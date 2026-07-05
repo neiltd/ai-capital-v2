@@ -29,9 +29,15 @@ fi
 
 # Already ran (or is currently running) today?
 if [ -f "$DB" ] && command -v sqlite3 > /dev/null 2>&1; then
+  SQLITE_ERR=$(mktemp)
   COUNT=$(sqlite3 "file:$DB?mode=ro" "select count(*) from pipeline_runs
     where stage='daily-pipeline' and status in ('running','success','failed')
-    and strftime('%Y-%m-%d', started_at) = strftime('%Y-%m-%d','now','localtime');" 2>/dev/null)
+    and strftime('%Y-%m-%d', started_at) = strftime('%Y-%m-%d','now','localtime');" 2>"$SQLITE_ERR")
+  if [ -s "$SQLITE_ERR" ]; then
+    log "sqlite3 stderr: $(cat "$SQLITE_ERR")"
+  fi
+  log "debug: COUNT=[$COUNT] hour=$(date +%H) db=$DB"
+  rm -f "$SQLITE_ERR"
   if [ "${COUNT:-0}" -gt 0 ]; then
     exit 0
   fi
