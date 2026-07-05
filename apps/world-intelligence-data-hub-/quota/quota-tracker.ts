@@ -9,7 +9,7 @@ export const SOURCE_CONFIGS: Record<string, SourceConfig> = {
   acled: {
     name: 'acled',
     ttlHours: 24,
-    maxStalenessHours: 48,
+    maxStalenessHours: 24,
     dailyLimit: null,
     monthlyLimit: 10_000,
     resetPeriod: 'monthly',

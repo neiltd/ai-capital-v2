@@ -1,0 +1,30 @@
+{
+  "$schema": "https://docs.renovatebot.com/renovate-schema.json",
+  "extends": ["config:recommended", ":dependencyDashboard"],
+  "timezone": "America/Los_Angeles",
+  "schedule": ["before 7am on monday"],
+  "prConcurrentLimit": 5,
+  "prHourlyLimit": 2,
+  "automerge": false,
+  "labels": ["dependencies"],
+  "packageRules": [
+    {
+      "groupName": "@anthropic-ai/sdk (all workspaces)",
+      "matchPackageNames": ["@anthropic-ai/sdk"]
+    },
+    {
+      "groupName": "dev dependencies (non-major)",
+      "matchDepTypes": ["devDependencies"],
+      "matchUpdateTypes": ["minor", "patch"]
+    },
+    {
+      "matchUpdateTypes": ["major"],
+      "dependencyDashboardApproval": true
+    },
+    {
+      "matchPackageNames": ["next", "react", "react-dom", "prisma", "@prisma/client"],
+      "matchUpdateTypes": ["major"],
+      "enabled": false
+    }
+  ]
+}

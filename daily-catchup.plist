@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<!--
+  LaunchAgent for the daily pipeline trigger. Replaces the "0 7 * * *" cron
+  entry — StartCalendarInterval jobs missed while asleep run once on wake,
+  which cron does not do. RunAtLoad additionally covers "Mac was fully
+  powered off/logged out at 7am, booted later" (StartCalendarInterval alone
+  does not catch that case up).
+
+  The actual script (scripts/daily-catchup.sh) is idempotent: it checks
+  pipeline_runs.db for today's daily-pipeline row before doing anything, so
+  it's safe for this to fire more than once a day (7:00 + a wake shortly
+  after, or a wake right at login).
+
+  Install (one-time):
+    cp daily-catchup.plist ~/Library/LaunchAgents/com.thanapol.ai-capital.daily.plist
+    launchctl bootstrap gui/$(id -u) ~/Library/LaunchAgents/com.thanapol.ai-capital.daily.plist
+
+  Stop / uninstall:
+    launchctl bootout gui/$(id -u)/com.thanapol.ai-capital.daily
+
+  Manual restart (after editing this file):
+    launchctl bootout gui/$(id -u)/com.thanapol.ai-capital.daily
+    launchctl bootstrap gui/$(id -u) ~/Library/LaunchAgents/com.thanapol.ai-capital.daily.plist
+-->
+<plist version="1.0">
+<dict>
+	<key>Label</key>
+	<string>com.thanapol.ai-capital.daily</string>
+
+	<key>ProgramArguments</key>
+	<array>
+		<string>/bin/bash</string>
+		<string>/Users/thanapold/Desktop/Projects.nosync/scripts/daily-catchup.sh</string>
+	</array>
+
+	<key>StartCalendarInterval</key>
+	<dict>
+		<key>Hour</key>
+		<integer>7</integer>
+		<key>Minute</key>
+		<integer>0</integer>
+	</dict>
+
+	<key>RunAtLoad</key>
+	<true/>
+
+	<key>StandardOutPath</key>
+	<string>/Users/thanapold/Desktop/Projects.nosync/logs/daily-catchup.log</string>
+	<key>StandardErrorPath</key>
+	<string>/Users/thanapold/Desktop/Projects.nosync/logs/daily-catchup.log</string>
+</dict>
+</plist>

@@ -172,6 +172,16 @@ export class ACLEDClient implements SourceClient {
       );
     }
 
+    if (!Array.isArray(data.data) || data.data.length === 0) {
+      // A 7-day+ global window never legitimately has 0 events — this is the
+      // account-level read-permission failure presenting as an empty 200, so
+      // treat it as a failure to let the UCDP fallback engage (see run.ts).
+      throw new SourceFetchError(
+        this.name,
+        `Returned ${data.count ?? 0} events for a global window since ${from} — treating as failure`,
+      );
+    }
+
     logger.info(this.name, `Got ${data.count} events`);
     return data;
   }
