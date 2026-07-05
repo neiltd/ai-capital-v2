@@ -1,23 +1,23 @@
 {
   "date": "2026-07-05",
-  "last_updated": "2026-07-05T14:18:06.770Z",
+  "last_updated": "2026-07-05T20:25:42.289Z",
   "collection": {
-    "last_run": "2026-07-05T14:13:02.580Z",
-    "run_count": 1,
-    "total_articles": 230,
+    "last_run": "2026-07-05T20:20:18.439Z",
+    "run_count": 2,
+    "total_articles": 65,
     "by_source": {
-      "bbc-world": 24,
-      "dw-world": 10,
-      "aljazeera-english": 25,
-      "france24-english": 23,
-      "nytimes-world": 37,
-      "washingtonpost-world": 7,
-      "bloomberg-markets": 30,
-      "npr-news": 10,
-      "scmp-china": 49,
+      "bbc-world": 7,
+      "dw-world": 2,
+      "aljazeera-english": 21,
+      "france24-english": 9,
+      "nytimes-world": 4,
+      "washingtonpost-world": 0,
+      "bloomberg-markets": 6,
+      "npr-news": 5,
+      "scmp-china": 11,
       "globaltimes-china": 0,
-      "bangkokpost-top": 10,
-      "khaosod-english": 5
+      "bangkokpost-top": 0,
+      "khaosod-english": 0
     },
     "failed_sources": [],
     "skipped_sources": [],
@@ -25,27 +25,27 @@
     "stale_feed_sources": [
       "globaltimes-china"
     ],
-    "avg_article_age_hours": 56.3,
-    "oldest_article_days": 24.6
+    "avg_article_age_hours": 57.1,
+    "oldest_article_days": 24.8
   },
   "scoring": {
-    "last_run": "2026-07-05T14:16:06.906Z",
-    "run_count": 1,
-    "total_scored": 414,
-    "recommended": 30,
-    "filtered": 384,
+    "last_run": "2026-07-05T20:23:15.234Z",
+    "run_count": 2,
+    "total_scored": 527,
+    "recommended": 37,
+    "filtered": 490,
     "reduction_pct": 93,
     "score_distribution": {
       "urgent": 0,
-      "high": 9,
-      "relevant": 12,
-      "marginal": 65,
-      "noise": 328
+      "high": 11,
+      "relevant": 14,
+      "marginal": 85,
+      "noise": 417
     },
     "by_source": {
       "aljazeera-english": {
-        "total": 25,
-        "recommended": 0,
+        "total": 46,
+        "recommended": 1,
         "narrative": 0
       },
       "bangkokpost-top": {
@@ -54,23 +54,23 @@
         "narrative": 0
       },
       "bbc-world": {
-        "total": 24,
+        "total": 31,
         "recommended": 2,
         "narrative": 0
       },
       "bloomberg-markets": {
-        "total": 30,
-        "recommended": 4,
+        "total": 36,
+        "recommended": 6,
         "narrative": 0
       },
       "dw-world": {
-        "total": 10,
+        "total": 12,
         "recommended": 4,
         "narrative": 0
       },
       "france24-english": {
-        "total": 23,
-        "recommended": 0,
+        "total": 32,
+        "recommended": 1,
         "narrative": 0
       },
       "khaosod-english": {
@@ -79,17 +79,17 @@
         "narrative": 0
       },
       "npr-news": {
-        "total": 10,
+        "total": 15,
         "recommended": 0,
         "narrative": 0
       },
       "nytimes-world": {
-        "total": 37,
-        "recommended": 7,
+        "total": 41,
+        "recommended": 8,
         "narrative": 0
       },
       "scmp-china": {
-        "total": 50,
+        "total": 61,
         "recommended": 3,
         "narrative": 0
       },
@@ -99,7 +99,7 @@
         "narrative": 0
       },
       "twitter-BillyM2k": {
-        "total": 10,
+        "total": 11,
         "recommended": 0,
         "narrative": 0
       },
@@ -109,7 +109,7 @@
         "narrative": 0
       },
       "twitter-CollinRugg": {
-        "total": 7,
+        "total": 8,
         "recommended": 0,
         "narrative": 0
       },
@@ -119,22 +119,22 @@
         "narrative": 0
       },
       "twitter-RALee85": {
-        "total": 3,
-        "recommended": 1,
+        "total": 9,
+        "recommended": 2,
         "narrative": 0
       },
       "twitter-RapidResponse47": {
-        "total": 19,
+        "total": 24,
         "recommended": 0,
         "narrative": 0
       },
       "twitter-TheFP": {
-        "total": 19,
+        "total": 21,
         "recommended": 0,
         "narrative": 0
       },
       "twitter-Top_Disaster": {
-        "total": 6,
+        "total": 7,
         "recommended": 0,
         "narrative": 0
       },
@@ -144,7 +144,7 @@
         "narrative": 0
       },
       "twitter-WhiteHouse": {
-        "total": 13,
+        "total": 17,
         "recommended": 0,
         "narrative": 0
       },
@@ -194,22 +194,22 @@
         "narrative": 0
       },
       "twitter-mdudas": {
-        "total": 6,
+        "total": 9,
         "recommended": 0,
         "narrative": 0
       },
       "twitter-mert": {
-        "total": 3,
+        "total": 5,
         "recommended": 0,
         "narrative": 0
       },
       "twitter-mfa_russia": {
-        "total": 10,
+        "total": 11,
         "recommended": 1,
         "narrative": 1
       },
       "twitter-paulg": {
-        "total": 5,
+        "total": 6,
         "recommended": 0,
         "narrative": 0
       },
@@ -219,8 +219,8 @@
         "narrative": 0
       },
       "twitter-politico": {
-        "total": 19,
-        "recommended": 0,
+        "total": 32,
+        "recommended": 1,
         "narrative": 0
       },
       "twitter-sundarpichai": {
@@ -234,7 +234,7 @@
         "narrative": 0
       },
       "twitter-toly": {
-        "total": 15,
+        "total": 23,
         "recommended": 1,
         "narrative": 0
       },
@@ -246,20 +246,20 @@
     }
   },
   "extraction": {
-    "last_run": "2026-07-05T14:18:06.770Z",
-    "run_count": 1,
-    "articles_sent_to_ai": 30,
-    "batches_run": 4,
-    "events_extracted": 15,
-    "events_merged": 0,
+    "last_run": "2026-07-05T20:25:42.289Z",
+    "run_count": 2,
+    "articles_sent_to_ai": 67,
+    "batches_run": 9,
+    "events_extracted": 24,
+    "events_merged": 1,
     "low_confidence": 0,
-    "human_review": 6,
+    "human_review": 16,
     "api_tokens": {
-      "input": 7546,
-      "output": 7749,
-      "cache_write": 3927,
-      "cache_read": 11781
+      "input": 16902,
+      "output": 17602,
+      "cache_write": 7854,
+      "cache_read": 27489
     },
-    "estimated_cost_usd": 0.15713354999999998
+    "estimated_cost_usd": 0.35243519999999995
   }
 }

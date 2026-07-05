@@ -1,7 +1,8 @@
-import { readFileSync, writeFileSync, existsSync, mkdirSync } from 'fs';
+import { readFileSync, existsSync } from 'fs';
 import type { QuotaEntry, QuotaState, SourceConfig } from '../lib/types.ts';
 import { PATHS } from '../lib/paths.ts';
 import { logger } from '../lib/logger.ts';
+import { writeJsonAtomic } from '../lib/atomic-fs.ts';
 
 // ── Source configuration registry ───────────────────────────────────────────
 
@@ -79,8 +80,7 @@ export class QuotaTracker {
   }
 
   private save(): void {
-    mkdirSync(PATHS.quota.root, { recursive: true });
-    writeFileSync(PATHS.quota.state, JSON.stringify(this.state, null, 2));
+    writeJsonAtomic(PATHS.quota.state, this.state);
   }
 
   private resetIfNeeded(): void {
@@ -97,8 +97,13 @@ export class QuotaTracker {
         this.state[source] = { ...entry, dailyUsed: 0, resetDate: today };
         dirty = true;
       } else if (config.resetPeriod === 'monthly' && entry.resetDate !== month) {
+        // dailyUsed is incremented unconditionally by recordFetch() regardless
+        // of resetPeriod, but monthly-period sources have no daily rollover
+        // check above — reset it here too so it can't grow unbounded across
+        // months (it's purely informational for these sources: dailyLimit is
+        // null wherever resetPeriod is 'monthly').
         logger.info('quota', `Monthly quota reset for ${source}`, { wasUsed: entry.monthlyUsed });
-        this.state[source] = { ...entry, monthlyUsed: 0, resetDate: month };
+        this.state[source] = { ...entry, dailyUsed: 0, monthlyUsed: 0, resetDate: month };
         dirty = true;
       }
     }

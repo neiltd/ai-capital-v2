@@ -35,7 +35,7 @@
 	</array>
 
 	<key>WorkingDirectory</key>
-	<string>/Users/thanapold/Desktop/Projects</string>
+	<string>/Users/thanapold/Desktop/Projects.nosync</string>
 
 	<key>RunAtLoad</key>
 	<true/>
@@ -51,9 +51,9 @@
 		<key>PATH</key>
 		<string>/opt/homebrew/bin:/usr/local/bin:/usr/bin:/bin</string>
 		<key>PIPELINE_RUNS_DB</key>
-		<string>/Users/thanapold/Desktop/Projects/data/pipeline-runs.db</string>
+		<string>/Users/thanapold/Desktop/Projects.nosync/data/pipeline-runs.db</string>
 		<key>DATA_ROOT</key>
-		<string>/Users/thanapold/Desktop/Projects/apps</string>
+		<string>/Users/thanapold/Desktop/Projects.nosync/apps</string>
 		<key>REDIS_URL</key>
 		<string>redis://localhost:6379</string>
 		<!-- @common/db's usePostgres() flips the structured + vector stores to
@@ -65,8 +65,8 @@
 	</dict>
 
 	<key>StandardOutPath</key>
-	<string>/Users/thanapold/Desktop/Projects/logs/queue-worker.out.log</string>
+	<string>/Users/thanapold/Desktop/Projects.nosync/logs/queue-worker.out.log</string>
 	<key>StandardErrorPath</key>
-	<string>/Users/thanapold/Desktop/Projects/logs/queue-worker.err.log</string>
+	<string>/Users/thanapold/Desktop/Projects.nosync/logs/queue-worker.err.log</string>
 </dict>
 </plist>

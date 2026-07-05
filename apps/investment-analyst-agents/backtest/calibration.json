@@ -1,7 +1,7 @@
 {
-  "generatedAt": "2026-07-03",
-  "predictionsAnalyzed": 41,
-  "scoredCalls": 490,
+  "generatedAt": "2026-07-05",
+  "predictionsAnalyzed": 43,
+  "scoredCalls": 521,
   "windows": [
     7,
     30
@@ -9,14 +9,14 @@
   "byAction": {
     "hold": {
       "7d": {
-        "calls": 284,
-        "accuracy": 0.5140845070422535,
-        "avgReturn": -0.14161663367356955
+        "calls": 291,
+        "accuracy": 0.5120274914089347,
+        "avgReturn": 0.010170155686479799
       },
       "30d": {
-        "calls": 167,
-        "accuracy": 0.2754491017964072,
-        "avgReturn": -2.7304450961799276
+        "calls": 190,
+        "accuracy": 0.25263157894736843,
+        "avgReturn": -2.423432038230466
       }
     },
     "trim": {
@@ -26,9 +26,9 @@
         "avgReturn": -2.6266438396068286
       },
       "30d": {
-        "calls": 15,
-        "accuracy": 0.26666666666666666,
-        "avgReturn": -1.1787598530357557
+        "calls": 16,
+        "accuracy": 0.25,
+        "avgReturn": 0.14937696890632757
       }
     },
     "buy": {
@@ -52,21 +52,21 @@
         "avgReturn": -2.848696723829489
       },
       "30d": {
-        "calls": 43,
-        "accuracy": 0.3023255813953488,
-        "avgReturn": -3.955318593096452
+        "calls": 50,
+        "accuracy": 0.3,
+        "avgReturn": -3.5584259949374566
       }
     },
     "medium": {
       "7d": {
-        "calls": 224,
-        "accuracy": 0.5625,
-        "avgReturn": -0.2067927594019768
+        "calls": 231,
+        "accuracy": 0.5584415584415584,
+        "avgReturn": -0.013605795835426097
       },
       "30d": {
-        "calls": 119,
-        "accuracy": 0.3025210084033613,
-        "avgReturn": -2.4746681559272794
+        "calls": 133,
+        "accuracy": 0.2706766917293233,
+        "avgReturn": -2.3335270029527972
       }
     },
     "low": {
@@ -76,20 +76,20 @@
         "avgReturn": 3.853796758374435
       },
       "30d": {
-        "calls": 22,
-        "accuracy": 0.13636363636363635,
-        "avgReturn": -0.014003688126328451
+        "calls": 25,
+        "accuracy": 0.12,
+        "avgReturn": 1.5604709215447559
       }
     }
   },
   "calibrationInverted": true,
-  "highConvictionPenalty": 0.19212962962962965,
+  "highConvictionPenalty": 0.18807118807118806,
   "bestEdge": {
     "signal": "trim (7d)",
     "accuracy": 0.7647058823529411
   },
   "worstSignal": {
     "signal": "trim (30d)",
-    "accuracy": 0.26666666666666666
+    "accuracy": 0.25
   }
 }

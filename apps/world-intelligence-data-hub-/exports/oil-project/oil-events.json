@@ -1,16 +1,17 @@
 {
   "meta": {
     "schemaVersion": "1.0",
-    "generatedAt": "2026-07-05T14:12:57.127Z",
+    "generatedAt": "2026-07-05T20:20:12.534Z",
     "sourceVersions": {
-      "gdelt": "2026-07-05T14:07:13.179Z",
-      "acled": "2026-07-05T14:12:51.178Z",
-      "eia": "2026-07-05T14:12:52.693Z",
-      "worldbank": "2026-07-05T14:12:54.102Z"
+      "gdelt": "2026-07-05T20:13:31.482Z",
+      "acled": "2026-06-26T00:00:00.000Z",
+      "ucdp": "2026-07-02T07:41:33.230Z",
+      "eia": "2026-07-05T14:12:54.095Z",
+      "worldbank": "2026-07-05T14:12:57.009Z"
     },
     "recordCount": 1,
     "breaking": false,
-    "staleSourcesPresent": false
+    "staleSourcesPresent": true
   },
   "data": [
     {
