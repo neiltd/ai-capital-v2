@@ -21,6 +21,12 @@ agentdb.rvf.lock
 **/agentdb.rvf.lock
 ruvector.db
 **/ruvector.db
+data/pipeline-runs.db
+data/pipeline-runs.db-shm
+data/pipeline-runs.db-wal
+
+# Scrape cache (transient tooling output, not project content)
+.firecrawl/
 
 # Stale npm lockfiles — root pnpm-lock.yaml is now the source of truth
 apps/*/package-lock.json
