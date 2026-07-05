@@ -1,0 +1,68 @@
+{
+  "id": "HTI",
+  "iso2": "HT",
+  "name": "Haiti",
+  "region": "Americas",
+  "subregion": "Caribbean",
+  "capital": "Port-au-Prince",
+  "lastUpdated": "2026-05-09",
+  "summary": "Haiti is currently a failed state in the midst of a catastrophic security and humanitarian collapse. Following the 2021 assassination of President Jovenel Moïse, the government has largely ceased to function, and armed gang coalitions now control over 80% of the capital, Port-au-Prince. The 2024 establishment of a Transitional Presidential Council (TPC) was intended to pave the way for elections, but it has been hampered by internal corruption and a lack of territorial control. A UN-authorized Multinational Security Support (MSS) mission, led by Kenya, is currently deployed to assist the Haitian National Police, but its impact remains localized and insufficient to dismantle gang power. The economy has contracted for seven consecutive years, leaving over five million people facing acute food insecurity and creating a massive internal and external migration crisis. Haiti's recovery is contingent on a fundamental restoration of order and the successful execution of democratic elections, currently tentatively planned for late 2026.",
+  "indicators": {
+    "politicalStability":       { "score": 1, "score_description": "Critical failure; total breakdown of state institutions and governance.", "trend": "stable", "confidence": "high", "note": "The state lacks a single elected official and exists only in a transitional capacity with no effective control over the capital." },
+    "economicDirection":        { "score": 1, "score_description": "Severe and prolonged contraction with near-total collapse of formal markets.", "trend": "declining", "confidence": "high", "note": "GDP has fallen for seven straight years; the economy is sustained almost entirely by humanitarian aid and diaspora remittances." },
+    "investmentAttractiveness": { "score": 1, "score_description": "Non-existent outside of high-risk humanitarian and state-led essential services.", "trend": "stable", "confidence": "high", "note": "Total lack of physical security and rule of law makes Haiti uninvestable for private capital." },
+    "geopoliticalRisk":         { "score": 9, "score_description": "Extreme risk due to total instability and its role as a regional source of refugees and drugs.", "trend": "rising", "confidence": "high", "note": "Haiti is a focal point for regional security intervention and represents a major humanitarian concern for the Western Hemisphere." },
+    "educationQuality":         { "score": 2, "score_description": "Non-functional; thousands of schools are closed due to gang violence and displacement.", "trend": "declining", "confidence": "medium", "note": "A generation of children is losing access to formal education, creating long-term socio-economic consequences." },
+    "healthcareQuality":        { "score": 1, "score_description": "Collapsed; major hospitals are non-operational and facing severe shortages of all supplies.", "trend": "declining", "confidence": "high", "note": "Cholera and other preventable diseases have resurged as sanitation and medical infrastructure have failed." },
+    "technologyInvestment":     { "score": 2, "score_description": "Extremely low; limited to damaged telecommunications infrastructure and basic solar projects.", "trend": "declining", "confidence": "medium", "note": "Digital connectivity is frequently interrupted by the destruction of physical infrastructure and fuel shortages." }
+  },
+  "demographics": {
+    "population": 11900000,
+    "medianAge": 24.1,
+    "urbanizationRate": 60,
+    "majorEthnicGroups": ["Black African descent", "Mixed African and European descent"],
+    "religions": [
+      { "name": "Roman Catholic", "percent": 55 },
+      { "name": "Protestant/Evangelical", "percent": 29 },
+      { "name": "Voodoo", "percent": 2 },
+      { "name": "None/Unaffiliated", "percent": 10 },
+      { "name": "Other", "percent": 4 }
+    ]
+  },
+  "alliances": ["CARICOM", "OAS", "CELAC", "UN", "OIF"],
+  "relationships": [
+    { "countryId": "USA", "countryName": "United States", "type": "partner", "sentiment": "neutral", "summary": "Primary source of humanitarian aid and the main driver behind the MSS security mission." },
+    { "countryId": "DOM", "countryName": "Dominican Republic", "type": "neighbor", "sentiment": "negative", "summary": "Hostile relationship centered on border closures, wall construction, and mass deportation of Haitian nationals." },
+    { "countryId": "KEN", "countryName": "Kenya", "type": "partner", "sentiment": "positive", "summary": "Lead nation for the Multinational Security Support (MSS) mission authorized by the UN to stabilize Port-au-Prince." },
+    { "countryId": "CAN", "countryName": "Canada", "type": "partner", "sentiment": "positive", "summary": "Significant donor of humanitarian and security assistance; host to a large and influential Haitian diaspora." },
+    { "countryId": "FRA", "countryName": "France", "type": "partner", "sentiment": "neutral", "summary": "Maintains historical ties and provides developmental aid, though the legacy of colonial debt remains a point of contention." }
+  ],
+  "perspectives": [
+    { "source": "Displaced Resident", "bias": "Victim", "view": "We are trapped in a nightmare; we have no food, no home, and the police are powerless against the gangs that rule our streets." },
+    { "source": "MSS Officer (Kenya)", "bias": "Interventionist", "view": "Our mission is to restore a 'breathing space' for the Haitian state, but without political consensus, security alone will not solve the crisis." },
+    { "source": "Gang Leader (Viv Ansanm)", "bias": "Warlord", "view": "We are the real authority in Haiti; we will continue to fight any foreign intervention that seeks to impose a government without our consent." }
+  ],
+  "historicalContext": {
+    "summary": "Haiti made history in 1804 as the world's first black-led republic after a successful slave revolt. However, its development was crippled by an massive independence debt to France, repeated foreign interventions (including a 1915-1934 U.S. occupation), and the brutal Duvalier family dictatorship (1957-1986). The 2010 earthquake and the 2021 assassination of Jovenel Moïse are the twin modern tragedies that have led to the current state of collapse.",
+    "keyEvents": [
+      { "year": 1804, "event": "Haiti declares independence from France following a successful slave revolution." },
+      { "year": 1915, "event": "Start of the United States occupation of Haiti." },
+      { "year": 1957, "event": "François 'Papa Doc' Duvalier takes power, beginning 29 years of family dictatorship." },
+      { "year": 1990, "event": "Jean-Bertrand Aristide is elected in Haiti's first free democratic election." },
+      { "year": 2010, "event": "A catastrophic magnitude 7.0 earthquake kills over 200,000 people and destroys the capital." },
+      { "year": 2021, "event": "President Jovenel Moïse is assassinated in his private residence." },
+      { "year": 2024, "event": "Massive gang uprising forces the resignation of Ariel Henry and the formation of a Transitional Council." },
+      { "year": 2026, "event": "Tentative date for long-overdue general elections (projected)." }
+    ]
+  },
+  "investmentNotes": {
+    "strengths": ["Strategic maritime location", "Large, youthful labor pool", "Strong agricultural potential (vetiver, essential oils)", "Highly resilient diaspora and entrepreneurial culture"],
+    "risks": ["Total lack of physical security and rule of law", "Extreme political instability and absence of governance", "Severely damaged and inadequate infrastructure", "High vulnerability to natural disasters and food insecurity"],
+    "sectors": ["Humanitarian Logistics", "Essential Services (Water, Power)", "Light Manufacturing (Textiles)", "Agribusiness", "Infrastructure Reconstruction"]
+  },
+  "sources": [
+    { "name": "World Bank", "url": "https://data.worldbank.org/country/HTI", "type": "economic" },
+    { "name": "CIA World Factbook", "url": "https://www.cia.gov/the-world-factbook/countries/haiti/", "type": "general" },
+    { "name": "UN News - Haiti", "url": "https://news.un.org/en/focus/haiti", "type": "security" }
+  ]
+}

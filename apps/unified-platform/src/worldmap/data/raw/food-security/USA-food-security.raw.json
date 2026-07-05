@@ -1,0 +1,27 @@
+[
+  {
+    "countryId": "USA",
+    "year": 2022,
+    "overallScore": 78.0,
+    "availability": 65.1,
+    "access": 87.1,
+    "utilization": 88.5,
+    "stability": 73.5,
+    "undernourishedPct": 2.5,
+    "foodImportDependencyPct": -28.2,
+    "cerealYieldKgHa": 8072,
+    "climateVulnerability": "medium",
+    "conflictExposure": "low",
+    "attribution": {
+      "sources": [
+        { "name": "GFSI 2022 — United States", "url": "https://impact.economist.com/sustainability/project/food-security-index/", "accessedAt": "2025-02-13" },
+        { "name": "FAO FAOSTAT", "url": "https://www.fao.org/faostat/en/", "accessedAt": "2025-02-13" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 2,
+        "lastVerified": "2025-02-13"
+      }
+    }
+  }
+]

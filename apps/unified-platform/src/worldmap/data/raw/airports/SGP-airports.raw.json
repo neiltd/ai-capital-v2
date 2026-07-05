@@ -1,0 +1,218 @@
+[
+  {
+    "id": "SIN",
+    "name": "Singapore Changi Airport",
+    "countryId": "SGP",
+    "city": "Singapore",
+    "iata": "SIN",
+    "icao": "WSSS",
+    "coordinates": [103.9911, 1.3644],
+    "passengerVolume": 60000000,
+    "cargoVolume": 1800000,
+    "runwayCount": 3,
+    "elevationM": 7,
+    "strategicImportance": "critical",
+    "geopoliticalNotes": "A premier global aviation hub and Singapore's primary economic gateway. Connects to over 400 cities and serves as a critical node for Southeast Asian trade and logistics.",
+    "notes": "Co-located with Changi Air Base.",
+    "attribution": {
+      "sources": [
+        { "name": "CAAS", "url": "https://www.caas.gov.sg", "accessedAt": "2026-05-10" },
+        { "name": "OurAirports", "url": "https://ourairports.com/airports/WSSS/", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 2,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  },
+  {
+    "id": "CAB-W",
+    "name": "Changi Air Base (West)",
+    "countryId": "SGP",
+    "city": "Singapore",
+    "iata": "null",
+    "icao": "WSSS",
+    "coordinates": [103.98, 1.37],
+    "passengerVolume": null,
+    "cargoVolume": null,
+    "runwayCount": 3,
+    "elevationM": 7,
+    "strategicImportance": "critical",
+    "geopoliticalNotes": "A major RSAF base co-located with Changi Airport. Houses transport and tanker aircraft, providing critical logistics and aerial refueling capabilities for the region.",
+    "notes": "Shares runways with commercial Changi Airport.",
+    "attribution": {
+      "sources": [
+        { "name": "MINDEF Singapore", "url": "https://www.mindef.gov.sg", "accessedAt": "2026-05-10" },
+        { "name": "OurAirports", "url": "https://ourairports.com/airports/WSSS/", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 2,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  },
+  {
+    "id": "CAB-E",
+    "name": "Changi Air Base (East)",
+    "countryId": "SGP",
+    "city": "Singapore",
+    "iata": "null",
+    "icao": "WSAC",
+    "coordinates": [104.00, 1.35],
+    "passengerVolume": null,
+    "cargoVolume": null,
+    "runwayCount": 1,
+    "elevationM": 7,
+    "strategicImportance": "critical",
+    "geopoliticalNotes": "A dedicated military facility on the eastern side of Changi Airport. Strategic for hosting visiting foreign military aircraft and supporting inter-theater transport.",
+    "notes": "Features its own dedicated runway (02R/20L).",
+    "attribution": {
+      "sources": [
+        { "name": "MINDEF Singapore", "url": "https://www.mindef.gov.sg", "accessedAt": "2026-05-10" },
+        { "name": "OurAirports", "url": "https://ourairports.com/airports/WSAC/", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 2,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  },
+  {
+    "id": "TGA",
+    "name": "Tengah Air Base",
+    "countryId": "SGP",
+    "city": "Singapore",
+    "iata": "TGA",
+    "icao": "WSAT",
+    "coordinates": [103.71, 1.39],
+    "passengerVolume": null,
+    "cargoVolume": null,
+    "runwayCount": 1,
+    "elevationM": 15,
+    "strategicImportance": "critical",
+    "geopoliticalNotes": "Known as the 'Home of the RSAF's Frontline'. Hosts the bulk of Singapore’s fighter fleet and AEWC assets, making it the most critical airfield for national defense.",
+    "notes": "Currently undergoing expansion to accommodate units from Paya Lebar.",
+    "attribution": {
+      "sources": [
+        { "name": "MINDEF Singapore", "url": "https://www.mindef.gov.sg", "accessedAt": "2026-05-10" },
+        { "name": "OurAirports", "url": "https://ourairports.com/airports/WSAT/", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 2,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  },
+  {
+    "id": "QPG",
+    "name": "Paya Lebar Air Base",
+    "countryId": "SGP",
+    "city": "Singapore",
+    "iata": "QPG",
+    "icao": "WSAP",
+    "coordinates": [103.91, 1.36],
+    "passengerVolume": null,
+    "cargoVolume": null,
+    "runwayCount": 1,
+    "elevationM": 20,
+    "strategicImportance": "high",
+    "geopoliticalNotes": "A key RSAF base for fighter and transport squadrons. Frequently hosts high-profile foreign military and government aircraft (e.g., Air Force One).",
+    "notes": "Slated for decommissioning in the 2030s for urban redevelopment.",
+    "attribution": {
+      "sources": [
+        { "name": "MINDEF Singapore", "url": "https://www.mindef.gov.sg", "accessedAt": "2026-05-10" },
+        { "name": "OurAirports", "url": "https://ourairports.com/airports/WSAP/", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 2,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  },
+  {
+    "id": "SBAB",
+    "name": "Sembawang Air Base",
+    "countryId": "SGP",
+    "city": "Singapore",
+    "iata": "null",
+    "icao": "WSAG",
+    "coordinates": [103.82, 1.45],
+    "passengerVolume": null,
+    "cargoVolume": null,
+    "runwayCount": 1,
+    "elevationM": 26,
+    "strategicImportance": "high",
+    "geopoliticalNotes": "The RSAF’s primary helicopter base. Strategically linked to the Sembawang Naval Base for maritime security and search-and-rescue operations.",
+    "notes": "Houses Apache and Chinook helicopter squadrons.",
+    "attribution": {
+      "sources": [
+        { "name": "MINDEF Singapore", "url": "https://www.mindef.gov.sg", "accessedAt": "2026-05-10" },
+        { "name": "OurAirports", "url": "https://ourairports.com/airports/WSAG/", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 2,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  },
+  {
+    "id": "XSP",
+    "name": "Seletar Airport",
+    "countryId": "SGP",
+    "city": "Singapore",
+    "iata": "XSP",
+    "icao": "WSSL",
+    "coordinates": [103.8644, 1.4169],
+    "passengerVolume": 200000,
+    "cargoVolume": 10000,
+    "runwayCount": 1,
+    "elevationM": 11,
+    "strategicImportance": "medium",
+    "geopoliticalNotes": "Hub for general aviation, business jets, and regional turboprop services. Centerpiece of the Seletar Aerospace Park, a strategic cluster for aircraft MRO.",
+    "notes": "Singapore's first international airport, built in 1928.",
+    "attribution": {
+      "sources": [
+        { "name": "Seletar Airport Official", "url": "https://www.seletarairport.com", "accessedAt": "2026-05-10" },
+        { "name": "OurAirports", "url": "https://ourairports.com/airports/WSSL/", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 2,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  },
+  {
+    "id": "SUDONG",
+    "name": "Pulau Sudong Airstrip",
+    "countryId": "SGP",
+    "city": "Singapore (Sudong Island)",
+    "iata": "null",
+    "icao": "null",
+    "coordinates": [103.71, 1.20],
+    "passengerVolume": null,
+    "cargoVolume": null,
+    "runwayCount": 1,
+    "elevationM": 3,
+    "strategicImportance": "medium",
+    "geopoliticalNotes": "A strategic offshore military airstrip used for RSAF live-firing exercises and as an emergency landing site for aircraft in the southern approaches.",
+    "notes": "Restricted military island.",
+    "attribution": {
+      "sources": [
+        { "name": "MINDEF Singapore", "url": "https://www.mindef.gov.sg", "accessedAt": "2026-05-10" },
+        { "name": "Google Maps", "url": "https://www.google.com/maps", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "medium",
+        "sourceCount": 2,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  }
+]

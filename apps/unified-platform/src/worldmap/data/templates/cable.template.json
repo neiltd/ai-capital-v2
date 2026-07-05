@@ -1,0 +1,46 @@
+[
+  {
+    "_comment": "TEMPLATE — all values must be verified. Coordinates must be [longitude, latitude]. Remove this _comment.",
+    "id": "CABLE-SEA-ME-WE-5",
+    "name": "SEA-ME-WE 5",
+    "route": [
+      [103.8, 1.3],
+      [80.0, 6.9],
+      [55.3, 25.2],
+      [43.1, 11.6],
+      [32.9, 29.9],
+      [14.5, 36.8],
+      [2.3, 41.4],
+      [-1.9, 46.9]
+    ],
+    "landingPoints": [
+      { "name": "Singapore", "countryId": "SGP", "coordinates": [103.8, 1.3], "city": "Singapore" },
+      { "name": "Colombo", "countryId": "LKA", "coordinates": [79.9, 6.9], "city": "Colombo" },
+      { "name": "Djibouti", "countryId": "DJI", "coordinates": [43.1, 11.6], "city": "Djibouti City" },
+      { "name": "Suez", "countryId": "EGY", "coordinates": [32.5, 29.9], "city": "Suez" },
+      { "name": "Palermo", "countryId": "ITA", "coordinates": [13.4, 38.1], "city": "Palermo" },
+      { "name": "Marseille", "countryId": "FRA", "coordinates": [5.4, 43.3], "city": "Marseille" }
+    ],
+    "status": "active",
+    "lengthKm": 20000,
+    "capacityTbps": 24,
+    "yearLaid": 2016,
+    "owners": ["Orange", "SingTel", "Telecom Italia", "STC", "Telin"],
+    "vulnerabilities": "Passes through Red Sea (Houthi risk), Suez Canal chokepoint, multiple state-controlled landing stations",
+    "geopoliticalNotes": "Critical link between Asia and Europe. Disruption in Red Sea (2024 Houthi threats) forced traffic rerouting. Government-owned landing stations in multiple authoritarian states create data security concerns.",
+    "attribution": {
+      "sources": [
+        {
+          "name": "TeleGeography SubmarineCableMap",
+          "url": "https://www.submarinecablemap.com/submarine-cable/sea-me-we-5",
+          "accessedAt": "2024-03-01"
+        }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 1,
+        "lastVerified": "2024-03-01"
+      }
+    }
+  }
+]

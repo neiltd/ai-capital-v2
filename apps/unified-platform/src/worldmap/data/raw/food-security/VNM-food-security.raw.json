@@ -1,0 +1,27 @@
+[
+  {
+    "countryId": "VNM",
+    "year": 2022,
+    "overallScore": 67.9,
+    "availability": 60.7,
+    "access": 84.0,
+    "utilization": 70.2,
+    "stability": 52.2,
+    "undernourishedPct": 5.3,
+    "foodImportDependencyPct": 11.4,
+    "cerealYieldKgHa": 5904,
+    "climateVulnerability": "high",
+    "conflictExposure": "low",
+    "attribution": {
+      "sources": [
+        { "name": "GFSI 2022 — Vietnam", "url": "https://impact.economist.com/sustainability/project/food-security-index/", "accessedAt": "2024-05-15" },
+        { "name": "FAO FAOSTAT", "url": "https://www.fao.org/faostat/en/", "accessedAt": "2024-05-15" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 2,
+        "lastVerified": "2024-05-15"
+      }
+    }
+  }
+]

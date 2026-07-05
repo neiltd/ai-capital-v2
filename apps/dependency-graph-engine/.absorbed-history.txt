@@ -1,0 +1,17 @@
+c031a1e 2026-06-06 12:02:32 -0700 chore(ts): enable noUnusedLocals + noUnusedParameters + noFallthroughCasesInSwitch
+5878f2d 2026-06-06 11:48:42 -0700 feat(schema): tag graph.json with schemaVersion 1.0
+9bc0634 2026-05-29 01:15:24 -0700 feat(graph): add financials + healthcare nodes and cross-theme edges
+02106cb 2026-05-27 14:11:55 -0700 chore: update .gitignore and add package-lock.json
+3f4ca31 2026-05-23 01:24:41 -0700 fix: support space-separated args in cli-query (--ticker NVDA not --ticker=NVDA)
+5d2c2a6 2026-05-23 01:21:25 -0700 feat: add query CLI for upstream, downstream, and path queries
+b0b4066 2026-05-23 01:21:25 -0700 feat: add seed, scan, and export CLI entrypoints
+630463d 2026-05-23 01:21:24 -0700 feat: add interactive review CLI for proposal approval
+b90aaff 2026-05-23 01:19:33 -0700 feat: add graph JSON exporter
+a270184 2026-05-23 01:14:08 -0700 feat: add scanner to discover relationships from ingested documents
+0c90163 2026-05-23 01:12:52 -0700 feat: add Claude extractor with prompt caching
+214da5d 2026-05-23 01:10:21 -0700 feat: add seed config (34 nodes, 41 edges) and loader
+2dad6de 2026-05-23 01:06:41 -0700 feat: add in-memory graph engine with traversal API
+db2a84d 2026-05-23 01:04:46 -0700 feat: add BFS path-finding traversal algorithm
+7f25037 2026-05-23 01:02:48 -0700 feat: add SQLite graph store with full CRUD
+a36a2c4 2026-05-23 00:56:13 -0700 feat: add shared types
+74b0483 2026-05-23 00:54:19 -0700 feat: scaffold dependency-graph-engine project

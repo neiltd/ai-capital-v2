@@ -1,0 +1,30 @@
+[
+  {
+    "countryId": "GBR",
+    "year": 2024,
+    "aiReadinessScore": 78.88,
+    "aiAdoptionScore": 16,
+    "aiTalentScore": 63.3,
+    "aiInvestmentUsdM": 4400,
+    "aiStartupCount": 5862,
+    "aiUnicornCount": 20,
+    "hasNationalAiStrategy": true,
+    "aiStrategyYear": 2021,
+    "aiPolicyScore": 8.45,
+    "cloudReadinessPct": 70,
+    "broadbandPenetrationPct": 97,
+    "topAiSectors": ["Finance", "Healthcare", "Manufacturing", "Defense"],
+    "attribution": {
+      "sources": [
+        { "name": "Oxford Insights Government AI Readiness Index 2024", "url": "https://oxfordinsights.com/ai-readiness/ai-readiness-index/", "accessedAt": "2025-05-10" },
+        { "name": "Office for National Statistics (ONS) - AI Adoption in UK Businesses", "url": "https://www.ons.gov.uk/", "accessedAt": "2025-05-10" },
+        { "name": "Tech Nation / Dealroom UK AI Investment Report 2024", "url": "https://technation.io/", "accessedAt": "2025-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 3,
+        "lastVerified": "2025-05-10"
+      }
+    }
+  }
+]

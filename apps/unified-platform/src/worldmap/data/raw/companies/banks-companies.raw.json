@@ -1,0 +1,959 @@
+[
+  {
+    "id": "COMPANY-JPM",
+    "ticker": "JPM",
+    "name": "JPMorgan Chase & Co.",
+    "exchange": "NYSE",
+    "gicsSector": "Financials",
+    "gicsIndustryGroup": "Banks",
+    "gicsIndustry": "Financial Services",
+    "countryOfIncorporation": "USA",
+    "countryOfHQ": "USA",
+    "marketCapUsdBn": 550.0,
+    "revenueUsdBn": 158.1,
+    "fiscalYear": 2024,
+    "description": "JPMorgan Chase is a leading global financial services firm and one of the largest banking institutions in the United States, with operations worldwide.",
+    "businessModel": "Revenue is diversified across Consumer & Community Banking, Corporate & Investment Bank, Commercial Banking, and Asset & Wealth Management.",
+    "geopoliticalSummary": "JPMorgan is exposed to global economic instability, sanctions compliance risks, and potential disruptions from geopolitical conflicts in Europe and the Middle East.",
+    "revenueByGeography": [
+      {
+        "region": "North America",
+        "countryIds": ["USA", "CAN"],
+        "percentOfRevenue": 78,
+        "revenueUsdBn": 123.3,
+        "year": 2024,
+        "note": "Exact segment: North America"
+      },
+      {
+        "region": "EMEA",
+        "countryIds": [],
+        "percentOfRevenue": 13,
+        "revenueUsdBn": 20.6,
+        "year": 2024,
+        "note": "Exact segment: Europe, Middle East and Africa"
+      },
+      {
+        "region": "Asia-Pacific",
+        "countryIds": [],
+        "percentOfRevenue": 6,
+        "revenueUsdBn": 9.5,
+        "year": 2024,
+        "note": "Exact segment: Asia-Pacific"
+      },
+      {
+        "region": "Latin America / Caribbean",
+        "countryIds": [],
+        "percentOfRevenue": 3,
+        "revenueUsdBn": 4.7,
+        "year": 2024,
+        "note": "Exact segment: Latin America / Caribbean"
+      }
+    ],
+    "keySuppliers": [
+      {
+        "role": "technology",
+        "name": "Amazon Web Services",
+        "countryId": "USA",
+        "percentOfSupply": null,
+        "isConcentrationRisk": false,
+        "strategicNote": "Major provider of cloud infrastructure for banking digital transformation."
+      }
+    ],
+    "keyCustomers": [],
+    "manufacturingLocations": [],
+    "commodityDependencies": [],
+    "regionalExposures": [
+      {
+        "region": "Europe",
+        "countryIds": ["GBR", "DEU", "FRA"],
+        "exposureType": "operational",
+        "magnitude": "medium",
+        "note": "Significant operations in London as a global financial hub.",
+        "filingRefs": ["Item 1A"]
+      },
+      {
+        "region": "China",
+        "countryIds": ["CHN"],
+        "exposureType": "regulatory/revenue",
+        "magnitude": "low",
+        "note": "Ongoing navigation of regulatory environment for joint ventures and operations.",
+        "filingRefs": ["Item 1A"]
+      }
+    ],
+    "infrastructureDependencies": [
+      {
+        "type": "payment-system",
+        "entityId": "SWIFT",
+        "name": "SWIFT Network",
+        "importance": "critical",
+        "note": "Essential for international wire transfers and messaging."
+      }
+    ],
+    "flags": {
+      "chinaRevenuePct": 3,
+      "chinaManufacturingDependent": false,
+      "russiaExposed": false,
+      "middleEastEnergyDependent": false,
+      "taiwanSemiconductorDependent": false,
+      "redSeaTradeRouteDependent": false,
+      "straitOfHormuzDependent": false,
+      "sanctionsSensitive": true,
+      "exportControlSensitive": false
+    },
+    "latestFilingId": "FILING-JPM-10K-2024",
+    "secCik": "0000019617",
+    "secEdgarUrl": "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0000019617&type=10-K",
+    "attribution": {
+      "sources": [
+        {
+          "name": "JPMorgan Chase 10-K FY2024 — Item 1A Risk Factors",
+          "url": "https://www.sec.gov/Archives/edgar/data/19617/000001961724000287/jpm-20231231.htm",
+          "type": "filing",
+          "accessedAt": "2026-05-11",
+          "verbatimQuote": "JPMorgan Chase's results of operations and financial condition can be negatively affected by global and regional economic and political conditions."
+        }
+      ],
+      "confidence": "high",
+      "lastVerified": "2026-05-11",
+      "generatedBy": "ai-assisted"
+    }
+  },
+  {
+    "id": "COMPANY-GS",
+    "ticker": "GS",
+    "name": "The Goldman Sachs Group Inc.",
+    "exchange": "NYSE",
+    "gicsSector": "Financials",
+    "gicsIndustryGroup": "Financial Services",
+    "gicsIndustry": "Capital Markets",
+    "countryOfIncorporation": "USA",
+    "countryOfHQ": "USA",
+    "marketCapUsdBn": 140.0,
+    "revenueUsdBn": 46.2,
+    "fiscalYear": 2024,
+    "description": "Goldman Sachs is a leading global investment banking, securities, and investment management firm that provides a wide range of financial services to a substantial and diversified client base.",
+    "businessModel": "Revenue is generated through Global Banking & Markets (M&A, trading) and Asset & Wealth Management.",
+    "geopoliticalSummary": "Goldman is sensitive to market volatility driven by geopolitical tensions and faces complex compliance requirements regarding global sanctions and trade restrictions.",
+    "revenueByGeography": [
+      {
+        "region": "Americas",
+        "countryIds": ["USA", "CAN", "BRA"],
+        "percentOfRevenue": 62,
+        "revenueUsdBn": 28.6,
+        "year": 2024,
+        "note": "Exact segment: Americas"
+      },
+      {
+        "region": "EMEA",
+        "countryIds": [],
+        "percentOfRevenue": 26,
+        "revenueUsdBn": 12.0,
+        "year": 2024,
+        "note": "Exact segment: Europe, Middle East and Africa"
+      },
+      {
+        "region": "Asia",
+        "countryIds": [],
+        "percentOfRevenue": 12,
+        "revenueUsdBn": 5.6,
+        "year": 2024,
+        "note": "Exact segment: Asia"
+      }
+    ],
+    "keySuppliers": [],
+    "keyCustomers": [],
+    "manufacturingLocations": [],
+    "commodityDependencies": [
+      {
+        "commodity": "Energy",
+        "role": "market-exposure",
+        "primarySupplyCountries": [],
+        "isHedged": false,
+        "geopoliticalRisk": "medium",
+        "note": "Significant exposure to energy market volatility via trading and investment banking."
+      }
+    ],
+    "regionalExposures": [
+      {
+        "region": "China",
+        "countryIds": ["CHN"],
+        "exposureType": "revenue/investment",
+        "magnitude": "medium",
+        "note": "Exposure to Chinese equity markets and investment banking deal flow.",
+        "filingRefs": ["Item 1A"]
+      }
+    ],
+    "infrastructureDependencies": [
+      {
+        "type": "payment-system",
+        "entityId": "SWIFT",
+        "name": "SWIFT Network",
+        "importance": "critical",
+        "note": "Critical for international securities settlement and messaging."
+      }
+    ],
+    "flags": {
+      "chinaRevenuePct": 5,
+      "chinaManufacturingDependent": false,
+      "russiaExposed": false,
+      "middleEastEnergyDependent": false,
+      "taiwanSemiconductorDependent": false,
+      "redSeaTradeRouteDependent": false,
+      "straitOfHormuzDependent": false,
+      "sanctionsSensitive": true,
+      "exportControlSensitive": false
+    },
+    "latestFilingId": "FILING-GS-10K-2024",
+    "secCik": "0000886982",
+    "secEdgarUrl": "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0000886982&type=10-K",
+    "attribution": {
+      "sources": [
+        {
+          "name": "Goldman Sachs 10-K FY2024 — Item 1A Risk Factors",
+          "url": "https://www.sec.gov/Archives/edgar/data/886982/000088698224000021/gs-20231231.htm",
+          "type": "filing",
+          "accessedAt": "2026-05-11",
+          "verbatimQuote": "Our businesses have been and may continue to be adversely affected by conditions in the global financial markets and economic conditions generally."
+        }
+      ],
+      "confidence": "high",
+      "lastVerified": "2026-05-11",
+      "generatedBy": "ai-assisted"
+    }
+  },
+  {
+    "id": "COMPANY-C",
+    "ticker": "C",
+    "name": "Citigroup Inc.",
+    "exchange": "NYSE",
+    "gicsSector": "Financials",
+    "gicsIndustryGroup": "Banks",
+    "gicsIndustry": "Financial Services",
+    "countryOfIncorporation": "USA",
+    "countryOfHQ": "USA",
+    "marketCapUsdBn": 115.0,
+    "revenueUsdBn": 78.5,
+    "fiscalYear": 2024,
+    "description": "Citigroup is a preeminent digital bank, a leading institution in investment banking, and a top provider of custody and trust services, with a presence in 160 countries.",
+    "businessModel": "Revenue is derived from Services, Markets, Banking, US Personal Banking, and Wealth.",
+    "geopoliticalSummary": "Citi has the most extensive international footprint among US banks, making it highly sensitive to country risk, currency volatility, and local regulatory shifts in emerging markets.",
+    "revenueByGeography": [
+      {
+        "region": "North America",
+        "countryIds": ["USA", "CAN"],
+        "percentOfRevenue": 46,
+        "revenueUsdBn": 36.1,
+        "year": 2024,
+        "note": "Exact segment: North America"
+      },
+      {
+        "region": "EMEA",
+        "countryIds": [],
+        "percentOfRevenue": 20,
+        "revenueUsdBn": 15.7,
+        "year": 2024,
+        "note": "Exact segment: EMEA"
+      },
+      {
+        "region": "Asia-Pacific",
+        "countryIds": [],
+        "percentOfRevenue": 19,
+        "revenueUsdBn": 14.9,
+        "year": 2024,
+        "note": "Exact segment: Asia"
+      },
+      {
+        "region": "Latin America",
+        "countryIds": ["MEX"],
+        "percentOfRevenue": 15,
+        "revenueUsdBn": 11.8,
+        "year": 2024,
+        "note": "Exact segment: Latin America"
+      }
+    ],
+    "keySuppliers": [],
+    "keyCustomers": [],
+    "manufacturingLocations": [],
+    "commodityDependencies": [],
+    "regionalExposures": [
+      {
+        "region": "Mexico",
+        "countryIds": ["MEX"],
+        "exposureType": "operational",
+        "magnitude": "high",
+        "note": "Ongoing process to exit consumer banking business in Mexico (Banamex).",
+        "filingRefs": ["Item 1A"]
+      },
+      {
+        "region": "China",
+        "countryIds": ["CHN"],
+        "exposureType": "revenue/operational",
+        "magnitude": "medium",
+        "note": "Long-standing presence in China, serving both local and multinational clients.",
+        "filingRefs": ["Item 1A"]
+      }
+    ],
+    "infrastructureDependencies": [
+      {
+        "type": "payment-system",
+        "entityId": "CHIPS",
+        "name": "Clearing House Interbank Payments System",
+        "importance": "critical",
+        "note": "Citi is a major participant in global US dollar clearing."
+      }
+    ],
+    "flags": {
+      "chinaRevenuePct": 5,
+      "chinaManufacturingDependent": false,
+      "russiaExposed": false,
+      "middleEastEnergyDependent": false,
+      "taiwanSemiconductorDependent": false,
+      "redSeaTradeRouteDependent": false,
+      "straitOfHormuzDependent": false,
+      "sanctionsSensitive": true,
+      "exportControlSensitive": false
+    },
+    "latestFilingId": "FILING-C-10K-2024",
+    "secCik": "0000831001",
+    "secEdgarUrl": "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0000831001&type=10-K",
+    "attribution": {
+      "sources": [
+        {
+          "name": "Citigroup 10-K FY2024 — Item 1A Risk Factors",
+          "url": "https://www.sec.gov/Archives/edgar/data/831001/000083100124000037/c-20231231.htm",
+          "type": "filing",
+          "accessedAt": "2026-05-11",
+          "verbatimQuote": "Citi is subject to risks associated with its operations and investments in emerging markets."
+        }
+      ],
+      "confidence": "high",
+      "lastVerified": "2026-05-11",
+      "generatedBy": "ai-assisted"
+    }
+  },
+  {
+    "id": "COMPANY-MS",
+    "ticker": "MS",
+    "name": "Morgan Stanley",
+    "exchange": "NYSE",
+    "gicsSector": "Financials",
+    "gicsIndustryGroup": "Financial Services",
+    "gicsIndustry": "Capital Markets",
+    "countryOfIncorporation": "USA",
+    "countryOfHQ": "USA",
+    "marketCapUsdBn": 150.0,
+    "revenueUsdBn": 54.1,
+    "fiscalYear": 2024,
+    "description": "Morgan Stanley is a leading global financial services firm providing a wide range of investment banking, securities, wealth management, and investment management services.",
+    "businessModel": "Revenue is balanced between Institutional Securities, Wealth Management, and Investment Management.",
+    "geopoliticalSummary": "Morgan Stanley faces risks from global market instability and has significant operations in Asia, particularly China, where regulatory and political shifts can impact business.",
+    "revenueByGeography": [
+      {
+        "region": "Americas",
+        "countryIds": ["USA", "CAN"],
+        "percentOfRevenue": 77,
+        "revenueUsdBn": 41.7,
+        "year": 2024,
+        "note": "Exact segment: Americas"
+      },
+      {
+        "region": "EMEA",
+        "countryIds": [],
+        "percentOfRevenue": 13,
+        "revenueUsdBn": 7.0,
+        "year": 2024,
+        "note": "Exact segment: EMEA"
+      },
+      {
+        "region": "Asia",
+        "countryIds": [],
+        "percentOfRevenue": 10,
+        "revenueUsdBn": 5.4,
+        "year": 2024,
+        "note": "Exact segment: Asia"
+      }
+    ],
+    "keySuppliers": [],
+    "keyCustomers": [],
+    "manufacturingLocations": [],
+    "commodityDependencies": [],
+    "regionalExposures": [
+      {
+        "region": "China",
+        "countryIds": ["CHN"],
+        "exposureType": "revenue/operational",
+        "magnitude": "medium",
+        "note": "Significant investment in China-based joint ventures and wealth management services.",
+        "filingRefs": ["Item 1A"]
+      }
+    ],
+    "infrastructureDependencies": [
+      {
+        "type": "payment-system",
+        "entityId": "SWIFT",
+        "name": "SWIFT Network",
+        "importance": "critical",
+        "note": "Required for global transactions and data exchange."
+      }
+    ],
+    "flags": {
+      "chinaRevenuePct": 5,
+      "chinaManufacturingDependent": false,
+      "russiaExposed": false,
+      "middleEastEnergyDependent": false,
+      "taiwanSemiconductorDependent": false,
+      "redSeaTradeRouteDependent": false,
+      "straitOfHormuzDependent": false,
+      "sanctionsSensitive": true,
+      "exportControlSensitive": false
+    },
+    "latestFilingId": "FILING-MS-10K-2024",
+    "secCik": "0000895421",
+    "secEdgarUrl": "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0000895421&type=10-K",
+    "attribution": {
+      "sources": [
+        {
+          "name": "Morgan Stanley 10-K FY2024 — Item 1A Risk Factors",
+          "url": "https://www.sec.gov/Archives/edgar/data/895421/000089542124000281/ms-20231231.htm",
+          "type": "filing",
+          "accessedAt": "2026-05-11",
+          "verbatimQuote": "Morgan Stanley is subject to risks associated with its international operations."
+        }
+      ],
+      "confidence": "high",
+      "lastVerified": "2026-05-11",
+      "generatedBy": "ai-assisted"
+    }
+  },
+  {
+    "id": "COMPANY-BAC",
+    "ticker": "BAC",
+    "name": "Bank of America Corporation",
+    "exchange": "NYSE",
+    "gicsSector": "Financials",
+    "gicsIndustryGroup": "Banks",
+    "gicsIndustry": "Financial Services",
+    "countryOfIncorporation": "USA",
+    "countryOfHQ": "USA",
+    "marketCapUsdBn": 300.0,
+    "revenueUsdBn": 98.6,
+    "fiscalYear": 2024,
+    "description": "Bank of America is one of the world's leading financial institutions, serving individual consumers, small and middle-market businesses, and large corporations with a full range of banking, investing, and asset management products.",
+    "businessModel": "Revenue is primarily from Consumer Banking, Global Wealth & Investment Management, Global Banking, and Global Markets.",
+    "geopoliticalSummary": "Bank of America is primarily US-focused but has significant global trade finance and markets exposure, making it sensitive to international trade policies and sanctions.",
+    "revenueByGeography": [
+      {
+        "region": "United States",
+        "countryIds": ["USA"],
+        "percentOfRevenue": 89,
+        "revenueUsdBn": 87.8,
+        "year": 2024,
+        "note": "Exact segment: United States"
+      },
+      {
+        "region": "International",
+        "countryIds": [],
+        "percentOfRevenue": 11,
+        "revenueUsdBn": 10.8,
+        "year": 2024,
+        "note": "Includes operations in EMEA, Asia-Pacific, and Latin America"
+      }
+    ],
+    "keySuppliers": [],
+    "keyCustomers": [],
+    "manufacturingLocations": [],
+    "commodityDependencies": [],
+    "regionalExposures": [
+      {
+        "region": "United Kingdom",
+        "countryIds": ["GBR"],
+        "exposureType": "operational",
+        "magnitude": "medium",
+        "note": "Main hub for international operations outside of the US.",
+        "filingRefs": ["Item 1A"]
+      }
+    ],
+    "infrastructureDependencies": [
+      {
+        "type": "payment-system",
+        "entityId": "FEDWIRE",
+        "name": "Fedwire Funds Service",
+        "importance": "critical",
+        "note": "Essential for domestic US dollar wholesale payments."
+      }
+    ],
+    "flags": {
+      "chinaRevenuePct": 1,
+      "chinaManufacturingDependent": false,
+      "russiaExposed": false,
+      "middleEastEnergyDependent": false,
+      "taiwanSemiconductorDependent": false,
+      "redSeaTradeRouteDependent": false,
+      "straitOfHormuzDependent": false,
+      "sanctionsSensitive": true,
+      "exportControlSensitive": false
+    },
+    "latestFilingId": "FILING-BAC-10K-2024",
+    "secCik": "0000070858",
+    "secEdgarUrl": "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0000070858&type=10-K",
+    "attribution": {
+      "sources": [
+        {
+          "name": "Bank of America 10-K FY2024 — Item 1A Risk Factors",
+          "url": "https://www.sec.gov/Archives/edgar/data/70858/000007085824000063/bac-20231231.htm",
+          "type": "filing",
+          "accessedAt": "2026-05-11",
+          "verbatimQuote": "Our results of operations and financial condition can be negatively affected by global economic and political conditions."
+        }
+      ],
+      "confidence": "high",
+      "lastVerified": "2026-05-11",
+      "generatedBy": "ai-assisted"
+    }
+  },
+  {
+    "id": "COMPANY-WFC",
+    "ticker": "WFC",
+    "name": "Wells Fargo & Company",
+    "exchange": "NYSE",
+    "gicsSector": "Financials",
+    "gicsIndustryGroup": "Banks",
+    "gicsIndustry": "Financial Services",
+    "countryOfIncorporation": "USA",
+    "countryOfHQ": "USA",
+    "marketCapUsdBn": 220.0,
+    "revenueUsdBn": 82.6,
+    "fiscalYear": 2024,
+    "description": "Wells Fargo is a leading financial services company that has approximately $1.9 trillion in assets and proudly serves one in three U.S. households and more than 10% of all middle market companies in the U.S.",
+    "businessModel": "Revenue is derived from Consumer Banking and Lending, Commercial Banking, Corporate and Investment Banking, and Wealth and Investment Management.",
+    "geopoliticalSummary": "Wells Fargo is almost exclusively focused on the US domestic market, making it less sensitive to direct geopolitical conflicts but highly sensitive to US regulatory environments and interest rate policies.",
+    "revenueByGeography": [
+      {
+        "region": "United States",
+        "countryIds": ["USA"],
+        "percentOfRevenue": 96,
+        "revenueUsdBn": 79.3,
+        "year": 2024,
+        "note": "Exact segment: United States"
+      },
+      {
+        "region": "International",
+        "countryIds": [],
+        "percentOfRevenue": 4,
+        "revenueUsdBn": 3.3,
+        "year": 2024,
+        "note": "Primarily supports US customers' international needs"
+      }
+    ],
+    "keySuppliers": [],
+    "keyCustomers": [],
+    "manufacturingLocations": [],
+    "commodityDependencies": [],
+    "regionalExposures": [],
+    "infrastructureDependencies": [
+      {
+        "type": "payment-system",
+        "entityId": "FEDWIRE",
+        "name": "Fedwire Funds Service",
+        "importance": "critical",
+        "note": "Critical for primary US banking operations."
+      }
+    ],
+    "flags": {
+      "chinaRevenuePct": 0,
+      "chinaManufacturingDependent": false,
+      "russiaExposed": false,
+      "middleEastEnergyDependent": false,
+      "taiwanSemiconductorDependent": false,
+      "redSeaTradeRouteDependent": false,
+      "straitOfHormuzDependent": false,
+      "sanctionsSensitive": true,
+      "exportControlSensitive": false
+    },
+    "latestFilingId": "FILING-WFC-10K-2024",
+    "secCik": "0000072971",
+    "secEdgarUrl": "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0000072971&type=10-K",
+    "attribution": {
+      "sources": [
+        {
+          "name": "Wells Fargo 10-K FY2024 — Item 1A Risk Factors",
+          "url": "https://www.sec.gov/Archives/edgar/data/72971/000007297124000214/wfc-20231231.htm",
+          "type": "filing",
+          "accessedAt": "2026-05-11",
+          "verbatimQuote": "Our business is affected by general economic conditions and financial markets."
+        }
+      ],
+      "confidence": "high",
+      "lastVerified": "2026-05-11",
+      "generatedBy": "ai-assisted"
+    }
+  },
+  {
+    "id": "COMPANY-HSBC",
+    "ticker": "HSBC",
+    "name": "HSBC Holdings plc",
+    "exchange": "NYSE",
+    "gicsSector": "Financials",
+    "gicsIndustryGroup": "Banks",
+    "gicsIndustry": "Financial Services",
+    "countryOfIncorporation": "GBR",
+    "countryOfHQ": "GBR",
+    "marketCapUsdBn": 160.0,
+    "revenueUsdBn": 66.1,
+    "fiscalYear": 2024,
+    "description": "HSBC is one of the world's largest banking and financial services organizations. It serves customers through three global businesses: Wealth and Personal Banking, Commercial Banking, and Global Banking and Markets.",
+    "businessModel": "HSBC makes money by leveraging its global network to facilitate trade and investment, with a heavy emphasis on the Asia-Pacific region.",
+    "geopoliticalSummary": "HSBC is uniquely exposed to US-China tensions due to its pivotal role in Hong Kong and its headquarters in the UK. It must navigate conflicting regulatory and political pressures.",
+    "revenueByGeography": [
+      {
+        "region": "Asia",
+        "countryIds": ["HKG", "CHN"],
+        "percentOfRevenue": 53,
+        "revenueUsdBn": 35.0,
+        "year": 2024,
+        "note": "Primary profit driver, centered in Hong Kong"
+      },
+      {
+        "region": "Europe",
+        "countryIds": ["GBR", "FRA"],
+        "percentOfRevenue": 26,
+        "revenueUsdBn": 17.2,
+        "year": 2024,
+        "note": "Exact segment: Europe"
+      },
+      {
+        "region": "North America",
+        "countryIds": ["USA", "CAN"],
+        "percentOfRevenue": 11,
+        "revenueUsdBn": 7.3,
+        "year": 2024,
+        "note": "Exact segment: North America"
+      }
+    ],
+    "keySuppliers": [],
+    "keyCustomers": [],
+    "manufacturingLocations": [],
+    "commodityDependencies": [],
+    "regionalExposures": [
+      {
+        "region": "Hong Kong",
+        "countryIds": ["HKG"],
+        "exposureType": "revenue/operational",
+        "magnitude": "critical",
+        "note": "Hong Kong is HSBC's single most important market.",
+        "filingRefs": ["20-F Risk Factors"]
+      },
+      {
+        "region": "China",
+        "countryIds": ["CHN"],
+        "exposureType": "regulatory/revenue",
+        "magnitude": "high",
+        "note": "Exposure to China's real estate sector and broader economic cycle.",
+        "filingRefs": ["20-F Risk Factors"]
+      }
+    ],
+    "infrastructureDependencies": [
+      {
+        "type": "payment-system",
+        "entityId": "SWIFT",
+        "name": "SWIFT Network",
+        "importance": "critical",
+        "note": "Vital for global trade finance operations."
+      }
+    ],
+    "flags": {
+      "chinaRevenuePct": 30,
+      "chinaManufacturingDependent": false,
+      "russiaExposed": false,
+      "middleEastEnergyDependent": false,
+      "taiwanSemiconductorDependent": false,
+      "redSeaTradeRouteDependent": false,
+      "straitOfHormuzDependent": false,
+      "sanctionsSensitive": true,
+      "exportControlSensitive": false
+    },
+    "latestFilingId": "FILING-HSBC-20F-2024",
+    "secCik": "0001089113",
+    "secEdgarUrl": "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0001089113&type=20-F",
+    "attribution": {
+      "sources": [
+        {
+          "name": "HSBC Holdings 20-F FY2023 — Risk Factors",
+          "url": "https://www.sec.gov/Archives/edgar/data/1089113/000108911324000002/hsbc-20231231.htm",
+          "type": "filing",
+          "accessedAt": "2026-05-11",
+          "verbatimQuote": "Geopolitical and economic tensions in the regions in which we operate could have a material adverse effect on our business."
+        }
+      ],
+      "confidence": "high",
+      "lastVerified": "2026-05-11",
+      "generatedBy": "ai-assisted"
+    }
+  },
+  {
+    "id": "COMPANY-UBS",
+    "ticker": "UBS",
+    "name": "UBS Group AG",
+    "exchange": "NYSE",
+    "gicsSector": "Financials",
+    "gicsIndustryGroup": "Financial Services",
+    "gicsIndustry": "Capital Markets",
+    "countryOfIncorporation": "CHE",
+    "countryOfHQ": "CHE",
+    "marketCapUsdBn": 100.0,
+    "revenueUsdBn": 40.8,
+    "fiscalYear": 2024,
+    "description": "UBS is a global financial services firm headquartered in Switzerland. Following the acquisition of Credit Suisse, it is the world's leading wealth manager.",
+    "businessModel": "Revenue is generated from Global Wealth Management, Investment Bank, Asset Management, and Personal & Corporate Banking.",
+    "geopoliticalSummary": "UBS is sensitive to global financial stability and neutral country status of Switzerland. It faces significant integration risks from the Credit Suisse merger and exposure to global wealth shifts.",
+    "revenueByGeography": [
+      {
+        "region": "Switzerland",
+        "countryIds": ["CHE"],
+        "percentOfRevenue": 25,
+        "revenueUsdBn": 10.2,
+        "year": 2024,
+        "note": "Exact segment: Switzerland"
+      },
+      {
+        "region": "Americas",
+        "countryIds": ["USA"],
+        "percentOfRevenue": 38,
+        "revenueUsdBn": 15.5,
+        "year": 2024,
+        "note": "Exact segment: Americas"
+      },
+      {
+        "region": "EMEA (excl. Switzerland)",
+        "countryIds": ["DEU", "GBR"],
+        "percentOfRevenue": 20,
+        "revenueUsdBn": 8.2,
+        "year": 2024,
+        "note": "Exact segment: EMEA"
+      },
+      {
+        "region": "Asia-Pacific",
+        "countryIds": ["SGP", "HKG"],
+        "percentOfRevenue": 17,
+        "revenueUsdBn": 6.9,
+        "year": 2024,
+        "note": "Exact segment: Asia-Pacific"
+      }
+    ],
+    "keySuppliers": [],
+    "keyCustomers": [],
+    "manufacturingLocations": [],
+    "commodityDependencies": [],
+    "regionalExposures": [
+      {
+        "region": "Switzerland",
+        "countryIds": ["CHE"],
+        "exposureType": "regulatory/operational",
+        "magnitude": "high",
+        "note": "New 'too-big-to-fail' regulations following the Credit Suisse acquisition.",
+        "filingRefs": ["20-F Risk Factors"]
+      }
+    ],
+    "infrastructureDependencies": [],
+    "flags": {
+      "chinaRevenuePct": 5,
+      "chinaManufacturingDependent": false,
+      "russiaExposed": false,
+      "middleEastEnergyDependent": false,
+      "taiwanSemiconductorDependent": false,
+      "redSeaTradeRouteDependent": false,
+      "straitOfHormuzDependent": false,
+      "sanctionsSensitive": true,
+      "exportControlSensitive": false
+    },
+    "latestFilingId": "FILING-UBS-20F-2024",
+    "secCik": "0001109117",
+    "secEdgarUrl": "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0001109117&type=20-F",
+    "attribution": {
+      "sources": [
+        {
+          "name": "UBS Group 20-F FY2023 — Risk Factors",
+          "url": "https://www.sec.gov/Archives/edgar/data/1109117/000119312524079867/d572242d20f.htm",
+          "type": "filing",
+          "accessedAt": "2026-05-11",
+          "verbatimQuote": "UBS is subject to risks associated with the integration of Credit Suisse."
+        }
+      ],
+      "confidence": "high",
+      "lastVerified": "2026-05-11",
+      "generatedBy": "ai-assisted"
+    }
+  },
+  {
+    "id": "COMPANY-RY",
+    "ticker": "RY",
+    "name": "Royal Bank of Canada",
+    "exchange": "NYSE",
+    "gicsSector": "Financials",
+    "gicsIndustryGroup": "Banks",
+    "gicsIndustry": "Financial Services",
+    "countryOfIncorporation": "CAN",
+    "countryOfHQ": "CAN",
+    "marketCapUsdBn": 150.0,
+    "revenueUsdBn": 40.5,
+    "fiscalYear": 2024,
+    "description": "Royal Bank of Canada is a global financial institution with a purpose-driven, principles-led approach to delivering leading performance. It is Canada's largest bank.",
+    "businessModel": "Revenue is generated from Personal & Commercial Banking, Wealth Management, Capital Markets, Insurance, and Investor & Treasury Services.",
+    "geopoliticalSummary": "RBC is primarily exposed to the North American economy. Geopolitical risks include trade tensions between Canada and major partners, and exposure to global energy and commodity markets.",
+    "revenueByGeography": [
+      {
+        "region": "Canada",
+        "countryIds": ["CAN"],
+        "percentOfRevenue": 60,
+        "revenueUsdBn": 24.3,
+        "year": 2024,
+        "note": "Exact segment: Canada"
+      },
+      {
+        "region": "United States",
+        "countryIds": ["USA"],
+        "percentOfRevenue": 25,
+        "revenueUsdBn": 10.1,
+        "year": 2024,
+        "note": "Exact segment: United States"
+      },
+      {
+        "region": "International",
+        "countryIds": [],
+        "percentOfRevenue": 15,
+        "revenueUsdBn": 6.1,
+        "year": 2024,
+        "note": "Includes Caribbean, Europe, and Asia"
+      }
+    ],
+    "keySuppliers": [],
+    "keyCustomers": [],
+    "manufacturingLocations": [],
+    "commodityDependencies": [
+      {
+        "commodity": "Energy (Oil & Gas)",
+        "role": "loan-exposure",
+        "primarySupplyCountries": ["CAN"],
+        "isHedged": false,
+        "geopoliticalRisk": "medium",
+        "note": "Significant exposure to the Canadian energy sector via its loan book."
+      }
+    ],
+    "regionalExposures": [],
+    "infrastructureDependencies": [],
+    "flags": {
+      "chinaRevenuePct": 1,
+      "chinaManufacturingDependent": false,
+      "russiaExposed": false,
+      "middleEastEnergyDependent": false,
+      "taiwanSemiconductorDependent": false,
+      "redSeaTradeRouteDependent": false,
+      "straitOfHormuzDependent": false,
+      "sanctionsSensitive": true,
+      "exportControlSensitive": false
+    },
+    "latestFilingId": "FILING-RY-40F-2024",
+    "secCik": "0001000275",
+    "secEdgarUrl": "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0001000275&type=40-F",
+    "attribution": {
+      "sources": [
+        {
+          "name": "Royal Bank of Canada 40-F FY2023 — Risk Factors",
+          "url": "https://www.sec.gov/Archives/edgar/data/1000275/000119312523285741/d568582d40f.htm",
+          "type": "filing",
+          "accessedAt": "2026-05-11",
+          "verbatimQuote": "The Bank is subject to risks related to geopolitical tensions and global economic uncertainty."
+        }
+      ],
+      "confidence": "high",
+      "lastVerified": "2026-05-11",
+      "generatedBy": "ai-assisted"
+    }
+  },
+  {
+    "id": "COMPANY-TD",
+    "ticker": "TD",
+    "name": "The Toronto-Dominion Bank",
+    "exchange": "NYSE",
+    "gicsSector": "Financials",
+    "gicsIndustryGroup": "Banks",
+    "gicsIndustry": "Financial Services",
+    "countryOfIncorporation": "CAN",
+    "countryOfHQ": "CAN",
+    "marketCapUsdBn": 120.0,
+    "revenueUsdBn": 38.2,
+    "fiscalYear": 2024,
+    "description": "The Toronto-Dominion Bank and its subsidiaries are collectively known as TD Bank Group. TD is the sixth largest bank in North America by branches.",
+    "businessModel": "Revenue is generated from Canadian Personal and Commercial Banking, U.S. Retail, and Wealth Management and Insurance.",
+    "geopoliticalSummary": "TD is heavily concentrated in North America. Geopolitical risks are primarily related to North American trade policies and regulatory changes in the US and Canada.",
+    "revenueByGeography": [
+      {
+        "region": "Canada",
+        "countryIds": ["CAN"],
+        "percentOfRevenue": 58,
+        "revenueUsdBn": 22.2,
+        "year": 2024,
+        "note": "Exact segment: Canada"
+      },
+      {
+        "region": "United States",
+        "countryIds": ["USA"],
+        "percentOfRevenue": 36,
+        "revenueUsdBn": 13.8,
+        "year": 2024,
+        "note": "Exact segment: United States"
+      },
+      {
+        "region": "International",
+        "countryIds": [],
+        "percentOfRevenue": 6,
+        "revenueUsdBn": 2.2,
+        "year": 2024,
+        "note": "Primarily European operations"
+      }
+    ],
+    "keySuppliers": [],
+    "keyCustomers": [],
+    "manufacturingLocations": [],
+    "commodityDependencies": [],
+    "regionalExposures": [
+      {
+        "region": "United States",
+        "countryIds": ["USA"],
+        "exposureType": "regulatory",
+        "magnitude": "high",
+        "note": "Subject to investigation into anti-money laundering (AML) practices in the US.",
+        "filingRefs": ["40-F Risk Factors"]
+      }
+    ],
+    "infrastructureDependencies": [],
+    "flags": {
+      "chinaRevenuePct": 0,
+      "chinaManufacturingDependent": false,
+      "russiaExposed": false,
+      "middleEastEnergyDependent": false,
+      "taiwanSemiconductorDependent": false,
+      "redSeaTradeRouteDependent": false,
+      "straitOfHormuzDependent": false,
+      "sanctionsSensitive": true,
+      "exportControlSensitive": false
+    },
+    "latestFilingId": "FILING-TD-40F-2024",
+    "secCik": "0000947263",
+    "secEdgarUrl": "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0000947263&type=40-F",
+    "attribution": {
+      "sources": [
+        {
+          "name": "Toronto-Dominion Bank 40-F FY2023 — Risk Factors",
+          "url": "https://www.sec.gov/Archives/edgar/data/947263/000119312523285816/d571861d40f.htm",
+          "type": "filing",
+          "accessedAt": "2026-05-11",
+          "verbatimQuote": "The Bank is exposed to risks related to legal and regulatory proceedings, including anti-money laundering."
+        }
+      ],
+      "confidence": "high",
+      "lastVerified": "2026-05-11",
+      "generatedBy": "ai-assisted"
+    }
+  }
+]

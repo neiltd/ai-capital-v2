@@ -1,0 +1,66 @@
+{
+  "id": "VAT",
+  "iso2": "VA",
+  "name": "Vatican City",
+  "region": "Europe",
+  "subregion": "Southern Europe",
+  "capital": "Vatican City",
+  "lastUpdated": "2026-05-09",
+  "summary": "Vatican City is the smallest independent state in the world, both by area and population, serving as the spiritual and administrative center of the Roman Catholic Church. As an absolute ecclesiastical elective monarchy, it is ruled by the Pope. The Holy See, the sovereign entity that governs the city-state, maintains a vast diplomatic network and holds unique international influence as a moral and religious authority. Its economy is non-commercial, supported by investments, donations, and tourism-related revenue from its world-renowned museums and heritage sites.",
+  "indicators": {
+    "politicalStability":       { "score": 10, "trend": "stable", "confidence": "high", "note": "High institutional continuity and lack of domestic political opposition; stability is inherent to its ecclesiastical structure." },
+    "economicDirection":        { "score": 6, "trend": "stable", "confidence": "high", "note": "Stable but non-standard economy; focus on transparency reforms in financial management and sustainability." },
+    "investmentAttractiveness": { "score": 3, "trend": "stable", "confidence": "high", "note": "Not a commercial destination; investment is restricted to internal ecclesiastical and heritage conservation needs." },
+    "geopoliticalRisk":         { "score": 2, "trend": "stable", "confidence": "high", "note": "Very low risk of direct conflict; protected by treaty with Italy and its unique status as a global religious center." },
+    "educationQuality":         { "score": 9, "trend": "stable", "confidence": "high", "note": "Host to prestigious pontifical universities and world-class research in theology, philosophy, and sciences." },
+    "healthcareQuality":        { "score": 9, "trend": "stable", "confidence": "high", "note": "Access to advanced medical facilities within the city and top-tier services in neighboring Rome." },
+    "technologyInvestment":     { "score": 5, "trend": "stable", "confidence": "medium", "note": "Focus on digital preservation of archives and modernizing communication channels for global outreach." }
+  },
+  "demographics": {
+    "population": 800,
+    "medianAge": 59.0,
+    "urbanizationRate": 100,
+    "majorEthnicGroups": ["Italian", "Swiss", "Other (clerical nationalities)"],
+    "religions": [
+      { "name": "Roman Catholic", "percent": 100 }
+    ]
+  },
+  "alliances": ["UN Observer State", "OSCE", "IAEA", "Council of Europe (Observer)"],
+  "relationships": [
+    { "countryId": "ITA", "countryName": "Italy", "type": "strategic_partner", "sentiment": "positive", "summary": "Essential relationship defined by the Lateran Treaty; Italy provides security, infrastructure, and logistical support." },
+    { "countryId": "USA", "countryName": "United States", "type": "diplomatic_partner", "sentiment": "positive", "summary": "Collaborative relationship on global issues such as religious freedom, humanitarian aid, and peace mediation." },
+    { "countryId": "CHN", "countryName": "China", "type": "diplomatic_partner", "sentiment": "neutral", "summary": "Complex and evolving relationship focused on the appointment of bishops and the status of the Catholic Church in China." },
+    { "countryId": "FRA", "countryName": "France", "type": "partner", "sentiment": "positive", "summary": "Historical 'Eldest Daughter of the Church'; strong diplomatic ties despite the secular nature of the French state." }
+  ],
+  "perspectives": [
+    { "source": "Curia Official", "bias": "Institutional", "view": "Our mission is to serve the universal Church and provide a moral voice for peace and justice in a fragmented world." },
+    { "source": "Catholic Reformer", "bias": "Progressive", "view": "The Vatican must continue to modernize its administration and lead by example on issues like environmental protection and social inclusivity." },
+    { "source": "Traditionalist Layperson", "bias": "Conservative", "view": "The Holy See's primary role is to preserve the doctrine and traditions of the Church against the pressures of secularism." },
+    { "source": "Museum Curator", "bias": "Cultural", "view": "We are custodians of a significant portion of human heritage; our duty is to ensure these treasures remain accessible to the world." }
+  ],
+  "historicalContext": {
+    "summary": "The Vatican's status as a sovereign state was formalized by the 1929 Lateran Treaty between the Holy See and the Kingdom of Italy. This ended the 'Roman Question' that had persisted since the unification of Italy and the loss of the Papal States in 1870.",
+    "keyEvents": [
+      { "year": 756, "event": "Donation of Pepin establishes the Papal States." },
+      { "year": 1870, "event": "Capture of Rome by the Kingdom of Italy; Pope becomes 'prisoner in the Vatican.'" },
+      { "year": 1929, "event": "Lateran Treaty signed, creating the independent State of the Vatican City." },
+      { "year": 1962, "event": "Opening of the Second Vatican Council (Vatican II), modernizing the Church." },
+      { "year": 1978, "event": "Election of Pope John Paul II, the first non-Italian pope in 455 years." },
+      { "year": 1984, "event": "A new Concordat with Italy further defines the separation of church and state." },
+      { "year": 2013, "event": "Resignation of Pope Benedict XVI and election of Pope Francis, the first pope from the Americas." },
+      { "year": 2015, "event": "Publication of 'Laudato si'', emphasizing the Vatican's commitment to environmentalism." },
+      { "year": 2018, "event": "Provisional agreement with China on the appointment of bishops." },
+      { "year": 2022, "event": "New constitution (Praedicate evangelium) reforms the Roman Curia." }
+    ]
+  },
+  "investmentNotes": {
+    "strengths": ["Unrivaled cultural and historical assets", "Global diplomatic influence", "Significant financial reserves and real estate", "Stable and predictable governance"],
+    "risks": ["Demographic limitations (no natural birth rate)", "Reputational risks from internal scandals", "Financial transparency challenges", "Dependence on Italian infrastructure"],
+    "sectors": ["Religious Tourism", "Cultural Heritage Management", "Philanthropy", "Publishing and Communications"]
+  },
+  "sources": [
+    { "name": "Vatican News", "url": "https://www.vaticannews.va/", "type": "general" },
+    { "name": "Holy See Press Office", "url": "https://press.vatican.va/", "type": "official" },
+    { "name": "Prefecture for the Economic Affairs of the Holy See", "url": "https://www.vatican.va/", "type": "economic" }
+  ]
+}

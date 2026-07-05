@@ -1,0 +1,67 @@
+{
+  "id": "GTM",
+  "iso2": "GT",
+  "name": "Guatemala",
+  "region": "Americas",
+  "subregion": "Central America",
+  "capital": "Guatemala City",
+  "lastUpdated": "2026-05-09",
+  "summary": "Guatemala is currently navigating a pivotal period of democratic transition under President Bernardo Arévalo, who took office in early 2024 with a mandate to dismantle entrenched corruption. As the largest economy in Central America, Guatemala maintains a reputation for macroeconomic stability, characterized by low public debt and high international reserves. However, the government faces significant institutional resistance from a fragmented Congress and a judiciary often aligned with established interests. Economic growth is steadily driven by robust domestic consumption and record-breaking remittances, which account for nearly 20% of GDP. Long-term prosperity remains contingent on improving infrastructure, addressing high rates of chronic malnutrition, and successfully navigating the geopolitical tensions arising from its continued diplomatic recognition of Taiwan.",
+  "indicators": {
+    "politicalStability":       { "score": 5, "score_description": "Moderate risk due to ongoing institutional friction between the executive and the Attorney General.", "trend": "stable", "confidence": "high", "note": "President Arévalo's anti-corruption agenda faces significant pushback from the 'Covenant of the Corrupt' in Congress." },
+    "economicDirection":        { "score": 6, "score_description": "Resilient growth supported by remittances and conservative fiscal management.", "trend": "rising", "confidence": "high", "note": "GDP growth is projected at 3.6% - 4.3% for 2025, with a slight increase in public investment." },
+    "investmentAttractiveness": { "score": 6, "score_description": "Growing appeal for nearshoring, particularly in textiles and energy.", "trend": "rising", "confidence": "medium", "note": "Strategic location and competitive labor costs are offset by high levels of corruption and legal uncertainty." },
+    "geopoliticalRisk":         { "score": 5, "score_description": "Moderate risk linked to migration flows and the Taiwan-China diplomatic rift.", "trend": "stable", "confidence": "high", "note": "China has applied trade pressure in response to Guatemala's continued recognition of Taiwan." },
+    "educationQuality":         { "score": 3, "score_description": "Low outcomes with significant rural-urban and ethnic disparities.", "trend": "stable", "confidence": "high", "note": "Public spending on education remains among the lowest in the region, hindering human capital development." },
+    "healthcareQuality":        { "score": 3, "score_description": "Struggling public system with high rates of child malnutrition.", "trend": "stable", "confidence": "medium", "note": "The Arévalo administration has prioritized nutrition programs, but results will take years to manifest." },
+    "technologyInvestment":     { "score": 4, "score_description": "Limited but growing focus on digitalization and semiconductor partnerships with Taiwan.", "trend": "rising", "confidence": "medium", "note": "New tech partnerships aim to modernize the manufacturing sector and improve government transparency." }
+  },
+  "demographics": {
+    "population": 18600000,
+    "medianAge": 24.8,
+    "urbanizationRate": 52,
+    "majorEthnicGroups": ["Mestizo (Ladino)", "Maya", "Xinca", "Garifuna"],
+    "religions": [
+      { "name": "Roman Catholic", "percent": 45 },
+      { "name": "Protestant/Evangelical", "percent": 42 },
+      { "name": "None/Unaffiliated", "percent": 11 },
+      { "name": "Other", "percent": 2 }
+    ]
+  },
+  "alliances": ["SICA", "CA-4", "OAS", "CELAC", "UN"],
+  "relationships": [
+    { "countryId": "USA", "countryName": "United States", "type": "ally", "sentiment": "positive", "summary": "Critical partner for migration management, security, and trade; supports Arévalo's anti-corruption efforts." },
+    { "countryId": "MEX", "countryName": "Mexico", "type": "neighbor", "sentiment": "positive", "summary": "Collaborates on southern border security and regional infrastructure projects like the Mayan Train extension." },
+    { "countryId": "TWN", "countryName": "Taiwan", "type": "ally", "sentiment": "positive", "summary": "Guatemala is one of Taiwan's few remaining diplomatic allies; cooperation focuses on technology and health." },
+    { "countryId": "CHN", "countryName": "China", "type": "competitor", "sentiment": "negative", "summary": "Tensions exist due to Guatemala's recognition of Taiwan; China has imposed trade restrictions on key exports." },
+    { "countryId": "SLV", "countryName": "El Salvador", "type": "neighbor", "sentiment": "neutral", "summary": "Partners in regional trade and transit through the CA-4 agreement, despite differing political styles." }
+  ],
+  "perspectives": [
+    { "source": "Semilla Reformist", "bias": "Anti-Corruption", "view": "The recovery of public institutions from criminal networks is the essential prerequisite for sustainable economic development." },
+    { "source": "Business Elite (CACIF)", "bias": "Pro-Market", "view": "Legal certainty and infrastructure investment are more critical for growth than the government's focus on political reform." },
+    { "source": "Indigenous Rights Activist", "bias": "Social Justice", "view": "The democratic transition must include genuine representation and land rights for the Maya majority to be meaningful." }
+  ],
+  "historicalContext": {
+    "summary": "Guatemala's modern history is marked by a brutal 36-year civil war (1960-1996) that disproportionately affected indigenous communities. Since the Peace Accords, the country has struggled with 'state capture' by corrupt networks, punctuated by the 2015 'La Linea' protests and the 2023 election of Bernardo Arévalo.",
+    "keyEvents": [
+      { "year": 1821, "event": "Guatemala gains independence from Spain." },
+      { "year": 1944, "event": "October Revolution starts a decade of democratic reform." },
+      { "year": 1954, "event": "CIA-backed coup ousts President Jacobo Árbenz." },
+      { "year": 1960, "event": "Beginning of the Guatemalan Civil War." },
+      { "year": 1996, "event": "Signing of the Firm and Lasting Peace Accords." },
+      { "year": 2015, "event": "Mass protests lead to the resignation of President Otto Pérez Molina." },
+      { "year": 2023, "event": "Bernardo Arévalo wins the presidency in a surprise landslide." },
+      { "year": 2024, "event": "Arévalo inaugurated after overcoming multiple legal challenges." }
+    ]
+  },
+  "investmentNotes": {
+    "strengths": ["Largest economy in Central America", "Geographic proximity to the U.S. market", "Macroeconomic stability and low debt", "Strong agricultural and textile sectors"],
+    "risks": ["Pervasive corruption and weak rule of law", "Poor infrastructure and logistics", "High social inequality and malnutrition", "Vulnerability to climate change"],
+    "sectors": ["Textiles and Apparel", "Agribusiness (Coffee, Sugar)", "Renewable Energy", "Digital Services", "Light Manufacturing"]
+  },
+  "sources": [
+    { "name": "World Bank", "url": "https://data.worldbank.org/country/GTM", "type": "economic" },
+    { "name": "CIA World Factbook", "url": "https://www.cia.gov/the-world-factbook/countries/guatemala/", "type": "general" },
+    { "name": "IMF Country Reports", "url": "https://www.imf.org/en/Countries/GTM", "type": "economic" }
+  ]
+}

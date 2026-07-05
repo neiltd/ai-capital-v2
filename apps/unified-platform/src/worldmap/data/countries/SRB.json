@@ -1,0 +1,69 @@
+{
+  "id": "SRB",
+  "iso2": "RS",
+  "name": "Serbia",
+  "region": "Europe",
+  "subregion": "Southeast Europe",
+  "capital": "Belgrade",
+  "lastUpdated": "2026-05-09",
+  "summary": "In 2026, Serbia is a pivotal but complex actor in the Western Balkans, maintaining its 'multi-vector' foreign policy that balances EU candidacy with deep-seated ties to Russia and China. The country has undergone significant industrial transformation, positioning itself as a key regional hub for automotive components and a major center for the European IT and software development industry. Belgrade is a vibrant metropolis, attracting substantial foreign investment in real estate and infrastructure. However, the path to EU accession remains contingent on the normalization of relations with Kosovo and the alignment of its foreign policy with the bloc. Economically, Serbia is making strides in energy diversification and is a focal point for the potential extraction and processing of critical minerals like lithium, which has become a major topic of both economic opportunity and domestic debate.",
+  "indicators": {
+    "politicalStability":       { "score": 6, "score_description": "Stable centralized governance with a focus on economic development.", "trend": "stable", "confidence": "high", "note": "The ruling coalition maintains a strong grip on power, though it faces increasing pressure from environmental and civil society groups." },
+    "economicDirection":        { "score": 6, "score_description": "Growth driven by FDI, manufacturing, and the tech sector.", "trend": "improving", "confidence": "high", "note": "GDP growth is projected at 3.0% in 2026, supported by large-scale infrastructure projects and industrial exports." },
+    "investmentAttractiveness": { "score": 7, "score_description": "Attractive for manufacturing and IT due to cost-competitive skilled labor.", "trend": "rising", "confidence": "high", "note": "Serbia has been highly successful in attracting foreign direct investment, particularly in the automotive and electronics sectors." },
+    "geopoliticalRisk":         { "score": 7, "score_description": "Elevated due to Kosovo tensions and balancing act between East and West.", "trend": "stable", "confidence": "high", "note": "The 'military neutrality' stance is increasingly tested by the evolving European security landscape." },
+    "educationQuality":         { "score": 6, "score_description": "Strong tradition in technical and engineering sciences.", "trend": "stable", "confidence": "medium", "note": "The secondary and higher education systems provide a steady supply of talent for the growing IT and industrial sectors." },
+    "healthcareQuality":        { "score": 5, "score_description": "Public system requiring significant investment and modernization.", "trend": "improving", "confidence": "medium", "note": "Recent years have seen the construction of several major clinical centers and increased digitalization of patient records." },
+    "technologyInvestment":     { "score": 7, "score_description": "High growth in the IT sector and increasing focus on bio-tech.", "trend": "rising", "confidence": "high", "note": "The 'BIO4' campus in Belgrade is a major initiative aimed at making Serbia a regional leader in biotechnology." }
+  },
+  "demographics": {
+    "population": 6600000,
+    "medianAge": 43.9,
+    "urbanizationRate": 60,
+    "majorEthnicGroups": ["Serb", "Hungarian", "Bosniak", "Roma", "Albanian"],
+    "religions": [
+      { "name": "Orthodox Christian", "percent": 81.1 },
+      { "name": "Muslim", "percent": 4.2 },
+      { "name": "Roman Catholic", "percent": 3.9 },
+      { "name": "None/Unaffiliated", "percent": 1.1 },
+      { "name": "Other", "percent": 9.7 }
+    ]
+  },
+  "alliances": ["EU (Candidate)", "OSCE", "Partnership for Peace (NATO)", "Open Balkan"],
+  "relationships": [
+    { "countryId": "HUN", "countryName": "Hungary", "type": "ally", "sentiment": "positive", "summary": "Strategic and pragmatically very close partnership; cooperation on energy (pipelines), infrastructure (railway), and migration." },
+    { "countryId": "RUS", "countryName": "Russia", "type": "partner", "sentiment": "neutral", "summary": "Traditional cultural and historical ties; relationship is focused on energy security and support for Serbia's territorial integrity." },
+    { "countryId": "CHN", "countryName": "China", "type": "partner", "sentiment": "positive", "summary": "Major source of investment in infrastructure and industry; Serbia is a key partner for China in Southeast Europe." },
+    { "countryId": "USA", "countryName": "United States", "type": "partner", "sentiment": "neutral", "summary": "Growing cooperation on economic and security issues, despite historical baggage and differing views on Kosovo." },
+    { "countryId": "XKX", "countryName": "Kosovo", "type": "competitor", "sentiment": "negative", "summary": "Persistent and deep-seated conflict over sovereignty; relations are managed through EU-mediated dialogue." }
+  ],
+  "perspectives": [
+    { "source": "Belgrade Policy Analyst", "bias": "Neutral/Pragmatist", "view": "Serbia's success depends on its ability to remain an open bridge for investment while slowly aligning with the European mainstream." },
+    { "source": "Environmental Activist", "bias": "Ecological-focused", "view": "The push for lithium mining must not come at the cost of our water and soil; economic development must be sustainable and transparent." },
+    { "source": "Tech Sector Leader", "bias": "Globalist", "view": "Our IT industry is our greatest export; we need more investment in education and digital infrastructure to remain competitive globally." }
+  ],
+  "historicalContext": {
+    "summary": "Serbia's modern history began with the 19th-century uprisings against Ottoman rule. It was a key player in the Balkan Wars and WWI, after which it became the core of the Kingdom and later Socialist Federal Republic of Yugoslavia. The 1990s were marked by the violent breakup of Yugoslavia and international sanctions. Since 2000, Serbia has been on a path of democratic transition and gradual integration into European and global economic structures.",
+    "keyEvents": [
+      { "year": 1804, "event": "First Serbian Uprising against Ottoman rule begins." },
+      { "year": 1878, "event": "Treaty of Berlin recognizes Serbia's full independence." },
+      { "year": 1918, "event": "Establishment of the Kingdom of Serbs, Croats, and Slovenes." },
+      { "year": 1945, "event": "Formation of the Socialist Federal Republic of Yugoslavia under Tito." },
+      { "year": 1991, "event": "Start of the Yugoslav Wars and the breakup of the federation." },
+      { "year": 2000, "event": "Overthrow of Slobodan Milošević (Bulldozer Revolution)." },
+      { "year": 2006, "event": "Dissolution of the State Union of Serbia and Montenegro." },
+      { "year": 2008, "event": "Kosovo's unilateral declaration of independence." },
+      { "year": 2012, "event": "Serbia officially becomes a candidate for EU membership." }
+    ]
+  },
+  "investmentNotes": {
+    "strengths": ["Strategic location at the center of the Balkans", "Strong and growing IT and software development sector", "Highly successful at attracting foreign direct investment (FDI)", "Competitive labor costs and skilled technical workforce"],
+    "risks": ["Geopolitical friction over Kosovo and relations with Russia", "Vulnerability to shifts in global trade and investment flows", "Challenges in the rule of law and judicial transparency", "Environmental concerns related to mining and heavy industry"],
+    "sectors": ["Information Technology", "Automotive & Industrial Manufacturing", "Agriculture & Food Processing", "Infrastructure & Construction", "Mining (Lithium & Copper)"]
+  },
+  "sources": [
+    { "name": "Statistical Office of the Republic of Serbia", "url": "https://www.stat.gov.rs/en-us/", "type": "economic" },
+    { "name": "National Bank of Serbia", "url": "https://www.nbs.rs/en/index.html", "type": "economic" },
+    { "name": "Development Agency of Serbia (RAS)", "url": "https://ras.gov.rs/en", "type": "economic" }
+  ]
+}

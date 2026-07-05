@@ -1,0 +1,28 @@
+[
+  {
+    "countryId": "NGA",
+    "year": 2022,
+    "overallScore": 42.0,
+    "availability": 39.5,
+    "access": 25.0,
+    "utilization": 55.6,
+    "stability": 53.7,
+    "undernourishedPct": 15.9,
+    "foodImportDependencyPct": 21.7,
+    "cerealYieldKgHa": 1656,
+    "climateVulnerability": "high",
+    "conflictExposure": "high",
+    "attribution": {
+      "sources": [
+        { "name": "GFSI 2022 — Nigeria", "url": "https://impact.economist.com/sustainability/project/food-security-index/", "accessedAt": "2025-05-10" },
+        { "name": "FAO FAOSTAT", "url": "https://www.fao.org/faostat/en/", "accessedAt": "2025-05-10" },
+        { "name": "World Bank Cereal Yield", "url": "https://data.worldbank.org/indicator/AG.YLD.CREL.KG", "accessedAt": "2025-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 3,
+        "lastVerified": "2025-05-10"
+      }
+    }
+  }
+]

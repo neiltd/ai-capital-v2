@@ -1,0 +1,66 @@
+{
+  "id": "CHL",
+  "iso2": "CL",
+  "name": "Chile",
+  "region": "Americas",
+  "subregion": "South America",
+  "capital": "Santiago",
+  "lastUpdated": "2025-05-23",
+  "summary": "Chile remains one of Latin America's most stable and prosperous nations, currently navigating a period of political consolidation after several years of social unrest and constitutional debate. Following the rejection of two proposed new constitutions, the country has returned to a more predictable institutional path, with the 1980 constitution remaining in effect. Chile is a global leader in the energy transition, possessing massive lithium reserves and world-class potential for solar and green hydrogen production. While facing challenges such as rising public safety concerns and an aging demographic, its commitment to fiscal discipline, open trade, and democratic norms continues to make it a premier destination for foreign investment in the region.",
+  "indicators": {
+    "politicalStability":       { "score": 7, "score_description": "Stable democracy with high polarization and upcoming elections.", "trend": "stable", "confidence": "high", "note": "The conclusion of the constitutional process has reduced uncertainty; focus is now on the November 2025 general elections." },
+    "economicDirection":        { "score": 6, "score_description": "Moderate growth rebounding from stagnation; focus on green economy.", "trend": "improving", "confidence": "high", "note": "GDP growth is projected to stabilize around 2.5% in 2025, supported by mining exports and renewable energy investments." },
+    "investmentAttractiveness": { "score": 8, "score_description": "Very high; regional leader for FDI and renewable energy.", "trend": "stable", "confidence": "high", "note": "Chile ranks among the most attractive globally for green energy; the National Lithium Strategy provides a clearer framework for public-private partnerships." },
+    "geopoliticalRisk":         { "score": 3, "score_description": "Low external risk; internal focus on crime and migration.", "trend": "stable", "confidence": "high", "note": "Rising crime rates and irregular migration at the northern border are the primary domestic security concerns." },
+    "educationQuality":         { "score": 6, "score_description": "High literacy and access; persistent inequality in outcomes.", "trend": "stable", "confidence": "high", "note": "Chile has the highest PISA scores in South America, but the gap between private and public education remains a central political issue." },
+    "healthcareQuality":        { "score": 6, "score_description": "Sophisticated dual system facing funding and access pressures.", "trend": "stable", "confidence": "high", "note": "Recent reforms have stabilized the private health insurance (Isapres) sector while aiming to strengthen the public provider (Fonasa)." },
+    "technologyInvestment":     { "score": 7, "score_description": "Regional hub for data centers and digital infrastructure.", "trend": "rising", "confidence": "high", "note": "Major tech companies are expanding data center footprints in Chile due to its connectivity, stable energy grid, and business environment." }
+  },
+  "demographics": {
+    "population": 19800000,
+    "medianAge": 37.5,
+    "urbanizationRate": 88,
+    "majorEthnicGroups": ["White and Non-Indigenous", "Mapuche", "Other Indigenous"],
+    "religions": [
+      { "name": "Roman Catholic", "percent": 54 },
+      { "name": "Protestant/Evangelical", "percent": 16 },
+      { "name": "None/Atheist", "percent": 26 },
+      { "name": "Other", "percent": 4 }
+    ]
+  },
+  "alliances": ["Pacific Alliance", "OECD", "CPTPP", "APEC", "CELAC", "United Nations"],
+  "relationships": [
+    { "countryId": "CHN", "countryName": "China", "type": "strategic_partner", "sentiment": "positive", "summary": "Largest trading partner; destination for the majority of Chile's copper and cherry exports." },
+    { "countryId": "USA", "countryName": "United States", "type": "partner", "sentiment": "positive", "summary": "Key partner in trade, security, and technology; major source of FDI and environmental cooperation." },
+    { "countryId": "BRA", "countryName": "Brazil", "type": "partner", "sentiment": "positive", "summary": "Important regional partner and second-largest trade partner in South America." },
+    { "countryId": "ARG", "countryName": "Argentina", "type": "partner", "sentiment": "neutral", "summary": "Critical neighbor for energy and border logistics; relationship managed pragmatically despite ideological differences." },
+    { "countryId": "JPN", "countryName": "Japan", "type": "partner", "sentiment": "positive", "summary": "Long-standing investment partner, particularly in the mining and renewable energy sectors." }
+  ],
+  "perspectives": [
+    { "source": "Finance Ministry official", "bias": "Technocratic/Fiscal Conservative", "view": "Maintaining our fiscal rule and investment-grade rating is paramount for Chile's long-term stability and role as a regional leader." },
+    { "source": "Renewable Energy Entrepreneur", "bias": "Pro-Innovation", "view": "Chile has the potential to be the 'Saudi Arabia of Green Hydrogen'; we need to streamline permitting to match our environmental ambitions." },
+    { "source": "Santiago Urban Resident", "bias": "Security-focused", "view": "Economic statistics don't matter if we don't feel safe in the streets; addressing crime and illegal migration must be the top priority." }
+  ],
+  "historicalContext": {
+    "summary": "Chile's modern history is defined by the transition from the 17-year military dictatorship of Augusto Pinochet (1973-1990) to a successful and stable democracy. The country followed a market-oriented development model that led to significant poverty reduction but also high inequality. The 2019 social unrest (Estallido Social) triggered a multi-year process to rewrite the constitution, which ultimately concluded with the retention of the existing legal framework in 2024.",
+    "keyEvents": [
+      { "year": 1810, "event": "First National Government Junta marks the start of the independence process." },
+      { "year": 1818, "event": "Declaration of Independence from Spain." },
+      { "year": 1973, "event": "Military coup ousts President Salvador Allende." },
+      { "year": 1990, "event": "Return to democracy with the inauguration of Patricio Aylwin." },
+      { "year": 2010, "event": "Chile becomes the first South American country to join the OECD." },
+      { "year": 2019, "event": "Massive social unrest triggers a process for constitutional reform." },
+      { "year": 2023, "event": "Rejection of the second proposed new constitution by public referendum." }
+    ]
+  },
+  "investmentNotes": {
+    "strengths": ["World's largest copper reserves and massive lithium potential", "Stable institutional framework and strong rule of law", "Global leadership in renewable energy (Solar/Green Hydrogen)", "Extensive network of Free Trade Agreements covering 90% of global GDP"],
+    "risks": ["Rising public safety and organized crime concerns", "Aging demographic and related pension/healthcare pressures", "Relatively high corporate tax rates for the region", "Dependency on commodity prices, particularly copper"],
+    "sectors": ["Mining (Lithium, Copper)", "Renewable Energy (Green Hydrogen, Solar)", "Digital Infrastructure (Data Centers)", "Agribusiness (Wine, Fruits, Salmon)", "Financial Services"]
+  },
+  "sources": [
+    { "name": "Central Bank of Chile", "url": "https://www.bcentral.cl/en/", "type": "economic" },
+    { "name": "InvestChile (Foreign Investment Promotion Agency)", "url": "https://investchile.gob.cl/", "type": "economic" },
+    { "name": "INE (National Institute of Statistics)", "url": "https://www.ine.gob.cl/", "type": "economic" }
+  ]
+}

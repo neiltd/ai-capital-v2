@@ -1,0 +1,67 @@
+{
+  "id": "NIC",
+  "iso2": "NI",
+  "name": "Nicaragua",
+  "region": "Americas",
+  "subregion": "Central America",
+  "capital": "Managua",
+  "lastUpdated": "2026-05-09",
+  "summary": "Nicaragua is currently characterized by a consolidated dynastic dictatorship under Daniel Ortega and Rosario Murillo. Since the 2018 protests, the regime has systematically dismantled the political opposition, shuttered thousands of NGOs, and asserted total control over all state institutions and the Catholic Church. Despite severe international sanctions and diplomatic isolation from the West, the economy has shown surprising resilience, fueled by record-high gold exports and a surge in remittances from the growing diaspora in the U.S. and Costa Rica. Geopolitically, Nicaragua has pivoted sharply toward an 'anti-imperialist' axis, forming strategic security and economic alliances with Russia and China. While the government claims success in reducing poverty, independent analysts highlight a massive brain drain and a climate of fear that stifles long-term domestic development.",
+  "indicators": {
+    "politicalStability":       { "score": 8, "score_description": "High stability maintained through systematic repression and total control of state apparatus.", "trend": "stable", "confidence": "high", "note": "The regime has eliminated all formal political opposition, ensuring short-term survival through force." },
+    "economicDirection":        { "score": 5, "score_description": "Resilient growth driven by external factors, though the base is narrow and vulnerable.", "trend": "stable", "confidence": "high", "note": "Remittances have surged to approximately 33% of GDP, providing an essential lifeline for the regime and the population." },
+    "investmentAttractiveness": { "score": 2, "score_description": "Extreme risk due to lack of rule of law and threat of arbitrary expropriation.", "trend": "stable", "confidence": "high", "note": "Western investment is virtually non-existent; new state-led projects are increasingly dependent on Chinese financing." },
+    "geopoliticalRisk":         { "score": 8, "score_description": "Very high risk due to sanctions and alignment with Western adversaries.", "trend": "rising", "confidence": "high", "note": "Nicaragua's support for Russia and its pivot to China have made it a focal point of U.S. regional security concerns." },
+    "educationQuality":         { "score": 3, "score_description": "Low quality, with the system increasingly used for political indoctrination.", "trend": "declining", "confidence": "medium", "note": "The closure of several private universities and the exile of academics have severely damaged higher education." },
+    "healthcareQuality":        { "score": 4, "score_description": "Public system focused on preventive health, but specialized care is limited.", "trend": "stable", "confidence": "medium", "note": "Government healthcare figures are often disputed; the system faces shortages of high-tech equipment." },
+    "technologyInvestment":     { "score": 3, "score_description": "Low investment, primarily focused on surveillance technology and state media.", "trend": "stable", "confidence": "medium", "note": "Strategic cooperation with Russia and China includes 'digital security' and surveillance infrastructure." }
+  },
+  "demographics": {
+    "population": 6900000,
+    "medianAge": 27.3,
+    "urbanizationRate": 59,
+    "majorEthnicGroups": ["Mestizo", "European descent", "Indigenous (Miskito, Mayangna)", "African descent"],
+    "religions": [
+      { "name": "Roman Catholic", "percent": 43 },
+      { "name": "Protestant/Evangelical", "percent": 35 },
+      { "name": "None/Unaffiliated", "percent": 20 },
+      { "name": "Other", "percent": 2 }
+    ]
+  },
+  "alliances": ["SICA", "ALBA", "OAS (Withdrawn)", "CELAC", "UN"],
+  "relationships": [
+    { "countryId": "USA", "countryName": "United States", "type": "competitor", "sentiment": "negative", "summary": "Relations are at a historic low due to sanctions and the U.S. label of the regime as a 'threat to national security'." },
+    { "countryId": "RUS", "countryName": "Russia", "type": "ally", "sentiment": "positive", "summary": "Provides military support, grain, and satellite infrastructure; Nicaragua is Russia's closest ally in Central America." },
+    { "countryId": "CHN", "countryName": "China", "type": "partner", "sentiment": "positive", "summary": "Main economic alternative since 2021; focus on infrastructure projects and an 'Early Harvest' trade agreement." },
+    { "countryId": "CRI", "countryName": "Costa Rica", "type": "neighbor", "sentiment": "negative", "summary": "Tense relationship due to the influx of hundreds of thousands of Nicaraguan refugees into Costa Rican territory." },
+    { "countryId": "VEN", "countryName": "Venezuela", "type": "ally", "sentiment": "positive", "summary": "Long-standing ideological and political partnership through the ALBA framework." }
+  ],
+  "perspectives": [
+    { "source": "Sandinista Loyalists", "bias": "Pro-Regime", "view": "The government has successfully defended national sovereignty against Yankee imperialism while providing for the poor." },
+    { "source": "Exiled Activist", "bias": "Pro-Democracy", "view": "Nicaragua is a giant prison where any form of dissent, even prayer, is considered a crime against the state." },
+    { "source": "International Security Analyst", "bias": "Realist", "view": "Nicaragua is positioning itself as a strategic platform for Russian and Chinese influence in the U.S. sphere of interest." }
+  ],
+  "historicalContext": {
+    "summary": "Nicaragua's 20th century was defined by the Somoza family dictatorship (1936-1979) and the subsequent Sandinista Revolution. The 1980s were marked by a bloody civil war between the Sandinista government and the U.S.-backed Contras. After a democratic interlude (1990-2006), Daniel Ortega returned to power and has since methodically dismantled democratic institutions.",
+    "keyEvents": [
+      { "year": 1821, "event": "Nicaragua gains independence from Spain." },
+      { "year": 1934, "event": "Assassination of Augusto César Sandino, leading to the Somoza era." },
+      { "year": 1979, "event": "Sandinista Revolution ousts the Somoza dynasty." },
+      { "year": 1990, "event": "Violeta Chamorro defeats Daniel Ortega in a landmark democratic election." },
+      { "year": 2006, "event": "Daniel Ortega returns to the presidency through the ballot box." },
+      { "year": 2018, "event": "National protests break out; the regime responds with a violent crackdown, killing hundreds." },
+      { "year": 2021, "event": "Ortega wins a fifth term after imprisoning all viable opposition candidates." },
+      { "year": 2023, "event": "The regime releases and strips the citizenship of 222 political prisoners, sending them to the U.S." }
+    ]
+  },
+  "investmentNotes": {
+    "strengths": ["Low labor costs for manufacturing", "Strategic location for potential logistic routes", "Abundant natural resources, especially gold", "High security for government-approved business"],
+    "risks": ["Severe international sanctions and legal risk", "Total lack of judicial independence", "High risk of asset expropriation", "Brain drain of skilled professionals"],
+    "sectors": ["Gold Mining", "Agriculture (Coffee, Beef)", "Light Manufacturing", "Renewable Energy", "Infrastructure (Chinese-led)"]
+  },
+  "sources": [
+    { "name": "World Bank", "url": "https://data.worldbank.org/country/NIC", "type": "economic" },
+    { "name": "CIA World Factbook", "url": "https://www.cia.gov/the-world-factbook/countries/nicaragua/", "type": "general" },
+    { "name": "Human Rights Watch", "url": "https://www.hrw.org/americas/nicaragua", "type": "social" }
+  ]
+}

@@ -1,0 +1,64 @@
+{
+  "id": "LBR",
+  "iso2": "LR",
+  "name": "Liberia",
+  "region": "Africa",
+  "subregion": "Western Africa",
+  "capital": "Monrovia",
+  "lastUpdated": "2025-05-22",
+  "summary": "Liberia is entering a new chapter under President Joseph Boakai, following a peaceful democratic transition in early 2024. The administration is pursuing the 'ARREST' agenda (Agriculture, Roads, Rule of Law, Education, Sanitation, and Tourism), with a landmark focus on establishing a War and Economic Crimes Court to address historical atrocities. Economically, Liberia is one of the more stable performers in the region, with consistent growth (5%+) driven by mining and services, and a successful effort to bring inflation down to single digits by late 2025. While challenges remain in infrastructure and governance, the current trajectory is focused on institutional strengthening and sustainable development.",
+  "indicators": {
+    "politicalStability":       { "score": 7, "trend": "stable", "confidence": "high", "note": "Successful democratic transition; focus on rule of law and anti-corruption; opposition remains active but peaceful." },
+    "economicDirection":        { "score": 6, "trend": "rising", "confidence": "high", "note": "Stable 5%+ growth; significant reduction in inflation; improved fiscal discipline." },
+    "investmentAttractiveness": { "score": 5, "trend": "rising", "confidence": "high", "note": "High interest in iron ore and gold; focus on improving the business climate and infrastructure." },
+    "geopoliticalRisk":         { "score": 3, "trend": "stable", "confidence": "medium", "note": "Strong ties with the US; stable relations with neighbors; main risk is potential fallout from war crimes trials." },
+    "educationQuality":         { "score": 3, "trend": "rising", "confidence": "medium", "note": "Efforts to reform the vocational training sector and improve basic education access." },
+    "healthcareQuality":        { "score": 3, "trend": "stable", "confidence": "medium", "note": "Post-Ebola recovery continues; focus on primary healthcare and maternal health." },
+    "technologyInvestment":     { "score": 3, "trend": "rising", "confidence": "medium", "note": "Growth in digital payments and mobile connectivity; efforts to improve e-government services." }
+  },
+  "demographics": {
+    "population": 5500000,
+    "medianAge": 18.0,
+    "urbanizationRate": 53.3,
+    "majorEthnicGroups": ["Kpelle", "Bassa", "Grebo", "Gio", "Mano", "Kru"],
+    "religions": [
+      { "name": "Christian", "percent": 85.6 },
+      { "name": "Muslim", "percent": 12.2 },
+      { "name": "Traditional/Other", "percent": 2.2 }
+    ]
+  },
+  "alliances": ["ECOWAS", "African Union", "United Nations", "Mano River Union"],
+  "relationships": [
+    { "countryId": "USA", "countryName": "United States", "type": "strategic_partner", "sentiment": "positive", "summary": "Special historical and security relationship; largest donor and partner in governance and health." },
+    { "countryId": "CHN", "countryName": "China", "type": "economic_partner", "sentiment": "positive", "summary": "Significant partner in infrastructure (roads, ministerial buildings) and mining." },
+    { "countryId": "SLE", "countryName": "Sierra Leone", "type": "regional_partner", "sentiment": "positive", "summary": "Close historical and ethnic ties; cooperation within the Mano River Union on security and trade." },
+    { "countryId": "GHA", "countryName": "Ghana", "type": "regional_partner", "sentiment": "positive", "summary": "Strong educational and cultural ties; model for democratic governance in the region." }
+  ],
+  "perspectives": [
+    { "source": "Civil Rights Lawyer", "bias": "Optimistic", "view": "The decision to establish the War Crimes Court is a victory for justice; we are finally ending the culture of impunity in Liberia." },
+    { "source": "Business Owner in Monrovia", "bias": "Supportive", "view": "The reduction in inflation has made a real difference; we can finally plan and invest with some confidence in the currency." },
+    { "source": "CDC Party Supporter", "bias": "Critical", "view": "Boakai's government is slow to deliver on jobs; they are focusing on the past instead of fixing the roads and hospitals now." },
+    { "source": "Cassava Farmer", "bias": "Hopeful", "view": "If the government truly supports agriculture as they say, we can finally stop importing rice and feed ourselves." }
+  ],
+  "historicalContext": {
+    "summary": "Liberia is Africa's oldest republic, founded by freed American slaves in 1847. It suffered two brutal civil wars (1989-2003) that left the country in ruins. Following the end of the war, Liberia has had three consecutive peaceful democratic handovers, including the landmark election of Ellen Johnson Sirleaf (Africa's first female head of state) and the recent transition to Joseph Boakai.",
+    "keyEvents": [
+      { "year": 1847, "event": "Liberia declares independence, becoming Africa's first republic." },
+      { "year": 1989, "event": "Start of the first Liberian Civil War." },
+      { "year": 2003, "event": "Accra Comprehensive Peace Agreement ends the second civil war." },
+      { "year": 2014, "event": "Ebola epidemic severely impacts the country and slows economic recovery." },
+      { "year": 2024, "event": "Joseph Boakai inaugurated as president following a peaceful election." },
+      { "year": 2024, "event": "Executive order signed to establish the War and Economic Crimes Court." }
+    ]
+  },
+  "investmentNotes": {
+    "strengths": ["Abundant iron ore and gold reserves with world-class potential", "Large tracts of fertile land suitable for palm oil, rubber, and food crops", "Improving fiscal discipline and successfully stabilized inflation", "Strategic relationship with the US and strong international support"],
+    "risks": ["Severe infrastructure gaps, particularly in power and transport", "High dependence on global commodity prices for export revenue", "Slow judicial and administrative systems despite recent reforms", "Youth unemployment and high poverty levels"],
+    "sectors": ["Iron Ore & Gold Mining", "Commercial Agriculture (Rice, Cocoa, Rubber)", "Fisheries & Aquaculture", "Eco-tourism & Hospitality"]
+  },
+  "sources": [
+    { "name": "Liberia Institute of Statistics and Geo-Information Services (LISGIS)", "url": "https://www.lisgis.gov.lr/", "type": "demographic" },
+    { "name": "Central Bank of Liberia", "url": "https://www.cbl.org.lr/", "type": "economic" },
+    { "name": "National Investment Commission of Liberia", "url": "https://www.investliberia.gov.lr/", "type": "investment" }
+  ]
+}

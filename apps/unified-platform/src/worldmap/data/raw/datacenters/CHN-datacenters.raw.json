@@ -1,0 +1,303 @@
+[
+  {
+    "id": "DC-CHN-ZHANGBEI-ALIBABA-ZH1",
+    "name": "Alibaba Cloud Zhangbei Data Center",
+    "countryId": "CHN",
+    "city": "Zhangbei",
+    "coordinates": [114.70, 41.15],
+    "type": "hyperscale",
+    "status": "operational",
+    "tierLevel": "3",
+    "capacityMW": null,
+    "floorSpaceM2": null,
+    "pue": 1.13,
+    "operator": "Alibaba Cloud",
+    "owner": "Alibaba Group",
+    "yearOpened": 2016,
+    "yearPlanned": null,
+    "cloudRegion": "cn-beijing",
+    "geopoliticalNotes": "One of the world's largest intelligent computing centers (12 EFLOPS). It is the primary processing hub for Alibaba’s AI and e-commerce operations, serving as a critical node in the Beijing-Tianjin-Hebei digital economy strategy.",
+    "notes": "Highly energy-efficient facility using free-air cooling.",
+    "attribution": {
+      "sources": [
+        { "name": "Alibaba Cloud Zhangbei", "url": "https://www.alibabacloud.com", "accessedAt": "2026-05-10" },
+        { "name": "ECNS", "url": "http://www.ecns.cn", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 2,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  },
+  {
+    "id": "DC-CHN-GUIAN-TENCENT-SS",
+    "name": "Tencent Gui'an Seven-Star Data Center",
+    "countryId": "CHN",
+    "city": "Gui'an",
+    "coordinates": [106.50068, 26.36958],
+    "type": "hyperscale",
+    "status": "operational",
+    "tierLevel": "3",
+    "capacityMW": null,
+    "floorSpaceM2": 470000,
+    "pue": 1.1,
+    "operator": "Tencent Cloud",
+    "owner": "Tencent",
+    "yearOpened": 2018,
+    "yearPlanned": null,
+    "cloudRegion": "cn-guangzhou-guiyang",
+    "geopoliticalNotes": "Known as China's most secure data center, partially built into a hill for maximum physical protection and disaster recovery. It stores Tencent's most sensitive core data and is a key part of national digital sovereignty.",
+    "notes": "Often referred to as the 'Bomb Shelter' data center.",
+    "attribution": {
+      "sources": [
+        { "name": "IDCnova", "url": "http://www.idcnova.com", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 1,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  },
+  {
+    "id": "DC-CHN-GUIAN-HUAWEI-GA1",
+    "name": "Huawei Cloud Gui'an Data Center",
+    "countryId": "CHN",
+    "city": "Gui'an",
+    "coordinates": [106.51, 26.37],
+    "type": "hyperscale",
+    "status": "operational",
+    "tierLevel": "3",
+    "capacityMW": null,
+    "floorSpaceM2": null,
+    "pue": 1.12,
+    "operator": "Huawei Cloud",
+    "owner": "Huawei",
+    "yearOpened": 2021,
+    "yearPlanned": null,
+    "cloudRegion": "cn-south-1",
+    "geopoliticalNotes": "Huawei's largest global cloud data center, anchoring the Guizhou national computing hub. It is a cornerstone of the 'East Data, West Computing' project, aiming to rebalance China's digital infrastructure.",
+    "notes": "Capacity for 1 million servers.",
+    "attribution": {
+      "sources": [
+        { "name": "Huawei Cloud Global Infrastructure", "url": "https://www.huaweicloud.com", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 1,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  },
+  {
+    "id": "DC-CHN-ULANQAB-ALIBABA-UL1",
+    "name": "Alibaba Cloud Ulanqab Data Center",
+    "countryId": "CHN",
+    "city": "Ulanqab",
+    "coordinates": [113.1193, 41.0257],
+    "type": "hyperscale",
+    "status": "operational",
+    "tierLevel": "3",
+    "capacityMW": null,
+    "floorSpaceM2": null,
+    "pue": 1.1,
+    "operator": "Alibaba Cloud",
+    "owner": "Alibaba Group",
+    "yearOpened": 2020,
+    "yearPlanned": null,
+    "cloudRegion": "cn-beijing-ulanqab",
+    "geopoliticalNotes": "A massive facility in the 'Grassland Cloud Valley,' strategically located to provide low-cost, green-energy-powered computing for the Beijing market.",
+    "notes": "Uses free-air cooling for 10 months of the year.",
+    "attribution": {
+      "sources": [
+        { "name": "Latitude.to", "url": "https://latitude.to", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "medium",
+        "sourceCount": 1,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  },
+  {
+    "id": "DC-CHN-ULANQAB-HUAWEI-UL1",
+    "name": "Huawei Cloud Ulanqab Data Center",
+    "countryId": "CHN",
+    "city": "Ulanqab",
+    "coordinates": [113.12, 41.03],
+    "type": "hyperscale",
+    "status": "operational",
+    "tierLevel": "3",
+    "capacityMW": null,
+    "floorSpaceM2": null,
+    "pue": null,
+    "operator": "Huawei Cloud",
+    "owner": "Huawei",
+    "yearOpened": 2020,
+    "yearPlanned": null,
+    "cloudRegion": "cn-north-4",
+    "geopoliticalNotes": "Huawei's largest cloud data center in North China. Serves as a national backup center and a key node for the digital transformation of northern China's industrial base.",
+    "notes": "Supports over 300,000 servers.",
+    "attribution": {
+      "sources": [
+        { "name": "Huawei Cloud", "url": "https://www.huaweicloud.com", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "medium",
+        "sourceCount": 1,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  },
+  {
+    "id": "DC-CHN-TIANJIN-TENCENT-TJ1",
+    "name": "Tencent Tianjin High-tech CDC",
+    "countryId": "CHN",
+    "city": "Tianjin",
+    "coordinates": [117.3616, 39.3434],
+    "type": "hyperscale",
+    "status": "operational",
+    "tierLevel": "3",
+    "capacityMW": 300,
+    "floorSpaceM2": null,
+    "pue": null,
+    "operator": "Tencent Cloud",
+    "owner": "Tencent",
+    "yearOpened": 2020,
+    "yearPlanned": null,
+    "cloudRegion": "cn-beijing",
+    "geopoliticalNotes": "AI-focused campus that underpins Tencent's large-model development (Hunyuan). Provides critical, low-latency AI inference capabilities for government and enterprise in the capital region.",
+    "notes": "Part of Tencent's nationwide AI infrastructure network.",
+    "attribution": {
+      "sources": [
+        { "name": "IDCnova", "url": "http://www.idcnova.com", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "medium",
+        "sourceCount": 1,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  },
+  {
+    "id": "DC-CHN-WUXI-GOVT-SUNWAY",
+    "name": "National Supercomputing Center in Wuxi",
+    "countryId": "CHN",
+    "city": "Wuxi",
+    "coordinates": [120.30, 31.57],
+    "type": "government",
+    "status": "operational",
+    "tierLevel": null,
+    "capacityMW": 15,
+    "floorSpaceM2": null,
+    "pue": null,
+    "operator": "Government / Tsinghua University",
+    "owner": "Chinese Government",
+    "yearOpened": 2016,
+    "yearPlanned": null,
+    "cloudRegion": null,
+    "geopoliticalNotes": "Houses the Sunway TaihuLight, built entirely with Chinese-designed processors. It is a symbol of China's push for technological self-reliance and is used for sensitive national defense research.",
+    "notes": "World's fastest supercomputer from 2016-2018.",
+    "attribution": {
+      "sources": [
+        { "name": "Wikipedia - Sunway TaihuLight", "url": "https://en.wikipedia.org/wiki/Sunway_TaihuLight", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 1,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  },
+  {
+    "id": "DC-CHN-GUANGZHOU-GOVT-TIANHE",
+    "name": "National Supercomputing Center in Guangzhou",
+    "countryId": "CHN",
+    "city": "Guangzhou",
+    "coordinates": [113.38861, 23.07306],
+    "type": "government",
+    "status": "operational",
+    "tierLevel": null,
+    "capacityMW": 24,
+    "floorSpaceM2": null,
+    "pue": null,
+    "operator": "Sun Yat-sen University",
+    "owner": "Chinese Government",
+    "yearOpened": 2013,
+    "yearPlanned": null,
+    "cloudRegion": null,
+    "geopoliticalNotes": "Houses the Tianhe-2 (MilkyWay-2). It is a critical innovation platform for the Greater Bay Area, connecting the R&D ecosystems of Guangzhou, Shenzhen, and Hong Kong.",
+    "notes": "Consistently ranked among the top supercomputers globally.",
+    "attribution": {
+      "sources": [
+        { "name": "Wikipedia - Tianhe-2", "url": "https://en.wikipedia.org/wiki/Tianhe-2", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 1,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  },
+  {
+    "id": "DC-CHN-QINGYUAN-TENCENT-QY1",
+    "name": "Tencent Qingyuan Data Center",
+    "countryId": "CHN",
+    "city": "Qingyuan",
+    "coordinates": [113.03, 23.70],
+    "type": "hyperscale",
+    "status": "operational",
+    "tierLevel": "3",
+    "capacityMW": null,
+    "floorSpaceM2": null,
+    "pue": 1.06,
+    "operator": "Tencent Cloud",
+    "owner": "Tencent",
+    "yearOpened": 2020,
+    "yearPlanned": null,
+    "cloudRegion": "cn-guangzhou",
+    "geopoliticalNotes": "The largest data center cluster in South China, housing over 1 million servers. It is the primary cloud hub for the Greater Bay Area and influences digital integration across the region.",
+    "notes": "Uses Tencent's 4th-generation T-block modular technology.",
+    "attribution": {
+      "sources": [
+        { "name": "EyeShenzhen", "url": "http://www.eyeshenzhen.com", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 1,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  },
+  {
+    "id": "DC-CHN-LANGFANG-HUAWEI-LF1",
+    "name": "Huawei Langfang Cloud Data Center",
+    "countryId": "CHN",
+    "city": "Langfang",
+    "coordinates": [116.70, 39.52],
+    "type": "hyperscale",
+    "status": "operational",
+    "tierLevel": "3",
+    "capacityMW": null,
+    "floorSpaceM2": 34000,
+    "pue": null,
+    "operator": "Huawei Cloud",
+    "owner": "Huawei",
+    "yearOpened": 2012,
+    "yearPlanned": null,
+    "cloudRegion": "cn-north-1",
+    "geopoliticalNotes": "A strategic cloud hub for North China, positioned to balance lower operational costs in Hebei with high-speed connectivity to the Beijing market.",
+    "notes": "Serves as a major production base for Huawei's consumer and enterprise cloud services.",
+    "attribution": {
+      "sources": [
+        { "name": "Baxtel - Huawei Langfang", "url": "https://baxtel.com", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "medium",
+        "sourceCount": 1,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  }
+]

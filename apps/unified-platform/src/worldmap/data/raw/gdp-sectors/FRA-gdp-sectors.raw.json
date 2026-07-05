@@ -1,0 +1,26 @@
+[
+  {
+    "countryId": "FRA",
+    "year": 2023,
+    "gdpUsdBn": 3031,
+    "gdpPerCapita": 44461,
+    "sectors": [
+      { "sector": "Market Services", "percentOfGDP": 56.1, "notes": "Includes real estate, business services, and financial activities" },
+      { "sector": "Non-Market Services", "percentOfGDP": 21.7, "notes": "Public administration, education, and health" },
+      { "sector": "Manufacturing", "percentOfGDP": 15.0, "notes": "Aerospace, luxury goods, and pharmaceuticals" },
+      { "sector": "Construction", "percentOfGDP": 5.5, "notes": null },
+      { "sector": "Agriculture", "percentOfGDP": 1.7, "notes": "Leading EU agricultural producer" }
+    ],
+    "attribution": {
+      "sources": [
+        { "name": "INSEE National Accounts 2023", "url": "https://www.insee.fr/en/statistiques/8181744", "accessedAt": "2025-05-14" },
+        { "name": "World Bank Data 2023", "url": "https://data.worldbank.org/indicator/NY.GDP.MKTP.CD?locations=FR", "accessedAt": "2025-05-14" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 2,
+        "lastVerified": "2025-05-14"
+      }
+    }
+  }
+]

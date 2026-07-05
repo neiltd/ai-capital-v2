@@ -1,0 +1,67 @@
+{
+  "id": "KHM",
+  "iso2": "KH",
+  "name": "Cambodia",
+  "region": "Asia",
+  "subregion": "South-Eastern Asia",
+  "capital": "Phnom Penh",
+  "lastUpdated": "2026-05-09",
+  "summary": "Cambodia is a fast-growing economy in Southeast Asia that has recently undergone a significant political transition from the long-time leadership of Hun Sen to his son, Hun Manet. The country is characterized by 'authoritarian developmentalism,' where robust economic growth and foreign investment (primarily from China) are prioritized alongside tight political control. Cambodia maintains a strategic 'ironclad' partnership with China while tentatively seeking to balance relations with the West to preserve trade preferences.",
+  "indicators": {
+    "politicalStability":       { "score": 7, "trend": "stable", "confidence": "high", "note": "Smooth dynastic transition; ruling CPP maintains absolute control over all state institutions." },
+    "economicDirection":        { "score": 7, "trend": "rising", "confidence": "high", "note": "Strong recovery driven by manufacturing, tourism, and real estate; strategic focus on industrial diversification." },
+    "investmentAttractiveness": { "score": 6, "trend": "stable", "confidence": "high", "note": "Pro-business policies and 100% foreign ownership are attractive, but corruption and high electricity costs remain hurdles." },
+    "geopoliticalRisk":         { "score": 4, "trend": "stable", "confidence": "high", "note": "Primary risk involves the Ream Naval Base controversy and potential for Western sanctions over political rights." },
+    "educationQuality":         { "score": 4, "trend": "rising", "confidence": "medium", "note": "Improving literacy and enrollment rates, but a significant skill gap remains in technical and vocational fields." },
+    "healthcareQuality":        { "score": 4, "trend": "rising", "confidence": "medium", "note": "Increasing investment in public health, though private healthcare in urban centers remains the preferred option for those who can afford it." },
+    "technologyInvestment":     { "score": 5, "trend": "rising", "confidence": "high", "note": "Rapid growth in fintech and digital payments; government pushing for a 'Digital Economy and Society Policy Framework'." }
+  },
+  "demographics": {
+    "population": 17400000,
+    "medianAge": 26.5,
+    "urbanizationRate": 25,
+    "majorEthnicGroups": ["Khmer", "Cham", "Chinese", "Vietnamese"],
+    "religions": [
+      { "name": "Buddhist", "percent": 97.9 },
+      { "name": "Muslim", "percent": 1.1 },
+      { "name": "Christian", "percent": 0.5 },
+      { "name": "Other", "percent": 0.5 }
+    ]
+  },
+  "alliances": ["ASEAN", "RCEP", "Belt and Road Initiative (BRI)"],
+  "relationships": [
+    { "countryId": "CHN", "countryName": "China", "type": "strategic_partner", "sentiment": "positive", "summary": "Deepest strategic and economic partner; China is the largest source of FDI, aid, and infrastructure development." },
+    { "countryId": "VNM", "countryName": "Vietnam", "type": "neighbor", "sentiment": "neutral", "summary": "Historically significant relationship with deep party-to-party ties, though occasionally strained by nationalist sentiment." },
+    { "countryId": "THA", "countryName": "Thailand", "type": "neighbor", "sentiment": "positive", "summary": "Important economic partner; cooperation on trade, energy, and labor migration is vital." },
+    { "countryId": "USA", "countryName": "United States", "type": "trade_partner", "sentiment": "neutral", "summary": "Major export market for garments, but diplomatic ties are often tense due to human rights and democracy concerns." }
+  ],
+  "perspectives": [
+    { "source": "CPP Government", "bias": "Developmental", "view": "Our priority is maintaining peace, stability, and high economic growth for the benefit of all Cambodians." },
+    { "source": "Young Professional", "bias": "Aspirational", "view": "We value the economic opportunities but hope for more transparent governance and better quality of education." },
+    { "source": "Garment Worker", "bias": "Pragmatic", "view": "Steady work and better wages are the most important; we worry about the loss of trade deals with the EU and US." },
+    { "source": "Opposition Activist", "bias": "Reformist", "view": "The lack of political space and suppression of dissent undermines the country's long-term democratic future." }
+  ],
+  "historicalContext": {
+    "summary": "The Khmer Empire once dominated mainland Southeast Asia. In the late 20th century, Cambodia suffered the catastrophic Khmer Rouge genocide (1975-1979) followed by years of civil war. Since the 1991 Paris Peace Accords, the country has rebuilt under the long-term leadership of the CPP.",
+    "keyEvents": [
+      { "year": 1953, "event": "Independence from France under King Norodom Sihanouk." },
+      { "year": 1970, "event": "General Lon Nol ousts Sihanouk in a coup, establishing the Khmer Republic." },
+      { "year": 1975, "event": "Khmer Rouge seize power, initiating a genocide that killed 1.7 to 2 million people." },
+      { "year": 1979, "event": "Vietnamese forces invade and topple the Khmer Rouge regime." },
+      { "year": 1985, "event": "Hun Sen becomes Prime Minister of the People's Republic of Kampuchea." },
+      { "year": 1991, "event": "Paris Peace Accords signed, leading to UN-sponsored elections in 1993." },
+      { "year": 1997, "event": "Hun Sen consolidates power following a violent clash within the coalition government." },
+      { "year": 2023, "event": "Hun Manet succeeds his father Hun Sen as Prime Minister." }
+    ]
+  },
+  "investmentNotes": {
+    "strengths": ["Strategic location within the Southern Economic Corridor", "Competitive labor costs and young workforce", "Liberal investment regime allowing 100% foreign ownership", "Strong growth in non-garment manufacturing (electronics, auto parts)"],
+    "risks": ["High levels of institutional corruption", "Dependency on Chinese capital and demand", "Risk of losing EU 'Everything But Arms' (EBA) trade status", "Relatively high electricity and logistics costs"],
+    "sectors": ["Garments & Footwear", "Tourism & Hospitality", "Agro-processing", "Renewable Energy (Solar)"]
+  },
+  "sources": [
+    { "name": "Council for the Development of Cambodia (CDC)", "url": "https://www.cambodiainvestment.gov.kh/", "type": "investment" },
+    { "name": "National Bank of Cambodia", "url": "https://www.nbc.org.kh/", "type": "economic" },
+    { "name": "ADB - Cambodia Country Profile", "url": "https://www.adb.org/countries/cambodia/main", "type": "economic" }
+  ]
+}

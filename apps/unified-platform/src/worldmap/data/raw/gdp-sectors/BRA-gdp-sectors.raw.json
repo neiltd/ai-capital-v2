@@ -1,0 +1,24 @@
+[
+  {
+    "countryId": "BRA",
+    "year": 2023,
+    "gdpUsdBn": 2190,
+    "gdpPerCapita": 10310,
+    "sectors": [
+      { "sector": "Services", "percentOfGDP": 67.4, "notes": "Grew by 2.4%, with finance and insurance as key drivers." },
+      { "sector": "Industry", "percentOfGDP": 25.5, "notes": "Includes Mining & Oil (8.7% of GVA) and manufacturing." },
+      { "sector": "Agriculture", "percentOfGDP": 7.1, "notes": "Record soybean and maize harvests drove 15.1% growth in this sector." }
+    ],
+    "attribution": {
+      "sources": [
+        { "name": "IBGE - Quarterly National Accounts 2023", "url": "https://www.ibge.gov.br/", "accessedAt": "2025-02-11" },
+        { "name": "World Bank DataBank 2023", "url": "https://databank.worldbank.org/", "accessedAt": "2025-02-11" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 2,
+        "lastVerified": "2025-02-11"
+      }
+    }
+  }
+]

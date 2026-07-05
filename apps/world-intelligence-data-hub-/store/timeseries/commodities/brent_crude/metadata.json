@@ -1,0 +1,20 @@
+{
+  "benchmarkId": "brent_crude",
+  "name": "Brent Crude Oil",
+  "assetClass": "commodity",
+  "subClass": "crude_oil",
+  "unit": "USD/barrel",
+  "currency": "USD",
+  "frequency": "daily",
+  "source": "eia",
+  "dataLag": "D+1",
+  "staleThresholdHours": 36,
+  "revisionWindowDays": 28,
+  "revisionThreshold": 0.001,
+  "eia": {
+    "route": "petroleum/pri/spt/data/",
+    "seriesId": "RBRTE"
+  },
+  "schemaVersion": "1.0",
+  "lastModified": "2026-05-15T01:51:59.000Z"
+}

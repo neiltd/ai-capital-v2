@@ -1,0 +1,54 @@
+[
+  {
+    "countryId": "USA",
+    "electricityConsumptionTWh": 4000,
+    "electricityMix": { "gas": 40, "coal": 20, "nuclear": 19, "wind": 10, "solar": 7, "hydro": 3, "otherRenewables": 1 },
+    "waterStressScore": 2.1,
+    "foodSecurityScore": 84,
+    "aiAdoptionPercent": 5.2,
+    "gdpBySector": [
+      { "sector": "Services", "percentOfGDP": 77 },
+      { "sector": "Industry", "percentOfGDP": 19 },
+      { "sector": "Agriculture", "percentOfGDP": 1 }
+    ]
+  },
+  {
+    "countryId": "CHN",
+    "electricityConsumptionTWh": 8800,
+    "electricityMix": { "coal": 60, "hydro": 16, "wind": 9, "nuclear": 5, "solar": 5, "gas": 3, "otherRenewables": 2 },
+    "waterStressScore": 3.2,
+    "foodSecurityScore": 71,
+    "aiAdoptionPercent": 4.8,
+    "gdpBySector": [
+      { "sector": "Services", "percentOfGDP": 54 },
+      { "sector": "Industry", "percentOfGDP": 39 },
+      { "sector": "Agriculture", "percentOfGDP": 7 }
+    ]
+  },
+  {
+    "countryId": "IND",
+    "electricityConsumptionTWh": 1600,
+    "electricityMix": { "coal": 70, "hydro": 11, "wind": 5, "solar": 6, "gas": 4, "nuclear": 3, "otherRenewables": 1 },
+    "waterStressScore": 4.1,
+    "foodSecurityScore": 58,
+    "aiAdoptionPercent": 2.1,
+    "gdpBySector": [
+      { "sector": "Services", "percentOfGDP": 55 },
+      { "sector": "Industry", "percentOfGDP": 26 },
+      { "sector": "Agriculture", "percentOfGDP": 18 }
+    ]
+  },
+  {
+    "countryId": "SAU",
+    "electricityConsumptionTWh": 380,
+    "electricityMix": { "gas": 57, "oil": 43 },
+    "waterStressScore": 4.8,
+    "foodSecurityScore": 67,
+    "aiAdoptionPercent": 1.8,
+    "gdpBySector": [
+      { "sector": "Services", "percentOfGDP": 44 },
+      { "sector": "Industry (incl. oil)", "percentOfGDP": 45 },
+      { "sector": "Agriculture", "percentOfGDP": 2 }
+    ]
+  }
+]

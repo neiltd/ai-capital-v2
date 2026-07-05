@@ -1,0 +1,66 @@
+{
+  "id": "FSM",
+  "iso2": "FM",
+  "name": "Federated States of Micronesia",
+  "region": "Oceania",
+  "subregion": "Micronesia",
+  "capital": "Palikir",
+  "lastUpdated": "2026-05-15",
+  "summary": "The Federated States of Micronesia (FSM) is a sovereign archipelago nation consisting of four states: Yap, Chuuk, Pohnpei, and Kosrae. Its political system is a loose federation with significant autonomy for each state. The FSM's relationship with the United States is defined by the Compact of Free Association (COFA), which is critical for its security and economic stability. The economy is primarily based on subsistence agriculture, fishing, and US grant assistance. The FSM is highly vulnerable to climate change and faces significant challenges in infrastructure and human capital development across its highly dispersed islands.",
+  "indicators": {
+    "politicalStability":       { "score": 7, "trend": "stable", "confidence": "high", "note": "Stable democratic system, though navigating the balance of power between the federal government and the four autonomous states is a constant theme." },
+    "economicDirection":        { "score": 4, "trend": "stable", "confidence": "medium", "note": "Highly dependent on US Compact funding; efforts to develop sustainable fisheries and niche tourism are ongoing but face logistical hurdles." },
+    "investmentAttractiveness": { "score": 4, "trend": "stable", "confidence": "medium", "note": "Potential in fisheries and eco-tourism; however, complex land laws and the highly dispersed nature of the islands present significant challenges." },
+    "geopoliticalRisk":         { "score": 4, "trend": "stable", "confidence": "high", "note": "Strongly aligned with the US via COFA; however, the FSM also maintains a 'friend to all' policy, notably including a strong relationship with China." },
+    "educationQuality":         { "score": 4, "trend": "stable", "confidence": "medium", "note": "Universal primary education, but higher education capacity is limited; significant outward migration for education and employment." },
+    "healthcareQuality":        { "score": 4, "trend": "stable", "confidence": "medium", "note": "Basic healthcare facilities in state capitals; outer islands have very limited access. Heavy reliance on US-supported medical referrals." },
+    "technologyInvestment":     { "score": 4, "trend": "rising", "confidence": "high", "note": "Ongoing projects to connect all four states via fiber-optic submarine cables are significantly improving digital connectivity." }
+  },
+  "demographics": {
+    "population": 115000,
+    "medianAge": 21.5,
+    "urbanizationRate": 23,
+    "majorEthnicGroups": ["Chuukese", "Pohnpeian", "Yapese", "Kosraean"],
+    "religions": [
+      { "name": "Roman Catholic", "percent": 50.0 },
+      { "name": "Protestant", "percent": 47.0 },
+      { "name": "Other/None", "percent": 3.0 }
+    ]
+  },
+  "alliances": ["Pacific Islands Forum", "Compact of Free Association (USA)", "United Nations", "SIDS", "ACP"],
+  "relationships": [
+    { "countryId": "USA", "countryName": "United States", "type": "strategic_partner", "sentiment": "positive", "summary": "Pivotal relationship via COFA; US provides for national defense and significant financial assistance." },
+    { "countryId": "CHN", "countryName": "China", "type": "economic_partner", "sentiment": "positive", "summary": "Long-standing diplomatic relationship focused on infrastructure aid and economic cooperation." },
+    { "countryId": "JPN", "countryName": "Japan", "type": "historical_partner", "sentiment": "positive", "summary": "Strong historical and economic ties; Japan is a major partner in fisheries and infrastructure development." },
+    { "countryId": "AUS", "countryName": "Australia", "type": "development_partner", "sentiment": "positive", "summary": "Key regional partner providing aid and support for maritime surveillance and sustainable development." }
+  ],
+  "perspectives": [
+    { "source": "FSM Government Official", "bias": "Federalist", "view": "Maintaining the unity of our four states while deepening our strategic partnership with the US is the key to our national progress." },
+    { "source": "State Leader (e.g., Chuuk)", "bias": "Regionalist", "view": "State autonomy and local development must be prioritized to ensure that the benefits of our national resources and alliances reach all our people." },
+    { "source": "Traditional Leader", "bias": "Traditionalist", "view": "Our traditional customs and the authority of our chiefs must be respected as we modernize and engage with the world." },
+    { "source": "Youth in the Diaspora", "bias": "Aspirational", "view": "We value our heritage, but we need more opportunities for high-quality education and work at home to keep our communities vibrant." }
+  ],
+  "historicalContext": {
+    "summary": "The islands of the FSM were successively colonized by Spain, Germany, and Japan before becoming part of the US-administered UN Trust Territory of the Pacific Islands after WWII. The FSM adopted its own constitution in 1979 and gained independence in 1986 under the Compact of Free Association with the United States.",
+    "keyEvents": [
+      { "year": 1899, "event": "Spain sells the Caroline Islands to the German Empire." },
+      { "year": 1914, "event": "Japan occupies the islands during WWI." },
+      { "year": 1944, "event": "US forces capture the islands from Japan during WWII." },
+      { "year": 1947, "event": "The islands become part of the Trust Territory of the Pacific Islands administered by the US." },
+      { "year": 1979, "event": "Constitution of the Federated States of Micronesia is adopted." },
+      { "year": 1986, "event": "FSM gains independence and enters the Compact of Free Association with the US." },
+      { "year": 2004, "event": "Renewal of the Compact of Free Association (Compact II)." },
+      { "year": 2024, "event": "Third renewal of the Compact of Free Association, securing long-term strategic and financial cooperation with the US." }
+    ]
+  },
+  "investmentNotes": {
+    "strengths": ["Strategic and stable relationship with the United States", "Massive Exclusive Economic Zone (EEZ) with rich tuna stocks", "Strong cultural identity and traditional governance structures", "Growing digital connectivity via submarine cables"],
+    "risks": ["Extreme vulnerability to climate change and sea-level rise", "High dependence on US federal funding", "Geographical dispersion and high logistics costs", "Complex land tenure system and state-level regulatory differences"],
+    "sectors": ["Sustainable Commercial Fisheries", "High-value Agriculture (e.g., Sakau/Kava)", "Niche Eco-tourism", "Climate-resilient Infrastructure Development"]
+  },
+  "sources": [
+    { "name": "FSM Department of Finance and Administration", "url": "https://www.dofa.gov.fm/", "type": "economic" },
+    { "name": "FSM Statistics Office", "url": "https://www.fsmstatistics.fm/", "type": "demographic" },
+    { "name": "FSM National Government Portal", "url": "https://www.gov.fm/", "type": "investment" }
+  ]
+}

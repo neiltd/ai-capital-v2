@@ -1,0 +1,67 @@
+{
+  "id": "BIH",
+  "iso2": "BA",
+  "name": "Bosnia and Herzegovina",
+  "region": "Europe",
+  "subregion": "Southeast Europe",
+  "capital": "Sarajevo",
+  "lastUpdated": "2026-05-09",
+  "summary": "In 2026, Bosnia and Herzegovina is navigating a critical period of institutional reform and gradual alignment with European standards, having secured EU candidate status. The country's unique decentralized political system, while complex, has maintained a fragile but essential peace for over three decades. There is a growing emphasis on economic modernization, with significant investments flowing into the renewable energy sector—particularly wind and hydro—and a resurgent manufacturing base focused on wood and metal processing. Sarajevo is experiencing a cultural and tech-led revitalization, while the tourism sector is expanding beyond its traditional hubs. Geopolitically, BIH remains a focal point for Western efforts to ensure Balkan stability, with ongoing debates regarding the pace of NATO integration and the necessity of constitutional reforms to enhance state functionality and the rule of law.",
+  "indicators": {
+    "politicalStability":       { "score": 4, "score_description": "Complex institutional structure with persistent ethnic-based political friction.", "trend": "stable", "confidence": "high", "note": "While state-level functionality is often challenged, the overall security environment remains stable under international oversight." },
+    "economicDirection":        { "score": 5, "score_description": "Moderate growth driven by exports, remittances, and tourism.", "trend": "improving", "confidence": "medium", "note": "GDP growth is steady at 2.1%, though the economy remains vulnerable to political uncertainty and the 'brain drain' of young talent." },
+    "investmentAttractiveness": { "score": 5, "score_description": "Attractive for energy and manufacturing but hampered by administrative complexity.", "trend": "stable", "confidence": "medium", "note": "Abundant natural resources and a skilled industrial workforce are significant draws for patient capital." },
+    "geopoliticalRisk":         { "score": 6, "score_description": "Elevated due to internal divisions and regional influence-seeking.", "trend": "stable", "confidence": "high", "note": "The country is a theater of competing interests between Euro-Atlantic and other regional powers." },
+    "educationQuality":         { "score": 5, "score_description": "Solid fundamental education but requiring modernization and better labor market alignment.", "trend": "stable", "confidence": "medium", "note": "There is a strong tradition in technical trades and engineering, though the higher education sector faces fragmentation." },
+    "healthcareQuality":        { "score": 4, "score_description": "Public system facing funding gaps and uneven service quality.", "trend": "stable", "confidence": "medium", "note": "The system is highly decentralized, leading to significant variations in healthcare access and quality between entities and cantons." },
+    "technologyInvestment":     { "score": 5, "score_description": "Growing focus on renewable energy and a small but vibrant IT sector.", "trend": "rising", "confidence": "medium", "note": "Several large-scale wind farm projects and the growth of IT outsourcing firms in Sarajevo and Banja Luka are notable." }
+  },
+  "demographics": {
+    "population": 3200000,
+    "medianAge": 43.1,
+    "urbanizationRate": 50,
+    "majorEthnicGroups": ["Bosniak", "Serb", "Croat"],
+    "religions": [
+      { "name": "Muslim", "percent": 50.7 },
+      { "name": "Orthodox Christian", "percent": 30.7 },
+      { "name": "Roman Catholic", "percent": 15.2 },
+      { "name": "Other/None", "percent": 3.4 }
+    ]
+  },
+  "alliances": ["EU (Candidate)", "OSCE", "Partnership for Peace (NATO)", "CEFTA"],
+  "relationships": [
+    { "countryId": "HRV", "countryName": "Croatia", "type": "partner", "sentiment": "neutral", "summary": "Important economic partner and neighbor; relations are influenced by the status of the Croat constituent people in BIH." },
+    { "countryId": "SRB", "countryName": "Serbia", "type": "partner", "sentiment": "neutral", "summary": "Key neighbor with deep cultural and economic links; relationship is central to regional stability and the status of Republika Srpska." },
+    { "countryId": "TUR", "countryName": "Turkey", "type": "partner", "sentiment": "positive", "summary": "Significant cultural and investment partner; Turkey plays a constructive role in supporting the country's sovereignty and development." },
+    { "countryId": "USA", "countryName": "United States", "type": "partner", "sentiment": "positive", "summary": "Essential guarantor of the Dayton Peace Agreement and a leading supporter of BIH's Euro-Atlantic path." },
+    { "countryId": "DEU", "countryName": "Germany", "type": "partner", "sentiment": "positive", "summary": "Major trading partner and advocate for EU integration; large BIH diaspora in Germany provides significant remittances." }
+  ],
+  "perspectives": [
+    { "source": "Sarajevo Civil Society", "bias": "Reformist/Non-ethnic", "view": "We must move beyond ethnic politics and focus on the rule of law and economic opportunity to keep our youth from leaving." },
+    { "source": "Industrialist", "bias": "Business-focused", "view": "The country has immense potential in energy and manufacturing, but we need a more unified internal market and less red tape." },
+    { "source": "Regional Security Expert", "bias": "Stability-focused", "view": "BIH's stability is the linchpin of Balkan security; continuous international engagement and a clear path to the EU are vital." }
+  ],
+  "historicalContext": {
+    "summary": "Bosnia and Herzegovina has a rich, multi-confessional history as a crossroads of the Ottoman and Austro-Hungarian Empires. After WWII, it was a central republic within the Socialist Federal Republic of Yugoslavia. The country's 1992 declaration of independence was followed by a devastating three-year war, which ended in 1995 with the U.S.-brokered Dayton Peace Agreement. This treaty established the current state structure, consisting of two entities and a central government.",
+    "keyEvents": [
+      { "year": 1463, "event": "Ottoman conquest of Bosnia." },
+      { "year": 1878, "event": "Austro-Hungarian administration begins following the Congress of Berlin." },
+      { "year": 1914, "event": "Assassination of Archduke Franz Ferdinand in Sarajevo, triggering WWI." },
+      { "year": 1945, "event": "Establishment of the Socialist Republic of Bosnia and Herzegovina within Yugoslavia." },
+      { "year": 1992, "event": "Independence referendum followed by the outbreak of the Bosnian War." },
+      { "year": 1995, "event": "Srebrenica genocide and the subsequent signing of the Dayton Peace Agreement." },
+      { "year": 2016, "event": "Bosnia and Herzegovina formally applies for EU membership." },
+      { "year": 2022, "event": "European Council grants candidate status to Bosnia and Herzegovina." }
+    ]
+  },
+  "investmentNotes": {
+    "strengths": ["Strategic location for nearshoring to the EU", "Abundant and underutilized hydroelectric and wind energy potential", "Strong tradition in industrial manufacturing and woodworking", "Competitive labor costs and a large diaspora providing capital"],
+    "risks": ["Complex and fragmented administrative and legal environment", "Persistent political gridlock and ethnic-based rhetoric", "Significant emigration of skilled labor (brain drain)", "Slow pace of infrastructure development and judicial reform"],
+    "sectors": ["Renewable Energy (Hydro, Wind, Solar)", "Wood Processing & Furniture", "Metalworking & Automotive Components", "Information Technology Outsourcing", "Niche & Adventure Tourism"]
+  },
+  "sources": [
+    { "name": "Agency for Statistics of Bosnia and Herzegovina", "url": "https://bhas.gov.ba/?lang=en", "type": "economic" },
+    { "name": "Central Bank of Bosnia and Herzegovina", "url": "https://www.cbbh.ba/?lang=en", "type": "economic" },
+    { "name": "Foreign Investment Promotion Agency (FIPA)", "url": "http://www.fipa.gov.ba/default.aspx?langTag=en-US", "type": "economic" }
+  ]
+}

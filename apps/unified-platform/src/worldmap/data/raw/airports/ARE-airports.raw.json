@@ -1,0 +1,272 @@
+[
+  {
+    "id": "DXB",
+    "name": "Dubai International Airport",
+    "countryId": "ARE",
+    "city": "Dubai",
+    "iata": "DXB",
+    "icao": "OMDB",
+    "coordinates": [55.3657, 25.2532],
+    "passengerVolume": 92300000,
+    "cargoVolume": 2200000,
+    "runwayCount": 2,
+    "elevationM": 19,
+    "strategicImportance": "critical",
+    "geopoliticalNotes": "World's busiest international airport and a central engine for the UAE's economic soft power. Indispensable for high-value, time-sensitive global supply chains.",
+    "notes": "Home to Emirates Airline and a massive belly-hold cargo hub.",
+    "attribution": {
+      "sources": [
+        { "name": "Dubai Airports", "url": "https://www.dubaiairports.ae", "accessedAt": "2026-05-10" },
+        { "name": "ACI World", "url": "https://aci.aero", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 2,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  },
+  {
+    "id": "AUH",
+    "name": "Zayed International Airport",
+    "countryId": "ARE",
+    "city": "Abu Dhabi",
+    "iata": "AUH",
+    "icao": "OMAA",
+    "coordinates": [54.6511, 24.4330],
+    "passengerVolume": 28800000,
+    "cargoVolume": 678990,
+    "runwayCount": 2,
+    "elevationM": 27,
+    "strategicImportance": "critical",
+    "geopoliticalNotes": "Primary gateway for the UAE's capital and a major hub for national carrier Etihad. Vital for diplomatic, government, and high-level economic connectivity.",
+    "notes": "Full operationalization of Terminal A in 2024 significantly boosted capacity.",
+    "attribution": {
+      "sources": [
+        { "name": "Abu Dhabi Airports", "url": "https://www.adairports.ae", "accessedAt": "2026-05-10" },
+        { "name": "IATA", "url": "https://www.iata.org", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 2,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  },
+  {
+    "id": "DWC",
+    "name": "Al Maktoum International Airport",
+    "countryId": "ARE",
+    "city": "Dubai",
+    "iata": "DWC",
+    "icao": "OMDW",
+    "coordinates": [55.1603, 24.8883],
+    "passengerVolume": 1100000,
+    "cargoVolume": 600000,
+    "runwayCount": 1,
+    "elevationM": 52,
+    "strategicImportance": "critical",
+    "geopoliticalNotes": "Future world's largest airport and centerpiece of the Dubai Logistics Corridor. Directly linked to Jebel Ali Port, creating a massive sea-air multimodal hub.",
+    "notes": "$35 billion expansion announced in 2024 to accommodate 260 million passengers.",
+    "attribution": {
+      "sources": [
+        { "name": "Dubai South", "url": "https://www.dubaisouth.ae", "accessedAt": "2026-05-10" },
+        { "name": "ICAO", "url": "https://www.icao.int", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 2,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  },
+  {
+    "id": "SHJ",
+    "name": "Sharjah International Airport",
+    "countryId": "ARE",
+    "city": "Sharjah",
+    "iata": "SHJ",
+    "icao": "OMSJ",
+    "coordinates": [55.5172, 25.3286],
+    "passengerVolume": 17100000,
+    "cargoVolume": 195909,
+    "runwayCount": 1,
+    "elevationM": 35,
+    "strategicImportance": "high",
+    "geopoliticalNotes": "Major low-cost carrier hub and the UAE's third-largest cargo gateway. Critical for regional distribution into Africa and Central Asia.",
+    "notes": "Primary base for Air Arabia.",
+    "attribution": {
+      "sources": [
+        { "name": "Sharjah Airport Authority", "url": "https://www.sharjahairport.ae", "accessedAt": "2026-05-10" },
+        { "name": "OurAirports", "url": "https://ourairports.com", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 2,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  },
+  {
+    "id": "FJR",
+    "name": "Fujairah International Airport",
+    "countryId": "ARE",
+    "city": "Fujairah",
+    "iata": "FJR",
+    "icao": "OMFJ",
+    "coordinates": [56.3241, 25.1122],
+    "passengerVolume": 40000,
+    "cargoVolume": null,
+    "runwayCount": 2,
+    "elevationM": 47,
+    "strategicImportance": "critical",
+    "geopoliticalNotes": "Strategic location on the East Coast, bypassing the Strait of Hormuz. Essential 'Plan B' hub for logistics and energy exports during regional tensions.",
+    "notes": "Recently upgraded with a new parallel runway.",
+    "attribution": {
+      "sources": [
+        { "name": "Fujairah Airport", "url": "https://fujairah-airport.ae", "accessedAt": "2026-05-10" },
+        { "name": "ACI World", "url": "https://aci.aero", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 2,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  },
+  {
+    "id": "XNB",
+    "name": "Al Dhafra Air Base",
+    "countryId": "ARE",
+    "city": "Abu Dhabi",
+    "iata": "XNB",
+    "icao": "OMAM",
+    "coordinates": [54.5469, 24.2483],
+    "passengerVolume": 0,
+    "cargoVolume": null,
+    "runwayCount": 2,
+    "elevationM": 23,
+    "strategicImportance": "critical",
+    "geopoliticalNotes": "Primary military installation in the UAE and a critical hub for coalition forces. Center for regional air defense, ISR missions, and strategic power projection.",
+    "notes": "Hosts the UAE Western Air Command and U.S. 380th Air Expeditionary Wing.",
+    "attribution": {
+      "sources": [
+        { "name": "Uniforce SOG", "url": "https://uniforce-sog.org", "accessedAt": "2026-05-10" },
+        { "name": "OurAirports", "url": "https://ourairports.com", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 2,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  },
+  {
+    "id": "AAN",
+    "name": "Al Ain International Airport",
+    "countryId": "ARE",
+    "city": "Al Ain",
+    "iata": "AAN",
+    "icao": "OMAL",
+    "coordinates": [55.6092, 24.2617],
+    "passengerVolume": 100000,
+    "cargoVolume": 25000,
+    "runwayCount": 1,
+    "elevationM": 264,
+    "strategicImportance": "high",
+    "geopoliticalNotes": "Primary training ground for the UAE Air Force and a center for aerospace manufacturing (MRO). Strategic secondary gateway near the Oman border.",
+    "notes": "Home to Khalifa bin Zayed Air College.",
+    "attribution": {
+      "sources": [
+        { "name": "Abu Dhabi Airports", "url": "https://www.adairports.ae", "accessedAt": "2026-05-10" },
+        { "name": "ICAO", "url": "https://www.icao.int", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 2,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  },
+  {
+    "id": "Minhad",
+    "name": "Al Minhad Air Base",
+    "countryId": "ARE",
+    "city": "Dubai",
+    "iata": "NHD",
+    "icao": "OMDM",
+    "coordinates": [55.3652, 25.0270],
+    "passengerVolume": 0,
+    "cargoVolume": null,
+    "runwayCount": 1,
+    "elevationM": 50,
+    "strategicImportance": "high",
+    "geopoliticalNotes": "Vital logistics and transport hub for coalition forces in the Middle East. Serves as a primary gateway for military personnel moving between global zones.",
+    "notes": "Regional headquarters for multiple international coalition partners.",
+    "attribution": {
+      "sources": [
+        { "name": "The National News", "url": "https://www.thenationalnews.com", "accessedAt": "2026-05-10" },
+        { "name": "OurAirports", "url": "https://ourairports.com", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 2,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  },
+  {
+    "id": "Safran",
+    "name": "Al Safran Air Base",
+    "countryId": "ARE",
+    "city": "Madinat Zayed",
+    "iata": null,
+    "icao": null,
+    "coordinates": [53.7500, 23.7333],
+    "passengerVolume": 0,
+    "cargoVolume": null,
+    "runwayCount": 1,
+    "elevationM": 100,
+    "strategicImportance": "high",
+    "geopoliticalNotes": "Strategic defense installation protecting the UAE's vast oil and gas infrastructure in the Western Region. Emerging hub for advanced UAV operations.",
+    "notes": "High-security facility housing Mirage and future Rafale fighter squadrons.",
+    "attribution": {
+      "sources": [
+        { "name": "Wikimapia", "url": "https://wikimapia.org", "accessedAt": "2026-05-10" },
+        { "name": "Uniforce SOG", "url": "https://uniforce-sog.org", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 2,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  },
+  {
+    "id": "RKT",
+    "name": "Ras Al Khaimah International Airport",
+    "countryId": "ARE",
+    "city": "Ras Al Khaimah",
+    "iata": "RKT",
+    "icao": "OMRK",
+    "coordinates": [55.9388, 25.6135],
+    "passengerVolume": 661765,
+    "cargoVolume": 6652,
+    "runwayCount": 1,
+    "elevationM": 29,
+    "strategicImportance": "medium",
+    "geopoliticalNotes": "Secondary international gateway serving the Northern Emirates. Important for regional tourism and cargo connectivity.",
+    "notes": "Growing hub for low-cost and seasonal charter flights.",
+    "attribution": {
+      "sources": [
+        { "name": "RAK Airport", "url": "https://www.rakairport.com", "accessedAt": "2026-05-10" },
+        { "name": "IATA", "url": "https://www.iata.org", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 2,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  }
+]

@@ -1,0 +1,272 @@
+[
+  {
+    "id": "TLV",
+    "name": "Ben Gurion International Airport",
+    "countryId": "ISR",
+    "city": "Tel Aviv",
+    "iata": "TLV",
+    "icao": "LLBG",
+    "coordinates": [34.8867, 32.0114],
+    "passengerVolume": 12000000,
+    "cargoVolume": 350000,
+    "runwayCount": 3,
+    "elevationM": 41,
+    "strategicImportance": "critical",
+    "geopoliticalNotes": "Israel's primary international gateway and a vital lifeline for the economy and emergency supplies; its operational status is essential for national security.",
+    "notes": "Passenger volume significantly affected by the 2023-2024 regional conflict.",
+    "attribution": {
+      "sources": [
+        { "name": "Israel Airports Authority", "url": "https://www.iaa.gov.il/en/airports/ben-gurion/", "accessedAt": "2026-05-10" },
+        { "name": "IATA", "url": "https://www.iata.org", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 2,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  },
+  {
+    "id": "ETM",
+    "name": "Ramon Airport",
+    "countryId": "ISR",
+    "city": "Eilat",
+    "iata": "ETM",
+    "icao": "LLER",
+    "coordinates": [35.0106, 29.7264],
+    "passengerVolume": 500000,
+    "cargoVolume": null,
+    "runwayCount": 1,
+    "elevationM": 54,
+    "strategicImportance": "high",
+    "geopoliticalNotes": "Primary southern alternative and diversion airport for Ben Gurion; strategically located away from central and northern missile threats.",
+    "notes": "Served as a key terminal for domestic and international flights during periods of central-area instability.",
+    "attribution": {
+      "sources": [
+        { "name": "Israel Airports Authority", "url": "https://www.iaa.gov.il/en/airports/ramon/", "accessedAt": "2026-05-10" },
+        { "name": "OurAirports", "url": "https://ourairports.com/airports/LLER/", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 2,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  },
+  {
+    "id": "HFA",
+    "name": "Haifa Airport",
+    "countryId": "ISR",
+    "city": "Haifa",
+    "iata": "HFA",
+    "icao": "LLHA",
+    "coordinates": [35.0431, 32.8094],
+    "passengerVolume": 50000,
+    "cargoVolume": null,
+    "runwayCount": 1,
+    "elevationM": 9,
+    "strategicImportance": "medium",
+    "geopoliticalNotes": "Secondary international gateway serving the northern region; critical for regional connectivity to Cyprus and neighboring Mediterranean hubs.",
+    "notes": "Shares facilities with the Israeli Air Force technical school.",
+    "attribution": {
+      "sources": [
+        { "name": "Israel Airports Authority", "url": "https://www.iaa.gov.il/en/airports/haifa/", "accessedAt": "2026-05-10" },
+        { "name": "IATA", "url": "https://www.iata.org", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 2,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  },
+  {
+    "id": "VDA",
+    "name": "Ovda Airport",
+    "countryId": "ISR",
+    "city": "Eilat",
+    "iata": "VDA",
+    "icao": "LLOV",
+    "coordinates": [34.935, 29.94],
+    "passengerVolume": null,
+    "cargoVolume": null,
+    "runwayCount": 2,
+    "elevationM": 445,
+    "strategicImportance": "high",
+    "geopoliticalNotes": "Dual-use civilian-military facility; serves as a critical military airbase and a backup for heavy cargo and emergency landings for the IAF and civilian airlines.",
+    "notes": "Civilian traffic has largely transitioned to Ramon, but the base remains highly active militarily.",
+    "attribution": {
+      "sources": [
+        { "name": "Israel Air Force", "url": "https://www.iaf.org.il/9253-en/IAF.aspx", "accessedAt": "2026-05-10" },
+        { "name": "OurAirports", "url": "https://ourairports.com/airports/LLOV/", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 2,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  },
+  {
+    "id": "LLNV",
+    "name": "Nevatim Airbase",
+    "countryId": "ISR",
+    "city": "Beersheba",
+    "iata": null,
+    "icao": "LLNV",
+    "coordinates": [35.0122, 31.2083],
+    "passengerVolume": null,
+    "cargoVolume": null,
+    "runwayCount": 4,
+    "elevationM": 407,
+    "strategicImportance": "critical",
+    "geopoliticalNotes": "Israel's most strategic military airbase; home to F-35I 'Adir' stealth fighters and the primary hub for long-range power projection and refueling.",
+    "notes": "Features some of the longest runways in the Middle East to support heavy strategic assets.",
+    "attribution": {
+      "sources": [
+        { "name": "Janes Defence", "url": "https://www.janes.com/", "accessedAt": "2026-05-10" },
+        { "name": "Israel Air Force", "url": "https://www.iaf.org.il/", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 2,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  },
+  {
+    "id": "LLEK",
+    "name": "Tel Nof Airbase",
+    "countryId": "ISR",
+    "city": "Rehovot",
+    "iata": null,
+    "icao": "LLEK",
+    "coordinates": [34.8217, 31.8394],
+    "passengerVolume": null,
+    "cargoVolume": null,
+    "runwayCount": 3,
+    "elevationM": 59,
+    "strategicImportance": "critical",
+    "geopoliticalNotes": "One of the IAF's oldest and most versatile bases; houses F-15 squadrons and specialized electronic warfare units critical for regional air superiority.",
+    "notes": "Central location makes it a primary hub for high-end combat operations.",
+    "attribution": {
+      "sources": [
+        { "name": "Israel Air Force", "url": "https://www.iaf.org.il/", "accessedAt": "2026-05-10" },
+        { "name": "GlobalSecurity.org", "url": "https://www.globalsecurity.org/military/world/israel/tel_nof.htm", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 2,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  },
+  {
+    "id": "LLRD",
+    "name": "Ramat David Airbase",
+    "countryId": "ISR",
+    "city": "Haifa",
+    "iata": null,
+    "icao": "LLRD",
+    "coordinates": [35.1819, 32.6647],
+    "passengerVolume": null,
+    "cargoVolume": null,
+    "runwayCount": 3,
+    "elevationM": 56,
+    "strategicImportance": "critical",
+    "geopoliticalNotes": "Primary northern airbase; essential for defense against Hezbollah and operations in Lebanon and Syria.",
+    "notes": "Under consideration for future expansion as a major civilian international airport.",
+    "attribution": {
+      "sources": [
+        { "name": "Israel Air Force", "url": "https://www.iaf.org.il/", "accessedAt": "2026-05-10" },
+        { "name": "Times of Israel", "url": "https://www.timesofisrael.com/", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 2,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  },
+  {
+    "id": "LLHB",
+    "name": "Hatzerim Airbase",
+    "countryId": "ISR",
+    "city": "Beersheba",
+    "iata": null,
+    "icao": "LLHB",
+    "coordinates": [34.6622, 31.2339],
+    "passengerVolume": null,
+    "cargoVolume": null,
+    "runwayCount": 4,
+    "elevationM": 221,
+    "strategicImportance": "high",
+    "geopoliticalNotes": "Home to the IAF Flight Academy and F-15I strike squadrons; vital for southern defense and training the next generation of aircrew.",
+    "notes": "Located in the Negev desert near Beersheba.",
+    "attribution": {
+      "sources": [
+        { "name": "Israel Air Force", "url": "https://www.iaf.org.il/", "accessedAt": "2026-05-10" },
+        { "name": "OurAirports", "url": "https://ourairports.com/airports/LLHB/", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 2,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  },
+  {
+    "id": "LLHS",
+    "name": "Hatzor Airbase",
+    "countryId": "ISR",
+    "city": "Ashdod",
+    "iata": null,
+    "icao": "LLHS",
+    "coordinates": [34.7269, 31.7625],
+    "passengerVolume": null,
+    "cargoVolume": null,
+    "runwayCount": 3,
+    "elevationM": 45,
+    "strategicImportance": "high",
+    "geopoliticalNotes": "Key air defense and intelligence base in central Israel; essential for protecting Ashdod and the surrounding industrial corridor.",
+    "notes": "Houses advanced Iron Dome and other missile defense coordination units.",
+    "attribution": {
+      "sources": [
+        { "name": "Israel Air Force", "url": "https://www.iaf.org.il/", "accessedAt": "2026-05-10" },
+        { "name": "GlobalSecurity.org", "url": "https://www.globalsecurity.org/military/world/israel/hatzor.htm", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 2,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  },
+  {
+    "id": "LLPZ",
+    "name": "Palmachim Airbase",
+    "countryId": "ISR",
+    "city": "Rishon LeZion",
+    "iata": null,
+    "icao": "LLPZ",
+    "coordinates": [34.6906, 31.8978],
+    "passengerVolume": null,
+    "cargoVolume": null,
+    "runwayCount": 1,
+    "elevationM": 10,
+    "strategicImportance": "high",
+    "geopoliticalNotes": "Israel's primary spaceport and a major base for UAV operations; critical for satellite launches and aerial reconnaissance.",
+    "notes": "Strategically located on the Mediterranean coast.",
+    "attribution": {
+      "sources": [
+        { "name": "Israel Space Agency", "url": "https://www.space.gov.il/en", "accessedAt": "2026-05-10" },
+        { "name": "Israel Air Force", "url": "https://www.iaf.org.il/", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 2,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  }
+]

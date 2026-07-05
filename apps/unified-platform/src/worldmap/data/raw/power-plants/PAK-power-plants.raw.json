@@ -1,0 +1,382 @@
+[
+  {
+    "id": "PLANT-PAK-KARACHI-NUCLEAR",
+    "name": "Karachi Nuclear Power Complex (KANUPP-2 & 3)",
+    "countryId": "PAK",
+    "city": "Karachi",
+    "coordinates": [66.785, 24.845],
+    "type": "nuclear",
+    "status": "operating",
+    "capacityMW": 2200,
+    "annualOutputGWh": null,
+    "yearCommissioned": 2021,
+    "yearRetirement": null,
+    "operator": "Pakistan Atomic Energy Commission (PAEC)",
+    "owner": "PAEC / Government of Pakistan",
+    "strategicNote": "Consists of two Hualong One (HPR1000) reactors; critical for Pakistan's nuclear energy expansion and reducing reliance on fossil fuels.",
+    "notes": "KANUPP-1 (mothballed) is at the same site but excluded from capacity.",
+    "attribution": {
+      "sources": [
+        { "name": "Global Energy Monitor", "url": "https://www.gem.wiki/Karachi_nuclear_power_station", "accessedAt": "2026-05-10" },
+        { "name": "IAEA PRIS", "url": "https://pris.iaea.org/PRIS/CountryStatistics/FacilityDetails.aspx?current=444", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 2,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  },
+  {
+    "id": "PLANT-PAK-CHASHMA-NUCLEAR",
+    "name": "Chashma Nuclear Power Plant (C-1 to C-4)",
+    "countryId": "PAK",
+    "city": "Chashma",
+    "coordinates": [71.465, 32.395],
+    "type": "nuclear",
+    "status": "operating",
+    "capacityMW": 1330,
+    "annualOutputGWh": null,
+    "yearCommissioned": 2000,
+    "yearRetirement": null,
+    "operator": "Pakistan Atomic Energy Commission (PAEC)",
+    "owner": "PAEC / Government of Pakistan",
+    "strategicNote": "A major nuclear hub developed with Chinese assistance; Unit 5 (C-5) is currently under construction.",
+    "notes": "Capacity represents combined output of units C-1, C-2, C-3, and C-4.",
+    "attribution": {
+      "sources": [
+        { "name": "Global Energy Monitor", "url": "https://www.gem.wiki/Chashma_nuclear_power_station", "accessedAt": "2026-05-10" },
+        { "name": "IAEA PRIS", "url": "https://pris.iaea.org/PRIS/CountryStatistics/CountryDetails.aspx?current=PK", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 2,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  },
+  {
+    "id": "PLANT-PAK-TARBELA",
+    "name": "Tarbela Dam Hydroelectric Plant",
+    "countryId": "PAK",
+    "city": "Tarbela",
+    "coordinates": [72.619, 34.087],
+    "type": "hydro",
+    "status": "operating",
+    "capacityMW": 4888,
+    "annualOutputGWh": 14000,
+    "yearCommissioned": 1976,
+    "yearRetirement": null,
+    "operator": "Water & Power Development Authority (WAPDA)",
+    "owner": "Government of Pakistan",
+    "strategicNote": "The largest earth-filled dam in the world and Pakistan's primary source of hydroelectric power; vital for both energy and irrigation.",
+    "notes": "Includes Tarbela 4th Extension; 5th Extension is under construction.",
+    "attribution": {
+      "sources": [
+        { "name": "Global Energy Monitor", "url": "https://www.gem.wiki/Tarbela_Dam", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 2,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  },
+  {
+    "id": "PLANT-PAK-GHAZI-BAROTHA",
+    "name": "Ghazi-Barotha Hydropower Project",
+    "countryId": "PAK",
+    "city": "Barotha",
+    "coordinates": [72.265, 33.779],
+    "type": "hydro",
+    "status": "operating",
+    "capacityMW": 1450,
+    "annualOutputGWh": 6600,
+    "yearCommissioned": 2003,
+    "yearRetirement": null,
+    "operator": "WAPDA",
+    "owner": "Government of Pakistan",
+    "strategicNote": "A major run-of-the-river project on the Indus River, providing baseload power without a large reservoir.",
+    "notes": null,
+    "attribution": {
+      "sources": [
+        { "name": "Global Energy Monitor", "url": "https://www.gem.wiki/Ghazi-Barotha_Hydropower_Project", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 1,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  },
+  {
+    "id": "PLANT-PAK-MANGLA",
+    "name": "Mangla Dam Hydroelectric Plant",
+    "countryId": "PAK",
+    "city": "Mangla",
+    "coordinates": [73.648, 33.141],
+    "type": "hydro",
+    "status": "operating",
+    "capacityMW": 1000,
+    "annualOutputGWh": null,
+    "yearCommissioned": 1967,
+    "yearRetirement": null,
+    "operator": "WAPDA",
+    "owner": "Government of Pakistan",
+    "strategicNote": "Second largest dam in Pakistan; critical for water storage under the Indus Waters Treaty and power generation.",
+    "notes": "Ongoing refurbishment is expected to increase capacity to 1500 MW.",
+    "attribution": {
+      "sources": [
+        { "name": "Global Energy Monitor", "url": "https://www.gem.wiki/Mangla_Dam", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 1,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  },
+  {
+    "id": "PLANT-PAK-NEELUM-JHELUM",
+    "name": "Neelum-Jhelum Hydropower Plant",
+    "countryId": "PAK",
+    "city": "Muzaffarabad",
+    "coordinates": [73.721, 34.391],
+    "type": "hydro",
+    "status": "operating",
+    "capacityMW": 969,
+    "annualOutputGWh": null,
+    "yearCommissioned": 2018,
+    "yearRetirement": null,
+    "operator": "WAPDA",
+    "owner": "Government of Pakistan",
+    "strategicNote": "Strategically significant project in Azad Jammu and Kashmir, diverting water from the Neelum to the Jhelum River.",
+    "notes": null,
+    "attribution": {
+      "sources": [
+        { "name": "Global Energy Monitor", "url": "https://www.gem.wiki/Neelum%E2%80%93Jhelum_Hydropower_Plant", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 1,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  },
+  {
+    "id": "PLANT-PAK-SAHIWAL",
+    "name": "Sahiwal Coal Power Plant",
+    "countryId": "PAK",
+    "city": "Sahiwal",
+    "coordinates": [73.238, 30.712],
+    "type": "coal",
+    "status": "operating",
+    "capacityMW": 1320,
+    "annualOutputGWh": null,
+    "yearCommissioned": 2017,
+    "yearRetirement": null,
+    "operator": "Huaneng Shandong Ruyi (Sahiwal) Energy",
+    "owner": "CPEC / Huaneng Shandong Ruyi",
+    "strategicNote": "A flagship project of the China-Pakistan Economic Corridor (CPEC), the first large-scale coal plant in Punjab.",
+    "notes": null,
+    "attribution": {
+      "sources": [
+        { "name": "Global Energy Monitor", "url": "https://www.gem.wiki/Sahiwal_power_station", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 1,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  },
+  {
+    "id": "PLANT-PAK-PORT-QASIM",
+    "name": "Port Qasim Coal Power Plant",
+    "countryId": "PAK",
+    "city": "Karachi",
+    "coordinates": [67.355, 24.785],
+    "type": "coal",
+    "status": "operating",
+    "capacityMW": 1320,
+    "annualOutputGWh": null,
+    "yearCommissioned": 2018,
+    "yearRetirement": null,
+    "operator": "Port Qasim Electric Power Company",
+    "owner": "CPEC / PowerChina & Al-Mirqab Capital",
+    "strategicNote": "Major CPEC coal plant located at Karachi's port, utilizing imported coal for efficient southern grid supply.",
+    "notes": null,
+    "attribution": {
+      "sources": [
+        { "name": "Global Energy Monitor", "url": "https://www.gem.wiki/Port_Qasim_power_station", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 1,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  },
+  {
+    "id": "PLANT-PAK-HUB-COAL",
+    "name": "China Power Hub Generation Company (Hubco)",
+    "countryId": "PAK",
+    "city": "Hub",
+    "coordinates": [66.691, 24.915],
+    "type": "coal",
+    "status": "operating",
+    "capacityMW": 1320,
+    "annualOutputGWh": null,
+    "yearCommissioned": 2019,
+    "yearRetirement": null,
+    "operator": "China Power Hub Generation Company",
+    "owner": "CPEC / China Power & HUBCO",
+    "strategicNote": "Significant CPEC investment in Balochistan, supplying power to the national grid via the Hub-Karachi link.",
+    "notes": null,
+    "attribution": {
+      "sources": [
+        { "name": "Global Energy Monitor", "url": "https://www.gem.wiki/China_Power_Hub_power_station", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 1,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  },
+  {
+    "id": "PLANT-PAK-GUDDU",
+    "name": "Guddu Thermal Power Station",
+    "countryId": "PAK",
+    "city": "Guddu",
+    "coordinates": [69.705, 28.425],
+    "type": "gas",
+    "status": "operating",
+    "capacityMW": 2402,
+    "annualOutputGWh": null,
+    "yearCommissioned": 1974,
+    "yearRetirement": null,
+    "operator": "GENCO-II",
+    "owner": "Government of Pakistan",
+    "strategicNote": "One of the oldest and largest thermal power stations in Pakistan, utilizing local gas reserves.",
+    "notes": "Capacity includes the newer combined cycle units.",
+    "attribution": {
+      "sources": [
+        { "name": "Global Energy Monitor", "url": "https://www.gem.wiki/Guddu_Thermal_Power_Station", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 1,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  },
+  {
+    "id": "PLANT-PAK-BIN-QASIM",
+    "name": "Bin Qasim Power Station (BQPS)",
+    "countryId": "PAK",
+    "city": "Karachi",
+    "coordinates": [67.335, 24.775],
+    "type": "gas",
+    "status": "operating",
+    "capacityMW": 2355,
+    "annualOutputGWh": null,
+    "yearCommissioned": 1983,
+    "yearRetirement": null,
+    "operator": "K-Electric",
+    "owner": "K-Electric",
+    "strategicNote": "The primary power source for Karachi; recently upgraded with high-efficiency BQPS-III combined cycle units.",
+    "notes": null,
+    "attribution": {
+      "sources": [
+        { "name": "Global Energy Monitor", "url": "https://www.gem.wiki/Bin_Qasim_power_station", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 1,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  },
+  {
+    "id": "PLANT-PAK-HAVELI-BAHADUR-SHAH",
+    "name": "Haveli Bahadur Shah Power Plant",
+    "countryId": "PAK",
+    "city": "Jhang",
+    "coordinates": [72.145, 31.175],
+    "type": "gas",
+    "status": "operating",
+    "capacityMW": 1230,
+    "annualOutputGWh": null,
+    "yearCommissioned": 2017,
+    "yearRetirement": null,
+    "operator": "NPPMCL",
+    "owner": "Government of Pakistan",
+    "strategicNote": "A high-efficiency RLNG (Re-gasified Liquefied Natural Gas) plant, part of the government's drive to end power shortages.",
+    "notes": null,
+    "attribution": {
+      "sources": [
+        { "name": "Global Energy Monitor", "url": "https://www.gem.wiki/Haveli_Bahadur_Shah_power_station", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 1,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  },
+  {
+    "id": "PLANT-PAK-THAR-BLOCK-1",
+    "name": "Thar Block I Coal Power Plant",
+    "countryId": "PAK",
+    "city": "Islamkot",
+    "coordinates": [70.385, 24.795],
+    "type": "coal",
+    "status": "operating",
+    "capacityMW": 1320,
+    "annualOutputGWh": null,
+    "yearCommissioned": 2023,
+    "yearRetirement": null,
+    "operator": "Thar Coal Block-I Power Generation Co.",
+    "owner": "CPEC / Shanghai Electric",
+    "strategicNote": "Utilizes indigenous lignite coal from the Thar desert, a major milestone in Pakistan's energy independence strategy.",
+    "notes": null,
+    "attribution": {
+      "sources": [
+        { "name": "Global Energy Monitor", "url": "https://www.gem.wiki/Thar_Block_I_power_station", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 1,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  },
+  {
+    "id": "PLANT-PAK-DASU",
+    "name": "Dasu Hydropower Project",
+    "countryId": "PAK",
+    "city": "Dasu",
+    "coordinates": [73.204, 35.311],
+    "type": "hydro",
+    "status": "construction",
+    "capacityMW": 2160,
+    "annualOutputGWh": null,
+    "yearCommissioned": null,
+    "yearRetirement": null,
+    "operator": "WAPDA",
+    "owner": "Government of Pakistan",
+    "strategicNote": "A massive run-of-river project on the Indus River; critical for the next decade's renewable energy targets.",
+    "notes": "Capacity listed is for Stage I.",
+    "attribution": {
+      "sources": [
+        { "name": "Global Energy Monitor", "url": "https://www.gem.wiki/Dasu_Hydropower_Project", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "medium",
+        "sourceCount": 1,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  }
+]

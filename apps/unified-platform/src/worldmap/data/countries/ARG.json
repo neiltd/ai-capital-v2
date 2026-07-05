@@ -1,0 +1,68 @@
+{
+  "id": "ARG",
+  "iso2": "AR",
+  "name": "Argentina",
+  "region": "Americas",
+  "subregion": "South America",
+  "capital": "Buenos Aires",
+  "lastUpdated": "2026-05-09",
+  "summary": "Argentina is currently undergoing a radical economic and political transformation under the libertarian administration of Javier Milei. Following decades of stagflation and fiscal mismanagement, the country is implementing a 'shock therapy' program characterized by massive spending cuts, deregulation, and a push for privatization. Historically a major regional power, Argentina is aggressively realigning its foreign policy toward the United States and Israel while distancing itself from traditional partners like China and the BRICS+ bloc. Despite the severe social cost of these reforms, the administration has achieved surprising fiscal surpluses. Argentina remains a global agricultural powerhouse and is increasingly focused on developing its vast energy (Vaca Muerta) and lithium reserves to stabilize its economy and return to international capital markets.",
+  "indicators": {
+    "politicalStability":       { "score": 4, "score_description": "High risk due to radical reforms and social unrest.", "trend": "stable", "confidence": "high", "note": "The Milei administration's ability to maintain its reform agenda depends on continued public patience and navigating a fragmented Congress." },
+    "economicDirection":        { "score": 5, "score_description": "Transitioning from hyperinflationary risk to fiscal austerity.", "trend": "improving", "confidence": "medium", "note": "Inflation is decelerating from historical peaks, but the country is in a deep recession as it attempts to correct long-standing price distortions." },
+    "investmentAttractiveness": { "score": 6, "score_description": "High potential in mining and energy, tempered by macro-instability.", "trend": "rising", "confidence": "high", "note": "The new RIGI (Large Investment Incentive Regime) is attracting significant interest in the energy and mining sectors." },
+    "geopoliticalRisk":         { "score": 4, "score_description": "Moderate risk centered on social stability and foreign policy shifts.", "trend": "rising", "confidence": "medium", "note": "Realignment with the West provides security benefits but risks cooling trade relations with China, Argentina's second-largest partner." },
+    "educationQuality":         { "score": 6, "score_description": "Historically high standards facing severe funding cuts.", "trend": "declining", "confidence": "high", "note": "Public universities and research institutions are under significant fiscal pressure, leading to widespread protests and potential brain drain." },
+    "healthcareQuality":        { "score": 6, "score_description": "Mixed system facing rising costs and medicine shortages.", "trend": "declining", "confidence": "medium", "note": "A combination of public and private healthcare is struggling with currency devaluation and reduced state subsidies." },
+    "technologyInvestment":     { "score": 5, "score_description": "Strong human capital in software; state R&D is declining.", "trend": "declining", "confidence": "high", "note": "While private tech (Unicorns) remains resilient, state-funded aerospace and nuclear projects are facing significant budget freezes." }
+  },
+  "demographics": {
+    "population": 46200000,
+    "medianAge": 32.4,
+    "urbanizationRate": 92,
+    "majorEthnicGroups": ["European descent", "Mestizo", "Amerindian"],
+    "religions": [
+      { "name": "Roman Catholic", "percent": 63 },
+      { "name": "None/Unaffiliated", "percent": 19 },
+      { "name": "Protestant/Evangelical", "percent": 15 },
+      { "name": "Other", "percent": 3 }
+    ]
+  },
+  "alliances": ["G20", "Mercosur", "CELAC", "Major Non-NATO Ally (MNNA)", "OECD (Aspirant)"],
+  "relationships": [
+    { "countryId": "USA", "countryName": "United States", "type": "ally", "sentiment": "positive", "summary": "Current primary strategic partner; Argentina is seeking deeper security and economic integration with Washington." },
+    { "countryId": "BRA", "countryName": "Brazil", "type": "partner", "sentiment": "mixed", "summary": "Most important trade partner; relations are characterized by 'institutional pragmatism' despite ideological clashes between heads of state." },
+    { "countryId": "CHN", "countryName": "China", "type": "trade_partner", "sentiment": "neutral", "summary": "Critical export market; relationship is being reviewed by the Milei government, focusing on private trade over state-to-state deals." },
+    { "countryId": "ISR", "countryName": "Israel", "type": "ally", "sentiment": "positive", "summary": "Significant shift toward a very close alliance, driven by President Milei's personal and ideological alignment." },
+    { "countryId": "GBR", "countryName": "United Kingdom", "type": "rival", "sentiment": "negative", "summary": "Persistent dispute over the Falkland Islands (Malvinas) remains a core pillar of Argentine constitutional identity, despite some trade cooperation." }
+  ],
+  "perspectives": [
+    { "source": "Libertarian (La Libertad Avanza)", "bias": "Anarcho-Capitalist", "view": "The state is a criminal organization; only total economic freedom and alignment with the 'civilized West' can rescue Argentina from its decline." },
+    { "source": "Peronist/Opposition", "bias": "National-Populist", "view": "Milei's policies are destroying the social fabric and selling off national sovereignty to foreign interests; the state must protect the vulnerable." },
+    { "source": "Wall Street Analyst", "bias": "Market-Optimist", "view": "Argentina is finally doing the necessary 'dirty work' to fix its economy; if it can maintain social order, it will be the comeback story of the decade." }
+  ],
+  "historicalContext": {
+    "summary": "Argentina was one of the world's ten wealthiest nations at the beginning of the 20th century. Its history since then has been marked by extreme political and economic volatility, including the rise of Peronism, multiple military coups, and a devastating return to democracy in 1983. Recurrent debt defaults and hyperinflation have defined its recent decades.",
+    "keyEvents": [
+      { "year": 1816, "event": "Declaration of Independence from Spain." },
+      { "year": 1853, "event": "Adoption of the National Constitution, establishing the federal republic." },
+      { "year": 1945, "event": "Rise of Juan Domingo Perón and the birth of Peronism." },
+      { "year": 1976, "event": "Military coup establishes a brutal dictatorship ('Dirty War')." },
+      { "year": 1982, "event": "Falklands War (Guerra de las Malvinas) with the UK." },
+      { "year": 1983, "event": "Return to democracy with the election of Raúl Alfonsín." },
+      { "year": 1991, "event": "Convertibility Plan pegs the Peso to the Dollar." },
+      { "year": 2001, "event": "Economic collapse and largest sovereign debt default in history." },
+      { "year": 2023, "event": "Election of Javier Milei, marking a radical break with traditional politics." }
+    ]
+  },
+  "investmentNotes": {
+    "strengths": ["World-class agricultural productivity", "Massive energy potential (Shale gas/oil in Vaca Muerta)", "Second-largest lithium reserves in the world", "Highly skilled human capital in software and biotechnology"],
+    "risks": ["Social unrest due to austerity measures", "Political fragility and lack of legislative majority", "History of debt defaults and currency instability", "Legal and regulatory uncertainty"],
+    "sectors": ["Energy (Oil & Gas)", "Mining (Lithium/Copper)", "Agribusiness", "Fintech & Software Services"]
+  },
+  "sources": [
+    { "name": "INDEC (National Institute of Statistics)", "url": "https://www.indec.gob.ar/", "type": "economic" },
+    { "name": "Central Bank of the Argentine Republic", "url": "http://www.bcra.gob.ar/default_i.asp", "type": "economic" },
+    { "name": "Ministry of Foreign Affairs, International Trade and Worship", "url": "https://www.cancilleria.gob.ar/en", "type": "political" }
+  ]
+}

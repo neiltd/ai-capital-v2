@@ -1,0 +1,870 @@
+[
+  {
+    "id": "COMPANY-FDX",
+    "ticker": "FDX",
+    "name": "FedEx Corporation",
+    "exchange": "NYSE",
+    "gicsSector": "Industrials",
+    "gicsIndustryGroup": "Air Freight & Logistics",
+    "gicsIndustry": "Air Freight & Logistics",
+    "countryOfIncorporation": "USA",
+    "countryOfHQ": "USA",
+    "marketCapUsdBn": 90.34,
+    "revenueUsdBn": 87.9,
+    "fiscalYear": 2025,
+    "description": "FedEx Corporation provides a broad portfolio of transportation, e-commerce and business services through companies competing collectively, operating independently and managed collaboratively.",
+    "businessModel": "Revenue is generated through a suite of integrated shipping and logistics services, including express air freight, ground small-package delivery, and freight shipping.",
+    "geopoliticalSummary": "FedEx is exposed to global trade policy shifts and tariffs, particularly between the U.S. and China. Its operations are sensitive to regional conflicts like the Red Sea crisis, which affects air freight demand and fuel costs.",
+    "revenueByGeography": [
+      {
+        "region": "United States",
+        "countryIds": ["USA"],
+        "percentOfRevenue": 71.6,
+        "revenueUsdBn": 62.92,
+        "year": 2025,
+        "note": "Exact segment name from filing: 'United States'"
+      },
+      {
+        "region": "International",
+        "countryIds": [],
+        "percentOfRevenue": 28.4,
+        "revenueUsdBn": 25.01,
+        "year": 2025,
+        "note": "Represents non-U.S. revenue across all segments."
+      }
+    ],
+    "keySuppliers": [],
+    "keyCustomers": [],
+    "manufacturingLocations": [],
+    "commodityDependencies": [
+      {
+        "commodity": "Jet Fuel",
+        "role": "input",
+        "percentOfCOGS": null,
+        "primarySupplyCountries": [],
+        "isHedged": true,
+        "geopoliticalRisk": "high",
+        "note": "Fuel price volatility is a major risk factor tied to Middle East stability."
+      }
+    ],
+    "regionalExposures": [
+      {
+        "region": "China",
+        "countryIds": ["CHN"],
+        "exposureType": "revenue",
+        "magnitude": "medium",
+        "note": "Subject to trade tensions and potential tariffs; adapting network to 'China Plus One' strategies.",
+        "filingRefs": ["Item 1A"]
+      },
+      {
+        "region": "Europe",
+        "countryIds": [],
+        "exposureType": "operations",
+        "magnitude": "medium",
+        "note": "Ongoing structural optimization and workforce reductions to improve margins.",
+        "filingRefs": ["Item 1"]
+      }
+    ],
+    "infrastructureDependencies": [
+      {
+        "type": "trade-route",
+        "entityId": "ROUTE-ASIA-US",
+        "name": "Asia-US Trade Lanes",
+        "importance": "high",
+        "note": "Critical for international economy and express services."
+      }
+    ],
+    "flags": {
+      "chinaRevenuePct": null,
+      "chinaManufacturingDependent": false,
+      "russiaExposed": false,
+      "middleEastEnergyDependent": true,
+      "taiwanSemiconductorDependent": false,
+      "redSeaTradeRouteDependent": true,
+      "straitOfHormuzDependent": false,
+      "sanctionsSensitive": true,
+      "exportControlSensitive": true
+    },
+    "latestFilingId": "FILING-FDX-10K-2025",
+    "secCik": "0001048911",
+    "secEdgarUrl": "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0001048911&type=10-K",
+    "attribution": {
+      "sources": [
+        {
+          "name": "FedEx 10-K FY2025",
+          "url": "https://www.sec.gov/Archives/edgar/data/1048911/000104891125000011/fdx-20250531.htm",
+          "type": "filing",
+          "accessedAt": "2026-05-11",
+          "verbatimQuote": "Our results of operations are also significantly affected by global economic and trade conditions."
+        }
+      ],
+      "confidence": "high",
+      "lastVerified": "2026-05-11",
+      "generatedBy": "ai-assisted"
+    }
+  },
+  {
+    "id": "COMPANY-UPS",
+    "ticker": "UPS",
+    "name": "United Parcel Service, Inc.",
+    "exchange": "NYSE",
+    "gicsSector": "Industrials",
+    "gicsIndustryGroup": "Air Freight & Logistics",
+    "gicsIndustry": "Air Freight & Logistics",
+    "countryOfIncorporation": "USA",
+    "countryOfHQ": "USA",
+    "marketCapUsdBn": 85.66,
+    "revenueUsdBn": 88.66,
+    "fiscalYear": 2025,
+    "description": "UPS is a global leader in logistics, offering a broad range of solutions including transporting packages and freight, facilitating international trade, and deploying advanced technology.",
+    "businessModel": "Revenue is generated from U.S. domestic package delivery, international package delivery, and supply chain solutions.",
+    "geopoliticalSummary": "UPS faces risks from shifting trade lanes, particularly the China-to-U.S. route due to tariff policies. Geopolitical instability in the Red Sea has increased operational costs and redirected freight volumes.",
+    "revenueByGeography": [
+      {
+        "region": "United States",
+        "countryIds": ["USA"],
+        "percentOfRevenue": 76.0,
+        "revenueUsdBn": 67.38,
+        "year": 2025,
+        "note": "Sourced from U.S. operations."
+      },
+      {
+        "region": "International",
+        "countryIds": [],
+        "percentOfRevenue": 24.0,
+        "revenueUsdBn": 21.28,
+        "year": 2025,
+        "note": "Sourced from non-U.S. operations."
+      }
+    ],
+    "keySuppliers": [],
+    "keyCustomers": [],
+    "manufacturingLocations": [],
+    "commodityDependencies": [
+      {
+        "commodity": "Fuel",
+        "role": "input",
+        "percentOfCOGS": null,
+        "primarySupplyCountries": [],
+        "isHedged": false,
+        "geopoliticalRisk": "medium",
+        "note": "Exposed to fuel price fluctuations driven by global tensions."
+      }
+    ],
+    "regionalExposures": [
+      {
+        "region": "China",
+        "countryIds": ["CHN"],
+        "exposureType": "revenue",
+        "magnitude": "medium",
+        "note": "Verbatim from 10-K: 'particularly reducing volumes on our China to U.S. lane, pressuring our International Package segment margins during the year.'",
+        "filingRefs": ["Item 1A"]
+      },
+      {
+        "region": "Middle East",
+        "countryIds": [],
+        "exposureType": "supply-chain",
+        "magnitude": "medium",
+        "note": "Ongoing instability in the Red Sea region has resulted in increased operational costs.",
+        "filingRefs": ["Item 1A"]
+      }
+    ],
+    "infrastructureDependencies": [
+      {
+        "type": "trade-route",
+        "entityId": "SUEZ-CANAL",
+        "name": "Suez Canal / Red Sea",
+        "importance": "medium",
+        "note": "Impacted by regional instability leading to redirections."
+      }
+    ],
+    "flags": {
+      "chinaRevenuePct": null,
+      "chinaManufacturingDependent": false,
+      "russiaExposed": false,
+      "middleEastEnergyDependent": false,
+      "taiwanSemiconductorDependent": false,
+      "redSeaTradeRouteDependent": true,
+      "straitOfHormuzDependent": false,
+      "sanctionsSensitive": true,
+      "exportControlSensitive": true
+    },
+    "latestFilingId": "FILING-UPS-10K-2025",
+    "secCik": "0001090727",
+    "secEdgarUrl": "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0001090727&type=10-K",
+    "attribution": {
+      "sources": [
+        {
+          "name": "UPS 10-K FY2025",
+          "url": "https://www.sec.gov/Archives/edgar/data/1090727/000109072726000001/ups-20251231.htm",
+          "type": "filing",
+          "accessedAt": "2026-05-11",
+          "verbatimQuote": "Geopolitical uncertainties, including ongoing instability in the Red Sea region, have resulted in increased operational costs."
+        }
+      ],
+      "confidence": "high",
+      "lastVerified": "2026-05-11",
+      "generatedBy": "ai-assisted"
+    }
+  },
+  {
+    "id": "COMPANY-ZIM",
+    "ticker": "ZIM",
+    "name": "ZIM Integrated Shipping Services Ltd.",
+    "exchange": "NYSE",
+    "gicsSector": "Industrials",
+    "gicsIndustryGroup": "Transportation",
+    "gicsIndustry": "Marine Transportation",
+    "countryOfIncorporation": "ISR",
+    "countryOfHQ": "ISR",
+    "marketCapUsdBn": 3.21,
+    "revenueUsdBn": 6.9,
+    "fiscalYear": 2025,
+    "description": "ZIM is a leading global container liner shipping company with a strong position in niche markets and a focus on customer-centricity.",
+    "businessModel": "Revenue is earned from container shipping services across major global trade routes.",
+    "geopoliticalSummary": "As an Israeli company, ZIM faces unique security risks. It has been heavily impacted by the Red Sea crisis, necessitating large-scale fleet diversions via the Cape of Good Hope.",
+    "revenueByGeography": [
+      {
+        "region": "Pacific (Transpacific)",
+        "countryIds": ["USA", "CHN"],
+        "percentOfRevenue": 43.0,
+        "revenueUsdBn": 2.97,
+        "year": 2025,
+        "note": "Largest geographic segment."
+      },
+      {
+        "region": "Asia-Europe",
+        "countryIds": [],
+        "percentOfRevenue": 18.0,
+        "revenueUsdBn": 1.24,
+        "year": 2025,
+        "note": "Most affected by Suez Canal diversions."
+      }
+    ],
+    "keySuppliers": [],
+    "keyCustomers": [],
+    "manufacturingLocations": [],
+    "commodityDependencies": [
+      {
+        "commodity": "Bunker Fuel",
+        "role": "input",
+        "percentOfCOGS": null,
+        "primarySupplyCountries": [],
+        "isHedged": false,
+        "geopoliticalRisk": "high",
+        "note": "Diversions significantly increase fuel consumption."
+      }
+    ],
+    "regionalExposures": [
+      {
+        "region": "Middle East",
+        "countryIds": ["ISR"],
+        "exposureType": "security",
+        "magnitude": "critical",
+        "note": "Verbatim from 20-F: 'Since late 2023... we have diverted substantially all of our vessels previously transiting the Suez Canal to the Cape of Good Hope route.'",
+        "filingRefs": ["Item 3D"]
+      }
+    ],
+    "infrastructureDependencies": [
+      {
+        "type": "trade-route",
+        "entityId": "CAPE-GOOD-HOPE",
+        "name": "Cape of Good Hope Route",
+        "importance": "critical",
+        "note": "Primary alternative route due to Red Sea security risks."
+      }
+    ],
+    "flags": {
+      "chinaRevenuePct": null,
+      "chinaManufacturingDependent": false,
+      "russiaExposed": false,
+      "middleEastEnergyDependent": false,
+      "taiwanSemiconductorDependent": false,
+      "redSeaTradeRouteDependent": true,
+      "straitOfHormuzDependent": true,
+      "sanctionsSensitive": true,
+      "exportControlSensitive": false
+    },
+    "latestFilingId": "FILING-ZIM-20F-2025",
+    "secCik": "0001654126",
+    "secEdgarUrl": "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0001654126&type=20-F",
+    "attribution": {
+      "sources": [
+        {
+          "name": "ZIM 20-F FY2025",
+          "url": "https://www.sec.gov/Archives/edgar/data/1654126/000165412626000001/zim-20251231.htm",
+          "type": "filing",
+          "accessedAt": "2026-05-11",
+          "verbatimQuote": "The diversion via the Cape of Good Hope has resulted in significantly longer transit times and increased bunker consumption."
+        }
+      ],
+      "confidence": "high",
+      "lastVerified": "2026-05-11",
+      "generatedBy": "ai-assisted"
+    }
+  },
+  {
+    "id": "COMPANY-MATX",
+    "ticker": "MATX",
+    "name": "Matson, Inc.",
+    "exchange": "NYSE",
+    "gicsSector": "Industrials",
+    "gicsIndustryGroup": "Transportation",
+    "gicsIndustry": "Marine Transportation",
+    "countryOfIncorporation": "USA",
+    "countryOfHQ": "USA",
+    "marketCapUsdBn": 5.53,
+    "revenueUsdBn": 3.34,
+    "fiscalYear": 2025,
+    "description": "Matson is a leading U.S. carrier in the Pacific, providing vital ocean transportation services to Hawaii, Alaska, Guam, and Micronesia, as well as an expedited service from China to Long Beach.",
+    "businessModel": "Revenue is primarily derived from ocean transportation and logistics services, with a focus on the Jones Act and trans-Pacific trade.",
+    "geopoliticalSummary": "Matson's business is heavily dependent on the Jones Act and U.S.-China trade relations. It faces risks from potential repeal of the Jones Act and trade volatility in the Pacific.",
+    "revenueByGeography": [
+      {
+        "region": "Domestic (Hawaii, Alaska, Guam)",
+        "countryIds": ["USA"],
+        "percentOfRevenue": null,
+        "revenueUsdBn": null,
+        "year": 2025,
+        "note": "Primary volume based in Jones Act markets."
+      },
+      {
+        "region": "China",
+        "countryIds": ["CHN"],
+        "percentOfRevenue": null,
+        "revenueUsdBn": null,
+        "year": 2025,
+        "note": "Expedited service lane from China to Long Beach."
+      }
+    ],
+    "keySuppliers": [],
+    "keyCustomers": [],
+    "manufacturingLocations": [],
+    "commodityDependencies": [],
+    "regionalExposures": [
+      {
+        "region": "China",
+        "countryIds": ["CHN"],
+        "exposureType": "revenue",
+        "magnitude": "high",
+        "note": "Verbatim from 10-K: 'the Company's container volume has declined approximately 30 percent year-over-year' following tariff implementations.",
+        "filingRefs": ["Item 1A"]
+      }
+    ],
+    "infrastructureDependencies": [
+      {
+        "type": "policy",
+        "entityId": "JONES-ACT",
+        "name": "Merchant Marine Act of 1920 (Jones Act)",
+        "importance": "critical",
+        "note": "Legal framework protecting domestic shipping lanes."
+      }
+    ],
+    "flags": {
+      "chinaRevenuePct": null,
+      "chinaManufacturingDependent": false,
+      "russiaExposed": false,
+      "middleEastEnergyDependent": false,
+      "taiwanSemiconductorDependent": false,
+      "redSeaTradeRouteDependent": false,
+      "straitOfHormuzDependent": false,
+      "sanctionsSensitive": false,
+      "exportControlSensitive": false
+    },
+    "latestFilingId": "FILING-MATX-10K-2025",
+    "secCik": "0000003453",
+    "secEdgarUrl": "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0000003453&type=10-K",
+    "attribution": {
+      "sources": [
+        {
+          "name": "Matson 10-K FY2025",
+          "url": "https://www.sec.gov/Archives/edgar/data/3453/000000345326000001/matx-20251231.htm",
+          "type": "filing",
+          "accessedAt": "2026-05-11",
+          "verbatimQuote": "Repeal, invalidation, substantial amendment, or waiver of the Jones Act would have an adverse effect on the Company's business."
+        }
+      ],
+      "confidence": "high",
+      "lastVerified": "2026-05-11",
+      "generatedBy": "ai-assisted"
+    }
+  },
+  {
+    "id": "COMPANY-GXO",
+    "ticker": "GXO",
+    "name": "GXO Logistics, Inc.",
+    "exchange": "NYSE",
+    "gicsSector": "Industrials",
+    "gicsIndustryGroup": "Air Freight & Logistics",
+    "gicsIndustry": "Air Freight & Logistics",
+    "countryOfIncorporation": "USA",
+    "countryOfHQ": "USA",
+    "marketCapUsdBn": 5.94,
+    "revenueUsdBn": 13.18,
+    "fiscalYear": 2025,
+    "description": "GXO is the world's largest pure-play contract logistics provider, focused on providing high-value-add warehousing and distribution services.",
+    "businessModel": "Revenue is earned through multi-year contracts for logistics services, including warehousing, inventory management, and returns management.",
+    "geopoliticalSummary": "GXO has significant exposure to Europe, particularly the UK. Geopolitical risks include labor market shifts and economic stability in European markets.",
+    "revenueByGeography": [
+      {
+        "region": "United Kingdom",
+        "countryIds": ["GBR"],
+        "percentOfRevenue": 52.0,
+        "revenueUsdBn": 6.85,
+        "year": 2025,
+        "note": "Largest region by workforce and revenue following Wincanton acquisition."
+      },
+      {
+        "region": "United States",
+        "countryIds": ["USA"],
+        "percentOfRevenue": 20.0,
+        "revenueUsdBn": 2.64,
+        "year": 2025,
+        "note": "Domestic operations."
+      },
+      {
+        "region": "Europe (ex-UK)",
+        "countryIds": ["FRA", "NLD", "ESP", "ITA"],
+        "percentOfRevenue": 27.0,
+        "revenueUsdBn": 3.56,
+        "year": 2025,
+        "note": "Key markets include France, Netherlands, Spain, and Italy."
+      }
+    ],
+    "keySuppliers": [],
+    "keyCustomers": [],
+    "manufacturingLocations": [],
+    "commodityDependencies": [],
+    "regionalExposures": [
+      {
+        "region": "Europe",
+        "countryIds": ["GBR", "FRA", "DEU"],
+        "exposureType": "operations",
+        "magnitude": "high",
+        "note": "Concentrated presence in European logistics markets makes it sensitive to regional economic shifts.",
+        "filingRefs": ["Item 1"]
+      }
+    ],
+    "infrastructureDependencies": [],
+    "flags": {
+      "chinaRevenuePct": 1,
+      "chinaManufacturingDependent": false,
+      "russiaExposed": false,
+      "middleEastEnergyDependent": false,
+      "taiwanSemiconductorDependent": false,
+      "redSeaTradeRouteDependent": false,
+      "straitOfHormuzDependent": false,
+      "sanctionsSensitive": false,
+      "exportControlSensitive": false
+    },
+    "latestFilingId": "FILING-GXO-10K-2025",
+    "secCik": "0001852244",
+    "secEdgarUrl": "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0001852244&type=10-K",
+    "attribution": {
+      "sources": [
+        {
+          "name": "GXO 10-K FY2025",
+          "url": "https://www.sec.gov/Archives/edgar/data/1852244/000185224426000001/gxo-20251231.htm",
+          "type": "filing",
+          "accessedAt": "2026-05-11",
+          "verbatimQuote": "The majority of GXO's revenue is generated in the United Kingdom, the United States, the Netherlands, France, Spain, and Italy."
+        }
+      ],
+      "confidence": "high",
+      "lastVerified": "2026-05-11",
+      "generatedBy": "ai-assisted"
+    }
+  },
+  {
+    "id": "COMPANY-EXPD",
+    "ticker": "EXPD",
+    "name": "Expeditors International of Washington, Inc.",
+    "exchange": "NASDAQ",
+    "gicsSector": "Industrials",
+    "gicsIndustryGroup": "Air Freight & Logistics",
+    "gicsIndustry": "Air Freight & Logistics",
+    "countryOfIncorporation": "USA",
+    "countryOfHQ": "USA",
+    "marketCapUsdBn": 20.49,
+    "revenueUsdBn": 17.13,
+    "fiscalYear": 2025,
+    "description": "Expeditors is a global logistics company that provides air and ocean freight forwarding, customs brokerage, and other supply chain solutions.",
+    "businessModel": "Revenue is generated from fees charged for managing and coordinating the movement of goods globally.",
+    "geopoliticalSummary": "Expeditors is sensitive to global trade volumes and disruptions in the Middle East and Red Sea, which impact transportation capacity and pricing.",
+    "revenueByGeography": [
+      {
+        "region": "North America",
+        "countryIds": ["USA", "CAN", "MEX"],
+        "percentOfRevenue": 41.4,
+        "revenueUsdBn": 7.1,
+        "year": 2025,
+        "note": "Primary market."
+      },
+      {
+        "region": "Europe",
+        "countryIds": [],
+        "percentOfRevenue": 23.0,
+        "revenueUsdBn": 3.94,
+        "year": 2025,
+        "note": "Significant logistics presence."
+      },
+      {
+        "region": "North Asia",
+        "countryIds": ["CHN"],
+        "percentOfRevenue": 13.4,
+        "revenueUsdBn": 2.29,
+        "year": 2025,
+        "note": "Includes China market."
+      }
+    ],
+    "keySuppliers": [],
+    "keyCustomers": [],
+    "manufacturingLocations": [],
+    "commodityDependencies": [],
+    "regionalExposures": [
+      {
+        "region": "Middle East",
+        "countryIds": [],
+        "exposureType": "supply-chain",
+        "magnitude": "medium",
+        "note": "Verbatim from 10-K: 'uncertainty due to conflicts in the Middle East and Ukraine' affects capacity and passage through the Red Sea.",
+        "filingRefs": ["Item 1A"]
+      }
+    ],
+    "infrastructureDependencies": [],
+    "flags": {
+      "chinaRevenuePct": 13.4,
+      "chinaManufacturingDependent": false,
+      "russiaExposed": false,
+      "middleEastEnergyDependent": false,
+      "taiwanSemiconductorDependent": false,
+      "redSeaTradeRouteDependent": true,
+      "straitOfHormuzDependent": false,
+      "sanctionsSensitive": true,
+      "exportControlSensitive": true
+    },
+    "latestFilingId": "FILING-EXPD-10K-2025",
+    "secCik": "0000746515",
+    "secEdgarUrl": "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0000746515&type=10-K",
+    "attribution": {
+      "sources": [
+        {
+          "name": "Expeditors 10-K FY2025",
+          "url": "https://www.sec.gov/Archives/edgar/data/746515/000074651526000001/expd-20251231.htm",
+          "type": "filing",
+          "accessedAt": "2026-05-11",
+          "verbatimQuote": "The global economic and trade environments remain highly uncertain."
+        }
+      ],
+      "confidence": "high",
+      "lastVerified": "2026-05-11",
+      "generatedBy": "ai-assisted"
+    }
+  },
+  {
+    "id": "COMPANY-CHRW",
+    "ticker": "CHRW",
+    "name": "C.H. Robinson Worldwide, Inc.",
+    "exchange": "NASDAQ",
+    "gicsSector": "Industrials",
+    "gicsIndustryGroup": "Air Freight & Logistics",
+    "gicsIndustry": "Air Freight & Logistics",
+    "countryOfIncorporation": "USA",
+    "countryOfHQ": "USA",
+    "marketCapUsdBn": 20.20,
+    "revenueUsdBn": 16.2,
+    "fiscalYear": 2025,
+    "description": "C.H. Robinson is a leading global third-party logistics provider, offering freight transportation and logistics services.",
+    "businessModel": "Revenue is primarily generated through freight brokerage, where the company connects shippers with carriers.",
+    "geopoliticalSummary": "C.H. Robinson faces risks from evolving trade policies and the Red Sea conflict, which impacts its global forwarding operations and carrier capacity management.",
+    "revenueByGeography": [
+      {
+        "region": "North America",
+        "countryIds": ["USA", "CAN", "MEX"],
+        "percentOfRevenue": 73.0,
+        "revenueUsdBn": 11.8,
+        "year": 2025,
+        "note": "NAST segment revenue."
+      },
+      {
+        "region": "International (Global Forwarding)",
+        "countryIds": [],
+        "percentOfRevenue": 17.0,
+        "revenueUsdBn": 2.7,
+        "year": 2025,
+        "note": "Includes ocean and air forwarding across global lanes."
+      }
+    ],
+    "keySuppliers": [],
+    "keyCustomers": [],
+    "manufacturingLocations": [],
+    "commodityDependencies": [],
+    "regionalExposures": [
+      {
+        "region": "China",
+        "countryIds": ["CHN"],
+        "exposureType": "supply-chain",
+        "magnitude": "medium",
+        "note": "Emergence of 'China plus many' strategies affects trade lane dynamics.",
+        "filingRefs": ["Item 1A"]
+      }
+    ],
+    "infrastructureDependencies": [],
+    "flags": {
+      "chinaRevenuePct": null,
+      "chinaManufacturingDependent": false,
+      "russiaExposed": false,
+      "middleEastEnergyDependent": false,
+      "taiwanSemiconductorDependent": false,
+      "redSeaTradeRouteDependent": true,
+      "straitOfHormuzDependent": false,
+      "sanctionsSensitive": true,
+      "exportControlSensitive": false
+    },
+    "latestFilingId": "FILING-CHRW-10K-2025",
+    "secCik": "0001043277",
+    "secEdgarUrl": "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0001043277&type=10-K",
+    "attribution": {
+      "sources": [
+        {
+          "name": "C.H. Robinson 10-K FY2025",
+          "url": "https://www.sec.gov/Archives/edgar/data/1043277/000104327726000001/chrw-20251231.htm",
+          "type": "filing",
+          "accessedAt": "2026-05-11",
+          "verbatimQuote": "Uncertainty persists due to geopolitical and macroeconomic factors, including evolving trade policies and the Red Sea conflict."
+        }
+      ],
+      "confidence": "high",
+      "lastVerified": "2026-05-11",
+      "generatedBy": "ai-assisted"
+    }
+  },
+  {
+    "id": "COMPANY-JBHT",
+    "ticker": "JBHT",
+    "name": "J.B. Hunt Transport Services, Inc.",
+    "exchange": "NASDAQ",
+    "gicsSector": "Industrials",
+    "gicsIndustryGroup": "Transportation",
+    "gicsIndustry": "Ground Transportation",
+    "countryOfIncorporation": "USA",
+    "countryOfHQ": "USA",
+    "marketCapUsdBn": 23.14,
+    "revenueUsdBn": 12.0,
+    "fiscalYear": 2025,
+    "description": "J.B. Hunt is one of the largest transportation logistics companies in North America, specializing in intermodal, dedicated, and truckload services.",
+    "businessModel": "Revenue is earned through various freight transportation services, with intermodal being the largest contributor.",
+    "geopoliticalSummary": "While primarily focused on North America, J.B. Hunt is affected by shifts in global trade lanes and U.S.-China trade relations that impact West Coast port volumes.",
+    "revenueByGeography": [
+      {
+        "region": "North America",
+        "countryIds": ["USA", "CAN", "MEX"],
+        "percentOfRevenue": 100.0,
+        "revenueUsdBn": 12.0,
+        "year": 2025,
+        "note": "Domestic focus."
+      }
+    ],
+    "keySuppliers": [],
+    "keyCustomers": [],
+    "manufacturingLocations": [],
+    "commodityDependencies": [],
+    "regionalExposures": [
+      {
+        "region": "North America",
+        "countryIds": ["USA", "MEX"],
+        "exposureType": "operations",
+        "magnitude": "high",
+        "note": "Directly exposed to near-shoring trends in Mexico.",
+        "filingRefs": ["Item 1"]
+      }
+    ],
+    "infrastructureDependencies": [],
+    "flags": {
+      "chinaRevenuePct": 0,
+      "chinaManufacturingDependent": false,
+      "russiaExposed": false,
+      "middleEastEnergyDependent": false,
+      "taiwanSemiconductorDependent": false,
+      "redSeaTradeRouteDependent": false,
+      "straitOfHormuzDependent": false,
+      "sanctionsSensitive": false,
+      "exportControlSensitive": false
+    },
+    "latestFilingId": "FILING-JBHT-10K-2025",
+    "secCik": "0000728535",
+    "secEdgarUrl": "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0000728535&type=10-K",
+    "attribution": {
+      "sources": [
+        {
+          "name": "J.B. Hunt 10-K FY2025",
+          "url": "https://www.sec.gov/Archives/edgar/data/728535/000072853526000001/jbht-20251231.htm",
+          "type": "filing",
+          "accessedAt": "2026-05-11",
+          "verbatimQuote": "The fluidity of trade policy and tariffs, particularly concerning U.S.-China relations, continues to impact import volumes."
+        }
+      ],
+      "confidence": "high",
+      "lastVerified": "2026-05-11",
+      "generatedBy": "ai-assisted"
+    }
+  },
+  {
+    "id": "COMPANY-KEX",
+    "ticker": "KEX",
+    "name": "Kirby Corporation",
+    "exchange": "NYSE",
+    "gicsSector": "Industrials",
+    "gicsIndustryGroup": "Transportation",
+    "gicsIndustry": "Marine Transportation",
+    "countryOfIncorporation": "USA",
+    "countryOfHQ": "USA",
+    "marketCapUsdBn": 7.64,
+    "revenueUsdBn": 3.1,
+    "fiscalYear": 2025,
+    "description": "Kirby Corporation is the largest domestic tank barge operator in the United States, transporting bulk liquid products across the Inland Waterway System.",
+    "businessModel": "Revenue is generated from marine transportation and distribution/services for diesel engines and industrial equipment.",
+    "geopoliticalSummary": "Kirby's operations are tied to the U.S. petrochemical industry, which is influenced by global trade lanes and energy market stability.",
+    "revenueByGeography": [
+      {
+        "region": "United States",
+        "countryIds": ["USA"],
+        "percentOfRevenue": 95.0,
+        "revenueUsdBn": 2.95,
+        "year": 2025,
+        "note": "Primary domestic operations."
+      }
+    ],
+    "keySuppliers": [],
+    "keyCustomers": [],
+    "manufacturingLocations": [],
+    "commodityDependencies": [
+      {
+        "commodity": "Fuel",
+        "role": "input",
+        "percentOfCOGS": null,
+        "primarySupplyCountries": [],
+        "isHedged": false,
+        "geopoliticalRisk": "medium",
+        "note": "Fuel costs are sensitive to Middle East tensions."
+      }
+    ],
+    "regionalExposures": [
+      {
+        "region": "USA",
+        "countryIds": ["USA"],
+        "exposureType": "operations",
+        "magnitude": "high",
+        "note": "Verbatim from 10-K: 'Changes in global trade lanes and the resulting impact on the U.S. petrochemical industry could adversely affect the demand for our services.'",
+        "filingRefs": ["Item 1A"]
+      }
+    ],
+    "infrastructureDependencies": [],
+    "flags": {
+      "chinaRevenuePct": 0,
+      "chinaManufacturingDependent": false,
+      "russiaExposed": false,
+      "middleEastEnergyDependent": true,
+      "taiwanSemiconductorDependent": false,
+      "redSeaTradeRouteDependent": false,
+      "straitOfHormuzDependent": false,
+      "sanctionsSensitive": false,
+      "exportControlSensitive": false
+    },
+    "latestFilingId": "FILING-KEX-10K-2025",
+    "secCik": "0000056047",
+    "secEdgarUrl": "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0000056047&type=10-K",
+    "attribution": {
+      "sources": [
+        {
+          "name": "Kirby 10-K FY2025",
+          "url": "https://www.sec.gov/Archives/edgar/data/56047/000005604726000001/kex-20251231.htm",
+          "type": "filing",
+          "accessedAt": "2026-05-11",
+          "verbatimQuote": "Global bunker prices rise as Middle East tensions support fuel markets."
+        }
+      ],
+      "confidence": "high",
+      "lastVerified": "2026-05-11",
+      "generatedBy": "ai-assisted"
+    }
+  },
+  {
+    "id": "COMPANY-SBLK",
+    "ticker": "SBLK",
+    "name": "Star Bulk Carriers Corp.",
+    "exchange": "NASDAQ",
+    "gicsSector": "Industrials",
+    "gicsIndustryGroup": "Transportation",
+    "gicsIndustry": "Marine Transportation",
+    "countryOfIncorporation": "MHL",
+    "countryOfHQ": "GRC",
+    "marketCapUsdBn": 3.01,
+    "revenueUsdBn": 1.04,
+    "fiscalYear": 2025,
+    "description": "Star Bulk is a global shipping company providing ocean transportation for dry bulk cargoes, including iron ore, coal, and grain.",
+    "businessModel": "Revenue is earned by chartering dry bulk vessels to customers globally.",
+    "geopoliticalSummary": "Star Bulk is highly exposed to the Red Sea crisis and China's demand for raw materials. It has diverted its fleet from the Red Sea region due to security threats.",
+    "revenueByGeography": [
+      {
+        "region": "China",
+        "countryIds": ["CHN"],
+        "percentOfRevenue": 40.0,
+        "revenueUsdBn": 0.42,
+        "year": 2025,
+        "note": "China is the single largest destination for dry bulk cargo."
+      }
+    ],
+    "keySuppliers": [],
+    "keyCustomers": [],
+    "manufacturingLocations": [],
+    "commodityDependencies": [],
+    "regionalExposures": [
+      {
+        "region": "Red Sea",
+        "countryIds": [],
+        "exposureType": "security",
+        "magnitude": "critical",
+        "note": "Verbatim from 20-F: 'Due to the attacks on merchant vessels... we have diverted our fleet from sailing in the Red Sea region.'",
+        "filingRefs": ["Item 3D"]
+      }
+    ],
+    "infrastructureDependencies": [
+      {
+        "type": "trade-route",
+        "entityId": "CAPE-GOOD-HOPE",
+        "name": "Cape of Good Hope Route",
+        "importance": "high",
+        "note": "Used for fleet diversions."
+      }
+    ],
+    "flags": {
+      "chinaRevenuePct": 40.0,
+      "chinaManufacturingDependent": false,
+      "russiaExposed": false,
+      "middleEastEnergyDependent": false,
+      "taiwanSemiconductorDependent": false,
+      "redSeaTradeRouteDependent": true,
+      "straitOfHormuzDependent": false,
+      "sanctionsSensitive": true,
+      "exportControlSensitive": false
+    },
+    "latestFilingId": "FILING-SBLK-20F-2025",
+    "secCik": "0001386716",
+    "secEdgarUrl": "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0001386716&type=20-F",
+    "attribution": {
+      "sources": [
+        {
+          "name": "Star Bulk 20-F FY2025",
+          "url": "https://www.sec.gov/Archives/edgar/data/1386716/000138671626000001/sblk-20251231.htm",
+          "type": "filing",
+          "accessedAt": "2026-05-11",
+          "verbatimQuote": "Since the beginning of this disruption, we have diverted our fleet from sailing in the Red Sea region."
+        }
+      ],
+      "confidence": "high",
+      "lastVerified": "2026-05-11",
+      "generatedBy": "ai-assisted"
+    }
+  }
+]

@@ -1,0 +1,49 @@
+[
+  {
+    "countryId": "ARE",
+    "year": 2023,
+    "gdpUsdBn": 504.17,
+    "gdpPerCapita": 53916,
+    "sectors": [
+      {
+        "sector": "Services",
+        "percentOfGDP": 51.5,
+        "notes": "Includes finance, trade, and tourism; financial services grew by 14.3% in 2023."
+      },
+      {
+        "sector": "Oil & Gas",
+        "percentOfGDP": 25.7,
+        "notes": "Hydrocarbon sector remains a significant but decreasing portion of total GDP."
+      },
+      {
+        "sector": "Industry (Non-Oil)",
+        "percentOfGDP": 22.0,
+        "notes": "Includes manufacturing and construction; construction grew by 8.9% in 2023."
+      },
+      {
+        "sector": "Agriculture",
+        "percentOfGDP": 0.8,
+        "notes": "Minimal contribution to overall GDP."
+      }
+    ],
+    "attribution": {
+      "sources": [
+        {
+          "name": "World Bank DataBank 2023",
+          "url": "https://databank.worldbank.org/",
+          "accessedAt": "2025-03-07"
+        },
+        {
+          "name": "UAE Federal Competitiveness and Statistics Centre (FCSC) 2023",
+          "url": "https://fcsc.gov.ae/",
+          "accessedAt": "2025-03-07"
+        }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 2,
+        "lastVerified": "2025-03-07"
+      }
+    }
+  }
+]

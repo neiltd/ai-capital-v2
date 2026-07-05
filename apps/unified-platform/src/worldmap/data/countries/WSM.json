@@ -1,0 +1,65 @@
+{
+  "id": "WSM",
+  "iso2": "WS",
+  "name": "Samoa",
+  "region": "Oceania",
+  "subregion": "Polynesia",
+  "capital": "Apia",
+  "lastUpdated": "2026-05-15",
+  "summary": "Samoa is a Polynesian nation with a stable political environment and a strong emphasis on traditional 'Fa'amatai' governance structures. It has recently undergone its first major change in government in decades, demonstrating the resilience of its democratic institutions. The economy is primarily driven by tourism, agriculture, and remittances. Samoa is a proactive leader in regional affairs, particularly concerning climate change and sustainable development. It maintains balanced relations with major powers while prioritizing regional unity through the Pacific Islands Forum.",
+  "indicators": {
+    "politicalStability":       { "score": 8, "trend": "stable", "confidence": "high", "note": "High stability following the 2021 constitutional crisis and peaceful transition of power; strong traditional social cohesion." },
+    "economicDirection":        { "score": 5, "trend": "stable", "confidence": "medium", "note": "Recovering well with tourism leading growth, but faces challenges from high public debt and limited diversification." },
+    "investmentAttractiveness": { "score": 6, "trend": "stable", "confidence": "medium", "note": "Stable legal environment and good infrastructure in Apia; however, land ownership rules (customary land) can be complex for investors." },
+    "geopoliticalRisk":         { "score": 3, "trend": "stable", "confidence": "high", "note": "Generally low risk; Samoa expertly navigates relations with Australia, New Zealand, China, and the US." },
+    "educationQuality":         { "score": 6, "trend": "stable", "confidence": "medium", "note": "High literacy rates and established education system, though vocational training and higher education capacity are still developing." },
+    "healthcareQuality":        { "score": 5, "trend": "stable", "confidence": "medium", "note": "Significant improvements in public health infrastructure since the 2019 measles outbreak; still relies on specialized care overseas." },
+    "technologyInvestment":     { "score": 5, "trend": "rising", "confidence": "high", "note": "Good internet connectivity via Tui-Samoa and Manatua submarine cables; increasing focus on digital government." }
+  },
+  "demographics": {
+    "population": 225000,
+    "medianAge": 22.0,
+    "urbanizationRate": 18,
+    "majorEthnicGroups": ["Samoan", "Euronesians (mixed European and Polynesian)"],
+    "religions": [
+      { "name": "Christian", "percent": 98.0 },
+      { "name": "Other/None", "percent": 2.0 }
+    ]
+  },
+  "alliances": ["Pacific Islands Forum", "Commonwealth", "United Nations", "SIDS", "ACP"],
+  "relationships": [
+    { "countryId": "NZL", "countryName": "New Zealand", "type": "strategic_partner", "sentiment": "positive", "summary": "Special relationship defined by the 1962 Treaty of Friendship; large Samoan diaspora in NZ." },
+    { "countryId": "AUS", "countryName": "Australia", "type": "development_partner", "sentiment": "positive", "summary": "Major donor and security partner; significant cooperation on maritime security and development aid." },
+    { "countryId": "CHN", "countryName": "China", "type": "economic_partner", "sentiment": "positive", "summary": "Key provider of infrastructure loans and aid; relationship is pragmatic and focused on development." },
+    { "countryId": "USA", "countryName": "United States", "type": "regional_partner", "sentiment": "positive", "summary": "Increasing engagement, particularly in fisheries management and regional security cooperation." }
+  ],
+  "perspectives": [
+    { "source": "Matai (Chief)", "bias": "Traditionalist", "view": "Development must be balanced with our 'Fa'a Samoa' (the Samoan way), ensuring our culture and community remain the foundation of the nation." },
+    { "source": "Samoan Expatriate", "bias": "Aspirational", "view": "Remittances are vital, but we want to see more opportunities for skilled work at home so families don't have to be separated." },
+    { "source": "Environmental Scientist", "bias": "Pragmatic", "view": "Climate change is an existential threat to our coastal villages and infrastructure; adaptation is our top priority." },
+    { "source": "Business Leader", "bias": "Liberal", "view": "We need to further modernize our regulations to attract sustainable investment beyond just the tourism sector." }
+  ],
+  "historicalContext": {
+    "summary": "Formerly Western Samoa, the islands were a German colony and later a New Zealand-administered territory under a UN mandate. Samoa was the first Pacific Island nation to gain independence in 1962. It has since developed into a stable parliamentary democracy that successfully integrates traditional leadership with modern governance.",
+    "keyEvents": [
+      { "year": 1899, "event": "Tripartite Convention divides the Samoan archipelago between Germany and the United States." },
+      { "year": 1914, "event": "New Zealand occupies German Samoa at the start of WWI." },
+      { "year": 1918, "event": "Influenza pandemic kills approximately 20% of the population due to NZ administrative failure." },
+      { "year": 1929, "event": "The 'Black Saturday' shooting of Mau movement protesters by NZ police." },
+      { "year": 1962, "event": "Samoa becomes the first South Pacific island nation to gain independence." },
+      { "year": 1997, "event": "The nation changes its name from Western Samoa to Samoa." },
+      { "year": 2019, "event": "A major measles outbreak leads to a national state of emergency and a vaccination overhaul." },
+      { "year": 2021, "event": "A constitutional crisis following the general election leads to the first change in government in 25 years." }
+    ]
+  },
+  "investmentNotes": {
+    "strengths": ["Strong political stability and rule of law", "Well-established tourism brand", "High social cohesion and community resilience", "Strategic regional leadership role"],
+    "risks": ["Vulnerability to climate change and natural disasters", "Reliance on remittances and foreign aid", "Limited economies of scale", "Customary land tenure challenges"],
+    "sectors": ["High-value Sustainable Tourism", "Climate-resilient Agriculture", "Renewable Energy (Hydro/Solar)", "Information Technology Services"]
+  },
+  "sources": [
+    { "name": "Central Bank of Samoa", "url": "https://www.cbs.gov.ws/", "type": "economic" },
+    { "name": "Samoa Bureau of Statistics", "url": "https://www.sbs.gov.ws/", "type": "demographic" },
+    { "name": "Samoa Ministry of Commerce, Industry and Labour", "url": "https://www.mcil.gov.ws/", "type": "investment" }
+  ]
+}

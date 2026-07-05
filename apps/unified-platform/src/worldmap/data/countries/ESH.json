@@ -1,0 +1,67 @@
+{
+  "id": "ESH",
+  "iso2": "EH",
+  "name": "Western Sahara",
+  "region": "Africa",
+  "subregion": "Northern Africa",
+  "capital": "Laayoune",
+  "lastUpdated": "2026-05-09",
+  "summary": "Western Sahara is a sparsely populated territory on the northwest coast of Africa, classified by the United Nations as a non-self-governing territory. It has been the subject of a long-standing dispute between Morocco, which claims sovereignty and controls the majority of the territory, and the Polisario Front, which seeks independence for the Sahrawi people and operates the Sahrawi Arab Democratic Republic (SADR). The region is divided by a 2,700 km sand berm (the 'Wall'). While Morocco has gained significant international support for its autonomy plan, including recognition of its sovereignty by the U.S., the conflict remains unresolved under international law.",
+  "indicators": {
+    "politicalStability":       { "score": 3, "trend": "stable", "confidence": "high", "note": "Directly administered by Morocco in the majority of the territory; stable in Moroccan-controlled areas but subject to periodic skirmishes and low-level conflict." },
+    "economicDirection":        { "score": 4, "trend": "rising", "confidence": "high", "note": "Heavy Moroccan investment in infrastructure, fishing, and phosphate mining in the 'Southern Provinces' to integrate the region." },
+    "investmentAttractiveness": { "score": 3, "trend": "rising", "confidence": "medium", "note": "Increasingly attractive for fisheries and renewable energy under Moroccan administration, but carries significant legal and reputational risk due to contested sovereignty." },
+    "geopoliticalRisk":         { "score": 8, "trend": "rising", "confidence": "high", "note": "Persistent risk of escalation between Morocco and the Polisario Front, and a major source of tension between Morocco and Algeria." },
+    "educationQuality":         { "score": 4, "trend": "stable", "confidence": "medium", "note": "Educational infrastructure has improved under Moroccan administration, but access for Sahrawis in refugee camps (Tindouf) is limited and aid-dependent." },
+    "healthcareQuality":        { "score": 4, "trend": "stable", "confidence": "medium", "note": "Reasonable facilities in major cities like Laayoune and Dakhla; extremely poor in the 'liberated territories' and refugee camps." },
+    "technologyInvestment":     { "score": 3, "trend": "stable", "confidence": "low", "note": "Limited focus beyond basic telecommunications and infrastructure supporting the extractive industries." }
+  },
+  "demographics": {
+    "population": 600000,
+    "medianAge": 22.0,
+    "urbanizationRate": 87,
+    "majorEthnicGroups": ["Sahrawi Arab", "Moroccan Settlers"],
+    "religions": [
+      { "name": "Muslim", "percent": 99.9 },
+      { "name": "Other", "percent": 0.1 }
+    ]
+  },
+  "alliances": ["African Union (SADR is a member)", "Arab League (Morocco is a member)"],
+  "relationships": [
+    { "countryId": "MAR", "countryName": "Morocco", "type": "occupier", "sentiment": "positive", "summary": "Controls approximately 80% of the territory; considers Western Sahara its 'Southern Provinces' and integral to its national integrity." },
+    { "countryId": "DZA", "countryName": "Algeria", "type": "supporter", "sentiment": "positive", "summary": "Primary supporter and host of the Polisario Front; views Western Sahara as a decolonization issue." },
+    { "countryId": "USA", "countryName": "United States", "type": "diplomatic_partner", "sentiment": "positive", "summary": "Recognized Moroccan sovereignty over the territory in 2020 as part of the Abraham Accords; supports the Moroccan autonomy plan." },
+    { "countryId": "ESP", "countryName": "Spain", "type": "historical_partner", "sentiment": "neutral", "summary": "Former colonial power; recently shifted toward supporting Morocco's autonomy plan, though traditionally favored a UN-led referendum." }
+  ],
+  "perspectives": [
+    { "source": "Moroccan Nationalist", "bias": "Expansionist", "view": "The Sahara is Moroccan; the international recognition of our sovereignty confirms the historical and legal reality." },
+    { "source": "Polisario Activist", "bias": "Independence-focused", "view": "We will not stop fighting until the Sahrawi people are granted their right to self-determination through a free and fair referendum." },
+    { "source": "UN Peacekeeper (MINURSO)", "bias": "Neutral", "view": "Our role is to monitor the ceasefire and support a political solution that provides for the self-determination of the people of Western Sahara." },
+    { "source": "International Investor", "bias": "Pragmatic", "view": "The region has immense potential in green hydrogen and fishing, but the lack of a final legal settlement remains a hurdle for many large-scale projects." }
+  ],
+  "historicalContext": {
+    "summary": "Formerly known as Spanish Sahara, the territory was claimed by both Morocco and Mauritania after Spain's withdrawal in 1975. The Polisario Front was formed to fight for independence, leading to a 16-year guerrilla war that ended with a UN-brokered ceasefire in 1991.",
+    "keyEvents": [
+      { "year": 1884, "event": "Berlin Conference establishes Spanish protectorate over the region." },
+      { "year": 1973, "event": "Formation of the Polisario Front." },
+      { "year": 1975, "event": "Green March; Morocco sends 350,000 civilians into the territory to claim sovereignty." },
+      { "year": 1976, "event": "Spain officially withdraws; Polisario declares the Sahrawi Arab Democratic Republic (SADR)." },
+      { "year": 1979, "event": "Mauritania withdraws its claims; Morocco occupies the remaining territory." },
+      { "year": 1991, "event": "Ceasefire agreement and establishment of MINURSO to organize a referendum." },
+      { "year": 2007, "event": "Morocco submits its Autonomy Plan to the United Nations." },
+      { "year": 2020, "event": "United States recognizes Moroccan sovereignty over Western Sahara." },
+      { "year": 2020, "event": "Polisario Front declares an end to the 29-year ceasefire after a Moroccan military operation." },
+      { "year": 2022, "event": "Spain shifts its long-standing policy and supports Morocco's autonomy plan as the most serious and credible basis for a solution." }
+    ]
+  },
+  "investmentNotes": {
+    "strengths": ["World's largest phosphate reserves (Bou Craa)", "Abundant wind and solar energy potential", "Extremely rich fishing grounds", "Strategic gateway for Morocco to Sub-Saharan Africa"],
+    "risks": ["Contested legal status and potential for sanctions", "Active conflict/Ceasefire violations", "Extreme desert climate and water scarcity", "Diplomatic isolation in some international forums"],
+    "sectors": ["Phosphate Mining", "Industrial Fishing", "Renewable Energy (Wind/Solar)", "Green Hydrogen"]
+  },
+  "sources": [
+    { "name": "MINURSO", "url": "https://minurso.unmissions.org/", "type": "security" },
+    { "name": "Moroccan Ministry of Foreign Affairs", "url": "https://www.diplomatie.ma/", "type": "official" },
+    { "name": "Sahara Press Service (SPS)", "url": "https://www.spsrasd.info/", "type": "official" }
+  ]
+}

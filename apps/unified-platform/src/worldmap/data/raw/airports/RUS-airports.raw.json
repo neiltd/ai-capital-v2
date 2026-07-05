@@ -1,0 +1,272 @@
+[
+  {
+    "id": "SVO",
+    "name": "Sheremetyevo International Airport",
+    "countryId": "RUS",
+    "city": "Moscow",
+    "iata": "SVO",
+    "icao": "UUEE",
+    "coordinates": [37.4147, 55.9727],
+    "passengerVolume": 43700000,
+    "cargoVolume": 380000,
+    "runwayCount": 3,
+    "elevationM": 192,
+    "strategicImportance": "critical",
+    "geopoliticalNotes": "Russia's primary global gateway and Aeroflot's main hub; critical for international connectivity and high-value cargo throughput via the Moscow Cargo terminal.",
+    "notes": "Handles the largest share of international traffic in Russia.",
+    "attribution": {
+      "sources": [
+        { "name": "Sheremetyevo International Airport", "url": "https://www.svo.aero/en/main", "accessedAt": "2026-05-10" },
+        { "name": "Moscow Cargo", "url": "https://moscow-cargo.com/en/", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 2,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  },
+  {
+    "id": "DME",
+    "name": "Domodedovo International Airport",
+    "countryId": "RUS",
+    "city": "Moscow",
+    "iata": "DME",
+    "icao": "UUDD",
+    "coordinates": [37.9061, 55.4086],
+    "passengerVolume": 15600000,
+    "cargoVolume": 191000,
+    "runwayCount": 2,
+    "elevationM": 179,
+    "strategicImportance": "high",
+    "geopoliticalNotes": "Major hub for S7 Airlines and international carriers from the CIS and Middle East; significant cargo infrastructure accounting for ~41% of Moscow's market.",
+    "notes": "Experienced a traffic dip in 2024 but remains a critical infrastructure asset.",
+    "attribution": {
+      "sources": [
+        { "name": "Domodedovo Airport", "url": "https://www.dme.ru/en/", "accessedAt": "2026-05-10" },
+        { "name": "Centre for Aviation", "url": "https://centreforaviation.com/", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 2,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  },
+  {
+    "id": "VKO",
+    "name": "Vnukovo International Airport",
+    "countryId": "RUS",
+    "city": "Moscow",
+    "iata": "VKO",
+    "icao": "UUWW",
+    "coordinates": [37.2728, 55.5961],
+    "passengerVolume": 16100000,
+    "cargoVolume": 120000,
+    "runwayCount": 2,
+    "elevationM": 209,
+    "strategicImportance": "high",
+    "geopoliticalNotes": "Moscow's hub for low-cost carriers and foreign airlines; serves as a primary terminal for government flights and express mail/e-commerce.",
+    "notes": "First Moscow airport with a direct metro connection.",
+    "attribution": {
+      "sources": [
+        { "name": "Vnukovo Airport", "url": "http://www.vnukovo.ru/en/", "accessedAt": "2026-05-10" },
+        { "name": "RuAviation", "url": "https://www.ruaviation.com/", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 2,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  },
+  {
+    "id": "LED",
+    "name": "Pulkovo Airport",
+    "countryId": "RUS",
+    "city": "Saint Petersburg",
+    "iata": "LED",
+    "icao": "ULLI",
+    "coordinates": [30.2625, 59.8003],
+    "passengerVolume": 20900000,
+    "cargoVolume": null,
+    "runwayCount": 2,
+    "elevationM": 24,
+    "strategicImportance": "high",
+    "geopoliticalNotes": "The primary gateway for Russia's Northwest region; critical for tourism and business links with Asia and the Middle East.",
+    "notes": "Russia's second-busiest airport after the Moscow hub.",
+    "attribution": {
+      "sources": [
+        { "name": "Pulkovo Airport", "url": "https://pulkovoairport.ru/en/", "accessedAt": "2026-05-10" },
+        { "name": "IATA", "url": "https://www.iata.org", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 2,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  },
+  {
+    "id": "AER",
+    "name": "Sochi International Airport",
+    "countryId": "RUS",
+    "city": "Sochi",
+    "iata": "AER",
+    "icao": "URSS",
+    "coordinates": [39.9567, 43.45],
+    "passengerVolume": 13700000,
+    "cargoVolume": null,
+    "runwayCount": 2,
+    "elevationM": 27,
+    "strategicImportance": "high",
+    "geopoliticalNotes": "Currently the only operational international hub in Southern Russia; serves as a vital 'southern gateway' for transit to other regional cities.",
+    "notes": "Heavily utilized due to the closure of other southern Russian airports.",
+    "attribution": {
+      "sources": [
+        { "name": "Sochi Airport", "url": "https://aer.aero/en/", "accessedAt": "2026-05-10" },
+        { "name": "OurAirports", "url": "https://ourairports.com/airports/URSS/", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 2,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  },
+  {
+    "id": "OVB",
+    "name": "Tolmachevo Airport",
+    "countryId": "RUS",
+    "city": "Novosibirsk",
+    "iata": "OVB",
+    "icao": "UNNT",
+    "coordinates": [82.6506, 55.0125],
+    "passengerVolume": 9300000,
+    "cargoVolume": null,
+    "runwayCount": 2,
+    "elevationM": 111,
+    "strategicImportance": "high",
+    "geopoliticalNotes": "Largest transit hub in Siberia; critical technical stop for cargo flights between Europe and Asia and a key node in the 'Air Silk Road'.",
+    "notes": "Primary hub for S7 Airlines' domestic network.",
+    "attribution": {
+      "sources": [
+        { "name": "Tolmachevo Airport", "url": "https://tolmachevo.ru/en/", "accessedAt": "2026-05-10" },
+        { "name": "ACI World", "url": "https://aci.aero", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 2,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  },
+  {
+    "id": "SVX",
+    "name": "Koltsovo International Airport",
+    "countryId": "RUS",
+    "city": "Yekaterinburg",
+    "iata": "SVX",
+    "icao": "USSS",
+    "coordinates": [60.8036, 56.7414],
+    "passengerVolume": 8000000,
+    "cargoVolume": null,
+    "runwayCount": 2,
+    "elevationM": 233,
+    "strategicImportance": "high",
+    "geopoliticalNotes": "Central hub for the Ural region connecting European Russia with Siberia and Central Asia; critical for industrial logistics.",
+    "notes": "Serves a major heavy manufacturing base.",
+    "attribution": {
+      "sources": [
+        { "name": "Koltsovo Airport", "url": "https://svx.aero/en/", "accessedAt": "2026-05-10" },
+        { "name": "OurAirports", "url": "https://ourairports.com/airports/USSS/", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 2,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  },
+  {
+    "id": "KZN",
+    "name": "Kazan International Airport",
+    "countryId": "RUS",
+    "city": "Kazan",
+    "iata": "KZN",
+    "icao": "UWKD",
+    "coordinates": [49.2817, 55.6067],
+    "passengerVolume": 5400000,
+    "cargoVolume": null,
+    "runwayCount": 2,
+    "elevationM": 125,
+    "strategicImportance": "medium",
+    "geopoliticalNotes": "Expanding gateway for Tatarstan with growing links to the Middle East and Central Asia; supported by regional economic zones.",
+    "notes": "Rapidly growing international connections.",
+    "attribution": {
+      "sources": [
+        { "name": "Kazan Airport", "url": "https://kazan.aero/en/", "accessedAt": "2026-05-10" },
+        { "name": "IATA", "url": "https://www.iata.org", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 2,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  },
+  {
+    "id": "MRV",
+    "name": "Mineralnye Vody Airport",
+    "countryId": "RUS",
+    "city": "Mineralnye Vody",
+    "iata": "MRV",
+    "icao": "URMM",
+    "coordinates": [43.0819, 44.225],
+    "passengerVolume": 4800000,
+    "cargoVolume": null,
+    "runwayCount": 1,
+    "elevationM": 321,
+    "strategicImportance": "medium",
+    "geopoliticalNotes": "Key gateway to the North Caucasus; transit hub benefiting from the closure of other southern airports.",
+    "notes": "Recently expanded terminal capacity.",
+    "attribution": {
+      "sources": [
+        { "name": "Mineralnye Vody Airport", "url": "https://mvairport.ru/en/", "accessedAt": "2026-05-10" },
+        { "name": "OurAirports", "url": "https://ourairports.com/airports/URMM/", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 2,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  },
+  {
+    "id": "VVO",
+    "name": "Vladivostok International Airport",
+    "countryId": "RUS",
+    "city": "Vladivostok",
+    "iata": "VVO",
+    "icao": "UHWW",
+    "coordinates": [132.1514, 43.3992],
+    "passengerVolume": 3000000,
+    "cargoVolume": null,
+    "runwayCount": 2,
+    "elevationM": 14,
+    "strategicImportance": "high",
+    "geopoliticalNotes": "Russia's primary 'Bridge to Asia' in the Far East; critical for trade with the Asia-Pacific region and seafood exports.",
+    "notes": "Strategically located for proximity to China, Japan, and Korea.",
+    "attribution": {
+      "sources": [
+        { "name": "Vladivostok Airport", "url": "http://vvo.aero/en/", "accessedAt": "2026-05-10" },
+        { "name": "ICAO", "url": "https://www.icao.int", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 2,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  }
+]

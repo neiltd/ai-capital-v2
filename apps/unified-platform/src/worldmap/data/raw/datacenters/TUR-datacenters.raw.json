@@ -1,0 +1,302 @@
+[
+  {
+    "id": "DC-TUR-IST-TKC-GEB",
+    "name": "Turkcell Gebze Data Center",
+    "countryId": "TUR",
+    "city": "Istanbul",
+    "coordinates": [29.40, 40.80],
+    "type": "hyperscale",
+    "status": "operational",
+    "tierLevel": "3",
+    "capacityMW": 24,
+    "floorSpaceM2": 33000,
+    "pue": null,
+    "operator": "Turkcell",
+    "owner": "Turkcell",
+    "yearOpened": 2016,
+    "yearPlanned": null,
+    "cloudRegion": null,
+    "geopoliticalNotes": "Largest data center in Turkey; central to Turkcell's enterprise cloud and national data sovereignty strategy.",
+    "notes": "Located in Gebze, on the Asian side of Istanbul.",
+    "attribution": {
+      "sources": [
+        { "name": "Turkcell Data Centers", "url": "https://www.turkcell.com.tr/en/aboutus/corporate-social-responsibility/data-centers", "accessedAt": "2025-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 1,
+        "lastVerified": "2025-05-10"
+      }
+    }
+  },
+  {
+    "id": "DC-TUR-IST-EQIX-IL2",
+    "name": "Equinix IL2 Istanbul",
+    "countryId": "TUR",
+    "city": "Istanbul",
+    "coordinates": [29.15, 41.01],
+    "type": "colocation",
+    "status": "operational",
+    "tierLevel": "3",
+    "capacityMW": null,
+    "floorSpaceM2": 1800,
+    "pue": null,
+    "operator": "Equinix",
+    "owner": "Equinix",
+    "yearOpened": 2017,
+    "yearPlanned": null,
+    "cloudRegion": null,
+    "geopoliticalNotes": "Most densely connected and carrier-neutral hub in Turkey; gateway for international cloud and financial services.",
+    "notes": "Formerly a Zenium facility.",
+    "attribution": {
+      "sources": [
+        { "name": "Equinix Istanbul Data Centers", "url": "https://www.equinix.com/data-centers/europe-colocation/turkey-colocation/istanbul-data-centers", "accessedAt": "2025-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 1,
+        "lastVerified": "2025-05-10"
+      }
+    }
+  },
+  {
+    "id": "DC-TUR-IST-NGN-STAR",
+    "name": "NGN Star of Bosphorus",
+    "countryId": "TUR",
+    "city": "Istanbul",
+    "coordinates": [29.35, 40.89],
+    "type": "colocation",
+    "status": "operational",
+    "tierLevel": "3",
+    "capacityMW": 16,
+    "floorSpaceM2": 24000,
+    "pue": null,
+    "operator": "NGN",
+    "owner": "NGN",
+    "yearOpened": 2018,
+    "yearPlanned": null,
+    "cloudRegion": null,
+    "geopoliticalNotes": "Turkey's first seismic-isolated data center; critical for business continuity in a high-earthquake-risk region.",
+    "notes": "Located in Tuzla, Istanbul.",
+    "attribution": {
+      "sources": [
+        { "name": "NGN Star of Bosphorus", "url": "https://ngn.com.tr/en/star-of-bosphorus", "accessedAt": "2025-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 1,
+        "lastVerified": "2025-05-10"
+      }
+    }
+  },
+  {
+    "id": "DC-TUR-IST-HUAW-TR",
+    "name": "Huawei Cloud Istanbul Region",
+    "countryId": "TUR",
+    "city": "Istanbul",
+    "coordinates": [28.97, 41.01],
+    "type": "hyperscale",
+    "status": "operational",
+    "tierLevel": "3",
+    "capacityMW": null,
+    "floorSpaceM2": null,
+    "pue": null,
+    "operator": "Huawei Cloud",
+    "owner": "Huawei",
+    "yearOpened": 2023,
+    "yearPlanned": null,
+    "cloudRegion": "tr-istanbul",
+    "geopoliticalNotes": "First major global public cloud region launched locally in Turkey; reflects deepening China-Turkey tech cooperation.",
+    "notes": null,
+    "attribution": {
+      "sources": [
+        { "name": "Huawei Cloud Global Infrastructure", "url": "https://www.huaweicloud.com/intl/en-us/about/locations.html", "accessedAt": "2025-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 1,
+        "lastVerified": "2025-05-10"
+      }
+    }
+  },
+  {
+    "id": "DC-TUR-ANK-TKC-TEM",
+    "name": "Turkcell Ankara Temelli",
+    "countryId": "TUR",
+    "city": "Ankara",
+    "coordinates": [32.35, 39.73],
+    "type": "hyperscale",
+    "status": "operational",
+    "tierLevel": "3",
+    "capacityMW": null,
+    "floorSpaceM2": 12000,
+    "pue": null,
+    "operator": "Turkcell",
+    "owner": "Turkcell",
+    "yearOpened": 2019,
+    "yearPlanned": null,
+    "cloudRegion": null,
+    "geopoliticalNotes": "Strategic hub in the capital; designated to host the future Google Cloud Turkey Region as a Sovereign Cloud.",
+    "notes": "Critical for government data residency.",
+    "attribution": {
+      "sources": [
+        { "name": "Turkcell Data Centers", "url": "https://www.turkcell.com.tr/en/aboutus/corporate-social-responsibility/data-centers", "accessedAt": "2025-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 1,
+        "lastVerified": "2025-05-10"
+      }
+    }
+  },
+  {
+    "id": "DC-TUR-IST-TTK-ESE",
+    "name": "Türk Telekom Esenyurt",
+    "countryId": "TUR",
+    "city": "Istanbul",
+    "coordinates": [28.68, 41.03],
+    "type": "colocation",
+    "status": "operational",
+    "tierLevel": "3",
+    "capacityMW": null,
+    "floorSpaceM2": 8700,
+    "pue": 1.02,
+    "operator": "Türk Telekom",
+    "owner": "Türk Telekom",
+    "yearOpened": 2022,
+    "yearPlanned": null,
+    "cloudRegion": null,
+    "geopoliticalNotes": "High-tech hub featuring liquid immersion cooling; critical node for national connectivity and international fiber backhaul.",
+    "notes": "Located on the European side of Istanbul.",
+    "attribution": {
+      "sources": [
+        { "name": "Türk Telekom Data Centers", "url": "https://www.turktelekom.com.tr/en", "accessedAt": "2025-05-10" }
+      ],
+      "confidence": {
+        "confidence": "medium",
+        "sourceCount": 1,
+        "lastVerified": "2025-05-10"
+      }
+    }
+  },
+  {
+    "id": "DC-TUR-ANK-KHZ-TUR1",
+    "name": "Khazna Ankara TUR1",
+    "countryId": "TUR",
+    "city": "Ankara",
+    "coordinates": [32.85, 39.93],
+    "type": "hyperscale",
+    "status": "planned",
+    "tierLevel": "3",
+    "capacityMW": 100,
+    "floorSpaceM2": null,
+    "pue": null,
+    "operator": "Khazna",
+    "owner": "Khazna (G42)",
+    "yearOpened": null,
+    "yearPlanned": 2026,
+    "cloudRegion": null,
+    "geopoliticalNotes": "Strategic UAE-Turkey joint venture; set to be Turkey's largest AI-ready hyperscale facility.",
+    "notes": "Planned for the Başkent Organized Industrial Zone.",
+    "attribution": {
+      "sources": [
+        { "name": "Khazna Data Centers News", "url": "https://khazna.ae/news/", "accessedAt": "2025-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 1,
+        "lastVerified": "2025-05-10"
+      }
+    }
+  },
+  {
+    "id": "DC-TUR-IST-VDF-ESE",
+    "name": "Vodafone Istanbul Esenyurt",
+    "countryId": "TUR",
+    "city": "Istanbul",
+    "coordinates": [28.68, 41.03],
+    "type": "colocation",
+    "status": "operational",
+    "tierLevel": "3",
+    "capacityMW": null,
+    "floorSpaceM2": null,
+    "pue": null,
+    "operator": "Vodafone Business",
+    "owner": "Vodafone",
+    "yearOpened": 2014,
+    "yearPlanned": null,
+    "cloudRegion": null,
+    "geopoliticalNotes": "Critical node for Vodafone's enterprise ecosystem and international subsea cable terminations in Turkey.",
+    "notes": null,
+    "attribution": {
+      "sources": [
+        { "name": "Vodafone Turkey Data Centers", "url": "https://www.vodafone.com.tr/business", "accessedAt": "2025-05-10" }
+      ],
+      "confidence": {
+        "confidence": "medium",
+        "sourceCount": 1,
+        "lastVerified": "2025-05-10"
+      }
+    }
+  },
+  {
+    "id": "DC-TUR-IST-EQIX-IL4",
+    "name": "Equinix IL4 Istanbul",
+    "countryId": "TUR",
+    "city": "Istanbul",
+    "coordinates": [29.15, 41.01],
+    "type": "colocation",
+    "status": "operational",
+    "tierLevel": "3",
+    "capacityMW": null,
+    "floorSpaceM2": null,
+    "pue": null,
+    "operator": "Equinix",
+    "owner": "Equinix",
+    "yearOpened": 2020,
+    "yearPlanned": null,
+    "cloudRegion": null,
+    "geopoliticalNotes": "Optimized for high-density AI and hybrid cloud; provides direct on-ramps to global cloud providers from Istanbul.",
+    "notes": null,
+    "attribution": {
+      "sources": [
+        { "name": "Equinix Istanbul Data Centers", "url": "https://www.equinix.com/data-centers/europe-colocation/turkey-colocation/istanbul-data-centers", "accessedAt": "2025-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 1,
+        "lastVerified": "2025-05-10"
+      }
+    }
+  },
+  {
+    "id": "DC-TUR-ANK-TTK-UMI",
+    "name": "Türk Telekom Ümitköy",
+    "countryId": "TUR",
+    "city": "Ankara",
+    "coordinates": [32.70, 39.89],
+    "type": "government",
+    "status": "operational",
+    "tierLevel": "3",
+    "capacityMW": null,
+    "floorSpaceM2": null,
+    "pue": null,
+    "operator": "Türk Telekom",
+    "owner": "Türk Telekom",
+    "yearOpened": null,
+    "yearPlanned": null,
+    "cloudRegion": null,
+    "geopoliticalNotes": "Primary public sector and government data hub in the capital; essential national infrastructure for civil services.",
+    "notes": null,
+    "attribution": {
+      "sources": [
+        { "name": "Türk Telekom Infrastructure", "url": "https://www.turktelekom.com.tr/en", "accessedAt": "2025-05-10" }
+      ],
+      "confidence": {
+        "confidence": "medium",
+        "sourceCount": 1,
+        "lastVerified": "2025-05-10"
+      }
+    }
+  }
+]

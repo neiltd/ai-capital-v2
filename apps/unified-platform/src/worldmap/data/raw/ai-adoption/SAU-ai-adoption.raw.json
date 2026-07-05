@@ -1,0 +1,30 @@
+[
+  {
+    "countryId": "SAU",
+    "year": 2023,
+    "aiReadinessScore": 67.04,
+    "aiAdoptionScore": 25.6,
+    "aiTalentScore": 4.49,
+    "aiInvestmentUsdM": 1700,
+    "aiStartupCount": 242,
+    "aiUnicornCount": 0,
+    "hasNationalAiStrategy": true,
+    "aiStrategyYear": 2020,
+    "aiPolicyScore": 100.0,
+    "cloudReadinessPct": null,
+    "broadbandPenetrationPct": 25.0,
+    "topAiSectors": ["Government", "Energy", "Finance", "Healthcare", "Smart Cities"],
+    "attribution": {
+      "sources": [
+        { "name": "Oxford Insights Government AI Readiness Index 2023", "url": "https://oxfordinsights.com/ai-readiness/ai-readiness-index/", "accessedAt": "2025-05-14" },
+        { "name": "Tortoise Media Global AI Index 2023", "url": "https://www.tortoisemedia.com/intelligence/global-ai/", "accessedAt": "2025-05-14" },
+        { "name": "Global AI Summit - Saudi Arabia AI Investment Report 2023", "url": "https://globalaisummit.org", "accessedAt": "2025-05-14" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 3,
+        "lastVerified": "2025-05-14"
+      }
+    }
+  }
+]

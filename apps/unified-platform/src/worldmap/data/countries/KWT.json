@@ -1,0 +1,67 @@
+{
+  "id": "KWT",
+  "iso2": "KW",
+  "name": "Kuwait",
+  "region": "Asia",
+  "subregion": "Western Asia",
+  "capital": "Kuwait City",
+  "lastUpdated": "2025-05-15",
+  "summary": "Kuwait is a constitutional monarchy undergoing significant political restructuring to accelerate its 'New Kuwait 2035' vision. Under the leadership of Emir Sheikh Mishal, the nation has entered a 'new era' of executive-led reform, marked by the dissolution of parliament to overcome years of legislative gridlock. Kuwait remains a global energy powerhouse with the world's 5th largest sovereign wealth fund, while simultaneously seeking to diversify its economy through massive infrastructure projects and increased foreign investment. Its foreign policy is characterized by strategic alliances with the West and pragmatic economic engagement with emerging powers like China.",
+  "indicators": {
+    "politicalStability":       { "score": 6, "trend": "stable", "confidence": "high", "note": "Executive-led restructuring aims to end long-standing legislative-executive friction." },
+    "economicDirection":        { "score": 7, "trend": "rising", "confidence": "high", "note": "Renewed focus on New Kuwait 2035 and major infrastructure following parliamentary dissolution." },
+    "investmentAttractiveness": { "score": 7, "trend": "rising", "confidence": "medium", "note": "Substantial sovereign wealth and new project pipelines, though bureaucracy remains a hurdle." },
+    "geopoliticalRisk":         { "score": 5, "trend": "stable", "confidence": "medium", "note": "Proximity to Iraq and Iran necessitates a balanced and proactive diplomatic approach." },
+    "educationQuality":         { "score": 6, "trend": "stable", "confidence": "high", "note": "Solid foundational system with ongoing efforts to align curriculum with private sector needs." },
+    "healthcareQuality":        { "score": 7, "trend": "stable", "confidence": "high", "note": "High-quality public and private healthcare services with significant state subsidies." },
+    "technologyInvestment":     { "score": 6, "trend": "rising", "confidence": "medium", "note": "Increasing investment in digital transformation and fintech to support economic diversification." }
+  },
+  "demographics": {
+    "population": 4850000,
+    "medianAge": 30.1,
+    "urbanizationRate": 100.0,
+    "majorEthnicGroups": ["Arab", "South Asian", "Other Asian", "African"],
+    "religions": [
+      { "name": "Muslim", "percent": 74 },
+      { "name": "Christian", "percent": 18 },
+      { "name": "Other", "percent": 8 }
+    ]
+  },
+  "alliances": ["GCC", "OPEC", "Arab League", "OIC", "UN", "MNNA"],
+  "relationships": [
+    { "countryId": "USA", "countryName": "United States", "type": "strategic_partner", "sentiment": "positive", "summary": "A cornerstone security relationship; Kuwait is a Major Non-NATO Ally (MNNA) hosting key U.S. facilities." },
+    { "countryId": "SAU", "countryName": "Saudi Arabia", "type": "ally", "sentiment": "positive", "summary": "Deep-rooted historical and security ties within the GCC framework." },
+    { "countryId": "CHN", "countryName": "China", "type": "economic_partner", "sentiment": "positive", "summary": "A primary trade partner and key collaborator in port management and infrastructure development." },
+    { "countryId": "IRQ", "countryName": "Iraq", "type": "neighbor", "sentiment": "neutral", "summary": "Improving bilateral ties focused on economic cooperation, despite lingering maritime border issues." },
+    { "countryId": "GBR", "countryName": "United Kingdom", "type": "strategic_partner", "sentiment": "positive", "summary": "Long-standing historical ties with ongoing cooperation in defense, finance, and education." }
+  ],
+  "perspectives": [
+    { "source": "Kuwaiti Reformer", "bias": "Optimistic", "view": "The suspension of the National Assembly is a necessary pause to clear the path for long-overdue economic reforms." },
+    { "source": "Regional Economist", "bias": "Pragmatic", "view": "Kuwait's massive fiscal buffers provide a safety net, but the transition to a non-oil economy is behind schedule compared to its neighbors." },
+    { "source": "Human Rights Advocate", "bias": "Critical", "view": "The concentration of executive power raises concerns about political expression and the rights of the stateless Bidoon population." },
+    { "source": "Energy Sector Analyst", "bias": "Optimistic", "view": "Recent offshore discoveries and the revival of project spending signal a robust outlook for the energy sector." }
+  ],
+  "historicalContext": {
+    "summary": "Kuwait gained independence from the UK in 1961. It was the first Gulf state to establish a parliament (1963). The 1990 Iraqi invasion and subsequent liberation in 1991 remain defining moments in its modern history, shaping its security-focused foreign policy and close ties with Western allies.",
+    "keyEvents": [
+      { "year": 1961, "event": "Independence from the United Kingdom." },
+      { "year": 1990, "event": "Invasion by Iraq under Saddam Hussein." },
+      { "year": 1991, "event": "Liberation by a U.S.-led international coalition." },
+      { "year": 2006, "event": "Sheikh Sabah Al-Ahmad becomes Emir, leading a period of diplomatic activism." },
+      { "year": 2020, "event": "Death of Emir Sheikh Sabah; Sheikh Nawaf Al-Ahmad succeeds him." },
+      { "year": 2023, "event": "Emir Sheikh Mishal Al-Ahmad succeeds the late Sheikh Nawaf." },
+      { "year": 2024, "event": "Emir dissolves the National Assembly to end years of legislative gridlock." },
+      { "year": 2025, "event": "Announcement of the Al-Julai'a offshore hydrocarbon discovery." }
+    ]
+  },
+  "investmentNotes": {
+    "strengths": ["World's 5th largest sovereign wealth fund (KIA)", "Lowest break-even oil price in the region", "Strategic location for Northern Gulf trade", "Strong legal and financial institutions"],
+    "risks": ["Heavy dependence on oil revenues", "Political uncertainty during transition", "Bureaucratic delays in project execution", "Regional geopolitical volatility"],
+    "sectors": ["Oil & Gas (Upstream and Downstream)", "Infrastructure & Construction", "FinTech", "Renewable Energy"]
+  },
+  "sources": [
+    { "name": "Central Statistical Bureau - Kuwait", "url": "https://www.csb.gov.kw", "type": "economic" },
+    { "name": "Kuwait Investment Authority", "url": "https://www.kia.gov.kw", "type": "economic" },
+    { "name": "KUNA - Kuwait News Agency", "url": "https://www.kuna.net.kw", "type": "government" }
+  ]
+}

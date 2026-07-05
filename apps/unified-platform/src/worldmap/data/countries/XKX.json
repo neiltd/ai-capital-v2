@@ -1,0 +1,68 @@
+{
+  "id": "XKX",
+  "iso2": "XK",
+  "name": "Kosovo",
+  "region": "Europe",
+  "subregion": "Southern Europe",
+  "capital": "Pristina",
+  "lastUpdated": "2026-05-09",
+  "summary": "Kosovo is a landlocked state in the Balkans that declared independence from Serbia in 2008. While recognized by over 100 UN member states, its sovereignty remains contested by Serbia, Russia, and several EU members. Kosovo's security is guaranteed by NATO's KFOR mission, and its political life is heavily oriented toward Euro-Atlantic integration. The country faces significant challenges including ethnic tensions in the north, high unemployment, and the need for a finalized normalization agreement with Serbia to unlock its full potential for EU and UN membership.",
+  "indicators": {
+    "politicalStability":       { "score": 5, "trend": "stable", "confidence": "high", "note": "Stable central government, but persistent ethnic friction and periodic unrest in the northern Serb-majority municipalities." },
+    "economicDirection":        { "score": 5, "trend": "rising", "confidence": "high", "note": "Strong growth post-pandemic driven by the diaspora and service sector, but structural issues like energy insecurity persist." },
+    "investmentAttractiveness": { "score": 5, "trend": "stable", "confidence": "high", "note": "Young, multilingual workforce and favorable tax regime, but deterred by political uncertainty and rule-of-law concerns." },
+    "geopoliticalRisk":         { "score": 7, "trend": "rising", "confidence": "high", "note": "High risk of localized conflict in the north and the impact of the broader West-Russia rift on Balkan stability." },
+    "educationQuality":         { "score": 4, "trend": "stable", "confidence": "medium", "note": "Education system needs reform to better align with market needs; high youth unemployment remains a critical issue." },
+    "healthcareQuality":        { "score": 4, "trend": "stable", "confidence": "medium", "note": "Public healthcare is underfunded; many citizens seek specialized treatment abroad, particularly in the region." },
+    "technologyInvestment":     { "score": 6, "trend": "rising", "confidence": "high", "note": "Rapidly growing ICT sector and high internet penetration; focus on outsourcing and digital services for the European market." }
+  },
+  "demographics": {
+    "population": 1800000,
+    "medianAge": 30.5,
+    "urbanizationRate": 38,
+    "majorEthnicGroups": ["Albanian (93%)", "Serb (1.5%)", "Bosniak", "Turkish", "Roma"],
+    "religions": [
+      { "name": "Muslim", "percent": 95.6 },
+      { "name": "Christian (Catholic/Orthodox)", "percent": 3.7 },
+      { "name": "Other", "percent": 0.7 }
+    ]
+  },
+  "alliances": ["IMF", "World Bank", "CEFTA", "NATO Aspirant"],
+  "relationships": [
+    { "countryId": "ALB", "countryName": "Albania", "type": "strategic_partner", "sentiment": "positive", "summary": "Deepest ethnic, cultural, and political ties; shared goal of regional integration and cooperation." },
+    { "countryId": "USA", "countryName": "United States", "type": "strategic_partner", "sentiment": "positive", "summary": "Viewed as the primary security guarantor and architect of Kosovo's independence; very high public approval." },
+    { "countryId": "SRB", "countryName": "Serbia", "type": "adversary", "sentiment": "negative", "summary": "Does not recognize independence; relations characterized by diplomatic friction and disputes over northern Kosovo." },
+    { "countryId": "DEU", "countryName": "Germany", "type": "partner", "sentiment": "positive", "summary": "Major economic partner and host to a significant Kosovar diaspora; key supporter of EU integration." }
+  ],
+  "perspectives": [
+    { "source": "Pristina Tech Entrepreneur", "bias": "Optimistic", "view": "Our youth and digital connectivity are our greatest assets; we can become a tech hub for Europe if the political barriers are removed." },
+    { "source": "Northern Kosovo Serb", "bias": "Defensive", "view": "We feel marginalized by Pristina; our identity and rights must be protected through some form of autonomy or special status." },
+    { "source": "European Union Envoy", "bias": "Neutral", "view": "Normalization with Serbia is the only path forward; both sides must implement the agreements reached in Brussels." },
+    { "source": "Government Reformer", "bias": "Institutional", "view": "Our priority is fighting corruption and strengthening the rule of law to make Kosovo a credible candidate for EU membership." }
+  ],
+  "historicalContext": {
+    "summary": "Kosovo was part of the Ottoman Empire for centuries before being incorporated into Serbia and later Yugoslavia. The late 20th century was defined by rising tensions between the Albanian majority and the Serbian state, culminating in the 1998-1999 war and NATO intervention.",
+    "keyEvents": [
+      { "year": 1989, "event": "Slobodan Milosevic revokes Kosovo's autonomy within Yugoslavia." },
+      { "year": 1998, "event": "Outbreak of armed conflict between the Kosovo Liberation Army (KLA) and Serbian forces." },
+      { "year": 1999, "event": "NATO air campaign against Yugoslavia; establishment of UN administration (UNMIK)." },
+      { "year": 2004, "event": "Widespread inter-ethnic unrest leads to a renewed push for a final status settlement." },
+      { "year": 2008, "event": "Kosovo declares independence from Serbia." },
+      { "year": 2010, "event": "International Court of Justice rules that the declaration of independence did not violate international law." },
+      { "year": 2013, "event": "Brussels Agreement signed, aiming to normalize relations with Serbia." },
+      { "year": 2020, "event": "Washington Agreement on economic normalization." },
+      { "year": 2021, "event": "Vetevendosje (Self-Determination) party wins a landslide victory, promising anti-corruption reforms." },
+      { "year": 2023, "event": "Serious security incidents in northern Kosovo highlight the fragility of the peace." }
+    ]
+  },
+  "investmentNotes": {
+    "strengths": ["Youngest population in Europe", "Competitive labor costs", "Strategic location for nearshoring", "Strong diaspora-led consumption and investment"],
+    "risks": ["Unresolved political status/Geopolitical risk", "Energy supply instability", "Small domestic market", "Inconsistent judicial enforcement"],
+    "sectors": ["ICT and Business Process Outsourcing", "Agribusiness", "Mining (Lead, Zinc, Lignite)", "Textiles and Leather"]
+  },
+  "sources": [
+    { "name": "Kosovo Agency of Statistics", "url": "https://ask.rks-gov.net/", "type": "economic" },
+    { "name": "Investment and Enterprise Support Agency (KIESA)", "url": "https://kiesa.rks-gov.net/", "type": "investment" },
+    { "name": "NATO KFOR", "url": "https://jfcnaples.nato.int/kfor", "type": "security" }
+  ]
+}

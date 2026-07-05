@@ -1,0 +1,68 @@
+{
+  "id": "ETH",
+  "iso2": "ET",
+  "name": "Ethiopia",
+  "region": "Africa",
+  "subregion": "Eastern Africa",
+  "capital": "Addis Ababa",
+  "lastUpdated": "2026-05-15",
+  "summary": "Ethiopia is a pivotal but fragile state in the Horn of Africa, currently undergoing a historic shift from a state-led developmental model to a market-oriented economy. Under Prime Minister Abiy Ahmed, the country has joined BRICS+ and is aggressively liberalizing its banking and telecommunications sectors. However, deep-seated ethnic federalist tensions, active insurgencies in the Amhara and Oromia regions, and a high debt burden pose significant risks to its ambitious growth trajectory and institutional stability.",
+  "indicators": {
+    "politicalStability":       { "score": 3, "trend": "declining", "confidence": "high", "note": "Persistent internal conflicts and fractured regional politics challenge centralized governance." },
+    "economicDirection":        { "score": 8, "trend": "rising", "confidence": "high", "note": "Aggressive liberalization and Homegrown Economic Reform 2.0 driving high growth." },
+    "investmentAttractiveness": { "score": 6, "trend": "rising", "confidence": "medium", "note": "Opening sectors to foreign competition but hampered by FX shortages and security risks." },
+    "geopoliticalRisk":         { "score": 4, "trend": "rising", "confidence": "high", "note": "Strategic tensions with Somalia over sea access and deteriorating ties with Eritrea." },
+    "educationQuality":         { "score": 5, "trend": "stable", "confidence": "medium", "note": "Massive expansion of tertiary education but quality and vocational alignment remain low." },
+    "healthcareQuality":        { "score": 4, "trend": "stable", "confidence": "medium", "note": "Improving rural access but severely strained by conflict and displacement." },
+    "technologyInvestment":     { "score": 7, "trend": "rising", "confidence": "medium", "note": "Focus on AI sovereignty and digital infrastructure to modernize the economy." }
+  },
+  "demographics": {
+    "population": 140000000,
+    "medianAge": 20.0,
+    "urbanizationRate": 23,
+    "majorEthnicGroups": ["Oromo", "Amhara", "Somali", "Tigray"],
+    "religions": [
+      { "name": "Ethiopian Orthodox", "percent": 43 },
+      { "name": "Muslim", "percent": 34 },
+      { "name": "Protestant", "percent": 19 },
+      { "name": "Traditional/Other", "percent": 4 }
+    ]
+  },
+  "alliances": ["BRICS+", "African Union", "IGAD", "Common Market for Eastern and Southern Africa (COMESA)"],
+  "relationships": [
+    { "countryId": "CHN", "countryName": "China", "type": "partner", "sentiment": "positive", "summary": "Primary source of infrastructure financing and strategic digital partner." },
+    { "countryId": "ARE", "countryName": "United Arab Emirates", "type": "partner", "sentiment": "positive", "summary": "Key financial backer and strategic ally in port access negotiations." },
+    { "countryId": "SOM", "countryName": "Somalia", "type": "rival", "sentiment": "negative", "summary": "Acute tension following Ethiopia's maritime MoU with Somaliland." },
+    { "countryId": "ERI", "countryName": "Eritrea", "type": "rival", "sentiment": "negative", "summary": "Deteriorating relations with high risk of return to border hostilities." },
+    { "countryId": "USA", "countryName": "United States", "type": "partner", "sentiment": "neutral", "summary": "Complex security cooperation balanced against human rights critiques." }
+  ],
+  "perspectives": [
+    { "source": "Prosperity Party Official", "bias": "Nationalist", "view": "Our economic reforms and BRICS+ entry mark Ethiopia's emergence as a sovereign, multi-aligned middle power." },
+    { "source": "Regional Human Rights Advocate", "bias": "Critical", "view": "State-led liberalization ignores the underlying human rights crisis and ethnic marginalization driving instability." },
+    { "source": "Foreign Tech Investor", "bias": "Optimistic", "view": "Ethiopia is the last great frontier market in Africa; the scale of the digital and banking opening is unprecedented." },
+    { "source": "Sudanese Security Analyst", "bias": "Wary", "view": "Ethiopia's push for sea access and the GERD dam threaten the delicate regional balance of power." }
+  ],
+  "historicalContext": {
+    "summary": "Ethiopia is Africa's oldest independent nation, never colonized. It transitioned from a centuries-old empire to a Marxist military junta (Derg) in 1974, followed by the ethnic federalist EPRDF era, and the current reformist but conflict-shadowed Abiy era.",
+    "keyEvents": [
+      { "year": 1896, "event": "Battle of Adwa: Defeat of Italian colonial forces, preserving independence." },
+      { "year": 1974, "event": "Revolution deposes Emperor Haile Selassie; Marxist Derg takes power." },
+      { "year": 1991, "event": "EPRDF overthrows the Derg, establishing the ethnic federalist republic." },
+      { "year": 2018, "event": "Abiy Ahmed becomes PM, initiating democratic and economic reforms." },
+      { "year": 2020, "event": "Outbreak of the Tigray War, causing massive humanitarian crisis." },
+      { "year": 2022, "event": "Pretoria Agreement ends large-scale Tigray hostilities." },
+      { "year": 2024, "event": "Ethiopia officially joins BRICS+; signs maritime MoU with Somaliland." },
+      { "year": 2026, "event": "Launch of the Ethiopian Securities Exchange (ESX)." }
+    ]
+  },
+  "investmentNotes": {
+    "strengths": ["Large, young domestic market", "Low-cost renewable energy (GERD)", "Rapidly liberalizing regulatory environment", "Strategic entry point for East Africa"],
+    "risks": ["Ethnic conflict and internal security", "Foreign exchange shortages", "Debt sustainability hurdles", "Logistics bottlenecks"],
+    "sectors": ["Financial Services", "Telecommunications", "Manufacturing (Textiles/Leather)", "Mining (Gold/Lithium)"]
+  },
+  "sources": [
+    { "name": "National Bank of Ethiopia", "url": "https://www.nbe.gov.et/", "type": "economic" },
+    { "name": "BTI Transformation Index", "url": "https://bti-project.org/en/reports/country-report/ETH", "type": "political" },
+    { "name": "CIA World Factbook", "url": "https://www.cia.gov/the-world-factbook/countries/ethiopia/", "type": "general" }
+  ]
+}

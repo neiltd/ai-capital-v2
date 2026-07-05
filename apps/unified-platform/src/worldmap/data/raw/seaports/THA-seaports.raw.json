@@ -1,0 +1,218 @@
+[
+  {
+    "id": "PORT-THA-LAEM-CHABANG",
+    "name": "Laem Chabang Port",
+    "countryId": "THA",
+    "city": "Chonburi",
+    "coordinates": [100.883, 13.067],
+    "type": "container",
+    "annualThroughputTEU": 10150000,
+    "annualThroughputTonnes": 106000000,
+    "berthCount": 23,
+    "maxDraftM": 17.0,
+    "strategicImportance": "critical",
+    "riskLevel": "low",
+    "geopoliticalNotes": "Thailand’s primary deep-sea gateway and heart of the Eastern Economic Corridor (EEC).",
+    "notes": "Handles over 70% of national container trade; major transshipment hub for the Mekong region.",
+    "attribution": {
+      "sources": [
+        { "name": "Port Authority of Thailand", "url": "https://www.port.co.th/en/", "accessedAt": "2024-05-10" },
+        { "name": "World Shipping Council", "url": "https://www.worldshipping.org", "accessedAt": "2024-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 2,
+        "lastVerified": "2024-05-10"
+      }
+    }
+  },
+  {
+    "id": "PORT-THA-BANGKOK",
+    "name": "Bangkok Port (Klong Toey)",
+    "countryId": "THA",
+    "city": "Bangkok",
+    "coordinates": [100.567, 13.7],
+    "type": "container",
+    "annualThroughputTEU": 1260000,
+    "annualThroughputTonnes": 21000000,
+    "berthCount": 18,
+    "maxDraftM": 8.2,
+    "strategicImportance": "high",
+    "riskLevel": "low",
+    "geopoliticalNotes": "Historic river port serving the capital's urban economy; vital for SME trade and domestic consumption.",
+    "notes": "Currently undergoing modernization into a 'Smart Port' to reduce city congestion.",
+    "attribution": {
+      "sources": [
+        { "name": "Port Authority of Thailand", "url": "https://www.port.co.th/en/", "accessedAt": "2024-05-10" },
+        { "name": "UNCTAD Maritime Transport Report", "url": "https://unctad.org/topic/transport-and-trade-logistics/maritime-transport-report", "accessedAt": "2024-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 2,
+        "lastVerified": "2024-05-10"
+      }
+    }
+  },
+  {
+    "id": "PORT-THA-MAP-TA-PHUT",
+    "name": "Map Ta Phut Industrial Port",
+    "countryId": "THA",
+    "city": "Rayong",
+    "coordinates": [101.15, 12.667],
+    "type": "oil",
+    "annualThroughputTEU": 700000,
+    "annualThroughputTonnes": 23000000,
+    "berthCount": 15,
+    "maxDraftM": 16.0,
+    "strategicImportance": "critical",
+    "riskLevel": "low",
+    "geopoliticalNotes": "Thailand’s largest industrial and petrochemical hub; critical for national energy security.",
+    "notes": "Handles crude oil, liquid chemicals, and natural gas for the Eastern Seaboard.",
+    "attribution": {
+      "sources": [
+        { "name": "Industrial Estate Authority of Thailand", "url": "https://www.ieat.go.th/en/", "accessedAt": "2024-05-10" },
+        { "name": "UNCTAD", "url": "https://unctad.org", "accessedAt": "2024-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 2,
+        "lastVerified": "2024-05-10"
+      }
+    }
+  },
+  {
+    "id": "PORT-THA-SRIRACHA",
+    "name": "Sriracha Harbour",
+    "countryId": "THA",
+    "city": "Chonburi",
+    "coordinates": [100.883, 13.15],
+    "type": "bulk",
+    "annualThroughputTEU": null,
+    "annualThroughputTonnes": 4000000,
+    "berthCount": 6,
+    "maxDraftM": 14.0,
+    "strategicImportance": "medium",
+    "riskLevel": "low",
+    "geopoliticalNotes": "Thailand’s first private international deep-sea port; serves automotive, steel, and manufacturing sectors.",
+    "notes": "Provides flexible alternatives to state-run facilities; high specialized volume.",
+    "attribution": {
+      "sources": [
+        { "name": "Sriracha Harbour", "url": "http://www.srirachaport.com/", "accessedAt": "2024-05-10" },
+        { "name": "UNCTAD", "url": "https://unctad.org", "accessedAt": "2024-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 2,
+        "lastVerified": "2024-05-10"
+      }
+    }
+  },
+  {
+    "id": "PORT-THA-SONGKHLA",
+    "name": "Songkhla Port",
+    "countryId": "THA",
+    "city": "Songkhla",
+    "coordinates": [100.583, 7.233],
+    "type": "mixed",
+    "annualThroughputTEU": 140000,
+    "annualThroughputTonnes": 1800000,
+    "berthCount": 3,
+    "maxDraftM": 9.0,
+    "strategicImportance": "medium",
+    "riskLevel": "low",
+    "geopoliticalNotes": "Primary maritime hub for Southern Thailand; main outlet for rubber and frozen seafood exports.",
+    "notes": "Key trade link with Malaysia and Singapore.",
+    "attribution": {
+      "sources": [
+        { "name": "Chaophraya Terminal International Co., Ltd.", "url": "http://www.ctiport.com/", "accessedAt": "2024-05-10" },
+        { "name": "Port Authority of Thailand", "url": "https://www.port.co.th/en/", "accessedAt": "2024-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 2,
+        "lastVerified": "2024-05-10"
+      }
+    }
+  },
+  {
+    "id": "PORT-THA-RANONG",
+    "name": "Ranong Port",
+    "countryId": "THA",
+    "city": "Ranong",
+    "coordinates": [98.6, 9.967],
+    "type": "mixed",
+    "annualThroughputTEU": 5500,
+    "annualThroughputTonnes": 325000,
+    "berthCount": 2,
+    "maxDraftM": 9.0,
+    "strategicImportance": "high",
+    "riskLevel": "low",
+    "geopoliticalNotes": "Gateway to the Andaman Sea and BIMSTEC region; western terminus for the proposed Thai Land Bridge.",
+    "notes": "Strategic node intended to bypass the Malacca Strait in the future.",
+    "attribution": {
+      "sources": [
+        { "name": "Port Authority of Thailand", "url": "https://www.port.co.th/en/", "accessedAt": "2024-05-10" },
+        { "name": "Bangkok Post", "url": "https://www.bangkokpost.com", "accessedAt": "2024-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 2,
+        "lastVerified": "2024-05-10"
+      }
+    }
+  },
+  {
+    "id": "PORT-THA-SATTAHIP",
+    "name": "Sattahip Commercial Port",
+    "countryId": "THA",
+    "city": "Chonburi",
+    "coordinates": [100.883, 12.633],
+    "type": "naval",
+    "annualThroughputTEU": null,
+    "annualThroughputTonnes": null,
+    "berthCount": 4,
+    "maxDraftM": 10.3,
+    "strategicImportance": "high",
+    "riskLevel": "low",
+    "geopoliticalNotes": "Strategic dual-use facility; main base for the Royal Thai Navy and commercial Ro-Ro cargo for the EEC.",
+    "notes": "Significant for regional security and heavy machinery logistics.",
+    "attribution": {
+      "sources": [
+        { "name": "Sattahip Commercial Port", "url": "http://www.sattahimport.com/", "accessedAt": "2024-05-10" },
+        { "name": "Naval Base Sattahip", "url": "https://www.navy.mi.th", "accessedAt": "2024-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 2,
+        "lastVerified": "2024-05-10"
+      }
+    }
+  },
+  {
+    "id": "PORT-THA-PHUKET",
+    "name": "Phuket Deep Sea Port",
+    "countryId": "THA",
+    "city": "Phuket",
+    "coordinates": [98.4, 7.817],
+    "type": "multipurpose",
+    "annualThroughputTEU": null,
+    "annualThroughputTonnes": 50000,
+    "berthCount": 1,
+    "maxDraftM": 10.0,
+    "strategicImportance": "low",
+    "riskLevel": "low",
+    "geopoliticalNotes": "Primary Andaman gateway for the tourism industry; strategically essential for Southern tourism supply chain.",
+    "notes": "Focuses on international cruise connectivity and regional tourism logistics.",
+    "attribution": {
+      "sources": [
+        { "name": "Phuket Deep Sea Port", "url": "http://www.phuketport.com/", "accessedAt": "2024-05-10" },
+        { "name": "ASEAN Stats", "url": "https://www.aseanstats.org/", "accessedAt": "2024-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 2,
+        "lastVerified": "2024-05-10"
+      }
+    }
+  }
+]

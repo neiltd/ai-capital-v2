@@ -1,0 +1,61 @@
+{
+  "id": "MAC",
+  "iso2": "MO",
+  "name": "Macau",
+  "region": "Asia",
+  "subregion": "Eastern Asia",
+  "capital": "Macau",
+  "lastUpdated": "2025-05-20",
+  "summary": "Macau is currently undergoing a leadership transition and a major strategic pivot away from its gaming-centric economy. In late 2024, Sam Hou Fai, a legal professional with strong mainland ties, was elected Chief Executive, signaling a move toward more rigorous legal integration and administrative efficiency. The territory is aggressively pursuing its '1+4' diversification strategy to expand into health, finance, and tech while maintaining a very low security risk profile.",
+  "indicators": {
+    "politicalStability":       { "score": 9, "trend": "stable", "confidence": "high", "note": "High stability under the 'Patriots Only' governance model; smooth leadership transition in late 2024." },
+    "economicDirection":        { "score": 7, "trend": "improving", "confidence": "high", "note": "Strong recovery in tourism; active diversification efforts via the '1+4' strategy and Hengqin cooperation zone." },
+    "investmentAttractiveness": { "score": 7, "trend": "stable", "confidence": "high", "note": "Highly attractive for non-gaming sectors being promoted by the government (MICE, TCM, Fintech)." },
+    "geopoliticalRisk":         { "score": 3, "trend": "stable", "confidence": "high", "note": "Low risk; Macau is fully integrated into the mainland's security framework and maintains a less confrontational international profile than Hong Kong." },
+    "educationQuality":         { "score": 7, "trend": "stable", "confidence": "high", "note": "Standardized system with increasing focus on mainland integration and high-tech research." },
+    "healthcareQuality":        { "score": 8, "trend": "improving", "confidence": "high", "note": "High-quality system; major investment in the Islands Healthcare Complex and Traditional Chinese Medicine hub." },
+    "technologyInvestment":     { "score": 7, "trend": "improving", "confidence": "high", "note": "Significant state push for high-tech in the Hengqin zone; focus on chips and biotech." }
+  },
+  "demographics": {
+    "population": 713082,
+    "medianAge": 41.0,
+    "urbanizationRate": 100.0,
+    "majorEthnicGroups": ["Chinese", "Filipino", "Vietnamese"],
+    "religions": [
+      { "name": "Buddhist", "percent": 50.0 },
+      { "name": "Catholic", "percent": 7.0 }
+    ]
+  },
+  "alliances": ["WTO", "APEC", "Greater Bay Area (GBA)"],
+  "relationships": [
+    { "countryId": "CHN", "countryName": "China", "type": "strategic_partner", "sentiment": "positive", "summary": "Sovereign power; Macau is a model of successful integration under the 'One Country, Two Systems' framework." },
+    { "countryId": "PRT", "countryName": "Portugal", "type": "strategic_partner", "sentiment": "positive", "summary": "Close cultural and linguistic ties; Macau serves as a primary bridge between China and the Lusophone world." },
+    { "countryId": "HKG", "countryName": "Hong Kong", "type": "strategic_partner", "sentiment": "positive", "summary": "Close regional partner and fellow SAR; cooperation within the Greater Bay Area framework." },
+    { "countryId": "USA", "countryName": "United States", "type": "economic_partner", "sentiment": "neutral", "summary": "Relationship focused on gaming concessions (MGM, Sands, Wynn) and increasingly impacted by broader US-China competition." }
+  ],
+  "perspectives": [
+    { "source": "Macau SAR Official", "bias": "Optimistic", "view": "Our new leadership and the '1+4' plan will ensure Macau's prosperity for the next 20 years, moving us beyond the gaming table." },
+    { "source": "Gaming Industry Analyst", "bias": "Cautious", "view": "The focus on non-gaming is necessary but the transition is difficult; the new CE's legal background suggests tighter oversight of capital flows." },
+    { "source": "Hengqin Startup Founder", "bias": "Excited", "view": "The customs relaxation in 2024 has made Hengqin a real part of Macau; we have the space we never had on the peninsula." }
+  ],
+  "historicalContext": {
+    "summary": "A Portuguese territory for over 400 years, Macau was returned to China in 1999. It became the world's largest gaming hub following the liberalization of the casino industry in 2002. Since 2020, it has shifted focus toward economic diversification and closer integration with the mainland.",
+    "keyEvents": [
+      { "year": 1999, "event": "Handover from Portugal to China." },
+      { "year": 2002, "event": "Liberalization of the gaming industry." },
+      { "year": 2023, "event": "Major amendments to the National Security Law." },
+      { "year": 2024, "event": "Implementation of the 'Two Lines' customs system in Hengqin; election of Sam Hou Fai as CE." },
+      { "year": 2025, "event": "First arrests under the amended National Security Law." }
+    ]
+  },
+  "investmentNotes": {
+    "strengths": ["World-class tourism and MICE infrastructure", "Strategic bridge role to Portuguese-speaking countries", "Stable and predictable political environment", "High per-capita income and strong government reserves"],
+    "risks": ["Heavy historical reliance on a single industry (gaming)", "Negative demographic trends (aging population)", "Susceptibility to mainland regulatory changes regarding capital flows", "Limited land for physical expansion"],
+    "sectors": ["Conventions & Exhibitions (MICE)", "Traditional Chinese Medicine", "Modern Financial Services", "High-Tech Manufacturing (Hengqin Zone)"]
+  },
+  "sources": [
+    { "name": "Macau SAR Government Portal", "url": "https://www.gov.mo/en/", "type": "government" },
+    { "name": "Statistics and Census Service (DSEC)", "url": "https://www.dsec.gov.mo/en-US/", "type": "economic" },
+    { "name": "Macao Trade and Investment Promotion Institute (IPIM)", "url": "https://www.ipim.gov.mo/en/", "type": "economic" }
+  ]
+}

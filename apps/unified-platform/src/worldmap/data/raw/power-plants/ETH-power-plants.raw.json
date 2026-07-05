@@ -1,0 +1,272 @@
+[
+  {
+    "id": "PLANT-ETH-GERD",
+    "name": "Grand Ethiopian Renaissance Dam (GERD)",
+    "countryId": "ETH",
+    "city": "Guba",
+    "coordinates": [35.0931, 11.2153],
+    "type": "hydro",
+    "status": "operating",
+    "capacityMW": 5150,
+    "annualOutputGWh": 15700,
+    "yearCommissioned": 2022,
+    "yearRetirement": null,
+    "operator": "Ethiopian Electric Power",
+    "owner": "State of Ethiopia",
+    "strategicNote": "Largest hydroelectric plant in Africa and a major source of regional tension with downstream countries Egypt and Sudan over Nile water rights.",
+    "notes": "Current installed capacity; planned final capacity is 6,450 MW.",
+    "attribution": {
+      "sources": [
+        { "name": "Global Energy Monitor", "url": "https://www.gem.wiki/Grand_Ethiopian_Renaissance_Dam", "accessedAt": "2025-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 1,
+        "lastVerified": "2025-05-10"
+      }
+    }
+  },
+  {
+    "id": "PLANT-ETH-GILGEL-GIBE-3",
+    "name": "Gilgel Gibe III Dam",
+    "countryId": "ETH",
+    "city": "Arba Minch",
+    "coordinates": [37.3014, 6.8472],
+    "type": "hydro",
+    "status": "operating",
+    "capacityMW": 1870,
+    "annualOutputGWh": 6500,
+    "yearCommissioned": 2015,
+    "yearRetirement": null,
+    "operator": "Ethiopian Electric Power",
+    "owner": "State of Ethiopia",
+    "strategicNote": "Critical for Ethiopia's electricity exports to neighboring Kenya.",
+    "notes": null,
+    "attribution": {
+      "sources": [
+        { "name": "Global Energy Monitor", "url": "https://www.gem.wiki/Gilgel_Gibe_III_Dam", "accessedAt": "2025-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 1,
+        "lastVerified": "2025-05-10"
+      }
+    }
+  },
+  {
+    "id": "PLANT-ETH-TANA-BELES",
+    "name": "Tana Beles Hydroelectric Plant",
+    "countryId": "ETH",
+    "city": "Bahir Dar",
+    "coordinates": [36.9189, 11.8194],
+    "type": "hydro",
+    "status": "operating",
+    "capacityMW": 460,
+    "annualOutputGWh": 2300,
+    "yearCommissioned": 2010,
+    "yearRetirement": null,
+    "operator": "Ethiopian Electric Power",
+    "owner": "State of Ethiopia",
+    "strategicNote": "Major inter-basin transfer project utilizing water from Lake Tana for power and irrigation.",
+    "notes": null,
+    "attribution": {
+      "sources": [
+        { "name": "Global Energy Monitor", "url": "https://www.gem.wiki/Tana_Beles_hydroelectric_plant", "accessedAt": "2025-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 1,
+        "lastVerified": "2025-05-10"
+      }
+    }
+  },
+  {
+    "id": "PLANT-ETH-TEKEZE",
+    "name": "Tekeze Dam",
+    "countryId": "ETH",
+    "city": "Inda Selassie",
+    "coordinates": [38.7436, 13.3469],
+    "type": "hydro",
+    "status": "operating",
+    "capacityMW": 300,
+    "annualOutputGWh": 1000,
+    "yearCommissioned": 2009,
+    "yearRetirement": null,
+    "operator": "Ethiopian Electric Power",
+    "owner": "State of Ethiopia",
+    "strategicNote": "Double-curvature arch dam on the Tekeze River, critical for the northern region's power supply.",
+    "notes": null,
+    "attribution": {
+      "sources": [
+        { "name": "Global Energy Monitor", "url": "https://www.gem.wiki/Tekeze_Dam", "accessedAt": "2025-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 1,
+        "lastVerified": "2025-05-10"
+      }
+    }
+  },
+  {
+    "id": "PLANT-ETH-ADAMA-WIND",
+    "name": "Adama Wind Farm (I & II)",
+    "countryId": "ETH",
+    "city": "Adama",
+    "coordinates": [39.2495, 8.5913],
+    "type": "wind",
+    "status": "operating",
+    "capacityMW": 204,
+    "annualOutputGWh": null,
+    "yearCommissioned": 2012,
+    "yearRetirement": null,
+    "operator": "Ethiopian Electric Power",
+    "owner": "State of Ethiopia",
+    "strategicNote": "First major wind farm in Ethiopia, demonstrating the potential for non-hydro renewables.",
+    "notes": "Adama I (51 MW) and Adama II (153 MW).",
+    "attribution": {
+      "sources": [
+        { "name": "Global Energy Monitor", "url": "https://www.gem.wiki/Adama_Wind_Farm", "accessedAt": "2025-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 1,
+        "lastVerified": "2025-05-10"
+      }
+    }
+  },
+  {
+    "id": "PLANT-ETH-GILGEL-GIBE-2",
+    "name": "Gilgel Gibe II Hydroelectric Plant",
+    "countryId": "ETH",
+    "city": "Fofofa",
+    "coordinates": [37.5500, 7.7500],
+    "type": "hydro",
+    "status": "operating",
+    "capacityMW": 420,
+    "annualOutputGWh": 1600,
+    "yearCommissioned": 2010,
+    "yearRetirement": null,
+    "operator": "Ethiopian Electric Power",
+    "owner": "State of Ethiopia",
+    "strategicNote": "Unique facility using the head between Gibe I and Gibe II reservoirs through a 26km tunnel.",
+    "notes": null,
+    "attribution": {
+      "sources": [
+        { "name": "Global Energy Monitor", "url": "https://www.gem.wiki/Gilgel_Gibe_II_hydroelectric_plant", "accessedAt": "2025-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 1,
+        "lastVerified": "2025-05-10"
+      }
+    }
+  },
+  {
+    "id": "PLANT-ETH-ASHEGODA",
+    "name": "Ashegoda Wind Farm",
+    "countryId": "ETH",
+    "city": "Mekelle",
+    "coordinates": [39.5000, 13.5000],
+    "type": "wind",
+    "status": "operating",
+    "capacityMW": 120,
+    "annualOutputGWh": null,
+    "yearCommissioned": 2013,
+    "yearRetirement": null,
+    "operator": "Ethiopian Electric Power",
+    "owner": "State of Ethiopia",
+    "strategicNote": "Key wind facility in the Tigray region.",
+    "notes": null,
+    "attribution": {
+      "sources": [
+        { "name": "Global Energy Monitor", "url": "https://www.gem.wiki/Ashegoda_wind_farm", "accessedAt": "2025-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 1,
+        "lastVerified": "2025-05-10"
+      }
+    }
+  },
+  {
+    "id": "PLANT-ETH-REPPIE",
+    "name": "Reppie Waste-to-Energy Plant",
+    "countryId": "ETH",
+    "city": "Addis Ababa",
+    "coordinates": [38.7099, 8.9778],
+    "type": "biomass",
+    "status": "operating",
+    "capacityMW": 25,
+    "annualOutputGWh": null,
+    "yearCommissioned": 2018,
+    "yearRetirement": null,
+    "operator": "Ethiopian Electric Power",
+    "owner": "State of Ethiopia",
+    "strategicNote": "Africa's first major waste-to-energy facility, addressing waste management and power needs in Addis Ababa.",
+    "notes": null,
+    "attribution": {
+      "sources": [
+        { "name": "Global Energy Monitor", "url": "https://www.gem.wiki/Reppie_Waste-to-Energy_plant", "accessedAt": "2025-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 1,
+        "lastVerified": "2025-05-10"
+      }
+    }
+  },
+  {
+    "id": "PLANT-ETH-FINCHA",
+    "name": "Fincha Hydroelectric Plant",
+    "countryId": "ETH",
+    "city": "Fincha",
+    "coordinates": [37.3500, 9.5500],
+    "type": "hydro",
+    "status": "operating",
+    "capacityMW": 134,
+    "annualOutputGWh": null,
+    "yearCommissioned": 1973,
+    "yearRetirement": null,
+    "operator": "Ethiopian Electric Power",
+    "owner": "State of Ethiopia",
+    "strategicNote": "One of Ethiopia's older but still critical hydroelectric facilities on the Fincha River.",
+    "notes": null,
+    "attribution": {
+      "sources": [
+        { "name": "Global Energy Monitor", "url": "https://www.gem.wiki/Fincha_hydroelectric_plant", "accessedAt": "2025-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 1,
+        "lastVerified": "2025-05-10"
+      }
+    }
+  },
+  {
+    "id": "PLANT-ETH-ALUTO-LANGANO",
+    "name": "Aluto Langano Geothermal Plant",
+    "countryId": "ETH",
+    "city": "Adami Tullu",
+    "coordinates": [38.7833, 7.8000],
+    "type": "geothermal",
+    "status": "operating",
+    "capacityMW": 7,
+    "annualOutputGWh": null,
+    "yearCommissioned": 1998,
+    "yearRetirement": null,
+    "operator": "Ethiopian Electric Power",
+    "owner": "State of Ethiopia",
+    "strategicNote": "Ethiopia's pilot geothermal facility, proving the immense Rift Valley geothermal potential.",
+    "notes": "Expansion projects are underway to significantly increase capacity.",
+    "attribution": {
+      "sources": [
+        { "name": "Global Energy Monitor", "url": "https://www.gem.wiki/Aluto_Langano_geothermal_plant", "accessedAt": "2025-05-10" }
+      ],
+      "confidence": {
+        "confidence": "medium",
+        "sourceCount": 1,
+        "lastVerified": "2025-05-10"
+      }
+    }
+  }
+]

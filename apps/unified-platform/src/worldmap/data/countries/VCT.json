@@ -1,0 +1,64 @@
+{
+  "id": "VCT",
+  "iso2": "VC",
+  "name": "Saint Vincent and the Grenadines",
+  "region": "Americas",
+  "subregion": "Caribbean",
+  "capital": "Kingstown",
+  "lastUpdated": "2026-05-15",
+  "summary": "Saint Vincent and the Grenadines is currently one of the fastest-growing economies in the Caribbean, driven by a massive rebound in tourism and several large-scale infrastructure projects, most notably the new modern port in Kingstown. Under the long-standing leadership of Prime Minister Ralph Gonsalves, the country has focused on post-volcano recovery and economic modernization. While the economy is booming, the nation faces challenges with a spike in violent crime, leading to a firearms amnesty program in 2024. Geopolitically, the country maintains an independent foreign policy, balancing close ties with traditional Western partners and non-traditional allies like Taiwan and Venezuela. As a multi-island state, it continues to invest in inter-island connectivity and climate-resilient infrastructure to support its diverse tourism and agricultural sectors.",
+  "indicators": {
+    "politicalStability":       { "score": 6, "score_description": "Stable parliamentary democracy; PM Gonsalves provides consistent but long-term leadership.", "trend": "stable", "confidence": "high", "note": "Political discourse remains vibrant and occasionally polarized." },
+    "economicDirection":        { "score": 7, "score_description": "High growth driven by construction, infrastructure, and cruise tourism.", "trend": "rising", "confidence": "high", "note": "The new Kingstown port is a major catalyst for future trade and logistics growth." },
+    "investmentAttractiveness": { "score": 6, "score_description": "Strong opportunities in hospitality and logistics; stable legal environment.", "trend": "rising", "confidence": "high", "note": "Massive expansion in the hotel sector, including major international brands." },
+    "geopoliticalRisk":         { "score": 4, "score_description": "Low to moderate; maintains a 'friend to all' foreign policy that occasionally draws scrutiny.", "trend": "stable", "confidence": "high", "note": "Strategic partner for both Taiwan and ALBA members." },
+    "educationQuality":         { "score": 6, "score_description": "Good foundation with a focus on 'Education Revolution' policies.", "trend": "stable", "confidence": "medium", "note": "Expansion of tertiary access and technical training is ongoing." },
+    "healthcareQuality":        { "score": 5, "score_description": "Decent primary care; the new acute referral hospital project aims to upgrade tertiary care.", "trend": "rising", "confidence": "medium", "note": "Significant focus on building climate-resilient health clinics across the islands." },
+    "technologyInvestment":     { "score": 5, "score_description": "Improving digital infrastructure and connectivity, especially in the Grenadines.", "trend": "rising", "confidence": "medium", "note": "Government is promoting digital services to streamline the business environment." }
+  },
+  "demographics": {
+    "population": 111000,
+    "medianAge": 33.4,
+    "urbanizationRate": 53,
+    "majorEthnicGroups": ["Black African descent", "Mixed descent", "Indigenous Garifuna/Kalinago", "East Indian", "European"],
+    "religions": [
+      { "name": "Protestant", "percent": 75 },
+      { "name": "Roman Catholic", "percent": 6 },
+      { "name": "None/Unaffiliated", "percent": 9 },
+      { "name": "Other", "percent": 10 }
+    ]
+  },
+  "alliances": ["CARICOM", "OECS", "OAS", "UN", "Commonwealth", "SIDS", "ALBA", "CELAC"],
+  "relationships": [
+    { "countryId": "TWN", "countryName": "Taiwan", "type": "ally", "sentiment": "positive", "summary": "Critical diplomatic and developmental partner, particularly in agriculture and infrastructure." },
+    { "countryId": "USA", "countryName": "United States", "type": "partner", "sentiment": "positive", "summary": "Close partner in regional security and maritime enforcement." },
+    { "countryId": "GBR", "countryName": "United Kingdom", "type": "partner", "sentiment": "positive", "summary": "Strong historical and legal ties; significant diaspora links." },
+    { "countryId": "VEN", "countryName": "Venezuela", "type": "partner", "sentiment": "positive", "summary": "Maintains close relations through PetroCaribe and developmental assistance." }
+  ],
+  "perspectives": [
+    { "source": "Kingstown Business Owner", "bias": "Economic", "view": "The new port will change everything for us; we are becoming a real hub for the southern Caribbean." },
+    { "source": "Grenadines Hotelier", "bias": "Tourism", "view": "Our islands are the crown jewels of the Caribbean; we need to ensure development is sustainable and benefits locals." },
+    { "source": "Community Leader", "bias": "Social", "view": "The economy is growing, but we must address the root causes of the crime spike among our youth." }
+  ],
+  "historicalContext": {
+    "summary": "Saint Vincent was a stronghold of the indigenous Garifuna (Black Caribs), who resisted European colonization for decades. It was eventually partitioned between France and Britain before becoming a British colony in 1763. The country gained independence in 1979. Its modern history has been punctuated by eruptions of the La Soufrière volcano, most recently in 1979 and 2021, both of which caused significant disruption and prompted major recovery efforts.",
+    "keyEvents": [
+      { "year": 1797, "event": "The British defeat the Garifuna and deport many to Roatán, Honduras." },
+      { "year": 1979, "event": "Saint Vincent and the Grenadines gains independence; La Soufrière erupts." },
+      { "year": 2001, "event": "Ralph Gonsalves and the ULP begin their long-standing tenure in government." },
+      { "year": 2017, "event": "Opening of the Argyle International Airport, a major milestone for tourism." },
+      { "year": 2021, "event": "Major eruption of La Soufrière volcano causes massive displacement." },
+      { "year": 2024, "event": "Launch of a successful firearms amnesty program to combat rising crime." }
+    ]
+  },
+  "investmentNotes": {
+    "strengths": ["Rapid economic growth and modernization", "Strategic infrastructure investments (new port, airport)", "Diverse tourism product from mainland to luxury Grenadines", "Independent and pragmatic foreign policy"],
+    "risks": ["Vulnerability to volcanic activity and hurricanes", "Recent spike in violent crime (being addressed)", "High cost of inter-island logistics", "Small domestic labor market"],
+    "sectors": ["Logistics and Transshipment", "High-end Hospitality and Real Estate", "Agro-processing (Bananas, Root Crops)", "Renewable Energy (Geothermal and Solar)", "Maritime Services"]
+  },
+  "sources": [
+    { "name": "Government of Saint Vincent and the Grenadines", "url": "https://www.gov.vc/", "type": "official" },
+    { "name": "Statistical Office of SVG", "url": "https://stats.gov.vc/", "type": "official" },
+    { "name": "IMF SVG Page", "url": "https://www.imf.org/en/Countries/VCT", "type": "economic" }
+  ]
+}

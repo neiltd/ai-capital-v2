@@ -1,0 +1,302 @@
+[
+  {
+    "id": "DC-NLD-AMS-EQUINIX-AM4",
+    "name": "Equinix AM4 Amsterdam IBX",
+    "countryId": "NLD",
+    "city": "Amsterdam",
+    "coordinates": [4.955, 52.356],
+    "type": "colocation",
+    "status": "operational",
+    "tierLevel": "3",
+    "capacityMW": 15,
+    "floorSpaceM2": null,
+    "pue": null,
+    "operator": "Equinix",
+    "owner": "Equinix",
+    "yearOpened": 2017,
+    "yearPlanned": null,
+    "cloudRegion": null,
+    "geopoliticalNotes": "A landmark vertical data center in Amsterdam Science Park. It handles ~38% of all Dutch data traffic and provides low-latency access to 80% of Europe, making it a critical node for global internet connectivity.",
+    "notes": "Houses a significant portion of the AMS-IX infrastructure.",
+    "attribution": {
+      "sources": [
+        { "name": "Equinix AM4 Amsterdam", "url": "https://www.equinix.com/data-centers/europe-colocation/netherlands-colocation/amsterdam-data-centers/am4", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 2,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  },
+  {
+    "id": "DC-NLD-MID-MSFT-CAMPUS",
+    "name": "Microsoft Middenmeer Campus",
+    "countryId": "NLD",
+    "city": "Middenmeer",
+    "coordinates": [5.025, 52.812],
+    "type": "hyperscale",
+    "status": "operational",
+    "tierLevel": "3",
+    "capacityMW": 300,
+    "floorSpaceM2": null,
+    "pue": null,
+    "operator": "Microsoft",
+    "owner": "Microsoft",
+    "yearOpened": 2015,
+    "yearPlanned": null,
+    "cloudRegion": "westeurope",
+    "geopoliticalNotes": "A massive hyperscale campus that serves as the heart of Microsoft's Azure West Europe region. Its location in Agriport A7 is strategically chosen for power availability and cooling efficiency.",
+    "notes": "One of Microsoft's largest data center footprints globally.",
+    "attribution": {
+      "sources": [
+        { "name": "Microsoft Azure Global Infrastructure", "url": "https://azure.microsoft.com/en-us/explore/global-infrastructure/geographies/#geographies", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 1,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  },
+  {
+    "id": "DC-NLD-EEM-GOOGLE-EEMSHAVEN",
+    "name": "Google Eemshaven Data Center",
+    "countryId": "NLD",
+    "city": "Eemshaven",
+    "coordinates": [6.835, 53.442],
+    "type": "hyperscale",
+    "status": "operational",
+    "tierLevel": "3",
+    "capacityMW": null,
+    "floorSpaceM2": null,
+    "pue": null,
+    "operator": "Google Cloud",
+    "owner": "Alphabet Inc.",
+    "yearOpened": 2016,
+    "yearPlanned": null,
+    "cloudRegion": "europe-west4",
+    "geopoliticalNotes": "Strategically located at a major subsea cable landing point, this facility is powered by 100% renewable energy from nearby offshore wind farms, reflecting the intersection of digital and energy geopolitics.",
+    "notes": "Google's first 100% renewable energy data center.",
+    "attribution": {
+      "sources": [
+        { "name": "Google Data Centers - Eemshaven", "url": "https://www.google.com/about/datacenters/locations/eemshaven/", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 1,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  },
+  {
+    "id": "DC-NLD-SCH-DR-AMS11",
+    "name": "Digital Realty AMS11 Schiphol",
+    "countryId": "NLD",
+    "city": "Schiphol",
+    "coordinates": [4.765, 52.285],
+    "type": "colocation",
+    "status": "operational",
+    "tierLevel": "3",
+    "capacityMW": 27,
+    "floorSpaceM2": null,
+    "pue": null,
+    "operator": "Digital Realty",
+    "owner": "Digital Realty",
+    "yearOpened": 2025,
+    "yearPlanned": null,
+    "cloudRegion": null,
+    "geopoliticalNotes": "An AI-optimized facility near Schiphol Airport, featuring direct liquid cooling for high-density workloads. It strengthens Amsterdam's position as a key AI hub in Northern Europe.",
+    "notes": "Strategically located near major logistics and transportation hubs.",
+    "attribution": {
+      "sources": [
+        { "name": "Digital Realty Amsterdam", "url": "https://www.digitalrealty.com/data-centers/amsterdam", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 2,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  },
+  {
+    "id": "DC-NLD-MID-GOOGLE-CAMPUS",
+    "name": "Google Middenmeer Campus",
+    "countryId": "NLD",
+    "city": "Middenmeer",
+    "coordinates": [5.035, 52.808],
+    "type": "hyperscale",
+    "status": "operational",
+    "tierLevel": "3",
+    "capacityMW": null,
+    "floorSpaceM2": null,
+    "pue": null,
+    "operator": "Google Cloud",
+    "owner": "Alphabet Inc.",
+    "yearOpened": 2020,
+    "yearPlanned": null,
+    "cloudRegion": "europe-west4",
+    "geopoliticalNotes": "Part of Google's multi-billion euro investment in the Netherlands, this campus provides critical redundancy for the Eemshaven site and supports the growing demand for cloud services in the Benelux region.",
+    "notes": "Highly efficient facility using advanced cooling techniques.",
+    "attribution": {
+      "sources": [
+        { "name": "Google Cloud Netherlands", "url": "https://cloud.google.com/about/locations/netherlands", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 1,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  },
+  {
+    "id": "DC-NLD-ASP-EQUINIX-AM3",
+    "name": "Equinix AM3 Amsterdam Science Park",
+    "countryId": "NLD",
+    "city": "Amsterdam",
+    "coordinates": [4.952, 52.358],
+    "type": "colocation",
+    "status": "operational",
+    "tierLevel": "3",
+    "capacityMW": null,
+    "floorSpaceM2": null,
+    "pue": null,
+    "operator": "Equinix",
+    "owner": "Equinix",
+    "yearOpened": 2012,
+    "yearPlanned": null,
+    "cloudRegion": null,
+    "geopoliticalNotes": "A key interconnection site in Amsterdam Science Park, providing high-density access to hundreds of carriers and ISPs, and serving as a major node for the NL-ix internet exchange.",
+    "notes": "Known for its high network density and carrier-neutrality.",
+    "attribution": {
+      "sources": [
+        { "name": "Equinix AM3", "url": "https://www.equinix.com/data-centers/europe-colocation/netherlands-colocation/amsterdam-data-centers/am3", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "medium",
+        "sourceCount": 1,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  },
+  {
+    "id": "DC-NLD-ASP-DR-AMS9",
+    "name": "Digital Realty AMS9 Science Park",
+    "countryId": "NLD",
+    "city": "Amsterdam",
+    "coordinates": [4.958, 52.355],
+    "type": "colocation",
+    "status": "operational",
+    "tierLevel": "3",
+    "capacityMW": null,
+    "floorSpaceM2": null,
+    "pue": null,
+    "operator": "Digital Realty",
+    "owner": "Digital Realty",
+    "yearOpened": null,
+    "yearPlanned": null,
+    "cloudRegion": null,
+    "geopoliticalNotes": "Strategically located in Amsterdam Science Park, this facility is a core node for international cloud and network connectivity, hosting a large number of global carriers and content providers.",
+    "notes": "Highly interconnected campus with multiple sister facilities in the Amsterdam area.",
+    "attribution": {
+      "sources": [
+        { "name": "Digital Realty AMS9", "url": "https://www.digitalrealty.com/data-centers/amsterdam/science-park", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "medium",
+        "sourceCount": 1,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  },
+  {
+    "id": "DC-NLD-AMS-IM-AMS1",
+    "name": "Iron Mountain AMS1 Amsterdam",
+    "countryId": "NLD",
+    "city": "Amsterdam",
+    "coordinates": [4.880, 52.330],
+    "type": "colocation",
+    "status": "operational",
+    "tierLevel": "3",
+    "capacityMW": null,
+    "floorSpaceM2": null,
+    "pue": null,
+    "operator": "Iron Mountain",
+    "owner": "Iron Mountain",
+    "yearOpened": null,
+    "yearPlanned": null,
+    "cloudRegion": null,
+    "geopoliticalNotes": "A major colocation facility in Amsterdam, providing secure and compliant infrastructure for enterprises and government agencies requiring high levels of data protection.",
+    "notes": "Features extensive security measures and compliance certifications.",
+    "attribution": {
+      "sources": [
+        { "name": "Iron Mountain Amsterdam Data Centers", "url": "https://www.ironmountain.com/data-centers/locations/amsterdam-data-center", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "medium",
+        "sourceCount": 1,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  },
+  {
+    "id": "DC-NLD-AMS-CYRUSONE-AMS1",
+    "name": "CyrusOne Amsterdam I",
+    "countryId": "NLD",
+    "city": "Amsterdam",
+    "coordinates": [4.750, 52.380],
+    "type": "colocation",
+    "status": "operational",
+    "tierLevel": "3",
+    "capacityMW": 72,
+    "floorSpaceM2": null,
+    "pue": null,
+    "operator": "CyrusOne",
+    "owner": "CyrusOne",
+    "yearOpened": 2020,
+    "yearPlanned": null,
+    "cloudRegion": null,
+    "geopoliticalNotes": "One of the largest data center developments in the Amsterdam region, this facility provides massive scale for cloud service providers and large enterprises operating in Europe.",
+    "notes": "Located in the Polanen Park area, north of Amsterdam.",
+    "attribution": {
+      "sources": [
+        { "name": "CyrusOne Amsterdam I", "url": "https://cyrusone.com/data-center-locations/amsterdam-i/", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 1,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  },
+  {
+    "id": "DC-NLD-AMS-NORTHC-AMS",
+    "name": "NorthC Amsterdam",
+    "countryId": "NLD",
+    "city": "Amsterdam",
+    "coordinates": [4.820, 52.400],
+    "type": "colocation",
+    "status": "operational",
+    "tierLevel": "3",
+    "capacityMW": null,
+    "floorSpaceM2": null,
+    "pue": null,
+    "operator": "NorthC Data Centers",
+    "owner": "NorthC",
+    "yearOpened": null,
+    "yearPlanned": null,
+    "cloudRegion": null,
+    "geopoliticalNotes": "A leading regional data center provider in the Netherlands, providing critical infrastructure for local businesses and public sector organizations, emphasizing regional data sovereignty.",
+    "notes": "Focuses on providing localized cloud and colocation services.",
+    "attribution": {
+      "sources": [
+        { "name": "NorthC Data Centers Amsterdam", "url": "https://www.northcdatacenters.com/en/locations/amsterdam/", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "medium",
+        "sourceCount": 1,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  }
+]

@@ -1,0 +1,65 @@
+{
+  "id": "MLI",
+  "iso2": "ML",
+  "name": "Mali",
+  "region": "Africa",
+  "subregion": "Western Africa",
+  "capital": "Bamako",
+  "lastUpdated": "2025-05-22",
+  "summary": "Mali is currently led by a military transition government under Colonel Assimi Goïta, which has recently consolidated power by extending the transition period to 2027. A founding member of the Alliance of Sahel States (AES), Mali has formally exited ECOWAS and fundamentally realigned its foreign policy away from France and the West toward Russia and the BRICS nations. The country faces a complex security landscape with renewed conflict against Tuareg separatists in the north and persistent jihadist insurgencies, while simultaneously navigating a severe electricity crisis and pivoting its economy toward lithium and gold production.",
+  "indicators": {
+    "politicalStability":       { "score": 2, "trend": "stable", "confidence": "high", "note": "Military rule; elections postponed to 2027; suppression of political opposition." },
+    "economicDirection":        { "score": 4, "trend": "rising", "confidence": "medium", "note": "Growth supported by gold and new lithium exports; hindered by electricity shortages and exit from ECOWAS." },
+    "investmentAttractiveness": { "score": 3, "trend": "stable", "confidence": "medium", "note": "High interest from Russian and Chinese firms in mining; high risk for Western investors." },
+    "geopoliticalRisk":         { "score": 9, "trend": "rising", "confidence": "high", "note": "Exit from ECOWAS; high tension with Western powers; active internal armed conflicts." },
+    "educationQuality":         { "score": 2, "trend": "falling", "confidence": "low", "note": "Disrupted by conflict in the north and center; limited resources for reform." },
+    "healthcareQuality":        { "score": 2, "trend": "stable", "confidence": "medium", "note": "High reliance on international NGOs; infrastructure remains very basic outside Bamako." },
+    "technologyInvestment":     { "score": 3, "trend": "rising", "confidence": "medium", "note": "Emerging interest in digital sovereignty and partnerships with non-Western tech firms." }
+  },
+  "demographics": {
+    "population": 23500000,
+    "medianAge": 16.1,
+    "urbanizationRate": 46.5,
+    "majorEthnicGroups": ["Bambara", "Fulani", "Sarakole", "Senufo", "Dogon", "Tuareg"],
+    "religions": [
+      { "name": "Muslim", "percent": 94.8 },
+      { "name": "Christian", "percent": 2.4 },
+      { "name": "Traditional", "percent": 2.0 },
+      { "name": "Other/None", "percent": 0.8 }
+    ]
+  },
+  "alliances": ["Alliance of Sahel States (AES)", "African Union", "United Nations"],
+  "relationships": [
+    { "countryId": "RUS", "countryName": "Russia", "type": "strategic_partner", "sentiment": "positive", "summary": "Primary security provider via Africa Corps; key partner in military and technical cooperation." },
+    { "countryId": "CHN", "countryName": "China", "type": "economic_partner", "sentiment": "positive", "summary": "Major investor in infrastructure and mining; provides significant diplomatic support." },
+    { "countryId": "FRA", "countryName": "France", "type": "adversary", "sentiment": "negative", "summary": "Relations severed; French military and NGOs expelled; constant diplomatic friction." },
+    { "countryId": "BFA", "countryName": "Burkina Faso", "type": "strategic_partner", "sentiment": "positive", "summary": "Co-founder of AES; deep military and political integration." }
+  ],
+  "perspectives": [
+    { "source": "Civil Servant in Bamako", "bias": "Supportive", "view": "We are finally reclaiming our sovereignty from colonial powers; the transition is necessary to stabilize the state." },
+    { "source": "Human Rights Activist", "bias": "Critical", "view": "The indefinite delay of elections and the crackdown on dissent are taking us back to a darker era of authoritarianism." },
+    { "source": "Gold Mine Operator", "bias": "Pragmatic", "view": "As long as the government maintains security in the mining zones, we can continue to operate and export." },
+    { "source": "Displaced Person in Mopti", "bias": "Desperate", "view": "We don't care about the big politics; we just want safety from the bandits and the return of our livelihoods." }
+  ],
+  "historicalContext": {
+    "summary": "Mali has a rich history as the center of great West African empires. Since independence in 1960, it has experienced periods of democratic growth and military intervention. A major separatist and jihadist uprising in 2012 triggered over a decade of international intervention, culminating in two coups (2020, 2021) that brought the current military administration to power.",
+    "keyEvents": [
+      { "year": 1960, "event": "Independence from France." },
+      { "year": 2012, "event": "Tuareg rebellion and jihadist takeover in the north; French intervention (Operation Serval)." },
+      { "year": 2021, "event": "Colonel Assimi Goïta takes power in a second coup." },
+      { "year": 2023, "event": "UN peacekeeping mission (MINUSMA) withdraws at the junta's request." },
+      { "year": 2024, "event": "Mali formally joins the AES Confederation and captures the rebel stronghold of Kidal." },
+      { "year": 2025, "event": "Formal exit from ECOWAS and transition period extended to 2027." }
+    ]
+  },
+  "investmentNotes": {
+    "strengths": ["Abundant gold reserves and significant lithium potential", "Large youthful workforce", "Strong push for infrastructure development through new partnerships", "Strategic position within the new AES bloc"],
+    "risks": ["Severe electricity shortages impacting industrial growth", "High geopolitical risk and exit from the ECOWAS common market", "Active internal armed conflict and human rights concerns", "Indefinite transition period and political uncertainty"],
+    "sectors": ["Gold Mining", "Lithium Exploration & Extraction", "Renewable Energy (Solar)", "Agricultural Processing"]
+  },
+  "sources": [
+    { "name": "Institut National de la Statistique (INSTAT)", "url": "https://www.instat-mali.org/", "type": "demographic" },
+    { "name": "African Development Bank - Mali", "url": "https://www.afdb.org/en/countries/west-africa/mali", "type": "economic" },
+    { "name": "Alliance of Sahel States (AES) Official Portal", "url": "https://www.aes-infos.org/", "type": "geopolitical" }
+  ]
+}

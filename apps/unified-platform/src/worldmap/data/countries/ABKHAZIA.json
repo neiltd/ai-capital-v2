@@ -1,0 +1,65 @@
+{
+  "id": "ABKHAZIA",
+  "iso2": "GE-AB",
+  "name": "Abkhazia",
+  "region": "Asia",
+  "subregion": "Western Asia",
+  "capital": "Sukhumi",
+  "lastUpdated": "2025-05-15",
+  "summary": "Abkhazia is currently experiencing a period of intense internal political volatility and social unrest, driven by a growing rift between Russian integration efforts and local 'sovereigntist' sentiments. The November 2024 mass protests against a Russian-backed investment law forced the resignation of President Aslan Bzhania, leading to a tense snap election in February 2025. While the region remains under the security umbrella of the Russian Federation, the local population is increasingly resistant to legislative 'harmonization' and Russian corporate dominance in the real estate and tourism sectors. Economically, Abkhazia remains stagnant and heavily dependent on Russian subsidies and tourism, while facing chronic energy insecurity.",
+  "indicators": {
+    "politicalStability":       { "score": 3, "trend": "falling", "confidence": "high", "note": "High volatility due to anti-government protests and a contentious 2025 snap election; strong nationalist resistance to Russian legislative pressure." },
+    "economicDirection":        { "score": 3, "trend": "stagnant", "confidence": "high", "note": "Heavily reliant on Russian aid and seasonal tourism; hampered by energy shortages and a lack of diversified investment." },
+    "investmentAttractiveness": { "score": 2, "trend": "falling", "confidence": "high", "note": "Extremely risky; local backlash against Russian investment laws has deterred foreign capital and complicated Russian corporate interests." },
+    "geopoliticalRisk":         { "score": 7, "trend": "stable", "confidence": "high", "note": "Frozen conflict with Georgia; host to significant Russian military infrastructure (Ochamchire naval base development)." },
+    "educationQuality":         { "score": 4, "trend": "stable", "confidence": "medium", "note": "Basic primary and secondary education; higher education is isolated and primarily linked to the Russian academic system." },
+    "healthcareQuality":        { "score": 3, "trend": "stable", "confidence": "medium", "note": "Limited medical infrastructure; severe cases are often transferred to Russia or, increasingly, to Georgia for humanitarian treatment." },
+    "technologyInvestment":     { "score": 3, "trend": "stable", "confidence": "medium", "note": "Basic mobile and internet connectivity provided by Russian-linked companies; limited innovative capacity beyond basic consumer services." }
+  },
+  "demographics": {
+    "population": 245000,
+    "medianAge": 38.0,
+    "urbanizationRate": 50.0,
+    "majorEthnicGroups": ["Abkhaz", "Armenian", "Georgian", "Russian"],
+    "religions": [
+      { "name": "Orthodox Christian", "percent": 60 },
+      { "name": "Muslim (mostly Sunni)", "percent": 16 },
+      { "name": "Abkhaz Neopaganism", "percent": 8 },
+      { "name": "Other/None", "percent": 16 }
+    ]
+  },
+  "alliances": ["Community for Democracy and Rights of Nations"],
+  "relationships": [
+    { "countryId": "RUS", "countryName": "Russia", "type": "security_guarantor", "sentiment": "neutral", "summary": "The sole protector and financier, but relations are currently strained by Moscow's push for property ownership and legislative control." },
+    { "countryId": "GEO", "countryName": "Georgia", "type": "adversary", "sentiment": "negative", "summary": "Georgia maintains its claim of sovereignty; relations remain frozen, though limited humanitarian and energy cooperation exists." },
+    { "countryId": "SYR", "countryName": "Syria", "type": "partner", "sentiment": "positive", "summary": "One of the few states to grant formal recognition; maintains limited diplomatic and cultural engagement." },
+    { "countryId": "BLR", "countryName": "Belarus", "type": "partner", "sentiment": "positive", "summary": "Deepening informal ties; President Lukashenko has visited the region, signaling a move toward closer economic cooperation." }
+  ],
+  "perspectives": [
+    { "source": "Abkhaz Sovereigntist", "bias": "Nationalist", "view": "We fought for our independence from Georgia; we will not surrender our land and laws to Russian oligarchs." },
+    { "source": "Russian Diplomat", "bias": "Pragmatic", "view": "Russia provides the security and subsidies that keep Abkhazia afloat; it is only reasonable that our investors receive legal protections." },
+    { "source": "Georgian Refugee", "bias": "Critical", "view": "Abkhazia is an occupied territory where ethnic cleansing remains unaddressed. True stability will only come with reintegration." },
+    { "source": "Tourism Operator", "bias": "Optimistic", "view": "Despite the politics, the Russian tourists keep coming. If we can fix the electricity, we can become a major Mediterranean-style destination." }
+  ],
+  "historicalContext": {
+    "summary": "Abkhazia has a long history of distinct identity within the Caucasus. Following the collapse of the Soviet Union, the region fought a brutal war for independence from Georgia in 1992-1993, which resulted in the displacement of most of its ethnic Georgian population. While de facto independent for over three decades, it only received formal recognition from Russia following the 2008 Russo-Georgian War. The recent era is defined by the struggle to balance the necessity of Russian support with the desire to maintain local autonomy.",
+    "keyEvents": [
+      { "year": 1992, "event": "Outbreak of the war for independence from Georgia." },
+      { "year": 1993, "event": "Abkhaz forces take Sukhumi, establishing de facto control over the territory." },
+      { "year": 2008, "event": "Russia formally recognizes Abkhazia's independence following the five-day war." },
+      { "year": 2023, "event": "Agreement announced for a permanent Russian naval base in Ochamchire." },
+      { "year": 2024, "event": "Mass protests against the Russian investment law lead to the resignation of President Bzhania." },
+      { "year": 2025, "event": "Tense snap presidential election in February marks a new phase of political uncertainty." }
+    ]
+  },
+  "investmentNotes": {
+    "strengths": ["Prime Black Sea coastline with significant tourism potential", "Favorable climate for high-value agriculture (citrus, hazelnuts, wine)", "Strategic location for regional maritime and transit infrastructure", "Significant, though underutilized, hydroelectric capacity (Enguri Dam)"],
+    "risks": ["Lack of international recognition and extreme legal uncertainty", "High political volatility and frequent anti-government protests", "Chronic energy shortages and crumbling public infrastructure", "Extreme dependency on Russian subsidies and economic policy"],
+    "sectors": ["Tourism & Hospitality", "Agriculture & Food Processing", "Maritime Logistics", "Hydroelectric Power Generation"]
+  },
+  "sources": [
+    { "name": "Abkhazian State Statistics Office", "url": "https://ugsra.org", "type": "economic" },
+    { "name": "Ministry of Foreign Affairs - Republic of Abkhazia", "url": "https://mfaapsny.org", "type": "government" },
+    { "name": "Crisis Group Abkhazia Report", "url": "https://www.crisisgroup.org/europe-central-asia/caucasus/georgia/abkhazia", "type": "government" }
+  ]
+}

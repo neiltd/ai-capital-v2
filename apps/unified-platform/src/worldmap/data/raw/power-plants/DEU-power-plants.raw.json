@@ -1,0 +1,407 @@
+[
+  {
+    "id": "PLANT-DEU-NEURATH",
+    "name": "Neurath Power Station",
+    "countryId": "DEU",
+    "city": "Grevenbroich",
+    "coordinates": [6.623, 51.038],
+    "type": "coal",
+    "status": "operating",
+    "capacityMW": 4400,
+    "annualOutputGWh": 30000,
+    "yearCommissioned": 1972,
+    "yearRetirement": 2030,
+    "operator": "RWE Power AG",
+    "owner": "RWE",
+    "strategicNote": "Germany's largest power station, primarily lignite-fired; a central point in the debate over coal phase-out.",
+    "notes": "Includes several units, including the 1,100 MW 'BoA' units.",
+    "attribution": {
+      "sources": [
+        { "name": "Global Energy Monitor", "url": "https://www.gem.wiki/Neurath_Power_Station", "accessedAt": "2025-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 1,
+        "lastVerified": "2025-05-10"
+      }
+    }
+  },
+  {
+    "id": "PLANT-DEU-NIEDERAUSSEM",
+    "name": "Niederaussem Power Station",
+    "countryId": "DEU",
+    "city": "Bergheim",
+    "coordinates": [6.667, 50.996],
+    "type": "coal",
+    "status": "operating",
+    "capacityMW": 3864,
+    "annualOutputGWh": 25000,
+    "yearCommissioned": 1963,
+    "yearRetirement": 2030,
+    "operator": "RWE Power AG",
+    "owner": "RWE",
+    "strategicNote": "Major lignite-fired station in the Rhineland, significant for base-load power in industrial Western Germany.",
+    "notes": null,
+    "attribution": {
+      "sources": [
+        { "name": "Global Energy Monitor", "url": "https://www.gem.wiki/Niederaussem_Power_Station", "accessedAt": "2025-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 1,
+        "lastVerified": "2025-05-10"
+      }
+    }
+  },
+  {
+    "id": "PLANT-DEU-JAENSCHWALDE",
+    "name": "Jänschwalde Power Station",
+    "countryId": "DEU",
+    "city": "Peitz",
+    "coordinates": [14.458, 51.835],
+    "type": "coal",
+    "status": "operating",
+    "capacityMW": 3000,
+    "annualOutputGWh": 20000,
+    "yearCommissioned": 1981,
+    "yearRetirement": 2028,
+    "operator": "LEAG",
+    "owner": "EPH",
+    "strategicNote": "Largest power station in Eastern Germany, critical for the regional economy and grid stability.",
+    "notes": null,
+    "attribution": {
+      "sources": [
+        { "name": "Global Energy Monitor", "url": "https://www.gem.wiki/J%C3%A4nschwalde_Power_Station", "accessedAt": "2025-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 1,
+        "lastVerified": "2025-05-10"
+      }
+    }
+  },
+  {
+    "id": "PLANT-DEU-BOXBERG",
+    "name": "Boxberg Power Station",
+    "countryId": "DEU",
+    "city": "Boxberg",
+    "coordinates": [14.569, 51.413],
+    "type": "coal",
+    "status": "operating",
+    "capacityMW": 2575,
+    "annualOutputGWh": 18000,
+    "yearCommissioned": 1971,
+    "yearRetirement": 2038,
+    "operator": "LEAG",
+    "owner": "EPH",
+    "strategicNote": "Significant lignite facility in Lusatia, key to the coal phase-out timeline in the East.",
+    "notes": null,
+    "attribution": {
+      "sources": [
+        { "name": "Global Energy Monitor", "url": "https://www.gem.wiki/Boxberg_Power_Station", "accessedAt": "2025-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 1,
+        "lastVerified": "2025-05-10"
+      }
+    }
+  },
+  {
+    "id": "PLANT-DEU-SCHWARZE-PUMPE",
+    "name": "Schwarze Pumpe Power Station",
+    "countryId": "DEU",
+    "city": "Spremberg",
+    "coordinates": [14.354, 51.536],
+    "type": "coal",
+    "status": "operating",
+    "capacityMW": 1600,
+    "annualOutputGWh": 12000,
+    "yearCommissioned": 1997,
+    "yearRetirement": 2038,
+    "operator": "LEAG",
+    "owner": "EPH",
+    "strategicNote": "Highly efficient lignite plant, often cited in discussions about modernizing coal power.",
+    "notes": null,
+    "attribution": {
+      "sources": [
+        { "name": "Global Energy Monitor", "url": "https://www.gem.wiki/Schwarze_Pumpe_Power_Station", "accessedAt": "2025-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 1,
+        "lastVerified": "2025-05-10"
+      }
+    }
+  },
+  {
+    "id": "PLANT-DEU-ISAR-2",
+    "name": "Isar Nuclear Power Plant (Unit 2)",
+    "countryId": "DEU",
+    "city": "Essenbach",
+    "coordinates": [12.293, 48.605],
+    "type": "nuclear",
+    "status": "decommissioned",
+    "capacityMW": 1485,
+    "annualOutputGWh": 12000,
+    "yearCommissioned": 1988,
+    "yearRetirement": 2023,
+    "operator": "PreussenElektra GmbH",
+    "owner": "E.ON",
+    "strategicNote": "One of the last three nuclear plants to be shut down in April 2023, marking the end of nuclear power in Germany.",
+    "notes": "Shutdown as part of the Atomausstieg policy.",
+    "attribution": {
+      "sources": [
+        { "name": "IAEA PRIS", "url": "https://pris.iaea.org/PRIS/CountryStatistics/ReactorDetails.aspx?current=93", "accessedAt": "2025-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 1,
+        "lastVerified": "2025-05-10"
+      }
+    }
+  },
+  {
+    "id": "PLANT-DEU-EMSLAND",
+    "name": "Emsland Nuclear Power Plant",
+    "countryId": "DEU",
+    "city": "Lingen",
+    "coordinates": [7.318, 52.474],
+    "type": "nuclear",
+    "status": "decommissioned",
+    "capacityMW": 1406,
+    "annualOutputGWh": 11000,
+    "yearCommissioned": 1988,
+    "yearRetirement": 2023,
+    "operator": "Kernkraftwerke Lippe-Ems GmbH",
+    "owner": "RWE",
+    "strategicNote": "One of the final three nuclear reactors shut down in 2023.",
+    "notes": null,
+    "attribution": {
+      "sources": [
+        { "name": "IAEA PRIS", "url": "https://pris.iaea.org/PRIS/CountryStatistics/ReactorDetails.aspx?current=87", "accessedAt": "2025-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 1,
+        "lastVerified": "2025-05-10"
+      }
+    }
+  },
+  {
+    "id": "PLANT-DEU-NECKARWESTHEIM-2",
+    "name": "Neckarwestheim Nuclear Power Plant (Unit 2)",
+    "countryId": "DEU",
+    "city": "Neckarwestheim",
+    "coordinates": [9.175, 49.041],
+    "type": "nuclear",
+    "status": "decommissioned",
+    "capacityMW": 1400,
+    "annualOutputGWh": 11000,
+    "yearCommissioned": 1989,
+    "yearRetirement": 2023,
+    "operator": "EnBW Kernkraft GmbH",
+    "owner": "EnBW",
+    "strategicNote": "The third of the final nuclear plants closed in April 2023.",
+    "notes": null,
+    "attribution": {
+      "sources": [
+        { "name": "IAEA PRIS", "url": "https://pris.iaea.org/PRIS/CountryStatistics/ReactorDetails.aspx?current=102", "accessedAt": "2025-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 1,
+        "lastVerified": "2025-05-10"
+      }
+    }
+  },
+  {
+    "id": "PLANT-DEU-IRSCHING",
+    "name": "Irsching Power Station",
+    "countryId": "DEU",
+    "city": "Vohburg an der Donau",
+    "coordinates": [11.585, 48.771],
+    "type": "gas",
+    "status": "operating",
+    "capacityMW": 1400,
+    "annualOutputGWh": null,
+    "yearCommissioned": 2010,
+    "yearRetirement": null,
+    "operator": "Uniper",
+    "owner": "Uniper",
+    "strategicNote": "A critical gas-fired backup facility, essential for grid stability as renewable share grows.",
+    "notes": "Includes highly efficient CCGT units 4 and 5.",
+    "attribution": {
+      "sources": [
+        { "name": "Global Energy Monitor", "url": "https://www.gem.wiki/Irsching_Power_Station", "accessedAt": "2025-05-10" }
+      ],
+      "confidence": {
+        "confidence": "medium",
+        "sourceCount": 1,
+        "lastVerified": "2025-05-10"
+      }
+    }
+  },
+  {
+    "id": "PLANT-DEU-GOLDISTHAL",
+    "name": "Goldisthal Pumped Storage Station",
+    "countryId": "DEU",
+    "city": "Goldisthal",
+    "coordinates": [11.003, 50.507],
+    "type": "hydro",
+    "status": "operating",
+    "capacityMW": 1060,
+    "annualOutputGWh": null,
+    "yearCommissioned": 2003,
+    "yearRetirement": null,
+    "operator": "Vattenfall",
+    "owner": "Vattenfall",
+    "strategicNote": "Germany's largest pumped-storage plant, acting as a massive battery for the national grid.",
+    "notes": null,
+    "attribution": {
+      "sources": [
+        { "name": "Global Energy Monitor", "url": "https://www.gem.wiki/Goldisthal_Pumped_Storage_Station", "accessedAt": "2025-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 1,
+        "lastVerified": "2025-05-10"
+      }
+    }
+  },
+  {
+    "id": "PLANT-DEU-MARKERSBACH",
+    "name": "Markersbach Pumped Storage Station",
+    "countryId": "DEU",
+    "city": "Markersbach",
+    "coordinates": [12.875, 50.514],
+    "type": "hydro",
+    "status": "operating",
+    "capacityMW": 1050,
+    "annualOutputGWh": null,
+    "yearCommissioned": 1979,
+    "yearRetirement": null,
+    "operator": "Vattenfall",
+    "owner": "Vattenfall",
+    "strategicNote": "Second largest pumped-storage facility, critical for frequency regulation.",
+    "notes": null,
+    "attribution": {
+      "sources": [
+        { "name": "Global Energy Monitor", "url": "https://www.gem.wiki/Markersbach_Pumped_Storage_Station", "accessedAt": "2025-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 1,
+        "lastVerified": "2025-05-10"
+      }
+    }
+  },
+  {
+    "id": "PLANT-DEU-BROKDORF",
+    "name": "Brokdorf Nuclear Power Plant",
+    "countryId": "DEU",
+    "city": "Brokdorf",
+    "coordinates": [9.345, 53.851],
+    "type": "nuclear",
+    "status": "decommissioned",
+    "capacityMW": 1480,
+    "annualOutputGWh": null,
+    "yearCommissioned": 1986,
+    "yearRetirement": 2021,
+    "operator": "PreussenElektra GmbH",
+    "owner": "E.ON",
+    "strategicNote": "Major nuclear plant shut down in 2021; historically a site of significant anti-nuclear protests.",
+    "notes": null,
+    "attribution": {
+      "sources": [
+        { "name": "IAEA PRIS", "url": "https://pris.iaea.org/PRIS/CountryStatistics/ReactorDetails.aspx?current=80", "accessedAt": "2025-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 1,
+        "lastVerified": "2025-05-10"
+      }
+    }
+  },
+  {
+    "id": "PLANT-DEU-GROHNDE",
+    "name": "Grohnde Nuclear Power Plant",
+    "countryId": "DEU",
+    "city": "Grohnde",
+    "coordinates": [9.413, 52.035],
+    "type": "nuclear",
+    "status": "decommissioned",
+    "capacityMW": 1430,
+    "annualOutputGWh": null,
+    "yearCommissioned": 1984,
+    "yearRetirement": 2021,
+    "operator": "PreussenElektra GmbH",
+    "owner": "E.ON",
+    "strategicNote": "Shut down in 2021, it was one of Germany's most productive nuclear plants.",
+    "notes": null,
+    "attribution": {
+      "sources": [
+        { "name": "IAEA PRIS", "url": "https://pris.iaea.org/PRIS/CountryStatistics/ReactorDetails.aspx?current=91", "accessedAt": "2025-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 1,
+        "lastVerified": "2025-05-10"
+      }
+    }
+  },
+  {
+    "id": "PLANT-DEU-GUNDREMMINGEN-C",
+    "name": "Gundremmingen Nuclear Power Plant (Unit C)",
+    "countryId": "DEU",
+    "city": "Gundremmingen",
+    "coordinates": [10.402, 48.515],
+    "type": "nuclear",
+    "status": "decommissioned",
+    "capacityMW": 1344,
+    "annualOutputGWh": null,
+    "yearCommissioned": 1984,
+    "yearRetirement": 2021,
+    "operator": "Kernkraftwerke Gundremmingen GmbH",
+    "owner": "RWE",
+    "strategicNote": "Last unit of the Gundremmingen site to be shut down in 2021.",
+    "notes": null,
+    "attribution": {
+      "sources": [
+        { "name": "IAEA PRIS", "url": "https://pris.iaea.org/PRIS/CountryStatistics/ReactorDetails.aspx?current=92", "accessedAt": "2025-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 1,
+        "lastVerified": "2025-05-10"
+      }
+    }
+  },
+  {
+    "id": "PLANT-DEU-DATTELN-4",
+    "name": "Datteln 4 Power Station",
+    "countryId": "DEU",
+    "city": "Datteln",
+    "coordinates": [7.341, 51.632],
+    "type": "coal",
+    "status": "operating",
+    "capacityMW": 1100,
+    "annualOutputGWh": null,
+    "yearCommissioned": 2020,
+    "yearRetirement": 2035,
+    "operator": "Uniper",
+    "owner": "Uniper",
+    "strategicNote": "Germany's newest and most controversial hard coal plant, commissioned in 2020.",
+    "notes": null,
+    "attribution": {
+      "sources": [
+        { "name": "Global Energy Monitor", "url": "https://www.gem.wiki/Datteln_4_Power_Station", "accessedAt": "2025-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 1,
+        "lastVerified": "2025-05-10"
+      }
+    }
+  }
+]

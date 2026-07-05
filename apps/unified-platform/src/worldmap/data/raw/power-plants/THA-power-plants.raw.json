@@ -1,0 +1,407 @@
+[
+  {
+    "id": "PLANT-THA-BANG-PAKONG",
+    "name": "Bang Pakong Power Plant",
+    "countryId": "THA",
+    "city": "Bang Pakong",
+    "coordinates": [101.0261, 13.4994],
+    "type": "gas",
+    "status": "operating",
+    "capacityMW": 4385,
+    "annualOutputGWh": null,
+    "yearCommissioned": 1984,
+    "yearRetirement": null,
+    "operator": "Electricity Generating Authority of Thailand",
+    "owner": "Electricity Generating Authority of Thailand",
+    "strategicNote": "One of Thailand's largest power plants, critical for supplying electricity to the Bangkok Metropolitan Area and Eastern Economic Corridor.",
+    "notes": "Primary fuel is natural gas with fuel oil as backup.",
+    "attribution": {
+      "sources": [
+        { "name": "Global Energy Monitor", "url": "https://www.gem.wiki/Bang_Pakong_power_station", "accessedAt": "2025-02-13" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 1,
+        "lastVerified": "2025-02-13"
+      }
+    }
+  },
+  {
+    "id": "PLANT-THA-MAE-MOH",
+    "name": "Mae Moh Power Plant",
+    "countryId": "THA",
+    "city": "Mae Moh",
+    "coordinates": [99.7519, 18.2961],
+    "type": "coal",
+    "status": "operating",
+    "capacityMW": 2400,
+    "annualOutputGWh": null,
+    "yearCommissioned": 1978,
+    "yearRetirement": null,
+    "operator": "Electricity Generating Authority of Thailand",
+    "owner": "Electricity Generating Authority of Thailand",
+    "strategicNote": "Southeast Asia's largest lignite-fired power plant, located at the site of a major lignite mine.",
+    "notes": null,
+    "attribution": {
+      "sources": [
+        { "name": "Global Energy Monitor", "url": "https://www.gem.wiki/Mae_Moh_power_station", "accessedAt": "2025-02-13" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 1,
+        "lastVerified": "2025-02-13"
+      }
+    }
+  },
+  {
+    "id": "PLANT-THA-WANG-NOI",
+    "name": "Wang Noi Power Plant",
+    "countryId": "THA",
+    "city": "Wang Noi",
+    "coordinates": [100.78, 14.23],
+    "type": "gas",
+    "status": "operating",
+    "capacityMW": 2027,
+    "annualOutputGWh": null,
+    "yearCommissioned": 1996,
+    "yearRetirement": null,
+    "operator": "Electricity Generating Authority of Thailand",
+    "owner": "Electricity Generating Authority of Thailand",
+    "strategicNote": "Strategic gas-fired plant located in central Thailand, supporting the national grid's stability.",
+    "notes": null,
+    "attribution": {
+      "sources": [
+        { "name": "Global Energy Monitor", "url": "https://www.gem.wiki/Wang_Noi_power_station", "accessedAt": "2025-02-13" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 1,
+        "lastVerified": "2025-02-13"
+      }
+    }
+  },
+  {
+    "id": "PLANT-THA-RATCHABURI",
+    "name": "Ratchaburi Power Plant",
+    "countryId": "THA",
+    "city": "Ratchaburi",
+    "coordinates": [99.88, 13.57],
+    "type": "gas",
+    "status": "operating",
+    "capacityMW": 3645,
+    "annualOutputGWh": null,
+    "yearCommissioned": 2000,
+    "yearRetirement": null,
+    "operator": "Ratch Group",
+    "owner": "Ratch Group",
+    "strategicNote": "A major Independent Power Producer (IPP) plant supplying a significant portion of Thailand's electricity.",
+    "notes": null,
+    "attribution": {
+      "sources": [
+        { "name": "Global Energy Monitor", "url": "https://www.gem.wiki/Ratchaburi_power_station", "accessedAt": "2025-02-13" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 1,
+        "lastVerified": "2025-02-13"
+      }
+    }
+  },
+  {
+    "id": "PLANT-THA-SOUTH-BANGKOK",
+    "name": "South Bangkok Power Plant",
+    "countryId": "THA",
+    "city": "Samut Prakan",
+    "coordinates": [100.56, 13.62],
+    "type": "gas",
+    "status": "operating",
+    "capacityMW": 1691,
+    "annualOutputGWh": null,
+    "yearCommissioned": 1970,
+    "yearRetirement": null,
+    "operator": "Electricity Generating Authority of Thailand",
+    "owner": "Electricity Generating Authority of Thailand",
+    "strategicNote": "Crucial for the power stability of Bangkok and surrounding industrial zones.",
+    "notes": null,
+    "attribution": {
+      "sources": [
+        { "name": "Global Energy Monitor", "url": "https://www.gem.wiki/South_Bangkok_power_station", "accessedAt": "2025-02-13" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 1,
+        "lastVerified": "2025-02-13"
+      }
+    }
+  },
+  {
+    "id": "PLANT-THA-CHANA",
+    "name": "Chana Power Plant",
+    "countryId": "THA",
+    "city": "Chana",
+    "coordinates": [100.75, 6.95],
+    "type": "gas",
+    "status": "operating",
+    "capacityMW": 1476,
+    "annualOutputGWh": null,
+    "yearCommissioned": 2008,
+    "yearRetirement": null,
+    "operator": "Electricity Generating Authority of Thailand",
+    "owner": "Electricity Generating Authority of Thailand",
+    "strategicNote": "Primary power source for Southern Thailand, using gas from the Thailand-Malaysia Joint Development Area.",
+    "notes": null,
+    "attribution": {
+      "sources": [
+        { "name": "Global Energy Monitor", "url": "https://www.gem.wiki/Chana_power_station", "accessedAt": "2025-02-13" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 1,
+        "lastVerified": "2025-02-13"
+      }
+    }
+  },
+  {
+    "id": "PLANT-THA-KAENG-KHOI-2",
+    "name": "Kaeng Khoi 2 Power Plant",
+    "countryId": "THA",
+    "city": "Kaeng Khoi",
+    "coordinates": [101.0259, 14.605],
+    "type": "gas",
+    "status": "operating",
+    "capacityMW": 1468,
+    "annualOutputGWh": null,
+    "yearCommissioned": 2007,
+    "yearRetirement": null,
+    "operator": "Gulf JP UT Co., Ltd.",
+    "owner": "Gulf Energy Development",
+    "strategicNote": "Major IPP plant supporting the industrial needs of Saraburi province and central Thailand.",
+    "notes": null,
+    "attribution": {
+      "sources": [
+        { "name": "Global Energy Monitor", "url": "https://www.gem.wiki/Kaeng_Khoi_2_power_station", "accessedAt": "2025-02-13" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 1,
+        "lastVerified": "2025-02-13"
+      }
+    }
+  },
+  {
+    "id": "PLANT-THA-BLCP",
+    "name": "BLCP Power Plant",
+    "countryId": "THA",
+    "city": "Map Ta Phut",
+    "coordinates": [101.1611, 12.6439],
+    "type": "coal",
+    "status": "operating",
+    "capacityMW": 1434,
+    "annualOutputGWh": null,
+    "yearCommissioned": 2006,
+    "yearRetirement": null,
+    "operator": "BLCP Power Limited",
+    "owner": "Banpu Power and EGCO Group",
+    "strategicNote": "Large coal-fired plant in the Map Ta Phut Industrial Estate, critical for the Eastern Economic Corridor.",
+    "notes": "Uses imported bituminous coal.",
+    "attribution": {
+      "sources": [
+        { "name": "Global Energy Monitor", "url": "https://www.gem.wiki/BLCP_power_station", "accessedAt": "2025-02-13" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 1,
+        "lastVerified": "2025-02-13"
+      }
+    }
+  },
+  {
+    "id": "PLANT-THA-GULF-SRC",
+    "name": "Gulf SRC Power Plant",
+    "countryId": "THA",
+    "city": "Si Racha",
+    "coordinates": [101.15, 13.1],
+    "type": "gas",
+    "status": "operating",
+    "capacityMW": 2650,
+    "annualOutputGWh": null,
+    "yearCommissioned": 2021,
+    "yearRetirement": null,
+    "operator": "Gulf SRC Co., Ltd.",
+    "owner": "Gulf Energy Development",
+    "strategicNote": "One of the newest and largest gas-fired power plants in Thailand, supporting modern industrial infrastructure.",
+    "notes": null,
+    "attribution": {
+      "sources": [
+        { "name": "Global Energy Monitor", "url": "https://www.gem.wiki/Gulf_SRC_power_station", "accessedAt": "2025-02-13" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 1,
+        "lastVerified": "2025-02-13"
+      }
+    }
+  },
+  {
+    "id": "PLANT-THA-RAYONG",
+    "name": "Rayong Power Plant",
+    "countryId": "THA",
+    "city": "Rayong",
+    "coordinates": [101.1562, 12.7623],
+    "type": "gas",
+    "status": "operating",
+    "capacityMW": 1232,
+    "annualOutputGWh": null,
+    "yearCommissioned": 1994,
+    "yearRetirement": null,
+    "operator": "Electricity Generating Public Company Limited (EGCO)",
+    "owner": "EGCO Group",
+    "strategicNote": "Key facility in Rayong province, supporting the local petrochemical and manufacturing hub.",
+    "notes": null,
+    "attribution": {
+      "sources": [
+        { "name": "Global Energy Monitor", "url": "https://www.gem.wiki/Rayong_power_station", "accessedAt": "2025-02-13" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 1,
+        "lastVerified": "2025-02-13"
+      }
+    }
+  },
+  {
+    "id": "PLANT-THA-LAM-TA-KHONG",
+    "name": "Lam Ta Khong Jolabha Vadhana",
+    "countryId": "THA",
+    "city": "Sikhio",
+    "coordinates": [101.53, 14.86],
+    "type": "hydro",
+    "status": "operating",
+    "capacityMW": 1000,
+    "annualOutputGWh": null,
+    "yearCommissioned": 2002,
+    "yearRetirement": null,
+    "operator": "Electricity Generating Authority of Thailand",
+    "owner": "Electricity Generating Authority of Thailand",
+    "strategicNote": "Thailand's first pumped-storage hydropower plant, essential for grid balancing.",
+    "notes": null,
+    "attribution": {
+      "sources": [
+        { "name": "Global Energy Monitor", "url": "https://www.gem.wiki/Lam_Ta_Khong_Jolabha_Vadhana_power_station", "accessedAt": "2025-02-13" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 1,
+        "lastVerified": "2025-02-13"
+      }
+    }
+  },
+  {
+    "id": "PLANT-THA-BHUMIBOL",
+    "name": "Bhumibol Dam",
+    "countryId": "THA",
+    "city": "Sam Ngao",
+    "coordinates": [98.9719, 17.2433],
+    "type": "hydro",
+    "status": "operating",
+    "capacityMW": 779,
+    "annualOutputGWh": null,
+    "yearCommissioned": 1964,
+    "yearRetirement": null,
+    "operator": "Electricity Generating Authority of Thailand",
+    "owner": "Electricity Generating Authority of Thailand",
+    "strategicNote": "Thailand's first multi-purpose dam and the country's largest hydroelectric facility.",
+    "notes": null,
+    "attribution": {
+      "sources": [
+        { "name": "Global Energy Monitor", "url": "https://www.gem.wiki/Bhumibol_dam", "accessedAt": "2025-02-13" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 1,
+        "lastVerified": "2025-02-13"
+      }
+    }
+  },
+  {
+    "id": "PLANT-THA-SIRIKIT",
+    "name": "Sirikit Dam",
+    "countryId": "THA",
+    "city": "Tha Pla",
+    "coordinates": [100.5517, 17.7633],
+    "type": "hydro",
+    "status": "operating",
+    "capacityMW": 500,
+    "annualOutputGWh": null,
+    "yearCommissioned": 1974,
+    "yearRetirement": null,
+    "operator": "Electricity Generating Authority of Thailand",
+    "owner": "Electricity Generating Authority of Thailand",
+    "strategicNote": "Important hydroelectric and water management facility in Northern Thailand.",
+    "notes": null,
+    "attribution": {
+      "sources": [
+        { "name": "Global Energy Monitor", "url": "https://www.gem.wiki/Sirikit_dam", "accessedAt": "2025-02-13" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 1,
+        "lastVerified": "2025-02-13"
+      }
+    }
+  },
+  {
+    "id": "PLANT-THA-SRINAGARIND",
+    "name": "Srinagarind Dam",
+    "countryId": "THA",
+    "city": "Si Sawat",
+    "coordinates": [99.1247, 14.4072],
+    "type": "hydro",
+    "status": "operating",
+    "capacityMW": 720,
+    "annualOutputGWh": null,
+    "yearCommissioned": 1980,
+    "yearRetirement": null,
+    "operator": "Electricity Generating Authority of Thailand",
+    "owner": "Electricity Generating Authority of Thailand",
+    "strategicNote": "Significant hydroelectric plant providing power and irrigation to the western region.",
+    "notes": null,
+    "attribution": {
+      "sources": [
+        { "name": "Global Energy Monitor", "url": "https://www.gem.wiki/Srinagarind_dam", "accessedAt": "2025-02-13" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 1,
+        "lastVerified": "2025-02-13"
+      }
+    }
+  },
+  {
+    "id": "PLANT-THA-NORTH-BANGKOK",
+    "name": "North Bangkok Power Plant",
+    "countryId": "THA",
+    "city": "Bang Kruai",
+    "coordinates": [100.505, 13.805],
+    "type": "gas",
+    "status": "operating",
+    "capacityMW": 1550,
+    "annualOutputGWh": null,
+    "yearCommissioned": 1961,
+    "yearRetirement": null,
+    "operator": "Electricity Generating Authority of Thailand",
+    "owner": "Electricity Generating Authority of Thailand",
+    "strategicNote": "Strategically located to serve the northern part of the Bangkok Metropolitan Area.",
+    "notes": null,
+    "attribution": {
+      "sources": [
+        { "name": "Global Energy Monitor", "url": "https://www.gem.wiki/North_Bangkok_power_station", "accessedAt": "2025-02-13" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 1,
+        "lastVerified": "2025-02-13"
+      }
+    }
+  }
+]

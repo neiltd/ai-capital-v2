@@ -1,0 +1,71 @@
+{
+  "id": "GBR",
+  "iso2": "GB",
+  "name": "United Kingdom of Great Britain and Northern Ireland",
+  "region": "Europe",
+  "subregion": "Northern Europe",
+  "capital": "London",
+  "lastUpdated": "2026-05-09",
+  "summary": "The United Kingdom is a major global power and a permanent member of the UN Security Council, currently navigating its post-Brexit role through a strategy of 'Progressive Realism.' Following a period of significant political and economic volatility, the UK is focused on rebuilding ties with European partners while maintaining its 'Special Relationship' with the United States and expanding its presence in the Indo-Pacific. As a central pillar of NATO and a leading supporter of Ukraine, the UK remains a key security guarantor in Europe. Despite facing long-term structural economic challenges and internal debates over the union's future, London remains a preeminent global financial and cultural hub with significant soft power influence.",
+  "indicators": {
+    "politicalStability":       { "score": 7, "trend": "improving", "confidence": "high", "note": "Stabilizing after post-Brexit leadership churn; emphasis on institutional continuity." },
+    "economicDirection":        { "score": 5, "trend": "stable", "confidence": "high", "note": "Recovering from high inflation and low growth; adjusting to new trade realities with the EU." },
+    "investmentAttractiveness": { "score": 7, "trend": "stable", "confidence": "high", "note": "Remains a top destination for venture capital and finance, though regulatory divergence from EU creates complexity." },
+    "geopoliticalRisk":         { "score": 4, "trend": "stable", "confidence": "high", "note": "Relatively low domestic risk, but highly exposed to global security shifts and energy prices." },
+    "educationQuality":         { "score": 8, "trend": "stable", "confidence": "high", "note": "Home to world-leading universities; strong research output in life sciences and AI." },
+    "healthcareQuality":        { "score": 6, "trend": "declining", "confidence": "high", "note": "NHS faces chronic capacity issues and staffing shortages despite high clinical standards." },
+    "technologyInvestment":     { "score": 7, "trend": "improving", "confidence": "medium", "note": "Strong focus on becoming a 'science superpower,' particularly in AI, fintech, and biotech." }
+  },
+  "demographics": {
+    "population": 68278000,
+    "medianAge": 40.7,
+    "urbanizationRate": 84,
+    "majorEthnicGroups": ["White", "Asian", "Black", "Mixed", "Other"],
+    "religions": [
+      { "name": "Christian", "percent": 46.2 },
+      { "name": "None/Irreligious", "percent": 37.2 },
+      { "name": "Muslim", "percent": 6.5 },
+      { "name": "Hindu", "percent": 1.7 }
+    ]
+  },
+  "alliances": ["NATO", "AUKUS", "Five Eyes", "G7", "CPTPP"],
+  "relationships": [
+    { "countryId": "USA", "countryName": "United States", "type": "treaty_ally", "sentiment": "positive", "summary": "The 'Special Relationship' remains the bedrock of UK security and intelligence policy." },
+    { "countryId": "FRA", "countryName": "France", "type": "ally", "sentiment": "mixed", "summary": "Close security cooperation through the Lancaster House Treaties, despite friction over migration and fishing." },
+    { "countryId": "CHN", "countryName": "China", "type": "trade_partner", "sentiment": "negative", "summary": "Strained relations due to security concerns, Hong Kong, and ideological differences." },
+    { "countryId": "UKR", "countryName": "Ukraine", "type": "ally", "sentiment": "positive", "summary": "The UK is one of Ukraine's most vocal and significant military and political supporters." },
+    { "countryId": "AUS", "countryName": "Australia", "type": "treaty_ally", "sentiment": "positive", "summary": "Deepening ties through AUKUS and the first post-Brexit comprehensive free trade agreement." }
+  ],
+  "perspectives": [
+    { "source": "Global Britain Proponent", "bias": "Pro-Brexit/Internationalist", "view": "The UK is now free to pursue an independent trade and foreign policy, leveraging its unique historical ties and maritime heritage." },
+    { "source": "Pro-European Realist", "bias": "Liberal/Europeanist", "view": "Brexit has fundamentally weakened the UK's economic standing and diplomatic influence; re-alignment with the EU is an economic necessity." },
+    { "source": "Progressive Realist", "bias": "Labour/Pragmatist", "view": "The UK must be a pragmatic force for good, using its military and diplomatic weight to uphold the international order while focusing on domestic renewal." },
+    { "source": "Scottish Nationalist", "bias": "Separatist", "view": "The UK union no longer serves Scotland's interests, particularly after being taken out of the EU against its will; independence is the only path back to Europe." }
+  ],
+  "historicalContext": {
+    "summary": "The UK's history is characterized by its transition from a global colonial empire to a modern parliamentary democracy. It played a pivotal role in the Industrial Revolution and the defeat of fascism in WWII, later helping to build the post-war international architecture.",
+    "keyEvents": [
+      { "year": 1707, "event": "Acts of Union create the Kingdom of Great Britain." },
+      { "year": 1815, "event": "Defeat of Napoleon at Waterloo establishes British global hegemony ('Pax Britannica')." },
+      { "year": 1837, "event": "Accession of Queen Victoria; height of the British Empire and Industrial Revolution." },
+      { "year": 1914, "event": "Entry into World War I." },
+      { "year": 1939, "event": "Entry into World War II." },
+      { "year": 1945, "event": "Founding of the Welfare State (NHS) and the start of decolonization." },
+      { "year": 1973, "event": "UK joins the European Economic Community (EEC)." },
+      { "year": 1979, "event": "Margaret Thatcher becomes PM, initiating a period of radical economic reform." },
+      { "year": 1998, "event": "Good Friday Agreement ends 'The Troubles' in Northern Ireland." },
+      { "year": 2016, "event": "UK votes to leave the European Union in a national referendum." },
+      { "year": 2020, "event": "UK formally exits the EU (Brexit) and begins its independent trade policy." }
+    ]
+  },
+  "investmentNotes": {
+    "strengths": ["Global financial center (The City)", "World-class higher education and R&D", "Strong legal system and property rights", "Leader in offshore wind and green finance"],
+    "risks": ["Low productivity growth", "Trade friction with its largest partner (EU)", "Potential for constitutional instability (Scotland/Northern Ireland)", "High public debt and aging infrastructure"],
+    "sectors": ["Fintech", "Life Sciences", "Aerospace", "Artificial Intelligence"]
+  },
+  "sources": [
+    { "name": "World Bank", "url": "https://data.worldbank.org/country/GBR", "type": "economic" },
+    { "name": "Freedom House", "url": "https://freedomhouse.org/country/united-kingdom", "type": "political" },
+    { "name": "CIA World Factbook", "url": "https://www.cia.gov/the-world-factbook/countries/united-kingdom/", "type": "general" }
+  ]
+}

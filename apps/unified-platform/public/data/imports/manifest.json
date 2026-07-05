@@ -1,0 +1,21 @@
+{
+  "schemaVersion": "1.0.0",
+  "generatedAt": "2026-05-28T17:08:30.745Z",
+  "hub": "world-intelligence-hub",
+  "contents": {
+    "events": {
+      "count": 20,
+      "from": "2026-05-28",
+      "to": "2026-05-28"
+    },
+    "energyIndicators": {
+      "count": 0,
+      "asOf": "2026-05-28"
+    },
+    "macroIndicators": {
+      "countryCount": 0,
+      "indicatorCount": 0,
+      "asOf": "2026-05-28"
+    }
+  }
+}

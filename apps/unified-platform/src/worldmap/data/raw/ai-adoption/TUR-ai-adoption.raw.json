@@ -1,0 +1,29 @@
+[
+  {
+    "countryId": "TUR",
+    "year": 2024,
+    "aiReadinessScore": 60.63,
+    "aiAdoptionScore": 54.0,
+    "aiTalentScore": 43.5,
+    "aiInvestmentUsdM": 715.8,
+    "aiStartupCount": 1200,
+    "aiUnicornCount": 1,
+    "hasNationalAiStrategy": true,
+    "aiStrategyYear": 2021,
+    "aiPolicyScore": 78.0,
+    "cloudReadinessPct": null,
+    "broadbandPenetrationPct": 86.5,
+    "topAiSectors": ["Finance", "Healthcare", "Manufacturing", "Defense"],
+    "attribution": {
+      "sources": [
+        { "name": "Oxford Insights Government AI Readiness Index 2024", "url": "https://oxfordinsights.com/ai-readiness/ai-readiness-index/", "accessedAt": "2025-05-14" },
+        { "name": "Turkish Startup Ecosystem Report 2024", "url": "https://tracxn.com/d/explore/ai-startups-in-turkey", "accessedAt": "2025-05-14" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 2,
+        "lastVerified": "2025-05-14"
+      }
+    }
+  }
+]

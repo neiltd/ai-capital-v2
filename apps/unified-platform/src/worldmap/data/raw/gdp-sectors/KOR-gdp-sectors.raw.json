@@ -1,0 +1,24 @@
+[
+  {
+    "countryId": "KOR",
+    "year": 2023,
+    "gdpUsdBn": 1712.79,
+    "gdpPerCapita": 33121,
+    "sectors": [
+      { "sector": "Services", "percentOfGDP": 63.8, "notes": "Dominant sector, includes finance, retail, and public administration" },
+      { "sector": "Industry", "percentOfGDP": 34.6, "notes": "Robust high-tech manufacturing base, including semiconductors and automotive" },
+      { "sector": "Agriculture, Forestry & Fishing", "percentOfGDP": 1.6, "notes": "Includes rice, livestock, and fisheries" }
+    ],
+    "attribution": {
+      "sources": [
+        { "name": "Bank of Korea", "url": "https://www.bok.or.kr/", "accessedAt": "2025-03-03" },
+        { "name": "World Bank DataBank", "url": "https://databank.worldbank.org/", "accessedAt": "2025-03-03" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 2,
+        "lastVerified": "2025-03-03"
+      }
+    }
+  }
+]

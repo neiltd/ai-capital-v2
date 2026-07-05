@@ -1,0 +1,218 @@
+[
+  {
+    "id": "PORT-FRA-MARSEILLE-FOS",
+    "name": "Port of Marseille-Fos",
+    "countryId": "FRA",
+    "city": "Marseille",
+    "coordinates": [5.336, 43.342],
+    "type": "mixed",
+    "annualThroughputTEU": 1450000,
+    "annualThroughputTonnes": 79000000,
+    "berthCount": 100,
+    "maxDraftM": 16.5,
+    "strategicImportance": "critical",
+    "riskLevel": "low",
+    "geopoliticalNotes": "France's largest port and a leading Mediterranean hub. Critical energy gateway (oil and LNG) and primary link to North Africa.",
+    "notes": "Divided into the Eastern Basins (Marseille city) and Western Basins (Fos-sur-Mer).",
+    "attribution": {
+      "sources": [
+        { "name": "Marseille-Fos Port Official", "url": "https://www.marseille-port.fr/en", "accessedAt": "2026-05-10" },
+        { "name": "ShipsGo", "url": "https://shipsgo.com/top-10-ports-in-france", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 2,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  },
+  {
+    "id": "PORT-FRA-LE-HAVRE",
+    "name": "Port of Le Havre",
+    "countryId": "FRA",
+    "city": "Le Havre",
+    "coordinates": [0.133, 49.475],
+    "type": "container",
+    "annualThroughputTEU": 3100000,
+    "annualThroughputTonnes": 83200000,
+    "berthCount": 69,
+    "maxDraftM": 17.5,
+    "strategicImportance": "critical",
+    "riskLevel": "low",
+    "geopoliticalNotes": "France's premier container port and the main Atlantic gateway for the Paris region. Part of the HAROPA alliance.",
+    "notes": "Port 2000 terminal can accommodate the largest container ships in the world.",
+    "attribution": {
+      "sources": [
+        { "name": "HAROPA Port Official", "url": "https://www.haropaport.com/en", "accessedAt": "2026-05-10" },
+        { "name": "Flows.be", "url": "https://www.flows.be/en/shipping/2024/01/haropa-port-throughput-down-2023", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 2,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  },
+  {
+    "id": "PORT-FRA-DUNKERQUE",
+    "name": "Port of Dunkirk",
+    "countryId": "FRA",
+    "city": "Dunkirk",
+    "coordinates": [2.378, 51.048],
+    "type": "mixed",
+    "annualThroughputTEU": 745000,
+    "annualThroughputTonnes": 46000000,
+    "berthCount": 25,
+    "maxDraftM": 22.0,
+    "strategicImportance": "high",
+    "riskLevel": "low",
+    "geopoliticalNotes": "Major industrial port on the North Sea. Strategic hub for steel (ArcelorMittal) and the emerging EV battery industry.",
+    "notes": "Third largest French port by tonnage. Deep-water capabilities for dry bulk.",
+    "attribution": {
+      "sources": [
+        { "name": "Dunkerque-Port Official", "url": "https://www.dunkerque-port.fr/en/", "accessedAt": "2026-05-10" },
+        { "name": "Wikipedia - Port of Dunkirk", "url": "https://en.wikipedia.org/wiki/Port_of_Dunkirk", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 2,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  },
+  {
+    "id": "PORT-FRA-CALAIS",
+    "name": "Port of Calais",
+    "countryId": "FRA",
+    "city": "Calais",
+    "coordinates": [1.85, 50.967],
+    "type": "mixed",
+    "annualThroughputTEU": 100000,
+    "annualThroughputTonnes": 40000000,
+    "berthCount": 11,
+    "maxDraftM": 11.0,
+    "strategicImportance": "critical",
+    "riskLevel": "medium",
+    "geopoliticalNotes": "Europe's leading port for cross-Channel Ro-Ro traffic. Vital link for just-in-time logistics between the UK and continental Europe.",
+    "notes": "Handles high volumes of accompanied freight and passenger traffic.",
+    "attribution": {
+      "sources": [
+        { "name": "Port Boulogne Calais Official", "url": "https://www.portboulognecalais.fr/en", "accessedAt": "2026-05-10" },
+        { "name": "ShipHub", "url": "https://www.shiphub.co/port-of-calais/", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 2,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  },
+  {
+    "id": "PORT-FRA-NANTES-ST-NAZAIRE",
+    "name": "Port of Nantes Saint-Nazaire",
+    "countryId": "FRA",
+    "city": "Saint-Nazaire",
+    "coordinates": [-2.2, 47.267],
+    "type": "mixed",
+    "annualThroughputTEU": 135600,
+    "annualThroughputTonnes": 25700000,
+    "berthCount": 30,
+    "maxDraftM": 16.0,
+    "strategicImportance": "high",
+    "riskLevel": "low",
+    "geopoliticalNotes": "Major Atlantic hub for aerospace, shipbuilding (Chantiers de l'Atlantique), and energy (LNG terminal at Montoir-de-Bretagne).",
+    "notes": "Strategically located at the mouth of the Loire estuary.",
+    "attribution": {
+      "sources": [
+        { "name": "Nantes Saint-Nazaire Port Official", "url": "https://www.nantes.port.fr/en", "accessedAt": "2026-05-10" },
+        { "name": "UNCTAD", "url": "https://unctad.org/", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 2,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  },
+  {
+    "id": "PORT-FRA-ROUEN",
+    "name": "Port of Rouen",
+    "countryId": "FRA",
+    "city": "Rouen",
+    "coordinates": [1.09, 49.44],
+    "type": "bulk",
+    "annualThroughputTEU": 300000,
+    "annualThroughputTonnes": 22000000,
+    "berthCount": 60,
+    "maxDraftM": 11.0,
+    "strategicImportance": "high",
+    "riskLevel": "low",
+    "geopoliticalNotes": "Europe's leading center for cereal exports. Critical link in the Seine Axis logistics chain connecting to Paris.",
+    "notes": "Maritime river port located 80 km from the sea. Part of HAROPA Port.",
+    "attribution": {
+      "sources": [
+        { "name": "HAROPA Port - Rouen", "url": "https://www.haropaport.com/en/rouen", "accessedAt": "2026-05-10" },
+        { "name": "Wikipedia - Port of Rouen", "url": "https://en.wikipedia.org/wiki/Port_of_Rouen", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 2,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  },
+  {
+    "id": "PORT-FRA-LA-ROCHELLE",
+    "name": "Port of La Rochelle",
+    "countryId": "FRA",
+    "city": "La Rochelle",
+    "coordinates": [-1.217, 46.15],
+    "type": "bulk",
+    "annualThroughputTEU": null,
+    "annualThroughputTonnes": 8300000,
+    "berthCount": 17,
+    "maxDraftM": 16.0,
+    "strategicImportance": "medium",
+    "riskLevel": "low",
+    "geopoliticalNotes": "Only deep-water port on the French Atlantic coast not on an estuary. Strategic for agri-bulk and renewable energy components.",
+    "notes": "Known as Grand Port Maritime de la Pallice.",
+    "attribution": {
+      "sources": [
+        { "name": "Port de La Rochelle Official", "url": "https://www.larochelle.port.fr/en/", "accessedAt": "2026-05-10" },
+        { "name": "UNCTAD", "url": "https://unctad.org/", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 2,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  },
+  {
+    "id": "PORT-FRA-BORDEAUX",
+    "name": "Port of Bordeaux",
+    "countryId": "FRA",
+    "city": "Bordeaux",
+    "coordinates": [-0.533, 44.9],
+    "type": "mixed",
+    "annualThroughputTEU": 70000,
+    "annualThroughputTonnes": 6000000,
+    "berthCount": 28,
+    "maxDraftM": 12.0,
+    "strategicImportance": "medium",
+    "riskLevel": "low",
+    "geopoliticalNotes": "Major multimodal hub in Southwest France handling cereals, hydrocarbons, and chemicals. Strategic for the regional wine and aerospace economy.",
+    "notes": "Operates across seven terminals along the Gironde estuary.",
+    "attribution": {
+      "sources": [
+        { "name": "Grand Port Maritime de Bordeaux", "url": "https://www.bordeaux-port.fr/en", "accessedAt": "2026-05-10" },
+        { "name": "SeaRates", "url": "https://www.searates.com/port/bordeaux_fr.htm", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 2,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  }
+]

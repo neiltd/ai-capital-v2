@@ -1,0 +1,36 @@
+[
+  {
+    "countryId": "KAZ",
+    "year": 2023,
+    "electricityConsumptionTWh": 106.2,
+    "electricityProductionTWh": 112.7,
+    "electricityMix": {
+      "coal": 58.4,
+      "gas": 28.5,
+      "hydro": 7.8,
+      "wind": 3.3,
+      "solar": 1.6,
+      "other": 0.4
+    },
+    "renewableSharePct": 12.7,
+    "waterStressScore": 2.55,
+    "waterWithdrawalPct": 26,
+    "foodSecurityScore": 72.1,
+    "aiAdoptionScore": 51.01,
+    "internetPenetration": 90.9,
+    "mobilePenetration": 130.5,
+    "attribution": {
+      "sources": [
+        { "name": "IEA Kazakhstan Country Profile 2023", "url": "https://www.iea.org/countries/kazakhstan", "accessedAt": "2025-05-10" },
+        { "name": "WRI Aqueduct 4.0", "url": "https://www.wri.org/aqueduct", "accessedAt": "2025-05-10" },
+        { "name": "GFSI 2022", "url": "https://impact.economist.com/sustainability/project/food-security-index", "accessedAt": "2025-05-10" },
+        { "name": "Oxford Insights Government AI Readiness Index 2023", "url": "https://oxfordinsights.com/government-ai-readiness-index-2023/", "accessedAt": "2025-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 4,
+        "lastVerified": "2025-05-10"
+      }
+    }
+  }
+]

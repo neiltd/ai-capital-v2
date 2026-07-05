@@ -1,0 +1,67 @@
+{
+  "id": "PAN",
+  "iso2": "PA",
+  "name": "Panama",
+  "region": "Americas",
+  "subregion": "Central America",
+  "capital": "Panama City",
+  "lastUpdated": "2026-05-09",
+  "summary": "Panama is the primary logistics and financial hub of the Americas, centered on the strategic Panama Canal. Under the administration of President José Raúl Mulino, inaugurated in 2024, the country is focused on reviving its economy following a series of fiscal and social shocks, including a sovereign credit downgrade and the closure of the Cobre Panamá mine. Panama's dollarized economy remains highly integrated with global trade, though it faces critical challenges in managing the massive migration flow through the Darién Gap and addressing a widening fiscal deficit. Despite these hurdles, Panama City continues to serve as a world-class center for banking, real estate, and regional headquarters. The government is aggressively courting foreign investment through specialized visa programs and a territorial tax system, while balancing the need for institutional transparency and the rule of law to maintain its status as a global transit point.",
+  "indicators": {
+    "politicalStability":       { "score": 6, "score_description": "Moderate stability with a fragmented legislature and potential for social unrest.", "trend": "stable", "confidence": "high", "note": "President Mulino must navigate a Congress where independent candidates hold significant influence." },
+    "economicDirection":        { "score": 6, "score_description": "Resilient growth driven by Canal transit and logistics, though constrained by fiscal challenges.", "trend": "rising", "confidence": "high", "note": "Canal revenues have stabilized after the 2023-24 drought, but the loss of mining revenue persists." },
+    "investmentAttractiveness": { "score": 7, "score_description": "Strong appeal due to dollarization, territorial tax system, and world-class logistics.", "trend": "stable", "confidence": "high", "note": "Panama remains a top choice for regional headquarters, though its credit rating downgrade has increased borrowing costs." },
+    "geopoliticalRisk":         { "score": 4, "score_description": "Low to moderate risk, centered on migration control and Canal neutrality.", "trend": "stable", "confidence": "high", "note": "Close security cooperation with the U.S. to manage the Darién Gap migration crisis." },
+    "educationQuality":         { "score": 4, "score_description": "Variable quality with significant gaps between urban and rural/indigenous areas.", "trend": "stable", "confidence": "medium", "note": "Public education outcomes remain below regional averages, necessitating a reliance on foreign talent for high-tech roles." },
+    "healthcareQuality":        { "score": 5, "score_description": "Good urban facilities, but rural healthcare is severely underserved.", "trend": "stable", "confidence": "medium", "note": "Panama City offers world-class private medical services, but the public social security system (CSS) faces a funding crisis." },
+    "technologyInvestment":     { "score": 6, "score_description": "Strong focus on digital logistics, fintech, and becoming a regional data hub.", "trend": "rising", "confidence": "high", "note": "Expanding subsea cable connectivity and tech-ready special economic zones like City of Knowledge." }
+  },
+  "demographics": {
+    "population": 4500000,
+    "medianAge": 30.1,
+    "urbanizationRate": 69,
+    "majorEthnicGroups": ["Mestizo", "African descent", "European descent", "Indigenous"],
+    "religions": [
+      { "name": "Roman Catholic", "percent": 63 },
+      { "name": "Protestant/Evangelical", "percent": 25 },
+      { "name": "None/Unaffiliated", "percent": 9 },
+      { "name": "Other", "percent": 3 }
+    ]
+  },
+  "alliances": ["SICA", "OAS", "CELAC", "ADD", "UN"],
+  "relationships": [
+    { "countryId": "USA", "countryName": "United States", "type": "ally", "sentiment": "positive", "summary": "Strategic ally for Canal security and migration management; the U.S. is the top user of the Canal and a major investor." },
+    { "countryId": "CHN", "countryName": "China", "type": "partner", "sentiment": "neutral", "summary": "Second-largest user of the Canal and a major trade partner, though relations have cooled compared to the previous administration." },
+    { "countryId": "COL", "countryName": "Colombia", "type": "neighbor", "sentiment": "neutral", "summary": "Complex relationship focused on managing the migration crisis and security cooperation in the Darién region." },
+    { "countryId": "CRI", "countryName": "Costa Rica", "type": "neighbor", "sentiment": "positive", "summary": "Close partner in the ADD alliance; coordinated approach to regional trade and border security." },
+    { "countryId": "MEX", "countryName": "Mexico", "type": "partner", "sentiment": "positive", "summary": "Collaborates on regional trade and infrastructure integration through the Pacific Alliance framework." }
+  ],
+  "perspectives": [
+    { "source": "Logistics Professional", "bias": "Technocratic", "view": "Panama's competitive advantage is its geography; we must continuously modernize the Canal and port infrastructure to remain the 'heart' of global trade." },
+    { "source": "Indigenous Rights Leader", "bias": "Social Justice", "view": "The economic boom in the capital has left indigenous communities behind; our lands and resources must be protected from exploitative mining and projects." },
+    { "source": "U.S. Security Analyst", "bias": "Security-centric", "view": "Panama is the front line for managing irregular migration to the North; its stability is critical for Western Hemispheric security." }
+  ],
+  "historicalContext": {
+    "summary": "Panama's modern history is inseparable from the construction and control of the Canal. After gaining independence from Colombia in 1903 with U.S. support, the country was defined by the U.S. Canal Zone until the 1977 Torrijos-Carter Treaties. The 1989 U.S. invasion to oust Manuel Noriega paved the way for the stable democracy and handover of the Canal in 1999.",
+    "keyEvents": [
+      { "year": 1903, "event": "Panama declares independence from Colombia." },
+      { "year": 1914, "event": "The Panama Canal officially opens." },
+      { "year": 1977, "event": "Torrijos-Carter Treaties signed, outlining the handover of the Canal." },
+      { "year": 1989, "event": "Operation Just Cause; U.S. invasion of Panama to remove Manuel Noriega." },
+      { "year": 1999, "event": "Transfer of the Canal from the U.S. to full Panamanian control." },
+      { "year": 2016, "event": "Opening of the Panama Canal expansion (third set of locks)." },
+      { "year": 2023, "event": "Mass protests lead to the closure of the Cobre Panamá copper mine." },
+      { "year": 2024, "event": "José Raúl Mulino is elected president, succeeding Laurentino Cortizo." }
+    ]
+  },
+  "investmentNotes": {
+    "strengths": ["Strategic location and the Panama Canal hub", "Full dollarization and world-class banking sector", "Territorial tax system and FDI incentives", "Modern infrastructure in Panama City"],
+    "risks": ["Fiscal deficit and recent credit rating downgrades", "Social inequality and potential for protests", "Vulnerability to climate-induced water shortages for the Canal", "High levels of perceived corruption"],
+    "sectors": ["Maritime and Logistics", "Banking and Financial Services", "Real Estate and Construction", "Tourism", "Regional Headquarters (SEM)"]
+  },
+  "sources": [
+    { "name": "World Bank", "url": "https://data.worldbank.org/country/PAN", "type": "economic" },
+    { "name": "CIA World Factbook", "url": "https://www.cia.gov/the-world-factbook/countries/panama/", "type": "general" },
+    { "name": "Autoridad del Canal de Panamá", "url": "https://pancanal.com/", "type": "logistics" }
+  ]
+}

@@ -1,0 +1,66 @@
+{
+  "id": "KNA",
+  "iso2": "KN",
+  "name": "Saint Kitts and Nevis",
+  "region": "Americas",
+  "subregion": "Caribbean",
+  "capital": "Basseterre",
+  "lastUpdated": "2026-05-15",
+  "summary": "Saint Kitts and Nevis is currently undergoing a significant economic transition under the leadership of Prime Minister Terrance Drew. The government has launched an ambitious 'Sustainable Island State' agenda, focusing on food security, renewable energy—specifically geothermal power on Nevis—and economic diversification. The federation faced fiscal headwinds in 2024 and 2025 due to a sharp decline in Citizenship by Investment (CBI) revenues following robust reforms aimed at increasing transparency and meeting international standards. Despite this, tourism remains a pillar of the economy, and the country is making strides in water security and infrastructure. Politically, the federation remains a stable parliamentary democracy, though it faces the ongoing challenge of balancing the needs of its two-island structure while navigating a post-CBI fiscal reality.",
+  "indicators": {
+    "politicalStability":       { "score": 7, "score_description": "Stable parliamentary democracy; the SKNLP-led administration has a clear mandate.", "trend": "stable", "confidence": "high", "note": "Focus on good governance and transparency has improved international standing." },
+    "economicDirection":        { "score": 5, "score_description": "Challenging transition away from CBI dependence toward sustainable sectors.", "trend": "stable", "confidence": "high", "note": "Fiscal deficit widened in 2024, but geothermal potential offers a long-term upside." },
+    "investmentAttractiveness": { "score": 6, "score_description": "Attractive for renewable energy and luxury real estate; stable legal framework.", "trend": "stable", "confidence": "high", "note": "Stricter CBI rules have prioritized quality over quantity in investment." },
+    "geopoliticalRisk":         { "score": 3, "score_description": "Low risk; strong regional ties and a key partner for Taiwan in the Caribbean.", "trend": "stable", "confidence": "high", "note": "The federation maintains a principled foreign policy focused on sustainable development." },
+    "educationQuality":         { "score": 6, "score_description": "High literacy and a strong foundation in primary and secondary education.", "trend": "stable", "confidence": "medium", "note": "Government is increasing investment in TVET to support the new green economy." },
+    "healthcareQuality":        { "score": 6, "score_description": "Adequate public facilities with ongoing upgrades to the JNF General Hospital.", "trend": "rising", "confidence": "medium", "note": "National health insurance reforms are being phased in to improve access." },
+    "technologyInvestment":     { "score": 5, "score_description": "Improving digital infrastructure and e-government services.", "trend": "rising", "confidence": "medium", "note": "Focus on creating a 'tech-ready' workforce to attract digital nomads and services." }
+  },
+  "demographics": {
+    "population": 53000,
+    "medianAge": 36.5,
+    "urbanizationRate": 31,
+    "majorEthnicGroups": ["Black African descent", "Mixed descent", "East Indian", "European"],
+    "religions": [
+      { "name": "Anglican", "percent": 17 },
+      { "name": "Methodist", "percent": 16 },
+      { "name": "Pentecostal", "percent": 14 },
+      { "name": "Roman Catholic", "percent": 6 },
+      { "name": "Other Christian", "percent": 30 },
+      { "name": "None/Other", "percent": 17 }
+    ]
+  },
+  "alliances": ["CARICOM", "OECS", "OAS", "UN", "Commonwealth", "SIDS", "CELAC"],
+  "relationships": [
+    { "countryId": "TWN", "countryName": "Taiwan", "type": "ally", "sentiment": "positive", "summary": "Key diplomatic ally and provider of significant developmental aid in agriculture, health, and water." },
+    { "countryId": "USA", "countryName": "United States", "type": "partner", "sentiment": "positive", "summary": "Collaborates on regional security and maritime law enforcement." },
+    { "countryId": "GBR", "countryName": "United Kingdom", "type": "partner", "sentiment": "positive", "summary": "Strong historical ties; shared legal and parliamentary systems." },
+    { "countryId": "CAN", "countryName": "Canada", "type": "partner", "sentiment": "positive", "summary": "Important partner for trade and seasonal labor programs." }
+  ],
+  "perspectives": [
+    { "source": "Nevisian Resident", "bias": "Island-centric", "view": "Geothermal energy is the future for Nevis; it will finally make us energy independent and lower our bills." },
+    { "source": "Business Owner", "bias": "Practical", "view": "The CBI changes were necessary but painful; we need the new tourism projects to pick up the slack quickly." },
+    { "source": "Youth Leader", "bias": "Forward-looking", "view": "The Sustainable Island State agenda is exactly what we need to ensure there is a future for us here." }
+  ],
+  "historicalContext": {
+    "summary": "Saint Kitts was the first British colony in the West Indies (1623), earning it the title 'The Mother Colony.' It was also home to the first French colony in the region. The two islands were united as a single state in 1882. They gained independence in 1983. The sugar industry, which dominated for centuries, was closed in 2005, leading to the current focus on tourism and services.",
+    "keyEvents": [
+      { "year": 1623, "event": "Sir Thomas Warner establishes the first British colony on Saint Kitts." },
+      { "year": 1983, "event": "Saint Kitts and Nevis gains independence from the United Kingdom." },
+      { "year": 2005, "event": "The state-owned sugar industry is closed after 300 years of operation." },
+      { "year": 2022, "event": "Terrance Drew (SKNLP) is elected Prime Minister." },
+      { "year": 2024, "event": "Major CBI reforms implemented to enhance program integrity and transparency." },
+      { "year": 2025, "event": "Nevis geothermal project reaches a critical drilling milestone." }
+    ]
+  },
+  "investmentNotes": {
+    "strengths": ["Stable and mature parliamentary democracy", "High potential for geothermal energy", "Well-established luxury tourism infrastructure", "Strong rule of law and property rights"],
+    "risks": ["Vulnerability to hurricanes and climate change", "High dependence on a declining CBI revenue stream", "Limited economies of scale due to small size", "Water scarcity issues (being addressed)"],
+    "sectors": ["Renewable Energy (Geothermal and Solar)", "Luxury Tourism and Real Estate", "Sustainable Agriculture", "Digital Services", "Education Exports"]
+  },
+  "sources": [
+    { "name": "Government of Saint Kitts and Nevis", "url": "https://www.gov.kn/", "type": "official" },
+    { "name": "Nevis Island Administration", "url": "https://www.nia.gov.kn/", "type": "official" },
+    { "name": "ECCB Annual Economic and Financial Review", "url": "https://www.eccb-centralbank.org/", "type": "economic" }
+  ]
+}

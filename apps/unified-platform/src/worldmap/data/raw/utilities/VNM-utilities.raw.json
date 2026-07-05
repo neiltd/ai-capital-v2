@@ -1,0 +1,38 @@
+[
+  {
+    "countryId": "VNM",
+    "year": 2023,
+    "electricityConsumptionTWh": 251.3,
+    "electricityProductionTWh": 280.6,
+    "electricityMix": {
+      "coal": 46.2,
+      "hydro": 28.8,
+      "gas": 9.4,
+      "solar": 9.2,
+      "wind": 4.1,
+      "oil": 0.5,
+      "otherRenewables": 0.3,
+      "other": 1.5
+    },
+    "renewableSharePct": 42.4,
+    "waterStressScore": 1.5,
+    "waterWithdrawalPct": 18.1,
+    "foodSecurityScore": 67.9,
+    "aiAdoptionScore": 54.5,
+    "internetPenetration": 79.1,
+    "mobilePenetration": 164.0,
+    "attribution": {
+      "sources": [
+        { "name": "EVN Annual Report 2023", "url": "https://www.evn.com.vn/", "accessedAt": "2026-05-10" },
+        { "name": "WRI Aqueduct 4.0", "url": "https://www.wri.org/aqueduct", "accessedAt": "2026-05-10" },
+        { "name": "GFSI 2022", "url": "https://impact.economist.com/sustainability/project/food-security-index", "accessedAt": "2026-05-10" },
+        { "name": "DataReportal Digital 2023: Vietnam", "url": "https://datareportal.com/reports/digital-2023-vietnam", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 4,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  }
+]

@@ -1,0 +1,114 @@
+[
+  {
+    "id": "peace-cable",
+    "name": "Pakistan & East Africa Connecting Europe (PEACE)",
+    "route": [
+      [67.0, 24.8],
+      [42.5, 11.5],
+      [32.0, 31.0],
+      [5.3, 43.3]
+    ],
+    "landingPoints": [
+      {
+        "name": "Karachi",
+        "countryId": "PAK",
+        "coordinates": [67.01, 24.86],
+        "city": "Karachi"
+      },
+      {
+        "name": "Djibouti City",
+        "countryId": "DJI",
+        "coordinates": [43.14, 11.59],
+        "city": "Djibouti City"
+      },
+      {
+        "name": "Mombasa",
+        "countryId": "KEN",
+        "coordinates": [39.67, -4.04],
+        "city": "Mombasa"
+      },
+      {
+        "name": "Marseille",
+        "countryId": "FRA",
+        "coordinates": [5.37, 43.30],
+        "city": "Marseille"
+      }
+    ],
+    "status": "active",
+    "lengthKm": 15000,
+    "capacityTbps": 192,
+    "yearLaid": 2022,
+    "yearRepaired": null,
+    "owners": ["PCCW Global", "PEACE Cable International Network Co.", "Cybernet"],
+    "vulnerabilities": "Crosses the Red Sea and Gulf of Aden, regions with high geopolitical risk and potential for sabotage.",
+    "geopoliticalNotes": "A key part of China's Digital Silk Road initiative, providing a direct link from China/Pakistan to Europe and Africa, bypassing some Western-controlled hubs.",
+    "notes": "Utilizes 200G WDM technology.",
+    "attribution": {
+      "sources": [
+        { "name": "TeleGeography SubmarineCableMap", "url": "https://www.submarinecablemap.com/submarine-cable/pakistan-east-africa-connecting-europe-peace", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 1,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  },
+  {
+    "id": "2africa",
+    "name": "2Africa",
+    "route": [
+      [5.0, 50.0],
+      [-15.0, 20.0],
+      [18.0, -34.0],
+      [40.0, -15.0],
+      [43.0, 11.0],
+      [72.0, 19.0]
+    ],
+    "landingPoints": [
+      {
+        "name": "Bude",
+        "countryId": "GBR",
+        "coordinates": [-4.54, 50.82],
+        "city": "Bude"
+      },
+      {
+        "name": "Cape Town",
+        "countryId": "ZAF",
+        "coordinates": [18.42, -33.92],
+        "city": "Cape Town"
+      },
+      {
+        "name": "Djibouti City",
+        "countryId": "DJI",
+        "coordinates": [43.14, 11.59],
+        "city": "Djibouti City"
+      },
+      {
+        "name": "Mumbai",
+        "countryId": "IND",
+        "coordinates": [72.87, 19.07],
+        "city": "Mumbai"
+      }
+    ],
+    "status": "construction",
+    "lengthKm": 45000,
+    "capacityTbps": 180,
+    "yearLaid": 2023,
+    "yearRepaired": null,
+    "owners": ["Meta", "Orange", "STC", "Telecom Egypt", "Vodafone", "WIOCC"],
+    "vulnerabilities": "Massive scale makes it a target for state actors; crosses numerous territorial waters.",
+    "geopoliticalNotes": "Will be the longest submarine cable ever deployed, significantly increasing connectivity across Africa, the Middle East, and Asia.",
+    "notes": "Aims to provide connectivity to 3 billion people.",
+    "attribution": {
+      "sources": [
+        { "name": "TeleGeography SubmarineCableMap", "url": "https://www.submarinecablemap.com/submarine-cable/2africa", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 1,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  }
+]

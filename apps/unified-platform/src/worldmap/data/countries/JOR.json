@@ -1,0 +1,66 @@
+{
+  "id": "JOR",
+  "iso2": "JO",
+  "name": "Jordan",
+  "region": "Asia",
+  "subregion": "Western Asia",
+  "capital": "Amman",
+  "lastUpdated": "2025-05-15",
+  "summary": "Jordan is a resilient constitutional monarchy that serves as a critical buffer of stability in a perennially volatile region. Despite facing chronic economic challenges, including high unemployment and extreme water scarcity, the nation has maintained internal cohesion under the Hashemite monarchy. Jordan's foreign policy is anchored in strategic partnerships with the West and a pragmatic balancing act with regional neighbors. The 'Economic Modernization Vision' represents a major effort to transform the economy through ICT, green energy, and tourism, while the nation continues to manage the immense demographic and social pressures of hosting one of the world's largest refugee populations per capita.",
+  "indicators": {
+    "politicalStability":       { "score": 7, "trend": "stable", "confidence": "high", "note": "Strong monarchy provides continuity, though economic grievances drive occasional domestic protests." },
+    "economicDirection":        { "score": 5, "trend": "stable", "confidence": "high", "note": "Ambitious modernization plans face structural headwinds like high debt and low growth." },
+    "investmentAttractiveness": { "score": 6, "trend": "rising", "confidence": "medium", "note": "Strategic location and skilled workforce are offset by regional instability and high utility costs." },
+    "geopoliticalRisk":         { "score": 6, "trend": "stable", "confidence": "high", "note": "Buffer status is a double-edged sword; essential for regional peace but vulnerable to neighborhood shocks." },
+    "educationQuality":         { "score": 7, "trend": "stable", "confidence": "high", "note": "High literacy rates and a strong tradition of higher education, though youth employment remains a challenge." },
+    "healthcareQuality":        { "score": 7, "trend": "stable", "confidence": "high", "note": "A regional leader in medical services and medical tourism, particularly in Amman." },
+    "technologyInvestment":     { "score": 7, "trend": "rising", "confidence": "high", "note": "A thriving ICT sector and startup ecosystem, often referred to as the 'Silicon Valley of the Levant'." }
+  },
+  "demographics": {
+    "population": 11300000,
+    "medianAge": 23.5,
+    "urbanizationRate": 91.8,
+    "majorEthnicGroups": ["Jordanian/Palestinian Arab", "Syrian", "Other Arab", "Circassian/Chechen"],
+    "religions": [
+      { "name": "Muslim (mostly Sunni)", "percent": 97 },
+      { "name": "Christian", "percent": 2 },
+      { "name": "Other", "percent": 1 }
+    ]
+  },
+  "alliances": ["Arab League", "OIC", "UN", "MNNA", "UfM"],
+  "relationships": [
+    { "countryId": "USA", "countryName": "United States", "type": "strategic_partner", "sentiment": "positive", "summary": "Essential security and economic benefactor; Jordan is a Major Non-NATO Ally and key regional intelligence partner." },
+    { "countryId": "SAU", "countryName": "Saudi Arabia", "type": "ally", "sentiment": "positive", "summary": "Critical regional ally and source of investment, despite occasional competition for regional influence." },
+    { "countryId": "ISR", "countryName": "Israel", "type": "pragmatic_partner", "sentiment": "neutral", "summary": "Maintains a 1994 peace treaty; cooperation on water and energy persists despite deep public anger over regional conflicts." },
+    { "countryId": "GBR", "countryName": "United Kingdom", "type": "strategic_partner", "sentiment": "positive", "summary": "Deep historical and military ties; major supporter of Jordanian institutional development." },
+    { "countryId": "ARE", "countryName": "United Arab Emirates", "type": "ally", "sentiment": "positive", "summary": "Major investor and close political ally within the moderate Arab bloc." }
+  ],
+  "perspectives": [
+    { "source": "Jordanian Official", "bias": "Optimistic", "view": "Our Economic Modernization Vision is the roadmap to a self-reliant future, leveraging our greatest asset: our youth." },
+    { "source": "Levantine Security Analyst", "bias": "Cautious", "view": "Jordan's stability is the linchpin of the region; the international community cannot afford to let its economy falter." },
+    { "source": "Youth Entrepreneur", "bias": "Pragmatic", "view": "The talent in Amman is incredible, but we need more than visions—we need an environment that allows businesses to scale without being choked by costs." },
+    { "source": "Humanitarian Worker", "bias": "Critical", "view": "The world has moved on, but the refugee crisis remains a permanent reality here, stretching infrastructure and social services to their limits." }
+  ],
+  "historicalContext": {
+    "summary": "The Hashemite Kingdom of Jordan gained independence from the British mandate in 1946. Under King Hussein (r. 1952-1999), Jordan navigated numerous regional wars and internal challenges, eventually signing a peace treaty with Israel in 1994. King Abdullah II succeeded him in 1999, focusing on economic liberalization and maintaining Jordan's role as a moderate voice in the Islamic world.",
+    "keyEvents": [
+      { "year": 1946, "event": "Independence from the United Kingdom." },
+      { "year": 1967, "event": "Six-Day War; Jordan loses the West Bank and East Jerusalem." },
+      { "year": 1994, "event": "Signing of the Wadi Araba Peace Treaty with Israel." },
+      { "year": 1999, "event": "Death of King Hussein; King Abdullah II ascends the throne." },
+      { "year": 2011, "event": "Start of the Syrian Civil War, leading to a massive refugee influx into Jordan." },
+      { "year": 2022, "event": "Launch of the 10-year Economic Modernization Vision." },
+      { "year": 2024, "event": "Parliamentary elections held under a new electoral law; appointment of PM Jafar Hassan." }
+    ]
+  },
+  "investmentNotes": {
+    "strengths": ["Highly educated and skilled workforce", "Strategic gateway to Levant and Gulf markets", "Stable and predictable legal environment", "Strong international support and donor backing"],
+    "risks": ["Extreme water scarcity and high energy costs", "High youth unemployment and public debt", "Sensitivity to regional conflict escalations", "Small domestic consumer market"],
+    "sectors": ["ICT & Software Development", "Renewable Energy (Solar & Wind)", "Medical Services & Tourism", "Mining & Fertilizers (Potash/Phosphate)"]
+  },
+  "sources": [
+    { "name": "Jordan Department of Statistics", "url": "http://dosweb.dos.gov.jo", "type": "economic" },
+    { "name": "Central Bank of Jordan", "url": "https://www.cbj.gov.jo", "type": "economic" },
+    { "name": "Jordan Investment Commission", "url": "https://www.jic.gov.jo", "type": "economic" }
+  ]
+}

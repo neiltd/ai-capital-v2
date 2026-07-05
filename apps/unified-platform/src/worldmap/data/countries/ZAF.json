@@ -1,0 +1,71 @@
+{
+  "id": "ZAF",
+  "iso2": "ZA",
+  "name": "South Africa",
+  "region": "Africa",
+  "subregion": "Southern Africa",
+  "capital": "Pretoria",
+  "lastUpdated": "2026-05-09",
+  "summary": "South Africa is the most industrialized and diverse economy in Africa, characterized by sophisticated financial markets, a robust legal framework, and a vibrant civil society. As a leading member of the G20 and BRICS, it serves as a critical bridge between the Global South and the West. However, the country faces significant structural challenges, including extreme levels of inequality, high unemployment, and a persistent energy crisis that has hampered economic growth. Since the end of apartheid in 1994, the African National Congress (ANC) has dominated the political landscape, though its support is increasingly challenged by internal factionalism and the rise of opposition parties. Its foreign policy is defined by a commitment to multilateralism, 'African solutions to African problems,' and a balanced approach to global power competition.",
+  "indicators": {
+    "politicalStability":       { "score": 6, "trend": "stable", "confidence": "high", "note": "Transitioning towards coalition politics at the national level, which tests democratic resilience." },
+    "economicDirection":        { "score": 5, "trend": "rising", "confidence": "high", "note": "Slow recovery as energy and logistics reforms begin to take effect, though unemployment remains a major drag." },
+    "investmentAttractiveness": { "score": 6, "trend": "stable", "confidence": "high", "note": "Deep capital markets and strong rule of law are offset by infrastructure gaps and policy uncertainty." },
+    "geopoliticalRisk":         { "score": 3, "trend": "stable", "confidence": "medium", "note": "Low risk of external conflict, but internal social stability is vulnerable to economic shocks." },
+    "educationQuality":         { "score": 5, "trend": "stable", "confidence": "high", "note": "Significant disparity between high-quality private/university education and underperforming public primary schooling." },
+    "healthcareQuality":        { "score": 6, "trend": "stable", "confidence": "high", "note": "Home to Africa's best medical research and private hospitals, but public system is overburdened." },
+    "technologyInvestment":     { "score": 7, "trend": "rising", "confidence": "high", "note": "Leading African hub for fintech, digital services, and renewable energy technology." }
+  },
+  "demographics": {
+    "population": 60604000,
+    "medianAge": 28.0,
+    "urbanizationRate": 68,
+    "majorEthnicGroups": ["Black African", "Coloured", "White", "Indian/Asian"],
+    "religions": [
+      { "name": "Christian", "percent": 86 },
+      { "name": "Ancestral/Traditional", "percent": 5 },
+      { "name": "Muslim", "percent": 2 },
+      { "name": "Other/None", "percent": 7 }
+    ]
+  },
+  "alliances": ["African Union", "BRICS+", "SADC", "G20", "Commonwealth"],
+  "relationships": [
+    { "countryId": "CHN", "countryName": "China", "type": "strategic_partner", "sentiment": "positive", "summary": "Largest trade partner and key collaborator within BRICS; significant investor in infrastructure and energy." },
+    { "countryId": "USA", "countryName": "United States", "type": "strategic_partner", "sentiment": "neutral", "summary": "Important economic and health partner (via PEPFAR), though strained by South Africa's non-aligned stance on global conflicts." },
+    { "countryId": "GBR", "countryName": "United Kingdom", "type": "ally", "sentiment": "positive", "summary": "Deep historical, economic, and cultural ties; UK remains one of the largest foreign investors." },
+    { "countryId": "RUS", "countryName": "Russia", "type": "strategic_partner", "sentiment": "neutral", "summary": "Maintains historical ties dating back to the anti-apartheid struggle, though economic engagement is limited." },
+    { "countryId": "NGA", "countryName": "Nigeria", "type": "competitor", "sentiment": "neutral", "summary": "Constructive but competitive relationship for regional leadership and investment in Sub-Saharan Africa." }
+  ],
+  "perspectives": [
+    { "source": "ANC Traditionalist", "bias": "Pro-government", "view": "The ANC remains the only movement capable of transforming the economy and addressing the historical legacies of apartheid through social programs." },
+    { "source": "Business Leader", "bias": "Pro-market", "view": "Urgent privatization of state-owned enterprises and labor market reform are essential to unlock South Africa's enormous economic potential." },
+    { "source": "Constitutional Lawyer", "bias": "Rule of Law", "view": "South Africa's independent judiciary and free press are the ultimate safeguards against corruption and the erosion of democratic institutions." },
+    { "source": "Pan-African Activist", "bias": "Global South", "view": "South Africa should use its G20 and BRICS membership to demand a more equitable global financial architecture and represent African interests." }
+  ],
+  "historicalContext": {
+    "summary": "South Africa's history is defined by the struggle against racial segregation (Apartheid), which ended in 1994 with the country's first democratic elections and the presidency of Nelson Mandela, ushering in the 'Rainbow Nation' era.",
+    "keyEvents": [
+      { "year": 1910, "event": "Formation of the Union of South Africa." },
+      { "year": 1948, "event": "National Party takes power and formalizes the Apartheid system." },
+      { "year": 1960, "event": "Sharpeville Massacre leads to the banning of the ANC and PAC." },
+      { "year": 1976, "event": "Soweto Uprising marks a turning point in the internal resistance." },
+      { "year": 1990, "event": "Nelson Mandela released from prison; Apartheid begins to be dismantled." },
+      { "year": 1994, "event": "First multi-racial democratic elections; Mandela becomes President." },
+      { "year": 1996, "event": "Adoption of the new democratic Constitution." },
+      { "year": 2010, "event": "South Africa hosts the FIFA World Cup, the first in Africa." },
+      { "year": 2011, "event": "South Africa officially joins the BRICS group." },
+      { "year": 2018, "event": "Cyril Ramaphosa becomes President, promising a 'New Dawn' of reform." },
+      { "year": 2024, "event": "South Africa marks 30 years of democracy and moves towards a Government of National Unity (GNU)." }
+    ]
+  },
+  "investmentNotes": {
+    "strengths": ["World's largest reserves of platinum group metals and manganese", "Most advanced financial and banking sector in Africa", "Independent judiciary and strong property rights", "Significant potential in renewable energy (solar and wind)"],
+    "risks": ["High unemployment and social inequality", "Energy (Eskom) and logistics (Transnet) infrastructure constraints", "Political uncertainty during coalition transitions", "Crime and corruption"],
+    "sectors": ["Mining & Beneficiation", "Fintech & Financial Services", "Renewable Energy", "Automotive Manufacturing"]
+  },
+  "sources": [
+    { "name": "Statistics South Africa", "url": "https://www.statssa.gov.za/", "type": "economic" },
+    { "name": "South African Reserve Bank", "url": "https://www.resbank.co.za/", "type": "economic" },
+    { "name": "Department of International Relations and Cooperation", "url": "https://www.dirco.gov.za/", "type": "government" }
+  ]
+}

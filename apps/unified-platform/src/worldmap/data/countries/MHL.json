@@ -1,0 +1,66 @@
+{
+  "id": "MHL",
+  "iso2": "MH",
+  "name": "Marshall Islands",
+  "region": "Oceania",
+  "subregion": "Micronesia",
+  "capital": "Majuro",
+  "lastUpdated": "2026-05-15",
+  "summary": "The Republic of the Marshall Islands (RMI) is a Micronesian nation consisting of a vast chain of volcanic islands and coral atolls. Its relationship with the United States is defined by the Compact of Free Association (COFA), which provides security, financial assistance, and visa-free travel for citizens to the US. The RMI faces significant historical challenges related to US nuclear testing on Bikini and Enewetak atolls, as well as an existential threat from climate change. The economy is heavily dependent on US aid, fishing license fees, and its ship registry.",
+  "indicators": {
+    "politicalStability":       { "score": 7, "trend": "stable", "confidence": "high", "note": "Stable democratic system with a parliamentary structure and traditional leadership (Iroij) integrated into the political fabric." },
+    "economicDirection":        { "score": 4, "trend": "stable", "confidence": "medium", "note": "High reliance on US Compact funding; efforts to diversify through the maritime registry and sustainable fisheries are ongoing." },
+    "investmentAttractiveness": { "score": 5, "trend": "stable", "confidence": "medium", "note": "Attractive for maritime and fishing sectors due to its registry and massive EEZ; however, limited by geography and infrastructure." },
+    "geopoliticalRisk":         { "score": 4, "trend": "stable", "confidence": "high", "note": "Close strategic alignment with the US via COFA; however, the legacy of nuclear testing remains a sensitive diplomatic point." },
+    "educationQuality":         { "score": 4, "trend": "stable", "confidence": "medium", "note": "Basic education is universal, but higher education capacity is limited; significant migration to the US for educational opportunities." },
+    "healthcareQuality":        { "score": 4, "trend": "stable", "confidence": "medium", "note": "Healthcare is heavily influenced by the legacy of nuclear testing; relies on US support for specialized care and screening." },
+    "technologyInvestment":     { "score": 4, "trend": "rising", "confidence": "high", "note": "Improvements in fiber-optic connectivity to Majuro and Ebeye; increasing digital integration with US-based systems." }
+  },
+  "demographics": {
+    "population": 42000,
+    "medianAge": 23.8,
+    "urbanizationRate": 78,
+    "majorEthnicGroups": ["Marshallese"],
+    "religions": [
+      { "name": "Protestant", "percent": 80.0 },
+      { "name": "Roman Catholic", "percent": 8.0 },
+      { "name": "Other Christian/None", "percent": 12.0 }
+    ]
+  },
+  "alliances": ["Pacific Islands Forum", "Compact of Free Association (USA)", "United Nations", "SIDS", "ACP"],
+  "relationships": [
+    { "countryId": "USA", "countryName": "United States", "type": "strategic_partner", "sentiment": "positive", "summary": "Unique and deep relationship via the Compact of Free Association; US is the primary provider of security and aid." },
+    { "countryId": "TWN", "countryName": "Taiwan", "type": "diplomatic_partner", "sentiment": "positive", "summary": "RMI is one of the few remaining countries to maintain full diplomatic relations with Taiwan." },
+    { "countryId": "JPN", "countryName": "Japan", "type": "historical_partner", "sentiment": "positive", "summary": "Strong historical and economic ties; Japan is a major partner in infrastructure and fisheries development." },
+    { "countryId": "AUS", "countryName": "Australia", "type": "development_partner", "sentiment": "positive", "summary": "Key regional partner providing aid and support for maritime surveillance and climate adaptation." }
+  ],
+  "perspectives": [
+    { "source": "Marshallese Leader", "bias": "Pragmatic", "view": "Our relationship with the US is fundamental to our security, but the legacy of nuclear testing must be fully addressed and compensated." },
+    { "source": "Climate Negotiator", "bias": "Aspirational", "view": "For atoll nations like ours, 1.5 degrees is not a target; it's a survival limit. The world must act before we lose our homeland." },
+    { "source": "Youth Advocate", "bias": "Reformist", "view": "We need better opportunities at home so our people don't feel forced to migrate to the US to build a life." },
+    { "source": "Traditional Chief (Iroij)", "bias": "Traditionalist", "view": "Development must respect our traditional land rights and the cultural heritage that defines the Marshallese people." }
+  ],
+  "historicalContext": {
+    "summary": "The Marshall Islands were successively colonized by Spain, Germany, and Japan before becoming a US-administered UN Trust Territory after WWII. Between 1946 and 1958, the US conducted 67 nuclear tests in the islands. The RMI gained independence in 1986 under the Compact of Free Association, which was renewed in 2003 and again in 2024.",
+    "keyEvents": [
+      { "year": 1885, "event": "Marshall Islands become a German protectorate." },
+      { "year": 1914, "event": "Japan occupies the islands during WWI." },
+      { "year": 1944, "event": "US forces capture the Marshall Islands from Japan during WWII." },
+      { "year": 1946, "event": "Beginning of US nuclear testing on Bikini Atoll." },
+      { "year": 1954, "event": "Castle Bravo test on Bikini Atoll, the largest US nuclear detonation, causing significant fallout." },
+      { "year": 1979, "event": "Constitution of the Republic of the Marshall Islands is adopted." },
+      { "year": 1986, "event": "RMI gains independence and enters the Compact of Free Association with the US." },
+      { "year": 2024, "event": "Renewal of the Compact of Free Association, securing long-term funding and strategic cooperation with the US." }
+    ]
+  },
+  "investmentNotes": {
+    "strengths": ["Strategic security relationship with the US", "One of the world's largest and most reputable ship registries", "Extensive Exclusive Economic Zone (EEZ) for fisheries", "Strong traditional leadership and social stability"],
+    "risks": ["Extreme vulnerability to sea-level rise and climate change", "High dependence on US federal funding", "Geographical remoteness and high transportation costs", "Limited land for development and agriculture"],
+    "sectors": ["Maritime Registry and Services", "Sustainable Tuna Fisheries", "Aquaculture Development", "Climate Resilience and Infrastructure"]
+  },
+  "sources": [
+    { "name": "Marshall Islands Ministry of Finance", "url": "https://www.rmi-mof.com/", "type": "economic" },
+    { "name": "Economic Policy, Planning and Statistics Office (EPPSO)", "url": "https://www.eppso.org/", "type": "demographic" },
+    { "name": "Marshall Islands Maritime Authority", "url": "https://www.rmimishipreg.com/", "type": "investment" }
+  ]
+}

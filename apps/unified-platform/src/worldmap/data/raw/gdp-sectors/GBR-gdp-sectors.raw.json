@@ -1,0 +1,24 @@
+[
+  {
+    "countryId": "GBR",
+    "year": 2023,
+    "gdpUsdBn": 3370.0,
+    "gdpPerCapita": 49776,
+    "sectors": [
+      { "sector": "Services", "percentOfGDP": 81.0, "notes": "Finance, Real Estate, Retail, Professional Services. Real Estate is 13.1%." },
+      { "sector": "Industry", "percentOfGDP": 18.4, "notes": "Aerospace, Pharmaceuticals, Construction (6%)." },
+      { "sector": "Agriculture", "percentOfGDP": 0.6, "notes": "Livestock, Cereals, Fishing." }
+    ],
+    "attribution": {
+      "sources": [
+        { "name": "Office for National Statistics (ONS) 2023", "url": "https://www.ons.gov.uk/", "accessedAt": "2025-02-13" },
+        { "name": "World Bank DataBank 2023", "url": "https://databank.worldbank.org/", "accessedAt": "2025-02-13" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 2,
+        "lastVerified": "2025-02-13"
+      }
+    }
+  }
+]

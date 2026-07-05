@@ -1,0 +1,63 @@
+{
+  "id": "LSO",
+  "iso2": "LS",
+  "name": "Lesotho",
+  "region": "Africa",
+  "subregion": "Southern Africa",
+  "capital": "Maseru",
+  "lastUpdated": "2025-05-15",
+  "summary": "Lesotho is a high-altitude, landlocked kingdom entirely encircled by South Africa. Known as the 'Kingdom in the Sky,' its economy is deeply integrated with its neighbor, particularly through labor migration and the export of water and hydroelectric power via the Lesotho Highlands Water Project (LHWP). Lesotho is also a significant exporter of textiles and diamonds. The country has a history of political instability, but recent years have seen efforts toward constitutional reform and more stable coalition governance. Under the leadership of Prime Minister Sam Matekane, a businessman-turned-politician, the government is focused on economic revitalization, anti-corruption, and addressing high levels of poverty and HIV/AIDS.",
+  "indicators": {
+    "politicalStability":       { "score": 5, "trend": "rising", "confidence": "high", "note": "Efforts toward constitutional reform are improving stability; coalition politics remain complex." },
+    "economicDirection":        { "score": 5, "trend": "rising", "confidence": "high", "note": "Recovery supported by the next phase of the Highlands Water Project and textile exports." },
+    "investmentAttractiveness": { "score": 5, "trend": "stable", "confidence": "medium", "note": "Potential in mining and textiles; business environment is being streamlined." },
+    "geopoliticalRisk":         { "score": 2, "trend": "stable", "confidence": "high", "note": "Very low risk of external conflict; security is intrinsically tied to South Africa." },
+    "educationQuality":         { "score": 4, "trend": "stable", "confidence": "medium", "note": "High literacy rates, but education system needs better alignment with market needs." },
+    "healthcareQuality":        { "score": 4, "trend": "rising", "confidence": "medium", "note": "Significant progress in HIV/AIDS treatment and maternal health, though facilities are limited." },
+    "technologyInvestment":     { "score": 4, "trend": "rising", "confidence": "medium", "note": "Expansion of mobile money and initiatives to improve digital access in mountainous areas." }
+  },
+  "demographics": {
+    "population": 2300000,
+    "medianAge": 19.6,
+    "urbanizationRate": 30.2,
+    "majorEthnicGroups": ["Sotho"],
+    "religions": [
+      { "name": "Christian", "percent": 95 },
+      { "name": "Traditional/Other", "percent": 5 }
+    ]
+  },
+  "alliances": ["African Union", "SADC", "SACU", "Commonwealth"],
+  "relationships": [
+    { "countryId": "ZAF", "countryName": "South Africa", "type": "strategic_partner", "sentiment": "positive", "summary": "Survival depends on South Africa; critical for trade, employment, and water revenue." },
+    { "countryId": "USA", "countryName": "United States", "type": "economic_partner", "sentiment": "positive", "summary": "Major market for textile exports via AGOA; significant development partner (MCC)." },
+    { "countryId": "CHN", "countryName": "China", "type": "economic_partner", "sentiment": "positive", "summary": "Partner in infrastructure development and growing influence in the retail sector." },
+    { "countryId": "GBR", "countryName": "United Kingdom", "type": "historical_partner", "sentiment": "positive", "summary": "Deep historical ties through the Commonwealth and development cooperation." }
+  ],
+  "perspectives": [
+    { "source": "Maseru Textile Worker", "bias": "Vulnerable", "view": "The garment factories provide jobs, but we need more stable markets and better pay to escape poverty." },
+    { "source": "Highlands Water Project Engineer", "bias": "Optimistic", "view": "The water project is Lesotho's lifeblood, providing revenue and energy for our development." },
+    { "source": "Matekane Supporter", "bias": "Pro-reform", "view": "We need a businessman's approach to clean up the government and attract real investment." },
+    { "source": "Opposition Politician", "bias": "Critical", "view": "Constitutional reforms are taking too long; we need more inclusive dialogue for lasting peace." }
+  ],
+  "historicalContext": {
+    "summary": "Lesotho, formerly Basutoland, gained independence from Britain in 1966. Its history has been marked by periodic military intervention and political unrest, often influenced by the shifting dynamics in neighboring South Africa. The monarchy remains a key symbol of national unity, though its role is primarily ceremonial.",
+    "keyEvents": [
+      { "year": 1966, "event": "Independence from the United Kingdom." },
+      { "year": 1986, "event": "Treaty for the Lesotho Highlands Water Project signed with South Africa." },
+      { "year": 1998, "event": "SADC intervention following election-related unrest." },
+      { "year": 2014, "event": "Political crisis and attempted coup lead to SADC mediation." },
+      { "year": 2022, "event": "Sam Matekane's Revolution for Prosperity (RFP) wins the general election." },
+      { "year": 2024, "event": "Advancement of the LHWP Phase II construction to ensure long-term water and energy security." }
+    ]
+  },
+  "investmentNotes": {
+    "strengths": ["Strategic water and hydroelectric resources (LHWP)", "Duty-free access to US and EU markets for textile exports", "Production of world-class high-value diamonds", "Stable political outlook following the 2022 elections"],
+    "risks": ["Extreme geographic and economic dependence on South Africa", "One of the highest HIV/AIDS prevalence rates in the world", "High youth unemployment and reliance on migrant remittances", "Fragile mountainous environment vulnerable to erosion and climate change"],
+    "sectors": ["Water & Hydroelectric Power", "Mining (Diamonds)", "Textiles & Garments", "High-altitude Agriculture (Wool & Mohair)"]
+  },
+  "sources": [
+    { "name": "Central Bank of Lesotho", "url": "https://www.centralbank.org.ls/", "type": "economic" },
+    { "name": "Bureau of Statistics Lesotho", "url": "http://www.bos.gov.ls/", "type": "demographic" },
+    { "name": "Lesotho National Development Corporation (LNDC)", "url": "https://www.lndc.org.ls/", "type": "investment" }
+  ]
+}

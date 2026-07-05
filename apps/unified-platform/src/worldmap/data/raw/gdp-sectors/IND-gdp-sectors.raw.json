@@ -1,0 +1,29 @@
+[
+  {
+    "countryId": "IND",
+    "year": 2023,
+    "gdpUsdBn": 3550,
+    "gdpPerCapita": 2485,
+    "sectors": [
+      { "sector": "Trade, Hotels, Transport, Communication", "percentOfGDP": 18.7, "notes": null },
+      { "sector": "Financial, Real Estate & Professional Services", "percentOfGDP": 21.5, "notes": "Significant IT and business services export component" },
+      { "sector": "Public Administration, Defence & Other Services", "percentOfGDP": 14.5, "notes": null },
+      { "sector": "Manufacturing", "percentOfGDP": 13.9, "notes": "Supported by PLI schemes" },
+      { "sector": "Agriculture, Forestry & Fishing", "percentOfGDP": 17.7, "notes": "Largest employer in the country" },
+      { "sector": "Construction", "percentOfGDP": 9.1, "notes": "Infrastructure boom" },
+      { "sector": "Mining & Quarrying", "percentOfGDP": 2.3, "notes": null },
+      { "sector": "Electricity, Gas, Water & Utilities", "percentOfGDP": 2.3, "notes": null }
+    ],
+    "attribution": {
+      "sources": [
+        { "name": "MOSPI Press Note May 2024", "url": "https://mospi.gov.in/", "accessedAt": "2025-05-14" },
+        { "name": "World Bank Data 2023", "url": "https://data.worldbank.org/indicator/NY.GDP.MKTP.CD?locations=IN", "accessedAt": "2025-05-14" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 2,
+        "lastVerified": "2025-05-14"
+      }
+    }
+  }
+]

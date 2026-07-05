@@ -1,0 +1,409 @@
+[
+  {
+    "id": "PLANT-USA-GRAND-COULEE",
+    "name": "Grand Coulee Dam",
+    "countryId": "USA",
+    "city": "Grand Coulee",
+    "coordinates": [-118.979, 47.957],
+    "type": "hydro",
+    "status": "operating",
+    "capacityMW": 6809,
+    "annualOutputGWh": 21000,
+    "yearCommissioned": 1941,
+    "yearRetirement": null,
+    "operator": "U.S. Bureau of Reclamation",
+    "owner": "U.S. Bureau of Reclamation",
+    "strategicNote": "Largest power station in the United States; critical infrastructure for the Pacific Northwest power grid and irrigation.",
+    "notes": "Includes three major powerhouses and a pump-generating plant.",
+    "attribution": {
+      "sources": [
+        { "name": "Global Energy Monitor", "url": "https://www.gem.wiki/Grand_Coulee_Dam", "accessedAt": "2026-05-10" },
+        { "name": "U.S. Bureau of Reclamation", "url": "https://www.usbr.gov/pn/grandcoulee/", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 2,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  },
+  {
+    "id": "PLANT-USA-VOGTLE",
+    "name": "Vogtle Electric Generating Plant",
+    "countryId": "USA",
+    "city": "Waynesboro",
+    "coordinates": [-81.761, 33.143],
+    "type": "nuclear",
+    "status": "operating",
+    "capacityMW": 4536,
+    "annualOutputGWh": null,
+    "yearCommissioned": 1987,
+    "yearRetirement": null,
+    "operator": "Southern Nuclear Operating Company",
+    "owner": "Georgia Power (Southern Company), Oglethorpe Power, MEAG Power, Dalton Utilities",
+    "strategicNote": "Largest nuclear plant in the U.S. following the 2024 completion of Units 3 and 4, the first new nuclear units in the U.S. in over 30 years.",
+    "notes": "Units 3 and 4 are AP1000 reactors.",
+    "attribution": {
+      "sources": [
+        { "name": "EIA", "url": "https://www.eia.gov/todayinenergy/detail.php?id=61922", "accessedAt": "2026-05-10" },
+        { "name": "IAEA PRIS", "url": "https://pris.iaea.org/PRIS/CountryStatistics/CountryDetails.aspx?current=US", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 2,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  },
+  {
+    "id": "PLANT-USA-PALO-VERDE",
+    "name": "Palo Verde Generating Station",
+    "countryId": "USA",
+    "city": "Tonopah",
+    "coordinates": [-112.865, 33.389],
+    "type": "nuclear",
+    "status": "operating",
+    "capacityMW": 3937,
+    "annualOutputGWh": 31000,
+    "yearCommissioned": 1986,
+    "yearRetirement": null,
+    "operator": "Arizona Public Service",
+    "owner": "Arizona Public Service, Salt River Project, Southern California Edison, and others",
+    "strategicNote": "Largest nuclear plant in the U.S. by net generation; unique for being the only large nuclear plant not located near a large body of water (uses treated sewage effluent for cooling).",
+    "notes": null,
+    "attribution": {
+      "sources": [
+        { "name": "IAEA PRIS", "url": "https://pris.iaea.org/PRIS/CountryStatistics/CountryDetails.aspx?current=US", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 2,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  },
+  {
+    "id": "PLANT-USA-BROWNS-FERRY",
+    "name": "Browns Ferry Nuclear Plant",
+    "countryId": "USA",
+    "city": "Athens",
+    "coordinates": [-87.119, 34.704],
+    "type": "nuclear",
+    "status": "operating",
+    "capacityMW": 3775,
+    "annualOutputGWh": null,
+    "yearCommissioned": 1974,
+    "yearRetirement": null,
+    "operator": "Tennessee Valley Authority",
+    "owner": "Tennessee Valley Authority (TVA)",
+    "strategicNote": "First nuclear plant in the world to generate 1,000 MW from a single unit; critical base-load power for the TVA service area.",
+    "notes": null,
+    "attribution": {
+      "sources": [
+        { "name": "IAEA PRIS", "url": "https://pris.iaea.org/PRIS/CountryStatistics/CountryDetails.aspx?current=US", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 2,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  },
+  {
+    "id": "PLANT-USA-SCHERER",
+    "name": "Robert W. Scherer Power Plant",
+    "countryId": "USA",
+    "city": "Juliette",
+    "coordinates": [-83.804, 33.063],
+    "type": "coal",
+    "status": "operating",
+    "capacityMW": 3740,
+    "annualOutputGWh": null,
+    "yearCommissioned": 1982,
+    "yearRetirement": null,
+    "operator": "Georgia Power",
+    "owner": "Georgia Power, Oglethorpe Power, MEAG Power, Dalton Utilities, Florida Power & Light, JEA",
+    "strategicNote": "One of the largest coal-fired power plants in the United States; historically a major point source of CO2 emissions.",
+    "notes": "Multiple units have been retired or are planned for retirement in the coming years.",
+    "attribution": {
+      "sources": [
+        { "name": "Global Energy Monitor", "url": "https://www.gem.wiki/Scherer_Power_Station", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 1,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  },
+  {
+    "id": "PLANT-USA-PEACH-BOTTOM",
+    "name": "Peach Bottom Atomic Power Station",
+    "countryId": "USA",
+    "city": "Delta",
+    "coordinates": [-76.268, 39.758],
+    "type": "nuclear",
+    "status": "operating",
+    "capacityMW": 2770,
+    "annualOutputGWh": null,
+    "yearCommissioned": 1974,
+    "yearRetirement": null,
+    "operator": "Constellation Energy",
+    "owner": "Constellation Energy, PSEG Nuclear LLC",
+    "strategicNote": "Strategically located near the Susquehanna River; has undergone significant power uprates to increase capacity.",
+    "notes": null,
+    "attribution": {
+      "sources": [
+        { "name": "IAEA PRIS", "url": "https://pris.iaea.org/PRIS/CountryStatistics/CountryDetails.aspx?current=US", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 1,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  },
+  {
+    "id": "PLANT-USA-SOUTH-TEXAS",
+    "name": "South Texas Project Electric Generating Station",
+    "countryId": "USA",
+    "city": "Bay City",
+    "coordinates": [-96.049, 28.796],
+    "type": "nuclear",
+    "status": "operating",
+    "capacityMW": 2560,
+    "annualOutputGWh": null,
+    "yearCommissioned": 1988,
+    "yearRetirement": null,
+    "operator": "STP Nuclear Operating Company",
+    "owner": "NRG Energy, CPS Energy, Austin Energy",
+    "strategicNote": "Critical power source for the Texas (ERCOT) grid; notable for its large cooling reservoir.",
+    "notes": null,
+    "attribution": {
+      "sources": [
+        { "name": "IAEA PRIS", "url": "https://pris.iaea.org/PRIS/CountryStatistics/CountryDetails.aspx?current=US", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 2,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  },
+  {
+    "id": "PLANT-USA-OCONEE",
+    "name": "Oconee Nuclear Station",
+    "countryId": "USA",
+    "city": "Seneca",
+    "coordinates": [-82.898, 34.794],
+    "type": "nuclear",
+    "status": "operating",
+    "capacityMW": 2554,
+    "annualOutputGWh": null,
+    "yearCommissioned": 1973,
+    "yearRetirement": null,
+    "operator": "Duke Energy",
+    "owner": "Duke Energy",
+    "strategicNote": "Major nuclear facility in the Carolinas; one of the first nuclear plants to receive a second 20-year license renewal.",
+    "notes": null,
+    "attribution": {
+      "sources": [
+        { "name": "IAEA PRIS", "url": "https://pris.iaea.org/PRIS/CountryStatistics/CountryDetails.aspx?current=US", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 1,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  },
+  {
+    "id": "PLANT-USA-SUSQUEHANNA",
+    "name": "Susquehanna Steam Electric Station",
+    "countryId": "USA",
+    "city": "Salem Township",
+    "coordinates": [-76.149, 41.089],
+    "type": "nuclear",
+    "status": "operating",
+    "capacityMW": 2514,
+    "annualOutputGWh": null,
+    "yearCommissioned": 1983,
+    "yearRetirement": null,
+    "operator": "Susquehanna Nuclear, LLC",
+    "owner": "Talen Energy, Allegheny Electric Cooperative",
+    "strategicNote": "Key asset for Talen Energy and a major contributor to Pennsylvania's carbon-free electricity.",
+    "notes": null,
+    "attribution": {
+      "sources": [
+        { "name": "IAEA PRIS", "url": "https://pris.iaea.org/PRIS/CountryStatistics/CountryDetails.aspx?current=US", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 1,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  },
+  {
+    "id": "PLANT-USA-BRAIDWOOD",
+    "name": "Braidwood Generating Station",
+    "countryId": "USA",
+    "city": "Braceville",
+    "coordinates": [-88.229, 41.244],
+    "type": "nuclear",
+    "status": "operating",
+    "capacityMW": 2386,
+    "annualOutputGWh": null,
+    "yearCommissioned": 1988,
+    "yearRetirement": null,
+    "operator": "Constellation Energy",
+    "owner": "Constellation Energy",
+    "strategicNote": "Part of the largest nuclear fleet in the U.S. (Constellation's Illinois fleet), providing essential power to the Chicago region.",
+    "notes": null,
+    "attribution": {
+      "sources": [
+        { "name": "IAEA PRIS", "url": "https://pris.iaea.org/PRIS/CountryStatistics/CountryDetails.aspx?current=US", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 1,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  },
+  {
+    "id": "PLANT-USA-BYRON",
+    "name": "Byron Generating Station",
+    "countryId": "USA",
+    "city": "Byron",
+    "coordinates": [-89.282, 42.074],
+    "type": "nuclear",
+    "status": "operating",
+    "capacityMW": 2347,
+    "annualOutputGWh": null,
+    "yearCommissioned": 1985,
+    "yearRetirement": null,
+    "operator": "Constellation Energy",
+    "owner": "Constellation Energy",
+    "strategicNote": "Another key component of Illinois' nuclear capacity; its continued operation was secured by state legislative support in 2021.",
+    "notes": null,
+    "attribution": {
+      "sources": [
+        { "name": "IAEA PRIS", "url": "https://pris.iaea.org/PRIS/CountryStatistics/CountryDetails.aspx?current=US", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 1,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  },
+  {
+    "id": "PLANT-USA-HOOVER",
+    "name": "Hoover Dam",
+    "countryId": "USA",
+    "city": "Boulder City",
+    "coordinates": [-114.738, 36.016],
+    "type": "hydro",
+    "status": "operating",
+    "capacityMW": 2080,
+    "annualOutputGWh": 4000,
+    "yearCommissioned": 1936,
+    "yearRetirement": null,
+    "operator": "U.S. Bureau of Reclamation",
+    "owner": "U.S. Bureau of Reclamation",
+    "strategicNote": "Iconic engineering marvel; provides critical power and water regulation for the Southwestern United States (Arizona, Nevada, California).",
+    "notes": null,
+    "attribution": {
+      "sources": [
+        { "name": "Global Energy Monitor", "url": "https://www.gem.wiki/Hoover_Dam", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 1,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  },
+  {
+    "id": "PLANT-USA-ALTA-WIND",
+    "name": "Alta Wind Energy Center",
+    "countryId": "USA",
+    "city": "Tehachapi",
+    "coordinates": [-118.321, 35.017],
+    "type": "wind",
+    "status": "operating",
+    "capacityMW": 1548,
+    "annualOutputGWh": null,
+    "yearCommissioned": 2010,
+    "yearRetirement": null,
+    "operator": "Terra-Gen Power",
+    "owner": "Terra-Gen Power, NRG Energy, and others",
+    "strategicNote": "One of the largest onshore wind farms in the world; located in the Tehachapi Pass, a major wind corridor in California.",
+    "notes": "Also known as the Mojave Wind Farm.",
+    "attribution": {
+      "sources": [
+        { "name": "Global Energy Monitor", "url": "https://www.gem.wiki/Alta_Wind_Energy_Center", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 1,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  },
+  {
+    "id": "PLANT-USA-WEST-COUNTY",
+    "name": "West County Energy Center",
+    "countryId": "USA",
+    "city": "Loxahatchee",
+    "coordinates": [-80.375, 26.699],
+    "type": "gas",
+    "status": "operating",
+    "capacityMW": 3750,
+    "annualOutputGWh": null,
+    "yearCommissioned": 2009,
+    "yearRetirement": null,
+    "operator": "Florida Power & Light",
+    "owner": "Florida Power & Light (FPL)",
+    "strategicNote": "One of the largest and most efficient natural gas plants in the U.S., serving Southern Florida.",
+    "notes": null,
+    "attribution": {
+      "sources": [
+        { "name": "EIA", "url": "https://www.eia.gov/electricity/data/browser/", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "medium",
+        "sourceCount": 1,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  },
+  {
+    "id": "PLANT-USA-IVANPAH",
+    "name": "Ivanpah Solar Electric Generating System",
+    "countryId": "USA",
+    "city": "Nipton",
+    "coordinates": [-115.467, 35.567],
+    "type": "solar",
+    "status": "operating",
+    "capacityMW": 392,
+    "annualOutputGWh": 1000,
+    "yearCommissioned": 2014,
+    "yearRetirement": null,
+    "operator": "NRG Energy",
+    "owner": "NRG Energy, Google, BrightSource Energy",
+    "strategicNote": "Major concentrated solar thermal project; high visibility as a flagship large-scale solar project on federal lands.",
+    "notes": "Uses solar power tower technology.",
+    "attribution": {
+      "sources": [
+        { "name": "Global Energy Monitor", "url": "https://www.gem.wiki/Ivanpah_Solar_Electric_Generating_System", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 2,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  }
+]

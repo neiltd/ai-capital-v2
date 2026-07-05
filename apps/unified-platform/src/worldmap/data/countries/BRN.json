@@ -1,0 +1,65 @@
+{
+  "id": "BRN",
+  "iso2": "BN",
+  "name": "Brunei Darussalam",
+  "region": "Asia",
+  "subregion": "South-Eastern Asia",
+  "capital": "Bandar Seri Begawan",
+  "lastUpdated": "2026-05-15",
+  "summary": "Brunei is a wealthy, energy-rich absolute monarchy on the island of Borneo. Its economy is dominated by the oil and gas sector, which provides for a high standard of living and comprehensive social welfare for its citizens. Under the long-standing rule of Sultan Hassanal Bolkiah, the nation is pursuing its 'Wawasan Brunei 2035' vision to diversify the economy into non-energy sectors. Brunei maintains a stable and conservative political environment, characterized by the 'Melayu Islam Beraja' (Malay Islamic Monarchy) philosophy and a pragmatic foreign policy focused on ASEAN and regional stability.",
+  "indicators": {
+    "politicalStability":       { "score": 9, "trend": "stable", "confidence": "high", "note": "Highly stable absolute monarchy; same royal family has ruled for over 600 years; no significant internal opposition." },
+    "economicDirection":        { "score": 6, "trend": "stable", "confidence": "high", "note": "Growth recovered in 2024-2025 due to new energy production; long-term challenge remains diversification away from hydrocarbons." },
+    "investmentAttractiveness": { "score": 6, "trend": "rising", "confidence": "high", "note": "High GDP per capita and lack of personal income tax; government aggressively courting non-oil FDI through BusinessBN portal." },
+    "geopoliticalRisk":         { "score": 3, "trend": "stable", "confidence": "high", "note": "Low direct risk of conflict; claimant in the South China Sea but maintains a low-profile, diplomatic approach." },
+    "educationQuality":         { "score": 7, "trend": "stable", "confidence": "high", "note": "High-quality, free education system for citizens; focus on aligning vocational training with diversification goals." },
+    "healthcareQuality":        { "score": 8, "trend": "stable", "confidence": "high", "note": "Excellent public healthcare system, free for citizens; high health outcomes and modern facilities." },
+    "technologyInvestment":     { "score": 6, "trend": "rising", "confidence": "medium", "note": "Significant investment in digital infrastructure and smart nation initiatives to support economic diversification." }
+  },
+  "demographics": {
+    "population": 462720,
+    "medianAge": 31.8,
+    "urbanizationRate": 79,
+    "majorEthnicGroups": ["Malay 65.8%", "Chinese 10.2%", "Other 24%"],
+    "religions": [
+      { "name": "Muslim (Official)", "percent": 82.1 },
+      { "name": "Christian", "percent": 6.7 },
+      { "name": "Buddhist", "percent": 6.3 },
+      { "name": "Other", "percent": 4.9 }
+    ]
+  },
+  "alliances": ["ASEAN", "APEC", "Commonwealth", "OIC", "WTO", "United Nations"],
+  "relationships": [
+    { "countryId": "SGP", "countryName": "Singapore", "type": "strategic_partner", "sentiment": "positive", "summary": "Closest regional partner; Brunei Dollar is pegged to the Singapore Dollar; deep cooperation in finance and defense." },
+    { "countryId": "CHN", "countryName": "China", "type": "economic_partner", "sentiment": "positive", "summary": "Major source of FDI and infrastructure investment (Hengyi Industries); critical trade partner for energy exports." },
+    { "countryId": "MYS", "countryName": "Malaysia", "type": "neighbor", "sentiment": "positive", "summary": "Close cultural and economic ties; collaboration on border management and regional security." },
+    { "countryId": "JPN", "countryName": "Japan", "type": "economic_partner", "sentiment": "positive", "summary": "Primary export market for liquefied natural gas (LNG); long-standing energy security partnership." }
+  ],
+  "perspectives": [
+    { "source": "Government Minister", "bias": "Loyalist", "view": "Our MIB philosophy ensures a harmonious society. Wawasan 2035 is successfully preparing us for a post-oil future." },
+    { "source": "Young Professional", "bias": "Pragmatic", "view": "The public sector can no longer hire everyone. We need to be more entrepreneurial and look for opportunities in the digital and halal industries." },
+    { "source": "Foreign Investor", "bias": "Cautious", "view": "Brunei offers great stability and zero tax, but the small market and conservative regulatory environment require a long-term perspective." },
+    { "source": "Environmentalist", "bias": "Concerned", "view": "Our forests are pristine, but our economy is built on carbon. We must transition to renewables while protecting our biodiversity." }
+  ],
+  "historicalContext": {
+    "summary": "Brunei was a powerful maritime empire in the 15th-17th centuries, controlling much of Borneo and the Philippines. It became a British protectorate in 1888 and gained full independence in 1984. It has since used its massive oil and gas wealth to build one of the world's most comprehensive welfare states.",
+    "keyEvents": [
+      { "year": 1929, "event": "Discovery of oil in Seria, transforming the nation's future." },
+      { "year": 1962, "event": "Brunei revolt; state of emergency declared (remains in effect)." },
+      { "year": 1967, "event": "Sultan Hassanal Bolkiah ascends to the throne." },
+      { "year": 1984, "event": "Independence from British protectorate status." },
+      { "year": 2014, "event": "Phased introduction of Sharia penal code begins." },
+      { "year": 2024, "event": "New oil well production leads to a rebound in economic growth." }
+    ]
+  },
+  "investmentNotes": {
+    "strengths": ["Extreme political stability and strong rule of law", "No personal income tax, sales tax, or export duties", "Strategic location in the heart of Southeast Asia", "High GDP per capita and educated, English-speaking workforce"],
+    "risks": ["Heavy economic dependence on the oil and gas sector", "Small domestic market and limited economies of scale", "Strict regulatory and conservative social environment", "Bureaucratic delays in non-energy project approvals"],
+    "sectors": ["Halal Manufacturing & Services", "ICT & Digital Economy", "Eco-Tourism & Conservation Finance", "Food & Agribusiness Diversification"]
+  },
+  "sources": [
+    { "name": "Brunei Darussalam Central Bank", "url": "https://www.bdcb.gov.bn/", "type": "economic" },
+    { "name": "Ministry of Finance and Economy", "url": "https://www.mofe.gov.bn/", "type": "official" },
+    { "name": "ASEAN Secretariat - Brunei Profile", "url": "https://asean.org/member-state/brunei-darussalam/", "type": "regional" }
+  ]
+}

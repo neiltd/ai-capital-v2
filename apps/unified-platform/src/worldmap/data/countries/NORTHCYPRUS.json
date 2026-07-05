@@ -1,0 +1,63 @@
+{
+  "id": "NORTHCYPRUS",
+  "iso2": "CY-TR",
+  "name": "Northern Cyprus (Turkish Republic of Northern Cyprus)",
+  "region": "Europe",
+  "subregion": "Southern Europe",
+  "capital": "North Nicosia",
+  "lastUpdated": "2025-05-15",
+  "summary": "Northern Cyprus is currently experiencing a significant political shift following the October 2025 presidential election, which saw the victory of Tufan Erhürman and the center-left CTP. This result signals a public pivot away from the hardline 'two-state' policy toward a more pragmatic approach aimed at reviving reunification talks and functional engagement with the Republic of Cyprus and the EU. Economically, the region remains heavily integrated with Turkey and highly vulnerable to the volatility of the Turkish Lira, though it maintains a resilient service sector driven by tourism and higher education. The new administration faces the complex challenge of balancing its security dependence on Turkey with the public's desire for international reintegration.",
+  "indicators": {
+    "politicalStability":       { "score": 7, "trend": "rising", "confidence": "high", "note": "Stable democratic transition following the 2025 elections; strong mandate for a more pragmatic diplomatic approach." },
+    "economicDirection":        { "score": 4, "trend": "stable", "confidence": "high", "note": "Resilient service sector hindered by high inflation and dependence on the Turkish Lira." },
+    "investmentAttractiveness": { "score": 4, "trend": "rising", "confidence": "medium", "note": "Improving due to renewed hopes for a diplomatic settlement, though legal uncertainties regarding property remain." },
+    "geopoliticalRisk":         { "score": 5, "trend": "falling", "confidence": "high", "note": "Tensions with the Republic of Cyprus are moderating as both sides explore confidence-building measures." },
+    "educationQuality":         { "score": 7, "trend": "stable", "confidence": "high", "note": "Higher education is a major economic pillar, with numerous universities attracting a large international student body." },
+    "healthcareQuality":        { "score": 6, "trend": "stable", "confidence": "medium", "note": "Adequate public and private facilities; significant cooperation with Turkey for specialized medical treatments." },
+    "technologyInvestment":     { "score": 5, "trend": "rising", "confidence": "medium", "note": "Expanding 5G infrastructure and a growing focus on digitalizing government services to improve transparency." }
+  },
+  "demographics": {
+    "population": 390000,
+    "medianAge": 33.5,
+    "urbanizationRate": 72.0,
+    "majorEthnicGroups": ["Turkish Cypriot", "Turkish"],
+    "religions": [
+      { "name": "Sunni Muslim", "percent": 98 },
+      { "name": "Other (Christian/None)", "percent": 2 }
+    ]
+  },
+  "alliances": ["OIC (Observer)", "Organization of Turkic States (Observer)"],
+  "relationships": [
+    { "countryId": "TUR", "countryName": "Turkey", "type": "strategic_partner", "sentiment": "positive", "summary": "The sole recognizer and primary security and economic patron; maintains a significant military presence on the island." },
+    { "countryId": "CYP", "countryName": "Republic of Cyprus", "type": "neighbor", "sentiment": "neutral", "summary": "Relations are transitioning from hostile to pragmatic as both sides explore functional cooperation and the resumption of talks." },
+    { "countryId": "GRC", "countryName": "Greece", "type": "neighbor", "sentiment": "neutral", "summary": "Engagement is indirect and mediated through the UN and EU; focused on regional stability and the 'Motherland' role." },
+    { "countryId": "GBR", "countryName": "United Kingdom", "type": "partner", "sentiment": "positive", "summary": "A guarantor power with deep historical ties; home to a large Turkish Cypriot diaspora and a key mediator in the peace process." }
+  ],
+  "perspectives": [
+    { "source": "Turkish Cypriot Diplomat", "bias": "Optimistic", "view": "The 2025 election shows that our people want a future within the international community. We are ready for a settlement based on sovereign equality." },
+    { "source": "Turkish Government Official", "bias": "Supportive", "view": "We will always stand by the Turkish Cypriots. While we support a settlement, their security and rights are non-negotiable." },
+    { "source": "Greek Cypriot Analyst", "bias": "Cautious", "view": "The change in leadership in the North is a positive signal, but the core issues of security guarantees and territory remain extremely difficult." },
+    { "source": "International Student in Nicosia", "bias": "Pragmatic", "view": "The universities here are great and affordable. The politics doesn't affect us much, but more international flights would be better." }
+  ],
+  "historicalContext": {
+    "summary": "The division of Cyprus dates back to the 1974 Turkish intervention following a Greek-backed coup aimed at union with Greece. Northern Cyprus declared itself the Turkish Republic of Northern Cyprus (TRNC) in 1983, but it has only been recognized by Turkey. Multiple rounds of UN-led peace talks, most notably the 2004 Annan Plan and the 2017 Crans-Montana summit, have failed to reach a final settlement. The recent era is defined by the shift between the two-state vision of Ersin Tatar and the more traditional federalist/pragmatic vision of Tufan Erhürman.",
+    "keyEvents": [
+      { "year": 1974, "event": "Turkish military intervention following a coup attempt; division of the island." },
+      { "year": 1983, "event": "Unilateral declaration of independence of the TRNC." },
+      { "year": 2003, "event": "Opening of the border crossings for the first time since 1974." },
+      { "year": 2004, "event": "Turkish Cypriots approve the Annan Plan; Republic of Cyprus joins the EU." },
+      { "year": 2020, "event": "Election of Ersin Tatar marks a shift toward a 'two-state solution' policy." },
+      { "year": 2025, "event": "Tufan Erhürman wins the presidential election, signaling a return to a more pragmatic, pro-reunification stance." }
+    ]
+  },
+  "investmentNotes": {
+    "strengths": ["Well-established and internationally recognized higher education sector", "High potential for high-end tourism and boutique hospitality", "Resilient private sector with strong links to the Turkish market", "Strategic location in the Eastern Mediterranean with potential energy transit roles"],
+    "risks": ["Lack of international recognition and legal isolation (excluding Turkey)", "Exposure to Turkish Lira volatility and high inflation", "Unresolved property claims and legal disputes stemming from the 1974 conflict", "Direct dependence on Turkish financial and political decisions"],
+    "sectors": ["Higher Education & Research", "Tourism & Casino Resorts", "Construction & Real Estate", "Agribusiness (Citrus & Dairy)"]
+  },
+  "sources": [
+    { "name": "TRNC Statistical Institute", "url": "https://stat.gov.ct.tr", "type": "economic" },
+    { "name": "TRNC Ministry of Foreign Affairs", "url": "https://mfa.gov.ct.tr", "type": "government" },
+    { "name": "UN Peacekeeping Force in Cyprus (UNFICYP)", "url": "https://unficyp.unmissions.org", "type": "government" }
+  ]
+}

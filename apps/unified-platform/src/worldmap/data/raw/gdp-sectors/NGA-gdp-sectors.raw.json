@@ -1,0 +1,54 @@
+[
+  {
+    "countryId": "NGA",
+    "year": 2023,
+    "gdpUsdBn": 362.81,
+    "gdpPerCapita": 1621,
+    "sectors": [
+      {
+        "sector": "Services",
+        "percentOfGDP": 56.2,
+        "notes": "Driven by Information & Communication (telecoms), Trade, and Financial services."
+      },
+      {
+        "sector": "Agriculture",
+        "percentOfGDP": 26.1,
+        "notes": "Primarily crop production which accounts for about 90% of the sector."
+      },
+      {
+        "sector": "Manufacturing",
+        "percentOfGDP": 12.3,
+        "notes": "Includes food, beverages, and tobacco, as well as textile and apparel."
+      },
+      {
+        "sector": "Oil & Gas",
+        "percentOfGDP": 5.4,
+        "notes": "Mining & Quarrying sector; production averaged 1.55 mbpd in Q4 2023."
+      }
+    ],
+    "attribution": {
+      "sources": [
+        {
+          "name": "Nigeria National Bureau of Statistics (NBS) GDP Report Q4 2023",
+          "url": "https://nigerianstat.gov.ng/",
+          "accessedAt": "2025-02-11"
+        },
+        {
+          "name": "World Bank DataBank 2023",
+          "url": "https://databank.worldbank.org/",
+          "accessedAt": "2025-02-11"
+        },
+        {
+          "name": "IMF World Economic Outlook October 2024",
+          "url": "https://www.imf.org/en/Publications/WEO",
+          "accessedAt": "2025-02-11"
+        }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 3,
+        "lastVerified": "2025-02-11"
+      }
+    }
+  }
+]

@@ -1,0 +1,30 @@
+[
+  {
+    "countryId": "DEU",
+    "year": 2024,
+    "aiReadinessScore": 76.90,
+    "aiAdoptionScore": 72.0,
+    "aiTalentScore": 75.0,
+    "aiInvestmentUsdM": 1910,
+    "aiStartupCount": 687,
+    "aiUnicornCount": 4,
+    "hasNationalAiStrategy": true,
+    "aiStrategyYear": 2018,
+    "aiPolicyScore": 79.24,
+    "cloudReadinessPct": null,
+    "broadbandPenetrationPct": 86.55,
+    "topAiSectors": ["Manufacturing", "Automotive", "Logistics", "Healthcare"],
+    "attribution": {
+      "sources": [
+        { "name": "Oxford Insights Government AI Readiness Index 2024", "url": "https://oxfordinsights.com/publications/2024-government-ai-readiness-index/", "accessedAt": "2025-05-10" },
+        { "name": "Stanford HAI AI Index Report 2024", "url": "https://aiindex.stanford.edu/report/", "accessedAt": "2025-05-10" },
+        { "name": "appliedAI Institute for Europe - AI Startup Landscape 2024", "url": "https://www.appliedai-institute.de/", "accessedAt": "2025-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 3,
+        "lastVerified": "2025-05-10"
+      }
+    }
+  }
+]

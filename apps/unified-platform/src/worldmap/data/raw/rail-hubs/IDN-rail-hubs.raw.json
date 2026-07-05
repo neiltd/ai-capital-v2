@@ -1,0 +1,218 @@
+[
+  {
+    "id": "RAIL-IDN-HALIM-HSR",
+    "name": "Halim High-Speed Railway Station",
+    "countryId": "IDN",
+    "city": "Jakarta",
+    "coordinates": [106.8897, -6.2458],
+    "type": "high_speed",
+    "dailyPassengers": 24000,
+    "annualFreightTonnes": null,
+    "connectedCountries": [],
+    "gaugeType": "standard",
+    "lineCount": 6,
+    "strategicImportance": "high",
+    "isPartOfBRI": true,
+    "geopoliticalNotes": "Flagship BRI project (Whoosh). The first high-speed railway in Southeast Asia, connecting Jakarta and Bandung. Symbol of China-Indonesia strategic cooperation.",
+    "notes": "Dedicated terminal for the 350 km/h high-speed service.",
+    "attribution": {
+      "sources": [
+        { "name": "KCIC (PT Kereta Cepat Indonesia China)", "url": "https://kcic.co.id/", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 2,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  },
+  {
+    "id": "RAIL-IDN-TEGALLUAR-HSR",
+    "name": "Tegalluar High-Speed Railway Station",
+    "countryId": "IDN",
+    "city": "Bandung",
+    "coordinates": [107.71, -6.96],
+    "type": "high_speed",
+    "dailyPassengers": 15000,
+    "annualFreightTonnes": null,
+    "connectedCountries": [],
+    "gaugeType": "standard",
+    "lineCount": 4,
+    "strategicImportance": "high",
+    "isPartOfBRI": true,
+    "geopoliticalNotes": "The eastern terminus of the Whoosh HSR. Key node for future extensions toward Surabaya as part of the BRI-backed Trans-Java HSR network.",
+    "notes": "Located in the Bandung metropolitan area, serving as a catalyst for local transit-oriented development.",
+    "attribution": {
+      "sources": [
+        { "name": "KCIC Official Operations Data", "url": "https://kcic.co.id/", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 1,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  },
+  {
+    "id": "RAIL-IDN-GAMBIR-JAKARTA",
+    "name": "Gambir Railway Station",
+    "countryId": "IDN",
+    "city": "Jakarta",
+    "coordinates": [106.8306, -6.1767],
+    "type": "passenger",
+    "dailyPassengers": 20000,
+    "annualFreightTonnes": null,
+    "connectedCountries": [],
+    "gaugeType": "narrow",
+    "lineCount": 4,
+    "strategicImportance": "medium",
+    "isPartOfBRI": false,
+    "geopoliticalNotes": "Indonesia's primary executive-class passenger hub. Central to the conventional Java rail network.",
+    "notes": "Located in the heart of the capital, near the National Monument.",
+    "attribution": {
+      "sources": [
+        { "name": "PT Kereta Api Indonesia (KAI)", "url": "https://www.kai.id/", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 1,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  },
+  {
+    "id": "RAIL-IDN-PASAR-SENEN",
+    "name": "Pasar Senen Railway Station",
+    "countryId": "IDN",
+    "city": "Jakarta",
+    "coordinates": [106.8444, -6.1744],
+    "type": "passenger",
+    "dailyPassengers": 40000,
+    "annualFreightTonnes": null,
+    "connectedCountries": [],
+    "gaugeType": "narrow",
+    "lineCount": 6,
+    "strategicImportance": "medium",
+    "isPartOfBRI": false,
+    "geopoliticalNotes": "High-volume passenger hub serving economy and business class long-distance routes across Java.",
+    "notes": "One of the busiest stations in Indonesia during 'Mudik' (holiday exodus) periods.",
+    "attribution": {
+      "sources": [
+        { "name": "PT KAI Passenger Statistics", "url": "https://www.kai.id/", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 1,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  },
+  {
+    "id": "RAIL-IDN-TANJUNG-PRIOK",
+    "name": "Tanjung Priok Rail Terminal",
+    "countryId": "IDN",
+    "city": "Jakarta",
+    "coordinates": [106.88, -6.11],
+    "type": "port_interface",
+    "dailyPassengers": null,
+    "annualFreightTonnes": 5000000,
+    "connectedCountries": [],
+    "gaugeType": "narrow",
+    "lineCount": 4,
+    "strategicImportance": "high",
+    "isPartOfBRI": false,
+    "geopoliticalNotes": "Major port interface for Indonesia's busiest seaport. Critical for reducing road congestion in Jakarta by shifting container movement to rail.",
+    "notes": "Connects directly to the national freight network.",
+    "attribution": {
+      "sources": [
+        { "name": "IPC (Indonesia Port Corporation)", "url": "https://www.indonesiaport.co.id/", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "medium",
+        "sourceCount": 1,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  },
+  {
+    "id": "RAIL-IDN-SURABAYA-GUBENG",
+    "name": "Surabaya Gubeng Railway Station",
+    "countryId": "IDN",
+    "city": "Surabaya",
+    "coordinates": [112.7522, -7.2653],
+    "type": "mixed",
+    "dailyPassengers": 10000,
+    "annualFreightTonnes": 2000000,
+    "connectedCountries": [],
+    "gaugeType": "narrow",
+    "lineCount": 6,
+    "strategicImportance": "high",
+    "isPartOfBRI": false,
+    "geopoliticalNotes": "Largest railway hub in East Java. Strategically positioned for the proposed extension of the BRI high-speed line from Bandung to Surabaya.",
+    "notes": "Gateway for industrial and passenger traffic in the eastern part of Java.",
+    "attribution": {
+      "sources": [
+        { "name": "PT KAI Daop 8 Surabaya", "url": "https://www.kai.id/", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 1,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  },
+  {
+    "id": "RAIL-IDN-BANDUNG-HALL",
+    "name": "Bandung Railway Station (Hall)",
+    "countryId": "IDN",
+    "city": "Bandung",
+    "coordinates": [107.6025, -6.9147],
+    "type": "mixed",
+    "dailyPassengers": 15000,
+    "annualFreightTonnes": 500000,
+    "connectedCountries": [],
+    "gaugeType": "narrow",
+    "lineCount": 6,
+    "strategicImportance": "medium",
+    "isPartOfBRI": true,
+    "geopoliticalNotes": "Key feeder hub for the Whoosh HSR. Integrates the conventional narrow-gauge network with the new standard-gauge BRI corridor.",
+    "notes": "Critical for regional connectivity in West Java.",
+    "attribution": {
+      "sources": [
+        { "name": "PT KAI Operations", "url": "https://www.kai.id/", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 1,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  },
+  {
+    "id": "RAIL-IDN-SEMARANG-TAWANG",
+    "name": "Semarang Tawang Railway Station",
+    "countryId": "IDN",
+    "city": "Semarang",
+    "coordinates": [110.4281, -6.9644],
+    "type": "mixed",
+    "dailyPassengers": 8000,
+    "annualFreightTonnes": 1200000,
+    "connectedCountries": [],
+    "gaugeType": "narrow",
+    "lineCount": 5,
+    "strategicImportance": "medium",
+    "isPartOfBRI": false,
+    "geopoliticalNotes": "Central Java's primary logistics and passenger node. Linkage point for the North Coast (Pantura) rail corridor.",
+    "notes": "Prone to tidal flooding, leading to strategic investments in flood mitigation for rail infrastructure.",
+    "attribution": {
+      "sources": [
+        { "name": "PT KAI Daop 4 Semarang", "url": "https://www.kai.id/", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "medium",
+        "sourceCount": 1,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  }
+]

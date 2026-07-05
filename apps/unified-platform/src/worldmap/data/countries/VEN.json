@@ -1,0 +1,64 @@
+{
+  "id": "VEN",
+  "iso2": "VE",
+  "name": "Venezuela",
+  "region": "Americas",
+  "subregion": "South America",
+  "capital": "Caracas",
+  "lastUpdated": "2025-05-23",
+  "summary": "Venezuela is currently at a critical geopolitical and domestic crossroads. Following the deeply contested 2024 presidential elections and a period of intense internal repression, the country is facing extreme economic contraction and international isolation. While possessing the world's largest proven oil reserves, its infrastructure and social systems have largely collapsed. Recent reports from early 2026 indicate a major shift in the political landscape with a potential U.S.-led intervention and the capture of Nicolás Maduro, signaling a possible transition to a period of international management or interim governance. This development, if confirmed, would represent the most significant change in the country's trajectory since the rise of Chavismo, potentially opening the door for post-conflict recovery amid extreme legal and security uncertainty.",
+  "indicators": {
+    "politicalStability":       { "score": 1, "score_description": "Extreme instability with potential regime transition.", "trend": "unstable", "confidence": "high", "note": "The country is in a state of flux; the reports of Maduro's capture in early 2026 suggest a total breakdown of the previous regime's control." },
+    "economicDirection":        { "score": 1, "score_description": "Severe contraction and hyperinflationary environment.", "trend": "declining", "confidence": "high", "note": "GDP is projected to contract by another 5% in 2025-2026; the economy is almost entirely dependent on stagnant oil exports and remittances." },
+    "investmentAttractiveness": { "score": 1, "score_description": "Extremely low; highly speculative and 'radioactive'.", "trend": "declining", "confidence": "high", "note": "Lack of rule of law, international sanctions, and political upheaval make it unsuitable for all but the most high-risk investors." },
+    "geopoliticalRisk":         { "score": 10, "score_description": "Flashpoint for global power confrontation.", "trend": "stable", "confidence": "high", "note": "Venezuela is a key arena for U.S., Russian, and Chinese competition; the 2026 transition has significantly escalated regional and global security stakes." },
+    "educationQuality":         { "score": 2, "score_description": "Total collapse of public education due to professional flight.", "trend": "declining", "confidence": "high", "note": "A massive 'brain drain' has left schools and universities without staff; over 7.9 million Venezuelans have fled the country." },
+    "healthcareQuality":        { "score": 1, "score_description": "Humanitarian crisis with total collapse of services.", "trend": "declining", "confidence": "high", "note": "Public hospitals lack basic supplies and medicine; infant and maternal mortality rates are among the highest in the world." },
+    "technologyInvestment":     { "score": 2, "score_description": "Minimal investment, primarily used for surveillance.", "trend": "stable", "confidence": "medium", "note": "Infrastructure is decaying; internet and power outages are frequent and nationwide." }
+  },
+  "demographics": {
+    "population": 28400000,
+    "medianAge": 30.2,
+    "urbanizationRate": 88.3,
+    "majorEthnicGroups": ["Mestizo", "White", "Black", "Indigenous"],
+    "religions": [
+      { "name": "Roman Catholic", "percent": 71 },
+      { "name": "Protestant", "percent": 17 },
+      { "name": "None/Other", "percent": 12 }
+    ]
+  },
+  "alliances": ["ALBA", "CELAC", "OPEC"],
+  "relationships": [
+    { "countryId": "RUS", "countryName": "Russia", "type": "strategic_partner", "sentiment": "positive", "summary": "Primary military and energy ally of the Maduro regime; 10-year strategic treaty signed in 2025." },
+    { "countryId": "CHN", "countryName": "China", "type": "partner", "sentiment": "positive", "summary": "Major creditor and trade partner; providing economic lifelines in exchange for oil and minerals." },
+    { "countryId": "USA", "countryName": "United States", "type": "adversary", "sentiment": "negative", "summary": "Primary driver of sanctions and international pressure; reportedly leading a 2026 intervention for regime change." },
+    { "countryId": "COL", "countryName": "Colombia", "type": "partner", "sentiment": "neutral", "summary": "Historically close but currently managing a complex relationship focused on trade and the refugee crisis." },
+    { "countryId": "CUB", "countryName": "Cuba", "type": "ally", "sentiment": "positive", "summary": "Deep ideological and intelligence ties; central to the security architecture of the previous regime." }
+  ],
+  "perspectives": [
+    { "source": "Exiled Opposition Leader", "bias": "Pro-Democracy", "view": "The 2026 transition is a necessary painful step toward restoring our sovereignty and rebuilding a nation destroyed by years of tyranny." },
+    { "source": "Diaspora Professional", "bias": "Pragmatic", "view": "We want to return and help rebuild, but the country needs years of structural reform and security guarantees before that is possible." },
+    { "source": "Russian Diplomat", "bias": "Pro-Regime/Geopolitical", "view": "U.S. intervention in Venezuela is a violation of international law and a direct threat to the multipolar world order we are building." }
+  ],
+  "historicalContext": {
+    "summary": "Venezuela was once one of the wealthiest and most stable democracies in Latin America. The rise of Hugo Chávez in 1999 and the subsequent 'Bolivarian Revolution' transformed the country into a socialist state. Mismanagement, corruption, and a collapse in oil prices led to a catastrophic humanitarian and economic crisis. Nicolás Maduro's 2013 succession further deepened the authoritarian shift, leading to the current state of disputed legitimacy and potential transition.",
+    "keyEvents": [
+      { "year": 1998, "event": "Election of Hugo Chávez; start of the Bolivarian Revolution." },
+      { "year": 2013, "event": "Death of Chávez and succession of Nicolás Maduro." },
+      { "year": 2018, "event": "Widely condemned presidential election triggers international non-recognition." },
+      { "year": 2024, "event": "Disputed July election; mass protests and violent state crackdown." },
+      { "year": 2025, "event": "Formalization of a 10-year Strategic Treaty with Russia." },
+      { "year": 2026, "event": "Reported U.S. capture of Maduro and start of transitional period." }
+    ]
+  },
+  "investmentNotes": {
+    "strengths": ["World's largest proven oil reserves", "Vast untapped mineral and gas potential", "Strategic location on the Caribbean/Atlantic coast", "Highly skilled diaspora with potential for 'return' investment"],
+    "risks": ["Extreme political and regime transition risk", "Total collapse of physical and digital infrastructure", "Hyperinflation and total loss of currency value", "Severe international sanctions and legal uncertainty"],
+    "sectors": ["Oil and Gas (Recovery/Rehab)", "Mining (Gold, Diamonds)", "Agriculture (Vast arable land)", "Telecommunications (Post-collapse rebuild)", "Infrastructure and Construction"]
+  },
+  "sources": [
+    { "name": "World Bank - Venezuela Data", "url": "https://data.worldbank.org/country/venezuela-rb", "type": "economic" },
+    { "name": "UNHCR - Venezuela Situation", "url": "https://www.unhcr.org/venezuela-emergency.html", "type": "social" },
+    { "name": "OPEC Annual Statistical Bulletin", "url": "https://www.opec.org/opec_web/en/publications/202.htm", "type": "economic" }
+  ]
+}

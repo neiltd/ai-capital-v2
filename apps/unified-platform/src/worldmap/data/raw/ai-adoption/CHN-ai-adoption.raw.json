@@ -1,0 +1,30 @@
+[
+  {
+    "countryId": "CHN",
+    "year": 2024,
+    "aiReadinessScore": 71.47,
+    "aiAdoptionScore": 42.8,
+    "aiTalentScore": 46.27,
+    "aiInvestmentUsdM": 9300,
+    "aiStartupCount": 5100,
+    "aiUnicornCount": 71,
+    "hasNationalAiStrategy": true,
+    "aiStrategyYear": 2017,
+    "aiPolicyScore": 6.85,
+    "cloudReadinessPct": 70,
+    "broadbandPenetrationPct": 78.6,
+    "topAiSectors": ["Manufacturing", "Finance", "Healthcare", "E-commerce", "Smart Cities"],
+    "attribution": {
+      "sources": [
+        { "name": "Oxford Insights Government AI Readiness Index 2024", "url": "https://oxfordinsights.com/ai-readiness/ai-readiness-index/", "accessedAt": "2025-05-10" },
+        { "name": "Stanford HAI AI Index 2024", "url": "https://aiindex.stanford.edu/report/", "accessedAt": "2025-05-10" },
+        { "name": "CAICT - China AI Development Report 2024", "url": "http://www.caict.ac.cn/", "accessedAt": "2025-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 3,
+        "lastVerified": "2025-05-10"
+      }
+    }
+  }
+]

@@ -1,0 +1,218 @@
+[
+  {
+    "id": "PORT-ARE-JEBEL-ALI",
+    "name": "Jebel Ali Port",
+    "countryId": "ARE",
+    "city": "Dubai",
+    "coordinates": [55.061, 25.011],
+    "type": "container",
+    "annualThroughputTEU": 15500000,
+    "annualThroughputTonnes": null,
+    "berthCount": 67,
+    "maxDraftM": 17.0,
+    "strategicImportance": "critical",
+    "riskLevel": "low",
+    "geopoliticalNotes": "Largest man-made harbor and busiest port in the Middle East. Essential node of the Maritime Silk Road and major transshipment hub.",
+    "notes": "Operated by DP World; integral to Jebel Ali Free Zone (JAFZA).",
+    "attribution": {
+      "sources": [
+        { "name": "DP World", "url": "https://www.dpworld.com/uae/ports-and-terminals/jebel-ali-port", "accessedAt": "2026-05-10" },
+        { "name": "Wikipedia", "url": "https://en.wikipedia.org/wiki/Port_Jebel_Ali", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 2,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  },
+  {
+    "id": "PORT-ARE-KHALIFA",
+    "name": "Khalifa Port",
+    "countryId": "ARE",
+    "city": "Abu Dhabi",
+    "coordinates": [54.667, 24.833],
+    "type": "container",
+    "annualThroughputTEU": 5400000,
+    "annualThroughputTonnes": null,
+    "berthCount": 12,
+    "maxDraftM": 18.0,
+    "strategicImportance": "high",
+    "riskLevel": "low",
+    "geopoliticalNotes": "First semi-automated port in the region. Key for Abu Dhabi's Economic Vision 2030 and COSCO's Middle East hub.",
+    "notes": "Linked to Khalifa Economic Zone Abu Dhabi (KEZAD).",
+    "attribution": {
+      "sources": [
+        { "name": "AD Ports Group", "url": "https://www.adportsgroup.com", "accessedAt": "2026-05-10" },
+        { "name": "Wikipedia", "url": "https://en.wikipedia.org/wiki/Khalifa_Port", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 2,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  },
+  {
+    "id": "PORT-ARE-FUJAIRAH",
+    "name": "Port of Fujairah",
+    "countryId": "ARE",
+    "city": "Fujairah",
+    "coordinates": [56.359, 25.188],
+    "type": "oil",
+    "annualThroughputTEU": 720000,
+    "annualThroughputTonnes": 130000000,
+    "berthCount": 12,
+    "maxDraftM": 18.0,
+    "strategicImportance": "critical",
+    "riskLevel": "medium",
+    "geopoliticalNotes": "Strategic location outside the Strait of Hormuz. Second largest bunkering hub in the world and major oil export terminal.",
+    "notes": "Connected to Habshan–Fujairah oil pipeline.",
+    "attribution": {
+      "sources": [
+        { "name": "Fujairah Port Authority", "url": "https://fujairahport.ae", "accessedAt": "2026-05-10" },
+        { "name": "Wikipedia", "url": "https://en.wikipedia.org/wiki/Port_of_Fujairah", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 2,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  },
+  {
+    "id": "PORT-ARE-KHOR-FAKKAN",
+    "name": "Khor Fakkan Port",
+    "countryId": "ARE",
+    "city": "Khor Fakkan",
+    "coordinates": [56.357, 25.354],
+    "type": "container",
+    "annualThroughputTEU": 2000000,
+    "annualThroughputTonnes": null,
+    "berthCount": 6,
+    "maxDraftM": 16.0,
+    "strategicImportance": "high",
+    "riskLevel": "low",
+    "geopoliticalNotes": "Strategically located on the Gulf of Oman, bypassing the Strait of Hormuz. Major transshipment hub for Sharjah.",
+    "notes": "Operated by Gulftainer on behalf of Sharjah Port Authority.",
+    "attribution": {
+      "sources": [
+        { "name": "Gulftainer", "url": "https://www.gulftainer.com/khorfakkan/", "accessedAt": "2026-05-10" },
+        { "name": "Sharjah Ports", "url": "https://www.sharjahports.gov.ae", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 2,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  },
+  {
+    "id": "PORT-ARE-RASHID",
+    "name": "Port Rashid",
+    "countryId": "ARE",
+    "city": "Dubai",
+    "coordinates": [55.290, 25.275],
+    "type": "mixed",
+    "annualThroughputTEU": null,
+    "annualThroughputTonnes": null,
+    "berthCount": 30,
+    "maxDraftM": 13.0,
+    "strategicImportance": "medium",
+    "riskLevel": "low",
+    "geopoliticalNotes": "Primary cruise destination in the Middle East. Retains strategic value for Ro-Ro and general cargo despite container move to Jebel Ali.",
+    "notes": "Also known as Mina Rashid; home to the Queen Elizabeth 2 hotel.",
+    "attribution": {
+      "sources": [
+        { "name": "DP World", "url": "https://www.dpworld.com/uae/ports-and-terminals/mina-rashid", "accessedAt": "2026-05-10" },
+        { "name": "Wikipedia", "url": "https://en.wikipedia.org/wiki/Port_Rashid", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 2,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  },
+  {
+    "id": "PORT-ARE-SAQR",
+    "name": "Saqr Port",
+    "countryId": "ARE",
+    "city": "Ras Al Khaimah",
+    "coordinates": [56.064, 25.978],
+    "type": "bulk",
+    "annualThroughputTEU": null,
+    "annualThroughputTonnes": 65000000,
+    "berthCount": 12,
+    "maxDraftM": 15.0,
+    "strategicImportance": "high",
+    "riskLevel": "low",
+    "geopoliticalNotes": "Largest bulk handling port in the Middle East. Critical for regional construction industry supply chains (aggregate and cement).",
+    "notes": "Located in the industrial area of Khor Khwair.",
+    "attribution": {
+      "sources": [
+        { "name": "RAK Ports", "url": "https://rakports.ae/saqr-port/", "accessedAt": "2026-05-10" },
+        { "name": "Wikipedia", "url": "https://en.wikipedia.org/wiki/Saqr_Port", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 2,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  },
+  {
+    "id": "PORT-ARE-KHALID",
+    "name": "Khalid Port",
+    "countryId": "ARE",
+    "city": "Sharjah",
+    "coordinates": [55.371, 25.362],
+    "type": "multipurpose",
+    "annualThroughputTEU": 400000,
+    "annualThroughputTonnes": null,
+    "berthCount": 21,
+    "maxDraftM": 12.5,
+    "strategicImportance": "medium",
+    "riskLevel": "low",
+    "geopoliticalNotes": "Strategic multipurpose gateway for Sharjah's industrial zones. Pioneer in regional container and Ro-Ro operations.",
+    "notes": "Handles general cargo, reefer, and oil products.",
+    "attribution": {
+      "sources": [
+        { "name": "Sharjah Ports Authority", "url": "https://www.sharjahports.gov.ae", "accessedAt": "2026-05-10" },
+        { "name": "Gulftainer", "url": "https://www.gulftainer.com/sharjah/", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 2,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  },
+  {
+    "id": "PORT-ARE-HAMRIYAH",
+    "name": "Hamriyah Port",
+    "countryId": "ARE",
+    "city": "Sharjah",
+    "coordinates": [55.495, 25.472],
+    "type": "mixed",
+    "annualThroughputTEU": null,
+    "annualThroughputTonnes": 4680000,
+    "berthCount": 10,
+    "maxDraftM": 14.0,
+    "strategicImportance": "medium",
+    "riskLevel": "low",
+    "geopoliticalNotes": "Critical hub for food security (livestock) and the oil and gas industry in the Northern Emirates.",
+    "notes": "Adjacent to Hamriyah Free Zone.",
+    "attribution": {
+      "sources": [
+        { "name": "Hamriyah Free Zone", "url": "https://www.hfza.ae", "accessedAt": "2026-05-10" },
+        { "name": "Sharjah Ports Authority", "url": "https://www.sharjahports.gov.ae", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 2,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  }
+]

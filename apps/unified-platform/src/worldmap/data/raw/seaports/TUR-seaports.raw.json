@@ -1,0 +1,215 @@
+[
+  {
+    "id": "PORT-TUR-AMBARLI",
+    "name": "Ambarli Port",
+    "countryId": "TUR",
+    "city": "Istanbul",
+    "coordinates": [28.681, 40.962],
+    "type": "container",
+    "annualThroughputTEU": 3009700,
+    "annualThroughputTonnes": null,
+    "berthCount": 35,
+    "maxDraftM": 16.5,
+    "strategicImportance": "critical",
+    "riskLevel": "low",
+    "geopoliticalNotes": "Turkey's largest container port. Serves the massive Istanbul industrial and consumer market; essential gateway for trade with Europe.",
+    "notes": "Complex of several terminals including Kumport, Mardas, and Akçansa.",
+    "attribution": {
+      "sources": [
+        { "name": "Ambarli Port Authority (ALTAŞ)", "url": "https://www.altas.com.tr", "accessedAt": "2026-05-10" },
+        { "name": "Wikipedia", "url": "https://en.wikipedia.org/wiki/Port_of_Ambarl%C4%B1", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 2,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  },
+  {
+    "id": "PORT-TUR-ALIAGA",
+    "name": "Aliaga Port",
+    "countryId": "TUR",
+    "city": "Izmir",
+    "coordinates": [26.953, 38.831],
+    "type": "mixed",
+    "annualThroughputTEU": 2119200,
+    "annualThroughputTonnes": 70000000,
+    "berthCount": 20,
+    "maxDraftM": 18.0,
+    "strategicImportance": "high",
+    "riskLevel": "low",
+    "geopoliticalNotes": "Major petrochemical and ship-breaking hub. Fastest-growing container base for Aegean manufacturers.",
+    "notes": "Home to Petkim (petrochemicals) and several private container terminals like Nemport and TCE Ege.",
+    "attribution": {
+      "sources": [
+        { "name": "Aliaga Chamber of Commerce", "url": "https://www.alto.org.tr", "accessedAt": "2026-05-10" },
+        { "name": "Invest in Turkiye", "url": "https://www.invest.gov.tr", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 2,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  },
+  {
+    "id": "PORT-TUR-MERSIN",
+    "name": "Mersin International Port",
+    "countryId": "TUR",
+    "city": "Mersin",
+    "coordinates": [34.632, 36.791],
+    "type": "container",
+    "annualThroughputTEU": 1889900,
+    "annualThroughputTonnes": 40000000,
+    "berthCount": 21,
+    "maxDraftM": 15.8,
+    "strategicImportance": "critical",
+    "riskLevel": "medium",
+    "geopoliticalNotes": "Primary gateway for southern and central Turkey. Strategic transit point for trade with Iraq and the broader Middle East.",
+    "notes": "Operated by Mersin International Port (MIP), a joint venture between PSA International and Akfen.",
+    "attribution": {
+      "sources": [
+        { "name": "Mersin International Port", "url": "https://www.mersinport.com.tr", "accessedAt": "2026-05-10" },
+        { "name": "Wikipedia", "url": "https://en.wikipedia.org/wiki/Port_of_Mersin", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 2,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  },
+  {
+    "id": "PORT-TUR-KOCAELI",
+    "name": "Kocaeli Port",
+    "countryId": "TUR",
+    "city": "Izmit",
+    "coordinates": [29.921, 40.763],
+    "type": "multipurpose",
+    "annualThroughputTEU": 2000000,
+    "annualThroughputTonnes": 75000000,
+    "berthCount": 40,
+    "maxDraftM": 18.0,
+    "strategicImportance": "critical",
+    "riskLevel": "low",
+    "geopoliticalNotes": "Turkey's industrial heartland. Handles major automotive, chemical, and heavy machinery exports.",
+    "notes": "Includes several terminals in Izmit Bay, such as DP World Yarimca and Evyap Port.",
+    "attribution": {
+      "sources": [
+        { "name": "Kocaeli Port Authority", "url": "https://kocaeli.uab.gov.tr", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "medium",
+        "sourceCount": 1,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  },
+  {
+    "id": "PORT-TUR-ISKENDERUN",
+    "name": "Iskenderun Port",
+    "countryId": "TUR",
+    "city": "Iskenderun",
+    "coordinates": [36.182, 36.591],
+    "type": "mixed",
+    "annualThroughputTEU": 710000,
+    "annualThroughputTonnes": 25000000,
+    "berthCount": 10,
+    "maxDraftM": 15.5,
+    "strategicImportance": "high",
+    "riskLevel": "medium",
+    "geopoliticalNotes": "Critical for industrial bulk (steel and coal) and energy. Major Red Sea-Mediterranean logistics bridge link.",
+    "notes": "Operated by LimakPort Iskenderun.",
+    "attribution": {
+      "sources": [
+        { "name": "LimakPort Iskenderun", "url": "https://www.limakport.com.tr", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "medium",
+        "sourceCount": 1,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  },
+  {
+    "id": "PORT-TUR-IZMIR",
+    "name": "Izmir Port",
+    "countryId": "TUR",
+    "city": "Izmir",
+    "coordinates": [27.142, 38.441],
+    "type": "multipurpose",
+    "annualThroughputTEU": 500000,
+    "annualThroughputTonnes": 10000000,
+    "berthCount": 24,
+    "maxDraftM": 13.0,
+    "strategicImportance": "medium",
+    "riskLevel": "low",
+    "geopoliticalNotes": "Historical export gateway for agricultural and industrial goods from western Anatolia.",
+    "notes": "Also known as Alsancak Port; state-owned and handles significant cruise traffic.",
+    "attribution": {
+      "sources": [
+        { "name": "TCDD Izmir Port", "url": "https://www.tcdd.gov.tr", "accessedAt": "2026-05-10" },
+        { "name": "Wikipedia", "url": "https://en.wikipedia.org/wiki/Port_of_Izmir", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 2,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  },
+  {
+    "id": "PORT-TUR-SAMSUN",
+    "name": "Samsun Port",
+    "countryId": "TUR",
+    "city": "Samsun",
+    "coordinates": [36.341, 41.292],
+    "type": "bulk",
+    "annualThroughputTEU": 100000,
+    "annualThroughputTonnes": 12000000,
+    "berthCount": 12,
+    "maxDraftM": 12.0,
+    "strategicImportance": "high",
+    "riskLevel": "low",
+    "geopoliticalNotes": "Largest Black Sea port of Turkey. Key link to Eastern Europe and Central Asia via rail and Ro-Ro lines.",
+    "notes": "Operated by Samsunport (Ceynak Group).",
+    "attribution": {
+      "sources": [
+        { "name": "Samsunport Official Site", "url": "https://www.samsunport.com.tr", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "medium",
+        "sourceCount": 1,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  },
+  {
+    "id": "PORT-TUR-TRABZON",
+    "name": "Trabzon Port",
+    "countryId": "TUR",
+    "city": "Trabzon",
+    "coordinates": [39.731, 41.002],
+    "type": "bulk",
+    "annualThroughputTEU": null,
+    "annualThroughputTonnes": 5000000,
+    "berthCount": 9,
+    "maxDraftM": 11.0,
+    "strategicImportance": "medium",
+    "riskLevel": "low",
+    "geopoliticalNotes": "Strategic transit point for the historical Silk Road. Vital for trade with the Caucasus and Iran.",
+    "notes": "Operated by Trabzonport (Albayrak Group).",
+    "attribution": {
+      "sources": [
+        { "name": "Trabzonport Official Site", "url": "https://www.trabzonport.com.tr", "accessedAt": "2026-05-10" },
+        { "name": "Wikipedia", "url": "https://en.wikipedia.org/wiki/Port_of_Trabzon", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 2,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  }
+]

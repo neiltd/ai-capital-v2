@@ -1,0 +1,67 @@
+{
+  "id": "TON",
+  "iso2": "TO",
+  "name": "Tonga",
+  "region": "Oceania",
+  "subregion": "Polynesia",
+  "capital": "Nukuʻalofa",
+  "lastUpdated": "2026-05-15",
+  "summary": "Tonga is the only monarchy in the South Pacific, characterized by a unique blend of traditional royal authority and a developing parliamentary democracy. The nation is deeply conservative and religious, with the monarchy remaining a central pillar of social and political life. The economy is heavily dependent on remittances from a large overseas diaspora, subsistence agriculture, and foreign aid. Tonga is highly vulnerable to natural disasters, as evidenced by the catastrophic 2022 volcanic eruption and tsunami. Geopolitically, it maintains close ties with Australia and New Zealand while managing significant debt to China.",
+  "indicators": {
+    "politicalStability":       { "score": 7, "trend": "stable", "confidence": "high", "note": "Stable monarchy-led system with gradual democratic reforms; social order is strongly maintained through traditional and religious institutions." },
+    "economicDirection":        { "score": 4, "trend": "stable", "confidence": "medium", "note": "Slow recovery from the 2022 disaster; highly dependent on external assistance and remittances for economic survival." },
+    "investmentAttractiveness": { "score": 4, "trend": "stable", "confidence": "medium", "note": "Good potential in tourism and agriculture, but limited by high disaster risk, small market size, and complex land ownership laws." },
+    "geopoliticalRisk":         { "score": 4, "trend": "rising", "confidence": "high", "note": "High level of external debt, particularly to China, creates long-term strategic vulnerability and dependency." },
+    "educationQuality":         { "score": 6, "trend": "stable", "confidence": "medium", "note": "High literacy rates and a valued education system, though many of the most educated citizens migrate overseas." },
+    "healthcareQuality":        { "score": 4, "trend": "stable", "confidence": "medium", "note": "Basic healthcare facilities available, but specialized treatment often requires evacuation to New Zealand or Australia." },
+    "technologyInvestment":     { "score": 4, "trend": "rising", "confidence": "high", "note": "Submarine cable connectivity was restored and is being upgraded after the 2022 eruption; increasing focus on digital resilience." }
+  },
+  "demographics": {
+    "population": 108000,
+    "medianAge": 22.4,
+    "urbanizationRate": 23,
+    "majorEthnicGroups": ["Tongan", "Part-Tongan", "Other"],
+    "religions": [
+      { "name": "Christian (Free Wesleyan)", "percent": 35.0 },
+      { "name": "LDS (Mormon)", "percent": 18.0 },
+      { "name": "Roman Catholic", "percent": 15.0 },
+      { "name": "Other Christian", "percent": 32.0 }
+    ]
+  },
+  "alliances": ["Pacific Islands Forum", "Commonwealth", "United Nations", "SIDS", "ACP"],
+  "relationships": [
+    { "countryId": "AUS", "countryName": "Australia", "type": "strategic_partner", "sentiment": "positive", "summary": "Major development and security partner; primary responder during the 2022 disaster." },
+    { "countryId": "NZL", "countryName": "New Zealand", "type": "strategic_partner", "sentiment": "positive", "summary": "Close historical and cultural ties; host to a very large Tongan diaspora." },
+    { "countryId": "CHN", "countryName": "China", "type": "economic_partner", "sentiment": "neutral", "summary": "Significant creditor and infrastructure provider; the relationship is overshadowed by debt sustainability concerns." },
+    { "countryId": "USA", "countryName": "United States", "type": "security_partner", "sentiment": "positive", "summary": "Increasing engagement as part of a broader Pacific strategy; historical ties through the Peace Corps." }
+  ],
+  "perspectives": [
+    { "source": "Royalist", "bias": "Traditionalist", "view": "The monarchy is the guarantor of Tongan stability and identity; modern reforms must proceed slowly and respect our traditions." },
+    { "source": "Pro-Democracy Advocate", "bias": "Reformist", "view": "True progress requires more power to be shifted from the throne to the people's representatives to ensure accountability." },
+    { "source": "Tongan Living Abroad", "bias": "Aspirational", "view": "We support our families back home with remittances, but we want to see a more dynamic economy that can offer our children a future in Tonga." },
+    { "source": "Disaster Management Official", "bias": "Pragmatic", "view": "Resilience is not an option but a necessity; every development project must consider our vulnerability to the sea and the earth." }
+  ],
+  "historicalContext": {
+    "summary": "Tonga is unique as the only Pacific island nation never to have lost its indigenous governance, remaining a kingdom throughout the colonial era (though it was a British protected state from 1900 to 1970). It has been ruled by the House of Tupou since 1845. In recent years, it has transitioned toward a more representative democracy while maintaining the King as Head of State.",
+    "keyEvents": [
+      { "year": 1845, "event": "King George Tupou I unifies Tonga into a single kingdom." },
+      { "year": 1875, "event": "Proclamation of the Constitution of Tonga." },
+      { "year": 1900, "event": "Tonga becomes a British protected state under a Treaty of Friendship." },
+      { "year": 1970, "event": "Tonga ceases to be a protected state and joins the Commonwealth." },
+      { "year": 2006, "event": "Pro-democracy riots in Nukuʻalofa cause significant damage to the business district." },
+      { "year": 2010, "event": "First general election under a new system that allows a majority of MPs to be elected by the people." },
+      { "year": 2012, "event": "King George Tupou V passes away; succeeded by his brother, King Tupou VI." },
+      { "year": 2022, "event": "The Hunga Tonga-Hunga Haʻapai volcanic eruption and tsunami cause unprecedented national damage." }
+    ]
+  },
+  "investmentNotes": {
+    "strengths": ["Strong social stability and cultural cohesion", "Significant untapped potential in niche tourism", "High literacy and English proficiency", "Strategic location in the central South Pacific"],
+    "risks": ["Extreme vulnerability to natural disasters", "Small domestic market and high transportation costs", "High levels of external debt", "Limited land availability for commercial use"],
+    "sectors": ["Sustainable Tourism", "High-value Agriculture (Vanilla, Squash)", "Fisheries and Marine Conservation", "Digital Services and E-commerce"]
+  },
+  "sources": [
+    { "name": "National Reserve Bank of Tonga", "url": "https://www.reservebank.to/", "type": "economic" },
+    { "name": "Tonga Statistics Department", "url": "https://tongastats.gov.to/", "type": "demographic" },
+    { "name": "Tonga Ministry of Trade and Economic Development", "url": "https://www.mted.gov.to/", "type": "investment" }
+  ]
+}

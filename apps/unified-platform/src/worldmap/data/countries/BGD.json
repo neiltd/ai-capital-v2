@@ -1,0 +1,66 @@
+{
+  "id": "BGD",
+  "iso2": "BD",
+  "name": "Bangladesh",
+  "region": "Asia",
+  "subregion": "Southern Asia",
+  "capital": "Dhaka",
+  "lastUpdated": "2026-05-09",
+  "summary": "Bangladesh is a major Deltaic power in South Asia, currently undergoing a historic political transition following a mass uprising in 2024. Long known for its rapid economic growth driven by the Ready-Made Garment (RMG) sector, the country is now focusing on structural reforms to its banking sector and state institutions under an interim government. Geopolitically, Bangladesh occupies a critical position on the Bay of Bengal, balancing its traditionally close ties with India against increasing Chinese investment and its role as a key export partner for the West.",
+  "indicators": {
+    "politicalStability":       { "score": 4, "trend": "stable", "confidence": "high", "note": "Interim government focused on reform; long-term stability depends on a smooth transition to democratic elections." },
+    "economicDirection":        { "score": 5, "trend": "stable", "confidence": "high", "note": "Strong RMG exports, but growth has slowed due to banking sector fragility and high inflation." },
+    "investmentAttractiveness": { "score": 5, "trend": "rising", "confidence": "medium", "note": "Investors are cautiously optimistic about institutional reforms, though political uncertainty remains a factor." },
+    "geopoliticalRisk":         { "score": 6, "trend": "stable", "confidence": "high", "note": "Primary risks include managing the Rohingya refugee crisis and navigating the strategic rivalry between India and China." },
+    "educationQuality":         { "score": 4, "trend": "rising", "confidence": "medium", "note": "High primary enrollment rates, but quality of higher education and vocational training needs significant improvement." },
+    "healthcareQuality":        { "score": 5, "trend": "rising", "confidence": "medium", "note": "Made significant strides in maternal and child health; growing private healthcare sector in urban hubs." },
+    "technologyInvestment":     { "score": 6, "trend": "rising", "confidence": "high", "note": "Strong push for 'Digital Bangladesh' and 'Smart Bangladesh' initiatives; thriving mobile financial services sector." }
+  },
+  "demographics": {
+    "population": 172000000,
+    "medianAge": 28.5,
+    "urbanizationRate": 40,
+    "majorEthnicGroups": ["Bengali", "Chakma", "Marma", "Santal"],
+    "religions": [
+      { "name": "Muslim", "percent": 91.0 },
+      { "name": "Hindu", "percent": 8.0 },
+      { "name": "Buddhist", "percent": 0.6 },
+      { "name": "Christian", "percent": 0.4 }
+    ]
+  },
+  "alliances": ["BIMSTEC", "SAARC", "Belt and Road Initiative (BRI)", "RCEP (Negotiating)"],
+  "relationships": [
+    { "countryId": "IND", "countryName": "India", "type": "strategic_partner", "sentiment": "neutral", "summary": "Critical neighbor with deep cultural and security ties; relationship is currently in a phase of recalibration following the 2024 change in government." },
+    { "countryId": "CHN", "countryName": "China", "type": "economic_partner", "sentiment": "positive", "summary": "Major infrastructure partner and source of military equipment; China's influence is growing through the BRI." },
+    { "countryId": "USA", "countryName": "United States", "type": "trade_partner", "sentiment": "positive", "summary": "Largest export destination for RMG; USA is a key partner in humanitarian aid and climate resilience." },
+    { "countryId": "PAK", "countryName": "Pakistan", "type": "neighbor", "sentiment": "neutral", "summary": "Complex historical relationship; recent years have seen a modest thawing of diplomatic ties." }
+  ],
+  "perspectives": [
+    { "source": "Interim Government", "bias": "Reformist", "view": "Our mission is to rebuild the state's institutions and ensure a fair, democratic future for all citizens." },
+    { "source": "RMG Factory Owner", "bias": "Pragmatic", "view": "We need political stability and reliable energy to maintain our global competitiveness and keep orders coming from the West." },
+    { "source": "Student Activist", "bias": "Idealistic", "view": "The 2024 revolution was just the beginning; we must ensure that the old corrupt practices do not return." },
+    { "source": "Climate Refugee", "bias": "Victim", "view": "Every year the floods get worse; we need more than just promises of help from the government and the world." }
+  ],
+  "historicalContext": {
+    "summary": "Formerly East Pakistan, Bangladesh gained independence in 1971 after a bloody war of liberation. Since then, it has transitioned from a war-torn 'basket case' to a vibrant emerging economy, though its political history has been marked by periods of military rule and intense partisan rivalry.",
+    "keyEvents": [
+      { "year": 1971, "event": "War of Independence from Pakistan; establishment of the sovereign state of Bangladesh." },
+      { "year": 1975, "event": "Assassination of Sheikh Mujibur Rahman, the nation's founding father." },
+      { "year": 1991, "event": "Restoration of parliamentary democracy following a decade of military rule." },
+      { "year": 2009, "event": "Awami League begins a 15-year period of continuous rule under Sheikh Hasina." },
+      { "year": 2017, "event": "Exodus of over 700,000 Rohingya from Myanmar to Cox's Bazar." },
+      { "year": 2021, "event": "Celebration of the 50th anniversary of independence and graduation from LDC status (deferred to 2026)." },
+      { "year": 2024, "event": "Mass student-led uprising ousts the Awami League government; formation of an interim government." }
+    ]
+  },
+  "investmentNotes": {
+    "strengths": ["World's second-largest garment exporter", "Strategic maritime access to the Bay of Bengal", "Large, young, and increasingly skilled workforce", "Resilient macroeconomic management despite shocks"],
+    "risks": ["Vulnerability to climate change and rising sea levels", "Institutional corruption and banking sector fragility", "Political transition risks", "Heavy reliance on a single export sector (RMG)"],
+    "sectors": ["Ready-Made Garments & Textiles", "Pharmaceuticals", "Information Technology & Software Services", "Renewable Energy (Solar/Wind)"]
+  },
+  "sources": [
+    { "name": "Bangladesh Bank", "url": "https://www.bb.org.bd/", "type": "economic" },
+    { "name": "Bangladesh Investment Development Authority (BIDA)", "url": "https://bida.gov.bd/", "type": "investment" },
+    { "name": "World Bank - Bangladesh Overview", "url": "https://www.worldbank.org/en/country/bangladesh", "type": "economic" }
+  ]
+}

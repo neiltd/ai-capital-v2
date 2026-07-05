@@ -1,0 +1,220 @@
+[
+  {
+    "id": "RAIL-MYS-PORT-KLANG",
+    "name": "Port Klang Rail Terminal",
+    "countryId": "MYS",
+    "city": "Port Klang",
+    "coordinates": [101.3922, 2.9996],
+    "type": "port_interface",
+    "dailyPassengers": null,
+    "annualFreightTonnes": 7000000,
+    "connectedCountries": ["THA"],
+    "gaugeType": "mixed",
+    "lineCount": 12,
+    "strategicImportance": "high",
+    "isPartOfBRI": true,
+    "geopoliticalNotes": "Malaysia's primary maritime-rail hub. Currently being integrated into the ECRL (Phase 2) to create a land bridge between the Malacca Strait and the South China Sea.",
+    "notes": "ECRL standard gauge expansion ongoing; expected full operation by 2028.",
+    "attribution": {
+      "sources": [
+        { "name": "Port Klang Authority", "url": "https://www.pka.gov.my", "accessedAt": "2026-05-10" },
+        { "name": "Malaysia Rail Link (MRL)", "url": "https://www.mrl.com.my", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 2,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  },
+  {
+    "id": "RAIL-MYS-PADANG-BESAR",
+    "name": "Padang Besar Railway Station",
+    "countryId": "MYS",
+    "city": "Padang Besar",
+    "coordinates": [100.3204, 6.6622],
+    "type": "border_crossing",
+    "dailyPassengers": 18000,
+    "annualFreightTonnes": 5200000,
+    "connectedCountries": ["THA", "LAO", "CHN"],
+    "gaugeType": "narrow",
+    "lineCount": 8,
+    "strategicImportance": "high",
+    "isPartOfBRI": true,
+    "geopoliticalNotes": "The primary rail gateway between Malaysia and Thailand. Critical node for the Pan-Asian Railway connecting Kunming to Singapore.",
+    "notes": "Handles significant transshipment of rubber and electronics freight.",
+    "attribution": {
+      "sources": [
+        { "name": "KTM Berhad Statistics", "url": "https://www.ktmb.com.my", "accessedAt": "2026-05-10" },
+        { "name": "State Railway of Thailand", "url": "https://www.railway.co.th", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 2,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  },
+  {
+    "id": "RAIL-MYS-JB-SENTRAL",
+    "name": "Johor Bahru Sentral",
+    "countryId": "MYS",
+    "city": "Johor Bahru",
+    "coordinates": [103.7644, 1.4614],
+    "type": "border_crossing",
+    "dailyPassengers": 35000,
+    "annualFreightTonnes": null,
+    "connectedCountries": ["SGP"],
+    "gaugeType": "narrow",
+    "lineCount": 6,
+    "strategicImportance": "high",
+    "isPartOfBRI": false,
+    "geopoliticalNotes": "Southern terminus of the West Coast Line and primary link to Singapore. Integral to the RTS Link project which is 90% complete.",
+    "notes": "Will serve as a major high-capacity transit node for the Singapore-Johor Special Economic Zone.",
+    "attribution": {
+      "sources": [
+        { "name": "The Star Malaysia", "url": "https://www.thestar.com.my/news/nation/2026/04/rts-link-90-percent-complete", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 1,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  },
+  {
+    "id": "RAIL-MYS-KUANTAN-PORT",
+    "name": "Kuantan Port Rail Terminal (ECRL)",
+    "countryId": "MYS",
+    "city": "Kuantan",
+    "coordinates": [103.4281, 3.9782],
+    "type": "port_interface",
+    "dailyPassengers": null,
+    "annualFreightTonnes": null,
+    "connectedCountries": [],
+    "gaugeType": "standard",
+    "lineCount": 10,
+    "strategicImportance": "high",
+    "isPartOfBRI": true,
+    "geopoliticalNotes": "A flagship BRI terminal on the East Coast Rail Link. Designed to facilitate cargo bypass of the Malacca Strait via the east-west land bridge.",
+    "notes": "Targeted for full operational status in January 2027.",
+    "attribution": {
+      "sources": [
+        { "name": "Malaysia Rail Link (MRL)", "url": "https://www.mrl.com.my", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 1,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  },
+  {
+    "id": "RAIL-MYS-KL-SENTRAL",
+    "name": "Kuala Lumpur Sentral",
+    "countryId": "MYS",
+    "city": "Kuala Lumpur",
+    "coordinates": [101.6861, 3.1344],
+    "type": "mixed",
+    "dailyPassengers": 160000,
+    "annualFreightTonnes": null,
+    "connectedCountries": ["THA", "SGP"],
+    "gaugeType": "narrow",
+    "lineCount": 12,
+    "strategicImportance": "high",
+    "isPartOfBRI": false,
+    "geopoliticalNotes": "The central transport hub of Malaysia. Coordinates all major passenger rail lines including ETS, Komuter, and airport links.",
+    "notes": "Critical node for urban and regional workforce mobility.",
+    "attribution": {
+      "sources": [
+        { "name": "KTMB Annual Report", "url": "https://www.ktmb.com.my", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 1,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  },
+  {
+    "id": "RAIL-MYS-GEMAS-HUB",
+    "name": "Gemas Railway Station",
+    "countryId": "MYS",
+    "city": "Gemas",
+    "coordinates": [102.6103, 2.5801],
+    "type": "mixed",
+    "dailyPassengers": 2500,
+    "annualFreightTonnes": 1200000,
+    "connectedCountries": [],
+    "gaugeType": "narrow",
+    "lineCount": 8,
+    "strategicImportance": "medium",
+    "isPartOfBRI": false,
+    "geopoliticalNotes": "The strategic junction connecting the West Coast and East Coast rail lines. Crucial for domestic logistics and inter-state travel.",
+    "notes": "Ongoing double-tracking projects to modernize the southern sector.",
+    "attribution": {
+      "sources": [
+        { "name": "Ministry of Transport Malaysia", "url": "https://www.mot.gov.my", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 1,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  },
+  {
+    "id": "RAIL-MYS-BUTTERWORTH",
+    "name": "Butterworth Railway Station",
+    "countryId": "MYS",
+    "city": "Butterworth (Penang)",
+    "coordinates": [100.3692, 5.3944],
+    "type": "port_interface",
+    "dailyPassengers": 12000,
+    "annualFreightTonnes": 3500000,
+    "connectedCountries": ["THA"],
+    "gaugeType": "narrow",
+    "lineCount": 10,
+    "strategicImportance": "medium",
+    "isPartOfBRI": false,
+    "geopoliticalNotes": "Major northern port-rail interface serving the Penang Port and industrial zones in Kedah and Perak.",
+    "notes": "Key terminal for the northern sector Komuter and ETS services.",
+    "attribution": {
+      "sources": [
+        { "name": "Penang Port Commission", "url": "https://www.ppc.gov.my", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 1,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  },
+  {
+    "id": "RAIL-MYS-KOTA-BHARU-ECRL",
+    "name": "Kota Bharu ECRL Station",
+    "countryId": "MYS",
+    "city": "Kota Bharu",
+    "coordinates": [102.2600, 6.1100],
+    "type": "mixed",
+    "dailyPassengers": null,
+    "annualFreightTonnes": null,
+    "connectedCountries": ["THA"],
+    "gaugeType": "standard",
+    "lineCount": 6,
+    "strategicImportance": "high",
+    "isPartOfBRI": true,
+    "geopoliticalNotes": "Northern terminus of the ECRL, bringing standard gauge connectivity to the East Coast and potential future link to the Thai rail network.",
+    "notes": "Infrastructure significantly complete; awaiting electrification and track laying.",
+    "attribution": {
+      "sources": [
+        { "name": "ECRL Project Updates", "url": "https://www.mrl.com.my", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "medium",
+        "sourceCount": 1,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  }
+]

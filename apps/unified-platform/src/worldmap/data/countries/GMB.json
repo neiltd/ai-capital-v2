@@ -1,0 +1,64 @@
+{
+  "id": "GMB",
+  "iso2": "GM",
+  "name": "The Gambia",
+  "region": "Africa",
+  "subregion": "Western Africa",
+  "capital": "Banjul",
+  "lastUpdated": "2026-05-15",
+  "summary": "The Gambia, often referred to as 'The Smiling Coast,' is a small West African nation navigating a complex post-authoritarian transition. Under the administration of President Adama Barrow, the country has maintained relative stability and seen a strong rebound in its tourism and agricultural sectors. However, the democratization process has faced hurdles, including concerns over corruption, institutional weakening, and the reintroduction of a controversial draft constitution. The economy remains vulnerable due to high public debt and a significant reliance on external budget support and remittances.",
+  "indicators": {
+    "politicalStability":       { "score": 6, "trend": "stable", "confidence": "high", "note": "Generally stable but faces challenges with 'stalled' democratization and concerns over executive overreach and corruption." },
+    "economicDirection":        { "score": 5, "trend": "rising", "confidence": "high", "note": "Robust growth driven by tourism recovery and infrastructure projects; inflation is moderating after 2024 peaks." },
+    "investmentAttractiveness": { "score": 4, "trend": "stable", "confidence": "high", "note": "Growing interest in renewables and agro-processing; limited by high debt-to-GDP and infrastructure gaps." },
+    "geopoliticalRisk":         { "score": 3, "trend": "stable", "confidence": "high", "note": "Low risk of internal conflict; focus on regional integration through ECOWAS and managing the unique geographic dependency on Senegal." },
+    "educationQuality":         { "score": 4, "trend": "stable", "confidence": "medium", "note": "Improving enrollment but quality remains low; high youth unemployment is a major structural challenge." },
+    "healthcareQuality":        { "score": 3, "trend": "stable", "confidence": "medium", "note": "Basic healthcare services are available but often lack specialized equipment and trained staff; heavily reliant on international aid." },
+    "technologyInvestment":     { "score": 4, "trend": "rising", "confidence": "medium", "note": "Significant focus on solar energy projects and digital connectivity improvements through the World Bank." }
+  },
+  "demographics": {
+    "population": 2800000,
+    "medianAge": 17.4,
+    "urbanizationRate": 65,
+    "majorEthnicGroups": ["Mandinka 33.3%", "Fula 18.2%", "Wolof 12.9%", "Jola 11%", "Sarahule 7.2%"],
+    "religions": [
+      { "name": "Muslim", "percent": 96.4 },
+      { "name": "Christian", "percent": 3.5 },
+      { "name": "Indigenous", "percent": 0.1 }
+    ]
+  },
+  "alliances": ["African Union", "ECOWAS", "Commonwealth", "OIC", "United Nations"],
+  "relationships": [
+    { "countryId": "SEN", "countryName": "Senegal", "type": "strategic_partner", "sentiment": "positive", "summary": "Most critical relationship due to geographic surrounding; close cooperation on security, trade, and regional stability (Senegambia)." },
+    { "countryId": "CHN", "countryName": "China", "type": "economic_partner", "sentiment": "positive", "summary": "Major partner for infrastructure development and healthcare cooperation; significant provider of development assistance." },
+    { "countryId": "USA", "countryName": "United States", "type": "strategic_partner", "sentiment": "positive", "summary": "Strong partner for democratization and development; provides support through the Millennium Challenge Corporation." },
+    { "countryId": "GBR", "countryName": "United Kingdom", "type": "strategic_partner", "sentiment": "positive", "summary": "Historical ties revitalized after The Gambia rejoined the Commonwealth in 2018; focus on education and governance." }
+  ],
+  "perspectives": [
+    { "source": "Tourism Operator", "bias": "Optimistic", "view": "The return of visitors is breathing life back into our economy. We have the best beaches and the friendliest people in West Africa." },
+    { "source": "Civil Society Leader", "bias": "Critical", "view": "The transition is incomplete. We need genuine institutional reforms and a new constitution that limits executive power to prevent a return to the past." },
+    { "source": "Young Graduate", "bias": "Frustrated", "view": "I have my degree, but there are no jobs. Many of my friends are still looking for the 'back way' to Europe because they see no future here." },
+    { "source": "Smallholder Farmer", "bias": "Vulnerable", "view": "The erratic rains and lack of fertilizer make it harder every year to grow enough groundnuts to support my family." }
+  ],
+  "historicalContext": {
+    "summary": "Gambia gained independence from the United Kingdom in 1965. It was one of Africa's most stable democracies until a 1994 coup by Yahya Jammeh, who ruled for 22 years until his defeat in the 2016 election. The 2017 peaceful transition of power marked the beginning of the 'New Gambia' era focused on reconciliation and rebuilding democratic institutions.",
+    "keyEvents": [
+      { "year": 1965, "event": "Independence from the United Kingdom." },
+      { "year": 1994, "event": "Military coup led by Yahya Jammeh ousts the first president." },
+      { "year": 2016, "event": "Adama Barrow wins the presidential election; Jammeh eventually leaves for exile." },
+      { "year": 2018, "event": "The Gambia rejoins the Commonwealth; launch of the Truth, Reconciliation and Reparations Commission (TRRC)." },
+      { "year": 2021, "event": "President Adama Barrow is re-elected for a second term." },
+      { "year": 2024, "event": "National Assembly rejects the repeal of the FGM ban, maintaining a major human rights protection." }
+    ]
+  },
+  "investmentNotes": {
+    "strengths": ["Strategic maritime location with a deep-water port in Banjul", "Significant untapped potential in agro-processing and eco-tourism", "Strong donor support and commitment to democratic reform", "Relatively youthful and entrepreneurial workforce"],
+    "risks": ["High risk of public debt distress limiting fiscal space", "Vulnerability to climate change and environmental degradation", "Pervasive corruption and weak institutional oversight", "Heavy reliance on volatile tourism and agricultural exports"],
+    "sectors": ["Solar Energy & Power Infrastructure", "Agro-processing (Cashew/Groundnut)", "Hospitality & Sustainable Tourism", "ICT & Digital Government Services"]
+  },
+  "sources": [
+    { "name": "Central Bank of The Gambia", "url": "https://www.cbg.gm/", "type": "economic" },
+    { "name": "Gambia Investment and Export Promotion Agency (GIEPA)", "url": "https://www.giepa.gm/", "type": "investment" },
+    { "name": "World Bank - The Gambia Country Data", "url": "https://data.worldbank.org/country/gambia-the", "type": "economic" }
+  ]
+}

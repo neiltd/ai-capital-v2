@@ -1,0 +1,71 @@
+{
+  "id": "IND",
+  "iso2": "IN",
+  "name": "India",
+  "region": "Asia",
+  "subregion": "Southern Asia",
+  "capital": "New Delhi",
+  "lastUpdated": "2026-05-09",
+  "summary": "India is the world's most populous nation and its fastest-growing major economy. It is increasingly asserting itself as a leading 'bridge' power between the Global North and Global South. While it benefits from a massive demographic dividend and a burgeoning tech sector, it faces challenges from bureaucratic friction, infrastructure gaps, and significant internal socio-religious tensions. Geopolitically, India maintains a policy of multi-alignment, balancing its deepening security partnership with the West against its historical ties to Russia and its complex, often adversarial relationship with China.",
+  "indicators": {
+    "politicalStability":       { "score": 6, "trend": "stable", "confidence": "high", "note": "Strong central government leadership tempered by regional identity politics and social polarization." },
+    "economicDirection":        { "score": 8, "trend": "rising", "confidence": "high", "note": "Robust domestic demand and manufacturing push (Make in India) driving high growth rates." },
+    "investmentAttractiveness": { "score": 7, "trend": "rising", "confidence": "medium", "note": "Massive market scale and improving infrastructure, though regulatory complexity remains a hurdle." },
+    "geopoliticalRisk":         { "score": 5, "trend": "stable", "confidence": "high", "note": "Border disputes with China and Pakistan are persistent but currently contained." },
+    "educationQuality":         { "score": 5, "trend": "rising", "confidence": "medium", "note": "World-class elite technical institutes (IITs/IIMs) contrast with uneven primary and secondary schooling." },
+    "healthcareQuality":        { "score": 4, "trend": "rising", "confidence": "medium", "note": "Expanding public health initiatives and a global hub for pharmaceuticals, but significant rural-urban disparities." },
+    "technologyInvestment":     { "score": 7, "trend": "rising", "confidence": "high", "note": "Rapidly growing startup ecosystem and massive digital public infrastructure (India Stack)." }
+  },
+  "demographics": {
+    "population": 1430000000,
+    "medianAge": 28.2,
+    "urbanizationRate": 36,
+    "majorEthnicGroups": ["Indo-Aryan", "Dravidian", "Mongoloid", "Others"],
+    "religions": [
+      { "name": "Hindu", "percent": 79.8 },
+      { "name": "Muslim", "percent": 14.2 },
+      { "name": "Christian", "percent": 2.3 },
+      { "name": "Sikh", "percent": 1.7 },
+      { "name": "Other", "percent": 2.0 }
+    ]
+  },
+  "alliances": ["QUAD", "BRICS", "G20", "SCO", "I2U2"],
+  "relationships": [
+    { "countryId": "USA", "countryName": "United States", "type": "strategic_partner", "sentiment": "positive", "summary": "Deepening defense and technology ties driven by shared concerns over China's rise." },
+    { "countryId": "CHN", "countryName": "China", "type": "rival", "sentiment": "negative", "summary": "Competitive and often tense relationship centered on border disputes and regional influence." },
+    { "countryId": "RUS", "countryName": "Russia", "type": "strategic_partner", "sentiment": "neutral", "summary": "Long-standing defense and energy ties, though complicated by Russia's alignment with China." },
+    { "countryId": "PAK", "countryName": "Pakistan", "type": "enemy", "sentiment": "negative", "summary": "Perpetual hostility over Kashmir and cross-border terrorism issues." },
+    { "countryId": "JPN", "countryName": "Japan", "type": "ally", "sentiment": "positive", "summary": "Strong economic partnership and shared vision for a 'Free and Open Indo-Pacific'." }
+  ],
+  "perspectives": [
+    { "source": "Strategic Autonomy Advocate", "bias": "Nationalist/Realist", "view": "India must avoid formal alliances and maintain its freedom of action to pursue its own national interests in a multipolar world." },
+    { "source": "Hindutva Proponent", "bias": "Ideological", "view": "India is a civilizational state whose modern identity and policies should be rooted in its majority Hindu heritage." },
+    { "source": "Western Policy Analyst", "bias": "Liberal Democratic", "view": "India is the essential democratic counterweight to China in Asia, provided it maintains its secular and democratic institutions." },
+    { "source": "Global South Economist", "bias": "Developmental", "view": "India's success in digital public goods offers a scalable model for other developing nations to bypass traditional developmental stages." }
+  ],
+  "historicalContext": {
+    "summary": "India's history spans one of the world's oldest civilizations. After nearly two centuries of British colonial rule, it gained independence in 1947. Since the 1991 economic liberalization, it has transformed from a slow-growing socialist-leaning state into a global economic powerhouse.",
+    "keyEvents": [
+      { "year": 1947, "event": "Independence from British rule and the Partition of India and Pakistan." },
+      { "year": 1950, "event": "Adoption of the Constitution, establishing India as a secular republic." },
+      { "year": 1962, "event": "Sino-Indian War, leading to long-term border tensions with China." },
+      { "year": 1971, "event": "Indo-Pakistani War and the creation of Bangladesh." },
+      { "year": 1974, "event": "First successful nuclear test (Smiling Buddha)." },
+      { "year": 1991, "event": "Economic liberalization reforms launched under Manmohan Singh." },
+      { "year": 1998, "event": "Pokhran-II nuclear tests, establishing India as a declared nuclear state." },
+      { "year": 2014, "event": "Narendra Modi and the BJP come to power with a strong mandate." },
+      { "year": 2019, "event": "Abrogation of Article 370 in Jammu and Kashmir." },
+      { "year": 2023, "event": "India successfully lands Chandrayaan-3 on the Moon's south pole." }
+    ]
+  },
+  "investmentNotes": {
+    "strengths": ["Large, young workforce", "World-class IT and service sector", "Massive domestic market", "Stable political leadership"],
+    "risks": ["Complex regulatory environment", "Infrastructure bottlenecks", "Vulnerability to oil price shocks", "Social and religious tensions"],
+    "sectors": ["Information Technology", "Renewable Energy", "Pharmaceuticals", "Infrastructure & Logistics"]
+  },
+  "sources": [
+    { "name": "Reserve Bank of India", "url": "https://www.rbi.org.in/", "type": "economic" },
+    { "name": "Ministry of External Affairs", "url": "https://www.mea.gov.in/", "type": "political" },
+    { "name": "World Bank India", "url": "https://www.worldbank.org/en/country/india", "type": "general" }
+  ]
+}

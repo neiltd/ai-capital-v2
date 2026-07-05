@@ -1,0 +1,67 @@
+{
+  "id": "CRI",
+  "iso2": "CR",
+  "name": "Costa Rica",
+  "region": "Americas",
+  "subregion": "Central America",
+  "capital": "San José",
+  "lastUpdated": "2026-05-09",
+  "summary": "Costa Rica is a regional leader in political stability, environmental sustainability, and high-tech manufacturing. Reclassified as a high-income country by the World Bank in 2025, it has successfully transitioned from an agricultural base to a hub for medical devices, semiconductors, and digital services. Under President Rodrigo Chaves, the government has maintained a pro-market stance and fiscal discipline, though it faces a fragmented legislature and a rising security crisis related to transnational drug trafficking. Costa Rica's commitment to democratic values and its 'green' energy grid—consistently over 95% renewable—make it a preferred destination for FDI and a key U.S. partner in supply chain diversification. Despite its successes, the country struggles with high living costs, bureaucratic bottlenecks, and a widening inequality gap between its high-skilled tech sector and the informal economy.",
+  "indicators": {
+    "politicalStability":       { "score": 8, "score_description": "High stability rooted in a long democratic tradition, though executive-legislative friction persists.", "trend": "stable", "confidence": "high", "note": "Costa Rica remains the most stable democracy in the region, despite President Chaves' confrontational political style." },
+    "economicDirection":        { "score": 7, "score_description": "Strong growth driven by high-tech exports and tourism, supported by OECD-standard reforms.", "trend": "rising", "confidence": "high", "note": "The country is benefiting from the CHIPS Act and nearshoring, though fiscal space is constrained by debt servicing." },
+    "investmentAttractiveness": { "score": 8, "score_description": "Highly attractive due to human capital, green energy, and Free Trade Zone incentives.", "trend": "rising", "confidence": "high", "note": "Consistently attracts the highest FDI relative to GDP in Central America, particularly in medical technology." },
+    "geopoliticalRisk":         { "score": 3, "score_description": "Low risk, characterized by strong alliances with the U.S. and EU.", "trend": "stable", "confidence": "high", "note": "A founding member of the Alliance for Development in Democracy (ADD), promoting regional stability." },
+    "educationQuality":         { "score": 6, "score_description": "High standards relative to the region, with a strong focus on bilingualism and technical skills.", "trend": "stable", "confidence": "high", "note": "Investment in education is constitutionally mandated at 8% of GDP, though efficiency remains a concern." },
+    "healthcareQuality":        { "score": 7, "score_description": "Universal socialized system (CCSS) provides high-quality care and high life expectancy.", "trend": "stable", "confidence": "high", "note": "One of the best healthcare systems in Latin America, though facing pressure from an aging population." },
+    "technologyInvestment":     { "score": 8, "score_description": "Significant investment in semiconductors, cybersecurity, and renewable energy tech.", "trend": "rising", "confidence": "high", "note": "Strategic partnership with the U.S. to become a regional semiconductor assembly and testing hub." }
+  },
+  "demographics": {
+    "population": 5200000,
+    "medianAge": 33.9,
+    "urbanizationRate": 82,
+    "majorEthnicGroups": ["White or Mestizo", "African descent", "Indigenous", "Chinese descent"],
+    "religions": [
+      { "name": "Roman Catholic", "percent": 47 },
+      { "name": "Protestant/Evangelical", "percent": 19 },
+      { "name": "None/Unaffiliated", "percent": 27 },
+      { "name": "Other", "percent": 7 }
+    ]
+  },
+  "alliances": ["OECD", "SICA", "OAS", "CELAC", "ADD", "UN"],
+  "relationships": [
+    { "countryId": "USA", "countryName": "United States", "type": "ally", "sentiment": "positive", "summary": "Indispensable partner for trade, security, and technology; Costa Rica is a primary beneficiary of the U.S. CHIPS Act." },
+    { "countryId": "PAN", "countryName": "Panama", "type": "partner", "sentiment": "positive", "summary": "Strong economic and security cooperation, particularly in managing the migration flows through the Darien Gap." },
+    { "countryId": "DOM", "countryName": "Dominican Republic", "type": "ally", "sentiment": "positive", "summary": "Core partner in the ADD alliance, coordinating on regional trade and democratic promotion." },
+    { "countryId": "NIC", "countryName": "Nicaragua", "type": "neighbor", "sentiment": "negative", "summary": "Relations are strained by the influx of refugees and border security issues resulting from the Ortega regime's policies." },
+    { "countryId": "CHN", "countryName": "China", "type": "partner", "sentiment": "neutral", "summary": "Trade partner and source of infrastructure investment, though Costa Rica has recently cooled relations to align with U.S. tech standards." }
+  ],
+  "perspectives": [
+    { "source": "Tech Sector Leader", "bias": "Pro-Globalist", "view": "Costa Rica's future lies in its ability to integrate into global high-tech value chains by leveraging its talent and green credentials." },
+    { "source": "Environmental Advocate", "bias": "Ecological", "view": "Our economic development must remain compatible with our 'Pura Vida' identity and our global commitment to carbon neutrality." },
+    { "source": "Security Analyst", "bias": "Security-centric", "view": "The 'Switzerland of Central America' is under threat from narco-trafficking networks; without a major security overhaul, our reputation for stability is at risk." }
+  ],
+  "historicalContext": {
+    "summary": "Costa Rica's unique trajectory was set in 1948 after a short civil war, leading to the abolition of its military and the redirection of defense spending toward education and health. This decision has fostered decades of civilian democratic rule and social development, distinguishing it from its conflict-ridden neighbors.",
+    "keyEvents": [
+      { "year": 1821, "event": "Costa Rica gains independence from Spain." },
+      { "year": 1948, "event": "Civil War ends; the military is abolished under José Figueres Ferrer." },
+      { "year": 1949, "event": "New Constitution is adopted, granting women the right to vote." },
+      { "year": 1987, "event": "President Oscar Arias Sánchez wins the Nobel Peace Prize for his Central American peace plan." },
+      { "year": 2007, "event": "Costa Rica narrowly approves CAFTA-DR in a national referendum." },
+      { "year": 2014, "event": "Luis Guillermo Solís wins the presidency, breaking the long-standing PLN-PUSC duopoly." },
+      { "year": 2021, "event": "Costa Rica officially becomes the 38th member of the OECD." },
+      { "year": 2022, "event": "Rodrigo Chaves is elected president on a platform of anti-establishment reform." }
+    ]
+  },
+  "investmentNotes": {
+    "strengths": ["World-class human capital and high English proficiency", "Stable democratic environment and strong rule of law", "Renewable energy grid and sustainability focus", "Advanced manufacturing and life sciences ecosystem"],
+    "risks": ["High cost of doing business and utility rates", "Increasing levels of violent crime and drug transit", "Fiscal constraints and high public debt", "Complex and slow-moving bureaucracy"],
+    "sectors": ["Medical Devices", "Semiconductors", "IT and Business Services", "Sustainable Tourism", "Renewable Energy"]
+  },
+  "sources": [
+    { "name": "World Bank", "url": "https://data.worldbank.org/country/CRI", "type": "economic" },
+    { "name": "CIA World Factbook", "url": "https://www.cia.gov/the-world-factbook/countries/costa-rica/", "type": "general" },
+    { "name": "OECD iLibrary", "url": "https://www.oecd-ilibrary.org/costa-rica", "type": "economic" }
+  ]
+}

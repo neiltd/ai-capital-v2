@@ -1,0 +1,218 @@
+[
+  {
+    "id": "RAIL-KOR-BUSAN-NEW-PORT",
+    "name": "Busan New Port Station",
+    "countryId": "KOR",
+    "city": "Busan",
+    "coordinates": [128.830, 35.080],
+    "type": "port_interface",
+    "dailyPassengers": null,
+    "annualFreightTonnes": 24400000,
+    "connectedCountries": [],
+    "gaugeType": "standard",
+    "lineCount": 12,
+    "strategicImportance": "high",
+    "isPartOfBRI": false,
+    "geopoliticalNotes": "South Korea's largest maritime gateway and the southern terminus of the Gyeongbu Line. Strategic starting point for the 'Iron Silk Road' vision connecting to Europe.",
+    "notes": "Freight volume reflects the rail-integrated portion of Busan New Port's capacity.",
+    "attribution": {
+      "sources": [
+        { "name": "Busan Port Authority Statistics", "url": "https://www.busanpa.com/eng/", "accessedAt": "2025-03-04" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 1,
+        "lastVerified": "2025-03-04"
+      }
+    }
+  },
+  {
+    "id": "RAIL-KOR-UIWANG-ICD",
+    "name": "Uiwang ICD (Obong Station)",
+    "countryId": "KOR",
+    "city": "Uiwang",
+    "coordinates": [126.960, 37.340],
+    "type": "freight",
+    "dailyPassengers": null,
+    "annualFreightTonnes": 12000000,
+    "connectedCountries": [],
+    "gaugeType": "standard",
+    "lineCount": 14,
+    "strategicImportance": "high",
+    "isPartOfBRI": false,
+    "geopoliticalNotes": "Primary inland container depot for the Seoul Metropolitan Area. Handles over 50% of South Korea's total container rail traffic.",
+    "notes": "Handles approx. 500,000 TEUs annually.",
+    "attribution": {
+      "sources": [
+        { "name": "Korea Railroad Research Institute (KRRI)", "url": "https://www.krri.re.kr/eng/", "accessedAt": "2025-03-04" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 1,
+        "lastVerified": "2025-03-04"
+      }
+    }
+  },
+  {
+    "id": "RAIL-KOR-SEOUL-STATION",
+    "name": "Seoul Station",
+    "countryId": "KOR",
+    "city": "Seoul",
+    "coordinates": [126.971, 37.555],
+    "type": "mixed",
+    "dailyPassengers": 110000,
+    "annualFreightTonnes": null,
+    "connectedCountries": [],
+    "gaugeType": "standard",
+    "lineCount": 16,
+    "strategicImportance": "high",
+    "isPartOfBRI": false,
+    "geopoliticalNotes": "The primary passenger hub and KTX terminus of South Korea. Central node for national rail integration and political/economic connectivity.",
+    "notes": null,
+    "attribution": {
+      "sources": [
+        { "name": "KORAIL Passenger Statistics", "url": "https://info.korail.com/", "accessedAt": "2025-03-04" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 1,
+        "lastVerified": "2025-03-04"
+      }
+    }
+  },
+  {
+    "id": "RAIL-KOR-DAEJEON-STATION",
+    "name": "Daejeon Station",
+    "countryId": "KOR",
+    "city": "Daejeon",
+    "coordinates": [127.433, 36.333],
+    "type": "mixed",
+    "dailyPassengers": 65000,
+    "annualFreightTonnes": null,
+    "connectedCountries": [],
+    "gaugeType": "standard",
+    "lineCount": 10,
+    "strategicImportance": "high",
+    "isPartOfBRI": false,
+    "geopoliticalNotes": "Critical inland junction where the Gyeongbu (Seoul-Busan) and Honam (Seoul-Mokpo) lines meet. Key logistics and distribution center for central Korea.",
+    "notes": null,
+    "attribution": {
+      "sources": [
+        { "name": "KORAIL Network Information", "url": "https://info.korail.com/", "accessedAt": "2025-03-04" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 1,
+        "lastVerified": "2025-03-04"
+      }
+    }
+  },
+  {
+    "id": "RAIL-KOR-INCHEON-PORT",
+    "name": "Incheon Station (Port Terminal)",
+    "countryId": "KOR",
+    "city": "Incheon",
+    "coordinates": [126.617, 37.476],
+    "type": "port_interface",
+    "dailyPassengers": null,
+    "annualFreightTonnes": 3560000,
+    "connectedCountries": [],
+    "gaugeType": "standard",
+    "lineCount": 8,
+    "strategicImportance": "high",
+    "isPartOfBRI": false,
+    "geopoliticalNotes": "Major hub for trade with China and South Korea's second-largest container port. Vital for the Seoul-Incheon industrial corridor.",
+    "notes": "Port volume cited as total capacity.",
+    "attribution": {
+      "sources": [
+        { "name": "Incheon Port Authority", "url": "https://www.icpa.or.kr/eng/", "accessedAt": "2025-03-04" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 1,
+        "lastVerified": "2025-03-04"
+      }
+    }
+  },
+  {
+    "id": "RAIL-KOR-GWANGYANG-TAEGUM",
+    "name": "Taegum Station (Gwangyang Port)",
+    "countryId": "KOR",
+    "city": "Gwangyang",
+    "coordinates": [127.680, 34.920],
+    "type": "port_interface",
+    "dailyPassengers": null,
+    "annualFreightTonnes": 2010000,
+    "connectedCountries": [],
+    "gaugeType": "standard",
+    "lineCount": 6,
+    "strategicImportance": "high",
+    "isPartOfBRI": false,
+    "geopoliticalNotes": "Serves the Honam industrial region and the Gwangyang Steel Works. Key part of the national 'Two-Port' strategy to decentralize cargo from Busan.",
+    "notes": null,
+    "attribution": {
+      "sources": [
+        { "name": "Yeosu Gwangyang Port Authority", "url": "https://www.ygpa.or.kr/en/", "accessedAt": "2025-03-04" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 1,
+        "lastVerified": "2025-03-04"
+      }
+    }
+  },
+  {
+    "id": "RAIL-KOR-DORASAN-STATION",
+    "name": "Dorasan Station",
+    "countryId": "KOR",
+    "city": "Paju",
+    "coordinates": [126.703, 37.892],
+    "type": "border_crossing",
+    "dailyPassengers": null,
+    "annualFreightTonnes": null,
+    "connectedCountries": ["PRK"],
+    "gaugeType": "standard",
+    "lineCount": 4,
+    "strategicImportance": "high",
+    "isPartOfBRI": false,
+    "geopoliticalNotes": "The symbolic northernmost station in South Korea. Built as the gateway to connect the Trans-Korean Railway (TKR) to the Trans-Siberian and Trans-Chinese networks.",
+    "notes": "Currently primarily symbolic; cross-border freight to Kaesong is suspended.",
+    "attribution": {
+      "sources": [
+        { "name": "Ministry of Unification - Railway Cooperation", "url": "https://www.unikorea.go.kr/eng_unikorea/", "accessedAt": "2025-03-04" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 1,
+        "lastVerified": "2025-03-04"
+      }
+    }
+  },
+  {
+    "id": "RAIL-KOR-PYEONGTAEK-POSEUNG",
+    "name": "Poseung Station (Pyeongtaek Port)",
+    "countryId": "KOR",
+    "city": "Pyeongtaek",
+    "coordinates": [126.850, 36.980],
+    "type": "port_interface",
+    "dailyPassengers": null,
+    "annualFreightTonnes": 4000000,
+    "connectedCountries": [],
+    "gaugeType": "standard",
+    "lineCount": 5,
+    "strategicImportance": "high",
+    "isPartOfBRI": false,
+    "geopoliticalNotes": "Rapidly growing port and rail hub serving the major automotive and electronics clusters (Samsung, LG) in the southern Gyeonggi region.",
+    "notes": "Critical node for industrial exports and component imports.",
+    "attribution": {
+      "sources": [
+        { "name": "Gyeonggi Province Logistics Plan", "url": "https://english.gg.go.kr/", "accessedAt": "2025-03-04" }
+      ],
+      "confidence": {
+        "confidence": "medium",
+        "sourceCount": 1,
+        "lastVerified": "2025-03-04"
+      }
+    }
+  }
+]

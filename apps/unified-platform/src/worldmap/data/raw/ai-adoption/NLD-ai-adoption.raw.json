@@ -1,0 +1,30 @@
+[
+  {
+    "countryId": "NLD",
+    "year": 2024,
+    "aiReadinessScore": 77.23,
+    "aiAdoptionScore": 72,
+    "aiTalentScore": 78,
+    "aiInvestmentUsdM": 490,
+    "aiStartupCount": 402,
+    "aiUnicornCount": 3,
+    "hasNationalAiStrategy": true,
+    "aiStrategyYear": 2019,
+    "aiPolicyScore": 8.2,
+    "cloudReadinessPct": null,
+    "broadbandPenetrationPct": 98.2,
+    "topAiSectors": ["Healthcare", "Agri-food", "Energy", "Logistics", "High-tech systems"],
+    "attribution": {
+      "sources": [
+        { "name": "Oxford Insights Government AI Readiness Index 2024", "url": "https://oxfordinsights.com/ai-readiness/ai-readiness-index/", "accessedAt": "2025-05-15" },
+        { "name": "Stanford HAI AI Index Report 2024", "url": "https://aiindex.stanford.edu/report/", "accessedAt": "2025-05-15" },
+        { "name": "Tortoise Media Global AI Index 2024", "url": "https://www.tortoisemedia.com/intelligence/global-ai/", "accessedAt": "2025-05-15" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 3,
+        "lastVerified": "2025-05-15"
+      }
+    }
+  }
+]

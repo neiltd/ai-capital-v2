@@ -1,0 +1,28 @@
+[
+  {
+    "countryId": "FRA",
+    "year": 2022,
+    "overallScore": 80.2,
+    "availability": 69.0,
+    "access": 91.3,
+    "utilization": 87.7,
+    "stability": 70.3,
+    "undernourishedPct": 2.5,
+    "foodImportDependencyPct": -25.0,
+    "cerealYieldKgHa": 6655,
+    "climateVulnerability": "medium",
+    "conflictExposure": "low",
+    "attribution": {
+      "sources": [
+        { "name": "GFSI 2022 — France", "url": "https://impact.economist.com/sustainability/project/food-security-index/", "accessedAt": "2025-05-10" },
+        { "name": "FAO FAOSTAT", "url": "https://www.fao.org/faostat/en/", "accessedAt": "2025-05-10" },
+        { "name": "World Bank Cereal Yield", "url": "https://data.worldbank.org/indicator/AG.YLD.CREL.KG", "accessedAt": "2025-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 3,
+        "lastVerified": "2025-05-10"
+      }
+    }
+  }
+]

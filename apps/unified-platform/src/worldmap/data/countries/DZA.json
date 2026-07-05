@@ -1,0 +1,68 @@
+{
+  "id": "DZA",
+  "iso2": "DZ",
+  "name": "Algeria",
+  "region": "Africa",
+  "subregion": "Northern Africa",
+  "capital": "Algiers",
+  "lastUpdated": "2026-05-09",
+  "summary": "Algeria is the largest country in Africa and a major exporter of natural gas to Europe. Its political system is characterized by a strong military influence, with the presidency of Abdelmadjid Tebboune focusing on stabilizing the country after the 2019 Hirak protests. The economy remains heavily dependent on hydrocarbons, though recent efforts aim to diversify through investments in non-hydrocarbon sectors and mining. Foreign policy is driven by a fierce commitment to national sovereignty, a non-aligned stance, and a deep-seated rivalry with Morocco, particularly over the Western Sahara conflict.",
+  "indicators": {
+    "politicalStability":       { "score": 6, "trend": "stable", "confidence": "high", "note": "Military-backed government maintains firm control; social discontent is managed through state spending and security measures." },
+    "economicDirection":        { "score": 5, "trend": "rising", "confidence": "high", "note": "Benefiting from high energy prices and increased gas demand from Europe, while non-oil sectors show modest growth." },
+    "investmentAttractiveness": { "score": 4, "trend": "rising", "confidence": "medium", "note": "Strategic mineral wealth and energy potential are attracting interest, though bureaucratic hurdles and protectionist policies remain challenges." },
+    "geopoliticalRisk":         { "score": 7, "trend": "rising", "confidence": "high", "note": "High risk from regional instability in the Sahel and the ongoing diplomatic and border tensions with Morocco." },
+    "educationQuality":         { "score": 5, "trend": "stable", "confidence": "medium", "note": "High literacy rates and widespread access, but quality and vocational alignment with the labor market need improvement." },
+    "healthcareQuality":        { "score": 5, "trend": "stable", "confidence": "medium", "note": "State-funded healthcare provides broad coverage, but facilities in southern regions lag behind northern urban centers." },
+    "technologyInvestment":     { "score": 4, "trend": "rising", "confidence": "medium", "note": "Growing focus on digitalizing government services and expanding telecommunications infrastructure." }
+  },
+  "demographics": {
+    "population": 47100000,
+    "medianAge": 28.6,
+    "urbanizationRate": 76,
+    "majorEthnicGroups": ["Arab-Berber"],
+    "religions": [
+      { "name": "Muslim (mostly Sunni)", "percent": 99 },
+      { "name": "Other (Christian, Jewish)", "percent": 1 }
+    ]
+  },
+  "alliances": ["Arab League", "African Union", "OPEC", "OIC", "UN Security Council (2024-2025)"],
+  "relationships": [
+    { "countryId": "RUS", "countryName": "Russia", "type": "strategic_partner", "sentiment": "positive", "summary": "Long-standing security partner and primary arms supplier; relationship remains deep despite Algerian moves to diversify partners." },
+    { "countryId": "CHN", "countryName": "China", "type": "strategic_partner", "sentiment": "positive", "summary": "Major economic partner in infrastructure and construction; Algeria is a key node in the Belt and Road Initiative in North Africa." },
+    { "countryId": "USA", "countryName": "United States", "type": "diplomatic_partner", "sentiment": "neutral", "summary": "Increasing cooperation in counter-terrorism and energy; Algiers is selectively opening to U.S. investment to balance traditional ties." },
+    { "countryId": "FRA", "countryName": "France", "type": "historical_partner", "sentiment": "neutral", "summary": "Complex relationship shaped by the colonial past; characterized by cycles of diplomatic tension and pragmatic economic cooperation." },
+    { "countryId": "MAR", "countryName": "Morocco", "type": "competitor", "sentiment": "negative", "summary": "Existential regional rivalry; Algeria provides full support to the Polisario Front and maintains a closed border with its neighbor." }
+  ],
+  "perspectives": [
+    { "source": "State Nationalist", "bias": "Pro-government", "view": "The 'New Algeria' is reasserting its sovereignty and role as a stabilizing force and energy powerhouse in the Mediterranean." },
+    { "source": "Hirak Supporter", "bias": "Pro-reform", "view": "The 2019 revolution remains unfinished; meaningful change requires a transition toward genuine civilian-led democracy and transparency." },
+    { "source": "Energy Analyst", "bias": "Technocratic", "view": "Algeria is the most reliable alternative to Russian gas for Europe, but it must modernize its energy sector to maintain long-term production." },
+    { "source": "Regional Security Specialist", "bias": "Objective", "view": "Algeria's massive military and experience in counter-insurgency make it the indispensable anchor for security in the Sahel." }
+  ],
+  "historicalContext": {
+    "summary": "Algeria's modern identity is forged by its brutal eight-year war for independence from France (1954-1962). The country has since navigated a post-colonial socialist era, a traumatic civil war against Islamists in the 1990s (the 'Black Decade'), and a recent transition following the ousting of long-time leader Bouteflika.",
+    "keyEvents": [
+      { "year": 1830, "event": "French invasion and beginning of colonial rule." },
+      { "year": 1954, "event": "Start of the Algerian War of Independence led by the FLN." },
+      { "year": 1962, "event": "Algeria wins independence from France after 132 years of colonization." },
+      { "year": 1965, "event": "Houari Boumédiène takes power in a coup, emphasizing industrialization and non-alignment." },
+      { "year": 1991, "event": "Military cancels elections as Islamists (FIS) are poised to win, triggering a decade-long civil war." },
+      { "year": 1999, "event": "Abdelaziz Bouteflika elected president, overseeing national reconciliation and the end of the civil war." },
+      { "year": 2019, "event": "The Hirak mass protests force Bouteflika to resign after 20 years in power." },
+      { "year": 2021, "event": "Algeria severs diplomatic relations with Morocco over 'hostile acts'." },
+      { "year": 2024, "event": "President Tebboune wins a second term amid high energy revenues and focus on economic reform." },
+      { "year": 2025, "event": "Algeria signs a significant military and investment MoU with the United States." }
+    ]
+  },
+  "investmentNotes": {
+    "strengths": ["World's 10th largest proven natural gas reserves", "Strategically positioned as a primary energy supplier to Europe", "High level of foreign exchange reserves and low external debt", "Significant untapped potential in critical minerals (Iron, Phosphates, Lithium)"],
+    "risks": ["Heavy dependency on oil and gas price volatility", "Complex bureaucracy and historical protectionist mindset", "Geopolitical risks from bordering Sahelian countries", "Youth unemployment and potential for social unrest"],
+    "sectors": ["Oil & Gas Infrastructure", "Mining (Iron & Rare Earths)", "Renewable Energy (Solar)", "Agriculture (Sahara region development)", "Digital Services"]
+  },
+  "sources": [
+    { "name": "Office National des Statistiques (ONS)", "url": "https://www.ons.dz/", "type": "economic" },
+    { "name": "Bank of Algeria", "url": "https://www.bank-of-algeria.dz/", "type": "economic" },
+    { "name": "Sonatrach (State Oil & Gas Company)", "url": "https://sonatrach.com/", "type": "industry" }
+  ]
+}

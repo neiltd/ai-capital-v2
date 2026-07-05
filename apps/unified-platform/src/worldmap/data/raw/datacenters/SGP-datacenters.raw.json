@@ -1,0 +1,302 @@
+[
+  {
+    "id": "DC-SGP-QUEENSTOWN-EQUINIX-SG1",
+    "name": "Equinix SG1",
+    "countryId": "SGP",
+    "city": "Queenstown",
+    "coordinates": [103.788, 1.297],
+    "type": "colocation",
+    "status": "operational",
+    "tierLevel": "3",
+    "capacityMW": null,
+    "floorSpaceM2": 11500,
+    "pue": null,
+    "operator": "Equinix",
+    "owner": "Equinix",
+    "yearOpened": 2002,
+    "yearPlanned": null,
+    "cloudRegion": null,
+    "geopoliticalNotes": "A critical interconnection hub in Southeast Asia, hosting multiple internet exchanges and subsea cable landings, facilitating regional data transit.",
+    "notes": "Located in the Ayer Rajah Crescent hub.",
+    "attribution": {
+      "sources": [
+        { "name": "Equinix Singapore Data Centers", "url": "https://www.equinix.com/data-centers/asia-pacific-colocation/singapore-data-centers", "accessedAt": "2024-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 2,
+        "lastVerified": "2024-05-10"
+      }
+    }
+  },
+  {
+    "id": "DC-SGP-ONENORTH-EQUINIX-SG3",
+    "name": "Equinix SG3",
+    "countryId": "SGP",
+    "city": "One-North",
+    "coordinates": [103.785, 1.293],
+    "type": "colocation",
+    "status": "operational",
+    "tierLevel": "3",
+    "capacityMW": null,
+    "floorSpaceM2": 26000,
+    "pue": null,
+    "operator": "Equinix",
+    "owner": "Equinix",
+    "yearOpened": 2015,
+    "yearPlanned": null,
+    "cloudRegion": null,
+    "geopoliticalNotes": "One of the largest colocation facilities in Singapore, serving as a key node for global financial services and cloud service providers.",
+    "notes": "Located in the Buona Vista/One-North research and tech district.",
+    "attribution": {
+      "sources": [
+        { "name": "Equinix SG3 Data Center", "url": "https://www.equinix.com/data-centers/asia-pacific-colocation/singapore-data-centers/sg3", "accessedAt": "2024-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 2,
+        "lastVerified": "2024-05-10"
+      }
+    }
+  },
+  {
+    "id": "DC-SGP-JURONGWEST-GOOGLE-SIN1",
+    "name": "Google Singapore SIN-1",
+    "countryId": "SGP",
+    "city": "Jurong West",
+    "coordinates": [103.702, 1.332],
+    "type": "hyperscale",
+    "status": "operational",
+    "tierLevel": "3",
+    "capacityMW": null,
+    "floorSpaceM2": null,
+    "pue": null,
+    "operator": "Google",
+    "owner": "Google",
+    "yearOpened": 2013,
+    "yearPlanned": null,
+    "cloudRegion": "asia-southeast1",
+    "geopoliticalNotes": "Google's first multi-story data center in Asia, critical for serving Southeast Asian markets and ensuring data residency within Singapore's stable jurisdiction.",
+    "notes": "Part of a large Google campus in Jurong West.",
+    "attribution": {
+      "sources": [
+        { "name": "Google Data Centers - Singapore", "url": "https://www.google.com/about/datacenters/locations/singapore/", "accessedAt": "2024-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 1,
+        "lastVerified": "2024-05-10"
+      }
+    }
+  },
+  {
+    "id": "DC-SGP-JURONG-AWS-REGION",
+    "name": "AWS Singapore Region (SIN-1)",
+    "countryId": "SGP",
+    "city": "Jurong",
+    "coordinates": [103.708, 1.328],
+    "type": "hyperscale",
+    "status": "operational",
+    "tierLevel": "3",
+    "capacityMW": 350,
+    "floorSpaceM2": null,
+    "pue": null,
+    "operator": "Amazon Web Services",
+    "owner": "Amazon",
+    "yearOpened": 2010,
+    "yearPlanned": null,
+    "cloudRegion": "ap-southeast-1",
+    "geopoliticalNotes": "The primary cloud hub for Southeast Asia, providing sovereign compute capabilities for regional governments and major enterprises.",
+    "notes": "Representing a major AZ site in the Jurong industrial area.",
+    "attribution": {
+      "sources": [
+        { "name": "AWS Global Infrastructure", "url": "https://aws.amazon.com/about-aws/global-infrastructure/", "accessedAt": "2024-05-10" }
+      ],
+      "confidence": {
+        "confidence": "medium",
+        "sourceCount": 1,
+        "lastVerified": "2024-05-10"
+      }
+    }
+  },
+  {
+    "id": "DC-SGP-JURONGWEST-DIGITALREALTY-SIN10",
+    "name": "Digital Realty SIN10",
+    "countryId": "SGP",
+    "city": "Jurong West",
+    "coordinates": [103.712, 1.328],
+    "type": "colocation",
+    "status": "operational",
+    "tierLevel": "3",
+    "capacityMW": 20,
+    "floorSpaceM2": 34000,
+    "pue": null,
+    "operator": "Digital Realty",
+    "owner": "Digital Realty",
+    "yearOpened": 2011,
+    "yearPlanned": null,
+    "cloudRegion": null,
+    "geopoliticalNotes": "Strategic colocation site in the Jurong cluster, providing critical redundancy and connectivity for Western cloud giants in the APAC region.",
+    "notes": null,
+    "attribution": {
+      "sources": [
+        { "name": "Digital Realty Singapore Data Centers", "url": "https://www.digitalrealty.com/data-centers/singapore", "accessedAt": "2024-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 1,
+        "lastVerified": "2024-05-10"
+      }
+    }
+  },
+  {
+    "id": "DC-SGP-LOYANG-DIGITALREALTY-SIN11",
+    "name": "Digital Realty SIN11 (Digital Loyang 1)",
+    "countryId": "SGP",
+    "city": "Loyang",
+    "coordinates": [103.985, 1.365],
+    "type": "colocation",
+    "status": "operational",
+    "tierLevel": "3",
+    "capacityMW": 13,
+    "floorSpaceM2": 15000,
+    "pue": null,
+    "operator": "Digital Realty",
+    "owner": "Digital Realty",
+    "yearOpened": 2015,
+    "yearPlanned": null,
+    "cloudRegion": null,
+    "geopoliticalNotes": "Located near the Loyang subsea cable landing stations, this facility is a vital gateway for trans-pacific and regional data traffic.",
+    "notes": "Located in the Loyang industrial estate.",
+    "attribution": {
+      "sources": [
+        { "name": "Digital Realty SIN11 Profile", "url": "https://www.digitalrealty.com/data-centers/singapore/sin11", "accessedAt": "2024-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 1,
+        "lastVerified": "2024-05-10"
+      }
+    }
+  },
+  {
+    "id": "DC-SGP-JURONG-META-SIN",
+    "name": "Meta Singapore Data Center",
+    "countryId": "SGP",
+    "city": "Jurong",
+    "coordinates": [103.700, 1.333],
+    "type": "hyperscale",
+    "status": "operational",
+    "tierLevel": "3",
+    "capacityMW": null,
+    "floorSpaceM2": 170000,
+    "pue": null,
+    "operator": "Meta",
+    "owner": "Meta",
+    "yearOpened": 2023,
+    "yearPlanned": null,
+    "cloudRegion": null,
+    "geopoliticalNotes": "Meta's first custom-built data center in Asia, centralizing user data for billions across the region and emphasizing Singapore's role as a trusted data vault.",
+    "notes": "An 11-story building, one of the first of its kind in the world.",
+    "attribution": {
+      "sources": [
+        { "name": "Meta Data Centers - Singapore", "url": "https://datacenters.atmeta.com/singapore/", "accessedAt": "2024-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 1,
+        "lastVerified": "2024-05-10"
+      }
+    }
+  },
+  {
+    "id": "DC-SGP-DEFULANE-STTGDC-DEFU3",
+    "name": "STT Defu 3",
+    "countryId": "SGP",
+    "city": "Defu Lane",
+    "coordinates": [103.896, 1.352],
+    "type": "colocation",
+    "status": "operational",
+    "tierLevel": "3",
+    "capacityMW": 15,
+    "floorSpaceM2": 14500,
+    "pue": null,
+    "operator": "ST Telemedia Global Data Centres",
+    "owner": "ST Telemedia",
+    "yearOpened": 2021,
+    "yearPlanned": null,
+    "cloudRegion": null,
+    "geopoliticalNotes": "A homegrown champion representing Singapore's domestic capabilities in high-security, carrier-neutral colocation infrastructure.",
+    "notes": null,
+    "attribution": {
+      "sources": [
+        { "name": "STT GDC Singapore Defu 3", "url": "https://www.sttelemediagdc.com/singapore/defu-3", "accessedAt": "2024-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 1,
+        "lastVerified": "2024-05-10"
+      }
+    }
+  },
+  {
+    "id": "DC-SGP-SERANGOON-NTTDATA-SERANGOON",
+    "name": "NTT DATA Serangoon Data Center",
+    "countryId": "SGP",
+    "city": "Serangoon North",
+    "coordinates": [103.875, 1.373],
+    "type": "hyperscale",
+    "status": "operational",
+    "tierLevel": "3",
+    "capacityMW": 250,
+    "floorSpaceM2": null,
+    "pue": null,
+    "operator": "NTT DATA",
+    "owner": "NTT DATA",
+    "yearOpened": 2022,
+    "yearPlanned": null,
+    "cloudRegion": null,
+    "geopoliticalNotes": "A massive hyperscale AI campus, supporting the next generation of sovereign AI compute for the region.",
+    "notes": null,
+    "attribution": {
+      "sources": [
+        { "name": "NTT Data Center Singapore", "url": "https://services.global.ntt/en-us/infrastructure-solutions/global-data-centers/asia-pacific/singapore-data-centers", "accessedAt": "2024-05-10" }
+      ],
+      "confidence": {
+        "confidence": "medium",
+        "sourceCount": 1,
+        "lastVerified": "2024-05-10"
+      }
+    }
+  },
+  {
+    "id": "DC-SGP-JURONG-SINGTEL-NXERA-WEST",
+    "name": "Singtel Nxera DC West",
+    "countryId": "SGP",
+    "city": "Jurong",
+    "coordinates": [103.682, 1.336],
+    "type": "hyperscale",
+    "status": "operational",
+    "tierLevel": "3",
+    "capacityMW": 58,
+    "floorSpaceM2": null,
+    "pue": null,
+    "operator": "Nxera (Singtel)",
+    "owner": "Singtel",
+    "yearOpened": 2024,
+    "yearPlanned": null,
+    "cloudRegion": null,
+    "geopoliticalNotes": "A flagship AI-ready data center by Singapore's national telco, integrated with NVIDIA technology to support national AI initiatives.",
+    "notes": null,
+    "attribution": {
+      "sources": [
+        { "name": "Nxera Data Centres", "url": "https://www.singtel.com/about-us/media-centre/news-releases/nxera-breaks-ground-on-new-dc-west", "accessedAt": "2024-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 1,
+        "lastVerified": "2024-05-10"
+      }
+    }
+  }
+]

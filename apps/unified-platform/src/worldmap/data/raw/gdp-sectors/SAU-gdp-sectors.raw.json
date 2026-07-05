@@ -1,0 +1,28 @@
+[
+  {
+    "countryId": "SAU",
+    "year": 2023,
+    "gdpUsdBn": 1067.6,
+    "gdpPerCapita": 28844.8,
+    "sectors": [
+      { "sector": "Crude Oil & Natural Gas", "percentOfGDP": 17.1, "notes": "Reflects production cuts under OPEC+ agreements" },
+      { "sector": "Government Services", "percentOfGDP": 14.0, "notes": "Major employer and driver of public investment" },
+      { "sector": "Wholesale & Retail Trade, Restaurants & Hotels", "percentOfGDP": 12.3, "notes": "High growth driven by tourism and domestic demand" },
+      { "sector": "Manufacturing (excl. oil refining)", "percentOfGDP": 11.1, "notes": "Key pillar of Vision 2030 industrial diversification" },
+      { "sector": "Finance, Insurance, Real Estate & Business Services", "percentOfGDP": 11.1, "notes": null },
+      { "sector": "Construction", "percentOfGDP": 8.0, "notes": "Driven by Giga-projects like NEOM" },
+      { "sector": "Other Activities (Agri, Transport, Refining, Taxes)", "percentOfGDP": 26.4, "notes": "Includes oil refining and taxes on products (VAT)" }
+    ],
+    "attribution": {
+      "sources": [
+        { "name": "World Bank DataBank 2023", "url": "https://databank.worldbank.org/", "accessedAt": "2024-05-10" },
+        { "name": "General Authority for Statistics (GASTAT) Saudi Arabia 2023", "url": "https://www.stats.gov.sa/", "accessedAt": "2024-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 2,
+        "lastVerified": "2024-05-10"
+      }
+    }
+  }
+]

@@ -1,0 +1,37 @@
+[
+  {
+    "countryId": "PHL",
+    "year": 2023,
+    "electricityConsumptionTWh": 118.4,
+    "electricityProductionTWh": 118.4,
+    "electricityMix": {
+      "coal": 61.9,
+      "gas": 12.0,
+      "otherRenewables": 12.0,
+      "hydro": 8.7,
+      "solar": 2.5,
+      "oil": 2.2,
+      "wind": 0.7
+    },
+    "renewableSharePct": 23.9,
+    "waterStressScore": 2.33,
+    "waterWithdrawalPct": null,
+    "foodSecurityScore": 59.3,
+    "aiAdoptionScore": 51.98,
+    "internetPenetration": 73.1,
+    "mobilePenetration": 144.5,
+    "attribution": {
+      "sources": [
+        { "name": "Ember Global Electricity Review 2024", "url": "https://ember-energy.org/data/global-electricity-review-2024/", "accessedAt": "2024-05-22" },
+        { "name": "WRI Aqueduct 3.0", "url": "https://www.wri.org/aqueduct", "accessedAt": "2024-05-22" },
+        { "name": "GFSI 2022", "url": "https://impact.economist.com/sustainability/project/food-security-index", "accessedAt": "2024-05-22" },
+        { "name": "Oxford Insights Government AI Readiness Index 2023", "url": "https://oxfordinsights.com/government-ai-readiness-index-2023/", "accessedAt": "2024-05-22" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 4,
+        "lastVerified": "2024-05-22"
+      }
+    }
+  }
+]

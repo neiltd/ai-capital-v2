@@ -1,0 +1,62 @@
+{
+  "id": "STP",
+  "iso2": "ST",
+  "name": "Sao Tome and Principe",
+  "region": "Africa",
+  "subregion": "Middle Africa",
+  "capital": "Sao Tome",
+  "lastUpdated": "2025-05-20",
+  "summary": "Sao Tome and Principe is a stable but economically fragile island nation in the Gulf of Guinea. In early 2025, the country experienced a political shift following the dismissal of the government by President Vila Nova, citing economic failure. The security profile is dominated by maritime piracy risks in the Gulf and a strategic shift in 2024 toward military cooperation with Russia. The nation remains heavily dependent on international aid and is facing significant austerity pressures.",
+  "indicators": {
+    "politicalStability":       { "score": 5, "trend": "declining", "confidence": "high", "note": "Historically stable but currently in a period of institutional tension following the dismissal of the Prime Minister in early 2025." },
+    "economicDirection":        { "score": 3, "trend": "declining", "confidence": "high", "note": "Facing severe financial constraints, high debt, and austerity measures required by the IMF." },
+    "investmentAttractiveness": { "score": 3, "trend": "stable", "confidence": "medium", "note": "Limited infrastructure and small market size; some potential in oil exploration and luxury tourism." },
+    "geopoliticalRisk":         { "score": 4, "trend": "increasing", "confidence": "high", "note": "Located in a high-piracy zone; new military alignment with Russia adds a layer of geopolitical complexity." },
+    "educationQuality":         { "score": 4, "trend": "stable", "confidence": "medium", "note": "Basic education is accessible but higher education and vocational training resources are very limited." },
+    "healthcareQuality":        { "score": 2, "trend": "stable", "confidence": "high", "note": "Very poor infrastructure; most serious cases require medical evacuation from the islands." },
+    "technologyInvestment":     { "score": 2, "trend": "stable", "confidence": "medium", "note": "Minimal investment beyond basic mobile connectivity and limited e-government initiatives." }
+  },
+  "demographics": {
+    "population": 235536,
+    "medianAge": 19.3,
+    "urbanizationRate": 76.4,
+    "majorEthnicGroups": ["Mestico", "Angolares", "Forros"],
+    "religions": [
+      { "name": "Catholic", "percent": 55.0 },
+      { "name": "Adventist", "percent": 4.0 }
+    ]
+  },
+  "alliances": ["CPLP", "African Union", "Gulf of Guinea Commission"],
+  "relationships": [
+    { "countryId": "PRT", "countryName": "Portugal", "type": "strategic_partner", "sentiment": "positive", "summary": "Former colonial power and primary development partner; providing significant aid and security cooperation." },
+    { "countryId": "RUS", "countryName": "Russia", "type": "strategic_partner", "sentiment": "neutral", "summary": "New security partner; signed a military cooperation agreement in 2024 for training and arms supply." },
+    { "countryId": "USA", "countryName": "United States", "type": "strategic_partner", "sentiment": "positive", "summary": "Key partner for maritime security and counter-piracy in the Gulf of Guinea." },
+    { "countryId": "CHN", "countryName": "China", "type": "economic_partner", "sentiment": "positive", "summary": "Major infrastructure donor since the resumption of diplomatic ties in 2016." }
+  ],
+  "perspectives": [
+    { "source": "STP Political Analyst", "bias": "Critical", "view": "The dismissal of the government in 2025 was a shock to our democratic norms; we are entering an uncertain period before the 2026 elections." },
+    { "source": "Local Merchant", "bias": "Struggling", "view": "The price of everything is going up because of IMF rules; we need investment, not just more debt." },
+    { "source": "Maritime Security Officer", "bias": "Vigilant", "view": "Piracy in the Gulf remains our number one threat; without international help, we cannot protect our waters." }
+  ],
+  "historicalContext": {
+    "summary": "Uninhabited until discovered by the Portuguese in 1470, the islands became a major center for the slave trade and later cocoa production. It achieved independence in 1975 and transitioned from a one-party state to a multi-party democracy in 1990.",
+    "keyEvents": [
+      { "year": 1975, "event": "Independence from Portugal." },
+      { "year": 1990, "event": "Referendum establishes multi-party democracy." },
+      { "year": 2003, "event": "Failed military coup; democratic order restored quickly." },
+      { "year": 2024, "event": "Military cooperation agreement signed with Russia." },
+      { "year": 2025, "event": "President Vila Nova dismisses the government of Patrice Trovoada." },
+      { "year": 2026, "event": "Scheduled presidential and parliamentary elections." }
+    ]
+  },
+  "investmentNotes": {
+    "strengths": ["Strategic maritime location in the Gulf of Guinea", "Strong democratic tradition compared to regional peers", "Potential for high-end eco-tourism and sustainable fishing", "Untapped offshore oil and gas reserves"],
+    "risks": ["High risk of maritime piracy and crew kidnappings", "Small domestic market and high logistical costs", "Extreme dependence on external aid and fluctuating commodity prices", "Inadequate health and transport infrastructure"],
+    "sectors": ["Tourism (Eco-tourism)", "Agriculture (Cocoa/Coffee)", "Maritime Logistics", "Oil & Gas Exploration"]
+  },
+  "sources": [
+    { "name": "IMF - São Tomé and Príncipe", "url": "https://www.imf.org/en/Countries/STP", "type": "economic" },
+    { "name": "Freedom House - Sao Tome and Principe", "url": "https://freedomhouse.org/country/sao-tome-and-principe", "type": "analytical" },
+    { "name": "Gulf of Guinea Maritime Security Report", "url": "https://gadecreport.com/", "type": "security" }
+  ]
+}

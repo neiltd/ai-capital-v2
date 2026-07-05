@@ -1,0 +1,218 @@
+[
+  {
+    "id": "PLANT-KAZ-EKIBASTUZ-1",
+    "name": "Ekibastuz GRES-1",
+    "countryId": "KAZ",
+    "city": "Ekibastuz",
+    "coordinates": [75.3771, 51.8848],
+    "type": "coal",
+    "status": "operating",
+    "capacityMW": 4000,
+    "annualOutputGWh": null,
+    "yearCommissioned": 1980,
+    "yearRetirement": null,
+    "operator": "Samruk-Energy",
+    "owner": "Samruk-Energy",
+    "strategicNote": "The largest power station in Kazakhstan, vital for the country's heavy industry and export capacity.",
+    "notes": "One of the largest coal-fired plants in the world.",
+    "attribution": {
+      "sources": [
+        { "name": "Global Energy Monitor", "url": "https://www.gem.wiki/Ekibastuz_GRES-1_power_station", "accessedAt": "2025-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 2,
+        "lastVerified": "2025-05-10"
+      }
+    }
+  },
+  {
+    "id": "PLANT-KAZ-EKIBASTUZ-2",
+    "name": "Ekibastuz GRES-2",
+    "countryId": "KAZ",
+    "city": "Ekibastuz",
+    "coordinates": [75.4762, 52.0239],
+    "type": "coal",
+    "status": "operating",
+    "capacityMW": 1000,
+    "annualOutputGWh": null,
+    "yearCommissioned": 1990,
+    "yearRetirement": null,
+    "operator": "GRES-2 Station JSC",
+    "owner": "Samruk-Energy / Kazakhmys",
+    "strategicNote": "Features the world's tallest chimney (419.7 m). Strategically important for northern Kazakhstan's grid.",
+    "notes": "Expansion plans to increase capacity to 4000 MW are ongoing.",
+    "attribution": {
+      "sources": [
+        { "name": "Global Energy Monitor", "url": "https://www.gem.wiki/Ekibastuz_GRES-2_power_station", "accessedAt": "2025-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 2,
+        "lastVerified": "2025-05-10"
+      }
+    }
+  },
+  {
+    "id": "PLANT-KAZ-AKSU",
+    "name": "Aksu Power Station",
+    "countryId": "KAZ",
+    "city": "Aksu",
+    "coordinates": [76.8666, 52.1166],
+    "type": "coal",
+    "status": "operating",
+    "capacityMW": 2450,
+    "annualOutputGWh": null,
+    "yearCommissioned": 1968,
+    "yearRetirement": null,
+    "operator": "Eurasian Energy Corporation",
+    "owner": "Eurasian Resources Group (ERG)",
+    "strategicNote": "Major power source for the Aksu Ferroalloy Plant, one of the largest in the world.",
+    "notes": null,
+    "attribution": {
+      "sources": [
+        { "name": "Global Energy Monitor", "url": "https://www.gem.wiki/Aksu_power_station", "accessedAt": "2025-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 1,
+        "lastVerified": "2025-05-10"
+      }
+    }
+  },
+  {
+    "id": "PLANT-KAZ-ZHAMBYL",
+    "name": "Zhambyl GRES",
+    "countryId": "KAZ",
+    "city": "Taraz",
+    "coordinates": [71.3666, 42.9000],
+    "type": "gas",
+    "status": "operating",
+    "capacityMW": 1230,
+    "annualOutputGWh": null,
+    "yearCommissioned": 1967,
+    "yearRetirement": null,
+    "operator": "Zhambyl GRES JSC",
+    "owner": "Samruk-Energy",
+    "strategicNote": "The main power source for southern Kazakhstan, capable of using gas or fuel oil.",
+    "notes": null,
+    "attribution": {
+      "sources": [
+        { "name": "Global Energy Monitor", "url": "https://www.gem.wiki/Zhambyl_GRES_power_station", "accessedAt": "2025-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 1,
+        "lastVerified": "2025-05-10"
+      }
+    }
+  },
+  {
+    "id": "PLANT-KAZ-SHULBINSK",
+    "name": "Shulbinsk Hydroelectric Power Plant",
+    "countryId": "KAZ",
+    "city": "Shulbinsk",
+    "coordinates": [81.0666, 50.4000],
+    "type": "hydro",
+    "status": "operating",
+    "capacityMW": 702,
+    "annualOutputGWh": 1660,
+    "yearCommissioned": 1987,
+    "yearRetirement": null,
+    "operator": "Samruk-Energy",
+    "owner": "Government of Kazakhstan",
+    "strategicNote": "The largest hydroelectric plant in Kazakhstan, located on the Irtysh River.",
+    "notes": null,
+    "attribution": {
+      "sources": [
+        { "name": "Global Energy Monitor", "url": "https://www.gem.wiki/Shulbinsk_HPP", "accessedAt": "2025-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 1,
+        "lastVerified": "2025-05-10"
+      }
+    }
+  },
+  {
+    "id": "PLANT-KAZ-BUKHTARMA",
+    "name": "Bukhtarma Hydroelectric Power Plant",
+    "countryId": "KAZ",
+    "city": "Serebryansk",
+    "coordinates": [83.3472, 49.6588],
+    "type": "hydro",
+    "status": "operating",
+    "capacityMW": 675,
+    "annualOutputGWh": 2400,
+    "yearCommissioned": 1960,
+    "yearRetirement": null,
+    "operator": "Kazzinc",
+    "owner": "Samruk-Energy",
+    "strategicNote": "Major hydro plant providing peak power and supporting mining operations in East Kazakhstan.",
+    "notes": null,
+    "attribution": {
+      "sources": [
+        { "name": "Global Energy Monitor", "url": "https://www.gem.wiki/Bukhtarma_HPP", "accessedAt": "2025-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 1,
+        "lastVerified": "2025-05-10"
+      }
+    }
+  },
+  {
+    "id": "PLANT-KAZ-ULKEN-NUCLEAR",
+    "name": "Ulken (Balkhash) Nuclear Power Plant",
+    "countryId": "KAZ",
+    "city": "Ulken",
+    "coordinates": [73.95, 45.21],
+    "type": "nuclear",
+    "status": "planned",
+    "capacityMW": 2400,
+    "annualOutputGWh": null,
+    "yearCommissioned": null,
+    "yearRetirement": null,
+    "operator": "Kazakhstan Nuclear Power Plants (KNPP)",
+    "owner": "Government of Kazakhstan",
+    "strategicNote": "Proposed first commercial nuclear power plant in Kazakhstan, approved by referendum in 2024.",
+    "notes": "Strategically critical for reducing coal dependency and meeting future energy deficits.",
+    "attribution": {
+      "sources": [
+        { "name": "World Nuclear Association", "url": "https://world-nuclear.org/information-library/country-profiles/countries-g-n/kazakhstan", "accessedAt": "2025-05-10" }
+      ],
+      "confidence": {
+        "confidence": "medium",
+        "sourceCount": 2,
+        "lastVerified": "2025-05-10"
+      }
+    }
+  },
+  {
+    "id": "PLANT-KAZ-MAEK",
+    "name": "MAEK-Kazatomprom (Mangistau)",
+    "countryId": "KAZ",
+    "city": "Aktau",
+    "coordinates": [51.1666, 43.6500],
+    "type": "gas",
+    "status": "operating",
+    "capacityMW": 625,
+    "annualOutputGWh": null,
+    "yearCommissioned": 1968,
+    "yearRetirement": null,
+    "operator": "MAEK-Kazatomprom",
+    "owner": "Government of Kazakhstan",
+    "strategicNote": "Critical energy and desalination hub for the Mangistau region; site of the decommissioned BN-350 breeder reactor.",
+    "notes": "Now primarily gas-fired.",
+    "attribution": {
+      "sources": [
+        { "name": "Global Energy Monitor", "url": "https://www.gem.wiki/MAEK_power_station", "accessedAt": "2025-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 1,
+        "lastVerified": "2025-05-10"
+      }
+    }
+  }
+]

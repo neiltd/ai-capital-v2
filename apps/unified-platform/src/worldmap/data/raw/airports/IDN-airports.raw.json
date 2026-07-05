@@ -1,0 +1,272 @@
+[
+  {
+    "id": "CGK",
+    "name": "Soekarno-Hatta International Airport",
+    "countryId": "IDN",
+    "city": "Jakarta",
+    "iata": "CGK",
+    "icao": "WIII",
+    "coordinates": [106.6559, -6.1256],
+    "passengerVolume": 49100000,
+    "cargoVolume": 720000,
+    "runwayCount": 3,
+    "elevationM": 10,
+    "strategicImportance": "critical",
+    "geopoliticalNotes": "Primary global gateway for Indonesia, handling approximately 43% of all international traffic and 50% of national cargo.",
+    "notes": "Undergoing capacity expansion to 90 million passengers by 2026.",
+    "attribution": {
+      "sources": [
+        { "name": "InJourney Airports", "url": "https://injourneyairports.id", "accessedAt": "2026-05-10" },
+        { "name": "OurAirports", "url": "https://ourairports.com/airports/WIII/", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 2,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  },
+  {
+    "id": "DPS",
+    "name": "I Gusti Ngurah Rai International Airport",
+    "countryId": "IDN",
+    "city": "Denpasar",
+    "iata": "DPS",
+    "icao": "WADD",
+    "coordinates": [115.1675, -8.7482],
+    "passengerVolume": 23500000,
+    "cargoVolume": 45000,
+    "runwayCount": 1,
+    "elevationM": 4,
+    "strategicImportance": "high",
+    "geopoliticalNotes": "Major international tourism hub and frequent host for global diplomatic summits such as the G20.",
+    "notes": "Main entry point for international tourists visiting Bali.",
+    "attribution": {
+      "sources": [
+        { "name": "BPS-Statistics Indonesia", "url": "https://www.bps.go.id", "accessedAt": "2026-05-10" },
+        { "name": "OurAirports", "url": "https://ourairports.com/airports/WADD/", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 2,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  },
+  {
+    "id": "SUB",
+    "name": "Juanda International Airport",
+    "countryId": "IDN",
+    "city": "Surabaya",
+    "iata": "SUB",
+    "icao": "WARR",
+    "coordinates": [112.7847, -7.3798],
+    "passengerVolume": 14500000,
+    "cargoVolume": 110000,
+    "runwayCount": 1,
+    "elevationM": 3,
+    "strategicImportance": "high",
+    "geopoliticalNotes": "Crucial industrial and business hub for East Java and gateway to Eastern Indonesia; dual-use facility with TNI-AL.",
+    "notes": "Located in Sidoarjo, serving the metropolitan area of Surabaya.",
+    "attribution": {
+      "sources": [
+        { "name": "InJourney Airports", "url": "https://injourneyairports.id", "accessedAt": "2026-05-10" },
+        { "name": "ICAO", "url": "https://www.icao.int", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 2,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  },
+  {
+    "id": "UPG",
+    "name": "Sultan Hasanuddin International Airport",
+    "countryId": "IDN",
+    "city": "Makassar",
+    "iata": "UPG",
+    "icao": "WAAA",
+    "coordinates": [119.5539, -5.0617],
+    "passengerVolume": 10800000,
+    "cargoVolume": 85000,
+    "runwayCount": 2,
+    "elevationM": 14,
+    "strategicImportance": "high",
+    "geopoliticalNotes": "Strategic gateway to Eastern Indonesia and a major transit hub for flights connecting to Sulawesi, Maluku, and Papua.",
+    "notes": "Key logistics node for the Wallacea region.",
+    "attribution": {
+      "sources": [
+        { "name": "InJourney Airports", "url": "https://injourneyairports.id", "accessedAt": "2026-05-10" },
+        { "name": "OurAirports", "url": "https://ourairports.com/airports/WAAA/", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 2,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  },
+  {
+    "id": "KNO",
+    "name": "Kualanamu International Airport",
+    "countryId": "IDN",
+    "city": "Medan",
+    "iata": "KNO",
+    "icao": "WIMM",
+    "coordinates": [98.8872, 3.6422],
+    "passengerVolume": 8200000,
+    "cargoVolume": 65000,
+    "runwayCount": 1,
+    "elevationM": 7,
+    "strategicImportance": "high",
+    "geopoliticalNotes": "Strategic hub for Western Indonesia and a key transit point for routes connecting to South Asia and the Middle East.",
+    "notes": "One of Indonesia's most modern airports, managed in partnership with GMR Airports.",
+    "attribution": {
+      "sources": [
+        { "name": "GMR Airports", "url": "https://www.gmrairports.com", "accessedAt": "2026-05-10" },
+        { "name": "IATA", "url": "https://www.iata.org", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 2,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  },
+  {
+    "id": "BPN",
+    "name": "Sultan Aji Muhammad Sulaiman Sepinggan International Airport",
+    "countryId": "IDN",
+    "city": "Balikpapan",
+    "iata": "BPN",
+    "icao": "WALL",
+    "coordinates": [116.8944, -1.2683],
+    "passengerVolume": 4200000,
+    "cargoVolume": 52000,
+    "runwayCount": 1,
+    "elevationM": 4,
+    "strategicImportance": "high",
+    "geopoliticalNotes": "Critical gateway for the development of Indonesia's new national capital, Nusantara (IKN), in East Kalimantan.",
+    "notes": "Seeing rapid growth due to the capital relocation project.",
+    "attribution": {
+      "sources": [
+        { "name": "InJourney Airports", "url": "https://injourneyairports.id", "accessedAt": "2026-05-10" },
+        { "name": "OurAirports", "url": "https://ourairports.com/airports/WALL/", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 2,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  },
+  {
+    "id": "BTH",
+    "name": "Hang Nadim International Airport",
+    "countryId": "IDN",
+    "city": "Batam",
+    "iata": "BTH",
+    "icao": "WIDD",
+    "coordinates": [104.1192, 1.1211],
+    "passengerVolume": 4000000,
+    "cargoVolume": 48000,
+    "runwayCount": 1,
+    "elevationM": 38,
+    "strategicImportance": "high",
+    "geopoliticalNotes": "Strategic logistics and industrial hub in the Batam Free Trade Zone, located near the Malacca Strait and Singapore.",
+    "notes": "Features the longest runway in Indonesia (4,025m).",
+    "attribution": {
+      "sources": [
+        { "name": "Batam Indonesia Free Zone Authority (BP Batam)", "url": "https://bpbatam.go.id", "accessedAt": "2026-05-10" },
+        { "name": "OurAirports", "url": "https://ourairports.com/airports/WIDD/", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 2,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  },
+  {
+    "id": "YIA",
+    "name": "Yogyakarta International Airport",
+    "countryId": "IDN",
+    "city": "Yogyakarta",
+    "iata": "YIA",
+    "icao": "WAHI",
+    "coordinates": [110.0617, -7.9044],
+    "passengerVolume": 4500000,
+    "cargoVolume": 15000,
+    "runwayCount": 1,
+    "elevationM": 7,
+    "strategicImportance": "medium",
+    "geopoliticalNotes": "New primary gateway for Yogyakarta and Central Java tourism, replacing the restricted Adisutjipto Airport.",
+    "notes": "Built to withstand tsunamis and earthquakes.",
+    "attribution": {
+      "sources": [
+        { "name": "InJourney Airports", "url": "https://injourneyairports.id", "accessedAt": "2026-05-10" },
+        { "name": "OurAirports", "url": "https://ourairports.com/airports/WAHI/", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 2,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  },
+  {
+    "id": "PLM",
+    "name": "Sultan Mahmud Badaruddin II International Airport",
+    "countryId": "IDN",
+    "city": "Palembang",
+    "iata": "PLM",
+    "icao": "WIPP",
+    "coordinates": [104.7011, -2.8978],
+    "passengerVolume": 3200000,
+    "cargoVolume": 18000,
+    "runwayCount": 1,
+    "elevationM": 11,
+    "strategicImportance": "medium",
+    "geopoliticalNotes": "Major economic hub for Southern Sumatra and a key node for connectivity in the BRI-linked development corridors.",
+    "notes": "Strategic for regional connectivity in Sumatra.",
+    "attribution": {
+      "sources": [
+        { "name": "InJourney Airports", "url": "https://injourneyairports.id", "accessedAt": "2026-05-10" },
+        { "name": "ICAO", "url": "https://www.icao.int", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 2,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  },
+  {
+    "id": "PDG",
+    "name": "Minangkabau International Airport",
+    "countryId": "IDN",
+    "city": "Padang",
+    "iata": "PDG",
+    "icao": "WIPT",
+    "coordinates": [100.2811, -0.7856],
+    "passengerVolume": 2800000,
+    "cargoVolume": 12000,
+    "runwayCount": 1,
+    "elevationM": 5,
+    "strategicImportance": "medium",
+    "geopoliticalNotes": "Key international gateway for West Sumatra and a strategic disaster relief node for the Indian Ocean region.",
+    "notes": "Located in Ketaping, Padang Pariaman.",
+    "attribution": {
+      "sources": [
+        { "name": "BPS-Statistics Indonesia", "url": "https://www.bps.go.id", "accessedAt": "2026-05-10" },
+        { "name": "OurAirports", "url": "https://ourairports.com/airports/WIPT/", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 2,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  }
+]

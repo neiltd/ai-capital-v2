@@ -1,0 +1,219 @@
+[
+  {
+    "id": "RAIL-RUS-MOSCOW-BEKASOVO",
+    "name": "Bekasovo-Sortirovochnoe",
+    "countryId": "RUS",
+    "city": "Moscow",
+    "coordinates": [36.786, 55.432],
+    "type": "freight",
+    "dailyPassengers": null,
+    "annualFreightTonnes": 100000000,
+    "connectedCountries": ["BLR", "KAZ", "CHN", "FIN", "EST", "LVA"],
+    "gaugeType": "broad",
+    "lineCount": 48,
+    "strategicImportance": "high",
+    "isPartOfBRI": true,
+    "geopoliticalNotes": "One of the largest marshaling yards in Europe. Central node for the Moscow Railway, distributing 60% of Russia's rail imports from both Europe and the BRI Northern Corridor.",
+    "notes": "Key technical hub for automated classification.",
+    "attribution": {
+      "sources": [
+        { "name": "Russian Railways (RZD) Annual Report", "url": "https://eng.rzd.ru", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 1,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  },
+  {
+    "id": "RAIL-RUS-ZABAIKALSK-BORDER",
+    "name": "Zabaikalsk Railway Station",
+    "countryId": "RUS",
+    "city": "Zabaikalsk",
+    "coordinates": [117.332, 49.645],
+    "type": "border_crossing",
+    "dailyPassengers": null,
+    "annualFreightTonnes": 20000000,
+    "connectedCountries": ["CHN"],
+    "gaugeType": "mixed",
+    "lineCount": 12,
+    "strategicImportance": "high",
+    "isPartOfBRI": true,
+    "geopoliticalNotes": "Russia's most important land border crossing with China. Primary gateway for the BRI Northern Corridor and Trans-Siberian export traffic.",
+    "notes": "Handles significant break-of-gauge operations.",
+    "attribution": {
+      "sources": [
+        { "name": "China Railway Express Statistics", "url": "http://www.railway.gov.cn", "accessedAt": "2026-05-10" },
+        { "name": "TASS News Agency", "url": "https://tass.com", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 2,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  },
+  {
+    "id": "RAIL-RUS-YEKATERINBURG-SVERDLOVSK",
+    "name": "Sverdlovsk-Sortirovochny",
+    "countryId": "RUS",
+    "city": "Yekaterinburg",
+    "coordinates": [60.517, 56.883],
+    "type": "freight",
+    "dailyPassengers": null,
+    "annualFreightTonnes": 75000000,
+    "connectedCountries": ["KAZ", "CHN"],
+    "gaugeType": "broad",
+    "lineCount": 60,
+    "strategicImportance": "high",
+    "isPartOfBRI": true,
+    "geopoliticalNotes": "Heart of the Trans-Siberian Railway. Critical bridge between European Russia and the Asian territories, serving as a major consolidation point for BRI freight.",
+    "notes": "Logistics capital of the Urals.",
+    "attribution": {
+      "sources": [
+        { "name": "International Union of Railways", "url": "https://uic.org", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "medium",
+        "sourceCount": 1,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  },
+  {
+    "id": "RAIL-RUS-VLADIVOSTOK-PORT",
+    "name": "Vladivostok Terminal",
+    "countryId": "RUS",
+    "city": "Vladivostok",
+    "coordinates": [131.881, 43.111],
+    "type": "port_interface",
+    "dailyPassengers": null,
+    "annualFreightTonnes": 72500000,
+    "connectedCountries": ["CHN", "PRK"],
+    "gaugeType": "broad",
+    "lineCount": 18,
+    "strategicImportance": "high",
+    "isPartOfBRI": true,
+    "geopoliticalNotes": "Eastern terminus of the Trans-Siberian Railway. Strategic gateway for Russian exports to the Asia-Pacific region and a key node for the Maritime Silk Road integration.",
+    "notes": "Includes the Vladivostok Commercial Sea Port rail interface.",
+    "attribution": {
+      "sources": [
+        { "name": "Port of Vladivostok Statistics", "url": "https://www.vmtp.ru", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 1,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  },
+  {
+    "id": "RAIL-RUS-NOVOSIBIRSK-GLAVNY",
+    "name": "Novosibirsk-Glavny",
+    "countryId": "RUS",
+    "city": "Novosibirsk",
+    "coordinates": [82.899, 55.035],
+    "type": "mixed",
+    "dailyPassengers": 50000,
+    "annualFreightTonnes": 40000000,
+    "connectedCountries": ["KAZ", "CHN", "MNG"],
+    "gaugeType": "broad",
+    "lineCount": 24,
+    "strategicImportance": "high",
+    "isPartOfBRI": true,
+    "geopoliticalNotes": "Administrative and logistical capital of Siberia. Major junction where the Trans-Siberian meets the Turksib railway and BRI routes from Kazakhstan.",
+    "notes": "Busiest passenger station in Siberia.",
+    "attribution": {
+      "sources": [
+        { "name": "Novosibirsk Regional Government", "url": "https://www.nso.ru", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "medium",
+        "sourceCount": 1,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  },
+  {
+    "id": "RAIL-RUS-NAUSHKI-BORDER",
+    "name": "Naushki Railway Station",
+    "countryId": "RUS",
+    "city": "Naushki",
+    "coordinates": [106.106, 50.381],
+    "type": "border_crossing",
+    "dailyPassengers": null,
+    "annualFreightTonnes": 8500000,
+    "connectedCountries": ["MNG", "CHN"],
+    "gaugeType": "broad",
+    "lineCount": 8,
+    "strategicImportance": "high",
+    "isPartOfBRI": true,
+    "geopoliticalNotes": "Primary gateway for the China-Mongolia-Russia Economic Corridor (CMREC). Essential for transit trade through Ulaanbaatar.",
+    "notes": "Currently undergoing capacity expansion to 15M tonnes.",
+    "attribution": {
+      "sources": [
+        { "name": "RZD International", "url": "https://rzdint.ru", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 1,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  },
+  {
+    "id": "RAIL-RUS-UST-LUGA-PORT",
+    "name": "Ust-Luga Railway Station",
+    "countryId": "RUS",
+    "city": "Ust-Luga",
+    "coordinates": [28.431, 59.697],
+    "type": "port_interface",
+    "dailyPassengers": null,
+    "annualFreightTonnes": 100000000,
+    "connectedCountries": ["EST", "BLR"],
+    "gaugeType": "broad",
+    "lineCount": 35,
+    "strategicImportance": "high",
+    "isPartOfBRI": true,
+    "geopoliticalNotes": "Russia's largest Baltic port interface. Strategically designed to bypass Baltic states for energy and container exports. Anchor of the Maritime Silk Road's European terminus.",
+    "notes": "Handles massive coal and oil volumes.",
+    "attribution": {
+      "sources": [
+        { "name": "Port of Ust-Luga Authority", "url": "https://www.ust-luga.ru", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 1,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  },
+  {
+    "id": "RAIL-RUS-CHELYABINSK-GLAVNY",
+    "name": "Chelyabinsk-Glavny",
+    "countryId": "RUS",
+    "city": "Chelyabinsk",
+    "coordinates": [61.419, 55.141],
+    "type": "mixed",
+    "dailyPassengers": 25000,
+    "annualFreightTonnes": 55000000,
+    "connectedCountries": ["KAZ"],
+    "gaugeType": "broad",
+    "lineCount": 42,
+    "strategicImportance": "high",
+    "isPartOfBRI": true,
+    "geopoliticalNotes": "Major metallurgical and industrial hub. Key junction on the southern Trans-Siberian branch and a vital node for the International North-South Transport Corridor (INSTC).",
+    "notes": "High strategic value for heavy industry logistics.",
+    "attribution": {
+      "sources": [
+        { "name": "RZD South Ural Railway", "url": "https://yuvzd.rzd.ru", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "medium",
+        "sourceCount": 1,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  }
+]

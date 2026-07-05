@@ -1,0 +1,65 @@
+{
+  "id": "BFA",
+  "iso2": "BF",
+  "name": "Burkina Faso",
+  "region": "Africa",
+  "subregion": "Western Africa",
+  "capital": "Ouagadougou",
+  "lastUpdated": "2025-05-22",
+  "summary": "Burkina Faso is at a critical juncture under the leadership of Captain Ibrahim Traoré, whose government has extended the transition to civilian rule until 2029. As the current head of the Alliance of Sahel States (AES), Burkina Faso is a key driver of the region's geopolitical shift away from ECOWAS and toward strategic partnerships with Russia and China. While the country remains the epicenter of West Africa's jihadist insurgency, with significant territory outside government control, the economy has shown resilience, bolstered by high global gold prices and increased state participation in the mining sector.",
+  "indicators": {
+    "politicalStability":       { "score": 2, "trend": "falling", "confidence": "high", "note": "Military rule; transition extended to 2029; high frequency of reported coup attempts." },
+    "economicDirection":        { "score": 4, "trend": "stable", "confidence": "medium", "note": "Resilient growth (4%+) supported by gold; challenged by internal displacement and security costs." },
+    "investmentAttractiveness": { "score": 3, "trend": "stable", "confidence": "medium", "note": "Western mining interest is cautious; high state intervention; rising Chinese and Russian interest." },
+    "geopoliticalRisk":         { "score": 9, "trend": "rising", "confidence": "high", "note": "Exit from ECOWAS; intense internal conflict; total realignment of foreign policy." },
+    "educationQuality":         { "score": 2, "trend": "falling", "confidence": "medium", "note": "Thousands of schools closed due to insecurity; focus on patriotic education under the junta." },
+    "healthcareQuality":        { "score": 2, "trend": "stable", "confidence": "medium", "note": "Rural healthcare nearly non-existent in conflict zones; urban centers remain overburdened." },
+    "technologyInvestment":     { "score": 3, "trend": "rising", "confidence": "low", "note": "Focus on security-related tech and drones; efforts to build a national digital identity system." }
+  },
+  "demographics": {
+    "population": 23300000,
+    "medianAge": 17.6,
+    "urbanizationRate": 32.5,
+    "majorEthnicGroups": ["Mossi", "Fulani", "Gurma", "Bobo", "Senufo"],
+    "religions": [
+      { "name": "Muslim", "percent": 63.8 },
+      { "name": "Christian", "percent": 26.3 },
+      { "name": "Traditional/Other", "percent": 9.9 }
+    ]
+  },
+  "alliances": ["Alliance of Sahel States (AES)", "African Union", "United Nations"],
+  "relationships": [
+    { "countryId": "MLI", "countryName": "Mali", "type": "strategic_partner", "sentiment": "positive", "summary": "Deepest security and political partner within the AES; joint military operations." },
+    { "countryId": "RUS", "countryName": "Russia", "type": "strategic_partner", "sentiment": "positive", "summary": "Primary security guarantor and supplier of military hardware; growing influence in civil sectors." },
+    { "countryId": "CHN", "countryName": "China", "type": "economic_partner", "sentiment": "positive", "summary": "Key partner in infrastructure and public health projects; increasing mining investment." },
+    { "countryId": "CIV", "countryName": "Cote d'Ivoire", "type": "regional_partner", "sentiment": "negative", "summary": "Strained relations due to border closures, refugee flows, and differing views on the AES." }
+  ],
+  "perspectives": [
+    { "source": "Volontaire pour la Défense de la Patrie (VDP)", "bias": "Supportive", "view": "We are fighting for our land; the current leadership has finally given us the means to defend our villages." },
+    { "source": "Journalist in Exile", "bias": "Critical", "view": "The 'transition' has become a permanent military state where any criticism is treated as treason." },
+    { "source": "Mining Analyst", "bias": "Pragmatic", "view": "Burkina remains a top-tier gold destination, but the new mining code and security risks make it a play for those with high risk tolerance." },
+    { "source": "Youth Leader in Ouagadougou", "bias": "Nationalist", "view": "The exit from ECOWAS is our independence day; we will build our own future with our AES brothers." }
+  ],
+  "historicalContext": {
+    "summary": "Formerly Upper Volta, Burkina Faso has a history of revolutionary leadership (notably Thomas Sankara) and long-term stability under Blaise Compaoré (1987-2014). Since the 2014 popular uprising, the country has struggled with political transitions and a rapidly escalating jihadist insurgency, leading to two coups in 2022 that brought Captain Traoré to power.",
+    "keyEvents": [
+      { "year": 1960, "event": "Independence from France." },
+      { "year": 1983, "event": "Thomas Sankara takes power, initiating a period of radical social and economic reform." },
+      { "year": 2014, "event": "Popular uprising ousts long-time president Blaise Compaoré." },
+      { "year": 2015, "event": "Start of the jihadist insurgency in the northern regions." },
+      { "year": 2022, "event": "Two military coups; Captain Ibrahim Traoré emerges as head of state." },
+      { "year": 2024, "event": "Transition period extended by five years; formalization of the AES Confederation." },
+      { "year": 2025, "event": "Formal exit from ECOWAS." }
+    ]
+  },
+  "investmentNotes": {
+    "strengths": ["Significant gold production and unexplored mineral potential", "Resilient agricultural sector (top cotton producer)", "High level of national mobilization for development goals", "Deepening integration within the AES resource-rich bloc"],
+    "risks": ["Severe security crisis with 30-40% of territory contested", "Political instability and risk of further internal power struggles", "Isolation from the broader West African market (ECOWAS)", "Limited infrastructure and high energy costs"],
+    "sectors": ["Gold & Base Metal Mining", "Cotton & Agri-business", "Security Technology & Services", "Solar Energy Projects"]
+  },
+  "sources": [
+    { "name": "Institut National de la Statistique et de la Démographie (INSD)", "url": "https://www.insd.bf/", "type": "demographic" },
+    { "name": "Burkina Faso Chamber of Mines", "url": "https://www.chambredesmines.bf/", "type": "investment" },
+    { "name": "World Bank - Burkina Faso", "url": "https://www.worldbank.org/en/country/burkinafaso", "type": "economic" }
+  ]
+}

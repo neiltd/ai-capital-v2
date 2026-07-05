@@ -1,0 +1,218 @@
+[
+  {
+    "id": "PLANT-KEN-OLKARIA-I",
+    "name": "Olkaria I Geothermal Power Station",
+    "countryId": "KEN",
+    "city": "Naivasha",
+    "coordinates": [36.3089, -0.8931],
+    "type": "geothermal",
+    "status": "operating",
+    "capacityMW": 268,
+    "annualOutputGWh": null,
+    "yearCommissioned": 1981,
+    "yearRetirement": null,
+    "operator": "KenGen",
+    "owner": "Government of Kenya",
+    "strategicNote": "Part of the massive Olkaria geothermal complex, which provides nearly half of Kenya's electricity.",
+    "notes": "Includes the recently commissioned Olkaria I Unit 6.",
+    "attribution": {
+      "sources": [
+        { "name": "Global Energy Monitor", "url": "https://www.gem.wiki/Olkaria_I_Geothermal_Power_Station", "accessedAt": "2025-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 2,
+        "lastVerified": "2025-05-10"
+      }
+    }
+  },
+  {
+    "id": "PLANT-KEN-OLKARIA-V",
+    "name": "Olkaria V Geothermal Power Station",
+    "countryId": "KEN",
+    "city": "Naivasha",
+    "coordinates": [36.3506, -0.8997],
+    "type": "geothermal",
+    "status": "operating",
+    "capacityMW": 158,
+    "annualOutputGWh": null,
+    "yearCommissioned": 2019,
+    "yearRetirement": null,
+    "operator": "KenGen",
+    "owner": "Government of Kenya",
+    "strategicNote": "One of the newest and most efficient units in the Olkaria complex.",
+    "notes": null,
+    "attribution": {
+      "sources": [
+        { "name": "Global Energy Monitor", "url": "https://www.gem.wiki/Olkaria_V_Geothermal_Power_Station", "accessedAt": "2025-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 1,
+        "lastVerified": "2025-05-10"
+      }
+    }
+  },
+  {
+    "id": "PLANT-KEN-OLKARIA-IV",
+    "name": "Olkaria IV Geothermal Power Station",
+    "countryId": "KEN",
+    "city": "Naivasha",
+    "coordinates": [36.3344, -0.9181],
+    "type": "geothermal",
+    "status": "operating",
+    "capacityMW": 140,
+    "annualOutputGWh": null,
+    "yearCommissioned": 2014,
+    "yearRetirement": null,
+    "operator": "KenGen",
+    "owner": "Government of Kenya",
+    "strategicNote": "A major contributor to Kenya's green energy transition.",
+    "notes": null,
+    "attribution": {
+      "sources": [
+        { "name": "Global Energy Monitor", "url": "https://www.gem.wiki/Olkaria_IV_Geothermal_Power_Station", "accessedAt": "2025-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 1,
+        "lastVerified": "2025-05-10"
+      }
+    }
+  },
+  {
+    "id": "PLANT-KEN-LAKE-TURKANA-WIND",
+    "name": "Lake Turkana Wind Power",
+    "countryId": "KEN",
+    "city": "Loiyangalani",
+    "coordinates": [36.8167, 2.5122],
+    "type": "wind",
+    "status": "operating",
+    "capacityMW": 310,
+    "annualOutputGWh": null,
+    "yearCommissioned": 2019,
+    "yearRetirement": null,
+    "operator": "Lake Turkana Wind Power Ltd",
+    "owner": "Consortium (KP&P, Aldwych, Google, etc.)",
+    "strategicNote": "The largest wind farm in Africa, providing a significant portion of Kenya's renewable energy.",
+    "notes": "Features 365 turbines.",
+    "attribution": {
+      "sources": [
+        { "name": "Global Energy Monitor", "url": "https://www.gem.wiki/Lake_Turkana_wind_farm", "accessedAt": "2025-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 2,
+        "lastVerified": "2025-05-10"
+      }
+    }
+  },
+  {
+    "id": "PLANT-KEN-GITARU",
+    "name": "Gitaru Hydroelectric Power Station",
+    "countryId": "KEN",
+    "city": "Embu",
+    "coordinates": [37.7525, -0.7953],
+    "type": "hydro",
+    "status": "operating",
+    "capacityMW": 225,
+    "annualOutputGWh": null,
+    "yearCommissioned": 1978,
+    "yearRetirement": null,
+    "operator": "KenGen",
+    "owner": "Government of Kenya",
+    "strategicNote": "The largest hydroelectric plant in Kenya, part of the Seven Forks Scheme.",
+    "notes": null,
+    "attribution": {
+      "sources": [
+        { "name": "Global Energy Monitor", "url": "https://www.gem.wiki/Gitaru_Dam", "accessedAt": "2025-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 1,
+        "lastVerified": "2025-05-10"
+      }
+    }
+  },
+  {
+    "id": "PLANT-KEN-KIAMBERE",
+    "name": "Kiambere Hydroelectric Power Station",
+    "countryId": "KEN",
+    "city": "Embu",
+    "coordinates": [37.9167, -0.6833],
+    "type": "hydro",
+    "status": "operating",
+    "capacityMW": 168,
+    "annualOutputGWh": null,
+    "yearCommissioned": 1988,
+    "yearRetirement": null,
+    "operator": "KenGen",
+    "owner": "Government of Kenya",
+    "strategicNote": "A key component of the Tana River hydro cascade.",
+    "notes": null,
+    "attribution": {
+      "sources": [
+        { "name": "Global Energy Monitor", "url": "https://www.gem.wiki/Kiambere_Dam", "accessedAt": "2025-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 1,
+        "lastVerified": "2025-05-10"
+      }
+    }
+  },
+  {
+    "id": "PLANT-KEN-TURKWEL",
+    "name": "Turkwel Hydroelectric Power Station",
+    "countryId": "KEN",
+    "city": "Kapenguria",
+    "coordinates": [35.3500, 1.9167],
+    "type": "hydro",
+    "status": "operating",
+    "capacityMW": 106,
+    "annualOutputGWh": null,
+    "yearCommissioned": 1991,
+    "yearRetirement": null,
+    "operator": "KenGen",
+    "owner": "Government of Kenya",
+    "strategicNote": "Major hydro plant in western Kenya, features the tallest dam in the country.",
+    "notes": null,
+    "attribution": {
+      "sources": [
+        { "name": "Global Energy Monitor", "url": "https://www.gem.wiki/Turkwel_Dam", "accessedAt": "2025-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 1,
+        "lastVerified": "2025-05-10"
+      }
+    }
+  },
+  {
+    "id": "PLANT-KEN-KIPETO-WIND",
+    "name": "Kipeto Wind Farm",
+    "countryId": "KEN",
+    "city": "Kajiado",
+    "coordinates": [36.7833, -1.6167],
+    "type": "wind",
+    "status": "operating",
+    "capacityMW": 100,
+    "annualOutputGWh": null,
+    "yearCommissioned": 2021,
+    "yearRetirement": null,
+    "operator": "Kipeto Energy",
+    "owner": "Actis / Craftskills Wind Energy International",
+    "strategicNote": "Kenya's second-largest wind farm, significantly boosting renewable capacity in the southern region.",
+    "notes": null,
+    "attribution": {
+      "sources": [
+        { "name": "Global Energy Monitor", "url": "https://www.gem.wiki/Kipeto_wind_farm", "accessedAt": "2025-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 1,
+        "lastVerified": "2025-05-10"
+      }
+    }
+  }
+]

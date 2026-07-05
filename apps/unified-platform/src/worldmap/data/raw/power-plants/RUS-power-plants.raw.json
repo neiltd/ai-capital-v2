@@ -1,0 +1,407 @@
+[
+  {
+    "id": "PLANT-RUS-SAYANO-SHUSHENSKAYA",
+    "name": "Sayano-Shushenskaya Dam",
+    "countryId": "RUS",
+    "city": "Sayanogorsk",
+    "coordinates": [91.3703, 52.8258],
+    "type": "hydro",
+    "status": "operating",
+    "capacityMW": 6400,
+    "annualOutputGWh": 23500,
+    "yearCommissioned": 1978,
+    "yearRetirement": null,
+    "operator": "RusHydro",
+    "owner": "RusHydro",
+    "strategicNote": "Russia's largest power plant by installed capacity; a critical infrastructure asset for the Siberian power system.",
+    "notes": "Fully restored after a major accident in 2009.",
+    "attribution": {
+      "sources": [
+        { "name": "Global Energy Monitor", "url": "https://www.gem.wiki/Sayano-Shushenskaya_hydro_power_station", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 2,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  },
+  {
+    "id": "PLANT-RUS-SURGUT-2",
+    "name": "Surgut-2 Power Station",
+    "countryId": "RUS",
+    "city": "Surgut",
+    "coordinates": [73.5125, 61.2794],
+    "type": "gas",
+    "status": "operating",
+    "capacityMW": 5687,
+    "annualOutputGWh": null,
+    "yearCommissioned": 1985,
+    "yearRetirement": null,
+    "operator": "PJSC Unipro",
+    "owner": "PJSC Unipro (under external management of Rosimushchestvo)",
+    "strategicNote": "The largest gas-fired power plant in Russia and one of the largest in the world; vital for the Urals and West Siberian energy systems.",
+    "notes": null,
+    "attribution": {
+      "sources": [
+        { "name": "Global Energy Monitor", "url": "https://www.gem.wiki/Surgut-2_power_station", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 1,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  },
+  {
+    "id": "PLANT-RUS-LENINGRAD",
+    "name": "Leningrad Nuclear Power Plant",
+    "countryId": "RUS",
+    "city": "Sosnovy Bor",
+    "coordinates": [29.0486, 59.8525],
+    "type": "nuclear",
+    "status": "operating",
+    "capacityMW": 4050,
+    "annualOutputGWh": null,
+    "yearCommissioned": 1974,
+    "yearRetirement": null,
+    "operator": "Rosenergoatom",
+    "owner": "Rosatom",
+    "strategicNote": "Russia's largest nuclear power plant by output; provides over 50% of the electricity for St. Petersburg and the Leningrad Region.",
+    "notes": "Houses both RBMK-1000 and VVER-1200 units.",
+    "attribution": {
+      "sources": [
+        { "name": "IAEA PRIS", "url": "https://pris.iaea.org/PRIS/CountryStatistics/CountryDetails.aspx?current=RU", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 2,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  },
+  {
+    "id": "PLANT-RUS-ROSTOV",
+    "name": "Rostov Nuclear Power Plant",
+    "countryId": "RUS",
+    "city": "Volgodonsk",
+    "coordinates": [42.3719, 47.5994],
+    "type": "nuclear",
+    "status": "operating",
+    "capacityMW": 4030,
+    "annualOutputGWh": null,
+    "yearCommissioned": 2001,
+    "yearRetirement": null,
+    "operator": "Rosenergoatom",
+    "owner": "Rosatom",
+    "strategicNote": "Key power source for the Southern Federal District; critical for regional energy security and supply to the North Caucasus.",
+    "notes": null,
+    "attribution": {
+      "sources": [
+        { "name": "IAEA PRIS", "url": "https://pris.iaea.org/PRIS/CountryStatistics/CountryDetails.aspx?current=RU", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 1,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  },
+  {
+    "id": "PLANT-RUS-BALAKOVO",
+    "name": "Balakovo Nuclear Power Plant",
+    "countryId": "RUS",
+    "city": "Balakovo",
+    "coordinates": [47.9553, 52.0911],
+    "type": "nuclear",
+    "status": "operating",
+    "capacityMW": 4000,
+    "annualOutputGWh": null,
+    "yearCommissioned": 1985,
+    "yearRetirement": null,
+    "operator": "Rosenergoatom",
+    "owner": "Rosatom",
+    "strategicNote": "One of Russia's most powerful nuclear plants, serving the Volga region.",
+    "notes": null,
+    "attribution": {
+      "sources": [
+        { "name": "IAEA PRIS", "url": "https://pris.iaea.org/PRIS/CountryStatistics/CountryDetails.aspx?current=RU", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 1,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  },
+  {
+    "id": "PLANT-RUS-KALININ",
+    "name": "Kalinin Nuclear Power Plant",
+    "countryId": "RUS",
+    "city": "Udomlya",
+    "coordinates": [35.0603, 57.9056],
+    "type": "nuclear",
+    "status": "operating",
+    "capacityMW": 4000,
+    "annualOutputGWh": null,
+    "yearCommissioned": 1985,
+    "yearRetirement": null,
+    "operator": "Rosenergoatom",
+    "owner": "Rosatom",
+    "strategicNote": "Major nuclear facility supplying electricity to the Central Federal District, including the Moscow region.",
+    "notes": null,
+    "attribution": {
+      "sources": [
+        { "name": "IAEA PRIS", "url": "https://pris.iaea.org/PRIS/CountryStatistics/CountryDetails.aspx?current=RU", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 1,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  },
+  {
+    "id": "PLANT-RUS-NOVOVORONEZH",
+    "name": "Novovoronezh Nuclear Power Plant",
+    "countryId": "RUS",
+    "city": "Novovoronezh",
+    "coordinates": [39.2000, 51.2750],
+    "type": "nuclear",
+    "status": "operating",
+    "capacityMW": 3747,
+    "annualOutputGWh": null,
+    "yearCommissioned": 1964,
+    "yearRetirement": null,
+    "operator": "Rosenergoatom",
+    "owner": "Rosatom",
+    "strategicNote": "Historically significant as the site of the first VVER reactors; now features the latest Gen III+ VVER-1200 units.",
+    "notes": "Includes both Novovoronezh I and II sites.",
+    "attribution": {
+      "sources": [
+        { "name": "IAEA PRIS", "url": "https://pris.iaea.org/PRIS/CountryStatistics/CountryDetails.aspx?current=RU", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 2,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  },
+  {
+    "id": "PLANT-RUS-SMOLENSK",
+    "name": "Smolensk Nuclear Power Plant",
+    "countryId": "RUS",
+    "city": "Desnogorsk",
+    "coordinates": [33.2392, 54.1661],
+    "type": "nuclear",
+    "status": "operating",
+    "capacityMW": 3000,
+    "annualOutputGWh": null,
+    "yearCommissioned": 1982,
+    "yearRetirement": null,
+    "operator": "Rosenergoatom",
+    "owner": "Rosatom",
+    "strategicNote": "Key nuclear facility in Western Russia, employing RBMK-1000 reactors.",
+    "notes": null,
+    "attribution": {
+      "sources": [
+        { "name": "IAEA PRIS", "url": "https://pris.iaea.org/PRIS/CountryStatistics/CountryDetails.aspx?current=RU", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 1,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  },
+  {
+    "id": "PLANT-RUS-KURSK",
+    "name": "Kursk Nuclear Power Plant",
+    "countryId": "RUS",
+    "city": "Kurchatov",
+    "coordinates": [35.6064, 51.6764],
+    "type": "nuclear",
+    "status": "operating",
+    "capacityMW": 2000,
+    "annualOutputGWh": null,
+    "yearCommissioned": 1977,
+    "yearRetirement": null,
+    "operator": "Rosenergoatom",
+    "owner": "Rosatom",
+    "strategicNote": "Strategic nuclear facility in the Central Black Earth region; currently undergoing expansion with Kursk II.",
+    "notes": "Operational capacity reflects two remaining RBMK units.",
+    "attribution": {
+      "sources": [
+        { "name": "IAEA PRIS", "url": "https://pris.iaea.org/PRIS/CountryStatistics/CountryDetails.aspx?current=RU", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 1,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  },
+  {
+    "id": "PLANT-RUS-BELOYARSK",
+    "name": "Beloyarsk Nuclear Power Plant",
+    "countryId": "RUS",
+    "city": "Zarechny",
+    "coordinates": [61.3225, 56.8417],
+    "type": "nuclear",
+    "status": "operating",
+    "capacityMW": 1485,
+    "annualOutputGWh": null,
+    "yearCommissioned": 1964,
+    "yearRetirement": null,
+    "operator": "Rosenergoatom",
+    "owner": "Rosatom",
+    "strategicNote": "World leader in commercial fast neutron reactor technology; houses the BN-600 and BN-800 reactors.",
+    "notes": "Crucial for Russia's 'closed nuclear fuel cycle' strategy.",
+    "attribution": {
+      "sources": [
+        { "name": "IAEA PRIS", "url": "https://pris.iaea.org/PRIS/CountryStatistics/CountryDetails.aspx?current=RU", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 2,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  },
+  {
+    "id": "PLANT-RUS-KOLA",
+    "name": "Kola Nuclear Power Plant",
+    "countryId": "RUS",
+    "city": "Polyarnye Zori",
+    "coordinates": [32.4667, 67.4667],
+    "type": "nuclear",
+    "status": "operating",
+    "capacityMW": 1760,
+    "annualOutputGWh": null,
+    "yearCommissioned": 1973,
+    "yearRetirement": null,
+    "operator": "Rosenergoatom",
+    "owner": "Rosatom",
+    "strategicNote": "Northernmost nuclear power plant in Europe; vital for the Murmansk region and Arctic operations.",
+    "notes": null,
+    "attribution": {
+      "sources": [
+        { "name": "IAEA PRIS", "url": "https://pris.iaea.org/PRIS/CountryStatistics/CountryDetails.aspx?current=RU", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 1,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  },
+  {
+    "id": "PLANT-RUS-KRASNOYARSK",
+    "name": "Krasnoyarsk Dam",
+    "countryId": "RUS",
+    "city": "Divnogorsk",
+    "coordinates": [92.2936, 55.9347],
+    "type": "hydro",
+    "status": "operating",
+    "capacityMW": 6000,
+    "annualOutputGWh": 18000,
+    "yearCommissioned": 1972,
+    "yearRetirement": null,
+    "operator": "RusHydro",
+    "owner": "RusHydro",
+    "strategicNote": "Major hydroelectric facility on the Yenisei River; iconic landmark and a key power supplier to Siberian aluminum smelters.",
+    "notes": null,
+    "attribution": {
+      "sources": [
+        { "name": "Global Energy Monitor", "url": "https://www.gem.wiki/Krasnoyarsk_hydro_power_station", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 1,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  },
+  {
+    "id": "PLANT-RUS-REFTINSKAYA",
+    "name": "Reftinskaya GRES",
+    "countryId": "RUS",
+    "city": "Reftinsky",
+    "coordinates": [61.7075, 57.1086],
+    "type": "coal",
+    "status": "operating",
+    "capacityMW": 3800,
+    "annualOutputGWh": null,
+    "yearCommissioned": 1970,
+    "yearRetirement": null,
+    "operator": "Kuzbassenergo (SUEK)",
+    "owner": "SUEK",
+    "strategicNote": "One of the largest coal-fired power plants in Russia, located in the Sverdlovsk region.",
+    "notes": null,
+    "attribution": {
+      "sources": [
+        { "name": "Global Energy Monitor", "url": "https://www.gem.wiki/Reftinskaya_GRES", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 1,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  },
+  {
+    "id": "PLANT-RUS-BILIBINO",
+    "name": "Bilibino Nuclear Power Plant",
+    "countryId": "RUS",
+    "city": "Bilibino",
+    "coordinates": [166.5386, 68.0503],
+    "type": "nuclear",
+    "status": "operating",
+    "capacityMW": 36,
+    "annualOutputGWh": null,
+    "yearCommissioned": 1974,
+    "yearRetirement": null,
+    "operator": "Rosenergoatom",
+    "owner": "Rosatom",
+    "strategicNote": "The world's smallest and most isolated nuclear plant; crucial for the Bilibino mining hub in Chukotka.",
+    "notes": "Gradual decommissioning is underway.",
+    "attribution": {
+      "sources": [
+        { "name": "IAEA PRIS", "url": "https://pris.iaea.org/PRIS/CountryStatistics/CountryDetails.aspx?current=RU", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 2,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  },
+  {
+    "id": "PLANT-RUS-LOMONOSOV",
+    "name": "Akademik Lomonosov",
+    "countryId": "RUS",
+    "city": "Pevek",
+    "coordinates": [170.3061, 69.7097],
+    "type": "nuclear",
+    "status": "operating",
+    "capacityMW": 70,
+    "annualOutputGWh": null,
+    "yearCommissioned": 2019,
+    "yearRetirement": null,
+    "operator": "Rosenergoatom",
+    "owner": "Rosatom",
+    "strategicNote": "The world's first floating nuclear power plant; stationed at Pevek to provide heat and power to the Arctic region.",
+    "notes": "Features two KLT-40S reactors.",
+    "attribution": {
+      "sources": [
+        { "name": "IAEA PRIS", "url": "https://pris.iaea.org/PRIS/CountryStatistics/CountryDetails.aspx?current=RU", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 2,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  }
+]

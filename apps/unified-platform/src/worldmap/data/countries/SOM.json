@@ -1,0 +1,61 @@
+{
+  "id": "SOM",
+  "iso2": "SO",
+  "name": "Somalia",
+  "region": "Africa",
+  "subregion": "Eastern Africa",
+  "capital": "Mogadishu",
+  "lastUpdated": "2025-05-20",
+  "summary": "Somalia is navigating a precarious security transition as it moves from the ATMIS mission to the new AUSSOM mission in 2025. The environment is marked by a resurgent Al-Shabaab insurgency, which launched a major counteroffensive in 2025 recapturing several central districts. Internal stability is further challenged by severe friction between the Federal Government and regional states, as well as escalating tensions with Ethiopia over the Somaliland sea access deal.",
+  "indicators": {
+    "politicalStability":       { "score": 2, "trend": "declining", "confidence": "high", "note": "High fragmentation between the federal government and regional states (notably Puntland/Jubaland); constitutional disputes remain unresolved." },
+    "economicDirection":        { "score": 3, "trend": "stable", "confidence": "medium", "note": "Economy is extremely fragile but shows resilience in the livestock and telecommunications sectors; heavily aid-dependent." },
+    "investmentAttractiveness": { "score": 2, "trend": "stable", "confidence": "medium", "note": "High risk environment; investment limited to specific urban hubs and the diaspora-led telecommunications and finance sectors." },
+    "geopoliticalRisk":         { "score": 9, "trend": "increasing", "confidence": "high", "note": "Escalating regional standoff with Ethiopia and the risk of a security vacuum following the ATMIS-AUSSOM transition." },
+    "educationQuality":         { "score": 2, "trend": "stable", "confidence": "medium", "note": "Highly fragmented system; heavily dependent on private and NGO providers with low overall literacy." },
+    "healthcareQuality":        { "score": 1, "trend": "stable", "confidence": "high", "note": "Critical shortages of all medical services; one of the highest maternal and infant mortality rates in the world." },
+    "technologyInvestment":     { "score": 4, "trend": "improving", "confidence": "medium", "note": "Surprisingly advanced mobile money and telecommunications sector driven by private competition and diaspora investment." }
+  },
+  "demographics": {
+    "population": 18706922,
+    "medianAge": 18.5,
+    "urbanizationRate": 48.5,
+    "majorEthnicGroups": ["Somali"],
+    "religions": [
+      { "name": "Sunni Muslim", "percent": 99.0 }
+    ]
+  },
+  "alliances": ["African Union", "Arab League", "IGAD", "East African Community (Joined 2023)"],
+  "relationships": [
+    { "countryId": "ETH", "countryName": "Ethiopia", "type": "neighbor", "sentiment": "negative", "summary": "Hostile relations since the 2024 Somaliland MoU; Somalia has excluded Ethiopian troops from the 2025 AUSSOM mission." },
+    { "countryId": "TUR", "countryName": "Turkey", "type": "strategic_partner", "sentiment": "positive", "summary": "Most important security and development partner; providing training for the Gorgor elite forces and major infrastructure aid." },
+    { "countryId": "EGY", "countryName": "Egypt", "type": "strategic_partner", "sentiment": "positive", "summary": "Rapidly growing security relationship; Egypt has offered troops for the AUSSOM mission to counter-balance Ethiopian influence." },
+    { "countryId": "USA", "countryName": "United States", "type": "strategic_partner", "sentiment": "positive", "summary": "Key counter-terrorism partner; providing airstrikes against Al-Shabaab and support for the Danab brigade." }
+  ],
+  "perspectives": [
+    { "source": "Somali National Army Officer", "bias": "Strained", "view": "We are ready to fight, but the political infighting between Juba and Mogadishu is giving Al-Shabaab the space they need to breathe." },
+    { "source": "Mogadishu Shopkeeper", "bias": "Resilient", "view": "Business is better than ten years ago, but the 'zakat' we are forced to pay to Al-Shabaab and the government's taxes make it hard to survive." },
+    { "source": "Displaced Person", "bias": "Victim", "view": "Between the war and the lack of rain, we have nothing left; the world talks about missions but we just need food and safety." }
+  ],
+  "historicalContext": {
+    "summary": "Following independence in 1960, Somalia collapsed into civil war in 1991. For two decades, it was a 'failed state' without a central government. Since 2012, a series of federal governments have worked to rebuild state institutions, though they remain challenged by Al-Shabaab and clan-based federalism.",
+    "keyEvents": [
+      { "year": 1960, "event": "Independence and unification of British and Italian Somalilands." },
+      { "year": 1991, "event": "Fall of Siad Barre; beginning of total state collapse and civil war." },
+      { "year": 2006, "event": "Rise of the Islamic Courts Union and the subsequent Ethiopian invasion." },
+      { "year": 2012, "event": "Election of the first permanent federal government in Mogadishu." },
+      { "year": 2024, "event": "Somalia joins the East African Community; Ethiopia-Somaliland MoU sparks crisis." },
+      { "year": 2025, "event": "Official transition from ATMIS to the AUSSOM security mission." }
+    ]
+  },
+  "investmentNotes": {
+    "strengths": ["Resilient and entrepreneurial private sector", "Deepwater ports with potential as regional transit hubs", "Significant offshore oil and gas potential", "Vibrant mobile money ecosystem and diaspora financial flows"],
+    "risks": ["High risk of urban terrorism and rural insurgency (Al-Shabaab)", "Extreme political fragmentation and lack of a unified legal system", "Severe environmental vulnerability (drought/floods)", "Lack of a formal banking system and correspondent relations"],
+    "sectors": ["Telecommunications & Mobile Finance", "Livestock & Meat Export", "Maritime Services & Logistics", "Energy (Renewable/Offshore Potential)"]
+  },
+  "sources": [
+    { "name": "United Nations Assistance Mission in Somalia (UNSOM)", "url": "https://unsom.unmissions.org/", "type": "humanitarian" },
+    { "name": "African Union Support and Stabilization Mission (AUSSOM)", "url": "https://atmis-au.org/", "type": "security" },
+    { "name": "Hiraal Institute", "url": "https://hiraalinstitute.org/", "type": "analytical" }
+  ]
+}

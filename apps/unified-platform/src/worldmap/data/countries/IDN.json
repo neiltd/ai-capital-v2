@@ -1,0 +1,71 @@
+{
+  "id": "IDN",
+  "iso2": "ID",
+  "name": "Indonesia",
+  "region": "Asia",
+  "subregion": "South-Eastern Asia",
+  "capital": "Jakarta",
+  "lastUpdated": "2026-05-09",
+  "summary": "Indonesia is the world's largest archipelagic state and the most populous Muslim-majority nation. It is a founding member of ASEAN and a key G20 economy, increasingly leveraging its vast natural resources (notably nickel) to move up the global value chain. Under leadership focused on downstreaming and infrastructure, Indonesia seeks to become a top-five global economy by 2045. It maintains a 'free and active' foreign policy, carefully navigating the U.S.-China rivalry while championing regional autonomy.",
+  "indicators": {
+    "politicalStability":       { "score": 7, "trend": "stable", "confidence": "high", "note": "Strong executive continuity and consolidated democratic processes, though dynastic politics are a growing concern." },
+    "economicDirection":        { "score": 8, "trend": "rising", "confidence": "high", "note": "Consistent growth driven by domestic consumption and mandatory domestic processing of mineral exports." },
+    "investmentAttractiveness": { "score": 7, "trend": "rising", "confidence": "high", "note": "Massive consumer market and strategic resource wealth; improving ease of doing business through omnibus laws." },
+    "geopoliticalRisk":         { "score": 4, "trend": "stable", "confidence": "high", "note": "Low risk of direct conflict, but exposed to South China Sea tensions and maritime boundary disputes." },
+    "educationQuality":         { "score": 5, "trend": "stable", "confidence": "medium", "note": "Broad access but quality lags regional peers; significant focus on vocational training for the industrial push." },
+    "healthcareQuality":        { "score": 5, "trend": "rising", "confidence": "medium", "note": "Expansion of universal healthcare (JKN) but infrastructure remains uneven across the archipelago." },
+    "technologyInvestment":     { "score": 7, "trend": "rising", "confidence": "high", "note": "Vibrant digital economy with numerous unicorns and a rapidly growing fintech sector." }
+  },
+  "demographics": {
+    "population": 280000000,
+    "medianAge": 30.1,
+    "urbanizationRate": 58,
+    "majorEthnicGroups": ["Javanese", "Sundanese", "Malay", "Madurese", "Batak"],
+    "religions": [
+      { "name": "Muslim", "percent": 87.2 },
+      { "name": "Protestant", "percent": 7.0 },
+      { "name": "Catholic", "percent": 2.9 },
+      { "name": "Hindu", "percent": 1.7 },
+      { "name": "Buddhist", "percent": 0.7 }
+    ]
+  },
+  "alliances": ["ASEAN", "G20", "OIC", "APEC"],
+  "relationships": [
+    { "countryId": "CHN", "countryName": "China", "type": "strategic_partner", "sentiment": "neutral", "summary": "Primary trade partner and source of infrastructure investment, but maritime incursions in the Natuna Sea cause friction." },
+    { "countryId": "USA", "countryName": "United States", "type": "strategic_partner", "sentiment": "positive", "summary": "Key security partner; cooperation focuses on maritime domain awareness and military modernization." },
+    { "countryId": "AUS", "countryName": "Australia", "type": "neighbor", "sentiment": "positive", "summary": "Improving relationship focused on security, trade, and managing regional migration." },
+    { "countryId": "MYS", "countryName": "Malaysia", "type": "ally", "sentiment": "positive", "summary": "Close cultural and economic ties within ASEAN, despite occasional border and heritage disputes." },
+    { "countryId": "JPN", "countryName": "Japan", "type": "strategic_partner", "sentiment": "positive", "summary": "Major long-term investor in manufacturing and urban infrastructure (MRT)." }
+  ],
+  "perspectives": [
+    { "source": "Downstreaming Strategist", "bias": "Resource Nationalist", "view": "Indonesia must ban raw mineral exports to force foreign companies to build smelters and factories here, ensuring the nation captures more economic value." },
+    { "source": "Traditionalist Diplomat", "bias": "Non-Aligned", "view": "Our 'bebas-aktif' (free and active) policy is paramount; we must never join a military bloc or choose sides in the Great Power struggle." },
+    { "source": "Moderate Islamist", "bias": "Centrist", "view": "Indonesia is a model of 'moderate Islam' that proves democracy and Islam are compatible, providing a stabilizing influence in the Muslim world." },
+    { "source": "Environmental Activist", "bias": "Ecological", "view": "Rapid industrialization and the capital move to Nusantara threaten the country's biodiversity and the rights of indigenous communities." }
+  ],
+  "historicalContext": {
+    "summary": "After centuries of Dutch colonial rule and a brief Japanese occupation, Indonesia declared independence in 1945. It transitioned from the 'Old Order' of Sukarno to the 32-year 'New Order' military-backed regime of Suharto. Since the 1998 Reformasi, it has emerged as the world's third-largest democracy.",
+    "keyEvents": [
+      { "year": 1945, "event": "Declaration of Independence from the Netherlands." },
+      { "year": 1949, "event": "Netherlands formally recognizes Indonesian sovereignty after a four-year revolution." },
+      { "year": 1955, "event": "Host of the Bandung Conference, launching the Non-Aligned Movement." },
+      { "year": 1965, "event": "Failed coup attempt leading to the purge of the Communist Party and the rise of Suharto." },
+      { "year": 1967, "event": "Founding of ASEAN in Bangkok, with Indonesia as a core member." },
+      { "year": 1998, "event": "Asian Financial Crisis leads to the fall of Suharto and the start of Reformasi." },
+      { "year": 1999, "event": "East Timor votes for independence in a UN-sponsored referendum." },
+      { "year": 2004, "event": "First direct presidential election; Indian Ocean Tsunami devastates Aceh." },
+      { "year": 2014, "event": "Election of Joko Widodo, signaling a shift toward infrastructure and grassroots politics." },
+      { "year": 2022, "event": "Parliament passes the bill to move the capital from Jakarta to Nusantara." }
+    ]
+  },
+  "investmentNotes": {
+    "strengths": ["Critical mineral reserves (Nickel, Copper)", "Growing young middle class", "Strategic location on global trade routes", "Strong fiscal discipline"],
+    "risks": ["Bureaucratic red tape", "Legal uncertainty", "Infrastructure gaps in eastern provinces", "Natural disaster vulnerability"],
+    "sectors": ["Electric Vehicle Battery Supply Chain", "Digital Economy & Fintech", "Infrastructure Development", "Consumer Goods"]
+  },
+  "sources": [
+    { "name": "Bank Indonesia", "url": "https://www.bi.go.id/", "type": "economic" },
+    { "name": "BPS - Statistics Indonesia", "url": "https://www.bps.go.id/", "type": "demographic" },
+    { "name": "Ministry of Investment (BKPM)", "url": "https://www.bkpm.go.id/", "type": "investment" }
+  ]
+}

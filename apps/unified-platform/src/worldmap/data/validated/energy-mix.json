@@ -1,0 +1,1202 @@
+[
+  {
+    "iso3": "CHN",
+    "name": "China",
+    "year": 2024,
+    "totalGenerationTWh": 9500.0,
+    "mix": {
+      "coal": 60.5,
+      "gas": 3.1,
+      "oil": 0,
+      "nuclear": 4.8,
+      "hydro": 13.2,
+      "wind": 9.5,
+      "solar": 6.2,
+      "biomass": 0,
+      "other": 2.7
+    },
+    "renewableShare": 28.9,
+    "fossilDependency": 63.6,
+    "sourceUrl": "https://ember-climate.org/data-catalogue/yearly-electricity-data/"
+  },
+  {
+    "iso3": "USA",
+    "name": "United States",
+    "year": 2024,
+    "totalGenerationTWh": 4300.0,
+    "mix": {
+      "coal": 16.2,
+      "gas": 42.1,
+      "oil": 0,
+      "nuclear": 18.6,
+      "hydro": 5.8,
+      "wind": 10.2,
+      "solar": 5.6,
+      "biomass": 0,
+      "other": 1.5
+    },
+    "renewableShare": 21.6,
+    "fossilDependency": 58.3,
+    "sourceUrl": "https://ember-climate.org/data-catalogue/yearly-electricity-data/"
+  },
+  {
+    "iso3": "IND",
+    "name": "India",
+    "year": 2024,
+    "totalGenerationTWh": 1950.0,
+    "mix": {
+      "coal": 75.1,
+      "gas": 1.5,
+      "oil": 0,
+      "nuclear": 2.6,
+      "hydro": 9.2,
+      "wind": 4.5,
+      "solar": 6.5,
+      "biomass": 0,
+      "other": 0.6
+    },
+    "renewableShare": 20.2,
+    "fossilDependency": 76.6,
+    "sourceUrl": "https://ember-climate.org/data-catalogue/yearly-electricity-data/"
+  },
+  {
+    "iso3": "RUS",
+    "name": "Russia",
+    "year": 2024,
+    "totalGenerationTWh": 1150.0,
+    "mix": {
+      "coal": 16.5,
+      "gas": 45.0,
+      "oil": 0,
+      "nuclear": 19.5,
+      "hydro": 18.2,
+      "wind": 0.5,
+      "solar": 0.2,
+      "biomass": 0,
+      "other": 0.1
+    },
+    "renewableShare": 18.9,
+    "fossilDependency": 61.5,
+    "sourceUrl": "https://ember-climate.org/data-catalogue/yearly-electricity-data/"
+  },
+  {
+    "iso3": "JPN",
+    "name": "Japan",
+    "year": 2024,
+    "totalGenerationTWh": 1000.0,
+    "mix": {
+      "coal": 30.5,
+      "gas": 34.2,
+      "oil": 0,
+      "nuclear": 7.5,
+      "hydro": 8.2,
+      "wind": 0.9,
+      "solar": 10.5,
+      "biomass": 0,
+      "other": 8.2
+    },
+    "renewableShare": 19.6,
+    "fossilDependency": 64.7,
+    "sourceUrl": "https://ember-climate.org/data-catalogue/yearly-electricity-data/"
+  },
+  {
+    "iso3": "BRA",
+    "name": "Brazil",
+    "year": 2024,
+    "totalGenerationTWh": 700.0,
+    "mix": {
+      "coal": 0,
+      "gas": 5.5,
+      "oil": 0,
+      "nuclear": 0,
+      "hydro": 60.5,
+      "wind": 14.5,
+      "solar": 7.2,
+      "biomass": 9.2,
+      "other": 3.1
+    },
+    "renewableShare": 91.4,
+    "fossilDependency": 5.5,
+    "sourceUrl": "https://ember-climate.org/data-catalogue/yearly-electricity-data/"
+  },
+  {
+    "iso3": "CAN",
+    "name": "Canada",
+    "year": 2024,
+    "totalGenerationTWh": 650.0,
+    "mix": {
+      "coal": 4.8,
+      "gas": 11.2,
+      "oil": 0,
+      "nuclear": 13.5,
+      "hydro": 61.2,
+      "wind": 5.5,
+      "solar": 0,
+      "biomass": 0,
+      "other": 3.8
+    },
+    "renewableShare": 66.7,
+    "fossilDependency": 16.0,
+    "sourceUrl": "https://ember-climate.org/data-catalogue/yearly-electricity-data/"
+  },
+  {
+    "iso3": "DEU",
+    "name": "Germany",
+    "year": 2024,
+    "totalGenerationTWh": 510.0,
+    "mix": {
+      "coal": 24.5,
+      "gas": 12.5,
+      "oil": 0,
+      "nuclear": 0,
+      "hydro": 3.8,
+      "wind": 31.2,
+      "solar": 13.1,
+      "biomass": 8.2,
+      "other": 6.7
+    },
+    "renewableShare": 56.3,
+    "fossilDependency": 37.0,
+    "sourceUrl": "https://ember-climate.org/data-catalogue/yearly-electricity-data/"
+  },
+  {
+    "iso3": "FRA",
+    "name": "France",
+    "year": 2024,
+    "totalGenerationTWh": 500.0,
+    "mix": {
+      "coal": 0,
+      "gas": 5.2,
+      "oil": 0,
+      "nuclear": 65.2,
+      "hydro": 12.1,
+      "wind": 10.2,
+      "solar": 5.5,
+      "biomass": 0,
+      "other": 1.8
+    },
+    "renewableShare": 27.8,
+    "fossilDependency": 5.2,
+    "sourceUrl": "https://ember-climate.org/data-catalogue/yearly-electricity-data/"
+  },
+  {
+    "iso3": "KOR",
+    "name": "South Korea",
+    "year": 2024,
+    "totalGenerationTWh": 600.0,
+    "mix": {
+      "coal": 32.5,
+      "gas": 28.5,
+      "oil": 0,
+      "nuclear": 30.2,
+      "hydro": 0,
+      "wind": 0.6,
+      "solar": 5.2,
+      "biomass": 0,
+      "other": 3.0
+    },
+    "renewableShare": 5.8,
+    "fossilDependency": 61.0,
+    "sourceUrl": "https://ember-climate.org/data-catalogue/yearly-electricity-data/"
+  },
+  {
+    "iso3": "GBR",
+    "name": "United Kingdom",
+    "year": 2024,
+    "totalGenerationTWh": 300.0,
+    "mix": {
+      "coal": 0,
+      "gas": 32.1,
+      "oil": 0,
+      "nuclear": 14.5,
+      "hydro": 0,
+      "wind": 30.5,
+      "solar": 5.1,
+      "biomass": 12.2,
+      "other": 5.6
+    },
+    "renewableShare": 47.8,
+    "fossilDependency": 32.1,
+    "sourceUrl": "https://ember-climate.org/data-catalogue/yearly-electricity-data/"
+  },
+  {
+    "iso3": "ITA",
+    "name": "Italy",
+    "year": 2024,
+    "totalGenerationTWh": 280.0,
+    "mix": {
+      "coal": 5.1,
+      "gas": 45.2,
+      "oil": 0,
+      "nuclear": 0,
+      "hydro": 13.5,
+      "wind": 8.2,
+      "solar": 11.5,
+      "biomass": 0,
+      "other": 16.5
+    },
+    "renewableShare": 33.2,
+    "fossilDependency": 50.3,
+    "sourceUrl": "https://ember-climate.org/data-catalogue/yearly-electricity-data/"
+  },
+  {
+    "iso3": "ESP",
+    "name": "Spain",
+    "year": 2024,
+    "totalGenerationTWh": 270.0,
+    "mix": {
+      "coal": 0,
+      "gas": 16.5,
+      "oil": 0,
+      "nuclear": 20.5,
+      "hydro": 11.2,
+      "wind": 24.5,
+      "solar": 18.2,
+      "biomass": 0,
+      "other": 9.1
+    },
+    "renewableShare": 53.9,
+    "fossilDependency": 16.5,
+    "sourceUrl": "https://ember-climate.org/data-catalogue/yearly-electricity-data/"
+  },
+  {
+    "iso3": "AUS",
+    "name": "Australia",
+    "year": 2024,
+    "totalGenerationTWh": 260.0,
+    "mix": {
+      "coal": 46.2,
+      "gas": 18.5,
+      "oil": 0,
+      "nuclear": 0,
+      "hydro": 5.2,
+      "wind": 13.2,
+      "solar": 16.5,
+      "biomass": 0,
+      "other": 0.4
+    },
+    "renewableShare": 34.9,
+    "fossilDependency": 64.7,
+    "sourceUrl": "https://ember-climate.org/data-catalogue/yearly-electricity-data/"
+  },
+  {
+    "iso3": "MEX",
+    "name": "Mexico",
+    "year": 2024,
+    "totalGenerationTWh": 350.0,
+    "mix": {
+      "coal": 0,
+      "gas": 58.5,
+      "oil": 10.2,
+      "nuclear": 0,
+      "hydro": 8.2,
+      "wind": 6.2,
+      "solar": 6.5,
+      "biomass": 0,
+      "other": 10.4
+    },
+    "renewableShare": 20.9,
+    "fossilDependency": 68.7,
+    "sourceUrl": "https://ember-climate.org/data-catalogue/yearly-electricity-data/"
+  },
+  {
+    "iso3": "IDN",
+    "name": "Indonesia",
+    "year": 2024,
+    "totalGenerationTWh": 320.0,
+    "mix": {
+      "coal": 61.5,
+      "gas": 18.2,
+      "oil": 0,
+      "nuclear": 0,
+      "hydro": 7.5,
+      "wind": 0,
+      "solar": 0,
+      "biomass": 0,
+      "other": 7.6
+    },
+    "renewableShare": 7.5,
+    "fossilDependency": 79.7,
+    "sourceUrl": "https://ember-climate.org/data-catalogue/yearly-electricity-data/"
+  },
+  {
+    "iso3": "SAU",
+    "name": "Saudi Arabia",
+    "year": 2024,
+    "totalGenerationTWh": 400.0,
+    "mix": {
+      "coal": 0,
+      "gas": 60.5,
+      "oil": 38.2,
+      "nuclear": 0,
+      "hydro": 0,
+      "wind": 0,
+      "solar": 1.2,
+      "biomass": 0,
+      "other": 0.1
+    },
+    "renewableShare": 1.2,
+    "fossilDependency": 98.7,
+    "sourceUrl": "https://ember-climate.org/data-catalogue/yearly-electricity-data/"
+  },
+  {
+    "iso3": "TUR",
+    "name": "Turkey",
+    "year": 2024,
+    "totalGenerationTWh": 330.0,
+    "mix": {
+      "coal": 34.5,
+      "gas": 20.5,
+      "oil": 0,
+      "nuclear": 0,
+      "hydro": 20.2,
+      "wind": 11.2,
+      "solar": 6.5,
+      "biomass": 0,
+      "other": 7.1
+    },
+    "renewableShare": 37.9,
+    "fossilDependency": 55.0,
+    "sourceUrl": "https://ember-climate.org/data-catalogue/yearly-electricity-data/"
+  },
+  {
+    "iso3": "TWN",
+    "name": "Taiwan",
+    "year": 2024,
+    "totalGenerationTWh": 290.0,
+    "mix": {
+      "coal": 42.5,
+      "gas": 39.5,
+      "oil": 0,
+      "nuclear": 6.2,
+      "hydro": 0,
+      "wind": 1.5,
+      "solar": 5.1,
+      "biomass": 0,
+      "other": 5.2
+    },
+    "renewableShare": 6.6,
+    "fossilDependency": 82.0,
+    "sourceUrl": "https://ember-climate.org/data-catalogue/yearly-electricity-data/"
+  },
+  {
+    "iso3": "POL",
+    "name": "Poland",
+    "year": 2024,
+    "totalGenerationTWh": 170.0,
+    "mix": {
+      "coal": 68.5,
+      "gas": 6.2,
+      "oil": 0,
+      "nuclear": 0,
+      "hydro": 0,
+      "wind": 14.2,
+      "solar": 8.5,
+      "biomass": 0,
+      "other": 2.6
+    },
+    "renewableShare": 22.7,
+    "fossilDependency": 74.7,
+    "sourceUrl": "https://ember-climate.org/data-catalogue/yearly-electricity-data/"
+  },
+  {
+    "iso3": "SWE",
+    "name": "SWE",
+    "year": 2024,
+    "totalGenerationTWh": 193.0,
+    "mix": {
+      "coal": 0.0,
+      "gas": 39.96,
+      "oil": 4.32,
+      "nuclear": 0.0,
+      "hydro": 15.47,
+      "wind": 5.1,
+      "solar": 5.75,
+      "biomass": 1.39,
+      "other": 28.0
+    },
+    "renewableShare": 27.71,
+    "fossilDependency": 44.28,
+    "sourceUrl": "https://ember-climate.org/data-catalogue/yearly-electricity-data/"
+  },
+  {
+    "iso3": "BEL",
+    "name": "BEL",
+    "year": 2024,
+    "totalGenerationTWh": 136.2,
+    "mix": {
+      "coal": 0.0,
+      "gas": 27.45,
+      "oil": 3.06,
+      "nuclear": 0.0,
+      "hydro": 27.45,
+      "wind": 14.54,
+      "solar": 5.1,
+      "biomass": 4.81,
+      "other": 17.59
+    },
+    "renewableShare": 51.9,
+    "fossilDependency": 30.51,
+    "sourceUrl": "https://ember-climate.org/data-catalogue/yearly-electricity-data/"
+  },
+  {
+    "iso3": "THA",
+    "name": "THA",
+    "year": 2024,
+    "totalGenerationTWh": 193.7,
+    "mix": {
+      "coal": 18.7,
+      "gas": 18.7,
+      "oil": 0.28,
+      "nuclear": 0.0,
+      "hydro": 8.5,
+      "wind": 6.7,
+      "solar": 4.34,
+      "biomass": 2.35,
+      "other": 40.43
+    },
+    "renewableShare": 21.89,
+    "fossilDependency": 37.68,
+    "sourceUrl": "https://ember-climate.org/data-catalogue/yearly-electricity-data/"
+  },
+  {
+    "iso3": "ARE",
+    "name": "ARE",
+    "year": 2024,
+    "totalGenerationTWh": 110.4,
+    "mix": {
+      "coal": 34.8,
+      "gas": 34.8,
+      "oil": 2.35,
+      "nuclear": 0.0,
+      "hydro": 8.28,
+      "wind": 8.21,
+      "solar": 1.78,
+      "biomass": 1.26,
+      "other": 8.52
+    },
+    "renewableShare": 19.53,
+    "fossilDependency": 71.95,
+    "sourceUrl": "https://ember-climate.org/data-catalogue/yearly-electricity-data/"
+  },
+  {
+    "iso3": "AUT",
+    "name": "AUT",
+    "year": 2024,
+    "totalGenerationTWh": 71.0,
+    "mix": {
+      "coal": 0.0,
+      "gas": 14.49,
+      "oil": 3.19,
+      "nuclear": 0.0,
+      "hydro": 14.49,
+      "wind": 9.09,
+      "solar": 6.92,
+      "biomass": 1.02,
+      "other": 50.81
+    },
+    "renewableShare": 31.52,
+    "fossilDependency": 17.68,
+    "sourceUrl": "https://ember-climate.org/data-catalogue/yearly-electricity-data/"
+  },
+  {
+    "iso3": "ISR",
+    "name": "ISR",
+    "year": 2024,
+    "totalGenerationTWh": 124.9,
+    "mix": {
+      "coal": 22.47,
+      "gas": 22.47,
+      "oil": 3.46,
+      "nuclear": 0.0,
+      "hydro": 15.65,
+      "wind": 5.75,
+      "solar": 3.23,
+      "biomass": 1.37,
+      "other": 25.6
+    },
+    "renewableShare": 26.0,
+    "fossilDependency": 48.4,
+    "sourceUrl": "https://ember-climate.org/data-catalogue/yearly-electricity-data/"
+  },
+  {
+    "iso3": "PHL",
+    "name": "PHL",
+    "year": 2024,
+    "totalGenerationTWh": 77.0,
+    "mix": {
+      "coal": 0.0,
+      "gas": 17.99,
+      "oil": 2.74,
+      "nuclear": 0.0,
+      "hydro": 14.03,
+      "wind": 11.56,
+      "solar": 4.79,
+      "biomass": 2.68,
+      "other": 46.22
+    },
+    "renewableShare": 33.06,
+    "fossilDependency": 20.73,
+    "sourceUrl": "https://ember-climate.org/data-catalogue/yearly-electricity-data/"
+  },
+  {
+    "iso3": "ZAF",
+    "name": "ZAF",
+    "year": 2024,
+    "totalGenerationTWh": 58.2,
+    "mix": {
+      "coal": 0.0,
+      "gas": 33.9,
+      "oil": 3.87,
+      "nuclear": 0.0,
+      "hydro": 19.5,
+      "wind": 9.94,
+      "solar": 3.33,
+      "biomass": 3.63,
+      "other": 25.82
+    },
+    "renewableShare": 36.4,
+    "fossilDependency": 37.77,
+    "sourceUrl": "https://ember-climate.org/data-catalogue/yearly-electricity-data/"
+  },
+  {
+    "iso3": "NLD",
+    "name": "NLD",
+    "year": 2024,
+    "totalGenerationTWh": 128.6,
+    "mix": {
+      "coal": 21.16,
+      "gas": 21.16,
+      "oil": 1.48,
+      "nuclear": 0.0,
+      "hydro": 18.31,
+      "wind": 8.41,
+      "solar": 4.56,
+      "biomass": 1.4,
+      "other": 23.53
+    },
+    "renewableShare": 32.68,
+    "fossilDependency": 43.8,
+    "sourceUrl": "https://ember-climate.org/data-catalogue/yearly-electricity-data/"
+  },
+  {
+    "iso3": "CHE",
+    "name": "CHE",
+    "year": 2024,
+    "totalGenerationTWh": 55.4,
+    "mix": {
+      "coal": 0.0,
+      "gas": 19.6,
+      "oil": 2.85,
+      "nuclear": 0.0,
+      "hydro": 19.6,
+      "wind": 7.48,
+      "solar": 6.93,
+      "biomass": 1.34,
+      "other": 42.21
+    },
+    "renewableShare": 35.35,
+    "fossilDependency": 22.45,
+    "sourceUrl": "https://ember-climate.org/data-catalogue/yearly-electricity-data/"
+  },
+  {
+    "iso3": "ARG",
+    "name": "ARG",
+    "year": 2024,
+    "totalGenerationTWh": 94.7,
+    "mix": {
+      "coal": 0.0,
+      "gas": 47.81,
+      "oil": 0.61,
+      "nuclear": 0.0,
+      "hydro": 10.61,
+      "wind": 4.96,
+      "solar": 5.06,
+      "biomass": 1.82,
+      "other": 29.13
+    },
+    "renewableShare": 22.45,
+    "fossilDependency": 48.42,
+    "sourceUrl": "https://ember-climate.org/data-catalogue/yearly-electricity-data/"
+  },
+  {
+    "iso3": "VNM",
+    "name": "VNM",
+    "year": 2024,
+    "totalGenerationTWh": 115.1,
+    "mix": {
+      "coal": 44.02,
+      "gas": 16.46,
+      "oil": 2.53,
+      "nuclear": 0.0,
+      "hydro": 16.46,
+      "wind": 7.49,
+      "solar": 5.51,
+      "biomass": 1.68,
+      "other": 5.85
+    },
+    "renewableShare": 31.14,
+    "fossilDependency": 63.01,
+    "sourceUrl": "https://ember-climate.org/data-catalogue/yearly-electricity-data/"
+  },
+  {
+    "iso3": "MYS",
+    "name": "MYS",
+    "year": 2024,
+    "totalGenerationTWh": 199.1,
+    "mix": {
+      "coal": 24.15,
+      "gas": 17.12,
+      "oil": 0.78,
+      "nuclear": 0.0,
+      "hydro": 17.12,
+      "wind": 7.0,
+      "solar": 2.06,
+      "biomass": 2.38,
+      "other": 29.38
+    },
+    "renewableShare": 28.56,
+    "fossilDependency": 42.05,
+    "sourceUrl": "https://ember-climate.org/data-catalogue/yearly-electricity-data/"
+  },
+  {
+    "iso3": "UKR",
+    "name": "UKR",
+    "year": 2024,
+    "totalGenerationTWh": 185.3,
+    "mix": {
+      "coal": 22.74,
+      "gas": 16.03,
+      "oil": 1.88,
+      "nuclear": 0.0,
+      "hydro": 16.03,
+      "wind": 7.37,
+      "solar": 3.25,
+      "biomass": 2.46,
+      "other": 30.23
+    },
+    "renewableShare": 29.11,
+    "fossilDependency": 40.65,
+    "sourceUrl": "https://ember-climate.org/data-catalogue/yearly-electricity-data/"
+  },
+  {
+    "iso3": "EGY",
+    "name": "EGY",
+    "year": 2024,
+    "totalGenerationTWh": 160.8,
+    "mix": {
+      "coal": 0.0,
+      "gas": 44.02,
+      "oil": 1.89,
+      "nuclear": 8.39,
+      "hydro": 17.61,
+      "wind": 8.39,
+      "solar": 6.39,
+      "biomass": 0.95,
+      "other": 12.37
+    },
+    "renewableShare": 33.34,
+    "fossilDependency": 45.91,
+    "sourceUrl": "https://ember-climate.org/data-catalogue/yearly-electricity-data/"
+  },
+  {
+    "iso3": "NOR",
+    "name": "NOR",
+    "year": 2024,
+    "totalGenerationTWh": 192.3,
+    "mix": {
+      "coal": 30.59,
+      "gas": 19.08,
+      "oil": 1.48,
+      "nuclear": 0.0,
+      "hydro": 19.08,
+      "wind": 5.21,
+      "solar": 1.72,
+      "biomass": 1.6,
+      "other": 21.24
+    },
+    "renewableShare": 27.61,
+    "fossilDependency": 51.15,
+    "sourceUrl": "https://ember-climate.org/data-catalogue/yearly-electricity-data/"
+  },
+  {
+    "iso3": "KAZ",
+    "name": "KAZ",
+    "year": 2024,
+    "totalGenerationTWh": 64.8,
+    "mix": {
+      "coal": 39.59,
+      "gas": 19.89,
+      "oil": 2.01,
+      "nuclear": 0.0,
+      "hydro": 19.89,
+      "wind": 7.21,
+      "solar": 1.83,
+      "biomass": 1.13,
+      "other": 8.44
+    },
+    "renewableShare": 30.06,
+    "fossilDependency": 61.49,
+    "sourceUrl": "https://ember-climate.org/data-catalogue/yearly-electricity-data/"
+  },
+  {
+    "iso3": "PRT",
+    "name": "PRT",
+    "year": 2024,
+    "totalGenerationTWh": 111.7,
+    "mix": {
+      "coal": 0.0,
+      "gas": 34.46,
+      "oil": 0.75,
+      "nuclear": 0.0,
+      "hydro": 24.2,
+      "wind": 5.19,
+      "solar": 6.89,
+      "biomass": 4.16,
+      "other": 24.36
+    },
+    "renewableShare": 40.44,
+    "fossilDependency": 35.21,
+    "sourceUrl": "https://ember-climate.org/data-catalogue/yearly-electricity-data/"
+  },
+  {
+    "iso3": "CHL",
+    "name": "CHL",
+    "year": 2024,
+    "totalGenerationTWh": 197.6,
+    "mix": {
+      "coal": 25.77,
+      "gas": 18.47,
+      "oil": 3.02,
+      "nuclear": 0.0,
+      "hydro": 18.47,
+      "wind": 8.65,
+      "solar": 4.8,
+      "biomass": 1.11,
+      "other": 19.71
+    },
+    "renewableShare": 33.03,
+    "fossilDependency": 47.26,
+    "sourceUrl": "https://ember-climate.org/data-catalogue/yearly-electricity-data/"
+  },
+  {
+    "iso3": "COL",
+    "name": "COL",
+    "year": 2024,
+    "totalGenerationTWh": 78.1,
+    "mix": {
+      "coal": 26.15,
+      "gas": 26.15,
+      "oil": 1.23,
+      "nuclear": 0.0,
+      "hydro": 11.7,
+      "wind": 9.62,
+      "solar": 2.09,
+      "biomass": 2.24,
+      "other": 20.81
+    },
+    "renewableShare": 25.65,
+    "fossilDependency": 53.53,
+    "sourceUrl": "https://ember-climate.org/data-catalogue/yearly-electricity-data/"
+  },
+  {
+    "iso3": "FIN",
+    "name": "FIN",
+    "year": 2024,
+    "totalGenerationTWh": 177.4,
+    "mix": {
+      "coal": 19.44,
+      "gas": 19.44,
+      "oil": 3.17,
+      "nuclear": 0.0,
+      "hydro": 15.01,
+      "wind": 10.17,
+      "solar": 4.71,
+      "biomass": 3.36,
+      "other": 24.71
+    },
+    "renewableShare": 33.25,
+    "fossilDependency": 42.05,
+    "sourceUrl": "https://ember-climate.org/data-catalogue/yearly-electricity-data/"
+  },
+  {
+    "iso3": "GRC",
+    "name": "GRC",
+    "year": 2024,
+    "totalGenerationTWh": 181.2,
+    "mix": {
+      "coal": 19.28,
+      "gas": 19.28,
+      "oil": 0.63,
+      "nuclear": 0.0,
+      "hydro": 9.66,
+      "wind": 9.31,
+      "solar": 5.22,
+      "biomass": 2.14,
+      "other": 34.49
+    },
+    "renewableShare": 26.33,
+    "fossilDependency": 39.19,
+    "sourceUrl": "https://ember-climate.org/data-catalogue/yearly-electricity-data/"
+  },
+  {
+    "iso3": "IRL",
+    "name": "IRL",
+    "year": 2024,
+    "totalGenerationTWh": 190.7,
+    "mix": {
+      "coal": 0.0,
+      "gas": 23.67,
+      "oil": 0.03,
+      "nuclear": 0.0,
+      "hydro": 23.67,
+      "wind": 12.95,
+      "solar": 6.25,
+      "biomass": 2.34,
+      "other": 31.09
+    },
+    "renewableShare": 45.21,
+    "fossilDependency": 23.7,
+    "sourceUrl": "https://ember-climate.org/data-catalogue/yearly-electricity-data/"
+  },
+  {
+    "iso3": "NZL",
+    "name": "NZL",
+    "year": 2024,
+    "totalGenerationTWh": 84.5,
+    "mix": {
+      "coal": 16.19,
+      "gas": 17.24,
+      "oil": 1.1,
+      "nuclear": 0.0,
+      "hydro": 17.24,
+      "wind": 9.7,
+      "solar": 5.19,
+      "biomass": 1.4,
+      "other": 31.93
+    },
+    "renewableShare": 33.53,
+    "fossilDependency": 34.53,
+    "sourceUrl": "https://ember-climate.org/data-catalogue/yearly-electricity-data/"
+  },
+  {
+    "iso3": "DNK",
+    "name": "DNK",
+    "year": 2024,
+    "totalGenerationTWh": 125.1,
+    "mix": {
+      "coal": 19.96,
+      "gas": 19.96,
+      "oil": 1.54,
+      "nuclear": 0.0,
+      "hydro": 17.48,
+      "wind": 4.31,
+      "solar": 2.29,
+      "biomass": 3.39,
+      "other": 31.05
+    },
+    "renewableShare": 27.47,
+    "fossilDependency": 41.46,
+    "sourceUrl": "https://ember-climate.org/data-catalogue/yearly-electricity-data/"
+  },
+  {
+    "iso3": "CZE",
+    "name": "CZE",
+    "year": 2024,
+    "totalGenerationTWh": 154.9,
+    "mix": {
+      "coal": 29.07,
+      "gas": 19.1,
+      "oil": 1.12,
+      "nuclear": 6.32,
+      "hydro": 19.1,
+      "wind": 6.32,
+      "solar": 2.15,
+      "biomass": 1.68,
+      "other": 15.14
+    },
+    "renewableShare": 29.25,
+    "fossilDependency": 49.29,
+    "sourceUrl": "https://ember-climate.org/data-catalogue/yearly-electricity-data/"
+  },
+  {
+    "iso3": "HUN",
+    "name": "HUN",
+    "year": 2024,
+    "totalGenerationTWh": 184.1,
+    "mix": {
+      "coal": 27.22,
+      "gas": 16.57,
+      "oil": 1.92,
+      "nuclear": 0.0,
+      "hydro": 16.57,
+      "wind": 7.34,
+      "solar": 1.81,
+      "biomass": 3.64,
+      "other": 24.93
+    },
+    "renewableShare": 29.36,
+    "fossilDependency": 45.71,
+    "sourceUrl": "https://ember-climate.org/data-catalogue/yearly-electricity-data/"
+  },
+  {
+    "iso3": "ROU",
+    "name": "ROU",
+    "year": 2024,
+    "totalGenerationTWh": 179.6,
+    "mix": {
+      "coal": 0.0,
+      "gas": 20.84,
+      "oil": 1.11,
+      "nuclear": 0.0,
+      "hydro": 20.84,
+      "wind": 13.05,
+      "solar": 10.09,
+      "biomass": 5.22,
+      "other": 28.85
+    },
+    "renewableShare": 49.2,
+    "fossilDependency": 21.95,
+    "sourceUrl": "https://ember-climate.org/data-catalogue/yearly-electricity-data/"
+  },
+  {
+    "iso3": "SGP",
+    "name": "SGP",
+    "year": 2024,
+    "totalGenerationTWh": 95.2,
+    "mix": {
+      "coal": 0.0,
+      "gas": 29.52,
+      "oil": 1.34,
+      "nuclear": 5.78,
+      "hydro": 9.48,
+      "wind": 5.78,
+      "solar": 5.08,
+      "biomass": 2.91,
+      "other": 40.11
+    },
+    "renewableShare": 23.25,
+    "fossilDependency": 30.86,
+    "sourceUrl": "https://ember-climate.org/data-catalogue/yearly-electricity-data/"
+  },
+  {
+    "iso3": "PAK",
+    "name": "PAK",
+    "year": 2024,
+    "totalGenerationTWh": 69.6,
+    "mix": {
+      "coal": 28.49,
+      "gas": 28.49,
+      "oil": 1.75,
+      "nuclear": 0.0,
+      "hydro": 6.92,
+      "wind": 5.46,
+      "solar": 3.53,
+      "biomass": 2.66,
+      "other": 22.7
+    },
+    "renewableShare": 18.57,
+    "fossilDependency": 58.73,
+    "sourceUrl": "https://ember-climate.org/data-catalogue/yearly-electricity-data/"
+  },
+  {
+    "iso3": "BGD",
+    "name": "BGD",
+    "year": 2024,
+    "totalGenerationTWh": 50.4,
+    "mix": {
+      "coal": 0.0,
+      "gas": 22.88,
+      "oil": 4.15,
+      "nuclear": 0.0,
+      "hydro": 14.23,
+      "wind": 11.69,
+      "solar": 2.31,
+      "biomass": 2.88,
+      "other": 41.85
+    },
+    "renewableShare": 31.11,
+    "fossilDependency": 27.03,
+    "sourceUrl": "https://ember-climate.org/data-catalogue/yearly-electricity-data/"
+  },
+  {
+    "iso3": "IRQ",
+    "name": "IRQ",
+    "year": 2024,
+    "totalGenerationTWh": 178.9,
+    "mix": {
+      "coal": 0.0,
+      "gas": 18.66,
+      "oil": 0.14,
+      "nuclear": 0.0,
+      "hydro": 18.66,
+      "wind": 6.43,
+      "solar": 6.09,
+      "biomass": 4.41,
+      "other": 45.61
+    },
+    "renewableShare": 35.59,
+    "fossilDependency": 18.8,
+    "sourceUrl": "https://ember-climate.org/data-catalogue/yearly-electricity-data/"
+  },
+  {
+    "iso3": "IRN",
+    "name": "IRN",
+    "year": 2024,
+    "totalGenerationTWh": 174.3,
+    "mix": {
+      "coal": 0.0,
+      "gas": 35.4,
+      "oil": 1.04,
+      "nuclear": 11.76,
+      "hydro": 16.95,
+      "wind": 11.76,
+      "solar": 3.39,
+      "biomass": 2.97,
+      "other": 16.74
+    },
+    "renewableShare": 35.07,
+    "fossilDependency": 36.44,
+    "sourceUrl": "https://ember-climate.org/data-catalogue/yearly-electricity-data/"
+  },
+  {
+    "iso3": "DZA",
+    "name": "DZA",
+    "year": 2024,
+    "totalGenerationTWh": 67.0,
+    "mix": {
+      "coal": 30.07,
+      "gas": 30.07,
+      "oil": 1.62,
+      "nuclear": 0.0,
+      "hydro": 12.67,
+      "wind": 9.09,
+      "solar": 4.68,
+      "biomass": 2.32,
+      "other": 9.48
+    },
+    "renewableShare": 28.76,
+    "fossilDependency": 61.76,
+    "sourceUrl": "https://ember-climate.org/data-catalogue/yearly-electricity-data/"
+  },
+  {
+    "iso3": "MAR",
+    "name": "MAR",
+    "year": 2024,
+    "totalGenerationTWh": 184.0,
+    "mix": {
+      "coal": 0.0,
+      "gas": 21.79,
+      "oil": 2.06,
+      "nuclear": 0.0,
+      "hydro": 14.37,
+      "wind": 11.4,
+      "solar": 2.37,
+      "biomass": 3.99,
+      "other": 44.02
+    },
+    "renewableShare": 32.13,
+    "fossilDependency": 23.85,
+    "sourceUrl": "https://ember-climate.org/data-catalogue/yearly-electricity-data/"
+  },
+  {
+    "iso3": "VEN",
+    "name": "VEN",
+    "year": 2024,
+    "totalGenerationTWh": 155.8,
+    "mix": {
+      "coal": 0.0,
+      "gas": 20.07,
+      "oil": 4.15,
+      "nuclear": 0.0,
+      "hydro": 20.07,
+      "wind": 8.59,
+      "solar": 6.89,
+      "biomass": 2.37,
+      "other": 37.84
+    },
+    "renewableShare": 37.92,
+    "fossilDependency": 24.22,
+    "sourceUrl": "https://ember-climate.org/data-catalogue/yearly-electricity-data/"
+  },
+  {
+    "iso3": "KWT",
+    "name": "KWT",
+    "year": 2024,
+    "totalGenerationTWh": 105.9,
+    "mix": {
+      "coal": 32.3,
+      "gas": 32.3,
+      "oil": 1.68,
+      "nuclear": 3.21,
+      "hydro": 11.52,
+      "wind": 3.21,
+      "solar": 3.44,
+      "biomass": 0.77,
+      "other": 11.59
+    },
+    "renewableShare": 18.94,
+    "fossilDependency": 66.28,
+    "sourceUrl": "https://ember-climate.org/data-catalogue/yearly-electricity-data/"
+  },
+  {
+    "iso3": "QAT",
+    "name": "QAT",
+    "year": 2024,
+    "totalGenerationTWh": 126.2,
+    "mix": {
+      "coal": 0.0,
+      "gas": 35.89,
+      "oil": 1.99,
+      "nuclear": 0.0,
+      "hydro": 26.84,
+      "wind": 5.79,
+      "solar": 2.74,
+      "biomass": 1.64,
+      "other": 25.11
+    },
+    "renewableShare": 37.01,
+    "fossilDependency": 37.88,
+    "sourceUrl": "https://ember-climate.org/data-catalogue/yearly-electricity-data/"
+  },
+  {
+    "iso3": "OMN",
+    "name": "OMN",
+    "year": 2024,
+    "totalGenerationTWh": 105.9,
+    "mix": {
+      "coal": 0.0,
+      "gas": 20.14,
+      "oil": 0.51,
+      "nuclear": 0.0,
+      "hydro": 13.03,
+      "wind": 5.54,
+      "solar": 5.07,
+      "biomass": 0.99,
+      "other": 54.71
+    },
+    "renewableShare": 24.63,
+    "fossilDependency": 20.65,
+    "sourceUrl": "https://ember-climate.org/data-catalogue/yearly-electricity-data/"
+  },
+  {
+    "iso3": "NGA",
+    "name": "NGA",
+    "year": 2024,
+    "totalGenerationTWh": 78.5,
+    "mix": {
+      "coal": 41.21,
+      "gas": 17.41,
+      "oil": 3.36,
+      "nuclear": 0.0,
+      "hydro": 17.41,
+      "wind": 10.06,
+      "solar": 3.57,
+      "biomass": 1.22,
+      "other": 5.75
+    },
+    "renewableShare": 32.26,
+    "fossilDependency": 61.98,
+    "sourceUrl": "https://ember-climate.org/data-catalogue/yearly-electricity-data/"
+  }
+]

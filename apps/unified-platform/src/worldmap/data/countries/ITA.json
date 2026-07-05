@@ -1,0 +1,67 @@
+{
+  "id": "ITA",
+  "iso2": "IT",
+  "name": "Italy",
+  "region": "Europe",
+  "subregion": "Southern Europe",
+  "capital": "Rome",
+  "lastUpdated": "2026-05-09",
+  "summary": "Italy is currently experiencing a period of rare political continuity under the right-wing coalition led by Giorgia Meloni. The government has focused on consolidating executive power and asserting Italy's role as a bridge between Europe and Africa through the 'Mattei Plan'. While Italy's economy has shown surprising resilience post-pandemic, it remains hampered by one of the world's highest debt-to-GDP ratios and a severe 'demographic winter'. Italy is a steadfast NATO ally and has adopted a pragmatic approach to EU institutions, while pivotally exiting China's Belt and Road Initiative to align more closely with G7 strategic priorities.",
+  "indicators": {
+    "politicalStability":       { "score": 6, "score_description": "Relatively stable government by Italian standards, with a cohesive ruling coalition.", "trend": "stable", "confidence": "high", "note": "The proposed 'Premierato' reform aims to further institutionalize this stability through the direct election of the Prime Minister." },
+    "economicDirection":        { "score": 5, "score_description": "Sluggish growth persistent with high public debt constraints.", "trend": "stable", "confidence": "high", "note": "Debt remains over 134% of GDP, limiting fiscal room for maneuver and making Italy sensitive to interest rate shifts." },
+    "investmentAttractiveness": { "score": 6, "score_description": "Attractive manufacturing and luxury base, but hindered by bureaucracy.", "trend": "stable", "confidence": "high", "note": "Italy is the second-largest manufacturer in Europe, though legal and administrative complexity remains a deterrent for some investors." },
+    "geopoliticalRisk":         { "score": 5, "score_description": "Moderate risk focused on Mediterranean security and migration flows.", "trend": "rising", "confidence": "high", "note": "Instability in North Africa and the Red Sea directly impacts Italy's energy security and trade routes." },
+    "educationQuality":         { "score": 7, "score_description": "Strong humanities and specialized technical education, but low R&D spending.", "trend": "stable", "confidence": "high", "note": "Italian universities produce high-quality graduates, but 'brain drain' remains a significant challenge for the economy." },
+    "healthcareQuality":        { "score": 8, "score_description": "High-quality universal system, though under pressure from an aging population.", "trend": "stable", "confidence": "high", "note": "Italy consistently ranks high in life expectancy, but regional disparities in healthcare provision persist between North and South." },
+    "technologyInvestment":     { "score": 7, "score_description": "Leader in industrial robotics, aerospace, and energy transition tech.", "trend": "rising", "confidence": "high", "note": "The PNRR (Recovery Plan) is channeling billions into the digitalization of the public sector and green energy infrastructure." }
+  },
+  "demographics": {
+    "population": 58900000,
+    "medianAge": 48.0,
+    "urbanizationRate": 71,
+    "majorEthnicGroups": ["Italian", "Romanian", "North African", "Albanian", "Chinese"],
+    "religions": [
+      { "name": "Roman Catholic", "percent": 74 },
+      { "name": "None/Unaffiliated", "percent": 22 },
+      { "name": "Muslim", "percent": 3 },
+      { "name": "Other", "percent": 1 }
+    ]
+  },
+  "alliances": ["EU", "NATO", "G7", "G20", "OECD"],
+  "relationships": [
+    { "countryId": "USA", "countryName": "United States", "type": "treaty_ally", "sentiment": "positive", "summary": "Core security partner; Italy hosts significant U.S. military assets and is a key contributor to NATO missions." },
+    { "countryId": "FRA", "countryName": "France", "type": "ally", "sentiment": "positive", "summary": "Strategic partner through the Quirinal Treaty, though competition for influence in the Mediterranean and Libya remains." },
+    { "countryId": "DEU", "countryName": "Germany", "type": "ally", "sentiment": "positive", "summary": "Crucial economic partner; Italian manufacturing is deeply integrated into German supply chains." },
+    { "countryId": "ALB", "countryName": "Albania", "type": "partner", "sentiment": "positive", "summary": "Close regional partner; collaboration on migration management via the 2024 Italy-Albania protocol." },
+    { "countryId": "CHN", "countryName": "China", "type": "competitor", "sentiment": "neutral", "summary": "Relations have cooled following Italy's exit from the BRI, shifting toward a more protective economic stance." }
+  ],
+  "perspectives": [
+    { "source": "Pragmatic Atlanticist", "bias": "Pro-Western", "view": "Italy's security and prosperity depend on a strong NATO and a decisive alignment with the G7, particularly in countering revisionist powers." },
+    { "source": "Mediterranean Visionary", "bias": "Regionalist", "view": "Italy must lead a 'Marshall Plan' for Africa (Mattei Plan) to stabilize the region, secure energy supplies, and manage migration at the source." },
+    { "source": "Fiscal Conservative", "bias": "Austerity-leaning", "view": "Long-term stability requires strict adherence to EU fiscal rules and structural reforms to address the low productivity of the Italian economy." }
+  ],
+  "historicalContext": {
+    "summary": "Italy's history spans from the Roman Empire and the Renaissance to its unification as a modern state in 1861. After the trauma of the Fascist era and WWII, Italy emerged as a founding member of the European Union and a major industrial power, though it has struggled with government instability and regional economic disparities for much of its post-war history.",
+    "keyEvents": [
+      { "year": 1861, "event": "Proclamation of the Kingdom of Italy and unification of the peninsula." },
+      { "year": 1946, "event": "Italy becomes a republic following a national referendum." },
+      { "year": 1957, "event": "Signing of the Treaty of Rome, establishing the European Economic Community." },
+      { "year": 1992, "event": "Mani Pulite (Clean Hands) investigation collapses the 'First Republic' political system." },
+      { "year": 1999, "event": "Italy joins the Eurozone as a founding member." },
+      { "year": 2021, "event": "Mario Draghi becomes Prime Minister, leading a national unity government during the pandemic." },
+      { "year": 2022, "event": "Election of Giorgia Meloni, Italy's first female Prime Minister." },
+      { "year": 2024, "event": "Italy hosts the 50th G7 Summit in Puglia, focusing on Africa and AI." }
+    ]
+  },
+  "investmentNotes": {
+    "strengths": ["Advanced and diversified manufacturing base", "World-leading 'Made in Italy' brand (luxury, food, design)", "Strong energy hub potential for the Mediterranean", "High household savings rate"],
+    "risks": ["Severe demographic decline", "High public debt and interest rate vulnerability", "Inefficient judicial and bureaucratic systems", "Regional economic divide (North-South)"],
+    "sectors": ["Industrial Robotics", "Renewable Energy", "Aerospace", "Luxury Goods", "Pharmaceuticals"]
+  },
+  "sources": [
+    { "name": "ISTAT", "url": "https://www.istat.it/en/", "type": "economic" },
+    { "name": "Banca d'Italia", "url": "https://www.bancaditalia.it/homepage/index.html?dothemelanguagetoggle=true", "type": "economic" },
+    { "name": "Ministry of Foreign Affairs", "url": "https://www.esteri.it/en/", "type": "political" }
+  ]
+}

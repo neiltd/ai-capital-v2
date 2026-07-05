@@ -1,0 +1,218 @@
+[
+  {
+    "id": "RAIL-GBR-BARKING-EUROCENTRE",
+    "name": "Barking Eurocentre (Ripple Lane)",
+    "countryId": "GBR",
+    "city": "London",
+    "coordinates": [0.120, 51.530],
+    "type": "freight",
+    "dailyPassengers": null,
+    "annualFreightTonnes": 1200000,
+    "connectedCountries": ["FRA", "BEL", "DEU", "CHN"],
+    "gaugeType": "standard",
+    "lineCount": 6,
+    "strategicImportance": "high",
+    "isPartOfBRI": true,
+    "geopoliticalNotes": "Primary UK terminus for direct rail freight from China (Yiwu-London). Acts as a nodal yard for Thameside ports and international traffic via the Channel Tunnel.",
+    "notes": "First direct train from China arrived here in January 2017.",
+    "attribution": {
+      "sources": [
+        { "name": "DB Cargo UK / China Railway Express", "url": "https://uk.dbcargo.com/", "accessedAt": "2025-03-04" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 1,
+        "lastVerified": "2025-03-04"
+      }
+    }
+  },
+  {
+    "id": "RAIL-GBR-FELIXSTOWE-PORT",
+    "name": "Port of Felixstowe Rail Terminals",
+    "countryId": "GBR",
+    "city": "Felixstowe",
+    "coordinates": [1.320, 51.950],
+    "type": "port_interface",
+    "dailyPassengers": null,
+    "annualFreightTonnes": 18000000,
+    "connectedCountries": [],
+    "gaugeType": "standard",
+    "lineCount": 9,
+    "strategicImportance": "high",
+    "isPartOfBRI": false,
+    "geopoliticalNotes": "UK's busiest container port. Handles approximately 25% of all port traffic by rail, operating 60 freight trains daily to inland hubs.",
+    "notes": "Freight volume reflects the rail portion of port throughput (approx. 930,000 TEUs).",
+    "attribution": {
+      "sources": [
+        { "name": "Port of Felixstowe Statistics", "url": "https://www.portoffelixstowe.co.uk/", "accessedAt": "2025-03-04" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 1,
+        "lastVerified": "2025-03-04"
+      }
+    }
+  },
+  {
+    "id": "RAIL-GBR-SOUTHAMPTON-PORT",
+    "name": "Port of Southampton Rail Terminal",
+    "countryId": "GBR",
+    "city": "Southampton",
+    "coordinates": [-1.420, 50.910],
+    "type": "port_interface",
+    "dailyPassengers": null,
+    "annualFreightTonnes": 12000000,
+    "connectedCountries": [],
+    "gaugeType": "standard",
+    "lineCount": 8,
+    "strategicImportance": "high",
+    "isPartOfBRI": false,
+    "geopoliticalNotes": "UK's second busiest container port and a major automotive hub. Highest rail modal share in the UK (approx. 33%).",
+    "notes": "Handles around 42 trains daily with infrastructure for 775m-long trains.",
+    "attribution": {
+      "sources": [
+        { "name": "Associated British Ports (ABP)", "url": "https://www.abports.co.uk/", "accessedAt": "2025-03-04" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 1,
+        "lastVerified": "2025-03-04"
+      }
+    }
+  },
+  {
+    "id": "RAIL-GBR-DAVENTRY-DIRFT",
+    "name": "Daventry International Rail Freight Terminal (DIRFT)",
+    "countryId": "GBR",
+    "city": "Daventry",
+    "coordinates": [-1.160, 52.340],
+    "type": "freight",
+    "dailyPassengers": null,
+    "annualFreightTonnes": 10000000,
+    "connectedCountries": ["FRA", "BEL"],
+    "gaugeType": "standard",
+    "lineCount": 12,
+    "strategicImportance": "high",
+    "isPartOfBRI": false,
+    "geopoliticalNotes": "UK's largest inland intermodal terminal. Core node for national retail distribution and international traffic via the Channel Tunnel.",
+    "notes": "Processes over 500,000 containers per year.",
+    "attribution": {
+      "sources": [
+        { "name": "Prologis DIRFT Data", "url": "https://prologis.co.uk/", "accessedAt": "2025-03-04" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 1,
+        "lastVerified": "2025-03-04"
+      }
+    }
+  },
+  {
+    "id": "RAIL-GBR-DONCASTER-IPORT",
+    "name": "iPort Doncaster",
+    "countryId": "GBR",
+    "city": "Doncaster",
+    "coordinates": [-1.080, 53.480],
+    "type": "freight",
+    "dailyPassengers": null,
+    "annualFreightTonnes": 2500000,
+    "connectedCountries": [],
+    "gaugeType": "standard",
+    "lineCount": 4,
+    "strategicImportance": "high",
+    "isPartOfBRI": false,
+    "geopoliticalNotes": "Major northern logistics hub on the East Coast Main Line. Strategic link connecting northern industrial zones to deep-sea ports.",
+    "notes": "Capacity for 12 trains per day with direct ECML access.",
+    "attribution": {
+      "sources": [
+        { "name": "iPort Doncaster Official", "url": "https://iportuk.com/", "accessedAt": "2025-03-04" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 1,
+        "lastVerified": "2025-03-04"
+      }
+    }
+  },
+  {
+    "id": "RAIL-GBR-DOLLANDS-MOOR",
+    "name": "Dollands Moor Freight Yard",
+    "countryId": "GBR",
+    "city": "Folkestone",
+    "coordinates": [1.070, 51.100],
+    "type": "border_crossing",
+    "dailyPassengers": null,
+    "annualFreightTonnes": 1200000,
+    "connectedCountries": ["FRA"],
+    "gaugeType": "standard",
+    "lineCount": 8,
+    "strategicImportance": "high",
+    "isPartOfBRI": false,
+    "geopoliticalNotes": "The primary international gateway for Channel Tunnel rail freight. Crucial for locomotive and security changes for all cross-border services.",
+    "notes": null,
+    "attribution": {
+      "sources": [
+        { "name": "Network Rail International", "url": "https://www.networkrail.co.uk/", "accessedAt": "2025-03-04" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 1,
+        "lastVerified": "2025-03-04"
+      }
+    }
+  },
+  {
+    "id": "RAIL-GBR-CREWE-BASFORD-HALL",
+    "name": "Crewe Basford Hall",
+    "countryId": "GBR",
+    "city": "Crewe",
+    "coordinates": [-2.430, 53.080],
+    "type": "freight",
+    "dailyPassengers": null,
+    "annualFreightTonnes": 5000000,
+    "connectedCountries": [],
+    "gaugeType": "standard",
+    "lineCount": 14,
+    "strategicImportance": "high",
+    "isPartOfBRI": false,
+    "geopoliticalNotes": "Key operational hub on the West Coast Main Line. Primary sorting and stabling point for freight moving between the South and North of the UK.",
+    "notes": "Often referred to as the 'engine room' of the UK rail freight network.",
+    "attribution": {
+      "sources": [
+        { "name": "Freightliner Operational Data", "url": "https://www.freightliner.co.uk/", "accessedAt": "2025-03-04" }
+      ],
+      "confidence": {
+        "confidence": "medium",
+        "sourceCount": 1,
+        "lastVerified": "2025-03-04"
+      }
+    }
+  },
+  {
+    "id": "RAIL-GBR-LONDON-ST-PANCRAS",
+    "name": "St Pancras International",
+    "countryId": "GBR",
+    "city": "London",
+    "coordinates": [-0.126, 51.531],
+    "type": "high_speed",
+    "dailyPassengers": 95000,
+    "annualFreightTonnes": null,
+    "connectedCountries": ["FRA", "BEL", "NLD"],
+    "gaugeType": "standard",
+    "lineCount": 15,
+    "strategicImportance": "high",
+    "isPartOfBRI": false,
+    "geopoliticalNotes": "The UK terminus for High Speed 1 and Eurostar services. Critical node for international passenger connectivity to Europe.",
+    "notes": null,
+    "attribution": {
+      "sources": [
+        { "name": "St Pancras International Station Info", "url": "https://stpancras.com/", "accessedAt": "2025-03-04" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 1,
+        "lastVerified": "2025-03-04"
+      }
+    }
+  }
+]

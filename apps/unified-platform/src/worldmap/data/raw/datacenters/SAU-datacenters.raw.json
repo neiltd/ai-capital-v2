@@ -1,0 +1,302 @@
+[
+  {
+    "id": "DC-SAU-RUH-C3-AI",
+    "name": "Center3 AI Data Center (Riyadh)",
+    "countryId": "SAU",
+    "city": "Riyadh",
+    "coordinates": [46.6753, 24.7136],
+    "type": "hyperscale",
+    "status": "operational",
+    "tierLevel": "3",
+    "capacityMW": 200,
+    "floorSpaceM2": null,
+    "pue": null,
+    "operator": "Center3",
+    "owner": "STC (Saudi Telecom Company)",
+    "yearOpened": 2024,
+    "yearPlanned": null,
+    "cloudRegion": null,
+    "geopoliticalNotes": "A massive 200MW facility dedicated to AI workloads; a cornerstone of Vision 2030 to position Saudi Arabia as the regional leader in AI and data processing.",
+    "notes": "Part of the multi-billion dollar STC data center expansion project.",
+    "attribution": {
+      "sources": [
+        { "name": "AI Data Center Index", "url": "https://aidatacenterindex.com/", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 2,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  },
+  {
+    "id": "DC-SAU-RUH-C3-RDC5",
+    "name": "Center3 RDC-05 (Mursalat)",
+    "countryId": "SAU",
+    "city": "Riyadh",
+    "coordinates": [46.71, 24.75],
+    "type": "enterprise",
+    "status": "operational",
+    "tierLevel": "3",
+    "capacityMW": null,
+    "floorSpaceM2": null,
+    "pue": null,
+    "operator": "Center3",
+    "owner": "STC",
+    "yearOpened": 2010,
+    "yearPlanned": null,
+    "cloudRegion": null,
+    "geopoliticalNotes": "Core facility for government digital transformation and national security communications; located at the main STC campus.",
+    "notes": null,
+    "attribution": {
+      "sources": [
+        { "name": "Data Center Map", "url": "https://www.datacentermap.com/saudi-arabia/riyadh/stc-rdc-05.html", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 1,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  },
+  {
+    "id": "DC-SAU-RUH-MOB-MALGA2",
+    "name": "Mobily Malga 2 Data Center",
+    "countryId": "SAU",
+    "city": "Riyadh",
+    "coordinates": [46.61, 24.82],
+    "type": "enterprise",
+    "status": "operational",
+    "tierLevel": "4",
+    "capacityMW": 10,
+    "floorSpaceM2": null,
+    "pue": null,
+    "operator": "Mobily",
+    "owner": "Etihad Etisalat",
+    "yearOpened": 2014,
+    "yearPlanned": null,
+    "cloudRegion": null,
+    "geopoliticalNotes": "One of the few Tier IV certified (Fault Tolerant) facilities in the Kingdom, hosting critical infrastructure for Aramco and major financial institutions.",
+    "notes": "First Tier IV facility in the region.",
+    "attribution": {
+      "sources": [
+        { "name": "Uptime Institute", "url": "https://uptimeinstitute.com/tier-certification/mobily-malga-2", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 2,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  },
+  {
+    "id": "DC-SAU-DMM-GCP-MEC2",
+    "name": "Google Cloud Region Saudi Arabia",
+    "countryId": "SAU",
+    "city": "Dammam",
+    "coordinates": [50.06, 26.43],
+    "type": "hyperscale",
+    "status": "operational",
+    "tierLevel": "3",
+    "capacityMW": null,
+    "floorSpaceM2": null,
+    "pue": null,
+    "operator": "Google / CNTXT",
+    "owner": "Google",
+    "yearOpened": 2023,
+    "yearPlanned": null,
+    "cloudRegion": "me-central2",
+    "geopoliticalNotes": "Google's first region in the Kingdom, operated through a JV with Aramco (CNTXT), signaling a major shift in tech partnership towards US hyperscalers.",
+    "notes": "Focuses on providing AI and data analytics for the energy sector.",
+    "attribution": {
+      "sources": [
+        { "name": "Google Cloud Locations", "url": "https://cloud.google.com/about/locations/dammam", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 2,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  },
+  {
+    "id": "DC-SAU-DMM-MSFT-EAST",
+    "name": "Microsoft Azure Saudi Arabia East",
+    "countryId": "SAU",
+    "city": "Dammam",
+    "coordinates": [50.09, 26.42],
+    "type": "hyperscale",
+    "status": "planned",
+    "tierLevel": "3",
+    "capacityMW": 100,
+    "floorSpaceM2": null,
+    "pue": null,
+    "operator": "Microsoft",
+    "owner": "Microsoft",
+    "yearOpened": null,
+    "yearPlanned": 2026,
+    "cloudRegion": "saudiarabiaeast",
+    "geopoliticalNotes": "Major investment aimed at supporting sovereign cloud requirements for the Saudi government; strategically located near the Dammam subsea cable landing points.",
+    "notes": "Targeting 100MW of capacity upon completion.",
+    "attribution": {
+      "sources": [
+        { "name": "Microsoft Global Infrastructure", "url": "https://azure.microsoft.com/en-us/blog/microsoft-announces-intent-to-launch-new-data-center-region-in-saudi-arabia/", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 1,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  },
+  {
+    "id": "DC-SAU-RUH-ORCL-MEC1",
+    "name": "Oracle Cloud Riyadh Region",
+    "countryId": "SAU",
+    "city": "Riyadh",
+    "coordinates": [46.68, 24.71],
+    "type": "hyperscale",
+    "status": "operational",
+    "tierLevel": "3",
+    "capacityMW": null,
+    "floorSpaceM2": null,
+    "pue": null,
+    "operator": "Oracle",
+    "owner": "Oracle",
+    "yearOpened": 2024,
+    "yearPlanned": null,
+    "cloudRegion": "me-riyadh-1",
+    "geopoliticalNotes": "A $1.5 billion investment to support the Kingdom's booming AI and cloud demand, fulfilling strict data residency laws for public sector data.",
+    "notes": "Second Oracle region in the Kingdom.",
+    "attribution": {
+      "sources": [
+        { "name": "Oracle Public Cloud Regions", "url": "https://www.oracle.com/cloud/public-cloud-regions/", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 1,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  },
+  {
+    "id": "DC-SAU-JED-ORCL-MEC1",
+    "name": "Oracle Cloud Jeddah Region",
+    "countryId": "SAU",
+    "city": "Jeddah",
+    "coordinates": [39.22, 21.50],
+    "type": "hyperscale",
+    "status": "operational",
+    "tierLevel": "3",
+    "capacityMW": null,
+    "floorSpaceM2": null,
+    "pue": null,
+    "operator": "Oracle",
+    "owner": "Oracle",
+    "yearOpened": 2020,
+    "yearPlanned": null,
+    "cloudRegion": "me-jeddah-1",
+    "geopoliticalNotes": "The first major hyperscale region in Saudi Arabia, enabling local hosting for Western Region enterprises and government entities.",
+    "notes": null,
+    "attribution": {
+      "sources": [
+        { "name": "Oracle Public Cloud Regions", "url": "https://www.oracle.com/cloud/public-cloud-regions/", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 1,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  },
+  {
+    "id": "DC-SAU-JED-C3-MG1",
+    "name": "Center3 MENA Gateway 1 (MG1)",
+    "countryId": "SAU",
+    "city": "Jeddah",
+    "coordinates": [39.21, 21.47],
+    "type": "colocation",
+    "status": "operational",
+    "tierLevel": "3",
+    "capacityMW": 14.4,
+    "floorSpaceM2": null,
+    "pue": null,
+    "operator": "Center3",
+    "owner": "STC",
+    "yearOpened": 2022,
+    "yearPlanned": null,
+    "cloudRegion": null,
+    "geopoliticalNotes": "A critical landing point for major subsea cables (including 2Africa), serving as the 'Western Gateway' for data traffic between Europe and Asia.",
+    "notes": "Highly interconnected site with major carrier PoPs.",
+    "attribution": {
+      "sources": [
+        { "name": "Center3 Infrastructure", "url": "https://center3.com/data-centers/", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 2,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  },
+  {
+    "id": "DC-SAU-RUH-HUA-CLOUD",
+    "name": "Huawei Cloud Riyadh Region",
+    "countryId": "SAU",
+    "city": "Riyadh",
+    "coordinates": [46.70, 24.70],
+    "type": "hyperscale",
+    "status": "operational",
+    "tierLevel": "3",
+    "capacityMW": null,
+    "floorSpaceM2": null,
+    "pue": null,
+    "operator": "Huawei",
+    "owner": "Huawei",
+    "yearOpened": 2023,
+    "yearPlanned": null,
+    "cloudRegion": "me-riyadh-1",
+    "geopoliticalNotes": "Huawei's flagship region in the Middle East; represents China's significant digital footprint in the Kingdom despite US pressure to limit Huawei's influence.",
+    "notes": "Provides local cloud services for Chinese firms operating in KSA.",
+    "attribution": {
+      "sources": [
+        { "name": "Huawei Cloud Global Regions", "url": "https://www.huaweicloud.com/intl/en-us/about/locations/", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 1,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  },
+  {
+    "id": "DC-SAU-RUH-C3-RDC102",
+    "name": "Center3 RDC-102 (Remal)",
+    "countryId": "SAU",
+    "city": "Riyadh",
+    "coordinates": [46.82, 24.85],
+    "type": "hyperscale",
+    "status": "operational",
+    "tierLevel": "3",
+    "capacityMW": null,
+    "floorSpaceM2": null,
+    "pue": null,
+    "operator": "Center3",
+    "owner": "STC",
+    "yearOpened": 2022,
+    "yearPlanned": null,
+    "cloudRegion": null,
+    "geopoliticalNotes": "Part of the strategic hyperscale cluster in the capital to support the exponential growth of the Saudi digital economy.",
+    "notes": null,
+    "attribution": {
+      "sources": [
+        { "name": "Data Center Dynamics", "url": "https://www.datacenterdynamics.com/en/news/stc-launches-two-new-data-centers-in-riyadh/", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "medium",
+        "sourceCount": 1,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  }
+]

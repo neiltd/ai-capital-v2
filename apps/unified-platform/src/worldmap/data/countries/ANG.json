@@ -1,0 +1,65 @@
+{
+  "id": "ANG",
+  "iso2": "AO",
+  "name": "Angola",
+  "region": "Africa",
+  "subregion": "Middle Africa",
+  "capital": "Luanda",
+  "lastUpdated": "2025-05-22",
+  "summary": "Angola is a major African oil producer currently navigating a complex period of economic diversification and strategic realignment. Following its exit from OPEC in 2024, the country has pivoted toward the United States for infrastructure development, most notably through the Lobito Corridor project. While the oil sector remains the fiscal anchor, the non-oil economy—led by agriculture and the massive Luele diamond mine—is showing significant growth. However, high inflation and social unrest due to subsidy removals present ongoing challenges for the administration of President João Lourenço.",
+  "indicators": {
+    "politicalStability":       { "score": 5, "trend": "stable", "confidence": "high", "note": "MPLA remains dominant, but rising public discontent and succession debates create uncertainty." },
+    "economicDirection":        { "score": 6, "trend": "rising", "confidence": "high", "note": "Rebound in GDP growth; non-oil sector diversification is showing results." },
+    "investmentAttractiveness": { "score": 6, "trend": "rising", "confidence": "high", "note": "Strong US interest in infrastructure; mining and energy remain primary draws." },
+    "geopoliticalRisk":         { "score": 4, "trend": "stable", "confidence": "medium", "note": "Managing a strategic balance between China and the US; leading regional mediation." },
+    "educationQuality":         { "score": 3, "trend": "stable", "confidence": "medium", "note": "Public spending is low; focus on vocational training to address high youth unemployment." },
+    "healthcareQuality":        { "score": 3, "trend": "stable", "confidence": "medium", "note": "Infrastructure is improving in Luanda, but basic care is lacking in the provinces." },
+    "technologyInvestment":     { "score": 6, "trend": "rising", "confidence": "high", "note": "Leading Central African tech ecosystem; significant investment in national digital infrastructure." }
+  },
+  "demographics": {
+    "population": 36600000,
+    "medianAge": 16.7,
+    "urbanizationRate": 69.3,
+    "majorEthnicGroups": ["Ovimbundu", "Ambundu", "Bakongo", "Lunda-Chokwe"],
+    "religions": [
+      { "name": "Roman Catholic", "percent": 44.2 },
+      { "name": "Protestant", "percent": 34.9 },
+      { "name": "Other/Traditional", "percent": 9.4 },
+      { "name": "None", "percent": 11.5 }
+    ]
+  },
+  "alliances": ["African Union", "SADC", "CPLP", "SAPP"],
+  "relationships": [
+    { "countryId": "CHN", "countryName": "China", "type": "economic_partner", "sentiment": "positive", "summary": "Primary creditor and infrastructure partner; major destination for Angolan oil." },
+    { "countryId": "USA", "countryName": "United States", "type": "strategic_partner", "sentiment": "positive", "summary": "Key partner in the Lobito Corridor; deepening security and energy cooperation." },
+    { "countryId": "PRT", "countryName": "Portugal", "type": "historical_partner", "sentiment": "positive", "summary": "Strong cultural and business ties; Portugal is a major hub for the Angolan elite." },
+    { "countryId": "COD", "countryName": "DR Congo", "type": "regional_partner", "sentiment": "positive", "summary": "Close security ties; Angola acts as a mediator in the Eastern DRC conflict." }
+  ],
+  "perspectives": [
+    { "source": "Luanda Youth Activist", "bias": "Critical", "view": "We see the new airports and the oil, but we don't see the jobs. Life is getting harder every day." },
+    { "source": "Diamond Mine Manager", "bias": "Optimistic", "view": "Luele is a world-class asset. It's proof that Angola can lead in sectors other than oil." },
+    { "source": "US Diplomat", "bias": "Strategic", "view": "Angola's pivot toward the Lobito Corridor is a major win for regional connectivity and Western mineral security." },
+    { "source": "MPLA Official", "bias": "Institutional", "view": "We are modernizing the state and diversifying the economy. Reforms take time, but the foundation is being laid." }
+  ],
+  "historicalContext": {
+    "summary": "Following a long war for independence from Portugal (1975) and a subsequent 27-year civil war (ended 2002), Angola experienced an oil-fueled boom. Under President Lourenço (since 2017), the country has been undergoing a painful but necessary process of anti-corruption reforms and economic liberalization.",
+    "keyEvents": [
+      { "year": 1975, "event": "Independence from Portugal." },
+      { "year": 2002, "event": "End of the Civil War following the death of Jonas Savimbi." },
+      { "year": 2017, "event": "João Lourenço succeeds José Eduardo dos Santos as president." },
+      { "year": 2024, "event": "Angola officially leaves OPEC to pursue independent production targets." },
+      { "year": 2024, "event": "Luele diamond mine begins full-scale commercial operations." },
+      { "year": 2025, "event": "US-backed Lobito Corridor project receives major financing and begins construction." }
+    ]
+  },
+  "investmentNotes": {
+    "strengths": ["One of Africa's top oil and diamond producers", "Strong strategic pivot toward Western infrastructure investment", "Rapidly growing agriculture sector aimed at food security", "High urbanization rate and youthful demographic"],
+    "risks": ["High external debt and heavy reliance on oil revenue", "Persistent social unrest linked to subsidy removal and inflation", "Bureaucratic bottlenecks and corruption in some sectors", "Internal succession politics within the ruling party"],
+    "sectors": ["Hydrocarbons (Post-OPEC expansion)", "Mining (Diamonds and Critical Minerals)", "Infrastructure & Logistics (Lobito Corridor)", "Agriculture & Food Processing"]
+  },
+  "sources": [
+    { "name": "National Bank of Angola (BNA)", "url": "https://www.bna.ao/", "type": "economic" },
+    { "name": "National Institute of Statistics (INE)", "url": "https://www.ine.gov.ao/", "type": "demographic" },
+    { "name": "Angola Agency for Investment and Export Promotion (AIPEX)", "url": "https://aipex.gov.ao/", "type": "investment" }
+  ]
+}

@@ -1,0 +1,36 @@
+[
+  {
+    "countryId": "RUS",
+    "year": 2023,
+    "electricityConsumptionTWh": 1162,
+    "electricityProductionTWh": 1162,
+    "electricityMix": {
+      "gas": 46.0,
+      "nuclear": 19.0,
+      "hydro": 18.0,
+      "coal": 16.0,
+      "wind": 0.4,
+      "solar": 0.2,
+      "otherRenewables": 0.4
+    },
+    "renewableSharePct": 19.0,
+    "waterStressScore": 0.91,
+    "waterWithdrawalPct": 4.1,
+    "foodSecurityScore": 61.4,
+    "aiAdoptionScore": 62.9,
+    "internetPenetration": 88.2,
+    "mobilePenetration": 156.9,
+    "attribution": {
+      "sources": [
+        { "name": "Ember Global Electricity Review 2023", "url": "https://www.ember-energy.org/data/global-electricity/", "accessedAt": "2024-05-24" },
+        { "name": "WRI Aqueduct 4.0", "url": "https://www.wri.org/aqueduct", "accessedAt": "2024-05-24" },
+        { "name": "Global Food Security Index 2022", "url": "https://impact.economist.com/sustainability/project/food-security-index", "accessedAt": "2024-05-24" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 3,
+        "lastVerified": "2024-05-24"
+      }
+    }
+  }
+]

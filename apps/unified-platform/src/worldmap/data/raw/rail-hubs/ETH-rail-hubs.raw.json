@@ -1,0 +1,219 @@
+[
+  {
+    "id": "RAIL-ETH-FURI-LEBU",
+    "name": "Furi-Lebu (Labu) Station",
+    "countryId": "ETH",
+    "city": "Addis Ababa",
+    "coordinates": [38.6872, 8.9320],
+    "type": "passenger",
+    "dailyPassengers": 2500,
+    "annualFreightTonnes": null,
+    "connectedCountries": ["DJI"],
+    "gaugeType": "standard",
+    "lineCount": 6,
+    "strategicImportance": "high",
+    "isPartOfBRI": true,
+    "geopoliticalNotes": "The primary passenger terminal for the capital and the western anchor of the Addis Ababa-Djibouti Railway, a flagship BRI project in Africa.",
+    "notes": "Located on the southwestern outskirts of Addis Ababa.",
+    "attribution": {
+      "sources": [
+        { "name": "Ethio-Djibouti Railway (EDR) official site", "url": "https://edr.gov.et/", "accessedAt": "2024-05-15" },
+        { "name": "Wikipedia - Addis Ababa–Djibouti Railway", "url": "https://en.wikipedia.org/wiki/Addis_Ababa%E2%80%93Djibouti_Railway", "accessedAt": "2024-05-15" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 2,
+        "lastVerified": "2024-05-15"
+      }
+    }
+  },
+  {
+    "id": "RAIL-ETH-INDODE",
+    "name": "Indode Freight Station",
+    "countryId": "ETH",
+    "city": "Addis Ababa",
+    "coordinates": [38.7500, 8.8833],
+    "type": "freight",
+    "dailyPassengers": null,
+    "annualFreightTonnes": 250000,
+    "connectedCountries": ["DJI"],
+    "gaugeType": "standard",
+    "lineCount": 8,
+    "strategicImportance": "high",
+    "isPartOfBRI": true,
+    "geopoliticalNotes": "The main freight yard for the capital; serves as the primary terminal for unimodal cargo and bulk imports like fertilizers and grain.",
+    "notes": "Houses the main rolling stock maintenance depot.",
+    "attribution": {
+      "sources": [
+        { "name": "Ethio-Djibouti Railway (EDR) Statistics", "url": "https://edr.gov.et/", "accessedAt": "2024-05-15" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 1,
+        "lastVerified": "2024-05-15"
+      }
+    }
+  },
+  {
+    "id": "RAIL-ETH-MOJO",
+    "name": "Modjo Dry Port & Station",
+    "countryId": "ETH",
+    "city": "Mojo",
+    "coordinates": [39.1375, 8.5878],
+    "type": "freight",
+    "dailyPassengers": null,
+    "annualFreightTonnes": 1300000,
+    "connectedCountries": ["DJI"],
+    "gaugeType": "standard",
+    "lineCount": 10,
+    "strategicImportance": "high",
+    "isPartOfBRI": true,
+    "geopoliticalNotes": "Ethiopia's most critical inland logistics hub, handling ~78% of the nation's import-export trade.",
+    "notes": "First dry port to have a direct rail spur in Ethiopia.",
+    "attribution": {
+      "sources": [
+        { "name": "Ethiopian Shipping and Logistics Services Enterprise (ESLSE)", "url": "https://www.eslse.et/", "accessedAt": "2024-05-15" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 2,
+        "lastVerified": "2024-05-15"
+      }
+    }
+  },
+  {
+    "id": "RAIL-ETH-ADAMA",
+    "name": "Adama Station",
+    "countryId": "ETH",
+    "city": "Adama",
+    "coordinates": [39.2644, 8.5056],
+    "type": "mixed",
+    "dailyPassengers": 800,
+    "annualFreightTonnes": null,
+    "connectedCountries": ["DJI"],
+    "gaugeType": "standard",
+    "lineCount": 4,
+    "strategicImportance": "medium",
+    "isPartOfBRI": true,
+    "geopoliticalNotes": "Major commercial hub and transition point where the railway shifts from double-track to single-track.",
+    "notes": "Key regional stop for the Madaraka Express equivalent (Ethio-Djibouti train).",
+    "attribution": {
+      "sources": [
+        { "name": "OSM", "url": "https://www.openstreetmap.org/", "accessedAt": "2024-05-15" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 1,
+        "lastVerified": "2024-05-15"
+      }
+    }
+  },
+  {
+    "id": "RAIL-ETH-AWASH",
+    "name": "Awash Junction",
+    "countryId": "ETH",
+    "city": "Awash",
+    "coordinates": [40.1528, 9.0031],
+    "type": "freight",
+    "dailyPassengers": null,
+    "annualFreightTonnes": null,
+    "connectedCountries": ["DJI"],
+    "gaugeType": "standard",
+    "lineCount": 6,
+    "strategicImportance": "high",
+    "isPartOfBRI": true,
+    "geopoliticalNotes": "Strategic junction where the Addis-Djibouti line meets the Awash-Hara Gebeya (AKH) line extending to northern Ethiopia.",
+    "notes": "Gateway to the industrial zones of Kombolcha and Mekelle.",
+    "attribution": {
+      "sources": [
+        { "name": "Railway Gazette International", "url": "https://www.railwaygazette.com/", "accessedAt": "2024-05-15" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 1,
+        "lastVerified": "2024-05-15"
+      }
+    }
+  },
+  {
+    "id": "RAIL-ETH-DIRE-DAWA",
+    "name": "Dire Dawa Dry Port & Station",
+    "countryId": "ETH",
+    "city": "Dire Dawa",
+    "coordinates": [41.8611, 9.5950],
+    "type": "freight",
+    "dailyPassengers": 600,
+    "annualFreightTonnes": 100000,
+    "connectedCountries": ["DJI"],
+    "gaugeType": "standard",
+    "lineCount": 8,
+    "strategicImportance": "high",
+    "isPartOfBRI": true,
+    "geopoliticalNotes": "The primary eastern hub; integrated with Ethiopia's first Free Trade Zone and major industrial parks.",
+    "notes": "Critical for regional trade with the eastern Somali region and Djibouti.",
+    "attribution": {
+      "sources": [
+        { "name": "Ministry of Transport and Logistics, Ethiopia", "url": "https://motl.gov.et/", "accessedAt": "2024-05-15" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 2,
+        "lastVerified": "2024-05-15"
+      }
+    }
+  },
+  {
+    "id": "RAIL-ETH-KOMBOLCHA",
+    "name": "Kombolcha Dry Port & Station",
+    "countryId": "ETH",
+    "city": "Kombolcha",
+    "coordinates": [39.7308, 11.0825],
+    "type": "freight",
+    "dailyPassengers": null,
+    "annualFreightTonnes": null,
+    "connectedCountries": ["DJI"],
+    "gaugeType": "standard",
+    "lineCount": 6,
+    "strategicImportance": "medium",
+    "isPartOfBRI": true,
+    "geopoliticalNotes": "Northern hub on the AKH line; essential for transporting industrial goods from the Kombolcha Industrial Park to the coast.",
+    "notes": "Key node in the Ethiopia-Djibouti-Northern Corridor.",
+    "attribution": {
+      "sources": [
+        { "name": "Logistics Cluster Ethiopia", "url": "https://logcluster.org/ops/eth20a", "accessedAt": "2024-05-15" }
+      ],
+      "confidence": {
+        "confidence": "medium",
+        "sourceCount": 1,
+        "lastVerified": "2024-05-15"
+      }
+    }
+  },
+  {
+    "id": "RAIL-ETH-SEMERA",
+    "name": "Semera Logistics Hub",
+    "countryId": "ETH",
+    "city": "Semera",
+    "coordinates": [41.0117, 11.7917],
+    "type": "freight",
+    "dailyPassengers": null,
+    "annualFreightTonnes": null,
+    "connectedCountries": ["DJI"],
+    "gaugeType": "standard",
+    "lineCount": 2,
+    "strategicImportance": "medium",
+    "isPartOfBRI": true,
+    "geopoliticalNotes": "Regional administrative and logistics hub for the Afar region, serving as a critical road-rail link on the Djibouti corridor.",
+    "notes": "Primarily handles livestock and salt transit.",
+    "attribution": {
+      "sources": [
+        { "name": "Ethio-Djibouti Railway", "url": "https://edr.gov.et/", "accessedAt": "2024-05-15" }
+      ],
+      "confidence": {
+        "confidence": "medium",
+        "sourceCount": 1,
+        "lastVerified": "2024-05-15"
+      }
+    }
+  }
+]

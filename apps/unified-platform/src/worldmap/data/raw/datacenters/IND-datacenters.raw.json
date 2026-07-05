@@ -1,0 +1,302 @@
+[
+  {
+    "id": "DC-IND-MUM-YOTTA-NM1",
+    "name": "Yotta NM1",
+    "countryId": "IND",
+    "city": "Navi Mumbai",
+    "coordinates": [73.10, 18.91],
+    "type": "hyperscale",
+    "status": "operational",
+    "tierLevel": "4",
+    "capacityMW": 50,
+    "floorSpaceM2": 76180,
+    "pue": 1.4,
+    "operator": "Yotta Infrastructure",
+    "owner": "Hiranandani Group",
+    "yearOpened": 2020,
+    "yearPlanned": null,
+    "cloudRegion": null,
+    "geopoliticalNotes": "Largest Tier IV certified data center in Asia; critical for India's data sovereignty and hosting government workloads.",
+    "notes": "Located in Panvel Data Center Park.",
+    "attribution": {
+      "sources": [
+        { "name": "Yotta Infrastructure", "url": "https://yotta.com/yotta-nm1/", "accessedAt": "2025-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 1,
+        "lastVerified": "2025-05-10"
+      }
+    }
+  },
+  {
+    "id": "DC-IND-MUM-EQIX-MB2",
+    "name": "Equinix MB2",
+    "countryId": "IND",
+    "city": "Mumbai",
+    "coordinates": [72.88, 19.11],
+    "type": "colocation",
+    "status": "operational",
+    "tierLevel": "3",
+    "capacityMW": null,
+    "floorSpaceM2": 3225,
+    "pue": null,
+    "operator": "Equinix",
+    "owner": "Equinix",
+    "yearOpened": 2011,
+    "yearPlanned": null,
+    "cloudRegion": null,
+    "geopoliticalNotes": "Most interconnected data center in India; hosts major internet exchanges (NIXI, DE-CIX) and financial ecosystem core.",
+    "notes": "Acquired from GPX Global Systems in 2021.",
+    "attribution": {
+      "sources": [
+        { "name": "Equinix Mumbai Data Centers", "url": "https://www.equinix.com/data-centers/asia-pacific-colocation/india-colocation/mumbai-data-centers", "accessedAt": "2025-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 1,
+        "lastVerified": "2025-05-10"
+      }
+    }
+  },
+  {
+    "id": "DC-IND-MUM-NTT-MUM8",
+    "name": "NTT Mumbai 8",
+    "countryId": "IND",
+    "city": "Navi Mumbai",
+    "coordinates": [73.01, 19.11],
+    "type": "hyperscale",
+    "status": "operational",
+    "tierLevel": "3",
+    "capacityMW": 45,
+    "floorSpaceM2": null,
+    "pue": null,
+    "operator": "NTT Global Data Centers",
+    "owner": "NTT",
+    "yearOpened": 2022,
+    "yearPlanned": null,
+    "cloudRegion": null,
+    "geopoliticalNotes": "Part of NTT's massive Chandivali/Mahape campus; strategically critical for global hyperscale traffic overflow from central Mumbai.",
+    "notes": null,
+    "attribution": {
+      "sources": [
+        { "name": "NTT Global Data Centers India", "url": "https://services.global.ntt/en-us/infrastructure/global-data-centers/asia-pacific/india", "accessedAt": "2025-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 1,
+        "lastVerified": "2025-05-10"
+      }
+    }
+  },
+  {
+    "id": "DC-IND-MAA-DIGCON-MAA10",
+    "name": "Digital Connexion MAA10",
+    "countryId": "IND",
+    "city": "Chennai",
+    "coordinates": [80.15, 13.11],
+    "type": "hyperscale",
+    "status": "operational",
+    "tierLevel": "3",
+    "capacityMW": 20,
+    "floorSpaceM2": null,
+    "pue": null,
+    "operator": "Digital Connexion",
+    "owner": "Digital Realty, Brookfield, Reliance",
+    "yearOpened": 2024,
+    "yearPlanned": null,
+    "cloudRegion": null,
+    "geopoliticalNotes": "First phase of 100MW campus; strategic gateway for subsea cables connecting India to Southeast Asia.",
+    "notes": "Joint venture between Digital Realty, Brookfield, and Reliance Industries.",
+    "attribution": {
+      "sources": [
+        { "name": "Digital Realty Chennai", "url": "https://www.digitalrealty.com/data-centers/chennai", "accessedAt": "2025-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 1,
+        "lastVerified": "2025-05-10"
+      }
+    }
+  },
+  {
+    "id": "DC-IND-MAA-STTGDC-MAA",
+    "name": "STT GDC Chennai",
+    "countryId": "IND",
+    "city": "Chennai",
+    "coordinates": [80.25, 13.02],
+    "type": "colocation",
+    "status": "operational",
+    "tierLevel": "3",
+    "capacityMW": null,
+    "floorSpaceM2": null,
+    "pue": null,
+    "operator": "STT GDC India",
+    "owner": "ST Telemedia Global Data Centres",
+    "yearOpened": 2010,
+    "yearPlanned": null,
+    "cloudRegion": null,
+    "geopoliticalNotes": "Critical hub for MIST subsea cable landing; facilitates low-latency connection to Malaysia and Singapore.",
+    "notes": "Hosts major international subsea cable terminations.",
+    "attribution": {
+      "sources": [
+        { "name": "STT GDC India Chennai", "url": "https://www.sttelemediagdc.in/data-centre-locations/chennai", "accessedAt": "2025-05-10" }
+      ],
+      "confidence": {
+        "confidence": "medium",
+        "sourceCount": 1,
+        "lastVerified": "2025-05-10"
+      }
+    }
+  },
+  {
+    "id": "DC-IND-HYD-AWS-AZ1",
+    "name": "AWS Hyderabad Region",
+    "countryId": "IND",
+    "city": "Hyderabad",
+    "coordinates": [78.48, 17.38],
+    "type": "hyperscale",
+    "status": "operational",
+    "tierLevel": "3",
+    "capacityMW": null,
+    "floorSpaceM2": null,
+    "pue": null,
+    "operator": "Amazon Web Services",
+    "owner": "Amazon",
+    "yearOpened": 2022,
+    "yearPlanned": null,
+    "cloudRegion": "ap-south-2",
+    "geopoliticalNotes": "India's second AWS region; provides disaster recovery for Mumbai and supports data residency for public sector clients.",
+    "notes": "Region consists of 3 Availability Zones.",
+    "attribution": {
+      "sources": [
+        { "name": "AWS Global Infrastructure", "url": "https://aws.amazon.com/about-aws/global-infrastructure/regions_az/", "accessedAt": "2025-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 1,
+        "lastVerified": "2025-05-10"
+      }
+    }
+  },
+  {
+    "id": "DC-IND-MAA-MSFT-SOUTH",
+    "name": "Microsoft Azure South India",
+    "countryId": "IND",
+    "city": "Chennai",
+    "coordinates": [80.22, 12.83],
+    "type": "hyperscale",
+    "status": "operational",
+    "tierLevel": "3",
+    "capacityMW": null,
+    "floorSpaceM2": null,
+    "pue": null,
+    "operator": "Microsoft",
+    "owner": "Microsoft",
+    "yearOpened": 2015,
+    "yearPlanned": null,
+    "cloudRegion": "southindia",
+    "geopoliticalNotes": "Primary Azure hub for Southern India; essential for regional government and financial sector digital transformation.",
+    "notes": null,
+    "attribution": {
+      "sources": [
+        { "name": "Azure Regions", "url": "https://azure.microsoft.com/en-us/explore/global-infrastructure/geographies/#geographies", "accessedAt": "2025-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 1,
+        "lastVerified": "2025-05-10"
+      }
+    }
+  },
+  {
+    "id": "DC-IND-DEL-GOOG-SOUTH2",
+    "name": "Google Cloud Delhi Region",
+    "countryId": "IND",
+    "city": "Noida",
+    "coordinates": [77.39, 28.53],
+    "type": "hyperscale",
+    "status": "operational",
+    "tierLevel": "3",
+    "capacityMW": null,
+    "floorSpaceM2": null,
+    "pue": null,
+    "operator": "Google Cloud",
+    "owner": "Google",
+    "yearOpened": 2021,
+    "yearPlanned": null,
+    "cloudRegion": "asia-south2",
+    "geopoliticalNotes": "Strategic gateway for Northern India; critical for serving Indian Government's digital initiatives in the capital region.",
+    "notes": null,
+    "attribution": {
+      "sources": [
+        { "name": "Google Cloud Regions", "url": "https://cloud.google.com/about/locations", "accessedAt": "2025-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 1,
+        "lastVerified": "2025-05-10"
+      }
+    }
+  },
+  {
+    "id": "DC-IND-HYD-CTRLS-DC2",
+    "name": "CtrlS Hyderabad DC2",
+    "countryId": "IND",
+    "city": "Hyderabad",
+    "coordinates": [78.37, 17.44],
+    "type": "enterprise",
+    "status": "operational",
+    "tierLevel": "4",
+    "capacityMW": null,
+    "floorSpaceM2": null,
+    "pue": null,
+    "operator": "CtrlS Datacenters",
+    "owner": "CtrlS",
+    "yearOpened": 2010,
+    "yearPlanned": null,
+    "cloudRegion": null,
+    "geopoliticalNotes": "World's first LEED Platinum-certified Tier IV data center; hosts mission-critical infrastructure for India's largest banks.",
+    "notes": null,
+    "attribution": {
+      "sources": [
+        { "name": "CtrlS Hyderabad", "url": "https://www.ctrls.in/hyderabad-datacenter.php", "accessedAt": "2025-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 1,
+        "lastVerified": "2025-05-10"
+      }
+    }
+  },
+  {
+    "id": "DC-IND-BLR-STTGDC-KML",
+    "name": "STT GDC Bengaluru KML",
+    "countryId": "IND",
+    "city": "Bengaluru",
+    "coordinates": [77.62, 12.94],
+    "type": "colocation",
+    "status": "operational",
+    "tierLevel": "3",
+    "capacityMW": null,
+    "floorSpaceM2": null,
+    "pue": null,
+    "operator": "STT GDC India",
+    "owner": "ST Telemedia Global Data Centres",
+    "yearOpened": 2014,
+    "yearPlanned": null,
+    "cloudRegion": null,
+    "geopoliticalNotes": "Infrastructure hub for India's tech capital; hosts R&D environments for global capability centers (GCCs).",
+    "notes": null,
+    "attribution": {
+      "sources": [
+        { "name": "STT GDC India Bengaluru", "url": "https://www.sttelemediagdc.in/data-centre-locations/bengaluru", "accessedAt": "2025-05-10" }
+      ],
+      "confidence": {
+        "confidence": "medium",
+        "sourceCount": 1,
+        "lastVerified": "2025-05-10"
+      }
+    }
+  }
+]

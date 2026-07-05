@@ -1,0 +1,408 @@
+[
+  {
+    "id": "PLANT-UKR-ZAPORIZHZHIA",
+    "name": "Zaporizhzhia Nuclear Power Plant",
+    "countryId": "UKR",
+    "city": "Enerhodar",
+    "coordinates": [34.5844, 47.5083],
+    "type": "nuclear",
+    "status": "mothballed",
+    "capacityMW": 6000,
+    "annualOutputGWh": null,
+    "yearCommissioned": 1984,
+    "yearRetirement": null,
+    "operator": "Energoatom (de jure)",
+    "owner": "State of Ukraine",
+    "strategicNote": "Europe's largest nuclear plant; currently under Russian occupation and in cold shutdown. Its status is a major global nuclear safety concern.",
+    "notes": "Occupied by Russian forces since March 2022.",
+    "attribution": {
+      "sources": [
+        { "name": "IAEA", "url": "https://www.iaea.org/zaporizhzhia-nuclear-power-plant-update", "accessedAt": "2025-02-13" },
+        { "name": "Global Energy Monitor", "url": "https://www.gem.wiki/Zaporizhzhia_nuclear_power_plant", "accessedAt": "2025-02-13" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 2,
+        "lastVerified": "2025-02-13"
+      }
+    }
+  },
+  {
+    "id": "PLANT-UKR-RIVNE",
+    "name": "Rivne Nuclear Power Plant",
+    "countryId": "UKR",
+    "city": "Varash",
+    "coordinates": [25.8917, 51.3278],
+    "type": "nuclear",
+    "status": "operating",
+    "capacityMW": 2835,
+    "annualOutputGWh": null,
+    "yearCommissioned": 1980,
+    "yearRetirement": null,
+    "operator": "Energoatom",
+    "owner": "State of Ukraine",
+    "strategicNote": "Critical nuclear facility in Western Ukraine, vital for national grid stability during the conflict.",
+    "notes": null,
+    "attribution": {
+      "sources": [
+        { "name": "IAEA PRIS", "url": "https://pris.iaea.org/PRIS/CountryStatistics/CountryDetails.aspx?current=UA", "accessedAt": "2025-02-13" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 1,
+        "lastVerified": "2025-02-13"
+      }
+    }
+  },
+  {
+    "id": "PLANT-UKR-SOUTH-UKRAINE",
+    "name": "South Ukraine Nuclear Power Plant",
+    "countryId": "UKR",
+    "city": "Yuzhnoukrainsk",
+    "coordinates": [31.2167, 47.8167],
+    "type": "nuclear",
+    "status": "operating",
+    "capacityMW": 2850,
+    "annualOutputGWh": null,
+    "yearCommissioned": 1982,
+    "yearRetirement": null,
+    "operator": "Energoatom",
+    "owner": "State of Ukraine",
+    "strategicNote": "Key energy source for Southern Ukraine, integrated with hydroelectric and pumped-storage facilities.",
+    "notes": null,
+    "attribution": {
+      "sources": [
+        { "name": "Global Energy Monitor", "url": "https://www.gem.wiki/South_Ukraine_nuclear_power_plant", "accessedAt": "2025-02-13" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 1,
+        "lastVerified": "2025-02-13"
+      }
+    }
+  },
+  {
+    "id": "PLANT-UKR-KHMELNYTSKYI",
+    "name": "Khmelnytskyi Nuclear Power Plant",
+    "countryId": "UKR",
+    "city": "Netishyn",
+    "coordinates": [26.6478, 50.3025],
+    "type": "nuclear",
+    "status": "operating",
+    "capacityMW": 2000,
+    "annualOutputGWh": null,
+    "yearCommissioned": 1987,
+    "yearRetirement": null,
+    "operator": "Energoatom",
+    "owner": "State of Ukraine",
+    "strategicNote": "Target for future expansion with Western reactor technology to reduce dependence on Russian designs.",
+    "notes": null,
+    "attribution": {
+      "sources": [
+        { "name": "Global Energy Monitor", "url": "https://www.gem.wiki/Khmelnitski_nuclear_power_plant", "accessedAt": "2025-02-13" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 1,
+        "lastVerified": "2025-02-13"
+      }
+    }
+  },
+  {
+    "id": "PLANT-UKR-DNIPROHES",
+    "name": "Dnipro Hydroelectric Station",
+    "countryId": "UKR",
+    "city": "Zaporizhzhia",
+    "coordinates": [35.08, 47.87],
+    "type": "hydro",
+    "status": "mothballed",
+    "capacityMW": 1569,
+    "annualOutputGWh": null,
+    "yearCommissioned": 1932,
+    "yearRetirement": null,
+    "operator": "Ukrhydroenergo",
+    "owner": "State of Ukraine",
+    "strategicNote": "Ukraine's largest and most iconic hydro station; severely damaged by missile strikes in 2024 and currently non-operational.",
+    "notes": "HPP turbine halls destroyed in March 2024.",
+    "attribution": {
+      "sources": [
+        { "name": "Global Energy Monitor", "url": "https://www.gem.wiki/Dnieper_Hydroelectric_Station", "accessedAt": "2025-02-13" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 1,
+        "lastVerified": "2025-02-13"
+      }
+    }
+  },
+  {
+    "id": "PLANT-UKR-DNIESTER-HES",
+    "name": "Dniester Hydroelectric Station",
+    "countryId": "UKR",
+    "city": "Novodnistrovsk",
+    "coordinates": [27.45, 48.55],
+    "type": "hydro",
+    "status": "operating",
+    "capacityMW": 702,
+    "annualOutputGWh": null,
+    "yearCommissioned": 1981,
+    "yearRetirement": null,
+    "operator": "Ukrhydroenergo",
+    "owner": "State of Ukraine",
+    "strategicNote": "Vital for grid maneuvering and water regulation in Southwest Ukraine and Moldova.",
+    "notes": null,
+    "attribution": {
+      "sources": [
+        { "name": "Global Energy Monitor", "url": "https://www.gem.wiki/Dniester_Hydroelectric_Station", "accessedAt": "2025-02-13" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 1,
+        "lastVerified": "2025-02-13"
+      }
+    }
+  },
+  {
+    "id": "PLANT-UKR-BURSHTYN",
+    "name": "Burshtyn Power Plant",
+    "countryId": "UKR",
+    "city": "Burshtyn",
+    "coordinates": [24.66, 49.21],
+    "type": "coal",
+    "status": "mothballed",
+    "capacityMW": 2334,
+    "annualOutputGWh": null,
+    "yearCommissioned": 1965,
+    "yearRetirement": null,
+    "operator": "DTEK",
+    "owner": "DTEK",
+    "strategicNote": "Formerly the primary source for the 'Burshtyn Island' grid; declared irreparably damaged in June 2024.",
+    "notes": "Target of numerous missile strikes.",
+    "attribution": {
+      "sources": [
+        { "name": "Global Energy Monitor", "url": "https://www.gem.wiki/Burshtyn_power_station", "accessedAt": "2025-02-13" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 1,
+        "lastVerified": "2025-02-13"
+      }
+    }
+  },
+  {
+    "id": "PLANT-UKR-TRYPILSKA",
+    "name": "Trypilska Power Plant",
+    "countryId": "UKR",
+    "city": "Ukrainka",
+    "coordinates": [30.74, 50.13],
+    "type": "coal",
+    "status": "decommissioned",
+    "capacityMW": 1800,
+    "annualOutputGWh": null,
+    "yearCommissioned": 1969,
+    "yearRetirement": 2024,
+    "operator": "Centrenergo",
+    "owner": "State of Ukraine",
+    "strategicNote": "Completely destroyed by Russian strikes in April 2024; was the largest power supplier for the Kyiv region.",
+    "notes": "Destroyed in missile attack.",
+    "attribution": {
+      "sources": [
+        { "name": "Global Energy Monitor", "url": "https://www.gem.wiki/Trypilska_power_station", "accessedAt": "2025-02-13" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 1,
+        "lastVerified": "2025-02-13"
+      }
+    }
+  },
+  {
+    "id": "PLANT-UKR-ZMIIVSKA",
+    "name": "Zmiivska Power Plant",
+    "countryId": "UKR",
+    "city": "Slobozhanske",
+    "coordinates": [36.4, 49.6],
+    "type": "coal",
+    "status": "decommissioned",
+    "capacityMW": 2200,
+    "annualOutputGWh": null,
+    "yearCommissioned": 1960,
+    "yearRetirement": 2024,
+    "operator": "Centrenergo",
+    "owner": "State of Ukraine",
+    "strategicNote": "One of the largest thermal power plants in the Kharkiv region; completely destroyed in March 2024.",
+    "notes": null,
+    "attribution": {
+      "sources": [
+        { "name": "Global Energy Monitor", "url": "https://www.gem.wiki/Zmiivska_power_station", "accessedAt": "2025-02-13" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 1,
+        "lastVerified": "2025-02-13"
+      }
+    }
+  },
+  {
+    "id": "PLANT-UKR-DNISTROVSKA-PSP",
+    "name": "Dnistrovska Pumped Storage Power Station",
+    "countryId": "UKR",
+    "city": "Novodnistrovsk",
+    "coordinates": [27.4, 48.5],
+    "type": "hydro",
+    "status": "operating",
+    "capacityMW": 2268,
+    "annualOutputGWh": null,
+    "yearCommissioned": 2009,
+    "yearRetirement": null,
+    "operator": "Ukrhydroenergo",
+    "owner": "State of Ukraine",
+    "strategicNote": "One of the largest pumped-storage plants in Europe, essential for maintaining grid frequency.",
+    "notes": null,
+    "attribution": {
+      "sources": [
+        { "name": "Global Energy Monitor", "url": "https://www.gem.wiki/Dniester_Pumped_Storage_Station", "accessedAt": "2025-02-13" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 1,
+        "lastVerified": "2025-02-13"
+      }
+    }
+  },
+  {
+    "id": "PLANT-UKR-KRYVORIZKA",
+    "name": "Kryvorizka Power Plant",
+    "countryId": "UKR",
+    "city": "Zelenodolsk",
+    "coordinates": [33.88, 47.51],
+    "type": "coal",
+    "status": "mothballed",
+    "capacityMW": 2820,
+    "annualOutputGWh": null,
+    "yearCommissioned": 1970,
+    "yearRetirement": null,
+    "operator": "DTEK",
+    "owner": "DTEK",
+    "strategicNote": "Major thermal plant in Central Ukraine, damaged by shelling due to its proximity to the front lines.",
+    "notes": null,
+    "attribution": {
+      "sources": [
+        { "name": "Global Energy Monitor", "url": "https://www.gem.wiki/Kryvorizka_power_station", "accessedAt": "2025-02-13" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 1,
+        "lastVerified": "2025-02-13"
+      }
+    }
+  },
+  {
+    "id": "PLANT-UKR-LADYPHYNSKA",
+    "name": "Ladyzhynska Power Plant",
+    "countryId": "UKR",
+    "city": "Ladyzhyn",
+    "coordinates": [28.9, 48.7],
+    "type": "coal",
+    "status": "mothballed",
+    "capacityMW": 1800,
+    "annualOutputGWh": null,
+    "yearCommissioned": 1970,
+    "yearRetirement": null,
+    "operator": "DTEK",
+    "owner": "DTEK",
+    "strategicNote": "Significant thermal power plant in Vinnytsia region, frequently targeted by strikes.",
+    "notes": null,
+    "attribution": {
+      "sources": [
+        { "name": "Global Energy Monitor", "url": "https://www.gem.wiki/Ladyzhyn_power_station", "accessedAt": "2025-02-13" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 1,
+        "lastVerified": "2025-02-13"
+      }
+    }
+  },
+  {
+    "id": "PLANT-UKR-KANIV-HES",
+    "name": "Kaniv Hydroelectric Station",
+    "countryId": "UKR",
+    "city": "Kaniv",
+    "coordinates": [31.5, 49.7],
+    "type": "hydro",
+    "status": "operating",
+    "capacityMW": 444,
+    "annualOutputGWh": null,
+    "yearCommissioned": 1972,
+    "yearRetirement": null,
+    "operator": "Ukrhydroenergo",
+    "owner": "State of Ukraine",
+    "strategicNote": "Part of the Dnieper cascade, important for peak load coverage and water management.",
+    "notes": null,
+    "attribution": {
+      "sources": [
+        { "name": "Global Energy Monitor", "url": "https://www.gem.wiki/Kaniv_Hydroelectric_Station", "accessedAt": "2025-02-13" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 1,
+        "lastVerified": "2025-02-13"
+      }
+    }
+  },
+  {
+    "id": "PLANT-UKR-KYIV-HES",
+    "name": "Kyiv Hydroelectric Station",
+    "countryId": "UKR",
+    "city": "Vyshhorod",
+    "coordinates": [30.5, 50.6],
+    "type": "hydro",
+    "status": "operating",
+    "capacityMW": 440,
+    "annualOutputGWh": null,
+    "yearCommissioned": 1964,
+    "yearRetirement": null,
+    "operator": "Ukrhydroenergo",
+    "owner": "State of Ukraine",
+    "strategicNote": "First stage of the Dnieper cascade, vital for Kyiv's energy and water safety.",
+    "notes": null,
+    "attribution": {
+      "sources": [
+        { "name": "Global Energy Monitor", "url": "https://www.gem.wiki/Kyiv_Hydroelectric_Station", "accessedAt": "2025-02-13" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 1,
+        "lastVerified": "2025-02-13"
+      }
+    }
+  },
+  {
+    "id": "PLANT-UKR-TASHLYK-PSP",
+    "name": "Tashlyk Pumped Storage Power Station",
+    "countryId": "UKR",
+    "city": "Yuzhnoukrainsk",
+    "coordinates": [31.1, 47.8],
+    "type": "hydro",
+    "status": "operating",
+    "capacityMW": 906,
+    "annualOutputGWh": null,
+    "yearCommissioned": 2006,
+    "yearRetirement": null,
+    "operator": "Energoatom",
+    "owner": "State of Ukraine",
+    "strategicNote": "Integral part of the South Ukraine Energy Complex, assisting in nuclear load leveling.",
+    "notes": null,
+    "attribution": {
+      "sources": [
+        { "name": "Global Energy Monitor", "url": "https://www.gem.wiki/Tashlyk_Pumped_Storage_Station", "accessedAt": "2025-02-13" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 1,
+        "lastVerified": "2025-02-13"
+      }
+    }
+  }
+]

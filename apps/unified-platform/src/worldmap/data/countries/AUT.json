@@ -1,0 +1,66 @@
+{
+  "id": "AUT",
+  "iso2": "AT",
+  "name": "Austria",
+  "region": "Europe",
+  "subregion": "Western Europe",
+  "capital": "Vienna",
+  "lastUpdated": "2026-05-09",
+  "summary": "Austria is emerging from its longest economic recession since 1945, with a centrist 'rebound' coalition (ÖVP, SPÖ, NEOS) currently at the helm following the 2024 elections. In 2026, the political focus is on restoring fiscal stability and addressing structural competitiveness issues that have plagued the industrial sector. The country remains a key bridge between Western and Eastern Europe, though its constitutional neutrality is under increasing domestic and international debate. Economically, a recovery in private consumption and tourism is driving modest growth, but high labor and energy costs remain persistent challenges. Vienna continues to serve as a major global hub for international organizations and diplomacy.",
+  "indicators": {
+    "politicalStability":       { "score": 6, "score_description": "Stable centrist governance after a period of polarization.", "trend": "improving", "confidence": "high", "note": "The formation of a three-party coalition has marginalized far-right influence for now, though social divisions remain visible." },
+    "economicDirection":        { "score": 5, "score_description": "Sluggish recovery following a deep recession.", "trend": "improving", "confidence": "high", "note": "GDP growth is picking up toward 1.2% in 2026, but the 'excessive deficit procedure' necessitates cautious fiscal management." },
+    "investmentAttractiveness": { "score": 7, "score_description": "Strong regional hub with high quality of life.", "trend": "stable", "confidence": "high", "note": "Austria remains an attractive base for CEE-focused operations, though high non-wage labor costs are a deterrent for some industrial sectors." },
+    "geopoliticalRisk":         { "score": 5, "score_description": "Moderate risk linked to energy dependency and neutrality debates.", "trend": "rising", "confidence": "high", "note": "The transition away from Russian gas is nearly complete, but the long-term strategic costs of neutrality in a more hostile Europe are a point of friction." },
+    "educationQuality":         { "score": 8, "score_description": "High standards with a strong emphasis on vocational training.", "trend": "stable", "confidence": "high", "note": "The dual education system provides a steady supply of skilled labor, particularly in engineering and technical trades." },
+    "healthcareQuality":        { "score": 9, "score_description": "Excellent universal system with high hospital capacity.", "trend": "stable", "confidence": "high", "note": "Austria's healthcare system is among the best in the EU, though it faces challenges with an aging medical workforce and rising expenditures." },
+    "technologyInvestment":     { "score": 7, "score_description": "Growing focus on green energy and environmental tech.", "trend": "rising", "confidence": "high", "note": "Austria is a leader in hydropower and is significantly increasing investments in green hydrogen and semiconductor research (Silicon Austria)." }
+  },
+  "demographics": {
+    "population": 9150000,
+    "medianAge": 43.5,
+    "urbanizationRate": 59,
+    "majorEthnicGroups": ["Austrian", "German", "Romanian", "Turkish", "Serbian"],
+    "religions": [
+      { "name": "Roman Catholic", "percent": 52 },
+      { "name": "None/Unaffiliated", "percent": 22.4 },
+      { "name": "Muslim", "percent": 8.3 },
+      { "name": "Orthodox Christian", "percent": 4.9 },
+      { "name": "Other", "percent": 12.4 }
+    ]
+  },
+  "alliances": ["EU", "OECD", "OSCE", "Partnership for Peace (NATO)"],
+  "relationships": [
+    { "countryId": "DEU", "countryName": "Germany", "type": "ally", "sentiment": "positive", "summary": "Most important economic and cultural partner; integrated supply chains and shared positions on many EU issues." },
+    { "countryId": "HUN", "countryName": "Hungary", "type": "partner", "sentiment": "neutral", "summary": "Complex relationship involving shared history and current migration challenges; tactical cooperation despite political differences." },
+    { "countryId": "ITA", "countryName": "Italy", "type": "ally", "sentiment": "positive", "summary": "Close cooperation on regional security and transport (Brenner Pass), though sensitive to migration flows." },
+    { "countryId": "USA", "countryName": "United States", "type": "partner", "sentiment": "positive", "summary": "Strong economic ties and cooperation on global security within the framework of Austrian neutrality." },
+    { "countryId": "RUS", "countryName": "Russia", "type": "competitor", "sentiment": "negative", "summary": "Relations have reached a historic low; Austria has significantly reduced its energy dependency and aligned with EU sanctions." }
+  ],
+  "perspectives": [
+    { "source": "Coalition Policymaker", "bias": "Centrist", "view": "The rebound coalition is focused on modernizing Austria's economy while preserving its social safety net and international reputation as a bridge-builder." },
+    { "source": "Industrial Leader", "bias": "Business-focused", "view": "Urgent reforms are needed to lower energy costs and reduce the tax burden on labor to prevent a loss of industrial competitiveness." },
+    { "source": "Neutrality Advocate", "bias": "Sovereigntist", "view": "Austria must strictly adhere to its constitutional neutrality to remain a credible venue for international dialogue and avoid being drawn into great power conflicts." }
+  ],
+  "historicalContext": {
+    "summary": "Austria's modern identity was shaped by the fall of the Austro-Hungarian Empire in 1918 and the post-WWII occupation. The 1955 State Treaty established its 'permanent neutrality' and regained its full sovereignty. Since joining the EU in 1995, Austria has successfully integrated its economy with Western Europe while maintaining its status as a gateway to the East.",
+    "keyEvents": [
+      { "year": 1918, "event": "Proclamation of the First Republic following the collapse of the Habsburg Monarchy." },
+      { "year": 1945, "event": "Liberation from Nazi rule and start of the ten-year Allied occupation." },
+      { "year": 1955, "event": "Austrian State Treaty and the declaration of permanent neutrality." },
+      { "year": 1995, "event": "Austria joins the European Union." },
+      { "year": 2002, "event": "Adoption of the Euro as the national currency." },
+      { "year": 2024, "event": "National elections lead to the formation of the first 'rebound' coalition." }
+    ]
+  },
+  "investmentNotes": {
+    "strengths": ["Strategic location in Central Europe", "High quality of life and world-class infrastructure", "Global leadership in environmental technologies and hydropower", "Stable legal and financial framework"],
+    "risks": ["High non-wage labor costs and complex labor laws", "Ageing population impacting labor supply", "Slow pace of digitalization in the public sector", "Vulnerability to fluctuations in CEE markets"],
+    "sectors": ["Tourism & Leisure", "Green Technology & Renewable Energy", "Automotive Components", "Mechanical Engineering", "Biotechnology"]
+  },
+  "sources": [
+    { "name": "Statistics Austria", "url": "https://www.statistik.at/en/", "type": "economic" },
+    { "name": "Oesterreichische Nationalbank (OeNB)", "url": "https://www.oenb.at/en/", "type": "economic" },
+    { "name": "Federal Ministry for European and International Affairs", "url": "https://www.bmeia.gv.at/en/", "type": "political" }
+  ]
+}

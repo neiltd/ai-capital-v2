@@ -1,0 +1,66 @@
+{
+  "id": "URY",
+  "iso2": "UY",
+  "name": "Uruguay",
+  "region": "Americas",
+  "subregion": "South America",
+  "capital": "Montevideo",
+  "lastUpdated": "2026-05-24",
+  "summary": "Uruguay remains one of the most stable and socially progressive nations in Latin America, often described as a 'full democracy' with strong institutional pillars. Following the 2024 general elections, the country transitioned to a new administration under Yamandú Orsi of the Frente Amplio, which has maintained the country's long-standing tradition of centrist pragmatism and fiscal responsibility. The economy is characterized by high income per capita, a robust middle class, and a commitment to green energy, with nearly all of its electricity coming from renewable sources. While Uruguay faces challenges such as an aging population, rising organized crime related to regional drug transit, and the need for greater global trade integration, it remains a premier destination for safe-haven investment and high-tech services in the Southern Cone.",
+  "indicators": {
+    "politicalStability":       { "score": 9, "score_description": "Exceptional stability and strong democratic institutions.", "trend": "stable", "confidence": "high", "note": "Uruguay consistently ranks at the top of regional indices for low corruption and high civil liberties." },
+    "economicDirection":        { "score": 7, "score_description": "Steady growth with high human development.", "trend": "stable", "confidence": "high", "note": "The economy has recovered well from recent droughts and is focusing on high-value software and logistics services." },
+    "investmentAttractiveness": { "score": 8, "score_description": "Highly attractive for stable, long-term capital.", "trend": "rising", "confidence": "high", "note": "Strong rule of law and investment incentives make it a regional hub for multinational headquarters and tech hubs." },
+    "geopoliticalRisk":         { "score": 2, "score_description": "Very low risk; neutral and diplomatic foreign policy.", "trend": "stable", "confidence": "high", "note": "Uruguay is a key advocate for rules-based trade and democratic norms in the region." },
+    "educationQuality":         { "score": 7, "score_description": "Historically strong but facing modern quality challenges.", "trend": "stable", "confidence": "medium", "note": "The 'Plan Ceibal' (One Laptop per Child) has ensured high digital literacy, though secondary school completion rates are a focus area." },
+    "healthcareQuality":        { "score": 8, "score_description": "High-quality universal healthcare system.", "trend": "stable", "confidence": "high", "note": "Uruguay's healthcare response and infrastructure are among the best in Latin America." },
+    "technologyInvestment":     { "score": 7, "score_description": "Strong tech ecosystem and digital infrastructure.", "trend": "rising", "confidence": "high", "note": "The country is a major exporter of software per capita and is attracting major data center projects from global tech giants." }
+  },
+  "demographics": {
+    "population": 3450000,
+    "medianAge": 35.8,
+    "urbanizationRate": 96,
+    "majorEthnicGroups": ["European descent", "Mestizo", "African descent"],
+    "religions": [
+      { "name": "Roman Catholic", "percent": 45 },
+      { "name": "None/Atheist/Agnostic", "percent": 38 },
+      { "name": "Non-Catholic Christian", "percent": 11 },
+      { "name": "Other", "percent": 6 }
+    ]
+  },
+  "alliances": ["Mercosur", "UN", "OAS", "CELAC"],
+  "relationships": [
+    { "countryId": "ARG", "countryName": "Argentina", "type": "partner", "sentiment": "positive", "summary": "Deep cultural and economic ties; Uruguay often serves as a financial safe haven for Argentine capital." },
+    { "countryId": "BRA", "countryName": "Brazil", "type": "partner", "sentiment": "positive", "summary": "Major trade partner; collaboration is strong within the Mercosur framework and on border infrastructure." },
+    { "countryId": "CHN", "countryName": "China", "type": "trade_partner", "sentiment": "positive", "summary": "Top export destination for beef and wool; Uruguay is actively pursuing a bilateral Free Trade Agreement despite Mercosur tensions." },
+    { "countryId": "USA", "countryName": "United States", "type": "partner", "sentiment": "positive", "summary": "Strong partner in technology, trade, and regional security; growing cooperation in the digital economy." }
+  ],
+  "perspectives": [
+    { "source": "Frente Amplio (Governing)", "bias": "Center-Left / Social Democratic", "view": "We must grow with equity, protecting our social safety net while modernizing our economy for the 21st century." },
+    { "source": "Coalición Republicana (Opposition)", "bias": "Center-Right", "view": "The focus should remain on competitiveness, deregulation, and opening new international markets to avoid economic stagnation." },
+    { "source": "World Bank / IMF", "bias": "Institutional", "view": "Uruguay stands out as a model of social cohesion and institutional quality in a volatile region, though fiscal consolidation remains important." }
+  ],
+  "historicalContext": {
+    "summary": "Uruguay was historically known as the 'Switzerland of South America' due to its early social welfare state and stability. After a period of military dictatorship (1973-1985), it successfully returned to democracy and has since experienced alternating power between center-right and center-left coalitions without social upheaval.",
+    "keyEvents": [
+      { "year": 1828, "event": "Treaty of Montevideo establishes Uruguay as an independent buffer state." },
+      { "year": 1903, "event": "Presidency of José Batlle y Ordóñez, architect of the modern welfare state." },
+      { "year": 1973, "event": "Military coup begins 12 years of dictatorship." },
+      { "year": 1985, "event": "Restoration of democratic rule." },
+      { "year": 1991, "event": "Uruguay hosts the signing of the Treaty of Asunción (Mercosur)." },
+      { "year": 2004, "event": "First victory of the Frente Amplio, marking a shift to the left." },
+      { "year": 2013, "event": "Uruguay becomes the first country in the world to fully legalize cannabis." },
+      { "year": 2024, "event": "Yamandú Orsi elected President, returning Frente Amplio to power." }
+    ]
+  },
+  "investmentNotes": {
+    "strengths": ["Strongest democratic institutions in Latin America", "High social stability and low corruption", "World-class renewable energy matrix", "Skilled workforce and high digital literacy"],
+    "risks": ["Small domestic market and high cost of living ('Uruguay is expensive')", "Aging population and pension system sustainability", "Exposure to regional economic volatility (Argentina/Brazil)", "Inflexible labor market regulations"],
+    "sectors": ["Software and IT Services", "Agribusiness (Beef, Soy, Forestry)", "Renewable Energy (Wind, Solar, Green Hydrogen)", "Logistics and Regional Distribution"]
+  },
+  "sources": [
+    { "name": "BCU (Banco Central del Uruguay)", "url": "https://www.bcu.gub.uy/", "type": "economic" },
+    { "name": "Uruguay XXI (Investment and Export Promotion)", "url": "https://www.uruguayxxi.gub.uy/", "type": "investment" },
+    { "name": "INE (Instituto Nacional de Estadística)", "url": "https://www.ine.gub.uy/", "type": "economic" }
+  ]
+}

@@ -1,0 +1,27 @@
+[
+  {
+    "countryId": "GBR",
+    "year": 2022,
+    "overallScore": 78.8,
+    "availability": 71.6,
+    "access": 91.5,
+    "utilization": 77.6,
+    "stability": 71.1,
+    "undernourishedPct": 2.5,
+    "foodImportDependencyPct": 18.1,
+    "cerealYieldKgHa": 7720,
+    "climateVulnerability": "medium",
+    "conflictExposure": "low",
+    "attribution": {
+      "sources": [
+        { "name": "GFSI 2022 — United Kingdom", "url": "https://impact.economist.com/sustainability/project/food-security-index/", "accessedAt": "2025-02-13" },
+        { "name": "FAO FAOSTAT", "url": "https://www.fao.org/faostat/en/", "accessedAt": "2025-02-13" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 2,
+        "lastVerified": "2025-02-13"
+      }
+    }
+  }
+]

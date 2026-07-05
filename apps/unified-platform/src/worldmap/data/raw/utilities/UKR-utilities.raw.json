@@ -1,0 +1,37 @@
+[
+  {
+    "countryId": "UKR",
+    "year": 2023,
+    "electricityConsumptionTWh": 93,
+    "electricityProductionTWh": 103,
+    "electricityMix": {
+      "coal": 21.7,
+      "gas": 11.0,
+      "nuclear": 50.1,
+      "hydro": 11.0,
+      "solar": 4.4,
+      "wind": 1.0,
+      "otherRenewables": 0.8
+    },
+    "renewableSharePct": 17.2,
+    "waterStressScore": 2.10,
+    "waterWithdrawalPct": 8.5,
+    "foodSecurityScore": 57.9,
+    "aiAdoptionScore": 53.29,
+    "internetPenetration": 79.2,
+    "mobilePenetration": 148.7,
+    "attribution": {
+      "sources": [
+        { "name": "IEA World Energy Balances 2023/2024", "url": "https://www.iea.org/data-and-statistics/data-product/world-energy-balances", "accessedAt": "2026-05-10" },
+        { "name": "WRI Aqueduct 4.0", "url": "https://www.wri.org/aqueduct", "accessedAt": "2026-05-10" },
+        { "name": "Oxford Insights Government AI Readiness Index 2023", "url": "https://oxfordinsights.com/government-ai-readiness-index-2023/", "accessedAt": "2026-05-10" },
+        { "name": "DataReportal Digital 2024: Ukraine", "url": "https://datareportal.com/reports/digital-2024-ukraine", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 4,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  }
+]

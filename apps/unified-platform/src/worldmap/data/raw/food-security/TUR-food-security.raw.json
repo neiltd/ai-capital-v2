@@ -1,0 +1,40 @@
+[
+  {
+    "countryId": "TUR",
+    "year": 2022,
+    "overallScore": 65.3,
+    "availability": 61.6,
+    "access": 67.6,
+    "utilization": 75.8,
+    "stability": 56.4,
+    "undernourishedPct": 2.5,
+    "foodImportDependencyPct": 6.5,
+    "cerealYieldKgHa": 3659,
+    "climateVulnerability": "high",
+    "conflictExposure": "medium",
+    "attribution": {
+      "sources": [
+        {
+          "name": "GFSI 2022 — Turkey",
+          "url": "https://impact.economist.com/sustainability/project/food-security-index/reports-and-resources",
+          "accessedAt": "2026-05-10"
+        },
+        {
+          "name": "FAO FAOSTAT",
+          "url": "https://www.fao.org/faostat/en/#data/FS",
+          "accessedAt": "2026-05-10"
+        },
+        {
+          "name": "World Bank Food Import Dependency",
+          "url": "https://data.worldbank.org/indicator/TM.VAL.FOOD.ZS.UN",
+          "accessedAt": "2026-05-10"
+        }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 3,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  }
+]

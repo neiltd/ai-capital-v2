@@ -1,0 +1,64 @@
+{
+  "id": "GAB",
+  "iso2": "GA",
+  "name": "Gabon",
+  "region": "Africa",
+  "subregion": "Middle Africa",
+  "capital": "Libreville",
+  "lastUpdated": "2025-05-22",
+  "summary": "Gabon has successfully transitioned from military to civilian-led rule following the April 2025 presidential election, which was won by General Brice Oligui Nguema. The election marked the formal end of the transition initiated by the 2023 coup that ousted the Bongo dynasty. With its full membership in the African Union restored, Gabon is now focusing on an ambitious economic renewal plan aimed at diversifying away from oil and manganese. While the country remains one of Africa's wealthiest per capita, the new administration faces the urgent task of addressing high youth unemployment and modernizing the nation's infrastructure.",
+  "indicators": {
+    "politicalStability":       { "score": 7, "trend": "rising", "confidence": "high", "note": "Successful 2025 election and AU restoration; high popular support for the current leadership." },
+    "economicDirection":        { "score": 5, "trend": "stable", "confidence": "high", "note": "Stable growth (2-3%); heavy focus on infrastructure and economic diversification; fiscal deficit remains a concern." },
+    "investmentAttractiveness": { "score": 6, "trend": "rising", "confidence": "high", "note": "Renewed interest following the return to constitutional order; focus on forestry, mining, and energy." },
+    "geopoliticalRisk":         { "score": 3, "trend": "falling", "confidence": "high", "note": "Normalization of relations with the AU and international community; stable regional standing." },
+    "educationQuality":         { "score": 5, "trend": "stable", "confidence": "medium", "note": "High literacy rates; focus on technical training for the mining and forestry sectors." },
+    "healthcareQuality":        { "score": 4, "trend": "stable", "confidence": "medium", "note": "Relatively good infrastructure in Libreville; efforts to improve rural primary healthcare access." },
+    "technologyInvestment":     { "score": 5, "trend": "rising", "confidence": "medium", "note": "Focus on digitalizing public administration and expanding broadband access." }
+  },
+  "demographics": {
+    "population": 2500000,
+    "medianAge": 21.0,
+    "urbanizationRate": 90.6,
+    "majorEthnicGroups": ["Fang", "Bapounou/Eschira", "Obamba/Mbete", "Myene"],
+    "religions": [
+      { "name": "Christian", "percent": 82.7 },
+      { "name": "Muslim", "percent": 9.8 },
+      { "name": "Traditional/Other", "percent": 7.5 }
+    ]
+  },
+  "alliances": ["African Union", "United Nations", "CEMAC", "ECCAS", "Commonwealth", "OPEC", "Francophonie"],
+  "relationships": [
+    { "countryId": "FRA", "countryName": "France", "type": "strategic_partner", "sentiment": "positive", "summary": "Relations normalized following the 2025 election; France remains a key economic and security partner." },
+    { "countryId": "CHN", "countryName": "China", "type": "economic_partner", "sentiment": "positive", "summary": "Major partner in mining (manganese) and infrastructure; providing significant financing for new development projects." },
+    { "countryId": "GBR", "countryName": "United Kingdom", "type": "strategic_partner", "sentiment": "positive", "summary": "Growing ties through Commonwealth membership; focus on environmental conservation and sustainable forestry." },
+    { "countryId": "COG", "countryName": "Republic of the Congo", "type": "regional_partner", "sentiment": "positive", "summary": "Close historical and ethnic ties; cooperation on regional security and CEMAC integration." }
+  ],
+  "perspectives": [
+    { "source": "Civil Servant in Libreville", "bias": "Supportive", "view": "We are finally breathing again; the 2025 election showed that we can have a peaceful change and move past the Bongo era." },
+    { "source": "Forestry Manager in Port-Gentil", "bias": "Optimistic", "view": "The government's focus on local wood processing is creating real value here; we are no longer just exporting raw logs." },
+    { "source": "Unemployed Youth", "bias": "Skeptical", "view": "The elections were fine, but I still don't have a job; the new government needs to do more than just build roads—they need to build a future for us." },
+    { "source": "Conservationist", "bias": "Hopeful", "view": "Gabon is a world leader in protecting rainforests; with the new political stability, we can attract more green investment and eco-tourism." }
+  ],
+  "historicalContext": {
+    "summary": "Gabon was ruled for 56 years by the Bongo family (Omar Bongo followed by his son Ali Bongo). In August 2023, Ali Bongo was ousted in a military coup led by General Brice Oligui Nguema following a disputed election. The coup was widely celebrated in Gabon as a 'liberation.' The country then underwent a two-year transition period, culminating in a new constitution and the 2025 presidential election.",
+    "keyEvents": [
+      { "year": 1960, "event": "Independence from France." },
+      { "year": 1967, "event": "Omar Bongo becomes president, ruling for 42 years." },
+      { "year": 2009, "event": "Ali Bongo succeeds his father as president." },
+      { "year": 2023, "event": "Military coup deposes Ali Bongo; General Brice Oligui Nguema takes power." },
+      { "year": 2024, "event": "New constitution approved by referendum." },
+      { "year": 2025, "event": "General Brice Oligui Nguema elected president; African Union restores Gabon's membership." }
+    ]
+  },
+  "investmentNotes": {
+    "strengths": ["Abundant natural resources, including oil, high-grade manganese, and vast rainforests", "Highest urbanization rate in Africa and relatively high per-capita income", "Renewed political legitimacy and restoration of international standing", "Strong commitment to sustainable forestry and carbon credit markets"],
+    "risks": ["High dependence on oil and manganese exports for fiscal revenue", "Significant infrastructure gaps despite the country's relative wealth", "Extremely high youth unemployment and risks of social frustration", "Need for deep structural reforms to improve the business environment"],
+    "sectors": ["Sustainable Forestry & Wood Processing", "Manganese & Iron Ore Mining", "Renewable Energy (Hydro and Solar)", "Eco-tourism & Conservation"]
+  },
+  "sources": [
+    { "name": "Direction Générale de la Statistique (DGS) du Gabon", "url": "https://www.stat-gabon.ga/", "type": "demographic" },
+    { "name": "World Bank - Gabon", "url": "https://www.worldbank.org/en/country/gabon", "type": "economic" },
+    { "name": "National Agency for Investment Promotion (ANPI-Gabon)", "url": "https://www.anpigabon.ga/", "type": "investment" }
+  ]
+}

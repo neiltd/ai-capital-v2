@@ -1,0 +1,66 @@
+{
+  "id": "VUT",
+  "iso2": "VU",
+  "name": "Vanuatu",
+  "region": "Oceania",
+  "subregion": "Melanesia",
+  "capital": "Port Vila",
+  "lastUpdated": "2026-05-15",
+  "summary": "Vanuatu is a Melanesian archipelago known for its cultural diversity and resilience. Its political system is characterized by frequent changes in government due to shifting parliamentary coalitions, often leading to periods of political instability. The economy is primarily based on subsistence agriculture, tourism, and offshore financial services. Vanuatu is one of the most disaster-prone countries in the world, facing significant risks from cyclones, earthquakes, and volcanic activity. Geopolitically, it maintains a non-aligned stance while engaging with both traditional Western partners and China.",
+  "indicators": {
+    "politicalStability":       { "score": 4, "trend": "stable", "confidence": "high", "note": "Frequent motions of no confidence and changes in leadership; however, the democratic process and rule of law remain resilient." },
+    "economicDirection":        { "score": 4, "trend": "stable", "confidence": "medium", "note": "Recovery in tourism is positive, but the economy is hampered by high vulnerability to natural disasters and infrastructure costs." },
+    "investmentAttractiveness": { "score": 4, "trend": "stable", "confidence": "medium", "note": "Tax-haven status and tourism potential are attractive, but regulatory changes and natural disaster risks can be deterrents." },
+    "geopoliticalRisk":         { "score": 4, "trend": "rising", "confidence": "high", "note": "Increasing Chinese presence in infrastructure and potential security cooperation has drawn greater scrutiny from Australia and the US." },
+    "educationQuality":         { "score": 4, "trend": "stable", "confidence": "medium", "note": "Dual English and French education system; progress in primary enrollment but secondary and vocational training need more support." },
+    "healthcareQuality":        { "score": 3, "trend": "stable", "confidence": "medium", "note": "Limited medical facilities and personnel, especially on outer islands; significant reliance on regional support (Australia/NZ)." },
+    "technologyInvestment":     { "score": 4, "trend": "rising", "confidence": "high", "note": "Expansion of 4G networks and submarine cable connectivity is improving digital access across the main islands." }
+  },
+  "demographics": {
+    "population": 330000,
+    "medianAge": 22.1,
+    "urbanizationRate": 26,
+    "majorEthnicGroups": ["Ni-Vanuatu (Melanesian)"],
+    "religions": [
+      { "name": "Protestant", "percent": 70.0 },
+      { "name": "Roman Catholic", "percent": 12.0 },
+      { "name": "Customary/Other", "percent": 18.0 }
+    ]
+  },
+  "alliances": ["Pacific Islands Forum", "Commonwealth", "United Nations", "MSG", "OIF (Francophonie)", "ACP"],
+  "relationships": [
+    { "countryId": "AUS", "countryName": "Australia", "type": "strategic_partner", "sentiment": "positive", "summary": "Primary donor, security partner, and trade link; deep ties in education and disaster response." },
+    { "countryId": "CHN", "countryName": "China", "type": "economic_partner", "sentiment": "positive", "summary": "Significant provider of infrastructure loans and aid; relationship is increasingly prominent." },
+    { "countryId": "FRA", "countryName": "France", "type": "historical_partner", "sentiment": "positive", "summary": "Maintains a strong cultural and educational presence due to the colonial history of the New Hebrides." },
+    { "countryId": "NZL", "countryName": "New Zealand", "type": "development_partner", "sentiment": "positive", "summary": "Key partner for seasonal labor programs and sustainable development aid." }
+  ],
+  "perspectives": [
+    { "source": "Traditional Chief", "bias": "Traditionalist", "view": "Development must not come at the cost of our 'Kastom' (culture) and communal land rights, which are the soul of Vanuatu." },
+    { "source": "Tourism Developer", "bias": "Pragmatic", "view": "We need stable government and improved infrastructure to attract higher-end sustainable tourism and build resilience." },
+    { "source": "Youth Activist", "bias": "Reformist", "view": "Climate change is our biggest threat; we need the global community to take action and support our right to a sustainable future." },
+    { "source": "Financial Sector Professional", "bias": "Liberal", "view": "Vanuatu's position as a financial hub needs to be modernized and more transparent to remain competitive and compliant." }
+  ],
+  "historicalContext": {
+    "summary": "Formerly the New Hebrides, Vanuatu was a unique Anglo-French 'Condominium' (jointly administered) before gaining independence in 1980. The transition to independence was marked by the 'Coconut War', a brief secessionist movement on the island of Espiritu Santo. Since then, Vanuatu has maintained a vibrant, if sometimes turbulent, parliamentary democracy.",
+    "keyEvents": [
+      { "year": 1906, "event": "Establishment of the Anglo-French Condominium of the New Hebrides." },
+      { "year": 1980, "event": "Vanuatu gains independence; the 'Coconut War' secessionist movement is suppressed with PNG assistance." },
+      { "year": 1991, "event": "Walter Lini, the 'Father of Independence', is removed from office after 11 years as PM." },
+      { "year": 2012, "event": "Vanuatu joins the World Trade Organization (WTO)." },
+      { "year": 2015, "event": "Cyclone Pam, a Category 5 storm, causes widespread destruction across the archipelago." },
+      { "year": 2020, "event": "Cyclone Harold causes major damage in the northern islands during the COVID-19 pandemic." },
+      { "year": 2022, "event": "Vanuatu declares a climate emergency, reflecting its vulnerability and international advocacy on the issue." },
+      { "year": 2023, "event": "Hit by two Category 4 cyclones (Judy and Kevin) within 48 hours, highlighting extreme climate risk." }
+    ]
+  },
+  "investmentNotes": {
+    "strengths": ["Strong cultural identity and social cohesion", "Untapped potential in niche tourism (Eco/Cultural)", "Strategic location in the Coral Sea", "Relatively open investment environment in certain sectors"],
+    "risks": ["Extreme vulnerability to natural disasters (cyclones/volcanoes)", "Small internal market and high logistics costs", "Political fluidity and frequent cabinet reshuffles", "Limited infrastructure on outer islands"],
+    "sectors": ["Sustainable Tourism and Hospitality", "Organic Agriculture (Beef, Cocoa, Kava)", "Renewable Energy Development", "Marine Resource Management"]
+  },
+  "sources": [
+    { "name": "Reserve Bank of Vanuatu", "url": "https://www.rbv.gov.vu/", "type": "economic" },
+    { "name": "Vanuatu Foreign Investment Promotion Agency", "url": "https://www.investvanuatu.vu/", "type": "investment" },
+    { "name": "Vanuatu National Statistics Office", "url": "https://www.vnso.gov.vu/", "type": "demographic" }
+  ]
+}

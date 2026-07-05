@@ -1,0 +1,64 @@
+{
+  "id": "CMR",
+  "iso2": "CM",
+  "name": "Cameroon",
+  "region": "Africa",
+  "subregion": "Middle Africa",
+  "capital": "Yaoundé",
+  "lastUpdated": "2025-05-22",
+  "summary": "Cameroon is entering a period of high-stakes political transition as it approaches the October 2025 presidential election. At 92, President Paul Biya's long tenure (since 1982) faces intense scrutiny regarding succession and health. The country remains divided by the ongoing Anglophone crisis in the Northwest and Southwest regions and continues to battle Boko Haram incursions in the Far North. Economically, Cameroon is a regional heavyweight with a diverse resource base, currently focusing on energy expansion through the Nachtigal dam to drive industrial growth, though it remains hampered by high poverty levels and a structural decline in oil production.",
+  "indicators": {
+    "politicalStability":       { "score": 3, "trend": "falling", "confidence": "high", "note": "High uncertainty over succession; active armed conflict in Anglophone regions and Far North; suppression of political dissent." },
+    "economicDirection":        { "score": 5, "trend": "stable", "confidence": "high", "note": "Stable growth (4%) driven by energy and agriculture; offset by declining oil and high security costs." },
+    "investmentAttractiveness": { "score": 4, "trend": "falling", "confidence": "medium", "note": "Rich in resources but high political risk and corruption; energy sector remains the most attractive." },
+    "geopoliticalRisk":         { "score": 6, "trend": "rising", "confidence": "high", "note": "Risk of instability during the 2025 election transition; active regional cross-border insurgencies." },
+    "educationQuality":         { "score": 5, "trend": "stable", "confidence": "medium", "note": "High literacy in urban areas but schools in conflict zones remain severely disrupted." },
+    "healthcareQuality":        { "score": 3, "trend": "stable", "confidence": "medium", "note": "Significant disparities between Yaoundé/Douala and the rest of the country; limited access in conflict zones." },
+    "technologyInvestment":     { "score": 4, "trend": "rising", "confidence": "medium", "note": "Growing fintech sector in Douala ('Silicon Mountain'); efforts to expand fiber optic backbone." }
+  },
+  "demographics": {
+    "population": 29500000,
+    "medianAge": 18.5,
+    "urbanizationRate": 58.7,
+    "majorEthnicGroups": ["Highland Bantu", "Equatorial Bantu", "Kirdi", "Fulani", "Northwestern Bantu"],
+    "religions": [
+      { "name": "Christian", "percent": 70.0 },
+      { "name": "Muslim", "percent": 20.0 },
+      { "name": "Traditional/Other", "percent": 10.0 }
+    ]
+  },
+  "alliances": ["African Union", "United Nations", "CEMAC", "ECCAS", "Commonwealth", "Francophonie"],
+  "relationships": [
+    { "countryId": "FRA", "countryName": "France", "type": "strategic_partner", "sentiment": "positive", "summary": "Key security and economic partner; maintains significant influence in Cameroon's political and financial systems." },
+    { "countryId": "CHN", "countryName": "China", "type": "economic_partner", "sentiment": "positive", "summary": "Largest creditor and major partner in infrastructure (dams, ports, roads); significant mining interest." },
+    { "countryId": "NGA", "countryName": "Nigeria", "type": "regional_partner", "sentiment": "neutral", "summary": "Interdependent trade relationship; cooperation on Boko Haram; lingering border management issues." },
+    { "countryId": "RUS", "countryName": "Russia", "type": "strategic_partner", "sentiment": "positive", "summary": "Increasing security cooperation and military hardware supply; growing diplomatic presence." }
+  ],
+  "perspectives": [
+    { "source": "Civil Servant in Yaoundé", "bias": "Loyalist", "view": "President Biya has kept the peace for 40 years; we need a slow and careful transition to avoid the chaos seen in other countries." },
+    { "source": "Anglophone Teacher in Bamenda", "bias": "Grievance", "view": "The 2025 election won't mean anything to us unless the central government finally addresses our marginalization and the war in our streets." },
+    { "source": "Startup Founder in Douala", "bias": "Frustrated", "view": "We have the talent to lead Africa, but the internet shutdowns and political uncertainty make it hard to scale our businesses." },
+    { "source": "Cocoa Farmer in the Southwest", "bias": "Desperate", "view": "Between the armed groups and the falling prices, we can barely survive; we just want to farm in peace again." }
+  ],
+  "historicalContext": {
+    "summary": "Cameroon was formed from the unification of French-administered and British-administered territories. Since independence, it has had only two presidents: Ahmadou Ahidjo and Paul Biya. The country has been relatively stable but has faced increasing internal strain since 2016 due to the 'Anglophone Crisis,' where English-speaking regions are seeking autonomy or independence from the Francophone-dominated central government.",
+    "keyEvents": [
+      { "year": 1960, "event": "Independence of French Cameroon." },
+      { "year": 1961, "event": "Unification with British Southern Cameroons." },
+      { "year": 1982, "event": "Paul Biya becomes president." },
+      { "year": 2016, "event": "Start of the Anglophone crisis following protests by lawyers and teachers." },
+      { "year": 2019, "event": "Major national dialogue held to address the Anglophone conflict; limited progress achieved." },
+      { "year": 2025, "event": "Completion of the Nachtigal hydroelectric dam; high tension ahead of October presidential elections." }
+    ]
+  },
+  "investmentNotes": {
+    "strengths": ["Most diversified economy in the CEMAC region", "Massive energy potential being realized through large-scale hydro projects", "Strategic location with the Port of Kribi serving as a regional transshipment hub", "Abundant agricultural and mineral resources (iron ore, bauxite)"],
+    "risks": ["High political succession risk and potential for unrest during 2025 elections", "Ongoing armed conflicts in three out of ten regions (Anglophone and Far North)", "Endemic corruption and complex bureaucratic hurdles for businesses", "High public debt and declining mature oil fields"],
+    "sectors": ["Renewable Energy (Hydro)", "Infrastructure & Port Logistics", "Agro-industry (Cocoa, Coffee, Palm Oil)", "Digital Services & Fintech"]
+  },
+  "sources": [
+    { "name": "Institut National de la Statistique du Cameroun", "url": "https://ins-cameroun.cm/", "type": "demographic" },
+    { "name": "African Development Bank - Cameroon", "url": "https://www.afdb.org/en/countries/central-africa/cameroon", "type": "economic" },
+    { "name": "Cameroon Investment Promotion Agency (API)", "url": "https://investincameroon.net/", "type": "investment" }
+  ]
+}

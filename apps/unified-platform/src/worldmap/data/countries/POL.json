@@ -1,0 +1,68 @@
+{
+  "id": "POL",
+  "iso2": "PL",
+  "name": "Poland",
+  "region": "Europe",
+  "subregion": "Eastern Europe",
+  "capital": "Warsaw",
+  "lastUpdated": "2026-05-09",
+  "summary": "Poland has established itself as a pivotal regional power and the linchpin of NATO's eastern flank. Since the 2022 invasion of Ukraine, Warsaw has accelerated a massive military modernization program, aiming to build one of the strongest land forces in Europe. Economically, Poland continues its trajectory of robust growth, benefiting from its role as a manufacturing hub and a primary destination for companies 'nearshoring' within the EU. While internal politics remain polarized between liberal-pro-European and national-conservative factions, there is broad consensus on national security and the necessity of a strong alliance with the United States. Poland is increasingly asserting its influence within EU decision-making, transitioning from a peripheral member to a central strategic actor.",
+  "indicators": {
+    "politicalStability":       { "score": 7, "score_description": "Stable but polarized; return to institutional norms under the Tusk government.", "trend": "stable", "confidence": "high", "note": "Improved relations with Brussels have unlocked EU funds, though domestic legislative friction persists." },
+    "economicDirection":        { "score": 7, "score_description": "Strong growth driven by exports, investment, and domestic demand.", "trend": "improving", "confidence": "high", "note": "Poland's economy has proven highly resilient to energy shocks and is successfully diversifying into high-tech sectors." },
+    "investmentAttractiveness": { "score": 8, "score_description": "Highly attractive due to skilled labor and strategic location.", "trend": "rising", "confidence": "high", "note": "A primary beneficiary of supply chain shifts in Europe; major investments in semiconductors and EV batteries." },
+    "geopoliticalRisk":         { "score": 6, "score_description": "Elevated due to proximity to the Ukraine conflict and Russian hostility.", "trend": "stable", "confidence": "high", "note": "While at risk, NATO membership and rapid rearmament provide a significant deterrent." },
+    "educationQuality":         { "score": 7, "score_description": "High standards in STEM and vocational training.", "trend": "stable", "confidence": "high", "note": "Consistently strong performance in international rankings, though university research output lags behind Western Europe." },
+    "healthcareQuality":        { "score": 6, "score_description": "Solid public system facing demographic and funding pressures.", "trend": "stable", "confidence": "medium", "note": "Improving infrastructure but struggling with long wait times and a shortage of medical professionals." },
+    "technologyInvestment":     { "score": 7, "score_description": "Rising investment in defense tech and digital infrastructure.", "trend": "rising", "confidence": "high", "note": "Significant state and private capital flowing into cybersecurity and military aerospace." }
+  },
+  "demographics": {
+    "population": 37600000,
+    "medianAge": 42.2,
+    "urbanizationRate": 60,
+    "majorEthnicGroups": ["Polish", "Ukrainian", "Belarusian", "German"],
+    "religions": [
+      { "name": "Roman Catholic", "percent": 84.8 },
+      { "name": "None/Unaffiliated", "percent": 10.5 },
+      { "name": "Orthodox", "percent": 1.3 },
+      { "name": "Other", "percent": 3.4 }
+    ]
+  },
+  "alliances": ["EU", "NATO", "Bucharest Nine", "Visegrád Group", "Three Seas Initiative"],
+  "relationships": [
+    { "countryId": "UKR", "countryName": "Ukraine", "type": "ally", "sentiment": "positive", "summary": "Strategic partner and primary hub for Western aid; relations are close but occasionally tested by agricultural trade disputes." },
+    { "countryId": "USA", "countryName": "United States", "type": "treaty_ally", "sentiment": "positive", "summary": "Essential security guarantor; Poland is a top purchaser of U.S. military hardware and hosts a permanent U.S. military presence." },
+    { "countryId": "DEU", "countryName": "Germany", "type": "ally", "sentiment": "mixed", "summary": "Top trading partner; relations have warmed under the Tusk government but disagreements over EU defense policy and historical reparations remain." },
+    { "countryId": "RUS", "countryName": "Russia", "type": "adversary", "sentiment": "negative", "summary": "Deep-seated historical and current hostility; Poland is a leading advocate for maximum sanctions and military containment of Russia." },
+    { "countryId": "LTU", "countryName": "Lithuania", "type": "ally", "sentiment": "positive", "summary": "Close regional partner sharing identical security concerns regarding the Suwalki Gap." }
+  ],
+  "perspectives": [
+    { "source": "Pro-European Liberal", "bias": "Globalist/Europhile", "view": "Poland's future depends on deep integration with the EU and adherence to the rule of law to secure economic prosperity and political influence." },
+    { "source": "National Conservative", "bias": "Sovereigntist", "view": "While supporting NATO, Poland must protect its national sovereignty against overreach from Brussels and maintain its traditional cultural identity." },
+    { "source": "Military Strategist", "bias": "Security-focused", "view": "Poland must become self-reliant in defense and the primary military power on the continent to ensure European stability against Russian revisionism." }
+  ],
+  "historicalContext": {
+    "summary": "Poland's history is marked by periods of greatness followed by tragic partitions and foreign occupation. After regaining independence in 1918 and enduring the horrors of WWII, Poland spent decades under Soviet-imposed communist rule. The Solidarity movement in the 1980s was instrumental in the collapse of the Eastern Bloc, leading to Poland's successful transition to a market democracy.",
+    "keyEvents": [
+      { "year": 1795, "event": "Third Partition of Poland; the country ceases to exist as a sovereign state for 123 years." },
+      { "year": 1918, "event": "Restoration of Polish independence following WWI." },
+      { "year": 1939, "event": "Invasion by Nazi Germany and the Soviet Union, starting WWII." },
+      { "year": 1944, "event": "Warsaw Uprising against Nazi occupation." },
+      { "year": 1980, "event": "Formation of the Solidarity (Solidarność) trade union." },
+      { "year": 1989, "event": "Round Table Agreement and the end of communist rule." },
+      { "year": 1999, "event": "Poland joins NATO." },
+      { "year": 2004, "event": "Poland joins the European Union." },
+      { "year": 2022, "event": "Poland becomes the primary transit hub for global support to Ukraine." }
+    ]
+  },
+  "investmentNotes": {
+    "strengths": ["Strategic location as a gateway to both East and West Europe", "Strong industrial base and diversified economy", "Highly educated STEM workforce", "Significant EU funding for infrastructure and green transition"],
+    "risks": ["Demographic aging and labor shortages", "Energy transition costs (decarbonization of coal-reliant grid)", "Geopolitical proximity to conflict zones", "Persistent domestic political polarization"],
+    "sectors": ["Aerospace & Defense", "Information Technology", "Business Process Outsourcing (BPO)", "EV Battery Manufacturing", "Renewable Energy"]
+  },
+  "sources": [
+    { "name": "Statistics Poland (GUS)", "url": "https://stat.gov.pl/en/", "type": "economic" },
+    { "name": "National Bank of Poland (NBP)", "url": "https://www.nbp.pl/homen.aspx", "type": "economic" },
+    { "name": "Ministry of Foreign Affairs", "url": "https://www.gov.pl/web/diplomacy", "type": "political" }
+  ]
+}

@@ -1,0 +1,67 @@
+{
+  "id": "IRL",
+  "iso2": "IE",
+  "name": "Ireland",
+  "region": "Europe",
+  "subregion": "Northern Europe",
+  "capital": "Dublin",
+  "lastUpdated": "2026-05-24",
+  "summary": "Ireland is currently a high-growth, technology-driven economy that serves as a primary European hub for multinational corporations, particularly in the pharmaceutical and digital sectors. Following the 2024 general election, a new coalition government was formed in early 2025 with Micheál Martin returning as Taoiseach. While the country's headline GDP figures are exceptionally high—driven by the activities of global giants—the domestic economy remains robust with record employment and a significant budget surplus. However, Ireland faces critical challenges, including an acute housing shortage, the need for major infrastructure upgrades, and potential geopolitical risks related to changes in international corporate tax regimes and global trade tensions. Despite these hurdles, its commitment to the EU, skilled workforce, and favorable business environment maintain its status as a premier global investment destination.",
+  "indicators": {
+    "politicalStability":       { "score": 8, "score_description": "Stable democracy with a strong coalition tradition.", "trend": "stable", "confidence": "high", "note": "The 2025 coalition government maintains policy continuity and a focus on fiscal responsibility." },
+    "economicDirection":        { "score": 9, "score_description": "Leading European growth driven by exports and tech.", "trend": "rising", "confidence": "high", "note": "Headline GDP growth of 10.7% in 2025 is skewed by multinationals, but the domestic economy (MDD) is growing at a healthy 3.4%." },
+    "investmentAttractiveness": { "score": 9, "score_description": "Top-tier destination for FDI in tech and life sciences.", "trend": "stable", "confidence": "high", "note": "Ireland's 15% corporate tax rate and access to the EU single market remain powerful draws for global capital." },
+    "geopoliticalRisk":         { "score": 4, "score_description": "Moderate risk from global trade shifts and US policy.", "trend": "rising", "confidence": "medium", "note": "Potential US tariffs and changes in global tax rules pose risks to Ireland's FDI-heavy economic model." },
+    "educationQuality":         { "score": 8, "score_description": "Highly educated workforce with world-class universities.", "trend": "stable", "confidence": "high", "note": "Ireland has one of the highest rates of tertiary education attainment in the European Union." },
+    "healthcareQuality":        { "score": 7, "score_description": "Modern system facing capacity and wait-time issues.", "trend": "rising", "confidence": "medium", "note": "Significant investment is being made through the 'Sláintecare' reform program to improve public health delivery." },
+    "technologyInvestment":     { "score": 9, "score_description": "Global hub for software, data centers, and med-tech.", "trend": "rising", "confidence": "high", "note": "Ireland continues to attract massive investments from 'Big Tech' and is a leader in digital economy integration." }
+  },
+  "demographics": {
+    "population": 5300000,
+    "medianAge": 38.5,
+    "urbanizationRate": 64,
+    "majorEthnicGroups": ["White Irish (82%)", "Other White", "Asian", "Black"],
+    "religions": [
+      { "name": "Roman Catholic", "percent": 69 },
+      { "name": "None", "percent": 14 },
+      { "name": "Church of Ireland", "percent": 2 },
+      { "name": "Muslim", "percent": 2 },
+      { "name": "Other", "percent": 13 }
+    ]
+  },
+  "alliances": ["EU", "UN", "OECD", "Council of Europe", "Eurozone", "Schengen (Non-member, partial)"],
+  "relationships": [
+    { "countryId": "USA", "countryName": "United States", "type": "ally", "sentiment": "positive", "summary": "Critical economic and cultural partner; the source of most FDI and home to a vast Irish diaspora." },
+    { "countryId": "GBR", "countryName": "United Kingdom", "type": "partner", "sentiment": "positive", "summary": "Closest neighbor and major trade partner; relations are managed through the Windsor Framework and Common Travel Area." },
+    { "countryId": "EU", "countryName": "European Union", "type": "ally", "sentiment": "positive", "summary": "Ireland is a deeply committed member, benefiting from the single market and acting as a gateway for non-EU firms." },
+    { "countryId": "FRA", "countryName": "France", "type": "partner", "sentiment": "positive", "summary": "Ireland's 'nearest EU neighbor' post-Brexit; growing cooperation in energy (Celtic Interconnector) and trade." }
+  ],
+  "perspectives": [
+    { "source": "Fianna Fáil / Fine Gael Coalition", "bias": "Centrist / Pro-Enterprise", "view": "We are using our fiscal surpluses to invest in the future while protecting the economic model that has brought us unprecedented prosperity." },
+    { "source": "Sinn Féin Opposition", "bias": "Left-Wing / Republican", "view": "The government has failed to address the housing crisis and the cost of living; the economy must work for ordinary citizens, not just multinationals." },
+    { "source": "IBEC (Business Representative)", "bias": "Pro-Business", "view": "Competitiveness and infrastructure investment are key to maintaining Ireland's attractiveness in a more volatile global trade environment." }
+  ],
+  "historicalContext": {
+    "summary": "Ireland's history is defined by its struggle for independence from Britain, achieved in 1922. After decades of economic protectionism and emigration, the 'Celtic Tiger' period of the 1990s transformed the country into a modern, high-tech economy. Despite a severe crash in 2008, Ireland has staged a remarkable recovery to become one of the wealthiest nations in the world per capita.",
+    "keyEvents": [
+      { "year": 1922, "event": "Establishment of the Irish Free State." },
+      { "year": 1949, "event": "Ireland is formally declared a Republic and leaves the Commonwealth." },
+      { "year": 1973, "event": "Ireland joins the European Economic Community (EEC)." },
+      { "year": 1998, "event": "Good Friday Agreement ends 'The Troubles' in Northern Ireland." },
+      { "year": 1999, "event": "Ireland adopts the Euro as its currency." },
+      { "year": 2008, "event": "Global financial crisis leads to a massive banking collapse and EU/IMF bailout." },
+      { "year": 2015, "event": "Ireland becomes the first country to legalize same-sex marriage by popular vote." },
+      { "year": 2025, "event": "New coalition government formed under Taoiseach Micheál Martin." }
+    ]
+  },
+  "investmentNotes": {
+    "strengths": ["Access to EU Single Market and Eurozone", "English-speaking, highly skilled workforce", "Stable political and legal environment", "Strong cluster effects in tech, pharma, and finance"],
+    "risks": ["Acute housing shortage affecting labor mobility and costs", "Vulnerability to international corporate tax changes (Pillar Two)", "Infrastructure deficits in energy and transport", "High concentration of corporate tax revenue from a few firms"],
+    "sectors": ["Information & Communication Technology", "Pharmaceuticals and Medical Devices", "Financial Services (International)", "Renewable Energy (Offshore Wind)"]
+  },
+  "sources": [
+    { "name": "Central Statistics Office (CSO)", "url": "https://www.cso.ie/", "type": "economic" },
+    { "name": "IDA Ireland (Investment Promotion)", "url": "https://www.idaireland.com/", "type": "investment" },
+    { "name": "Central Bank of Ireland", "url": "https://www.centralbank.ie/", "type": "economic" }
+  ]
+}

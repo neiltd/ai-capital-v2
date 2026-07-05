@@ -1,0 +1,65 @@
+{
+  "id": "GIN",
+  "iso2": "GN",
+  "name": "Guinea",
+  "region": "Africa",
+  "subregion": "Western Africa",
+  "capital": "Conakry",
+  "lastUpdated": "2025-05-22",
+  "summary": "Guinea is undergoing a complex political transition under General Mamadi Doumbouya, who took power in 2021. While a new constitution was approved via referendum in late 2025, the military has delayed the return to civilian rule until at least December 2025, sparking domestic unrest and international scrutiny. Economically, Guinea is on the cusp of a major transformation driven by the Simandou iron ore project, one of the world's largest mining ventures. Despite its immense mineral wealth, the country faces significant challenges including high food insecurity, restricted media freedom, and a fragile business environment characterized by regulatory opacity.",
+  "indicators": {
+    "politicalStability":       { "score": 3, "trend": "stable", "confidence": "high", "note": "Military rule; transition extended; media and political opposition restricted." },
+    "economicDirection":        { "score": 7, "trend": "rising", "confidence": "high", "note": "Strong growth driven by massive iron ore and bauxite investments." },
+    "investmentAttractiveness": { "score": 5, "trend": "rising", "confidence": "medium", "note": "Highly attractive mining sector (Simandou); high risk in other sectors due to political climate." },
+    "geopoliticalRisk":         { "score": 5, "trend": "stable", "confidence": "medium", "note": "Suspended from ECOWAS but maintains pragmatic regional ties; strategic importance to China." },
+    "educationQuality":         { "score": 3, "trend": "stable", "confidence": "medium", "note": "Low literacy rates; focus on vocational training for the mining sector." },
+    "healthcareQuality":        { "score": 2, "trend": "stable", "confidence": "medium", "note": "Basic infrastructure; significant urban-rural divide in service delivery." },
+    "technologyInvestment":     { "score": 3, "trend": "rising", "confidence": "low", "note": "Expanding mobile network coverage; efforts to digitalize government services." }
+  },
+  "demographics": {
+    "population": 14500000,
+    "medianAge": 18.2,
+    "urbanizationRate": 37.8,
+    "majorEthnicGroups": ["Fulani", "Malinke", "Susu", "Guerze", "Kissi"],
+    "religions": [
+      { "name": "Muslim", "percent": 89.1 },
+      { "name": "Christian", "percent": 6.8 },
+      { "name": "Traditional", "percent": 1.6 },
+      { "name": "Other/None", "percent": 2.5 }
+    ]
+  },
+  "alliances": ["African Union", "United Nations", "Mano River Union"],
+  "relationships": [
+    { "countryId": "CHN", "countryName": "China", "type": "strategic_partner", "sentiment": "positive", "summary": "Critical partner in Simandou and bauxite mining; major investor in transport infrastructure." },
+    { "countryId": "FRA", "countryName": "France", "type": "historical_partner", "sentiment": "neutral", "summary": "Complicated historical ties; current relations characterized by cautious diplomatic engagement." },
+    { "countryId": "MLI", "countryName": "Mali", "type": "regional_partner", "sentiment": "positive", "summary": "Maintains open borders and trade despite ECOWAS sanctions on both; shared experience of military rule." },
+    { "countryId": "USA", "countryName": "United States", "type": "economic_partner", "sentiment": "neutral", "summary": "Focus on democratic transition and health aid; cautious about military leadership." }
+  ],
+  "perspectives": [
+    { "source": "Mining Engineer in Kankan", "bias": "Optimistic", "view": "Simandou will change everything for Guinea; we are finally building the infrastructure needed to be a global mining powerhouse." },
+    { "source": "Civil Society Leader", "bias": "Vigilant", "view": "The wealth from our soil must be used to improve the lives of all Guineans, not just to enrich a few or consolidate military power." },
+    { "source": "Market Seller in Conakry", "bias": "Concerned", "view": "The prices of rice and oil continue to go up; the big mining projects don't put food on my table today." },
+    { "source": "Exiled Opposition Member", "bias": "Critical", "view": "The 2025 referendum was a sham designed to legitimize a lifelong presidency for the military elite." }
+  ],
+  "historicalContext": {
+    "summary": "Guinea was the only French colony to reject Charles de Gaulle's 1958 proposal for a French Community, choosing immediate independence. It spent decades under authoritarian rule (Sékou Touré, Lansana Conté) before its first democratic elections in 2010. A 2021 military coup led by Mamadi Doumbouya ousted Alpha Condé, initiating the current transition phase.",
+    "keyEvents": [
+      { "year": 1958, "event": "Independence from France; Sékou Touré becomes president." },
+      { "year": 2010, "event": "First democratic presidential election; Alpha Condé elected." },
+      { "year": 2014, "event": "Ebola virus epidemic devastates the country and economy." },
+      { "year": 2021, "event": "Military coup deposes Alpha Condé; Mamadi Doumbouya takes power." },
+      { "year": 2024, "event": "Start of major construction on the Simandou iron ore infrastructure (600km railway)." },
+      { "year": 2025, "event": "New constitution approved via referendum; transition to civilian rule delayed." }
+    ]
+  },
+  "investmentNotes": {
+    "strengths": ["World's largest bauxite reserves and massive iron ore deposits", "Significant hydroelectric power potential (Souapiti dam)", "Strategic maritime location with developing deep-water ports", "Major multi-billion dollar mining investments already underway"],
+    "risks": ["High political uncertainty and delayed transition to civilian rule", "Regulatory opacity and risks of corruption in the mining sector", "Inadequate transport and electricity infrastructure outside mining corridors", "Vulnerability to global commodity price fluctuations"],
+    "sectors": ["Iron Ore Mining (Simandou)", "Bauxite & Alumina", "Hydroelectric Power", "Agricultural Development (Rice, Coffee)"]
+  },
+  "sources": [
+    { "name": "Institut National de la Statistique de Guinée", "url": "https://www.stat-guinee.org/", "type": "demographic" },
+    { "name": "World Bank - Guinea", "url": "https://www.worldbank.org/en/country/guinea", "type": "economic" },
+    { "name": "Simandou Project Official Info", "url": "https://www.riotinto.com/en/operations/guinea/simandou", "type": "investment" }
+  ]
+}

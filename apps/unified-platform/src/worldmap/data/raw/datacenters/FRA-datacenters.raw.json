@@ -1,0 +1,302 @@
+[
+  {
+    "id": "DC-FRA-MRS-DR-MRS3",
+    "name": "Digital Realty MRS3 Marseille",
+    "countryId": "FRA",
+    "city": "Marseille",
+    "coordinates": [5.362, 43.315],
+    "type": "colocation",
+    "status": "operational",
+    "tierLevel": "3",
+    "capacityMW": 7,
+    "floorSpaceM2": null,
+    "pue": null,
+    "operator": "Digital Realty",
+    "owner": "Digital Realty",
+    "yearOpened": 2020,
+    "yearPlanned": null,
+    "cloudRegion": null,
+    "geopoliticalNotes": "Housed in a former WWII German submarine base, this facility is a key landing point for multiple intercontinental subsea cables, making it a vital digital bridge between Europe, Africa, the Middle East, and Asia.",
+    "notes": "Highly secure facility with significant historical context.",
+    "attribution": {
+      "sources": [
+        { "name": "Digital Realty Marseille", "url": "https://www.digitalrealty.com/data-centers/marseille", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 2,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  },
+  {
+    "id": "DC-FRA-MEU-EQUINIX-PA13X",
+    "name": "Equinix PA13x Meudon",
+    "countryId": "FRA",
+    "city": "Meudon",
+    "coordinates": [2.231, 48.785],
+    "type": "hyperscale",
+    "status": "operational",
+    "tierLevel": "3",
+    "capacityMW": null,
+    "floorSpaceM2": null,
+    "pue": null,
+    "operator": "Equinix",
+    "owner": "Equinix",
+    "yearOpened": 2024,
+    "yearPlanned": null,
+    "cloudRegion": null,
+    "geopoliticalNotes": "A €350M facility specifically designed for hyperscale AI workloads. It strengthens France's position as a leader in European AI infrastructure and digital sovereignty.",
+    "notes": "First xScale facility in the Paris region.",
+    "attribution": {
+      "sources": [
+        { "name": "Equinix PA13x Press Release", "url": "https://www.equinix.com/newsroom/press-releases/2024/02/equinix-launches-first-xscale-data-center-in-paris", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 1,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  },
+  {
+    "id": "DC-FRA-SDN-EQUINIX-PA10",
+    "name": "Equinix PA10 Saint-Denis",
+    "countryId": "FRA",
+    "city": "Saint-Denis",
+    "coordinates": [2.355, 48.932],
+    "type": "colocation",
+    "status": "operational",
+    "tierLevel": "3",
+    "capacityMW": null,
+    "floorSpaceM2": null,
+    "pue": null,
+    "operator": "Equinix",
+    "owner": "Equinix",
+    "yearOpened": 2023,
+    "yearPlanned": null,
+    "cloudRegion": null,
+    "geopoliticalNotes": "Part of the dense interconnection cluster in Saint-Denis, PA10 is critical for the French financial and telecommunications sectors, providing high-density peering for global carriers.",
+    "notes": "Features innovative sustainable technologies like heat recovery.",
+    "attribution": {
+      "sources": [
+        { "name": "Equinix Paris Data Centers", "url": "https://www.equinix.com/data-centers/europe-colocation/france-colocation/paris-data-centers", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "medium",
+        "sourceCount": 1,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  },
+  {
+    "id": "DC-FRA-PAR-AWS-PARIS",
+    "name": "AWS Paris Region (eu-west-3)",
+    "countryId": "FRA",
+    "city": "Paris",
+    "coordinates": [2.350, 48.856],
+    "type": "hyperscale",
+    "status": "operational",
+    "tierLevel": "3",
+    "capacityMW": 300,
+    "floorSpaceM2": null,
+    "pue": null,
+    "operator": "Amazon Web Services",
+    "owner": "Amazon",
+    "yearOpened": 2017,
+    "yearPlanned": null,
+    "cloudRegion": "eu-west-3",
+    "geopoliticalNotes": "A critical enabler of digital sovereignty for French businesses and government, allowing data to remain on French soil while utilizing AWS's global cloud platform.",
+    "notes": "Consists of multiple availability zones across the Paris metro area.",
+    "attribution": {
+      "sources": [
+        { "name": "AWS Global Infrastructure - France", "url": "https://aws.amazon.com/about-aws/global-infrastructure/regions_az/", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 1,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  },
+  {
+    "id": "DC-FRA-MRS-DR-MRS6",
+    "name": "Digital Realty MRS6 Marseille",
+    "countryId": "FRA",
+    "city": "Marseille",
+    "coordinates": [5.365, 43.320],
+    "type": "colocation",
+    "status": "planned",
+    "tierLevel": "3",
+    "capacityMW": 50,
+    "floorSpaceM2": null,
+    "pue": null,
+    "operator": "Digital Realty",
+    "owner": "Digital Realty",
+    "yearOpened": null,
+    "yearPlanned": 2028,
+    "cloudRegion": null,
+    "geopoliticalNotes": "A planned 50 MW facility dedicated to AI workloads, requiring a massive power feed. It solidifies Marseille's role as a primary Mediterranean gateway for the 'Digital Silk Road'.",
+    "notes": "Will be one of the largest and most power-dense facilities in the region.",
+    "attribution": {
+      "sources": [
+        { "name": "IDC Nova - Digital Realty Marseille Expansion", "url": "http://www.idcnova.com/news/16281.html", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 1,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  },
+  {
+    "id": "DC-FRA-LCO-DR-PAR8",
+    "name": "Digital Realty PAR8 La Courneuve",
+    "countryId": "FRA",
+    "city": "La Courneuve",
+    "coordinates": [2.395, 48.925],
+    "type": "colocation",
+    "status": "operational",
+    "tierLevel": "3",
+    "capacityMW": null,
+    "floorSpaceM2": null,
+    "pue": null,
+    "operator": "Digital Realty",
+    "owner": "Digital Realty",
+    "yearOpened": null,
+    "yearPlanned": null,
+    "cloudRegion": null,
+    "geopoliticalNotes": "Located in the major data center cluster north of Paris, PAR8 is a core node for international cloud and network connectivity, hosting a large number of global carriers.",
+    "notes": "Highly interconnected campus with multiple sister facilities.",
+    "attribution": {
+      "sources": [
+        { "name": "Digital Realty Paris", "url": "https://www.digitalrealty.com/data-centers/paris", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "medium",
+        "sourceCount": 1,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  },
+  {
+    "id": "DC-FRA-PAR-MSFT-FRANCE-CENTRAL",
+    "name": "Microsoft Azure France Central",
+    "countryId": "FRA",
+    "city": "Paris",
+    "coordinates": [2.348, 48.853],
+    "type": "hyperscale",
+    "status": "operational",
+    "tierLevel": "3",
+    "capacityMW": 250,
+    "floorSpaceM2": null,
+    "pue": null,
+    "operator": "Microsoft",
+    "owner": "Microsoft",
+    "yearOpened": 2018,
+    "yearPlanned": null,
+    "cloudRegion": "francecentral",
+    "geopoliticalNotes": "The primary Azure region for France, essential for providing cloud services to the public sector and industries requiring high levels of data protection and local residency.",
+    "notes": "Provides three availability zones for maximum resilience.",
+    "attribution": {
+      "sources": [
+        { "name": "Azure Global Infrastructure", "url": "https://azure.microsoft.com/en-us/explore/global-infrastructure/geographies/#geographies", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 1,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  },
+  {
+    "id": "DC-FRA-PAR-GOOGLE-EUROPE-WEST9",
+    "name": "Google Cloud Paris (europe-west9)",
+    "countryId": "FRA",
+    "city": "Paris",
+    "coordinates": [2.352, 48.860],
+    "type": "hyperscale",
+    "status": "operational",
+    "tierLevel": "3",
+    "capacityMW": null,
+    "floorSpaceM2": null,
+    "pue": null,
+    "operator": "Google Cloud",
+    "owner": "Alphabet Inc.",
+    "yearOpened": 2022,
+    "yearPlanned": null,
+    "cloudRegion": "europe-west9",
+    "geopoliticalNotes": "Google's first cloud region in France, aimed at supporting the country's 'Cloud de Confiance' strategy and ensuring compliance with local data sovereignty laws.",
+    "notes": "Supports three availability zones in the Paris region.",
+    "attribution": {
+      "sources": [
+        { "name": "Google Cloud Paris Launch", "url": "https://cloud.google.com/blog/products/infrastructure/announcing-the-new-google-cloud-region-in-paris", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 1,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  },
+  {
+    "id": "DC-FRA-PAR-SCALEWAY-AION",
+    "name": "Scaleway AION Paris",
+    "countryId": "FRA",
+    "city": "Paris",
+    "coordinates": [2.350, 48.850],
+    "type": "hyperscale",
+    "status": "operational",
+    "tierLevel": "3",
+    "capacityMW": null,
+    "floorSpaceM2": null,
+    "pue": null,
+    "operator": "Scaleway",
+    "owner": "Iliad Group",
+    "yearOpened": 2023,
+    "yearPlanned": null,
+    "cloudRegion": null,
+    "geopoliticalNotes": "A French-owned 'AI Gigafactory', AION is strategically significant for its use of European-developed hardware and its role in fostering an independent European AI ecosystem.",
+    "notes": "Equipped with high-performance NVIDIA H100 GPU clusters.",
+    "attribution": {
+      "sources": [
+        { "name": "Scaleway AION Announcement", "url": "https://www.scaleway.com/en/news/scaleway-announces-aion-ai-supercomputer/", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "medium",
+        "sourceCount": 1,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  },
+  {
+    "id": "DC-FRA-MAR-TELEHOUSE-MARSEILLE",
+    "name": "Telehouse Marseille",
+    "countryId": "FRA",
+    "city": "Marseille",
+    "coordinates": [5.370, 43.305],
+    "type": "colocation",
+    "status": "operational",
+    "tierLevel": "3",
+    "capacityMW": null,
+    "floorSpaceM2": null,
+    "pue": null,
+    "operator": "Telehouse",
+    "owner": "KDDI",
+    "yearOpened": null,
+    "yearPlanned": null,
+    "cloudRegion": null,
+    "geopoliticalNotes": "A critical interconnection point in Marseille, providing high-density access to the subsea cables landing in the port area and serving as a backup hub for Digital Realty's facilities.",
+    "notes": "Key site for international carriers and ISP peering.",
+    "attribution": {
+      "sources": [
+        { "name": "Telehouse Marseille", "url": "https://www.telehouse.net/locations/marseille-data-centers/", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "medium",
+        "sourceCount": 1,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  }
+]

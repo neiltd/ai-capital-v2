@@ -1,0 +1,81 @@
+[
+  {
+    "id": "SEA-ME-WE-5",
+    "name": "SEA-ME-WE 5",
+    "route": [
+      [103.8, 1.3], [80.0, 7.0], [55.3, 25.2], [32.9, 29.9],
+      [14.5, 36.8], [2.3, 41.4], [-1.6, 48.9]
+    ],
+    "landingPoints": [
+      { "name": "Singapore", "countryId": "SGP", "coordinates": [103.8, 1.3] },
+      { "name": "Sri Lanka", "countryId": "LKA", "coordinates": [80.0, 7.0] },
+      { "name": "Djibouti", "countryId": "DJI", "coordinates": [43.1, 11.6] },
+      { "name": "Egypt (Suez)", "countryId": "EGY", "coordinates": [32.9, 29.9] },
+      { "name": "Italy (Palermo)", "countryId": "ITA", "coordinates": [14.5, 36.8] },
+      { "name": "France (Marseille)", "countryId": "FRA", "coordinates": [2.3, 41.4] }
+    ],
+    "status": "active",
+    "lengthKm": 20000,
+    "capacityTbps": 24,
+    "owners": ["Orange", "SingTel", "Telecom Italia", "STC", "Telin"],
+    "yearLaid": 2016,
+    "notes": "Links Southeast Asia to Europe via Middle East. Runs through multiple geopolitical chokepoints including Suez Canal."
+  },
+  {
+    "id": "PEACE-CABLE",
+    "name": "PEACE Cable",
+    "route": [
+      [121.5, 31.2], [103.8, 1.3], [55.3, 25.2], [43.1, 11.6],
+      [39.2, -6.8], [21.0, -35.0]
+    ],
+    "landingPoints": [
+      { "name": "Shanghai", "countryId": "CHN", "coordinates": [121.5, 31.2] },
+      { "name": "Pakistan (Gwadar)", "countryId": "PAK", "coordinates": [62.3, 25.1] },
+      { "name": "Djibouti", "countryId": "DJI", "coordinates": [43.1, 11.6] },
+      { "name": "Kenya (Mombasa)", "countryId": "KEN", "coordinates": [39.7, -4.0] },
+      { "name": "South Africa", "countryId": "ZAF", "coordinates": [18.4, -34.0] }
+    ],
+    "status": "active",
+    "lengthKm": 15000,
+    "capacityTbps": 16,
+    "owners": ["PEACE Cable International Network"],
+    "yearLaid": 2022,
+    "notes": "Chinese-funded cable linking East Asia to East Africa and South Africa. Strategically significant BRI digital infrastructure."
+  },
+  {
+    "id": "DUNANT",
+    "name": "Dunant (Google)",
+    "route": [
+      [-73.9, 40.7], [-36.0, 45.0], [-9.1, 38.7]
+    ],
+    "landingPoints": [
+      { "name": "Virginia Beach, USA", "countryId": "USA", "coordinates": [-75.9, 36.8] },
+      { "name": "Saint-Hilaire-de-Riez, France", "countryId": "FRA", "coordinates": [-1.9, 46.9] }
+    ],
+    "status": "active",
+    "lengthKm": 6400,
+    "capacityTbps": 250,
+    "owners": ["Google"],
+    "yearLaid": 2021,
+    "notes": "Google's privately-owned transatlantic cable. Represents Big Tech's growing control over critical internet infrastructure."
+  },
+  {
+    "id": "BAY-OF-BENGAL-GATEWAY",
+    "name": "Bay of Bengal Gateway",
+    "route": [
+      [103.8, 1.3], [79.8, 6.9], [92.8, 21.4], [88.3, 22.5]
+    ],
+    "landingPoints": [
+      { "name": "Singapore", "countryId": "SGP", "coordinates": [103.8, 1.3] },
+      { "name": "Sri Lanka", "countryId": "LKA", "coordinates": [79.8, 6.9] },
+      { "name": "Bangladesh (Cox's Bazar)", "countryId": "BGD", "coordinates": [92.0, 21.4] },
+      { "name": "India (Chennai)", "countryId": "IND", "coordinates": [80.3, 13.1] }
+    ],
+    "status": "active",
+    "lengthKm": 13000,
+    "capacityTbps": 54,
+    "owners": ["Globe Telecom", "Bharti Airtel", "BSNL", "Telin"],
+    "yearLaid": 2020,
+    "notes": "Connects South and Southeast Asia through the Bay of Bengal. Critical for India and Bangladesh internet connectivity."
+  }
+]

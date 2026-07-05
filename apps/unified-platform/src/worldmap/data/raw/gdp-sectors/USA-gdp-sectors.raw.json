@@ -1,0 +1,35 @@
+[
+  {
+    "countryId": "USA",
+    "year": 2023,
+    "gdpUsdBn": 27360,
+    "gdpPerCapita": 81695,
+    "sectors": [
+      { "sector": "Real Estate, Rental, & Leasing", "percentOfGDP": 13.9, "notes": "Largest single private sector" },
+      { "sector": "Government", "percentOfGDP": 12.0, "notes": "Federal, State, and Local" },
+      { "sector": "Manufacturing", "percentOfGDP": 10.4, "notes": "Durable and nondurable goods" },
+      { "sector": "Professional, Scientific, & Tech Services", "percentOfGDP": 8.1, "notes": null },
+      { "sector": "Health Care & Social Assistance", "percentOfGDP": 7.5, "notes": null },
+      { "sector": "Finance & Insurance", "percentOfGDP": 7.4, "notes": null },
+      { "sector": "Retail Trade", "percentOfGDP": 6.5, "notes": null },
+      { "sector": "Wholesale Trade", "percentOfGDP": 6.0, "notes": null },
+      { "sector": "Information", "percentOfGDP": 5.4, "notes": null },
+      { "sector": "Construction", "percentOfGDP": 4.5, "notes": null },
+      { "sector": "Transportation & Warehousing", "percentOfGDP": 3.4, "notes": null },
+      { "sector": "Agriculture", "percentOfGDP": 1.0, "notes": "Farming, forestry, and fishing" },
+      { "sector": "Mining & Utilities", "percentOfGDP": 2.3, "notes": null },
+      { "sector": "Other Services", "percentOfGDP": 11.6, "notes": "Residual including personal services" }
+    ],
+    "attribution": {
+      "sources": [
+        { "name": "Bureau of Economic Analysis (BEA) 2023", "url": "https://www.bea.gov/", "accessedAt": "2024-05-14" },
+        { "name": "World Bank", "url": "https://data.worldbank.org/country/united-states", "accessedAt": "2024-05-14" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 2,
+        "lastVerified": "2024-05-14"
+      }
+    }
+  }
+]

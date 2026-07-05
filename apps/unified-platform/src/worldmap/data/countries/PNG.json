@@ -1,0 +1,66 @@
+{
+  "id": "PNG",
+  "iso2": "PG",
+  "name": "Papua New Guinea",
+  "region": "Oceania",
+  "subregion": "Melanesia",
+  "capital": "Port Moresby",
+  "lastUpdated": "2026-05-15",
+  "summary": "Papua New Guinea (PNG) is the largest and most populous Pacific Island nation, possessing vast natural resources including gold, copper, oil, and natural gas. Its political landscape is characterized by fluid parliamentary coalitions and significant local autonomy, often influenced by traditional tribal structures. PNG faces immense development challenges, including rugged terrain, infrastructure deficits, and high levels of crime and social unrest. Geopolitically, it is a key focus of regional security efforts by Australia and the United States, while maintaining strong economic ties with China.",
+  "indicators": {
+    "politicalStability":       { "score": 4, "trend": "stable", "confidence": "high", "note": "Persistent challenges with parliamentary instability and recent bouts of social unrest; however, the democratic framework remains intact." },
+    "economicDirection":        { "score": 5, "trend": "rising", "confidence": "medium", "note": "Driven by major resource projects like PNG LNG, but the broader economy suffers from high inflation and foreign exchange shortages." },
+    "investmentAttractiveness": { "score": 4, "trend": "stable", "confidence": "medium", "note": "High potential in mining and energy, but deterred by law and order issues, regulatory uncertainty, and infrastructure gaps." },
+    "geopoliticalRisk":         { "score": 5, "trend": "rising", "confidence": "high", "note": "At the center of a strategic 'tug-of-war' between Western powers and China; Bougainville's potential independence is a significant internal risk." },
+    "educationQuality":         { "score": 3, "trend": "stable", "confidence": "medium", "note": "Low literacy rates and limited access to quality education, especially in remote Highland regions." },
+    "healthcareQuality":        { "score": 3, "trend": "stable", "confidence": "medium", "note": "Fragile healthcare system facing shortages of medicine and staff; high prevalence of communicable diseases." },
+    "technologyInvestment":     { "score": 4, "trend": "rising", "confidence": "medium", "note": "Improvements in telecommunications via new submarine cables, but digital divide remains vast between urban and rural areas." }
+  },
+  "demographics": {
+    "population": 10300000,
+    "medianAge": 22.4,
+    "urbanizationRate": 13,
+    "majorEthnicGroups": ["Melanesian", "Papuan", "Polynesian", "Micronesian"],
+    "religions": [
+      { "name": "Protestant", "percent": 70.0 },
+      { "name": "Roman Catholic", "percent": 25.0 },
+      { "name": "Indigenous/Other", "percent": 5.0 }
+    ]
+  },
+  "alliances": ["Pacific Islands Forum", "Commonwealth", "APEC", "United Nations", "MSG", "ACP"],
+  "relationships": [
+    { "countryId": "AUS", "countryName": "Australia", "type": "strategic_partner", "sentiment": "positive", "summary": "Primary security and development partner; largest aid donor with deep historical and economic ties." },
+    { "countryId": "CHN", "countryName": "China", "type": "economic_partner", "sentiment": "positive", "summary": "Major investor in infrastructure and mining; PNG's second-largest trade partner." },
+    { "countryId": "USA", "countryName": "United States", "type": "security_partner", "sentiment": "positive", "summary": "Recently signed a Defense Cooperation Agreement (DCA) to enhance military ties and regional security." },
+    { "countryId": "IDN", "countryName": "Indonesia", "type": "neighbor", "sentiment": "neutral", "summary": "Important relationship focused on border management (West Papua) and increasing economic cooperation." }
+  ],
+  "perspectives": [
+    { "source": "Mining Executive", "bias": "Pragmatic", "view": "Regulatory stability and improved security are the most critical factors for unlocking PNG's massive resource potential." },
+    { "source": "Tribal Leader", "bias": "Traditionalist", "view": "Resource development must provide tangible benefits to local landowners and respect traditional customary land rights." },
+    { "source": "Urban Youth", "bias": "Aspirational", "view": "We need jobs, better education, and an end to the 'wantok' system of corruption to build a future in the city." },
+    { "source": "Bougainville Activist", "bias": "Secessionist", "view": "The 2019 referendum result for independence must be honored by the national government to ensure lasting peace." }
+  ],
+  "historicalContext": {
+    "summary": "The eastern half of the island was divided between Germany and the UK in the late 19th century, eventually coming under Australian administration. PNG gained independence in 1975. Its history has been shaped by the challenge of unifying over 800 linguistic groups and a decade-long civil war on the island of Bougainville (1988-1998).",
+    "keyEvents": [
+      { "year": 1884, "event": "Germany annexes northern New Guinea; UK establishes protectorate over southern Papua." },
+      { "year": 1906, "event": "Control of British Papua transferred to Australia." },
+      { "year": 1942, "event": "Japanese invasion during WWII; fierce fighting on the Kokoda Track." },
+      { "year": 1975, "event": "Papua New Guinea gains full independence from Australia." },
+      { "year": 1988, "event": "Outbreak of the Bougainville Civil War over mining royalties and environmental damage." },
+      { "year": 1998, "event": "A peace agreement ends the Bougainville conflict." },
+      { "year": 2019, "event": "Bougainville holds a non-binding referendum, with 98% voting for independence." },
+      { "year": 2024, "event": "Major civil unrest and rioting in Port Moresby (Black Wednesday) highlights social and economic pressures." }
+    ]
+  },
+  "investmentNotes": {
+    "strengths": ["Abundant natural resources (LNG, Gold, Copper)", "Strategic location in the Indo-Pacific", "Young and growing population", "Significant untapped agricultural potential"],
+    "risks": ["High crime rates and security concerns", "Infrastructure deficits (transport and power)", "Complex land ownership system", "Vulnerability to commodity price volatility"],
+    "sectors": ["Oil and Gas (LNG Expansion)", "Large-scale Mining", "Sustainable Forestry", "Agriculture (Coffee, Cocoa, Palm Oil)"]
+  },
+  "sources": [
+    { "name": "Bank of Papua New Guinea", "url": "https://www.bankpng.gov.pg/", "type": "economic" },
+    { "name": "PNG Investment Promotion Authority", "url": "https://www.ipa.gov.pg/", "type": "investment" },
+    { "name": "National Statistical Office of PNG", "url": "https://www.nso.gov.pg/", "type": "demographic" }
+  ]
+}

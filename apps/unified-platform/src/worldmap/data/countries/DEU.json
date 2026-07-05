@@ -1,0 +1,68 @@
+{
+  "id": "DEU",
+  "iso2": "DE",
+  "name": "Germany",
+  "region": "Europe",
+  "subregion": "Western Europe",
+  "capital": "Berlin",
+  "lastUpdated": "2026-05-09",
+  "summary": "Germany, Europe's largest economy, is navigating a period of profound transformation and uncertainty. The collapse of the 'Traffic Light' coalition in late 2024 has led to a political vacuum and scheduled snap elections, occurring alongside the rapid rise of the far-right AfD. Economically, Germany faces structural challenges including high energy costs, an aging workforce, and a 'de-industrialization' threat as it pivots away from its previous reliance on Russian energy and Chinese markets. Despite these headwinds, Germany remains a critical security actor in Europe, significantly increasing its defense spending and military support for Ukraine under the 'Zeitenwende' policy shift.",
+  "indicators": {
+    "politicalStability":       { "score": 4, "score_description": "Moderate risk following the collapse of the governing coalition.", "trend": "declining", "confidence": "high", "note": "Snap elections in early 2025 and the rise of populist parties have fragmented the political landscape." },
+    "economicDirection":        { "score": 4, "score_description": "Stagnating growth with significant structural hurdles in manufacturing.", "trend": "declining", "confidence": "high", "note": "Germany is currently the worst-performing G7 economy, struggling with high energy prices and bureaucratic inertia." },
+    "investmentAttractiveness": { "score": 7, "score_description": "Strong but weakening due to high costs and labor shortages.", "trend": "declining", "confidence": "high", "note": "While still a global leader in high-end engineering, concerns over 'de-industrialization' are prompting some firms to move production abroad." },
+    "geopoliticalRisk":         { "score": 4, "score_description": "Moderate risk centered on energy security and exposure to China.", "trend": "rising", "confidence": "high", "note": "The 'de-risking' strategy regarding China and the permanent shift away from Russian gas are recalibrating Germany's global position." },
+    "educationQuality":         { "score": 8, "score_description": "High quality with a world-renowned vocational training system.", "trend": "stable", "confidence": "high", "note": "The 'Dual System' provides a steady stream of skilled labor, though digital education and university funding are areas for improvement." },
+    "healthcareQuality":        { "score": 9, "score_description": "Excellent universal system with high capacity and advanced technology.", "trend": "stable", "confidence": "high", "note": "The system is highly resilient but faces long-term sustainability issues due to an aging population and rising costs." },
+    "technologyInvestment":     { "score": 8, "score_description": "Global leader in automotive tech, machinery, and renewable energy.", "trend": "stable", "confidence": "high", "note": "Significant investment is being redirected into green hydrogen, battery technology, and the digitalization of the 'Mittelstand'." }
+  },
+  "demographics": {
+    "population": 84700000,
+    "medianAge": 45.7,
+    "urbanizationRate": 77,
+    "majorEthnicGroups": ["German", "Turkish", "Ukrainian", "Polish", "Syrian"],
+    "religions": [
+      { "name": "None/Unaffiliated", "percent": 43 },
+      { "name": "Roman Catholic", "percent": 26 },
+      { "name": "Protestant", "percent": 23 },
+      { "name": "Muslim", "percent": 6 },
+      { "name": "Other", "percent": 2 }
+    ]
+  },
+  "alliances": ["EU", "NATO", "G7", "G20", "OECD"],
+  "relationships": [
+    { "countryId": "FRA", "countryName": "France", "type": "ally", "sentiment": "positive", "summary": "Core EU partner; despite tactical differences on energy and defense, the relationship remains the foundation of European integration." },
+    { "countryId": "USA", "countryName": "United States", "type": "treaty_ally", "sentiment": "positive", "summary": "Primary security guarantor and largest trading partner; Germany is increasingly aligned with U.S. strategic goals in Europe." },
+    { "countryId": "CHN", "countryName": "China", "type": "partner", "sentiment": "neutral", "summary": "Crucial trading partner, but relationship is being redefined under a 'de-risking' framework to reduce critical dependencies." },
+    { "countryId": "RUS", "countryName": "Russia", "type": "adversary", "sentiment": "negative", "summary": "Relations are at a historic low; Germany has completely decoupled from Russian energy and is a top military supporter of Ukraine." },
+    { "countryId": "POL", "countryName": "Poland", "type": "ally", "sentiment": "positive", "summary": "Improving relations under the Tusk government; critical partner for security on NATO's eastern flank." }
+  ],
+  "perspectives": [
+    { "source": "Atlanticist Security Expert", "bias": "Pro-NATO", "view": "Germany must follow through on its 'Zeitenwende' commitments to become a credible military power and lead European defense efforts." },
+    { "source": "Industrial Leader", "bias": "Pro-Business", "view": "High energy prices and excessive regulation are hollowing out Germany's industrial heartland, necessitating urgent structural reforms." },
+    { "source": "Social Democrat", "bias": "Moderate Left", "view": "The transition to a green economy must be socially just, protecting workers while maintaining Germany's competitive edge in new technologies." }
+  ],
+  "historicalContext": {
+    "summary": "Germany's history is characterized by its late unification in 1871, its role in two World Wars, and its subsequent division and miraculous post-WWII recovery. The peaceful reunification in 1990 cemented its role as the dominant economic power in a unified Europe, a position it is now struggling to maintain in a fragmented global order.",
+    "keyEvents": [
+      { "year": 1871, "event": "Unification of Germany into the German Empire." },
+      { "year": 1945, "event": "Surrender of Nazi Germany and division into Allied occupation zones." },
+      { "year": 1949, "event": "Founding of West Germany (FRG) and East Germany (GDR)." },
+      { "year": 1961, "event": "Construction of the Berlin Wall." },
+      { "year": 1989, "event": "Fall of the Berlin Wall." },
+      { "year": 1990, "event": "German Reunification." },
+      { "year": 2005, "event": "Angela Merkel becomes the first female Chancellor, starting a 16-year era." },
+      { "year": 2022, "event": "Chancellor Scholz announces 'Zeitenwende' (Turning Point) following the invasion of Ukraine." }
+    ]
+  },
+  "investmentNotes": {
+    "strengths": ["Stable legal and institutional framework", "Highly skilled workforce", "Global leadership in engineering and green tech", "Central location and world-class logistics"],
+    "risks": ["Demographic decline and skills shortage", "High energy costs and industrial transformation risks", "Digitalization lag", "Over-reliance on Chinese demand"],
+    "sectors": ["Renewable Energy", "Battery Technology", "Advanced Manufacturing", "Automotive (EV)", "Biotechnology"]
+  },
+  "sources": [
+    { "name": "Statistisches Bundesamt (Destatis)", "url": "https://www.destatis.de/EN/", "type": "economic" },
+    { "name": "Deutsche Bundesbank", "url": "https://www.bundesbank.de/en", "type": "economic" },
+    { "name": "Federal Foreign Office", "url": "https://www.auswaertiges-amt.de/en", "type": "political" }
+  ]
+}

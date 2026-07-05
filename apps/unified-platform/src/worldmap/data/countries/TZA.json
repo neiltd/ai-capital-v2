@@ -1,0 +1,67 @@
+{
+  "id": "TZA",
+  "iso2": "TZ",
+  "name": "Tanzania",
+  "region": "Africa",
+  "subregion": "Eastern Africa",
+  "capital": "Dodoma",
+  "lastUpdated": "2026-05-15",
+  "summary": "Tanzania is one of Africa's most stable nations, characterized by long-term one-party dominance (CCM) and a robust sense of national identity. Under President Samia Suluhu Hassan, the country has shifted toward 'Economic Diplomacy,' opening its doors to Western investment and pursuing massive infrastructure projects like the Standard Gauge Railway (SGR) and the Julius Nyerere Hydropower Plant. While historically non-aligned, Tanzania is positioning itself as a regional logistics and energy hub, though rising opposition pressure ahead of the 2025 elections tests its democratic resilience.",
+  "indicators": {
+    "politicalStability":       { "score": 7, "trend": "stable", "confidence": "high", "note": "Decades of peace and CCM dominance, though 2025 election tensions are rising." },
+    "economicDirection":        { "score": 7, "trend": "rising", "confidence": "high", "note": "Large-scale infra milestones and market-friendly policy shifts driving 6%+ growth." },
+    "investmentAttractiveness": { "score": 7, "trend": "rising", "confidence": "medium", "note": "Vast mineral wealth and strategic port location offset by bureaucratic hurdles." },
+    "geopoliticalRisk":         { "score": 8, "trend": "stable", "confidence": "high", "note": "Pragmatic non-alignment and positive relations with both China and the G7." },
+    "educationQuality":         { "score": 6, "trend": "stable", "confidence": "medium", "note": "Universal primary education success; focus on expanding technical training." },
+    "healthcareQuality":        { "score": 5, "trend": "stable", "confidence": "medium", "note": "Significant investment in hospital infrastructure under the 'Samia Level' initiative." },
+    "technologyInvestment":     { "score": 6, "trend": "rising", "confidence": "medium", "note": "Modernizing digital payments and improving connectivity via national fiber backbone." }
+  },
+  "demographics": {
+    "population": 67500000,
+    "medianAge": 18.0,
+    "urbanizationRate": 38,
+    "majorEthnicGroups": ["Sukuma", "Chagga", "Haya", "Makonde", "Zanzibari"],
+    "religions": [
+      { "name": "Christian", "percent": 61 },
+      { "name": "Muslim", "percent": 35 },
+      { "name": "Traditional/Other", "percent": 4 }
+    ]
+  },
+  "alliances": ["SADC", "East African Community (EAC)", "African Union", "Commonwealth"],
+  "relationships": [
+    { "countryId": "CHN", "countryName": "China", "type": "partner", "sentiment": "positive", "summary": "Legacy partner in infrastructure; primary funder of rail and port projects." },
+    { "countryId": "IND", "countryName": "India", "type": "partner", "sentiment": "positive", "summary": "Strategic partner in trade, defense, and maritime security in the Indian Ocean." },
+    { "countryId": "USA", "countryName": "United States", "type": "partner", "sentiment": "positive", "summary": "Warming relations under Samia; alignment on G7-led Lobito Corridor projects." },
+    { "countryId": "KEN", "countryName": "Kenya", "type": "partner", "sentiment": "neutral", "summary": "Intense trade competition and cooperation within the EAC framework." },
+    { "countryId": "RWA", "countryName": "Rwanda", "type": "partner", "sentiment": "positive", "summary": "Collaborating on logistics and SGR connectivity to landlocked Kigali." }
+  ],
+  "perspectives": [
+    { "source": "CCM Party Strategist", "bias": "Loyalist", "view": "Tanzania's stability is the result of our unique union and the CCM's steady hand in prioritizing national development over petty politics." },
+    { "source": "CHADEMA Opposition Leader", "bias": "Reformist", "view": "The '4Rs' are a facade; without genuine electoral reform and an end to repression, the 2025 vote will lack legitimacy." },
+    { "source": "Mining Executive", "bias": "Pragmatic", "view": "Tanzania is a top-tier destination for critical minerals, provided the tax administration becomes less predatory." },
+    { "source": "East African Analyst", "bias": "Observer", "view": "Tanzania is finally waking its 'sleeping giant' economy, potentially surpassing Kenya as the region's top destination." }
+  ],
+  "historicalContext": {
+    "summary": "Formed in 1964 by the union of Tanganyika and Zanzibar, Tanzania was defined by Julius Nyerere's 'Ujamaa' socialism. It transitioned to a market economy in the 1980s and has since maintained a rare record of internal peace and one-party continuity in a turbulent region.",
+    "keyEvents": [
+      { "year": 1961, "event": "Tanganyika gains independence from British colonial rule." },
+      { "year": 1964, "event": "Union of Tanganyika and Zanzibar to form the United Republic of Tanzania." },
+      { "year": 1967, "event": "Arusha Declaration: Launch of 'Ujamaa' African Socialism and self-reliance." },
+      { "year": 1992, "event": "Multi-party politics officially introduced, though CCM remains dominant." },
+      { "year": 2015, "event": "John Magufuli elected; begins era of state-led industrialization and crackdown." },
+      { "year": 2021, "event": "Ascension of Samia Suluhu Hassan as the first female president after Magufuli's death." },
+      { "year": 2024, "event": "Commercial operations of the SGR and completion of the Julius Nyerere Hydropower Dam." },
+      { "year": 2025, "event": "Scheduled General Elections (October)." }
+    ]
+  },
+  "investmentNotes": {
+    "strengths": ["Exceptional political and social stability", "Vast reserves of critical minerals (Graphite, Nickel)", "Strategic port hub for six landlocked countries", "Lower-middle-income status with consistent growth"],
+    "risks": ["Bureaucratic overlap and complex tax administration", "Strict land ownership laws for foreigners", "Rising political tensions ahead of elections", "USD liquidity challenges"],
+    "sectors": ["Mining (Critical Minerals)", "Energy (LNG and Hydro)", "Tourism", "Agro-processing"]
+  },
+  "sources": [
+    { "name": "Tanzania Investment Centre", "url": "https://www.tic.go.tz/", "type": "economic" },
+    { "name": "Bank of Tanzania", "url": "https://www.bot.go.tz/", "type": "economic" },
+    { "name": "CIA World Factbook", "url": "https://www.cia.gov/the-world-factbook/countries/tanzania/", "type": "general" }
+  ]
+}

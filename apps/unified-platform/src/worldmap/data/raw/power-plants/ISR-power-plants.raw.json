@@ -1,0 +1,218 @@
+[
+  {
+    "id": "PLANT-ISR-OROT-RABIN",
+    "name": "Orot Rabin Power Station",
+    "countryId": "ISR",
+    "city": "Hadera",
+    "coordinates": [34.8895, 32.4700],
+    "type": "coal",
+    "status": "operating",
+    "capacityMW": 2590,
+    "annualOutputGWh": null,
+    "yearCommissioned": 1981,
+    "yearRetirement": null,
+    "operator": "Israel Electric Corporation (IEC)",
+    "owner": "Israel Electric Corporation (IEC)",
+    "strategicNote": "Israel's largest power station, currently undergoing conversion from coal to natural gas for some units.",
+    "notes": "Strategically vital for Israel's energy independence and baseload supply.",
+    "attribution": {
+      "sources": [
+        { "name": "Global Energy Monitor", "url": "https://www.gem.wiki/Orot_Rabin_power_station", "accessedAt": "2025-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 2,
+        "lastVerified": "2025-05-10"
+      }
+    }
+  },
+  {
+    "id": "PLANT-ISR-RUTENBERG",
+    "name": "Rutenberg Power Station",
+    "countryId": "ISR",
+    "city": "Ashkelon",
+    "coordinates": [34.5161, 31.6275],
+    "type": "coal",
+    "status": "operating",
+    "capacityMW": 2250,
+    "annualOutputGWh": null,
+    "yearCommissioned": 1990,
+    "yearRetirement": null,
+    "operator": "Israel Electric Corporation (IEC)",
+    "owner": "Israel Electric Corporation (IEC)",
+    "strategicNote": "The second largest power plant in Israel, located near the southern border.",
+    "notes": "Key facility for the southern grid.",
+    "attribution": {
+      "sources": [
+        { "name": "Global Energy Monitor", "url": "https://www.gem.wiki/Rutenberg_power_station", "accessedAt": "2025-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 2,
+        "lastVerified": "2025-05-10"
+      }
+    }
+  },
+  {
+    "id": "PLANT-ISR-ESHKOL",
+    "name": "Eshkol Power Station",
+    "countryId": "ISR",
+    "city": "Ashdod",
+    "coordinates": [34.6500, 31.8333],
+    "type": "gas",
+    "status": "operating",
+    "capacityMW": 1606,
+    "annualOutputGWh": null,
+    "yearCommissioned": 1958,
+    "yearRetirement": null,
+    "operator": "Eshkol Power Energies",
+    "owner": "Dalia Power Energies consortium",
+    "strategicNote": "Recently privatized; a major natural gas facility near Ashdod port.",
+    "notes": "Includes modern combined-cycle units.",
+    "attribution": {
+      "sources": [
+        { "name": "Global Energy Monitor", "url": "https://www.gem.wiki/Eshkol_power_station", "accessedAt": "2025-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 1,
+        "lastVerified": "2025-05-10"
+      }
+    }
+  },
+  {
+    "id": "PLANT-ISR-HAGIT",
+    "name": "Hagit Power Station",
+    "countryId": "ISR",
+    "city": "Eliakim",
+    "coordinates": [35.0405, 32.6182],
+    "type": "gas",
+    "status": "operating",
+    "capacityMW": 1371,
+    "annualOutputGWh": null,
+    "yearCommissioned": 1996,
+    "yearRetirement": null,
+    "operator": "Israel Electric Corporation (IEC)",
+    "owner": "Israel Electric Corporation (IEC)",
+    "strategicNote": "Major natural gas combined cycle plant in northern Israel.",
+    "notes": null,
+    "attribution": {
+      "sources": [
+        { "name": "Global Energy Monitor", "url": "https://www.gem.wiki/Hagit_power_station", "accessedAt": "2025-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 1,
+        "lastVerified": "2025-05-10"
+      }
+    }
+  },
+  {
+    "id": "PLANT-ISR-GEZER",
+    "name": "Gezer Power Station",
+    "countryId": "ISR",
+    "city": "Ramla",
+    "coordinates": [34.9158, 31.9142],
+    "type": "gas",
+    "status": "operating",
+    "capacityMW": 1336,
+    "annualOutputGWh": null,
+    "yearCommissioned": 1998,
+    "yearRetirement": null,
+    "operator": "Israel Electric Corporation (IEC)",
+    "owner": "Israel Electric Corporation (IEC)",
+    "strategicNote": "Large natural gas facility serving the central district.",
+    "notes": null,
+    "attribution": {
+      "sources": [
+        { "name": "Global Energy Monitor", "url": "https://www.gem.wiki/Gezer_power_station", "accessedAt": "2025-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 1,
+        "lastVerified": "2025-05-10"
+      }
+    }
+  },
+  {
+    "id": "PLANT-ISR-DALIA",
+    "name": "Dalia (Tzafit) Power Station",
+    "countryId": "ISR",
+    "city": "Kfar Menahem",
+    "coordinates": [34.8428, 31.7142],
+    "type": "gas",
+    "status": "operating",
+    "capacityMW": 900,
+    "annualOutputGWh": null,
+    "yearCommissioned": 2015,
+    "yearRetirement": null,
+    "operator": "Dalia Power Energies",
+    "owner": "Dalia Power Energies",
+    "strategicNote": "The largest private power plant in Israel.",
+    "notes": null,
+    "attribution": {
+      "sources": [
+        { "name": "Global Energy Monitor", "url": "https://www.gem.wiki/Dalia_power_station", "accessedAt": "2025-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 1,
+        "lastVerified": "2025-05-10"
+      }
+    }
+  },
+  {
+    "id": "PLANT-ISR-DORAD",
+    "name": "Dorad Power Station",
+    "countryId": "ISR",
+    "city": "Ashkelon",
+    "coordinates": [34.5300, 31.6350],
+    "type": "gas",
+    "status": "operating",
+    "capacityMW": 840,
+    "annualOutputGWh": null,
+    "yearCommissioned": 2014,
+    "yearRetirement": null,
+    "operator": "Dorad Energy",
+    "owner": "EAPC / Zorlu Energy / Edeltech",
+    "strategicNote": "Major private natural gas plant located at the EAPC site.",
+    "notes": null,
+    "attribution": {
+      "sources": [
+        { "name": "Global Energy Monitor", "url": "https://www.gem.wiki/Dorad_power_station", "accessedAt": "2025-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 1,
+        "lastVerified": "2025-05-10"
+      }
+    }
+  },
+  {
+    "id": "PLANT-ISR-ASHALIM-SOLAR",
+    "name": "Ashalim Solar Thermal Power Station",
+    "countryId": "ISR",
+    "city": "Ashalim",
+    "coordinates": [34.7300, 30.9625],
+    "type": "solar",
+    "status": "operating",
+    "capacityMW": 312,
+    "annualOutputGWh": null,
+    "yearCommissioned": 2019,
+    "yearRetirement": null,
+    "operator": "Negev Energy / Megalim Solar Power",
+    "owner": "Various IPPs",
+    "strategicNote": "Flagship renewable project in the Negev desert, including one of the world's tallest solar towers.",
+    "notes": "Combines CSP and PV technologies.",
+    "attribution": {
+      "sources": [
+        { "name": "Global Energy Monitor", "url": "https://www.gem.wiki/Ashalim_Solar_Thermal_Power_Station", "accessedAt": "2025-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 2,
+        "lastVerified": "2025-05-10"
+      }
+    }
+  }
+]

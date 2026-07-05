@@ -1,0 +1,37 @@
+[
+  {
+    "countryId": "KEN",
+    "year": 2023,
+    "electricityConsumptionTWh": 10.0,
+    "electricityProductionTWh": 12.9,
+    "electricityMix": {
+      "hydro": 28.3,
+      "wind": 14.0,
+      "solar": 3.6,
+      "oil": 8.8,
+      "otherRenewables": 2.1,
+      "other": 43.2
+    },
+    "renewableSharePct": 91.2,
+    "waterStressScore": 0.73,
+    "waterWithdrawalPct": 10.5,
+    "foodSecurityScore": 53.0,
+    "aiAdoptionScore": 40.19,
+    "internetPenetration": 40.8,
+    "mobilePenetration": 118.7,
+    "attribution": {
+      "sources": [
+        { "name": "IEA World Energy Balances 2024", "url": "https://www.iea.org/data-and-statistics/data-product/world-energy-balances", "accessedAt": "2026-05-10" },
+        { "name": "Kenya EPRA Energy Statistics 2023", "url": "https://www.epra.go.ke/statistics/", "accessedAt": "2026-05-10" },
+        { "name": "WRI Aqueduct 4.0", "url": "https://www.wri.org/aqueduct", "accessedAt": "2026-05-10" },
+        { "name": "Oxford Insights Government AI Readiness Index 2023", "url": "https://oxfordinsights.com/government-ai-readiness-index-2023/", "accessedAt": "2026-05-10" },
+        { "name": "DataReportal Digital 2024: Kenya", "url": "https://datareportal.com/reports/digital-2024-kenya", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 5,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  }
+]

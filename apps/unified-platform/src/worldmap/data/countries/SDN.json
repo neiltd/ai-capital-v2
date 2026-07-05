@@ -1,0 +1,68 @@
+{
+  "id": "SDN",
+  "iso2": "SD",
+  "name": "Sudan",
+  "region": "Africa",
+  "subregion": "Northern Africa",
+  "capital": "Khartoum",
+  "lastUpdated": "2026-05-09",
+  "summary": "Sudan is currently engulfed in a catastrophic civil war between the Sudanese Armed Forces (SAF) and the Rapid Support Forces (RSF). The conflict has fractured the state, dismantled the transitional government, and triggered the world's largest displacement and hunger crisis. Both factions are engaged in a brutal power struggle with significant regional proxy involvement. The economy has collapsed, with critical infrastructure destroyed and traditional agricultural and mining sectors repurposed for war financing. Sudan's future is defined by a deep humanitarian catastrophe and the threat of long-term disintegration into competing military fiefdoms.",
+  "indicators": {
+    "politicalStability":       { "score": 1, "trend": "falling", "confidence": "high", "note": "Active nationwide civil war and state collapse; no functional central government exists as rival factions control different territories." },
+    "economicDirection":        { "score": 1, "trend": "falling", "confidence": "high", "note": "Complete economic collapse; GDP has shrunk by over 40% since the war began, and the formal financial system is largely non-functional." },
+    "investmentAttractiveness": { "score": 1, "trend": "falling", "confidence": "high", "note": "Extreme risk; most foreign assets have been seized or destroyed, and the 'war economy' is dominated by illicit gold smuggling and arms trade." },
+    "geopoliticalRisk":         { "score": 10, "trend": "stable", "confidence": "high", "note": "Maximum risk from active conflict, mass atrocities, and the potential for the war to destabilize the entire Horn of Africa and Red Sea region." },
+    "educationQuality":         { "score": 1, "trend": "falling", "confidence": "high", "note": "The education system has effectively ceased to function in conflict zones; universities and schools are frequently used as military barracks." },
+    "healthcareQuality":        { "score": 1, "trend": "falling", "confidence": "high", "note": "Systemic collapse; over 80% of hospitals are out of service, and the country faces widespread famine and disease outbreaks." },
+    "technologyInvestment":     { "score": 1, "trend": "falling", "confidence": "medium", "note": "Critical damage to telecommunications and internet infrastructure, though some systems are maintained for military and humanitarian use." }
+  },
+  "demographics": {
+    "population": 50600000,
+    "medianAge": 18.5,
+    "urbanizationRate": 36,
+    "majorEthnicGroups": ["Sudanese Arab", "Fur", "Beja", "Nuba", "Fallata"],
+    "religions": [
+      { "name": "Muslim (mostly Sunni)", "percent": 97 },
+      { "name": "Other (Christian, Traditional)", "percent": 3 }
+    ]
+  },
+  "alliances": ["Arab League", "African Union (Suspended)", "OIC", "CEN-SAD", "IGAD"],
+  "relationships": [
+    { "countryId": "EGY", "countryName": "Egypt", "type": "strategic_partner", "sentiment": "positive", "summary": "Strategic backer of the SAF; views Sudan's integrity as vital for Nile water security and its own border stability." },
+    { "countryId": "ARE", "countryName": "United Arab Emirates", "type": "competitor", "sentiment": "negative", "summary": "Accused of providing logistical and financial support to the RSF; relationship with the SAF-led administration is extremely tense." },
+    { "countryId": "RUS", "countryName": "Russia", "type": "strategic_partner", "sentiment": "positive", "summary": "Provides military support to the SAF in exchange for a Red Sea naval base; Wagner Group (Africa Corps) has previously interacted with both sides." },
+    { "countryId": "ETH", "countryName": "Ethiopia", "type": "competitor", "sentiment": "negative", "summary": "Border disputes and the GERD dam issue complicate relations; Ethiopia hosts large numbers of Sudanese refugees." },
+    { "countryId": "USA", "countryName": "United States", "type": "diplomatic_partner", "sentiment": "neutral", "summary": "Leading international efforts for a ceasefire and humanitarian access, but with limited leverage over the warring factions." }
+  ],
+  "perspectives": [
+    { "source": "Displaced Civilian", "bias": "Victimized", "view": "We have lost everything—our homes, our families, and our country; the generals are destroying Sudan for their own greed." },
+    { "source": "SAF Officer", "bias": "State-loyalist", "view": "We are fighting to preserve the national army and prevent the country from being taken over by a tribal militia and foreign agents." },
+    { "source": "RSF Spokesperson", "bias": "Insurgent", "view": "We are fighting against the 'old regime' and the Islamist military elite that has oppressed the Sudanese people for 30 years." },
+    { "source": "Humanitarian Worker", "bias": "Objective", "view": "Sudan is the site of the world's worst humanitarian crisis; without an immediate end to the fighting, we are looking at a famine of unprecedented proportions." }
+  ],
+  "historicalContext": {
+    "summary": "Sudan's history is marked by prolonged civil wars between the north and south, leading to South Sudan's independence in 2011. The country spent 30 years under the Islamist autocracy of Omar al-Bashir, whose ousting in 2019 led to a brief and failed democratic transition.",
+    "keyEvents": [
+      { "year": 1956, "event": "Sudan gains independence from joint British-Egyptian rule." },
+      { "year": 1989, "event": "Omar al-Bashir takes power in a military coup backed by Islamists." },
+      { "year": 2003, "event": "Outbreak of conflict in Darfur leads to accusations of genocide and ICC warrants for Bashir." },
+      { "year": 2011, "event": "South Sudan officially secedes from Sudan after a decades-long civil war." },
+      { "year": 2019, "event": "Mass protests lead to the military ousting of Omar al-Bashir." },
+      { "year": 2021, "event": "The military, led by Burhan and Dagalo, dissolves the transitional civilian government in a coup." },
+      { "year": 2023, "event": "April 15: Conflict erupts between the SAF and RSF in Khartoum over integration and power-sharing." },
+      { "year": 2024, "event": "The war expands into Sudan's agricultural heartland, triggering mass famine warnings." },
+      { "year": 2025, "event": "The SAF launches a major offensive to reclaim Khartoum; RSF maintains control over most of Darfur." },
+      { "year": 2025, "event": "October: Fall of El Fasher to the RSF marks the near-total loss of SAF control in Western Sudan." }
+    ]
+  },
+  "investmentNotes": {
+    "strengths": ["Significant gold reserves and mineral wealth", "Vast agricultural potential ('the breadbasket of Africa')", "Strategic location on the Red Sea", "Historical importance as a bridge between the Arab world and Sub-Saharan Africa"],
+    "risks": ["Active large-scale civil war and total state failure", "Extreme hyperinflation and currency collapse", "Massive destruction of physical and digital infrastructure", "Widespread famine and complete breakdown of the rule of law"],
+    "sectors": ["Emergency Humanitarian Services", "Satellite Telecommunications", "Security and Logistics (in stable zones like Port Sudan)", "Mining (highly informal and high-risk)", "Agricultural Reconstruction (post-conflict potential)"]
+  },
+  "sources": [
+    { "name": "Central Bureau of Statistics (Sudan)", "url": "http://www.cbs.gov.sd/en/", "type": "economic" },
+    { "name": "OCHA Sudan", "url": "https://www.unocha.org/sudan", "type": "humanitarian" },
+    { "name": "Central Bank of Sudan", "url": "https://cbos.gov.sd/en", "type": "economic" }
+  ]
+}

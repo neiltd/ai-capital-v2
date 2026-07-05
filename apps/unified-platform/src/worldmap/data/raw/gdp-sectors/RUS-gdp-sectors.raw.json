@@ -1,0 +1,27 @@
+[
+  {
+    "countryId": "RUS",
+    "year": 2023,
+    "gdpUsdBn": 2021.4,
+    "gdpPerCapita": 13647.6,
+    "sectors": [
+      { "sector": "Services (Trade, Transport, Finance)", "percentOfGDP": 57, "notes": "Largest sector, driven by domestic consumption and trade pivot to Asia" },
+      { "sector": "Mining (Oil, Gas, Minerals)", "percentOfGDP": 17, "notes": "Includes crude oil, natural gas, and coal extraction" },
+      { "sector": "Manufacturing", "percentOfGDP": 13, "notes": "Grew in 2023 due to import substitution and defense spending" },
+      { "sector": "Construction", "percentOfGDP": 7, "notes": "Boosted by infrastructure projects and housing boom" },
+      { "sector": "Agriculture", "percentOfGDP": 3, "notes": "Russia remains a top global wheat exporter despite small GDP share" },
+      { "sector": "Utilities (Electricity, Gas, Water)", "percentOfGDP": 3, "notes": null }
+    ],
+    "attribution": {
+      "sources": [
+        { "name": "World Bank DataBank 2023", "url": "https://databank.worldbank.org/", "accessedAt": "2024-05-10" },
+        { "name": "Rosstat / CEIC Data 2023", "url": "https://www.ceicdata.com/en/indicator/russia/real-gdp-growth", "accessedAt": "2024-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 2,
+        "lastVerified": "2024-05-10"
+      }
+    }
+  }
+]

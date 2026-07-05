@@ -1,0 +1,68 @@
+{
+  "id": "JAM",
+  "iso2": "JM",
+  "name": "Jamaica",
+  "region": "Americas",
+  "subregion": "Caribbean",
+  "capital": "Kingston",
+  "lastUpdated": "2026-05-09",
+  "summary": "Jamaica is a model of fiscal discipline and democratic resilience in the Caribbean, though it remains highly vulnerable to external shocks and climate change. Under Prime Minister Andrew Holness, who secured a third consecutive term in 2025, the country has maintained a rare bipartisan consensus on debt reduction and macroeconomic stability. Despite this, the economy faced setbacks in 2024 and 2025 due to back-to-back major hurricanes, leading to a temporary contraction. Jamaica's growth is primarily driven by tourism, bauxite mining, and a growing Business Process Outsourcing (BPO) sector. While the country has achieved record-low unemployment, it continues to struggle with high rates of violent crime and a significant 'brain drain' of skilled professionals. Geopolitically, Jamaica is a leading voice in CARICOM and an active advocate for climate finance and debt relief for Small Island Developing States (SIDS).",
+  "indicators": {
+    "politicalStability":       { "score": 7, "score_description": "Stable two-party system with a strong track record of peaceful transfers of power.", "trend": "stable", "confidence": "high", "note": "The 2025 election confirmed a mandate for continued fiscal responsibility, despite a narrowing majority for the JLP." },
+    "economicDirection":        { "score": 6, "score_description": "Strong fiscal management offset by high vulnerability to climate shocks and global price volatility.", "trend": "rising", "confidence": "high", "note": "Public debt has been halved over the last decade, though hurricane recovery will require significant capital in 2026." },
+    "investmentAttractiveness": { "score": 6, "score_description": "Attractive for tourism and BPO, with a stable regulatory environment.", "trend": "stable", "confidence": "high", "note": "Strong institutional support for FDI, particularly in renewable energy and the 'blue economy'." },
+    "geopoliticalRisk":         { "score": 4, "score_description": "Low risk, characterized by strong ties to the U.S., UK, and CARICOM peers.", "trend": "stable", "confidence": "high", "note": "Jamaica is a key regional partner for the U.S. in security and maritime law enforcement." },
+    "educationQuality":         { "score": 5, "score_description": "Good foundation with high literacy, but facing a shortage of technical and STEM skills.", "trend": "stable", "confidence": "medium", "note": "High rates of tertiary education are offset by significant migration of graduates to North America." },
+    "healthcareQuality":        { "score": 5, "score_description": "Mixed system with good primary care but aging infrastructure in public hospitals.", "trend": "stable", "confidence": "medium", "note": "The government is investing in digital health records and specialized centers to reduce wait times." },
+    "technologyInvestment":     { "score": 5, "score_description": "Growing BPO and digital services sector, with increasing focus on fintech.", "trend": "rising", "confidence": "high", "note": "Jamaica was a pioneer in launching a Central Bank Digital Currency (JAM-DEX) to promote financial inclusion." }
+  },
+  "demographics": {
+    "population": 2800000,
+    "medianAge": 31.5,
+    "urbanizationRate": 57,
+    "majorEthnicGroups": ["Black African descent", "Mixed descent", "East Indian descent", "Chinese descent"],
+    "religions": [
+      { "name": "Protestant/Evangelical", "percent": 65 },
+      { "name": "Roman Catholic", "percent": 2 },
+      { "name": "Rastafarian", "percent": 1 },
+      { "name": "None/Unaffiliated", "percent": 21 },
+      { "name": "Other", "percent": 11 }
+    ]
+  },
+  "alliances": ["CARICOM", "OAS", "CELAC", "UN", "Commonwealth", "SIDS"],
+  "relationships": [
+    { "countryId": "USA", "countryName": "United States", "type": "ally", "sentiment": "positive", "summary": "Primary trade partner and source of tourists and remittances; close cooperation on regional security." },
+    { "countryId": "GBR", "countryName": "United Kingdom", "type": "partner", "sentiment": "positive", "summary": "Strong historical and cultural ties; significant diaspora presence; partner in security and education." },
+    { "countryId": "CHN", "countryName": "China", "type": "partner", "sentiment": "neutral", "summary": "Major investor in road infrastructure and mining, though Jamaica remains wary of high debt-to-China ratios." },
+    { "countryId": "CAN", "countryName": "Canada", "type": "partner", "sentiment": "positive", "summary": "Key partner for seasonal labor programs and developmental aid in justice and security sectors." },
+    { "countryId": "HTI", "countryName": "Haiti", "type": "neighbor", "sentiment": "neutral", "summary": "Jamaica has played a leading role in CARICOM-led mediation efforts to resolve the Haitian political crisis." }
+  ],
+  "perspectives": [
+    { "source": "Business Leader (PSOJ)", "bias": "Pro-Market", "view": "Fiscal discipline is our greatest achievement; we must now focus on reducing the cost of crime and energy to unleash our full potential." },
+    { "source": "Climate Scientist", "bias": "Ecological", "view": "As a SIDS, climate change is an existential threat; we need global justice in the form of climate finance to build resilient infrastructure." },
+    { "source": "Community Advocate", "bias": "Social Justice", "view": "Economic statistics look good on paper, but for the average Jamaican, the cost of living and the fear of violence are the daily realities." }
+  ],
+  "historicalContext": {
+    "summary": "Jamaica's history is defined by its colonial past as a major sugar-producing hub of the British Empire and the subsequent legacy of slavery and resistance. Since gaining independence in 1962, the country has navigated periods of intense political tribalism and economic volatility, eventually maturing into a stable parliamentary democracy with a strong commitment to institutional reform.",
+    "keyEvents": [
+      { "year": 1834, "event": "Abolition of slavery in the British Empire, including Jamaica." },
+      { "year": 1944, "event": "Universal adult suffrage is granted, leading to the first modern elections." },
+      { "year": 1962, "event": "Jamaica gains independence from the United Kingdom." },
+      { "year": 1970, "event": "The rise of Michael Manley's democratic socialism and increased ties with Cuba." },
+      { "year": 1980, "event": "A violent election cycle leads to a shift toward pro-Western, market-oriented policies." },
+      { "year": 2013, "event": "Jamaica enters into a landmark multi-year reform program with the IMF." },
+      { "year": 2024, "event": "Hurricane Beryl causes significant damage to the southern coast and agriculture." },
+      { "year": 2025, "event": "Andrew Holness wins a third consecutive term as Prime Minister." }
+    ]
+  },
+  "investmentNotes": {
+    "strengths": ["Strong track record of fiscal discipline and debt reduction", "Established and world-renowned tourism brand", "English-speaking labor force ideal for BPO and services", "Stable democratic and legal framework"],
+    "risks": ["Extreme vulnerability to hurricanes and climate change", "High rates of violent crime and systemic security costs", "High cost of energy and reliance on imported fuel", "High levels of brain drain and skilled labor shortage"],
+    "sectors": ["Tourism and Hospitality", "Business Process Outsourcing (BPO)", "Logistics and Transshipment", "Renewable Energy", "Agribusiness (Blue Mountain Coffee, Rum)"]
+  },
+  "sources": [
+    { "name": "Bank of Jamaica", "url": "https://boj.org.jm/", "type": "official" },
+    { "name": "CIA World Factbook", "url": "https://www.cia.gov/the-world-factbook/countries/jamaica/", "type": "general" },
+    { "name": "PIOJ", "url": "https://www.pioj.gov.jm/", "type": "economic" }
+  ]
+}

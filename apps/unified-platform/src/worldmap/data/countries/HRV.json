@@ -1,0 +1,68 @@
+{
+  "id": "HRV",
+  "iso2": "HR",
+  "name": "Croatia",
+  "region": "Europe",
+  "subregion": "Southeast Europe",
+  "capital": "Zagreb",
+  "lastUpdated": "2026-05-09",
+  "summary": "In 2026, Croatia has firmly established itself as a fully integrated and prosperous member of the Eurozone and Schengen Area. The country is experiencing a multi-year economic boom, primarily driven by a record-breaking tourism sector and a surge in foreign investment following the removal of currency and border barriers. Zagreb and coastal hubs like Split and Rijeka are seeing significant development, while the Rimac Group has put Croatia on the global map as a center for high-performance electric vehicle technology. Geopolitically, Croatia serves as a strategic energy gateway for Central Europe through the Krk LNG terminal and is a leading advocate for the stability and integration of the Western Balkans. While the nation enjoys high political stability, it continues to address the challenges of an aging population and the need for labor market reforms to sustain its growth across diverse sectors.",
+  "indicators": {
+    "politicalStability":       { "score": 8, "score_description": "High stability with a strong pro-European consensus.", "trend": "stable", "confidence": "high", "note": "Mainstream parties are aligned on key strategic goals, ensuring a predictable and business-friendly environment." },
+    "economicDirection":        { "score": 7, "score_description": "Strong growth led by tourism, services, and energy transit.", "trend": "improving", "confidence": "high", "note": "GDP growth is outstripping the Eurozone average, supported by robust domestic demand and EU investment funds." },
+    "investmentAttractiveness": { "score": 8, "score_description": "Highly attractive due to Euro/Schengen status and lifestyle.", "trend": "stable", "confidence": "high", "note": "Croatia is increasingly attracting digital nomads and high-end investments in hospitality and green energy." },
+    "geopoliticalRisk":         { "score": 4, "score_description": "Low risk; deeply anchored in Western security structures.", "trend": "stable", "confidence": "high", "note": "The country maintains excellent relations with its EU and NATO peers and plays a stabilizing role in the region." },
+    "educationQuality":         { "score": 7, "score_description": "Solid standards with a growing focus on innovation and tech.", "trend": "improving", "confidence": "medium", "note": "Increased collaboration between universities and the burgeoning tech sector is enhancing graduate employability." },
+    "healthcareQuality":        { "score": 7, "score_description": "Good universal system with high standards in specialized care.", "trend": "stable", "confidence": "medium", "note": "Significant investments are being made in modernizing hospital infrastructure and digital health services." },
+    "technologyInvestment":     { "score": 7, "score_description": "Rising investment in E-mobility, IT, and renewable energy.", "trend": "rising", "confidence": "high", "note": "Rimac's 'Project Mobility' and investments in Adriatic wind and solar are key drivers." }
+  },
+  "demographics": {
+    "population": 3850000,
+    "medianAge": 44.5,
+    "urbanizationRate": 59,
+    "majorEthnicGroups": ["Croat", "Serb", "Bosniak", "Italian", "Albanian"],
+    "religions": [
+      { "name": "Roman Catholic", "percent": 79.0 },
+      { "name": "None/Unaffiliated", "percent": 10.5 },
+      { "name": "Orthodox Christian", "percent": 3.3 },
+      { "name": "Muslim", "percent": 1.3 },
+      { "name": "Other", "percent": 5.9 }
+    ]
+  },
+  "alliances": ["EU", "NATO", "Eurozone", "Schengen", "OECD (Candidate)"],
+  "relationships": [
+    { "countryId": "SVN", "countryName": "Slovenia", "type": "ally", "sentiment": "positive", "summary": "Closest regional partner; deep economic ties and shared interests within the EU and NATO." },
+    { "countryId": "DEU", "countryName": "Germany", "type": "ally", "sentiment": "positive", "summary": "Major economic partner and source of tourism; strong cultural and diaspora links." },
+    { "countryId": "ITA", "countryName": "Italy", "type": "partner", "sentiment": "positive", "summary": "Significant trading partner and co-steward of the Adriatic Sea; cooperation on maritime security and blue economy." },
+    { "countryId": "BIH", "countryName": "Bosnia and Herzegovina", "type": "partner", "sentiment": "neutral", "summary": "Vital neighbor with complex shared interests; Croatia is a leading supporter of BIH's path to the EU." },
+    { "countryId": "USA", "countryName": "United States", "type": "treaty_ally", "sentiment": "positive", "summary": "Strong security relationship; cooperation on defense procurement (Rafale/Bradley) and regional stability." }
+  ],
+  "perspectives": [
+    { "source": "Zagreb Tech Founder", "bias": "Optimistic/Globalist", "view": "Croatia is proving that a small country can lead in high-tech innovation; our talent and location are a winning combination." },
+    { "source": "Tourism Strategist", "bias": "Business-focused", "view": "We are moving toward a year-round, sustainable luxury model that preserves our natural beauty while maximizing economic value." },
+    { "source": "Regional Policy Expert", "bias": "Security-focused", "view": "Our role as a bridge between the EU and the Western Balkans is more important than ever; stability is the foundation of our prosperity." }
+  ],
+  "historicalContext": {
+    "summary": "Croatia's history is marked by its position at the crossroads of Central Europe and the Mediterranean. After centuries within the Hungarian and Habsburg realms, and later as part of Yugoslavia, Croatia regained independence in 1991 following a hard-fought war. Since then, it has undergone a remarkable transformation, successfully integrating into all major Western political and economic institutions.",
+    "keyEvents": [
+      { "year": 925, "event": "Coronation of Tomislav as the first King of Croatia." },
+      { "year": 1102, "event": "Croatia enters a personal union with the Kingdom of Hungary." },
+      { "year": 1527, "event": "The Croatian Sabor elects the Habsburgs as kings of Croatia." },
+      { "year": 1918, "event": "Croatia joins the Kingdom of Serbs, Croats, and Slovenes (later Yugoslavia)." },
+      { "year": 1991, "event": "Declaration of independence and the start of the War of Independence." },
+      { "year": 1995, "event": "Operation Storm effectively ends the war and restores territorial integrity." },
+      { "year": 2013, "event": "Croatia joins the European Union." },
+      { "year": 2023, "event": "Croatia joins the Eurozone and the Schengen Area." }
+    ]
+  },
+  "investmentNotes": {
+    "strengths": ["Full Eurozone and Schengen membership providing stability and ease of trade", "World-class tourism infrastructure and natural capital", "Strategic energy hub (LNG and pipeline networks)", "Strong growth in niche high-tech sectors like E-mobility"],
+    "risks": ["Labor shortages in hospitality and construction", "High economic concentration in the seasonal tourism sector", "Demographic decline and emigration of skilled workers", "Relatively slow pace of public sector digitalization"],
+    "sectors": ["Tourism & Hospitality", "High-Tech Manufacturing (EVs & Components)", "Energy & Green Tech", "Information Technology", "Logistics & Maritime Transport"]
+  },
+  "sources": [
+    { "name": "Croatian Bureau of Statistics (DZS)", "url": "https://dzs.gov.hr/en", "type": "economic" },
+    { "name": "Croatian National Bank (HNB)", "url": "https://www.hnb.hr/en/home", "type": "economic" },
+    { "name": "Ministry of Economy and Sustainable Development", "url": "https://mingor.gov.hr/", "type": "economic" }
+  ]
+}

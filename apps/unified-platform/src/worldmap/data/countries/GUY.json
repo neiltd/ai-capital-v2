@@ -1,0 +1,67 @@
+{
+  "id": "GUY",
+  "iso2": "GY",
+  "name": "Guyana",
+  "region": "Americas",
+  "subregion": "South America",
+  "capital": "Georgetown",
+  "lastUpdated": "2026-05-24",
+  "summary": "Guyana is currently the world's fastest-growing economy, undergoing a radical transformation driven by massive offshore oil discoveries. Since the start of production in 2019, the country has seen unprecedented GDP growth rates, with oil output projected to exceed 1.3 million barrels per day by 2027. Under the administration of President Irfaan Ali, who was re-elected in late 2025, the government is aggressively investing in national infrastructure, energy diversification (Gas-to-Energy project), and social services. However, this 'oil boom' is tempered by significant geopolitical tension with neighboring Venezuela over the Essequibo region and the domestic challenge of ensuring that wealth is distributed equitably while avoiding 'Dutch Disease' and institutional overstretch.",
+  "indicators": {
+    "politicalStability":       { "score": 6, "score_description": "Stable but under pressure from ethnic divisions and regional threats.", "trend": "stable", "confidence": "high", "note": "The PPP/C government maintains a strong mandate, but political polarization along ethnic lines remains a latent risk." },
+    "economicDirection":        { "score": 10, "score_description": "World-leading growth driven by the oil sector.", "trend": "rising", "confidence": "high", "note": "GDP growth remains in the double digits, though the non-oil economy faces challenges from rising costs and labor shortages." },
+    "investmentAttractiveness": { "score": 9, "score_description": "Extremely high in energy and infrastructure sectors.", "trend": "rising", "confidence": "high", "note": "Guyana is a global hotspot for upstream oil and gas, as well as massive logistics and construction projects." },
+    "geopoliticalRisk":         { "score": 6, "score_description": "High risk due to territorial dispute with Venezuela.", "trend": "rising", "confidence": "high", "note": "Venezuela's claims over two-thirds of Guyana's territory (Essequibo) necessitate increased defense spending and international diplomatic support." },
+    "educationQuality":         { "score": 6, "score_description": "Improving with significant new oil revenue funding.", "trend": "rising", "confidence": "medium", "note": "The government is prioritizing vocational training and university scholarships to build local capacity for the energy sector." },
+    "healthcareQuality":        { "score": 6, "score_description": "Undergoing modernization with new hospital projects.", "trend": "rising", "confidence": "medium", "note": "Massive investment is being channeled into regional hospitals and digital health records to improve rural access." },
+    "technologyInvestment":     { "score": 5, "score_description": "Expanding digital infrastructure and e-government services.", "trend": "rising", "confidence": "medium", "note": "Fiber optic connectivity is being expanded to the interior to support the modernization of the state and the economy." }
+  },
+  "demographics": {
+    "population": 815000,
+    "medianAge": 27.5,
+    "urbanizationRate": 27,
+    "majorEthnicGroups": ["Indo-Guyanese", "Afro-Guyanese", "Mixed", "Amerindian"],
+    "religions": [
+      { "name": "Protestant", "percent": 35 },
+      { "name": "Hindu", "percent": 25 },
+      { "name": "Roman Catholic", "percent": 7 },
+      { "name": "Muslim", "percent": 7 },
+      { "name": "Other/None", "percent": 26 }
+    ]
+  },
+  "alliances": ["CARICOM (Headquarters)", "Commonwealth", "UN", "OAS", "CELAC"],
+  "relationships": [
+    { "countryId": "USA", "countryName": "United States", "type": "ally", "sentiment": "positive", "summary": "Key security and economic partner; the US provides critical support for Guyana's territorial integrity and is the primary source of oil investment." },
+    { "countryId": "VEN", "countryName": "Venezuela", "type": "rival", "sentiment": "negative", "summary": "Primary geopolitical threat; the long-standing dispute over the Essequibo region has escalated into a major regional security concern." },
+    { "countryId": "BRA", "countryName": "Brazil", "type": "partner", "sentiment": "positive", "summary": "Growing strategic partner; Brazil supports Guyana's sovereignty and is collaborating on cross-border infrastructure and trade." },
+    { "countryId": "SUR", "countryName": "Suriname", "type": "partner", "sentiment": "positive", "summary": "Collaboration on the 'Energy Corridor' and a proposed bridge over the Corentyne River." }
+  ],
+  "perspectives": [
+    { "source": "PPP/C Government", "bias": "Social Democratic / Development-Oriented", "view": "Our oil wealth is a once-in-a-lifetime opportunity to transform Guyana into a high-income, modern nation for all Guyanese." },
+    { "source": "APNU+AFC Opposition", "bias": "Center-Left / Ethnic-Based", "view": "There must be greater transparency in the management of oil funds and a more equitable distribution of wealth to avoid marginalizing certain communities." },
+    { "source": "International Energy Agency (IEA)", "bias": "Technical", "view": "Guyana is poised to become one of the top non-OPEC oil producers, significantly altering global supply dynamics." }
+  ],
+  "historicalContext": {
+    "summary": "Formerly British Guiana, the country gained independence in 1966. Its history has been marked by ethnic-political polarization and economic struggles under socialist models in the 20th century. The discovery of the Liza field by ExxonMobil in 2015 fundamentally altered the nation's trajectory, leading to current explosive growth.",
+    "keyEvents": [
+      { "year": 1899, "event": "Paris Arbitral Award settles the boundary with Venezuela (currently disputed by Venezuela)." },
+      { "year": 1966, "event": "Independence from the United Kingdom." },
+      { "year": 1970, "event": "Guyana becomes a Co-operative Republic." },
+      { "year": 1978, "event": "Jonestown Massacre occurs in the Guyanese jungle." },
+      { "year": 2015, "event": "First major offshore oil discovery by ExxonMobil." },
+      { "year": 2019, "event": "Start of commercial oil production." },
+      { "year": 2023, "event": "Referendum in Venezuela increases tensions over the Essequibo region." },
+      { "year": 2025, "event": "President Irfaan Ali re-elected to a second term." }
+    ]
+  },
+  "investmentNotes": {
+    "strengths": ["Highest GDP growth rate in the world", "Low-cost, high-quality offshore oil reserves", "Strong diplomatic support from the US and UK", "English-speaking and strategically located"],
+    "risks": ["Existential threat from Venezuela's territorial claims", "Severe shortages of skilled labor and high local costs", "Institutional capacity and regulatory gaps", "Vulnerability to the 'Natural Resource Curse'"],
+    "sectors": ["Oil & Gas (Upstream and Services)", "Infrastructure and Construction", "Agribusiness (Rice, Sugar, Gold)", "Ecotourism"]
+  },
+  "sources": [
+    { "name": "Bank of Guyana", "url": "https://www.bankofguyana.org.gy/", "type": "economic" },
+    { "name": "Ministry of Natural Resources", "url": "https://nre.gov.gy/", "type": "economic" },
+    { "name": "Guyana Office for Investment (Go-Invest)", "url": "https://goinvest.gov.gy/", "type": "investment" }
+  ]
+}

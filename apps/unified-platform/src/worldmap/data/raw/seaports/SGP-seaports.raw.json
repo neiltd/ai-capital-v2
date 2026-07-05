@@ -1,0 +1,218 @@
+[
+  {
+    "id": "PORT-SGP-TUAS",
+    "name": "Tuas Port",
+    "countryId": "SGP",
+    "city": "Singapore",
+    "coordinates": [103.63, 1.22],
+    "type": "container",
+    "annualThroughputTEU": 40900000,
+    "annualThroughputTonnes": null,
+    "berthCount": 66,
+    "maxDraftM": 21.0,
+    "strategicImportance": "critical",
+    "riskLevel": "low",
+    "geopoliticalNotes": "Designed to be the world's largest fully automated container terminal upon completion in the 2040s. It represents Singapore's long-term strategy to maintain its status as a global transshipment hub by consolidating all container operations into a single, high-tech mega-port.",
+    "notes": "Currently in Phase 1 of operation. The port utilizes automated quay cranes and AI-driven vessel traffic management.",
+    "attribution": {
+      "sources": [
+        { "name": "Maritime and Port Authority of Singapore (MPA)", "url": "https://www.mpa.gov.sg", "accessedAt": "2026-05-10" },
+        { "name": "Singapore Economic Development Board (EDB)", "url": "https://www.edb.gov.sg", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 2,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  },
+  {
+    "id": "PORT-SGP-PASIR-PANJANG",
+    "name": "Pasir Panjang Terminal",
+    "countryId": "SGP",
+    "city": "Singapore",
+    "coordinates": [103.80, 1.27],
+    "type": "container",
+    "annualThroughputTEU": 35000000,
+    "annualThroughputTonnes": null,
+    "berthCount": 45,
+    "maxDraftM": 18.0,
+    "strategicImportance": "critical",
+    "riskLevel": "low",
+    "geopoliticalNotes": "Currently the most advanced and busiest container terminal complex in Singapore. It is capable of handling the world's largest ultra-large container vessels (ULCVs) and is the backbone of Singapore's transshipment economy.",
+    "notes": "Highly automated terminal featuring remote-controlled quay cranes. Scheduled for consolidation into Tuas Port by 2040.",
+    "attribution": {
+      "sources": [
+        { "name": "PSA Singapore", "url": "https://www.singaporepsa.com", "accessedAt": "2026-05-10" },
+        { "name": "World Shipping Council", "url": "https://www.worldshipping.org", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 2,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  },
+  {
+    "id": "PORT-SGP-JURONG",
+    "name": "Jurong Port",
+    "countryId": "SGP",
+    "city": "Singapore",
+    "coordinates": [103.72, 1.31],
+    "type": "bulk",
+    "annualThroughputTEU": null,
+    "annualThroughputTonnes": 37000000,
+    "berthCount": 32,
+    "maxDraftM": 16.0,
+    "strategicImportance": "high",
+    "riskLevel": "low",
+    "geopoliticalNotes": "Singapore's primary gateway for general and bulk cargo, handling 90% of the nation's cement and steel imports. It is critical for the country's construction industry and domestic infrastructure development.",
+    "notes": "Operates the world's largest common-user cement terminal and is increasingly diversifying into offshore and marine services.",
+    "attribution": {
+      "sources": [
+        { "name": "Jurong Port Official Website", "url": "https://www.jp.com.sg", "accessedAt": "2026-05-10" },
+        { "name": "The Business Times", "url": "https://www.businesstimes.com.sg", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 2,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  },
+  {
+    "id": "PORT-SGP-JURONG-ISLAND",
+    "name": "Jurong Island Terminals",
+    "countryId": "SGP",
+    "city": "Singapore",
+    "coordinates": [103.68, 1.27],
+    "type": "oil",
+    "annualThroughputTEU": 212000,
+    "annualThroughputTonnes": 200000000,
+    "berthCount": 100,
+    "maxDraftM": 18.0,
+    "strategicImportance": "critical",
+    "riskLevel": "medium",
+    "geopoliticalNotes": "One of the world's leading energy and chemical hubs. The port facilities on Jurong Island are vital for global energy trade and the supply of high-value chemical products. It integrates refining, petrochemicals, and logistics in a single location.",
+    "notes": "Includes the Jurong Island Terminal (JIT) for barge operations and numerous private jetties for oil majors.",
+    "attribution": {
+      "sources": [
+        { "name": "JTC Corporation", "url": "https://www.jtc.gov.sg", "accessedAt": "2026-05-10" },
+        { "name": "UNCTAD Maritime Transport Report", "url": "https://unctad.org", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 2,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  },
+  {
+    "id": "PORT-SGP-BUKOM",
+    "name": "Pulau Bukom Oil Terminal",
+    "countryId": "SGP",
+    "city": "Singapore",
+    "coordinates": [103.77, 1.23],
+    "type": "oil",
+    "annualThroughputTEU": null,
+    "annualThroughputTonnes": 100000000,
+    "berthCount": 12,
+    "maxDraftM": 18.5,
+    "strategicImportance": "high",
+    "riskLevel": "medium",
+    "geopoliticalNotes": "A dedicated island refinery and terminal for Shell. It is a key node in Asian energy markets and critical for the storage and distribution of refined petroleum products across the region.",
+    "notes": "One of Shell's most important refining and chemicals sites globally.",
+    "attribution": {
+      "sources": [
+        { "name": "Shell Singapore", "url": "https://www.shell.com.sg", "accessedAt": "2026-05-10" },
+        { "name": "Reuters", "url": "https://www.reuters.com", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 2,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  },
+  {
+    "id": "PORT-SGP-CHANGI-NAVAL",
+    "name": "Changi Naval Base",
+    "countryId": "SGP",
+    "city": "Singapore",
+    "coordinates": [104.02, 1.32],
+    "type": "naval",
+    "annualThroughputTEU": null,
+    "annualThroughputTonnes": null,
+    "berthCount": 10,
+    "maxDraftM": 15.0,
+    "strategicImportance": "critical",
+    "riskLevel": "low",
+    "geopoliticalNotes": "The premier strategic defense hub in Southeast Asia. It is the only regional port capable of docking US aircraft carriers, making it a critical facility for US naval logistics and power projection in the Indo-Pacific.",
+    "notes": "Co-located with the Republic of Singapore Navy (RSN) headquarters.",
+    "attribution": {
+      "sources": [
+        { "name": "Ministry of Defence Singapore (MINDEF)", "url": "https://www.mindef.gov.sg", "accessedAt": "2026-05-10" },
+        { "name": "U.S. Navy", "url": "https://www.navy.mil", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 2,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  },
+  {
+    "id": "PORT-SGP-SEMBAWANG",
+    "name": "Sembawang Wharves",
+    "countryId": "SGP",
+    "city": "Singapore",
+    "coordinates": [103.83, 1.45],
+    "type": "mixed",
+    "annualThroughputTEU": null,
+    "annualThroughputTonnes": 5000000,
+    "berthCount": 4,
+    "maxDraftM": 12.0,
+    "strategicImportance": "high",
+    "riskLevel": "low",
+    "geopoliticalNotes": "Handles specialized bulk cargo and serves as a major logistical base for international naval forces. It hosts the US Navy's COMLOG WESTPAC, providing essential support for regional maritime security.",
+    "notes": "Known for handling timber and heavy equipment in addition to its military logistical role.",
+    "attribution": {
+      "sources": [
+        { "name": "Wikipedia: Port of Singapore", "url": "https://en.wikipedia.org/wiki/Port_of_Singapore", "accessedAt": "2026-05-10" },
+        { "name": "U.S. Seventh Fleet", "url": "https://www.c7f.navy.mil", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 2,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  },
+  {
+    "id": "PORT-SGP-TUAS-NAVAL",
+    "name": "Tuas Naval Base",
+    "countryId": "SGP",
+    "city": "Singapore",
+    "coordinates": [103.63, 1.23],
+    "type": "naval",
+    "annualThroughputTEU": null,
+    "annualThroughputTonnes": null,
+    "berthCount": 8,
+    "maxDraftM": 12.0,
+    "strategicImportance": "high",
+    "riskLevel": "low",
+    "geopoliticalNotes": "Strategically monitors the western approaches to the Singapore Strait. It is essential for protecting Singapore's territorial waters and ensuring the security of the vital sea lines of communication (SLOCs).",
+    "notes": "Home to the RSN's patrol vessels, frigates, and littoral mission vessels.",
+    "attribution": {
+      "sources": [
+        { "name": "Ministry of Defence Singapore (MINDEF)", "url": "https://www.mindef.gov.sg", "accessedAt": "2026-05-10" },
+        { "name": "Findaport", "url": "https://www.findaport.com", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 2,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  }
+]

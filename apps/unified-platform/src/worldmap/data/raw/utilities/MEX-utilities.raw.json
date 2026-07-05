@@ -1,0 +1,37 @@
+[
+  {
+    "countryId": "MEX",
+    "year": 2023,
+    "electricityConsumptionTWh": 354.6,
+    "electricityProductionTWh": 351.0,
+    "electricityMix": {
+      "gas": 59.0,
+      "coal": 4.5,
+      "oil": 10.0,
+      "solar": 6.0,
+      "wind": 7.0,
+      "hydro": 8.5,
+      "nuclear": 3.5,
+      "otherRenewables": 1.5
+    },
+    "renewableSharePct": 23.0,
+    "waterStressScore": 4.1,
+    "waterWithdrawalPct": 44.95,
+    "foodSecurityScore": 69.1,
+    "aiAdoptionScore": 50.37,
+    "internetPenetration": 81.2,
+    "mobilePenetration": 96.5,
+    "attribution": {
+      "sources": [
+        { "name": "Ember Electricity Data Explorer 2024", "url": "https://ember-energy.org/data/electricity-data-explorer/", "accessedAt": "2026-05-10" },
+        { "name": "WRI Aqueduct 4.0", "url": "https://www.wri.org/aqueduct", "accessedAt": "2026-05-10" },
+        { "name": "Oxford Insights Government AI Readiness Index 2023", "url": "https://oxfordinsights.com/government-ai-readiness-index-2023/", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 3,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  }
+]

@@ -1,0 +1,54 @@
+[
+  {
+    "countryId": "POL",
+    "year": 2023,
+    "gdpUsdBn": 811.23,
+    "gdpPerCapita": 22113,
+    "sectors": [
+      {
+        "sector": "Services",
+        "percentOfGDP": 64.2,
+        "notes": "Largest sector, driven by IT, business process outsourcing (BPO), and logistics."
+      },
+      {
+        "sector": "Manufacturing",
+        "percentOfGDP": 18.5,
+        "notes": "Core industrial activity; hub for automotive, household appliances, and furniture."
+      },
+      {
+        "sector": "Other Industry",
+        "percentOfGDP": 14.4,
+        "notes": "Includes Mining (coal, copper), Energy, and Construction."
+      },
+      {
+        "sector": "Agriculture",
+        "percentOfGDP": 2.9,
+        "notes": "Major exporter of poultry, apples, and dairy; high nominal growth in 2023."
+      }
+    ],
+    "attribution": {
+      "sources": [
+        {
+          "name": "Statistics Poland (GUS) Preliminary Estimates 2023",
+          "url": "https://stat.gov.pl/en/",
+          "accessedAt": "2025-02-11"
+        },
+        {
+          "name": "World Bank DataBank 2023",
+          "url": "https://databank.worldbank.org/",
+          "accessedAt": "2025-02-11"
+        },
+        {
+          "name": "IMF World Economic Outlook October 2024",
+          "url": "https://www.imf.org/en/Publications/WEO",
+          "accessedAt": "2025-02-11"
+        }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 3,
+        "lastVerified": "2025-02-11"
+      }
+    }
+  }
+]

@@ -1,0 +1,9 @@
+node_modules/
+dist/
+.env
+knowledge/profile.md
+archive/*.jsonl
+data/*.jsonl
+data/*.db
+briefings/*.md
+!briefings/.gitkeep

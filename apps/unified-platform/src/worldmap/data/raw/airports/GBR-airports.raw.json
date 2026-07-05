@@ -1,0 +1,272 @@
+[
+  {
+    "id": "LHR",
+    "name": "London Heathrow Airport",
+    "countryId": "GBR",
+    "city": "London",
+    "iata": "LHR",
+    "icao": "EGLL",
+    "coordinates": [-0.4614, 51.4775],
+    "passengerVolume": 79152045,
+    "cargoVolume": 1432650,
+    "runwayCount": 2,
+    "elevationM": 25,
+    "strategicImportance": "critical",
+    "geopoliticalNotes": "Primary global hub for the UK and a critical economic gateway, handling over 20% of the nation's trade by value.",
+    "notes": "UK's largest port by value; operates at near-full capacity.",
+    "attribution": {
+      "sources": [
+        { "name": "Heathrow Airport Holdings", "url": "https://www.heathrow.com", "accessedAt": "2026-05-10" },
+        { "name": "ACI World", "url": "https://aci.aero", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 2,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  },
+  {
+    "id": "LGW",
+    "name": "London Gatwick Airport",
+    "countryId": "GBR",
+    "city": "London",
+    "iata": "LGW",
+    "icao": "EGKK",
+    "coordinates": [-0.1903, 51.1481],
+    "passengerVolume": 40900000,
+    "cargoVolume": 253000,
+    "runwayCount": 2,
+    "elevationM": 62,
+    "strategicImportance": "high",
+    "geopoliticalNotes": "Major secondary international hub for the UK, providing significant regional and global connectivity.",
+    "notes": "World's busiest single-runway airport (uses one at a time).",
+    "attribution": {
+      "sources": [
+        { "name": "Gatwick Airport Limited", "url": "https://www.gatwickairport.com", "accessedAt": "2026-05-10" },
+        { "name": "IATA", "url": "https://www.iata.org", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 2,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  },
+  {
+    "id": "STN",
+    "name": "London Stansted Airport",
+    "countryId": "GBR",
+    "city": "London",
+    "iata": "STN",
+    "icao": "EGSS",
+    "coordinates": [0.235, 51.885],
+    "passengerVolume": 28100000,
+    "cargoVolume": 266000,
+    "runwayCount": 1,
+    "elevationM": 106,
+    "strategicImportance": "high",
+    "geopoliticalNotes": "Key cargo hub and the primary airport for VVIP and state visits to the UK due to high security infrastructure.",
+    "notes": "Major base for low-cost carriers and dedicated freighter operations.",
+    "attribution": {
+      "sources": [
+        { "name": "Stansted Airport", "url": "https://www.stanstedairport.com", "accessedAt": "2026-05-10" },
+        { "name": "OurAirports", "url": "https://ourairports.com", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 2,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  },
+  {
+    "id": "MAN",
+    "name": "Manchester Airport",
+    "countryId": "GBR",
+    "city": "Manchester",
+    "iata": "MAN",
+    "icao": "EGCC",
+    "coordinates": [-2.275, 53.3539],
+    "passengerVolume": 28100000,
+    "cargoVolume": 171000,
+    "runwayCount": 2,
+    "elevationM": 78,
+    "strategicImportance": "high",
+    "geopoliticalNotes": "The primary gateway for Northern England, critical for regional economic development and international access.",
+    "notes": "Only UK airport outside London with two full-length runways.",
+    "attribution": {
+      "sources": [
+        { "name": "Manchester Airport Group", "url": "https://www.manchesterairport.co.uk", "accessedAt": "2026-05-10" },
+        { "name": "CAA UK", "url": "https://www.caa.co.uk", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 2,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  },
+  {
+    "id": "EMA",
+    "name": "East Midlands Airport",
+    "countryId": "GBR",
+    "city": "Derby/Nottingham",
+    "iata": "EMA",
+    "icao": "EGNX",
+    "coordinates": [-1.3333, 52.8333],
+    "passengerVolume": 3850000,
+    "cargoVolume": 352000,
+    "runwayCount": 1,
+    "elevationM": 93,
+    "strategicImportance": "critical",
+    "geopoliticalNotes": "UK's primary hub for pure cargo/express freight; central node for DHL, UPS, and FedEx operations.",
+    "notes": "Handles the most dedicated freighter traffic in the UK.",
+    "attribution": {
+      "sources": [
+        { "name": "East Midlands Airport", "url": "https://www.eastmidlandsairport.com", "accessedAt": "2026-05-10" },
+        { "name": "Heart of the Midlands", "url": "https://heartofthemidlands.co.uk", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 2,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  },
+  {
+    "id": "BZZ",
+    "name": "RAF Brize Norton",
+    "countryId": "GBR",
+    "city": "Oxfordshire",
+    "iata": "BZZ",
+    "icao": "EGVN",
+    "coordinates": [-1.5828, 51.7497],
+    "passengerVolume": null,
+    "cargoVolume": null,
+    "runwayCount": 1,
+    "elevationM": 87,
+    "strategicImportance": "critical",
+    "geopoliticalNotes": "The UK's largest RAF station and primary hub for military air mobility, transport, and air-to-air refueling.",
+    "notes": "Linchpin for all UK overseas military deployments and strategic lift.",
+    "attribution": {
+      "sources": [
+        { "name": "Royal Air Force", "url": "https://www.raf.mod.uk", "accessedAt": "2026-05-10" },
+        { "name": "SkyVector", "url": "https://skyvector.com", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 2,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  },
+  {
+    "id": "EDI",
+    "name": "Edinburgh Airport",
+    "countryId": "GBR",
+    "city": "Edinburgh",
+    "iata": "EDI",
+    "icao": "EGPH",
+    "coordinates": [-3.3725, 55.95],
+    "passengerVolume": 14400000,
+    "cargoVolume": 20100,
+    "runwayCount": 1,
+    "elevationM": 41,
+    "strategicImportance": "high",
+    "geopoliticalNotes": "Scotland's busiest airport and a key gateway for international diplomacy and finance in Northern Britain.",
+    "notes": "Significant growth in transatlantic routes recently.",
+    "attribution": {
+      "sources": [
+        { "name": "Edinburgh Airport", "url": "https://www.edinburghairport.com", "accessedAt": "2026-05-10" },
+        { "name": "IATA", "url": "https://www.iata.org", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 2,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  },
+  {
+    "id": "LMO",
+    "name": "RAF Lossiemouth",
+    "countryId": "GBR",
+    "city": "Moray",
+    "iata": "LMO",
+    "icao": "EGQS",
+    "coordinates": [-3.3392, 57.705],
+    "passengerVolume": null,
+    "cargoVolume": null,
+    "runwayCount": 2,
+    "elevationM": 13,
+    "strategicImportance": "critical",
+    "geopoliticalNotes": "Strategic defense node for maritime patrol and Quick Reaction Alert (QRA) in the North Atlantic and Arctic.",
+    "notes": "Home to the UK's P-8A Poseidon fleet, tracking maritime threats.",
+    "attribution": {
+      "sources": [
+        { "name": "Royal Air Force", "url": "https://www.raf.mod.uk", "accessedAt": "2026-05-10" },
+        { "name": "UK Ministry of Defence", "url": "https://www.gov.uk/government/organisations/ministry-of-defence", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 2,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  },
+  {
+    "id": "PIK",
+    "name": "Glasgow Prestwick Airport",
+    "countryId": "GBR",
+    "city": "Glasgow/Prestwick",
+    "iata": "PIK",
+    "icao": "EGPK",
+    "coordinates": [-4.5944, 55.5094],
+    "passengerVolume": 515000,
+    "cargoVolume": 18000,
+    "runwayCount": 2,
+    "elevationM": 20,
+    "strategicImportance": "high",
+    "geopoliticalNotes": "Critical transatlantic fuel stop and cargo hub with specialized capabilities for handling heavy and dangerous military goods.",
+    "notes": "Strategically located for great circle routes between North America and Europe.",
+    "attribution": {
+      "sources": [
+        { "name": "Glasgow Prestwick Airport", "url": "https://www.glasgowprestwick.com", "accessedAt": "2026-05-10" },
+        { "name": "OurAirports", "url": "https://ourairports.com", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 2,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  },
+  {
+    "id": "FFD",
+    "name": "RAF Fairford",
+    "countryId": "GBR",
+    "city": "Gloucestershire",
+    "iata": "FFD",
+    "icao": "EGVA",
+    "coordinates": [-1.79, 51.6822],
+    "passengerVolume": null,
+    "cargoVolume": null,
+    "runwayCount": 1,
+    "elevationM": 87,
+    "strategicImportance": "critical",
+    "geopoliticalNotes": "Only US Air Force heavy bomber forward operating location in Europe, essential for US strategic power projection.",
+    "notes": "Supports B-52, B-1, and B-2 bomber operations.",
+    "attribution": {
+      "sources": [
+        { "name": "US Air Force", "url": "https://www.af.mil", "accessedAt": "2026-05-10" },
+        { "name": "SkyVector", "url": "https://skyvector.com", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 2,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  }
+]

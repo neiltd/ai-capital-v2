@@ -1,0 +1,66 @@
+{
+  "id": "KIR",
+  "iso2": "KI",
+  "name": "Kiribati",
+  "region": "Oceania",
+  "subregion": "Micronesia",
+  "capital": "South Tarawa",
+  "lastUpdated": "2026-05-15",
+  "summary": "Kiribati is a Micronesian nation consisting of 33 coral atolls and islands spread across a vast area of the Pacific Ocean. It is one of the world's most vulnerable countries to climate change, particularly sea-level rise and coastal erosion. The economy is primarily based on fishing license fees, copra exports, and remittances. Kiribati has recently seen significant shifts in its foreign policy, including a move to recognize China and a temporary withdrawal from the Pacific Islands Forum, reflecting a more assertive and pragmatic approach to its national interests.",
+  "indicators": {
+    "politicalStability":       { "score": 6, "trend": "stable", "confidence": "high", "note": "Stable democratic system, but political discourse is increasingly focused on foreign policy shifts and climate adaptation strategies." },
+    "economicDirection":        { "score": 4, "trend": "stable", "confidence": "medium", "note": "Highly dependent on revenue from its massive Exclusive Economic Zone (EEZ) and sovereign wealth fund (RERF)." },
+    "investmentAttractiveness": { "score": 3, "trend": "stable", "confidence": "medium", "note": "Limited by extreme remoteness, small land area, and high climate risk; however, opportunities exist in sustainable fisheries." },
+    "geopoliticalRisk":         { "score": 5, "trend": "rising", "confidence": "high", "note": "Growing Chinese influence in infrastructure and potential security cooperation has increased regional strategic tension." },
+    "educationQuality":         { "score": 4, "trend": "stable", "confidence": "medium", "note": "Basic education is widespread, but higher education and vocational training opportunities are limited within the country." },
+    "healthcareQuality":        { "score": 3, "trend": "stable", "confidence": "medium", "note": "Medical services are basic and centralized in South Tarawa; outer islands have very limited access." },
+    "technologyInvestment":     { "score": 4, "trend": "rising", "confidence": "high", "note": "Connectivity is improving through new submarine cable links, essential for overcoming the challenges of geographical dispersion." }
+  },
+  "demographics": {
+    "population": 133000,
+    "medianAge": 23.0,
+    "urbanizationRate": 56,
+    "majorEthnicGroups": ["I-Kiribati (Micronesian)", "Part I-Kiribati"],
+    "religions": [
+      { "name": "Roman Catholic", "percent": 57.0 },
+      { "name": "Protestant (Kiribati Uniting Church)", "percent": 31.0 },
+      { "name": "Other Christian", "percent": 12.0 }
+    ]
+  },
+  "alliances": ["Pacific Islands Forum", "Commonwealth", "United Nations", "SIDS", "ACP"],
+  "relationships": [
+    { "countryId": "CHN", "countryName": "China", "type": "strategic_partner", "sentiment": "positive", "summary": "Rapidly growing economic and diplomatic partner since the switch from Taiwan in 2019." },
+    { "countryId": "AUS", "countryName": "Australia", "type": "traditional_partner", "sentiment": "positive", "summary": "Major donor and security partner; long-term commitment to development and climate resilience." },
+    { "countryId": "NZL", "countryName": "New Zealand", "type": "development_partner", "sentiment": "positive", "summary": "Key partner for education, seasonal labor, and climate adaptation assistance." },
+    { "countryId": "USA", "countryName": "United States", "type": "security_partner", "sentiment": "positive", "summary": "Historical ties from WWII; increasing engagement as part of the broader Pacific strategy." }
+  ],
+  "perspectives": [
+    { "source": "I-Kiribati Citizen", "bias": "Pragmatic", "view": "Climate change is not a future threat; it is our current reality. We need any help we can get to save our islands." },
+    { "source": "Government Official", "bias": "Assertive", "view": "Kiribati will engage with all partners who respect our sovereignty and support our development goals, regardless of traditional alliances." },
+    { "source": "Fisheries Manager", "bias": "Environmental", "view": "Our EEZ is our greatest asset; we must manage it sustainably to ensure the long-term food and economic security of our people." },
+    { "source": "Outer Island Elder", "bias": "Traditionalist", "view": "The modern world is changing fast, but our 'Maneaba' system of community governance must remain at the heart of our society." }
+  ],
+  "historicalContext": {
+    "summary": "Formerly known as the Gilbert Islands, Kiribati was a British protectorate and later colony. During WWII, the islands saw fierce fighting between US and Japanese forces (e.g., Battle of Tarawa). Kiribati gained independence in 1979. Its modern history is dominated by the existential threat of climate change and the challenge of developing a sustainable economy in a highly dispersed archipelago.",
+    "keyEvents": [
+      { "year": 1892, "event": "Gilbert and Ellice Islands become a British protectorate." },
+      { "year": 1943, "event": "The Battle of Tarawa, one of the bloodiest in the Pacific theater of WWII." },
+      { "year": 1975, "event": "Ellice Islands separate from the Gilbert Islands (becoming Tuvalu)." },
+      { "year": 1979, "event": "Kiribati gains independence from the United Kingdom." },
+      { "year": 1999, "event": "Kiribati joins the United Nations." },
+      { "year": 2014, "event": "The government purchases land in Fiji as a potential refuge due to climate change (though later repurposed)." },
+      { "year": 2019, "event": "Kiribati switches diplomatic recognition from Taiwan to China." },
+      { "year": 2022, "event": "Kiribati temporarily withdraws from the Pacific Islands Forum (later rejoins in 2023)." }
+    ]
+  },
+  "investmentNotes": {
+    "strengths": ["Massive Exclusive Economic Zone (EEZ) with rich tuna stocks", "Strong cultural resilience and community spirit", "Strategic location spanning the equator and the International Date Line", "Sovereign wealth fund (RERF) provides some fiscal buffer"],
+    "risks": ["Extreme vulnerability to sea-level rise and climate change", "Severe geographical fragmentation and remoteness", "Highly limited land and freshwater resources", "High dependence on a few revenue sources"],
+    "sectors": ["Sustainable Commercial Fisheries", "Marine Resource Exploration", "Niche Eco-tourism", "Climate-resilient Infrastructure"]
+  },
+  "sources": [
+    { "name": "Kiribati Ministry of Finance and Economic Development", "url": "https://www.mfed.gov.ki/", "type": "economic" },
+    { "name": "Kiribati National Statistics Office", "url": "https://www.statistics.gov.ki/", "type": "demographic" },
+    { "name": "Kiribati Ministry of Fisheries and Marine Resources Development", "url": "https://www.mfmrd.gov.ki/", "type": "investment" }
+  ]
+}

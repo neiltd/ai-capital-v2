@@ -1,0 +1,65 @@
+{
+  "id": "SGP",
+  "iso2": "SG",
+  "name": "Singapore",
+  "region": "Asia",
+  "subregion": "South-Eastern Asia",
+  "capital": "Singapore",
+  "lastUpdated": "2025-05-20",
+  "summary": "Singapore is a global financial hub and stable city-state maintaining a high state of vigilance against a diverse threat landscape. In 2024-2025, the primary security focus is on high levels of terrorism risk driven by online self-radicalization and the emotive impact of Middle East conflicts. The government is also aggressively countering sophisticated state-linked cyberattacks and foreign interference while managing a transition to AI-assisted 'passport-less' border security.",
+  "indicators": {
+    "politicalStability":       { "score": 9, "trend": "stable", "confidence": "high", "note": "Exceptionally stable governance under a long-term strategic vision; effective legal and administrative systems." },
+    "economicDirection":        { "score": 8, "trend": "stable", "confidence": "high", "note": "World-leading business hub; focus on green finance, digital economy, and high-value manufacturing." },
+    "investmentAttractiveness": { "score": 10, "trend": "stable", "confidence": "high", "note": "Top-tier global destination for FDI; excellent infrastructure, rule of law, and strategic location." },
+    "geopoliticalRisk":         { "score": 4, "trend": "increasing", "confidence": "high", "note": "Target of foreign interference and sophisticated cyber espionage; navigating US-China tensions." },
+    "educationQuality":         { "score": 10, "trend": "stable", "confidence": "high", "note": "One of the best education systems globally; world-class universities and strong focus on lifelong learning." },
+    "healthcareQuality":        { "score": 9, "trend": "stable", "confidence": "high", "note": "Highly efficient healthcare system with excellent outcomes; global leader in medical technology." },
+    "technologyInvestment":     { "score": 10, "trend": "improving", "confidence": "high", "note": "Massive investment in AI, smart city tech, and cybersecurity; leader in digital government services." }
+  },
+  "demographics": {
+    "population": 6052709,
+    "medianAge": 36.2,
+    "urbanizationRate": 100.0,
+    "majorEthnicGroups": ["Chinese", "Malay", "Indian"],
+    "religions": [
+      { "name": "Buddhist", "percent": 31.0 },
+      { "name": "Christian", "percent": 19.0 },
+      { "name": "Muslim", "percent": 16.0 },
+      { "name": "Taoist", "percent": 9.0 },
+      { "name": "Hindu", "percent": 5.0 }
+    ]
+  },
+  "alliances": ["ASEAN", "Five Power Defence Arrangements (FPDA)", "APEC", "CPTPP"],
+  "relationships": [
+    { "countryId": "USA", "countryName": "United States", "type": "strategic_partner", "sentiment": "positive", "summary": "Critical security and economic partner; hosting US military assets and deep cooperation on counter-terrorism." },
+    { "countryId": "CHN", "countryName": "China", "type": "economic_partner", "sentiment": "positive", "summary": "Largest trading partner; deep economic ties balanced with careful management of security and diplomatic space." },
+    { "countryId": "MYS", "countryName": "Malaysia", "type": "neighbor", "sentiment": "neutral", "summary": "Interdependent relationship focused on trade, water supply, and security; occasional friction over maritime and land boundaries." },
+    { "countryId": "IDN", "countryName": "Indonesia", "type": "neighbor", "sentiment": "positive", "summary": "Important regional partner; cooperation on counter-terrorism, maritime safety, and economic integration." }
+  ],
+  "perspectives": [
+    { "source": "ISD Official", "bias": "Security-focused", "view": "The terrorism threat remains high and evolved; online radicalization of youth is our most pressing domestic security challenge." },
+    { "source": "Global Tech Investor", "bias": "Optimistic", "view": "Singapore is the safest and most efficient hub in Asia for scaling digital businesses and managing family offices." },
+    { "source": "Cybersecurity Analyst", "bias": "Vigilant", "view": "We are a prime target for state-linked APTs; our defense must be continuous and powered by the latest AI detection tools." }
+  ],
+  "historicalContext": {
+    "summary": "Founded as a British trading post in 1819, Singapore gained independence from Malaysia in 1965. Under the leadership of Lee Kuan Yew, it transformed from a resource-poor island into one of the world's most prosperous 'Four Asian Tigers' through strategic planning and trade openness.",
+    "keyEvents": [
+      { "year": 1819, "event": "Founding by Stamford Raffles." },
+      { "year": 1965, "event": "Independence from Malaysia." },
+      { "year": 2004, "event": "Lee Hsien Loong becomes Prime Minister, continuing the PAP's long-term rule." },
+      { "year": 2021, "event": "Enactment of the Foreign Interference (Countermeasures) Act (FICA)." },
+      { "year": 2024, "event": "Lawrence Wong succeeds Lee Hsien Loong as Prime Minister in a planned leadership transition." },
+      { "year": 2025, "event": "Full implementation of 'Passport-less' immigration clearance at all major checkpoints." }
+    ]
+  },
+  "investmentNotes": {
+    "strengths": ["World-leading ease of doing business and transparent legal system", "Premier global hub for finance, logistics, and technology", "Highly skilled, multilingual, and international workforce", "Exceptional physical and digital infrastructure connectivity"],
+    "risks": ["Vulnerability to global trade volatility and geopolitical tensions", "High cost of living and business operations (labor/real estate)", "Increasing threat of sophisticated cyberattacks on critical infrastructure", "Limited land and natural resources"],
+    "sectors": ["Green Finance & Wealth Management", "Advanced Manufacturing (Semiconductors)", "Biotechnology & Healthcare", "Digital Economy & Artificial Intelligence"]
+  },
+  "sources": [
+    { "name": "Internal Security Department (ISD)", "url": "https://www.isd.gov.sg/", "type": "security" },
+    { "name": "Singapore Economic Development Board (EDB)", "url": "https://www.edb.gov.sg/", "type": "economic" },
+    { "name": "Ministry of Home Affairs (MHA)", "url": "https://www.mha.gov.sg/", "type": "government" }
+  ]
+}

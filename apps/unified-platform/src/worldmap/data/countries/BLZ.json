@@ -1,0 +1,65 @@
+{
+  "id": "BLZ",
+  "iso2": "BZ",
+  "name": "Belize",
+  "region": "Americas",
+  "subregion": "Central America",
+  "capital": "Belmopan",
+  "lastUpdated": "2026-05-15",
+  "summary": "Belize is currently experiencing a period of 'super-growth,' with its economy expanding by over 10% in 2024 and maintaining strong momentum into 2026. Under Prime Minister John Briceño, the country has become a global model for innovative debt management through its 'Blue Bonds' for ocean conservation, which significantly reduced its debt-to-GDP ratio. The economy is driven by a booming tourism sector, a growing Business Process Outsourcing (BPO) industry, and resilient agriculture. Politically, the ruling PUP maintains strong support, having secured a dominant victory in the 2024 municipal elections. A major upcoming event is the expected ICJ ruling on the long-standing border dispute with Guatemala, which is anticipated to bring greater certainty and stability to the region. Belize continues to leverage its unique position as both a Caribbean (CARICOM) and Central American (SICA) nation to foster trade and environmental cooperation.",
+  "indicators": {
+    "politicalStability":       { "score": 8, "score_description": "Stable parliamentary democracy with strong popular support for the current administration.", "trend": "stable", "confidence": "high", "note": "High levels of civil liberty and a robust electoral process." },
+    "economicDirection":        { "score": 8, "score_description": "Exceptional growth and successful debt restructuring via Blue Bonds.", "trend": "rising", "confidence": "high", "note": "Poverty rates have declined significantly as the economy expands." },
+    "investmentAttractiveness": { "score": 7, "score_description": "Highly attractive for tourism, AgTech, and BPO; unique environmental focus.", "trend": "rising", "confidence": "high", "note": "The country is increasingly seen as a leader in the green and blue economies." },
+    "geopoliticalRisk":         { "score": 4, "score_description": "Moderate risk due to the pending ICJ ruling on the border dispute with Guatemala.", "trend": "improving", "confidence": "medium", "note": "Both nations are committed to a peaceful resolution via the ICJ." },
+    "educationQuality":         { "score": 5, "score_description": "Decent foundation with a focus on improving bilingual and technical education.", "trend": "stable", "confidence": "medium", "note": "Focus on aligning education with the needs of the growing BPO and tourism sectors." },
+    "healthcareQuality":        { "score": 5, "score_description": "Mixed system; ongoing investments in regional hospitals and primary care clinics.", "trend": "stable", "confidence": "medium", "note": "Focus on improving accessibility in rural and indigenous communities." },
+    "technologyInvestment":     { "score": 6, "score_description": "Rapid growth in the BPO sector is driving significant investment in digital connectivity.", "trend": "rising", "confidence": "high", "note": "Government is promoting digital transformation to improve ease of doing business." }
+  },
+  "demographics": {
+    "population": 411000,
+    "medianAge": 25.5,
+    "urbanizationRate": 46,
+    "majorEthnicGroups": ["Mestizo", "Creole", "Maya", "Garifuna", "East Indian", "Mennonite"],
+    "religions": [
+      { "name": "Roman Catholic", "percent": 40 },
+      { "name": "Protestant", "percent": 31 },
+      { "name": "Jehovah's Witness", "percent": 2 },
+      { "name": "None/Unaffiliated", "percent": 15 },
+      { "name": "Other", "percent": 12 }
+    ]
+  },
+  "alliances": ["CARICOM", "SICA", "OAS", "UN", "Commonwealth", "SIDS", "CELAC"],
+  "relationships": [
+    { "countryId": "USA", "countryName": "United States", "type": "partner", "sentiment": "positive", "summary": "Close partner in trade, security, and conservation; primary source of tourism." },
+    { "countryId": "GTM", "countryName": "Guatemala", "type": "neighbor", "sentiment": "neutral", "summary": "Relationship dominated by the border dispute, but moving toward a peaceful ICJ resolution." },
+    { "countryId": "MEX", "countryName": "Mexico", "type": "neighbor", "sentiment": "positive", "summary": "Important partner for trade, energy, and cultural exchange." },
+    { "countryId": "TWN", "countryName": "Taiwan", "type": "ally", "sentiment": "positive", "summary": "Strong diplomatic ally and major provider of developmental aid." }
+  ],
+  "perspectives": [
+    { "source": "Tourism Operator", "bias": "Optimistic", "view": "Belize is the world's best-kept secret; our commitment to nature is what brings people back." },
+    { "source": "BPO Manager", "bias": "Business", "view": "We have the perfect talent pool—English-speaking, young, and motivated; we are just getting started." },
+    { "source": "Indigenous Leader", "bias": "Rights-based", "view": "Growth must respect our land rights; the Blue Bond is good, but we must be partners in conservation." }
+  ],
+  "historicalContext": {
+    "summary": "Belize, formerly British Honduras, was the only British colony in Central America. It has a unique history of Maya civilization followed by British settlement by 'Baymen' and enslaved Africans. It gained independence in 1981, much later than its neighbors, partly due to the territorial claim by Guatemala. Its modern history is defined by its ethnic diversity, its successful transition to a tourism-based economy, and its innovative environmental leadership.",
+    "keyEvents": [
+      { "year": 1798, "event": "Battle of St. George's Caye: British settlers defeat a Spanish naval force." },
+      { "year": 1981, "event": "Belize gains independence from the United Kingdom." },
+      { "year": 1996, "event": "The Belize Barrier Reef is designated a UNESCO World Heritage site." },
+      { "year": 2021, "event": "Belize launches the landmark Blue Bond for Ocean Conservation." },
+      { "year": 2024, "event": "The ruling PUP wins a near-total victory in national municipal elections." },
+      { "year": 2025, "event": "Anticipated final ruling from the ICJ on the Belize-Guatemala border dispute." }
+    ]
+  },
+  "investmentNotes": {
+    "strengths": ["World leader in conservation-linked finance (Blue Bonds)", "Bilingual, young, and English-speaking workforce", "Unrivaled natural assets (Barrier Reef, Maya ruins)", "Stable democratic and legal environment"],
+    "risks": ["Vulnerability to hurricanes and climate change", "Uncertainty regarding the final border ruling (though localized)", "Infrastructure gaps in rural areas", "Relatively small domestic market"],
+    "sectors": ["Sustainable Tourism", "Business Process Outsourcing (BPO)", "Regenerative Agriculture", "Renewable Energy", "Fintech and Blue Finance"]
+  },
+  "sources": [
+    { "name": "Government of Belize", "url": "https://www.belize.gov.bz/", "type": "official" },
+    { "name": "Statistical Institute of Belize", "url": "https://sib.org.bz/", "type": "official" },
+    { "name": "Central Bank of Belize", "url": "https://www.centralbank.org.bz/", "type": "official" }
+  ]
+}

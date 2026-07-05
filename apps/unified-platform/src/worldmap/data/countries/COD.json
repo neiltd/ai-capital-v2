@@ -1,0 +1,66 @@
+{
+  "id": "COD",
+  "iso2": "CD",
+  "name": "Democratic Republic of the Congo",
+  "region": "Africa",
+  "subregion": "Middle Africa",
+  "capital": "Kinshasa",
+  "lastUpdated": "2025-05-22",
+  "summary": "The DRC is a country of immense strategic importance, possessing the world's largest reserves of cobalt and significant copper deposits critical to the global green energy transition. Under President Félix Tshisekedi, the country has maintained strong mining-led growth, though it faces a severe security crisis in the East involving the M23 insurgency and tensions with Rwanda. The government is currently focused on formalizing the mining sector, improving infrastructure through projects like the Lobito Corridor, and navigating complex regional mediation efforts.",
+  "indicators": {
+    "politicalStability":       { "score": 3, "trend": "falling", "confidence": "high", "note": "High internal tension due to Eastern conflict and controversial 2023 election results." },
+    "economicDirection":        { "score": 6, "trend": "stable", "confidence": "high", "note": "Strong growth in mining, but high inflation and heavy reliance on commodity prices." },
+    "investmentAttractiveness": { "score": 5, "trend": "stable", "confidence": "high", "note": "High interest in critical minerals; balanced by high risk and infrastructure deficits." },
+    "geopoliticalRisk":         { "score": 8, "trend": "rising", "confidence": "high", "note": "Active conflict with M23 rebels and severe diplomatic tension with Rwanda." },
+    "educationQuality":         { "score": 3, "trend": "stable", "confidence": "medium", "note": "Free primary education policy has increased enrollment, but quality and funding remain low." },
+    "healthcareQuality":        { "score": 3, "trend": "stable", "confidence": "medium", "note": "Struggles with recurrent disease outbreaks (Ebola, Mpox); urban facilities under strain." },
+    "technologyInvestment":     { "score": 4, "trend": "rising", "confidence": "medium", "note": "Rising mobile penetration and digital ID initiatives; focus on rural connectivity." }
+  },
+  "demographics": {
+    "population": 109300000,
+    "medianAge": 16.9,
+    "urbanizationRate": 48.1,
+    "majorEthnicGroups": ["Luba", "Mongo", "Kongo", "Mangbetu-Azande", "Lunda"],
+    "religions": [
+      { "name": "Roman Catholic", "percent": 45.0 },
+      { "name": "Protestant", "percent": 40.0 },
+      { "name": "Kimbanguist", "percent": 5.0 },
+      { "name": "Muslim", "percent": 2.0 },
+      { "name": "Other/Traditional", "percent": 8.0 }
+    ]
+  },
+  "alliances": ["African Union", "SADC", "EAC", "SAPP"],
+  "relationships": [
+    { "countryId": "CHN", "countryName": "China", "type": "strategic_partner", "sentiment": "positive", "summary": "Dominant partner in the mining sector; recent renegotiation of the 'Sicomin' infrastructure-for-minerals deal." },
+    { "countryId": "USA", "countryName": "United States", "type": "strategic_partner", "sentiment": "positive", "summary": "Growing cooperation to secure critical mineral supply chains; backer of the Lobito Corridor." },
+    { "countryId": "RWA", "countryName": "Rwanda", "type": "adversary", "sentiment": "negative", "summary": "Severe hostility; DRC accuses Rwanda of backing M23 rebels; high risk of regional conflict." },
+    { "countryId": "ZAF", "countryName": "South Africa", "type": "security_partner", "sentiment": "positive", "summary": "Key provider of peacekeeping troops through the SADC SAMIDRC mission." }
+  ],
+  "perspectives": [
+    { "source": "Mining Engineer in Katanga", "bias": "Pragmatic", "view": "The copper boom is real, but the new cobalt quotas will force us to change how we operate." },
+    { "source": "Displaced Person in Goma", "bias": "Desperate", "view": "We just want to go home. The politicians in Kinshasa and the world have forgotten us." },
+    { "source": "Kinshasa Street Vendor", "bias": "Struggling", "view": "The prices of everything keep going up. The minerals are rich, but my pocket is empty." },
+    { "source": "Government Strategist", "bias": "Nationalist", "view": "We are re-asserting our sovereignty over our resources. The world needs our minerals, and they must pay a fair price." }
+  ],
+  "historicalContext": {
+    "summary": "Since independence from Belgium in 1960, the DRC has faced decades of instability, including the long dictatorship of Mobutu Sese Seko and the devastating 'Great War of Africa' (1998-2003). It saw its first peaceful transition of power in 2019, though security challenges in the East remain a persistent legacy.",
+    "keyEvents": [
+      { "year": 1960, "event": "Independence from Belgium." },
+      { "year": 1997, "event": "Mobutu Sese Seko overthrown; Laurent-Désiré Kabila takes power." },
+      { "year": 2019, "event": "First peaceful transfer of power (Kabila to Tshisekedi)." },
+      { "year": 2023, "event": "Félix Tshisekedi re-elected in a landslide, disputed by opposition." },
+      { "year": 2025, "event": "M23 rebels capture strategic hubs Goma and Bukavu." },
+      { "year": 2025, "event": "DRC implements a cobalt export quota system to lift global prices." }
+    ]
+  },
+  "investmentNotes": {
+    "strengths": ["Global leader in cobalt and copper production", "Massive untapped hydroelectric and agricultural potential", "Strategic importance for global green energy transition", "Large and young domestic market"],
+    "risks": ["Active conflict and high insecurity in the East", "Pervasive corruption and weak regulatory enforcement", "Extreme reliance on global commodity price cycles", "Vast infrastructure gaps in transport and energy"],
+    "sectors": ["Mining & Minerals Processing", "Agriculture & Agribusiness", "Renewable Energy (Hydro & Solar)", "Telecommunications & Digital Infrastructure"]
+  },
+  "sources": [
+    { "name": "Central Bank of Congo (BCC)", "url": "http://www.bcc.cd/", "type": "economic" },
+    { "name": "National Institute of Statistics (INS)", "url": "https://ins.cd/", "type": "demographic" },
+    { "name": "National Agency for Investment Promotion (ANAPI)", "url": "https://www.investindrc.cd/", "type": "investment" }
+  ]
+}

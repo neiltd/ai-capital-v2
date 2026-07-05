@@ -1,0 +1,60 @@
+{
+  "id": "ASM",
+  "iso2": "AS",
+  "name": "American Samoa",
+  "region": "Oceania",
+  "subregion": "Polynesia",
+  "capital": "Pago Pago",
+  "lastUpdated": "2025-05-20",
+  "summary": "American Samoa is an unincorporated U.S. territory serving as a vital strategic anchor in the South Pacific. In 2024-2025, its importance has grown as a counterweight to regional Chinese influence, with the Port of Pago Pago prioritized for development as a regional transshipment hub. The security focus is on maritime domain awareness, countering illegal fishing (IUU), and a proposed expansion of U.S. Marine rapid response units (FAST) to support diplomatic security across Oceania.",
+  "indicators": {
+    "politicalStability":       { "score": 8, "trend": "stable", "confidence": "high", "note": "Stable US territorial administration with a unique local traditional governance system (Fa'amatai)." },
+    "economicDirection":        { "score": 5, "trend": "stable", "confidence": "high", "note": "Economy heavily reliant on US federal grants and the tuna canning industry; efforts to diversify into logistics." },
+    "investmentAttractiveness": { "score": 5, "trend": "improving", "confidence": "medium", "note": "Attractive for maritime services and telecommunications (Hawaiki cable); challenging land tenure system for outsiders." },
+    "geopoliticalRisk":         { "score": 3, "trend": "increasing", "confidence": "high", "note": "Increasingly targeted by state-sponsored disinformation and economic coercion in the broader Pacific." },
+    "educationQuality":         { "score": 6, "trend": "stable", "confidence": "medium", "note": "US-aligned public education system; facing challenges with teacher retention and vocational alignment." },
+    "healthcareQuality":        { "score": 5, "trend": "stable", "confidence": "medium", "note": "Single main hospital (LBJ) in need of modernization; heavily dependent on US federal support." },
+    "technologyInvestment":     { "score": 6, "trend": "improving", "confidence": "high", "note": "Significantly improved connectivity due to the Hawaiki submarine cable; focus on digitalizing government." }
+  },
+  "demographics": {
+    "population": 43527,
+    "medianAge": 30.0,
+    "urbanizationRate": 87.2,
+    "majorEthnicGroups": ["Samoan", "Tongan", "Caucasian"],
+    "religions": [
+      { "name": "Christian (Congregational/Catholic/LDS)", "percent": 98.0 }
+    ]
+  },
+  "alliances": ["US Territory", "Pacific Islands Forum (Observer)", "South Pacific Commission"],
+  "relationships": [
+    { "countryId": "USA", "countryName": "United States", "type": "strategic_partner", "sentiment": "positive", "summary": "Sovereign power; providing total security guarantee and nearly all development funding." },
+    { "countryId": "WSM", "countryName": "Samoa", "type": "neighbor", "sentiment": "positive", "summary": "Close cultural and family ties; cooperation on regional trade and maritime security." },
+    { "countryId": "CHN", "countryName": "China", "type": "economic_partner", "sentiment": "neutral", "summary": "Active in local infrastructure and retail; US concerns over 'debt-trap' diplomacy in neighboring states affect local policy." }
+  ],
+  "perspectives": [
+    { "source": "American Samoan Official", "bias": "Territorial", "view": "We are proud of our US affiliation but our land and culture (Fa'a Samoa) must remain under our control; we are the anchor for the US in the South Pacific." },
+    { "source": "US Coast Guard Commander", "bias": "Security-focused", "view": "Pago Pago is critical for our Blue Pacific patrols; we cannot stop IUU fishing without this deepwater hub." },
+    { "source": "Local Youth", "bias": "Expectant", "view": "Enlisting in the Army is the traditional path to success here, but we want more digital jobs so we don't have to leave the islands." }
+  ],
+  "historicalContext": {
+    "summary": "Partitioned from the western islands (now Samoa) in 1899, American Samoa became a US naval base. It is the only US territory where residents are 'non-citizen nationals,' and it maintains a unique land tenure system that prevents non-Samoans from owning land.",
+    "keyEvents": [
+      { "year": 1899, "event": "Tripartite Convention partitions the Samoan islands." },
+      { "year": 1900, "event": "Deed of Cession for Tutuila and Aunu'u." },
+      { "year": 1951, "event": "Administration transferred from the Navy to the Department of the Interior." },
+      { "year": 2018, "event": "Hawaiki submarine cable landing transforms digital connectivity." },
+      { "year": 2024, "event": "Launch of major Port of Pago Pago modernization project." },
+      { "year": 2025, "event": "Proposal to station a Marine FAST unit on the islands for regional response." }
+    ]
+  },
+  "investmentNotes": {
+    "strengths": ["Only US jurisdiction in the South Pacific (US legal protection)", "Deepest natural harbor in the region (Pago Pago)", "Strategic location for maritime and transshipment services", "World-class digital connectivity via submarine fiber"],
+    "risks": ["Extreme economic dependence on the tuna industry and federal grants", "Complexity of the communal land tenure system for investors", "Susceptibility to climate change and rising sea levels", "High cost of electricity and imported goods"],
+    "sectors": ["Maritime & Logistics", "Fisheries & Food Processing", "Telecommunications & Data Services", "Renewable Energy (Solar/Battery Storage)"]
+  },
+  "sources": [
+    { "name": "American Samoa Government (ASG)", "url": "https://www.americansamoa.gov/", "type": "government" },
+    { "name": "Department of the Interior - American Samoa", "url": "https://www.doi.gov/oia/islands/american-samoa", "type": "government" },
+    { "name": "Pacific Island Times", "url": "https://www.pacificislandtimes.com/", "type": "media" }
+  ]
+}

@@ -1,0 +1,25 @@
+[
+  {
+    "countryId": "VNM",
+    "year": 2023,
+    "gdpUsdBn": 430,
+    "gdpPerCapita": 4347,
+    "sectors": [
+      { "sector": "Services", "percentOfGDP": 42.54, "notes": "Driven by retail and tourism recovery" },
+      { "sector": "Industry and Construction", "percentOfGDP": 37.12, "notes": "Electronics and garment exports" },
+      { "sector": "Agriculture, Forestry & Fishing", "percentOfGDP": 11.96, "notes": "Stable economic buffer" },
+      { "sector": "Product Taxes less Subsidies", "percentOfGDP": 8.38, "notes": null }
+    ],
+    "attribution": {
+      "sources": [
+        { "name": "GSO Vietnam Statistical Data 2023", "url": "https://www.gso.gov.vn/en/homepage/", "accessedAt": "2025-05-14" },
+        { "name": "World Bank Data 2023", "url": "https://data.worldbank.org/indicator/NY.GDP.MKTP.CD?locations=VN", "accessedAt": "2025-05-14" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 2,
+        "lastVerified": "2025-05-14"
+      }
+    }
+  }
+]

@@ -1,0 +1,219 @@
+[
+  {
+    "id": "RAIL-ZAF-CITY-DEEP",
+    "name": "City Deep Terminal",
+    "countryId": "ZAF",
+    "city": "Johannesburg",
+    "coordinates": [28.08, -26.22],
+    "type": "freight",
+    "dailyPassengers": null,
+    "annualFreightTonnes": 2000000,
+    "connectedCountries": [],
+    "gaugeType": "narrow",
+    "lineCount": 10,
+    "strategicImportance": "high",
+    "isPartOfBRI": false,
+    "geopoliticalNotes": "The largest inland 'dry port' in Africa. Critical for South Africa's container logistics, linking the industrial heartland of Gauteng to the Port of Durban.",
+    "notes": "Handles major automotive and general freight for the SADC region.",
+    "attribution": {
+      "sources": [
+        { "name": "Transnet Freight Rail - Container Corridor", "url": "https://www.transnetfreightrail-tfr.net/", "accessedAt": "2026-05-10" },
+        { "name": "Mordor Intelligence - South Africa Freight Rail Market", "url": "https://www.mordorintelligence.com/", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 2,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  },
+  {
+    "id": "RAIL-ZAF-DURBAN-PORT",
+    "name": "Durban Port Rail Terminal",
+    "countryId": "ZAF",
+    "city": "Durban",
+    "coordinates": [31.02, -29.87],
+    "type": "port_interface",
+    "dailyPassengers": null,
+    "annualFreightTonnes": 5000000,
+    "connectedCountries": [],
+    "gaugeType": "narrow",
+    "lineCount": 15,
+    "strategicImportance": "high",
+    "isPartOfBRI": false,
+    "geopoliticalNotes": "Busiest port in sub-Saharan Africa. The rail-port interface is the southern anchor of the Container Corridor, essential for international trade.",
+    "notes": "Handles ~70% of South Africa's total container volume.",
+    "attribution": {
+      "sources": [
+        { "name": "Transnet Port Terminals", "url": "https://www.transnetportterminals.net/", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 1,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  },
+  {
+    "id": "RAIL-ZAF-RICHARDS-BAY",
+    "name": "Richards Bay Coal Terminal (RBCT) Rail Hub",
+    "countryId": "ZAF",
+    "city": "Richards Bay",
+    "coordinates": [32.03, -28.78],
+    "type": "freight",
+    "dailyPassengers": null,
+    "annualFreightTonnes": 70000000,
+    "connectedCountries": [],
+    "gaugeType": "narrow",
+    "lineCount": 20,
+    "strategicImportance": "high",
+    "isPartOfBRI": false,
+    "geopoliticalNotes": "Terminus of the heavy-haul Coal Line. Critical for South Africa's mineral exports, particularly coal and magnetite, to global markets.",
+    "notes": "One of the world's leading coal export terminals by volume.",
+    "attribution": {
+      "sources": [
+        { "name": "Transnet Freight Rail - Coal Line Statistics", "url": "https://www.transnet.net/", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 1,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  },
+  {
+    "id": "RAIL-ZAF-SALDANHA-BAY",
+    "name": "Saldanha Bay Iron Ore Terminal",
+    "countryId": "ZAF",
+    "city": "Saldanha",
+    "coordinates": [17.94, -33.00],
+    "type": "freight",
+    "dailyPassengers": null,
+    "annualFreightTonnes": 60000000,
+    "connectedCountries": [],
+    "gaugeType": "narrow",
+    "lineCount": 4,
+    "strategicImportance": "high",
+    "isPartOfBRI": false,
+    "geopoliticalNotes": "Terminus of the 861 km Ore Corridor from Sishen. Strategic for the export of high-grade iron ore, primarily to Asian markets.",
+    "notes": "Dedicated heavy-haul line with some of the longest trains in the world.",
+    "attribution": {
+      "sources": [
+        { "name": "Transnet Freight Rail - Ore Line Operations", "url": "https://www.transnet.net/", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 1,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  },
+  {
+    "id": "RAIL-ZAF-SENTRARAND",
+    "name": "Sentrarand Marshalling Yard",
+    "countryId": "ZAF",
+    "city": "Gauteng",
+    "coordinates": [28.42, -26.05],
+    "type": "freight",
+    "dailyPassengers": null,
+    "annualFreightTonnes": null,
+    "connectedCountries": [],
+    "gaugeType": "narrow",
+    "lineCount": 64,
+    "strategicImportance": "high",
+    "isPartOfBRI": false,
+    "geopoliticalNotes": "The primary rail distribution hub for South Africa. Most general freight trains are consolidated here for dispatch to various national and regional corridors.",
+    "notes": "Critical 'nerve center' for the national freight network.",
+    "attribution": {
+      "sources": [
+        { "name": "Transnet Freight Rail - General Freight Business", "url": "https://www.transnetfreightrail-tfr.net/", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "medium",
+        "sourceCount": 1,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  },
+  {
+    "id": "RAIL-ZAF-PRETORIA-GAUTRAIN",
+    "name": "Pretoria Gautrain Station",
+    "countryId": "ZAF",
+    "city": "Pretoria",
+    "coordinates": [28.19, -25.75],
+    "type": "high_speed",
+    "dailyPassengers": 20000,
+    "annualFreightTonnes": null,
+    "connectedCountries": [],
+    "gaugeType": "standard",
+    "lineCount": 2,
+    "strategicImportance": "medium",
+    "isPartOfBRI": false,
+    "geopoliticalNotes": "Africa's first high-speed rapid rail hub. Connects the administrative capital to Johannesburg and the international airport, serving the political and business elite.",
+    "notes": "Operates on standard gauge, distinct from the national narrow-gauge network.",
+    "attribution": {
+      "sources": [
+        { "name": "Gautrain Management Agency Annual Report", "url": "https://www.gautrain.co.za/", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 1,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  },
+  {
+    "id": "RAIL-ZAF-CAPE-TOWN",
+    "name": "Cape Town Station",
+    "countryId": "ZAF",
+    "city": "Cape Town",
+    "coordinates": [18.42, -33.92],
+    "type": "mixed",
+    "dailyPassengers": 100000,
+    "annualFreightTonnes": 1500000,
+    "connectedCountries": [],
+    "gaugeType": "narrow",
+    "lineCount": 24,
+    "strategicImportance": "medium",
+    "isPartOfBRI": false,
+    "geopoliticalNotes": "Strategic hub for the Western Cape. Key for agricultural exports and the primary terminal for the Metrorail Western Cape commuter network.",
+    "notes": "Gateway for the 'Garden Route' and southern Atlantic trade.",
+    "attribution": {
+      "sources": [
+        { "name": "PRASA Annual Report 2024/25", "url": "https://www.prasa.com/", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 1,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  },
+  {
+    "id": "RAIL-ZAF-MUSINA",
+    "name": "Musina Border Station",
+    "countryId": "ZAF",
+    "city": "Musina",
+    "coordinates": [30.04, -22.34],
+    "type": "border_crossing",
+    "dailyPassengers": null,
+    "annualFreightTonnes": null,
+    "connectedCountries": ["ZWE"],
+    "gaugeType": "narrow",
+    "lineCount": 4,
+    "strategicImportance": "high",
+    "isPartOfBRI": false,
+    "geopoliticalNotes": "The primary rail border crossing between South Africa and Zimbabwe (Beitbridge). Essential link for the North-South Corridor connecting SA to Zambia and DRC.",
+    "notes": "Critical for regional SADC trade integration.",
+    "attribution": {
+      "sources": [
+        { "name": "SADC Regional Infrastructure Development Master Plan", "url": "https://www.sadc.int/", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 1,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  }
+]

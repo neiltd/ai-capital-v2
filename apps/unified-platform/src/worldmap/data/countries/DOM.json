@@ -1,0 +1,67 @@
+{
+  "id": "DOM",
+  "iso2": "DO",
+  "name": "Dominican Republic",
+  "region": "Americas",
+  "subregion": "Caribbean",
+  "capital": "Santo Domingo",
+  "lastUpdated": "2026-05-09",
+  "summary": "The Dominican Republic is a primary economic engine of the Caribbean, characterized by robust growth and relative political stability. Under President Luis Abinader, who was re-elected in 2024, the government has maintained pro-business policies and an aggressive anti-corruption agenda. The economy is driven by a diverse base including tourism, gold mining, remittances, and a thriving free trade zone sector that is increasingly attracting high-tech manufacturing. However, the country faces a persistent and complex security challenge stemming from the total institutional collapse of its neighbor, Haiti. This has led to a hardline border policy, including the construction of a border wall and mass deportations. While the Dominican Republic remains a top destination for FDI in the region, long-term stability is contingent on managing the socio-economic pressures of migration and improving the reliability of the national power grid.",
+  "indicators": {
+    "politicalStability":       { "score": 7, "score_description": "Stable democratic environment with strong public support for the current administration.", "trend": "stable", "confidence": "high", "note": "President Abinader's 2024 victory provides a clear mandate for continued economic and institutional reforms." },
+    "economicDirection":        { "score": 8, "score_description": "Consistently high growth, among the fastest in the Americas.", "trend": "rising", "confidence": "high", "note": "GDP growth is projected to remain between 4.5% and 5% for 2025-2026, supported by strong tourism and FDI." },
+    "investmentAttractiveness": { "score": 8, "score_description": "Highly attractive due to generous tax incentives and a stable legal framework.", "trend": "rising", "confidence": "high", "note": "Free Trade Zones (FTZs) are successfully diversifying into medical devices and electronics assembly." },
+    "geopoliticalRisk":         { "score": 6, "score_description": "Moderate risk primarily due to the spillover effects of the Haitian crisis.", "trend": "rising", "confidence": "high", "note": "Migration and border security are the dominant geopolitical concerns, impacting regional and U.S. relations." },
+    "educationQuality":         { "score": 4, "score_description": "Improving but still lags behind regional peers in quality and technical training.", "trend": "rising", "confidence": "medium", "note": "A mandatory 4% of GDP for education has increased infrastructure, but learning outcomes remain a challenge." },
+    "healthcareQuality":        { "score": 5, "score_description": "Improving public-private mix, with high-quality facilities in major urban centers.", "trend": "stable", "confidence": "medium", "note": "The country is a growing hub for medical tourism, though rural healthcare access remains variable." },
+    "technologyInvestment":     { "score": 6, "score_description": "Growing focus on digital government and high-tech manufacturing in FTZs.", "trend": "rising", "confidence": "high", "note": "Expansion of fiber optic networks and support for the tech-manufacturing ecosystem are government priorities." }
+  },
+  "demographics": {
+    "population": 10800000,
+    "medianAge": 28.5,
+    "urbanizationRate": 84,
+    "majorEthnicGroups": ["Mixed (Mulatto/Mestizo)", "African descent", "European descent"],
+    "religions": [
+      { "name": "Roman Catholic", "percent": 48 },
+      { "name": "Protestant/Evangelical", "percent": 21 },
+      { "name": "None/Unaffiliated", "percent": 28 },
+      { "name": "Other", "percent": 3 }
+    ]
+  },
+  "alliances": ["CAFTA-DR", "OAS", "CELAC", "ADD", "UN", "CARIFORUM"],
+  "relationships": [
+    { "countryId": "USA", "countryName": "United States", "type": "ally", "sentiment": "positive", "summary": "The Dominican Republic is the U.S.'s most reliable partner in the Caribbean for trade, security, and migration control." },
+    { "countryId": "HTI", "countryName": "Haiti", "type": "neighbor", "sentiment": "negative", "summary": "Relationship is at a historic low due to the security crisis in Haiti, border closures, and mass deportations." },
+    { "countryId": "CRI", "countryName": "Costa Rica", "type": "ally", "sentiment": "positive", "summary": "Core partner in the ADD alliance; coordinated approach to regional trade and democratic promotion." },
+    { "countryId": "PAN", "countryName": "Panama", "type": "partner", "sentiment": "positive", "summary": "Strong trade ties and cooperation within the ADD framework to promote regional stability." },
+    { "countryId": "CHN", "countryName": "China", "type": "partner", "sentiment": "neutral", "summary": "Trade partner and source of FDI since establishing relations in 2018, though the U.S. remains the dominant partner." }
+  ],
+  "perspectives": [
+    { "source": "Business Leader (CONEP)", "bias": "Pro-Market", "view": "The Dominican Republic is the best-kept secret for investors; our stability and incentives provide a platform for regional leadership." },
+    { "source": "Border Security Advocate", "bias": "Nationalist", "view": "Protecting our sovereignty and resources from the Haitian collapse is our number one priority; the wall is a necessary defense." },
+    { "source": "Civil Society Activist", "bias": "Social Justice", "view": "Economic growth is impressive, but we must ensure it reaches the poorest sectors and that the rights of all residents, including migrants, are respected." }
+  ],
+  "historicalContext": {
+    "summary": "The Dominican Republic's history is marked by periods of foreign occupation and the long dictatorship of Rafael Trujillo (1930-1961). Since the 1960s, the country has successfully transitioned into one of the most stable and prosperous representative democracies in the region, characterized by a peaceful transfer of power and steady economic modernization.",
+    "keyEvents": [
+      { "year": 1844, "event": "Dominican Republic gains independence from Haiti." },
+      { "year": 1930, "event": "Rafael Trujillo begins a 31-year brutal dictatorship." },
+      { "year": 1961, "event": "Assassination of Trujillo paves the way for a return to democracy." },
+      { "year": 1965, "event": "Civil War leads to a U.S. military intervention." },
+      { "year": 1996, "event": "Election of Leonel Fernández marks the beginning of a modern economic era." },
+      { "year": 2004, "event": "The Dominican Republic joins CAFTA-DR, opening the U.S. market further." },
+      { "year": 2020, "event": "Luis Abinader wins the presidency, ending 16 years of PLD rule." },
+      { "year": 2024, "event": "Abinader wins re-election in a landslide, signaling strong public support." }
+    ]
+  },
+  "investmentNotes": {
+    "strengths": ["Fastest-growing economy in the Caribbean", "Generous tax exemptions in Free Trade Zones", "Strategic location and excellent logistics and airports", "World-class tourism infrastructure"],
+    "risks": ["Vulnerability to the Haitian security crisis", "Unreliable and expensive electricity supply", "Increasing public debt and fiscal pressure", "Weak institutional capacity at local levels"],
+    "sectors": ["Tourism and Real Estate", "Free Trade Zone Manufacturing (Medical, Electronics)", "Gold and Ferronickel Mining", "Agribusiness", "Logistics and Transshipment"]
+  },
+  "sources": [
+    { "name": "Central Bank of the DR", "url": "https://www.bancentral.gov.do/", "type": "official" },
+    { "name": "CIA World Factbook", "url": "https://www.cia.gov/the-world-factbook/countries/dominican-republic/", "type": "general" },
+    { "name": "ProDominicana", "url": "https://prodominicana.gob.do/", "type": "investment" }
+  ]
+}

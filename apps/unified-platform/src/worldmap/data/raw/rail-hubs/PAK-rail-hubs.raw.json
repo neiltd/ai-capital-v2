@@ -1,0 +1,219 @@
+[
+  {
+    "id": "RAIL-PAK-KARACHI-CANTT",
+    "name": "Karachi Cantonment Railway Station",
+    "countryId": "PAK",
+    "city": "Karachi",
+    "coordinates": [67.03, 24.85],
+    "type": "port_interface",
+    "dailyPassengers": 20000,
+    "annualFreightTonnes": 5000000,
+    "connectedCountries": [],
+    "gaugeType": "broad",
+    "lineCount": 8,
+    "strategicImportance": "high",
+    "isPartOfBRI": true,
+    "geopoliticalNotes": "Southern terminus of the ML-1 (Main Line 1) under CPEC. Primary gateway for maritime freight from Karachi Port and Port Qasim to the rest of the country.",
+    "notes": "Busiest freight hub in Pakistan Railways network.",
+    "attribution": {
+      "sources": [
+        { "name": "Pakistan Railways Yearbook 2023-24", "url": "https://www.pakrail.gov.pk/", "accessedAt": "2026-05-10" },
+        { "name": "CPEC Official Website - Infrastructure", "url": "http://cpec.gov.pk/", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 2,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  },
+  {
+    "id": "RAIL-PAK-LAHORE-JN",
+    "name": "Lahore Junction Station",
+    "countryId": "PAK",
+    "city": "Lahore",
+    "coordinates": [74.34, 31.58],
+    "type": "mixed",
+    "dailyPassengers": 30000,
+    "annualFreightTonnes": null,
+    "connectedCountries": ["IND"],
+    "gaugeType": "broad",
+    "lineCount": 11,
+    "strategicImportance": "high",
+    "isPartOfBRI": true,
+    "geopoliticalNotes": "Central passenger and freight hub. Headquarters of Pakistan Railways and a key node on the Eastern Route of CPEC. Historical rail link to India (Wagah).",
+    "notes": "Primary passenger hub with connections to all major cities.",
+    "attribution": {
+      "sources": [
+        { "name": "Pakistan Railways Revenue Report 2024", "url": "https://www.pakrail.gov.pk/", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 1,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  },
+  {
+    "id": "RAIL-PAK-RAWALPINDI",
+    "name": "Rawalpindi Railway Station",
+    "countryId": "PAK",
+    "city": "Rawalpindi",
+    "coordinates": [73.05, 33.60],
+    "type": "mixed",
+    "dailyPassengers": 15000,
+    "annualFreightTonnes": null,
+    "connectedCountries": [],
+    "gaugeType": "broad",
+    "lineCount": 5,
+    "strategicImportance": "high",
+    "isPartOfBRI": true,
+    "geopoliticalNotes": "Strategic hub for the capital region (Islamabad/Rawalpindi). Critical node for the northern section of ML-1 and logistics for the twin cities.",
+    "notes": "Handles significant military and civilian logistics due to proximity to GHQ.",
+    "attribution": {
+      "sources": [
+        { "name": "Pakistan Railways Statistics", "url": "https://www.pakrail.gov.pk/", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 1,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  },
+  {
+    "id": "RAIL-PAK-QUETTA",
+    "name": "Quetta Railway Station",
+    "countryId": "PAK",
+    "city": "Quetta",
+    "coordinates": [67.00, 30.19],
+    "type": "border_crossing",
+    "dailyPassengers": 5000,
+    "annualFreightTonnes": 800000,
+    "connectedCountries": ["IRN"],
+    "gaugeType": "broad",
+    "lineCount": 4,
+    "strategicImportance": "high",
+    "isPartOfBRI": false,
+    "geopoliticalNotes": "Terminus for ML-3. Critical link for trade with Iran (via Taftan) and potentially Afghanistan. Strategic for mineral transport from Balochistan.",
+    "notes": "High elevation station with challenging terrain connectivity.",
+    "attribution": {
+      "sources": [
+        { "name": "CAREC Program Pakistan Country Profile", "url": "https://www.carecprogram.org/", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "medium",
+        "sourceCount": 1,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  },
+  {
+    "id": "RAIL-PAK-PESHAWAR-CANTT",
+    "name": "Peshawar Cantonment Station",
+    "countryId": "PAK",
+    "city": "Peshawar",
+    "coordinates": [71.55, 34.00],
+    "type": "border_crossing",
+    "dailyPassengers": 8000,
+    "annualFreightTonnes": null,
+    "connectedCountries": [],
+    "gaugeType": "broad",
+    "lineCount": 4,
+    "strategicImportance": "high",
+    "isPartOfBRI": true,
+    "geopoliticalNotes": "Northern terminus of ML-1. Gateway for transit trade with Afghanistan and a key component of the proposed Trans-Afghan Railway linking Uzbekistan to the Arabian Sea.",
+    "notes": "Primary hub for Khyber Pakhtunkhwa province.",
+    "attribution": {
+      "sources": [
+        { "name": "Ministry of Transport - CPEC ML-1 Updates", "url": "http://cpec.gov.pk/", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 1,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  },
+  {
+    "id": "RAIL-PAK-MULTAN-CANTT",
+    "name": "Multan Cantonment Station",
+    "countryId": "PAK",
+    "city": "Multan",
+    "coordinates": [71.44, 30.19],
+    "type": "mixed",
+    "dailyPassengers": 10000,
+    "annualFreightTonnes": 1200000,
+    "connectedCountries": [],
+    "gaugeType": "broad",
+    "lineCount": 6,
+    "strategicImportance": "medium",
+    "isPartOfBRI": true,
+    "geopoliticalNotes": "Major agricultural and industrial hub in South Punjab. Significant junction on ML-1 and a transit point for the Central Route of CPEC.",
+    "notes": "Key for fertilizer and cotton freight transport.",
+    "attribution": {
+      "sources": [
+        { "name": "Pakistan Railways Commercial Department", "url": "https://www.pakrail.gov.pk/", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "medium",
+        "sourceCount": 1,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  },
+  {
+    "id": "RAIL-PAK-GWADAR",
+    "name": "Gwadar Port Rail Terminal (Planned)",
+    "countryId": "PAK",
+    "city": "Gwadar",
+    "coordinates": [62.32, 25.13],
+    "type": "port_interface",
+    "dailyPassengers": null,
+    "annualFreightTonnes": null,
+    "connectedCountries": [],
+    "gaugeType": "broad",
+    "lineCount": 0,
+    "strategicImportance": "high",
+    "isPartOfBRI": true,
+    "geopoliticalNotes": "The southern terminus of the CPEC corridor. Designed to link the Gwadar deep-sea port to Kashgar, China, providing an alternative to the Malacca Strait.",
+    "notes": "Infrastructure currently in land acquisition and design phase; part of ML-4.",
+    "attribution": {
+      "sources": [
+        { "name": "Gwadar Port Authority", "url": "http://www.gwadarport.gov.pk/", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "medium",
+        "sourceCount": 1,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  },
+  {
+    "id": "RAIL-PAK-ROHRI-JN",
+    "name": "Rohri Junction Station",
+    "countryId": "PAK",
+    "city": "Rohri",
+    "coordinates": [68.90, 27.68],
+    "type": "mixed",
+    "dailyPassengers": 7000,
+    "annualFreightTonnes": null,
+    "connectedCountries": [],
+    "gaugeType": "broad",
+    "lineCount": 6,
+    "strategicImportance": "medium",
+    "isPartOfBRI": true,
+    "geopoliticalNotes": "Critical railway junction where the line from Quetta (ML-3) meets the main Karachi-Peshawar line (ML-1). Essential for connectivity between Sindh and Balochistan.",
+    "notes": "Strategic transit point for mineral and agricultural freight.",
+    "attribution": {
+      "sources": [
+        { "name": "Pakistan Railways Network Map", "url": "https://www.pakrail.gov.pk/", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 1,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  }
+]

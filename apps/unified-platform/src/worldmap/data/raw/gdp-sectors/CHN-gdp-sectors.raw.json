@@ -1,0 +1,24 @@
+[
+  {
+    "countryId": "CHN",
+    "year": 2023,
+    "gdpUsdBn": 17794.78,
+    "gdpPerCapita": 12614,
+    "sectors": [
+      { "sector": "Tertiary Industry (Services)", "percentOfGDP": 56.3, "notes": "Revised upward in 2024; contributed over 60% of total growth" },
+      { "sector": "Secondary Industry (Industry & Construction)", "percentOfGDP": 36.8, "notes": "Includes manufacturing and construction; 'new three' industries (EVs, solar) are key drivers" },
+      { "sector": "Primary Industry (Agriculture)", "percentOfGDP": 6.9, "notes": "Long-term structural decline as share of GDP" }
+    ],
+    "attribution": {
+      "sources": [
+        { "name": "China National Bureau of Statistics (NBS)", "url": "http://www.stats.gov.cn/", "accessedAt": "2025-03-03" },
+        { "name": "World Bank DataBank", "url": "https://databank.worldbank.org/", "accessedAt": "2025-03-03" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 2,
+        "lastVerified": "2025-03-03"
+      }
+    }
+  }
+]

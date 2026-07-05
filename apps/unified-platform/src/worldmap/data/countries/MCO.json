@@ -1,0 +1,64 @@
+{
+  "id": "MCO",
+  "iso2": "MC",
+  "name": "Monaco",
+  "region": "Europe",
+  "subregion": "Western Europe",
+  "capital": "Monaco",
+  "lastUpdated": "2026-05-24",
+  "summary": "The Principality of Monaco is a sovereign city-state that serves as a global center for high-net-worth individuals, luxury tourism, and international finance. Despite its small size, Monaco possesses a booming economy with a GDP exceeding €10 billion and a record-breaking Constitutional Reserve Fund. Currently, the Principality is navigating a period of intense regulatory reform following its placement on the FATF 'grey list' in mid-2024 for deficiencies in anti-money laundering and anti-corruption measures. Under the leadership of Prince Albert II, Monaco has established a high-level steering committee to address these concerns and restore its international standing. While the state faces challenges related to a high-profile corruption scandal and the need for greater transparency, its absence of personal income tax, strategic Mediterranean location, and commitment to environmental sustainability (particularly marine conservation) continue to ensure its status as one of the world's most exclusive and stable jurisdictions.",
+  "indicators": {
+    "politicalStability":       { "score": 7, "score_description": "Stable monarchy currently navigating internal friction.", "trend": "stable", "confidence": "high", "note": "Long-term stability is guaranteed by the House of Grimaldi, though recent scandals have tested the administration's transparency." },
+    "economicDirection":        { "score": 9, "score_description": "Booming economy with massive state reserves.", "trend": "rising", "confidence": "high", "note": "GDP growth of 8.8% in 2024 and a surplus of over €7 billion in the reserve fund reflect immense fiscal strength." },
+    "investmentAttractiveness": { "score": 9, "score_description": "Premier destination for luxury and private wealth.", "trend": "stable", "confidence": "high", "note": "Monaco remains one of the most attractive tax-efficient jurisdictions in the world for ultra-high-net-worth individuals." },
+    "geopoliticalRisk":         { "score": 3, "score_description": "Low risk; closely integrated with France and the EU.", "trend": "rising", "confidence": "high", "note": "The primary risk is reputational and regulatory, centered on the FATF grey-listing and anti-corruption reforms." },
+    "educationQuality":         { "score": 8, "score_description": "High-quality, specialized education system.", "trend": "stable", "confidence": "high", "note": "Monaco provides excellent public and private schooling, with a focus on international business and marine sciences." },
+    "healthcareQuality":        { "score": 9, "score_description": "Top-tier healthcare with world-class facilities.", "trend": "stable", "confidence": "high", "note": "The Princess Grace Hospital Centre is a leading medical institution in the region." },
+    "technologyInvestment":     { "score": 7, "score_description": "Focus on smart city tech and sustainable yachting.", "trend": "rising", "confidence": "high", "note": "Monaco is positioning itself as a leader in 'Green Tech' and digital transformation through its 'Extended Monaco' program." }
+  },
+  "demographics": {
+    "population": 39000,
+    "medianAge": 55.4,
+    "urbanizationRate": 100,
+    "majorEthnicGroups": ["French (28%)", "Monegasque (22%)", "Italian (19%)", "British", "Other"],
+    "religions": [
+      { "name": "Roman Catholic", "percent": 90 },
+      { "name": "Other", "percent": 10 }
+    ]
+  },
+  "alliances": ["UN", "OSCE", "Council of Europe", "Eurozone (through France)", "Schengen (through France)"],
+  "relationships": [
+    { "countryId": "FRA", "countryName": "France", "type": "ally", "sentiment": "positive", "summary": "Most important strategic partner; France guarantees Monaco's independence and security, and the two share a customs and currency union." },
+    { "countryId": "ITA", "countryName": "Italy", "type": "partner", "sentiment": "positive", "summary": "Significant neighbor and source of trade and workforce; many Italian nationals reside in or work in the Principality." },
+    { "countryId": "EU", "countryName": "European Union", "type": "partner", "sentiment": "neutral", "summary": "Monaco is not an EU member but is integrated into the customs union and Eurozone; negotiations for an association agreement have been complex." },
+    { "countryId": "USA", "countryName": "United States", "type": "partner", "sentiment": "positive", "summary": "Friendly relations centered on shared interests in philanthropy, marine conservation, and high-level economic ties." }
+  ],
+  "perspectives": [
+    { "source": "Prince Albert II / Princely Government", "bias": "Monarchical / Reformist", "view": "We are committed to the highest standards of transparency and environmental stewardship to ensure Monaco's prosperity for future generations." },
+    { "source": "National Council (Parliament)", "bias": "Centrist / Pro-Citizen", "view": "While economic growth is vital, we must ensure that the quality of life and the unique identity of Monegasque citizens are protected." },
+    { "source": "FATF / International Regulators", "bias": "Technical / Oversight", "view": "Monaco must implement urgent reforms to its anti-money laundering and anti-corruption frameworks to meet international standards." }
+  ],
+  "historicalContext": {
+    "summary": "The Grimaldi family has ruled Monaco since 1297. Throughout its history, the Principality has navigated the complexities of being a microstate surrounded by major powers. In the 19th and 20th centuries, it transformed from a small agricultural town into a world-famous center for gaming and luxury, largely through the vision of Prince Charles III and the development of Monte Carlo.",
+    "keyEvents": [
+      { "year": 1297, "event": "Francesco Grimaldi ('Malizia') captures the Rock of Monaco." },
+      { "year": 1861, "event": "Franco-Monegasque Treaty recognizes Monaco's sovereignty after the loss of Menton and Roquebrune." },
+      { "year": 1863, "event": "Opening of the Casino de Monte-Carlo, marking the start of Monaco's modern economic era." },
+      { "year": 1911, "event": "Adoption of the first Constitution, establishing a constitutional monarchy." },
+      { "year": 1949, "event": "Inauguration of Prince Rainier III, who oversaw massive modernization and land reclamation." },
+      { "year": 1993, "event": "Monaco joins the United Nations as a full member." },
+      { "year": 2005, "event": "Accession of Prince Albert II, focusing on environmental conservation and scientific research." },
+      { "year": 2024, "event": "Monaco placed on the FATF grey list, triggering major regulatory reforms." }
+    ]
+  },
+  "investmentNotes": {
+    "strengths": ["Zero personal income tax and high political stability", "Extremely high concentration of wealth and private banking expertise", "Prime Mediterranean location and world-class security", "Robust state reserves and absence of public debt"],
+    "risks": ["Reputational and regulatory risk from FATF grey-listing", "Extreme scarcity of land and exceptionally high real estate prices", "Economic reliance on a few key sectors (Finance, Tourism, Real Estate)", "Small domestic labor market and reliance on cross-border workers"],
+    "sectors": ["Private Banking and Asset Management", "Luxury Real Estate", "High-End Tourism and Hospitality", "Marine Conservation and Green Technology"]
+  },
+  "sources": [
+    { "name": "IMSEE (Monaco Statistics)", "url": "https://www.imsee.mc/", "type": "economic" },
+    { "name": "Monaco Private Label", "url": "https://www.monacoprivatelabel.com/", "type": "investment" },
+    { "name": "Prince's Government of Monaco", "url": "https://www.gouv.mc/", "type": "political" }
+  ]
+}

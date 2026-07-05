@@ -1,0 +1,68 @@
+{
+  "id": "NPL",
+  "iso2": "NP",
+  "name": "Nepal",
+  "region": "Asia",
+  "subregion": "Southern Asia",
+  "capital": "Kathmandu",
+  "lastUpdated": "2026-05-09",
+  "summary": "Nepal is a landlocked Himalayan nation transitioning into a federal democratic republic while strategically positioning itself as a bridge between India and China. Its economy is heavily dependent on remittances, tourism, and subsistence agriculture, with significant untapped potential in hydropower. Nepal's political landscape is characterized by frequent coalition government changes, which occasionally hamper long-term policy consistency, yet the nation maintains a resilient democratic framework and a commitment to regional connectivity.",
+  "indicators": {
+    "politicalStability":       { "score": 5, "trend": "stable", "confidence": "high", "note": "Frequent changes in coalition governments, though the federal democratic system remains intact." },
+    "economicDirection":        { "score": 5, "trend": "stable", "confidence": "high", "note": "Moderate growth supported by remittances and hydropower exports, but faces challenges with trade deficits and inflation." },
+    "investmentAttractiveness": { "score": 4, "trend": "rising", "confidence": "medium", "note": "Significant opportunities in hydropower and tourism, but bureaucratic red tape and landlocked logistics remain hurdles." },
+    "geopoliticalRisk":         { "score": 5, "trend": "stable", "confidence": "high", "note": "Primary risk involves navigating the strategic interests of India and China; also sensitive to border and sovereignty issues." },
+    "educationQuality":         { "score": 4, "trend": "rising", "confidence": "medium", "note": "Improving literacy and enrollment, but quality of higher education and mismatch with labor market needs lead to high youth emigration." },
+    "healthcareQuality":        { "score": 4, "trend": "rising", "confidence": "medium", "note": "Improving health indicators, but significant disparities exist between urban centers and remote Himalayan regions." },
+    "technologyInvestment":     { "score": 4, "trend": "rising", "confidence": "medium", "note": "Growing mobile internet penetration and fintech sector; government pushing for 'Digital Nepal Framework'." }
+  },
+  "demographics": {
+    "population": 30500000,
+    "medianAge": 25.3,
+    "urbanizationRate": 21,
+    "majorEthnicGroups": ["Chhettri", "Brahman-Hill", "Magar", "Tharu", "Tamang", "Newar"],
+    "religions": [
+      { "name": "Hindu", "percent": 81.3 },
+      { "name": "Buddhist", "percent": 9.0 },
+      { "name": "Muslim", "percent": 4.4 },
+      { "name": "Kirant", "percent": 3.0 },
+      { "name": "Christian", "percent": 1.4 }
+    ]
+  },
+  "alliances": ["SAARC", "BIMSTEC", "Belt and Road Initiative (BRI)", "Non-Aligned Movement"],
+  "relationships": [
+    { "countryId": "IND", "countryName": "India", "type": "strategic_partner", "sentiment": "positive", "summary": "Primary trade partner with an open border and deep cultural ties; relationship is central but often sensitive over sovereignty issues." },
+    { "countryId": "CHN", "countryName": "China", "type": "economic_partner", "sentiment": "positive", "summary": "Increasing influence through BRI infrastructure projects and trans-Himalayan connectivity initiatives." },
+    { "countryId": "USA", "countryName": "United States", "type": "development_partner", "sentiment": "positive", "summary": "Significant donor through the MCC Compact; focuses on energy and road infrastructure development." },
+    { "countryId": "BGD", "countryName": "Bangladesh", "type": "neighbor", "sentiment": "positive", "summary": "Growing partnership focused on energy trade and regional connectivity through the BBIN initiative." }
+  ],
+  "perspectives": [
+    { "source": "Government Official", "bias": "Pragmatic", "view": "Our goal is to leverage our position between two giants to become a regional energy and transit hub." },
+    { "source": "Hydropower Developer", "bias": "Optimistic", "view": "Nepal has the potential to become the 'green battery' of South Asia if we can attract enough FDI and secure long-term power purchase agreements." },
+    { "source": "Youth Migrant", "bias": "Aspirational", "view": "We want to contribute to our country, but the lack of high-paying jobs forces many of us to seek opportunities in the Gulf or Australia." },
+    { "source": "Rural Farmer", "bias": "Traditional", "view": "Remittances from our children keep the family going, but we need better irrigation and market access for our crops." }
+  ],
+  "historicalContext": {
+    "summary": "Nepal was a Hindu monarchy for centuries. In 2008, following a decade-long Maoist insurgency and a peace agreement, it transitioned to a Federal Democratic Republic. The nation has since focused on drafting a new constitution (promulgated in 2015) and decentralizing power to seven provincial governments.",
+    "keyEvents": [
+      { "year": 1951, "event": "End of the Rana dynasty; restoration of the monarchy and introduction of democratic reforms." },
+      { "year": 1996, "event": "Beginning of the Maoist 'People's War' against the monarchy." },
+      { "year": 2001, "event": "Royal Massacre results in the death of King Birendra and his family." },
+      { "year": 2006, "event": "Comprehensive Peace Accord ends the civil war." },
+      { "year": 2008, "event": "Abolition of the monarchy; Nepal becomes a Federal Democratic Republic." },
+      { "year": 2015, "event": "Devastating earthquake kills nearly 9,000 people; promulgation of the new Federal Constitution." },
+      { "year": 2022, "event": "Ratification of the $500 million MCC compact with the United States." },
+      { "year": 2024, "event": "Significant progress in hydropower export agreements with India and Bangladesh." }
+    ]
+  },
+  "investmentNotes": {
+    "strengths": ["Immense untapped hydropower potential (estimated 40,000 MW viable)", "World-class mountaineering and trekking tourism", "Abundant and youthful labor force", "Strategically located between the world's two fastest-growing major economies"],
+    "risks": ["Landlocked geography leading to high logistics and transit costs", "Vulnerability to natural disasters (earthquakes, floods)", "Political instability due to frequent coalition changes", "Bureaucratic red tape and slow project implementation"],
+    "sectors": ["Hydropower & Renewable Energy", "Adventure & Cultural Tourism", "Agro-processing", "Information Technology & Outsourcing"]
+  },
+  "sources": [
+    { "name": "Nepal Rastra Bank", "url": "https://www.nrb.org.np/", "type": "economic" },
+    { "name": "Investment Board Nepal", "url": "https://ibn.gov.np/", "type": "investment" },
+    { "name": "ADB - Nepal Country Profile", "url": "https://www.adb.org/countries/nepal/main", "type": "economic" }
+  ]
+}

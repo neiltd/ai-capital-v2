@@ -1,0 +1,37 @@
+[
+  {
+    "countryId": "GBR",
+    "year": 2023,
+    "electricityConsumptionTWh": 259,
+    "electricityProductionTWh": 235,
+    "electricityMix": {
+      "gas": 31.0,
+      "wind": 29.4,
+      "nuclear": 14.2,
+      "otherRenewables": 5.0,
+      "solar": 4.9,
+      "hydro": 1.8,
+      "coal": 1.0,
+      "other": 12.7
+    },
+    "renewableSharePct": 41.1,
+    "waterStressScore": 1.5,
+    "waterWithdrawalPct": 13.8,
+    "foodSecurityScore": 78.8,
+    "aiAdoptionScore": 78.5,
+    "internetPenetration": 97.8,
+    "mobilePenetration": 129.6,
+    "attribution": {
+      "sources": [
+        { "name": "National Grid ESO 2023", "url": "https://www.nationalgrideso.com/news/britains-electricity-explained-2023-review", "accessedAt": "2024-05-24" },
+        { "name": "WRI Aqueduct 4.0", "url": "https://www.wri.org/aqueduct", "accessedAt": "2024-05-24" },
+        { "name": "Global Food Security Index 2022", "url": "https://impact.economist.com/sustainability/project/food-security-index", "accessedAt": "2024-05-24" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 3,
+        "lastVerified": "2024-05-24"
+      }
+    }
+  }
+]

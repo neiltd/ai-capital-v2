@@ -1,0 +1,63 @@
+{
+  "id": "VGB",
+  "iso2": "VG",
+  "name": "British Virgin Islands",
+  "region": "Americas",
+  "subregion": "Caribbean",
+  "capital": "Road Town",
+  "lastUpdated": "2026-05-09",
+  "summary": "The British Virgin Islands (BVI) is a globally significant offshore financial center and a major hub for luxury sailing and tourism. In 2026, the territory is navigating a period of profound institutional reform following a major Commission of Inquiry (COI) in 2022. The government is focused on enhancing transparency and governance while maintaining the BVI's competitive position in the corporate services market. The economy is dual-pronged: financial services (particularly corporate registrations) provide the bulk of government revenue, while high-end tourism drives employment. BVI is also a leader in climate adaptation within the Caribbean, investing in resilient infrastructure and renewable energy to protect its pristine marine environment.",
+  "indicators": {
+    "politicalStability":       { "score": 6, "score_description": "Stable but undergoing major governance reforms.", "trend": "improving", "confidence": "high", "note": "The implementation of COI recommendations is strengthening the territory's institutional framework." },
+    "economicDirection":        { "score": 7, "score_description": "Steady economy focused on high-value services.", "trend": "stable", "confidence": "high", "note": "The corporate registry remains a global leader, though it faces pressure from international transparency standards." },
+    "investmentAttractiveness": { "score": 8, "score_description": "Premier destination for corporate structuring and luxury maritime ventures.", "trend": "stable", "confidence": "high", "note": "A highly efficient legal system and a tax-neutral environment remain strong attractors." },
+    "geopoliticalRisk":         { "score": 3, "score_description": "Low risk; protected by the UK and part of a stable regional framework.", "trend": "stable", "confidence": "high", "note": "Primary risks are environmental (hurricanes) and regulatory (global financial standards)." },
+    "educationQuality":         { "score": 7, "score_description": "Solid education system with a focus on professional services.", "trend": "stable", "confidence": "high", "note": "H. Lavity Stoutt Community College is a key institution for higher education and vocational training." },
+    "healthcareQuality":        { "score": 7, "score_description": "Good standard of healthcare with modern facilities.", "trend": "stable", "confidence": "high", "note": "The Peebles Hospital (BVI Health Services Authority) provides comprehensive medical care." },
+    "technologyInvestment":     { "score": 7, "score_description": "Focus on digital government and climate-resilient tech.", "trend": "rising", "confidence": "high", "note": "Significant investment in digitalizing the corporate registry and improving island-wide connectivity." }
+  },
+  "demographics": {
+    "population": 32100,
+    "medianAge": 37.2,
+    "urbanizationRate": 48,
+    "majorEthnicGroups": ["African descent", "European", "Mixed"],
+    "religions": [
+      { "name": "Protestant", "percent": 75 },
+      { "name": "Roman Catholic", "percent": 10 },
+      { "name": "None", "percent": 6 },
+      { "name": "Other", "percent": 9 }
+    ]
+  },
+  "alliances": ["CARICOM (Associate)", "OECS (Associate)", "United Kingdom Overseas Territories"],
+  "relationships": [
+    { "countryId": "USA", "countryName": "United States", "type": "strategic_partner", "sentiment": "positive", "summary": "Primary source of tourists and trade; uses the US Dollar as its official currency." },
+    { "countryId": "GBR", "countryName": "United Kingdom", "type": "sovereign", "sentiment": "positive", "summary": "The UK provides defense, international representation, and oversight of governance reforms." },
+    { "countryId": "VIR", "countryName": "US Virgin Islands", "type": "partner", "sentiment": "positive", "summary": "Close cultural, familial, and economic ties between the two island groups." }
+  ],
+  "perspectives": [
+    { "source": "BVI Finance Leader", "bias": "Business-focused", "view": "The BVI remains the gold standard for international business companies; our focus is on combining innovation with the highest standards of transparency." },
+    { "source": "Sailing Operator", "bias": "Tourism-focused", "view": "The BVI is the sailing capital of the world; our mission is to preserve the natural beauty of our waters for future generations." },
+    { "source": "Civil Society Advocate", "bias": "Reformist", "view": "The ongoing governance reforms are a once-in-a-generation opportunity to build a more accountable and transparent BVI." }
+  ],
+  "historicalContext": {
+    "summary": "Originally inhabited by the Arawak and Carib people, the islands were colonized by the Dutch and then the British in the 17th century. The BVI was historically a plantation economy but transformed itself in the late 20th century into a global financial and tourism hub. The 1984 International Business Companies Act was a landmark event that launched its modern financial services industry.",
+    "keyEvents": [
+      { "year": 1672, "event": "England annexes Tortola from the Dutch." },
+      { "year": 1967, "event": "New constitution grants internal self-government to the BVI." },
+      { "year": 1984, "event": "Passage of the International Business Companies Act, transforming the economy." },
+      { "year": 2017, "event": "Hurricane Irma causes catastrophic damage, leading to a massive recovery effort." },
+      { "year": 2021, "event": "BVI is removed from the EU list of non-cooperative jurisdictions for tax purposes." },
+      { "year": 2022, "event": "Commission of Inquiry (COI) report released, leading to major governance reforms." }
+    ]
+  },
+  "investmentNotes": {
+    "strengths": ["World-leading corporate registration and offshore financial services", "Highly efficient legal system and use of the US Dollar", "Premier luxury tourism and sailing brand", "Stable political environment with UK backing"],
+    "risks": ["Vulnerability to international financial regulatory changes", "Exposure to hurricanes and climate change", "Need for sustained implementation of governance reforms", "Reliance on imported goods and energy"],
+    "sectors": ["Financial Services (Corporate Registry, Trust)", "Luxury Tourism & Maritime Services", "Real Estate Development", "Professional Services", "Renewable Energy"]
+  },
+  "sources": [
+    { "name": "BVI Central Statistics Office", "url": "https://www.bvi.gov.vg/statistics", "type": "economic" },
+    { "name": "BVI Finance", "url": "https://www.bvifinance.vg/", "type": "investment" },
+    { "name": "BVI Financial Services Commission", "url": "https://www.bvifsc.vg/", "type": "financial" }
+  ]
+}

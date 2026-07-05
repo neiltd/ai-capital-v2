@@ -1,0 +1,272 @@
+[
+  {
+    "id": "DEL",
+    "name": "Indira Gandhi International Airport",
+    "countryId": "IND",
+    "city": "Delhi",
+    "iata": "DEL",
+    "icao": "VIDP",
+    "coordinates": [77.1000, 28.5562],
+    "passengerVolume": 73600000,
+    "cargoVolume": 900000,
+    "runwayCount": 4,
+    "elevationM": 237,
+    "strategicImportance": "critical",
+    "geopoliticalNotes": "India's primary global gateway and a major hub for South Asia. Strategically positioned as the nation's first major hub-and-spoke anchor to compete with Middle Eastern transit points.",
+    "notes": "Only airport in India with four operational runways.",
+    "attribution": {
+      "sources": [
+        { "name": "PIB India", "url": "https://pib.gov.in", "accessedAt": "2026-05-10" },
+        { "name": "OurAirports", "url": "https://ourairports.com/airports/VIDP/", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 2,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  },
+  {
+    "id": "BOM",
+    "name": "Chhatrapati Shivaji Maharaj International Airport",
+    "countryId": "IND",
+    "city": "Mumbai",
+    "iata": "BOM",
+    "icao": "VABB",
+    "coordinates": [72.8656, 19.0896],
+    "passengerVolume": 52800000,
+    "cargoVolume": 800000,
+    "runwayCount": 2,
+    "elevationM": 12,
+    "strategicImportance": "critical",
+    "geopoliticalNotes": "Financial capital gateway and a critical logistics hub for Western India. Despite space constraints, it remains a vital node for international business and high-value cargo.",
+    "notes": "Operates with two intersecting runways.",
+    "attribution": {
+      "sources": [
+        { "name": "Wikipedia", "url": "https://en.wikipedia.org/wiki/Chhatrapati_Shivaji_Maharaj_International_Airport", "accessedAt": "2026-05-10" },
+        { "name": "OurAirports", "url": "https://ourairports.com/airports/VABB/", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 2,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  },
+  {
+    "id": "BLR",
+    "name": "Kempegowda International Airport",
+    "countryId": "IND",
+    "city": "Bengaluru",
+    "iata": "BLR",
+    "icao": "VOBL",
+    "coordinates": [77.7066, 13.1986],
+    "passengerVolume": 37500000,
+    "cargoVolume": 450000,
+    "runwayCount": 2,
+    "elevationM": 915,
+    "strategicImportance": "high",
+    "geopoliticalNotes": "The primary gateway for India's technology and innovation sector. Key hub for Air India Express and a leading node for electronics-driven air cargo.",
+    "notes": "Fastest growing international connectivity in India as of 2025.",
+    "attribution": {
+      "sources": [
+        { "name": "Kempegowda International Airport", "url": "https://www.bengaluruairport.com", "accessedAt": "2026-05-10" },
+        { "name": "OurAirports", "url": "https://ourairports.com/airports/VOBL/", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 2,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  },
+  {
+    "id": "HYD",
+    "name": "Rajiv Gandhi International Airport",
+    "countryId": "IND",
+    "city": "Hyderabad",
+    "iata": "HYD",
+    "icao": "VOHY",
+    "coordinates": [78.4294, 17.2403],
+    "passengerVolume": 25000000,
+    "cargoVolume": 150000,
+    "runwayCount": 2,
+    "elevationM": 617,
+    "strategicImportance": "high",
+    "geopoliticalNotes": "Known as the 'Pharma Capital' gateway, this airport is critical for global vaccine and pharmaceutical logistics. Expanding direct routes to Europe and the US.",
+    "notes": "First airport in India to offer end-to-end e-boarding facilities.",
+    "attribution": {
+      "sources": [
+        { "name": "GMR Hyderabad Airport", "url": "https://www.hyderabad.aero", "accessedAt": "2026-05-10" },
+        { "name": "OurAirports", "url": "https://ourairports.com/airports/VOHY/", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 2,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  },
+  {
+    "id": "MAA",
+    "name": "Chennai International Airport",
+    "countryId": "IND",
+    "city": "Chennai",
+    "iata": "MAA",
+    "icao": "VOMM",
+    "coordinates": [80.1709, 12.9941],
+    "passengerVolume": 21200000,
+    "cargoVolume": 400000,
+    "runwayCount": 2,
+    "elevationM": 16,
+    "strategicImportance": "high",
+    "geopoliticalNotes": "Critical for India's automotive and manufacturing sectors. Serves as a major gateway for trade and connectivity with Southeast Asia.",
+    "notes": "Operating entirely on green energy as of 2025.",
+    "attribution": {
+      "sources": [
+        { "name": "Airports Authority of India", "url": "https://www.aai.aero", "accessedAt": "2026-05-10" },
+        { "name": "OurAirports", "url": "https://ourairports.com/airports/VOMM/", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 2,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  },
+  {
+    "id": "CCU",
+    "name": "Netaji Subhas Chandra Bose International Airport",
+    "countryId": "IND",
+    "city": "Kolkata",
+    "iata": "CCU",
+    "icao": "VECC",
+    "coordinates": [88.4467, 22.6547],
+    "passengerVolume": 19700000,
+    "cargoVolume": 150000,
+    "runwayCount": 2,
+    "elevationM": 5,
+    "strategicImportance": "high",
+    "geopoliticalNotes": "The primary gateway for Eastern India and a strategic link for the 'Act East' policy. Vital for connectivity with the Northeast and ASEAN nations.",
+    "notes": "Key hub for regional flights to Bangladesh and Bhutan.",
+    "attribution": {
+      "sources": [
+        { "name": "Airports Authority of India", "url": "https://www.aai.aero", "accessedAt": "2026-05-10" },
+        { "name": "OurAirports", "url": "https://ourairports.com/airports/VECC/", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 2,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  },
+  {
+    "id": "AMD",
+    "name": "Sardar Vallabhbhai Patel International Airport",
+    "countryId": "IND",
+    "city": "Ahmedabad",
+    "iata": "AMD",
+    "icao": "VAAH",
+    "coordinates": [72.6347, 23.0772],
+    "passengerVolume": 11500000,
+    "cargoVolume": 100000,
+    "runwayCount": 1,
+    "elevationM": 58,
+    "strategicImportance": "medium",
+    "geopoliticalNotes": "Gateway to the industrial state of Gujarat. Increasingly important for international business and diaspora connectivity.",
+    "notes": "Managed by Adani Airports.",
+    "attribution": {
+      "sources": [
+        { "name": "Adani Airports", "url": "https://www.adani.com", "accessedAt": "2026-05-10" },
+        { "name": "OurAirports", "url": "https://ourairports.com/airports/VAAH/", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 2,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  },
+  {
+    "id": "COK",
+    "name": "Cochin International Airport",
+    "countryId": "IND",
+    "city": "Kochi",
+    "iata": "COK",
+    "icao": "VOCI",
+    "coordinates": [76.4019, 10.1520],
+    "passengerVolume": 10500000,
+    "cargoVolume": 75000,
+    "runwayCount": 1,
+    "elevationM": 9,
+    "strategicImportance": "medium",
+    "geopoliticalNotes": "A major gateway for the Indian diaspora in the Middle East. Strategic for tourism and agricultural exports from Kerala.",
+    "notes": "World's first fully solar-powered airport.",
+    "attribution": {
+      "sources": [
+        { "name": "CIAL", "url": "https://www.cial.aero", "accessedAt": "2026-05-10" },
+        { "name": "OurAirports", "url": "https://ourairports.com/airports/VOCI/", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 2,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  },
+  {
+    "id": "GOX",
+    "name": "Manohar International Airport",
+    "countryId": "IND",
+    "city": "Goa (Mopa)",
+    "iata": "GOX",
+    "icao": "VEMP",
+    "coordinates": [73.8677, 15.7661],
+    "passengerVolume": 5000000,
+    "cargoVolume": 10000,
+    "runwayCount": 1,
+    "elevationM": 168,
+    "strategicImportance": "medium",
+    "geopoliticalNotes": "A new greenfield airport designed to boost international tourism and logistics in the Konkan region. Complements the older dual-use Dabolim airport.",
+    "notes": "Began operations in 2023.",
+    "attribution": {
+      "sources": [
+        { "name": "Mopa Airport", "url": "https://www.mopa-airport.com", "accessedAt": "2026-05-10" },
+        { "name": "OurAirports", "url": "https://ourairports.com/airports/VEMP/", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 2,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  },
+  {
+    "id": "GAU",
+    "name": "Lokpriya Gopinath Bordoloi International Airport",
+    "countryId": "IND",
+    "city": "Guwahati",
+    "iata": "GAU",
+    "icao": "VEGT",
+    "coordinates": [91.5859, 26.1061],
+    "passengerVolume": 6000000,
+    "cargoVolume": 20000,
+    "runwayCount": 1,
+    "elevationM": 49,
+    "strategicImportance": "high",
+    "geopoliticalNotes": "The primary gateway to Northeast India. Strategically vital for the 'Act East' policy and military logistics in the sensitive border regions.",
+    "notes": "Managed by Adani Airports since 2021.",
+    "attribution": {
+      "sources": [
+        { "name": "Adani Airports", "url": "https://www.adani.com", "accessedAt": "2026-05-10" },
+        { "name": "OurAirports", "url": "https://ourairports.com/airports/VEGT/", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 2,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  }
+]

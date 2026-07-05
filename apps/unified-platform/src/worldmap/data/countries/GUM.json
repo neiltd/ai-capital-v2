@@ -1,0 +1,61 @@
+{
+  "id": "GUM",
+  "iso2": "GU",
+  "name": "Guam",
+  "region": "Oceania",
+  "subregion": "Micronesia",
+  "capital": "Hagatna",
+  "lastUpdated": "2025-05-20",
+  "summary": "Guam is a critical US strategic hub, known as the 'Tip of the Spear' in the Indo-Pacific. In 2024-2025, the island is undergoing a massive $2 billion military transformation, focusing on the Enhanced Integrated Air and Missile Defense (EIAMD) system to counter ballistic and hypersonic threats. As the primary base for US power projection toward Taiwan and the South China Sea, it faces high-probability threats from cyberattacks and regional missile aggression.",
+  "indicators": {
+    "politicalStability":       { "score": 9, "trend": "stable", "confidence": "high", "note": "Stable US territorial administration; high consensus on the importance of the military presence for the local economy." },
+    "economicDirection":        { "score": 7, "trend": "improving", "confidence": "high", "note": "Economy is boosting from massive US military construction spending; tourism sector (primarily Japanese/Korean) is stabilizing." },
+    "investmentAttractiveness": { "score": 7, "trend": "stable", "confidence": "high", "note": "Attractive for defense contracting, construction, and telecommunications; US legal system and federal backing." },
+    "geopoliticalRisk":         { "score": 9, "trend": "increasing", "confidence": "high", "note": "High-priority target for Chinese and North Korean missile forces; frequent target of state-sponsored cyberattacks." },
+    "educationQuality":         { "score": 7, "trend": "stable", "confidence": "high", "note": "US-aligned education system; University of Guam is a regional hub for maritime and environmental research." },
+    "healthcareQuality":        { "score": 7, "trend": "stable", "confidence": "high", "note": "Highest quality healthcare in Micronesia; supplemented by significant US military medical facilities." },
+    "technologyInvestment":     { "score": 8, "trend": "improving", "confidence": "high", "note": "Massive investment in missile defense tech, secure communications, and regional submarine cable hubs." }
+  },
+  "demographics": {
+    "population": 173774,
+    "medianAge": 30.0,
+    "urbanizationRate": 95.2,
+    "majorEthnicGroups": ["Chamorro", "Filipino", "Caucasian"],
+    "religions": [
+      { "name": "Roman Catholic", "percent": 85.0 }
+    ]
+  },
+  "alliances": ["US Territory", "Pacific Islands Forum (Observer)"],
+  "relationships": [
+    { "countryId": "USA", "countryName": "United States", "type": "strategic_partner", "sentiment": "positive", "summary": "Sovereign power; Guam is an integral part of the US national defense strategy in the Pacific." },
+    { "countryId": "JPN", "countryName": "Japan", "type": "economic_partner", "sentiment": "positive", "summary": "Primary source of tourism and key regional security ally; cooperation on Marine relocation to Camp Blaz." },
+    { "countryId": "KOR", "countryName": "South Korea", "type": "economic_partner", "sentiment": "positive", "summary": "Major secondary source of tourism and increasingly important for retail and construction investment." },
+    { "countryId": "PHL", "countryName": "Philippines", "type": "strategic_partner", "sentiment": "positive", "summary": "Close cultural ties and source of skilled labor; key regional partner in the second island chain defense." }
+  ],
+  "perspectives": [
+    { "source": "Guam Defense Official", "bias": "Security-focused", "view": "We are the first line of defense; the new 360-degree missile shield is not just for the base, it's for every family on this island." },
+    { "source": "Chamorro Activist", "bias": "Decolonial", "view": "We are proud to serve but we are also a target because of a military presence we didn't vote for; we need more say in how our land is used." },
+    { "source": "Tourism Business Owner", "bias": "Pragmatic", "view": "The military construction is keeping us afloat while we wait for the Japanese tourists to return in full force; safety is our best selling point." }
+  ],
+  "historicalContext": {
+    "summary": "Guam was a Spanish colony for 300 years before being ceded to the US in 1898. It was occupied by Japan during WWII and remains a critical strategic asset. It is an organized, unincorporated territory of the US, and its residents are US citizens.",
+    "keyEvents": [
+      { "year": 1898, "event": "Spain cedes Guam to the US after the Spanish-American War." },
+      { "year": 1941, "event": "Japanese occupation of Guam." },
+      { "year": 1944, "event": "US liberation of Guam." },
+      { "year": 1950, "event": "Guam Organic Act grants US citizenship to residents." },
+      { "year": 2024, "event": "Activation of Marine Corps Base Camp Blaz and first troop arrivals from Okinawa." },
+      { "year": 2025, "event": "Deployment of the Enhanced Integrated Air and Missile Defense (EIAMD) network." }
+    ]
+  },
+  "investmentNotes": {
+    "strengths": ["Strategic location at the center of the 'Second Island Chain'", "Direct US federal funding and legal protection", "Advanced telecommunications and submarine cable infrastructure", "Highly stable and security-hardened environment"],
+    "risks": ["Extreme exposure to regional missile and cyber threats", "High cost of living and dependence on imported goods", "Vulnerability to typhoons and climate-induced disasters", "Limited labor pool for non-military sectors"],
+    "sectors": ["Defense Contracting & Logistics", "Construction & Engineering", "Telecommunications (Regional Hub)", "Tourism & Hospitality"]
+  },
+  "sources": [
+    { "name": "Guam Government", "url": "https://guam.gov/", "type": "government" },
+    { "name": "Joint Region Marianas (JRM)", "url": "https://jrm.cnic.navy.mil/", "type": "security" },
+    { "name": "Guam Economic Development Authority (GEDA)", "url": "https://www.investguam.com/", "type": "economic" }
+  ]
+}

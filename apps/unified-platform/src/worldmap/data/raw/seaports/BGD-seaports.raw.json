@@ -1,0 +1,212 @@
+[
+  {
+    "id": "PORT-BGD-CHATTOGRAM",
+    "name": "Chattogram Port",
+    "countryId": "BGD",
+    "city": "Chattogram",
+    "coordinates": [91.801, 22.318],
+    "type": "container",
+    "annualThroughputTEU": 3410000,
+    "annualThroughputTonnes": null,
+    "berthCount": 20,
+    "maxDraftM": 10.0,
+    "strategicImportance": "critical",
+    "riskLevel": "low",
+    "geopoliticalNotes": "The 'Gateway to Bangladesh', handling over 90% of the country's international trade. Vital for the RMG (Ready-Made Garment) export sector.",
+    "notes": "Includes the newly operational Patenga Container Terminal (PCT), managed by Red Sea Gateway Terminal.",
+    "attribution": {
+      "sources": [
+        { "name": "Chittagong Port Authority", "url": "https://cpa.gov.bd", "accessedAt": "2025-05-10" },
+        { "name": "Lloyd's List", "url": "https://lloydslist.maritimeintelligence.informa.com", "accessedAt": "2025-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 2,
+        "lastVerified": "2025-05-10"
+      }
+    }
+  },
+  {
+    "id": "PORT-BGD-MONGLA",
+    "name": "Mongla Port",
+    "countryId": "BGD",
+    "city": "Mongla",
+    "coordinates": [89.583, 22.483],
+    "type": "mixed",
+    "annualThroughputTEU": 50000,
+    "annualThroughputTonnes": 10410000,
+    "berthCount": 5,
+    "maxDraftM": 8.5,
+    "strategicImportance": "high",
+    "riskLevel": "low",
+    "geopoliticalNotes": "The second largest seaport in Bangladesh, serving as a primary hub for bulk cargo such as coal, cement, and vehicles. Key for trade with Nepal and Bhutan.",
+    "notes": "Strategic focus on jute exports and car imports.",
+    "attribution": {
+      "sources": [
+        { "name": "Mongla Port Authority", "url": "https://mpa.gov.bd", "accessedAt": "2025-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 1,
+        "lastVerified": "2025-05-10"
+      }
+    }
+  },
+  {
+    "id": "PORT-BGD-PAYRA",
+    "name": "Payra Port",
+    "countryId": "BGD",
+    "city": "Patuakhali",
+    "coordinates": [90.279, 21.989],
+    "type": "mixed",
+    "annualThroughputTEU": null,
+    "annualThroughputTonnes": 1000000,
+    "berthCount": 2,
+    "maxDraftM": 10.5,
+    "strategicImportance": "high",
+    "riskLevel": "low",
+    "geopoliticalNotes": "Bangladesh's third seaport, designed to accommodate larger vessels and serve the Payra Power Plant. A key component of the country's energy infrastructure.",
+    "notes": "Full-scale container terminal operations expected by 2026.",
+    "attribution": {
+      "sources": [
+        { "name": "Payra Port Authority", "url": "https://ppa.gov.bd", "accessedAt": "2025-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 1,
+        "lastVerified": "2025-05-10"
+      }
+    }
+  },
+  {
+    "id": "PORT-BGD-MATARBARI",
+    "name": "Matarbari Deep Sea Port",
+    "countryId": "BGD",
+    "city": "Maheshkhali",
+    "coordinates": [91.859, 21.691],
+    "type": "container",
+    "annualThroughputTEU": null,
+    "annualThroughputTonnes": null,
+    "berthCount": 2,
+    "maxDraftM": 18.5,
+    "strategicImportance": "critical",
+    "riskLevel": "low",
+    "geopoliticalNotes": "Bangladesh's first deep-sea port, developed with Japanese assistance. Poised to become a regional transshipment hub for South Asia due to its extreme depth.",
+    "notes": "Currently handling coal for the Matarbari Power Plant; commercial container operations scheduled for 2029.",
+    "attribution": {
+      "sources": [
+        { "name": "Chattogram Port Authority (Matarbari Project)", "url": "https://cpa.gov.bd", "accessedAt": "2025-05-10" },
+        { "name": "JICA", "url": "https://www.jica.go.jp", "accessedAt": "2025-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 2,
+        "lastVerified": "2025-05-10"
+      }
+    }
+  },
+  {
+    "id": "PORT-BGD-DHAKA",
+    "name": "Port of Dhaka (Sadarghat)",
+    "countryId": "BGD",
+    "city": "Dhaka",
+    "coordinates": [90.41, 23.7],
+    "type": "multipurpose",
+    "annualThroughputTEU": null,
+    "annualThroughputTonnes": 53000000,
+    "berthCount": 10,
+    "maxDraftM": 4.5,
+    "strategicImportance": "medium",
+    "riskLevel": "medium",
+    "geopoliticalNotes": "One of the busiest river ports in the world and the central logistics hub for the capital city. Critical for domestic distribution and passenger transport.",
+    "notes": "Handles high volumes of consumer goods, salt, and cement for the capital.",
+    "attribution": {
+      "sources": [
+        { "name": "BIWTA", "url": "http://www.biwta.gov.bd", "accessedAt": "2025-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 1,
+        "lastVerified": "2025-05-10"
+      }
+    }
+  },
+  {
+    "id": "PORT-BGD-PANGAON",
+    "name": "Pangaon Inland Container Terminal",
+    "countryId": "BGD",
+    "city": "Dhaka",
+    "coordinates": [90.452, 23.655],
+    "type": "container",
+    "annualThroughputTEU": 20000,
+    "annualThroughputTonnes": null,
+    "berthCount": 3,
+    "maxDraftM": 4.0,
+    "strategicImportance": "medium",
+    "riskLevel": "low",
+    "geopoliticalNotes": "The first inland container terminal in Bangladesh, connecting Dhaka's manufacturing zones directly to the seaports via the Buriganga River.",
+    "notes": "Designed to reduce congestion on the Dhaka-Chattogram highway.",
+    "attribution": {
+      "sources": [
+        { "name": "Chattogram Port Authority", "url": "https://cpa.gov.bd", "accessedAt": "2025-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 1,
+        "lastVerified": "2025-05-10"
+      }
+    }
+  },
+  {
+    "id": "PORT-BGD-NARAYANGANJ",
+    "name": "Port of Narayanganj",
+    "countryId": "BGD",
+    "city": "Narayanganj",
+    "coordinates": [90.506, 23.617],
+    "type": "mixed",
+    "annualThroughputTEU": null,
+    "annualThroughputTonnes": null,
+    "berthCount": 8,
+    "maxDraftM": 4.0,
+    "strategicImportance": "medium",
+    "riskLevel": "low",
+    "geopoliticalNotes": "A historic industrial port and the center for jute and textile logistics in Bangladesh. Vital for the domestic industrial supply chain.",
+    "notes": "Handles bulk cargo including salt, cement, and industrial raw materials.",
+    "attribution": {
+      "sources": [
+        { "name": "BIWTA", "url": "http://www.biwta.gov.bd", "accessedAt": "2025-05-10" }
+      ],
+      "confidence": {
+        "confidence": "medium",
+        "sourceCount": 1,
+        "lastVerified": "2025-05-10"
+      }
+    }
+  },
+  {
+    "id": "PORT-BGD-ASHUGANJ",
+    "name": "Ashuganj River Port",
+    "countryId": "BGD",
+    "city": "Ashuganj",
+    "coordinates": [91.017, 24.033],
+    "type": "multipurpose",
+    "annualThroughputTEU": null,
+    "annualThroughputTonnes": null,
+    "berthCount": 4,
+    "maxDraftM": 4.0,
+    "strategicImportance": "high",
+    "riskLevel": "low",
+    "geopoliticalNotes": "A critical transshipment hub for trade between Bangladesh and India's North-Eastern states. Key node in the Indo-Bangla Protocol on Inland Water Transit and Trade.",
+    "notes": "Major transshipment point for Indian goods bound for Tripura and Assam.",
+    "attribution": {
+      "sources": [
+        { "name": "BIWTA", "url": "http://www.biwta.gov.bd", "accessedAt": "2025-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 1,
+        "lastVerified": "2025-05-10"
+      }
+    }
+  }
+]

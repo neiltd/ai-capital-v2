@@ -1,0 +1,61 @@
+{
+  "id": "YEM",
+  "iso2": "YE",
+  "name": "Yemen",
+  "region": "Asia",
+  "subregion": "Western Asia",
+  "capital": "Sana'a",
+  "lastUpdated": "2025-05-20",
+  "summary": "Yemen is currently a central theater for regional conflict, transitioning from a localized civil war to a high-stakes standoff involving Israel, the US, and Houthi rebels. In 2024-2025, the Houthis expanded their maritime blockade of the Red Sea, leading to intense retaliatory strikes. Internally, the country is fragmented between the Houthi-controlled north and the UAE-backed STC, which seized oil-rich southern provinces in late 2025, while the population faces catastrophic famine risks.",
+  "indicators": {
+    "politicalStability":       { "score": 1, "trend": "declining", "confidence": "high", "note": "Near-total state fragmentation; neither the Houthi-led north nor the PLC/STC-led south can exert unified control." },
+    "economicDirection":        { "score": 1, "trend": "declining", "confidence": "high", "note": "Economy is a weapon of war; total collapse of exports, fragmented banking systems, and extreme currency volatility." },
+    "investmentAttractiveness": { "score": 1, "trend": "stable", "confidence": "high", "note": "Non-existent for formal sectors; extreme physical risk and total lack of legal or financial infrastructure." },
+    "geopoliticalRisk":         { "score": 10, "trend": "increasing", "confidence": "high", "note": "High risk of regional escalation; direct strikes between Israel and Houthis and US/UK naval interventions." },
+    "educationQuality":         { "score": 1, "trend": "declining", "confidence": "high", "note": "System is broken; many schools destroyed or used for military purposes; high levels of child recruitment." },
+    "healthcareQuality":        { "score": 1, "trend": "declining", "confidence": "high", "note": "In total collapse; facing recurring cholera outbreaks and acute shortages of all medical supplies." },
+    "technologyInvestment":     { "score": 2, "trend": "stable", "confidence": "medium", "note": "Limited to Houthi-controlled telecommunications and increasing use of sophisticated drone and missile technology." }
+  },
+  "demographics": {
+    "population": 35219853,
+    "medianAge": 20.2,
+    "urbanizationRate": 40.3,
+    "majorEthnicGroups": ["Arab", "Afro-Arab", "South Asian"],
+    "religions": [
+      { "name": "Muslim (Zaydi Shia and Sunni)", "percent": 99.1 }
+    ]
+  },
+  "alliances": ["Arab League", "OIC"],
+  "relationships": [
+    { "countryId": "IRN", "countryName": "Iran", "type": "strategic_partner", "sentiment": "positive", "summary": "Primary backer of the Houthi movement; providing advanced weapons, training, and political support." },
+    { "countryId": "SAU", "countryName": "Saudi Arabia", "type": "neighbor", "sentiment": "neutral", "summary": "Balancing a desire to exit the war with the need to contain Houthi aggression; currently facilitating fragile peace talks." },
+    { "countryId": "ARE", "countryName": "United Arab Emirates", "type": "strategic_partner", "sentiment": "positive", "summary": "Primary backer of the STC and southern forces; focused on controlling strategic ports and maritime routes." },
+    { "countryId": "ISR", "countryName": "Israel", "type": "adversary", "sentiment": "negative", "summary": "Hostile relations; direct military exchange in 2024-2025 following Houthi attacks on Israeli territory and maritime interests." }
+  ],
+  "perspectives": [
+    { "source": "Houthi Official", "bias": "Revolutionary", "view": "We are defending our sovereignty and supporting Palestine against the Zionist-American aggression; our strikes will not stop until the siege of Gaza is lifted." },
+    { "source": "STC Commander", "bias": "Secessionist", "view": "The north is lost to the Houthis; we must secure the south and restore our independent state to ensure stability in the region." },
+    { "source": "Yemeni Mother in Taiz", "bias": "Victim", "view": "The world talks about missiles and politics, but here we just want water, bread, and for the shooting to stop so our children can sleep." }
+  ],
+  "historicalContext": {
+    "summary": "Yemen was divided into north and south until 1990. After unification, it faced multiple civil wars and an Arab Spring uprising in 2011. The current conflict began in 2014 when the Houthis seized Sana'a, leading to a decade of war that has created one of the world's worst humanitarian crises.",
+    "keyEvents": [
+      { "year": 1990, "event": "Unification of North and South Yemen." },
+      { "year": 2011, "event": "Arab Spring protests lead to the removal of President Ali Abdullah Saleh." },
+      { "year": 2014, "event": "Houthis capture Sana'a, forcing the government into exile." },
+      { "year": 2015, "event": "Saudi-led coalition intervenes in the civil war." },
+      { "year": 2024, "event": "First direct Israeli strikes on Yemen (Hodeidah); Houthi Red Sea blockade intensifies." },
+      { "year": 2025, "event": "STC seizes control of Hadramawt; assassination of Houthi PM by Israel." }
+    ]
+  },
+  "investmentNotes": {
+    "strengths": ["Strategic maritime location at the Bab el-Mandeb strait", "Significant untapped oil, gas, and mineral wealth", "Deepwater ports with major potential (Aden, Hodeidah)", "Resilient population with a strong trading tradition"],
+    "risks": ["Extreme physical danger from ongoing air strikes and ground conflict", "Total lack of a unified legal, financial, or administrative system", "Catastrophic humanitarian situation and near-total infrastructure collapse", "High risk of regional escalation and total port blockades"],
+    "sectors": ["Energy (Oil/Gas - mostly offline)", "Maritime Services (High risk)", "Humanitarian Logistics", "Informal Trade"]
+  },
+  "sources": [
+    { "name": "Yemen Data Project", "url": "https://yemendataproject.org/", "type": "security" },
+    { "name": "UN Office for the Coordination of Humanitarian Affairs (OCHA)", "url": "https://www.unocha.org/yemen", "type": "humanitarian" },
+    { "name": "South24 Center for News and Studies", "url": "https://south24.net/", "type": "analytical" }
+  ]
+}

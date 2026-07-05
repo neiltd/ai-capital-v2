@@ -1,0 +1,353 @@
+[
+  {
+    "id": "PLANT-POL-BELCHATOW",
+    "name": "Bełchatów Power Station",
+    "countryId": "POL",
+    "city": "Bełchatów",
+    "coordinates": [19.3265, 51.2679],
+    "type": "coal",
+    "status": "operating",
+    "capacityMW": 5472,
+    "annualOutputGWh": null,
+    "yearCommissioned": 1981,
+    "yearRetirement": 2036,
+    "operator": "PGE GiEK",
+    "owner": "PGE Group",
+    "strategicNote": "The largest lignite-fired power station in the world and Europe's largest coal plant, fundamental to Poland's energy security.",
+    "notes": null,
+    "attribution": {
+      "sources": [
+        { "name": "Global Energy Monitor", "url": "https://www.gem.wiki/Be%C5%82chat%C3%B3w_power_station", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 2,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  },
+  {
+    "id": "PLANT-POL-KOZIENICE",
+    "name": "Kozienice Power Station",
+    "countryId": "POL",
+    "city": "Kozienice",
+    "coordinates": [21.467, 51.667],
+    "type": "coal",
+    "status": "operating",
+    "capacityMW": 4016,
+    "annualOutputGWh": null,
+    "yearCommissioned": 1972,
+    "yearRetirement": null,
+    "operator": "Enea Wytwarzanie",
+    "owner": "Enea",
+    "strategicNote": "Second largest power plant in Poland, primarily hard coal-fired, with a modern 1075 MW supercritical unit.",
+    "notes": null,
+    "attribution": {
+      "sources": [
+        { "name": "Global Energy Monitor", "url": "https://www.gem.wiki/Kozienice_power_station", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 2,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  },
+  {
+    "id": "PLANT-POL-OPOLE",
+    "name": "Opole Power Station",
+    "countryId": "POL",
+    "city": "Opole",
+    "coordinates": [17.900, 50.800],
+    "type": "coal",
+    "status": "operating",
+    "capacityMW": 3342,
+    "annualOutputGWh": null,
+    "yearCommissioned": 1993,
+    "yearRetirement": null,
+    "operator": "PGE GiEK",
+    "owner": "PGE Group",
+    "strategicNote": "Major hard coal facility, recently expanded with two high-efficiency units (Units 5 & 6).",
+    "notes": null,
+    "attribution": {
+      "sources": [
+        { "name": "Global Energy Monitor", "url": "https://www.gem.wiki/Opole_power_station", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 2,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  },
+  {
+    "id": "PLANT-POL-TUROW",
+    "name": "Turów Power Station",
+    "countryId": "POL",
+    "city": "Bogatynia",
+    "coordinates": [14.914, 50.945],
+    "type": "coal",
+    "status": "operating",
+    "capacityMW": 2357,
+    "annualOutputGWh": null,
+    "yearCommissioned": 1962,
+    "yearRetirement": null,
+    "operator": "PGE GiEK",
+    "owner": "PGE Group",
+    "strategicNote": "Strategically located near the borders of Germany and the Czech Republic; subject to significant environmental and diplomatic disputes.",
+    "notes": "Lignite-fired.",
+    "attribution": {
+      "sources": [
+        { "name": "Global Energy Monitor", "url": "https://www.gem.wiki/Tur%C3%B3w_power_station", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 2,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  },
+  {
+    "id": "PLANT-POL-JAWORZNO-III",
+    "name": "Jaworzno III Power Station",
+    "countryId": "POL",
+    "city": "Jaworzno",
+    "coordinates": [19.205, 50.208],
+    "type": "coal",
+    "status": "operating",
+    "capacityMW": 2255,
+    "annualOutputGWh": null,
+    "yearCommissioned": 1976,
+    "yearRetirement": null,
+    "operator": "Tauron Wytwarzanie",
+    "owner": "Tauron Group",
+    "strategicNote": "Includes a new 910 MW unit, representing Poland's latest investment in high-efficiency coal technology.",
+    "notes": null,
+    "attribution": {
+      "sources": [
+        { "name": "Global Energy Monitor", "url": "https://www.gem.wiki/Jaworzno_power_station", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 1,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  },
+  {
+    "id": "PLANT-POL-DOLNA-ODRA",
+    "name": "PGE Gryfino Dolna Odra CCGT",
+    "countryId": "POL",
+    "city": "Nowe Czarnowo",
+    "coordinates": [14.467, 53.207],
+    "type": "gas",
+    "status": "operating",
+    "capacityMW": 1366,
+    "annualOutputGWh": null,
+    "yearCommissioned": 2024,
+    "yearRetirement": null,
+    "operator": "PGE GiEK",
+    "owner": "PGE Group",
+    "strategicNote": "The largest and most efficient gas-fired power plant in Poland, replacing older coal units.",
+    "notes": "Two units of 683 MW each.",
+    "attribution": {
+      "sources": [
+        { "name": "GE Vernova", "url": "https://www.gevernova.com/news/press-releases/polands-most-efficient-gas-power-plant-powered-ge-vernova-technology-starts", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 1,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  },
+  {
+    "id": "PLANT-POL-RYBNIK-CCGT",
+    "name": "Rybnik CCGT Power Plant",
+    "countryId": "POL",
+    "city": "Rybnik",
+    "coordinates": [18.521, 50.133],
+    "type": "gas",
+    "status": "construction",
+    "capacityMW": 883,
+    "annualOutputGWh": null,
+    "yearCommissioned": 2026,
+    "yearRetirement": null,
+    "operator": "PGE Rybnik",
+    "owner": "PGE Group",
+    "strategicNote": "Major new gas investment to decarbonize the industrial Silesian region.",
+    "notes": null,
+    "attribution": {
+      "sources": [
+        { "name": "Global Energy Monitor", "url": "https://www.gem.wiki/Rybnik_power_station", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 1,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  },
+  {
+    "id": "PLANT-POL-PLOCK-CCGT",
+    "name": "Płock CCGT",
+    "countryId": "POL",
+    "city": "Płock",
+    "coordinates": [19.688, 52.558],
+    "type": "gas",
+    "status": "operating",
+    "capacityMW": 596,
+    "annualOutputGWh": null,
+    "yearCommissioned": 2018,
+    "yearRetirement": null,
+    "operator": "ORLEN",
+    "owner": "ORLEN",
+    "strategicNote": "Integrated with Poland's largest refinery, providing heat and power.",
+    "notes": null,
+    "attribution": {
+      "sources": [
+        { "name": "Global Energy Monitor", "url": "https://www.gem.wiki/P%C5%82ock_power_station", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 1,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  },
+  {
+    "id": "PLANT-POL-POTEGOWO",
+    "name": "Potęgowo Wind Farm",
+    "countryId": "POL",
+    "city": "Potęgowo",
+    "coordinates": [17.480, 54.480],
+    "type": "wind",
+    "status": "operating",
+    "capacityMW": 257,
+    "annualOutputGWh": null,
+    "yearCommissioned": 2020,
+    "yearRetirement": null,
+    "operator": "Mashav Energia",
+    "owner": "Mashav Energia",
+    "strategicNote": "The largest onshore wind farm in Poland.",
+    "notes": null,
+    "attribution": {
+      "sources": [
+        { "name": "Global Energy Monitor", "url": "https://www.gem.wiki/Pot%C4%99gowo_wind_farm", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 1,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  },
+  {
+    "id": "PLANT-POL-BALTICA-2",
+    "name": "Baltica 2 Offshore Wind Farm",
+    "countryId": "POL",
+    "city": "Baltic Sea",
+    "coordinates": [17.500, 55.000],
+    "type": "wind",
+    "status": "construction",
+    "capacityMW": 1500,
+    "annualOutputGWh": null,
+    "yearCommissioned": 2027,
+    "yearRetirement": null,
+    "operator": "PGE / Ørsted",
+    "owner": "PGE Group / Ørsted",
+    "strategicNote": "Flagship offshore wind project in the Baltic Sea, pivotal for Poland's energy transition.",
+    "notes": null,
+    "attribution": {
+      "sources": [
+        { "name": "PGE Group", "url": "https://baltica.energy/projects/baltica-2", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 1,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  },
+  {
+    "id": "PLANT-POL-BALTIC-POWER",
+    "name": "Baltic Power Offshore Wind Farm",
+    "countryId": "POL",
+    "city": "Baltic Sea",
+    "coordinates": [17.800, 55.100],
+    "type": "wind",
+    "status": "construction",
+    "capacityMW": 1200,
+    "annualOutputGWh": null,
+    "yearCommissioned": 2026,
+    "yearRetirement": null,
+    "operator": "ORLEN / Northland Power",
+    "owner": "ORLEN / Northland Power",
+    "strategicNote": "Significant offshore wind project supporting diversification away from coal.",
+    "notes": null,
+    "attribution": {
+      "sources": [
+        { "name": "Baltic Power", "url": "https://www.balticpower.pl/en/project-status", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 1,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  },
+  {
+    "id": "PLANT-POL-CHOCZEWO-NUCLEAR",
+    "name": "Lubiatowo-Kopalino Nuclear Power Plant",
+    "countryId": "POL",
+    "city": "Choczewo",
+    "coordinates": [17.787, 54.796],
+    "type": "nuclear",
+    "status": "planned",
+    "capacityMW": 3750,
+    "annualOutputGWh": null,
+    "yearCommissioned": 2033,
+    "yearRetirement": null,
+    "operator": "Polskie Elektrownie Jądrowe (PEJ)",
+    "owner": "Government of Poland",
+    "strategicNote": "Poland's first planned nuclear power plant, using Westinghouse AP1000 technology.",
+    "notes": "Three reactors planned.",
+    "attribution": {
+      "sources": [
+        { "name": "Polskie Elektrownie Jądrowe", "url": "https://ppj.it/en/investments/lubiatowo-kopalino", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 1,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  },
+  {
+    "id": "PLANT-POL-PATNOW-NUCLEAR",
+    "name": "Pątnów Nuclear Power Plant",
+    "countryId": "POL",
+    "city": "Konin",
+    "coordinates": [18.233, 52.300],
+    "type": "nuclear",
+    "status": "planned",
+    "capacityMW": 2800,
+    "annualOutputGWh": null,
+    "yearCommissioned": 2035,
+    "yearRetirement": null,
+    "operator": "PGE PAK Energia Jądrowa",
+    "owner": "PGE / ZE PAK / KHNP",
+    "strategicNote": "Second planned nuclear site in Poland, in collaboration with South Korea's KHNP.",
+    "notes": "Two APR1400 reactors planned.",
+    "attribution": {
+      "sources": [
+        { "name": "WNA", "url": "https://world-nuclear.org/information-library/country-profiles/countries-o-s/poland.aspx", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "medium",
+        "sourceCount": 1,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  }
+]

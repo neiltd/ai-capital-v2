@@ -1,0 +1,10 @@
+node_modules/
+data/
+ruvector.db
+agentdb.rvf
+agentdb.rvf.lock
+*.db
+*.db-shm
+*.db-wal
+dist/
+.env

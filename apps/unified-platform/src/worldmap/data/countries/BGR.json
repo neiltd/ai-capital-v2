@@ -1,0 +1,67 @@
+{
+  "id": "BGR",
+  "iso2": "BG",
+  "name": "Bulgaria",
+  "region": "Europe",
+  "subregion": "Southeast Europe",
+  "capital": "Sofia",
+  "lastUpdated": "2026-05-09",
+  "summary": "In 2026, Bulgaria is entering a new phase of economic and institutional maturity, having secured full Schengen membership and advanced to the final stages of Eurozone accession. The country has successfully leveraged its competitive labor costs and strategic location to become a key regional player in IT services, fintech, and automotive components. Sofia is vibrant with tech innovation, while the energy sector is undergoing a profound shift toward renewables and nuclear expansion to ensure long-term independence. Geopolitically, Bulgaria serves as a critical bridge between Europe and the Eastern Mediterranean, playing a vital role in regional energy transit and border security. While political stability has improved after several years of frequent elections, the government remains focused on deep-seated judicial reforms and enhancing the transparency of public institutions to attract higher-quality foreign investment.",
+  "indicators": {
+    "politicalStability":       { "score": 6, "score_description": "Improving stability after a period of fragmentation.", "trend": "improving", "confidence": "medium", "note": "A more durable coalition has emerged, prioritizing Euro-Atlantic integration and institutional reforms." },
+    "economicDirection":        { "score": 6, "score_description": "Steady growth supported by exports and EU recovery funds.", "trend": "improving", "confidence": "high", "note": "GDP growth is consistent at 2.4%, driven by the tech sector and a recovering tourism industry." },
+    "investmentAttractiveness": { "score": 7, "score_description": "Attractive for tech and manufacturing due to low taxes and skilled labor.", "trend": "rising", "confidence": "high", "note": "Bulgaria offers some of the lowest corporate and personal tax rates in the EU, attracting a wide range of multinational firms." },
+    "geopoliticalRisk":         { "score": 5, "score_description": "Moderate risk linked to regional energy and security dynamics.", "trend": "stable", "confidence": "high", "note": "NATO membership and increased regional cooperation provide a solid security framework." },
+    "educationQuality":         { "score": 6, "score_description": "Strong tradition in mathematics and technical sciences.", "trend": "stable", "confidence": "medium", "note": "Bulgarian IT professionals are highly regarded globally, though the broader education system needs modernization." },
+    "healthcareQuality":        { "score": 5, "score_description": "Universal system facing challenges in rural areas.", "trend": "improving", "confidence": "medium", "note": "Increased funding and digitalization are gradually improving outcomes in the major urban centers." },
+    "technologyInvestment":     { "score": 7, "score_description": "Significant growth in the IT, fintech, and renewable energy sectors.", "trend": "rising", "confidence": "high", "note": "Bulgaria is increasingly seen as a hub for startups and innovative tech solutions in Southeast Europe." }
+  },
+  "demographics": {
+    "population": 6300000,
+    "medianAge": 45.1,
+    "urbanizationRate": 76,
+    "majorEthnicGroups": ["Bulgarian", "Turkish", "Roma"],
+    "religions": [
+      { "name": "Orthodox Christian", "percent": 59.4 },
+      { "name": "Muslim", "percent": 7.8 },
+      { "name": "None/Unaffiliated", "percent": 27.2 },
+      { "name": "Other", "percent": 5.6 }
+    ]
+  },
+  "alliances": ["EU", "NATO", "Bucharest Nine", "OECD (Candidate)"],
+  "relationships": [
+    { "countryId": "ROU", "countryName": "Romania", "type": "ally", "sentiment": "positive", "summary": "Strongest regional partner; close cooperation on Schengen, infrastructure (Danube bridges), and Black Sea security." },
+    { "countryId": "GRC", "countryName": "Greece", "type": "ally", "sentiment": "positive", "summary": "Key partner for energy transit and trade; the gas interconnector (IGB) is a pillar of regional energy security." },
+    { "countryId": "TUR", "countryName": "Turkey", "type": "partner", "sentiment": "neutral", "summary": "Important neighbor for trade and migration management; relations are pragmatic and focused on regional stability." },
+    { "countryId": "USA", "countryName": "United States", "type": "treaty_ally", "sentiment": "positive", "summary": "Strategic security partner; strong cooperation on defense modernization and energy diversification." },
+    { "countryId": "RUS", "countryName": "Russia", "type": "competitor", "sentiment": "negative", "summary": "Relations have deteriorated significantly as Bulgaria has decisively shifted away from energy and political dependence on Moscow." }
+  ],
+  "perspectives": [
+    { "source": "Sofia Tech Entrepreneur", "bias": "Growth-oriented", "view": "Our talent pool is world-class; by joining the Eurozone, we will remove the last major barrier to becoming a top European tech destination." },
+    { "source": "Civil Society Reformer", "bias": "Justice-focused", "view": "The legislative changes are a good start, but the real test is the consistent application of the law and the elimination of corruption in all levels of government." },
+    { "source": "Energy Expert", "bias": "Pragmatist", "view": "The expansion of the Kozloduy nuclear plant and the shift to green energy are essential for our competitiveness and strategic autonomy." }
+  ],
+  "historicalContext": {
+    "summary": "Bulgaria is one of the oldest states in Europe, with a rich history spanning the First and Second Bulgarian Empires. After five centuries of Ottoman rule, it regained independence in 1878. Following WWII, Bulgaria spent decades under communist rule within the Soviet sphere. The transition to democracy after 1989 was gradual, culminating in its membership in NATO in 2004 and the EU in 2007.",
+    "keyEvents": [
+      { "year": 681, "event": "Establishment of the First Bulgarian Empire." },
+      { "year": 1878, "event": "Treaty of San Stefano/Berlin restores Bulgarian statehood." },
+      { "year": 1908, "event": "Declaration of full independence from the Ottoman Empire." },
+      { "year": 1944, "event": "Communist coup d'état leads to the establishment of the People's Republic." },
+      { "year": 1989, "event": "Fall of Todor Zhivkov and the beginning of the democratic transition." },
+      { "year": 2004, "event": "Bulgaria joins NATO." },
+      { "year": 2007, "event": "Bulgaria joins the European Union." },
+      { "year": 2024, "event": "Partial accession to the Schengen Area (Air and Sea)." }
+    ]
+  },
+  "investmentNotes": {
+    "strengths": ["Most competitive tax system in the EU (10% flat tax)", "Highly skilled and affordable IT and engineering talent", "Strategic location for energy transit and nearshoring", "Stable currency (pegged to the Euro) and healthy fiscal position"],
+    "risks": ["Demographic decline and aging population", "Slow pace of judicial and administrative reforms", "Dependence on external energy for industrial sectors", "Vulnerability to regional geopolitical shifts"],
+    "sectors": ["IT & Software Development", "Fintech & Business Services", "Automotive Parts Manufacturing", "Renewable Energy & Nuclear", "Tourism & Logistics"]
+  },
+  "sources": [
+    { "name": "National Statistical Institute (NSI)", "url": "https://www.nsi.bg/en", "type": "economic" },
+    { "name": "Bulgarian National Bank (BNB)", "url": "https://www.bnb.bg/index.htm?toLang=_EN", "type": "economic" },
+    { "name": "InvestBulgaria Agency", "url": "https://www.investbg.government.bg/en", "type": "economic" }
+  ]
+}

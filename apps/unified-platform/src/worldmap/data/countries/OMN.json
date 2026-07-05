@@ -1,0 +1,66 @@
+{
+  "id": "OMN",
+  "iso2": "OM",
+  "name": "Oman",
+  "region": "Asia",
+  "subregion": "Western Asia",
+  "capital": "Muscat",
+  "lastUpdated": "2025-05-15",
+  "summary": "Oman is a sultanate that has carved out a unique role as a neutral mediator in the Middle East, maintaining functional relationships with all regional and global powers. Under Sultan Haitham bin Tariq, the nation is aggressively pursuing 'Oman Vision 2040,' focusing on fiscal discipline, economic diversification, and a transition to green energy, particularly green hydrogen. Its strategic location on the Arabian Sea makes it a vital logistics hub and a bridge between Central Asia, the Middle East, and East Africa. While oil remains a key revenue source, recent credit upgrades and a surge in FDI reflect growing international confidence in its reform agenda.",
+  "indicators": {
+    "politicalStability":       { "score": 8, "trend": "stable", "confidence": "high", "note": "Smooth transition of power and Sultan Haitham's firm consolidation of reformist policies." },
+    "economicDirection":        { "score": 8, "trend": "rising", "confidence": "high", "note": "Successful fiscal consolidation and clear focus on non-oil sectors like logistics and renewables." },
+    "investmentAttractiveness": { "score": 7, "trend": "rising", "confidence": "high", "note": "Improved credit rating to investment grade and new specialized investment courts." },
+    "geopoliticalRisk":         { "score": 3, "trend": "stable", "confidence": "high", "note": "Oman's policy of neutrality and mediation significantly mitigates regional risks." },
+    "educationQuality":         { "score": 6, "trend": "rising", "confidence": "medium", "note": "Focus on vocational training and digital literacy to meet Vision 2040 labor needs." },
+    "healthcareQuality":        { "score": 7, "trend": "stable", "confidence": "high", "note": "Comprehensive public healthcare system with expanding specialized services." },
+    "technologyInvestment":     { "score": 7, "trend": "rising", "confidence": "medium", "note": "Investments in space technology (Duqm-1) and local AI development (Maeen)." }
+  },
+  "demographics": {
+    "population": 5500000,
+    "medianAge": 26.2,
+    "urbanizationRate": 88.0,
+    "majorEthnicGroups": ["Omani Arab", "South Asian", "East African", "Baluchi"],
+    "religions": [
+      { "name": "Muslim (mostly Ibadhi)", "percent": 86 },
+      { "name": "Christian", "percent": 6 },
+      { "name": "Hindu", "percent": 5 },
+      { "name": "Other", "percent": 3 }
+    ]
+  },
+  "alliances": ["GCC", "Arab League", "OIC", "UN", "OPEC+"],
+  "relationships": [
+    { "countryId": "USA", "countryName": "United States", "type": "strategic_partner", "sentiment": "positive", "summary": "Long-standing security cooperation; Oman serves as a critical diplomatic bridge for U.S. regional interests." },
+    { "countryId": "IRN", "countryName": "Iran", "type": "pragmatic_partner", "sentiment": "neutral", "summary": "Maintains constructive ties, facilitating backchannel diplomacy between Tehran and the West." },
+    { "countryId": "SAU", "countryName": "Saudi Arabia", "type": "ally", "sentiment": "positive", "summary": "Growing economic and security integration, highlighted by the opening of the first direct land crossing." },
+    { "countryId": "IND", "countryName": "India", "type": "strategic_partner", "sentiment": "positive", "summary": "Deep historical ties bolstered by a recent Comprehensive Economic Partnership Agreement (CEPA)." },
+    { "countryId": "CHN", "countryName": "China", "type": "economic_partner", "sentiment": "positive", "summary": "A major purchaser of Omani oil and a key investor in the Duqm Special Economic Zone." }
+  ],
+  "perspectives": [
+    { "source": "Omani Technocrat", "bias": "Optimistic", "view": "Vision 2040 is not just a plan; it's a fundamental transformation of our economy from rentier state to productive hub." },
+    { "source": "Regional Diplomat", "bias": "Pragmatic", "view": "Oman is the essential 'silent player' in Middle East stability; without its mediation, regional conflicts would be far harder to manage." },
+    { "source": "International Credit Analyst", "bias": "Favorable", "view": "The recent upgrade to investment grade is a testament to the Sultanate's credible and disciplined fiscal path." },
+    { "source": "Civil Society Observer", "bias": "Cautious", "view": "Economic reforms must be balanced with social safeguards to ensure the transition benefits all Omanis, not just the elite." }
+  ],
+  "historicalContext": {
+    "summary": "Oman was a powerful maritime empire in the 18th and 19th centuries, controlling territories in East Africa. The modern era began in 1970 with Sultan Qaboos bin Said, who oversaw the 'Renaissance' that modernized the nation. Upon his death in 2020, Sultan Haitham bin Tariq succeeded him, shifting focus toward economic sustainability and fiscal reform.",
+    "keyEvents": [
+      { "year": 1970, "event": "Sultan Qaboos bin Said takes power, initiating the 'Omani Renaissance'." },
+      { "year": 1975, "event": "End of the Dhofar Rebellion, consolidating national unity." },
+      { "year": 2020, "event": "Death of Sultan Qaboos; Sultan Haitham bin Tariq succeeds him." },
+      { "year": 2021, "event": "Announcement of 'Oman Vision 2040' economic roadmap." },
+      { "year": 2024, "event": "S&P upgrades Oman's credit rating to Investment Grade (BBB-)." },
+      { "year": 2025, "event": "Launch of 'Duqm-1,' Oman's first experimental rocket; hosted U.S.-Iran nuclear talks." }
+    ]
+  },
+  "investmentNotes": {
+    "strengths": ["Strategic location outside the Strait of Hormuz", "Strong fiscal discipline and debt reduction", "Established reputation as a stable and neutral actor", "World-class green hydrogen potential"],
+    "risks": ["Vulnerability to oil price fluctuations", "Limited private sector employment for nationals", "Geopolitical spillover from neighboring Yemen", "High reliance on foreign technology and expertise"],
+    "sectors": ["Green Hydrogen & Renewables", "Logistics & Ports (Duqm, Salalah)", "Tourism & Real Estate", "Fisheries & Food Security"]
+  },
+  "sources": [
+    { "name": "National Centre for Statistics and Information", "url": "https://www.ncsi.gov.om", "type": "economic" },
+    { "name": "Oman Ministry of Economy", "url": "https://www.economy.gov.om", "type": "economic" },
+    { "name": "Oman Vision 2040 Unit", "url": "https://www.isfu.gov.om", "type": "government" }
+  ]
+}

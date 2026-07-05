@@ -1,0 +1,67 @@
+{
+  "id": "ESP",
+  "iso2": "ES",
+  "name": "Spain",
+  "region": "Europe",
+  "subregion": "Southern Europe",
+  "capital": "Madrid",
+  "lastUpdated": "2026-05-09",
+  "summary": "Spain is currently a top economic performer in the Eurozone, driven by a record-breaking tourism sector and the effective deployment of EU recovery funds. However, this economic vitality contrasts with a deeply polarized and fragmented domestic political environment. The minority coalition government under Pedro Sánchez relies on the support of regional nationalist parties, leading to controversial legislation such as the Catalan amnesty law. Internationally, Spain is asserting a more prominent role in multilateralism and European defense, while maintaining its unique strategic position as a bridge to Latin America and a critical partner for security in North Africa.",
+  "indicators": {
+    "politicalStability":       { "score": 4, "score_description": "Moderate risk due to extreme polarization and reliance on regional nationalist support.", "trend": "declining", "confidence": "high", "note": "High institutional tension exists between the executive and judicial branches over the amnesty law for Catalan pro-independence leaders." },
+    "economicDirection":        { "score": 7, "score_description": "Strong growth outperforming the Eurozone average.", "trend": "rising", "confidence": "high", "note": "GDP growth is bolstered by resilient services exports and the structural impact of NextGenerationEU investment programs." },
+    "investmentAttractiveness": { "score": 7, "score_description": "High appeal in renewable energy, tourism, and digital services.", "trend": "rising", "confidence": "high", "note": "Spain is a global leader in wind and solar energy, attracting significant investment in the green hydrogen value chain." },
+    "geopoliticalRisk":         { "score": 4, "score_description": "Moderate risk centered on regional secessionism and relations with Morocco.", "trend": "stable", "confidence": "high", "note": "While the Catalan independence movement has lost momentum, domestic regionalism remains a core factor in national policy." },
+    "educationQuality":         { "score": 7, "score_description": "Good general standards with top-tier business schools in Madrid and Barcelona.", "trend": "stable", "confidence": "high", "note": "Spain has made significant strides in vocational training, though youth unemployment remains a structural challenge." },
+    "healthcareQuality":        { "score": 9, "score_description": "World-class universal healthcare system with high efficiency and life expectancy.", "trend": "stable", "confidence": "high", "note": "The system is a global leader in organ transplantation and primary care accessibility, despite post-pandemic funding pressures." },
+    "technologyInvestment":     { "score": 7, "score_description": "Significant growth in green tech and digital infrastructure.", "trend": "rising", "confidence": "high", "note": "Investment is heavily focused on the 'Digital Spain 2026' agenda, aiming for 100% fiber optic coverage and 5G deployment." }
+  },
+  "demographics": {
+    "population": 48600000,
+    "medianAge": 44.9,
+    "urbanizationRate": 81,
+    "majorEthnicGroups": ["Spanish", "Latin American", "North African", "Romanian"],
+    "religions": [
+      { "name": "Roman Catholic", "percent": 56 },
+      { "name": "None/Unaffiliated", "percent": 39 },
+      { "name": "Muslim", "percent": 3 },
+      { "name": "Other", "percent": 2 }
+    ]
+  },
+  "alliances": ["EU", "NATO", "OECD", "G20 (Permanent Guest)"],
+  "relationships": [
+    { "countryId": "FRA", "countryName": "France", "type": "ally", "sentiment": "positive", "summary": "Key EU partner; strong collaboration on energy infrastructure (H2Med pipeline) and counter-terrorism." },
+    { "countryId": "PRT", "countryName": "Portugal", "type": "ally", "sentiment": "positive", "summary": "Deeply integrated relationship through the Iberian Market (MIBEL) and shared Atlantic interests." },
+    { "countryId": "MAR", "countryName": "Morocco", "type": "partner", "sentiment": "neutral", "summary": "Critical but complex partnership focused on migration control, security, and the status of Western Sahara." },
+    { "countryId": "USA", "countryName": "United States", "type": "treaty_ally", "sentiment": "positive", "summary": "Important security ally; Spain hosts U.S. naval assets at Rota and air assets at Morón." },
+    { "countryId": "MEX", "countryName": "Mexico", "type": "partner", "sentiment": "positive", "summary": "Major economic and cultural partner; Spain is the second-largest foreign investor in Mexico." }
+  ],
+  "perspectives": [
+    { "source": "Social Democratic Reformer", "bias": "Progressive", "view": "Spain's success lies in balancing robust economic growth with social expansion and deeper integration into the European project." },
+    { "source": "Conservative Constitutionalist", "bias": "Right-wing", "view": "The government's concessions to regional nationalists threaten the unity of the state and the independence of the judiciary." },
+    { "source": "Ibero-American Strategist", "bias": "Regionalist", "view": "Spain should leverage its unique historical ties to become the primary advocate and gateway for Latin American interests within the European Union." }
+  ],
+  "historicalContext": {
+    "summary": "Spain's history is defined by its era as a global maritime empire, a period of decline, and a traumatic Civil War (1936-1939) followed by the Franco dictatorship. The peaceful transition to democracy after 1975 and subsequent entry into the EU and NATO transformed Spain into a modern, decentralized, and socially progressive European state.",
+    "keyEvents": [
+      { "year": 1492, "event": "Reconquista ends; Columbus reaches the Americas, beginning the Spanish Empire." },
+      { "year": 1936, "event": "Outbreak of the Spanish Civil War." },
+      { "year": 1939, "event": "General Francisco Franco begins his 36-year dictatorship." },
+      { "year": 1975, "event": "Death of Franco and the start of the transition to democracy under King Juan Carlos I." },
+      { "year": 1978, "event": "Adoption of the current democratic Constitution." },
+      { "year": 1986, "event": "Spain joins the European Economic Community (precursor to the EU)." },
+      { "year": 1992, "event": "Barcelona Olympics and Seville Expo mark Spain's arrival as a modern power." },
+      { "year": 2024, "event": "Spain recognizes the State of Palestine and achieves record economic growth in the Eurozone." }
+    ]
+  },
+  "investmentNotes": {
+    "strengths": ["Leading global tourism infrastructure", "Pioneer in renewable energy (wind/solar)", "High-quality infrastructure and high-speed rail network", "Strong cultural and economic links to Latin America"],
+    "risks": ["High public debt and structural unemployment", "Political instability and minority government reliance", "Aging population and pension sustainability", "Exposure to water scarcity and climate change"],
+    "sectors": ["Renewable Energy", "Tourism & Hospitality", "Agribusiness", "Digital Infrastructure", "Biotechnology"]
+  },
+  "sources": [
+    { "name": "INE (Instituto Nacional de Estadística)", "url": "https://www.ine.es/en/", "type": "economic" },
+    { "name": "Banco de España", "url": "https://www.bde.es/bde/en/", "type": "economic" },
+    { "name": "La Moncloa", "url": "https://www.lamoncloa.gob.es/lang/en/Paginas/index.aspx", "type": "political" }
+  ]
+}

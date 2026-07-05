@@ -1,0 +1,27 @@
+[
+  {
+    "countryId": "KOR",
+    "year": 2022,
+    "overallScore": 70.2,
+    "availability": 71.5,
+    "access": 76.8,
+    "utilization": 71.5,
+    "stability": 58.5,
+    "undernourishedPct": 2.5,
+    "foodImportDependencyPct": 78.5,
+    "cerealYieldKgHa": 6612,
+    "climateVulnerability": "medium",
+    "conflictExposure": "low",
+    "attribution": {
+      "sources": [
+        { "name": "GFSI 2022 — South Korea", "url": "https://impact.economist.com/sustainability/project/food-security-index/", "accessedAt": "2025-02-13" },
+        { "name": "FAO FAOSTAT", "url": "https://www.fao.org/faostat/en/", "accessedAt": "2025-02-13" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 2,
+        "lastVerified": "2025-02-13"
+      }
+    }
+  }
+]

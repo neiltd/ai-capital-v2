@@ -1,0 +1,67 @@
+{
+  "id": "FRA",
+  "iso2": "FR",
+  "name": "France",
+  "region": "Europe",
+  "subregion": "Western Europe",
+  "capital": "Paris",
+  "lastUpdated": "2026-05-09",
+  "summary": "France remains a central pillar of the European Union and a global diplomatic power, yet it is currently navigating its most significant internal political crisis in decades. The dissolution of the National Assembly in 2024 led to a highly fragmented parliament and frequent government collapses, challenging the institutional stability of the Fifth Republic. Economically, France shows resilience with strong tourism and high-tech sectors, but faces mounting fiscal pressure and a large public deficit. Externally, France continues to advocate for European 'strategic autonomy' while managing a declining influence in Africa and a shift toward a more hawkish stance on European security following the invasion of Ukraine.",
+  "indicators": {
+    "politicalStability":       { "score": 3, "score_description": "High risk due to a hung parliament and frequent no-confidence votes.", "trend": "declining", "confidence": "high", "note": "The absence of a clear parliamentary majority since late 2024 has led to legislative gridlock and executive weakness." },
+    "economicDirection":        { "score": 6, "score_description": "Modest growth supported by services and tech, offset by fiscal tightening.", "trend": "stable", "confidence": "high", "note": "Public debt exceeds 110% of GDP, necessitating significant spending cuts that could trigger social unrest." },
+    "investmentAttractiveness": { "score": 8, "score_description": "Strong appeal as a gateway to the EU and a leader in innovation.", "trend": "stable", "confidence": "high", "note": "France continues to attract high levels of FDI, particularly in AI, green tech, and the pharmaceutical industry." },
+    "geopoliticalRisk":         { "score": 5, "score_description": "Moderate risk from domestic polarization and shifting global alliances.", "trend": "rising", "confidence": "high", "note": "Setbacks in the Sahel region and rising domestic populism challenge France's traditional global role." },
+    "educationQuality":         { "score": 8, "score_description": "High quality with world-class engineering and business schools.", "trend": "stable", "confidence": "high", "note": "The 'Grandes Écoles' system remains a global benchmark, though K-12 outcomes are under pressure from social inequality." },
+    "healthcareQuality":        { "score": 9, "score_description": "Excellent universal system with high life expectancy and advanced medical research.", "trend": "stable", "confidence": "high", "note": "Despite high standards, the system faces regional 'medical deserts' and rising costs due to an aging population." },
+    "technologyInvestment":     { "score": 8, "score_description": "Leading global player in aerospace, nuclear energy, and AI.", "trend": "rising", "confidence": "high", "note": "The 'France 2030' plan is channeling billions into deep tech, decarbonization, and digital sovereignty." }
+  },
+  "demographics": {
+    "population": 68500000,
+    "medianAge": 42.1,
+    "urbanizationRate": 81,
+    "majorEthnicGroups": ["Celtic/Latin", "North African", "African", "Asian"],
+    "religions": [
+      { "name": "Roman Catholic", "percent": 47 },
+      { "name": "None/Unaffiliated", "percent": 40 },
+      { "name": "Muslim", "percent": 8 },
+      { "name": "Other", "percent": 5 }
+    ]
+  },
+  "alliances": ["EU", "NATO", "G7", "G20", "UNSC (P5)"],
+  "relationships": [
+    { "countryId": "DEU", "countryName": "Germany", "type": "ally", "sentiment": "positive", "summary": "The 'Franco-German Engine' remains the core of EU policy, despite friction over energy and fiscal rules." },
+    { "countryId": "USA", "countryName": "United States", "type": "treaty_ally", "sentiment": "positive", "summary": "Oldest ally; deep security cooperation through NATO, though France maintains an independent strategic outlook." },
+    { "countryId": "GBR", "countryName": "United Kingdom", "type": "ally", "sentiment": "neutral", "summary": "Close security and defense partnership (Lancaster House Treaties), but relations are complicated by post-Brexit trade issues." },
+    { "countryId": "ITA", "countryName": "Italy", "type": "ally", "sentiment": "positive", "summary": "Strengthened cooperation through the Quirinal Treaty, focusing on Mediterranean security and industrial ties." },
+    { "countryId": "RUS", "countryName": "Russia", "type": "adversary", "sentiment": "negative", "summary": "Relations have severely deteriorated; France is a leading proponent of European defense against Russian expansionism." }
+  ],
+  "perspectives": [
+    { "source": "Gaullist Strategist", "bias": "Sovereigntist", "view": "France must maintain its nuclear deterrence and strategic independence, avoiding being caught between the U.S. and China while leading a strong Europe." },
+    { "source": "Pro-Market Reformer", "bias": "Liberal", "view": "Fiscal consolidation and labor market flexibility are essential to maintain France's economic credibility within the Eurozone." },
+    { "source": "Left-Wing Critic", "bias": "Socialist", "view": "The prioritization of business attractiveness over social welfare is eroding the French social model and fueling far-right populism." }
+  ],
+  "historicalContext": {
+    "summary": "France's modern identity was forged in the 1789 Revolution, which established the ideals of liberty, equality, and fraternity. After centuries of monarchy and multiple republics, the current Fifth Republic, established by Charles de Gaulle in 1958, provides a strong executive framework that is currently under test by political fragmentation.",
+    "keyEvents": [
+      { "year": 1789, "event": "French Revolution; Declaration of the Rights of Man and of the Citizen." },
+      { "year": 1944, "event": "Liberation of Paris from Nazi occupation." },
+      { "year": 1951, "event": "Founding member of the European Coal and Steel Community, precursor to the EU." },
+      { "year": 1958, "event": "Founding of the Fifth Republic and adoption of the current constitution." },
+      { "year": 1968, "event": "May 1968 protests and general strike lead to social liberalization." },
+      { "year": 1999, "event": "Adoption of the Euro as the official currency." },
+      { "year": 2015, "event": "Paris Climate Agreement and major terrorist attacks (Charlie Hebdo, Bataclan)." },
+      { "year": 2024, "event": "Paris Olympic Games and dissolution of the National Assembly." }
+    ]
+  },
+  "investmentNotes": {
+    "strengths": ["Strategic location and top-tier infrastructure", "World-leading luxury and aerospace sectors", "High labor productivity", "Low-carbon energy mix (nuclear)"],
+    "risks": ["Political gridlock and social unrest", "Rigid labor regulations", "High public debt and tax burden", "Exposure to geopolitical shifts in Africa"],
+    "sectors": ["Aerospace & Defense", "Luxury Goods", "Nuclear Energy", "Artificial Intelligence", "Green Hydrogen"]
+  },
+  "sources": [
+    { "name": "INSEE", "url": "https://www.insee.fr/en/", "type": "economic" },
+    { "name": "Banque de France", "url": "https://www.banque-france.fr/en", "type": "economic" },
+    { "name": "French Ministry for Europe and Foreign Affairs", "url": "https://www.diplomatie.gouv.fr/en/", "type": "political" }
+  ]
+}

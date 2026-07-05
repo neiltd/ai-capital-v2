@@ -1,0 +1,68 @@
+{
+  "id": "TWN",
+  "iso2": "TW",
+  "name": "Taiwan",
+  "region": "Asia",
+  "subregion": "Eastern Asia",
+  "capital": "Taipei",
+  "lastUpdated": "2026-05-09",
+  "summary": "Taiwan is a highly developed, democratic island nation and a critical node in the global semiconductor supply chain. While it operates as a fully functional state with its own government, military, and currency, its international status remains complex due to the 'One China' policy and claims by the People's Republic of China. Taiwan's security is anchored by its unofficial but robust relationship with the United States and its indispensable role in the global technology ecosystem. Domestically, Taiwan focuses on energy security, demographic shifts, and maintaining its democratic resilience in the face of persistent external pressure.",
+  "indicators": {
+    "politicalStability":       { "score": 8, "trend": "stable", "confidence": "high", "note": "Vibrant democracy with peaceful power transitions, though deeply affected by cross-strait tensions." },
+    "economicDirection":        { "score": 7, "trend": "stable", "confidence": "high", "note": "Strong growth driven by high-tech exports, but vulnerable to global demand shifts and energy imports." },
+    "investmentAttractiveness": { "score": 8, "trend": "stable", "confidence": "high", "note": "World-leading tech ecosystem and rule of law, though geopolitical risk is a primary concern for long-term investors." },
+    "geopoliticalRisk":         { "score": 9, "trend": "rising", "confidence": "high", "note": "High risk due to increasing military pressure from China and the island's strategic position in the First Island Chain." },
+    "educationQuality":         { "score": 8, "trend": "stable", "confidence": "high", "note": "High literacy and strong STEM focus, consistently ranking well in international assessments." },
+    "healthcareQuality":        { "score": 9, "trend": "stable", "confidence": "high", "note": "National Health Insurance system is world-renowned for its efficiency, coverage, and high standard of care." },
+    "technologyInvestment":     { "score": 10, "trend": "rising", "confidence": "high", "note": "Global leader in semiconductor manufacturing (TSMC) and increasing investment in AI and R&D." }
+  },
+  "demographics": {
+    "population": 23900000,
+    "medianAge": 44.4,
+    "urbanizationRate": 79,
+    "majorEthnicGroups": ["Han Chinese (Hoklo, Hakka, Mainland)", "Indigenous Peoples"],
+    "religions": [
+      { "name": "Buddhist/Taoist", "percent": 70 },
+      { "name": "Christian", "percent": 4 },
+      { "name": "None/Other", "percent": 26 }
+    ]
+  },
+  "alliances": ["APEC", "WTO", "ADB", "Unofficial Security Partner (US)"],
+  "relationships": [
+    { "countryId": "USA", "countryName": "United States", "type": "strategic_partner", "sentiment": "positive", "summary": "Key security guarantor through the Taiwan Relations Act; deep cooperation on technology and trade." },
+    { "countryId": "CHN", "countryName": "China", "type": "adversary", "sentiment": "negative", "summary": "Primary security threat; China claims Taiwan as part of its territory and refuses to rule out the use of force." },
+    { "countryId": "JPN", "countryName": "Japan", "type": "strategic_partner", "sentiment": "positive", "summary": "Close cultural and economic ties; Japan increasingly views Taiwan's security as vital to its own." },
+    { "countryId": "PHL", "countryName": "Philippines", "type": "neighbor", "sentiment": "neutral", "summary": "Shared maritime interests and regional security concerns, though formal relations are constrained by the One China policy." }
+  ],
+  "perspectives": [
+    { "source": "Semiconductor Executive", "bias": "Technological", "view": "Our 'Silicon Shield' is Taiwan's best defense; the world cannot afford a conflict that halts the production of advanced chips." },
+    { "source": "DPP Supporter", "bias": "Sovereignty-focused", "view": "Taiwan is already an independent, sovereign nation; we must strengthen our defense and deepen ties with fellow democracies." },
+    { "source": "KMT Realist", "bias": "Status-quo", "view": "Maintaining a pragmatic dialogue with Beijing is necessary to avoid conflict while preserving our democratic way of life." },
+    { "source": "Youth Activist", "bias": "Social-reformist", "view": "Beyond cross-strait issues, we must address housing affordability and the challenges of an aging society to ensure our future." }
+  ],
+  "historicalContext": {
+    "summary": "Taiwan has been shaped by successive periods of colonial rule (Dutch, Spanish, Qing, Japanese) before the ROC government relocated to the island in 1949. It transitioned from an authoritarian state to a full democracy in the late 20th century, a period known as the 'Taiwan Miracle.'",
+    "keyEvents": [
+      { "year": 1895, "event": "Treaty of Shimonoseki cedes Taiwan to Japan." },
+      { "year": 1945, "event": "End of WWII; Taiwan returns to ROC administration." },
+      { "year": 1949, "event": "ROC government moves to Taipei after losing the Chinese Civil War." },
+      { "year": 1971, "event": "ROC loses UN seat to the PRC." },
+      { "year": 1979, "event": "US switches recognition to PRC; passes Taiwan Relations Act." },
+      { "year": 1987, "event": "Lifting of 38 years of martial law." },
+      { "year": 1996, "event": "First direct presidential election." },
+      { "year": 2014, "event": "Sunflower Student Movement protests trade pact with China." },
+      { "year": 2016, "event": "Election of Tsai Ing-wen, the first female president." },
+      { "year": 2024, "event": "Lai Ching-te elected president, continuing the DPP's third consecutive term." }
+    ]
+  },
+  "investmentNotes": {
+    "strengths": ["Global semiconductor monopoly", "Highly skilled workforce", "Strong IP protection", "Advanced infrastructure"],
+    "risks": ["Geopolitical instability", "Energy dependence", "Aging demographics", "Cyber warfare threats"],
+    "sectors": ["Semiconductors", "Artificial Intelligence", "Green Energy", "Biotechnology"]
+  },
+  "sources": [
+    { "name": "Taiwan Ministry of Economic Affairs", "url": "https://www.moea.gov.tw/", "type": "economic" },
+    { "name": "Directorate General of Budget, Accounting and Statistics", "url": "https://www.dgbas.gov.tw/", "type": "economic" },
+    { "name": "Central News Agency (CNA)", "url": "https://focustaiwan.tw/", "type": "general" }
+  ]
+}

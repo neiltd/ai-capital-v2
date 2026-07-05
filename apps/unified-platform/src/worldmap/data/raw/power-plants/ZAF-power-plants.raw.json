@@ -1,0 +1,408 @@
+[
+  {
+    "id": "PLANT-ZAF-KOEBERG",
+    "name": "Koeberg Nuclear Power Station",
+    "countryId": "ZAF",
+    "city": "Cape Town",
+    "coordinates": [18.432, -33.6764],
+    "type": "nuclear",
+    "status": "operating",
+    "capacityMW": 1940,
+    "annualOutputGWh": null,
+    "yearCommissioned": 1984,
+    "yearRetirement": null,
+    "operator": "Eskom",
+    "owner": "Eskom",
+    "strategicNote": "The only nuclear power plant on the African continent, providing reliable base-load power to the Western Cape.",
+    "notes": "Located on the Atlantic coast north of Cape Town.",
+    "attribution": {
+      "sources": [
+        { "name": "IAEA PRIS", "url": "https://pris.iaea.org/PRIS/CountryStatistics/CountryDetails.aspx?current=ZA", "accessedAt": "2025-02-13" },
+        { "name": "Global Energy Monitor", "url": "https://www.gem.wiki/Koeberg_nuclear_power_station", "accessedAt": "2025-02-13" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 2,
+        "lastVerified": "2025-02-13"
+      }
+    }
+  },
+  {
+    "id": "PLANT-ZAF-KUSILE",
+    "name": "Kusile Power Station",
+    "countryId": "ZAF",
+    "city": "Witbank",
+    "coordinates": [28.9172, -25.9164],
+    "type": "coal",
+    "status": "operating",
+    "capacityMW": 4800,
+    "annualOutputGWh": null,
+    "yearCommissioned": 2017,
+    "yearRetirement": null,
+    "operator": "Eskom",
+    "owner": "Eskom",
+    "strategicNote": "One of the world's largest coal-fired power stations, critical for addressing South Africa's energy crisis.",
+    "notes": "Includes advanced flue-gas desulphurization (FGD) technology.",
+    "attribution": {
+      "sources": [
+        { "name": "Global Energy Monitor", "url": "https://www.gem.wiki/Kusile_Power_Station", "accessedAt": "2025-02-13" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 1,
+        "lastVerified": "2025-02-13"
+      }
+    }
+  },
+  {
+    "id": "PLANT-ZAF-MEDUPI",
+    "name": "Medupi Power Station",
+    "countryId": "ZAF",
+    "city": "Lephalale",
+    "coordinates": [27.55, -23.7],
+    "type": "coal",
+    "status": "operating",
+    "capacityMW": 4764,
+    "annualOutputGWh": null,
+    "yearCommissioned": 2015,
+    "yearRetirement": null,
+    "operator": "Eskom",
+    "owner": "Eskom",
+    "strategicNote": "The largest dry-cooled coal-fired power station in the world, essential for power security in South Africa.",
+    "notes": null,
+    "attribution": {
+      "sources": [
+        { "name": "Global Energy Monitor", "url": "https://www.gem.wiki/Medupi_Power_Station", "accessedAt": "2025-02-13" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 1,
+        "lastVerified": "2025-02-13"
+      }
+    }
+  },
+  {
+    "id": "PLANT-ZAF-KENDAL",
+    "name": "Kendal Power Station",
+    "countryId": "ZAF",
+    "city": "Ogies",
+    "coordinates": [28.9714, -26.09],
+    "type": "coal",
+    "status": "operating",
+    "capacityMW": 4116,
+    "annualOutputGWh": null,
+    "yearCommissioned": 1988,
+    "yearRetirement": null,
+    "operator": "Eskom",
+    "owner": "Eskom",
+    "strategicNote": "Strategically important for its massive capacity and unique dry-cooling system.",
+    "notes": null,
+    "attribution": {
+      "sources": [
+        { "name": "Global Energy Monitor", "url": "https://www.gem.wiki/Kendal_Power_Station", "accessedAt": "2025-02-13" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 1,
+        "lastVerified": "2025-02-13"
+      }
+    }
+  },
+  {
+    "id": "PLANT-ZAF-LETHABO",
+    "name": "Lethabo Power Station",
+    "countryId": "ZAF",
+    "city": "Sasolburg",
+    "coordinates": [27.9775, -26.7419],
+    "type": "coal",
+    "status": "operating",
+    "capacityMW": 3708,
+    "annualOutputGWh": null,
+    "yearCommissioned": 1985,
+    "yearRetirement": null,
+    "operator": "Eskom",
+    "owner": "Eskom",
+    "strategicNote": "Notable for its ability to burn low-grade coal, maximizing the use of domestic resources.",
+    "notes": null,
+    "attribution": {
+      "sources": [
+        { "name": "Global Energy Monitor", "url": "https://www.gem.wiki/Lethabo_Power_Station", "accessedAt": "2025-02-13" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 1,
+        "lastVerified": "2025-02-13"
+      }
+    }
+  },
+  {
+    "id": "PLANT-ZAF-MAJUBA",
+    "name": "Majuba Power Station",
+    "countryId": "ZAF",
+    "city": "Amersfoort",
+    "coordinates": [29.77, -27.1],
+    "type": "coal",
+    "status": "operating",
+    "capacityMW": 4110,
+    "annualOutputGWh": null,
+    "yearCommissioned": 1996,
+    "yearRetirement": null,
+    "operator": "Eskom",
+    "owner": "Eskom",
+    "strategicNote": "One of Eskom's newer coal plants, significantly contributing to the national grid.",
+    "notes": null,
+    "attribution": {
+      "sources": [
+        { "name": "Global Energy Monitor", "url": "https://www.gem.wiki/Majuba_Power_Station", "accessedAt": "2025-02-13" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 1,
+        "lastVerified": "2025-02-13"
+      }
+    }
+  },
+  {
+    "id": "PLANT-ZAF-MATIMBA",
+    "name": "Matimba Power Station",
+    "countryId": "ZAF",
+    "city": "Lephalale",
+    "coordinates": [27.6, -23.67],
+    "type": "coal",
+    "status": "operating",
+    "capacityMW": 3990,
+    "annualOutputGWh": null,
+    "yearCommissioned": 1987,
+    "yearRetirement": null,
+    "operator": "Eskom",
+    "owner": "Eskom",
+    "strategicNote": "A major coal facility in the Limpopo province, utilizing nearby coal reserves.",
+    "notes": null,
+    "attribution": {
+      "sources": [
+        { "name": "Global Energy Monitor", "url": "https://www.gem.wiki/Matimba_Power_Station", "accessedAt": "2025-02-13" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 1,
+        "lastVerified": "2025-02-13"
+      }
+    }
+  },
+  {
+    "id": "PLANT-ZAF-TUTUKA",
+    "name": "Tutuka Power Station",
+    "countryId": "ZAF",
+    "city": "Standerton",
+    "coordinates": [29.35, -26.78],
+    "type": "coal",
+    "status": "operating",
+    "capacityMW": 3654,
+    "annualOutputGWh": null,
+    "yearCommissioned": 1985,
+    "yearRetirement": null,
+    "operator": "Eskom",
+    "owner": "Eskom",
+    "strategicNote": "Significant coal-fired plant in the Mpumalanga province.",
+    "notes": null,
+    "attribution": {
+      "sources": [
+        { "name": "Global Energy Monitor", "url": "https://www.gem.wiki/Tutuka_Power_Station", "accessedAt": "2025-02-13" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 1,
+        "lastVerified": "2025-02-13"
+      }
+    }
+  },
+  {
+    "id": "PLANT-ZAF-MATLA",
+    "name": "Matla Power Station",
+    "countryId": "ZAF",
+    "city": "Kriel",
+    "coordinates": [29.14, -26.28],
+    "type": "coal",
+    "status": "operating",
+    "capacityMW": 3600,
+    "annualOutputGWh": null,
+    "yearCommissioned": 1979,
+    "yearRetirement": null,
+    "operator": "Eskom",
+    "owner": "Eskom",
+    "strategicNote": "One of the older workhorses of the Eskom fleet.",
+    "notes": null,
+    "attribution": {
+      "sources": [
+        { "name": "Global Energy Monitor", "url": "https://www.gem.wiki/Matla_Power_Station", "accessedAt": "2025-02-13" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 1,
+        "lastVerified": "2025-02-13"
+      }
+    }
+  },
+  {
+    "id": "PLANT-ZAF-DUVHA",
+    "name": "Duvha Power Station",
+    "countryId": "ZAF",
+    "city": "Witbank",
+    "coordinates": [29.34, -25.96],
+    "type": "coal",
+    "status": "operating",
+    "capacityMW": 3600,
+    "annualOutputGWh": null,
+    "yearCommissioned": 1980,
+    "yearRetirement": null,
+    "operator": "Eskom",
+    "owner": "Eskom",
+    "strategicNote": "Major contributor to South Africa's coal-fired generation capacity.",
+    "notes": null,
+    "attribution": {
+      "sources": [
+        { "name": "Global Energy Monitor", "url": "https://www.gem.wiki/Duvha_Power_Station", "accessedAt": "2025-02-13" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 1,
+        "lastVerified": "2025-02-13"
+      }
+    }
+  },
+  {
+    "id": "PLANT-ZAF-KRIEL",
+    "name": "Kriel Power Station",
+    "countryId": "ZAF",
+    "city": "Kriel",
+    "coordinates": [29.18, -26.25],
+    "type": "coal",
+    "status": "operating",
+    "capacityMW": 3000,
+    "annualOutputGWh": null,
+    "yearCommissioned": 1976,
+    "yearRetirement": null,
+    "operator": "Eskom",
+    "owner": "Eskom",
+    "strategicNote": "Important large-scale coal plant in the Mpumalanga coalfields.",
+    "notes": null,
+    "attribution": {
+      "sources": [
+        { "name": "Global Energy Monitor", "url": "https://www.gem.wiki/Kriel_Power_Station", "accessedAt": "2025-02-13" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 1,
+        "lastVerified": "2025-02-13"
+      }
+    }
+  },
+  {
+    "id": "PLANT-ZAF-ARNOT",
+    "name": "Arnot Power Station",
+    "countryId": "ZAF",
+    "city": "Middelburg",
+    "coordinates": [29.79, -25.94],
+    "type": "coal",
+    "status": "operating",
+    "capacityMW": 2352,
+    "annualOutputGWh": null,
+    "yearCommissioned": 1971,
+    "yearRetirement": null,
+    "operator": "Eskom",
+    "owner": "Eskom",
+    "strategicNote": "One of South Africa's long-serving coal power plants.",
+    "notes": null,
+    "attribution": {
+      "sources": [
+        { "name": "Global Energy Monitor", "url": "https://www.gem.wiki/Arnot_Power_Station", "accessedAt": "2025-02-13" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 1,
+        "lastVerified": "2025-02-13"
+      }
+    }
+  },
+  {
+    "id": "PLANT-ZAF-DRAKENSBERG",
+    "name": "Drakensberg Pumped Storage Scheme",
+    "countryId": "ZAF",
+    "city": "Bergville",
+    "coordinates": [29.13, -28.57],
+    "type": "hydro",
+    "status": "operating",
+    "capacityMW": 1000,
+    "annualOutputGWh": null,
+    "yearCommissioned": 1981,
+    "yearRetirement": null,
+    "operator": "Eskom",
+    "owner": "Eskom",
+    "strategicNote": "Critical facility for grid stability and energy storage in South Africa.",
+    "notes": null,
+    "attribution": {
+      "sources": [
+        { "name": "Global Energy Monitor", "url": "https://www.gem.wiki/Drakensberg_Pumped_Storage_Scheme", "accessedAt": "2025-02-13" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 1,
+        "lastVerified": "2025-02-13"
+      }
+    }
+  },
+  {
+    "id": "PLANT-ZAF-INGULA",
+    "name": "Ingula Pumped Storage Scheme",
+    "countryId": "ZAF",
+    "city": "Ladysmith",
+    "coordinates": [29.58, -28.28],
+    "type": "hydro",
+    "status": "operating",
+    "capacityMW": 1332,
+    "annualOutputGWh": null,
+    "yearCommissioned": 2016,
+    "yearRetirement": null,
+    "operator": "Eskom",
+    "owner": "Eskom",
+    "strategicNote": "A modern pumped-storage scheme vital for managing peak demand.",
+    "notes": null,
+    "attribution": {
+      "sources": [
+        { "name": "Global Energy Monitor", "url": "https://www.gem.wiki/Ingula_Pumped_Storage_Scheme", "accessedAt": "2025-02-13" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 1,
+        "lastVerified": "2025-02-13"
+      }
+    }
+  },
+  {
+    "id": "PLANT-ZAF-GARIEP",
+    "name": "Gariep Dam",
+    "countryId": "ZAF",
+    "city": "Norvalspont",
+    "coordinates": [25.5, -30.62],
+    "type": "hydro",
+    "status": "operating",
+    "capacityMW": 360,
+    "annualOutputGWh": null,
+    "yearCommissioned": 1971,
+    "yearRetirement": null,
+    "operator": "Eskom",
+    "owner": "Eskom",
+    "strategicNote": "South Africa's largest hydroelectric facility.",
+    "notes": null,
+    "attribution": {
+      "sources": [
+        { "name": "Global Energy Monitor", "url": "https://www.gem.wiki/Gariep_Dam", "accessedAt": "2025-02-13" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 1,
+        "lastVerified": "2025-02-13"
+      }
+    }
+  }
+]

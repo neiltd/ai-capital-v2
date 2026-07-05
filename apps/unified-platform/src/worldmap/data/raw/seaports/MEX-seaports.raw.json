@@ -1,0 +1,218 @@
+[
+  {
+    "id": "PORT-MEX-MANZANILLO",
+    "name": "Port of Manzanillo",
+    "countryId": "MEX",
+    "city": "Manzanillo",
+    "coordinates": [-104.4031, 19.1034],
+    "type": "container",
+    "annualThroughputTEU": 3690000,
+    "annualThroughputTonnes": null,
+    "berthCount": 20,
+    "maxDraftM": 15.0,
+    "strategicImportance": "critical",
+    "riskLevel": "low",
+    "geopoliticalNotes": "Mexico's 'Pacific Gateway' and busiest port. Primary entry point for Asian goods destined for Mexico City and the industrial heartland.",
+    "notes": "Handles over 40% of Mexico's total container traffic.",
+    "attribution": {
+      "sources": [
+        { "name": "ASIPONA Manzanillo", "url": "https://www.puertomanzanillo.com.mx", "accessedAt": "2026-05-10" },
+        { "name": "ShipHub", "url": "https://www.shiphub.co/ports-in-mexico/", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 2,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  },
+  {
+    "id": "PORT-MEX-LAZARO-CARDENAS",
+    "name": "Port of Lázaro Cárdenas",
+    "countryId": "MEX",
+    "city": "Lázaro Cárdenas",
+    "coordinates": [-102.1786, 17.9486],
+    "type": "container",
+    "annualThroughputTEU": 1860000,
+    "annualThroughputTonnes": null,
+    "berthCount": 18,
+    "maxDraftM": 18.0,
+    "strategicImportance": "high",
+    "riskLevel": "low",
+    "geopoliticalNotes": "Deepest port in Mexico; capable of handling Post-Panamax vessels. Strategic alternative to congested U.S. West Coast ports.",
+    "notes": "Critical industrial hub for steel and minerals.",
+    "attribution": {
+      "sources": [
+        { "name": "ASIPONA Lázaro Cárdenas", "url": "https://www.puertolazarocardenas.com.mx", "accessedAt": "2026-05-10" },
+        { "name": "ShipHub", "url": "https://www.shiphub.co/ports-in-mexico/", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 2,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  },
+  {
+    "id": "PORT-MEX-VERACRUZ",
+    "name": "Port of Veracruz",
+    "countryId": "MEX",
+    "city": "Veracruz",
+    "coordinates": [-96.1415, 19.2015],
+    "type": "mixed",
+    "annualThroughputTEU": 1140000,
+    "annualThroughputTonnes": null,
+    "berthCount": 22,
+    "maxDraftM": 13.5,
+    "strategicImportance": "high",
+    "riskLevel": "low",
+    "geopoliticalNotes": "Primary Atlantic gateway for trade with Europe and U.S. East Coast. Historically the most significant port in Mexico.",
+    "notes": "Leading automotive hub; handles the majority of vehicle imports/exports.",
+    "attribution": {
+      "sources": [
+        { "name": "ASIPONA Veracruz", "url": "https://www.puertodeveracruz.com.mx", "accessedAt": "2026-05-10" },
+        { "name": "Hongocean", "url": "https://hongocean.com", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 2,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  },
+  {
+    "id": "PORT-MEX-ALTAMIRA",
+    "name": "Port of Altamira",
+    "countryId": "MEX",
+    "city": "Altamira",
+    "coordinates": [-97.86, 22.4844],
+    "type": "mixed",
+    "annualThroughputTEU": 880000,
+    "annualThroughputTonnes": null,
+    "berthCount": 15,
+    "maxDraftM": 12.5,
+    "strategicImportance": "high",
+    "riskLevel": "low",
+    "geopoliticalNotes": "Massive industrial-port complex specializing in petrochemicals and LNG. Serves northern industrial states like Nuevo León.",
+    "notes": "Key node for the USMCA corridor.",
+    "attribution": {
+      "sources": [
+        { "name": "ASIPONA Altamira", "url": "https://www.puertoaltamira.com.mx", "accessedAt": "2026-05-10" },
+        { "name": "Bansar China", "url": "https://www.bansarchina.com", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 2,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  },
+  {
+    "id": "PORT-MEX-ENSENADA",
+    "name": "Port of Ensenada",
+    "countryId": "MEX",
+    "city": "Ensenada",
+    "coordinates": [-116.6261, 31.8577],
+    "type": "container",
+    "annualThroughputTEU": 450000,
+    "annualThroughputTonnes": null,
+    "berthCount": 8,
+    "maxDraftM": 12.0,
+    "strategicImportance": "medium",
+    "riskLevel": "low",
+    "geopoliticalNotes": "Vital for the 'maquiladora' industry in northern Mexico due to proximity to the U.S. border.",
+    "notes": "Provides direct link to Asian markets for northern Mexico; major cruise destination.",
+    "attribution": {
+      "sources": [
+        { "name": "ASIPONA Ensenada", "url": "https://www.puertoensenada.com.mx", "accessedAt": "2026-05-10" },
+        { "name": "ShipsGo", "url": "https://shipsgo.com", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 2,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  },
+  {
+    "id": "PORT-MEX-PROGRESO",
+    "name": "Port of Progreso",
+    "countryId": "MEX",
+    "city": "Progreso",
+    "coordinates": [-89.6647, 21.2844],
+    "type": "mixed",
+    "annualThroughputTEU": 140000,
+    "annualThroughputTonnes": null,
+    "berthCount": 6,
+    "maxDraftM": 11.0,
+    "strategicImportance": "medium",
+    "riskLevel": "low",
+    "geopoliticalNotes": "Primary gateway to the Yucatán Peninsula; features one of the world's longest piers.",
+    "notes": "Essential for regional tourism, agricultural exports, and hydrocarbon distribution.",
+    "attribution": {
+      "sources": [
+        { "name": "ASIPONA Progreso", "url": "https://www.puertoprogreso.com.mx", "accessedAt": "2026-05-10" },
+        { "name": "Wikipedia", "url": "https://en.wikipedia.org/wiki/Progreso,_Yucat%C3%A1n", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 2,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  },
+  {
+    "id": "PORT-MEX-TUXPAN",
+    "name": "Port of Tuxpan",
+    "countryId": "MEX",
+    "city": "Tuxpan",
+    "coordinates": [-97.3042, 20.9575],
+    "type": "mixed",
+    "annualThroughputTEU": 60000,
+    "annualThroughputTonnes": null,
+    "berthCount": 5,
+    "maxDraftM": 12.0,
+    "strategicImportance": "medium",
+    "riskLevel": "low",
+    "geopoliticalNotes": "Closest Gulf port to Mexico City; highly automated and critical for fuel imports.",
+    "notes": "Rapid road connectivity to the capital makes it vital for the automotive industry.",
+    "attribution": {
+      "sources": [
+        { "name": "ASIPONA Tuxpan", "url": "https://www.puertodetuxpan.com.mx", "accessedAt": "2026-05-10" },
+        { "name": "Seatrade Maritime", "url": "https://www.seatrade-maritime.com", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 2,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  },
+  {
+    "id": "PORT-MEX-SALINA-CRUZ",
+    "name": "Port of Salina Cruz",
+    "countryId": "MEX",
+    "city": "Salina Cruz",
+    "coordinates": [-95.2, 16.1667],
+    "type": "mixed",
+    "annualThroughputTEU": null,
+    "annualThroughputTonnes": null,
+    "berthCount": 4,
+    "maxDraftM": 14.0,
+    "strategicImportance": "high",
+    "riskLevel": "low",
+    "geopoliticalNotes": "Cornerstone of the Interoceanic Corridor of the Isthmus of Tehuantepec (CIIT); potential Panama Canal alternative.",
+    "notes": "Primarily handles bulk and oil currently; major development underway.",
+    "attribution": {
+      "sources": [
+        { "name": "Corredor Interoceánico", "url": "https://www.gob.mx/ciit", "accessedAt": "2026-05-10" },
+        { "name": "FreightAmigo", "url": "https://www.freightamigo.com", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 2,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  }
+]

@@ -1,0 +1,219 @@
+[
+  {
+    "id": "RAIL-KAZ-KHORGOS-GATEWAY",
+    "name": "Khorgos Gateway Dry Port",
+    "countryId": "KAZ",
+    "city": "Khorgos (Altynkol)",
+    "coordinates": [80.3667, 44.1167],
+    "type": "border_crossing",
+    "dailyPassengers": null,
+    "annualFreightTonnes": 15300000,
+    "connectedCountries": ["CHN", "UZB", "TKM", "RUS"],
+    "gaugeType": "mixed",
+    "lineCount": 14,
+    "strategicImportance": "high",
+    "isPartOfBRI": true,
+    "geopoliticalNotes": "A flagship BRI project, known as the 'Buckle' in the Belt and Road. It is the world's largest dry port, facilitating rapid transshipment between Chinese standard gauge and Eurasian broad gauge.",
+    "notes": "Handles 80% of container trains between China and Europe. Capacity recently expanded to 800,000 TEUs.",
+    "attribution": {
+      "sources": [
+        { "name": "The Astana Times", "url": "https://astanatimes.com/2025/04/khorgos-gateway-handles-record-freight/", "accessedAt": "2026-05-10" },
+        { "name": "Khorgos Gateway Official", "url": "https://khorgosgateway.com", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 2,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  },
+  {
+    "id": "RAIL-KAZ-DOSTYK-BORDER",
+    "name": "Dostyk Rail Hub",
+    "countryId": "KAZ",
+    "city": "Dostyk",
+    "coordinates": [82.4833, 45.2500],
+    "type": "border_crossing",
+    "dailyPassengers": 200,
+    "annualFreightTonnes": 16000000,
+    "connectedCountries": ["CHN"],
+    "gaugeType": "mixed",
+    "lineCount": 20,
+    "strategicImportance": "high",
+    "isPartOfBRI": true,
+    "geopoliticalNotes": "The primary historical gateway of the Northern Corridor of the BRI. It connects the Chinese Lanxin railway to the Kazakhstan network.",
+    "notes": "Critical for bulk commodities and minerals moving from Kazakhstan to China.",
+    "attribution": {
+      "sources": [
+        { "name": "Kazakhstan Temir Zholy (KTZ)", "url": "https://www.railways.kz", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 1,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  },
+  {
+    "id": "RAIL-KAZ-AKTAU-PORT",
+    "name": "Aktau Sea North Terminal Rail Hub",
+    "countryId": "KAZ",
+    "city": "Aktau",
+    "coordinates": [51.2000, 43.6000],
+    "type": "port_interface",
+    "dailyPassengers": null,
+    "annualFreightTonnes": 5000000,
+    "connectedCountries": ["AZE", "IRN", "RUS"],
+    "gaugeType": "broad",
+    "lineCount": 8,
+    "strategicImportance": "high",
+    "isPartOfBRI": true,
+    "geopoliticalNotes": "Key maritime-rail node for the Middle Corridor (Trans-Caspian International Transport Route). Connects China/Central Asia to the Caucasus and Europe via the Caspian Sea.",
+    "notes": "Focusing on containerized transit to bypass Russian territory.",
+    "attribution": {
+      "sources": [
+        { "name": "Middle Corridor (TITR) Association", "url": "https://middlecorridor.com", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 1,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  },
+  {
+    "id": "RAIL-KAZ-ASTANA-NEW",
+    "name": "Nurly Zhol Station",
+    "countryId": "KAZ",
+    "city": "Astana",
+    "coordinates": [71.5300, 51.1200],
+    "type": "high_speed",
+    "dailyPassengers": 15000,
+    "annualFreightTonnes": null,
+    "connectedCountries": ["RUS", "UZB"],
+    "gaugeType": "broad",
+    "lineCount": 10,
+    "strategicImportance": "high",
+    "isPartOfBRI": false,
+    "geopoliticalNotes": "A modern transportation hub symbolizing Kazakhstan's 'Nurly Zhol' infrastructure policy. Central administrative node for national rail operations.",
+    "notes": "One of the largest and most advanced stations in Central Asia.",
+    "attribution": {
+      "sources": [
+        { "name": "KTZ Annual Report", "url": "https://www.railways.kz", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 1,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  },
+  {
+    "id": "RAIL-KAZ-ALMATY-1",
+    "name": "Almaty-1 Railway Station",
+    "countryId": "KAZ",
+    "city": "Almaty",
+    "coordinates": [76.9400, 43.3400],
+    "type": "mixed",
+    "dailyPassengers": 12000,
+    "annualFreightTonnes": 4000000,
+    "connectedCountries": ["KGZ", "CHN"],
+    "gaugeType": "broad",
+    "lineCount": 12,
+    "strategicImportance": "high",
+    "isPartOfBRI": true,
+    "geopoliticalNotes": "The primary transit hub for southern Kazakhstan, connecting the Turk-Sib railway with the main East-West lines.",
+    "notes": "Critical node for regional trade with Kyrgyzstan and Western China.",
+    "attribution": {
+      "sources": [
+        { "name": "Almaty City Transport Authority", "url": "https://almaty.gov.kz", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "medium",
+        "sourceCount": 1,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  },
+  {
+    "id": "RAIL-KAZ-KURYK-PORT",
+    "name": "Kuryk Port Rail Terminal",
+    "countryId": "KAZ",
+    "city": "Kuryk",
+    "coordinates": [51.6667, 43.1667],
+    "type": "port_interface",
+    "dailyPassengers": null,
+    "annualFreightTonnes": 2000000,
+    "connectedCountries": ["AZE", "IRN"],
+    "gaugeType": "broad",
+    "lineCount": 6,
+    "strategicImportance": "high",
+    "isPartOfBRI": true,
+    "geopoliticalNotes": "A new, specialized rail-ferry terminal on the Caspian Sea designed to facilitate the Middle Corridor transit, particularly for hazardous goods and heavy equipment.",
+    "notes": "Complementary to Aktau, offering direct roll-on/roll-off rail ferry services.",
+    "attribution": {
+      "sources": [
+        { "name": "Port of Kuryk", "url": "https://kurykport.kz", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 1,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  },
+  {
+    "id": "RAIL-KAZ-PETROPAVL-HUB",
+    "name": "Petropavlovsk Railway Station",
+    "countryId": "KAZ",
+    "city": "Petropavl",
+    "coordinates": [69.1500, 54.8667],
+    "type": "border_crossing",
+    "dailyPassengers": 4000,
+    "annualFreightTonnes": 8000000,
+    "connectedCountries": ["RUS"],
+    "gaugeType": "broad",
+    "lineCount": 15,
+    "strategicImportance": "medium",
+    "isPartOfBRI": false,
+    "geopoliticalNotes": "A unique station on the Trans-Siberian Railway located in Kazakhstan but operated by Russian Railways (RZD). A critical node for North-South and transit traffic between Russia and Central Asia.",
+    "notes": "Handles high volumes of grain and coal exports.",
+    "attribution": {
+      "sources": [
+        { "name": "Russian Railways (RZD) - South Urals Branch", "url": "https://www.rzd.ru", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 1,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  },
+  {
+    "id": "RAIL-KAZ-KARAGANDA-HUB",
+    "name": "Karaganda-Sortirovochnaya",
+    "countryId": "KAZ",
+    "city": "Karaganda",
+    "coordinates": [73.1167, 49.8000],
+    "type": "freight",
+    "dailyPassengers": null,
+    "annualFreightTonnes": 12000000,
+    "connectedCountries": ["RUS", "UZB"],
+    "gaugeType": "broad",
+    "lineCount": 25,
+    "strategicImportance": "medium",
+    "isPartOfBRI": false,
+    "geopoliticalNotes": "The largest classification yard in Central Kazakhstan, serving the massive coal and steel industrial complex of the Karaganda region.",
+    "notes": "Primary logistical node for domestic industrial freight.",
+    "attribution": {
+      "sources": [
+        { "name": "KTZ Cargo Division", "url": "https://www.railways.kz", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "medium",
+        "sourceCount": 1,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  }
+]

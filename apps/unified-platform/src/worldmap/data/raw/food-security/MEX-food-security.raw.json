@@ -1,0 +1,27 @@
+[
+  {
+    "countryId": "MEX",
+    "year": 2022,
+    "overallScore": 69.1,
+    "availability": 59.4,
+    "access": 81.4,
+    "utilization": 78.1,
+    "stability": 54.1,
+    "undernourishedPct": 2.7,
+    "foodImportDependencyPct": 35.0,
+    "cerealYieldKgHa": 4262,
+    "climateVulnerability": "high",
+    "conflictExposure": "low",
+    "attribution": {
+      "sources": [
+        { "name": "GFSI 2022 — Mexico", "url": "https://impact.economist.com/sustainability/project/food-security-index/reports-and-resources", "accessedAt": "2025-02-13" },
+        { "name": "FAO FAOSTAT - Mexico", "url": "https://www.fao.org/faostat/en/#country/138", "accessedAt": "2025-02-13" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 2,
+        "lastVerified": "2025-02-13"
+      }
+    }
+  }
+]

@@ -1,0 +1,24 @@
+[
+  {
+    "countryId": "BGD",
+    "year": 2023,
+    "gdpUsdBn": 437.42,
+    "gdpPerCapita": 2551,
+    "sectors": [
+      { "sector": "Services", "percentOfGDP": 51.05, "notes": "Wholesale & retail trade is the largest sub-sector." },
+      { "sector": "Industry", "percentOfGDP": 37.65, "notes": "Manufacturing accounts for 24.89%; RMG is dominant." },
+      { "sector": "Agriculture", "percentOfGDP": 11.30, "notes": "Crops & horticulture remain the largest sub-sector." }
+    ],
+    "attribution": {
+      "sources": [
+        { "name": "Bangladesh Bureau of Statistics (BBS) FY2022-23", "url": "http://www.bbs.gov.bd/", "accessedAt": "2025-02-13" },
+        { "name": "World Bank DataBank 2023", "url": "https://databank.worldbank.org/", "accessedAt": "2025-02-13" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 2,
+        "lastVerified": "2025-02-13"
+      }
+    }
+  }
+]

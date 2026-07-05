@@ -1,0 +1,68 @@
+{
+  "id": "ARE",
+  "iso2": "AE",
+  "name": "United Arab Emirates",
+  "region": "Asia",
+  "subregion": "Western Asia",
+  "capital": "Abu Dhabi",
+  "lastUpdated": "2026-05-09",
+  "summary": "The United Arab Emirates (UAE) is a federation of seven emirates that has evolved into a preeminent global hub for trade, logistics, and finance. While historically dependent on oil, the UAE has aggressively diversified its economy, with Dubai serving as a commercial and tourism powerhouse and Abu Dhabi leading in energy and strategic investment. The nation maintains an assertive and pragmatic foreign policy, characterized by 'zero problems' diplomacy with neighbors, the landmark Abraham Accords with Israel, and recent accession to BRICS+. As it pursues its 'We the UAE 2031' vision, the country faces the challenge of navigating global geopolitical competition while maintaining its status as a stable haven in a volatile region.",
+  "indicators": {
+    "politicalStability":       { "score": 8, "trend": "stable", "confidence": "high", "note": "Strong federal cohesion and a clear succession process ensure high internal stability." },
+    "economicDirection":        { "score": 9, "trend": "rising", "confidence": "high", "note": "Visionary focus on the 'new economy,' including AI, renewables, and advanced manufacturing." },
+    "investmentAttractiveness": { "score": 9, "trend": "rising", "confidence": "high", "note": "World-class infrastructure, business-friendly regulations, and 100% foreign ownership in most sectors." },
+    "geopoliticalRisk":         { "score": 4, "trend": "stable", "confidence": "medium", "note": "Proactive diplomacy mitigates regional risks, though proximity to Iran remains a structural concern." },
+    "educationQuality":         { "score": 7, "trend": "rising", "confidence": "high", "note": "Significant investment in private education and partnerships with elite global universities." },
+    "healthcareQuality":        { "score": 8, "trend": "rising", "confidence": "high", "note": "A regional leader in healthcare services and medical tourism, with rapid digital health adoption." },
+    "technologyInvestment":     { "score": 9, "trend": "rising", "confidence": "high", "note": "Leading the region in AI (via G42), space exploration (Hope Probe), and digital infrastructure." }
+  },
+  "demographics": {
+    "population": 11350000,
+    "medianAge": 33.6,
+    "urbanizationRate": 87.8,
+    "majorEthnicGroups": ["South Asian", "Emirati", "Other Arab/Iranian", "Western/East Asian"],
+    "religions": [
+      { "name": "Muslim", "percent": 76 },
+      { "name": "Christian", "percent": 9 },
+      { "name": "Other", "percent": 15 }
+    ]
+  },
+  "alliances": ["GCC", "OPEC", "Arab League", "OIC", "UN", "BRICS+", "I2U2"],
+  "relationships": [
+    { "countryId": "USA", "countryName": "United States", "type": "strategic_partner", "sentiment": "neutral", "summary": "A deep security and economic partnership, though the UAE is increasingly seeking strategic autonomy." },
+    { "countryId": "SAU", "countryName": "Saudi Arabia", "type": "ally", "sentiment": "positive", "summary": "A critical regional ally with shared security interests, despite growing economic and soft-power competition." },
+    { "countryId": "ISR", "countryName": "Israel", "type": "strategic_partner", "sentiment": "positive", "summary": "Rapidly expanding cooperation in technology, security, and trade following the 2020 Abraham Accords." },
+    { "countryId": "CHN", "countryName": "China", "type": "economic_partner", "sentiment": "positive", "summary": "Essential trade partner and key collaborator in infrastructure and emerging technologies." },
+    { "countryId": "IND", "countryName": "India", "type": "strategic_partner", "sentiment": "positive", "summary": "Historic ties bolstered by a comprehensive economic partnership agreement (CEPA) and a massive diaspora." }
+  ],
+  "perspectives": [
+    { "source": "Emirati Technocrat", "bias": "Optimistic", "view": "We are not just a regional hub; we are a bridge between the East and West, defining the future of AI and green energy." },
+    { "source": "Global Business Analyst", "bias": "Pragmatic", "view": "The UAE is the most resilient market in the Middle East, though its growth is tied to global trade liquidity and regional peace." },
+    { "source": "Human Rights Observer", "bias": "Critical", "view": "Economic progress masks a restrictive political environment and ongoing concerns regarding labor rights for the expatriate majority." },
+    { "source": "Regional Security Expert", "bias": "Cautious", "view": "The UAE's 'soft power' strategy is effective, but it must continue to navigate the precarious balance between the U.S. and China." }
+  ],
+  "historicalContext": {
+    "summary": "Established in 1971 as a federation of six (later seven) emirates under the leadership of Sheikh Zayed bin Sultan Al Nahyan. The UAE transitioned from a pearl-diving and trading economy to a global energy giant and subsequently a diversified modern state in less than five decades.",
+    "keyEvents": [
+      { "year": 1971, "event": "Independence from the UK and unification of the Emirates." },
+      { "year": 1973, "event": "The UAE joins the global oil embargo, leading to a massive surge in national wealth." },
+      { "year": 2004, "event": "Death of Sheikh Zayed; Sheikh Khalifa bin Zayed Al Nahyan becomes President." },
+      { "year": 2017, "event": "The UAE, along with Saudi Arabia, initiates a blockade of Qatar (ended in 2021)." },
+      { "year": 2020, "event": "Signing of the Abraham Accords, normalizing relations with Israel." },
+      { "year": 2021, "event": "The UAE launches the Hope Probe, which successfully enters Mars' orbit." },
+      { "year": 2022, "event": "Sheikh Mohamed bin Zayed Al Nahyan (MbZ) is elected President." },
+      { "year": 2023, "event": "Host of the COP28 UN Climate Change Conference in Dubai." },
+      { "year": 2024, "event": "Official entry into the BRICS+ group." }
+    ]
+  },
+  "investmentNotes": {
+    "strengths": ["Strategic location and world-class logistics", "Highly diversified non-oil economy", "Stable and predictable business environment", "Leading regional digital infrastructure"],
+    "risks": ["Vulnerability to global trade shocks", "Regional geopolitical tensions (Red Sea/Iran)", "Dependence on foreign labor and capital", "Increasing regional competition for talent"],
+    "sectors": ["Artificial Intelligence", "Renewable Energy (Solar & Nuclear)", "FinTech & Digital Assets", "Space & Aerospace"]
+  },
+  "sources": [
+    { "name": "Federal Competitiveness and Statistics Centre", "url": "https://fcsc.gov.ae/en-us", "type": "economic" },
+    { "name": "UAE Government Portal", "url": "https://u.ae/en", "type": "government" },
+    { "name": "Ministry of Economy", "url": "https://www.moec.gov.ae/en/home", "type": "economic" }
+  ]
+}

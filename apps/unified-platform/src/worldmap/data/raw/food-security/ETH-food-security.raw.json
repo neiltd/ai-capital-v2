@@ -1,0 +1,28 @@
+[
+  {
+    "countryId": "ETH",
+    "year": 2022,
+    "overallScore": 44.5,
+    "availability": 51.2,
+    "access": 31.7,
+    "utilization": 48.9,
+    "stability": 51.4,
+    "undernourishedPct": 24.9,
+    "foodImportDependencyPct": 19.9,
+    "cerealYieldKgHa": 2864,
+    "climateVulnerability": "extreme",
+    "conflictExposure": "extreme",
+    "attribution": {
+      "sources": [
+        { "name": "GFSI 2022 — Ethiopia", "url": "https://impact.economist.com/sustainability/project/food-security-index/", "accessedAt": "2026-05-10" },
+        { "name": "FAO FAOSTAT", "url": "https://www.fao.org/faostat/en/", "accessedAt": "2026-05-10" },
+        { "name": "WFP Ethiopia", "url": "https://www.wfp.org/countries/ethiopia", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 3,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  }
+]

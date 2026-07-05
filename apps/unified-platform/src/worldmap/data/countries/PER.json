@@ -1,0 +1,65 @@
+{
+  "id": "PER",
+  "iso2": "PE",
+  "name": "Peru",
+  "region": "Americas",
+  "subregion": "South America",
+  "capital": "Lima",
+  "lastUpdated": "2025-05-23",
+  "summary": "Peru is a country of high economic potential and deep institutional fragility. It is characterized by a 'dual reality': a highly professional technocracy that maintains macroeconomic stability and a volatile political system that has seen seven presidents since 2016. Despite this executive-level churn, Peru remains an investment-grade economy with the lowest inflation in Latin America and significant foreign reserves. The country is a global leader in mining and is increasingly positioning itself as a strategic logistics hub between Asia and South America, exemplified by the new Chancay Megaport. However, persistent social unrest, high labor informality, and corruption continue to pose significant structural challenges.",
+  "indicators": {
+    "politicalStability":       { "score": 2, "score_description": "Extreme executive volatility and low institutional trust.", "trend": "declining", "confidence": "high", "note": "The presidency of Dina Boluarte faces record-low approval ratings, with reports of a 2025 transition to José Jerí following impeachment." },
+    "economicDirection":        { "score": 7, "score_description": "Robust macroeconomic management despite political chaos.", "trend": "improving", "confidence": "high", "note": "GDP is recovering (est. 3% for 2025) driven by high commodity prices and strong fiscal discipline by the Central Bank (BCRP)." },
+    "investmentAttractiveness": { "score": 6, "score_description": "Attractive for mining and logistics; deterred by policy ambiguity.", "trend": "stable", "confidence": "high", "note": "Peru maintains its investment-grade status, but corruption and social conflicts in mining regions remain key deterrents for long-term capital." },
+    "geopoliticalRisk":         { "score": 5, "score_description": "Moderate risk from social unrest and transnational crime.", "trend": "rising", "confidence": "medium", "note": "Internal risks stem from Andean social movements; externally, Peru is balancing its U.S. security alliance with deep China trade ties." },
+    "educationQuality":         { "score": 4, "score_description": "Progress in literacy but significant quality gaps in public schools.", "trend": "stable", "confidence": "medium", "note": "While basic education coverage is high, Peru continues to underperform in international quality rankings compared to regional peers." },
+    "healthcareQuality":        { "score": 4, "score_description": "Strained public system with notable regional disparities.", "trend": "stable", "confidence": "high", "note": "The system was severely impacted by COVID-19 and requires significant investment in infrastructure and preventive care." },
+    "technologyInvestment":     { "score": 5, "score_description": "Rising investment in logistics and digital infrastructure.", "trend": "rising", "confidence": "high", "note": "The Chancay Port project and growing Fintech ecosystem in Lima are driving modernization in trade and finance." }
+  },
+  "demographics": {
+    "population": 34040000,
+    "medianAge": 33.8,
+    "urbanizationRate": 83.1,
+    "majorEthnicGroups": ["Mestizo", "Amerindian/Indigenous (Quechua, Aymara)", "White", "Afro-Peruvian"],
+    "religions": [
+      { "name": "Roman Catholic", "percent": 60 },
+      { "name": "Protestant/Evangelical", "percent": 15 },
+      { "name": "None/Unaffiliated", "percent": 25 }
+    ]
+  },
+  "alliances": ["APEC", "Pacific Alliance", "Andean Community (CAN)", "Major Non-NATO Ally (MNNA)", "CELAC"],
+  "relationships": [
+    { "countryId": "CHN", "countryName": "China", "type": "strategic_partner", "sentiment": "positive", "summary": "Largest trading partner and primary investor in mining and the Chancay Megaport." },
+    { "countryId": "USA", "countryName": "United States", "type": "strategic_partner", "sentiment": "positive", "summary": "Key security ally and second-largest trade partner; bilateral relations reaching their bicentennial in 2026." },
+    { "countryId": "JPN", "countryName": "Japan", "type": "partner", "sentiment": "positive", "summary": "Long-term strategic partnership focused on trade, investment, and technological cooperation." },
+    { "countryId": "BRA", "countryName": "Brazil", "type": "partner", "sentiment": "positive", "summary": "Strategic neighbor; collaborating on trans-oceanic logistics and Amazonian security." },
+    { "countryId": "CHL", "countryName": "Chile", "type": "partner", "sentiment": "neutral", "summary": "Important economic partner in the Pacific Alliance, though historical and maritime sensitivities remain." }
+  ],
+  "perspectives": [
+    { "source": "Central Bank official", "bias": "Technocratic/Pro-Market", "view": "Macroeconomic stability is our priority; the BCRP's independence ensures that political noise does not translate into inflation or fiscal crisis." },
+    { "source": "Mining Executive", "bias": "Corporate", "view": "Peru has world-class reserves, but the government must improve its conflict resolution capacity to unlock billions in frozen investment." },
+    { "source": "Andean Community Leader", "bias": "Social Justice", "view": "Economic growth has not reached the highlands; we need a new social contract that prioritizes indigenous rights and environmental protection." }
+  ],
+  "historicalContext": {
+    "summary": "Peru's history spans from the advanced Inca Empire to Spanish colonial rule and independence in 1821. The late 20th century was defined by the fight against the Shining Path insurgency and the Fujimori era's market reforms. Since 2000, Peru has seen strong economic growth but has struggled with chronic political instability and high-level corruption cases (Lava Jato).",
+    "keyEvents": [
+      { "year": 1821, "event": "Declaration of Independence from Spain." },
+      { "year": 1879, "event": "War of the Pacific against Chile begins." },
+      { "year": 1990, "event": "Election of Alberto Fujimori and start of major economic reforms." },
+      { "year": 1992, "event": "Capture of Abimael Guzmán, leader of the Shining Path." },
+      { "year": 2016, "event": "Start of a period of extreme presidential turnover." },
+      { "year": 2022, "event": "Ousting of Pedro Castillo after a failed 'self-coup'." },
+      { "year": 2024, "event": "Inauguration of the Chancay Megaport." }
+    ]
+  },
+  "investmentNotes": {
+    "strengths": ["World-class mining sector (Copper, Gold, Zinc)", "Lowest inflation and robust foreign reserves in the region", "Strategic logistics hub potential with the Chancay Port", "Competitive and growing agricultural export sector"],
+    "risks": ["Extreme political volatility and executive weakness", "High labor informality (over 70%)", "Social conflicts surrounding extractive projects", "Corruption and institutional fragility"],
+    "sectors": ["Mining and Metals", "Logistics and Infrastructure", "Agro-exports (Blueberries, Avocados)", "Fintech", "Renewable Energy"]
+  },
+  "sources": [
+    { "name": "BCRP (Central Reserve Bank of Peru)", "url": "https://www.bcrp.gob.pe/en", "type": "economic" },
+    { "name": "INEI (National Institute of Statistics and Informatics)", "url": "https://www.inei.gob.pe/", "type": "economic" },
+    { "name": "Ministry of Foreign Affairs", "url": "https://www.gob.pe/rree", "type": "political" }
+  ]
+}

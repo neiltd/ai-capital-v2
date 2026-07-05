@@ -1,0 +1,65 @@
+{
+  "id": "CIV",
+  "iso2": "CI",
+  "name": "Côte d'Ivoire",
+  "region": "Africa",
+  "subregion": "Western Africa",
+  "capital": "Yamoussoukro",
+  "lastUpdated": "2025-05-22",
+  "summary": "Côte d'Ivoire is a regional economic powerhouse and the world's leading cocoa producer. Under President Alassane Ouattara, the country has maintained one of Africa's highest growth rates, driven by a successful transition from pure agriculture to a more diversified economy including oil, gas, and digital services. Recent major offshore oil discoveries ('Baleine' and 'Calao') are transforming the nation into a regional energy hub. While politically dominant, the 2025 election cycle remains a point of focus for social cohesion and long-term stability.",
+  "indicators": {
+    "politicalStability":       { "score": 6, "trend": "stable", "confidence": "high", "note": "Stable under current leadership; focus on 2025 election and political transition." },
+    "economicDirection":        { "score": 8, "trend": "rising", "confidence": "high", "note": "Consistently high GDP growth; major boost from new oil and gas production." },
+    "investmentAttractiveness": { "score": 8, "trend": "rising", "confidence": "high", "note": "Prime destination for agribusiness, energy, and infrastructure investment." },
+    "geopoliticalRisk":         { "score": 4, "trend": "stable", "confidence": "medium", "note": "Managing jihadist threats in the north; central to ECOWAS stability." },
+    "educationQuality":         { "score": 5, "trend": "stable", "confidence": "medium", "note": "Significant investment in technical education; Abidjan is an educational hub for Francophone Africa." },
+    "healthcareQuality":        { "score": 4, "trend": "rising", "confidence": "medium", "note": "Improving urban healthcare infrastructure; expansion of universal health coverage (CMU)." },
+    "technologyInvestment":     { "score": 7, "trend": "rising", "confidence": "high", "note": "Rapidly growing tech scene with strong government backing and digital infrastructure focus." }
+  },
+  "demographics": {
+    "population": 31900000,
+    "medianAge": 19.4,
+    "urbanizationRate": 53.0,
+    "majorEthnicGroups": ["Akan", "Gur", "Northern Mandé", "Kru", "Southern Mandé"],
+    "religions": [
+      { "name": "Muslim", "percent": 42.5 },
+      { "name": "Christian", "percent": 39.8 },
+      { "name": "Traditional", "percent": 2.2 },
+      { "name": "None", "percent": 12.6 }
+    ]
+  },
+  "alliances": ["ECOWAS", "African Union", "WAEMU", "OIC"],
+  "relationships": [
+    { "countryId": "FRA", "countryName": "France", "type": "strategic_partner", "sentiment": "positive", "summary": "Deep historical, economic, and security ties; major investor and partner in development." },
+    { "countryId": "USA", "countryName": "United States", "type": "economic_partner", "sentiment": "positive", "summary": "Increasing cooperation in security and energy; major destination for US cocoa imports." },
+    { "countryId": "CHN", "countryName": "China", "type": "infrastructure_partner", "sentiment": "positive", "summary": "Key financier for major road and port infrastructure projects." },
+    { "countryId": "GHA", "countryName": "Ghana", "type": "economic_rival", "sentiment": "neutral", "summary": "Partners in the Cocoa Initiative (CIGCI) but rivals for regional economic dominance." }
+  ],
+  "perspectives": [
+    { "source": "Abidjan Business Executive", "bias": "Optimistic", "view": "The new oil finds are a game changer. We are no longer just about cocoa; we are becoming an energy leader." },
+    { "source": "Cocoa Smallholder", "bias": "Vulnerable", "view": "Prices are better this year, but we still struggle with weather and the high cost of farming supplies." },
+    { "source": "Political Analyst", "bias": "Cautious", "view": "The economic progress is undeniable, but we must ensure the 2025 elections are inclusive to avoid the tensions of the past." },
+    { "source": "Tech Founder", "bias": "Reformist", "view": "Government support for startups is improving, but we need more venture capital to scale beyond the Ivorian market." }
+  ],
+  "historicalContext": {
+    "summary": "Since independence from France in 1960, Côte d'Ivoire was known as the 'Ivorian Miracle' for its economic success. Following a period of civil war (2002-2011), it has experienced a dramatic recovery and over a decade of rapid growth under President Ouattara, re-establishing itself as a regional hub.",
+    "keyEvents": [
+      { "year": 1960, "event": "Independence from France under Félix Houphouët-Boigny." },
+      { "year": 2011, "event": "End of post-election crisis; Alassane Ouattara assumes presidency." },
+      { "year": 2020, "event": "President Ouattara elected to a controversial third term; focus on stability." },
+      { "year": 2021, "event": "Major discovery of the 'Baleine' oil and gas field." },
+      { "year": 2024, "event": "Discovery of the 'Calao' field, potentially the largest in the country's history." },
+      { "year": 2025, "event": "Ouattara confirms candidacy for the October 2025 elections." }
+    ]
+  },
+  "investmentNotes": {
+    "strengths": ["Strongest GDP growth in West Africa", "World's largest cocoa and cashew producer", "Emerging regional energy hub with massive oil and gas reserves", "Modernizing infrastructure and digital services"],
+    "risks": ["Political sensitivity around the 2025 election", "Exposure to climate change and agricultural price volatility", "Regional security threats from the Sahel", "Wealth inequality between urban and rural areas"],
+    "sectors": ["Energy (Oil & Gas)", "Agribusiness & Processing", "Digital Technology & Fintech", "Infrastructure & Urban Development"]
+  },
+  "sources": [
+    { "name": "Central Bank of West African States (BCEAO)", "url": "https://www.bceao.int/", "type": "economic" },
+    { "name": "National Institute of Statistics", "url": "https://www.ins.ci/", "type": "demographic" },
+    { "name": "Ivorian Center for Investment Promotion (CEPICI)", "url": "http://www.cepici.gouv.ci/", "type": "investment" }
+  ]
+}

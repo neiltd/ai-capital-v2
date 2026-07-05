@@ -1,0 +1,302 @@
+[
+  {
+    "id": "DC-JPN-TOKYO-ATTOKYO-CC1",
+    "name": "AT TOKYO Chuo Center (CC1)",
+    "countryId": "JPN",
+    "city": "Toyosu, Tokyo",
+    "coordinates": [139.795, 35.644],
+    "type": "colocation",
+    "status": "operational",
+    "tierLevel": "4",
+    "capacityMW": 130,
+    "floorSpaceM2": 140000,
+    "pue": null,
+    "operator": "AT TOKYO",
+    "owner": "SECOM / TEPCO",
+    "yearOpened": 2001,
+    "yearPlanned": null,
+    "cloudRegion": null,
+    "geopoliticalNotes": "Japan's premier connectivity hub and heart of Tokyo's financial network. Hosting major internet exchanges (IXs) and providing high-security infrastructure designed to withstand major seismic events.",
+    "notes": "One of the largest and most connected data centers in Japan.",
+    "attribution": {
+      "sources": [
+        { "name": "AT TOKYO Data Centers", "url": "https://www.attokyo.com/services/datacenter/cc1.html", "accessedAt": "2024-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 2,
+        "lastVerified": "2024-05-10"
+      }
+    }
+  },
+  {
+    "id": "DC-JPN-INZAI-AIRTRUNK-TOK1",
+    "name": "AirTrunk TOK1",
+    "countryId": "JPN",
+    "city": "Inzai, Chiba",
+    "coordinates": [140.131, 35.801],
+    "type": "hyperscale",
+    "status": "operational",
+    "tierLevel": "3",
+    "capacityMW": 300,
+    "floorSpaceM2": null,
+    "pue": 1.15,
+    "operator": "AirTrunk",
+    "owner": "AirTrunk",
+    "yearOpened": 2021,
+    "yearPlanned": null,
+    "cloudRegion": null,
+    "geopoliticalNotes": "The largest hyperscale campus in Japan. A critical anchor for US cloud giants (AWS, Google, Azure) in the 'Inzai Data Center Park' cluster.",
+    "notes": null,
+    "attribution": {
+      "sources": [
+        { "name": "AirTrunk TOK1 Profile", "url": "https://airtrunk.com/location/tok1-tokyo-east/", "accessedAt": "2024-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 1,
+        "lastVerified": "2024-05-10"
+      }
+    }
+  },
+  {
+    "id": "DC-JPN-TOKYO-EQUINIX-TY11",
+    "name": "Equinix Tokyo TY11",
+    "countryId": "JPN",
+    "city": "Ariake, Tokyo",
+    "coordinates": [139.793, 35.634],
+    "type": "colocation",
+    "status": "operational",
+    "tierLevel": "3",
+    "capacityMW": null,
+    "floorSpaceM2": 14300,
+    "pue": null,
+    "operator": "Equinix",
+    "owner": "Equinix",
+    "yearOpened": 2019,
+    "yearPlanned": null,
+    "cloudRegion": null,
+    "geopoliticalNotes": "A vital interconnection point for the global financial ecosystem in Tokyo, providing direct access to 85+ financial service providers and key stock exchanges.",
+    "notes": null,
+    "attribution": {
+      "sources": [
+        { "name": "Equinix TY11 IBX Data Center", "url": "https://www.equinix.com/data-centers/asia-pacific-colocation/japan-colocation/tokyo-data-centers/ty11", "accessedAt": "2024-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 1,
+        "lastVerified": "2024-05-10"
+      }
+    }
+  },
+  {
+    "id": "DC-JPN-OSAKA-DIGITALREALTY-KIX11",
+    "name": "Digital Realty KIX11 (Digital Osaka 2)",
+    "countryId": "JPN",
+    "city": "Minoh, Osaka",
+    "coordinates": [135.512, 34.828],
+    "type": "colocation",
+    "status": "operational",
+    "tierLevel": "3",
+    "capacityMW": 28,
+    "floorSpaceM2": 23000,
+    "pue": null,
+    "operator": "MC Digital Realty",
+    "owner": "Mitsubishi & Digital Realty",
+    "yearOpened": 2019,
+    "yearPlanned": null,
+    "cloudRegion": null,
+    "geopoliticalNotes": "The primary gateway for international data exchange in Western Japan, serving as critical disaster recovery hub for Tokyo-based enterprises.",
+    "notes": null,
+    "attribution": {
+      "sources": [
+        { "name": "Digital Realty Osaka Data Centers", "url": "https://www.digitalrealty.com/data-centers/osaka", "accessedAt": "2024-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 1,
+        "lastVerified": "2024-05-10"
+      }
+    }
+  },
+  {
+    "id": "DC-JPN-TOMAKOMAI-SOFTBANK-AI",
+    "name": "SoftBank Hokkaido Tomakomai AI Data Center",
+    "countryId": "JPN",
+    "city": "Tomakomai, Hokkaido",
+    "coordinates": [141.602, 42.641],
+    "type": "hyperscale",
+    "status": "operational",
+    "tierLevel": "3",
+    "capacityMW": 300,
+    "floorSpaceM2": 700000,
+    "pue": null,
+    "operator": "SoftBank / IDC Frontier",
+    "owner": "SoftBank",
+    "yearOpened": 2024,
+    "yearPlanned": null,
+    "cloudRegion": null,
+    "geopoliticalNotes": "Strategically decentralizes AI compute away from Tokyo to Hokkaido, leveraging the cool climate and renewable energy for national resilience.",
+    "notes": "Part of Japan's 'Brain DataCenter' initiative.",
+    "attribution": {
+      "sources": [
+        { "name": "SoftBank AI Data Center in Hokkaido", "url": "https://www.softbank.jp/en/corp/news/press/sbkk/2023/20231107_01/", "accessedAt": "2024-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 1,
+        "lastVerified": "2024-05-10"
+      }
+    }
+  },
+  {
+    "id": "DC-JPN-INZAI-NTT-TKY11",
+    "name": "NTT Inzai Shiroi (TKY11)",
+    "countryId": "JPN",
+    "city": "Shiroi, Chiba",
+    "coordinates": [140.065, 35.792],
+    "type": "hyperscale",
+    "status": "operational",
+    "tierLevel": "3",
+    "capacityMW": 250,
+    "floorSpaceM2": null,
+    "pue": null,
+    "operator": "NTT Global Data Centers",
+    "owner": "NTT",
+    "yearOpened": 2020,
+    "yearPlanned": null,
+    "cloudRegion": null,
+    "geopoliticalNotes": "A symbol of Japanese data sovereignty, ensuring domestic control over critical AI and cloud infrastructure in partnership with TEPCO.",
+    "notes": null,
+    "attribution": {
+      "sources": [
+        { "name": "NTT Global Data Centers - Japan", "url": "https://services.global.ntt/en-us/infrastructure-solutions/global-data-centers/asia-pacific/japan-data-centers", "accessedAt": "2024-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 1,
+        "lastVerified": "2024-05-10"
+      }
+    }
+  },
+  {
+    "id": "DC-JPN-INZAI-GOOGLE-INZAI",
+    "name": "Google Inzai Data Center",
+    "countryId": "JPN",
+    "city": "Inzai, Chiba",
+    "coordinates": [140.174, 35.812],
+    "type": "hyperscale",
+    "status": "operational",
+    "tierLevel": "3",
+    "capacityMW": null,
+    "floorSpaceM2": null,
+    "pue": null,
+    "operator": "Google",
+    "owner": "Google",
+    "yearOpened": 2023,
+    "yearPlanned": null,
+    "cloudRegion": "asia-northeast1",
+    "geopoliticalNotes": "Google's first self-owned data center in Japan, serving as a landing point for the Topaz subsea cable connecting Japan to Canada.",
+    "notes": null,
+    "attribution": {
+      "sources": [
+        { "name": "Google Data Centers - Japan", "url": "https://www.google.com/about/datacenters/locations/inzai-city/", "accessedAt": "2024-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 1,
+        "lastVerified": "2024-05-10"
+      }
+    }
+  },
+  {
+    "id": "DC-JPN-SAITAMA-MICROSOFT-REGION",
+    "name": "Microsoft Japan East (Saitama Campus)",
+    "countryId": "JPN",
+    "city": "Saitama City",
+    "coordinates": [139.645, 35.861],
+    "type": "hyperscale",
+    "status": "operational",
+    "tierLevel": "3",
+    "capacityMW": null,
+    "floorSpaceM2": null,
+    "pue": null,
+    "operator": "Microsoft",
+    "owner": "Microsoft",
+    "yearOpened": 2014,
+    "yearPlanned": null,
+    "cloudRegion": "japaneast",
+    "geopoliticalNotes": "Primary site for Microsoft's collaboration with the Japanese government for hosting sensitive national-level AI and public sector workloads.",
+    "notes": null,
+    "attribution": {
+      "sources": [
+        { "name": "Microsoft Global Infrastructure", "url": "https://azure.microsoft.com/en-us/explore/global-infrastructure/", "accessedAt": "2024-05-10" }
+      ],
+      "confidence": {
+        "confidence": "medium",
+        "sourceCount": 1,
+        "lastVerified": "2024-05-10"
+      }
+    }
+  },
+  {
+    "id": "DC-JPN-INZAI-COLT-INZAI3",
+    "name": "Colt Tokyo Inzai 3",
+    "countryId": "JPN",
+    "city": "Inzai, Chiba",
+    "coordinates": [140.135, 35.805],
+    "type": "colocation",
+    "status": "operational",
+    "tierLevel": "3",
+    "capacityMW": 27,
+    "floorSpaceM2": 8000,
+    "pue": null,
+    "operator": "Colt Data Centre Services",
+    "owner": "Colt",
+    "yearOpened": 2020,
+    "yearPlanned": null,
+    "cloudRegion": null,
+    "geopoliticalNotes": "Reinforces Japan's role as a stable, low-latency relay hub for global financial institutions and hyperscalers in the APAC region.",
+    "notes": null,
+    "attribution": {
+      "sources": [
+        { "name": "Colt Tokyo Inzai 3 Profile", "url": "https://www.coltdatacentres.net/locations/tokyo-inzai-3/", "accessedAt": "2024-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 1,
+        "lastVerified": "2024-05-10"
+      }
+    }
+  },
+  {
+    "id": "DC-JPN-OSAKA-DIGITALREALTY-KIX13",
+    "name": "MC Digital Realty KIX13",
+    "countryId": "JPN",
+    "city": "Minoh, Osaka",
+    "coordinates": [135.512, 34.828],
+    "type": "hyperscale",
+    "status": "operational",
+    "tierLevel": "3",
+    "capacityMW": 21,
+    "floorSpaceM2": null,
+    "pue": null,
+    "operator": "MC Digital Realty",
+    "owner": "Mitsubishi & Digital Realty",
+    "yearOpened": 2023,
+    "yearPlanned": null,
+    "cloudRegion": null,
+    "geopoliticalNotes": "An AI-ready facility in Western Japan supporting the digital transformation of the Kansai manufacturing belt and regional business connectivity.",
+    "notes": null,
+    "attribution": {
+      "sources": [
+        { "name": "Digital Realty KIX13 Opening", "url": "https://www.digitalrealty.com/about/newsroom/mc-digital-realty-opens-kix13-data-center-in-osaka", "accessedAt": "2024-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 1,
+        "lastVerified": "2024-05-10"
+      }
+    }
+  }
+]

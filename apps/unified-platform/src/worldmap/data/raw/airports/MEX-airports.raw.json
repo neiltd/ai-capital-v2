@@ -1,0 +1,272 @@
+[
+  {
+    "id": "MEX",
+    "name": "Mexico City International Airport (Benito Juárez)",
+    "countryId": "MEX",
+    "city": "Mexico City",
+    "iata": "MEX",
+    "icao": "MMMX",
+    "coordinates": [-99.0721, 19.4363],
+    "passengerVolume": 45400000,
+    "cargoVolume": 500000,
+    "runwayCount": 2,
+    "elevationM": 2230,
+    "strategicImportance": "critical",
+    "geopoliticalNotes": "The country's primary hub and financial gateway. Despite saturation and the transfer of dedicated cargo to AIFA, it remains the most vital node for international passenger connectivity and business.",
+    "notes": "Undergoing a managed reduction of slots to redistribute traffic.",
+    "attribution": {
+      "sources": [
+        { "name": "AICM Official", "url": "https://www.aicm.com.mx", "accessedAt": "2026-05-10" },
+        { "name": "OurAirports", "url": "https://ourairports.com/airports/MMMX/", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 2,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  },
+  {
+    "id": "CUN",
+    "name": "Cancún International Airport",
+    "countryId": "MEX",
+    "city": "Cancún",
+    "iata": "CUN",
+    "icao": "MMUN",
+    "coordinates": [-86.8771, 21.0365],
+    "passengerVolume": 30400000,
+    "cargoVolume": 35000,
+    "runwayCount": 2,
+    "elevationM": 6,
+    "strategicImportance": "high",
+    "geopoliticalNotes": "The main gateway for international tourism in Mexico and the Caribbean. Handles the highest volume of international passengers in the country and serves as a major eastern gateway.",
+    "notes": "Operated by ASUR.",
+    "attribution": {
+      "sources": [
+        { "name": "ASUR", "url": "https://www.asur.com.mx", "accessedAt": "2026-05-10" },
+        { "name": "OurAirports", "url": "https://ourairports.com/airports/MMUN/", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 2,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  },
+  {
+    "id": "GDL",
+    "name": "Guadalajara International Airport (Miguel Hidalgo y Costilla)",
+    "countryId": "MEX",
+    "city": "Guadalajara",
+    "iata": "GDL",
+    "icao": "MMGL",
+    "coordinates": [-103.3110, 20.5218],
+    "passengerVolume": 17900000,
+    "cargoVolume": 160000,
+    "runwayCount": 2,
+    "elevationM": 1529,
+    "strategicImportance": "high",
+    "geopoliticalNotes": "A critical industrial and technology hub, often called Mexico's Silicon Valley. Vital for high-tech manufacturing exports and a key gateway ahead of the 2026 World Cup.",
+    "notes": "Recently added a second parallel runway in 2023.",
+    "attribution": {
+      "sources": [
+        { "name": "GAP", "url": "https://www.aeropuertosgap.com.mx", "accessedAt": "2026-05-10" },
+        { "name": "OurAirports", "url": "https://ourairports.com/airports/MMGL/", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 2,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  },
+  {
+    "id": "MTY",
+    "name": "Monterrey International Airport (General Mariano Escobedo)",
+    "countryId": "MEX",
+    "city": "Monterrey",
+    "iata": "MTY",
+    "icao": "MMMY",
+    "coordinates": [-100.1070, 25.7785],
+    "passengerVolume": 13600000,
+    "cargoVolume": 55000,
+    "runwayCount": 2,
+    "elevationM": 390,
+    "strategicImportance": "high",
+    "geopoliticalNotes": "The 'Industrial Capital' gateway, strategically vital for the nearshoring boom and trade with the United States. Key node for automotive and industrial logistics.",
+    "notes": "Undergoing massive terminal expansion as of 2025.",
+    "attribution": {
+      "sources": [
+        { "name": "OMA", "url": "https://www.oma.aero", "accessedAt": "2026-05-10" },
+        { "name": "OurAirports", "url": "https://ourairports.com/airports/MMMY/", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 2,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  },
+  {
+    "id": "TIJ",
+    "name": "Tijuana International Airport (General Abelardo L. Rodríguez)",
+    "countryId": "MEX",
+    "city": "Tijuana",
+    "iata": "TIJ",
+    "icao": "MMTJ",
+    "coordinates": [-116.9700, 32.5411],
+    "passengerVolume": 12500000,
+    "cargoVolume": 25000,
+    "runwayCount": 1,
+    "elevationM": 149,
+    "strategicImportance": "high",
+    "geopoliticalNotes": "Unique binational airport featuring the Cross Border Xpress (CBX) bridge, directly connecting to San Diego, USA. A critical link for cross-border logistics and migration.",
+    "notes": "The CBX terminal handles nearly 30% of its traffic.",
+    "attribution": {
+      "sources": [
+        { "name": "GAP", "url": "https://www.aeropuertosgap.com.mx", "accessedAt": "2026-05-10" },
+        { "name": "OurAirports", "url": "https://ourairports.com/airports/MMTJ/", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 2,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  },
+  {
+    "id": "SJD",
+    "name": "Los Cabos International Airport",
+    "countryId": "MEX",
+    "city": "San José del Cabo",
+    "iata": "SJD",
+    "icao": "MMSD",
+    "coordinates": [-109.4210, 23.1518],
+    "passengerVolume": 7500000,
+    "cargoVolume": 5000,
+    "runwayCount": 1,
+    "elevationM": 114,
+    "strategicImportance": "medium",
+    "geopoliticalNotes": "Primary luxury tourism hub for the Baja Peninsula. Highly significant for international connectivity from the US and Canada.",
+    "notes": "One of the busiest airports in the Pacific region.",
+    "attribution": {
+      "sources": [
+        { "name": "GAP", "url": "https://www.aeropuertosgap.com.mx", "accessedAt": "2026-05-10" },
+        { "name": "OurAirports", "url": "https://ourairports.com/airports/MMSD/", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 2,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  },
+  {
+    "id": "NLU",
+    "name": "Felipe Ángeles International Airport",
+    "countryId": "MEX",
+    "city": "Zumpango (Near Mexico City)",
+    "iata": "NLU",
+    "icao": "MMSM",
+    "coordinates": [-98.9956, 19.7525],
+    "passengerVolume": 6300000,
+    "cargoVolume": 450000,
+    "runwayCount": 3,
+    "elevationM": 2247,
+    "strategicImportance": "high",
+    "geopoliticalNotes": "The new secondary airport for the Mexico City metropolitan area. It has become the primary dedicated cargo hub for the region following a federal decree moving cargo from MEX.",
+    "notes": "Built on the site of Santa Lucía Air Force Base.",
+    "attribution": {
+      "sources": [
+        { "name": "AIFA Official", "url": "https://vuela-aifa.mx", "accessedAt": "2026-05-10" },
+        { "name": "OurAirports", "url": "https://ourairports.com/airports/MMSM/", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 2,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  },
+  {
+    "id": "PVR",
+    "name": "Licenciado Gustavo Díaz Ordaz International Airport",
+    "countryId": "MEX",
+    "city": "Puerto Vallarta",
+    "iata": "PVR",
+    "icao": "MMPR",
+    "coordinates": [-105.2540, 20.6801],
+    "passengerVolume": 6800000,
+    "cargoVolume": 5000,
+    "runwayCount": 1,
+    "elevationM": 7,
+    "strategicImportance": "medium",
+    "geopoliticalNotes": "Major Pacific coast tourism gateway. Undergoing modernization to become one of the first Net-Zero terminals in Latin America.",
+    "notes": "Operated by GAP.",
+    "attribution": {
+      "sources": [
+        { "name": "GAP", "url": "https://www.aeropuertosgap.com.mx", "accessedAt": "2026-05-10" },
+        { "name": "OurAirports", "url": "https://ourairports.com/airports/MMPR/", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 2,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  },
+  {
+    "id": "MID",
+    "name": "Mérida International Airport (Manuel Crescencio Rejón)",
+    "countryId": "MEX",
+    "city": "Mérida",
+    "iata": "MID",
+    "icao": "MMMD",
+    "coordinates": [-89.6577, 20.9370],
+    "passengerVolume": 3700000,
+    "cargoVolume": 25000,
+    "runwayCount": 2,
+    "elevationM": 9,
+    "strategicImportance": "medium",
+    "geopoliticalNotes": "Strategically important as the gateway to the Yucatan Peninsula and a key hub for the Mayan Train project, connecting to regional logistics and tourism.",
+    "notes": "Operated by ASUR.",
+    "attribution": {
+      "sources": [
+        { "name": "ASUR", "url": "https://www.asur.com.mx", "accessedAt": "2026-05-10" },
+        { "name": "OurAirports", "url": "https://ourairports.com/airports/MMMD/", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 2,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  },
+  {
+    "id": "QRO",
+    "name": "Querétaro Intercontinental Airport",
+    "countryId": "MEX",
+    "city": "Querétaro",
+    "iata": "QRO",
+    "icao": "MMQT",
+    "coordinates": [-100.1860, 20.6174],
+    "passengerVolume": 1800000,
+    "cargoVolume": 70000,
+    "runwayCount": 1,
+    "elevationM": 1919,
+    "strategicImportance": "high",
+    "geopoliticalNotes": "Mexico's primary aerospace hub, hosting major maintenance and manufacturing facilities for global companies. A critical node for the country's aerospace and automotive supply chains.",
+    "notes": "Serves as a major alternative for cargo and logistics near Mexico City.",
+    "attribution": {
+      "sources": [
+        { "name": "AIQ Official", "url": "https://aiq.com.mx", "accessedAt": "2026-05-10" },
+        { "name": "OurAirports", "url": "https://ourairports.com/airports/MMQT/", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 2,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  }
+]

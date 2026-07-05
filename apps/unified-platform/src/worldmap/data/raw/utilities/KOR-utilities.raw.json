@@ -1,0 +1,36 @@
+[
+  {
+    "countryId": "KOR",
+    "year": 2023,
+    "electricityConsumptionTWh": 575.36,
+    "electricityProductionTWh": 595.05,
+    "electricityMix": {
+      "coal": 32.0,
+      "nuclear": 30.7,
+      "gas": 27.0,
+      "solar": 7.0,
+      "otherRenewables": 2.3,
+      "oil": 1.0
+    },
+    "renewableSharePct": 9.3,
+    "waterStressScore": 2.7,
+    "waterWithdrawalPct": 27.0,
+    "foodSecurityScore": 70.2,
+    "aiAdoptionScore": 75.65,
+    "internetPenetration": 97.5,
+    "mobilePenetration": 135,
+    "attribution": {
+      "sources": [
+        { "name": "Ember Global Electricity Review 2024 (South Korea)", "url": "https://ember-energy.org", "accessedAt": "2024-05-10" },
+        { "name": "WRI Aqueduct 4.0", "url": "https://www.wri.org/aqueduct", "accessedAt": "2024-05-10" },
+        { "name": "Global Food Security Index 2022", "url": "https://impact.economist.com/sustainability/project/food-security-index", "accessedAt": "2024-05-10" },
+        { "name": "Oxford Insights AI Readiness Index 2023", "url": "https://oxfordinsights.com", "accessedAt": "2024-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 4,
+        "lastVerified": "2024-05-10"
+      }
+    }
+  }
+]

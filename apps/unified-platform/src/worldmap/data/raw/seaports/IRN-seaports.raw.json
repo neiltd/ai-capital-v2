@@ -1,0 +1,213 @@
+[
+  {
+    "id": "PORT-IRN-SHAHIDRAJAEE",
+    "name": "Shahid Rajaee Port",
+    "countryId": "IRN",
+    "city": "Bandar Abbas",
+    "coordinates": [56.0650, 27.1000],
+    "type": "container",
+    "annualThroughputTEU": 3080000,
+    "annualThroughputTonnes": 75000000,
+    "berthCount": 10,
+    "maxDraftM": 16.0,
+    "strategicImportance": "critical",
+    "riskLevel": "high",
+    "geopoliticalNotes": "Iran's largest container hub, handling ~85% of the country's container traffic. Primary gateway for the INSTC Western Route.",
+    "notes": "Strategically located near the Strait of Hormuz. Essential for national trade and regional logistics.",
+    "attribution": {
+      "sources": [
+        { "name": "Ports and Maritime Organization of Iran", "url": "https://www.pmo.ir", "accessedAt": "2026-05-10" },
+        { "name": "Container News", "url": "https://container-news.com", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 2,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  },
+  {
+    "id": "PORT-IRN-IMAMKHOMEINI",
+    "name": "Imam Khomeini Port",
+    "countryId": "IRN",
+    "city": "Bandar-e Imam Khomeini",
+    "coordinates": [49.0750, 30.4350],
+    "type": "mixed",
+    "annualThroughputTEU": 150000,
+    "annualThroughputTonnes": 48000000,
+    "berthCount": 40,
+    "maxDraftM": 13.0,
+    "strategicImportance": "critical",
+    "riskLevel": "medium",
+    "geopoliticalNotes": "Main entry point for Iran's food security (grain imports) and a critical node for the petrochemical industry.",
+    "notes": "Handles the majority of 'essential goods' and bulk commodities for the country.",
+    "attribution": {
+      "sources": [
+        { "name": "Ports and Maritime Organization of Iran", "url": "https://www.pmo.ir", "accessedAt": "2026-05-10" },
+        { "name": "Find a Port", "url": "https://www.findaport.com", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 2,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  },
+  {
+    "id": "PORT-IRN-CHABAHAR",
+    "name": "Chabahar Port (Shahid Beheshti)",
+    "countryId": "IRN",
+    "city": "Chabahar",
+    "coordinates": [60.6150, 25.2850],
+    "type": "mixed",
+    "annualThroughputTEU": 64000,
+    "annualThroughputTonnes": 2840000,
+    "berthCount": 5,
+    "maxDraftM": 16.5,
+    "strategicImportance": "critical",
+    "riskLevel": "medium",
+    "geopoliticalNotes": "Iran's only oceanic port, providing a bypass to the Strait of Hormuz. Primary gateway for India to reach Afghanistan and Central Asia.",
+    "notes": "Operated under a 10-year contract by India. Significant potential for transshipment in the Indian Ocean.",
+    "attribution": {
+      "sources": [
+        { "name": "Ports and Maritime Organization of Iran", "url": "https://www.pmo.ir", "accessedAt": "2026-05-10" },
+        { "name": "ILNA", "url": "https://www.ilna.ir", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 2,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  },
+  {
+    "id": "PORT-IRN-BUSHEHR",
+    "name": "Bushehr Port",
+    "countryId": "IRN",
+    "city": "Bushehr",
+    "coordinates": [50.8350, 28.9750],
+    "type": "mixed",
+    "annualThroughputTEU": 75000,
+    "annualThroughputTonnes": 6500000,
+    "berthCount": 10,
+    "maxDraftM": 14.0,
+    "strategicImportance": "high",
+    "riskLevel": "medium",
+    "geopoliticalNotes": "Main export hub for trade with Arab nations, specifically Saudi Arabia and Qatar. Strategically positioned in the central Persian Gulf.",
+    "notes": "Undergoing dredging to accommodate 50,000-ton vessels.",
+    "attribution": {
+      "sources": [
+        { "name": "Ports and Maritime Organization of Iran", "url": "https://www.pmo.ir", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "medium",
+        "sourceCount": 1,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  },
+  {
+    "id": "PORT-IRN-ANZALI",
+    "name": "Anzali Port",
+    "countryId": "IRN",
+    "city": "Bandar Anzali",
+    "coordinates": [49.4650, 37.4750],
+    "type": "mixed",
+    "annualThroughputTEU": 10000,
+    "annualThroughputTonnes": 1500000,
+    "berthCount": 17,
+    "maxDraftM": 6.0,
+    "strategicImportance": "high",
+    "riskLevel": "low",
+    "geopoliticalNotes": "Key Caspian port for trade with Russia and CIS countries. Directly connected to the national railway as of 2024.",
+    "notes": "Central to the INSTC Caspian route.",
+    "attribution": {
+      "sources": [
+        { "name": "Ports and Maritime Organization of Iran", "url": "https://www.pmo.ir", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "medium",
+        "sourceCount": 1,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  },
+  {
+    "id": "PORT-IRN-AMIRABAD",
+    "name": "Amirabad Port",
+    "countryId": "IRN",
+    "city": "Behshahr",
+    "coordinates": [53.3750, 36.8550],
+    "type": "bulk",
+    "annualThroughputTEU": null,
+    "annualThroughputTonnes": 7500000,
+    "berthCount": 15,
+    "maxDraftM": 4.5,
+    "strategicImportance": "high",
+    "riskLevel": "low",
+    "geopoliticalNotes": "Strategic hub for grain imports in the Caspian Sea. Integral to the INSTC Eastern Route.",
+    "notes": "Largest port on the Caspian Sea's southern coast with significant silo capacity.",
+    "attribution": {
+      "sources": [
+        { "name": "Ports and Maritime Organization of Iran", "url": "https://www.pmo.ir", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "medium",
+        "sourceCount": 1,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  },
+  {
+    "id": "PORT-IRN-ASSALUYEH",
+    "name": "Pars Special Economic Energy Zone Port",
+    "countryId": "IRN",
+    "city": "Assaluyeh",
+    "coordinates": [52.5650, 27.4750],
+    "type": "lng",
+    "annualThroughputTEU": null,
+    "annualThroughputTonnes": 30000000,
+    "berthCount": 25,
+    "maxDraftM": 15.0,
+    "strategicImportance": "critical",
+    "riskLevel": "high",
+    "geopoliticalNotes": "Energy hub for the South Pars gas field, the world's largest gas field. Vital for Iran's LNG and petrochemical exports.",
+    "notes": "Highly specialized for gas and liquid bulk products.",
+    "attribution": {
+      "sources": [
+        { "name": "PSEEZ Authority", "url": "http://www.pseez.ir", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "medium",
+        "sourceCount": 1,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  },
+  {
+    "id": "PORT-IRN-KHARG",
+    "name": "Kharg Island Oil Terminal",
+    "countryId": "IRN",
+    "city": "Kharg Island",
+    "coordinates": [50.3150, 29.2350],
+    "type": "oil",
+    "annualThroughputTEU": null,
+    "annualThroughputTonnes": 50000000,
+    "berthCount": 10,
+    "maxDraftM": 21.0,
+    "strategicImportance": "critical",
+    "riskLevel": "high",
+    "geopoliticalNotes": "Iran's primary crude oil export terminal, handling over 90% of the country's oil exports.",
+    "notes": "Deep-water terminal capable of handling ULCCs. Highly strategic for national revenue.",
+    "attribution": {
+      "sources": [
+        { "name": "Iranian Oil Terminals Company", "url": "http://www.iotco.ir", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "medium",
+        "sourceCount": 1,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  }
+]

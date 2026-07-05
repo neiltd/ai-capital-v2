@@ -1,0 +1,65 @@
+{
+  "id": "ZWE",
+  "iso2": "ZW",
+  "name": "Zimbabwe",
+  "region": "Africa",
+  "subregion": "Southern Africa",
+  "capital": "Harare",
+  "lastUpdated": "2025-05-15",
+  "summary": "Zimbabwe is a country of immense potential, possessing some of the world's largest reserves of lithium and platinum, yet it remains hampered by persistent macroeconomic instability and political polarization. Since the transition from Robert Mugabe's long rule in 2017, the administration of President Emmerson Mnangagwa has sought to attract foreign investment under the 'Zimbabwe is Open for Business' mantra. However, progress has been slow due to high inflation, currency volatility, and ongoing international sanctions. The country's agricultural sector is recovering, but land tenure issues and climate change remain significant hurdles. Zimbabwe's geopolitical strategy increasingly leans toward 'All-weather friends' like China and Russia, while attempting a delicate re-engagement with Western nations and multilateral lenders.",
+  "indicators": {
+    "politicalStability":       { "score": 4, "trend": "stable", "confidence": "high", "note": "ZANU-PF remains firmly in control; political landscape remains polarized following contested elections." },
+    "economicDirection":        { "score": 3, "trend": "neutral", "confidence": "high", "note": "Persistent currency instability and high inflation; lithium mining is a bright spot." },
+    "investmentAttractiveness": { "score": 4, "trend": "rising", "confidence": "medium", "note": "Significant interest in mining; offset by policy uncertainty and capital repatriation concerns." },
+    "geopoliticalRisk":         { "score": 4, "trend": "stable", "confidence": "medium", "note": "Low external threat; internal social tensions are managed through strict security measures." },
+    "educationQuality":         { "score": 5, "trend": "falling", "confidence": "high", "note": "Historically high literacy rates; system is suffering from brain drain and underfunding." },
+    "healthcareQuality":        { "score": 3, "trend": "stable", "confidence": "medium", "note": "Public hospitals face chronic shortages of equipment and personnel; private care is high-quality but expensive." },
+    "technologyInvestment":     { "score": 4, "trend": "stable", "confidence": "medium", "note": "Growing mobile money ecosystem; digital divide remains large between urban and rural areas." }
+  },
+  "demographics": {
+    "population": 16100000,
+    "medianAge": 18.1,
+    "urbanizationRate": 32.5,
+    "majorEthnicGroups": ["Shona", "Ndebele", "Other"],
+    "religions": [
+      { "name": "Apostolic/Christian", "percent": 84 },
+      { "name": "Traditional", "percent": 3 },
+      { "name": "None", "percent": 12 },
+      { "name": "Other", "percent": 1 }
+    ]
+  },
+  "alliances": ["African Union", "SADC", "COMESA", "AfCFTA"],
+  "relationships": [
+    { "countryId": "CHN", "countryName": "China", "type": "strategic_partner", "sentiment": "positive", "summary": "Key investor in mining, energy, and infrastructure; primary geopolitical ally." },
+    { "countryId": "ZAF", "countryName": "South Africa", "type": "strategic_partner", "sentiment": "positive", "summary": "Most important trade partner; provides critical economic and migration safety valve." },
+    { "countryId": "RUS", "countryName": "Russia", "type": "strategic_partner", "sentiment": "positive", "summary": "Cooperation in mining and defense; shares similar stances on international sanctions." },
+    { "countryId": "GBR", "countryName": "United Kingdom", "type": "competitor", "sentiment": "negative", "summary": "Relationship remains strained over historical issues, human rights, and sanctions." }
+  ],
+  "perspectives": [
+    { "source": "Mining Executive", "bias": "Pro-investment", "view": "The geology is world-class. If we can get the macro-stability right, Zimbabwe could be a global leader in the battery metal supply chain." },
+    { "source": "Harare Informal Trader", "bias": "Survivalist", "view": "The currency changes all the time. We survive by using the US dollar; the local money is hard to trust." },
+    { "source": "ZANU-PF Loyalist", "bias": "Pro-government", "view": "The Second Republic is delivering infrastructure and revitalizing agriculture despite the illegal sanctions." },
+    { "source": "Human Rights Lawyer", "bias": "Reformist", "view": "True economic recovery requires institutional reforms, the protection of property rights, and a return to the rule of law." }
+  ],
+  "historicalContext": {
+    "summary": "Formerly the British colony of Southern Rhodesia, Zimbabwe gained independence in 1980 after a long liberation war. Robert Mugabe led the country for 37 years, a period marked by early successes in education followed by a controversial land reform program and economic collapse. Since 2017, the country has been under the leadership of Emmerson Mnangagwa.",
+    "keyEvents": [
+      { "year": 1980, "event": "Independence from the United Kingdom; Robert Mugabe becomes Prime Minister." },
+      { "year": 2000, "event": "Fast-track land reform program begins, leading to international sanctions and economic decline." },
+      { "year": 2008, "event": "Hyperinflation reaches record levels; formation of a Government of National Unity." },
+      { "year": 2009, "event": "Adoption of a multi-currency system, primarily the US Dollar." },
+      { "year": 2017, "event": "Robert Mugabe is deposed in a military-assisted transition; Emmerson Mnangagwa takes power." },
+      { "year": 2023, "event": "President Mnangagwa wins a second term in elections widely criticized by international observers." }
+    ]
+  },
+  "investmentNotes": {
+    "strengths": ["World's second-largest reserves of platinum group metals", "Massive deposits of high-grade lithium and gold", "Highly educated and resilient workforce", "Significant potential for high-value agricultural exports"],
+    "risks": ["Currency volatility and lack of foreign exchange", "International sanctions and restricted access to global finance", "Inconsistent policy implementation", "Infrastructure gaps in electricity and transport"],
+    "sectors": ["Mining (Lithium, Platinum, Gold)", "Agriculture (Tobacco, Horticulture)", "Tourism (Victoria Falls)", "Renewable Energy"]
+  },
+  "sources": [
+    { "name": "Reserve Bank of Zimbabwe", "url": "https://www.rbz.co.zw/", "type": "economic" },
+    { "name": "Zimbabwe National Statistics Agency (ZIMSTAT)", "url": "https://www.zimstat.co.zw/", "type": "demographic" },
+    { "name": "Zimbabwe Investment and Development Agency (ZIDA)", "url": "https://www.zidainvest.com/", "type": "investment" }
+  ]
+}

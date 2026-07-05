@@ -1,0 +1,27 @@
+[
+  {
+    "countryId": "ZAF",
+    "year": 2022,
+    "overallScore": 61.7,
+    "availability": 60.1,
+    "access": 63.4,
+    "utilization": 66.1,
+    "stability": 56.9,
+    "undernourishedPct": 8.1,
+    "foodImportDependencyPct": 2.6,
+    "cerealYieldKgHa": 5726,
+    "climateVulnerability": "high",
+    "conflictExposure": "medium",
+    "attribution": {
+      "sources": [
+        { "name": "GFSI 2022 — South Africa", "url": "https://impact.economist.com/sustainability/project/food-security-index/reports-and-resources", "accessedAt": "2025-02-13" },
+        { "name": "FAO FAOSTAT - South Africa", "url": "https://www.fao.org/faostat/en/#country/202", "accessedAt": "2025-02-13" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 2,
+        "lastVerified": "2025-02-13"
+      }
+    }
+  }
+]

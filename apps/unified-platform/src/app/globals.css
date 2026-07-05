@@ -1,0 +1,147 @@
+/* maplibre-gl styles must precede @tailwind directives */
+@import 'maplibre-gl/dist/maplibre-gl.css';
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  color-scheme: dark;
+}
+
+body {
+  background: #010102;
+  color: #f7f8f8;
+  font-feature-settings: 'cv11', 'ss01', 'ss03';
+  -webkit-font-smoothing: antialiased;
+}
+
+/* Markdown rendering for the briefing & chat — lightweight, no plugin needed */
+.briefing-prose {
+  color: #d0d6e0;
+  font-size: 13px;
+  line-height: 1.7;
+}
+.briefing-prose > * + * {
+  margin-top: 0.9em;
+}
+.briefing-prose h1,
+.briefing-prose h2,
+.briefing-prose h3,
+.briefing-prose h4 {
+  color: #f7f8f8;
+  letter-spacing: -0.01em;
+  font-weight: 600;
+  line-height: 1.3;
+}
+.briefing-prose h1 { font-size: 20px; margin-top: 1.4em; }
+.briefing-prose h2 {
+  font-size: 15px;
+  margin-top: 1.6em;
+  padding-bottom: 0.4em;
+  border-bottom: 1px solid #23252a;
+  text-transform: none;
+}
+.briefing-prose h3 { font-size: 13px; margin-top: 1.2em; }
+.briefing-prose strong { color: #f7f8f8; font-weight: 600; }
+.briefing-prose em { color: #d0d6e0; }
+.briefing-prose code {
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  background: #141516;
+  border: 1px solid #23252a;
+  color: #828fff;
+  padding: 1px 5px;
+  border-radius: 4px;
+  font-size: 11.5px;
+}
+.briefing-prose pre {
+  background: #0f1011;
+  border: 1px solid #23252a;
+  border-radius: 8px;
+  padding: 14px 16px;
+  overflow-x: auto;
+  font-size: 12px;
+}
+.briefing-prose pre code {
+  background: transparent;
+  border: 0;
+  padding: 0;
+  color: #d0d6e0;
+}
+.briefing-prose ul, .briefing-prose ol {
+  padding-left: 1.2em;
+}
+.briefing-prose ul { list-style: disc; }
+.briefing-prose ol { list-style: decimal; }
+.briefing-prose li::marker { color: #4a4d52; }
+.briefing-prose li + li { margin-top: 0.25em; }
+.briefing-prose a { color: #828fff; text-decoration: none; }
+.briefing-prose a:hover { text-decoration: underline; }
+.briefing-prose blockquote {
+  border-left: 3px solid #5e6ad2;
+  background: rgba(94,106,210,0.05);
+  padding: 6px 12px;
+  margin: 1em 0;
+  color: #8a8f98;
+  border-radius: 0 6px 6px 0;
+}
+.briefing-prose hr { border: 0; border-top: 1px solid #23252a; margin: 1.4em 0; }
+.briefing-prose table {
+  width: 100%;
+  font-size: 12px;
+  border-collapse: collapse;
+  margin: 0.6em 0;
+}
+.briefing-prose th {
+  text-align: left;
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: #8a8f98;
+  border-bottom: 1px solid #23252a;
+  padding: 8px 10px;
+}
+.briefing-prose td {
+  color: #d0d6e0;
+  border-bottom: 1px solid rgba(35,37,42,0.6);
+  padding: 7px 10px;
+}
+
+/* Reuse the same prose styles for the chat. */
+.prose-dark { color: #d0d6e0; }
+.prose-dark p { margin: 0.5em 0; line-height: 1.6; }
+.prose-dark strong { color: #f7f8f8; font-weight: 600; }
+.prose-dark code {
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  background: #141516;
+  border: 1px solid #23252a;
+  color: #828fff;
+  padding: 1px 5px;
+  border-radius: 4px;
+  font-size: 11px;
+}
+.prose-dark a { color: #828fff; }
+.prose-dark ul, .prose-dark ol { padding-left: 1.1em; margin: 0.5em 0; }
+.prose-dark ul { list-style: disc; }
+.prose-dark ol { list-style: decimal; }
+
+/* Subtle scrollbar styling for a more polished feel */
+::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+::-webkit-scrollbar-thumb {
+  background: #23252a;
+  border-radius: 8px;
+  border: 2px solid transparent;
+  background-clip: padding-box;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #3e3e44;
+  background-clip: padding-box;
+  border: 2px solid transparent;
+}

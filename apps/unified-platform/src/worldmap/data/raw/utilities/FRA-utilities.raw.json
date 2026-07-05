@@ -1,0 +1,38 @@
+[
+  {
+    "countryId": "FRA",
+    "year": 2023,
+    "electricityConsumptionTWh": 445.4,
+    "electricityProductionTWh": 494.7,
+    "electricityMix": {
+      "nuclear": 64.73,
+      "hydro": 11.9,
+      "wind": 10.2,
+      "gas": 6.1,
+      "solar": 4.6,
+      "otherRenewables": 1.9,
+      "oil": 0.4,
+      "coal": 0.17
+    },
+    "renewableSharePct": 28.6,
+    "waterStressScore": 1.6,
+    "waterWithdrawalPct": 16.5,
+    "foodSecurityScore": 80.2,
+    "aiAdoptionScore": 76.07,
+    "internetPenetration": 93.5,
+    "mobilePenetration": 110,
+    "attribution": {
+      "sources": [
+        { "name": "RTE France Electricity Report 2023", "url": "https://www.rte-france.com", "accessedAt": "2024-05-10" },
+        { "name": "WRI Aqueduct 4.0", "url": "https://www.wri.org/aqueduct", "accessedAt": "2024-05-10" },
+        { "name": "Global Food Security Index 2022", "url": "https://impact.economist.com/sustainability/project/food-security-index", "accessedAt": "2024-05-10" },
+        { "name": "Oxford Insights AI Readiness Index 2023", "url": "https://oxfordinsights.com", "accessedAt": "2024-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 4,
+        "lastVerified": "2024-05-10"
+      }
+    }
+  }
+]

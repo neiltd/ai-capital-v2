@@ -1,0 +1,215 @@
+[
+  {
+    "id": "PORT-PHL-MANILA",
+    "name": "Port of Manila",
+    "countryId": "PHL",
+    "city": "Manila",
+    "coordinates": [120.9667, 14.5833],
+    "type": "container",
+    "annualThroughputTEU": 5500000,
+    "annualThroughputTonnes": null,
+    "berthCount": 22,
+    "maxDraftM": 14.5,
+    "strategicImportance": "critical",
+    "riskLevel": "low",
+    "geopoliticalNotes": "The primary international gateway of the Philippines, handling the vast majority of the country's foreign trade. Highly strategic for national economic security.",
+    "notes": "Comprises the Manila International Container Terminal (MICT), Manila South Harbor, and Manila North Harbor.",
+    "attribution": {
+      "sources": [
+        { "name": "Philippine Ports Authority (PPA)", "url": "https://www.ppa.com.ph", "accessedAt": "2025-05-10" },
+        { "name": "ICTSI", "url": "https://www.ictsi.com", "accessedAt": "2025-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 2,
+        "lastVerified": "2025-05-10"
+      }
+    }
+  },
+  {
+    "id": "PORT-PHL-CEBU",
+    "name": "Port of Cebu",
+    "countryId": "PHL",
+    "city": "Cebu City",
+    "coordinates": [123.9261, 10.3064],
+    "type": "mixed",
+    "annualThroughputTEU": 820000,
+    "annualThroughputTonnes": null,
+    "berthCount": 15,
+    "maxDraftM": 12.0,
+    "strategicImportance": "high",
+    "riskLevel": "low",
+    "geopoliticalNotes": "The largest domestic hub in the Philippines and the primary gateway for the Visayas region. Central to the country's inter-island logistics network.",
+    "notes": "The New Cebu International Container Port (NCICP) is under development to handle larger vessels.",
+    "attribution": {
+      "sources": [
+        { "name": "Cebu Port Authority", "url": "https://www.cpa.gov.ph", "accessedAt": "2025-05-10" },
+        { "name": "PPA Annual Report", "url": "https://www.ppa.com.ph", "accessedAt": "2025-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 2,
+        "lastVerified": "2025-05-10"
+      }
+    }
+  },
+  {
+    "id": "PORT-PHL-BATANGAS",
+    "name": "Port of Batangas",
+    "countryId": "PHL",
+    "city": "Batangas City",
+    "coordinates": [121.0450, 13.7650],
+    "type": "mixed",
+    "annualThroughputTEU": 450000,
+    "annualThroughputTonnes": null,
+    "berthCount": 10,
+    "maxDraftM": 15.0,
+    "strategicImportance": "high",
+    "riskLevel": "low",
+    "geopoliticalNotes": "A critical alternate gateway to Manila, handling significant volumes of petroleum products, automotive imports, and RoRo traffic connecting Luzon to Mindoro and Visayas.",
+    "notes": "Home to major oil refineries and car terminal operations.",
+    "attribution": {
+      "sources": [
+        { "name": "PPA", "url": "https://www.ppa.com.ph", "accessedAt": "2025-05-10" },
+        { "name": "Asian Terminals Inc.", "url": "https://www.asianterminals.com.ph", "accessedAt": "2025-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 2,
+        "lastVerified": "2025-05-10"
+      }
+    }
+  },
+  {
+    "id": "PORT-PHL-SUBIC-BAY",
+    "name": "Port of Subic Bay",
+    "countryId": "PHL",
+    "city": "Subic/Olongapo",
+    "coordinates": [120.28, 14.82],
+    "type": "mixed",
+    "annualThroughputTEU": 600000,
+    "annualThroughputTonnes": null,
+    "berthCount": 15,
+    "maxDraftM": 13.5,
+    "strategicImportance": "critical",
+    "riskLevel": "low",
+    "geopoliticalNotes": "A former US naval base with deep-water capabilities. Highly strategic for military logistics and as a growing industrial/logistics hub in Northern Luzon.",
+    "notes": "Managed by the Subic Bay Metropolitan Authority (SBMA).",
+    "attribution": {
+      "sources": [
+        { "name": "Subic Bay Metropolitan Authority", "url": "https://www.sbma.com", "accessedAt": "2025-05-10" },
+        { "name": "PPA", "url": "https://www.ppa.com.ph", "accessedAt": "2025-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 2,
+        "lastVerified": "2025-05-10"
+      }
+    }
+  },
+  {
+    "id": "PORT-PHL-DAVAO",
+    "name": "Port of Davao",
+    "countryId": "PHL",
+    "city": "Davao City",
+    "coordinates": [125.6637, 7.1282],
+    "type": "container",
+    "annualThroughputTEU": 850000,
+    "annualThroughputTonnes": null,
+    "berthCount": 8,
+    "maxDraftM": 13.0,
+    "strategicImportance": "high",
+    "riskLevel": "low",
+    "geopoliticalNotes": "The main gateway for Southern Mindanao, critical for the global export of agricultural products (bananas, pineapples). Key node in the BIMP-EAGA corridor.",
+    "notes": "Includes the Sasa Wharf and the privately-run Davao International Container Terminal (DICT).",
+    "attribution": {
+      "sources": [
+        { "name": "PPA", "url": "https://www.ppa.com.ph", "accessedAt": "2025-05-10" },
+        { "name": "Davao International Container Terminal", "url": "https://www.dict.com.ph", "accessedAt": "2025-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 2,
+        "lastVerified": "2025-05-10"
+      }
+    }
+  },
+  {
+    "id": "PORT-PHL-CAGAYAN-DE-ORO",
+    "name": "Port of Cagayan de Oro",
+    "countryId": "PHL",
+    "city": "Cagayan de Oro",
+    "coordinates": [124.65, 8.48],
+    "type": "mixed",
+    "annualThroughputTEU": null,
+    "annualThroughputTonnes": 10500000,
+    "berthCount": 12,
+    "maxDraftM": 13.0,
+    "strategicImportance": "high",
+    "riskLevel": "low",
+    "geopoliticalNotes": "Strategically located in Northern Mindanao, serving as a primary transit point for industrial and agricultural goods for the entire island.",
+    "notes": "Often referred to as the 'Global Gateway to Mindanao'.",
+    "attribution": {
+      "sources": [
+        { "name": "PPA PMO Misamis Oriental", "url": "https://www.ppa.com.ph", "accessedAt": "2025-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 1,
+        "lastVerified": "2025-05-10"
+      }
+    }
+  },
+  {
+    "id": "PORT-PHL-GENERAL-SANTOS",
+    "name": "Port of General Santos",
+    "countryId": "PHL",
+    "city": "General Santos",
+    "coordinates": [125.1717, 6.1162],
+    "type": "mixed",
+    "annualThroughputTEU": 250000,
+    "annualThroughputTonnes": null,
+    "berthCount": 6,
+    "maxDraftM": 12.0,
+    "strategicImportance": "medium",
+    "riskLevel": "low",
+    "geopoliticalNotes": "Vial for the tuna industry and agricultural exports of the SOCCSKSARGEN region. Strategic for connectivity to Indonesia and Australia.",
+    "notes": "Also known as Makar Wharf.",
+    "attribution": {
+      "sources": [
+        { "name": "PPA", "url": "https://www.ppa.com.ph", "accessedAt": "2025-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 1,
+        "lastVerified": "2025-05-10"
+      }
+    }
+  },
+  {
+    "id": "PORT-PHL-ILOILO",
+    "name": "Port of Iloilo",
+    "countryId": "PHL",
+    "city": "Iloilo City",
+    "coordinates": [122.562, 10.7203],
+    "type": "mixed",
+    "annualThroughputTEU": 950000,
+    "annualThroughputTonnes": null,
+    "berthCount": 10,
+    "maxDraftM": 10.5,
+    "strategicImportance": "medium",
+    "riskLevel": "low",
+    "geopoliticalNotes": "A key trade and commercial hub for Western Visayas, serving the sugar industry and food security for the region.",
+    "notes": "Includes the Iloilo Commercial Port Complex (ICPC).",
+    "attribution": {
+      "sources": [
+        { "name": "PPA", "url": "https://www.ppa.com.ph", "accessedAt": "2025-05-10" }
+      ],
+      "confidence": {
+        "confidence": "medium",
+        "sourceCount": 1,
+        "lastVerified": "2025-05-10"
+      }
+    }
+  }
+]

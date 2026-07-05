@@ -1,0 +1,219 @@
+[
+  {
+    "id": "RAIL-NLD-UTRECHT-CEN",
+    "name": "Utrecht Centraal",
+    "countryId": "NLD",
+    "city": "Utrecht",
+    "coordinates": [5.1097, 52.0892],
+    "type": "passenger",
+    "dailyPassengers": 230000,
+    "annualFreightTonnes": null,
+    "connectedCountries": ["DEU", "BEL", "FRA"],
+    "gaugeType": "standard",
+    "lineCount": 16,
+    "strategicImportance": "high",
+    "isPartOfBRI": false,
+    "geopoliticalNotes": "The central node of the Dutch passenger rail network; almost all domestic intercity lines converge here, making it the most critical domestic transit hub.",
+    "notes": "Houses Europe's largest bicycle parking facility.",
+    "attribution": {
+      "sources": [
+        { "name": "NS (Nederlandse Spoorwegen) Annual Report 2023", "url": "https://www.ns.nl/", "accessedAt": "2024-05-15" },
+        { "name": "European Railway Station Index 2024", "url": "https://www.consumerchoicecenter.org/", "accessedAt": "2024-05-15" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 2,
+        "lastVerified": "2024-05-15"
+      }
+    }
+  },
+  {
+    "id": "RAIL-NLD-ROTTERDAM-CEN",
+    "name": "Rotterdam Centraal",
+    "countryId": "NLD",
+    "city": "Rotterdam",
+    "coordinates": [4.4694, 51.9244],
+    "type": "mixed",
+    "dailyPassengers": 110000,
+    "annualFreightTonnes": null,
+    "connectedCountries": ["BEL", "FRA", "GBR"],
+    "gaugeType": "standard",
+    "lineCount": 13,
+    "strategicImportance": "high",
+    "isPartOfBRI": true,
+    "geopoliticalNotes": "A major international gateway and high-speed rail hub; connects the Port of Rotterdam (the BRI's primary European maritime node) to the rest of Europe.",
+    "notes": "Key stop for Eurostar and Thalys (now Eurostar) services.",
+    "attribution": {
+      "sources": [
+        { "name": "Port of Rotterdam Rail Statistics", "url": "https://www.portofrotterdam.com/", "accessedAt": "2024-05-15" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 1,
+        "lastVerified": "2024-05-15"
+      }
+    }
+  },
+  {
+    "id": "RAIL-NLD-KIJFHOEK",
+    "name": "Kijfhoek Shunting Yard",
+    "countryId": "NLD",
+    "city": "Zwijndrecht",
+    "coordinates": [4.5831, 51.8258],
+    "type": "freight",
+    "dailyPassengers": null,
+    "annualFreightTonnes": 25000000,
+    "connectedCountries": ["DEU", "BEL", "ITA"],
+    "gaugeType": "standard",
+    "lineCount": 43,
+    "strategicImportance": "high",
+    "isPartOfBRI": true,
+    "geopoliticalNotes": "The largest shunting yard in the Netherlands and a vital link for the Port of Rotterdam; handles the assembly of freight trains for the Betuweroute and the European hinterland.",
+    "notes": "Undergoing major automation upgrades by Siemens Mobility.",
+    "attribution": {
+      "sources": [
+        { "name": "ProRail - Kijfhoek Project Data", "url": "https://www.prorail.nl/", "accessedAt": "2024-05-15" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 2,
+        "lastVerified": "2024-05-15"
+      }
+    }
+  },
+  {
+    "id": "RAIL-NLD-VENLO",
+    "name": "Venlo Station / Freight Hub",
+    "countryId": "NLD",
+    "city": "Venlo",
+    "coordinates": [6.1714, 51.3647],
+    "type": "border_crossing",
+    "dailyPassengers": 15000,
+    "annualFreightTonnes": 5000000,
+    "connectedCountries": ["DEU"],
+    "gaugeType": "standard",
+    "lineCount": 8,
+    "strategicImportance": "high",
+    "isPartOfBRI": true,
+    "geopoliticalNotes": "A critical border hub for rail freight moving to the German Ruhr region; serves as a dual-voltage point for locomotives crossing the border.",
+    "notes": "Key node for the Brabant Route freight path.",
+    "attribution": {
+      "sources": [
+        { "name": "RailFreight.com - Netherlands Border Hubs", "url": "https://www.railfreight.com/", "accessedAt": "2024-05-15" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 1,
+        "lastVerified": "2024-05-15"
+      }
+    }
+  },
+  {
+    "id": "RAIL-NLD-AMSTERDAM-CEN",
+    "name": "Amsterdam Centraal",
+    "countryId": "NLD",
+    "city": "Amsterdam",
+    "coordinates": [4.9003, 52.3791],
+    "type": "passenger",
+    "dailyPassengers": 190000,
+    "annualFreightTonnes": null,
+    "connectedCountries": ["DEU", "BEL", "FRA", "GBR"],
+    "gaugeType": "standard",
+    "lineCount": 11,
+    "strategicImportance": "high",
+    "isPartOfBRI": false,
+    "geopoliticalNotes": "The primary international passenger terminal of the Netherlands and a symbol of European connectivity.",
+    "notes": "Major renovations underway to increase capacity by 2030.",
+    "attribution": {
+      "sources": [
+        { "name": "City of Amsterdam - Transport Data", "url": "https://data.amsterdam.nl/", "accessedAt": "2024-05-15" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 1,
+        "lastVerified": "2024-05-15"
+      }
+    }
+  },
+  {
+    "id": "RAIL-NLD-SCHIPHOL",
+    "name": "Schiphol Airport Station",
+    "countryId": "NLD",
+    "city": "Schiphol",
+    "coordinates": [4.7619, 52.3095],
+    "type": "high_speed",
+    "dailyPassengers": 95000,
+    "annualFreightTonnes": null,
+    "connectedCountries": ["BEL", "FRA"],
+    "gaugeType": "standard",
+    "lineCount": 6,
+    "strategicImportance": "high",
+    "isPartOfBRI": false,
+    "geopoliticalNotes": "A world-class example of air-rail integration; serves as a major node on the HSL-Zuid high-speed line.",
+    "notes": "Crucial for reducing short-haul flights within Europe.",
+    "attribution": {
+      "sources": [
+        { "name": "Schiphol Group Annual Report", "url": "https://www.schiphol.nl/", "accessedAt": "2024-05-15" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 2,
+        "lastVerified": "2024-05-15"
+      }
+    }
+  },
+  {
+    "id": "RAIL-NLD-MOERDIJK",
+    "name": "Moerdijk Port Rail Terminal",
+    "countryId": "NLD",
+    "city": "Moerdijk",
+    "coordinates": [4.6000, 51.6833],
+    "type": "port_interface",
+    "dailyPassengers": null,
+    "annualFreightTonnes": 3000000,
+    "connectedCountries": ["BEL", "DEU", "ITA"],
+    "gaugeType": "standard",
+    "lineCount": 8,
+    "strategicImportance": "medium",
+    "isPartOfBRI": false,
+    "geopoliticalNotes": "A strategic intermodal hub connecting maritime, inland waterway, and rail traffic; specializes in chemical and containerized freight.",
+    "notes": "Integrated with the Moerdijk Industrial Park.",
+    "attribution": {
+      "sources": [
+        { "name": "Port of Moerdijk - Rail Operations", "url": "https://www.portofmoerdijk.nl/", "accessedAt": "2024-05-15" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 1,
+        "lastVerified": "2024-05-15"
+      }
+    }
+  },
+  {
+    "id": "RAIL-NLD-ZEVENAAR",
+    "name": "Zevenaar Border Crossing",
+    "countryId": "NLD",
+    "city": "Zevenaar",
+    "coordinates": [6.0792, 51.9283],
+    "type": "border_crossing",
+    "dailyPassengers": null,
+    "annualFreightTonnes": 15000000,
+    "connectedCountries": ["DEU"],
+    "gaugeType": "standard",
+    "lineCount": 4,
+    "strategicImportance": "high",
+    "isPartOfBRI": true,
+    "geopoliticalNotes": "The primary exit point for the Betuweroute, the dedicated freight corridor linking the Port of Rotterdam to Germany; a cornerstone of the New Eurasian Land Bridge.",
+    "notes": "Subject to major construction on the German side (Third Track).",
+    "attribution": {
+      "sources": [
+        { "name": "ProRail - Betuweroute Operations", "url": "https://www.prorail.nl/", "accessedAt": "2024-05-15" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 1,
+        "lastVerified": "2024-05-15"
+      }
+    }
+  }
+]

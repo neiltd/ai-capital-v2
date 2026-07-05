@@ -1,0 +1,26 @@
+{
+  "schemaVersion": "1.0.0",
+  "generatedAt": "2026-05-12T06:00:00Z",
+  "asOf": "2024",
+  "source": "worldbank",
+  "byCountry": {
+    "USA": {
+      "gdp_current_usd": 27360,
+      "gdp_growth_pct": 2.5,
+      "inflation_cpi_pct": 3.1,
+      "debt_pct_gdp": 122.3
+    },
+    "CHN": {
+      "gdp_current_usd": 17790,
+      "gdp_growth_pct": 4.9,
+      "inflation_cpi_pct": 0.3,
+      "debt_pct_gdp": 83.6
+    },
+    "THA": {
+      "gdp_current_usd": 529,
+      "gdp_growth_pct": 2.7,
+      "inflation_cpi_pct": 1.2,
+      "debt_pct_gdp": 61.4
+    }
+  }
+}

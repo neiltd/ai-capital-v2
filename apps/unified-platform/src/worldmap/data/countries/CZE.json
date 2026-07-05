@@ -1,0 +1,67 @@
+{
+  "id": "CZE",
+  "iso2": "CZ",
+  "name": "Czech Republic",
+  "region": "Europe",
+  "subregion": "Central Europe",
+  "capital": "Prague",
+  "lastUpdated": "2026-05-09",
+  "summary": "In 2026, the Czech Republic is recognized as one of the most stable and economically advanced nations in Central Europe. The country has successfully navigated the post-pandemic recovery and the energy crisis, emerging with a modernized industrial base and a growing reputation as a regional hub for high-tech services, including cybersecurity and artificial intelligence. Following the 2025 general elections, the government has maintained a strong pro-European and pro-Atlanticist orientation, deepening its defense cooperation with NATO and advocating for increased EU support for Ukraine. While the automotive sector remains a cornerstone of the economy, a significant shift toward electric vehicle production and green energy technologies is underway. Domestic challenges include persistent labor shortages and the need for further pension and healthcare reforms to address an aging demographic.",
+  "indicators": {
+    "politicalStability":       { "score": 8, "score_description": "Stable parliamentary democracy with strong institutional checks.", "trend": "stable", "confidence": "high", "note": "The transition after the 2025 elections was seamless, reinforcing the country's democratic resilience." },
+    "economicDirection":        { "score": 7, "score_description": "Steady growth driven by high-value exports and digital services.", "trend": "improving", "confidence": "high", "note": "GDP growth is projected at 2.2% in 2026, supported by recovering domestic consumption and EU-funded investments." },
+    "investmentAttractiveness": { "score": 8, "score_description": "Highly attractive due to skilled labor, location, and stable legal environment.", "trend": "stable", "confidence": "high", "note": "Prague and Brno are increasingly attracting international R&D centers and tech startups." },
+    "geopoliticalRisk":         { "score": 5, "score_description": "Moderate risk linked to regional tensions; mitigated by NATO/EU membership.", "trend": "stable", "confidence": "high", "note": "The country has successfully eliminated its reliance on Russian energy, significantly enhancing its strategic autonomy." },
+    "educationQuality":         { "score": 7, "score_description": "Strong technical and engineering education with a long tradition.", "trend": "stable", "confidence": "high", "note": "Czech universities are performing well in STEM fields, though more focus on lifelong learning is required." },
+    "healthcareQuality":        { "score": 8, "score_description": "High-quality universal healthcare with excellent accessibility.", "trend": "stable", "confidence": "high", "note": "The system provides some of the best medical outcomes in the region, despite rising costs." },
+    "technologyInvestment":     { "score": 7, "score_description": "Growing focus on cybersecurity, AI, and green tech.", "trend": "rising", "confidence": "high", "note": "The 'Digital Czechia' initiative is accelerating the modernization of public services and industry." }
+  },
+  "demographics": {
+    "population": 10900000,
+    "medianAge": 43.2,
+    "urbanizationRate": 74,
+    "majorEthnicGroups": ["Czech", "Moravian", "Slovak", "Ukrainian", "Vietnamese"],
+    "religions": [
+      { "name": "None/Unaffiliated", "percent": 78.4 },
+      { "name": "Roman Catholic", "percent": 9.3 },
+      { "name": "Other Christian", "percent": 2.1 },
+      { "name": "Other/Unspecified", "percent": 10.2 }
+    ]
+  },
+  "alliances": ["EU", "NATO", "Visegrád Group", "OECD", "OSCE"],
+  "relationships": [
+    { "countryId": "SVK", "countryName": "Slovakia", "type": "ally", "sentiment": "positive", "summary": "Exceptionally close historical and cultural ties; the 'Velvet Divorce' legacy remains a model for peaceful separation and ongoing cooperation." },
+    { "countryId": "DEU", "countryName": "Germany", "type": "ally", "sentiment": "positive", "summary": "Primary economic partner; deeply integrated supply chains, particularly in the automotive and machinery sectors." },
+    { "countryId": "POL", "countryName": "Poland", "type": "ally", "sentiment": "positive", "summary": "Growing cooperation on regional security and energy infrastructure, despite occasional local friction over border issues." },
+    { "countryId": "USA", "countryName": "United States", "type": "treaty_ally", "sentiment": "positive", "summary": "Key security partner; strong cooperation on defense procurement and cybersecurity." },
+    { "countryId": "RUS", "countryName": "Russia", "type": "adversary", "sentiment": "negative", "summary": "Relations are at a nadir; the Czech Republic has been a leader in exposing Russian malign influence and supporting Ukraine." }
+  ],
+  "perspectives": [
+    { "source": "Prague Policy Analyst", "bias": "Atlanticist", "view": "Our security and prosperity are inextricably linked to a strong NATO and a cohesive EU; we must lead by example in defense and technology." },
+    { "source": "Industrial Leader", "bias": "Business-focused", "view": "The transition to EVs is a challenge, but our engineering excellence will allow us to remain a global manufacturing powerhouse." },
+    { "source": "Social Reformer", "bias": "Progressive", "view": "While the economy is strong, we must ensure that the digital transition doesn't leave older workers behind and that housing remains affordable." }
+  ],
+  "historicalContext": {
+    "summary": "The Czech Republic emerged from the 1993 peaceful dissolution of Czechoslovakia. Its history includes the medieval Kingdom of Bohemia, centuries under Habsburg rule, and the traumatic experience of Nazi occupation and 41 years of Soviet-dominated communist rule. The 1989 Velvet Revolution restored democracy and paved the way for its rapid integration into Western institutions.",
+    "keyEvents": [
+      { "year": 1918, "event": "Foundation of independent Czechoslovakia following the collapse of Austria-Hungary." },
+      { "year": 1938, "event": "Munich Agreement leads to the German annexation of the Sudetenland." },
+      { "year": 1948, "event": "Communist coup d'état establishes a pro-Soviet regime." },
+      { "year": 1968, "event": "Prague Spring reforms are crushed by the Warsaw Pact invasion." },
+      { "year": 1989, "event": "Velvet Revolution ends communist rule." },
+      { "year": 1993, "event": "Peaceful dissolution of Czechoslovakia (Velvet Divorce)." },
+      { "year": 1999, "event": "Czech Republic joins NATO." },
+      { "year": 2004, "event": "Czech Republic joins the European Union." }
+    ]
+  },
+  "investmentNotes": {
+    "strengths": ["Strategic location at the heart of Europe", "Strong industrial tradition and skilled engineering workforce", "High level of social and political stability", "Increasingly sophisticated R&D and tech ecosystem"],
+    "risks": ["Labor shortages due to demographic shifts", "Heavy dependence on the cyclical automotive sector", "Relatively slow pace of public sector digitalization", "Complexity of local building and planning regulations"],
+    "sectors": ["Automotive & EV Components", "Aerospace", "Information Technology & Cybersecurity", "Medical Technology", "Environmental Engineering"]
+  },
+  "sources": [
+    { "name": "Czech Statistical Office (ČSÚ)", "url": "https://www.czso.cz/csu/czso/home", "type": "economic" },
+    { "name": "Czech National Bank (ČNB)", "url": "https://www.cnb.cz/en/", "type": "economic" },
+    { "name": "CzechInvest", "url": "https://www.czechinvest.org/en", "type": "economic" }
+  ]
+}

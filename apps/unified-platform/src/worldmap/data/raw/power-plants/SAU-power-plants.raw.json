@@ -1,0 +1,272 @@
+[
+  {
+    "id": "PLANT-SAU-SHOAIBA",
+    "name": "Shoaiba Thermal Power Plant",
+    "countryId": "SAU",
+    "city": "Shoaiba",
+    "coordinates": [39.5232, 20.6801],
+    "type": "oil",
+    "status": "operating",
+    "capacityMW": 5600,
+    "annualOutputGWh": null,
+    "yearCommissioned": 2001,
+    "yearRetirement": null,
+    "operator": "Saudi Electricity Company (SEC)",
+    "owner": "SEC",
+    "strategicNote": "One of the world's largest oil-fired power plants, critical for the western region and desalination.",
+    "notes": "Integrated Water and Power Plant (IWPP).",
+    "attribution": {
+      "sources": [
+        { "name": "Global Energy Monitor", "url": "https://www.gem.wiki/Shoaiba_power_station", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 2,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  },
+  {
+    "id": "PLANT-SAU-PP9",
+    "name": "Riyadh Power Plant 9 (PP9)",
+    "countryId": "SAU",
+    "city": "Riyadh",
+    "coordinates": [47.0649, 24.9491],
+    "type": "gas",
+    "status": "operating",
+    "capacityMW": 5980,
+    "annualOutputGWh": null,
+    "yearCommissioned": 1997,
+    "yearRetirement": null,
+    "operator": "Saudi Electricity Company (SEC)",
+    "owner": "SEC",
+    "strategicNote": "Massive facility serving the capital city, Riyadh; one of the largest gas-fired plants globally.",
+    "notes": "Dual-fuel capability.",
+    "attribution": {
+      "sources": [
+        { "name": "Global Energy Monitor", "url": "https://www.gem.wiki/Riyadh_PP9_power_station", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 2,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  },
+  {
+    "id": "PLANT-SAU-PP10",
+    "name": "Riyadh Power Plant 10 (PP10)",
+    "countryId": "SAU",
+    "city": "Riyadh",
+    "coordinates": [47.0162, 24.4171],
+    "type": "gas",
+    "status": "operating",
+    "capacityMW": 4600,
+    "annualOutputGWh": null,
+    "yearCommissioned": 2011,
+    "yearRetirement": null,
+    "operator": "Saudi Electricity Company (SEC)",
+    "owner": "SEC",
+    "strategicNote": "Critical infrastructure for the central region's power demand.",
+    "notes": null,
+    "attribution": {
+      "sources": [
+        { "name": "Global Energy Monitor", "url": "https://www.gem.wiki/Riyadh_PP10_power_station", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 1,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  },
+  {
+    "id": "PLANT-SAU-GHAZLAN",
+    "name": "Ghazlan Power Plant",
+    "countryId": "SAU",
+    "city": "Ghazlan",
+    "coordinates": [49.8975, 26.8539],
+    "type": "gas",
+    "status": "operating",
+    "capacityMW": 4528,
+    "annualOutputGWh": null,
+    "yearCommissioned": 1980,
+    "yearRetirement": null,
+    "operator": "Saudi Electricity Company (SEC)",
+    "owner": "SEC",
+    "strategicNote": "A major thermal plant on the Arabian Gulf, essential for the eastern industrial province.",
+    "notes": null,
+    "attribution": {
+      "sources": [
+        { "name": "Global Energy Monitor", "url": "https://www.gem.wiki/Ghazlan_power_station", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 2,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  },
+  {
+    "id": "PLANT-SAU-QURAYYAH-IPP",
+    "name": "Qurayyah IPP",
+    "countryId": "SAU",
+    "city": "Qurayyah",
+    "coordinates": [50.1169, 25.8592],
+    "type": "gas",
+    "status": "operating",
+    "capacityMW": 3927,
+    "annualOutputGWh": null,
+    "yearCommissioned": 2014,
+    "yearRetirement": null,
+    "operator": "Hajr Electricity Production Company",
+    "owner": "SEC / ACWA Power / Samsung C&T",
+    "strategicNote": "One of the largest independent power producer (IPP) combined cycle plants in the world.",
+    "notes": null,
+    "attribution": {
+      "sources": [
+        { "name": "Global Energy Monitor", "url": "https://www.gem.wiki/Qurayyah_IPP_power_station", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 2,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  },
+  {
+    "id": "PLANT-SAU-JAZAN-IGCC",
+    "name": "Jazan IGCC Power Plant",
+    "countryId": "SAU",
+    "city": "Jazan",
+    "coordinates": [42.55, 16.89],
+    "type": "oil",
+    "status": "operating",
+    "capacityMW": 3800,
+    "annualOutputGWh": null,
+    "yearCommissioned": 2021,
+    "yearRetirement": null,
+    "operator": "Jazan Integrated Gasification and Power Company",
+    "owner": "Saudi Aramco / Air Products / ACWA Power",
+    "strategicNote": "The world's largest Integrated Gasification Combined Cycle (IGCC) plant, utilizing vacuum residue from the Jazan refinery.",
+    "notes": null,
+    "attribution": {
+      "sources": [
+        { "name": "Global Energy Monitor", "url": "https://www.gem.wiki/Jazan_IGCC_power_station", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 1,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  },
+  {
+    "id": "PLANT-SAU-YANBU-3",
+    "name": "Yanbu-3 Power & Desalination Plant",
+    "countryId": "SAU",
+    "city": "Yanbu",
+    "coordinates": [38.3224, 23.9100],
+    "type": "oil",
+    "status": "operating",
+    "capacityMW": 3100,
+    "annualOutputGWh": null,
+    "yearCommissioned": 2017,
+    "yearRetirement": null,
+    "operator": "Saline Water Conversion Corporation (SWCC)",
+    "owner": "Government of Saudi Arabia",
+    "strategicNote": "Critical for power and water supply in the industrial city of Yanbu.",
+    "notes": null,
+    "attribution": {
+      "sources": [
+        { "name": "Global Energy Monitor", "url": "https://www.gem.wiki/Yanbu_3_power_station", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 1,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  },
+  {
+    "id": "PLANT-SAU-RAS-AL-KHAIR",
+    "name": "Ras Al-Khair Power Plant",
+    "countryId": "SAU",
+    "city": "Ras Al-Khair",
+    "coordinates": [49.1389, 27.5367],
+    "type": "gas",
+    "status": "operating",
+    "capacityMW": 2400,
+    "annualOutputGWh": null,
+    "yearCommissioned": 2014,
+    "yearRetirement": null,
+    "operator": "Saline Water Conversion Corporation (SWCC)",
+    "owner": "Government of Saudi Arabia",
+    "strategicNote": "Massive desalination and power complex supporting the mining and industrial hub.",
+    "notes": null,
+    "attribution": {
+      "sources": [
+        { "name": "Global Energy Monitor", "url": "https://www.gem.wiki/Ras_Al-Khair_power_station", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 1,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  },
+  {
+    "id": "PLANT-SAU-AL-SHUAIBAH-SOLAR",
+    "name": "Al Shuaibah Solar PV IPP",
+    "countryId": "SAU",
+    "city": "Shoaiba",
+    "coordinates": [39.5272, 20.6756],
+    "type": "solar",
+    "status": "operating",
+    "capacityMW": 2060,
+    "annualOutputGWh": null,
+    "yearCommissioned": 2024,
+    "yearRetirement": null,
+    "operator": "ACWA Power",
+    "owner": "PIF / ACWA Power / Badeel",
+    "strategicNote": "A landmark project in Saudi Arabia's renewable energy transition under Vision 2030.",
+    "notes": null,
+    "attribution": {
+      "sources": [
+        { "name": "Global Energy Monitor", "url": "https://www.gem.wiki/Al_Shuaibah_solar_farm", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 1,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  },
+  {
+    "id": "PLANT-SAU-SUDAIR-SOLAR",
+    "name": "Sudair PV IPP",
+    "countryId": "SAU",
+    "city": "Sudair",
+    "coordinates": [45.8000, 25.6000],
+    "type": "solar",
+    "status": "operating",
+    "capacityMW": 1500,
+    "annualOutputGWh": null,
+    "yearCommissioned": 2023,
+    "yearRetirement": null,
+    "operator": "ACWA Power",
+    "owner": "PIF / ACWA Power / SAPCO",
+    "strategicNote": "Major utility-scale solar project, part of the Kingdom's goal to diversify energy sources.",
+    "notes": null,
+    "attribution": {
+      "sources": [
+        { "name": "Global Energy Monitor", "url": "https://www.gem.wiki/Sudair_solar_farm", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 1,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  }
+]

@@ -1,0 +1,1757 @@
+[
+  {
+    "id": "COMPANY-AVGO",
+    "ticker": "AVGO",
+    "name": "Broadcom Inc.",
+    "exchange": "NASDAQ",
+    "gicsSector": "Information Technology",
+    "gicsIndustryGroup": "Semiconductors & Semiconductor Equipment",
+    "gicsIndustry": "Semiconductors",
+    "countryOfIncorporation": "USA",
+    "countryOfHQ": "USA",
+    "marketCapUsdBn": 780,
+    "revenueUsdBn": 51.57,
+    "fiscalYear": 2024,
+    "description": "Broadcom Inc. is a global technology leader that designs, develops and supplies a broad range of semiconductor and infrastructure software solutions. The company's semiconductor solutions focus on complex digital and mixed-signal complementary metal-oxide-semiconductor based devices and analog III-V based products.",
+    "businessModel": "Broadcom generates revenue through the sale of semiconductor devices for networking, broadband, enterprise storage, and industrial applications, as well as infrastructure software. In AI, it co-designs custom AI accelerators (ASICs) for hyperscalers like Google and Meta.",
+    "geopoliticalSummary": "Broadcom's revenue is heavily concentrated in the Asia Pacific region, particularly China, which presents significant exposure to export controls and trade tensions. The company relies on a complex global supply chain with significant concentration risk in Taiwan for manufacturing.",
+    "revenueByGeography": [
+      {
+        "region": "Asia Pacific",
+        "countryIds": ["CHN", "SGP", "KOR", "TWN"],
+        "percentOfRevenue": 55.1,
+        "revenueUsdBn": 28.42,
+        "year": 2024,
+        "note": "Primary hub for semiconductor supply chain"
+      },
+      {
+        "region": "Americas",
+        "countryIds": ["USA", "BRA", "CAN", "MEX"],
+        "percentOfRevenue": 29.0,
+        "revenueUsdBn": 14.97,
+        "year": 2024,
+        "note": "Includes United States revenue"
+      },
+      {
+        "region": "EMEA",
+        "countryIds": ["DEU", "GBR", "FRA", "NLD"],
+        "percentOfRevenue": 15.9,
+        "revenueUsdBn": 8.18,
+        "year": 2024,
+        "note": "Europe, Middle East and Africa"
+      }
+    ],
+    "keySuppliers": [
+      {
+        "role": "manufacturer",
+        "name": "TSMC",
+        "countryId": "TWN",
+        "percentOfSupply": 90,
+        "isConcentrationRisk": true,
+        "strategicNote": "Sole source for advanced node manufacturing"
+      }
+    ],
+    "keyCustomers": [
+      {
+        "role": "custom-asic-partner",
+        "name": "Google",
+        "countryId": "USA",
+        "percentOfRevenue": 15,
+        "isConcentrationRisk": true,
+        "strategicNote": "Co-design partner for Google's TPU"
+      },
+      {
+        "role": "custom-asic-partner",
+        "name": "Meta",
+        "countryId": "USA",
+        "percentOfRevenue": null,
+        "isConcentrationRisk": false,
+        "strategicNote": "Co-design partner for MTIA"
+      }
+    ],
+    "manufacturingLocations": [
+      {
+        "countryId": "TWN",
+        "city": "Hsinchu",
+        "percentOfCapacity": 90,
+        "note": "TSMC foundry dependence"
+      }
+    ],
+    "commodityDependencies": [
+      {
+        "commodity": "Advanced Logic Chips",
+        "role": "input",
+        "primarySupplyCountries": ["TWN"],
+        "isHedged": false,
+        "geopoliticalRisk": "critical",
+        "note": "Fabless model dependent on Taiwan"
+      }
+    ],
+    "regionalExposures": [
+      {
+        "region": "Taiwan",
+        "countryIds": ["TWN"],
+        "exposureType": "supply-chain",
+        "magnitude": "critical",
+        "note": "Manufacturing concentration risk",
+        "filingRefs": ["Item 1A"]
+      },
+      {
+        "region": "China",
+        "countryIds": ["CHN"],
+        "exposureType": "revenue",
+        "magnitude": "high",
+        "note": "Significant revenue and supply chain exposure",
+        "filingRefs": ["Item 1A"]
+      }
+    ],
+    "infrastructureDependencies": [
+      {
+        "type": "trade-route",
+        "entityId": "ROUTE-TRANSPAC-NORTH",
+        "name": "Trans-Pacific Shipping",
+        "importance": "high",
+        "note": "Transport of chips from Taiwan to US"
+      }
+    ],
+    "flags": {
+      "chinaRevenuePct": 17,
+      "chinaManufacturingDependent": false,
+      "russiaExposed": false,
+      "middleEastEnergyDependent": false,
+      "taiwanSemiconductorDependent": true,
+      "redSeaTradeRouteDependent": false,
+      "straitOfHormuzDependent": false,
+      "sanctionsSensitive": true,
+      "exportControlSensitive": true
+    },
+    "aiMarketPosition": {
+      "primaryAIRole": "custom-asic",
+      "aiRevenueEstimateUsdBn": 12.2,
+      "aiRevenueShareOfTotal": 24,
+      "trainingMarketSharePct": null,
+      "inferenceMarketSharePct": null,
+      "customASICMarketSharePct": 75,
+      "aiComputeStack": {
+        "layer": "Silicon Design",
+        "what": "Custom AI accelerators and networking chips",
+        "replaceabilityRisk": "low",
+        "note": "Deep integration with hyperscalers"
+      },
+      "hbmRelationship": {
+        "role": "consumer",
+        "note": "Uses HBM in ASICs from SK Hynix/Micron"
+      },
+      "customASICPartnerships": [
+        {
+          "customer": "Google",
+          "chipName": "TPU v4/v5/v6",
+          "node": "5nm/3nm",
+          "confirmed": true,
+          "source": "Earnings Call",
+          "note": "Lead partner for Google's AI training chips"
+        },
+        {
+          "customer": "Meta",
+          "chipName": "MTIA",
+          "node": "5nm",
+          "confirmed": true,
+          "source": "Meta AI Blog",
+          "note": "Design partner for Meta's inference chips"
+        }
+      ],
+      "keyAICustomers": [
+        {
+          "name": "Google",
+          "relationship": "custom-asic-partner",
+          "estimatedSpendUsdBn": 8.0,
+          "note": "Primary TPU partner"
+        }
+      ],
+      "vsNVIDIA": {
+        "relationship": "competitor",
+        "note": "Custom ASICs offer better power efficiency for specific workloads vs NVIDIA GPUs"
+      },
+      "competitiveMoat": [
+        "Hyperscaler co-design relationships",
+        "Networking dominance (Ethernet)",
+        "Advanced packaging expertise"
+      ],
+      "keyAIRisks": [
+        "Hyperscalers moving design in-house",
+        "Export controls on high-end networking",
+        "TSMC dependency"
+      ],
+      "aiMarketShareSources": [
+        {
+          "metric": "Custom AI ASIC share",
+          "value": "75%",
+          "source": "Analyst Estimate",
+          "url": null,
+          "note": "Dominant player in custom silicon"
+        }
+      ]
+    },
+    "latestFilingId": "FILING-AVGO-10K-2024",
+    "secCik": "0001730168",
+    "secEdgarUrl": "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0001730168&type=10-K",
+    "attribution": {
+      "sources": [
+        {
+          "name": "Broadcom 10-K FY2024",
+          "url": "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0001730168",
+          "type": "filing",
+          "accessedAt": "2026-05-11",
+          "verbatimQuote": "Our business, operations and financial results are subject to various risks and uncertainties, including those described below, that could adversely affect our business, financial condition, results of operations, cash flows, and the trading price of our common stock."
+        }
+      ],
+      "confidence": "high",
+      "lastVerified": "2026-05-11",
+      "generatedBy": "ai-assisted"
+    }
+  },
+  {
+    "id": "COMPANY-NVDA",
+    "ticker": "NVDA",
+    "name": "NVIDIA Corporation",
+    "exchange": "NASDAQ",
+    "gicsSector": "Information Technology",
+    "gicsIndustryGroup": "Semiconductors & Semiconductor Equipment",
+    "gicsIndustry": "Semiconductors",
+    "countryOfIncorporation": "USA",
+    "countryOfHQ": "USA",
+    "marketCapUsdBn": 3200,
+    "revenueUsdBn": 130.5,
+    "fiscalYear": 2025,
+    "description": "NVIDIA Corporation is the pioneer of GPU-accelerated computing. The company specializes in markets where its computing platforms can provide tremendous acceleration for applications, including gaming, professional visualization, data center, and automotive.",
+    "businessModel": "NVIDIA designs and sells GPUs for gaming and data centers, as well as networking solutions. Its AI revenue comes from selling high-performance GPUs (Hopper, Blackwell) used for AI training and inference in data centers.",
+    "geopoliticalSummary": "NVIDIA faces significant geopolitical risks due to its dependence on TSMC in Taiwan for all advanced manufacturing and its exposure to U.S. export controls on sales to China.",
+    "revenueByGeography": [
+      {
+        "region": "United States",
+        "countryIds": ["USA"],
+        "percentOfRevenue": 46.9,
+        "revenueUsdBn": 61.3,
+        "year": 2025,
+        "note": "Exact segment name: 'United States'"
+      },
+      {
+        "region": "Singapore",
+        "countryIds": ["SGP"],
+        "percentOfRevenue": 18.1,
+        "revenueUsdBn": 23.7,
+        "year": 2025,
+        "note": "Centralized invoicing location"
+      },
+      {
+        "region": "Taiwan",
+        "countryIds": ["TWN"],
+        "percentOfRevenue": 15.8,
+        "revenueUsdBn": 20.6,
+        "year": 2025,
+        "note": "Major manufacturing hub"
+      },
+      {
+        "region": "China",
+        "countryIds": ["CHN"],
+        "percentOfRevenue": 13.1,
+        "revenueUsdBn": 17.1,
+        "year": 2025,
+        "note": "Includes Hong Kong; impacted by export controls"
+      }
+    ],
+    "keySuppliers": [
+      {
+        "role": "manufacturer",
+        "name": "TSMC",
+        "countryId": "TWN",
+        "percentOfSupply": 95,
+        "isConcentrationRisk": true,
+        "strategicNote": "Sole source for advanced node GPUs and CoWoS packaging"
+      }
+    ],
+    "keyCustomers": [
+      {
+        "role": "hyperscaler",
+        "name": "Microsoft",
+        "countryId": "USA",
+        "percentOfRevenue": null,
+        "isConcentrationRisk": false,
+        "strategicNote": "Largest customer for AI infrastructure"
+      }
+    ],
+    "manufacturingLocations": [
+      {
+        "countryId": "TWN",
+        "city": "Hsinchu",
+        "percentOfCapacity": 95,
+        "note": "TSMC fabrication"
+      }
+    ],
+    "commodityDependencies": [
+      {
+        "commodity": "HBM Memory",
+        "role": "input",
+        "primarySupplyCountries": ["KOR", "USA"],
+        "isHedged": false,
+        "geopoliticalRisk": "high",
+        "note": "Critical for AI GPUs, supplied by SK Hynix, Micron, Samsung"
+      }
+    ],
+    "regionalExposures": [
+      {
+        "region": "Taiwan",
+        "countryIds": ["TWN"],
+        "exposureType": "supply-chain",
+        "magnitude": "critical",
+        "note": "Total dependency on Taiwan for manufacturing",
+        "filingRefs": ["Item 1A"]
+      },
+      {
+        "region": "China",
+        "countryIds": ["CHN"],
+        "exposureType": "revenue",
+        "magnitude": "high",
+        "note": "Impact of US export controls on high-end GPU sales",
+        "filingRefs": ["Item 1A"]
+      }
+    ],
+    "infrastructureDependencies": [
+      {
+        "type": "trade-route",
+        "entityId": "ROUTE-TRANSPAC-NORTH",
+        "name": "Trans-Pacific Shipping",
+        "importance": "high",
+        "note": "Critical for hardware delivery"
+      }
+    ],
+    "flags": {
+      "chinaRevenuePct": 13,
+      "chinaManufacturingDependent": false,
+      "russiaExposed": false,
+      "middleEastEnergyDependent": false,
+      "taiwanSemiconductorDependent": true,
+      "redSeaTradeRouteDependent": false,
+      "straitOfHormuzDependent": false,
+      "sanctionsSensitive": true,
+      "exportControlSensitive": true
+    },
+    "aiMarketPosition": {
+      "primaryAIRole": "training-gpu",
+      "aiRevenueEstimateUsdBn": 115.2,
+      "aiRevenueShareOfTotal": 88,
+      "trainingMarketSharePct": 90,
+      "inferenceMarketSharePct": 70,
+      "customASICMarketSharePct": null,
+      "aiComputeStack": {
+        "layer": "Silicon / Platform",
+        "what": "GPUs, Networking, CUDA software ecosystem",
+        "replaceabilityRisk": "very-low",
+        "note": "CUDA creates significant software lock-in"
+      },
+      "hbmRelationship": {
+        "role": "consumer",
+        "note": "Primary consumer of global HBM capacity"
+      },
+      "customASICPartnerships": [],
+      "keyAICustomers": [
+        {
+          "name": "Meta",
+          "relationship": "customer",
+          "estimatedSpendUsdBn": 10.0,
+          "note": "Significant buyer for Llama training"
+        }
+      ],
+      "vsNVIDIA": {
+        "relationship": "self",
+        "note": "Market leader"
+      },
+      "competitiveMoat": [
+        "CUDA software ecosystem",
+        "Product cadence (1-year cycles)",
+        "Full stack optimization (Silicon to Systems)"
+      ],
+      "keyAIRisks": [
+        "Export controls on Blackwell",
+        "Hyperscaler custom ASICs",
+        "Taiwan conflict"
+      ],
+      "aiMarketShareSources": [
+        {
+          "metric": "AI Accelerator market share",
+          "value": "80-95%",
+          "source": "Gartner / IDC",
+          "url": null,
+          "note": "Near monopoly in training"
+        }
+      ]
+    },
+    "latestFilingId": "FILING-NVDA-10K-2025",
+    "secCik": "0001045810",
+    "secEdgarUrl": "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0001045810&type=10-K",
+    "attribution": {
+      "sources": [
+        {
+          "name": "NVIDIA 10-K FY2024",
+          "url": "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0001045810",
+          "type": "filing",
+          "accessedAt": "2026-05-11",
+          "verbatimQuote": "In evaluating NVIDIA and our business, the following factors should be considered in addition to the other information in this Annual Report on Form 10-K."
+        }
+      ],
+      "confidence": "high",
+      "lastVerified": "2026-05-11",
+      "generatedBy": "ai-assisted"
+    }
+  },
+  {
+    "id": "COMPANY-MRVL",
+    "ticker": "MRVL",
+    "name": "Marvell Technology, Inc.",
+    "exchange": "NASDAQ",
+    "gicsSector": "Information Technology",
+    "gicsIndustryGroup": "Semiconductors & Semiconductor Equipment",
+    "gicsIndustry": "Semiconductors",
+    "countryOfIncorporation": "USA",
+    "countryOfHQ": "USA",
+    "marketCapUsdBn": 70,
+    "revenueUsdBn": 8.2,
+    "fiscalYear": 2025,
+    "description": "Marvell Technology, Inc. is a leader in infrastructure semiconductor solutions. The company provides a broad portfolio of data infrastructure semiconductor solutions spanning the data center core to the network edge.",
+    "businessModel": "Marvell generates revenue by designing and selling semiconductor products for the data center, carrier infrastructure, enterprise networking, consumer and automotive markets. It focuses on custom AI ASICs and electro-optics (DSP).",
+    "geopoliticalSummary": "Marvell has significant exposure to the Asia Pacific region for manufacturing and revenue. It relies on TSMC for its most advanced products and faces risks from U.S.-China trade restrictions.",
+    "revenueByGeography": [
+      {
+        "region": "Asia Pacific",
+        "countryIds": ["CHN", "SGP", "TWN"],
+        "percentOfRevenue": 75,
+        "revenueUsdBn": 6.15,
+        "year": 2025,
+        "note": "Estimated based on historical trends"
+      },
+      {
+        "region": "United States",
+        "countryIds": ["USA"],
+        "percentOfRevenue": 15,
+        "revenueUsdBn": 1.23,
+        "year": 2025,
+        "note": "Direct domestic sales"
+      }
+    ],
+    "keySuppliers": [
+      {
+        "role": "manufacturer",
+        "name": "TSMC",
+        "countryId": "TWN",
+        "percentOfSupply": 80,
+        "isConcentrationRisk": true,
+        "strategicNote": "Critical for advanced node production"
+      }
+    ],
+    "keyCustomers": [
+      {
+        "role": "custom-asic-partner",
+        "name": "Amazon (AWS)",
+        "countryId": "USA",
+        "percentOfRevenue": null,
+        "isConcentrationRisk": false,
+        "strategicNote": "Partner for Trainium and Inferentia"
+      }
+    ],
+    "manufacturingLocations": [
+      {
+        "countryId": "TWN",
+        "city": "Hsinchu",
+        "percentOfCapacity": 80,
+        "note": "TSMC foundry"
+      }
+    ],
+    "commodityDependencies": [
+      {
+        "commodity": "Substrates",
+        "role": "input",
+        "primarySupplyCountries": ["JPN", "TWN"],
+        "isHedged": false,
+        "geopoliticalRisk": "medium",
+        "note": "Packaging materials"
+      }
+    ],
+    "regionalExposures": [
+      {
+        "region": "Taiwan",
+        "countryIds": ["TWN"],
+        "exposureType": "supply-chain",
+        "magnitude": "critical",
+        "note": "High dependence on Taiwan for manufacturing",
+        "filingRefs": ["Item 1A"]
+      }
+    ],
+    "infrastructureDependencies": [
+      {
+        "type": "trade-route",
+        "entityId": "ROUTE-TRANSPAC-NORTH",
+        "name": "Trans-Pacific Shipping",
+        "importance": "high",
+        "note": "Component delivery"
+      }
+    ],
+    "flags": {
+      "chinaRevenuePct": 30,
+      "chinaManufacturingDependent": false,
+      "russiaExposed": false,
+      "middleEastEnergyDependent": false,
+      "taiwanSemiconductorDependent": true,
+      "redSeaTradeRouteDependent": false,
+      "straitOfHormuzDependent": false,
+      "sanctionsSensitive": true,
+      "exportControlSensitive": true
+    },
+    "aiMarketPosition": {
+      "primaryAIRole": "custom-asic",
+      "aiRevenueEstimateUsdBn": 2.5,
+      "aiRevenueShareOfTotal": 30,
+      "trainingMarketSharePct": null,
+      "inferenceMarketSharePct": null,
+      "customASICMarketSharePct": 20,
+      "aiComputeStack": {
+        "layer": "Silicon Design / Connectivity",
+        "what": "Custom accelerators and PAM4 DSPs for AI interconnect",
+        "replaceabilityRisk": "medium",
+        "note": "Strong position in AI optics"
+      },
+      "hbmRelationship": {
+        "role": "consumer",
+        "note": "Integrates HBM into custom ASICs"
+      },
+      "customASICPartnerships": [
+        {
+          "customer": "Amazon",
+          "chipName": "Trainium 1/2",
+          "node": "7nm/5nm",
+          "confirmed": true,
+          "source": "AWS re:Invent",
+          "note": "Major partner for AWS AI training chips"
+        },
+        {
+          "customer": "Microsoft",
+          "chipName": "Maia 100",
+          "node": "5nm",
+          "confirmed": true,
+          "source": "Microsoft Ignite",
+          "note": "Silicon IP partner"
+        }
+      ],
+      "keyAICustomers": [
+        {
+          "name": "Amazon",
+          "relationship": "custom-asic-partner",
+          "estimatedSpendUsdBn": 1.0,
+          "note": "Trainium production ramp"
+        }
+      ],
+      "vsNVIDIA": {
+        "relationship": "partner/competitor",
+        "note": "Provides connectivity for NVIDIA systems while building competing custom chips"
+      },
+      "competitiveMoat": [
+        "Leadership in high-speed optical interconnect (DSP)",
+        "Proven execution on complex custom ASICs",
+        "Broad IP portfolio"
+      ],
+      "keyAIRisks": [
+        "Loss of custom slots to competitors (Alchip/Broadcom)",
+        "Cyclicality in networking spend",
+        "Trade restrictions"
+      ],
+      "aiMarketShareSources": [
+        {
+          "metric": "Custom AI ASIC share",
+          "value": "~20%",
+          "source": "J.P. Morgan",
+          "url": null,
+          "note": "Strong #2 behind Broadcom"
+        }
+      ]
+    },
+    "latestFilingId": "FILING-MRVL-10K-2024",
+    "secCik": "0001850744",
+    "secEdgarUrl": "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0001850744&type=10-K",
+    "attribution": {
+      "sources": [
+        {
+          "name": "Marvell 10-K FY2024",
+          "url": "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0001850744",
+          "type": "filing",
+          "accessedAt": "2026-05-11",
+          "verbatimQuote": "Investing in our common stock involves a high degree of risk."
+        }
+      ],
+      "confidence": "high",
+      "lastVerified": "2026-05-11",
+      "generatedBy": "ai-assisted"
+    }
+  },
+  {
+    "id": "COMPANY-MU",
+    "ticker": "MU",
+    "name": "Micron Technology, Inc.",
+    "exchange": "NASDAQ",
+    "gicsSector": "Information Technology",
+    "gicsIndustryGroup": "Semiconductors & Semiconductor Equipment",
+    "gicsIndustry": "Semiconductors",
+    "countryOfIncorporation": "USA",
+    "countryOfHQ": "USA",
+    "marketCapUsdBn": 130,
+    "revenueUsdBn": 37.4,
+    "fiscalYear": 2025,
+    "description": "Micron Technology, Inc. is a world leader in innovative memory and storage solutions. Through its global brands — Micron and Crucial — the company's broad portfolio of high-performance memory and storage technologies is transforming how the world uses information to enrich life.",
+    "businessModel": "Micron manufactures DRAM and NAND memory products. AI revenue is driven by High Bandwidth Memory (HBM3e) and high-capacity DDR5 modules for AI servers.",
+    "geopoliticalSummary": "Micron faces complex geopolitical risks, including China's CAC restrictions on its products and the competitive landscape with South Korean rivals. It is expanding U.S. manufacturing with CHIPS Act support.",
+    "revenueByGeography": [
+      {
+        "region": "United States",
+        "countryIds": ["USA"],
+        "percentOfRevenue": 50,
+        "revenueUsdBn": 18.7,
+        "year": 2025,
+        "note": "Strong domestic growth driven by AI"
+      },
+      {
+        "region": "China",
+        "countryIds": ["CHN"],
+        "percentOfRevenue": 12,
+        "revenueUsdBn": 4.49,
+        "year": 2025,
+        "note": "Impacted by CAC restrictions"
+      },
+      {
+        "region": "Taiwan",
+        "countryIds": ["TWN"],
+        "percentOfRevenue": 15,
+        "revenueUsdBn": 5.61,
+        "year": 2025,
+        "note": "Significant manufacturing and sales presence"
+      }
+    ],
+    "keySuppliers": [
+      {
+        "role": "equipment",
+        "name": "ASML",
+        "countryId": "NLD",
+        "percentOfSupply": null,
+        "isConcentrationRisk": true,
+        "strategicNote": "Critical for EUV-based DRAM production"
+      }
+    ],
+    "keyCustomers": [
+      {
+        "role": "customer",
+        "name": "NVIDIA",
+        "countryId": "USA",
+        "percentOfRevenue": null,
+        "isConcentrationRisk": true,
+        "strategicNote": "Major buyer of HBM3e"
+      }
+    ],
+    "manufacturingLocations": [
+      {
+        "countryId": "USA",
+        "city": "Boise",
+        "percentOfCapacity": null,
+        "note": "R&D and manufacturing"
+      },
+      {
+        "countryId": "TWN",
+        "city": "Taichung",
+        "percentOfCapacity": null,
+        "note": "DRAM fabrication"
+      },
+      {
+        "countryId": "JPN",
+        "city": "Hiroshima",
+        "percentOfCapacity": null,
+        "note": "Advanced DRAM fab"
+      }
+    ],
+    "commodityDependencies": [
+      {
+        "commodity": "Silicon Wafers",
+        "role": "input",
+        "primarySupplyCountries": ["JPN"],
+        "isHedged": true,
+        "geopoliticalRisk": "low",
+        "note": "Long-term supply agreements"
+      }
+    ],
+    "regionalExposures": [
+      {
+        "region": "China",
+        "countryIds": ["CHN"],
+        "exposureType": "revenue / regulatory",
+        "magnitude": "high",
+        "note": "CAC security review limits sales to critical infrastructure",
+        "filingRefs": ["Item 1A"]
+      }
+    ],
+    "infrastructureDependencies": [],
+    "flags": {
+      "chinaRevenuePct": 12,
+      "chinaManufacturingDependent": true,
+      "russiaExposed": false,
+      "middleEastEnergyDependent": false,
+      "taiwanSemiconductorDependent": true,
+      "redSeaTradeRouteDependent": false,
+      "straitOfHormuzDependent": false,
+      "sanctionsSensitive": true,
+      "exportControlSensitive": true
+    },
+    "aiMarketPosition": {
+      "primaryAIRole": "hbm-memory",
+      "aiRevenueEstimateUsdBn": 8.0,
+      "aiRevenueShareOfTotal": 21,
+      "trainingMarketSharePct": null,
+      "inferenceMarketSharePct": null,
+      "customASICMarketSharePct": null,
+      "aiComputeStack": {
+        "layer": "Memory",
+        "what": "HBM and high-capacity DRAM",
+        "replaceabilityRisk": "medium",
+        "note": "HBM is a critical bottleneck for AI hardware"
+      },
+      "hbmRelationship": {
+        "role": "producer",
+        "note": "Scaling HBM3e production for NVIDIA Blackwell"
+      },
+      "customASICPartnerships": [],
+      "keyAICustomers": [
+        {
+          "name": "NVIDIA",
+          "relationship": "HBM Supplier",
+          "estimatedSpendUsdBn": null,
+          "note": "Qualified for H200/Blackwell"
+        }
+      ],
+      "vsNVIDIA": {
+        "relationship": "supplier",
+        "note": "Micron is a beneficiary of NVIDIA's growth"
+      },
+      "competitiveMoat": [
+        "Proprietary 1-beta DRAM node",
+        "Power efficiency lead in HBM3e",
+        "In-house manufacturing footprint"
+      ],
+      "keyAIRisks": [
+        "Yield issues on HBM stack",
+        "Oversupply in general DRAM market",
+        "China's ban on Micron products"
+      ],
+      "aiMarketShareSources": [
+        {
+          "metric": "HBM market share target",
+          "value": "20-25%",
+          "source": "Micron Investor Relations",
+          "url": null,
+          "note": "Aiming for share parity with DRAM"
+        }
+      ]
+    },
+    "latestFilingId": "FILING-MU-10K-2024",
+    "secCik": "0000723125",
+    "secEdgarUrl": "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0000723125&type=10-K",
+    "attribution": {
+      "sources": [
+        {
+          "name": "Micron 10-K FY2024",
+          "url": "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0000723125",
+          "type": "filing",
+          "accessedAt": "2026-05-11",
+          "verbatimQuote": "In addition to the factors discussed elsewhere in this Form 10-K, this section discusses important factors which could cause actual results or events to differ materially from those contained in any forward-looking statements made by us."
+        }
+      ],
+      "confidence": "high",
+      "lastVerified": "2026-05-11",
+      "generatedBy": "ai-assisted"
+    }
+  },
+  {
+    "id": "COMPANY-SMCI",
+    "ticker": "SMCI",
+    "name": "Super Micro Computer, Inc.",
+    "exchange": "NASDAQ",
+    "gicsSector": "Information Technology",
+    "gicsIndustryGroup": "Technology Hardware & Equipment",
+    "gicsIndustry": "Technology Hardware, Storage & Peripherals",
+    "countryOfIncorporation": "USA",
+    "countryOfHQ": "USA",
+    "marketCapUsdBn": 50,
+    "revenueUsdBn": 21.97,
+    "fiscalYear": 2025,
+    "description": "Super Micro Computer, Inc. is a global leader in high-performance, high-efficiency server technology and innovation. It provides advanced server, storage, networking, devices and software solutions optimized for diverse applications.",
+    "businessModel": "SMCI sells server systems, subsystems, and accessories. It specializes in application-optimized servers, particularly for AI, utilizing liquid cooling and rapid time-to-market strategies.",
+    "geopoliticalSummary": "SMCI manufactures primarily in the U.S., Taiwan, and Malaysia. It faces risks from component availability (GPUs) and potential export controls on high-end server systems.",
+    "revenueByGeography": [
+      {
+        "region": "United States",
+        "countryIds": ["USA"],
+        "percentOfRevenue": 59.4,
+        "revenueUsdBn": 13.05,
+        "year": 2025,
+        "note": "Strong demand from AI clouds"
+      },
+      {
+        "region": "Asia",
+        "countryIds": ["TWN", "MYS", "CHN"],
+        "percentOfRevenue": 25.0,
+        "revenueUsdBn": 5.49,
+        "year": 2025,
+        "note": "Includes manufacturing and local sales"
+      },
+      {
+        "region": "Europe",
+        "countryIds": ["NLD", "DEU"],
+        "percentOfRevenue": 12.4,
+        "revenueUsdBn": 2.73,
+        "year": 2025,
+        "note": "EMEA region growth"
+      }
+    ],
+    "keySuppliers": [
+      {
+        "role": "component-gpu",
+        "name": "NVIDIA",
+        "countryId": "USA",
+        "percentOfSupply": null,
+        "isConcentrationRisk": true,
+        "strategicNote": "Primary source for AI server acceleration"
+      }
+    ],
+    "keyCustomers": [
+      {
+        "role": "customer",
+        "name": "CoreWeave",
+        "countryId": "USA",
+        "percentOfRevenue": null,
+        "isConcentrationRisk": false,
+        "strategicNote": "AI cloud service provider"
+      }
+    ],
+    "manufacturingLocations": [
+      {
+        "countryId": "USA",
+        "city": "San Jose",
+        "percentOfCapacity": null,
+        "note": "Headquarters and primary manufacturing"
+      },
+      {
+        "countryId": "TWN",
+        "city": "Taoyuan",
+        "percentOfCapacity": null,
+        "note": "Science Park manufacturing"
+      },
+      {
+        "countryId": "MYS",
+        "city": "Johor",
+        "percentOfCapacity": null,
+        "note": "Lower cost assembly"
+      }
+    ],
+    "commodityDependencies": [],
+    "regionalExposures": [],
+    "infrastructureDependencies": [],
+    "flags": {
+      "chinaRevenuePct": 5,
+      "chinaManufacturingDependent": false,
+      "russiaExposed": false,
+      "middleEastEnergyDependent": false,
+      "taiwanSemiconductorDependent": true,
+      "redSeaTradeRouteDependent": false,
+      "straitOfHormuzDependent": false,
+      "sanctionsSensitive": true,
+      "exportControlSensitive": true
+    },
+    "aiMarketPosition": {
+      "primaryAIRole": "systems",
+      "aiRevenueEstimateUsdBn": 15.0,
+      "aiRevenueShareOfTotal": 68,
+      "trainingMarketSharePct": 40,
+      "inferenceMarketSharePct": 40,
+      "customASICMarketSharePct": null,
+      "aiComputeStack": {
+        "layer": "Systems / Infrastructure",
+        "what": "AI server racks with liquid cooling",
+        "replaceabilityRisk": "medium",
+        "note": "Speed of delivery is key"
+      },
+      "hbmRelationship": {
+        "role": "none",
+        "note": "N/A"
+      },
+      "customASICPartnerships": [],
+      "keyAICustomers": [
+        {
+          "name": "NVIDIA",
+          "relationship": "Partner",
+          "estimatedSpendUsdBn": null,
+          "note": "Launch partner for Blackwell systems"
+        }
+      ],
+      "vsNVIDIA": {
+        "relationship": "partner",
+        "note": "SMCI is an essential channel for NVIDIA GPUs"
+      },
+      "competitiveMoat": [
+        "Time-to-market (First to ship new GPUs)",
+        "Direct Liquid Cooling (DLC) leadership",
+        "Building block architecture"
+      ],
+      "keyAIRisks": [
+        "NVIDIA allocation constraints",
+        "Competitive pressure from Dell/HPE",
+        "Internal controls and auditing challenges"
+      ],
+      "aiMarketShareSources": [
+        {
+          "metric": "AI GPU server share",
+          "value": "~40-50%",
+          "source": "Industry Analysis 2024",
+          "url": null,
+          "note": "Leader in early adoption phase"
+        }
+      ]
+    },
+    "latestFilingId": "FILING-SMCI-10K-2024",
+    "secCik": "0001375365",
+    "secEdgarUrl": "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0001375365&type=10-K",
+    "attribution": {
+      "sources": [
+        {
+          "name": "Super Micro 10-K FY2024",
+          "url": "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0001375365",
+          "type": "filing",
+          "accessedAt": "2026-05-11",
+          "verbatimQuote": "Our business involves significant risks, some of which are described below."
+        }
+      ],
+      "confidence": "high",
+      "lastVerified": "2026-05-11",
+      "generatedBy": "ai-assisted"
+    }
+  },
+  {
+    "id": "COMPANY-ARM",
+    "ticker": "ARM",
+    "name": "Arm Holdings plc",
+    "exchange": "NASDAQ",
+    "gicsSector": "Information Technology",
+    "gicsIndustryGroup": "Semiconductors & Semiconductor Equipment",
+    "gicsIndustry": "Semiconductors",
+    "countryOfIncorporation": "UK",
+    "countryOfHQ": "UK",
+    "marketCapUsdBn": 140,
+    "revenueUsdBn": 4.01,
+    "fiscalYear": 2025,
+    "description": "Arm is the world's leading supplier of semiconductor intellectual property (IP). Arm designs the architecture that powers the majority of the world's chips, from smartphones to supercomputers.",
+    "businessModel": "Arm generates revenue through licensing fees and royalties. In AI, its Armv9 architecture provides specialized instructions for AI workloads, and its Neoverse platform targets data center AI chips.",
+    "geopoliticalSummary": "Arm's business in China is a major geopolitical risk, as it operates through Arm China, an entity it does not control. It also faces risks from UK and US export controls.",
+    "revenueByGeography": [
+      {
+        "region": "United States",
+        "countryIds": ["USA"],
+        "percentOfRevenue": 42.8,
+        "revenueUsdBn": 1.72,
+        "year": 2025,
+        "note": "Growth in data center adoption"
+      },
+      {
+        "region": "China",
+        "countryIds": ["CHN"],
+        "percentOfRevenue": 18.7,
+        "revenueUsdBn": 0.75,
+        "year": 2025,
+        "note": "Includes revenue from Arm China"
+      },
+      {
+        "region": "Taiwan",
+        "countryIds": ["TWN"],
+        "percentOfRevenue": 15.7,
+        "revenueUsdBn": 0.63,
+        "year": 2025,
+        "note": "Major semiconductor hub"
+      }
+    ],
+    "keySuppliers": [],
+    "keyCustomers": [
+      {
+        "role": "licensee",
+        "name": "Apple",
+        "countryId": "USA",
+        "percentOfRevenue": null,
+        "isConcentrationRisk": true,
+        "strategicNote": "Long-term architectural license"
+      },
+      {
+        "role": "licensee",
+        "name": "NVIDIA",
+        "countryId": "USA",
+        "percentOfRevenue": null,
+        "isConcentrationRisk": false,
+        "strategicNote": "Uses Arm for Grace CPU"
+      }
+    ],
+    "manufacturingLocations": [],
+    "commodityDependencies": [],
+    "regionalExposures": [
+      {
+        "region": "China",
+        "countryIds": ["CHN"],
+        "exposureType": "revenue / control",
+        "magnitude": "critical",
+        "note": "Dependence on Arm China for revenue collection and IP enforcement",
+        "filingRefs": ["Item 3D"]
+      }
+    ],
+    "infrastructureDependencies": [],
+    "flags": {
+      "chinaRevenuePct": 19,
+      "chinaManufacturingDependent": false,
+      "russiaExposed": false,
+      "middleEastEnergyDependent": false,
+      "taiwanSemiconductorDependent": false,
+      "redSeaTradeRouteDependent": false,
+      "straitOfHormuzDependent": false,
+      "sanctionsSensitive": true,
+      "exportControlSensitive": true
+    },
+    "aiMarketPosition": {
+      "primaryAIRole": "architecture",
+      "aiRevenueEstimateUsdBn": 1.5,
+      "aiRevenueShareOfTotal": 37,
+      "trainingMarketSharePct": null,
+      "inferenceMarketSharePct": 90,
+      "customASICMarketSharePct": null,
+      "aiComputeStack": {
+        "layer": "Architecture",
+        "what": "CPU architecture and AI instructions (SVE2)",
+        "replaceabilityRisk": "very-low",
+        "note": "Deeply embedded in mobile and increasingly data center"
+      },
+      "hbmRelationship": {
+        "role": "none",
+        "note": "N/A"
+      },
+      "customASICPartnerships": [],
+      "keyAICustomers": [
+        {
+          "name": "AWS",
+          "relationship": "Licensee",
+          "estimatedSpendUsdBn": null,
+          "note": "Graviton processors for AI inference"
+        }
+      ],
+      "vsNVIDIA": {
+        "relationship": "partner",
+        "note": "NVIDIA Grace CPU uses Arm architecture"
+      },
+      "competitiveMoat": [
+        "Ubiquity (Billions of chips)",
+        "Energy efficiency lead",
+        "Software ecosystem (Arm ecosystem)"
+      ],
+      "keyAIRisks": [
+        "Arm China operational risks",
+        "RISC-V competition",
+        "Export controls on high-end cores (Neoverse)"
+      ],
+      "aiMarketShareSources": [
+        {
+          "metric": "Smartphone AI inference share",
+          "value": ">90%",
+          "source": "Strategy Analytics",
+          "url": null,
+          "note": "Dominant in edge AI"
+        }
+      ]
+    },
+    "latestFilingId": "FILING-ARM-20F-2024",
+    "secCik": "0001967656",
+    "secEdgarUrl": "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0001967656&type=20-F",
+    "attribution": {
+      "sources": [
+        {
+          "name": "Arm 20-F FY2024",
+          "url": "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0001967656",
+          "type": "filing",
+          "accessedAt": "2026-05-11",
+          "verbatimQuote": "In addition to the other information contained in this Annual Report and in other documents we file with or furnish to the U.S. Securities and Exchange Commission (the 'SEC'), the following risk factors should be considered in evaluating our business."
+        }
+      ],
+      "confidence": "high",
+      "lastVerified": "2026-05-11",
+      "generatedBy": "ai-assisted"
+    }
+  },
+  {
+    "id": "COMPANY-TSM",
+    "ticker": "TSM",
+    "name": "Taiwan Semiconductor Manufacturing Co.",
+    "exchange": "NYSE",
+    "gicsSector": "Information Technology",
+    "gicsIndustryGroup": "Semiconductors & Semiconductor Equipment",
+    "gicsIndustry": "Semiconductors",
+    "countryOfIncorporation": "Taiwan",
+    "countryOfHQ": "Taiwan",
+    "marketCapUsdBn": 900,
+    "revenueUsdBn": 90.08,
+    "fiscalYear": 2024,
+    "description": "TSMC is the world's largest dedicated semiconductor foundry. It manufactures chips for most of the world's leading semiconductor companies, including Apple, NVIDIA, and AMD.",
+    "businessModel": "TSMC's revenue comes from manufacturing wafers for its customers. AI growth is driving demand for advanced nodes (3nm, 5nm) and CoWoS packaging.",
+    "geopoliticalSummary": "TSMC is at the heart of the U.S.-China technology rivalry. Its concentration of manufacturing in Taiwan is a critical global chokepoint.",
+    "revenueByGeography": [
+      {
+        "region": "North America",
+        "countryIds": ["USA", "CAN"],
+        "percentOfRevenue": 70,
+        "revenueUsdBn": 63.06,
+        "year": 2024,
+        "note": "Dominated by US hyperscalers and fabless firms"
+      },
+      {
+        "region": "China",
+        "countryIds": ["CHN"],
+        "percentOfRevenue": 11,
+        "revenueUsdBn": 9.91,
+        "year": 2024,
+        "note": "Includes mainland China"
+      }
+    ],
+    "keySuppliers": [
+      {
+        "role": "equipment",
+        "name": "ASML",
+        "countryId": "NLD",
+        "percentOfSupply": null,
+        "isConcentrationRisk": true,
+        "strategicNote": "Sole source for EUV lithography machines"
+      }
+    ],
+    "keyCustomers": [
+      {
+        "role": "customer",
+        "name": "Apple",
+        "countryId": "USA",
+        "percentOfRevenue": 25,
+        "isConcentrationRisk": true,
+        "strategicNote": "Largest customer for leading-edge nodes"
+      },
+      {
+        "role": "customer",
+        "name": "NVIDIA",
+        "countryId": "USA",
+        "percentOfRevenue": 15,
+        "isConcentrationRisk": true,
+        "strategicNote": "Dominant customer for AI logic"
+      }
+    ],
+    "manufacturingLocations": [
+      {
+        "countryId": "TWN",
+        "city": "Hsinchu",
+        "percentOfCapacity": 80,
+        "note": "Advanced node hub"
+      },
+      {
+        "countryId": "USA",
+        "city": "Phoenix",
+        "percentOfCapacity": 5,
+        "note": "Expanding US capacity"
+      }
+    ],
+    "commodityDependencies": [
+      {
+        "commodity": "Neon Gas",
+        "role": "input",
+        "primarySupplyCountries": ["UKR", "CHN"],
+        "isHedged": true,
+        "geopoliticalRisk": "medium",
+        "note": "Critical for lithography"
+      }
+    ],
+    "regionalExposures": [
+      {
+        "region": "Taiwan",
+        "countryIds": ["TWN"],
+        "exposureType": "concentration",
+        "magnitude": "critical",
+        "note": "Cross-strait tensions pose an existential risk to operations",
+        "filingRefs": ["Item 3D"]
+      }
+    ],
+    "infrastructureDependencies": [
+      {
+        "type": "trade-route",
+        "entityId": "ROUTE-TRANSPAC-NORTH",
+        "name": "Trans-Pacific Shipping",
+        "importance": "high",
+        "note": "Shipping to North American customers"
+      }
+    ],
+    "flags": {
+      "chinaRevenuePct": 11,
+      "chinaManufacturingDependent": true,
+      "russiaExposed": false,
+      "middleEastEnergyDependent": false,
+      "taiwanSemiconductorDependent": true,
+      "redSeaTradeRouteDependent": false,
+      "straitOfHormuzDependent": false,
+      "sanctionsSensitive": true,
+      "exportControlSensitive": true
+    },
+    "aiMarketPosition": {
+      "primaryAIRole": "foundry",
+      "aiRevenueEstimateUsdBn": 15.0,
+      "aiRevenueShareOfTotal": 17,
+      "trainingMarketSharePct": 95,
+      "inferenceMarketSharePct": 90,
+      "customASICMarketSharePct": 90,
+      "aiComputeStack": {
+        "layer": "Manufacturing",
+        "what": "Advanced node wafers and CoWoS packaging",
+        "replaceabilityRisk": "very-low",
+        "note": "The ultimate chokepoint of the AI industry"
+      },
+      "hbmRelationship": {
+        "role": "aggregator",
+        "note": "Integrates HBM into customer chips via CoWoS"
+      },
+      "customASICPartnerships": [],
+      "keyAICustomers": [
+        {
+          "name": "NVIDIA",
+          "relationship": "Customer",
+          "estimatedSpendUsdBn": null,
+          "note": "Primary foundry for H100/B100"
+        }
+      ],
+      "vsNVIDIA": {
+        "relationship": "partner",
+        "note": "TSMC is the essential partner for NVIDIA's existence"
+      },
+      "competitiveMoat": [
+        "Process technology lead (3nm/2nm)",
+        "Scale and capital intensity",
+        "CoWoS packaging capacity"
+      ],
+      "keyAIRisks": [
+        "Cross-strait conflict",
+        "Client concentration",
+        "Energy and water shortages in Taiwan"
+      ],
+      "aiMarketShareSources": [
+        {
+          "metric": "Advanced Node Foundry Share",
+          "value": ">90%",
+          "source": "TrendForce",
+          "url": null,
+          "note": "Dominant in <7nm nodes"
+        }
+      ]
+    },
+    "latestFilingId": "FILING-TSM-20F-2024",
+    "secCik": "0001046179",
+    "secEdgarUrl": "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0001046179&type=20-F",
+    "attribution": {
+      "sources": [
+        {
+          "name": "TSMC 20-F 2023",
+          "url": "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0001046179",
+          "type": "filing",
+          "accessedAt": "2026-05-11",
+          "verbatimQuote": "The uncertainty and instability inherent in advanced technologies impose challenges for achieving expected product quality and product yield."
+        }
+      ],
+      "confidence": "high",
+      "lastVerified": "2026-05-11",
+      "generatedBy": "ai-assisted"
+    }
+  },
+  {
+    "id": "COMPANY-ASML",
+    "ticker": "ASML",
+    "name": "ASML Holding N.V.",
+    "exchange": "NASDAQ",
+    "gicsSector": "Information Technology",
+    "gicsIndustryGroup": "Semiconductors & Semiconductor Equipment",
+    "gicsIndustry": "Semiconductor Equipment",
+    "countryOfIncorporation": "Netherlands",
+    "countryOfHQ": "Netherlands",
+    "marketCapUsdBn": 400,
+    "revenueUsdBn": 30.6,
+    "fiscalYear": 2024,
+    "description": "ASML is the world's leading supplier to the semiconductor industry of photolithography systems. It is the sole manufacturer of Extreme Ultraviolet (EUV) lithography machines.",
+    "businessModel": "ASML sells high-cost lithography systems and provides ongoing service and upgrades. EUV systems are required for all advanced AI chip manufacturing.",
+    "geopoliticalSummary": "ASML is subject to Dutch and US export controls, particularly regarding its sales of advanced DUV and EUV tools to China.",
+    "revenueByGeography": [
+      {
+        "region": "China",
+        "countryIds": ["CHN"],
+        "percentOfRevenue": 36.1,
+        "revenueUsdBn": 11.05,
+        "year": 2024,
+        "note": "Surge in DUV demand prior to restrictions"
+      },
+      {
+        "region": "Taiwan",
+        "countryIds": ["TWN"],
+        "percentOfRevenue": 25,
+        "revenueUsdBn": 7.65,
+        "year": 2024,
+        "note": "Driven by TSMC"
+      },
+      {
+        "region": "South Korea",
+        "countryIds": ["KOR"],
+        "percentOfRevenue": 20,
+        "revenueUsdBn": 6.12,
+        "year": 2024,
+        "note": "Driven by Samsung and SK Hynix"
+      }
+    ],
+    "keySuppliers": [
+      {
+        "role": "optics",
+        "name": "Zeiss",
+        "countryId": "DEU",
+        "percentOfSupply": null,
+        "isConcentrationRisk": true,
+        "strategicNote": "Sole source for lithography optics"
+      }
+    ],
+    "keyCustomers": [
+      {
+        "role": "customer",
+        "name": "TSMC",
+        "countryId": "TWN",
+        "percentOfRevenue": null,
+        "isConcentrationRisk": true,
+        "strategicNote": "Major buyer of EUV systems"
+      }
+    ],
+    "manufacturingLocations": [
+      {
+        "countryId": "NLD",
+        "city": "Veldhoven",
+        "percentOfCapacity": 90,
+        "note": "Core assembly and R&D"
+      }
+    ],
+    "commodityDependencies": [],
+    "regionalExposures": [
+      {
+        "region": "China",
+        "countryIds": ["CHN"],
+        "exposureType": "revenue / export-control",
+        "magnitude": "high",
+        "note": "US and Dutch government restrictions on tool exports",
+        "filingRefs": ["Item 3D"]
+      }
+    ],
+    "infrastructureDependencies": [],
+    "flags": {
+      "chinaRevenuePct": 36,
+      "chinaManufacturingDependent": false,
+      "russiaExposed": false,
+      "middleEastEnergyDependent": false,
+      "taiwanSemiconductorDependent": false,
+      "redSeaTradeRouteDependent": false,
+      "straitOfHormuzDependent": false,
+      "sanctionsSensitive": true,
+      "exportControlSensitive": true
+    },
+    "aiMarketPosition": {
+      "primaryAIRole": "equipment",
+      "aiRevenueEstimateUsdBn": 10.0,
+      "aiRevenueShareOfTotal": 33,
+      "trainingMarketSharePct": 100,
+      "inferenceMarketSharePct": 100,
+      "customASICMarketSharePct": 100,
+      "aiComputeStack": {
+        "layer": "Lithography Equipment",
+        "what": "EUV and High-NA EUV lithography systems",
+        "replaceabilityRisk": "impossible",
+        "note": "Sole provider of technology needed for advanced nodes"
+      },
+      "hbmRelationship": {
+        "role": "none",
+        "note": "N/A"
+      },
+      "customASICPartnerships": [],
+      "keyAICustomers": [
+        {
+          "name": "TSMC",
+          "relationship": "Customer",
+          "estimatedSpendUsdBn": null,
+          "note": "Purchases EUV systems for AI logic manufacturing"
+        }
+      ],
+      "vsNVIDIA": {
+        "relationship": "enabler",
+        "note": "NVIDIA chips cannot be made without ASML tools"
+      },
+      "competitiveMoat": [
+        "EUV Monopoly",
+        "High-NA EUV roadmap",
+        "Complex supply chain of 5000+ partners"
+      ],
+      "keyAIRisks": [
+        "Export control expansion to older DUV tools",
+        "China's push for lithography independence",
+        "Cyclicality in chip equipment spend"
+      ],
+      "aiMarketShareSources": [
+        {
+          "metric": "EUV Market Share",
+          "value": "100%",
+          "source": "Gartner",
+          "url": null,
+          "note": "Absolute monopoly"
+        }
+      ]
+    },
+    "latestFilingId": "FILING-ASML-20F-2024",
+    "secCik": "0000937966",
+    "secEdgarUrl": "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0000937966&type=20-F",
+    "attribution": {
+      "sources": [
+        {
+          "name": "ASML 20-F 2023",
+          "url": "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0000937966",
+          "type": "filing",
+          "accessedAt": "2026-05-11",
+          "verbatimQuote": "Many risks have the potential to impact our business and it is important to understand their nature."
+        }
+      ],
+      "confidence": "high",
+      "lastVerified": "2026-05-11",
+      "generatedBy": "ai-assisted"
+    }
+  },
+  {
+    "id": "COMPANY-AMD",
+    "ticker": "AMD",
+    "name": "Advanced Micro Devices, Inc.",
+    "exchange": "NASDAQ",
+    "gicsSector": "Information Technology",
+    "gicsIndustryGroup": "Semiconductors & Semiconductor Equipment",
+    "gicsIndustry": "Semiconductors",
+    "countryOfIncorporation": "USA",
+    "countryOfHQ": "USA",
+    "marketCapUsdBn": 250,
+    "revenueUsdBn": 25.8,
+    "fiscalYear": 2024,
+    "description": "AMD is a global semiconductor company that designs and develops high-performance processors and graphics technologies for the data center, personal computer and gaming markets.",
+    "businessModel": "AMD sells CPUs (EPYC) and GPUs (Instinct) for data centers, as well as PC and gaming hardware. AI revenue is driven by the Instinct MI300 series.",
+    "geopoliticalSummary": "AMD relies on TSMC for manufacturing and faces risks from export controls on high-performance accelerators to China.",
+    "revenueByGeography": [
+      {
+        "region": "United States",
+        "countryIds": ["USA"],
+        "percentOfRevenue": 40,
+        "revenueUsdBn": 10.32,
+        "year": 2024,
+        "note": "Largest market"
+      },
+      {
+        "region": "China",
+        "countryIds": ["CHN"],
+        "percentOfRevenue": 24.2,
+        "revenueUsdBn": 6.23,
+        "year": 2024,
+        "note": "Includes Hong Kong"
+      }
+    ],
+    "keySuppliers": [
+      {
+        "role": "manufacturer",
+        "name": "TSMC",
+        "countryId": "TWN",
+        "percentOfSupply": 90,
+        "isConcentrationRisk": true,
+        "strategicNote": "Sole source for advanced node CPUs and GPUs"
+      }
+    ],
+    "keyCustomers": [
+      {
+        "role": "customer",
+        "name": "Microsoft",
+        "countryId": "USA",
+        "percentOfRevenue": null,
+        "isConcentrationRisk": false,
+        "strategicNote": "Uses Instinct GPUs in Azure"
+      }
+    ],
+    "manufacturingLocations": [
+      {
+        "countryId": "TWN",
+        "city": "Hsinchu",
+        "percentOfCapacity": 90,
+        "note": "TSMC foundry"
+      }
+    ],
+    "commodityDependencies": [],
+    "regionalExposures": [
+      {
+        "region": "Taiwan",
+        "countryIds": ["TWN"],
+        "exposureType": "supply-chain",
+        "magnitude": "critical",
+        "note": "Dependence on TSMC for all advanced products",
+        "filingRefs": ["Item 1A"]
+      }
+    ],
+    "infrastructureDependencies": [],
+    "flags": {
+      "chinaRevenuePct": 24,
+      "chinaManufacturingDependent": false,
+      "russiaExposed": false,
+      "middleEastEnergyDependent": false,
+      "taiwanSemiconductorDependent": true,
+      "redSeaTradeRouteDependent": false,
+      "straitOfHormuzDependent": false,
+      "sanctionsSensitive": true,
+      "exportControlSensitive": true
+    },
+    "aiMarketPosition": {
+      "primaryAIRole": "training-gpu",
+      "aiRevenueEstimateUsdBn": 5.0,
+      "aiRevenueShareOfTotal": 19,
+      "trainingMarketSharePct": 7,
+      "inferenceMarketSharePct": 5,
+      "customASICMarketSharePct": null,
+      "aiComputeStack": {
+        "layer": "Silicon",
+        "what": "Instinct GPUs (MI300X) and EPYC CPUs",
+        "replaceabilityRisk": "medium",
+        "note": "Primary alternative to NVIDIA"
+      },
+      "hbmRelationship": {
+        "role": "consumer",
+        "note": "Uses high quantities of HBM in Instinct GPUs"
+      },
+      "customASICPartnerships": [],
+      "keyAICustomers": [
+        {
+          "name": "Meta",
+          "relationship": "Customer",
+          "estimatedSpendUsdBn": null,
+          "note": "Using MI300X for inference"
+        }
+      ],
+      "vsNVIDIA": {
+        "relationship": "competitor",
+        "note": "Main challenger in AI training and inference"
+      },
+      "competitiveMoat": [
+        "Open software ecosystem (ROCm)",
+        "Advanced chiplet architecture",
+        "Leading data center CPU share (EPYC)"
+      ],
+      "keyAIRisks": [
+        "NVIDIA's software lock-in (CUDA)",
+        "Allocation of HBM and CoWoS capacity",
+        "China export controls on MI300"
+      ],
+      "aiMarketShareSources": [
+        {
+          "metric": "AI Accelerator Revenue Share",
+          "value": "~5-7%",
+          "source": "Mercury Research",
+          "url": null,
+          "note": "Gaining share in 2024/2025"
+        }
+      ]
+    },
+    "latestFilingId": "FILING-AMD-10K-2024",
+    "secCik": "0000002488",
+    "secEdgarUrl": "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0000002488&type=10-K",
+    "attribution": {
+      "sources": [
+        {
+          "name": "AMD 10-K FY2023",
+          "url": "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0000002488",
+          "type": "filing",
+          "accessedAt": "2026-05-11",
+          "verbatimQuote": "You should carefully consider the risks described below and elsewhere in this Annual Report on Form 10-K before making an investment decision."
+        }
+      ],
+      "confidence": "high",
+      "lastVerified": "2026-05-11",
+      "generatedBy": "ai-assisted"
+    }
+  },
+  {
+    "id": "COMPANY-AMAT",
+    "ticker": "AMAT",
+    "name": "Applied Materials, Inc.",
+    "exchange": "NASDAQ",
+    "gicsSector": "Information Technology",
+    "gicsIndustryGroup": "Semiconductors & Semiconductor Equipment",
+    "gicsIndustry": "Semiconductor Equipment",
+    "countryOfIncorporation": "USA",
+    "countryOfHQ": "USA",
+    "marketCapUsdBn": 180,
+    "revenueUsdBn": 27.18,
+    "fiscalYear": 2024,
+    "description": "Applied Materials is a leader in materials engineering solutions used to produce virtually every new chip and advanced display in the world. Its expertise in modifying materials at atomic levels and on an industrial scale enables customers to transform possibilities into reality.",
+    "businessModel": "AMAT sells manufacturing equipment, services, and software to semiconductor, display, and related industries. It benefits from AI through increased demand for advanced logic and memory manufacturing tools.",
+    "geopoliticalSummary": "AMAT has significant revenue exposure to China and is highly sensitive to export controls. It is a key player in the re-shoring of semiconductor manufacturing to the U.S. and Europe.",
+    "revenueByGeography": [
+      {
+        "region": "China",
+        "countryIds": ["CHN"],
+        "percentOfRevenue": 37.2,
+        "revenueUsdBn": 10.12,
+        "year": 2024,
+        "note": "Largest geographic market"
+      },
+      {
+        "region": "Taiwan",
+        "countryIds": ["TWN"],
+        "percentOfRevenue": 18,
+        "revenueUsdBn": 4.89,
+        "year": 2024,
+        "note": "Reflects foundry investment"
+      },
+      {
+        "region": "Korea",
+        "countryIds": ["KOR"],
+        "percentOfRevenue": 16,
+        "revenueUsdBn": 4.35,
+        "year": 2024,
+        "note": "Reflects memory investment"
+      }
+    ],
+    "keySuppliers": [],
+    "keyCustomers": [
+      {
+        "role": "customer",
+        "name": "TSMC",
+        "countryId": "TWN",
+        "percentOfRevenue": null,
+        "isConcentrationRisk": true,
+        "strategicNote": "Major foundry customer"
+      },
+      {
+        "role": "customer",
+        "name": "Samsung",
+        "countryId": "KOR",
+        "percentOfRevenue": null,
+        "isConcentrationRisk": true,
+        "strategicNote": "Major memory and foundry customer"
+      }
+    ],
+    "manufacturingLocations": [
+      {
+        "countryId": "USA",
+        "city": "Austin",
+        "percentOfCapacity": null,
+        "note": "Major manufacturing hub"
+      },
+      {
+        "countryId": "SGP",
+        "city": "Singapore",
+        "percentOfCapacity": null,
+        "note": "Asia operations hub"
+      }
+    ],
+    "commodityDependencies": [],
+    "regionalExposures": [
+      {
+        "region": "China",
+        "countryIds": ["CHN"],
+        "exposureType": "revenue / export-control",
+        "magnitude": "critical",
+        "note": "Highly vulnerable to US government trade restrictions",
+        "filingRefs": ["Item 1A"]
+      }
+    ],
+    "infrastructureDependencies": [],
+    "flags": {
+      "chinaRevenuePct": 37,
+      "chinaManufacturingDependent": false,
+      "russiaExposed": false,
+      "middleEastEnergyDependent": false,
+      "taiwanSemiconductorDependent": false,
+      "redSeaTradeRouteDependent": false,
+      "straitOfHormuzDependent": false,
+      "sanctionsSensitive": true,
+      "exportControlSensitive": true
+    },
+    "aiMarketPosition": {
+      "primaryAIRole": "equipment",
+      "aiRevenueEstimateUsdBn": 5.0,
+      "aiRevenueShareOfTotal": 18,
+      "trainingMarketSharePct": null,
+      "inferenceMarketSharePct": null,
+      "customASICMarketSharePct": null,
+      "aiComputeStack": {
+        "layer": "Manufacturing Equipment",
+        "what": "Deposition, Etch, and Ion Implantation tools",
+        "replaceabilityRisk": "low",
+        "note": "Materials engineering is critical for advanced chip scaling"
+      },
+      "hbmRelationship": {
+        "role": "none",
+        "note": "N/A"
+      },
+      "customASICPartnerships": [],
+      "keyAICustomers": [
+        {
+          "name": "TSMC",
+          "relationship": "Customer",
+          "estimatedSpendUsdBn": null,
+          "note": "Uses AMAT tools for advanced logic"
+        }
+      ],
+      "vsNVIDIA": {
+        "relationship": "enabler",
+        "note": "AMAT tools are used to build NVIDIA GPUs"
+      },
+      "competitiveMoat": [
+        "Broadest tool portfolio in the industry",
+        "Materials engineering expertise",
+        "Large installed base and service revenue"
+      ],
+      "keyAIRisks": [
+        "China export controls on advanced tools",
+        "Investigation into sales to China",
+        "Transition to GAA (Gate-All-Around) transistors"
+      ],
+      "aiMarketShareSources": [
+        {
+          "metric": "WFE (Wafer Fab Equipment) Share",
+          "value": "~20%",
+          "source": "VLSI Research",
+          "url": null,
+          "note": "Leader in multiple tool categories"
+        }
+      ]
+    },
+    "latestFilingId": "FILING-AMAT-10K-2024",
+    "secCik": "0000006951",
+    "secEdgarUrl": "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0000006951&type=10-K",
+    "attribution": {
+      "sources": [
+        {
+          "name": "Applied Materials 10-K FY2024",
+          "url": "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0000006951",
+          "type": "filing",
+          "accessedAt": "2026-05-11",
+          "verbatimQuote": "The following risk factors could materially and adversely affect our business, financial condition or results of operations and cause reputational harm, and should be carefully considered in evaluating our business, in addition to other information presented elsewhere in this report."
+        }
+      ],
+      "confidence": "high",
+      "lastVerified": "2026-05-11",
+      "generatedBy": "ai-assisted"
+    }
+  }
+]

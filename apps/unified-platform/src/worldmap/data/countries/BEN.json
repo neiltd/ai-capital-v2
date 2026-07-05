@@ -1,0 +1,65 @@
+{
+  "id": "BEN",
+  "iso2": "BJ",
+  "name": "Benin",
+  "region": "Africa",
+  "subregion": "Western Africa",
+  "capital": "Porto-Novo",
+  "lastUpdated": "2025-05-22",
+  "summary": "Benin is one of West Africa's fastest-growing economies, driven by the aggressive industrialization strategy of President Patrice Talon. The centerpiece of this growth is the Glo-Djigbé Industrial Zone (GDIZ), which is successfully attracting foreign investment in textiles and agro-processing. While economically vibrant, Benin faces significant security challenges from jihadist spillovers in the north and political tensions following a failed coup attempt in late 2024. As the country prepares for the 2026 elections, the government is balancing the need for tight fiscal control with the demand for social safety nets and enhanced security measures.",
+  "indicators": {
+    "politicalStability":       { "score": 6, "trend": "stable", "confidence": "high", "note": "Strong central authority; failed coup in Dec 2024 was quickly suppressed; preparations for 2026 elections underway." },
+    "economicDirection":        { "score": 8, "trend": "rising", "confidence": "high", "note": "Top-tier regional growth (6-7%); success of GDIZ industrial zone; strong cotton exports." },
+    "investmentAttractiveness": { "score": 7, "trend": "rising", "confidence": "high", "note": "High FDI in manufacturing and textiles; port of Cotonou remains a key regional transit hub." },
+    "geopoliticalRisk":         { "score": 5, "trend": "rising", "confidence": "medium", "note": "Escalating security threats in northern border regions; tense but functional relation with Niger over oil pipeline." },
+    "educationQuality":         { "score": 4, "trend": "rising", "confidence": "medium", "note": "Focus on technical and vocational training to support new industrial zones." },
+    "healthcareQuality":        { "score": 4, "trend": "stable", "confidence": "medium", "note": "Insurance reforms underway; significant investment in hospital infrastructure in Cotonou and Abomey-Calavi." },
+    "technologyInvestment":     { "score": 6, "trend": "rising", "confidence": "high", "note": "A regional leader in e-government services and digital infrastructure." }
+  },
+  "demographics": {
+    "population": 14200000,
+    "medianAge": 18.2,
+    "urbanizationRate": 49.5,
+    "majorEthnicGroups": ["Fon", "Adja", "Yoruba", "Bariba", "Fulani"],
+    "religions": [
+      { "name": "Christian", "percent": 48.5 },
+      { "name": "Muslim", "percent": 27.7 },
+      { "name": "Vodun", "percent": 11.6 },
+      { "name": "Other/None", "percent": 12.2 }
+    ]
+  },
+  "alliances": ["ECOWAS", "African Union", "United Nations", "OIC"],
+  "relationships": [
+    { "countryId": "FRA", "countryName": "France", "type": "strategic_partner", "sentiment": "positive", "summary": "Close security and cultural partner; providing support in the fight against northern insurgencies." },
+    { "countryId": "CHN", "countryName": "China", "type": "economic_partner", "sentiment": "positive", "summary": "Major partner in infrastructure and the development of the Cotonou-Niamey transport corridor." },
+    { "countryId": "NGA", "countryName": "Nigeria", "type": "regional_partner", "sentiment": "neutral", "summary": "Essential but complex trade relationship; frequent border management issues and informal trade friction." },
+    { "countryId": "NER", "countryName": "Niger", "type": "economic_partner", "sentiment": "neutral", "summary": "Interdependent relationship centered on the Sèmè-Kpodji oil terminal; recovering from 2023-24 sanctions period." }
+  ],
+  "perspectives": [
+    { "source": "Textile Worker at GDIZ", "bias": "Optimistic", "view": "Before this zone, there were no factory jobs for us; now we are making clothes that go all over the world." },
+    { "source": "Civil Society Activist", "bias": "Critical", "view": "The economic growth is real, but the political space is shrinking; we need a more inclusive dialogue before the 2026 elections." },
+    { "source": "Cotton Farmer in Banikoara", "bias": "Supportive", "view": "Prices have been stable and the government provides fertilizers on time; we are finally seeing the benefit of our hard work." },
+    { "source": "Security Analyst in Cotonou", "bias": "Concerned", "view": "The threat from the north is no longer theoretical; we need more than just military force—we need to win over the populations in the frontier zones." }
+  ],
+  "historicalContext": {
+    "summary": "Formerly Dahomey, Benin was the site of a powerful pre-colonial kingdom and later became a pioneer in Africa's democratic wave in 1990. After decades of multi-party democracy, the presidency of Patrice Talon (since 2016) has been characterized by a shift toward a more centralized, 'developmentalist' state model, prioritizing economic efficiency and industrialization.",
+    "keyEvents": [
+      { "year": 1960, "event": "Independence from France." },
+      { "year": 1990, "event": "National Conference marks the transition from Marxist-Leninist rule to multi-party democracy." },
+      { "year": 2016, "event": "Patrice Talon elected president, launching the 'Government Action Program' (PAG)." },
+      { "year": 2022, "event": "Official inauguration of the Glo-Djigbé Industrial Zone (GDIZ)." },
+      { "year": 2024, "event": "Successful handling of first major spillover attacks and a failed coup attempt in December." },
+      { "year": 2025, "event": "Full operationalization of the Niger-Benin oil pipeline terminal." }
+    ]
+  },
+  "investmentNotes": {
+    "strengths": ["Rapid industrialization with successful special economic zones (GDIZ)", "Top cotton producer in Africa with increasing value-added processing", "Strategic location as a gateway to Niger and Nigeria", "High level of digital government and ease of doing business for the region"],
+    "risks": ["Increasing security risks in northern departments from Sahelian groups", "Political polarization and concerns over democratic backsliding", "Vulnerability to changes in Nigerian trade policy", "High youth unemployment despite industrial growth"],
+    "sectors": ["Manufacturing & Textiles", "Agro-processing (Cashews, Pineapples)", "Logistics & Port Services", "Digital Economy & Fintech"]
+  },
+  "sources": [
+    { "name": "Institut National de la Statistique et de la Démographie (INStAD)", "url": "https://instad.bj/", "type": "demographic" },
+    { "name": "Benin Investment and Exports Promotion Agency (APIEx)", "url": "https://apiex.bj/", "type": "investment" },
+    { "name": "Ministry of Economy and Finance, Benin", "url": "https://economie.gouv.bj/", "type": "economic" }
+  ]
+}

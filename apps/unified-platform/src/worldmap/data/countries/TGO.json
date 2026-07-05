@@ -1,0 +1,65 @@
+{
+  "id": "TGO",
+  "iso2": "TG",
+  "name": "Togo",
+  "region": "Africa",
+  "subregion": "Western Africa",
+  "capital": "Lomé",
+  "lastUpdated": "2025-05-22",
+  "summary": "Togo has recently undergone a major constitutional transformation, transitioning to a parliamentary system in 2024. This change has consolidated executive power in the new role of President of the Council of Ministers, currently held by Faure Gnassingbé, whose family has led the country for over five decades. Economically, Togo is positioning itself as a premier regional logistics and financial hub, leveraging its deep-water port in Lomé and a stable macroeconomic environment. While the country enjoys relatively high growth and low inflation compared to its neighbors, the political transition has faced significant criticism from opposition groups and civil society.",
+  "indicators": {
+    "politicalStability":       { "score": 6, "trend": "stable", "confidence": "high", "note": "Strong central control; transition to parliamentary system complete; opposition remains fragmented." },
+    "economicDirection":        { "score": 6, "trend": "rising", "confidence": "high", "note": "Consistent growth (5-6%); successful positioning as a logistics hub; inflation among the lowest in the region." },
+    "investmentAttractiveness": { "score": 6, "trend": "stable", "confidence": "high", "note": "Attractive for logistics, banking, and energy; business reforms have improved ranking." },
+    "geopoliticalRisk":         { "score": 4, "trend": "stable", "confidence": "medium", "note": "Active role in regional mediation; moderate risk from northern border insecurity." },
+    "educationQuality":         { "score": 4, "trend": "stable", "confidence": "medium", "note": "Focus on improving school infrastructure and vocational training for the port sector." },
+    "healthcareQuality":        { "score": 3, "trend": "rising", "confidence": "medium", "note": "Launch of universal health insurance (AMU); investment in new regional hospital centers." },
+    "technologyInvestment":     { "score": 5, "trend": "rising", "confidence": "medium", "note": "Focus on digital economy; home to major regional data centers and the 'Lomé Data Centre'." }
+  },
+  "demographics": {
+    "population": 9200000,
+    "medianAge": 19.1,
+    "urbanizationRate": 44.2,
+    "majorEthnicGroups": ["Ewe", "Kabye", "Ouatchi-Gen", "Mina", "Tem"],
+    "religions": [
+      { "name": "Christian", "percent": 43.7 },
+      { "name": "Traditional", "percent": 35.6 },
+      { "name": "Muslim", "percent": 14.0 },
+      { "name": "Other/None", "percent": 6.7 }
+    ]
+  },
+  "alliances": ["ECOWAS", "African Union", "United Nations", "Commonwealth"],
+  "relationships": [
+    { "countryId": "FRA", "countryName": "France", "type": "strategic_partner", "sentiment": "positive", "summary": "Close security and economic partner; provides support for the 'Accra Initiative' counter-terrorism efforts." },
+    { "countryId": "CHN", "countryName": "China", "type": "economic_partner", "sentiment": "positive", "summary": "Major partner in port infrastructure and road construction; significant provider of development loans." },
+    { "countryId": "GHA", "countryName": "Ghana", "type": "regional_partner", "sentiment": "positive", "summary": "Strong trade and ethnic ties; cooperation on maritime security and energy sharing." },
+    { "countryId": "NLD", "countryName": "Netherlands", "type": "economic_partner", "sentiment": "positive", "summary": "Key partner in maritime logistics and agricultural exports through Lomé port." }
+  ],
+  "perspectives": [
+    { "source": "Port Logistics Manager", "bias": "Optimistic", "view": "Lomé is now the gateway to West Africa; our efficiency is drawing cargo away from more congested regional ports." },
+    { "source": "University Student in Lomé", "bias": "Critical", "view": "The constitutional change was done without a referendum; we want a system where the people can actually choose their leader." },
+    { "source": "Traditional Leader in Kara", "bias": "Supportive", "view": "The stability we have is precious; look at our neighbors to the north—we must maintain our current path to avoid chaos." },
+    { "source": "Tech Startup Founder", "bias": "Hopeful", "view": "The government's focus on the digital hub is creating real opportunities for developers; we are finally seeing the infrastructure we need." }
+  ],
+  "historicalContext": {
+    "summary": "Togo's modern history is dominated by the Gnassingbé family, with Gnassingbé Eyadéma ruling from 1967 until his death in 2005, followed by his son Faure Gnassingbé. The country has navigated several periods of political unrest, leading to various constitutional reforms, culminating in the 2024 shift to a parliamentary system which fundamentally altered the structure of executive power.",
+    "keyEvents": [
+      { "year": 1960, "event": "Independence from France." },
+      { "year": 1967, "event": "Gnassingbé Eyadéma takes power in a coup." },
+      { "year": 2005, "event": "Faure Gnassingbé succeeds his father following a controversial transition." },
+      { "year": 2017, "event": "Massive anti-government protests lead to calls for term limits." },
+      { "year": 2024, "event": "Adoption of a new constitution transitioning Togo to a parliamentary system." },
+      { "year": 2025, "event": "Savi de Tové elected as President; Faure Gnassingbé becomes President of the Council of Ministers." }
+    ]
+  },
+  "investmentNotes": {
+    "strengths": ["Deep-water Port of Lomé is a top-tier regional logistics hub", "Stable macroeconomic environment with low inflation and manageable debt", "Strategic membership in the Commonwealth and strong ties with both West and East", "Pro-business regulatory reforms and improving digital infrastructure"],
+    "risks": ["Long-term political dominance of a single family and risks of social unrest", "Increasing security threats in the northern Savanes region", "High dependence on regional trade and transit to landlocked countries", "Limited domestic market size necessitating an export-oriented strategy"],
+    "sectors": ["Logistics & Maritime Services", "Banking & Finance", "Renewable Energy (Solar)", "Agro-industry (Soybeans, Pineapples)"]
+  },
+  "sources": [
+    { "name": "Institut National de la Statistique et des Études Économiques et Démographiques (INSEED)", "url": "https://inseed.tg/", "type": "demographic" },
+    { "name": "Togo Investment Promotion Agency", "url": "https://investirtogo.tg/", "type": "investment" },
+    { "name": "Central Bank of West African States (BCEAO) - Togo", "url": "https://www.bceao.int/en/content/togo", "type": "economic" }
+  ]
+}

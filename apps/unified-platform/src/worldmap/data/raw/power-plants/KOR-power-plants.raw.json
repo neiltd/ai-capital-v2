@@ -1,0 +1,407 @@
+[
+  {
+    "id": "PLANT-KOR-TAEAN",
+    "name": "Taean Power Station",
+    "countryId": "KOR",
+    "city": "Taean",
+    "coordinates": [126.233, 36.906],
+    "type": "coal",
+    "status": "operating",
+    "capacityMW": 6100,
+    "annualOutputGWh": null,
+    "yearCommissioned": 1995,
+    "yearRetirement": null,
+    "operator": "Korea Western Power",
+    "owner": "Korea Electric Power Corporation (KEPCO)",
+    "strategicNote": "The largest power station in South Korea, primarily coal-fired, providing critical base-load for the Seoul metropolitan area.",
+    "notes": null,
+    "attribution": {
+      "sources": [
+        { "name": "Global Energy Monitor", "url": "https://www.gem.wiki/Taean_power_station", "accessedAt": "2025-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 1,
+        "lastVerified": "2025-05-10"
+      }
+    }
+  },
+  {
+    "id": "PLANT-KOR-KORI",
+    "name": "Kori & Saeul Nuclear Power Plant",
+    "countryId": "KOR",
+    "city": "Busan",
+    "coordinates": [129.288, 35.319],
+    "type": "nuclear",
+    "status": "operating",
+    "capacityMW": 6040,
+    "annualOutputGWh": null,
+    "yearCommissioned": 1978,
+    "yearRetirement": null,
+    "operator": "Korea Hydro & Nuclear Power (KHNP)",
+    "owner": "KEPCO",
+    "strategicNote": "A massive nuclear complex on the southeast coast; includes the Saeul units which represent the latest APR-1400 technology.",
+    "notes": "Kori Unit 1 was retired in 2017.",
+    "attribution": {
+      "sources": [
+        { "name": "IAEA PRIS", "url": "https://pris.iaea.org/PRIS/CountryStatistics/CountryDetails.aspx?current=KR", "accessedAt": "2025-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 1,
+        "lastVerified": "2025-05-10"
+      }
+    }
+  },
+  {
+    "id": "PLANT-KOR-DANGJIN",
+    "name": "Dangjin Power Station",
+    "countryId": "KOR",
+    "city": "Dangjin",
+    "coordinates": [126.505, 37.054],
+    "type": "coal",
+    "status": "operating",
+    "capacityMW": 6040,
+    "annualOutputGWh": null,
+    "yearCommissioned": 1999,
+    "yearRetirement": null,
+    "operator": "Korea East-West Power",
+    "owner": "KEPCO",
+    "strategicNote": "Major coal-fired facility on the west coast, essential for regional industrial hubs.",
+    "notes": null,
+    "attribution": {
+      "sources": [
+        { "name": "Global Energy Monitor", "url": "https://www.gem.wiki/Dangjin_power_station", "accessedAt": "2025-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 1,
+        "lastVerified": "2025-05-10"
+      }
+    }
+  },
+  {
+    "id": "PLANT-KOR-HANUL",
+    "name": "Hanul Nuclear Power Plant",
+    "countryId": "KOR",
+    "city": "Uljin",
+    "coordinates": [129.385, 37.095],
+    "type": "nuclear",
+    "status": "operating",
+    "capacityMW": 5900,
+    "annualOutputGWh": null,
+    "yearCommissioned": 1988,
+    "yearRetirement": null,
+    "operator": "KHNP",
+    "owner": "KEPCO",
+    "strategicNote": "One of the world's largest nuclear power stations, a cornerstone of South Korea's energy independence.",
+    "notes": "Formerly known as Uljin Nuclear Power Plant.",
+    "attribution": {
+      "sources": [
+        { "name": "IAEA PRIS", "url": "https://pris.iaea.org/PRIS/CountryStatistics/ReactorDetails.aspx?current=398", "accessedAt": "2025-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 1,
+        "lastVerified": "2025-05-10"
+      }
+    }
+  },
+  {
+    "id": "PLANT-KOR-HANBIT",
+    "name": "Hanbit Nuclear Power Plant",
+    "countryId": "KOR",
+    "city": "Yeonggwang",
+    "coordinates": [126.41, 35.41],
+    "type": "nuclear",
+    "status": "operating",
+    "capacityMW": 5900,
+    "annualOutputGWh": null,
+    "yearCommissioned": 1986,
+    "yearRetirement": null,
+    "operator": "KHNP",
+    "owner": "KEPCO",
+    "strategicNote": "Major nuclear site on the southwest coast, vital for the Honam region.",
+    "notes": "Formerly known as Yeonggwang Nuclear Power Plant.",
+    "attribution": {
+      "sources": [
+        { "name": "IAEA PRIS", "url": "https://pris.iaea.org/PRIS/CountryStatistics/ReactorDetails.aspx?current=414", "accessedAt": "2025-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 1,
+        "lastVerified": "2025-05-10"
+      }
+    }
+  },
+  {
+    "id": "PLANT-KOR-YEONGHEUNG",
+    "name": "Yeongheung Power Station",
+    "countryId": "KOR",
+    "city": "Yeongheung-myeon",
+    "coordinates": [126.4, 37.24],
+    "type": "coal",
+    "status": "operating",
+    "capacityMW": 5080,
+    "annualOutputGWh": null,
+    "yearCommissioned": 2004,
+    "yearRetirement": null,
+    "operator": "Korea South-East Power",
+    "owner": "KEPCO",
+    "strategicNote": "The closest large-scale coal plant to Seoul, providing a massive share of the capital's electricity.",
+    "notes": null,
+    "attribution": {
+      "sources": [
+        { "name": "Global Energy Monitor", "url": "https://www.gem.wiki/Yeongheung_power_station", "accessedAt": "2025-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 1,
+        "lastVerified": "2025-05-10"
+      }
+    }
+  },
+  {
+    "id": "PLANT-KOR-WOLSONG",
+    "name": "Wolsong Nuclear Power Plant",
+    "countryId": "KOR",
+    "city": "Gyeongju",
+    "coordinates": [129.47, 35.71],
+    "type": "nuclear",
+    "status": "operating",
+    "capacityMW": 4566,
+    "annualOutputGWh": null,
+    "yearCommissioned": 1983,
+    "yearRetirement": null,
+    "operator": "KHNP",
+    "owner": "KEPCO",
+    "strategicNote": "Unique site utilizing both CANDU heavy water reactors and PWR units.",
+    "notes": "Wolsong Unit 1 was permanently shut down in 2019.",
+    "attribution": {
+      "sources": [
+        { "name": "IAEA PRIS", "url": "https://pris.iaea.org/PRIS/CountryStatistics/ReactorDetails.aspx?current=405", "accessedAt": "2025-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 1,
+        "lastVerified": "2025-05-10"
+      }
+    }
+  },
+  {
+    "id": "PLANT-KOR-HADONG",
+    "name": "Hadong Power Station",
+    "countryId": "KOR",
+    "city": "Hadong",
+    "coordinates": [127.76, 34.93],
+    "type": "coal",
+    "status": "operating",
+    "capacityMW": 4000,
+    "annualOutputGWh": null,
+    "yearCommissioned": 1997,
+    "yearRetirement": null,
+    "operator": "Korea Southern Power",
+    "owner": "KEPCO",
+    "strategicNote": "Major coal-fired hub in the south, supporting the Gyeongsang region.",
+    "notes": null,
+    "attribution": {
+      "sources": [
+        { "name": "Global Energy Monitor", "url": "https://www.gem.wiki/Hadong_power_station", "accessedAt": "2025-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 1,
+        "lastVerified": "2025-05-10"
+      }
+    }
+  },
+  {
+    "id": "PLANT-KOR-BORYEONG",
+    "name": "Boryeong Power Station",
+    "countryId": "KOR",
+    "city": "Boryeong",
+    "coordinates": [126.502, 36.4],
+    "type": "coal",
+    "status": "operating",
+    "capacityMW": 4000,
+    "annualOutputGWh": null,
+    "yearCommissioned": 1983,
+    "yearRetirement": null,
+    "operator": "Korea Midland Power",
+    "owner": "KEPCO",
+    "strategicNote": "A mixed coal and gas site, historically one of the largest power hubs in Korea.",
+    "notes": "Capacity listed is for coal units; also has significant gas capacity.",
+    "attribution": {
+      "sources": [
+        { "name": "Global Energy Monitor", "url": "https://www.gem.wiki/Boryeong_power_station", "accessedAt": "2025-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 1,
+        "lastVerified": "2025-05-10"
+      }
+    }
+  },
+  {
+    "id": "PLANT-KOR-INCHEON",
+    "name": "Incheon LNG Power Plant",
+    "countryId": "KOR",
+    "city": "Incheon",
+    "coordinates": [126.61, 37.49],
+    "type": "gas",
+    "status": "operating",
+    "capacityMW": 3412,
+    "annualOutputGWh": null,
+    "yearCommissioned": 1970,
+    "yearRetirement": null,
+    "operator": "POSCO Energy",
+    "owner": "POSCO",
+    "strategicNote": "One of the largest private LNG-fired plants, critical for Incheon and Seoul's peaking demand.",
+    "notes": null,
+    "attribution": {
+      "sources": [
+        { "name": "Global Energy Monitor", "url": "https://www.gem.wiki/Incheon_LNG_power_station", "accessedAt": "2025-05-10" }
+      ],
+      "confidence": {
+        "confidence": "medium",
+        "sourceCount": 1,
+        "lastVerified": "2025-05-10"
+      }
+    }
+  },
+  {
+    "id": "PLANT-KOR-SAMCHEOK-GREEN",
+    "name": "Samcheok Green Power Plant",
+    "countryId": "KOR",
+    "city": "Samcheok",
+    "coordinates": [129.35, 37.2],
+    "type": "coal",
+    "status": "operating",
+    "capacityMW": 2044,
+    "annualOutputGWh": null,
+    "yearCommissioned": 2016,
+    "yearRetirement": null,
+    "operator": "Korea Southern Power",
+    "owner": "KEPCO",
+    "strategicNote": "A modern, high-efficiency coal plant on the east coast.",
+    "notes": null,
+    "attribution": {
+      "sources": [
+        { "name": "Global Energy Monitor", "url": "https://www.gem.wiki/Samcheok_Green_Power_Station", "accessedAt": "2025-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 1,
+        "lastVerified": "2025-05-10"
+      }
+    }
+  },
+  {
+    "id": "PLANT-KOR-YANGYANG",
+    "name": "Yangyang Pumped Storage Power Plant",
+    "countryId": "KOR",
+    "city": "Yangyang",
+    "coordinates": [128.53, 38.01],
+    "type": "hydro",
+    "status": "operating",
+    "capacityMW": 1000,
+    "annualOutputGWh": null,
+    "yearCommissioned": 2006,
+    "yearRetirement": null,
+    "operator": "KHNP",
+    "owner": "KEPCO",
+    "strategicNote": "The largest pumped-storage plant in Korea, essential for grid frequency stability.",
+    "notes": null,
+    "attribution": {
+      "sources": [
+        { "name": "Global Energy Monitor", "url": "https://www.gem.wiki/Yangyang_Pumped_Storage_Power_Station", "accessedAt": "2025-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 1,
+        "lastVerified": "2025-05-10"
+      }
+    }
+  },
+  {
+    "id": "PLANT-KOR-CHUNGJU",
+    "name": "Chungju Hydroelectric Plant",
+    "countryId": "KOR",
+    "city": "Chungju",
+    "coordinates": [127.99, 36.99],
+    "type": "hydro",
+    "status": "operating",
+    "capacityMW": 400,
+    "annualOutputGWh": null,
+    "yearCommissioned": 1985,
+    "yearRetirement": null,
+    "operator": "K-water",
+    "owner": "South Korean Government",
+    "strategicNote": "South Korea's largest conventional hydroelectric facility.",
+    "notes": null,
+    "attribution": {
+      "sources": [
+        { "name": "Global Energy Monitor", "url": "https://www.gem.wiki/Chungju_Dam", "accessedAt": "2025-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 1,
+        "lastVerified": "2025-05-10"
+      }
+    }
+  },
+  {
+    "id": "PLANT-KOR-SIHWA-LAKE",
+    "name": "Sihwa Lake Tidal Power Station",
+    "countryId": "KOR",
+    "city": "Ansan",
+    "coordinates": [126.615, 37.311],
+    "type": "other",
+    "status": "operating",
+    "capacityMW": 254,
+    "annualOutputGWh": 550,
+    "yearCommissioned": 2011,
+    "yearRetirement": null,
+    "operator": "K-water",
+    "owner": "South Korean Government",
+    "strategicNote": "The world's largest tidal power station, representing a significant achievement in renewable technology.",
+    "notes": "Utilizes a sea wall built for land reclamation.",
+    "attribution": {
+      "sources": [
+        { "name": "Global Energy Monitor", "url": "https://www.gem.wiki/Sihwa_Lake_Tidal_Power_Station", "accessedAt": "2025-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 1,
+        "lastVerified": "2025-05-10"
+      }
+    }
+  },
+  {
+    "id": "PLANT-KOR-SHIN-HANUL",
+    "name": "Shin Hanul Nuclear Power Plant",
+    "countryId": "KOR",
+    "city": "Uljin",
+    "coordinates": [129.38, 37.1],
+    "type": "nuclear",
+    "status": "operating",
+    "capacityMW": 2800,
+    "annualOutputGWh": null,
+    "yearCommissioned": 2022,
+    "yearRetirement": null,
+    "operator": "KHNP",
+    "owner": "KEPCO",
+    "strategicNote": "One of the newest nuclear plants in Korea, featuring the advanced APR-1400 reactors.",
+    "notes": "Units 1 and 2 (1400 MW each). Unit 1 commissioned in 2022, Unit 2 in 2024.",
+    "attribution": {
+      "sources": [
+        { "name": "IAEA PRIS", "url": "https://pris.iaea.org/PRIS/CountryStatistics/ReactorDetails.aspx?current=952", "accessedAt": "2025-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 1,
+        "lastVerified": "2025-05-10"
+      }
+    }
+  }
+]

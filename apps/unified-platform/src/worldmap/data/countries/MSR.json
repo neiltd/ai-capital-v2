@@ -1,0 +1,63 @@
+{
+  "id": "MSR",
+  "iso2": "MS",
+  "name": "Montserrat",
+  "region": "Americas",
+  "subregion": "Caribbean",
+  "capital": "Brades",
+  "lastUpdated": "2026-05-09",
+  "summary": "Montserrat, known as the 'Emerald Isle of the Caribbean,' is a British Overseas Territory in the Leeward Islands. The island's modern history is defined by the ongoing volcanic activity that began in 1995, which destroyed the capital, Plymouth, and forced the relocation of much of the population. In 2026, Montserrat is in a phase of strategic redevelopment, focused on building a new capital at Little Bay and leveraging its unique volcanic landscape for sustainable tourism and geothermal energy. The economy remains heavily dependent on UK aid, but there is a growing emphasis on self-sufficiency through niche agriculture, digital nomadism, and green energy. The resilient population maintains a strong sense of community and cultural identity, with the island serving as a unique laboratory for disaster recovery and sustainable development.",
+  "indicators": {
+    "politicalStability":       { "score": 8, "score_description": "Stable parliamentary democracy with close UK oversight.", "trend": "stable", "confidence": "high", "note": "Governance is focused on long-term recovery and redevelopment goals." },
+    "economicDirection":        { "score": 5, "score_description": "Recovery phase with heavy reliance on external aid.", "trend": "rising", "confidence": "medium", "note": "Geothermal energy and the new capital project are key drivers for future growth." },
+    "investmentAttractiveness": { "score": 5, "score_description": "Niche opportunities in green energy and sustainable tourism.", "trend": "rising", "confidence": "medium", "note": "A small market, but the government offers incentives for pioneer industries." },
+    "geopoliticalRisk":         { "score": 4, "score_description": "Low geopolitical risk; high environmental risk.", "trend": "stable", "confidence": "high", "note": "The primary threat remains the Soufrière Hills Volcano and tropical storms." },
+    "educationQuality":         { "score": 6, "score_description": "Solid basic education; tertiary education is sought regionally.", "trend": "stable", "confidence": "medium", "note": "The Montserrat Community College is expanding its technical and vocational offerings." },
+    "healthcareQuality":        { "score": 6, "score_description": "Adequate facilities for primary care; complex cases travel abroad.", "trend": "stable", "confidence": "medium", "note": "The Glendon Hospital provides essential services, with plans for a new modern facility." },
+    "technologyInvestment":     { "score": 6, "score_description": "Focus on geothermal energy and digital connectivity.", "trend": "rising", "confidence": "high", "note": "The island is investing in subsea fiber optic cables and renewable energy infrastructure." }
+  },
+  "demographics": {
+    "population": 5200,
+    "medianAge": 41.2,
+    "urbanizationRate": 15,
+    "majorEthnicGroups": ["African descent", "Mixed", "European"],
+    "religions": [
+      { "name": "Protestant", "percent": 75 },
+      { "name": "Roman Catholic", "percent": 10 },
+      { "name": "Other/None", "percent": 15 }
+    ]
+  },
+  "alliances": ["CARICOM", "OECS", "United Kingdom Overseas Territories"],
+  "relationships": [
+    { "countryId": "GBR", "countryName": "United Kingdom", "type": "sovereign", "sentiment": "positive", "summary": "The UK is the primary provider of financial aid, defense, and international representation." },
+    { "countryId": "ATG", "countryName": "Antigua and Barbuda", "type": "partner", "sentiment": "positive", "summary": "Closest neighbor and a major transit hub for people and goods." },
+    { "countryId": "USA", "countryName": "United States", "type": "partner", "sentiment": "positive", "summary": "Important source of tourism and a destination for many Montserratian migrants." }
+  ],
+  "perspectives": [
+    { "source": "Government Planner", "bias": "Optimistic / Reconstruction-focused", "view": "The Little Bay development and our geothermal resources will finally give Montserrat the economic independence it deserves." },
+    { "source": "Local Farmer", "bias": "Traditional", "view": "Our volcanic soil is the richest in the Caribbean; we need to invest more in feeding ourselves and exporting our unique products." },
+    { "source": "Returnee (Expat)", "bias": "Nostalgic / Investor", "view": "I came back to help rebuild; the island has a peace and beauty you can't find anywhere else, but we need better access." }
+  ],
+  "historicalContext": {
+    "summary": "Montserrat was colonized by the British and Irish in the 17th century, earning its nickname from its green landscape and Irish heritage. Its history changed forever in 1995 when the Soufrière Hills Volcano erupted, rendering the southern two-thirds of the island uninhabitable. Since then, the island has been in a constant state of rebuilding and adaptation.",
+    "keyEvents": [
+      { "year": 1632, "event": "British and Irish colonists settle on Montserrat." },
+      { "year": 1967, "event": "Montserrat becomes an internally self-governing colony." },
+      { "year": 1995, "event": "Soufrière Hills Volcano begins a period of major eruptions." },
+      { "year": 1997, "event": "The capital, Plymouth, is destroyed and abandoned." },
+      { "year": 2011, "event": "Drilling for geothermal energy begins, showing great potential." },
+      { "year": 2020, "event": "Subsea fiber optic cable restored, providing high-speed internet to the island." },
+      { "year": 2024, "event": "Major progress on the Little Bay port and town center development." }
+    ]
+  },
+  "investmentNotes": {
+    "strengths": ["Strong UK backing and political stability", "Significant geothermal energy potential", "Unique tourism brand (Emerald Isle/Volcano)", "Resilient and community-focused workforce"],
+    "risks": ["Active volcanic hazard and environmental vulnerability", "Small population and limited domestic market", "Heavy reliance on external financial support", "Limited transportation access (no large-scale airport)"],
+    "sectors": ["Geothermal & Renewable Energy", "Sustainable Eco-Tourism", "Niche Agriculture", "Digital Nomad Services", "Small-Scale Manufacturing"]
+  },
+  "sources": [
+    { "name": "Montserrat Statistics Department", "url": "https://www.statistics.ms/", "type": "economic" },
+    { "name": "Government of Montserrat", "url": "https://www.gov.ms/", "type": "political" },
+    { "name": "Montserrat Tourism Division", "url": "https://www.visitmontserrat.com/", "type": "general" }
+  ]
+}

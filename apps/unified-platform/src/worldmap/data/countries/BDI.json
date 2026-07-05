@@ -1,0 +1,66 @@
+{
+  "id": "BDI",
+  "iso2": "BI",
+  "name": "Burundi",
+  "region": "Africa",
+  "subregion": "Eastern Africa",
+  "capital": "Gitega",
+  "lastUpdated": "2026-05-09",
+  "summary": "Burundi is a small, landlocked country in the Great Lakes region of East Africa. It has faced decades of political instability and ethnic conflict, though it has seen a period of relative calm in recent years. The economy is heavily dependent on subsistence agriculture, particularly coffee and tea. Burundi remains one of the world's poorest nations, with significant challenges in infrastructure, healthcare, and education. Geopolitically, it is working to reintegrate into the international community following years of isolation.",
+  "indicators": {
+    "politicalStability":       { "score": 4, "trend": "stable", "confidence": "medium", "note": "Relative stability under President Ndayishimiye, but concerns over human rights and political space remain." },
+    "economicDirection":        { "score": 3, "trend": "improving", "confidence": "medium", "note": "Modest growth driven by agricultural exports and some infrastructure projects; highly vulnerable to external shocks." },
+    "investmentAttractiveness": { "score": 2, "trend": "improving", "confidence": "medium", "note": "Efforts to attract foreign investment in mining and energy, but constrained by poor infrastructure and corruption." },
+    "geopoliticalRisk":         { "score": 6, "trend": "stable", "confidence": "medium", "note": "Risk of regional spillover from conflicts in neighboring DRC; internal ethnic tensions are dormant but not fully resolved." },
+    "educationQuality":         { "score": 3, "trend": "stable", "confidence": "high", "note": "Universal primary education achieved, but quality and secondary enrollment remain low due to lack of resources." },
+    "healthcareQuality":        { "score": 2, "trend": "stable", "confidence": "high", "note": "Basic healthcare access is limited; high maternal and child mortality rates; heavily reliant on donor support." },
+    "technologyInvestment":     { "score": 2, "trend": "stable", "confidence": "medium", "note": "Low internet penetration; some efforts to expand mobile connectivity and digital payments." }
+  },
+  "demographics": {
+    "population": 13500000,
+    "medianAge": 17.5,
+    "urbanizationRate": 15,
+    "majorEthnicGroups": ["Hutu", "Tutsi", "Twa"],
+    "religions": [
+      { "name": "Roman Catholic", "percent": 62.1 },
+      { "name": "Protestant", "percent": 23.9 },
+      { "name": "Muslim", "percent": 2.5 }
+    ]
+  },
+  "alliances": ["EAC", "AU", "COMESA"],
+  "relationships": [
+    { "countryId": "RWA", "countryName": "Rwanda", "type": "neighbor", "sentiment": "neutral", "summary": "Relations have improved recently after years of tension over border security and mutual accusations of supporting rebels." },
+    { "countryId": "TZA", "countryName": "Tanzania", "type": "strategic_partner", "sentiment": "positive", "summary": "Main transit route for Burundian trade; strong historical and political ties." },
+    { "countryId": "COD", "countryName": "DRC", "type": "neighbor", "sentiment": "neutral", "summary": "Cooperation on regional security issues, particularly in the eastern DRC where Burundian rebels operate." },
+    { "countryId": "BEL", "countryName": "Belgium", "type": "former_colonizer", "sentiment": "neutral", "summary": "Significant development partner, though relations are periodically strained by human rights concerns." }
+  ],
+  "perspectives": [
+    { "source": "Government Official", "bias": "Optimistic", "view": "Burundi is open for business and moving toward a prosperous future under our National Development Plan." },
+    { "source": "Opposition Activist", "bias": "Critical", "view": "The political environment remains restrictive, and the benefits of growth are not reaching the ordinary citizen." },
+    { "source": "Smallholder Farmer", "bias": "Pragmatic", "view": "We need better prices for our coffee and better roads to get our crops to market." },
+    { "source": "UN Representative", "bias": "Neutral", "view": "Progress has been made in security, but the humanitarian situation remains fragile due to poverty and climate change." }
+  ],
+  "historicalContext": {
+    "summary": "Burundi gained independence from Belgium in 1962. Its history has been marked by ethnic violence between Hutu and Tutsi groups, including a devastating civil war (1993-2005). The 2000 Arusha Accords paved the way for peace. Recent years have seen a transition of power following the death of Pierre Nkurunziza in 2020.",
+    "keyEvents": [
+      { "year": 1962, "event": "Independence from Belgium." },
+      { "year": 1972, "event": "Massive ethnic violence and killings." },
+      { "year": 1993, "event": "Assassination of the first Hutu president, sparking a long civil war." },
+      { "year": 2000, "event": "Signing of the Arusha Peace and Reconciliation Agreement." },
+      { "year": 2005, "event": "End of the civil war; Pierre Nkurunziza elected president." },
+      { "year": 2015, "event": "Political crisis triggered by Nkurunziza's bid for a third term." },
+      { "year": 2020, "event": "Election of Évariste Ndayishimiye; death of Nkurunziza." },
+      { "year": 2024, "event": "Continued focus on economic recovery and regional reintegration." }
+    ]
+  },
+  "investmentNotes": {
+    "strengths": ["Untapped mineral resources (Nickel, Rare Earth Elements)", "Ideal climate for high-quality coffee and tea production", "Youthful and growing workforce", "Strategic location within the East African Community"],
+    "risks": ["Vulnerability to commodity price fluctuations", "Limited infrastructure and high energy costs", "Weak judicial system and bureaucratic hurdles", "Environmental risks from land degradation and climate change"],
+    "sectors": ["Agriculture (Coffee, Tea)", "Mining (Nickel)", "Energy (Hydroelectric potential)", "Telecommunications"]
+  },
+  "sources": [
+    { "name": "World Bank - Burundi Overview", "url": "https://www.worldbank.org/en/country/burundi", "type": "economic" },
+    { "name": "African Development Bank - Burundi", "url": "https://www.afdb.org/en/countries/east-africa/burundi", "type": "economic" },
+    { "name": "UNICEF Burundi", "url": "https://www.unicef.org/burundi/", "type": "social" }
+  ]
+}

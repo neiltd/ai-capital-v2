@@ -1,0 +1,71 @@
+{
+  "id": "RUS",
+  "iso2": "RU",
+  "name": "Russian Federation",
+  "region": "Europe/Asia",
+  "subregion": "Eastern Europe",
+  "capital": "Moscow",
+  "lastUpdated": "2026-05-09",
+  "summary": "Russia is a significant revisionist power that has fundamentally broken with the Western-led international order following its full-scale invasion of Ukraine in 2022. The state defines itself as a distinct 'civilization-state' focused on Eurasian integration and multipolarity. While facing unprecedented Western sanctions and international isolation, Moscow has pivoted its economy toward Asia, particularly China and India, and mobilized its domestic industry for a long-term war footing. Despite demographic challenges and the loss of European energy markets, Russia remains a nuclear superpower with vast natural resources and significant influence in the 'Global Majority' as a counterweight to Western hegemony.",
+  "indicators": {
+    "politicalStability":       { "score": 6, "trend": "stable", "confidence": "medium", "note": "High degree of centralization around the presidency; dissent is suppressed, but wartime pressures create latent risks." },
+    "economicDirection":        { "score": 4, "trend": "declining", "confidence": "high", "note": "War-mobilized economy facing high inflation, labor shortages, and loss of Western technology." },
+    "investmentAttractiveness": { "score": 3, "trend": "declining", "confidence": "high", "note": "Severe sanctions, capital controls, and high geopolitical risk deter all but the most risk-tolerant investors." },
+    "geopoliticalRisk":         { "score": 9, "trend": "rising", "confidence": "high", "note": "Ongoing conflict in Ukraine and direct confrontation with NATO over European security." },
+    "educationQuality":         { "score": 6, "trend": "stable", "confidence": "medium", "note": "Strong traditional focus on mathematics and physical sciences, though brain drain is a significant concern." },
+    "healthcareQuality":        { "score": 5, "trend": "stable", "confidence": "medium", "note": "Adequate in major cities but underfunded in remote regions; demographic crisis continues." },
+    "technologyInvestment":     { "score": 5, "trend": "declining", "confidence": "medium", "note": "Focus has shifted heavily to defense and import substitution due to sanctions." }
+  },
+  "demographics": {
+    "population": 144444000,
+    "medianAge": 40.3,
+    "urbanizationRate": 75,
+    "majorEthnicGroups": ["Russian", "Tatar", "Chechen", "Bashkir", "Chuvash"],
+    "religions": [
+      { "name": "Russian Orthodox", "percent": 71 },
+      { "name": "Muslim", "percent": 10 },
+      { "name": "None/Atheist", "percent": 13 },
+      { "name": "Buddhist", "percent": 1 }
+    ]
+  },
+  "alliances": ["CSTO", "BRICS+", "SCO", "EAEU", "Union State"],
+  "relationships": [
+    { "countryId": "USA", "countryName": "United States", "type": "enemy", "sentiment": "negative", "summary": "Deeply adversarial relationship characterized by proxy conflict and zero-sum competition." },
+    { "countryId": "CHN", "countryName": "China", "type": "strategic_partner", "sentiment": "positive", "summary": "An essential economic and political lifeline, though increasingly asymmetric in China's favor." },
+    { "countryId": "GBR", "countryName": "United Kingdom", "type": "enemy", "sentiment": "negative", "summary": "Historical rivals with deep-seated security animosity, currently at a post-Cold War low." },
+    { "countryId": "BLR", "countryName": "Belarus", "type": "ally", "sentiment": "positive", "summary": "Closest strategic ally and junior partner in the Union State integration project." },
+    { "countryId": "IND", "countryName": "India", "type": "strategic_partner", "sentiment": "positive", "summary": "Long-standing defense and energy ties being tested by Russia's shift toward China." }
+  ],
+  "perspectives": [
+    { "source": "Kremlin Nationalist", "bias": "Statist/Nationalist", "view": "Russia is fighting a defensive war against NATO expansion to preserve its sovereignty and unique civilizational identity." },
+    { "source": "Russian Liberal Exile", "bias": "Pro-Western/Liberal", "view": "The current regime's aggressive policies are leading to Russia's long-term economic decay and moral isolation from the civilized world." },
+    { "source": "Chinese Pragmatist", "bias": "Realist", "view": "Russia is a necessary partner in balancing U.S. power, but its instability and military entanglements require careful management." },
+    { "source": "Central European Realist", "bias": "Security-focused", "view": "Russia is an existential threat to European security that only understands military strength and containment." }
+  ],
+  "historicalContext": {
+    "summary": "Russia's history is a cycle of expansion, imperial grandeur, and systemic collapse. From the Tsarist Empire to the Soviet Union and the post-1991 Federation, the state has consistently sought 'Great Power' status and security through geographic depth.",
+    "keyEvents": [
+      { "year": 1721, "event": "Peter the Great proclaims the Russian Empire." },
+      { "year": 1812, "event": "Defeat of Napoleon's invasion, establishing Russia as a key European power." },
+      { "year": 1861, "event": "Abolition of Serfdom by Tsar Alexander II." },
+      { "year": 1917, "event": "Russian Revolution; collapse of the monarchy and rise of the Bolsheviks." },
+      { "year": 1941, "event": "German invasion of the USSR (Great Patriotic War)." },
+      { "year": 1945, "event": "Victory in WWII; USSR emerges as a global superpower." },
+      { "year": 1953, "event": "Death of Stalin, followed by the 'Khrushchev Thaw'." },
+      { "year": 1991, "event": "Dissolution of the Soviet Union; Russia becomes its successor state." },
+      { "year": 1999, "event": "Vladimir Putin appointed Prime Minister, then Acting President." },
+      { "year": 2014, "event": "Annexation of Crimea and start of conflict in Eastern Ukraine." },
+      { "year": 2022, "event": "Full-scale invasion of Ukraine and subsequent total break with the West." }
+    ]
+  },
+  "investmentNotes": {
+    "strengths": ["Vast natural resources (energy, minerals)", "Strong military-industrial base", "Food security and agricultural potential", "Highly educated workforce in STEM"],
+    "risks": ["Severe international sanctions", "High political and legal risk", "Brain drain and demographic decline", "Over-reliance on commodity exports"],
+    "sectors": ["Energy (Oil & Gas)", "Defense Industry", "Agriculture", "Cybersecurity & Software"]
+  },
+  "sources": [
+    { "name": "World Bank", "url": "https://data.worldbank.org/country/RUS", "type": "economic" },
+    { "name": "Freedom House", "url": "https://freedomhouse.org/country/russia", "type": "political" },
+    { "name": "CIA World Factbook", "url": "https://www.cia.gov/the-world-factbook/countries/russia/", "type": "general" }
+  ]
+}

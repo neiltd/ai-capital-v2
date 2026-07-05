@@ -1,0 +1,62 @@
+{
+  "id": "MKD",
+  "iso2": "MK",
+  "name": "North Macedonia",
+  "region": "Europe",
+  "subregion": "Southern Europe",
+  "capital": "Skopje",
+  "lastUpdated": "2025-05-20",
+  "summary": "North Macedonia is a newer NATO member (joined 2020) currently focused on aligning its intelligence and legal frameworks with EU standards. In 2024-2025, the security landscape is defined by countering foreign hybrid warfare aimed at ethnic polarization and institutional trust. The country is in the final stages of a comprehensive security sector reform while managing the regional stability challenges of the Western Balkans.",
+  "indicators": {
+    "politicalStability":       { "score": 6, "trend": "stable", "confidence": "high", "note": "Stable but polarized political environment; ongoing efforts to combat high-level corruption and ensure ethnic cohesion." },
+    "economicDirection":        { "score": 5, "trend": "improving", "confidence": "medium", "note": "Steady growth driven by EU integration prospects and infrastructure projects, though hampered by regional instability." },
+    "investmentAttractiveness": { "score": 6, "trend": "stable", "confidence": "high", "note": "Attractive for manufacturing and automotive parts due to low costs and EU proximity; corruption remains a concern." },
+    "geopoliticalRisk":         { "score": 5, "trend": "stable", "confidence": "high", "note": "Vulnerable to Russian-led disinformation and regional ethnic tensions; NATO membership provides a critical safety net." },
+    "educationQuality":         { "score": 5, "trend": "stable", "confidence": "medium", "note": "Standardized public system; facing 'brain drain' of skilled youth to Western Europe." },
+    "healthcareQuality":        { "score": 4, "trend": "stable", "confidence": "medium", "note": "Public system in need of modernization; significant disparity between urban and rural care." },
+    "technologyInvestment":     { "score": 5, "trend": "improving", "confidence": "medium", "note": "Growing IT outsourcing sector; focus on digitalizing government services under EU guidance." }
+  },
+  "demographics": {
+    "population": 2082706,
+    "medianAge": 41.0,
+    "urbanizationRate": 59.4,
+    "majorEthnicGroups": ["Macedonian", "Albanian", "Turkish", "Romani"],
+    "religions": [
+      { "name": "Orthodox Christian", "percent": 65.0 },
+      { "name": "Muslim", "percent": 33.0 }
+    ]
+  },
+  "alliances": ["NATO", "EU Candidate", "OSCE", "Open Balkan"],
+  "relationships": [
+    { "countryId": "USA", "countryName": "United States", "type": "strategic_partner", "sentiment": "positive", "summary": "Strongest security ally; providing significant support for military modernization and judicial reform." },
+    { "countryId": "GRC", "countryName": "Greece", "type": "neighbor", "sentiment": "positive", "summary": "Relations have improved significantly since the Prespa Agreement; Greece is now a key economic partner and EU advocate." },
+    { "countryId": "BGR", "countryName": "Bulgaria", "type": "neighbor", "sentiment": "neutral", "summary": "Tense relations due to historical and linguistic disputes that have occasionally delayed MKD's EU accession process." },
+    { "countryId": "ALB", "countryName": "Albania", "type": "strategic_partner", "sentiment": "positive", "summary": "Close regional ally; joint focus on EU integration and regional stability in the Western Balkans." }
+  ],
+  "perspectives": [
+    { "source": "MKD Security Official", "bias": "Reformist", "view": "Our priority is professionalizing our agencies and rooting out foreign influence that seeks to divide our multi-ethnic society." },
+    { "source": "Young Professional in Skopje", "bias": "Skeptical", "view": "The EU path feels slow; we need real jobs and less corruption, otherwise more of my friends will move to Germany." },
+    { "source": "Regional Investor", "bias": "Pragmatic", "view": "The costs are low and NATO provides security, but the slow pace of legal reform makes long-term projects risky." }
+  ],
+  "historicalContext": {
+    "summary": "Part of Yugoslavia until its peaceful secession in 1991, the country has navigated complex ethnic tensions (culminating in the 2001 Ohrid Agreement) and a long-running name dispute with Greece that was resolved in 2018, paving the way for NATO and EU integration.",
+    "keyEvents": [
+      { "year": 1991, "event": "Independence from Yugoslavia." },
+      { "year": 2001, "event": "Ohrid Framework Agreement ends ethnic conflict." },
+      { "year": 2018, "event": "Prespa Agreement with Greece resolves name dispute." },
+      { "year": 2019, "event": "Official name change to Republic of North Macedonia." },
+      { "year": 2020, "event": "Joined NATO as the 30th member." },
+      { "year": 2024, "event": "Launch of the 2024-2025 Defence Strategy focused on asymmetric threats." }
+    ]
+  },
+  "investmentNotes": {
+    "strengths": ["Competitive labor costs and tax incentives for FDI", "Strategic location on European transport corridors", "NATO security guarantee provides regional stability", "Increasingly simplified business registration process"],
+    "risks": ["High levels of perceived corruption in the judiciary", "Susceptibility to foreign-backed disinformation and polarization", "Significant brain drain and labor shortages in technical fields", "Slow pace of EU accession negotiations"],
+    "sectors": ["Automotive Parts & Manufacturing", "Information Technology & BPO", "Agriculture & Agribusiness", "Renewable Energy (Solar/Wind)"]
+  },
+  "sources": [
+    { "name": "MKD Intelligence Agency (AR)", "url": "https://www.ia.gov.mk/en/", "type": "security" },
+    { "name": "Invest North Macedonia", "url": "https://investnorthmacedonia.gov.mk/", "type": "economic" },
+    { "name": "European Commission Progress Report", "url": "https://neighbourhood-enlargement.ec.europa.eu/north-macedonia-report-2024_en", "type": "analytical" }
+  ]
+}

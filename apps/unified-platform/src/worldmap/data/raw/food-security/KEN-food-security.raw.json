@@ -1,0 +1,28 @@
+[
+  {
+    "countryId": "KEN",
+    "year": 2022,
+    "overallScore": 53.0,
+    "availability": 55.3,
+    "access": 41.7,
+    "utilization": 60.4,
+    "stability": 61.2,
+    "undernourishedPct": 27.8,
+    "foodImportDependencyPct": 51.3,
+    "cerealYieldKgHa": 1758,
+    "climateVulnerability": "extreme",
+    "conflictExposure": "high",
+    "attribution": {
+      "sources": [
+        { "name": "GFSI 2022 — Kenya", "url": "https://impact.economist.com/sustainability/project/food-security-index/", "accessedAt": "2026-05-10" },
+        { "name": "FAO FAOSTAT", "url": "https://www.fao.org/faostat/en/", "accessedAt": "2026-05-10" },
+        { "name": "WFP Kenya", "url": "https://www.wfp.org/countries/kenya", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 3,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  }
+]

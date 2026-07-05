@@ -1,0 +1,26 @@
+[
+  {
+    "countryId": "MYS",
+    "year": 2023,
+    "gdpUsdBn": 399.65,
+    "gdpPerCapita": 11379,
+    "sectors": [
+      { "sector": "Services", "percentOfGDP": 60.4, "notes": "Wholesale & retail trade, transportation, and tourism recovery. Adjusted to sum to 100% including import duties." },
+      { "sector": "Manufacturing", "percentOfGDP": 23.4, "notes": "Electrical & Electronics (E&E), petroleum, and chemicals." },
+      { "sector": "Agriculture", "percentOfGDP": 6.4, "notes": "Oil palm, livestock, and fisheries." },
+      { "sector": "Mining & Quarrying", "percentOfGDP": 6.2, "notes": "Natural gas and crude oil production." },
+      { "sector": "Construction", "percentOfGDP": 3.6, "notes": "Civil engineering and specialized construction." }
+    ],
+    "attribution": {
+      "sources": [
+        { "name": "Department of Statistics Malaysia (DOSM) 2023", "url": "https://www.dosm.gov.my/", "accessedAt": "2025-02-13" },
+        { "name": "World Bank DataBank 2023", "url": "https://databank.worldbank.org/", "accessedAt": "2025-02-13" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 2,
+        "lastVerified": "2025-02-13"
+      }
+    }
+  }
+]

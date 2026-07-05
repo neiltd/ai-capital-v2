@@ -1,0 +1,65 @@
+{
+  "id": "MWI",
+  "iso2": "MW",
+  "name": "Malawi",
+  "region": "Africa",
+  "subregion": "Southern Africa",
+  "capital": "Lilongwe",
+  "lastUpdated": "2025-05-15",
+  "summary": "Malawi is a peaceful, landlocked nation often referred to as 'The Warm Heart of Africa.' It gained international acclaim for its democratic resilience following the 2020 presidential re-run, which saw the opposition Tonse Alliance take power. However, the administration of President Lazarus Chakwera faces daunting economic hurdles, including a severe foreign exchange shortage, high inflation, and a heavy debt burden. The economy is predominantly agrarian, with tobacco being the primary export. Malawi is exceptionally vulnerable to climate change, as evidenced by recent devastating cyclones. The government's long-term vision, 'Malawi 2063,' aims to transform the country into a wealthy, self-reliant, industrialized upper-middle-income nation through commercializing agriculture and promoting digitalization.",
+  "indicators": {
+    "politicalStability":       { "score": 7, "trend": "stable", "confidence": "high", "note": "Strong democratic culture and judicial independence; Tonse Alliance faces internal pressures ahead of 2025 elections." },
+    "economicDirection":        { "score": 4, "trend": "rising", "confidence": "high", "note": "Economic recovery supported by IMF ECF program, but hampered by foreign exchange scarcity." },
+    "investmentAttractiveness": { "score": 5, "trend": "rising", "confidence": "medium", "note": "Potential in mining and commercial agriculture; improved business environment reforms ongoing." },
+    "geopoliticalRisk":         { "score": 2, "trend": "stable", "confidence": "high", "note": "Very low risk of conflict; maintains good relations with all neighbors." },
+    "educationQuality":         { "score": 4, "trend": "stable", "confidence": "medium", "note": "Universal primary education achieved, but quality and secondary enrollment remain low." },
+    "healthcareQuality":        { "score": 4, "trend": "stable", "confidence": "medium", "note": "Heavily reliant on donor support; significant progress in HIV/AIDS and malaria control." },
+    "technologyInvestment":     { "score": 4, "trend": "rising", "confidence": "medium", "note": "Expansion of mobile connectivity and digital payment systems; government pushing for 'Digital Malawi' initiative." }
+  },
+  "demographics": {
+    "population": 21500000,
+    "medianAge": 17.2,
+    "urbanizationRate": 18.2,
+    "majorEthnicGroups": ["Chewa", "Lomwe", "Yao", "Tumbuka"],
+    "religions": [
+      { "name": "Christian", "percent": 77.3 },
+      { "name": "Muslim", "percent": 13.8 },
+      { "name": "Other", "percent": 6.8 },
+      { "name": "None", "percent": 2.1 }
+    ]
+  },
+  "alliances": ["African Union", "SADC", "COMESA", "Commonwealth"],
+  "relationships": [
+    { "countryId": "ZAF", "countryName": "South Africa", "type": "strategic_partner", "sentiment": "positive", "summary": "Major source of imports and destination for Malawian labor migration." },
+    { "countryId": "CHN", "countryName": "China", "type": "economic_partner", "sentiment": "positive", "summary": "Key infrastructure partner and market for agricultural exports." },
+    { "countryId": "USA", "countryName": "United States", "type": "strategic_partner", "sentiment": "positive", "summary": "Significant development partner via USAID and Millennium Challenge Corporation (MCC)." },
+    { "countryId": "TZA", "countryName": "Tanzania", "type": "regional_partner", "sentiment": "neutral", "summary": "Critical for transit trade via the Mtwara Corridor; occasional border disputes over Lake Malawi." }
+  ],
+  "perspectives": [
+    { "source": "Smallholder Farmer", "bias": "Vulnerable", "view": "Weather patterns have changed; we need more irrigation and better prices for our crops to survive." },
+    { "source": "Lilongwe Civil Servant", "bias": "Optimistic", "view": "The IMF program is painful but necessary to stabilize our currency and bring back investors." },
+    { "source": "Youth Activist", "bias": "Critical", "view": "Democracy is good, but we need jobs. The promised transformations are taking too long to reach the youth." },
+    { "source": "Business Leader", "bias": "Pragmatic", "view": "Access to foreign exchange is the single biggest bottleneck for businesses right now." }
+  ],
+  "historicalContext": {
+    "summary": "Gaining independence from Britain in 1964, Malawi was ruled by Hastings Kamuzu Banda for 30 years as a one-party state. It transitioned to multi-party democracy in 1994. The 2020 presidential election re-run was a landmark moment for African democracy, overturning a fraudulent result and bringing the opposition to power.",
+    "keyEvents": [
+      { "year": 1964, "event": "Independence from the United Kingdom." },
+      { "year": 1994, "event": "First multi-party elections; Bakili Muluzi becomes president." },
+      { "year": 2012, "event": "Joyce Banda becomes Malawi's first female president following the death of Bingu wa Mutharika." },
+      { "year": 2020, "event": "Constitutional Court nullifies 2019 election; Lazarus Chakwera wins the historic re-run." },
+      { "year": 2023, "event": "Cyclone Freddy causes catastrophic damage, leading to a national state of disaster." },
+      { "year": 2024, "event": "Malawi successfully secures a new IMF Extended Credit Facility (ECF) to address economic imbalances." }
+    ]
+  },
+  "investmentNotes": {
+    "strengths": ["Strong democratic institutions and peaceful social climate", "Vast underutilized arable land and freshwater resources (Lake Malawi)", "Growing potential in rare earth minerals and graphite mining", "Youthful population and expanding digital infrastructure"],
+    "risks": ["High vulnerability to extreme weather events (cyclones, droughts)", "Acute foreign exchange shortages and currency devaluation", "High external debt levels", "Infrastructure deficits in energy and transport"],
+    "sectors": ["Agro-processing (Tobacco, Macadamia, Legumes)", "Mining (Rare Earths, Graphite)", "Tourism & Hospitality", "Information & Communication Technology"]
+  },
+  "sources": [
+    { "name": "Reserve Bank of Malawi", "url": "https://www.rbm.mw/", "type": "economic" },
+    { "name": "National Statistical Office of Malawi", "url": "http://www.nsomalawi.mw/", "type": "demographic" },
+    { "name": "Malawi Investment and Trade Centre (MITC)", "url": "https://www.mitc.mw/", "type": "investment" }
+  ]
+}

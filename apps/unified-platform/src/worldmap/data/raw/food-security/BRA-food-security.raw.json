@@ -1,0 +1,28 @@
+[
+  {
+    "countryId": "BRA",
+    "year": 2022,
+    "overallScore": 65.1,
+    "availability": 53.4,
+    "access": 79.2,
+    "utilization": 85.1,
+    "stability": 48.1,
+    "undernourishedPct": 4.7,
+    "foodImportDependencyPct": -45.4,
+    "cerealYieldKgHa": 5310,
+    "climateVulnerability": "medium",
+    "conflictExposure": "extreme",
+    "attribution": {
+      "sources": [
+        { "name": "GFSI 2022 — Brazil", "url": "https://impact.economist.com/sustainability/project/food-security-index/", "accessedAt": "2026-05-10" },
+        { "name": "FAO FAOSTAT", "url": "https://www.fao.org/faostat/en/", "accessedAt": "2026-05-10" },
+        { "name": "WFP Brazil", "url": "https://www.wfp.org/countries/brazil", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 3,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  }
+]

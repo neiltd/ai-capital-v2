@@ -1,0 +1,65 @@
+# Build/install outputs
+node_modules/
+dist/
+.next/
+.turbo/
+
+# Secrets / env
+.env
+.env.local
+**/.env
+**/.env.local
+
+# macOS noise
+.DS_Store
+**/.DS_Store
+
+# Runtime DB files (per-project; never commit)
+agentdb.rvf
+agentdb.rvf.lock
+**/agentdb.rvf
+**/agentdb.rvf.lock
+ruvector.db
+**/ruvector.db
+
+# Stale npm lockfiles — root pnpm-lock.yaml is now the source of truth
+apps/*/package-lock.json
+
+# Build artefacts not covered by per-app gitignores
+apps/*/.next/
+apps/*/tsconfig.tsbuildinfo
+
+# Logs
+logs/
+**/logs/
+
+# Crontab backups (don't accidentally commit secrets-in-cron)
+logs/crontab.*.txt
+crontab.*.txt
+
+# IDE noise
+.idea/
+.vscode/*
+!.vscode/extensions.json
+
+# Editor/tooling local state
+.superpowers/
+
+# Local-only personal data project (per user request: keep local, future per-user)
+capital-intelligence-ingestion/
+apps/capital-intelligence-ingestion/
+
+# Old project backups (large, not meant for version control)
+_archive/
+.git.pre-fresh-start-backup-*/
+
+# claude-flow daemon runtime state (not project content)
+.claude-flow/
+**/.claude-flow/
+
+# Real portfolio value/holdings reports (personal financial data — never commit)
+apps/investment-analyst-agents/tax/harvest.json
+apps/investment-analyst-agents/tax/report.md
+apps/investment-analyst-agents/risk/risk.json
+apps/investment-analyst-agents/risk/report.md
+apps/investment-analyst-agents/correlation/report.md

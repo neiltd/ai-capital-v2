@@ -1,0 +1,28 @@
+[
+  {
+    "countryId": "UKR",
+    "year": 2022,
+    "overallScore": 57.9,
+    "availability": 48.1,
+    "access": 66.6,
+    "utilization": 71.3,
+    "stability": 43.5,
+    "undernourishedPct": 5.8,
+    "foodImportDependencyPct": -174.0,
+    "cerealYieldKgHa": 4614,
+    "climateVulnerability": "medium",
+    "conflictExposure": "extreme",
+    "attribution": {
+      "sources": [
+        { "name": "GFSI 2022 — Ukraine", "url": "https://impact.economist.com/sustainability/project/food-security-index/", "accessedAt": "2025-05-10" },
+        { "name": "FAO FAOSTAT", "url": "https://www.fao.org/faostat/en/", "accessedAt": "2025-05-10" },
+        { "name": "World Bank Cereal Yield", "url": "https://data.worldbank.org/indicator/AG.YLD.CREL.KG", "accessedAt": "2025-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 3,
+        "lastVerified": "2025-05-10"
+      }
+    }
+  }
+]

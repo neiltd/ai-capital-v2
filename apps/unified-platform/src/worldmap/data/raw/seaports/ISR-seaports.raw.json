@@ -1,0 +1,214 @@
+[
+  {
+    "id": "PORT-ISR-HAIFA",
+    "name": "Haifa Port",
+    "countryId": "ISR",
+    "city": "Haifa",
+    "coordinates": [35.002, 32.819],
+    "type": "container",
+    "annualThroughputTEU": 1100000,
+    "annualThroughputTonnes": 30000000,
+    "berthCount": 16,
+    "maxDraftM": 15.5,
+    "strategicImportance": "critical",
+    "riskLevel": "medium",
+    "geopoliticalNotes": "Israel's largest and most efficient gateway. Recently privatized by Adani Group; major hub for containers and cruise tourism.",
+    "notes": "Houses the main Israeli Navy base; critical for national security.",
+    "attribution": {
+      "sources": [
+        { "name": "Haifa Port Official Site", "url": "https://www.haifaport.co.il", "accessedAt": "2026-05-10" },
+        { "name": "Wikipedia", "url": "https://en.wikipedia.org/wiki/Port_of_Haifa", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 2,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  },
+  {
+    "id": "PORT-ISR-ASHDOD",
+    "name": "Ashdod Port",
+    "countryId": "ISR",
+    "city": "Ashdod",
+    "coordinates": [34.651, 31.821],
+    "type": "container",
+    "annualThroughputTEU": 1500000,
+    "annualThroughputTonnes": 24000000,
+    "berthCount": 12,
+    "maxDraftM": 15.0,
+    "strategicImportance": "critical",
+    "riskLevel": "medium",
+    "geopoliticalNotes": "Primary gateway for consumer imports (60% of goods). Critical for humanitarian aid to Gaza and proximity to Israel's industrial heartland.",
+    "notes": "State-owned port undergoing modernization to compete with new private terminals.",
+    "attribution": {
+      "sources": [
+        { "name": "Ashdod Port Authority", "url": "https://www.ashdodport.co.il", "accessedAt": "2026-05-10" },
+        { "name": "Wikipedia", "url": "https://en.wikipedia.org/wiki/Port_of_Ashdod", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 2,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  },
+  {
+    "id": "PORT-ISR-EILAT",
+    "name": "Eilat Port",
+    "countryId": "ISR",
+    "city": "Eilat",
+    "coordinates": [34.935, 29.533],
+    "type": "multipurpose",
+    "annualThroughputTEU": null,
+    "annualThroughputTonnes": 2100000,
+    "berthCount": 4,
+    "maxDraftM": 12.0,
+    "strategicImportance": "high",
+    "riskLevel": "high",
+    "geopoliticalNotes": "Israel's only Red Sea outlet; strategic 'back door' bypassing the Suez Canal. Vital for vehicle imports and potash exports.",
+    "notes": "Currently heavily impacted by regional maritime instability in the Red Sea.",
+    "attribution": {
+      "sources": [
+        { "name": "Eilat Port Official Site", "url": "https://www.eilatport.co.il", "accessedAt": "2026-05-10" },
+        { "name": "Wikipedia", "url": "https://en.wikipedia.org/wiki/Port_of_Eilat", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 2,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  },
+  {
+    "id": "PORT-ISR-BAYPORT",
+    "name": "Bay Port (Haifa)",
+    "countryId": "ISR",
+    "city": "Haifa",
+    "coordinates": [35.031, 32.818],
+    "type": "container",
+    "annualThroughputTEU": 830000,
+    "annualThroughputTonnes": null,
+    "berthCount": 3,
+    "maxDraftM": 17.3,
+    "strategicImportance": "high",
+    "riskLevel": "medium",
+    "geopoliticalNotes": "Operated by SIPG (China); Israel's most advanced and eco-friendly terminal. Capable of handling ULCVs.",
+    "notes": "New terminal opened in 2021 to introduce competition in Haifa.",
+    "attribution": {
+      "sources": [
+        { "name": "SIPG Bay Port", "url": "https://www.sipgbayport.com", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "medium",
+        "sourceCount": 1,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  },
+  {
+    "id": "PORT-ISR-HADAROM",
+    "name": "Hadarom Port",
+    "countryId": "ISR",
+    "city": "Ashdod",
+    "coordinates": [34.662, 31.841],
+    "type": "container",
+    "annualThroughputTEU": 1700000,
+    "annualThroughputTonnes": null,
+    "berthCount": 3,
+    "maxDraftM": 18.0,
+    "strategicImportance": "high",
+    "riskLevel": "medium",
+    "geopoliticalNotes": "Semi-automated terminal operated by TiL. Expands Ashdod's capacity to handle the world's largest container ships.",
+    "notes": "Also known as the South Port; key to Israel's port reform.",
+    "attribution": {
+      "sources": [
+        { "name": "Hadarom Port (HCT)", "url": "https://www.hct.co.il", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "medium",
+        "sourceCount": 1,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  },
+  {
+    "id": "PORT-ISR-HADERA",
+    "name": "Hadera Port",
+    "countryId": "ISR",
+    "city": "Hadera",
+    "coordinates": [34.881, 32.468],
+    "type": "bulk",
+    "annualThroughputTEU": null,
+    "annualThroughputTonnes": null,
+    "berthCount": 2,
+    "maxDraftM": 22.0,
+    "strategicImportance": "high",
+    "riskLevel": "low",
+    "geopoliticalNotes": "Critical energy port serving the Orot Rabin Power Plant. Essential for Israel's power supply infrastructure.",
+    "notes": "Primarily handles coal and fuel products via deep-water jetty.",
+    "attribution": {
+      "sources": [
+        { "name": "Israel Electric Corporation", "url": "https://www.iec.co.il", "accessedAt": "2026-05-10" },
+        { "name": "Wikipedia", "url": "https://en.wikipedia.org/wiki/Hadera", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 2,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  },
+  {
+    "id": "PORT-ISR-ASHKELON",
+    "name": "Ashkelon Port",
+    "countryId": "ISR",
+    "city": "Ashkelon",
+    "coordinates": [34.522, 31.638],
+    "type": "oil",
+    "annualThroughputTEU": null,
+    "annualThroughputTonnes": null,
+    "berthCount": 6,
+    "maxDraftM": 20.0,
+    "strategicImportance": "critical",
+    "riskLevel": "high",
+    "geopoliticalNotes": "Vital energy hub housing EAPC pipeline infrastructure. Key node for oil trade between Europe and the Far East.",
+    "notes": "Located south of Ashkelon; major player in domestic fuel security.",
+    "attribution": {
+      "sources": [
+        { "name": "EAPC (Eilat-Ashkelon Pipeline Co.)", "url": "https://eapc.com", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "medium",
+        "sourceCount": 1,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  },
+  {
+    "id": "PORT-ISR-NAVAL-HAIFA",
+    "name": "Haifa Naval Base",
+    "countryId": "ISR",
+    "city": "Haifa",
+    "coordinates": [34.991, 32.831],
+    "type": "naval",
+    "annualThroughputTEU": null,
+    "annualThroughputTonnes": null,
+    "berthCount": null,
+    "maxDraftM": null,
+    "strategicImportance": "critical",
+    "riskLevel": "medium",
+    "geopoliticalNotes": "Main base of the Israeli Navy and home to the country's submarine fleet. Essential for Mediterranean maritime security.",
+    "notes": "Restricted military area adjacent to the commercial Haifa Port.",
+    "attribution": {
+      "sources": [
+        { "name": "Wikipedia - Haifa Naval Base", "url": "https://en.wikipedia.org/wiki/Haifa_Naval_Base", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "medium",
+        "sourceCount": 1,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  }
+]

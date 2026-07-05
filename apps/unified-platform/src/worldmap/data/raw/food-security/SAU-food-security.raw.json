@@ -1,0 +1,28 @@
+[
+  {
+    "countryId": "SAU",
+    "year": 2022,
+    "overallScore": 69.9,
+    "availability": 67.2,
+    "access": 83.2,
+    "utilization": 71.6,
+    "stability": 53.7,
+    "undernourishedPct": 3.0,
+    "foodImportDependencyPct": 95.0,
+    "cerealYieldKgHa": 5002,
+    "climateVulnerability": "high",
+    "conflictExposure": "medium",
+    "attribution": {
+      "sources": [
+        { "name": "GFSI 2022 — Saudi Arabia", "url": "https://impact.economist.com/sustainability/project/food-security-index/", "accessedAt": "2025-05-10" },
+        { "name": "FAO FAOSTAT", "url": "https://www.fao.org/faostat/en/", "accessedAt": "2025-05-10" },
+        { "name": "World Bank Cereal Yield", "url": "https://data.worldbank.org/indicator/AG.YLD.CREL.KG", "accessedAt": "2025-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 3,
+        "lastVerified": "2025-05-10"
+      }
+    }
+  }
+]

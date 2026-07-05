@@ -1,0 +1,218 @@
+[
+  {
+    "id": "PORT-VNM-HCMC-CAT-LAI",
+    "name": "Ho Chi Minh City Port (Cat Lai)",
+    "countryId": "VNM",
+    "city": "Ho Chi Minh City",
+    "coordinates": [106.79, 10.76],
+    "type": "container",
+    "annualThroughputTEU": 9100000,
+    "annualThroughputTonnes": 143000000,
+    "berthCount": 21,
+    "maxDraftM": 12.0,
+    "strategicImportance": "critical",
+    "riskLevel": "low",
+    "geopoliticalNotes": "Vietnam's busiest port; handles approximately 50% of the nation's container volume. Vital for the Southern Key Economic Region.",
+    "notes": "Economic engine of Vietnam; primary gateway for consumer goods.",
+    "attribution": {
+      "sources": [
+        { "name": "Saigon Newport Corporation", "url": "https://saigonnewport.com.vn/en/", "accessedAt": "2024-05-10" },
+        { "name": "Vietnam Seaports Association", "url": "http://www.vpa.org.vn/", "accessedAt": "2024-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 2,
+        "lastVerified": "2024-05-10"
+      }
+    }
+  },
+  {
+    "id": "PORT-VNM-HAI-PHONG-LACH-HUYEN",
+    "name": "Hai Phong Port (Lach Huyen)",
+    "countryId": "VNM",
+    "city": "Hai Phong",
+    "coordinates": [106.88, 20.83],
+    "type": "container",
+    "annualThroughputTEU": 7100000,
+    "annualThroughputTonnes": 170000000,
+    "berthCount": 6,
+    "maxDraftM": 14.0,
+    "strategicImportance": "critical",
+    "riskLevel": "low",
+    "geopoliticalNotes": "Northern gateway; primary hub for electronics and manufacturing exports to China, US, and EU.",
+    "notes": "Only northern port capable of receiving large mother vessels.",
+    "attribution": {
+      "sources": [
+        { "name": "Hai Phong Port Joint Stock Company", "url": "https://haiphongport.com.vn/en/", "accessedAt": "2024-05-10" },
+        { "name": "UNCTAD Maritime Transport Report", "url": "https://unctad.org/topic/transport-and-trade-logistics/maritime-transport-report", "accessedAt": "2024-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 2,
+        "lastVerified": "2024-05-10"
+      }
+    }
+  },
+  {
+    "id": "PORT-VNM-CAI-MEP-THI-VAI",
+    "name": "Cai Mep - Thi Vai Port Complex",
+    "countryId": "VNM",
+    "city": "Phu My",
+    "coordinates": [107.03, 10.54],
+    "type": "container",
+    "annualThroughputTEU": 7000000,
+    "annualThroughputTonnes": 152000000,
+    "berthCount": 22,
+    "maxDraftM": 18.0,
+    "strategicImportance": "critical",
+    "riskLevel": "low",
+    "geopoliticalNotes": "Deep-water hub capable of receiving ultra-large vessels (24,000 TEU). Direct transpacific routes to US/EU.",
+    "notes": "Strategically located to bypass transshipment hubs like Singapore for long-haul routes.",
+    "attribution": {
+      "sources": [
+        { "name": "Cai Mep International Terminal", "url": "https://www.cmit.com.vn/", "accessedAt": "2024-05-10" },
+        { "name": "Lloyd's List", "url": "https://lloydslist.com/", "accessedAt": "2024-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 2,
+        "lastVerified": "2024-05-10"
+      }
+    }
+  },
+  {
+    "id": "PORT-VNM-DA-NANG-TIEN-SA",
+    "name": "Da Nang Port (Tien Sa)",
+    "countryId": "VNM",
+    "city": "Da Nang",
+    "coordinates": [108.21, 16.12],
+    "type": "mixed",
+    "annualThroughputTEU": 762000,
+    "annualThroughputTonnes": 14000000,
+    "berthCount": 5,
+    "maxDraftM": 12.0,
+    "strategicImportance": "high",
+    "riskLevel": "low",
+    "geopoliticalNotes": "Terminus of the East-West Economic Corridor (EWEC), connecting Vietnam to Laos, Thailand, and Myanmar.",
+    "notes": "Central Vietnam's primary gateway; high regional connectivity.",
+    "attribution": {
+      "sources": [
+        { "name": "Danang Port", "url": "https://danangport.com/en/", "accessedAt": "2024-05-10" },
+        { "name": "Vietnam Seaports Association", "url": "http://www.vpa.org.vn/", "accessedAt": "2024-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 2,
+        "lastVerified": "2024-05-10"
+      }
+    }
+  },
+  {
+    "id": "PORT-VNM-QUANG-NINH-CAI-LAN",
+    "name": "Quang Ninh Port (Cai Lan)",
+    "countryId": "VNM",
+    "city": "Ha Long",
+    "coordinates": [107.05, 20.96],
+    "type": "bulk",
+    "annualThroughputTEU": 24000,
+    "annualThroughputTonnes": 131000000,
+    "berthCount": 5,
+    "maxDraftM": 11.5,
+    "strategicImportance": "medium",
+    "riskLevel": "low",
+    "geopoliticalNotes": "Strategic for coal, minerals, and agricultural trade with China. Key logistics hub for the Northeast region.",
+    "notes": "Handles high volume of dry bulk and raw materials.",
+    "attribution": {
+      "sources": [
+        { "name": "Quang Ninh Port", "url": "http://www.quangninhport.com.vn/", "accessedAt": "2024-05-10" },
+        { "name": "Vietnam Seaports Association", "url": "http://www.vpa.org.vn/", "accessedAt": "2024-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 2,
+        "lastVerified": "2024-05-10"
+      }
+    }
+  },
+  {
+    "id": "PORT-VNM-QUY-NHON",
+    "name": "Quy Nhon Port",
+    "countryId": "VNM",
+    "city": "Quy Nhon",
+    "coordinates": [109.24, 13.77],
+    "type": "mixed",
+    "annualThroughputTEU": 200000,
+    "annualThroughputTonnes": 11000000,
+    "berthCount": 5,
+    "maxDraftM": 12.0,
+    "strategicImportance": "medium",
+    "riskLevel": "low",
+    "geopoliticalNotes": "Crucial for agricultural exports from the Central Highlands and Southern Laos/Northeast Cambodia.",
+    "notes": "Gateway for the Indochina crossroads.",
+    "attribution": {
+      "sources": [
+        { "name": "Quy Nhon Port", "url": "https://quynhonport.vn/", "accessedAt": "2024-05-10" },
+        { "name": "Vietnam Seaports Association", "url": "http://www.vpa.org.vn/", "accessedAt": "2024-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 2,
+        "lastVerified": "2024-05-10"
+      }
+    }
+  },
+  {
+    "id": "PORT-VNM-CAM-RANH",
+    "name": "Cam Ranh International Port",
+    "countryId": "VNM",
+    "city": "Cam Ranh",
+    "coordinates": [109.14, 11.91],
+    "type": "naval",
+    "annualThroughputTEU": 150000,
+    "annualThroughputTonnes": 4000000,
+    "berthCount": 7,
+    "maxDraftM": 13.0,
+    "strategicImportance": "high",
+    "riskLevel": "low",
+    "geopoliticalNotes": "One of the world's finest natural deep-water harbors; dual-use (military/commercial) with high naval significance.",
+    "notes": "Strategic defense node in the South China Sea.",
+    "attribution": {
+      "sources": [
+        { "name": "Cam Ranh International Port", "url": "http://camranhport.vn/", "accessedAt": "2024-05-10" },
+        { "name": "Vietnam Seaports Association", "url": "http://www.vpa.org.vn/", "accessedAt": "2024-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 2,
+        "lastVerified": "2024-05-10"
+      }
+    }
+  },
+  {
+    "id": "PORT-VNM-CHU-LAI",
+    "name": "Chu Lai Port",
+    "countryId": "VNM",
+    "city": "Nui Thanh",
+    "coordinates": [108.62, 15.47],
+    "type": "mixed",
+    "annualThroughputTEU": 12000,
+    "annualThroughputTonnes": 5000000,
+    "berthCount": 2,
+    "maxDraftM": 11.6,
+    "strategicImportance": "medium",
+    "riskLevel": "low",
+    "geopoliticalNotes": "Developed by THACO; serves the Chu Lai Open Economic Zone. Key for automotive and high-tech supply chains.",
+    "notes": "Industrial hub focused on logistics and manufacturing integration.",
+    "attribution": {
+      "sources": [
+        { "name": "Chu Lai Port", "url": "https://chulaiport.com.vn/", "accessedAt": "2024-05-10" },
+        { "name": "Vietnam Seaports Association", "url": "http://www.vpa.org.vn/", "accessedAt": "2024-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 2,
+        "lastVerified": "2024-05-10"
+      }
+    }
+  }
+]

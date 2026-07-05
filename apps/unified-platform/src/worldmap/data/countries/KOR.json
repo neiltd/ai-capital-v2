@@ -1,0 +1,68 @@
+{
+  "id": "KOR",
+  "iso2": "KR",
+  "name": "South Korea",
+  "region": "Asia",
+  "subregion": "Eastern Asia",
+  "capital": "Seoul",
+  "lastUpdated": "2025-05-20",
+  "summary": "South Korea is a global technological powerhouse and a leading liberal democracy in East Asia. After a period of significant political upheaval in late 2024, the nation has transitioned to a new administration under President Lee Jae-myung, focusing on pragmatic diplomacy and economic revitalization. South Korea remains a critical node in global supply chains, particularly in semiconductors and high-tech manufacturing. However, it faces severe structural challenges, most notably the world's lowest fertility rate and an rapidly aging population, which pose long-term risks to its economic dynamism and social stability.",
+  "indicators": {
+    "politicalStability":       { "score": 6, "trend": "stable", "confidence": "high", "note": "Recovering from the late 2024 political crisis; democratic institutions proved resilient during the transition." },
+    "economicDirection":        { "score": 7, "trend": "stable", "confidence": "high", "note": "Strong high-tech exports continue to drive growth, though domestic consumption is hampered by high household debt." },
+    "investmentAttractiveness": { "score": 7, "trend": "rising", "confidence": "high", "note": "Aggressive government incentives for AI and chips; however, regulatory complexity and labor rigidity remain concerns." },
+    "geopoliticalRisk":         { "score": 6, "trend": "rising", "confidence": "high", "note": "Persistent tensions with North Korea and a complex 'North Korea-Russia-China' axis; deepening trilateral ties with US and Japan." },
+    "educationQuality":         { "score": 9, "trend": "stable", "confidence": "high", "note": "One of the world's most educated workforces; extremely high emphasis on STEM and higher education." },
+    "healthcareQuality":        { "score": 9, "trend": "stable", "confidence": "high", "note": "Excellent, efficient universal healthcare system; a global leader in medical technology and pharmaceuticals." },
+    "technologyInvestment":     { "score": 10, "trend": "rising", "confidence": "high", "note": "World-class R&D spending; national priority on semiconductors, AI, and green energy technology." }
+  },
+  "demographics": {
+    "population": 51750000,
+    "medianAge": 45.1,
+    "urbanizationRate": 82,
+    "majorEthnicGroups": ["Korean"],
+    "religions": [
+      { "name": "No Religion", "percent": 56.0 },
+      { "name": "Christian", "percent": 27.6 },
+      { "name": "Buddhist", "percent": 15.5 },
+      { "name": "Other", "percent": 0.9 }
+    ]
+  },
+  "alliances": ["ROK-US Alliance", "APEC", "G20", "OECD", "CPTPP (Applying)", "RCEP", "IPEF"],
+  "relationships": [
+    { "countryId": "USA", "countryName": "United States", "type": "treaty_ally", "sentiment": "positive", "summary": "Core security ally; relationship is deepening in technology and supply chain security despite cost-sharing pressures." },
+    { "countryId": "JPN", "countryName": "Japan", "type": "strategic_partner", "sentiment": "positive", "summary": "Relationship has significantly improved; focused on trilateral security cooperation to counter common threats." },
+    { "countryId": "CHN", "countryName": "China", "type": "strategic_partner", "sentiment": "neutral", "summary": "Largest trade partner; relationship is carefully managed to balance economic needs with security concerns." },
+    { "countryId": "PRK", "countryName": "North Korea", "type": "adversary", "sentiment": "negative", "summary": "Direct existential threat; relations remain frozen with high military readiness on both sides." },
+    { "countryId": "RUS", "countryName": "Russia", "type": "competitor", "sentiment": "negative", "summary": "Relations have deteriorated due to the Ukraine war and Russia's deepening military ties with North Korea." }
+  ],
+  "perspectives": [
+    { "source": "Chaebol Executive", "bias": "Pragmatic", "view": "We must lead in AI and semiconductors to survive. Global supply chain shifts are our biggest challenge and our biggest opportunity." },
+    { "source": "Young Professional", "bias": "Cynical", "view": "The competition is suffocating, and the cost of living makes it impossible to start a family. We need more than just chip factories to have a future." },
+    { "source": "National Security Expert", "bias": "Hawkish", "view": "The threats are evolving. We need to maintain our technological edge and strengthen our alliances to ensure peace through strength." },
+    { "source": "Social Reformer", "bias": "Reformist", "view": "Our success means nothing if we don't address the inequality and the demographic collapse. We need a fundamental shift in our social contract." }
+  ],
+  "historicalContext": {
+    "summary": "Following the Korean War (1950-1953), South Korea underwent rapid industrialization known as the 'Miracle on the Han River.' It transitioned from a military dictatorship to a vibrant democracy in 1987. It is now a leading global economy and a key cultural exporter (Hallyu).",
+    "keyEvents": [
+      { "year": 1948, "event": "Establishment of the Republic of Korea." },
+      { "year": 1950, "event": "Outbreak of the Korean War." },
+      { "year": 1953, "event": "Korean Armistice Agreement signed, establishing the DMZ." },
+      { "year": 1961, "event": "Park Chung-hee takes power in a military coup, initiating rapid economic development." },
+      { "year": 1987, "event": "June Democracy Movement leads to direct presidential elections and the Sixth Republic." },
+      { "year": 1997, "event": "Asian Financial Crisis leads to significant IMF-mandated structural reforms." },
+      { "year": 2017, "event": "Impeachment of President Park Geun-hye after mass protests." },
+      { "year": 2024, "event": "Political crisis following a brief martial law declaration; leads to the impeachment of President Yoon Suk-yeol." }
+    ]
+  },
+  "investmentNotes": {
+    "strengths": ["Global leader in Semiconductors and Display technology", "Highly skilled and disciplined workforce", "World-class digital infrastructure (5G/AI)", "Strong R&D environment and government support for innovation"],
+    "risks": ["Severe demographic decline (labor shortages)", "High household debt and slowing domestic consumption", "Geopolitical volatility on the Korean Peninsula", "Regulatory barriers and Chaebol-dominated market structure"],
+    "sectors": ["Semiconductors & Advanced Packaging", "AI & Robotics", "Biotechnology & Pharmaceuticals", "Electric Vehicle Batteries"]
+  },
+  "sources": [
+    { "name": "Bank of Korea", "url": "https://www.bok.or.kr/", "type": "economic" },
+    { "name": "Statistics Korea (KOSTAT)", "url": "https://kostat.go.kr/", "type": "demographic" },
+    { "name": "KOTRA (Korea Trade-Investment Promotion Agency)", "url": "https://www.kotra.or.kr/", "type": "investment" }
+  ]
+}

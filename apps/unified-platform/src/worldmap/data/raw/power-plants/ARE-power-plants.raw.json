@@ -1,0 +1,274 @@
+[
+  {
+    "id": "PLANT-ARE-BARAKAH",
+    "name": "Barakah Nuclear Power Plant",
+    "countryId": "ARE",
+    "city": "Ruwais",
+    "coordinates": [52.2317, 23.9678],
+    "type": "nuclear",
+    "status": "operating",
+    "capacityMW": 5600,
+    "annualOutputGWh": null,
+    "yearCommissioned": 2021,
+    "yearRetirement": null,
+    "operator": "Nawah Energy Company",
+    "owner": "Emirates Nuclear Energy Corporation",
+    "strategicNote": "First commercial nuclear power station in the Arab world, providing up to 25% of UAE electricity.",
+    "notes": "Unit 4 entered commercial service in September 2024.",
+    "attribution": {
+      "sources": [
+        { "name": "Global Energy Monitor", "url": "https://www.gem.wiki/Barakah_Nuclear_Power_Plant", "accessedAt": "2025-05-10" },
+        { "name": "IAEA PRIS", "url": "https://pris.iaea.org/PRIS/CountryStatistics/CountryDetails.aspx?current=AE", "accessedAt": "2025-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 2,
+        "lastVerified": "2025-05-10"
+      }
+    }
+  },
+  {
+    "id": "PLANT-ARE-JEBEL-ALI",
+    "name": "Jebel Ali Power and Desalination Complex",
+    "countryId": "ARE",
+    "city": "Dubai",
+    "coordinates": [55.1172, 25.0597],
+    "type": "gas",
+    "status": "operating",
+    "capacityMW": 9547,
+    "annualOutputGWh": null,
+    "yearCommissioned": 1976,
+    "yearRetirement": null,
+    "operator": "Dubai Electricity and Water Authority",
+    "owner": "Dubai Electricity and Water Authority",
+    "strategicNote": "World's largest single-site natural gas power generation facility and critical desalination hub for Dubai.",
+    "notes": null,
+    "attribution": {
+      "sources": [
+        { "name": "Global Energy Monitor", "url": "https://www.gem.wiki/Jebel_Ali_power_station", "accessedAt": "2025-05-10" },
+        { "name": "DEWA", "url": "https://www.dewa.gov.ae/en/about-us/news-publications/news-archives/2021/05/jebel-ali-power-complex", "accessedAt": "2025-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 2,
+        "lastVerified": "2025-05-10"
+      }
+    }
+  },
+  {
+    "id": "PLANT-ARE-MBR-SOLAR",
+    "name": "Mohammed bin Rashid Al Maktoum Solar Park",
+    "countryId": "ARE",
+    "city": "Seih Al-Dahal",
+    "coordinates": [55.3650, 24.7547],
+    "type": "solar",
+    "status": "operating",
+    "capacityMW": 3860,
+    "annualOutputGWh": null,
+    "yearCommissioned": 2013,
+    "yearRetirement": null,
+    "operator": "Dubai Electricity and Water Authority",
+    "owner": "Dubai Electricity and Water Authority",
+    "strategicNote": "World's largest single-site solar park, core of Dubai's Clean Energy Strategy 2050.",
+    "notes": "Capacity as of 2024; planned to reach 5000 MW by 2030.",
+    "attribution": {
+      "sources": [
+        { "name": "Global Energy Monitor", "url": "https://www.gem.wiki/Mohammed_bin_Rashid_Al_Maktoum_Solar_Park", "accessedAt": "2025-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 1,
+        "lastVerified": "2025-05-10"
+      }
+    }
+  },
+  {
+    "id": "PLANT-ARE-AL-TAWEELAH",
+    "name": "Al Taweelah Power Plant",
+    "countryId": "ARE",
+    "city": "Abu Dhabi",
+    "coordinates": [54.6844, 24.7628],
+    "type": "gas",
+    "status": "operating",
+    "capacityMW": 4696,
+    "annualOutputGWh": null,
+    "yearCommissioned": 1989,
+    "yearRetirement": null,
+    "operator": "Emirates Water and Electricity Company",
+    "owner": "TAQA",
+    "strategicNote": "Major power and water production site serving Abu Dhabi.",
+    "notes": null,
+    "attribution": {
+      "sources": [
+        { "name": "Global Energy Monitor", "url": "https://www.gem.wiki/Al_Taweelah_power_station", "accessedAt": "2025-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 1,
+        "lastVerified": "2025-05-10"
+      }
+    }
+  },
+  {
+    "id": "PLANT-ARE-HASSYAN",
+    "name": "Hassyan Thermal Plant",
+    "countryId": "ARE",
+    "city": "Dubai",
+    "coordinates": [54.9167, 24.9250],
+    "type": "gas",
+    "status": "operating",
+    "capacityMW": 2400,
+    "annualOutputGWh": null,
+    "yearCommissioned": 2020,
+    "yearRetirement": null,
+    "operator": "Hassyan Energy Company",
+    "owner": "DEWA (51%), ACWA Power & Harbin Electric (49%)",
+    "strategicNote": "Originally designed as clean coal, converted to natural gas to align with UAE's net zero goals.",
+    "notes": "Full capacity reached in 2023.",
+    "attribution": {
+      "sources": [
+        { "name": "Global Energy Monitor", "url": "https://www.gem.wiki/Hassyan_Clean_Coal_power_station", "accessedAt": "2025-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 1,
+        "lastVerified": "2025-05-10"
+      }
+    }
+  },
+  {
+    "id": "PLANT-ARE-AL-DHAFRA",
+    "name": "Al Dhafra Solar PV",
+    "countryId": "ARE",
+    "city": "Abu Dhabi",
+    "coordinates": [54.5500, 24.0833],
+    "type": "solar",
+    "status": "operating",
+    "capacityMW": 2000,
+    "annualOutputGWh": null,
+    "yearCommissioned": 2023,
+    "yearRetirement": null,
+    "operator": "Dhafra PV2",
+    "owner": "TAQA, Masdar, EDF Renewables, Jinko Power",
+    "strategicNote": "One of the world's largest single-site solar PV plants.",
+    "notes": null,
+    "attribution": {
+      "sources": [
+        { "name": "Global Energy Monitor", "url": "https://www.gem.wiki/Al_Dhafra_solar_farm", "accessedAt": "2025-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 1,
+        "lastVerified": "2025-05-10"
+      }
+    }
+  },
+  {
+    "id": "PLANT-ARE-FUJAIRAH-F2",
+    "name": "Fujairah F2 IWPP",
+    "countryId": "ARE",
+    "city": "Qidfa",
+    "coordinates": [56.3667, 25.3000],
+    "type": "gas",
+    "status": "operating",
+    "capacityMW": 2000,
+    "annualOutputGWh": null,
+    "yearCommissioned": 2010,
+    "yearRetirement": null,
+    "operator": "Fujairah Asia Power Company",
+    "owner": "TAQA, Marubeni, Engie",
+    "strategicNote": "Major independent water and power project on the east coast.",
+    "notes": null,
+    "attribution": {
+      "sources": [
+        { "name": "Global Energy Monitor", "url": "https://www.gem.wiki/Fujairah_F2_power_station", "accessedAt": "2025-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 1,
+        "lastVerified": "2025-05-10"
+      }
+    }
+  },
+  {
+    "id": "PLANT-ARE-NOOR-ABU-DHABI",
+    "name": "Noor Abu Dhabi",
+    "countryId": "ARE",
+    "city": "Sweihan",
+    "coordinates": [55.2686, 24.4031],
+    "type": "solar",
+    "status": "operating",
+    "capacityMW": 1177,
+    "annualOutputGWh": null,
+    "yearCommissioned": 2019,
+    "yearRetirement": null,
+    "operator": "Sweihan PV Power Company",
+    "owner": "TAQA, Masdar, Jinko Power",
+    "strategicNote": "Pioneering large-scale solar project in Abu Dhabi.",
+    "notes": null,
+    "attribution": {
+      "sources": [
+        { "name": "Global Energy Monitor", "url": "https://www.gem.wiki/Noor_Abu_Dhabi_solar_farm", "accessedAt": "2025-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 1,
+        "lastVerified": "2025-05-10"
+      }
+    }
+  },
+  {
+    "id": "PLANT-ARE-SHUWEIHAT-S3",
+    "name": "Shuweihat S3 Power Plant",
+    "countryId": "ARE",
+    "city": "Al Ruwais",
+    "coordinates": [52.5833, 24.1500],
+    "type": "gas",
+    "status": "operating",
+    "capacityMW": 1600,
+    "annualOutputGWh": null,
+    "yearCommissioned": 2014,
+    "yearRetirement": null,
+    "operator": "Shuweihat Asia Power Company",
+    "owner": "TAQA, Sumitomo, KEPCO",
+    "strategicNote": "Part of the Shuweihat complex, a key power generation site in Abu Dhabi's western region.",
+    "notes": null,
+    "attribution": {
+      "sources": [
+        { "name": "Global Energy Monitor", "url": "https://www.gem.wiki/Shuweihat_S3_power_station", "accessedAt": "2025-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 1,
+        "lastVerified": "2025-05-10"
+      }
+    }
+  },
+  {
+    "id": "PLANT-ARE-HAMRIYAH",
+    "name": "Hamriyah Power Plant",
+    "countryId": "ARE",
+    "city": "Sharjah",
+    "coordinates": [55.4833, 25.4667],
+    "type": "gas",
+    "status": "operating",
+    "capacityMW": 1800,
+    "annualOutputGWh": null,
+    "yearCommissioned": 2021,
+    "yearRetirement": null,
+    "operator": "Sharjah Electricity, Water and Gas Authority",
+    "owner": "SEWA, GE, Sumitomo",
+    "strategicNote": "Most efficient gas power plant in the UAE, critical for Sharjah's power supply.",
+    "notes": null,
+    "attribution": {
+      "sources": [
+        { "name": "Global Energy Monitor", "url": "https://www.gem.wiki/Hamriyah_power_station", "accessedAt": "2025-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 1,
+        "lastVerified": "2025-05-10"
+      }
+    }
+  }
+]

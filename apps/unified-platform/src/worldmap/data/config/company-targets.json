@@ -1,0 +1,106 @@
+[
+  {
+    "sectorId": "sector-semiconductors",
+    "sectorName": "Semiconductors — Core Fab & Equipment",
+    "sectorSlug": "semiconductors",
+    "priority": 1,
+    "companies": [
+      { "ticker": "NVDA", "name": "NVIDIA Corporation", "exchange": "NASDAQ", "note": "AI GPU monopoly — ~80% training market share, Taiwan/export control exposure" },
+      { "ticker": "TSM",  "name": "Taiwan Semiconductor Manufacturing (TSMC)", "exchange": "NYSE", "note": "Foundry for 90%+ of world advanced AI chips — only one who can make them" },
+      { "ticker": "ASML", "name": "ASML Holding NV", "exchange": "NASDAQ", "note": "Sole EUV machine maker — without ASML no one can make advanced AI chips" },
+      { "ticker": "AMD",  "name": "Advanced Micro Devices", "exchange": "NASDAQ", "note": "NVIDIA challenger — MI300X GPU, 15-20% AI training market share target" },
+      { "ticker": "AMAT", "name": "Applied Materials", "exchange": "NASDAQ", "note": "Largest chip equipment maker — China revenue 30%+, export controls key risk" }
+    ]
+  },
+  {
+    "sectorId": "sector-semiconductors-ai",
+    "sectorName": "Semiconductors — AI Infrastructure Stack",
+    "sectorSlug": "semiconductors-ai",
+    "priority": 2,
+    "companies": [
+      { "ticker": "AVGO", "name": "Broadcom Inc.", "exchange": "NASDAQ", "note": "Largest custom AI ASIC designer — builds Google TPU, Meta MTIA, Apple Neural Engine; also AI networking chips (Tomahawk)" },
+      { "ticker": "MRVL", "name": "Marvell Technology Group", "exchange": "NASDAQ", "note": "Custom AI ASICs for Amazon Trainium/Inferentia, Microsoft Maia — pure-play custom silicon" },
+      { "ticker": "MU",   "name": "Micron Technology", "exchange": "NASDAQ", "note": "HBM3e memory — every H100/H200 needs HBM, Micron is only US HBM maker (vs SK Hynix/Samsung)" },
+      { "ticker": "SMCI", "name": "Super Micro Computer", "exchange": "NASDAQ", "note": "AI server systems integrator — first to ship H100 servers, liquid cooling leadership" },
+      { "ticker": "ARM",  "name": "Arm Holdings plc", "exchange": "NASDAQ", "note": "CPU architecture licensor — inside every smartphone AI chip, Apple Silicon, AWS Graviton, Qualcomm Oryon" }
+    ]
+  },
+  {
+    "sectorId": "sector-energy",
+    "sectorName": "Energy",
+    "sectorSlug": "energy",
+    "priority": 2,
+    "companies": [
+      { "ticker": "XOM",  "name": "Exxon Mobil Corporation", "exchange": "NYSE", "note": "Largest US oil major — global operations" },
+      { "ticker": "CVX",  "name": "Chevron Corporation", "exchange": "NYSE", "note": "Major US oil — Middle East and Kazakhstan exposure" },
+      { "ticker": "SLB",  "name": "SLB (Schlumberger)", "exchange": "NYSE", "note": "Largest oil services — operates in sanctioned regions" },
+      { "ticker": "COP",  "name": "ConocoPhillips", "exchange": "NYSE", "note": "E&P focused — LNG exports, Alaska and Middle East" },
+      { "ticker": "HAL",  "name": "Halliburton Company", "exchange": "NYSE", "note": "Oil services — Russia exit, Middle East heavy" }
+    ]
+  },
+  {
+    "sectorId": "sector-shipping-logistics",
+    "sectorName": "Shipping & Logistics",
+    "sectorSlug": "shipping",
+    "priority": 3,
+    "companies": [
+      { "ticker": "FDX",  "name": "FedEx Corporation", "exchange": "NYSE", "note": "Air/ground freight — Red Sea beneficiary, China exposure" },
+      { "ticker": "UPS",  "name": "United Parcel Service", "exchange": "NYSE", "note": "Global logistics — supply chain disruption exposure" },
+      { "ticker": "ZIM",  "name": "ZIM Integrated Shipping Services", "exchange": "NYSE", "note": "Container shipping — directly affected by Red Sea crisis" },
+      { "ticker": "MATX", "name": "Matson Inc.", "exchange": "NYSE", "note": "Trans-Pacific shipping — US-China trade routes" },
+      { "ticker": "GXO",  "name": "GXO Logistics", "exchange": "NYSE", "note": "Contract logistics — European supply chain exposure" }
+    ]
+  },
+  {
+    "sectorId": "sector-ai-infrastructure",
+    "sectorName": "AI Infrastructure & Datacenters",
+    "sectorSlug": "ai-infrastructure",
+    "priority": 4,
+    "companies": [
+      { "ticker": "MSFT", "name": "Microsoft Corporation", "exchange": "NASDAQ", "note": "Azure AI — hyperscale datacenter, OpenAI partner, China exit" },
+      { "ticker": "GOOGL","name": "Alphabet Inc. (Google)", "exchange": "NASDAQ", "note": "Google Cloud, DeepMind — submarine cable owner (Dunant)" },
+      { "ticker": "AMZN", "name": "Amazon.com Inc.", "exchange": "NASDAQ", "note": "AWS — largest cloud, logistics, Red Sea shipping exposure" },
+      { "ticker": "META", "name": "Meta Platforms Inc.", "exchange": "NASDAQ", "note": "AI infrastructure — submarine cable owner, data sovereignty" },
+      { "ticker": "EQIX", "name": "Equinix Inc.", "exchange": "NASDAQ", "note": "Datacenter REIT — 250 datacenters in 70 markets globally" }
+    ]
+  },
+  {
+    "sectorId": "sector-defense",
+    "sectorName": "Defense & Aerospace",
+    "sectorSlug": "defense",
+    "priority": 5,
+    "companies": [
+      { "ticker": "LMT",  "name": "Lockheed Martin Corporation", "exchange": "NYSE", "note": "F-35, Javelin — largest defense contractor, rare earth exposure" },
+      { "ticker": "RTX",  "name": "RTX Corporation (Raytheon)", "exchange": "NYSE", "note": "Missiles, Stinger, Patriot — Ukraine/Taiwan demand surge" },
+      { "ticker": "NOC",  "name": "Northrop Grumman Corporation", "exchange": "NYSE", "note": "B-21, Space systems — classified programs exposure" },
+      { "ticker": "GD",   "name": "General Dynamics Corporation", "exchange": "NYSE", "note": "Gulfstream, submarines, Abrams — international sales" },
+      { "ticker": "BA",   "name": "The Boeing Company", "exchange": "NYSE", "note": "Defense + commercial aviation — China delivery freeze" }
+    ]
+  },
+  {
+    "sectorId": "sector-banks",
+    "sectorName": "Banks & Financial System",
+    "sectorSlug": "banks",
+    "priority": 6,
+    "companies": [
+      { "ticker": "JPM",  "name": "JPMorgan Chase & Co.", "exchange": "NYSE", "note": "Largest US bank — global operations, sanctions compliance leader" },
+      { "ticker": "GS",   "name": "The Goldman Sachs Group", "exchange": "NYSE", "note": "Investment bank — commodities, Russia exit, Middle East growth" },
+      { "ticker": "C",    "name": "Citigroup Inc.", "exchange": "NYSE", "note": "Most international US bank — 160 countries, EM exposure" },
+      { "ticker": "MS",   "name": "Morgan Stanley", "exchange": "NYSE", "note": "Investment banking — China JV complications, Russia exit" },
+      { "ticker": "BAC",  "name": "Bank of America Corporation", "exchange": "NYSE", "note": "US-focused — global trade finance, sanctions exposure" }
+    ]
+  },
+  {
+    "sectorId": "sector-commodities",
+    "sectorName": "Commodities",
+    "sectorSlug": "commodities",
+    "priority": 7,
+    "companies": [
+      { "ticker": "NEM",  "name": "Newmont Corporation", "exchange": "NYSE", "note": "Largest gold miner — operations in 9 countries" },
+      { "ticker": "FCX",  "name": "Freeport-McMoRan Inc.", "exchange": "NYSE", "note": "Largest copper miner — Indonesia, US, DRC, Peru" },
+      { "ticker": "GOLD", "name": "Barrick Gold Corporation", "exchange": "NYSE", "note": "Major gold miner — Africa, Middle East, Americas" },
+      { "ticker": "AA",   "name": "Alcoa Corporation", "exchange": "NYSE", "note": "Aluminum — energy-intensive, Russia sanctions impact" },
+      { "ticker": "MOS",  "name": "The Mosaic Company", "exchange": "NYSE", "note": "Fertilizer — Russia/Belarus sanctions cut global supply" }
+    ]
+  }
+]

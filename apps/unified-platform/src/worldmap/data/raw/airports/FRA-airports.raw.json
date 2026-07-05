@@ -1,0 +1,272 @@
+[
+  {
+    "id": "CDG",
+    "name": "Paris Charles de Gaulle Airport",
+    "countryId": "FRA",
+    "city": "Paris",
+    "iata": "CDG",
+    "icao": "LFPG",
+    "coordinates": [2.5478, 49.0097],
+    "passengerVolume": 67421316,
+    "cargoVolume": 1810000,
+    "runwayCount": 4,
+    "elevationM": 119,
+    "strategicImportance": "critical",
+    "geopoliticalNotes": "France's primary international gateway and Europe's second-busiest cargo hub, central to French global connectivity.",
+    "notes": "Hosts the FedEx European hub; critical node in global supply chains.",
+    "attribution": {
+      "sources": [
+        { "name": "Groupe ADP", "url": "https://www.groupeadp.fr", "accessedAt": "2026-05-10" },
+        { "name": "ACI World", "url": "https://aci.aero", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 2,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  },
+  {
+    "id": "ORY",
+    "name": "Paris Orly Airport",
+    "countryId": "FRA",
+    "city": "Paris",
+    "iata": "ORY",
+    "icao": "LFPO",
+    "coordinates": [2.3942, 48.7233],
+    "passengerVolume": 32294167,
+    "cargoVolume": 120000,
+    "runwayCount": 3,
+    "elevationM": 89,
+    "strategicImportance": "high",
+    "geopoliticalNotes": "Secondary hub for Paris, essential for domestic and North African regional connectivity.",
+    "notes": "Primary hub for domestic French air traffic.",
+    "attribution": {
+      "sources": [
+        { "name": "Groupe ADP", "url": "https://www.groupeadp.fr", "accessedAt": "2026-05-10" },
+        { "name": "IATA", "url": "https://www.iata.org", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 2,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  },
+  {
+    "id": "LYS",
+    "name": "Lyon-Saint Exupéry Airport",
+    "countryId": "FRA",
+    "city": "Lyon",
+    "iata": "LYS",
+    "icao": "LFLL",
+    "coordinates": [5.0811, 45.7256],
+    "passengerVolume": 10000000,
+    "cargoVolume": 54000,
+    "runwayCount": 2,
+    "elevationM": 250,
+    "strategicImportance": "high",
+    "geopoliticalNotes": "Strategic gateway for the Auvergne-Rhône-Alpes industrial heartland and a major regional logistics node.",
+    "notes": "Leading provincial freight airport in France.",
+    "attribution": {
+      "sources": [
+        { "name": "Lyon Airport", "url": "https://www.lyonaeroports.com", "accessedAt": "2026-05-10" },
+        { "name": "ACI World", "url": "https://aci.aero", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 2,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  },
+  {
+    "id": "MRS",
+    "name": "Marseille Provence Airport",
+    "countryId": "FRA",
+    "city": "Marseille",
+    "iata": "MRS",
+    "icao": "LFML",
+    "coordinates": [5.215, 43.4367],
+    "passengerVolume": 10800000,
+    "cargoVolume": 59700,
+    "runwayCount": 2,
+    "elevationM": 21,
+    "strategicImportance": "high",
+    "geopoliticalNotes": "Critical Mediterranean hub connecting France to Southern Europe, Africa, and the Middle East.",
+    "notes": "Recently expanded capacity with a new terminal to support increased regional traffic.",
+    "attribution": {
+      "sources": [
+        { "name": "Marseille Provence Airport", "url": "https://www.marseille.aeroport.fr", "accessedAt": "2026-05-10" },
+        { "name": "Aviation Week", "url": "https://aviationweek.com", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 2,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  },
+  {
+    "id": "TLS",
+    "name": "Toulouse-Blagnac Airport",
+    "countryId": "FRA",
+    "city": "Toulouse",
+    "iata": "TLS",
+    "icao": "LFBO",
+    "coordinates": [1.3678, 43.635],
+    "passengerVolume": 7800000,
+    "cargoVolume": 29570,
+    "runwayCount": 2,
+    "elevationM": 151,
+    "strategicImportance": "critical",
+    "geopoliticalNotes": "Industrial heart of European aviation; primary assembly and test site for Airbus aircraft.",
+    "notes": "Indispensable to European aerospace sovereignty and industrial cooperation.",
+    "attribution": {
+      "sources": [
+        { "name": "Toulouse-Blagnac Airport", "url": "https://www.toulouse.aeroport.fr", "accessedAt": "2026-05-10" },
+        { "name": "Airbus", "url": "https://www.airbus.com", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 2,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  },
+  {
+    "id": "LFMI",
+    "name": "Istres-Le Tubé Air Base (BA 125)",
+    "countryId": "FRA",
+    "city": "Istres",
+    "iata": null,
+    "icao": "LFMI",
+    "coordinates": [4.9417, 43.5244],
+    "passengerVolume": null,
+    "cargoVolume": null,
+    "runwayCount": 1,
+    "elevationM": 49,
+    "strategicImportance": "critical",
+    "geopoliticalNotes": "France's most strategic military airbase, featuring one of Europe's longest runways (5,000m).",
+    "notes": "Hub for Strategic Air Forces (FAS) refueling tankers, essential for France's nuclear deterrent.",
+    "attribution": {
+      "sources": [
+        { "name": "French Air and Space Force", "url": "https://air.defense.gouv.fr", "accessedAt": "2026-05-10" },
+        { "name": "SkyVector", "url": "https://skyvector.com", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 2,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  },
+  {
+    "id": "SXB",
+    "name": "Strasbourg Airport",
+    "countryId": "FRA",
+    "city": "Strasbourg",
+    "iata": "SXB",
+    "icao": "LFST",
+    "coordinates": [7.6344, 48.5419],
+    "passengerVolume": 1010000,
+    "cargoVolume": 13500,
+    "runwayCount": 1,
+    "elevationM": 154,
+    "strategicImportance": "medium",
+    "geopoliticalNotes": "Geopolitically significant as the seat of the European Parliament, facilitating EU governance.",
+    "notes": "Symbol of Franco-German reconciliation and European integration.",
+    "attribution": {
+      "sources": [
+        { "name": "Strasbourg Airport", "url": "https://www.strasbourg.aeroport.fr", "accessedAt": "2026-05-10" },
+        { "name": "IATA", "url": "https://www.iata.org", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 2,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  },
+  {
+    "id": "XCR",
+    "name": "Châlons Vatry Airport",
+    "countryId": "FRA",
+    "city": "Châlons-en-Champagne",
+    "iata": "XCR",
+    "icao": "LFOK",
+    "coordinates": [4.2061, 48.7733],
+    "passengerVolume": 65000,
+    "cargoVolume": 75000,
+    "runwayCount": 1,
+    "elevationM": 179,
+    "strategicImportance": "high",
+    "geopoliticalNotes": "Specialized cargo hub for humanitarian aid, emergency airlifts, and outsized military equipment.",
+    "notes": "Operates 24/7 with no noise restrictions, making it a critical logistics backup.",
+    "attribution": {
+      "sources": [
+        { "name": "Vatry Airport", "url": "https://www.vatry.com", "accessedAt": "2026-05-10" },
+        { "name": "Aviation Business News", "url": "https://www.aviationbusinessnews.com", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 2,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  },
+  {
+    "id": "LFSI",
+    "name": "Saint-Dizier – Robinson Air Base (BA 113)",
+    "countryId": "FRA",
+    "city": "Saint-Dizier",
+    "iata": null,
+    "icao": "LFSI",
+    "coordinates": [4.8992, 48.6358],
+    "passengerVolume": null,
+    "cargoVolume": null,
+    "runwayCount": 1,
+    "elevationM": 140,
+    "strategicImportance": "critical",
+    "geopoliticalNotes": "Primary airbase for France's airborne nuclear deterrent, hosting Rafale fighter squadrons.",
+    "notes": "Key site for the ASMP-A nuclear missile operations.",
+    "attribution": {
+      "sources": [
+        { "name": "French Air and Space Force", "url": "https://air.defense.gouv.fr", "accessedAt": "2026-05-10" },
+        { "name": "Wikipedia", "url": "https://fr.wikipedia.org/wiki/Base_a%C3%A9rienne_113_Saint-Dizier-Robinson", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 2,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  },
+  {
+    "id": "LFOE",
+    "name": "Évreux-Fauville Air Base (BA 105)",
+    "countryId": "FRA",
+    "city": "Évreux",
+    "iata": null,
+    "icao": "LFOE",
+    "coordinates": [1.2197, 49.0286],
+    "passengerVolume": null,
+    "cargoVolume": null,
+    "runwayCount": 1,
+    "elevationM": 141,
+    "strategicImportance": "high",
+    "geopoliticalNotes": "Main tactical transport hub for the French military, hosting the Airbus A400M Atlas fleet.",
+    "notes": "Essential for rapid troop and equipment deployment across Africa and the Middle East.",
+    "attribution": {
+      "sources": [
+        { "name": "French Air and Space Force", "url": "https://air.defense.gouv.fr", "accessedAt": "2026-05-10" },
+        { "name": "SkyVector", "url": "https://skyvector.com", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 2,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  }
+]

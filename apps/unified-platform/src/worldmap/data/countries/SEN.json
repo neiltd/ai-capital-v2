@@ -1,0 +1,64 @@
+{
+  "id": "SEN",
+  "iso2": "SN",
+  "name": "Senegal",
+  "region": "Africa",
+  "subregion": "Western Africa",
+  "capital": "Dakar",
+  "lastUpdated": "2025-05-22",
+  "summary": "Senegal is entering a transformative era as a new oil and gas producer while maintaining its reputation as one of Africa's most resilient democracies. Following the historic 2024 election of President Bassirou Diomaye Faye, the country has pivoted toward a 'sovereigntist' foreign policy and an ambitious national development plan, 'Senegal 2050'. With massive hydrocarbon projects (Sangomar and GTA) coming online, Senegal is projected to be one of the world's fastest-growing economies in 2025, while simultaneously positioning itself as a regional hub for technology and innovation.",
+  "indicators": {
+    "politicalStability":       { "score": 7, "trend": "stable", "confidence": "high", "note": "Democratic resilience proven by 2024 election; currently in a consolidation phase under new leadership." },
+    "economicDirection":        { "score": 9, "trend": "rising", "confidence": "high", "note": "Explosive growth driven by first-time oil and gas production; focus on economic sovereignty." },
+    "investmentAttractiveness": { "score": 7, "trend": "rising", "confidence": "high", "note": "High interest in hydrocarbons, renewable energy, and the tech sector via the Startup Act." },
+    "geopoliticalRisk":         { "score": 4, "trend": "stable", "confidence": "medium", "note": "Mediator role in ECOWAS; managing the transition of French military presence." },
+    "educationQuality":         { "score": 6, "trend": "rising", "confidence": "medium", "note": "Dakar is a major regional center for higher education; growing focus on digital skills." },
+    "healthcareQuality":        { "score": 4, "trend": "stable", "confidence": "medium", "note": "High-quality facilities in Dakar; rural access remains a challenge." },
+    "technologyInvestment":     { "score": 8, "trend": "rising", "confidence": "high", "note": "Strong 'Tech Hub' ambition; landmark Startup Act and Diamniadio Digital Technology Park." }
+  },
+  "demographics": {
+    "population": 18500000,
+    "medianAge": 19.4,
+    "urbanizationRate": 50.1,
+    "majorEthnicGroups": ["Wolof", "Pulaar", "Serer", "Mandinka", "Jola"],
+    "religions": [
+      { "name": "Muslim (Sufi)", "percent": 96.0 },
+      { "name": "Christian", "percent": 3.0 },
+      { "name": "Traditional", "percent": 1.0 }
+    ]
+  },
+  "alliances": ["ECOWAS", "African Union", "OIC", "WAEMU"],
+  "relationships": [
+    { "countryId": "FRA", "countryName": "France", "type": "historical_partner", "sentiment": "neutral", "summary": "Traditional ally; currently renegotiating military and economic presence toward a more 'sovereign' relationship." },
+    { "countryId": "CHN", "countryName": "China", "type": "strategic_partner", "sentiment": "positive", "summary": "Major partner for infrastructure and the primary financier for 'Senegal 2050'." },
+    { "countryId": "USA", "countryName": "United States", "type": "strategic_partner", "sentiment": "positive", "summary": "Strong partner in security and democratic governance; rising energy cooperation." },
+    { "countryId": "MLI", "countryName": "Mali", "type": "regional_partner", "sentiment": "positive", "summary": "Key trade partner; Senegal acts as a mediator between Mali and ECOWAS." }
+  ],
+  "perspectives": [
+    { "source": "Young Professional in Dakar", "bias": "Optimistic/Nationalist", "view": "The new government represents our generation. We are finally taking control of our resources and our future." },
+    { "source": "Sufi Leader", "bias": "Traditionalist", "view": "Stability comes from our faith and the social fabric our brotherhoods have built over centuries." },
+    { "source": "Foreign Energy Investor", "bias": "Pragmatic", "view": "The growth potential is massive, but we are watching how the renegotiation of contracts will play out." },
+    { "source": "Artisan in Casamance", "bias": "Hopeful", "view": "The new peace agreement is a blessing. Now we can finally focus on tourism and farming again." }
+  ],
+  "historicalContext": {
+    "summary": "Senegal is one of the few African countries never to have experienced a military coup. Since independence from France in 1960, it has maintained a stable democratic system. The 2024 election marked a peaceful but radical shift from the traditional political establishment to a new generation of leaders.",
+    "keyEvents": [
+      { "year": 1960, "event": "Senegal gains independence from France under Léopold Sédar Senghor." },
+      { "year": 2000, "event": "First peaceful democratic transition of power (Diouf to Wade)." },
+      { "year": 2024, "event": "Bassirou Diomaye Faye elected president; Ousmane Sonko appointed PM." },
+      { "year": 2024, "event": "Start of oil production at the Sangomar field." },
+      { "year": 2025, "event": "First gas production from the Greater Tortue Ahmeyim project." },
+      { "year": 2025, "event": "French military begins final withdrawal from permanent bases." }
+    ]
+  },
+  "investmentNotes": {
+    "strengths": ["World-class oil and gas reserves coming online", "Strongest democratic institutions and stability in the region", "Ambitious digital strategy and Startup Act", "Strategic gateway location for West Africa"],
+    "risks": ["Fiscal pressure from high public debt", "Potential for internal friction within the new executive leadership", "Renegotiation of international mining and energy contracts", "Youth unemployment and high cost of living"],
+    "sectors": ["Hydrocarbons (Oil & Gas)", "Tech & Digital Services", "Renewable Energy", "Agro-industry & Fisheries"]
+  },
+  "sources": [
+    { "name": "Central Bank of West African States (BCEAO)", "url": "https://www.bceao.int/", "type": "economic" },
+    { "name": "National Agency for Statistics and Demography (ANSD)", "url": "https://www.ansd.sn/", "type": "demographic" },
+    { "name": "Agency for the Promotion of Investments (APIX)", "url": "https://investinsenegal.com/", "type": "investment" }
+  ]
+}

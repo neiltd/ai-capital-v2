@@ -1,0 +1,65 @@
+{
+  "id": "SWZ",
+  "iso2": "SZ",
+  "name": "Eswatini",
+  "region": "Africa",
+  "subregion": "Southern Africa",
+  "capital": "Mbabane",
+  "lastUpdated": "2025-05-15",
+  "summary": "Eswatini, formerly known as Swaziland, is Africa's last absolute monarchy, led by King Mswati III. The kingdom is a small, landlocked nation deeply integrated with the South African economy. Eswatini is known for its agricultural exports, particularly sugar, and its unique cultural heritage. In recent years, the country has faced unprecedented internal pressure for democratic reforms, which led to significant civil unrest in 2021. The government remains focused on maintaining traditional authority while attempting to address economic challenges, including high unemployment and one of the world's highest HIV/AIDS prevalence rates. Geopolitically, Eswatini is notable for being the only African nation that maintains formal diplomatic relations with Taiwan rather than the People's Republic of China.",
+  "indicators": {
+    "politicalStability":       { "score": 4, "trend": "stable", "confidence": "high", "note": "Traditional authority remains firm, but underlying tensions regarding democratic reform persist." },
+    "economicDirection":        { "score": 5, "trend": "stable", "confidence": "high", "note": "Economic growth is steady but dependent on SACU revenues and agricultural performance." },
+    "investmentAttractiveness": { "score": 5, "trend": "stable", "confidence": "medium", "note": "Attractive for agribusiness and textiles, but political uncertainty is a consideration for some investors." },
+    "geopoliticalRisk":         { "score": 3, "trend": "stable", "confidence": "medium", "note": "Low external risk; relationship with Taiwan is a unique strategic factor." },
+    "educationQuality":         { "score": 5, "trend": "stable", "confidence": "medium", "note": "Solid primary education system; focus on expanding vocational and technical training." },
+    "healthcareQuality":        { "score": 4, "trend": "rising", "confidence": "medium", "note": "Success in reducing HIV transmission and improving life expectancy, though the system is under pressure." },
+    "technologyInvestment":     { "score": 4, "trend": "rising", "confidence": "medium", "note": "Growing mobile penetration and efforts to digitalize government services." }
+  },
+  "demographics": {
+    "population": 1200000,
+    "medianAge": 20.2,
+    "urbanizationRate": 24.6,
+    "majorEthnicGroups": ["Swazi", "Zulu", "Other"],
+    "religions": [
+      { "name": "Christian (Zionist/Other)", "percent": 88 },
+      { "name": "Traditional", "percent": 5 },
+      { "name": "Muslim", "percent": 2 },
+      { "name": "Other/None", "percent": 5 }
+    ]
+  },
+  "alliances": ["African Union", "SADC", "SACU", "Commonwealth"],
+  "relationships": [
+    { "countryId": "ZAF", "countryName": "South Africa", "type": "strategic_partner", "sentiment": "positive", "summary": "Dominant trade partner; Eswatini's economy is highly sensitive to South African policy and SACU revenue shares." },
+    { "countryId": "TWN", "countryName": "Taiwan", "type": "ally", "sentiment": "positive", "summary": "Key diplomatic and development partner; Taiwan provides significant technical and infrastructure assistance." },
+    { "countryId": "USA", "countryName": "United States", "type": "economic_partner", "sentiment": "neutral", "summary": "Important for textile exports under AGOA, though relations are periodically tested by human rights concerns." },
+    { "countryId": "CHN", "countryName": "China", "type": "competitor", "sentiment": "negative", "summary": "No formal relations; China exerts pressure on Eswatini to switch recognition from Taiwan." }
+  ],
+  "perspectives": [
+    { "source": "Eswatini Sugar Farmer", "bias": "Economic", "view": "Sugar is our green gold. We need stable markets and good rainfall to support the thousands of families dependent on this crop." },
+    { "source": "Pro-Democracy Activist", "bias": "Reformist", "view": "The youth are demanding a voice in how our country is run. We want a constitutional democracy that respects human rights." },
+    { "source": "Traditional Leader", "bias": "Conservative", "view": "Our monarchy is the soul of our nation and the guardian of our peace and culture. It must be protected." },
+    { "source": "Business Owner", "bias": "Pragmatic", "view": "Stability is what matters most for investment. We hope for a peaceful dialogue that ensures a predictable business environment." }
+  ],
+  "historicalContext": {
+    "summary": "Eswatini gained independence from the United Kingdom in 1968. King Sobhuza II ruled for most of the early independence period, eventually suspending the constitution and assuming absolute power in 1973. His son, King Mswati III, has continued this tradition since 1986, while the country has undergone significant modernization and faced major health and social challenges.",
+    "keyEvents": [
+      { "year": 1968, "event": "Independence from the United Kingdom." },
+      { "year": 1973, "event": "King Sobhuza II suspends the constitution and bans political parties." },
+      { "year": 1986, "event": "Mswati III is crowned King." },
+      { "year": 2018, "event": "The King changes the country's name from Swaziland to Eswatini." },
+      { "year": 2021, "event": "Widespread civil unrest and protests calling for democratic reforms." },
+      { "year": 2023, "event": "Successful hosting of national elections (though political parties remain banned from participation)." }
+    ]
+  },
+  "investmentNotes": {
+    "strengths": ["Strong agricultural sector, particularly in sugar and forestry", "Well-developed textile manufacturing base for export", "Favorable trade access via SACU and COMESA", "Unique cultural heritage attracting niche tourism"],
+    "risks": ["Potential for social unrest linked to calls for democratic reform", "Heavy reliance on SACU revenue and the South African economy", "High HIV/AIDS prevalence affecting labor productivity", "High poverty and income inequality"],
+    "sectors": ["Agribusiness (Sugar, Citrus)", "Textile Manufacturing", "Forestry & Pulp", "Niche Tourism"]
+  },
+  "sources": [
+    { "name": "Central Bank of Eswatini", "url": "https://www.centralbank.org.sz/", "type": "economic" },
+    { "name": "Central Statistical Office of Eswatini", "url": "http://www.statistics.org.sz/", "type": "demographic" },
+    { "name": "Eswatini Investment Promotion Authority (EIPA)", "url": "https://www.investeswatini.org.sz/", "type": "investment" }
+  ]
+}

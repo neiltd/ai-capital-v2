@@ -1,0 +1,66 @@
+{
+  "id": "SUR",
+  "iso2": "SR",
+  "name": "Suriname",
+  "region": "Americas",
+  "subregion": "South America",
+  "capital": "Paramaribo",
+  "lastUpdated": "2026-05-24",
+  "summary": "Suriname is currently on the cusp of an oil-driven economic boom, following a period of painful fiscal stabilization and debt restructuring. The transition to a new government in July 2025, led by President Jennifer Geerlings-Simons, has focused on preparing the nation for the massive 'Gran Morgu' offshore oil project, which is expected to begin production in 2028. After years of high inflation and economic contraction, Suriname is seeing signs of stability, with inflation dropping to single digits and a renewed focus on institutional transparency. While the country remains vulnerable to climate change and faces challenges in infrastructure and human capital, the anticipated oil revenue is expected to fundamentally transform its fiscal position and development trajectory over the next decade.",
+  "indicators": {
+    "politicalStability":       { "score": 7, "score_description": "Stable democratic transition with a focus on institutional reform.", "trend": "stable", "confidence": "high", "note": "The peaceful election and transition in 2025 have reinforced Suriname's democratic credentials." },
+    "economicDirection":        { "score": 8, "score_description": "Improving rapidly as oil production nears.", "trend": "rising", "confidence": "high", "note": "Successful debt restructuring and the final investment decision on Gran Morgu have cleared the path for growth." },
+    "investmentAttractiveness": { "score": 7, "score_description": "Rising interest in energy, mining, and sustainable forestry.", "trend": "rising", "confidence": "high", "note": "Suriname is positioning itself as a reliable partner for global energy firms and sustainable resource management." },
+    "geopoliticalRisk":         { "score": 4, "score_description": "Low-moderate risk with stable regional ties.", "trend": "stable", "confidence": "medium", "note": "Relations with Guyana are collaborative, focusing on shared offshore resources and infrastructure." },
+    "educationQuality":         { "score": 5, "score_description": "Stable system facing modern skill gaps.", "trend": "stable", "confidence": "medium", "note": "There is an urgent need to align the technical education system with the requirements of the emerging oil and gas industry." },
+    "healthcareQuality":        { "score": 5, "score_description": "Recovering after a period of severe economic stress.", "trend": "rising", "confidence": "medium", "note": "Efforts are underway to restore medical supplies and retain healthcare professionals who emigrated during the crisis." },
+    "technologyInvestment":     { "score": 4, "score_description": "Developing digital sector with growing connectivity.", "trend": "rising", "confidence": "medium", "note": "Investment in fiber optics and e-government is increasing to support the modernization of the administrative state." }
+  },
+  "demographics": {
+    "population": 630000,
+    "medianAge": 28.1,
+    "urbanizationRate": 66,
+    "majorEthnicGroups": ["Hindustani", "Maroon", "Creole", "Javanese", "Mixed"],
+    "religions": [
+      { "name": "Christianity", "percent": 48 },
+      { "name": "Hinduism", "percent": 22 },
+      { "name": "Islam", "percent": 14 },
+      { "name": "Other/None", "percent": 16 }
+    ]
+  },
+  "alliances": ["CARICOM", "OIC", "UN", "OAS", "CELAC"],
+  "relationships": [
+    { "countryId": "NLD", "countryName": "Netherlands", "type": "partner", "sentiment": "positive", "summary": "Strong historical, cultural, and development ties; the Netherlands remains a key partner in judicial and economic reform." },
+    { "countryId": "GUY", "countryName": "Guyana", "type": "partner", "sentiment": "positive", "summary": "Close collaboration on cross-border infrastructure and the development of the 'Guiana Basin' oil province." },
+    { "countryId": "USA", "countryName": "United States", "type": "partner", "sentiment": "positive", "summary": "Growing cooperation in security, energy, and anti-corruption efforts." },
+    { "countryId": "CHN", "countryName": "China", "type": "trade_partner", "sentiment": "neutral", "summary": "Significant creditor and infrastructure partner; relations are being managed within the framework of debt restructuring." }
+  ],
+  "perspectives": [
+    { "source": "NDP-led Coalition (Governing)", "bias": "Social Democratic / Nationalist", "view": "We are focused on ensuring that Suriname's natural wealth translates into sustainable development and social equity for all our people." },
+    { "source": "VHP Opposition", "bias": "Centrist / Pro-Business", "view": "Stability must be maintained to ensure the confidence of international investors during this critical pre-production phase." },
+    { "source": "TotalEnergies / Investors", "bias": "Project-Focused", "view": "Suriname offers a world-class opportunity in the offshore sector, supported by a constructive regulatory environment." }
+  ],
+  "historicalContext": {
+    "summary": "Formerly Dutch Guiana, Suriname gained independence in 1975. Its post-independence history was marked by a military coup in 1980 led by Desi Bouterse, followed by a civil war and periods of economic volatility. The recent years have seen a strengthening of democratic institutions and a shift toward market-based stabilization.",
+    "keyEvents": [
+      { "year": 1975, "event": "Independence from the Netherlands." },
+      { "year": 1980, "event": "Sergeants' Coup led by Desi Bouterse." },
+      { "year": 1982, "event": "December Murders; 15 political opponents executed under military rule." },
+      { "year": 1986, "event": "Surinamese Interior War begins." },
+      { "year": 1991, "event": "Return to democratic elections." },
+      { "year": 2020, "event": "Chan Santokhi elected President, initiating economic reforms." },
+      { "year": 2024, "event": "Final Investment Decision (FID) for the $10.5 billion Gran Morgu oil project." },
+      { "year": 2025, "event": "Jennifer Geerlings-Simons sworn in as President." }
+    ]
+  },
+  "investmentNotes": {
+    "strengths": ["Massive offshore oil and gas potential", "Rich gold and bauxite deposits", "World's most forested country (high carbon credit potential)", "Strong cultural and linguistic ties to Europe and the Caribbean"],
+    "risks": ["Vulnerability to rising sea levels (most population on the coast)", "History of political volatility and institutional weakness", "Reliance on commodity prices", "Small domestic market and labor pool"],
+    "sectors": ["Oil & Gas", "Mining (Gold)", "Sustainable Forestry and Carbon Credits", "Agriculture (Rice, Bananas)"]
+  },
+  "sources": [
+    { "name": "Centrale Bank van Suriname", "url": "https://www.cbvs.sr/", "type": "economic" },
+    { "name": "General Bureau of Statistics (ABS)", "url": "https://www.statistics-suriname.org/", "type": "economic" },
+    { "name": "Staatsolie (State Oil Company)", "url": "https://www.staatsolie.com/", "type": "economic" }
+  ]
+}

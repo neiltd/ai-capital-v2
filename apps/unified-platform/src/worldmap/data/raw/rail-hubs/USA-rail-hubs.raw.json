@@ -1,0 +1,219 @@
+[
+  {
+    "id": "RAIL-USA-CHICAGO-CLEARING",
+    "name": "Clearing Yard",
+    "countryId": "USA",
+    "city": "Chicago",
+    "coordinates": [-87.765, 41.776],
+    "type": "freight",
+    "dailyPassengers": null,
+    "annualFreightTonnes": 150000000,
+    "connectedCountries": ["CAN", "MEX"],
+    "gaugeType": "standard",
+    "lineCount": 92,
+    "strategicImportance": "high",
+    "isPartOfBRI": false,
+    "geopoliticalNotes": "The most critical rail interchange in North America. Connects all six Class I railroads. Handling 25% of all US rail freight traffic.",
+    "notes": "Operated by the Belt Railway of Chicago.",
+    "attribution": {
+      "sources": [
+        { "name": "Association of American Railroads (AAR)", "url": "https://www.aar.org", "accessedAt": "2026-05-10" },
+        { "name": "Bureau of Transportation Statistics", "url": "https://www.bts.gov", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 2,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  },
+  {
+    "id": "RAIL-USA-KANSAS-CITY-ARGENTINE",
+    "name": "Argentine Yard",
+    "countryId": "USA",
+    "city": "Kansas City",
+    "coordinates": [-94.665, 39.083],
+    "type": "freight",
+    "dailyPassengers": null,
+    "annualFreightTonnes": 250000000,
+    "connectedCountries": ["CAN", "MEX"],
+    "gaugeType": "standard",
+    "lineCount": 60,
+    "strategicImportance": "high",
+    "isPartOfBRI": false,
+    "geopoliticalNotes": "Top rail hub by tonnage in the US. Critical node for agricultural exports and Powder River Basin coal distribution.",
+    "notes": "Primary BNSF classification yard.",
+    "attribution": {
+      "sources": [
+        { "name": "Kansas City Southern (CPKC)", "url": "https://www.cpkcr.com", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 1,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  },
+  {
+    "id": "RAIL-USA-LAREDO-BORDER",
+    "name": "Laredo Rail Port of Entry",
+    "countryId": "USA",
+    "city": "Laredo",
+    "coordinates": [-99.529, 27.536],
+    "type": "border_crossing",
+    "dailyPassengers": null,
+    "annualFreightTonnes": 40000000,
+    "connectedCountries": ["MEX"],
+    "gaugeType": "standard",
+    "lineCount": 8,
+    "strategicImportance": "high",
+    "isPartOfBRI": false,
+    "geopoliticalNotes": "Number one rail port of entry on the US-Mexico border. Essential for USMCA automotive and industrial supply chains.",
+    "notes": "Includes the Sanchez Yard on the Mexican side.",
+    "attribution": {
+      "sources": [
+        { "name": "US Customs and Border Protection", "url": "https://www.cbp.gov", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 1,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  },
+  {
+    "id": "RAIL-USA-LA-HOBART",
+    "name": "Hobart Yard",
+    "countryId": "USA",
+    "city": "Los Angeles",
+    "coordinates": [-118.204, 34.008],
+    "type": "port_interface",
+    "dailyPassengers": null,
+    "annualFreightTonnes": 60000000,
+    "connectedCountries": [],
+    "gaugeType": "standard",
+    "lineCount": 24,
+    "strategicImportance": "high",
+    "isPartOfBRI": false,
+    "geopoliticalNotes": "The busiest intermodal rail terminal in the US, servicing the Port of Los Angeles and Port of Long Beach.",
+    "notes": "Main gateway for trans-Pacific container trade into the US interior.",
+    "attribution": {
+      "sources": [
+        { "name": "Port of Los Angeles Statistics", "url": "https://www.portoflosangeles.org", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 1,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  },
+  {
+    "id": "RAIL-USA-HOUSTON-ENGLEWOOD",
+    "name": "Englewood Yard",
+    "countryId": "USA",
+    "city": "Houston",
+    "coordinates": [-95.313, 29.791],
+    "type": "freight",
+    "dailyPassengers": null,
+    "annualFreightTonnes": 50000000,
+    "connectedCountries": ["MEX"],
+    "gaugeType": "standard",
+    "lineCount": 64,
+    "strategicImportance": "high",
+    "isPartOfBRI": false,
+    "geopoliticalNotes": "Nexus for the US petrochemical industry. Critical for the transport of plastics, chemicals, and energy products.",
+    "notes": "Major Union Pacific hub.",
+    "attribution": {
+      "sources": [
+        { "name": "Union Pacific Railroad", "url": "https://www.up.com", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "medium",
+        "sourceCount": 1,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  },
+  {
+    "id": "RAIL-USA-ATLANTA-INMAN",
+    "name": "Inman Yard",
+    "countryId": "USA",
+    "city": "Atlanta",
+    "coordinates": [-84.444, 33.791],
+    "type": "freight",
+    "dailyPassengers": null,
+    "annualFreightTonnes": 35000000,
+    "connectedCountries": [],
+    "gaugeType": "standard",
+    "lineCount": 40,
+    "strategicImportance": "high",
+    "isPartOfBRI": false,
+    "geopoliticalNotes": "Logistics backbone of the Southeastern US. Vital for consumer goods and automotive distribution in the region.",
+    "notes": "Operated by Norfolk Southern.",
+    "attribution": {
+      "sources": [
+        { "name": "Norfolk Southern Corporation", "url": "http://www.nscorp.com", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "medium",
+        "sourceCount": 1,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  },
+  {
+    "id": "RAIL-USA-STLOUIS-MADISON",
+    "name": "Madison Yard",
+    "countryId": "USA",
+    "city": "St. Louis",
+    "coordinates": [-90.151, 38.675],
+    "type": "mixed",
+    "dailyPassengers": null,
+    "annualFreightTonnes": 45000000,
+    "connectedCountries": [],
+    "gaugeType": "standard",
+    "lineCount": 50,
+    "strategicImportance": "high",
+    "isPartOfBRI": false,
+    "geopoliticalNotes": "Second largest rail hub in the US by interchange volume. Strategic bridge over the Mississippi River connecting Eastern and Western lines.",
+    "notes": "Managed by the Terminal Railroad Association of St. Louis.",
+    "attribution": {
+      "sources": [
+        { "name": "Terminal Railroad Association of St. Louis", "url": "https://www.trra.com", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 1,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  },
+  {
+    "id": "RAIL-USA-NY-PENN",
+    "name": "Pennsylvania Station",
+    "countryId": "USA",
+    "city": "New York",
+    "coordinates": [-73.993, 40.750],
+    "type": "passenger",
+    "dailyPassengers": 600000,
+    "annualFreightTonnes": null,
+    "connectedCountries": ["CAN"],
+    "gaugeType": "standard",
+    "lineCount": 21,
+    "strategicImportance": "high",
+    "isPartOfBRI": false,
+    "geopoliticalNotes": "Busiest passenger station in North America. Anchor of the Northeast Corridor, vital for regional economic stability.",
+    "notes": "Owned by Amtrak; used by LIRR and NJ Transit.",
+    "attribution": {
+      "sources": [
+        { "name": "Amtrak Annual Report", "url": "https://www.amtrak.com", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 1,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  }
+]

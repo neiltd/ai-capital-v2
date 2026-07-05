@@ -1,0 +1,44 @@
+[
+  {
+    "countryId": "DEU",
+    "year": 2023,
+    "gdpUsdBn": 4456.1,
+    "gdpPerCapita": 52727,
+    "sectors": [
+      {
+        "sector": "Services",
+        "percentOfGDP": 70.3,
+        "notes": "Includes public services, business services, and information/communication."
+      },
+      {
+        "sector": "Industry",
+        "percentOfGDP": 23.0,
+        "notes": "Manufacturing, mining, and utilities; excluding construction."
+      },
+      {
+        "sector": "Construction",
+        "percentOfGDP": 5.9,
+        "notes": "Affected by rising interest rates and building costs."
+      },
+      {
+        "sector": "Agriculture",
+        "percentOfGDP": 0.8,
+        "notes": "Includes forestry and fishing."
+      }
+    ],
+    "attribution": {
+      "sources": [
+        {
+          "name": "Destatis (Federal Statistical Office of Germany) / IMF 2023",
+          "url": "https://www.destatis.de",
+          "accessedAt": "2025-02-14"
+        }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 2,
+        "lastVerified": "2025-02-14"
+      }
+    }
+  }
+]

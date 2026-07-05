@@ -1,0 +1,302 @@
+[
+  {
+    "id": "DC-RUS-MOW-IXCELLERATE-MOS5",
+    "name": "IXcellerate MOS5 (Moscow South)",
+    "countryId": "RUS",
+    "city": "Moscow",
+    "coordinates": [37.6251, 55.5843],
+    "type": "colocation",
+    "status": "operational",
+    "tierLevel": "3",
+    "capacityMW": 64,
+    "floorSpaceM2": null,
+    "pue": 1.35,
+    "operator": "IXcellerate",
+    "owner": "IXcellerate",
+    "yearOpened": 2024,
+    "yearPlanned": null,
+    "cloudRegion": null,
+    "geopoliticalNotes": "Largest carrier-neutral commercial facility in Russia; critical for financial and retail sectors amidst shift to domestic cloud infrastructure.",
+    "notes": "Located in the Biryulyovo Zapadnoye district.",
+    "attribution": {
+      "sources": [
+        { "name": "IXcellerate MOS5 Launch", "url": "https://ixcellerate.com/data-centers/mos5/", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 2,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  },
+  {
+    "id": "DC-RUS-KLF-YANDEX-GRABTSEVO",
+    "name": "Yandex Kaluga (Grabtsevo)",
+    "countryId": "RUS",
+    "city": "Kaluga",
+    "coordinates": [36.3721, 54.5645],
+    "type": "hyperscale",
+    "status": "operational",
+    "tierLevel": "3",
+    "capacityMW": 63,
+    "floorSpaceM2": null,
+    "pue": 1.15,
+    "operator": "Yandex",
+    "owner": "Yandex",
+    "yearOpened": 2023,
+    "yearPlanned": null,
+    "cloudRegion": "ru-central1",
+    "geopoliticalNotes": "Core infrastructure for Yandex Cloud and AI training; central to Russia's digital sovereignty and domestic AI development.",
+    "notes": "Designed for high-density AI workloads.",
+    "attribution": {
+      "sources": [
+        { "name": "Yandex Cloud Infrastructure", "url": "https://cloud.yandex.ru/docs/overview/concepts/geo-scope", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 2,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  },
+  {
+    "id": "DC-RUS-SAR-SBERBANK-BALAKOVO",
+    "name": "Sberbank Balakovo",
+    "countryId": "RUS",
+    "city": "Balakovo",
+    "coordinates": [47.8012, 52.0034],
+    "type": "enterprise",
+    "status": "operational",
+    "tierLevel": "3",
+    "capacityMW": 82,
+    "floorSpaceM2": null,
+    "pue": null,
+    "operator": "Sberbank",
+    "owner": "Sberbank",
+    "yearOpened": 2024,
+    "yearPlanned": null,
+    "cloudRegion": null,
+    "geopoliticalNotes": "Massive regional AI data center supporting GigaChat and Sber's financial ecosystem; part of Russia's push for regional digital development.",
+    "notes": "Phase 1 operational; total planned capacity up to 120MW.",
+    "attribution": {
+      "sources": [
+        { "name": "Sberbank Infrastructure", "url": "https://www.sberbank.com/ru/news-and-media/", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "medium",
+        "sourceCount": 1,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  },
+  {
+    "id": "DC-RUS-TVE-ROSTELECOM-UDOMLYA",
+    "name": "Rostelecom Udomlya",
+    "countryId": "RUS",
+    "city": "Udomlya",
+    "coordinates": [35.0512, 57.9015],
+    "type": "hyperscale",
+    "status": "operational",
+    "tierLevel": "3",
+    "capacityMW": 48,
+    "floorSpaceM2": null,
+    "pue": null,
+    "operator": "Rostelecom-DPC",
+    "owner": "Rosenergoatom / Rostelecom",
+    "yearOpened": 2019,
+    "yearPlanned": null,
+    "cloudRegion": null,
+    "geopoliticalNotes": "Strategically located next to the Kalinin Nuclear Power Plant for stable, low-cost power; hosts government and critical state data.",
+    "notes": "Co-project with Rosatom.",
+    "attribution": {
+      "sources": [
+        { "name": "Rostelecom-DPC Udomlya", "url": "https://rt-dc.ru/centers/udomlya/", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 2,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  },
+  {
+    "id": "DC-RUS-MOW-ROSATOM-MOSCOW2",
+    "name": "Rosatom Moscow-2",
+    "countryId": "RUS",
+    "city": "Moscow",
+    "coordinates": [37.6112, 55.6123],
+    "type": "colocation",
+    "status": "operational",
+    "tierLevel": "4",
+    "capacityMW": 36,
+    "floorSpaceM2": null,
+    "pue": null,
+    "operator": "Atomdata (Rosatom)",
+    "owner": "Rosatom",
+    "yearOpened": 2024,
+    "yearPlanned": null,
+    "cloudRegion": null,
+    "geopoliticalNotes": "Tier IV certified facility acquired by Rosatom to expand state-controlled cloud and storage services.",
+    "notes": "Located on Dorozhnaya Street.",
+    "attribution": {
+      "sources": [
+        { "name": "Rosatom Atomdata", "url": "https://atomdata.ru/", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "medium",
+        "sourceCount": 1,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  },
+  {
+    "id": "DC-RUS-MOW-SBERBANK-SKOLKOVO",
+    "name": "Sberbank Skolkovo (MDC-2)",
+    "countryId": "RUS",
+    "city": "Moscow",
+    "coordinates": [37.3512, 55.6945],
+    "type": "enterprise",
+    "status": "operational",
+    "tierLevel": "3",
+    "capacityMW": 31.2,
+    "floorSpaceM2": null,
+    "pue": 1.3,
+    "operator": "Sberbank",
+    "owner": "Sberbank",
+    "yearOpened": 2017,
+    "yearPlanned": null,
+    "cloudRegion": null,
+    "geopoliticalNotes": "Flagship facility in the Skolkovo Innovation Center; central hub for Russia's largest banking and digital ecosystem.",
+    "notes": "One of the largest in Europe at launch.",
+    "attribution": {
+      "sources": [
+        { "name": "Sberbank Skolkovo DC", "url": "https://www.sberbank.com/ru/news-and-media/press-releases/release/2017?newsID=76097103-7a71-4a11-a83d-3b5a1b3b2c2b", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 1,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  },
+  {
+    "id": "DC-RUS-MOW-IXCELLERATE-MOS3",
+    "name": "IXcellerate MOS3 (Moscow North)",
+    "countryId": "RUS",
+    "city": "Moscow",
+    "coordinates": [37.5812, 55.8845],
+    "type": "colocation",
+    "status": "operational",
+    "tierLevel": "3",
+    "capacityMW": 30,
+    "floorSpaceM2": null,
+    "pue": 1.3,
+    "operator": "IXcellerate",
+    "owner": "IXcellerate",
+    "yearOpened": 2024,
+    "yearPlanned": null,
+    "cloudRegion": null,
+    "geopoliticalNotes": "Major connectivity hub in Northern Moscow; critical for international enterprises maintaining presence in Russia.",
+    "notes": "Carrier-neutral facility.",
+    "attribution": {
+      "sources": [
+        { "name": "IXcellerate MOS3", "url": "https://ixcellerate.com/data-centers/mos3/", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 1,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  },
+  {
+    "id": "DC-RUS-MOW-ROSTELECOM-MEDVEDKOVO",
+    "name": "Rostelecom Medvedkovo",
+    "countryId": "RUS",
+    "city": "Moscow",
+    "coordinates": [37.6623, 55.8812],
+    "type": "colocation",
+    "status": "operational",
+    "tierLevel": "3",
+    "capacityMW": 36,
+    "floorSpaceM2": null,
+    "pue": null,
+    "operator": "Rostelecom-DPC",
+    "owner": "Rostelecom",
+    "yearOpened": 2023,
+    "yearPlanned": null,
+    "cloudRegion": null,
+    "geopoliticalNotes": "Large-scale facility acquired to support growing demand for sovereign data storage and state services.",
+    "notes": "Acquired from 3Data/PNK Group.",
+    "attribution": {
+      "sources": [
+        { "name": "Rostelecom Expansion", "url": "https://rt-dc.ru/centers/medvedkovo/", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "medium",
+        "sourceCount": 1,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  },
+  {
+    "id": "DC-RUS-MOW-DATAPRO-I",
+    "name": "DataPro Moscow I",
+    "countryId": "RUS",
+    "city": "Moscow",
+    "coordinates": [37.7123, 55.7412],
+    "type": "colocation",
+    "status": "operational",
+    "tierLevel": "3",
+    "capacityMW": 25,
+    "floorSpaceM2": null,
+    "pue": 1.3,
+    "operator": "DataPro",
+    "owner": "DataPro",
+    "yearOpened": 2014,
+    "yearPlanned": null,
+    "cloudRegion": null,
+    "geopoliticalNotes": "One of the most connected and reliable commercial facilities in Moscow; hosts major enterprise and financial clients.",
+    "notes": "Located on Aviamotornaya Street.",
+    "attribution": {
+      "sources": [
+        { "name": "DataPro Moscow I", "url": "https://datapro.ru/data-centers/moscow-1/", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 1,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  },
+  {
+    "id": "DC-RUS-MOW-SELECTEL-YURLOVSKY",
+    "name": "Selectel Yurlovsky",
+    "countryId": "RUS",
+    "city": "Moscow",
+    "coordinates": [37.6115, 55.8645],
+    "type": "colocation",
+    "status": "operational",
+    "tierLevel": "4",
+    "capacityMW": 20,
+    "floorSpaceM2": null,
+    "pue": null,
+    "operator": "Selectel",
+    "owner": "Selectel",
+    "yearOpened": 2023,
+    "yearPlanned": null,
+    "cloudRegion": null,
+    "geopoliticalNotes": "High-density facility designed to Tier IV standards; supports Selectel's growing cloud and bare-metal services as Western providers exit.",
+    "notes": "Located in Yurlovsky Proyezd.",
+    "attribution": {
+      "sources": [
+        { "name": "Selectel Yurlovsky DC", "url": "https://selectel.ru/en/about/data-centers/yurlovsky/", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 1,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  }
+]

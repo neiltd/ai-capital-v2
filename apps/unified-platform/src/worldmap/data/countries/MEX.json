@@ -1,0 +1,67 @@
+{
+  "id": "MEX",
+  "iso2": "MX",
+  "name": "Mexico",
+  "region": "Americas",
+  "subregion": "Central America",
+  "capital": "Mexico City",
+  "lastUpdated": "2026-05-09",
+  "summary": "Mexico is a critical North American economic hub currently undergoing a significant political transition under its first female president, Claudia Sheinbaum. The country is benefiting from a 'nearshoring' boom as global supply chains shift toward North America, making it the top trading partner of the United States. However, this economic potential is tempered by persistent security challenges from transnational criminal organizations, high levels of corruption, and a controversial judicial reform that has raised concerns about the rule of law. Mexico maintains a non-interventionist foreign policy while balancing its deep economic integration with the U.S. against its desire for broader regional leadership in Latin America.",
+  "indicators": {
+    "politicalStability":       { "score": 4, "score_description": "Moderate risk due to high levels of cartel violence and institutional polarization.", "trend": "declining", "confidence": "high", "note": "The supermajority of the ruling MORENA party allows for rapid constitutional changes, creating uncertainty regarding judicial independence." },
+    "economicDirection":        { "score": 6, "score_description": "Stable growth driven by exports and domestic consumption, offset by high fiscal deficits.", "trend": "stable", "confidence": "high", "note": "Highest budget deficit in decades (approx. 5.9% of GDP) due to social spending and infrastructure projects." },
+    "investmentAttractiveness": { "score": 7, "score_description": "Strong appeal due to nearshoring and USMCA integration.", "trend": "rising", "confidence": "high", "note": "Mexico has surpassed China as the top exporter to the U.S., attracting significant FDI in automotive and electronics." },
+    "geopoliticalRisk":         { "score": 5, "score_description": "Moderate risk centered on border security, migration, and trade tensions.", "trend": "rising", "confidence": "medium", "note": "Potential friction with the U.S. over migration management and the 2026 USMCA review." },
+    "educationQuality":         { "score": 4, "score_description": "Variable quality with significant gaps in technical skills and rural access.", "trend": "stable", "confidence": "high", "note": "Educational outcomes remain below OECD averages, hindering long-term productivity growth." },
+    "healthcareQuality":        { "score": 5, "score_description": "Universal system faces challenges in funding, infrastructure, and medicine shortages.", "trend": "stable", "confidence": "medium", "note": "Ongoing restructuring of the public healthcare system (IMSS-Bienestar) aims to improve coverage." },
+    "technologyInvestment":     { "score": 6, "score_description": "Growing tech sector driven by manufacturing digitalization and fintech.", "trend": "rising", "confidence": "high", "note": "Increasing focus on 'Industry 4.0' to support the manufacturing requirements of global partners." }
+  },
+  "demographics": {
+    "population": 130800000,
+    "medianAge": 30.2,
+    "urbanizationRate": 81,
+    "majorEthnicGroups": ["Mestizo", "Indigenous", "European descent"],
+    "religions": [
+      { "name": "Roman Catholic", "percent": 78 },
+      { "name": "Protestant/Evangelical", "percent": 11 },
+      { "name": "None/Unaffiliated", "percent": 10 },
+      { "name": "Other", "percent": 1 }
+    ]
+  },
+  "alliances": ["USMCA", "G20", "OECD", "CELAC", "Pacific Alliance"],
+  "relationships": [
+    { "countryId": "USA", "countryName": "United States", "type": "ally", "sentiment": "positive", "summary": "Indispensable economic and security partner; relationship is defined by trade, migration, and shared security concerns." },
+    { "countryId": "CHN", "countryName": "China", "type": "partner", "sentiment": "neutral", "summary": "Growing trade partner and source of FDI, though tensions exist over trade deficits and lithium nationalization." },
+    { "countryId": "CAN", "countryName": "Canada", "type": "ally", "sentiment": "positive", "summary": "Partner in North American integration through USMCA; aligned on trade and environmental standards." },
+    { "countryId": "ESP", "countryName": "Spain", "type": "partner", "sentiment": "positive", "summary": "Strong historical and cultural ties; significant Spanish investment in Mexico's banking and energy sectors." },
+    { "countryId": "GTM", "countryName": "Guatemala", "type": "neighbor", "sentiment": "neutral", "summary": "Critical for southern border security and managing Central American migration flows." }
+  ],
+  "perspectives": [
+    { "source": "Sovereigntist (MORENA)", "bias": "Nationalist", "view": "Mexico must prioritize energy sovereignty and social justice, reducing dependence on foreign capital while asserting leadership in the Global South." },
+    { "source": "Business Technocrat", "bias": "Pro-Market", "view": "The current judicial reforms threaten the legal certainty required to fully capitalize on the nearshoring opportunity." },
+    { "source": "U.S. Security Analyst", "bias": "Security-centric", "view": "Mexican institutional weakness and cartel penetration represent a significant threat to North American stability and public health via the fentanyl crisis." }
+  ],
+  "historicalContext": {
+    "summary": "Mexico's history is defined by its colonial past, a long struggle for independence, and a revolutionary legacy that shaped its 20th-century institutions. The transition from one-party rule (PRI) to a multi-party democracy in 2000 and the subsequent rise of the left-wing MORENA party have fundamentally altered its political trajectory.",
+    "keyEvents": [
+      { "year": 1810, "event": "Outbreak of the War of Independence from Spain." },
+      { "year": 1848, "event": "Treaty of Guadalupe Hidalgo; Mexico cedes over half its territory to the U.S." },
+      { "year": 1910, "event": "Start of the Mexican Revolution, leading to the 1917 Constitution." },
+      { "year": 1938, "event": "Expropriation of the oil industry and nationalization of PEMEX." },
+      { "year": 1994, "event": "Implementation of NAFTA and the Zapatista (EZLN) uprising." },
+      { "year": 2000, "event": "Vicente Fox wins presidency, ending 71 years of PRI rule." },
+      { "year": 2018, "event": "Landslide victory of AMLO, marking the rise of MORENA." },
+      { "year": 2024, "event": "Election of Claudia Sheinbaum as Mexico's first female president." }
+    ]
+  },
+  "investmentNotes": {
+    "strengths": ["Strategic proximity to U.S.", "Young and growing workforce", "Strong manufacturing base", "Vibrant export sector"],
+    "risks": ["Insecurity and organized crime", "Judicial and regulatory uncertainty", "Infrastructure bottlenecks", "Fiscal pressure from state-owned enterprises"],
+    "sectors": ["Automotive", "Aerospace", "Fintech", "Agribusiness", "Renewable Energy"]
+  },
+  "sources": [
+    { "name": "World Bank", "url": "https://data.worldbank.org/country/MEX", "type": "economic" },
+    { "name": "CIA World Factbook", "url": "https://www.cia.gov/the-world-factbook/countries/mexico/", "type": "general" },
+    { "name": "OECD iLibrary", "url": "https://www.oecd-ilibrary.org/mexico", "type": "economic" }
+  ]
+}

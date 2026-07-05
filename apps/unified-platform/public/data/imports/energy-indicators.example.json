@@ -1,0 +1,42 @@
+{
+  "schemaVersion": "1.0.0",
+  "generatedAt": "2026-05-12T06:00:00Z",
+  "asOf": "2026-05-11",
+  "indicators": [
+    {
+      "indicatorKey": "brent_crude_usd_bbl",
+      "indicatorName": "Brent Crude Oil Spot Price",
+      "unit": "USD/barrel",
+      "source": "eia",
+      "series": [
+        { "period": "2026-05-11", "value": 84.32 },
+        { "period": "2026-05-10", "value": 83.91 },
+        { "period": "2026-05-09", "value": 82.45 },
+        { "period": "2026-05-08", "value": 81.20 },
+        { "period": "2026-05-07", "value": 80.88 }
+      ]
+    },
+    {
+      "indicatorKey": "wti_crude_usd_bbl",
+      "indicatorName": "WTI Crude Oil Spot Price",
+      "unit": "USD/barrel",
+      "source": "eia",
+      "series": [
+        { "period": "2026-05-11", "value": 80.15 },
+        { "period": "2026-05-10", "value": 79.74 },
+        { "period": "2026-05-09", "value": 78.30 }
+      ]
+    },
+    {
+      "indicatorKey": "henry_hub_natgas_usd_mmbtu",
+      "indicatorName": "Henry Hub Natural Gas Spot Price",
+      "unit": "USD/MMBtu",
+      "source": "eia",
+      "series": [
+        { "period": "2026-05-11", "value": 2.84 },
+        { "period": "2026-05-10", "value": 2.79 },
+        { "period": "2026-05-09", "value": 2.91 }
+      ]
+    }
+  ]
+}

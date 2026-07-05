@@ -1,0 +1,68 @@
+{
+  "id": "KAZ",
+  "iso2": "KZ",
+  "name": "Kazakhstan",
+  "region": "Asia",
+  "subregion": "Central Asia",
+  "capital": "Astana",
+  "lastUpdated": "2026-05-09",
+  "summary": "Kazakhstan is the preeminent economic power in Central Asia, serving as a critical global supplier of energy and minerals, including uranium, oil, and gas. Following the 'Bloody January' unrest of 2022, the nation has embarked on a 'Just Kazakhstan' reform agenda aimed at decentralizing political power and addressing economic inequality. Kazakhstan is renowned for its 'multi-vector' foreign policy, adroitly balancing its strategic alliance with Russia, deep economic integration with China, and robust investment ties with the West. As a central node in the Trans-Caspian International Transport Route (Middle Corridor), it is increasingly vital to global supply chains connecting Europe and East Asia.",
+  "indicators": {
+    "politicalStability":       { "score": 6, "trend": "rising", "confidence": "high", "note": "Stabilization following 2022 unrest; gradual political reforms and consolidation under President Tokayev." },
+    "economicDirection":        { "score": 7, "trend": "rising", "confidence": "high", "note": "Strong focus on diversification, digitalization, and attracting high-quality FDI in non-extractive sectors." },
+    "investmentAttractiveness": { "score": 7, "trend": "rising", "confidence": "high", "note": "Leading destination for FDI in the region, supported by the Astana International Financial Centre (AIFC)." },
+    "geopoliticalRisk":         { "score": 6, "trend": "stable", "confidence": "medium", "note": "Complex balancing act amidst the Russia-Ukraine war and intensifying U.S.-China competition." },
+    "educationQuality":         { "score": 6, "trend": "rising", "confidence": "high", "note": "Success of the Bolashak scholarship and a growing network of international-standard universities." },
+    "healthcareQuality":        { "score": 6, "trend": "stable", "confidence": "medium", "note": "Ongoing modernization of healthcare infrastructure and expansion of digital medical services." },
+    "technologyInvestment":     { "score": 6, "trend": "rising", "confidence": "high", "note": "Rapid growth in 'GovTech' and a thriving startup ecosystem centered in Astana and Almaty." }
+  },
+  "demographics": {
+    "population": 20180000,
+    "medianAge": 31.7,
+    "urbanizationRate": 62.7,
+    "majorEthnicGroups": ["Kazakh", "Russian", "Uzbek", "Ukrainian"],
+    "religions": [
+      { "name": "Muslim", "percent": 70.2 },
+      { "name": "Christian (Orthodox)", "percent": 26.2 },
+      { "name": "Other/None", "percent": 3.6 }
+    ]
+  },
+  "alliances": ["CIS", "CSTO", "SCO", "EAEU", "Organization of Turkic States", "UN"],
+  "relationships": [
+    { "countryId": "RUS", "countryName": "Russia", "type": "strategic_ally", "sentiment": "neutral", "summary": "A deep-rooted security and economic relationship, now being managed with increased caution and autonomy." },
+    { "countryId": "CHN", "countryName": "China", "type": "economic_partner", "sentiment": "positive", "summary": "Critical trade partner and investor in energy, infrastructure, and the Middle Corridor project." },
+    { "countryId": "USA", "countryName": "United States", "type": "investment_partner", "sentiment": "positive", "summary": "Significant U.S. investment in the energy sector; cooperation on regional security and non-proliferation." },
+    { "countryId": "UZB", "countryName": "Uzbekistan", "type": "regional_partner", "sentiment": "positive", "summary": "Growing cooperation between Central Asia's two largest economies to foster regional integration." },
+    { "countryId": "TUR", "countryName": "Turkey", "type": "strategic_partner", "sentiment": "positive", "summary": "Strong cultural, linguistic, and military-technical ties through the Organization of Turkic States." }
+  ],
+  "perspectives": [
+    { "source": "Kazakh Diplomat", "bias": "Multi-vector", "view": "Our sovereignty depends on our ability to be a reliable partner to everyone—Moscow, Beijing, Washington, and Brussels." },
+    { "source": "Almaty Entrepreneur", "bias": "Progressive", "view": "The future of Kazakhstan is in innovation and the Middle Corridor; we need to move beyond the 'resource curse'." },
+    { "source": "Social Reformer", "bias": "Critical", "view": "Reforms are moving in the right direction, but we need more transparency and a genuine crackdown on the oligarchic structures of the past." },
+    { "source": "Energy Market Analyst", "bias": "Objective", "view": "Kazakhstan's role in the global uranium and rare earth markets makes it indispensable for the global green energy transition." }
+  ],
+  "historicalContext": {
+    "summary": "Once a central part of the Silk Road and later the Russian Empire and Soviet Union, Kazakhstan declared independence in 1991. Under its first president, Nursultan Nazarbayev, the country established its borders and market economy. In 2019, Nazarbayev resigned, leading to the presidency of Kassym-Jomart Tokayev, whose tenure has been marked by significant reforms and the navigation of major regional geopolitical shifts.",
+    "keyEvents": [
+      { "year": 1991, "event": "Independence from the Soviet Union; Nursultan Nazarbayev becomes President." },
+      { "year": 1994, "event": "Agreement to relinquish the world's fourth-largest nuclear arsenal." },
+      { "year": 1997, "event": "The capital is moved from Almaty to Akmola (later renamed Astana)." },
+      { "year": 2015, "event": "Kazakhstan officially joins the World Trade Organization (WTO)." },
+      { "year": 2017, "event": "Astana hosts EXPO-2017 focusing on 'Future Energy'." },
+      { "year": 2019, "event": "Nazarbayev resigns; Kassym-Jomart Tokayev becomes President." },
+      { "year": 2022, "event": "Mass protests and unrest in January lead to a state of emergency and CSTO intervention." },
+      { "year": 2022, "event": "Constitutional referendum marks a shift away from 'super-presidential' rule." },
+      { "year": 2023, "event": "Launch of the 'Middle Corridor' expansion to bypass Russian transit routes." }
+    ]
+  },
+  "investmentNotes": {
+    "strengths": ["World's largest producer of uranium", "Vast reserves of oil, gas, and critical minerals", "Strategic transit hub between China and Europe", "Most developed financial sector in Central Asia"],
+    "risks": ["Vulnerability to shifts in Russian and Chinese policies", "Exposure to commodity price volatility", "Challenges in full judicial and anti-corruption reform", "Landlocked geography requiring transit cooperation"],
+    "sectors": ["Mining & Critical Minerals", "Renewable Energy (Wind & Green Hydrogen)", "Logistics & Transit Infrastructure", "FinTech & Digital Government"]
+  },
+  "sources": [
+    { "name": "Bureau of National Statistics", "url": "https://stat.gov.kz/en/", "type": "economic" },
+    { "name": "Astana International Financial Centre (AIFC)", "url": "https://aifc.kz/", "type": "investment" },
+    { "name": "Kazakhstan Ministry of Foreign Affairs", "url": "https://www.gov.kz/memleket/entities/mfa?lang=en", "type": "government" }
+  ]
+}

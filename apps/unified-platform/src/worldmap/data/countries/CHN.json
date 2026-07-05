@@ -1,0 +1,71 @@
+{
+  "id": "CHN",
+  "iso2": "CN",
+  "name": "People's Republic of China",
+  "region": "Asia",
+  "subregion": "Eastern Asia",
+  "capital": "Beijing",
+  "lastUpdated": "2026-05-09",
+  "summary": "China is the world's second-largest economy and a primary challenger to the existing international order, seeking to reclaim its historical position as a central global power. Under President Xi Jinping, the country has shifted toward a more assertive foreign policy and tighter domestic social control, focusing on 'national rejuvenation.' While China leads in several future-defining technologies such as electric vehicles and green energy, it faces structural economic headwinds, including a shrinking population and high local government debt. Its strategic partnership with Russia and expansion of influence in the Global South through the Belt and Road Initiative are central to its goal of creating a multipolar world.",
+  "indicators": {
+    "politicalStability":       { "score": 8, "trend": "stable", "confidence": "high", "note": "High degree of centralized control by the CPC ensures policy continuity." },
+    "economicDirection":        { "score": 6, "trend": "declining", "confidence": "high", "note": "Transitioning from investment-led growth to high-tech manufacturing amidst a property sector crisis." },
+    "investmentAttractiveness": { "score": 7, "trend": "declining", "confidence": "medium", "note": "Large market remains vital, but regulatory unpredictability and geopolitical tensions deter some FDI." },
+    "geopoliticalRisk":         { "score": 6, "trend": "rising", "confidence": "high", "note": "Friction over Taiwan, South China Sea, and tech competition with the West." },
+    "educationQuality":         { "score": 7, "trend": "improving", "confidence": "high", "note": "Rapidly improving STEM output, though tertiary education quality varies widely." },
+    "healthcareQuality":        { "score": 6, "trend": "improving", "confidence": "high", "note": "Significant improvements in basic coverage, but rural-urban disparities persist." },
+    "technologyInvestment":     { "score": 9, "trend": "rising", "confidence": "high", "note": "Massive state support for semiconductors, quantum computing, and green energy." }
+  },
+  "demographics": {
+    "population": 1409670000,
+    "medianAge": 39.8,
+    "urbanizationRate": 66,
+    "majorEthnicGroups": ["Han Chinese", "Zhuang", "Hui", "Manchu", "Uyghur"],
+    "religions": [
+      { "name": "None/Folk Religions", "percent": 73.5 },
+      { "name": "Buddhist", "percent": 15.8 },
+      { "name": "Christian", "percent": 5.1 },
+      { "name": "Muslim", "percent": 1.8 }
+    ]
+  },
+  "alliances": ["BRICS+", "SCO", "RCEP"],
+  "relationships": [
+    { "countryId": "USA", "countryName": "United States", "type": "rival", "sentiment": "negative", "summary": "Intense systemic competition over trade, technology, and regional security." },
+    { "countryId": "RUS", "countryName": "Russia", "type": "strategic_partner", "sentiment": "positive", "summary": "A 'no-limits' partnership driven by shared opposition to U.S. hegemony." },
+    { "countryId": "JPN", "countryName": "Japan", "type": "rival", "sentiment": "negative", "summary": "Tense relations due to historical grievances and competing maritime claims." },
+    { "countryId": "PAK", "countryName": "Pakistan", "type": "ally", "sentiment": "positive", "summary": "All-weather strategic partnership centered on the China-Pakistan Economic Corridor (CPEC)." },
+    { "countryId": "GBR", "countryName": "United Kingdom", "type": "trade_partner", "sentiment": "mixed", "summary": "Pragmatic economic ties complicated by disputes over Hong Kong and national security." }
+  ],
+  "perspectives": [
+    { "source": "CCP Official", "bias": "State Nationalist", "view": "China's rise is a peaceful rejuvenation and an inevitable historical correction to the 'Century of Humiliation' by Western powers." },
+    { "source": "Western Human Rights Advocate", "bias": "Liberal Interventionist", "view": "China is an authoritarian state that suppresses political dissent, ethnic minorities, and human rights through high-tech surveillance." },
+    { "source": "Global South Pragmatist", "bias": "Neutral/Developmentalist", "view": "China provides an alternative development model and vital infrastructure investment without the intrusive political conditions imposed by Western lenders." },
+    { "source": "Indo-Pacific Security Analyst", "bias": "Regional Hawk", "view": "China's maritime expansionism and military modernization represent the primary threat to the rule-based order in Asia." }
+  ],
+  "historicalContext": {
+    "summary": "China's history is defined by millennia of dynastic rule, a period of colonial exploitation, and its 20th-century transformation into a socialist republic. Since 1978, it has undergone the fastest economic expansion in human history.",
+    "keyEvents": [
+      { "year": 1839, "event": "First Opium War begins, starting the 'Century of Humiliation'." },
+      { "year": 1911, "event": "Xinhai Revolution ends the Qing Dynasty and the imperial system." },
+      { "year": 1937, "event": "Full-scale Japanese invasion of China." },
+      { "year": 1949, "event": "Proclamation of the People's Republic of China by Mao Zedong." },
+      { "year": 1972, "event": "Richard Nixon visits China, initiating a thaw in U.S.-China relations." },
+      { "year": 1978, "event": "Deng Xiaoping initiates 'Reform and Opening Up' policies." },
+      { "year": 1989, "event": "Tiananmen Square protests and subsequent military crackdown." },
+      { "year": 1997, "event": "Handover of Hong Kong from the UK to China." },
+      { "year": 2001, "event": "China joins the World Trade Organization (WTO)." },
+      { "year": 2013, "event": "Xi Jinping launches the Belt and Road Initiative." },
+      { "year": 2021, "event": "CPC celebrates its centenary; China declares eradication of absolute poverty." }
+    ]
+  },
+  "investmentNotes": {
+    "strengths": ["Global manufacturing hub", "Leadership in green technology", "Large and growing middle class", "Significant state R&D funding"],
+    "risks": ["Demographic decline", "Regulatory/political risk", "Geopolitical isolation/tariffs", "Debt in the property sector"],
+    "sectors": ["Electric Vehicles", "Renewable Energy", "Digital Payments", "Industrial Robotics"]
+  },
+  "sources": [
+    { "name": "World Bank", "url": "https://data.worldbank.org/country/CHN", "type": "economic" },
+    { "name": "Freedom House", "url": "https://freedomhouse.org/country/china", "type": "political" },
+    { "name": "CIA World Factbook", "url": "https://www.cia.gov/the-world-factbook/countries/china/", "type": "general" }
+  ]
+}

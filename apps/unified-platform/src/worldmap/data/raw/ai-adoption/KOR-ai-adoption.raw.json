@@ -1,0 +1,30 @@
+[
+  {
+    "countryId": "KOR",
+    "year": 2024,
+    "aiReadinessScore": 79.98,
+    "aiAdoptionScore": 58.34,
+    "aiTalentScore": 74.62,
+    "aiInvestmentUsdM": 4270,
+    "aiStartupCount": 400,
+    "aiUnicornCount": 2,
+    "hasNationalAiStrategy": true,
+    "aiStrategyYear": 2024,
+    "aiPolicyScore": 78.2,
+    "cloudReadinessPct": null,
+    "broadbandPenetrationPct": 98.6,
+    "topAiSectors": ["Semiconductors", "Manufacturing", "Healthcare", "Public Sector"],
+    "attribution": {
+      "sources": [
+        { "name": "Oxford Insights Government AI Readiness Index 2024", "url": "https://oxfordinsights.com/ai-readiness/ai-readiness-index/", "accessedAt": "2025-05-14" },
+        { "name": "Stanford HAI AI Index 2024", "url": "https://aiindex.stanford.edu/report/", "accessedAt": "2025-05-14" },
+        { "name": "South Korea Ministry of SMEs and Startups Report 2024", "url": "https://www.mss.go.kr/", "accessedAt": "2025-05-14" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 3,
+        "lastVerified": "2025-05-14"
+      }
+    }
+  }
+]

@@ -1,0 +1,72 @@
+{
+  "id": "USA",
+  "iso2": "US",
+  "name": "United States of America",
+  "region": "Americas",
+  "subregion": "Northern America",
+  "capital": "Washington, D.C.",
+  "lastUpdated": "2026-05-09",
+  "summary": "The United States remains the world's preeminent economic and military power, characterized by a highly diversified economy and a robust technological sector. However, it faces significant internal political polarization and social divisions that challenge its institutional stability. Externally, it maintains a vast network of alliances but is increasingly focused on strategic competition with China and managing the repercussions of the conflict in Ukraine. The U.S. model of liberal democracy and market capitalism continues to exert global influence, even as domestic debates over trade, immigration, and fiscal policy create uncertainty regarding its future international role.",
+  "indicators": {
+    "politicalStability":       { "score": 5, "trend": "declining", "confidence": "high", "note": "High internal polarization and legislative gridlock challenge long-term stability." },
+    "economicDirection":        { "score": 7, "trend": "stable", "confidence": "high", "note": "Resilient growth and innovation offset by high public debt and fiscal deficits." },
+    "investmentAttractiveness": { "score": 9, "trend": "stable", "confidence": "high", "note": "World-leading capital markets, rule of law, and technological ecosystem." },
+    "geopoliticalRisk":         { "score": 4, "trend": "rising", "confidence": "medium", "note": "Increasingly challenged by revisionist powers and overextension of global commitments." },
+    "educationQuality":         { "score": 8, "trend": "stable", "confidence": "high", "note": "Home to world's top research universities, though K-12 performance is variable." },
+    "healthcareQuality":        { "score": 6, "trend": "declining", "confidence": "high", "note": "Advanced technology and high costs, but struggling with access and life expectancy trends." },
+    "technologyInvestment":     { "score": 10, "trend": "rising", "confidence": "high", "note": "Leading global investment in AI, semiconductors, and biotechnology." }
+  },
+  "demographics": {
+    "population": 341814000,
+    "medianAge": 38.9,
+    "urbanizationRate": 83,
+    "majorEthnicGroups": ["White", "Hispanic", "Black", "Asian", "Multiracial"],
+    "religions": [
+      { "name": "Protestant", "percent": 43 },
+      { "name": "Catholic", "percent": 20 },
+      { "name": "None/Unaffiliated", "percent": 26 },
+      { "name": "Jewish", "percent": 2 },
+      { "name": "Muslim", "percent": 1 }
+    ]
+  },
+  "alliances": ["NATO", "AUKUS", "Five Eyes", "QUAD", "USMCA"],
+  "relationships": [
+    { "countryId": "CHN", "countryName": "China", "type": "rival", "sentiment": "negative", "summary": "Strategic competition across trade, technology, and security in the Indo-Pacific." },
+    { "countryId": "RUS", "countryName": "Russia", "type": "enemy", "sentiment": "negative", "summary": "Direct confrontation over European security and the war in Ukraine." },
+    { "countryId": "GBR", "countryName": "United Kingdom", "type": "treaty_ally", "sentiment": "positive", "summary": "The 'Special Relationship' remains the core of transatlantic security and intelligence." },
+    { "countryId": "JPN", "countryName": "Japan", "type": "treaty_ally", "sentiment": "positive", "summary": "Key anchor of U.S. strategy in Asia and primary partner in technology containment." },
+    { "countryId": "CAN", "countryName": "Canada", "type": "ally", "sentiment": "positive", "summary": "Deeply integrated economic and defense partnership through USMCA and NORAD." }
+  ],
+  "perspectives": [
+    { "source": "America First Realist", "bias": "Nationalist", "view": "The U.S. should prioritize domestic manufacturing and border security while reducing overseas military entanglements and demanding more from allies." },
+    { "source": "Liberal Internationalist", "bias": "Globalist", "view": "U.S. leadership in multilateral institutions and the promotion of democracy are essential for global stability and economic prosperity." },
+    { "source": "Chinese Strategic Analyst", "bias": "Sino-centric", "view": "The U.S. is a declining hegemon using zero-sum tactics to suppress China's legitimate rise and maintain its global dominance." },
+    { "source": "European Security Policy Expert", "bias": "Atlanticist", "view": "While the U.S. is the indispensable security guarantor for Europe, its shifting domestic politics make it an increasingly unpredictable partner." }
+  ],
+  "historicalContext": {
+    "summary": "Since its founding in 1776, the U.S. transitioned from an isolationist former colony to a global superpower. Key phases include westward expansion, the existential crisis of the Civil War, and the post-WWII emergence as the leader of the liberal world order.",
+    "keyEvents": [
+      { "year": 1776, "event": "Declaration of Independence from Great Britain." },
+      { "year": 1787, "event": "U.S. Constitution drafted, establishing the federal republic." },
+      { "year": 1803, "event": "Louisiana Purchase doubles the nation's land area." },
+      { "year": 1861, "event": "Outbreak of the American Civil War over slavery and states' rights." },
+      { "year": 1917, "event": "Entry into World War I, marking the end of isolationism." },
+      { "year": 1941, "event": "Attack on Pearl Harbor; U.S. enters World War II." },
+      { "year": 1945, "event": "End of WWII; U.S. emerges as a nuclear superpower and architect of the UN." },
+      { "year": 1964, "event": "Civil Rights Act signed, legally ending racial segregation." },
+      { "year": 1991, "event": "Collapse of the Soviet Union leaves U.S. as the sole global hegemon." },
+      { "year": 2001, "event": "September 11 attacks trigger the Global War on Terror." },
+      { "year": 2021, "event": "Withdrawal from Afghanistan and January 6 Capitol Riot." }
+    ]
+  },
+  "investmentNotes": {
+    "strengths": ["Innovation ecosystem", "Energy independence", "Deep capital markets", "Demographic resilience compared to peers"],
+    "risks": ["Fiscal instability/debt", "Regulatory fragmentation", "Political risk/social unrest", "Trade protectionism"],
+    "sectors": ["Artificial Intelligence", "Biotechnology", "Aerospace & Defense", "Clean Energy Tech"]
+  },
+  "sources": [
+    { "name": "World Bank", "url": "https://data.worldbank.org/country/USA", "type": "economic" },
+    { "name": "Freedom House", "url": "https://freedomhouse.org/country/united-states", "type": "political" },
+    { "name": "CIA World Factbook", "url": "https://www.cia.gov/the-world-factbook/countries/united-states/", "type": "general" }
+  ]
+}

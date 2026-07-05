@@ -1,0 +1,36 @@
+[
+  {
+    "countryId": "MYS",
+    "year": 2023,
+    "electricityConsumptionTWh": 152.5,
+    "electricityProductionTWh": 189.0,
+    "electricityMix": {
+      "coal": 44.0,
+      "gas": 36.0,
+      "hydro": 16.5,
+      "solar": 1.7,
+      "oil": 1.1,
+      "otherRenewables": 0.7
+    },
+    "renewableSharePct": 18.9,
+    "waterStressScore": 1.03,
+    "waterWithdrawalPct": 3.44,
+    "foodSecurityScore": 69.9,
+    "aiAdoptionScore": 68.71,
+    "internetPenetration": 96.8,
+    "mobilePenetration": 129.1,
+    "attribution": {
+      "sources": [
+        { "name": "IEA Malaysia Profile 2023", "url": "https://www.iea.org/countries/malaysia", "accessedAt": "2026-05-10" },
+        { "name": "WRI Aqueduct 4.0", "url": "https://www.wri.org/aqueduct", "accessedAt": "2026-05-10" },
+        { "name": "Oxford Insights Government AI Readiness Index 2023", "url": "https://oxfordinsights.com/government-ai-readiness-index-2023/", "accessedAt": "2026-05-10" },
+        { "name": "DataReportal Digital 2023: Malaysia", "url": "https://datareportal.com/reports/digital-2023-malaysia", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 4,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  }
+]

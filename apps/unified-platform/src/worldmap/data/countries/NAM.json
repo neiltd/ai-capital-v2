@@ -1,0 +1,63 @@
+{
+  "id": "NAM",
+  "iso2": "NA",
+  "name": "Namibia",
+  "region": "Africa",
+  "subregion": "Southern Africa",
+  "capital": "Windhoek",
+  "lastUpdated": "2025-05-15",
+  "summary": "Namibia is a stable, multi-party democracy in Southern Africa, renowned for its vast mineral wealth, including diamonds and uranium. Since gaining independence from South Africa in 1990, the country has maintained political stability under the leadership of the SWAPO party. Namibia is currently positioning itself as a global leader in the emerging green hydrogen industry, leveraging its abundant solar and wind resources. While the mining sector remains the backbone of the economy, the government is focused on industrialization and reducing high levels of income inequality and youth unemployment. Namibia's foreign policy is defined by non-alignment and strong regional cooperation within SADC and SACU.",
+  "indicators": {
+    "politicalStability":       { "score": 8, "trend": "stable", "confidence": "high", "note": "Strong democratic institutions and peaceful political transitions; SWAPO remains dominant but faces growing opposition." },
+    "economicDirection":        { "score": 6, "trend": "rising", "confidence": "high", "note": "Recovery driven by mining and excitement around green hydrogen and offshore oil discoveries." },
+    "investmentAttractiveness": { "score": 7, "trend": "rising", "confidence": "high", "note": "Stable legal framework and attractive incentives for renewable energy and mining." },
+    "geopoliticalRisk":         { "score": 2, "trend": "stable", "confidence": "high", "note": "Low risk; peaceful relations with all neighbors and active in regional security." },
+    "educationQuality":         { "score": 5, "trend": "stable", "confidence": "medium", "note": "High literacy rates; focus on technical skills to support the energy transition." },
+    "healthcareQuality":        { "score": 5, "trend": "stable", "confidence": "medium", "note": "Good coverage in urban areas; significant investment in rural health outreach." },
+    "technologyInvestment":     { "score": 6, "trend": "rising", "confidence": "high", "note": "Significant investment in digital infrastructure and green energy technology." }
+  },
+  "demographics": {
+    "population": 2600000,
+    "medianAge": 21.8,
+    "urbanizationRate": 54.0,
+    "majorEthnicGroups": ["Ovambo", "Kavango", "Herero", "Damara", "Nama"],
+    "religions": [
+      { "name": "Christian", "percent": 90 },
+      { "name": "Traditional/Other", "percent": 10 }
+    ]
+  },
+  "alliances": ["African Union", "SADC", "SACU", "Commonwealth"],
+  "relationships": [
+    { "countryId": "ZAF", "countryName": "South Africa", "type": "strategic_partner", "sentiment": "positive", "summary": "Strong historical, economic, and cultural ties; South Africa is the primary trade partner." },
+    { "countryId": "DEU", "countryName": "Germany", "type": "historical_partner", "sentiment": "neutral", "summary": "Complex relationship due to colonial history; Germany is a major development partner and source of tourists." },
+    { "countryId": "CHN", "countryName": "China", "type": "economic_partner", "sentiment": "positive", "summary": "Significant investor in the mining sector (uranium) and infrastructure." },
+    { "countryId": "BWA", "countryName": "Botswana", "type": "regional_partner", "sentiment": "positive", "summary": "Cooperation on shared water resources and regional logistics corridors." }
+  ],
+  "perspectives": [
+    { "source": "Windhoek Energy Expert", "bias": "Optimistic", "view": "Green hydrogen will transform Namibia into a global energy player and create thousands of jobs for our youth." },
+    { "source": "Mining Executive", "bias": "Pragmatic", "view": "Namibia's uranium and diamonds are world-class assets, but we need stable policies to maintain long-term investment." },
+    { "source": "Social Activist", "bias": "Critical", "view": "Economic growth must be more inclusive; the gap between the rich and the poor is still far too wide." },
+    { "source": "Coastal Fisherman", "bias": "Environmental", "view": "We need to protect our marine resources while pursuing offshore oil and gas development." }
+  ],
+  "historicalContext": {
+    "summary": "Namibia was a German colony until WWI, after which it was administered by South Africa. Following a decades-long struggle for independence led by SWAPO, Namibia gained sovereignty in 1990. The country has since been a model of stability and democratic governance in the region.",
+    "keyEvents": [
+      { "year": 1884, "event": "Namibia becomes a German protectorate (German South West Africa)." },
+      { "year": 1904, "event": "Herero and Nama genocide begins under German colonial rule." },
+      { "year": 1966, "event": "SWAPO begins the armed struggle for independence." },
+      { "year": 1990, "event": "Independence from South Africa; Sam Nujoma becomes the first president." },
+      { "year": 2021, "event": "Namibia announces massive green hydrogen project plans." },
+      { "year": 2024, "event": "Nangolo Mbumba becomes President following the passing of Hage Geingob." }
+    ]
+  },
+  "investmentNotes": {
+    "strengths": ["Leading global producer of uranium and high-grade diamonds", "Massive potential for green hydrogen production (solar and wind)", "Stable political environment and strong legal framework", "Strategic port of Walvis Bay serving as a regional gateway"],
+    "risks": ["High levels of income inequality and youth unemployment", "Small domestic market and low population density", "Vulnerability to droughts and climate change", "Dependence on global commodity price cycles"],
+    "sectors": ["Mining (Uranium, Diamonds, Lithium)", "Renewable Energy (Green Hydrogen, Solar)", "Logistics & Transport", "Tourism & Conservation"]
+  },
+  "sources": [
+    { "name": "Bank of Namibia", "url": "https://www.bon.com.na/", "type": "economic" },
+    { "name": "Namibia Statistics Agency", "url": "https://nsa.org.na/", "type": "demographic" },
+    { "name": "Namibia Investment Promotion and Development Board (NIPDB)", "url": "https://nipdb.com/", "type": "investment" }
+  ]
+}

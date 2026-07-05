@@ -1,0 +1,213 @@
+[
+  {
+    "id": "PORT-RUS-NOVOROSSIYSK",
+    "name": "Port of Novorossiysk",
+    "countryId": "RUS",
+    "city": "Novorossiysk",
+    "coordinates": [37.7850, 44.7200],
+    "type": "mixed",
+    "annualThroughputTEU": 800000,
+    "annualThroughputTonnes": 130900000,
+    "berthCount": 80,
+    "maxDraftM": 19.0,
+    "strategicImportance": "critical",
+    "riskLevel": "high",
+    "geopoliticalNotes": "Russia's largest port and a key hub for grain, fertilizer, and oil exports via the Black Sea. Central to the International North-South Transport Corridor (INSTC).",
+    "notes": "Significant for military logistics in the Black Sea region. Non-freezing deep-water port.",
+    "attribution": {
+      "sources": [
+        { "name": "Rosmorport", "url": "http://www.rosmorport.com", "accessedAt": "2026-05-10" },
+        { "name": "PortNews", "url": "https://portnews.ru", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 2,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  },
+  {
+    "id": "PORT-RUS-USTLUGA",
+    "name": "Port of Ust-Luga",
+    "countryId": "RUS",
+    "city": "Ust-Luga",
+    "coordinates": [28.4350, 59.6800],
+    "type": "mixed",
+    "annualThroughputTEU": 1000000,
+    "annualThroughputTonnes": 135000000,
+    "berthCount": 37,
+    "maxDraftM": 17.5,
+    "strategicImportance": "critical",
+    "riskLevel": "medium",
+    "geopoliticalNotes": "Largest Baltic port for Russia; primary outlet for energy products and fertilizers. Essential for bypassing transit through Baltic states.",
+    "notes": "Deep-water port capable of handling large-capacity vessels. Expanding rapidly to handle diverted cargo.",
+    "attribution": {
+      "sources": [
+        { "name": "Rosmorport", "url": "http://www.rosmorport.com", "accessedAt": "2026-05-10" },
+        { "name": "Lloyd's List", "url": "https://lloydslist.com", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 2,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  },
+  {
+    "id": "PORT-RUS-VOSTOCHNY",
+    "name": "Port of Vostochny",
+    "countryId": "RUS",
+    "city": "Nakhodka",
+    "coordinates": [133.0700, 42.7300],
+    "type": "bulk",
+    "annualThroughputTEU": 500000,
+    "annualThroughputTonnes": 55000000,
+    "berthCount": 25,
+    "maxDraftM": 16.5,
+    "strategicImportance": "high",
+    "riskLevel": "low",
+    "geopoliticalNotes": "Key coal and container gateway to the Asia-Pacific region. Integral to Russia's 'Pivot to the East' and the Trans-Siberian railway logistics.",
+    "notes": "Undergoing expansion to 70M tonnes capacity by 2026.",
+    "attribution": {
+      "sources": [
+        { "name": "Vostochny Port JSC", "url": "http://www.vostochnyport.com", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "medium",
+        "sourceCount": 1,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  },
+  {
+    "id": "PORT-RUS-MURMANSK",
+    "name": "Port of Murmansk",
+    "countryId": "RUS",
+    "city": "Murmansk",
+    "coordinates": [33.0600, 68.9700],
+    "type": "mixed",
+    "annualThroughputTEU": 50000,
+    "annualThroughputTonnes": 58000000,
+    "berthCount": 13,
+    "maxDraftM": 14.5,
+    "strategicImportance": "high",
+    "riskLevel": "low",
+    "geopoliticalNotes": "Ice-free Arctic port; crucial for the Northern Sea Route (NSR) and military operations in the North Atlantic.",
+    "notes": "New Lavna coal terminal added 18M t capacity in 2025.",
+    "attribution": {
+      "sources": [
+        { "name": "Murmansk Sea Commercial Port", "url": "http://www.mscp.ru", "accessedAt": "2026-05-10" },
+        { "name": "UNCTAD", "url": "https://unctad.org", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 2,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  },
+  {
+    "id": "PORT-RUS-PRIMORSK",
+    "name": "Port of Primorsk",
+    "countryId": "RUS",
+    "city": "Primorsk",
+    "coordinates": [28.6050, 60.3350],
+    "type": "oil",
+    "annualThroughputTEU": null,
+    "annualThroughputTonnes": 60700000,
+    "berthCount": 6,
+    "maxDraftM": 15.85,
+    "strategicImportance": "high",
+    "riskLevel": "high",
+    "geopoliticalNotes": "Largest oil export terminal in the Baltic Sea; critical for Russian crude and petroleum product exports to world markets.",
+    "notes": "Vulnerable to security threats in the Baltic region. Recent infrastructure damage reported in 2026.",
+    "attribution": {
+      "sources": [
+        { "name": "Transneft", "url": "https://www.transneft.ru", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "medium",
+        "sourceCount": 1,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  },
+  {
+    "id": "PORT-RUS-VLADIVOSTOK",
+    "name": "Port of Vladivostok",
+    "countryId": "RUS",
+    "city": "Vladivostok",
+    "coordinates": [131.8850, 43.1050],
+    "type": "container",
+    "annualThroughputTEU": 1640000,
+    "annualThroughputTonnes": 25000000,
+    "berthCount": 15,
+    "maxDraftM": 11.9,
+    "strategicImportance": "high",
+    "riskLevel": "low",
+    "geopoliticalNotes": "Russia's primary container hub in the Far East. Main link for trade with China, South Korea, and Japan.",
+    "notes": "Central to FESCO's Asia-Pacific logistics network.",
+    "attribution": {
+      "sources": [
+        { "name": "Vladivostok Sea Fishing Port", "url": "http://www.fishport.ru", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "medium",
+        "sourceCount": 1,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  },
+  {
+    "id": "PORT-RUS-STPETERSBURG",
+    "name": "Port of St. Petersburg",
+    "countryId": "RUS",
+    "city": "St. Petersburg",
+    "coordinates": [30.2200, 59.9000],
+    "type": "mixed",
+    "annualThroughputTEU": 1200000,
+    "annualThroughputTonnes": 52000000,
+    "berthCount": 150,
+    "maxDraftM": 11.0,
+    "strategicImportance": "high",
+    "riskLevel": "medium",
+    "geopoliticalNotes": "Historic gateway to Europe; remains a major multi-purpose hub despite shifting trade patterns away from the West.",
+    "notes": "Large concentration of berths and logistical infrastructure.",
+    "attribution": {
+      "sources": [
+        { "name": "Big Port St. Petersburg Authority", "url": "http://www.pasp.ru", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "medium",
+        "sourceCount": 1,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  },
+  {
+    "id": "PORT-RUS-TAMAN",
+    "name": "Port of Taman",
+    "countryId": "RUS",
+    "city": "Taman",
+    "coordinates": [36.6750, 45.1300],
+    "type": "bulk",
+    "annualThroughputTEU": null,
+    "annualThroughputTonnes": 25100000,
+    "berthCount": 10,
+    "maxDraftM": 19.0,
+    "strategicImportance": "high",
+    "riskLevel": "medium",
+    "geopoliticalNotes": "Deep-water port for coal, grain, and LPG; critical for bypassing Bosphorus constraints and increasing export capacity.",
+    "notes": "Non-freezing port with deep-water berths for large bulk carriers.",
+    "attribution": {
+      "sources": [
+        { "name": "OTEKO", "url": "https://www.oteko.ru", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "medium",
+        "sourceCount": 1,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  }
+]

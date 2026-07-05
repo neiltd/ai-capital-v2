@@ -1,0 +1,220 @@
+[
+  {
+    "id": "RAIL-EGY-CAIRO-RAMSES",
+    "name": "Cairo Ramses Station",
+    "countryId": "EGY",
+    "city": "Cairo",
+    "coordinates": [31.247, 30.063],
+    "type": "mixed",
+    "dailyPassengers": 1000000,
+    "annualFreightTonnes": null,
+    "connectedCountries": [],
+    "gaugeType": "standard",
+    "lineCount": 12,
+    "strategicImportance": "high",
+    "isPartOfBRI": false,
+    "geopoliticalNotes": "The primary national rail hub of Egypt, connecting the Nile Delta to Upper Egypt. It is one of the busiest stations in Africa and the Middle East.",
+    "notes": "Currently undergoing massive modernization of signaling and track systems.",
+    "attribution": {
+      "sources": [
+        { "name": "Egyptian National Railways (ENR)", "url": "https://www.enr.gov.eg/", "accessedAt": "2026-05-10" },
+        { "name": "World Bank Egypt Transport Report", "url": "https://www.worldbank.org/", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 2,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  },
+  {
+    "id": "RAIL-EGY-ALEXANDRIA-MISR",
+    "name": "Alexandria Misr Station",
+    "countryId": "EGY",
+    "city": "Alexandria",
+    "coordinates": [29.909, 31.193],
+    "type": "port_interface",
+    "dailyPassengers": 150000,
+    "annualFreightTonnes": 2000000,
+    "connectedCountries": [],
+    "gaugeType": "standard",
+    "lineCount": 8,
+    "strategicImportance": "high",
+    "isPartOfBRI": false,
+    "geopoliticalNotes": "Major Mediterranean terminus and port-rail interface. Essential for moving maritime imports from Alexandria and Dekheila ports to the Egyptian interior.",
+    "notes": "Northern terminus of the Cairo-Alexandria main line.",
+    "attribution": {
+      "sources": [
+        { "name": "Alexandria Port Authority", "url": "https://www.apa.gov.eg/", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 1,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  },
+  {
+    "id": "RAIL-EGY-AIN-SOKHNA",
+    "name": "Ain Sokhna HSR Terminal",
+    "countryId": "EGY",
+    "city": "Ain Sokhna",
+    "coordinates": [32.330, 29.660],
+    "type": "high_speed",
+    "dailyPassengers": null,
+    "annualFreightTonnes": null,
+    "connectedCountries": [],
+    "gaugeType": "standard",
+    "lineCount": 6,
+    "strategicImportance": "high",
+    "isPartOfBRI": true,
+    "geopoliticalNotes": "The eastern terminus of the 'Suez Canal on Rails' high-speed project. Integrated with the SCZone (Suez Canal Economic Zone), a major node for BRI maritime-rail integration.",
+    "notes": "Starting point of the Green Line HSR connecting the Red Sea to the Mediterranean.",
+    "attribution": {
+      "sources": [
+        { "name": "Siemens Mobility - Egypt HSR Project", "url": "https://www.mobility.siemens.com/", "accessedAt": "2026-05-10" },
+        { "name": "Suez Canal Economic Zone (SCZONE)", "url": "https://www.sczone.eg/", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 2,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  },
+  {
+    "id": "RAIL-EGY-BASHTIL",
+    "name": "Bashtil Station (Said Misr)",
+    "countryId": "EGY",
+    "city": "Giza",
+    "coordinates": [31.208, 30.078],
+    "type": "passenger",
+    "dailyPassengers": 250000,
+    "annualFreightTonnes": null,
+    "connectedCountries": [],
+    "gaugeType": "standard",
+    "lineCount": 28,
+    "strategicImportance": "high",
+    "isPartOfBRI": false,
+    "geopoliticalNotes": "A newly constructed mega-hub designed to relieve pressure on Ramses Station. It serves as the primary terminal for all trains traveling to and from Upper Egypt.",
+    "notes": "Inaugurated in 2024; four times larger than Cairo's historic Ramses Station.",
+    "attribution": {
+      "sources": [
+        { "name": "Egypt State Information Service", "url": "https://www.sis.gov.eg/", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 1,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  },
+  {
+    "id": "RAIL-EGY-PORT-SAID",
+    "name": "Port Said Rail Terminal",
+    "countryId": "EGY",
+    "city": "Port Said",
+    "coordinates": [32.30, 31.26],
+    "type": "port_interface",
+    "dailyPassengers": null,
+    "annualFreightTonnes": 1000000,
+    "connectedCountries": [],
+    "gaugeType": "standard",
+    "lineCount": 4,
+    "strategicImportance": "medium",
+    "isPartOfBRI": true,
+    "geopoliticalNotes": "Strategic link at the northern entrance of the Suez Canal. Key for the proposed Coastal HSR (Fourth Line) and BRI-related logistics in East Port Said Port.",
+    "notes": "Essential for container transport from the Suez Canal zone.",
+    "attribution": {
+      "sources": [
+        { "name": "RailFreight.com Egypt Analysis", "url": "https://www.railfreight.com/", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "medium",
+        "sourceCount": 1,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  },
+  {
+    "id": "RAIL-EGY-ASWAN",
+    "name": "Aswan Station",
+    "countryId": "EGY",
+    "city": "Aswan",
+    "coordinates": [32.899, 24.089],
+    "type": "mixed",
+    "dailyPassengers": 15000,
+    "annualFreightTonnes": null,
+    "connectedCountries": [],
+    "gaugeType": "standard",
+    "lineCount": 4,
+    "strategicImportance": "medium",
+    "isPartOfBRI": false,
+    "geopoliticalNotes": "Southern terminus of the conventional Nile Valley line. Strategic gateway for future rail connectivity to Sudan (via Wadi Halfa).",
+    "notes": "Critical for tourism and local connectivity in Upper Egypt.",
+    "attribution": {
+      "sources": [
+        { "name": "OSM", "url": "https://www.openstreetmap.org/", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 1,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  },
+  {
+    "id": "RAIL-EGY-SUEZ",
+    "name": "Suez Station",
+    "countryId": "EGY",
+    "city": "Suez",
+    "coordinates": [32.53, 29.97],
+    "type": "port_interface",
+    "dailyPassengers": null,
+    "annualFreightTonnes": 800000,
+    "connectedCountries": [],
+    "gaugeType": "standard",
+    "lineCount": 5,
+    "strategicImportance": "medium",
+    "isPartOfBRI": false,
+    "geopoliticalNotes": "Rail-port link at the southern entrance of the Suez Canal. Vital for the movement of fuel and chemicals from Suez refineries.",
+    "notes": "Handles significant industrial freight traffic.",
+    "attribution": {
+      "sources": [
+        { "name": "Ministry of Transport Egypt", "url": "http://www.mot.gov.eg/", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "medium",
+        "sourceCount": 1,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  },
+  {
+    "id": "RAIL-EGY-MARSA-MATROUH",
+    "name": "Marsa Matrouh HSR Terminal",
+    "countryId": "EGY",
+    "city": "Marsa Matrouh",
+    "coordinates": [27.24, 31.35],
+    "type": "high_speed",
+    "dailyPassengers": null,
+    "annualFreightTonnes": null,
+    "connectedCountries": [],
+    "gaugeType": "standard",
+    "lineCount": 4,
+    "strategicImportance": "medium",
+    "isPartOfBRI": false,
+    "geopoliticalNotes": "Western terminus of the High-Speed Rail Green Line. Strategic for developing Egypt's northwestern coast and potential future links to Libya.",
+    "notes": "Part of the effort to decentralize the Egyptian population away from the Nile Valley.",
+    "attribution": {
+      "sources": [
+        { "name": "Siemens Mobility Press Releases", "url": "https://press.siemens.com/", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 1,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  }
+]

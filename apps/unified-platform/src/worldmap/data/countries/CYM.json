@@ -1,0 +1,63 @@
+{
+  "id": "CYM",
+  "iso2": "KY",
+  "name": "Cayman Islands",
+  "region": "Americas",
+  "subregion": "Caribbean",
+  "capital": "George Town",
+  "lastUpdated": "2026-05-09",
+  "summary": "The Cayman Islands is a leading global offshore financial center and a premier luxury tourism destination in the Western Caribbean. As a British Overseas Territory, it offers a stable and sophisticated legal and regulatory environment that has attracted thousands of investment funds and international banks. In 2026, the territory is focused on maintaining its competitive edge amidst evolving global tax standards and enhancing its 'Cayman Enterprise City' special economic zones. The islands enjoy one of the highest standards of living in the region, characterized by robust infrastructure and a highly professional workforce. Current strategic priorities include sustainable tourism development, climate resilience, and diversifying the economy into tech and knowledge-based sectors.",
+  "indicators": {
+    "politicalStability":       { "score": 9, "score_description": "Highly stable parliamentary democracy with British legal oversight.", "trend": "stable", "confidence": "high", "note": "Strong institutional framework and a history of orderly governance." },
+    "economicDirection":        { "score": 8, "score_description": "Strong growth driven by financial services and high-end tourism.", "trend": "stable", "confidence": "high", "note": "The territory continues to adapt successfully to international regulatory changes." },
+    "investmentAttractiveness": { "score": 9, "score_description": "Premier destination for global capital and private wealth.", "trend": "stable", "confidence": "high", "note": "Unrivaled expertise in investment funds and a tax-neutral environment." },
+    "geopoliticalRisk":         { "score": 3, "score_description": "Low risk; protected by the UK and well-integrated into global finance.", "trend": "stable", "confidence": "high", "note": "Primary risks are environmental (hurricanes) and regulatory (FATF/OECD standards)." },
+    "educationQuality":         { "score": 7, "score_description": "High standards with a focus on professional and financial services.", "trend": "stable", "confidence": "high", "note": "Solid public and private systems; many students pursue higher education in the UK or US." },
+    "healthcareQuality":        { "score": 8, "score_description": "Excellent healthcare with advanced facilities and medical tourism.", "trend": "rising", "confidence": "high", "note": "Health City Cayman Islands is a regional leader in specialized medical services." },
+    "technologyInvestment":     { "score": 7, "score_description": "Growing focus on digital assets and specialized tech zones.", "trend": "rising", "confidence": "high", "note": "Cayman Enterprise City is successfully attracting international tech companies." }
+  },
+  "demographics": {
+    "population": 71500,
+    "medianAge": 40.5,
+    "urbanizationRate": 100,
+    "majorEthnicGroups": ["Mixed", "African descent", "European descent"],
+    "religions": [
+      { "name": "Protestant", "percent": 68 },
+      { "name": "Roman Catholic", "percent": 14 },
+      { "name": "None", "percent": 9 },
+      { "name": "Other", "percent": 9 }
+    ]
+  },
+  "alliances": ["CARICOM (Associate)", "United Kingdom Overseas Territories"],
+  "relationships": [
+    { "countryId": "USA", "countryName": "United States", "type": "strategic_partner", "sentiment": "positive", "summary": "Primary source of tourists, investment, and trade; deeply integrated financial ties." },
+    { "countryId": "GBR", "countryName": "United Kingdom", "type": "sovereign", "sentiment": "positive", "summary": "The UK provides the legal foundation, defense, and international representation." },
+    { "countryId": "JAM", "countryName": "Jamaica", "type": "partner", "sentiment": "positive", "summary": "Significant historical and cultural ties; many Caymanians have Jamaican heritage." }
+  ],
+  "perspectives": [
+    { "source": "Financial Services Executive", "bias": "Business-focused", "view": "Our commitment to transparency and world-class regulation ensures that Cayman remains the jurisdiction of choice for global investment funds." },
+    { "source": "Environmental Advocate", "bias": "Ecological", "view": "Protecting our coral reefs and mangroves is not just an environmental issue; it is vital for the long-term survival of our tourism industry." },
+    { "source": "Caymanian Entrepreneur", "bias": "Innovation-focused", "view": "The special economic zones are opening up new opportunities for young Caymanians in the tech and media sectors." }
+  ],
+  "historicalContext": {
+    "summary": "The Cayman Islands were first sighted by Christopher Columbus in 1503. They were governed from Jamaica until 1962, when they chose to remain a British dependency after Jamaica's independence. Since then, the islands have undergone a remarkable transformation from a quiet 'islands that time forgot' to a global financial powerhouse.",
+    "keyEvents": [
+      { "year": 1503, "event": "Christopher Columbus sights the islands, naming them 'Las Tortugas'." },
+      { "year": 1670, "event": "Treaty of Madrid cedes the islands to England along with Jamaica." },
+      { "year": 1962, "event": "Cayman Islands chooses to remain a British territory following Jamaica's independence." },
+      { "year": 1966, "event": "Enactment of the first laws enabling the development of the offshore financial industry." },
+      { "year": 2004, "event": "Hurricane Ivan causes widespread damage, leading to a rapid and robust recovery." },
+      { "year": 2021, "event": "The Cayman Islands is removed from the FATF 'grey list' following regulatory enhancements." }
+    ]
+  },
+  "investmentNotes": {
+    "strengths": ["Global leadership in investment funds and captive insurance", "Sophisticated legal and professional services infrastructure", "Political stability and high standard of living", "Strategic location and excellent connectivity to North America"],
+    "risks": ["Exposure to global shifts in tax and financial regulations", "Vulnerability to climate change and rising sea levels", "High cost of living and business operations", "Labor market dependence on work permits"],
+    "sectors": ["Financial Services (Funds, Banking, Insurance)", "Luxury Tourism & Real Estate", "Digital Assets & Tech Zones", "Medical Tourism", "Professional Services"]
+  },
+  "sources": [
+    { "name": "Cayman Islands Government - Economics and Statistics Office", "url": "https://www.eso.ky/", "type": "economic" },
+    { "name": "Cayman Finance", "url": "https://caymanfinance.ky/", "type": "investment" },
+    { "name": "Cayman Islands Monetary Authority (CIMA)", "url": "https://www.cima.ky/", "type": "financial" }
+  ]
+}

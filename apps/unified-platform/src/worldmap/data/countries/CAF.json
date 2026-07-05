@@ -1,0 +1,66 @@
+{
+  "id": "CAF",
+  "iso2": "CF",
+  "name": "Central African Republic",
+  "region": "Africa",
+  "subregion": "Middle Africa",
+  "capital": "Bangui",
+  "lastUpdated": "2026-05-09",
+  "summary": "The Central African Republic (CAR) is a landlocked country in Central Africa with vast natural resources but remains one of the world's most fragile states. It has been plagued by cycles of civil war and instability since independence. Despite a 2019 peace agreement, armed groups still control significant portions of the territory. The presence of international forces, including the UN and Russian-linked private military groups, significantly influences the security landscape. The economy is primarily based on subsistence agriculture and extractive industries like diamonds and gold, though much is informal.",
+  "indicators": {
+    "politicalStability":       { "score": 2, "trend": "unstable", "confidence": "high", "note": "Persistent insecurity outside the capital; fragile state authority; heavy reliance on external security partners." },
+    "economicDirection":        { "score": 2, "trend": "stable", "confidence": "medium", "note": "Economy is stagnant; hindered by conflict, poor infrastructure, and lack of investment." },
+    "investmentAttractiveness": { "score": 1, "trend": "stable", "confidence": "high", "note": "High risk environment; investment limited to specific extractive sectors often under opaque arrangements." },
+    "geopoliticalRisk":         { "score": 9, "trend": "stable", "confidence": "high", "note": "High risk of regional instability; presence of foreign military actors complicates diplomatic relations." },
+    "educationQuality":         { "score": 1, "trend": "declining", "confidence": "high", "note": "Education system is severely disrupted by conflict; lack of qualified teachers and functional schools in rural areas." },
+    "healthcareQuality":        { "score": 1, "trend": "declining", "confidence": "high", "note": "Among the worst health indicators globally; critical shortages of medical personnel and supplies; dependent on NGO aid." },
+    "technologyInvestment":     { "score": 1, "trend": "stable", "confidence": "medium", "note": "Very low connectivity; limited mobile network coverage focused on major urban centers." }
+  },
+  "demographics": {
+    "population": 5700000,
+    "medianAge": 19.4,
+    "urbanizationRate": 43,
+    "majorEthnicGroups": ["Baya", "Banda", "Mandjia", "Sara"],
+    "religions": [
+      { "name": "Christian", "percent": 80.0 },
+      { "name": "Muslim", "percent": 15.0 },
+      { "name": "Indigenous", "percent": 5.0 }
+    ]
+  },
+  "alliances": ["AU", "CEMAC", "ECCAS"],
+  "relationships": [
+    { "countryId": "RUS", "countryName": "Russia", "type": "security_partner", "sentiment": "positive", "summary": "Key security provider; Russian instructors and contractors play a major role in supporting the government and protecting mining interests." },
+    { "countryId": "FRA", "countryName": "France", "type": "former_colonizer", "sentiment": "negative", "summary": "Historically influential, but relations have deteriorated as CAR has turned toward Russia for security and political support." },
+    { "countryId": "TCD", "countryName": "Chad", "type": "neighbor", "sentiment": "neutral", "summary": "Complex relationship often affected by cross-border movement of armed groups and refugees." },
+    { "countryId": "RWA", "countryName": "Rwanda", "type": "security_partner", "sentiment": "positive", "summary": "Rwanda provides a significant contingent to the UN peacekeeping mission (MINUSCA) and has a bilateral security agreement." }
+  ],
+  "perspectives": [
+    { "source": "Government Official", "bias": "Defensive", "view": "We are re-establishing state authority and securing our borders with the help of our brave partners." },
+    { "source": "Displaced Person", "bias": "Victim", "view": "We just want to return to our homes in safety; the peace is only on paper for us." },
+    { "source": "Humanitarian Worker", "bias": "Concerned", "view": "Funding is low while needs are rising; access to vulnerable populations is constantly threatened by armed groups." },
+    { "source": "Local Merchant", "bias": "Pragmatic", "view": "Trade is difficult when the roads are controlled by bandits and prices are so high." }
+  ],
+  "historicalContext": {
+    "summary": "CAR gained independence from France in 1960. It experienced various coups and regimes, most notably the self-proclaimed 'Empire' under Jean-Bédel Bokassa. A major conflict broke out in 2012 between the Séléka and anti-balaka militias, leading to a profound humanitarian crisis that continues to echo today.",
+    "keyEvents": [
+      { "year": 1960, "event": "Independence from France." },
+      { "year": 1966, "event": "Jean-Bédel Bokassa takes power in a coup." },
+      { "year": 1979, "event": "Bokassa is overthrown with French military assistance." },
+      { "year": 2013, "event": "Séléka rebels seize Bangui, triggering widespread sectarian violence." },
+      { "year": 2014, "event": "Deployment of the UN peacekeeping mission (MINUSCA)." },
+      { "year": 2016, "event": "Election of Faustin-Archange Touadéra as president." },
+      { "year": 2019, "event": "Signing of the Khartoum Peace Agreement between the government and armed groups." },
+      { "year": 2024, "event": "Ongoing efforts to expand state control amidst persistent rebel activity." }
+    ]
+  },
+  "investmentNotes": {
+    "strengths": ["Abundant mineral resources (Diamonds, Gold, Uranium)", "Significant hydroelectric and agricultural potential", "Arable land available for development", "Young population"],
+    "risks": ["Extreme political and security instability", "Pervasive corruption and weak legal frameworks", "Severe lack of infrastructure (roads, electricity)", "Landlocked position and high transport costs"],
+    "sectors": ["Mining (Diamonds/Gold)", "Timber/Forestry", "Agriculture (Cotton/Coffee)", "Renewable Energy"]
+  },
+  "sources": [
+    { "name": "World Bank - CAR Data", "url": "https://data.worldbank.org/country/central-african-republic", "type": "economic" },
+    { "name": "UN MINUSCA", "url": "https://minusca.unmissions.org/en", "type": "security" },
+    { "name": "International Crisis Group - CAR", "url": "https://www.crisisgroup.org/africa/central-africa/central-african-republic", "type": "political" }
+  ]
+}

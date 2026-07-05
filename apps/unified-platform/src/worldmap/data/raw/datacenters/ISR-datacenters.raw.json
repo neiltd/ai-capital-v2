@@ -1,0 +1,302 @@
+[
+  {
+    "id": "DC-ISR-TA-AWS-ILC1",
+    "name": "AWS Israel (Tel Aviv) Region",
+    "countryId": "ISR",
+    "city": "Tel Aviv",
+    "coordinates": [34.78, 32.08],
+    "type": "hyperscale",
+    "status": "operational",
+    "tierLevel": "3",
+    "capacityMW": 60,
+    "floorSpaceM2": null,
+    "pue": null,
+    "operator": "Amazon Web Services",
+    "owner": "Amazon",
+    "yearOpened": 2023,
+    "yearPlanned": null,
+    "cloudRegion": "il-central-1",
+    "geopoliticalNotes": "Result of the government's Project Nimbus; ensures critical state services run on local infrastructure to prevent foreign 'kill-switch' risks.",
+    "notes": "Investment of $7.2 billion over 15 years.",
+    "attribution": {
+      "sources": [
+        { "name": "AWS Global Infrastructure", "url": "https://aws.amazon.com/about-aws/global-infrastructure/regions_az/", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 2,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  },
+  {
+    "id": "DC-ISR-TA-MSFT-CENTRAL",
+    "name": "Microsoft Azure Israel Central",
+    "countryId": "ISR",
+    "city": "Tel Aviv",
+    "coordinates": [34.80, 32.10],
+    "type": "hyperscale",
+    "status": "operational",
+    "tierLevel": "3",
+    "capacityMW": null,
+    "floorSpaceM2": null,
+    "pue": null,
+    "operator": "Microsoft",
+    "owner": "Microsoft",
+    "yearOpened": 2023,
+    "yearPlanned": null,
+    "cloudRegion": "israelcentral",
+    "geopoliticalNotes": "Includes three availability zones; designed with high-security underground specifications to withstand regional kinetic threats.",
+    "notes": null,
+    "attribution": {
+      "sources": [
+        { "name": "Microsoft Azure Regions", "url": "https://azure.microsoft.com/en-us/explore/global-infrastructure/geographies/", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 1,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  },
+  {
+    "id": "DC-ISR-TA-GCP-MEC1",
+    "name": "Google Cloud Israel Region",
+    "countryId": "ISR",
+    "city": "Tel Aviv",
+    "coordinates": [34.79, 32.07],
+    "type": "hyperscale",
+    "status": "operational",
+    "tierLevel": "3",
+    "capacityMW": null,
+    "floorSpaceM2": null,
+    "pue": null,
+    "operator": "Google",
+    "owner": "Google",
+    "yearOpened": 2022,
+    "yearPlanned": null,
+    "cloudRegion": "me-west1",
+    "geopoliticalNotes": "Part of Project Nimbus; strategic hub for Google's Blue-Raman subsea cable system connecting Europe to India via Israel.",
+    "notes": null,
+    "attribution": {
+      "sources": [
+        { "name": "Google Cloud Locations", "url": "https://cloud.google.com/about/locations/tel-aviv", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 1,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  },
+  {
+    "id": "DC-ISR-JRS-ORCL-MEC1",
+    "name": "Oracle Cloud Jerusalem Region",
+    "countryId": "ISR",
+    "city": "Jerusalem",
+    "coordinates": [35.21, 31.80],
+    "type": "hyperscale",
+    "status": "operational",
+    "tierLevel": "3",
+    "capacityMW": 8,
+    "floorSpaceM2": null,
+    "pue": null,
+    "operator": "Oracle",
+    "owner": "Oracle",
+    "yearOpened": 2021,
+    "yearPlanned": null,
+    "cloudRegion": "il-jerusalem-1",
+    "geopoliticalNotes": "A 9-floor underground bunker facility designed for extreme resilience; hosts critical government and security workloads in the capital.",
+    "notes": "Located in the Har Hotzvim tech park.",
+    "attribution": {
+      "sources": [
+        { "name": "Oracle Public Cloud Regions", "url": "https://www.oracle.com/cloud/public-cloud-regions/", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 2,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  },
+  {
+    "id": "DC-ISR-TRC-MEDONE-NORTH",
+    "name": "MedOne Tirat Carmel (Northern Hub)",
+    "countryId": "ISR",
+    "city": "Tirat Carmel",
+    "coordinates": [34.96, 32.76],
+    "type": "colocation",
+    "status": "operational",
+    "tierLevel": "3",
+    "capacityMW": null,
+    "floorSpaceM2": null,
+    "pue": null,
+    "operator": "MedOne",
+    "owner": "MedOne",
+    "yearOpened": 1999,
+    "yearPlanned": null,
+    "cloudRegion": null,
+    "geopoliticalNotes": "Major landing point for international submarine cables; acts as a critical connectivity gateway for Israel to the global internet.",
+    "notes": "Underground, missile-hardened facility.",
+    "attribution": {
+      "sources": [
+        { "name": "MedOne Data Centers", "url": "https://www.medone.co.il/en/data-centers/", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 1,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  },
+  {
+    "id": "DC-ISR-PTK-MEDONE-CENTRAL",
+    "name": "MedOne Petah Tikva",
+    "countryId": "ISR",
+    "city": "Petah Tikva",
+    "coordinates": [34.86, 32.09],
+    "type": "colocation",
+    "status": "operational",
+    "tierLevel": "3",
+    "capacityMW": null,
+    "floorSpaceM2": null,
+    "pue": null,
+    "operator": "MedOne",
+    "owner": "MedOne",
+    "yearOpened": null,
+    "yearPlanned": null,
+    "cloudRegion": null,
+    "geopoliticalNotes": "Located in Israel's primary 'Data Center Alley'; serves as a major carrier-neutral interconnection hub for local enterprises and global tech firms.",
+    "notes": null,
+    "attribution": {
+      "sources": [
+        { "name": "MedOne Data Centers", "url": "https://www.medone.co.il/en/data-centers/", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 1,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  },
+  {
+    "id": "DC-ISR-RML-MEDONE-BUNKER",
+    "name": "MedOne Ramla (Bunker)",
+    "countryId": "ISR",
+    "city": "Ramla",
+    "coordinates": [34.87, 31.93],
+    "type": "colocation",
+    "status": "operational",
+    "tierLevel": "3",
+    "capacityMW": null,
+    "floorSpaceM2": null,
+    "pue": null,
+    "operator": "MedOne",
+    "owner": "MedOne",
+    "yearOpened": null,
+    "yearPlanned": null,
+    "cloudRegion": null,
+    "geopoliticalNotes": "Deep underground facility designed for maximum physical security and autonomous operation during national emergencies.",
+    "notes": null,
+    "attribution": {
+      "sources": [
+        { "name": "MedOne Data Centers", "url": "https://www.medone.co.il/en/data-centers/", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 1,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  },
+  {
+    "id": "DC-ISR-RSL-EDX-IL1",
+    "name": "EdgeConneX Rishon LeTsiyon (IL-01)",
+    "countryId": "ISR",
+    "city": "Rishon LeTsiyon",
+    "coordinates": [34.78, 31.98],
+    "type": "colocation",
+    "status": "operational",
+    "tierLevel": "3",
+    "capacityMW": 7.5,
+    "floorSpaceM2": null,
+    "pue": null,
+    "operator": "EdgeConneX",
+    "owner": "EQT Infrastructure",
+    "yearOpened": null,
+    "yearPlanned": null,
+    "cloudRegion": null,
+    "geopoliticalNotes": "Part of the global EdgeConneX network; provides high-security, carrier-neutral hosting in the central district.",
+    "notes": null,
+    "attribution": {
+      "sources": [
+        { "name": "EdgeConneX Israel", "url": "https://www.edgeconnex.com/locations/middle-east/israel/", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 1,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  },
+  {
+    "id": "DC-ISR-HER-EDX-IL2",
+    "name": "EdgeConneX Herzliya (IL-02)",
+    "countryId": "ISR",
+    "city": "Herzliya",
+    "coordinates": [34.83, 32.16],
+    "type": "colocation",
+    "status": "operational",
+    "tierLevel": "3",
+    "capacityMW": null,
+    "floorSpaceM2": null,
+    "pue": null,
+    "operator": "EdgeConneX",
+    "owner": "EQT Infrastructure",
+    "yearOpened": null,
+    "yearPlanned": null,
+    "cloudRegion": null,
+    "geopoliticalNotes": "Strategic location in the Herzliya Pituach high-tech hub, serving many of Israel's leading technology and R&D companies.",
+    "notes": null,
+    "attribution": {
+      "sources": [
+        { "name": "EdgeConneX Israel", "url": "https://www.edgeconnex.com/locations/middle-east/israel/", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 1,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  },
+  {
+    "id": "DC-ISR-BTS-TECH-TITAN4",
+    "name": "Techtonic Titan 4 (Beit Shemesh)",
+    "countryId": "ISR",
+    "city": "Beit Shemesh",
+    "coordinates": [34.98, 31.75],
+    "type": "hyperscale",
+    "status": "planned",
+    "tierLevel": "4",
+    "capacityMW": 10.5,
+    "floorSpaceM2": 15000,
+    "pue": null,
+    "operator": "Techtonic",
+    "owner": "Techtonic",
+    "yearOpened": null,
+    "yearPlanned": 2025,
+    "cloudRegion": null,
+    "geopoliticalNotes": "A Tier IV underground facility designed specifically for AI workloads; part of the national push to host high-density compute safely beneath regional threats.",
+    "notes": "Designed to withstand a direct missile strike.",
+    "attribution": {
+      "sources": [
+        { "name": "Data Center Dynamics", "url": "https://www.datacenterdynamics.com/en/news/techtonic-secures-funding-for-105mw-underground-data-center-in-israel/", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 2,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  }
+]

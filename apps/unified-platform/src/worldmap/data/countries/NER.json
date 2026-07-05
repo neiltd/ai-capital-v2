@@ -1,0 +1,63 @@
+{
+  "id": "NER",
+  "iso2": "NE",
+  "name": "Niger",
+  "region": "Africa",
+  "subregion": "Western Africa",
+  "capital": "Niamey",
+  "lastUpdated": "2025-05-22",
+  "summary": "Niger is experiencing a period of intense transformation under General Abdourahamane Tiani's military leadership. Following the 2023 coup, the country has pivoted away from Western security alliances, expelling French and U.S. forces in favor of Russian and Chinese partnerships. Economically, Niger is on the verge of a boom, with triple-digit oil export growth projected via a new pipeline to Benin. As a founding member of the Alliance of Sahel States (AES), Niger has formally exited ECOWAS, choosing a path of 'sovereignty' that prioritizes regional security and non-Western economic integration.",
+  "indicators": {
+    "politicalStability":       { "score": 3, "trend": "stable", "confidence": "high", "note": "Military consolidation; local councils dissolved; no clear election timetable." },
+    "economicDirection":        { "score": 8, "trend": "rising", "confidence": "high", "note": "Massive GDP growth (10%+) driven by the start of large-scale oil exports." },
+    "investmentAttractiveness": { "score": 4, "trend": "rising", "confidence": "medium", "note": "High interest in uranium and oil from China and Russia; Western investment remains stalled." },
+    "geopoliticalRisk":         { "score": 8, "trend": "stable", "confidence": "high", "note": "Exit from ECOWAS; realignment with Russia; lingering tensions with neighbors over the coup." },
+    "educationQuality":         { "score": 2, "trend": "stable", "confidence": "medium", "note": "Low literacy rates; educational infrastructure is severely underfunded." },
+    "healthcareQuality":        { "score": 2, "trend": "stable", "confidence": "medium", "note": "High maternal and child mortality; extreme shortage of specialized medical staff." },
+    "technologyInvestment":     { "score": 2, "trend": "rising", "confidence": "low", "note": "Nascent digital sector; some investment in military and security technology from new partners." }
+  },
+  "demographics": {
+    "population": 27200000,
+    "medianAge": 14.8,
+    "urbanizationRate": 17.1,
+    "majorEthnicGroups": ["Hausa", "Zarma-Songhai", "Tuareg", "Fulani", "Kanuri"],
+    "religions": [
+      { "name": "Muslim", "percent": 99.3 },
+      { "name": "Christian/Animist", "percent": 0.7 }
+    ]
+  },
+  "alliances": ["Alliance of Sahel States (AES)", "African Union", "United Nations"],
+  "relationships": [
+    { "countryId": "CHN", "countryName": "China", "type": "economic_partner", "sentiment": "positive", "summary": "Key investor in the oil pipeline and uranium mining; major provider of loans and infrastructure." },
+    { "countryId": "RUS", "countryName": "Russia", "type": "strategic_partner", "sentiment": "positive", "summary": "New primary security partner providing military equipment and training." },
+    { "countryId": "USA", "countryName": "United States", "type": "former_partner", "sentiment": "negative", "summary": "Security cooperation ended in 2024; U.S. forces expelled from critical drone base." },
+    { "countryId": "BEN", "countryName": "Benin", "type": "economic_partner", "sentiment": "neutral", "summary": "Tense but essential relationship due to the shared oil pipeline terminal." }
+  ],
+  "perspectives": [
+    { "source": "Petroleum Engineer in Agadem", "bias": "Optimistic", "view": "The oil pipeline is a game-changer for our country's finances; we are finally seeing our resources benefit us." },
+    { "source": "Opposition Supporter in Niamey", "bias": "Fearful", "view": "The military is using oil wealth to entrench their power while silencing any voice that asks for democracy." },
+    { "source": "Market Trader", "bias": "Pragmatic", "view": "The border closures after the coup were hard, but now that we are looking toward our neighbors in the AES, trade is starting to flow again." },
+    { "source": "Regional Security Expert", "bias": "Concerned", "view": "The removal of Western surveillance capabilities could leave the region more vulnerable to long-term jihadist expansion." }
+  ],
+  "historicalContext": {
+    "summary": "Niger has faced multiple coups and periods of military rule since gaining independence from France in 1960. It had a decade of relative democratic stability (2011-2023) and was a key Western ally in the Sahel until the 2023 coup led by General Tiani, which sparked a massive geopolitical shift and the formation of the AES.",
+    "keyEvents": [
+      { "year": 1960, "event": "Independence from France." },
+      { "year": 2011, "event": "First peaceful democratic transition of power." },
+      { "year": 2023, "event": "President Mohamed Bazoum is deposed in a military coup; General Tiani takes power." },
+      { "year": 2024, "event": "U.S. and French troops complete their withdrawal from Niger." },
+      { "year": 2024, "event": "First barrels of crude oil exported via the 2,000km pipeline to Benin." },
+      { "year": 2025, "event": "Formal exit from ECOWAS as part of the AES Confederation." }
+    ]
+  },
+  "investmentNotes": {
+    "strengths": ["Rapidly growing oil production and export capacity", "World-class uranium deposits with increasing global demand", "Strategic location as a transit hub between the Sahel and the Mediterranean", "Strong commitment to regional integration through the AES"],
+    "risks": ["Heavy dependence on a single oil pipeline for revenue", "High geopolitical instability and recent exit from ECOWAS", "Persistent security threats from jihadist groups", "Minimal domestic industrial base and low human capital"],
+    "sectors": ["Oil & Gas", "Uranium Mining", "Infrastructure & Logistics", "Agro-processing (Onions, Livestock)"]
+  },
+  "sources": [
+    { "name": "Institut National de la Statistique du Niger", "url": "https://www.stat-niger.org/", "type": "demographic" },
+    { "name": "International Monetary Fund - Niger", "url": "https://www.imf.org/en/Countries/NER", "type": "economic" },
+    { "name": "Ministry of Petroleum, Niger", "url": "https://www.petrole.gouv.ne/", "type": "economic" }
+  ]
+}

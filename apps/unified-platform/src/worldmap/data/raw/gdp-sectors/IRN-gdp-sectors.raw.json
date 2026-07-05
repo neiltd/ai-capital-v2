@@ -1,0 +1,26 @@
+[
+  {
+    "countryId": "IRN",
+    "year": 2023,
+    "gdpUsdBn": 403,
+    "gdpPerCapita": 4500,
+    "sectors": [
+      { "sector": "Services", "percentOfGDP": 51.0, "notes": "Largest sector, led by real estate and professional services." },
+      { "sector": "Oil & Gas", "percentOfGDP": 23.0, "notes": "Major growth driver in 2023 due to increased exports." },
+      { "sector": "Manufacturing & Mining", "percentOfGDP": 13.0, "notes": "Includes significant automotive and steel industries." },
+      { "sector": "Agriculture", "percentOfGDP": 10.0, "notes": "Stagnant due to persistent droughts." },
+      { "sector": "Construction & Utilities", "percentOfGDP": 3.0, "notes": "Includes energy distribution." }
+    ],
+    "attribution": {
+      "sources": [
+        { "name": "World Bank Iran Economic Monitor 2023", "url": "https://www.worldbank.org/en/country/iran", "accessedAt": "2025-02-11" },
+        { "name": "Central Bank of Iran 1402 Annual Report", "url": "https://www.cbi.ir/", "accessedAt": "2025-02-11" }
+      ],
+      "confidence": {
+        "confidence": "medium",
+        "sourceCount": 2,
+        "lastVerified": "2025-02-11"
+      }
+    }
+  }
+]

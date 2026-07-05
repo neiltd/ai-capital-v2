@@ -1,0 +1,213 @@
+[
+  {
+    "id": "PORT-IND-MUNDRA",
+    "name": "Mundra Port",
+    "countryId": "IND",
+    "city": "Mundra",
+    "coordinates": [69.71, 22.74],
+    "type": "mixed",
+    "annualThroughputTEU": 7400000,
+    "annualThroughputTonnes": 200700000,
+    "berthCount": 28,
+    "maxDraftM": 18.5,
+    "strategicImportance": "critical",
+    "riskLevel": "low",
+    "geopoliticalNotes": "India's largest commercial port and a primary gateway for Northern India. First Indian port to handle over 200 MMT of cargo in a fiscal year.",
+    "notes": "Privately operated by Adani Ports and SEZ Limited (APSEZ).",
+    "attribution": {
+      "sources": [
+        { "name": "Adani Ports and SEZ Limited", "url": "https://www.adaniports.com", "accessedAt": "2025-05-10" },
+        { "name": "Lloyd's List", "url": "https://lloydslist.maritimeintelligence.informa.com", "accessedAt": "2025-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 2,
+        "lastVerified": "2025-05-10"
+      }
+    }
+  },
+  {
+    "id": "PORT-IND-JNPA",
+    "name": "Jawaharlal Nehru Port (JNPT)",
+    "countryId": "IND",
+    "city": "Navi Mumbai",
+    "coordinates": [72.95, 18.95],
+    "type": "container",
+    "annualThroughputTEU": 7300000,
+    "annualThroughputTonnes": null,
+    "berthCount": 30,
+    "maxDraftM": 15.0,
+    "strategicImportance": "critical",
+    "riskLevel": "low",
+    "geopoliticalNotes": "India's premier container hub, handling over 50% of the country's containerized trade. Critical node for the International North-South Transport Corridor (INSTC).",
+    "notes": "Also known as Nhava Sheva. Fully landlord-based major port.",
+    "attribution": {
+      "sources": [
+        { "name": "Jawaharlal Nehru Port Authority", "url": "https://www.jnport.gov.in", "accessedAt": "2025-05-10" },
+        { "name": "World Shipping Council", "url": "https://www.worldshipping.org", "accessedAt": "2025-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 2,
+        "lastVerified": "2025-05-10"
+      }
+    }
+  },
+  {
+    "id": "PORT-IND-DEENDAYAL",
+    "name": "Deendayal Port",
+    "countryId": "IND",
+    "city": "Kandla",
+    "coordinates": [70.22, 23.01],
+    "type": "bulk",
+    "annualThroughputTEU": 600000,
+    "annualThroughputTonnes": 150000000,
+    "berthCount": 16,
+    "maxDraftM": 12.5,
+    "strategicImportance": "high",
+    "riskLevel": "low",
+    "geopoliticalNotes": "A major hub for crude oil, chemicals, and food grains. Serves the industrial hinterland of North-Western India.",
+    "notes": "Formerly known as Kandla Port. A major government-owned port.",
+    "attribution": {
+      "sources": [
+        { "name": "Deendayal Port Authority", "url": "https://www.deendayalport.gov.in", "accessedAt": "2025-05-10" },
+        { "name": "Ministry of Ports, Shipping and Waterways", "url": "https://shipmin.gov.in", "accessedAt": "2025-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 2,
+        "lastVerified": "2025-05-10"
+      }
+    }
+  },
+  {
+    "id": "PORT-IND-PARADIP",
+    "name": "Paradip Port",
+    "countryId": "IND",
+    "city": "Paradip",
+    "coordinates": [86.67, 20.27],
+    "type": "bulk",
+    "annualThroughputTEU": null,
+    "annualThroughputTonnes": 150000000,
+    "berthCount": 15,
+    "maxDraftM": 16.0,
+    "strategicImportance": "high",
+    "riskLevel": "low",
+    "geopoliticalNotes": "Top cargo-handling government port in FY2024-25. Specialized in bulk commodities like iron ore and coal, critical for India's steel industry.",
+    "notes": "Located on the confluence of the Mahanadi River and the Bay of Bengal.",
+    "attribution": {
+      "sources": [
+        { "name": "Paradip Port Authority", "url": "https://paradipport.gov.in", "accessedAt": "2025-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 1,
+        "lastVerified": "2025-05-10"
+      }
+    }
+  },
+  {
+    "id": "PORT-IND-VISAKHAPATNAM",
+    "name": "Visakhapatnam Port",
+    "countryId": "IND",
+    "city": "Visakhapatnam",
+    "coordinates": [83.28, 17.68],
+    "type": "mixed",
+    "annualThroughputTEU": 700000,
+    "annualThroughputTonnes": 85000000,
+    "berthCount": 24,
+    "maxDraftM": 18.1,
+    "strategicImportance": "critical",
+    "riskLevel": "low",
+    "geopoliticalNotes": "Strategic deep-water port hosting the Eastern Naval Command. Critical for iron ore exports to East Asia and handling strategic oil reserves.",
+    "notes": "Deepest landlocked port in India.",
+    "attribution": {
+      "sources": [
+        { "name": "Visakhapatnam Port Authority", "url": "https://vizagport.com", "accessedAt": "2025-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 1,
+        "lastVerified": "2025-05-10"
+      }
+    }
+  },
+  {
+    "id": "PORT-IND-CHENNAI",
+    "name": "Chennai Port",
+    "countryId": "IND",
+    "city": "Chennai",
+    "coordinates": [80.3, 13.1],
+    "type": "container",
+    "annualThroughputTEU": 1600000,
+    "annualThroughputTonnes": 55000000,
+    "berthCount": 26,
+    "maxDraftM": 15.5,
+    "strategicImportance": "high",
+    "riskLevel": "low",
+    "geopoliticalNotes": "Known as the 'Gateway to South India'. A major hub for automobile exports (Detroit of Asia) and containerized trade on the East Coast.",
+    "notes": "Second largest container port in India after JNPT.",
+    "attribution": {
+      "sources": [
+        { "name": "Chennai Port Authority", "url": "https://www.chennaiport.gov.in", "accessedAt": "2025-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 1,
+        "lastVerified": "2025-05-10"
+      }
+    }
+  },
+  {
+    "id": "PORT-IND-KOLKATA",
+    "name": "Syama Prasad Mookerjee Port",
+    "countryId": "IND",
+    "city": "Kolkata/Haldia",
+    "coordinates": [88.32, 22.54],
+    "type": "mixed",
+    "annualThroughputTEU": 800000,
+    "annualThroughputTonnes": 65000000,
+    "berthCount": 40,
+    "maxDraftM": 12.0,
+    "strategicImportance": "high",
+    "riskLevel": "low",
+    "geopoliticalNotes": "India's only major riverine port. Vital for trade with landlocked Nepal and Bhutan and the North-Eastern states of India.",
+    "notes": "Consists of Kolkata Dock System and Haldia Dock Complex.",
+    "attribution": {
+      "sources": [
+        { "name": "Syama Prasad Mookerjee Port Authority", "url": "https://www.smportkolkata.shipping.gov.in", "accessedAt": "2025-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 1,
+        "lastVerified": "2025-05-10"
+      }
+    }
+  },
+  {
+    "id": "PORT-IND-COCHIN",
+    "name": "Cochin Port",
+    "countryId": "IND",
+    "city": "Kochi",
+    "coordinates": [76.27, 9.96],
+    "type": "mixed",
+    "annualThroughputTEU": 800000,
+    "annualThroughputTonnes": 38000000,
+    "berthCount": 20,
+    "maxDraftM": 14.5,
+    "strategicImportance": "critical",
+    "riskLevel": "low",
+    "geopoliticalNotes": "Strategically located on the East-West international sea route. Home to India's first dedicated transshipment terminal (Vallarpadam) and a major naval base.",
+    "notes": "Key for energy imports and maritime security in the Indian Ocean.",
+    "attribution": {
+      "sources": [
+        { "name": "Cochin Port Authority", "url": "https://cochinport.gov.in", "accessedAt": "2025-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 1,
+        "lastVerified": "2025-05-10"
+      }
+    }
+  }
+]

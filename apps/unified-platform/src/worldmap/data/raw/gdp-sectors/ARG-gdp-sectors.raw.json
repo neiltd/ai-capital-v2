@@ -1,0 +1,44 @@
+[
+  {
+    "countryId": "ARG",
+    "year": 2023,
+    "gdpUsdBn": 640.59,
+    "gdpPerCapita": 13730,
+    "sectors": [
+      {
+        "sector": "Services",
+        "percentOfGDP": 63.4,
+        "notes": "Normalized from GVA; includes finance, trade, and public administration."
+      },
+      {
+        "sector": "Industry",
+        "percentOfGDP": 29.6,
+        "notes": "Normalized from GVA; includes manufacturing (15.2%), mining, and construction."
+      },
+      {
+        "sector": "Agriculture",
+        "percentOfGDP": 7.0,
+        "notes": "Normalized from GVA; 2023 share was lower than usual due to severe drought."
+      }
+    ],
+    "attribution": {
+      "sources": [
+        {
+          "name": "World Bank DataBank 2023",
+          "url": "https://databank.worldbank.org/",
+          "accessedAt": "2025-03-07"
+        },
+        {
+          "name": "INDEC (National Institute of Statistics and Censuses of Argentina)",
+          "url": "https://www.indec.gob.ar/",
+          "accessedAt": "2025-03-07"
+        }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 2,
+        "lastVerified": "2025-03-07"
+      }
+    }
+  }
+]

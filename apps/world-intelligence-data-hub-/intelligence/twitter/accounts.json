@@ -1,0 +1,572 @@
+[
+  {
+    "username": "RALee85",
+    "display_name": "Rob Lee",
+    "category": "analyst",
+    "reliability_tier": 2,
+    "region_focus": ["Russia", "Ukraine", "Europe"],
+    "topics": ["conflict", "politics"],
+    "notes": "Senior Fellow FPRI — real-time Russian/Ukrainian military analysis",
+    "enabled": true
+  },
+  {
+    "username": "HassanIHassan",
+    "display_name": "Hassan Hassan",
+    "category": "analyst",
+    "reliability_tier": 2,
+    "region_focus": ["Middle East", "Syria", "Iraq"],
+    "topics": ["conflict", "diplomacy", "politics"],
+    "notes": "ISIS/Syria expert, New Lines Institute",
+    "enabled": true
+  },
+  {
+    "username": "borzou",
+    "display_name": "Borzou Daragahi",
+    "category": "reporter",
+    "reliability_tier": 2,
+    "region_focus": ["Middle East", "North Africa"],
+    "topics": ["conflict", "politics", "society"],
+    "notes": "Independent journalist — Middle East and North Africa field reporting",
+    "enabled": true
+  },
+  {
+    "username": "MFA_China",
+    "display_name": "Chinese MFA Spokesperson",
+    "category": "official",
+    "reliability_tier": 3,
+    "region_focus": ["China", "Global"],
+    "topics": ["diplomacy", "politics"],
+    "notes": "Official CCP foreign ministry account — narrative track",
+    "enabled": true
+  },
+  {
+    "username": "mfa_russia",
+    "display_name": "Russian MFA",
+    "category": "official",
+    "reliability_tier": 3,
+    "region_focus": ["Russia", "Global"],
+    "topics": ["diplomacy", "conflict", "politics"],
+    "notes": "Official Russian foreign ministry — narrative track",
+    "enabled": true
+  },
+  {
+    "username": "ArvindKrishna",
+    "display_name": "Arvind Krishna",
+    "category": "executive",
+    "reliability_tier": 2,
+    "region_focus": ["Global"],
+    "topics": ["technology", "economy"],
+    "notes": "Chairman and CEO, IBM",
+    "enabled": true
+  },
+  {
+    "username": "AntonioNeri_HPE",
+    "display_name": "Antonio Neri",
+    "category": "executive",
+    "reliability_tier": 2,
+    "region_focus": ["Global"],
+    "topics": ["technology", "economy"],
+    "notes": "President & CEO, Hewlett Packard Enterprise",
+    "enabled": true
+  },
+  {
+    "username": "jasonfried",
+    "display_name": "Jason Fried",
+    "category": "entrepreneur",
+    "reliability_tier": 2,
+    "region_focus": ["Global"],
+    "topics": ["technology"],
+    "notes": "Founder, 37signals (Basecamp, HEY, ONCE)",
+    "enabled": true
+  },
+  {
+    "username": "sundarpichai",
+    "display_name": "Sundar Pichai",
+    "category": "executive",
+    "reliability_tier": 2,
+    "region_focus": ["Global"],
+    "topics": ["technology", "economy"],
+    "notes": "CEO, Google and Alphabet",
+    "enabled": true
+  },
+  {
+    "username": "tim_cook",
+    "display_name": "Tim Cook",
+    "category": "executive",
+    "reliability_tier": 2,
+    "region_focus": ["Global"],
+    "topics": ["technology", "economy"],
+    "notes": "CEO, Apple",
+    "enabled": true
+  },
+  {
+    "username": "satyanadella",
+    "display_name": "Satya Nadella",
+    "category": "executive",
+    "reliability_tier": 2,
+    "region_focus": ["Global"],
+    "topics": ["technology", "economy"],
+    "notes": "Chairman and CEO, Microsoft",
+    "enabled": true
+  },
+  {
+    "username": "GuyKawasaki",
+    "display_name": "Guy Kawasaki",
+    "category": "analyst",
+    "reliability_tier": 2,
+    "region_focus": ["Global"],
+    "topics": ["technology"],
+    "notes": "Chief evangelist, Canva; tech thought leader",
+    "enabled": true
+  },
+  {
+    "username": "BillGates",
+    "display_name": "Bill Gates",
+    "category": "executive",
+    "reliability_tier": 2,
+    "region_focus": ["Global"],
+    "topics": ["technology", "economy", "society"],
+    "notes": "Co-founder Microsoft; Bill & Melinda Gates Foundation",
+    "enabled": true
+  },
+  {
+    "username": "pmarca",
+    "display_name": "Marc Andreessen",
+    "category": "investor",
+    "reliability_tier": 2,
+    "region_focus": ["Global"],
+    "topics": ["technology", "economy"],
+    "notes": "Co-founder, Andreessen Horowitz (a16z)",
+    "enabled": true
+  },
+  {
+    "username": "ID_AA_Carmack",
+    "display_name": "John Carmack",
+    "category": "analyst",
+    "reliability_tier": 2,
+    "region_focus": ["Global"],
+    "topics": ["technology"],
+    "notes": "AGI at Keen Technologies; former CTO Oculus VR; Founder Id Software",
+    "enabled": true
+  },
+  {
+    "username": "JeffBezos",
+    "display_name": "Jeff Bezos",
+    "category": "executive",
+    "reliability_tier": 2,
+    "region_focus": ["Global"],
+    "topics": ["technology", "economy"],
+    "notes": "Founder, Amazon; Blue Origin",
+    "enabled": true
+  },
+  {
+    "username": "Steven_Ballmer",
+    "display_name": "Steve Ballmer",
+    "category": "executive",
+    "reliability_tier": 2,
+    "region_focus": ["Global"],
+    "topics": ["technology", "economy"],
+    "notes": "Former CEO Microsoft; owner LA Clippers; USAFacts",
+    "enabled": true
+  },
+  {
+    "username": "paulg",
+    "display_name": "Paul Graham",
+    "category": "investor",
+    "reliability_tier": 2,
+    "region_focus": ["Global"],
+    "topics": ["technology"],
+    "notes": "Co-founder, Y Combinator; essayist",
+    "enabled": true
+  },
+  {
+    "username": "MichaelDell",
+    "display_name": "Michael Dell",
+    "category": "executive",
+    "reliability_tier": 2,
+    "region_focus": ["Global"],
+    "topics": ["technology", "economy"],
+    "notes": "Founder, Chairman and CEO, Dell Technologies",
+    "enabled": true
+  },
+  {
+    "username": "stevewoz",
+    "display_name": "Steve Wozniak",
+    "category": "analyst",
+    "reliability_tier": 2,
+    "region_focus": ["Global"],
+    "topics": ["technology"],
+    "notes": "Co-founder, Apple; engineer and inventor",
+    "enabled": true
+  },
+  {
+    "username": "timoreilly",
+    "display_name": "Tim O'Reilly",
+    "category": "analyst",
+    "reliability_tier": 2,
+    "region_focus": ["Global"],
+    "topics": ["technology", "economy"],
+    "notes": "Founder and CEO, O'Reilly Media; tech trend watcher",
+    "enabled": true
+  },
+  {
+    "username": "elonmusk",
+    "display_name": "Elon Musk",
+    "category": "executive",
+    "reliability_tier": 2,
+    "region_focus": ["Global"],
+    "topics": ["technology", "economy", "politics"],
+    "notes": "CEO Tesla, SpaceX; owner X; founder xAI",
+    "enabled": true
+  },
+  {
+    "username": "jiayuan_jy",
+    "display_name": "Jiayuan (JY) Zhang",
+    "category": "entrepreneur",
+    "reliability_tier": 2,
+    "region_focus": ["Global"],
+    "topics": ["technology"],
+    "notes": "Building MulticaAI; ex-devv_ai; ex-TikTok",
+    "enabled": true
+  },
+  {
+    "username": "FoxNews",
+    "display_name": "Fox News",
+    "category": "reporter",
+    "reliability_tier": 2,
+    "region_focus": ["United States", "Global"],
+    "topics": ["politics", "society"],
+    "notes": "US conservative news network — breaking news feed",
+    "enabled": false
+  },
+  {
+    "username": "Reuters",
+    "display_name": "Reuters",
+    "category": "reporter",
+    "reliability_tier": 2,
+    "region_focus": ["Global"],
+    "topics": ["politics", "economy", "conflict", "diplomacy"],
+    "notes": "Wire agency breaking news on X; RSS source also configured separately",
+    "enabled": false
+  },
+  {
+    "username": "cnnbrk",
+    "display_name": "CNN Breaking News",
+    "category": "reporter",
+    "reliability_tier": 2,
+    "region_focus": ["United States", "Global"],
+    "topics": ["politics", "society", "conflict"],
+    "notes": "CNN Digital breaking news account",
+    "enabled": false
+  },
+  {
+    "username": "CollinRugg",
+    "display_name": "Collin Rugg",
+    "category": "analyst",
+    "reliability_tier": 2,
+    "region_focus": ["United States"],
+    "topics": ["politics"],
+    "notes": "Co-owner Trending Politics; conservative commentary",
+    "enabled": true
+  },
+  {
+    "username": "TheFP",
+    "display_name": "The Free Press",
+    "category": "reporter",
+    "reliability_tier": 2,
+    "region_focus": ["United States", "Global"],
+    "topics": ["politics", "society"],
+    "notes": "Independent media — honest and fearless reporting",
+    "enabled": true
+  },
+  {
+    "username": "politico",
+    "display_name": "POLITICO",
+    "category": "reporter",
+    "reliability_tier": 2,
+    "region_focus": ["United States", "Europe"],
+    "topics": ["politics", "diplomacy"],
+    "notes": "US and EU political news and policy",
+    "enabled": true
+  },
+  {
+    "username": "WhiteHouse",
+    "display_name": "The White House",
+    "category": "official",
+    "reliability_tier": 3,
+    "region_focus": ["United States", "Global"],
+    "topics": ["politics", "diplomacy", "economy"],
+    "notes": "Official US White House account — narrative track for administration messaging",
+    "enabled": true
+  },
+  {
+    "username": "Top_Disaster",
+    "display_name": "Disaster News",
+    "category": "reporter",
+    "reliability_tier": 2,
+    "region_focus": ["Global"],
+    "topics": ["conflict", "society"],
+    "notes": "Rapid disaster and breaking news aggregator",
+    "enabled": true
+  },
+  {
+    "username": "ABC",
+    "display_name": "ABC News",
+    "category": "reporter",
+    "reliability_tier": 2,
+    "region_focus": ["United States", "Global"],
+    "topics": ["politics", "society"],
+    "notes": "Official ABC News breaking news account",
+    "enabled": false
+  },
+  {
+    "username": "RapidResponse47",
+    "display_name": "White House Rapid Response",
+    "category": "official",
+    "reliability_tier": 3,
+    "region_focus": ["United States", "Global"],
+    "topics": ["politics"],
+    "notes": "Official White House Rapid Response — administration spin/messaging track",
+    "enabled": true
+  },
+  {
+    "username": "benshapiro",
+    "display_name": "Ben Shapiro",
+    "category": "analyst",
+    "reliability_tier": 2,
+    "region_focus": ["United States"],
+    "topics": ["politics", "society"],
+    "notes": "Daily Wire co-founder; conservative political commentator",
+    "enabled": true
+  },
+  {
+    "username": "Breaking911",
+    "display_name": "Breaking911",
+    "category": "reporter",
+    "reliability_tier": 2,
+    "region_focus": ["United States", "Global"],
+    "topics": ["conflict", "society", "politics"],
+    "notes": "Alternative breaking news aggregator; fast but unverified — verify before relying",
+    "enabled": false
+  },
+  {
+    "username": "CBSNews",
+    "display_name": "CBS News",
+    "category": "reporter",
+    "reliability_tier": 2,
+    "region_focus": ["United States", "Global"],
+    "topics": ["politics", "society"],
+    "notes": "CBS News official breaking news feed",
+    "enabled": false
+  },
+  {
+    "username": "haydenzadams",
+    "display_name": "Hayden Adams",
+    "category": "entrepreneur",
+    "reliability_tier": 2,
+    "region_focus": ["Global"],
+    "topics": ["technology", "economy"],
+    "notes": "Invented and founded Uniswap protocol",
+    "enabled": true
+  },
+  {
+    "username": "mdudas",
+    "display_name": "Mike Dudas",
+    "category": "investor",
+    "reliability_tier": 2,
+    "region_focus": ["Global"],
+    "topics": ["technology", "economy"],
+    "notes": "Investor at 6th Man Ventures; crypto/Web3",
+    "enabled": true
+  },
+  {
+    "username": "rodarmor",
+    "display_name": "Casey Rodarmor",
+    "category": "entrepreneur",
+    "reliability_tier": 2,
+    "region_focus": ["Global"],
+    "topics": ["technology"],
+    "notes": "Creator of Bitcoin Ordinals protocol",
+    "enabled": true
+  },
+  {
+    "username": "BillyM2k",
+    "display_name": "Shibetoshi Nakamoto",
+    "category": "entrepreneur",
+    "reliability_tier": 2,
+    "region_focus": ["Global"],
+    "topics": ["technology", "economy"],
+    "notes": "Creator of Dogecoin (Billy Markus)",
+    "enabled": true
+  },
+  {
+    "username": "toly",
+    "display_name": "Anatoly Yakovenko",
+    "category": "entrepreneur",
+    "reliability_tier": 2,
+    "region_focus": ["Global"],
+    "topics": ["technology", "economy"],
+    "notes": "Co-founder, Solana Labs",
+    "enabled": true
+  },
+  {
+    "username": "mert",
+    "display_name": "Mert Mumtaz",
+    "category": "entrepreneur",
+    "reliability_tier": 2,
+    "region_focus": ["Global"],
+    "topics": ["technology", "economy"],
+    "notes": "CEO, Helius; Solana infrastructure",
+    "enabled": true
+  },
+  {
+    "username": "rajgokal",
+    "display_name": "Raj Gokal",
+    "category": "entrepreneur",
+    "reliability_tier": 2,
+    "region_focus": ["Global"],
+    "topics": ["technology", "economy"],
+    "notes": "Co-founder, Solana",
+    "enabled": true
+  },
+  {
+    "username": "cz_binance",
+    "display_name": "CZ (Changpeng Zhao)",
+    "category": "executive",
+    "reliability_tier": 2,
+    "region_focus": ["Global"],
+    "topics": ["technology", "economy"],
+    "notes": "Founder, Binance; BNB Chain",
+    "enabled": true
+  },
+  {
+    "username": "VitalikButerin",
+    "display_name": "Vitalik Buterin",
+    "category": "entrepreneur",
+    "reliability_tier": 2,
+    "region_focus": ["Global"],
+    "topics": ["technology", "economy"],
+    "notes": "Co-founder, Ethereum",
+    "enabled": true
+  },
+  {
+    "username": "rleshner",
+    "display_name": "Robert Leshner",
+    "category": "entrepreneur",
+    "reliability_tier": 2,
+    "region_focus": ["Global"],
+    "topics": ["technology", "economy"],
+    "notes": "CEO Superstate; founded Compound protocol",
+    "enabled": true
+  },
+  {
+    "username": "brian_armstrong",
+    "display_name": "Brian Armstrong",
+    "category": "executive",
+    "reliability_tier": 2,
+    "region_focus": ["Global"],
+    "topics": ["technology", "economy"],
+    "notes": "Co-founder & CEO, Coinbase",
+    "enabled": true
+  },
+  {
+    "username": "mtbarra",
+    "display_name": "Mary Barra",
+    "category": "executive",
+    "reliability_tier": 2,
+    "region_focus": ["Global"],
+    "topics": ["technology", "economy"],
+    "notes": "Chair and CEO, General Motors",
+    "enabled": true
+  },
+  {
+    "username": "jack",
+    "display_name": "Jack Dorsey",
+    "category": "executive",
+    "reliability_tier": 2,
+    "region_focus": ["Global"],
+    "topics": ["technology", "economy"],
+    "notes": "Co-founder Twitter/X; founder Block (Square)",
+    "enabled": true
+  },
+  {
+    "username": "jimfarley98",
+    "display_name": "Jim Farley",
+    "category": "executive",
+    "reliability_tier": 2,
+    "region_focus": ["Global"],
+    "topics": ["technology", "economy"],
+    "notes": "CEO, Ford Motor Company",
+    "enabled": true
+  },
+  {
+    "username": "ChuckRobbins",
+    "display_name": "Chuck Robbins",
+    "category": "executive",
+    "reliability_tier": 2,
+    "region_focus": ["Global"],
+    "topics": ["technology", "economy"],
+    "notes": "Chair and CEO, Cisco",
+    "enabled": true
+  },
+  {
+    "username": "t_xu",
+    "display_name": "Tony Xu",
+    "category": "executive",
+    "reliability_tier": 2,
+    "region_focus": ["Global"],
+    "topics": ["technology", "economy"],
+    "notes": "CEO and co-founder, DoorDash",
+    "enabled": true
+  },
+  {
+    "username": "Benioff",
+    "display_name": "Marc Benioff",
+    "category": "executive",
+    "reliability_tier": 2,
+    "region_focus": ["Global"],
+    "topics": ["technology", "economy"],
+    "notes": "Chair and CEO, Salesforce",
+    "enabled": true
+  },
+  {
+    "username": "PGelsinger",
+    "display_name": "Pat Gelsinger",
+    "category": "executive",
+    "reliability_tier": 2,
+    "region_focus": ["Global"],
+    "topics": ["technology", "economy"],
+    "notes": "Former CEO, Intel; engineering pioneer",
+    "enabled": true
+  },
+  {
+    "username": "dkhos",
+    "display_name": "Dara Khosrowshahi",
+    "category": "executive",
+    "reliability_tier": 2,
+    "region_focus": ["Global"],
+    "topics": ["technology", "economy"],
+    "notes": "CEO, Uber",
+    "enabled": true
+  },
+  {
+    "username": "ajassy",
+    "display_name": "Andy Jassy",
+    "category": "executive",
+    "reliability_tier": 2,
+    "region_focus": ["Global"],
+    "topics": ["technology", "economy"],
+    "notes": "CEO, Amazon",
+    "enabled": true
+  },
+  {
+    "username": "AlbertBourla",
+    "display_name": "Albert Bourla",
+    "category": "executive",
+    "reliability_tier": 2,
+    "region_focus": ["Global"],
+    "topics": ["technology", "economy", "society"],
+    "notes": "Chairman and CEO, Pfizer",
+    "enabled": true
+  }
+]

@@ -1,0 +1,68 @@
+{
+  "id": "MNG",
+  "iso2": "MN",
+  "name": "Mongolia",
+  "region": "Asia",
+  "subregion": "Eastern Asia",
+  "capital": "Ulaanbaatar",
+  "lastUpdated": "2026-05-09",
+  "summary": "Mongolia is a vast, resource-rich nation strategically positioned between China and Russia. It has successfully maintained a vibrant multi-party democracy since 1990 while navigating extreme economic dependence on its two giant neighbors. The economy is currently experiencing a commodity-driven boom, fueled by coal and copper exports to China. Mongolia's 'Third Neighbor' policy is the cornerstone of its foreign strategy, aimed at building deep diplomatic and economic ties with the US, EU, Japan, and South Korea to balance the influence of Beijing and Moscow.",
+  "indicators": {
+    "politicalStability":       { "score": 7, "trend": "stable", "confidence": "high", "note": "Resilient democracy with regular peaceful transitions of power; some concerns over corruption and judicial independence." },
+    "economicDirection":        { "score": 8, "trend": "rising", "confidence": "high", "note": "Strong growth driven by mining exports and stabilized inflation; creation of a new Sovereign Wealth Fund to manage mineral revenues." },
+    "investmentAttractiveness": { "score": 6, "trend": "rising", "confidence": "medium", "note": "Immense mineral wealth and a pro-market stance attract FDI, though regulatory consistency and high logistics costs remain challenges." },
+    "geopoliticalRisk":         { "score": 6, "trend": "stable", "confidence": "high", "note": "Primary risk is extreme vulnerability to Chinese economic policy and Russian energy supply; also affected by the fallout of the Ukraine war." },
+    "educationQuality":         { "score": 5, "trend": "stable", "confidence": "medium", "note": "High literacy rates and growing number of international graduates, but quality mismatch with technical needs of the mining sector." },
+    "healthcareQuality":        { "score": 5, "trend": "stable", "confidence": "medium", "note": "Improving services in Ulaanbaatar, but rural access remains a challenge; significant public health concerns regarding air pollution in the capital." },
+    "technologyInvestment":     { "score": 6, "trend": "rising", "confidence": "high", "note": "Strong growth in digital government services (E-Mongolia) and a burgeoning fintech and crypto-mining scene." }
+  },
+  "demographics": {
+    "population": 3450000,
+    "medianAge": 29.8,
+    "urbanizationRate": 68,
+    "majorEthnicGroups": ["Khalkha Mongol", "Kazakh", "Durbet Mongol"],
+    "religions": [
+      { "name": "Buddhist", "percent": 53.0 },
+      { "name": "Muslim", "percent": 3.0 },
+      { "name": "Shamanist", "percent": 2.9 },
+      { "name": "Christian", "percent": 2.2 },
+      { "name": "None", "percent": 38.6 }
+    ]
+  },
+  "alliances": ["SCO (Observer)", "OSCE (Partner)", "Belt and Road Initiative (BRI)", "Third Neighbor Policy"],
+  "relationships": [
+    { "countryId": "CHN", "countryName": "China", "type": "strategic_partner", "sentiment": "positive", "summary": "Destination for 90% of exports; China is the indispensable economic partner, providing critical port access and infrastructure." },
+    { "countryId": "RUS", "countryName": "Russia", "type": "strategic_partner", "sentiment": "positive", "summary": "Provides 90% of Mongolia's energy; relationship is historically deep but increasingly complex due to Western sanctions on Moscow." },
+    { "countryId": "USA", "countryName": "Strategic Partner", "sentiment": "positive", "summary": "A key 'Third Neighbor' partner; USA supports Mongolia's democratic sovereignty and provides development aid via the MCC." },
+    { "countryId": "JPN", "countryName": "Strategic Partner", "sentiment": "positive", "summary": "Japan is a major investor and provider of technical assistance, particularly in urban infrastructure and the New Ulaanbaatar Airport." }
+  ],
+  "perspectives": [
+    { "source": "Mongolian Diplomat", "bias": "Pragmatic", "view": "Our survival depends on maintaining a delicate balance: we must be a good neighbor to China and Russia while being a reliable partner to the West." },
+    { "source": "Mining Executive", "bias": "Optimistic", "view": "Oyu Tolgoi and the new railway links to China are transforming Mongolia into a global mining powerhouse." },
+    { "source": "Urban Professional", "bias": "Reformist", "view": "We have the resources to be like Norway; we must use the new Sovereign Wealth Fund to ensure that mineral wealth benefits all citizens and not just the elite." },
+    { "source": "Nomadic Herder", "bias": "Traditional", "view": "The climate is changing and the 'dzud' (harsh winters) are getting worse; we need to protect our pastures and our way of life from over-mining." }
+  ],
+  "historicalContext": {
+    "summary": "Once the center of the world's largest contiguous empire under Genghis Khan, Mongolia became a Soviet satellite state for most of the 20th century. In 1990, it underwent a peaceful democratic revolution and has since maintained one of the most stable democratic systems in the post-communist world.",
+    "keyEvents": [
+      { "year": 1206, "event": "Genghis Khan unifies the Mongol tribes, founding the Mongol Empire." },
+      { "year": 1911, "event": "Mongolia declares independence from the Qing Dynasty." },
+      { "year": 1924, "event": "Establishment of the Mongolian People's Republic as a Soviet satellite." },
+      { "year": 1990, "event": "Peaceful democratic revolution ends one-party rule; transition to a market economy." },
+      { "year": 1992, "event": "Adoption of a new democratic constitution." },
+      { "year": 2009, "event": "Signing of the Oyu Tolgoi investment agreement, marking the start of the modern mining boom." },
+      { "year": 2021, "event": "Election of Ukhnaagiin Khürelsükh as President; ruling MPP consolidates power." },
+      { "year": 2024, "event": "Enactment of the Sovereign Wealth Fund Law to manage mineral revenues for future generations." }
+    ]
+  },
+  "investmentNotes": {
+    "strengths": ["World-class deposits of copper, coal, gold, and rare earth elements", "Strategic location as a transit corridor between China and Europe", "Robust and transparent democratic institutions compared to regional peers", "Young and increasingly educated workforce"],
+    "risks": ["Extreme economic dependence on Chinese commodity demand", "High vulnerability to commodity price volatility", "Landlocked geography leading to high transit costs and dependence on neighbors' ports", "Regulatory and tax uncertainty for foreign investors"],
+    "sectors": ["Extractive Industries (Copper/Coal/Rare Earths)", "Renewable Energy (Wind/Solar in the Gobi)", "Logistics & Rail Infrastructure", "Agriculture & Cashmere Processing"]
+  },
+  "sources": [
+    { "name": "Bank of Mongolia", "url": "https://www.mongolbank.mn/", "type": "economic" },
+    { "name": "National Development Agency of Mongolia", "url": "https://nda.gov.mn/", "type": "investment" },
+    { "name": "World Bank - Mongolia Overview", "url": "https://www.worldbank.org/en/country/mongolia", "type": "economic" }
+  ]
+}

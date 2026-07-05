@@ -1,0 +1,64 @@
+{
+  "id": "SLE",
+  "iso2": "SL",
+  "name": "Sierra Leone",
+  "region": "Africa",
+  "subregion": "Western Africa",
+  "capital": "Freetown",
+  "lastUpdated": "2025-05-22",
+  "summary": "Sierra Leone is navigating a period of fragile political reconciliation and ambitious economic reform under President Julius Maada Bio. Following the contentious 2023 elections, the government has focused on the 'Agreement for National Unity' to reform the electoral system and stabilize the political environment. The centerpiece of the administration's 2024–2030 plan is the 'Feed Salone' initiative, aimed at achieving food self-sufficiency through massive agricultural investment. While the economy is supported by mineral exports (iron ore, diamonds), it continues to grapple with high inflation and a significant risk of debt distress, requiring cautious fiscal management.",
+  "indicators": {
+    "politicalStability":       { "score": 5, "trend": "rising", "confidence": "high", "note": "Reconciliation efforts underway after 2023 election; recent coup trial handled through legal and diplomatic channels." },
+    "economicDirection":        { "score": 4, "trend": "stable", "confidence": "medium", "note": "Growth stable around 4%; persistent high inflation (over 30%) impacting consumer power." },
+    "investmentAttractiveness": { "score": 4, "trend": "stable", "confidence": "medium", "note": "Mining sector remains key; new opportunities in agro-industry under 'Feed Salone'." },
+    "geopoliticalRisk":         { "score": 4, "trend": "stable", "confidence": "medium", "note": "Regional instability in the Sahel is a concern, but domestic security has stabilized." },
+    "educationQuality":         { "score": 4, "trend": "rising", "confidence": "medium", "note": "Major commitment to 'Free Quality School Education' (FQSE) program." },
+    "healthcareQuality":        { "score": 3, "trend": "stable", "confidence": "medium", "note": "Focus on reducing maternal and child mortality; infrastructure improvements in provincial hospitals." },
+    "technologyInvestment":     { "score": 4, "trend": "rising", "confidence": "medium", "note": "Expansion of mobile money and efforts to build digital government infrastructure." }
+  },
+  "demographics": {
+    "population": 8900000,
+    "medianAge": 19.4,
+    "urbanizationRate": 43.8,
+    "majorEthnicGroups": ["Temne", "Mende", "Limba", "Fula", "Kono"],
+    "religions": [
+      { "name": "Muslim", "percent": 77.0 },
+      { "name": "Christian", "percent": 21.9 },
+      { "name": "Traditional/Other", "percent": 1.1 }
+    ]
+  },
+  "alliances": ["ECOWAS", "African Union", "Commonwealth", "Mano River Union"],
+  "relationships": [
+    { "countryId": "GBR", "countryName": "United Kingdom", "type": "historical_partner", "sentiment": "positive", "summary": "Strong historical and educational ties; major donor and partner in institutional reform." },
+    { "countryId": "USA", "countryName": "United States", "type": "strategic_partner", "sentiment": "positive", "summary": "Key partner in security, health (post-Ebola), and democratic governance; major aid provider." },
+    { "countryId": "CHN", "countryName": "China", "type": "economic_partner", "sentiment": "positive", "summary": "Significant investor in infrastructure, fishing, and mining; provides loans for major projects." },
+    { "countryId": "NGA", "countryName": "Nigeria", "type": "regional_partner", "sentiment": "positive", "summary": "Strong security cooperation; key supporter during the civil war and current political transitions." }
+  ],
+  "perspectives": [
+    { "source": "Smallholder Farmer in Bo", "bias": "Hopeful", "view": "The 'Feed Salone' program is what we need; if we can get better seeds and roads, we won't need to import our food." },
+    { "source": "Urban Professional in Freetown", "bias": "Frustrated", "view": "The cost of living is becoming unbearable; even if the economy grows, my salary buys less every month because of inflation." },
+    { "source": "Opposition Supporter", "bias": "Skeptical", "view": "The electoral reforms are a good step, but we need to see real change in how the government treats dissent before we trust the system." },
+    { "source": "Diamond Mine Manager", "bias": "Pragmatic", "view": "Sierra Leone remains a good place for mining, but we need more consistency in the tax and regulatory framework to attract long-term capital." }
+  ],
+  "historicalContext": {
+    "summary": "Sierra Leone gained independence from Britain in 1961. It suffered a devastating civil war (1991-2002) that destroyed its infrastructure and economy. Since the end of the war, the country has made significant strides in democratic consolidation, though it was severely set back by the 2014-2016 Ebola epidemic and global commodity price shocks.",
+    "keyEvents": [
+      { "year": 1961, "event": "Independence from the United Kingdom." },
+      { "year": 1991, "event": "Start of the 11-year civil war." },
+      { "year": 2002, "event": "Civil war officially declared over; UN peacekeeping mission begins." },
+      { "year": 2014, "event": "Ebola outbreak kills thousands and halts economic growth." },
+      { "year": 2023, "event": "President Julius Maada Bio re-elected in contested elections." },
+      { "year": 2024, "event": "Launch of the 'Agreement for National Unity' and the 'Feed Salone' initiative." }
+    ]
+  },
+  "investmentNotes": {
+    "strengths": ["High-quality iron ore, diamonds, and rutile reserves", "Significant unexploited agricultural land with high rainfall", "Growing youthful and increasingly educated population", "Strong international support for democratic and economic reforms"],
+    "risks": ["Persistent high inflation and currency volatility (Leone)", "High risk of debt distress and limited fiscal space", "Inadequate power supply and transport infrastructure", "Political polarization following recent elections"],
+    "sectors": ["Iron Ore & Diamond Mining", "Agro-processing (Rice, Palm Oil, Cocoa)", "Fisheries & Blue Economy", "Renewable Energy (Mini-grids and Hydro)"]
+  },
+  "sources": [
+    { "name": "Statistics Sierra Leone (Stats SL)", "url": "https://www.statistics.sl/", "type": "demographic" },
+    { "name": "Bank of Sierra Leone", "url": "https://www.bsl.gov.sl/", "type": "economic" },
+    { "name": "Sierra Leone Investment and Export Promotion Agency (SLIEPA)", "url": "https://sliepa.org/", "type": "investment" }
+  ]
+}

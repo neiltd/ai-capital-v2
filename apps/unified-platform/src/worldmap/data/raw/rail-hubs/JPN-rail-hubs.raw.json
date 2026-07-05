@@ -1,0 +1,218 @@
+[
+  {
+    "id": "RAIL-JPN-TOKYO-OI",
+    "name": "Tokyo Freight Terminal (Oi)",
+    "countryId": "JPN",
+    "city": "Tokyo",
+    "coordinates": [139.754, 35.597],
+    "type": "freight",
+    "dailyPassengers": null,
+    "annualFreightTonnes": 21000000,
+    "connectedCountries": [],
+    "gaugeType": "narrow",
+    "lineCount": 22,
+    "strategicImportance": "high",
+    "isPartOfBRI": false,
+    "geopoliticalNotes": "Japan's largest freight terminal and the primary base for the Tokaido Line. Critical for the 'Pacific Belt' economy, handling massive volumes of consumer goods.",
+    "notes": "Terminus for 'Super Rail Cargo' high-speed freight trains. Gauge is 1067mm (narrow).",
+    "attribution": {
+      "sources": [
+        { "name": "JR Freight Annual Report", "url": "https://www.jrfreight.co.jp/en/", "accessedAt": "2025-03-04" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 1,
+        "lastVerified": "2025-03-04"
+      }
+    }
+  },
+  {
+    "id": "RAIL-JPN-SUITA-TERMINAL",
+    "name": "Suita Freight Terminal",
+    "countryId": "JPN",
+    "city": "Suita",
+    "coordinates": [135.545, 34.770],
+    "type": "freight",
+    "dailyPassengers": null,
+    "annualFreightTonnes": 15000000,
+    "connectedCountries": [],
+    "gaugeType": "narrow",
+    "lineCount": 18,
+    "strategicImportance": "high",
+    "isPartOfBRI": false,
+    "geopoliticalNotes": "Primary consolidation point for the Kansai region. Vital node connecting Tokyo, Shikoku, and Kyushu freight corridors.",
+    "notes": "Modern terminal replacing the former Umeda Freight Station.",
+    "attribution": {
+      "sources": [
+        { "name": "JR Freight Operational Data", "url": "https://www.jrfreight.co.jp/", "accessedAt": "2025-03-04" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 1,
+        "lastVerified": "2025-03-04"
+      }
+    }
+  },
+  {
+    "id": "RAIL-JPN-TOKYO-STATION",
+    "name": "Tokyo Station",
+    "countryId": "JPN",
+    "city": "Tokyo",
+    "coordinates": [139.767, 35.681],
+    "type": "high_speed",
+    "dailyPassengers": 467000,
+    "annualFreightTonnes": null,
+    "connectedCountries": [],
+    "gaugeType": "mixed",
+    "lineCount": 28,
+    "strategicImportance": "high",
+    "isPartOfBRI": false,
+    "geopoliticalNotes": "The ultimate hub of Japan's rail network, connecting multiple Shinkansen lines. Critical for national economic integration and passenger mobility.",
+    "notes": "Mixed gauge to support both Shinkansen (standard) and conventional (narrow) lines.",
+    "attribution": {
+      "sources": [
+        { "name": "JR East Station Data", "url": "https://www.jreast.co.jp/passenger/", "accessedAt": "2025-03-04" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 1,
+        "lastVerified": "2025-03-04"
+      }
+    }
+  },
+  {
+    "id": "RAIL-JPN-SHIN-OSAKA",
+    "name": "Shin-Osaka Station",
+    "countryId": "JPN",
+    "city": "Osaka",
+    "coordinates": [135.500, 34.733],
+    "type": "high_speed",
+    "dailyPassengers": 230000,
+    "annualFreightTonnes": null,
+    "connectedCountries": [],
+    "gaugeType": "mixed",
+    "lineCount": 18,
+    "strategicImportance": "high",
+    "isPartOfBRI": false,
+    "geopoliticalNotes": "Western terminus of the Tokaido Shinkansen and start of the Sanyo Shinkansen. The central passenger hub for the Kansai region.",
+    "notes": null,
+    "attribution": {
+      "sources": [
+        { "name": "JR Central/West Station Statistics", "url": "https://railway.jr-central.co.jp/", "accessedAt": "2025-03-04" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 1,
+        "lastVerified": "2025-03-04"
+      }
+    }
+  },
+  {
+    "id": "RAIL-JPN-NAGOYA-TERMINAL",
+    "name": "Nagoya Freight Terminal",
+    "countryId": "JPN",
+    "city": "Nagoya",
+    "coordinates": [136.850, 35.130],
+    "type": "freight",
+    "dailyPassengers": null,
+    "annualFreightTonnes": 8000000,
+    "connectedCountries": [],
+    "gaugeType": "narrow",
+    "lineCount": 12,
+    "strategicImportance": "high",
+    "isPartOfBRI": false,
+    "geopoliticalNotes": "Central logistics hub for the Chubu industrial heartland. Specializes in automotive parts and industrial machinery for major manufacturers like Toyota.",
+    "notes": null,
+    "attribution": {
+      "sources": [
+        { "name": "Nagoya Port and Rail Logistics", "url": "https://www.port-of-nagoya.jp/en/", "accessedAt": "2025-03-04" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 1,
+        "lastVerified": "2025-03-04"
+      }
+    }
+  },
+  {
+    "id": "RAIL-JPN-KAWASAKI-TERMINAL",
+    "name": "Kawasaki Freight Terminal",
+    "countryId": "JPN",
+    "city": "Kawasaki",
+    "coordinates": [139.740, 35.520],
+    "type": "port_interface",
+    "dailyPassengers": null,
+    "annualFreightTonnes": 12000000,
+    "connectedCountries": [],
+    "gaugeType": "narrow",
+    "lineCount": 10,
+    "strategicImportance": "high",
+    "isPartOfBRI": false,
+    "geopoliticalNotes": "Key terminal for the Keihin Industrial Zone, heavily integrated with the Port of Yokohama. Handles significant volumes of chemicals and raw materials.",
+    "notes": "Handles approx. 700,000 TEUs annually.",
+    "attribution": {
+      "sources": [
+        { "name": "Kawasaki City Port Bureau", "url": "https://www.city.kawasaki.jp/en/", "accessedAt": "2025-03-04" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 1,
+        "lastVerified": "2025-03-04"
+      }
+    }
+  },
+  {
+    "id": "RAIL-JPN-SAPPORO-TERMINAL",
+    "name": "Sapporo Freight Terminal",
+    "countryId": "JPN",
+    "city": "Sapporo",
+    "coordinates": [141.410, 43.060],
+    "type": "freight",
+    "dailyPassengers": null,
+    "annualFreightTonnes": 4500000,
+    "connectedCountries": [],
+    "gaugeType": "narrow",
+    "lineCount": 8,
+    "strategicImportance": "high",
+    "isPartOfBRI": false,
+    "geopoliticalNotes": "Primary hub for Hokkaido's rail freight. Critical for transporting agricultural products to Honshu via the Seikan Tunnel.",
+    "notes": "Vital for national food security (potato and onion transport).",
+    "attribution": {
+      "sources": [
+        { "name": "JR Hokkaido Freight Data", "url": "https://www.jrhokkaido.co.jp/", "accessedAt": "2025-03-04" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 1,
+        "lastVerified": "2025-03-04"
+      }
+    }
+  },
+  {
+    "id": "RAIL-JPN-FUKUOKA-TERMINAL",
+    "name": "Fukuoka Freight Terminal",
+    "countryId": "JPN",
+    "city": "Fukuoka",
+    "coordinates": [130.430, 33.630],
+    "type": "freight",
+    "dailyPassengers": null,
+    "annualFreightTonnes": 6000000,
+    "connectedCountries": [],
+    "gaugeType": "narrow",
+    "lineCount": 10,
+    "strategicImportance": "high",
+    "isPartOfBRI": false,
+    "geopoliticalNotes": "Main gateway for freight entering and leaving Kyushu. Handles agricultural products from the south and consumer goods from Honshu.",
+    "notes": null,
+    "attribution": {
+      "sources": [
+        { "name": "JR Freight Kyushu Branch", "url": "https://www.jrfreight.co.jp/", "accessedAt": "2025-03-04" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 1,
+        "lastVerified": "2025-03-04"
+      }
+    }
+  }
+]

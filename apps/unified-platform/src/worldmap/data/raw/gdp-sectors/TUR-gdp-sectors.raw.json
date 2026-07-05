@@ -1,0 +1,26 @@
+[
+  {
+    "countryId": "TUR",
+    "year": 2023,
+    "gdpUsdBn": 1118.6,
+    "gdpPerCapita": 13110,
+    "sectors": [
+      { "sector": "Services", "percentOfGDP": 59.2, "notes": "Wholesale & retail trade (13.9%), Transport (9.5%), Tourism (~12%)" },
+      { "sector": "Manufacturing", "percentOfGDP": 19.5, "notes": "Automotive, textiles, and food processing" },
+      { "sector": "Agriculture", "percentOfGDP": 6.2, "notes": "1st in Europe for agricultural income" },
+      { "sector": "Construction", "percentOfGDP": 6.4, "notes": "Post-earthquake reconstruction drive" },
+      { "sector": "Mining & Utilities", "percentOfGDP": 8.7, "notes": "Includes energy and water supply" }
+    ],
+    "attribution": {
+      "sources": [
+        { "name": "Turkish Statistical Institute (TÜİK) 2023", "url": "https://www.tuik.gov.tr/", "accessedAt": "2024-05-14" },
+        { "name": "World Bank DataBank 2023", "url": "https://databank.worldbank.org/", "accessedAt": "2024-05-14" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 2,
+        "lastVerified": "2024-05-14"
+      }
+    }
+  }
+]

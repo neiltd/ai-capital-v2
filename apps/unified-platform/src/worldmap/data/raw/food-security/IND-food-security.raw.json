@@ -1,0 +1,40 @@
+[
+  {
+    "countryId": "IND",
+    "year": 2022,
+    "overallScore": 58.9,
+    "availability": 62.3,
+    "access": 59.3,
+    "utilization": 62.3,
+    "stability": 51.2,
+    "undernourishedPct": 16.6,
+    "foodImportDependencyPct": 4.8,
+    "cerealYieldKgHa": 3626,
+    "climateVulnerability": "high",
+    "conflictExposure": "low",
+    "attribution": {
+      "sources": [
+        {
+          "name": "GFSI 2022 — India",
+          "url": "https://impact.economist.com/sustainability/project/food-security-index/reports-and-resources",
+          "accessedAt": "2026-05-10"
+        },
+        {
+          "name": "FAO FAOSTAT",
+          "url": "https://www.fao.org/faostat/en/#data/FS",
+          "accessedAt": "2026-05-10"
+        },
+        {
+          "name": "World Bank Food Import Dependency",
+          "url": "https://data.worldbank.org/indicator/TM.VAL.FOOD.ZS.UN",
+          "accessedAt": "2026-05-10"
+        }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 3,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  }
+]

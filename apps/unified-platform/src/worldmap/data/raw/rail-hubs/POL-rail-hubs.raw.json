@@ -1,0 +1,220 @@
+[
+  {
+    "id": "RAIL-POL-MALASZEWICZE",
+    "name": "Małaszewicze Logistics Park",
+    "countryId": "POL",
+    "city": "Małaszewicze",
+    "coordinates": [23.5133, 52.0300],
+    "type": "border_crossing",
+    "dailyPassengers": null,
+    "annualFreightTonnes": 15000000,
+    "connectedCountries": ["BLR", "CHN", "KAZ", "RUS"],
+    "gaugeType": "mixed",
+    "lineCount": 25,
+    "strategicImportance": "high",
+    "isPartOfBRI": true,
+    "geopoliticalNotes": "The 'Gateway to Europe' for the New Silk Road. Handles over 80% of rail container traffic between China and the EU. Critical transshipment point between 1520mm and 1435mm gauges.",
+    "notes": "Handles a surge in traffic (up 77% in H1 2024) due to Red Sea maritime disruptions.",
+    "attribution": {
+      "sources": [
+        { "name": "UTK (Urząd Transportu Kolejowego)", "url": "https://www.utk.gov.pl", "accessedAt": "2026-05-10" },
+        { "name": "China Railway Express Statistics", "url": "https://www.index1520.com", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 2,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  },
+  {
+    "id": "RAIL-POL-GDANSK-PORT",
+    "name": "Port of Gdańsk Rail Terminal",
+    "countryId": "POL",
+    "city": "Gdańsk",
+    "coordinates": [18.7200, 54.3900],
+    "type": "port_interface",
+    "dailyPassengers": null,
+    "annualFreightTonnes": 27000000,
+    "connectedCountries": ["CZE", "SVK", "HUN"],
+    "gaugeType": "standard",
+    "lineCount": 18,
+    "strategicImportance": "high",
+    "isPartOfBRI": false,
+    "geopoliticalNotes": "The largest container terminal on the Baltic Sea. Primary node for the Baltic-Adriatic corridor, connecting Northern Europe to the Balkans and the Middle East.",
+    "notes": "Rail handles 35% of the port's hinterland cargo.",
+    "attribution": {
+      "sources": [
+        { "name": "Port of Gdańsk Authority", "url": "https://www.portgdansk.pl", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 1,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  },
+  {
+    "id": "RAIL-POL-LODZ-OLECHOW",
+    "name": "Łódź Olechów Intermodal Terminal",
+    "countryId": "POL",
+    "city": "Łódź",
+    "coordinates": [19.5533, 51.7250],
+    "type": "freight",
+    "dailyPassengers": null,
+    "annualFreightTonnes": 2500000,
+    "connectedCountries": ["CHN"],
+    "gaugeType": "standard",
+    "lineCount": 12,
+    "strategicImportance": "high",
+    "isPartOfBRI": true,
+    "geopoliticalNotes": "A central intermodal hub in Poland and a primary destination for BRI trains from Chengdu. Serves as a distribution center for Western Europe.",
+    "notes": "Capacity expanding to 530,000 TEU per year by 2027.",
+    "attribution": {
+      "sources": [
+        { "name": "Spedcont Terminal Łódź", "url": "https://www.spedcont.pl", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 1,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  },
+  {
+    "id": "RAIL-POL-PRZEMYSL-MAIN",
+    "name": "Przemyśl Główny",
+    "countryId": "POL",
+    "city": "Przemyśl",
+    "coordinates": [22.7761, 49.7833],
+    "type": "border_crossing",
+    "dailyPassengers": 15000,
+    "annualFreightTonnes": 5000000,
+    "connectedCountries": ["UKR"],
+    "gaugeType": "mixed",
+    "lineCount": 10,
+    "strategicImportance": "high",
+    "isPartOfBRI": false,
+    "geopoliticalNotes": "The most critical rail link between the EU and Ukraine. Handles massive volumes of grain exports, humanitarian aid, and refugee transit since 2022.",
+    "notes": "Features both standard and 1520mm broad gauge tracks reaching into the city center.",
+    "attribution": {
+      "sources": [
+        { "name": "PKP Polskie Linie Kolejowe", "url": "https://www.plk-sa.pl", "accessedAt": "2026-05-10" },
+        { "name": "Ukrainian Railways (UZ)", "url": "https://www.uz.gov.ua", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 2,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  },
+  {
+    "id": "RAIL-POL-SLAWKOW-LHS",
+    "name": "Euroterminal Sławków",
+    "countryId": "POL",
+    "city": "Sławków",
+    "coordinates": [19.3242, 50.2981],
+    "type": "freight",
+    "dailyPassengers": null,
+    "annualFreightTonnes": 3000000,
+    "connectedCountries": ["UKR", "KAZ", "CHN"],
+    "gaugeType": "mixed",
+    "lineCount": 15,
+    "strategicImportance": "high",
+    "isPartOfBRI": true,
+    "geopoliticalNotes": "Westernmost point of the LHS broad gauge line (1520mm), allowing direct rail freight from Asia and Ukraine deep into the EU without axle changes.",
+    "notes": "Strategically positioned for the future reconstruction of Ukraine.",
+    "attribution": {
+      "sources": [
+        { "name": "Euroterminal Sławków", "url": "http://www.euroterminal.slawkow.pl", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 1,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  },
+  {
+    "id": "RAIL-POL-WARSAW-CENTRAL",
+    "name": "Warszawa Centralna",
+    "countryId": "POL",
+    "city": "Warsaw",
+    "coordinates": [21.0033, 52.2289],
+    "type": "mixed",
+    "dailyPassengers": 45000,
+    "annualFreightTonnes": null,
+    "connectedCountries": ["DEU", "CZE", "LTU", "UKR"],
+    "gaugeType": "standard",
+    "lineCount": 8,
+    "strategicImportance": "high",
+    "isPartOfBRI": false,
+    "geopoliticalNotes": "The primary passenger and administrative hub of Poland. Central node for the E20 East-West and North-South rail corridors.",
+    "notes": "Undergoing extensive modernization of the cross-city line to increase throughput.",
+    "attribution": {
+      "sources": [
+        { "name": "PKP Intercity", "url": "https://www.intercity.pl", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 1,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  },
+  {
+    "id": "RAIL-POL-POZNAN-MAIN",
+    "name": "Poznań Główny",
+    "countryId": "POL",
+    "city": "Poznań",
+    "coordinates": [16.9133, 52.4019],
+    "type": "mixed",
+    "dailyPassengers": 60000,
+    "annualFreightTonnes": 3000000,
+    "connectedCountries": ["DEU"],
+    "gaugeType": "standard",
+    "lineCount": 14,
+    "strategicImportance": "high",
+    "isPartOfBRI": true,
+    "geopoliticalNotes": "Key node on the Berlin-Warsaw-Moscow corridor. A major transit point for BRI freight moving from Małaszewicze toward Germany and the Benelux countries.",
+    "notes": "One of Poland's busiest passenger stations by foot traffic.",
+    "attribution": {
+      "sources": [
+        { "name": "UTK Statistics", "url": "https://www.utk.gov.pl", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 1,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  },
+  {
+    "id": "RAIL-POL-GDYNIA-PORT",
+    "name": "Port of Gdynia Rail Hub",
+    "countryId": "POL",
+    "city": "Gdynia",
+    "coordinates": [18.5250, 54.5350],
+    "type": "port_interface",
+    "dailyPassengers": null,
+    "annualFreightTonnes": 12000000,
+    "connectedCountries": ["SWE", "FIN"],
+    "gaugeType": "standard",
+    "lineCount": 22,
+    "strategicImportance": "medium",
+    "isPartOfBRI": false,
+    "geopoliticalNotes": "Poland's second-largest port interface, specializing in grain and general cargo. Key military port for NATO logistics on the Baltic Sea.",
+    "notes": "Features a specialized military rail ramp for NATO equipment deployment.",
+    "attribution": {
+      "sources": [
+        { "name": "Port of Gdynia Authority", "url": "https://www.port.gdynia.pl", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 1,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  }
+]

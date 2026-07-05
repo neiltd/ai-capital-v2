@@ -1,0 +1,67 @@
+{
+  "id": "LBN",
+  "iso2": "LB",
+  "name": "Lebanon",
+  "region": "Asia",
+  "subregion": "Western Asia",
+  "capital": "Beirut",
+  "lastUpdated": "2025-05-15",
+  "summary": "Lebanon is a nation in a state of fragile recovery following a decade of systemic economic collapse and a devastating 2024 conflict with Israel. The election of President Joseph Aoun in early 2025 ended a protracted political vacuum, providing a glimmer of hope for institutional reform. However, the country remain deeply divided along sectarian lines, with Hezbollah's dual role as a political party and armed militia continuing to complicate governance and foreign relations. Lebanon's primary challenge is executing the deep structural reforms required by the IMF to unlock international aid, while simultaneously rebuilding infrastructure destroyed by war and addressing an unprecedented banking crisis.",
+  "indicators": {
+    "politicalStability":       { "score": 3, "trend": "rising", "confidence": "medium", "note": "End of presidential vacuum provides a path toward governance, though sectarian divisions remain acute." },
+    "economicDirection":        { "score": 2, "trend": "stable", "confidence": "high", "note": "Economy is bottoming out; recovery is contingent on IMF reforms and reconstruction aid." },
+    "investmentAttractiveness": { "score": 2, "trend": "stable", "confidence": "high", "note": "Investment is largely restricted to diaspora remittances and small-scale reconstruction; banking sector is insolvent." },
+    "geopoliticalRisk":         { "score": 8, "trend": "falling", "confidence": "medium", "note": "2024 ceasefire has reduced immediate kinetic risk, but structural tensions with Israel and regional powers persist." },
+    "educationQuality":         { "score": 5, "trend": "falling", "confidence": "high", "note": "Historically excellent system is suffering from a massive 'brain drain' of teachers and institutional funding cuts." },
+    "healthcareQuality":        { "score": 4, "trend": "falling", "confidence": "high", "note": "Severe shortages of medicines and staff; heavily reliant on NGO and international support." },
+    "technologyInvestment":     { "score": 3, "trend": "stable", "confidence": "medium", "note": "Thriving entrepreneurial spirit persists in tech and creative industries despite failing state infrastructure." }
+  },
+  "demographics": {
+    "population": 5300000,
+    "medianAge": 29.6,
+    "urbanizationRate": 89.2,
+    "majorEthnicGroups": ["Arab (Lebanese)", "Armenian", "Other Arab (including 1.5M Syrian refugees)"],
+    "religions": [
+      { "name": "Muslim (Shi'a, Sunni, Druze)", "percent": 67 },
+      { "name": "Christian (mostly Maronite)", "percent": 32 },
+      { "name": "Other", "percent": 1 }
+    ]
+  },
+  "alliances": ["Arab League", "OIC", "UN", "UfM"],
+  "relationships": [
+    { "countryId": "FRA", "countryName": "France", "type": "strategic_partner", "sentiment": "positive", "summary": "Maintains deep historical ties and has been the lead diplomatic mediator during recent crises." },
+    { "countryId": "USA", "countryName": "United States", "type": "partner", "sentiment": "neutral", "summary": "Provides critical support to the Lebanese Armed Forces (LAF) while sanctioning Hezbollah-linked entities." },
+    { "countryId": "SAU", "countryName": "Saudi Arabia", "type": "economic_partner", "sentiment": "neutral", "summary": "Historically a major benefactor; current engagement is cautious and contingent on political reform." },
+    { "countryId": "IRN", "countryName": "Iran", "type": "political_partner", "sentiment": "neutral", "summary": "Exerts significant influence through its ideological and financial support for Hezbollah." },
+    { "countryId": "ISR", "countryName": "Israel", "type": "adversary", "sentiment": "negative", "summary": "Technically at war; 2024 ceasefire remains fragile with frequent disputes over maritime and land borders." }
+  ],
+  "perspectives": [
+    { "source": "Lebanese Reformer", "bias": "Cautious", "view": "The new presidency is a start, but without a total overhaul of our sectarian banking system, we are just managing the decline." },
+    { "source": "Hezbollah Supporter", "bias": "Defiant", "view": "We are the resistance that protects Lebanon's sovereignty; our presence ensures that the nation's interests are not dictated by foreign powers." },
+    { "source": "Beirut Business Owner", "bias": "Resilient", "view": "Lebanese people always find a way to survive, but it is heartbreaking to see our children forced to emigrate for a basic future." },
+    { "source": "IMF Representative", "bias": "Pragmatic", "view": "The roadmap is clear: audit the central bank, restructure debt, and unify exchange rates. The clock is ticking for Lebanon's recovery." }
+  ],
+  "historicalContext": {
+    "summary": "Lebanon gained independence from France in 1943. Its complex 'confessional' political system was designed to balance religious groups but has often led to deadlock. A 15-year civil war (1975-1990) devastated the country. Since 2019, Lebanon has faced an unprecedented economic meltdown, the 2020 Beirut port explosion, and the 2024 conflict with Israel, which collectively decimated its middle class and infrastructure.",
+    "keyEvents": [
+      { "year": 1943, "event": "Independence from France." },
+      { "year": 1975, "event": "Outbreak of the 15-year Lebanese Civil War." },
+      { "year": 1989, "event": "Taif Agreement signed, providing the framework for ending the civil war." },
+      { "year": 2005, "event": "Assassination of Rafik Hariri; Cedar Revolution leads to Syrian troop withdrawal." },
+      { "year": 2019, "event": "Start of a massive economic crisis and nationwide anti-government protests." },
+      { "year": 2020, "event": "Catastrophic explosion at the Port of Beirut." },
+      { "year": 2024, "event": "Devastating conflict with Israel; ceasefire reached on November 27." },
+      { "year": 2025, "event": "Election of President Joseph Aoun, ending a two-year presidential vacuum." }
+    ]
+  },
+  "investmentNotes": {
+    "strengths": ["Highly resilient and creative population", "Significant global diaspora with capital and expertise", "Strategic location and high potential for reconstruction", "Established reputation in media, finance, and services"],
+    "risks": ["Systemic corruption and political deadlock", "Insolvent banking sector and high public debt", "Persistent regional security tensions", "Total collapse of state-provided electricity and water"],
+    "sectors": ["Infrastructure Reconstruction", "Renewable Energy (Solar)", "Agri-Tech & Specialized Food Exports", "Creative & Digital Services"]
+  },
+  "sources": [
+    { "name": "Banque du Liban", "url": "https://www.bdl.gov.lb", "type": "economic" },
+    { "name": "Lebanon Ministry of Finance", "url": "https://www.finance.gov.lb", "type": "economic" },
+    { "name": "World Bank - Lebanon", "url": "https://www.worldbank.org/en/country/lebanon", "type": "economic" }
+  ]
+}

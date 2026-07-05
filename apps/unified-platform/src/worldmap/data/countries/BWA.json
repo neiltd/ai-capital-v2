@@ -1,0 +1,65 @@
+{
+  "id": "BWA",
+  "iso2": "BW",
+  "name": "Botswana",
+  "region": "Africa",
+  "subregion": "Southern Africa",
+  "capital": "Gaborone",
+  "lastUpdated": "2025-05-15",
+  "summary": "Botswana is widely regarded as one of Africa's most stable and successful democracies, having maintained continuous multi-party rule since independence. Its economy has historically been underpinned by diamond mining, transforming the nation from one of the world's poorest to an upper-middle-income status. However, the government is currently pushing a major diversification agenda to reduce its heavy reliance on diamonds, which face competition from synthetic gems and market fluctuations. Botswana is also a leader in conservation, with tourism being a critical economic pillar. Under President Mokgweetsi Masisi, the country has focused on digital transformation and high-value agriculture, while navigating complex regional dynamics and the ongoing challenge of high income inequality.",
+  "indicators": {
+    "politicalStability":       { "score": 9, "trend": "stable", "confidence": "high", "note": "Benchmark for African democracy; strong rule of law and peaceful transitions of power." },
+    "economicDirection":        { "score": 6, "trend": "stable", "confidence": "high", "note": "Resilient economy; focus on value addition in diamonds and growth in non-mining sectors." },
+    "investmentAttractiveness": { "score": 7, "trend": "rising", "confidence": "high", "note": "Transparent business environment and investment-grade sovereign credit ratings." },
+    "geopoliticalRisk":         { "score": 2, "trend": "stable", "confidence": "high", "note": "Low risk; active role in regional SADC security and peacekeeping." },
+    "educationQuality":         { "score": 6, "trend": "stable", "confidence": "high", "note": "Significant public investment in education; focus on STEM and vocational skills for the future." },
+    "healthcareQuality":        { "score": 6, "trend": "stable", "confidence": "high", "note": "Highly effective public health system; notable success in HIV/AIDS management." },
+    "technologyInvestment":     { "score": 7, "trend": "rising", "confidence": "high", "note": "Strong push for 'Smart Botswana' initiative and becoming a regional technology hub." }
+  },
+  "demographics": {
+    "population": 2600000,
+    "medianAge": 25.7,
+    "urbanizationRate": 72.8,
+    "majorEthnicGroups": ["Tswana", "Kalanga", "Basarwa", "Kgalagadi"],
+    "religions": [
+      { "name": "Christian", "percent": 79.1 },
+      { "name": "Badimo (Traditional)", "percent": 4.1 },
+      { "name": "Other", "percent": 1.6 },
+      { "name": "None", "percent": 15.2 }
+    ]
+  },
+  "alliances": ["African Union", "SADC", "SACU", "Commonwealth"],
+  "relationships": [
+    { "countryId": "ZAF", "countryName": "South Africa", "type": "strategic_partner", "sentiment": "positive", "summary": "Key economic partner within SACU; shared infrastructure and deep trade links." },
+    { "countryId": "USA", "countryName": "United States", "type": "strategic_partner", "sentiment": "positive", "summary": "Strong cooperation in health (PEPFAR) and security; mutual commitment to democratic values." },
+    { "countryId": "CHN", "countryName": "China", "type": "economic_partner", "sentiment": "positive", "summary": "Significant partner in infrastructure development and market for minerals." },
+    { "countryId": "NAM", "countryName": "Namibia", "type": "regional_partner", "sentiment": "positive", "summary": "Collaboration on water management and regional trade corridors." }
+  ],
+  "perspectives": [
+    { "source": "Gaborone Tech Founder", "bias": "Optimistic", "view": "The government's focus on the knowledge economy is opening doors for local startups to compete regionally." },
+    { "source": "Diamond Industry Analyst", "bias": "Pragmatic", "view": "The new agreement with De Beers is a win, but we must accelerate value-addition locally to sustain long-term growth." },
+    { "source": "Rural Community Leader", "bias": "Critical", "view": "Urban areas are developing fast, but rural communities still face challenges with unemployment and human-wildlife conflict." },
+    { "source": "International Conservationist", "bias": "Environmental", "view": "Botswana remains a global model for wildlife management, but climate change is putting pressure on water resources." }
+  ],
+  "historicalContext": {
+    "summary": "Botswana gained independence from Britain in 1966. Unlike many neighbors, it avoided conflict and utilized its diamond wealth to build a stable, prosperous nation. It has consistently ranked among the least corrupt and most democratic countries in Africa.",
+    "keyEvents": [
+      { "year": 1966, "event": "Independence from the United Kingdom; Seretse Khama becomes first president." },
+      { "year": 1967, "event": "Discovery of major diamond deposits at Orapa." },
+      { "year": 2008, "event": "Ian Khama succeeds Festus Mogae, reinforcing the tradition of smooth leadership transitions." },
+      { "year": 2018, "event": "Mokgweetsi Masisi becomes President." },
+      { "year": 2023, "event": "Botswana signs a historic new 10-year diamond sales agreement with De Beers, increasing its share of rough stones." },
+      { "year": 2024, "event": "Launch of major digital transformation initiatives to streamline government services and boost the private sector." }
+    ]
+  },
+  "investmentNotes": {
+    "strengths": ["Strongest democratic institutions and rule of law in Africa", "Stable macroeconomic environment and low corruption", "Strategic location as a gateway to SADC and SACU markets", "World-class tourism destination with high-value, low-volume strategy"],
+    "risks": ["Heavy economic concentration in the diamond sector", "High youth unemployment and persistent income inequality", "Small domestic market size", "Vulnerability to droughts and climate change"],
+    "sectors": ["Mining (Diamonds, Coal, Copper)", "Tourism & Hospitality", "Information & Communication Technology (ICT)", "Financial & Business Services"]
+  },
+  "sources": [
+    { "name": "Bank of Botswana", "url": "https://www.bankofbotswana.bw/", "type": "economic" },
+    { "name": "Statistics Botswana", "url": "https://www.statsbots.org.bw/", "type": "demographic" },
+    { "name": "Botswana Investment and Trade Centre (BITC)", "url": "https://www.bitc.co.bw/", "type": "investment" }
+  ]
+}

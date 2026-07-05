@@ -1,0 +1,272 @@
+[
+  {
+    "id": "EZE",
+    "name": "Ministro Pistarini International Airport",
+    "countryId": "ARG",
+    "city": "Ezeiza (Buenos Aires)",
+    "iata": "EZE",
+    "icao": "SAEZ",
+    "coordinates": [-58.5358, -34.8222],
+    "passengerVolume": 11077000,
+    "cargoVolume": 174000,
+    "runwayCount": 2,
+    "elevationM": 20,
+    "strategicImportance": "critical",
+    "geopoliticalNotes": "Primary global gateway for Argentina, handling 85% of international traffic and 90% of air cargo.",
+    "notes": "Main logistics and trade hub for the nation.",
+    "attribution": {
+      "sources": [
+        { "name": "Aeropuertos Argentina 2000", "url": "https://www.aa2000.com.ar", "accessedAt": "2026-05-10" },
+        { "name": "OurAirports", "url": "https://ourairports.com/airports/SAEZ/", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 2,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  },
+  {
+    "id": "AEP",
+    "name": "Jorge Newbery Airfield",
+    "countryId": "ARG",
+    "city": "Buenos Aires",
+    "iata": "AEP",
+    "icao": "SABE",
+    "coordinates": [-58.4158, -34.5592],
+    "passengerVolume": 14890000,
+    "cargoVolume": null,
+    "runwayCount": 1,
+    "elevationM": 6,
+    "strategicImportance": "high",
+    "geopoliticalNotes": "Critical hub for Mercosur and domestic connectivity, located in the heart of Buenos Aires.",
+    "notes": "Handles the highest volume of domestic and regional passengers.",
+    "attribution": {
+      "sources": [
+        { "name": "ORSNA", "url": "https://www.argentina.gob.ar/orsna", "accessedAt": "2026-05-10" },
+        { "name": "OurAirports", "url": "https://ourairports.com/airports/SABE/", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 2,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  },
+  {
+    "id": "COR",
+    "name": "Ingeniero Aeronáutico Ambrosio L.V. Taravella International Airport",
+    "countryId": "ARG",
+    "city": "Córdoba",
+    "iata": "COR",
+    "icao": "SACO",
+    "coordinates": [-64.2083, -31.31],
+    "passengerVolume": 2867000,
+    "cargoVolume": null,
+    "runwayCount": 2,
+    "elevationM": 489,
+    "strategicImportance": "high",
+    "geopoliticalNotes": "Central hub connecting the industrial heartland; primary alternative to Buenos Aires for international routes.",
+    "notes": "Vital for automotive and industrial logistics.",
+    "attribution": {
+      "sources": [
+        { "name": "Aeropuertos Argentina 2000", "url": "https://www.aa2000.com.ar", "accessedAt": "2026-05-10" },
+        { "name": "OurAirports", "url": "https://ourairports.com/airports/SACO/", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 2,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  },
+  {
+    "id": "BRC",
+    "name": "San Carlos de Bariloche Airport",
+    "countryId": "ARG",
+    "city": "Bariloche",
+    "iata": "BRC",
+    "icao": "SAZS",
+    "coordinates": [-71.1575, -41.1511],
+    "passengerVolume": 2371000,
+    "cargoVolume": null,
+    "runwayCount": 1,
+    "elevationM": 846,
+    "strategicImportance": "medium",
+    "geopoliticalNotes": "Primary gateway for Patagonia's tourism and scientific sectors.",
+    "notes": "Strategic for southern regional development.",
+    "attribution": {
+      "sources": [
+        { "name": "ANAC", "url": "https://www.anac.gov.ar", "accessedAt": "2026-05-10" },
+        { "name": "OurAirports", "url": "https://ourairports.com/airports/SAZS/", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 2,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  },
+  {
+    "id": "MDZ",
+    "name": "Governor Francisco Gabrielli International Airport",
+    "countryId": "ARG",
+    "city": "Mendoza",
+    "iata": "MDZ",
+    "icao": "SAME",
+    "coordinates": [-68.7928, -32.8317],
+    "passengerVolume": 2298000,
+    "cargoVolume": null,
+    "runwayCount": 1,
+    "elevationM": 704,
+    "strategicImportance": "high",
+    "geopoliticalNotes": "Critical trans-Andean link for the wine industry and trade with Chile.",
+    "notes": "Major western regional hub.",
+    "attribution": {
+      "sources": [
+        { "name": "IATA", "url": "https://www.iata.org", "accessedAt": "2026-05-10" },
+        { "name": "OurAirports", "url": "https://ourairports.com/airports/SAME/", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 2,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  },
+  {
+    "id": "IGR",
+    "name": "Mayor Carlos Eduardo Krause International Airport",
+    "countryId": "ARG",
+    "city": "Puerto Iguazú",
+    "iata": "IGR",
+    "icao": "SARI",
+    "coordinates": [-54.4733, -25.7372],
+    "passengerVolume": 1502000,
+    "cargoVolume": null,
+    "runwayCount": 1,
+    "elevationM": 279,
+    "strategicImportance": "medium",
+    "geopoliticalNotes": "Strategic for Triple Border monitoring (Argentina-Brazil-Paraguay) and tourism.",
+    "notes": "Vital for northeastern border security.",
+    "attribution": {
+      "sources": [
+        { "name": "ORSNA", "url": "https://www.argentina.gob.ar/orsna", "accessedAt": "2026-05-10" },
+        { "name": "OurAirports", "url": "https://ourairports.com/airports/SARI/", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 2,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  },
+  {
+    "id": "SLA",
+    "name": "Martín Miguel de Güemes International Airport",
+    "countryId": "ARG",
+    "city": "Salta",
+    "iata": "SLA",
+    "icao": "SASA",
+    "coordinates": [-65.4861, -24.8558],
+    "passengerVolume": 1325000,
+    "cargoVolume": null,
+    "runwayCount": 2,
+    "elevationM": 1246,
+    "strategicImportance": "high",
+    "geopoliticalNotes": "Northwest hub critical for the lithium mining sector and Andean regional integration.",
+    "notes": "High strategic growth due to mining projects.",
+    "attribution": {
+      "sources": [
+        { "name": "ANAC", "url": "https://www.anac.gov.ar", "accessedAt": "2026-05-10" },
+        { "name": "OurAirports", "url": "https://ourairports.com/airports/SASA/", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 2,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  },
+  {
+    "id": "USH",
+    "name": "Ushuaia – Malvinas Argentinas International Airport",
+    "countryId": "ARG",
+    "city": "Ushuaia",
+    "iata": "USH",
+    "icao": "SAWH",
+    "coordinates": [-68.2958, -54.8431],
+    "passengerVolume": 1148000,
+    "cargoVolume": null,
+    "runwayCount": 1,
+    "elevationM": 31,
+    "strategicImportance": "high",
+    "geopoliticalNotes": "World's southernmost international airport; vital gateway for Antarctic research and tourism logistics.",
+    "notes": "Strategic for Antarctic sovereignty and logistics.",
+    "attribution": {
+      "sources": [
+        { "name": "Aeropuertos Argentina 2000", "url": "https://www.aa2000.com.ar", "accessedAt": "2026-05-10" },
+        { "name": "OurAirports", "url": "https://ourairports.com/airports/SAWH/", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 2,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  },
+  {
+    "id": "NQN",
+    "name": "Presidente Perón International Airport",
+    "countryId": "ARG",
+    "city": "Neuquén",
+    "iata": "NQN",
+    "icao": "SAZN",
+    "coordinates": [-68.1558, -38.9489],
+    "passengerVolume": 1000000,
+    "cargoVolume": null,
+    "runwayCount": 1,
+    "elevationM": 273,
+    "strategicImportance": "high",
+    "geopoliticalNotes": "Energy capital hub serving the Vaca Muerta shale formation; essential for the oil and gas industry.",
+    "notes": "Vital for industrial personnel and equipment logistics.",
+    "attribution": {
+      "sources": [
+        { "name": "IATA", "url": "https://www.iata.org", "accessedAt": "2026-05-10" },
+        { "name": "OurAirports", "url": "https://ourairports.com/airports/SAZN/", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 2,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  },
+  {
+    "id": "ROS",
+    "name": "Rosario – Islas Malvinas International Airport",
+    "countryId": "ARG",
+    "city": "Rosario",
+    "iata": "ROS",
+    "icao": "SAAR",
+    "coordinates": [-60.785, -32.9036],
+    "passengerVolume": 800000,
+    "cargoVolume": null,
+    "runwayCount": 1,
+    "elevationM": 26,
+    "strategicImportance": "medium",
+    "geopoliticalNotes": "Agro-industrial hub located in the heart of the grain belt; strategic for regional exports.",
+    "notes": "Important for industrial business and connectivity.",
+    "attribution": {
+      "sources": [
+        { "name": "Aeropuertos Argentina 2000", "url": "https://www.aa2000.com.ar", "accessedAt": "2026-05-10" },
+        { "name": "OurAirports", "url": "https://ourairports.com/airports/SAAR/", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 2,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  }
+]

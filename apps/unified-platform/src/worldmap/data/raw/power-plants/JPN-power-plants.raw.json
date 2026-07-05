@@ -1,0 +1,407 @@
+[
+  {
+    "id": "PLANT-JPN-KASHIWAZAKI-KARIWA",
+    "name": "Kashiwazaki-Kariwa Nuclear Power Plant",
+    "countryId": "JPN",
+    "city": "Kashiwazaki",
+    "coordinates": [138.602, 37.427],
+    "type": "nuclear",
+    "status": "mothballed",
+    "capacityMW": 7965,
+    "annualOutputGWh": null,
+    "yearCommissioned": 1985,
+    "yearRetirement": null,
+    "operator": "Tokyo Electric Power Company (TEPCO)",
+    "owner": "TEPCO",
+    "strategicNote": "The largest nuclear power station in the world by net capacity; its restart is a key part of Japan's energy strategy post-Fukushima.",
+    "notes": "Currently suspended pending safety upgrades and regulatory approval.",
+    "attribution": {
+      "sources": [
+        { "name": "Global Energy Monitor", "url": "https://www.gem.wiki/Kashiwazaki-Kariwa_Nuclear_Power_Plant", "accessedAt": "2025-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 1,
+        "lastVerified": "2025-05-10"
+      }
+    }
+  },
+  {
+    "id": "PLANT-JPN-FUTTSU",
+    "name": "Futtsu Power Station",
+    "countryId": "JPN",
+    "city": "Futtsu",
+    "coordinates": [139.854, 35.341],
+    "type": "gas",
+    "status": "operating",
+    "capacityMW": 5040,
+    "annualOutputGWh": null,
+    "yearCommissioned": 1985,
+    "yearRetirement": null,
+    "operator": "JERA",
+    "owner": "TEPCO / Chubu Electric",
+    "strategicNote": "A massive LNG-fired plant, critical for supplying the Tokyo metropolitan area.",
+    "notes": null,
+    "attribution": {
+      "sources": [
+        { "name": "Global Energy Monitor", "url": "https://www.gem.wiki/Futtsu_Power_Station", "accessedAt": "2025-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 1,
+        "lastVerified": "2025-05-10"
+      }
+    }
+  },
+  {
+    "id": "PLANT-JPN-OHI",
+    "name": "Ohi Nuclear Power Plant",
+    "countryId": "JPN",
+    "city": "Ohi",
+    "coordinates": [135.49, 35.54],
+    "type": "nuclear",
+    "status": "operating",
+    "capacityMW": 4494,
+    "annualOutputGWh": null,
+    "yearCommissioned": 1979,
+    "yearRetirement": null,
+    "operator": "Kansai Electric Power Company",
+    "owner": "Kansai Electric",
+    "strategicNote": "One of Japan's largest operating nuclear plants, vital for the Kansai region's industrial base.",
+    "notes": "Units 3 and 4 are currently operating.",
+    "attribution": {
+      "sources": [
+        { "name": "IAEA PRIS", "url": "https://pris.iaea.org/PRIS/CountryStatistics/ReactorDetails.aspx?current=352", "accessedAt": "2025-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 1,
+        "lastVerified": "2025-05-10"
+      }
+    }
+  },
+  {
+    "id": "PLANT-JPN-HEKINAN",
+    "name": "Hekinan Power Station",
+    "countryId": "JPN",
+    "city": "Hekinan",
+    "coordinates": [136.96, 34.83],
+    "type": "coal",
+    "status": "operating",
+    "capacityMW": 4100,
+    "annualOutputGWh": null,
+    "yearCommissioned": 1991,
+    "yearRetirement": null,
+    "operator": "JERA",
+    "owner": "Chubu Electric",
+    "strategicNote": "Japan's largest coal-fired power station; currently testing large-scale ammonia co-firing to reduce emissions.",
+    "notes": null,
+    "attribution": {
+      "sources": [
+        { "name": "Global Energy Monitor", "url": "https://www.gem.wiki/Hekinan_Power_Station", "accessedAt": "2025-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 1,
+        "lastVerified": "2025-05-10"
+      }
+    }
+  },
+  {
+    "id": "PLANT-JPN-SODEGAURA",
+    "name": "Sodegaura Power Station",
+    "countryId": "JPN",
+    "city": "Sodegaura",
+    "coordinates": [139.98, 35.46],
+    "type": "gas",
+    "status": "operating",
+    "capacityMW": 3600,
+    "annualOutputGWh": null,
+    "yearCommissioned": 1974,
+    "yearRetirement": null,
+    "operator": "JERA",
+    "owner": "TEPCO",
+    "strategicNote": "Major LNG-fired station on Tokyo Bay.",
+    "notes": null,
+    "attribution": {
+      "sources": [
+        { "name": "Global Energy Monitor", "url": "https://www.gem.wiki/Sodegaura_Power_Station", "accessedAt": "2025-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 1,
+        "lastVerified": "2025-05-10"
+      }
+    }
+  },
+  {
+    "id": "PLANT-JPN-KAWASAKI",
+    "name": "Kawasaki Power Station",
+    "countryId": "JPN",
+    "city": "Kawasaki",
+    "coordinates": [139.75, 35.51],
+    "type": "gas",
+    "status": "operating",
+    "capacityMW": 3420,
+    "annualOutputGWh": null,
+    "yearCommissioned": 2007,
+    "yearRetirement": null,
+    "operator": "JERA",
+    "owner": "TEPCO",
+    "strategicNote": "Modern CCGT plant serving the industrial heart of the Keihin region.",
+    "notes": null,
+    "attribution": {
+      "sources": [
+        { "name": "Global Energy Monitor", "url": "https://www.gem.wiki/Kawasaki_Power_Station", "accessedAt": "2025-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 1,
+        "lastVerified": "2025-05-10"
+      }
+    }
+  },
+  {
+    "id": "PLANT-JPN-TAKAHAMA",
+    "name": "Takahama Nuclear Power Plant",
+    "countryId": "JPN",
+    "city": "Takahama",
+    "coordinates": [135.503, 35.52],
+    "type": "nuclear",
+    "status": "operating",
+    "capacityMW": 3220,
+    "annualOutputGWh": null,
+    "yearCommissioned": 1974,
+    "yearRetirement": null,
+    "operator": "Kansai Electric Power Company",
+    "owner": "Kansai Electric",
+    "strategicNote": "A major nuclear hub for Western Japan; all four units have received approval to operate beyond 40 years.",
+    "notes": null,
+    "attribution": {
+      "sources": [
+        { "name": "IAEA PRIS", "url": "https://pris.iaea.org/PRIS/CountryStatistics/ReactorDetails.aspx?current=340", "accessedAt": "2025-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 1,
+        "lastVerified": "2025-05-10"
+      }
+    }
+  },
+  {
+    "id": "PLANT-JPN-CHIBA",
+    "name": "Chiba Power Station",
+    "countryId": "JPN",
+    "city": "Chiba",
+    "coordinates": [140.11, 35.56],
+    "type": "gas",
+    "status": "operating",
+    "capacityMW": 2880,
+    "annualOutputGWh": null,
+    "yearCommissioned": 2000,
+    "yearRetirement": null,
+    "operator": "JERA",
+    "owner": "TEPCO",
+    "strategicNote": "Significant gas-fired capacity near Tokyo.",
+    "notes": null,
+    "attribution": {
+      "sources": [
+        { "name": "Global Energy Monitor", "url": "https://www.gem.wiki/Chiba_Power_Station", "accessedAt": "2025-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 1,
+        "lastVerified": "2025-05-10"
+      }
+    }
+  },
+  {
+    "id": "PLANT-JPN-KANNAGAWA",
+    "name": "Kannagawa Hydropower Plant",
+    "countryId": "JPN",
+    "city": "Ueno",
+    "coordinates": [138.65, 36.0],
+    "type": "hydro",
+    "status": "operating",
+    "capacityMW": 2820,
+    "annualOutputGWh": null,
+    "yearCommissioned": 2005,
+    "yearRetirement": null,
+    "operator": "TEPCO",
+    "owner": "TEPCO",
+    "strategicNote": "The world's largest pumped-storage power station when complete, providing massive peak-shaving capacity.",
+    "notes": null,
+    "attribution": {
+      "sources": [
+        { "name": "Global Energy Monitor", "url": "https://www.gem.wiki/Kannagawa_Hydropower_Plant", "accessedAt": "2025-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 1,
+        "lastVerified": "2025-05-10"
+      }
+    }
+  },
+  {
+    "id": "PLANT-JPN-HIGASHI-NIIGATA",
+    "name": "Higashi-Niigata Power Station",
+    "countryId": "JPN",
+    "city": "Niigata",
+    "coordinates": [139.21, 37.98],
+    "type": "gas",
+    "status": "operating",
+    "capacityMW": 2730,
+    "annualOutputGWh": null,
+    "yearCommissioned": 1977,
+    "yearRetirement": null,
+    "operator": "Tohoku Electric Power",
+    "owner": "Tohoku Electric",
+    "strategicNote": "Major gas hub on the Sea of Japan coast.",
+    "notes": null,
+    "attribution": {
+      "sources": [
+        { "name": "Global Energy Monitor", "url": "https://www.gem.wiki/Higashi-Niigata_Power_Station", "accessedAt": "2025-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 1,
+        "lastVerified": "2025-05-10"
+      }
+    }
+  },
+  {
+    "id": "PLANT-JPN-MATSUURA",
+    "name": "Matsuura Power Station",
+    "countryId": "JPN",
+    "city": "Matsuura",
+    "coordinates": [129.71, 33.34],
+    "type": "coal",
+    "status": "operating",
+    "capacityMW": 2700,
+    "annualOutputGWh": null,
+    "yearCommissioned": 1989,
+    "yearRetirement": null,
+    "operator": "Kyushu Electric / J-Power",
+    "owner": "Kyushu Electric / J-Power",
+    "strategicNote": "Large coal facility in Kyushu, important for base-load in the south.",
+    "notes": null,
+    "attribution": {
+      "sources": [
+        { "name": "Global Energy Monitor", "url": "https://www.gem.wiki/Matsuura_Power_Station", "accessedAt": "2025-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 1,
+        "lastVerified": "2025-05-10"
+      }
+    }
+  },
+  {
+    "id": "PLANT-JPN-GENKAI",
+    "name": "Genkai Nuclear Power Plant",
+    "countryId": "JPN",
+    "city": "Genkai",
+    "coordinates": [129.83, 33.51],
+    "type": "nuclear",
+    "status": "operating",
+    "capacityMW": 2360,
+    "annualOutputGWh": null,
+    "yearCommissioned": 1975,
+    "yearRetirement": null,
+    "operator": "Kyushu Electric Power Company",
+    "owner": "Kyushu Electric",
+    "strategicNote": "Key nuclear facility in Kyushu; Units 3 and 4 were among the first to restart after Fukushima.",
+    "notes": null,
+    "attribution": {
+      "sources": [
+        { "name": "IAEA PRIS", "url": "https://pris.iaea.org/PRIS/CountryStatistics/ReactorDetails.aspx?current=335", "accessedAt": "2025-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 1,
+        "lastVerified": "2025-05-10"
+      }
+    }
+  },
+  {
+    "id": "PLANT-JPN-HITACHINAKA",
+    "name": "Hitachinaka Power Station",
+    "countryId": "JPN",
+    "city": "Hitachinaka",
+    "coordinates": [140.61, 36.43],
+    "type": "coal",
+    "status": "operating",
+    "capacityMW": 2000,
+    "annualOutputGWh": null,
+    "yearCommissioned": 2003,
+    "yearRetirement": null,
+    "operator": "JERA",
+    "owner": "TEPCO",
+    "strategicNote": "Major coal plant serving the Kanto region.",
+    "notes": null,
+    "attribution": {
+      "sources": [
+        { "name": "Global Energy Monitor", "url": "https://www.gem.wiki/Hitachinaka_Power_Station", "accessedAt": "2025-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 1,
+        "lastVerified": "2025-05-10"
+      }
+    }
+  },
+  {
+    "id": "PLANT-JPN-OKUTATARAGI",
+    "name": "Okutataragi Pumped Storage Station",
+    "countryId": "JPN",
+    "city": "Asago",
+    "coordinates": [134.85, 35.24],
+    "type": "hydro",
+    "status": "operating",
+    "capacityMW": 1932,
+    "annualOutputGWh": null,
+    "yearCommissioned": 1974,
+    "yearRetirement": null,
+    "operator": "Kansai Electric Power",
+    "owner": "Kansai Electric",
+    "strategicNote": "Japan's second largest pumped-storage facility, critical for the Kansai grid.",
+    "notes": null,
+    "attribution": {
+      "sources": [
+        { "name": "Global Energy Monitor", "url": "https://www.gem.wiki/Okutataragi_Pumped_Storage_Station", "accessedAt": "2025-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 1,
+        "lastVerified": "2025-05-10"
+      }
+    }
+  },
+  {
+    "id": "PLANT-JPN-SENDAI",
+    "name": "Sendai Nuclear Power Plant",
+    "countryId": "JPN",
+    "city": "Satsumasendai",
+    "coordinates": [130.19, 31.83],
+    "type": "nuclear",
+    "status": "operating",
+    "capacityMW": 1780,
+    "annualOutputGWh": null,
+    "yearCommissioned": 1984,
+    "yearRetirement": null,
+    "operator": "Kyushu Electric Power Company",
+    "owner": "Kyushu Electric",
+    "strategicNote": "The first nuclear plant to restart under Japan's new post-Fukushima safety standards in 2015.",
+    "notes": null,
+    "attribution": {
+      "sources": [
+        { "name": "IAEA PRIS", "url": "https://pris.iaea.org/PRIS/CountryStatistics/ReactorDetails.aspx?current=339", "accessedAt": "2025-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 1,
+        "lastVerified": "2025-05-10"
+      }
+    }
+  }
+]

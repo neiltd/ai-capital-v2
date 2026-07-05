@@ -1,0 +1,64 @@
+{
+  "id": "PRI",
+  "iso2": "PR",
+  "name": "Puerto Rico",
+  "region": "Americas",
+  "subregion": "Caribbean",
+  "capital": "San Juan",
+  "lastUpdated": "2026-05-09",
+  "summary": "Puerto Rico is an unincorporated territory of the United States with a complex political and economic landscape. In 2026, the island is continuing its long-term recovery from bankruptcy and the devastating impacts of Hurricane Maria. The economy is characterized by a strong manufacturing base (especially pharmaceuticals and medical devices) and a vibrant tourism sector. Puerto Rico is currently focused on modernizing its electrical grid through renewable energy transition and leveraging federal funding for infrastructure resilient to climate change. The political debate remains centered on the island's status—whether to seek statehood, independence, or an enhanced commonwealth—while the Financial Oversight and Management Board (FOMB) continues to play a significant role in fiscal policy. Despite these challenges, Puerto Rico remains a major cultural and economic hub in the Caribbean with a highly skilled workforce and deep integration into the US market.",
+  "indicators": {
+    "politicalStability":       { "score": 6, "score_description": "Stable but characterized by deep status debates.", "trend": "stable", "confidence": "high", "note": "Governance is a mix of local administration and federal oversight, with ongoing status referendums." },
+    "economicDirection":        { "score": 5, "score_description": "Steady recovery following a prolonged debt crisis.", "trend": "improving", "confidence": "medium", "note": "Post-bankruptcy fiscal stability is being tested by the need for massive infrastructure investment." },
+    "investmentAttractiveness": { "score": 7, "score_description": "Attractive for manufacturing and digital nomads.", "trend": "rising", "confidence": "high", "note": "Federal tax incentives (like Act 60) and a skilled workforce are key draws for US-based companies." },
+    "geopoliticalRisk":         { "score": 3, "score_description": "Low risk; protected by the US and part of its legal framework.", "trend": "stable", "confidence": "high", "note": "Primary risks are internal fiscal management and environmental vulnerability." },
+    "educationQuality":         { "score": 7, "score_description": "High standards with a large university system.", "trend": "stable", "confidence": "high", "note": "The University of Puerto Rico is a major producer of STEM graduates for the manufacturing sector." },
+    "healthcareQuality":        { "score": 7, "score_description": "Good standard of care, though facing provider shortages.", "trend": "stable", "confidence": "medium", "note": "Integrated into the US healthcare system, though with distinct funding challenges (Medicaid/Medicare gaps)." },
+    "technologyInvestment":     { "score": 7, "score_description": "Significant investment in grid modernization and pharma-tech.", "trend": "rising", "confidence": "high", "note": "The transition to 'Pr100' (100% renewable energy by 2050) is a major technological focus." }
+  },
+  "demographics": {
+    "population": 3220000,
+    "medianAge": 45.2,
+    "urbanizationRate": 94,
+    "majorEthnicGroups": ["Hispanic/Latino", "Mixed", "White", "Black"],
+    "religions": [
+      { "name": "Roman Catholic", "percent": 56 },
+      { "name": "Protestant", "percent": 33 },
+      { "name": "None", "percent": 8 },
+      { "name": "Other", "percent": 3 }
+    ]
+  },
+  "alliances": ["United States (Territory)", "CARICOM (Observer)"],
+  "relationships": [
+    { "countryId": "USA", "countryName": "United States", "type": "sovereign", "sentiment": "positive", "summary": "Essential and complex relationship; Puerto Rico is a US territory with US citizenship and currency." },
+    { "countryId": "DOM", "countryName": "Dominican Republic", "type": "partner", "sentiment": "positive", "summary": "Major trading partner and source of regional migration; close cultural and economic ties." },
+    { "countryId": "ESP", "countryName": "Spain", "type": "partner", "sentiment": "positive", "summary": "Strong historical and cultural ties; significant Spanish corporate presence on the island." }
+  ],
+  "perspectives": [
+    { "source": "Business Leader (San Juan)", "bias": "Investment-focused", "view": "Puerto Rico is the perfect bridge between the US and Latin America, offering US legal protections with a highly competitive cost structure." },
+    { "source": "Renewable Energy Advocate", "bias": "Environmental", "view": "The future of Puerto Rico depends on decentralizing our energy grid and embracing solar and storage to ensure resilience." },
+    { "source": "Status Advocate (Statehood)", "bias": "Political", "view": "Only statehood can provide Puerto Rico with the equal representation and resources it needs to truly prosper." }
+  ],
+  "historicalContext": {
+    "summary": "Originally inhabited by the Taíno people, Puerto Rico was a Spanish colony for four centuries before being ceded to the United States in 1898 following the Spanish-American War. In 1952, it became a Commonwealth. Its history is characterized by a unique blend of Spanish and American influences and a persistent debate over its ultimate political status.",
+    "keyEvents": [
+      { "year": 1493, "event": "Christopher Columbus arrives in Puerto Rico." },
+      { "year": 1898, "event": "Puerto Rico is ceded to the US following the Spanish-American War." },
+      { "year": 1917, "event": "Jones-Shafroth Act grants US citizenship to Puerto Ricans." },
+      { "year": 1952, "event": "Puerto Rico becomes a Commonwealth (Estado Libre Asociado)." },
+      { "year": 2016, "event": "PROMESA Act establishes the Financial Oversight and Management Board." },
+      { "year": 2017, "event": "Hurricane Maria causes catastrophic damage and a humanitarian crisis." },
+      { "year": 2022, "event": "Puerto Rico officially exits bankruptcy through a debt restructuring plan." }
+    ]
+  },
+  "investmentNotes": {
+    "strengths": ["Deep integration into the US legal and financial systems", "Strong manufacturing cluster (Life Sciences & Medical Devices)", "Federal tax incentives and a highly skilled bilingual workforce", "Significant federal funding for infrastructure and energy modernization"],
+    "risks": ["Vulnerability to hurricanes and climate change", "Uncertainty regarding long-term political status", "Demographic challenges (out-migration and aging population)", "High cost of energy and reliance on a centralized grid"],
+    "sectors": ["Pharmaceuticals & Biotechnology", "Medical Device Manufacturing", "Tourism & Hospitality", "Aerospace & Information Technology", "Renewable Energy Services"]
+  },
+  "sources": [
+    { "name": "Puerto Rico Institute of Statistics", "url": "https://estadisticas.pr/", "type": "economic" },
+    { "name": "Invest Puerto Rico", "url": "https://www.investpr.org/", "type": "investment" },
+    { "name": "Puerto Rico Department of Economic Development and Commerce (DDEC)", "url": "https://www.ddec.pr.gov/", "type": "political" }
+  ]
+}

@@ -1,0 +1,69 @@
+{
+  "id": "CAN",
+  "iso2": "CA",
+  "name": "Canada",
+  "region": "Americas",
+  "subregion": "Northern America",
+  "capital": "Ottawa",
+  "lastUpdated": "2026-05-09",
+  "summary": "Canada is a stable, advanced democracy with a highly developed economy deeply integrated with that of the United States. It possesses vast natural resources, particularly in energy and minerals, and maintains a strong reputation for multilateralism and human rights. However, it faces challenges related to regional economic disparities, climate change adaptation for its resource-dependent sectors, and a housing affordability crisis in major urban centers. Externally, Canada is focused on diversifying its trade beyond North America while managing increasingly complex relations with China and fulfilling its NATO commitments.",
+  "indicators": {
+    "politicalStability":       { "score": 8, "trend": "stable", "confidence": "high", "note": "Strong democratic institutions and rule of law, though regional tensions exist." },
+    "economicDirection":        { "score": 6, "trend": "stable", "confidence": "high", "note": "Resilient resource sector and tech growth offset by high household debt." },
+    "investmentAttractiveness": { "score": 8, "trend": "stable", "confidence": "high", "note": "Stable legal framework and access to US market through USMCA." },
+    "geopoliticalRisk":         { "score": 2, "trend": "stable", "confidence": "high", "note": "Low direct threat profile, though Arctic sovereignty is a growing focus." },
+    "educationQuality":         { "score": 8, "trend": "stable", "confidence": "high", "note": "High-performing public education system and world-class universities." },
+    "healthcareQuality":        { "score": 7, "trend": "declining", "confidence": "high", "note": "Universal system facing significant strain from aging population and staff shortages." },
+    "technologyInvestment":     { "score": 7, "trend": "rising", "confidence": "medium", "note": "Growing strengths in AI and clean tech, though trailing the US in commercialization." }
+  },
+  "demographics": {
+    "population": 41000000,
+    "medianAge": 41.0,
+    "urbanizationRate": 82,
+    "majorEthnicGroups": ["European", "East Asian", "South Asian", "Indigenous", "Black"],
+    "religions": [
+      { "name": "Catholic", "percent": 30 },
+      { "name": "Protestant", "percent": 17 },
+      { "name": "None/Unaffiliated", "percent": 35 },
+      { "name": "Muslim", "percent": 5 },
+      { "name": "Hindu", "percent": 2 }
+    ]
+  },
+  "alliances": ["NATO", "Five Eyes", "G7", "G20", "USMCA", "NORAD"],
+  "relationships": [
+    { "countryId": "USA", "countryName": "United States", "type": "treaty_ally", "sentiment": "positive", "summary": "Essential economic and security partner; highly integrated supply chains." },
+    { "countryId": "CHN", "countryName": "China", "type": "competitor", "sentiment": "negative", "summary": "Tensions over trade, human rights, and foreign interference concerns." },
+    { "countryId": "GBR", "countryName": "United Kingdom", "type": "ally", "sentiment": "positive", "summary": "Deep historical ties and shared membership in the Commonwealth and Five Eyes." },
+    { "countryId": "FRA", "countryName": "France", "type": "ally", "sentiment": "positive", "summary": "Strong cultural and linguistic ties, particularly through Quebec." },
+    { "countryId": "UKR", "countryName": "Ukraine", "type": "ally", "sentiment": "positive", "summary": "Significant military and financial support; large Ukrainian-Canadian diaspora." }
+  ],
+  "perspectives": [
+    { "source": "Continentalist Business Leader", "bias": "Pro-US Integration", "view": "Canada's prosperity depends on seamless trade with the US; we must align our regulations and energy policies with Washington." },
+    { "source": "Multilateralist Diplomat", "bias": "Globalist", "view": "Canada must maintain its independent voice by championing international law and strengthening ties with mid-sized powers in Europe and Asia." },
+    { "source": "Resource Sector Advocate", "bias": "Industry-centric", "view": "The regulatory burden and environmental targets are stifling the natural resource sector, which is the backbone of the national economy." },
+    { "source": "Indigenous Rights Activist", "bias": "Social Justice", "view": "True stability requires meaningful reconciliation and the recognition of Indigenous sovereignty over lands and resources." }
+  ],
+  "historicalContext": {
+    "summary": "Formed in 1867 through Confederation, Canada evolved from a collection of British colonies into a sovereign, multicultural nation. Its history is marked by the dual influence of British and French heritage and the ongoing process of reconciliation with its Indigenous peoples.",
+    "keyEvents": [
+      { "year": 1867, "event": "Confederation of four provinces into the Dominion of Canada." },
+      { "year": 1885, "event": "Completion of the Canadian Pacific Railway." },
+      { "year": 1917, "event": "Battle of Vimy Ridge; often cited as a moment of national birth." },
+      { "year": 1931, "event": "Statute of Westminster grants Canada full legislative independence." },
+      { "year": 1949, "event": "Newfoundland joins Confederation; Canada joins NATO." },
+      { "year": 1982, "event": "Patriation of the Constitution and the adoption of the Charter of Rights and Freedoms." },
+      { "year": 1995, "event": "Quebec sovereignty referendum narrowly defeated." },
+      { "year": 2015, "event": "Truth and Reconciliation Commission issues final report on residential schools." }
+    ]
+  },
+  "investmentNotes": {
+    "strengths": ["Abundant natural resources", "Highly educated workforce", "Stable financial system", "Strong rule of law"],
+    "risks": ["High household debt", "Regional economic dependence on oil", "Housing market bubble", "Inter-provincial trade barriers"],
+    "sectors": ["Critical Minerals", "Artificial Intelligence", "Clean Energy", "Agri-tech"]
+  },
+  "sources": [
+    { "name": "Statistics Canada", "url": "https://www.statcan.gc.ca/", "type": "economic" },
+    { "name": "Department of Finance Canada", "url": "https://www.canada.ca/en/department-finance.html", "type": "economic" },
+    { "name": "Global Affairs Canada", "url": "https://www.international.gc.ca/", "type": "geopolitical" }
+  ]
+}

@@ -1,0 +1,64 @@
+{
+  "id": "MDV",
+  "iso2": "MV",
+  "name": "Maldives",
+  "region": "Asia",
+  "subregion": "Southern Asia",
+  "capital": "Malé",
+  "lastUpdated": "2026-05-09",
+  "summary": "The Maldives is a dispersed archipelagic nation in the Indian Ocean, globally renowned for its high-end tourism industry. While it has achieved significant economic growth and reached upper-middle-income status, the nation faces existential threats from climate change and rising sea levels. Politically, the Maldives is characterized by a vibrant but polarized democracy, currently navigating a strategic pivot toward China under President Muizzu while managing complex security ties with India. The economy is also under severe fiscal pressure due to high public debt and low foreign exchange reserves.",
+  "indicators": {
+    "politicalStability":       { "score": 5, "trend": "stable", "confidence": "high", "note": "Vibrant democracy but highly polarized; policy shifts often occur with changes in administration." },
+    "economicDirection":        { "score": 4, "trend": "declining", "confidence": "high", "note": "Tourism remains strong, but the economy is hampered by critical levels of public debt and low reserves." },
+    "investmentAttractiveness": { "score": 5, "trend": "stable", "confidence": "medium", "note": "High interest in resort development and infrastructure, but fiscal fragility and climate risks are significant deterrents." },
+    "geopoliticalRisk":         { "score": 6, "trend": "rising", "confidence": "high", "note": "Strategic location on Indian Ocean shipping lanes; center of 'India vs. China' regional competition." },
+    "educationQuality":         { "score": 5, "trend": "stable", "confidence": "medium", "note": "High literacy rates; focus is on vocational training for the tourism sector and improving remote atoll access." },
+    "healthcareQuality":        { "score": 5, "trend": "rising", "confidence": "medium", "note": "Significant investment in hospital infrastructure (e.g., Dharumavantha Hospital), but specialized care often requires travel abroad." },
+    "technologyInvestment":     { "score": 6, "trend": "rising", "confidence": "high", "note": "High mobile penetration; push for digital identity and fintech solutions to connect the dispersed islands." }
+  },
+  "demographics": {
+    "population": 520000,
+    "medianAge": 30.0,
+    "urbanizationRate": 41,
+    "majorEthnicGroups": ["Maldivian (Dhivehi)"],
+    "religions": [
+      { "name": "Sunni Muslim", "percent": 100.0 }
+    ]
+  },
+  "alliances": ["SAARC", "Commonwealth of Nations", "IORA", "AOSIS"],
+  "relationships": [
+    { "countryId": "CHN", "countryName": "China", "type": "strategic_partner", "sentiment": "positive", "summary": "Key infrastructure partner and source of tourists; relationship has deepened under President Muizzu with the signing of an FTA." },
+    { "countryId": "IND", "countryName": "India", "type": "strategic_partner", "sentiment": "neutral", "summary": "Traditionally the closest security and development partner; relationship is currently under strain due to the 'India Out' policy." },
+    { "countryId": "SAU", "countryName": "Saudi Arabia", "type": "development_partner", "sentiment": "positive", "summary": "Important source of Islamic development aid and investment in housing and religious infrastructure." },
+    { "countryId": "USA", "countryName": "United States", "type": "security_partner", "sentiment": "positive", "summary": "USA is increasing its presence in the Maldives to support maritime security and democratic resilience." }
+  ],
+  "perspectives": [
+    { "source": "Presidential Office", "bias": "Sovereigntist", "view": "Our priority is defending our sovereignty and diversifying our partnerships to ensure the best outcomes for our people." },
+    { "source": "Resort Owner", "bias": "Pragmatic", "view": "We need political stability and a stable exchange rate to keep the Maldives as a premier global destination." },
+    { "source": "Climate Activist", "bias": "Existential", "view": "For us, climate change is not a future threat; it is a current reality. We need global action, not just words, to save our islands." },
+    { "source": "Atoll Youth", "bias": "Aspirational", "view": "We want more than just jobs in tourism; we need digital opportunities that allow us to stay on our home islands." }
+  ],
+  "historicalContext": {
+    "summary": "The Maldives was a sultanate and later a British protectorate before gaining independence in 1965. It was ruled by Maumoon Abdul Gayoom for 30 years (1978-2008) before transitioning to a multi-party democracy. Since then, the nation has seen significant political volatility alongside rapid tourism-led development.",
+    "keyEvents": [
+      { "year": 1965, "event": "Independence from the United Kingdom." },
+      { "year": 1968, "event": "Abolition of the sultanate; establishment of the Republic." },
+      { "year": 1972, "event": "Beginning of the modern tourism industry with the first resort opening." },
+      { "year": 2004, "event": "Indian Ocean Tsunami causes severe damage to infrastructure and atolls." },
+      { "year": 2008, "event": "First multi-party democratic elections; Mohamed Nasheed elected President." },
+      { "year": 2012, "event": "President Nasheed resigns following a period of political unrest." },
+      { "year": 2018, "event": "Ibrahim Mohamed Solih elected President, marking a shift toward 'India First' policy." },
+      { "year": 2023, "event": "Mohamed Muizzu elected President, initiating a 'Pro-Maldives' (pro-China) shift." }
+    ]
+  },
+  "investmentNotes": {
+    "strengths": ["Global brand as a premier luxury tourism destination", "Strategic location along major Indian Ocean trade routes", "Strong and growing construction and real estate sectors", "Pro-investment policies in the tourism and energy sectors"],
+    "risks": ["Critical levels of public debt and low foreign exchange reserves", "Extreme vulnerability to climate change and sea-level rise", "Small and geographically dispersed domestic market", "Heavy reliance on imported fuel and food"],
+    "sectors": ["Luxury Tourism & Hospitality", "Renewable Energy (Solar/Ocean Thermal)", "Construction & Infrastructure", "Sustainable Fisheries"]
+  },
+  "sources": [
+    { "name": "Maldives Monetary Authority", "url": "https://www.mma.gov.mv/", "type": "economic" },
+    { "name": "Ministry of Economic Development", "url": "https://www.trade.gov.mv/", "type": "investment" },
+    { "name": "World Bank - Maldives Overview", "url": "https://www.worldbank.org/en/country/maldives", "type": "economic" }
+  ]
+}

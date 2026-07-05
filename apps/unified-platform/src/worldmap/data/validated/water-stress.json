@@ -1,0 +1,1554 @@
+[
+  {
+    "iso3": "AFG",
+    "name": "AFG",
+    "stressScore": 1.89,
+    "category": "low-medium",
+    "trend": "worsening",
+    "sourceUrl": "https://www.wri.org/data/aqueduct-40-current-and-future-country-rankings"
+  },
+  {
+    "iso3": "ALB",
+    "name": "ALB",
+    "stressScore": 3.42,
+    "category": "high",
+    "trend": "improving",
+    "sourceUrl": "https://www.wri.org/data/aqueduct-40-current-and-future-country-rankings"
+  },
+  {
+    "iso3": "DZA",
+    "name": "DZA",
+    "stressScore": 4.2,
+    "category": "extremely-high",
+    "trend": "worsening",
+    "sourceUrl": "https://www.wri.org/data/aqueduct-40-current-and-future-country-rankings"
+  },
+  {
+    "iso3": "AND",
+    "name": "AND",
+    "stressScore": 3.74,
+    "category": "extremely-high",
+    "trend": "worsening",
+    "sourceUrl": "https://www.wri.org/data/aqueduct-40-current-and-future-country-rankings"
+  },
+  {
+    "iso3": "AGO",
+    "name": "AGO",
+    "stressScore": 0.85,
+    "category": "low",
+    "trend": "worsening",
+    "sourceUrl": "https://www.wri.org/data/aqueduct-40-current-and-future-country-rankings"
+  },
+  {
+    "iso3": "ATG",
+    "name": "ATG",
+    "stressScore": 3.27,
+    "category": "high",
+    "trend": "worsening",
+    "sourceUrl": "https://www.wri.org/data/aqueduct-40-current-and-future-country-rankings"
+  },
+  {
+    "iso3": "ARG",
+    "name": "ARG",
+    "stressScore": 3.37,
+    "category": "high",
+    "trend": "improving",
+    "sourceUrl": "https://www.wri.org/data/aqueduct-40-current-and-future-country-rankings"
+  },
+  {
+    "iso3": "ARM",
+    "name": "ARM",
+    "stressScore": 2.64,
+    "category": "medium-high",
+    "trend": "worsening",
+    "sourceUrl": "https://www.wri.org/data/aqueduct-40-current-and-future-country-rankings"
+  },
+  {
+    "iso3": "AUS",
+    "name": "AUS",
+    "stressScore": 2.79,
+    "category": "medium-high",
+    "trend": "worsening",
+    "sourceUrl": "https://www.wri.org/data/aqueduct-40-current-and-future-country-rankings"
+  },
+  {
+    "iso3": "AUT",
+    "name": "AUT",
+    "stressScore": 3.37,
+    "category": "high",
+    "trend": "stable",
+    "sourceUrl": "https://www.wri.org/data/aqueduct-40-current-and-future-country-rankings"
+  },
+  {
+    "iso3": "AZE",
+    "name": "AZE",
+    "stressScore": 2.58,
+    "category": "medium-high",
+    "trend": "worsening",
+    "sourceUrl": "https://www.wri.org/data/aqueduct-40-current-and-future-country-rankings"
+  },
+  {
+    "iso3": "BHS",
+    "name": "BHS",
+    "stressScore": 2.59,
+    "category": "medium-high",
+    "trend": "stable",
+    "sourceUrl": "https://www.wri.org/data/aqueduct-40-current-and-future-country-rankings"
+  },
+  {
+    "iso3": "BHR",
+    "name": "BHR",
+    "stressScore": 5.0,
+    "category": "extremely-high",
+    "trend": "worsening",
+    "sourceUrl": "https://www.wri.org/data/aqueduct-40-current-and-future-country-rankings"
+  },
+  {
+    "iso3": "BGD",
+    "name": "BGD",
+    "stressScore": 3.92,
+    "category": "high",
+    "trend": "worsening",
+    "sourceUrl": "https://www.wri.org/data/aqueduct-40-current-and-future-country-rankings"
+  },
+  {
+    "iso3": "BRB",
+    "name": "BRB",
+    "stressScore": 1.28,
+    "category": "low-medium",
+    "trend": "stable",
+    "sourceUrl": "https://www.wri.org/data/aqueduct-40-current-and-future-country-rankings"
+  },
+  {
+    "iso3": "BLR",
+    "name": "BLR",
+    "stressScore": 3.68,
+    "category": "high",
+    "trend": "stable",
+    "sourceUrl": "https://www.wri.org/data/aqueduct-40-current-and-future-country-rankings"
+  },
+  {
+    "iso3": "BEL",
+    "name": "BEL",
+    "stressScore": 4.0,
+    "category": "extremely-high",
+    "trend": "worsening",
+    "sourceUrl": "https://www.wri.org/data/aqueduct-40-current-and-future-country-rankings"
+  },
+  {
+    "iso3": "BLZ",
+    "name": "BLZ",
+    "stressScore": 2.9,
+    "category": "medium-high",
+    "trend": "stable",
+    "sourceUrl": "https://www.wri.org/data/aqueduct-40-current-and-future-country-rankings"
+  },
+  {
+    "iso3": "BEN",
+    "name": "BEN",
+    "stressScore": 4.25,
+    "category": "extremely-high",
+    "trend": "worsening",
+    "sourceUrl": "https://www.wri.org/data/aqueduct-40-current-and-future-country-rankings"
+  },
+  {
+    "iso3": "BTN",
+    "name": "BTN",
+    "stressScore": 3.82,
+    "category": "high",
+    "trend": "worsening",
+    "sourceUrl": "https://www.wri.org/data/aqueduct-40-current-and-future-country-rankings"
+  },
+  {
+    "iso3": "BOL",
+    "name": "BOL",
+    "stressScore": 1.84,
+    "category": "low-medium",
+    "trend": "stable",
+    "sourceUrl": "https://www.wri.org/data/aqueduct-40-current-and-future-country-rankings"
+  },
+  {
+    "iso3": "BIH",
+    "name": "BIH",
+    "stressScore": 3.97,
+    "category": "high",
+    "trend": "stable",
+    "sourceUrl": "https://www.wri.org/data/aqueduct-40-current-and-future-country-rankings"
+  },
+  {
+    "iso3": "BWA",
+    "name": "BWA",
+    "stressScore": 2.02,
+    "category": "medium-high",
+    "trend": "worsening",
+    "sourceUrl": "https://www.wri.org/data/aqueduct-40-current-and-future-country-rankings"
+  },
+  {
+    "iso3": "BRA",
+    "name": "BRA",
+    "stressScore": 0.5,
+    "category": "low",
+    "trend": "stable",
+    "sourceUrl": "https://www.wri.org/data/aqueduct-40-current-and-future-country-rankings"
+  },
+  {
+    "iso3": "BRN",
+    "name": "BRN",
+    "stressScore": 2.98,
+    "category": "medium-high",
+    "trend": "worsening",
+    "sourceUrl": "https://www.wri.org/data/aqueduct-40-current-and-future-country-rankings"
+  },
+  {
+    "iso3": "BGR",
+    "name": "BGR",
+    "stressScore": 4.2,
+    "category": "extremely-high",
+    "trend": "stable",
+    "sourceUrl": "https://www.wri.org/data/aqueduct-40-current-and-future-country-rankings"
+  },
+  {
+    "iso3": "BFA",
+    "name": "BFA",
+    "stressScore": 3.93,
+    "category": "high",
+    "trend": "worsening",
+    "sourceUrl": "https://www.wri.org/data/aqueduct-40-current-and-future-country-rankings"
+  },
+  {
+    "iso3": "BDI",
+    "name": "BDI",
+    "stressScore": 1.93,
+    "category": "low-medium",
+    "trend": "stable",
+    "sourceUrl": "https://www.wri.org/data/aqueduct-40-current-and-future-country-rankings"
+  },
+  {
+    "iso3": "KHM",
+    "name": "KHM",
+    "stressScore": 1.16,
+    "category": "low-medium",
+    "trend": "worsening",
+    "sourceUrl": "https://www.wri.org/data/aqueduct-40-current-and-future-country-rankings"
+  },
+  {
+    "iso3": "CMR",
+    "name": "CMR",
+    "stressScore": 3.47,
+    "category": "high",
+    "trend": "stable",
+    "sourceUrl": "https://www.wri.org/data/aqueduct-40-current-and-future-country-rankings"
+  },
+  {
+    "iso3": "CAN",
+    "name": "CAN",
+    "stressScore": 0.7,
+    "category": "low",
+    "trend": "stable",
+    "sourceUrl": "https://www.wri.org/data/aqueduct-40-current-and-future-country-rankings"
+  },
+  {
+    "iso3": "CPV",
+    "name": "CPV",
+    "stressScore": 0.84,
+    "category": "low",
+    "trend": "stable",
+    "sourceUrl": "https://www.wri.org/data/aqueduct-40-current-and-future-country-rankings"
+  },
+  {
+    "iso3": "CAF",
+    "name": "CAF",
+    "stressScore": 2.3,
+    "category": "medium-high",
+    "trend": "worsening",
+    "sourceUrl": "https://www.wri.org/data/aqueduct-40-current-and-future-country-rankings"
+  },
+  {
+    "iso3": "TCD",
+    "name": "TCD",
+    "stressScore": 1.28,
+    "category": "low-medium",
+    "trend": "stable",
+    "sourceUrl": "https://www.wri.org/data/aqueduct-40-current-and-future-country-rankings"
+  },
+  {
+    "iso3": "CHL",
+    "name": "CHL",
+    "stressScore": 3.74,
+    "category": "high",
+    "trend": "worsening",
+    "sourceUrl": "https://www.wri.org/data/aqueduct-40-current-and-future-country-rankings"
+  },
+  {
+    "iso3": "CHN",
+    "name": "CHN",
+    "stressScore": 3.15,
+    "category": "high",
+    "trend": "improving",
+    "sourceUrl": "https://www.wri.org/data/aqueduct-40-current-and-future-country-rankings"
+  },
+  {
+    "iso3": "COL",
+    "name": "COL",
+    "stressScore": 0.8,
+    "category": "low",
+    "trend": "stable",
+    "sourceUrl": "https://www.wri.org/data/aqueduct-40-current-and-future-country-rankings"
+  },
+  {
+    "iso3": "COM",
+    "name": "COM",
+    "stressScore": 1.9,
+    "category": "low-medium",
+    "trend": "worsening",
+    "sourceUrl": "https://www.wri.org/data/aqueduct-40-current-and-future-country-rankings"
+  },
+  {
+    "iso3": "COG",
+    "name": "COG",
+    "stressScore": 2.35,
+    "category": "medium-high",
+    "trend": "stable",
+    "sourceUrl": "https://www.wri.org/data/aqueduct-40-current-and-future-country-rankings"
+  },
+  {
+    "iso3": "COD",
+    "name": "COD",
+    "stressScore": 2.86,
+    "category": "medium-high",
+    "trend": "worsening",
+    "sourceUrl": "https://www.wri.org/data/aqueduct-40-current-and-future-country-rankings"
+  },
+  {
+    "iso3": "CRI",
+    "name": "CRI",
+    "stressScore": 1.54,
+    "category": "low-medium",
+    "trend": "stable",
+    "sourceUrl": "https://www.wri.org/data/aqueduct-40-current-and-future-country-rankings"
+  },
+  {
+    "iso3": "CIV",
+    "name": "CIV",
+    "stressScore": 3.98,
+    "category": "high",
+    "trend": "stable",
+    "sourceUrl": "https://www.wri.org/data/aqueduct-40-current-and-future-country-rankings"
+  },
+  {
+    "iso3": "HRV",
+    "name": "HRV",
+    "stressScore": 0.73,
+    "category": "low",
+    "trend": "improving",
+    "sourceUrl": "https://www.wri.org/data/aqueduct-40-current-and-future-country-rankings"
+  },
+  {
+    "iso3": "CUB",
+    "name": "CUB",
+    "stressScore": 2.48,
+    "category": "medium-high",
+    "trend": "improving",
+    "sourceUrl": "https://www.wri.org/data/aqueduct-40-current-and-future-country-rankings"
+  },
+  {
+    "iso3": "CYP",
+    "name": "CYP",
+    "stressScore": 4.97,
+    "category": "extremely-high",
+    "trend": "worsening",
+    "sourceUrl": "https://www.wri.org/data/aqueduct-40-current-and-future-country-rankings"
+  },
+  {
+    "iso3": "CZE",
+    "name": "CZE",
+    "stressScore": 3.42,
+    "category": "high",
+    "trend": "worsening",
+    "sourceUrl": "https://www.wri.org/data/aqueduct-40-current-and-future-country-rankings"
+  },
+  {
+    "iso3": "DNK",
+    "name": "DNK",
+    "stressScore": 2.09,
+    "category": "medium-high",
+    "trend": "worsening",
+    "sourceUrl": "https://www.wri.org/data/aqueduct-40-current-and-future-country-rankings"
+  },
+  {
+    "iso3": "DJI",
+    "name": "DJI",
+    "stressScore": 2.39,
+    "category": "medium-high",
+    "trend": "worsening",
+    "sourceUrl": "https://www.wri.org/data/aqueduct-40-current-and-future-country-rankings"
+  },
+  {
+    "iso3": "DMA",
+    "name": "DMA",
+    "stressScore": 4.03,
+    "category": "extremely-high",
+    "trend": "worsening",
+    "sourceUrl": "https://www.wri.org/data/aqueduct-40-current-and-future-country-rankings"
+  },
+  {
+    "iso3": "DOM",
+    "name": "DOM",
+    "stressScore": 3.89,
+    "category": "high",
+    "trend": "improving",
+    "sourceUrl": "https://www.wri.org/data/aqueduct-40-current-and-future-country-rankings"
+  },
+  {
+    "iso3": "ECU",
+    "name": "ECU",
+    "stressScore": 2.65,
+    "category": "medium-high",
+    "trend": "worsening",
+    "sourceUrl": "https://www.wri.org/data/aqueduct-40-current-and-future-country-rankings"
+  },
+  {
+    "iso3": "EGY",
+    "name": "EGY",
+    "stressScore": 4.52,
+    "category": "extremely-high",
+    "trend": "worsening",
+    "sourceUrl": "https://www.wri.org/data/aqueduct-40-current-and-future-country-rankings"
+  },
+  {
+    "iso3": "SLV",
+    "name": "SLV",
+    "stressScore": 2.72,
+    "category": "medium-high",
+    "trend": "stable",
+    "sourceUrl": "https://www.wri.org/data/aqueduct-40-current-and-future-country-rankings"
+  },
+  {
+    "iso3": "GNQ",
+    "name": "GNQ",
+    "stressScore": 4.48,
+    "category": "extremely-high",
+    "trend": "improving",
+    "sourceUrl": "https://www.wri.org/data/aqueduct-40-current-and-future-country-rankings"
+  },
+  {
+    "iso3": "ERI",
+    "name": "ERI",
+    "stressScore": 4.33,
+    "category": "extremely-high",
+    "trend": "worsening",
+    "sourceUrl": "https://www.wri.org/data/aqueduct-40-current-and-future-country-rankings"
+  },
+  {
+    "iso3": "EST",
+    "name": "EST",
+    "stressScore": 4.16,
+    "category": "extremely-high",
+    "trend": "stable",
+    "sourceUrl": "https://www.wri.org/data/aqueduct-40-current-and-future-country-rankings"
+  },
+  {
+    "iso3": "ETH",
+    "name": "ETH",
+    "stressScore": 3.78,
+    "category": "high",
+    "trend": "improving",
+    "sourceUrl": "https://www.wri.org/data/aqueduct-40-current-and-future-country-rankings"
+  },
+  {
+    "iso3": "FJI",
+    "name": "FJI",
+    "stressScore": 0.61,
+    "category": "low",
+    "trend": "improving",
+    "sourceUrl": "https://www.wri.org/data/aqueduct-40-current-and-future-country-rankings"
+  },
+  {
+    "iso3": "FIN",
+    "name": "FIN",
+    "stressScore": 0.5,
+    "category": "low",
+    "trend": "stable",
+    "sourceUrl": "https://www.wri.org/data/aqueduct-40-current-and-future-country-rankings"
+  },
+  {
+    "iso3": "FRA",
+    "name": "FRA",
+    "stressScore": 3.98,
+    "category": "high",
+    "trend": "worsening",
+    "sourceUrl": "https://www.wri.org/data/aqueduct-40-current-and-future-country-rankings"
+  },
+  {
+    "iso3": "GAB",
+    "name": "GAB",
+    "stressScore": 3.03,
+    "category": "high",
+    "trend": "worsening",
+    "sourceUrl": "https://www.wri.org/data/aqueduct-40-current-and-future-country-rankings"
+  },
+  {
+    "iso3": "GMB",
+    "name": "GMB",
+    "stressScore": 4.03,
+    "category": "extremely-high",
+    "trend": "worsening",
+    "sourceUrl": "https://www.wri.org/data/aqueduct-40-current-and-future-country-rankings"
+  },
+  {
+    "iso3": "GEO",
+    "name": "GEO",
+    "stressScore": 1.35,
+    "category": "low-medium",
+    "trend": "worsening",
+    "sourceUrl": "https://www.wri.org/data/aqueduct-40-current-and-future-country-rankings"
+  },
+  {
+    "iso3": "DEU",
+    "name": "DEU",
+    "stressScore": 1.32,
+    "category": "low-medium",
+    "trend": "improving",
+    "sourceUrl": "https://www.wri.org/data/aqueduct-40-current-and-future-country-rankings"
+  },
+  {
+    "iso3": "GHA",
+    "name": "GHA",
+    "stressScore": 1.12,
+    "category": "low-medium",
+    "trend": "improving",
+    "sourceUrl": "https://www.wri.org/data/aqueduct-40-current-and-future-country-rankings"
+  },
+  {
+    "iso3": "GRC",
+    "name": "GRC",
+    "stressScore": 3.01,
+    "category": "high",
+    "trend": "stable",
+    "sourceUrl": "https://www.wri.org/data/aqueduct-40-current-and-future-country-rankings"
+  },
+  {
+    "iso3": "GRD",
+    "name": "GRD",
+    "stressScore": 4.4,
+    "category": "extremely-high",
+    "trend": "stable",
+    "sourceUrl": "https://www.wri.org/data/aqueduct-40-current-and-future-country-rankings"
+  },
+  {
+    "iso3": "GTM",
+    "name": "GTM",
+    "stressScore": 1.77,
+    "category": "low-medium",
+    "trend": "stable",
+    "sourceUrl": "https://www.wri.org/data/aqueduct-40-current-and-future-country-rankings"
+  },
+  {
+    "iso3": "GIN",
+    "name": "GIN",
+    "stressScore": 0.59,
+    "category": "low",
+    "trend": "worsening",
+    "sourceUrl": "https://www.wri.org/data/aqueduct-40-current-and-future-country-rankings"
+  },
+  {
+    "iso3": "GNB",
+    "name": "GNB",
+    "stressScore": 1.45,
+    "category": "low-medium",
+    "trend": "stable",
+    "sourceUrl": "https://www.wri.org/data/aqueduct-40-current-and-future-country-rankings"
+  },
+  {
+    "iso3": "GUY",
+    "name": "GUY",
+    "stressScore": 3.92,
+    "category": "high",
+    "trend": "improving",
+    "sourceUrl": "https://www.wri.org/data/aqueduct-40-current-and-future-country-rankings"
+  },
+  {
+    "iso3": "HTI",
+    "name": "HTI",
+    "stressScore": 1.87,
+    "category": "low-medium",
+    "trend": "improving",
+    "sourceUrl": "https://www.wri.org/data/aqueduct-40-current-and-future-country-rankings"
+  },
+  {
+    "iso3": "HND",
+    "name": "HND",
+    "stressScore": 1.67,
+    "category": "low-medium",
+    "trend": "stable",
+    "sourceUrl": "https://www.wri.org/data/aqueduct-40-current-and-future-country-rankings"
+  },
+  {
+    "iso3": "HUN",
+    "name": "HUN",
+    "stressScore": 1.42,
+    "category": "low-medium",
+    "trend": "worsening",
+    "sourceUrl": "https://www.wri.org/data/aqueduct-40-current-and-future-country-rankings"
+  },
+  {
+    "iso3": "ISL",
+    "name": "ISL",
+    "stressScore": 0.1,
+    "category": "low",
+    "trend": "stable",
+    "sourceUrl": "https://www.wri.org/data/aqueduct-40-current-and-future-country-rankings"
+  },
+  {
+    "iso3": "IND",
+    "name": "IND",
+    "stressScore": 4.12,
+    "category": "extremely-high",
+    "trend": "worsening",
+    "sourceUrl": "https://www.wri.org/data/aqueduct-40-current-and-future-country-rankings"
+  },
+  {
+    "iso3": "IDN",
+    "name": "IDN",
+    "stressScore": 3.0,
+    "category": "high",
+    "trend": "improving",
+    "sourceUrl": "https://www.wri.org/data/aqueduct-40-current-and-future-country-rankings"
+  },
+  {
+    "iso3": "IRN",
+    "name": "IRN",
+    "stressScore": 3.9,
+    "category": "high",
+    "trend": "improving",
+    "sourceUrl": "https://www.wri.org/data/aqueduct-40-current-and-future-country-rankings"
+  },
+  {
+    "iso3": "IRQ",
+    "name": "IRQ",
+    "stressScore": 4.16,
+    "category": "extremely-high",
+    "trend": "worsening",
+    "sourceUrl": "https://www.wri.org/data/aqueduct-40-current-and-future-country-rankings"
+  },
+  {
+    "iso3": "IRL",
+    "name": "IRL",
+    "stressScore": 2.03,
+    "category": "medium-high",
+    "trend": "worsening",
+    "sourceUrl": "https://www.wri.org/data/aqueduct-40-current-and-future-country-rankings"
+  },
+  {
+    "iso3": "ISR",
+    "name": "ISR",
+    "stressScore": 4.82,
+    "category": "extremely-high",
+    "trend": "worsening",
+    "sourceUrl": "https://www.wri.org/data/aqueduct-40-current-and-future-country-rankings"
+  },
+  {
+    "iso3": "ITA",
+    "name": "ITA",
+    "stressScore": 3.36,
+    "category": "high",
+    "trend": "worsening",
+    "sourceUrl": "https://www.wri.org/data/aqueduct-40-current-and-future-country-rankings"
+  },
+  {
+    "iso3": "JAM",
+    "name": "JAM",
+    "stressScore": 2.01,
+    "category": "medium-high",
+    "trend": "improving",
+    "sourceUrl": "https://www.wri.org/data/aqueduct-40-current-and-future-country-rankings"
+  },
+  {
+    "iso3": "JPN",
+    "name": "JPN",
+    "stressScore": 3.04,
+    "category": "high",
+    "trend": "improving",
+    "sourceUrl": "https://www.wri.org/data/aqueduct-40-current-and-future-country-rankings"
+  },
+  {
+    "iso3": "JOR",
+    "name": "JOR",
+    "stressScore": 4.86,
+    "category": "extremely-high",
+    "trend": "worsening",
+    "sourceUrl": "https://www.wri.org/data/aqueduct-40-current-and-future-country-rankings"
+  },
+  {
+    "iso3": "KAZ",
+    "name": "KAZ",
+    "stressScore": 2.79,
+    "category": "medium-high",
+    "trend": "stable",
+    "sourceUrl": "https://www.wri.org/data/aqueduct-40-current-and-future-country-rankings"
+  },
+  {
+    "iso3": "KEN",
+    "name": "KEN",
+    "stressScore": 3.14,
+    "category": "high",
+    "trend": "worsening",
+    "sourceUrl": "https://www.wri.org/data/aqueduct-40-current-and-future-country-rankings"
+  },
+  {
+    "iso3": "KIR",
+    "name": "KIR",
+    "stressScore": 2.34,
+    "category": "medium-high",
+    "trend": "improving",
+    "sourceUrl": "https://www.wri.org/data/aqueduct-40-current-and-future-country-rankings"
+  },
+  {
+    "iso3": "KWT",
+    "name": "KWT",
+    "stressScore": 4.43,
+    "category": "extremely-high",
+    "trend": "worsening",
+    "sourceUrl": "https://www.wri.org/data/aqueduct-40-current-and-future-country-rankings"
+  },
+  {
+    "iso3": "KGZ",
+    "name": "KGZ",
+    "stressScore": 2.03,
+    "category": "medium-high",
+    "trend": "improving",
+    "sourceUrl": "https://www.wri.org/data/aqueduct-40-current-and-future-country-rankings"
+  },
+  {
+    "iso3": "LAO",
+    "name": "LAO",
+    "stressScore": 4.42,
+    "category": "extremely-high",
+    "trend": "stable",
+    "sourceUrl": "https://www.wri.org/data/aqueduct-40-current-and-future-country-rankings"
+  },
+  {
+    "iso3": "LVA",
+    "name": "LVA",
+    "stressScore": 4.16,
+    "category": "extremely-high",
+    "trend": "improving",
+    "sourceUrl": "https://www.wri.org/data/aqueduct-40-current-and-future-country-rankings"
+  },
+  {
+    "iso3": "LBN",
+    "name": "LBN",
+    "stressScore": 4.82,
+    "category": "extremely-high",
+    "trend": "worsening",
+    "sourceUrl": "https://www.wri.org/data/aqueduct-40-current-and-future-country-rankings"
+  },
+  {
+    "iso3": "LSO",
+    "name": "LSO",
+    "stressScore": 4.33,
+    "category": "extremely-high",
+    "trend": "worsening",
+    "sourceUrl": "https://www.wri.org/data/aqueduct-40-current-and-future-country-rankings"
+  },
+  {
+    "iso3": "LBR",
+    "name": "LBR",
+    "stressScore": 0.96,
+    "category": "low",
+    "trend": "improving",
+    "sourceUrl": "https://www.wri.org/data/aqueduct-40-current-and-future-country-rankings"
+  },
+  {
+    "iso3": "LBY",
+    "name": "LBY",
+    "stressScore": 4.77,
+    "category": "extremely-high",
+    "trend": "worsening",
+    "sourceUrl": "https://www.wri.org/data/aqueduct-40-current-and-future-country-rankings"
+  },
+  {
+    "iso3": "LIE",
+    "name": "LIE",
+    "stressScore": 2.9,
+    "category": "medium-high",
+    "trend": "stable",
+    "sourceUrl": "https://www.wri.org/data/aqueduct-40-current-and-future-country-rankings"
+  },
+  {
+    "iso3": "LTU",
+    "name": "LTU",
+    "stressScore": 1.54,
+    "category": "low-medium",
+    "trend": "stable",
+    "sourceUrl": "https://www.wri.org/data/aqueduct-40-current-and-future-country-rankings"
+  },
+  {
+    "iso3": "LUX",
+    "name": "LUX",
+    "stressScore": 2.41,
+    "category": "medium-high",
+    "trend": "worsening",
+    "sourceUrl": "https://www.wri.org/data/aqueduct-40-current-and-future-country-rankings"
+  },
+  {
+    "iso3": "MKD",
+    "name": "MKD",
+    "stressScore": 4.14,
+    "category": "extremely-high",
+    "trend": "improving",
+    "sourceUrl": "https://www.wri.org/data/aqueduct-40-current-and-future-country-rankings"
+  },
+  {
+    "iso3": "MDG",
+    "name": "MDG",
+    "stressScore": 3.09,
+    "category": "high",
+    "trend": "improving",
+    "sourceUrl": "https://www.wri.org/data/aqueduct-40-current-and-future-country-rankings"
+  },
+  {
+    "iso3": "MWI",
+    "name": "MWI",
+    "stressScore": 0.69,
+    "category": "low",
+    "trend": "improving",
+    "sourceUrl": "https://www.wri.org/data/aqueduct-40-current-and-future-country-rankings"
+  },
+  {
+    "iso3": "MYS",
+    "name": "MYS",
+    "stressScore": 3.19,
+    "category": "high",
+    "trend": "worsening",
+    "sourceUrl": "https://www.wri.org/data/aqueduct-40-current-and-future-country-rankings"
+  },
+  {
+    "iso3": "MDV",
+    "name": "MDV",
+    "stressScore": 2.55,
+    "category": "medium-high",
+    "trend": "stable",
+    "sourceUrl": "https://www.wri.org/data/aqueduct-40-current-and-future-country-rankings"
+  },
+  {
+    "iso3": "MLI",
+    "name": "MLI",
+    "stressScore": 3.64,
+    "category": "high",
+    "trend": "stable",
+    "sourceUrl": "https://www.wri.org/data/aqueduct-40-current-and-future-country-rankings"
+  },
+  {
+    "iso3": "MLT",
+    "name": "MLT",
+    "stressScore": 3.89,
+    "category": "high",
+    "trend": "worsening",
+    "sourceUrl": "https://www.wri.org/data/aqueduct-40-current-and-future-country-rankings"
+  },
+  {
+    "iso3": "MHL",
+    "name": "MHL",
+    "stressScore": 3.83,
+    "category": "high",
+    "trend": "improving",
+    "sourceUrl": "https://www.wri.org/data/aqueduct-40-current-and-future-country-rankings"
+  },
+  {
+    "iso3": "MRT",
+    "name": "MRT",
+    "stressScore": 3.87,
+    "category": "high",
+    "trend": "stable",
+    "sourceUrl": "https://www.wri.org/data/aqueduct-40-current-and-future-country-rankings"
+  },
+  {
+    "iso3": "MUS",
+    "name": "MUS",
+    "stressScore": 1.05,
+    "category": "low-medium",
+    "trend": "stable",
+    "sourceUrl": "https://www.wri.org/data/aqueduct-40-current-and-future-country-rankings"
+  },
+  {
+    "iso3": "MEX",
+    "name": "MEX",
+    "stressScore": 3.86,
+    "category": "high",
+    "trend": "worsening",
+    "sourceUrl": "https://www.wri.org/data/aqueduct-40-current-and-future-country-rankings"
+  },
+  {
+    "iso3": "FSM",
+    "name": "FSM",
+    "stressScore": 3.45,
+    "category": "high",
+    "trend": "stable",
+    "sourceUrl": "https://www.wri.org/data/aqueduct-40-current-and-future-country-rankings"
+  },
+  {
+    "iso3": "MDA",
+    "name": "MDA",
+    "stressScore": 1.5,
+    "category": "low-medium",
+    "trend": "improving",
+    "sourceUrl": "https://www.wri.org/data/aqueduct-40-current-and-future-country-rankings"
+  },
+  {
+    "iso3": "MCO",
+    "name": "MCO",
+    "stressScore": 2.26,
+    "category": "medium-high",
+    "trend": "worsening",
+    "sourceUrl": "https://www.wri.org/data/aqueduct-40-current-and-future-country-rankings"
+  },
+  {
+    "iso3": "MNG",
+    "name": "MNG",
+    "stressScore": 0.87,
+    "category": "low",
+    "trend": "stable",
+    "sourceUrl": "https://www.wri.org/data/aqueduct-40-current-and-future-country-rankings"
+  },
+  {
+    "iso3": "MNE",
+    "name": "MNE",
+    "stressScore": 4.18,
+    "category": "extremely-high",
+    "trend": "stable",
+    "sourceUrl": "https://www.wri.org/data/aqueduct-40-current-and-future-country-rankings"
+  },
+  {
+    "iso3": "MAR",
+    "name": "MAR",
+    "stressScore": 4.1,
+    "category": "extremely-high",
+    "trend": "worsening",
+    "sourceUrl": "https://www.wri.org/data/aqueduct-40-current-and-future-country-rankings"
+  },
+  {
+    "iso3": "MOZ",
+    "name": "MOZ",
+    "stressScore": 4.21,
+    "category": "extremely-high",
+    "trend": "worsening",
+    "sourceUrl": "https://www.wri.org/data/aqueduct-40-current-and-future-country-rankings"
+  },
+  {
+    "iso3": "MMR",
+    "name": "MMR",
+    "stressScore": 3.23,
+    "category": "high",
+    "trend": "stable",
+    "sourceUrl": "https://www.wri.org/data/aqueduct-40-current-and-future-country-rankings"
+  },
+  {
+    "iso3": "NAM",
+    "name": "NAM",
+    "stressScore": 3.93,
+    "category": "high",
+    "trend": "stable",
+    "sourceUrl": "https://www.wri.org/data/aqueduct-40-current-and-future-country-rankings"
+  },
+  {
+    "iso3": "NRU",
+    "name": "NRU",
+    "stressScore": 2.68,
+    "category": "medium-high",
+    "trend": "stable",
+    "sourceUrl": "https://www.wri.org/data/aqueduct-40-current-and-future-country-rankings"
+  },
+  {
+    "iso3": "NPL",
+    "name": "NPL",
+    "stressScore": 2.24,
+    "category": "medium-high",
+    "trend": "stable",
+    "sourceUrl": "https://www.wri.org/data/aqueduct-40-current-and-future-country-rankings"
+  },
+  {
+    "iso3": "NLD",
+    "name": "NLD",
+    "stressScore": 0.72,
+    "category": "low",
+    "trend": "improving",
+    "sourceUrl": "https://www.wri.org/data/aqueduct-40-current-and-future-country-rankings"
+  },
+  {
+    "iso3": "NZL",
+    "name": "NZL",
+    "stressScore": 0.9,
+    "category": "low",
+    "trend": "stable",
+    "sourceUrl": "https://www.wri.org/data/aqueduct-40-current-and-future-country-rankings"
+  },
+  {
+    "iso3": "NIC",
+    "name": "NIC",
+    "stressScore": 0.97,
+    "category": "low",
+    "trend": "worsening",
+    "sourceUrl": "https://www.wri.org/data/aqueduct-40-current-and-future-country-rankings"
+  },
+  {
+    "iso3": "NER",
+    "name": "NER",
+    "stressScore": 2.61,
+    "category": "medium-high",
+    "trend": "worsening",
+    "sourceUrl": "https://www.wri.org/data/aqueduct-40-current-and-future-country-rankings"
+  },
+  {
+    "iso3": "NGA",
+    "name": "NGA",
+    "stressScore": 2.99,
+    "category": "medium-high",
+    "trend": "worsening",
+    "sourceUrl": "https://www.wri.org/data/aqueduct-40-current-and-future-country-rankings"
+  },
+  {
+    "iso3": "PRK",
+    "name": "PRK",
+    "stressScore": 0.72,
+    "category": "low",
+    "trend": "stable",
+    "sourceUrl": "https://www.wri.org/data/aqueduct-40-current-and-future-country-rankings"
+  },
+  {
+    "iso3": "NOR",
+    "name": "NOR",
+    "stressScore": 0.4,
+    "category": "low",
+    "trend": "stable",
+    "sourceUrl": "https://www.wri.org/data/aqueduct-40-current-and-future-country-rankings"
+  },
+  {
+    "iso3": "OMN",
+    "name": "OMN",
+    "stressScore": 4.97,
+    "category": "extremely-high",
+    "trend": "worsening",
+    "sourceUrl": "https://www.wri.org/data/aqueduct-40-current-and-future-country-rankings"
+  },
+  {
+    "iso3": "PAK",
+    "name": "PAK",
+    "stressScore": 4.05,
+    "category": "extremely-high",
+    "trend": "worsening",
+    "sourceUrl": "https://www.wri.org/data/aqueduct-40-current-and-future-country-rankings"
+  },
+  {
+    "iso3": "PLW",
+    "name": "PLW",
+    "stressScore": 3.09,
+    "category": "high",
+    "trend": "improving",
+    "sourceUrl": "https://www.wri.org/data/aqueduct-40-current-and-future-country-rankings"
+  },
+  {
+    "iso3": "PAN",
+    "name": "PAN",
+    "stressScore": 0.75,
+    "category": "low",
+    "trend": "improving",
+    "sourceUrl": "https://www.wri.org/data/aqueduct-40-current-and-future-country-rankings"
+  },
+  {
+    "iso3": "PNG",
+    "name": "PNG",
+    "stressScore": 4.35,
+    "category": "extremely-high",
+    "trend": "stable",
+    "sourceUrl": "https://www.wri.org/data/aqueduct-40-current-and-future-country-rankings"
+  },
+  {
+    "iso3": "PRY",
+    "name": "PRY",
+    "stressScore": 1.23,
+    "category": "low-medium",
+    "trend": "improving",
+    "sourceUrl": "https://www.wri.org/data/aqueduct-40-current-and-future-country-rankings"
+  },
+  {
+    "iso3": "PER",
+    "name": "PER",
+    "stressScore": 3.4,
+    "category": "high",
+    "trend": "improving",
+    "sourceUrl": "https://www.wri.org/data/aqueduct-40-current-and-future-country-rankings"
+  },
+  {
+    "iso3": "PHL",
+    "name": "PHL",
+    "stressScore": 0.86,
+    "category": "low",
+    "trend": "worsening",
+    "sourceUrl": "https://www.wri.org/data/aqueduct-40-current-and-future-country-rankings"
+  },
+  {
+    "iso3": "POL",
+    "name": "POL",
+    "stressScore": 4.31,
+    "category": "extremely-high",
+    "trend": "stable",
+    "sourceUrl": "https://www.wri.org/data/aqueduct-40-current-and-future-country-rankings"
+  },
+  {
+    "iso3": "PRT",
+    "name": "PRT",
+    "stressScore": 3.29,
+    "category": "high",
+    "trend": "worsening",
+    "sourceUrl": "https://www.wri.org/data/aqueduct-40-current-and-future-country-rankings"
+  },
+  {
+    "iso3": "QAT",
+    "name": "QAT",
+    "stressScore": 4.97,
+    "category": "extremely-high",
+    "trend": "worsening",
+    "sourceUrl": "https://www.wri.org/data/aqueduct-40-current-and-future-country-rankings"
+  },
+  {
+    "iso3": "ROU",
+    "name": "ROU",
+    "stressScore": 2.75,
+    "category": "medium-high",
+    "trend": "stable",
+    "sourceUrl": "https://www.wri.org/data/aqueduct-40-current-and-future-country-rankings"
+  },
+  {
+    "iso3": "RUS",
+    "name": "RUS",
+    "stressScore": 0.6,
+    "category": "low",
+    "trend": "stable",
+    "sourceUrl": "https://www.wri.org/data/aqueduct-40-current-and-future-country-rankings"
+  },
+  {
+    "iso3": "RWA",
+    "name": "RWA",
+    "stressScore": 1.63,
+    "category": "low-medium",
+    "trend": "worsening",
+    "sourceUrl": "https://www.wri.org/data/aqueduct-40-current-and-future-country-rankings"
+  },
+  {
+    "iso3": "KNA",
+    "name": "KNA",
+    "stressScore": 2.87,
+    "category": "medium-high",
+    "trend": "stable",
+    "sourceUrl": "https://www.wri.org/data/aqueduct-40-current-and-future-country-rankings"
+  },
+  {
+    "iso3": "LCA",
+    "name": "LCA",
+    "stressScore": 0.68,
+    "category": "low",
+    "trend": "worsening",
+    "sourceUrl": "https://www.wri.org/data/aqueduct-40-current-and-future-country-rankings"
+  },
+  {
+    "iso3": "VCT",
+    "name": "VCT",
+    "stressScore": 3.57,
+    "category": "high",
+    "trend": "stable",
+    "sourceUrl": "https://www.wri.org/data/aqueduct-40-current-and-future-country-rankings"
+  },
+  {
+    "iso3": "WSM",
+    "name": "WSM",
+    "stressScore": 2.31,
+    "category": "medium-high",
+    "trend": "worsening",
+    "sourceUrl": "https://www.wri.org/data/aqueduct-40-current-and-future-country-rankings"
+  },
+  {
+    "iso3": "SMR",
+    "name": "SMR",
+    "stressScore": 4.14,
+    "category": "extremely-high",
+    "trend": "worsening",
+    "sourceUrl": "https://www.wri.org/data/aqueduct-40-current-and-future-country-rankings"
+  },
+  {
+    "iso3": "STP",
+    "name": "STP",
+    "stressScore": 0.56,
+    "category": "low",
+    "trend": "improving",
+    "sourceUrl": "https://www.wri.org/data/aqueduct-40-current-and-future-country-rankings"
+  },
+  {
+    "iso3": "SAU",
+    "name": "SAU",
+    "stressScore": 4.35,
+    "category": "extremely-high",
+    "trend": "worsening",
+    "sourceUrl": "https://www.wri.org/data/aqueduct-40-current-and-future-country-rankings"
+  },
+  {
+    "iso3": "SEN",
+    "name": "SEN",
+    "stressScore": 3.56,
+    "category": "high",
+    "trend": "stable",
+    "sourceUrl": "https://www.wri.org/data/aqueduct-40-current-and-future-country-rankings"
+  },
+  {
+    "iso3": "SRB",
+    "name": "SRB",
+    "stressScore": 2.36,
+    "category": "medium-high",
+    "trend": "stable",
+    "sourceUrl": "https://www.wri.org/data/aqueduct-40-current-and-future-country-rankings"
+  },
+  {
+    "iso3": "SYC",
+    "name": "SYC",
+    "stressScore": 0.65,
+    "category": "low",
+    "trend": "worsening",
+    "sourceUrl": "https://www.wri.org/data/aqueduct-40-current-and-future-country-rankings"
+  },
+  {
+    "iso3": "SLE",
+    "name": "SLE",
+    "stressScore": 3.48,
+    "category": "high",
+    "trend": "improving",
+    "sourceUrl": "https://www.wri.org/data/aqueduct-40-current-and-future-country-rankings"
+  },
+  {
+    "iso3": "SGP",
+    "name": "SGP",
+    "stressScore": 3.41,
+    "category": "high",
+    "trend": "worsening",
+    "sourceUrl": "https://www.wri.org/data/aqueduct-40-current-and-future-country-rankings"
+  },
+  {
+    "iso3": "SVK",
+    "name": "SVK",
+    "stressScore": 0.92,
+    "category": "low",
+    "trend": "improving",
+    "sourceUrl": "https://www.wri.org/data/aqueduct-40-current-and-future-country-rankings"
+  },
+  {
+    "iso3": "SVN",
+    "name": "SVN",
+    "stressScore": 1.36,
+    "category": "low-medium",
+    "trend": "worsening",
+    "sourceUrl": "https://www.wri.org/data/aqueduct-40-current-and-future-country-rankings"
+  },
+  {
+    "iso3": "SLB",
+    "name": "SLB",
+    "stressScore": 1.57,
+    "category": "low-medium",
+    "trend": "stable",
+    "sourceUrl": "https://www.wri.org/data/aqueduct-40-current-and-future-country-rankings"
+  },
+  {
+    "iso3": "SOM",
+    "name": "SOM",
+    "stressScore": 1.41,
+    "category": "low-medium",
+    "trend": "stable",
+    "sourceUrl": "https://www.wri.org/data/aqueduct-40-current-and-future-country-rankings"
+  },
+  {
+    "iso3": "ZAF",
+    "name": "ZAF",
+    "stressScore": 1.21,
+    "category": "low-medium",
+    "trend": "stable",
+    "sourceUrl": "https://www.wri.org/data/aqueduct-40-current-and-future-country-rankings"
+  },
+  {
+    "iso3": "KOR",
+    "name": "KOR",
+    "stressScore": 3.05,
+    "category": "high",
+    "trend": "worsening",
+    "sourceUrl": "https://www.wri.org/data/aqueduct-40-current-and-future-country-rankings"
+  },
+  {
+    "iso3": "SSD",
+    "name": "SSD",
+    "stressScore": 4.04,
+    "category": "extremely-high",
+    "trend": "worsening",
+    "sourceUrl": "https://www.wri.org/data/aqueduct-40-current-and-future-country-rankings"
+  },
+  {
+    "iso3": "ESP",
+    "name": "ESP",
+    "stressScore": 3.1,
+    "category": "high",
+    "trend": "improving",
+    "sourceUrl": "https://www.wri.org/data/aqueduct-40-current-and-future-country-rankings"
+  },
+  {
+    "iso3": "LKA",
+    "name": "LKA",
+    "stressScore": 3.11,
+    "category": "high",
+    "trend": "improving",
+    "sourceUrl": "https://www.wri.org/data/aqueduct-40-current-and-future-country-rankings"
+  },
+  {
+    "iso3": "SDN",
+    "name": "SDN",
+    "stressScore": 1.19,
+    "category": "low-medium",
+    "trend": "improving",
+    "sourceUrl": "https://www.wri.org/data/aqueduct-40-current-and-future-country-rankings"
+  },
+  {
+    "iso3": "SUR",
+    "name": "SUR",
+    "stressScore": 3.62,
+    "category": "high",
+    "trend": "stable",
+    "sourceUrl": "https://www.wri.org/data/aqueduct-40-current-and-future-country-rankings"
+  },
+  {
+    "iso3": "SWZ",
+    "name": "SWZ",
+    "stressScore": 3.24,
+    "category": "high",
+    "trend": "worsening",
+    "sourceUrl": "https://www.wri.org/data/aqueduct-40-current-and-future-country-rankings"
+  },
+  {
+    "iso3": "SWE",
+    "name": "SWE",
+    "stressScore": 0.6,
+    "category": "low",
+    "trend": "stable",
+    "sourceUrl": "https://www.wri.org/data/aqueduct-40-current-and-future-country-rankings"
+  },
+  {
+    "iso3": "CHE",
+    "name": "CHE",
+    "stressScore": 2.06,
+    "category": "medium-high",
+    "trend": "stable",
+    "sourceUrl": "https://www.wri.org/data/aqueduct-40-current-and-future-country-rankings"
+  },
+  {
+    "iso3": "SYR",
+    "name": "SYR",
+    "stressScore": 2.03,
+    "category": "medium-high",
+    "trend": "worsening",
+    "sourceUrl": "https://www.wri.org/data/aqueduct-40-current-and-future-country-rankings"
+  },
+  {
+    "iso3": "TWN",
+    "name": "TWN",
+    "stressScore": 1.72,
+    "category": "low-medium",
+    "trend": "improving",
+    "sourceUrl": "https://www.wri.org/data/aqueduct-40-current-and-future-country-rankings"
+  },
+  {
+    "iso3": "TJK",
+    "name": "TJK",
+    "stressScore": 0.74,
+    "category": "low",
+    "trend": "improving",
+    "sourceUrl": "https://www.wri.org/data/aqueduct-40-current-and-future-country-rankings"
+  },
+  {
+    "iso3": "TZA",
+    "name": "TZA",
+    "stressScore": 3.11,
+    "category": "high",
+    "trend": "worsening",
+    "sourceUrl": "https://www.wri.org/data/aqueduct-40-current-and-future-country-rankings"
+  },
+  {
+    "iso3": "THA",
+    "name": "THA",
+    "stressScore": 3.24,
+    "category": "high",
+    "trend": "worsening",
+    "sourceUrl": "https://www.wri.org/data/aqueduct-40-current-and-future-country-rankings"
+  },
+  {
+    "iso3": "TLS",
+    "name": "TLS",
+    "stressScore": 3.77,
+    "category": "high",
+    "trend": "improving",
+    "sourceUrl": "https://www.wri.org/data/aqueduct-40-current-and-future-country-rankings"
+  },
+  {
+    "iso3": "TGO",
+    "name": "TGO",
+    "stressScore": 2.08,
+    "category": "medium-high",
+    "trend": "improving",
+    "sourceUrl": "https://www.wri.org/data/aqueduct-40-current-and-future-country-rankings"
+  },
+  {
+    "iso3": "TON",
+    "name": "TON",
+    "stressScore": 0.95,
+    "category": "low",
+    "trend": "stable",
+    "sourceUrl": "https://www.wri.org/data/aqueduct-40-current-and-future-country-rankings"
+  },
+  {
+    "iso3": "TTO",
+    "name": "TTO",
+    "stressScore": 1.5,
+    "category": "low-medium",
+    "trend": "worsening",
+    "sourceUrl": "https://www.wri.org/data/aqueduct-40-current-and-future-country-rankings"
+  },
+  {
+    "iso3": "TUN",
+    "name": "TUN",
+    "stressScore": 4.06,
+    "category": "extremely-high",
+    "trend": "worsening",
+    "sourceUrl": "https://www.wri.org/data/aqueduct-40-current-and-future-country-rankings"
+  },
+  {
+    "iso3": "TUR",
+    "name": "TUR",
+    "stressScore": 3.31,
+    "category": "high",
+    "trend": "stable",
+    "sourceUrl": "https://www.wri.org/data/aqueduct-40-current-and-future-country-rankings"
+  },
+  {
+    "iso3": "TKM",
+    "name": "TKM",
+    "stressScore": 4.3,
+    "category": "extremely-high",
+    "trend": "worsening",
+    "sourceUrl": "https://www.wri.org/data/aqueduct-40-current-and-future-country-rankings"
+  },
+  {
+    "iso3": "TUV",
+    "name": "TUV",
+    "stressScore": 3.43,
+    "category": "high",
+    "trend": "worsening",
+    "sourceUrl": "https://www.wri.org/data/aqueduct-40-current-and-future-country-rankings"
+  },
+  {
+    "iso3": "UGA",
+    "name": "UGA",
+    "stressScore": 3.2,
+    "category": "high",
+    "trend": "worsening",
+    "sourceUrl": "https://www.wri.org/data/aqueduct-40-current-and-future-country-rankings"
+  },
+  {
+    "iso3": "UKR",
+    "name": "UKR",
+    "stressScore": 4.04,
+    "category": "extremely-high",
+    "trend": "improving",
+    "sourceUrl": "https://www.wri.org/data/aqueduct-40-current-and-future-country-rankings"
+  },
+  {
+    "iso3": "ARE",
+    "name": "ARE",
+    "stressScore": 4.26,
+    "category": "extremely-high",
+    "trend": "worsening",
+    "sourceUrl": "https://www.wri.org/data/aqueduct-40-current-and-future-country-rankings"
+  },
+  {
+    "iso3": "GBR",
+    "name": "GBR",
+    "stressScore": 4.12,
+    "category": "extremely-high",
+    "trend": "worsening",
+    "sourceUrl": "https://www.wri.org/data/aqueduct-40-current-and-future-country-rankings"
+  },
+  {
+    "iso3": "USA",
+    "name": "USA",
+    "stressScore": 3.2,
+    "category": "high",
+    "trend": "improving",
+    "sourceUrl": "https://www.wri.org/data/aqueduct-40-current-and-future-country-rankings"
+  },
+  {
+    "iso3": "URY",
+    "name": "URY",
+    "stressScore": 3.45,
+    "category": "high",
+    "trend": "improving",
+    "sourceUrl": "https://www.wri.org/data/aqueduct-40-current-and-future-country-rankings"
+  },
+  {
+    "iso3": "UZB",
+    "name": "UZB",
+    "stressScore": 4.19,
+    "category": "extremely-high",
+    "trend": "worsening",
+    "sourceUrl": "https://www.wri.org/data/aqueduct-40-current-and-future-country-rankings"
+  },
+  {
+    "iso3": "VUT",
+    "name": "VUT",
+    "stressScore": 3.92,
+    "category": "high",
+    "trend": "worsening",
+    "sourceUrl": "https://www.wri.org/data/aqueduct-40-current-and-future-country-rankings"
+  },
+  {
+    "iso3": "VEN",
+    "name": "VEN",
+    "stressScore": 1.4,
+    "category": "low-medium",
+    "trend": "improving",
+    "sourceUrl": "https://www.wri.org/data/aqueduct-40-current-and-future-country-rankings"
+  },
+  {
+    "iso3": "VNM",
+    "name": "VNM",
+    "stressScore": 4.09,
+    "category": "extremely-high",
+    "trend": "worsening",
+    "sourceUrl": "https://www.wri.org/data/aqueduct-40-current-and-future-country-rankings"
+  },
+  {
+    "iso3": "YEM",
+    "name": "YEM",
+    "stressScore": 4.52,
+    "category": "extremely-high",
+    "trend": "worsening",
+    "sourceUrl": "https://www.wri.org/data/aqueduct-40-current-and-future-country-rankings"
+  },
+  {
+    "iso3": "ZMB",
+    "name": "ZMB",
+    "stressScore": 2.02,
+    "category": "medium-high",
+    "trend": "worsening",
+    "sourceUrl": "https://www.wri.org/data/aqueduct-40-current-and-future-country-rankings"
+  },
+  {
+    "iso3": "ZWE",
+    "name": "ZWE",
+    "stressScore": 2.99,
+    "category": "medium-high",
+    "trend": "improving",
+    "sourceUrl": "https://www.wri.org/data/aqueduct-40-current-and-future-country-rankings"
+  }
+]

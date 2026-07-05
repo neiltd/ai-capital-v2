@@ -1,0 +1,68 @@
+{
+  "id": "ALB",
+  "iso2": "AL",
+  "name": "Albania",
+  "region": "Europe",
+  "subregion": "Southeast Europe",
+  "capital": "Tirana",
+  "lastUpdated": "2026-05-09",
+  "summary": "In 2026, Albania is experiencing a period of dynamic growth and structural modernization, characterized by its steady progress in EU accession negotiations and its emergence as a major Mediterranean tourism destination. The country has successfully attracted significant foreign direct investment into its energy sector—particularly in renewables and gas infrastructure—and its rapidly expanding hospitality industry. Tirana is undergoing a digital-led transformation, becoming a regional hub for tech startups and digital nomads. Geopolitically, Albania remains a staunchly pro-Western and pro-Atlanticist actor, leveraging its NATO membership and close ties with the United States and Italy to enhance its regional influence. While the government has implemented substantial judicial reforms, persistent challenges include the need for more effective anti-corruption measures and addressing the socio-economic factors driving youth emigration.",
+  "indicators": {
+    "politicalStability":       { "score": 6, "score_description": "Stable parliamentary democracy with a strong pro-EU mandate.", "trend": "stable", "confidence": "high", "note": "Policy continuity is high, with a focus on fulfilling EU accession criteria and modernizing the economy." },
+    "economicDirection":        { "score": 7, "score_description": "Strong growth led by tourism, energy, and infrastructure investment.", "trend": "improving", "confidence": "high", "note": "GDP growth is projected at 3.8% in 2026, one of the highest in the region, driven by the service sector." },
+    "investmentAttractiveness": { "score": 7, "score_description": "Highly attractive for tourism, energy, and nearshoring.", "trend": "rising", "confidence": "high", "note": "Albania offers competitive costs, a young workforce, and a strategic location on the Adriatic and Ionian seas." },
+    "geopoliticalRisk":         { "score": 5, "score_description": "Moderate risk; strongly anchored in NATO and pursuing EU membership.", "trend": "stable", "confidence": "high", "note": "The country is a reliable security partner and is actively involved in regional stabilization efforts." },
+    "educationQuality":         { "score": 5, "score_description": "Improving standards with a focus on vocational and digital skills.", "trend": "improving", "confidence": "medium", "note": "Recent reforms are aimed at better aligning the education system with the needs of the modern labor market." },
+    "healthcareQuality":        { "score": 5, "score_description": "Public system in transition; increasing role for private healthcare.", "trend": "improving", "confidence": "medium", "note": "Substantial investments are being made in upgrading hospital infrastructure and primary care services." },
+    "technologyInvestment":     { "score": 6, "score_description": "Rising investment in digital infrastructure and green energy.", "trend": "rising", "confidence": "high", "note": "The 'Digital Albania' initiative and large-scale solar and wind projects are key drivers of modernization." }
+  },
+  "demographics": {
+    "population": 2800000,
+    "medianAge": 38.2,
+    "urbanizationRate": 65,
+    "majorEthnicGroups": ["Albanian", "Greek", "Other (Roma, Vlach, etc.)"],
+    "religions": [
+      { "name": "Muslim", "percent": 56.7 },
+      { "name": "Roman Catholic", "percent": 10.0 },
+      { "name": "Orthodox Christian", "percent": 6.8 },
+      { "name": "None/Unaffiliated", "percent": 2.5 },
+      { "name": "Other", "percent": 24.0 }
+    ]
+  },
+  "alliances": ["EU (Candidate)", "NATO", "OSCE", "WTO"],
+  "relationships": [
+    { "countryId": "ITA", "countryName": "Italy", "type": "partner", "sentiment": "positive", "summary": "Strategic and primary economic partner; deep cultural, historic, and diaspora links." },
+    { "countryId": "USA", "countryName": "United States", "type": "treaty_ally", "sentiment": "positive", "summary": "Essential security partner; strong cooperation on defense, justice reform, and regional stability." },
+    { "countryId": "GRC", "countryName": "Greece", "type": "partner", "sentiment": "positive", "summary": "Significant neighbor and economic partner; large Albanian diaspora in Greece plays a key role." },
+    { "countryId": "XKX", "countryName": "Kosovo", "type": "ally", "sentiment": "positive", "summary": "Special relationship based on shared language and history; close cooperation on all fronts." },
+    { "countryId": "TUR", "countryName": "Turkey", "type": "partner", "sentiment": "positive", "summary": "Important cultural and investment partner; Turkey plays a constructive role in various industrial and infrastructure projects." }
+  ],
+  "perspectives": [
+    { "source": "Tirana Business Leader", "bias": "Innovation-focused", "view": "Albania is the next Mediterranean success story; we are transforming from an outsourcing economy to an innovation-led one." },
+    { "source": "Justice Reform Advocate", "bias": "Reform-oriented", "view": "The vetting of judges is a painful but necessary process to build the trust needed for our European future." },
+    { "source": "Coastal Developer", "bias": "Growth-focused", "view": "We are building world-class resorts that respect our environment while creating thousands of high-quality jobs." }
+  ],
+  "historicalContext": {
+    "summary": "Albania achieved independence from the Ottoman Empire in 1912. Following WWII, it endured one of the world's most isolated and repressive communist dictatorships under Enver Hoxha. Since the fall of communism in 1991, the country has undergone a radical transition, joining NATO in 2009 and decisively pivoting toward integration into the European Union.",
+    "keyEvents": [
+      { "year": 1912, "event": "Declaration of Independence from the Ottoman Empire." },
+      { "year": 1944, "event": "Communist partisans take control of the country." },
+      { "year": 1967, "event": "Albania is declared the world's first atheist state." },
+      { "year": 1991, "event": "Collapse of the communist regime and the first multi-party elections." },
+      { "year": 1997, "event": "Pyramid scheme collapse leads to widespread civil unrest." },
+      { "year": 2009, "event": "Albania officially joins NATO." },
+      { "year": 2014, "event": "Albania is granted EU candidate status." },
+      { "year": 2022, "event": "Accession negotiations with the EU formally open." }
+    ]
+  },
+  "investmentNotes": {
+    "strengths": ["Strategic location on the Mediterranean and proximity to EU markets", "Booming tourism sector with high growth potential", "Abundant renewable energy potential (hydro, solar, wind)", "Competitive labor costs and a young, linguistically diverse workforce"],
+    "risks": ["Challenges in the rule of law and judicial transparency", "Relatively underdeveloped infrastructure in rural areas", "Significant emigration of young and skilled labor", "Vulnerability to regional economic fluctuations"],
+    "sectors": ["Tourism & Hospitality", "Renewable Energy & Infrastructure", "Information Technology & Outsourcing", "Agribusiness & Food Processing", "Textiles & Footwear"]
+  },
+  "sources": [
+    { "name": "Institute of Statistics (INSTAT)", "url": "https://www.instat.gov.al/en/", "type": "economic" },
+    { "name": "Bank of Albania", "url": "https://www.bankofalbania.org/Home/", "type": "economic" },
+    { "name": "Albanian Investment Development Agency (AIDA)", "url": "https://aida.gov.al/en/", "type": "economic" }
+  ]
+}

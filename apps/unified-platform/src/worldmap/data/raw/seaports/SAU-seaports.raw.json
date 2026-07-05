@@ -1,0 +1,213 @@
+[
+  {
+    "id": "PORT-SAU-JEDDAH",
+    "name": "Jeddah Islamic Port",
+    "countryId": "SAU",
+    "city": "Jeddah",
+    "coordinates": [39.174, 21.470],
+    "type": "container",
+    "annualThroughputTEU": 6200000,
+    "annualThroughputTonnes": 160000000,
+    "berthCount": 62,
+    "maxDraftM": 18.0,
+    "strategicImportance": "critical",
+    "riskLevel": "low",
+    "geopoliticalNotes": "Primary gateway to the Kingdom and busiest port on the Red Sea. Crucial for pilgrims and trade between Europe, Asia, and Africa.",
+    "notes": "Handles 65% of Saudi Arabia's sea imports.",
+    "attribution": {
+      "sources": [
+        { "name": "MAWANI (Saudi Ports Authority)", "url": "https://mawani.gov.sa/en-us/OurPorts/Pages/JeddahIslamic.aspx", "accessedAt": "2026-05-10" },
+        { "name": "Wikipedia", "url": "https://en.wikipedia.org/wiki/Jeddah_Islamic_Port", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 2,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  },
+  {
+    "id": "PORT-SAU-DAMMAM",
+    "name": "King Abdulaziz Port",
+    "countryId": "SAU",
+    "city": "Dammam",
+    "coordinates": [50.201, 26.488],
+    "type": "container",
+    "annualThroughputTEU": 2980000,
+    "annualThroughputTonnes": 105000000,
+    "berthCount": 43,
+    "maxDraftM": 16.0,
+    "strategicImportance": "critical",
+    "riskLevel": "low",
+    "geopoliticalNotes": "Largest port on the Arabian Gulf. Connected to Riyadh Dry Port by rail; primary export hub for oil and petrochemicals.",
+    "notes": "Key gateway for the Eastern and Central regions.",
+    "attribution": {
+      "sources": [
+        { "name": "MAWANI", "url": "https://mawani.gov.sa/en-us/OurPorts/Pages/KingAbdulAziz.aspx", "accessedAt": "2026-05-10" },
+        { "name": "Wikipedia", "url": "https://en.wikipedia.org/wiki/King_Abdul_Aziz_Port", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 2,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  },
+  {
+    "id": "PORT-SAU-KING-ABDULLAH",
+    "name": "King Abdullah Port",
+    "countryId": "SAU",
+    "city": "Rabigh",
+    "coordinates": [39.083, 22.517],
+    "type": "container",
+    "annualThroughputTEU": 3500000,
+    "annualThroughputTonnes": null,
+    "berthCount": 30,
+    "maxDraftM": 18.0,
+    "strategicImportance": "high",
+    "riskLevel": "low",
+    "geopoliticalNotes": "First privately owned and operated port in the Middle East. Strategic node in King Abdullah Economic City.",
+    "notes": "Consistently ranked as one of the most efficient ports globally.",
+    "attribution": {
+      "sources": [
+        { "name": "King Abdullah Port Official Site", "url": "https://www.kingabdullahport.com.sa", "accessedAt": "2026-05-10" },
+        { "name": "Wikipedia", "url": "https://en.wikipedia.org/wiki/King_Abdullah_Port", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 2,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  },
+  {
+    "id": "PORT-SAU-JUBAIL-COMM",
+    "name": "Jubail Commercial Port",
+    "countryId": "SAU",
+    "city": "Jubail",
+    "coordinates": [49.606, 27.051],
+    "type": "multipurpose",
+    "annualThroughputTEU": 2400000,
+    "annualThroughputTonnes": 36000000,
+    "berthCount": 16,
+    "maxDraftM": 14.0,
+    "strategicImportance": "high",
+    "riskLevel": "low",
+    "geopoliticalNotes": "Supports the world's largest petrochemical complex in Jubail Industrial City.",
+    "notes": "Recently expanded to handle mega-ships.",
+    "attribution": {
+      "sources": [
+        { "name": "MAWANI", "url": "https://mawani.gov.sa/en-us/OurPorts/Pages/JubailCommercial.aspx", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "medium",
+        "sourceCount": 1,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  },
+  {
+    "id": "PORT-SAU-JUBAIL-IND",
+    "name": "King Fahad Industrial Port (Jubail)",
+    "countryId": "SAU",
+    "city": "Jubail",
+    "coordinates": [49.670, 27.017],
+    "type": "oil",
+    "annualThroughputTEU": null,
+    "annualThroughputTonnes": 210000000,
+    "berthCount": 34,
+    "maxDraftM": 30.0,
+    "strategicImportance": "critical",
+    "riskLevel": "low",
+    "geopoliticalNotes": "The world's largest industrial port. Vital for Saudi Arabia's energy and petrochemical exports on the Arabian Gulf.",
+    "notes": "Primary export point for SABIC products.",
+    "attribution": {
+      "sources": [
+        { "name": "MAWANI", "url": "https://mawani.gov.sa/en-us/OurPorts/Pages/KingFahadIndustrialJubail.aspx", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "medium",
+        "sourceCount": 1,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  },
+  {
+    "id": "PORT-SAU-YANBU-IND",
+    "name": "King Fahad Industrial Port (Yanbu)",
+    "countryId": "SAU",
+    "city": "Yanbu",
+    "coordinates": [38.250, 23.950],
+    "type": "oil",
+    "annualThroughputTEU": null,
+    "annualThroughputTonnes": 230000000,
+    "berthCount": 25,
+    "maxDraftM": 32.0,
+    "strategicImportance": "critical",
+    "riskLevel": "low",
+    "geopoliticalNotes": "Strategic alternative for oil exports to bypass the Strait of Hormuz. Terminus for the East-West Pipeline.",
+    "notes": "Largest oil export port on the Red Sea.",
+    "attribution": {
+      "sources": [
+        { "name": "MAWANI", "url": "https://mawani.gov.sa/en-us/OurPorts/Pages/KingFahadIndustrialYanbu.aspx", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "medium",
+        "sourceCount": 1,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  },
+  {
+    "id": "PORT-SAU-YANBU-COMM",
+    "name": "Yanbu Commercial Port",
+    "countryId": "SAU",
+    "city": "Yanbu",
+    "coordinates": [38.050, 24.070],
+    "type": "multipurpose",
+    "annualThroughputTEU": null,
+    "annualThroughputTonnes": 13500000,
+    "berthCount": 12,
+    "maxDraftM": 14.5,
+    "strategicImportance": "medium",
+    "riskLevel": "low",
+    "geopoliticalNotes": "Maritime gateway for Medina and Al-Qassim. Important for food security (grain/livestock imports).",
+    "notes": "One of the oldest ports on the Red Sea.",
+    "attribution": {
+      "sources": [
+        { "name": "MAWANI", "url": "https://mawani.gov.sa/en-us/OurPorts/Pages/YanbuCommercial.aspx", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "medium",
+        "sourceCount": 1,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  },
+  {
+    "id": "PORT-SAU-RAS-AL-KHAIR",
+    "name": "Ras Al Khair Port",
+    "countryId": "SAU",
+    "city": "Ras Al Khair",
+    "coordinates": [49.183, 27.550],
+    "type": "bulk",
+    "annualThroughputTEU": null,
+    "annualThroughputTonnes": 35000000,
+    "berthCount": 14,
+    "maxDraftM": 15.0,
+    "strategicImportance": "high",
+    "riskLevel": "low",
+    "geopoliticalNotes": "Dedicated mining port linked by rail to northern mines. Vital for phosphate and aluminum exports.",
+    "notes": "Serves the Ras Al Khair Industrial City.",
+    "attribution": {
+      "sources": [
+        { "name": "MAWANI", "url": "https://mawani.gov.sa/en-us/OurPorts/Pages/RasAlKhair.aspx", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "medium",
+        "sourceCount": 1,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  }
+]

@@ -1,0 +1,409 @@
+[
+  {
+    "id": "PLANT-TUR-AKKUYU",
+    "name": "Akkuyu Nuclear Power Plant",
+    "countryId": "TUR",
+    "city": "Mersin",
+    "coordinates": [33.5411, 36.1444],
+    "type": "nuclear",
+    "status": "construction",
+    "capacityMW": 4800,
+    "annualOutputGWh": null,
+    "yearCommissioned": null,
+    "yearRetirement": null,
+    "operator": "Akkuyu Nukleer JSC",
+    "owner": "Rosatom",
+    "strategicNote": "Turkey's first nuclear power plant, representing a major shift in the national energy mix and deepening energy ties with Russia.",
+    "notes": "Consists of four VVER-1200 reactors.",
+    "attribution": {
+      "sources": [
+        { "name": "IAEA PRIS", "url": "https://pris.iaea.org/PRIS/CountryStatistics/CountryDetails.aspx?current=TR", "accessedAt": "2025-02-13" },
+        { "name": "Global Energy Monitor", "url": "https://www.gem.wiki/Akkuyu_Nuclear_Power_Plant", "accessedAt": "2025-02-13" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 2,
+        "lastVerified": "2025-02-13"
+      }
+    }
+  },
+  {
+    "id": "PLANT-TUR-ZETES",
+    "name": "Zonguldak Eren Thermal Power Plant",
+    "countryId": "TUR",
+    "city": "Zonguldak",
+    "coordinates": [31.8869, 41.5031],
+    "type": "coal",
+    "status": "operating",
+    "capacityMW": 2790,
+    "annualOutputGWh": null,
+    "yearCommissioned": 2010,
+    "yearRetirement": null,
+    "operator": "Eren Enerji",
+    "owner": "Eren Holding",
+    "strategicNote": "The largest coal-fired power station in Turkey, crucial for the Black Sea industrial region.",
+    "notes": "Consists of ZETES 1, 2, and 3 units.",
+    "attribution": {
+      "sources": [
+        { "name": "Global Energy Monitor", "url": "https://www.gem.wiki/ZETES_power_station", "accessedAt": "2025-02-13" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 1,
+        "lastVerified": "2025-02-13"
+      }
+    }
+  },
+  {
+    "id": "PLANT-TUR-AFSIN-ELBISTAN-A",
+    "name": "Afşin-Elbistan A Power Plant",
+    "countryId": "TUR",
+    "city": "Afşin",
+    "coordinates": [36.9806, 38.3486],
+    "type": "coal",
+    "status": "operating",
+    "capacityMW": 1355,
+    "annualOutputGWh": null,
+    "yearCommissioned": 1984,
+    "yearRetirement": null,
+    "operator": "Çelikler Holding",
+    "owner": "Çelikler Holding",
+    "strategicNote": "Part of the massive Afşin-Elbistan lignite complex, one of the largest in Turkey.",
+    "notes": null,
+    "attribution": {
+      "sources": [
+        { "name": "Global Energy Monitor", "url": "https://www.gem.wiki/Af%C5%9Fin-Elbistan_A_power_station", "accessedAt": "2025-02-13" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 1,
+        "lastVerified": "2025-02-13"
+      }
+    }
+  },
+  {
+    "id": "PLANT-TUR-AFSIN-ELBISTAN-B",
+    "name": "Afşin-Elbistan B Power Plant",
+    "countryId": "TUR",
+    "city": "Afşin",
+    "coordinates": [36.9814, 38.3542],
+    "type": "coal",
+    "status": "operating",
+    "capacityMW": 1440,
+    "annualOutputGWh": null,
+    "yearCommissioned": 2004,
+    "yearRetirement": null,
+    "operator": "EÜAŞ",
+    "owner": "Turkish Electricity Generation Corporation (EÜAŞ)",
+    "strategicNote": "State-operated unit of the Afşin-Elbistan complex, utilizing local lignite reserves.",
+    "notes": null,
+    "attribution": {
+      "sources": [
+        { "name": "Global Energy Monitor", "url": "https://www.gem.wiki/Af%C5%9Fin-Elbistan_B_power_station", "accessedAt": "2025-02-13" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 1,
+        "lastVerified": "2025-02-13"
+      }
+    }
+  },
+  {
+    "id": "PLANT-TUR-ATATURK-DAM",
+    "name": "Atatürk Dam",
+    "countryId": "TUR",
+    "city": "Şanlıurfa",
+    "coordinates": [38.3175, 37.4817],
+    "type": "hydro",
+    "status": "operating",
+    "capacityMW": 2400,
+    "annualOutputGWh": null,
+    "yearCommissioned": 1992,
+    "yearRetirement": null,
+    "operator": "EÜAŞ",
+    "owner": "Turkish Electricity Generation Corporation (EÜAŞ)",
+    "strategicNote": "The centerpiece of the Southeastern Anatolia Project (GAP), and Turkey's largest hydroelectric facility.",
+    "notes": "Located on the Euphrates river.",
+    "attribution": {
+      "sources": [
+        { "name": "Global Energy Monitor", "url": "https://www.gem.wiki/Atat%C3%BCrk_Dam", "accessedAt": "2025-02-13" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 1,
+        "lastVerified": "2025-02-13"
+      }
+    }
+  },
+  {
+    "id": "PLANT-TUR-KARAKAYA-DAM",
+    "name": "Karakaya Dam",
+    "countryId": "TUR",
+    "city": "Diyarbakır",
+    "coordinates": [39.1356, 38.2267],
+    "type": "hydro",
+    "status": "operating",
+    "capacityMW": 1800,
+    "annualOutputGWh": null,
+    "yearCommissioned": 1987,
+    "yearRetirement": null,
+    "operator": "EÜAŞ",
+    "owner": "Turkish Electricity Generation Corporation (EÜAŞ)",
+    "strategicNote": "Major hydroelectric plant on the Euphrates, downstream from Keban.",
+    "notes": null,
+    "attribution": {
+      "sources": [
+        { "name": "Global Energy Monitor", "url": "https://www.gem.wiki/Karakaya_Dam", "accessedAt": "2025-02-13" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 1,
+        "lastVerified": "2025-02-13"
+      }
+    }
+  },
+  {
+    "id": "PLANT-TUR-KEBAN-DAM",
+    "name": "Keban Dam",
+    "countryId": "TUR",
+    "city": "Elazığ",
+    "coordinates": [38.7569, 38.8069],
+    "type": "hydro",
+    "status": "operating",
+    "capacityMW": 1330,
+    "annualOutputGWh": null,
+    "yearCommissioned": 1974,
+    "yearRetirement": null,
+    "operator": "EÜAŞ",
+    "owner": "Turkish Electricity Generation Corporation (EÜAŞ)",
+    "strategicNote": "One of Turkey's oldest and most significant large-scale hydroelectric facilities.",
+    "notes": null,
+    "attribution": {
+      "sources": [
+        { "name": "Global Energy Monitor", "url": "https://www.gem.wiki/Keban_Dam", "accessedAt": "2025-02-13" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 1,
+        "lastVerified": "2025-02-13"
+      }
+    }
+  },
+  {
+    "id": "PLANT-TUR-ENKA-GEBZE",
+    "name": "Enka Gebze Power Plant",
+    "countryId": "TUR",
+    "city": "Kocaeli",
+    "coordinates": [29.47, 40.83],
+    "type": "gas",
+    "status": "operating",
+    "capacityMW": 1542,
+    "annualOutputGWh": null,
+    "yearCommissioned": 2002,
+    "yearRetirement": null,
+    "operator": "Enka",
+    "owner": "Enka Power",
+    "strategicNote": "A major gas-fired facility serving the industrial heartland of Turkey near Istanbul.",
+    "notes": null,
+    "attribution": {
+      "sources": [
+        { "name": "Global Energy Monitor", "url": "https://www.gem.wiki/Gebze_power_station", "accessedAt": "2025-02-13" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 1,
+        "lastVerified": "2025-02-13"
+      }
+    }
+  },
+  {
+    "id": "PLANT-TUR-ENKA-IZMIR",
+    "name": "Enka İzmir Power Plant",
+    "countryId": "TUR",
+    "city": "Aliağa",
+    "coordinates": [26.9564, 38.7464],
+    "type": "gas",
+    "status": "operating",
+    "capacityMW": 1520,
+    "annualOutputGWh": null,
+    "yearCommissioned": 2003,
+    "yearRetirement": null,
+    "operator": "Enka",
+    "owner": "Enka Power",
+    "strategicNote": "Strategic gas plant serving the Aegean industrial zone.",
+    "notes": null,
+    "attribution": {
+      "sources": [
+        { "name": "Global Energy Monitor", "url": "https://www.gem.wiki/Izmir_power_station", "accessedAt": "2025-02-13" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 1,
+        "lastVerified": "2025-02-13"
+      }
+    }
+  },
+  {
+    "id": "PLANT-TUR-HAMITABAT",
+    "name": "Hamitabat Power Plant",
+    "countryId": "TUR",
+    "city": "Lüleburgaz",
+    "coordinates": [27.2417, 41.4625],
+    "type": "gas",
+    "status": "operating",
+    "capacityMW": 1220,
+    "annualOutputGWh": null,
+    "yearCommissioned": 1985,
+    "yearRetirement": null,
+    "operator": "Limak Energy",
+    "owner": "Limak Energy",
+    "strategicNote": "Turkey's first natural gas combined cycle power plant, recently modernized.",
+    "notes": null,
+    "attribution": {
+      "sources": [
+        { "name": "Global Energy Monitor", "url": "https://www.gem.wiki/Hamitabat_power_station", "accessedAt": "2025-02-13" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 1,
+        "lastVerified": "2025-02-13"
+      }
+    }
+  },
+  {
+    "id": "PLANT-TUR-CENAL",
+    "name": "Cenal Power Plant",
+    "countryId": "TUR",
+    "city": "Karabiga",
+    "coordinates": [27.31, 40.42],
+    "type": "coal",
+    "status": "operating",
+    "capacityMW": 1320,
+    "annualOutputGWh": null,
+    "yearCommissioned": 2017,
+    "yearRetirement": null,
+    "operator": "Cenal Elektrik",
+    "owner": "Alarko Holding and Cengiz Holding",
+    "strategicNote": "Large ultra-supercritical coal plant on the Sea of Marmara.",
+    "notes": null,
+    "attribution": {
+      "sources": [
+        { "name": "Global Energy Monitor", "url": "https://www.gem.wiki/Cenal_power_station", "accessedAt": "2025-02-13" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 1,
+        "lastVerified": "2025-02-13"
+      }
+    }
+  },
+  {
+    "id": "PLANT-TUR-SOMA",
+    "name": "Soma B Power Plant",
+    "countryId": "TUR",
+    "city": "Soma",
+    "coordinates": [27.61, 39.19],
+    "type": "coal",
+    "status": "operating",
+    "capacityMW": 990,
+    "annualOutputGWh": null,
+    "yearCommissioned": 1981,
+    "yearRetirement": null,
+    "operator": "Konya Şeker",
+    "owner": "Konya Şeker",
+    "strategicNote": "Significant lignite-fired plant in the Aegean region.",
+    "notes": null,
+    "attribution": {
+      "sources": [
+        { "name": "Global Energy Monitor", "url": "https://www.gem.wiki/Soma_B_power_station", "accessedAt": "2025-02-13" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 1,
+        "lastVerified": "2025-02-13"
+      }
+    }
+  },
+  {
+    "id": "PLANT-TUR-SUGOZU",
+    "name": "Sugözü Power Plant",
+    "countryId": "TUR",
+    "city": "Yumurtalık",
+    "coordinates": [35.85, 36.83],
+    "type": "coal",
+    "status": "operating",
+    "capacityMW": 1320,
+    "annualOutputGWh": null,
+    "yearCommissioned": 2003,
+    "yearRetirement": null,
+    "operator": "İsken",
+    "owner": "OYAK and STEAG",
+    "strategicNote": "Major imported-coal plant on the Mediterranean coast.",
+    "notes": null,
+    "attribution": {
+      "sources": [
+        { "name": "Global Energy Monitor", "url": "https://www.gem.wiki/Sug%C3%B6z%C3%BC_power_station", "accessedAt": "2025-02-13" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 1,
+        "lastVerified": "2025-02-13"
+      }
+    }
+  },
+  {
+    "id": "PLANT-TUR-ILISU-DAM",
+    "name": "Ilısu Dam",
+    "countryId": "TUR",
+    "city": "Dargeçit",
+    "coordinates": [41.85, 37.53],
+    "type": "hydro",
+    "status": "operating",
+    "capacityMW": 1200,
+    "annualOutputGWh": null,
+    "yearCommissioned": 2020,
+    "yearRetirement": null,
+    "operator": "EÜAŞ",
+    "owner": "Turkish Electricity Generation Corporation (EÜAŞ)",
+    "strategicNote": "A new and strategically important dam on the Tigris river, part of the GAP project.",
+    "notes": null,
+    "attribution": {
+      "sources": [
+        { "name": "Global Energy Monitor", "url": "https://www.gem.wiki/Il%C4%B1su_dam", "accessedAt": "2025-02-13" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 1,
+        "lastVerified": "2025-02-13"
+      }
+    }
+  },
+  {
+    "id": "PLANT-TUR-YENIKOY",
+    "name": "Yeniköy Power Plant",
+    "countryId": "TUR",
+    "city": "Milas",
+    "coordinates": [27.89, 37.13],
+    "type": "coal",
+    "status": "operating",
+    "capacityMW": 420,
+    "capacityMW_note": "Included as notable lignite plant in Aegean",
+    "annualOutputGWh": null,
+    "yearCommissioned": 1987,
+    "yearRetirement": null,
+    "operator": "YK Enerji",
+    "owner": "IC İçtaş and Limak Energy",
+    "strategicNote": "Strategically located lignite plant in Southwest Turkey.",
+    "notes": null,
+    "attribution": {
+      "sources": [
+        { "name": "Global Energy Monitor", "url": "https://www.gem.wiki/Yenik%C3%B6y_power_station_(Turkey)", "accessedAt": "2025-02-13" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 1,
+        "lastVerified": "2025-02-13"
+      }
+    }
+  }
+]

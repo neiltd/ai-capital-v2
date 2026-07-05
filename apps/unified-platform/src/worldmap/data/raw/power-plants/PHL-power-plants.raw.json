@@ -1,0 +1,381 @@
+[
+  {
+    "id": "PLANT-PHL-BATAAN-NUCLEAR",
+    "name": "Bataan Nuclear Power Plant",
+    "countryId": "PHL",
+    "city": "Morong",
+    "coordinates": [120.315, 14.630],
+    "type": "nuclear",
+    "status": "mothballed",
+    "capacityMW": 621,
+    "annualOutputGWh": 0,
+    "yearCommissioned": 1984,
+    "yearRetirement": null,
+    "operator": "National Power Corporation",
+    "owner": "Government of the Philippines",
+    "strategicNote": "Completed but never fueled or operated due to safety concerns and political shifts. Remains a central point of debate for energy security in the Philippines.",
+    "notes": "Maintained in a mothballed state; potential for rehabilitation is frequently discussed.",
+    "attribution": {
+      "sources": [
+        { "name": "Global Energy Monitor", "url": "https://www.gem.wiki/Bataan_Nuclear_Power_Plant", "accessedAt": "2026-05-10" },
+        { "name": "IAEA PRIS", "url": "https://pris.iaea.org/PRIS/CountryStatistics/FacilityDetails.aspx?current=447", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 2,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  },
+  {
+    "id": "PLANT-PHL-SAN-LORENZO-SANTA-RITA",
+    "name": "Santa Rita & San Lorenzo Gas Power Plants",
+    "countryId": "PHL",
+    "city": "Batangas City",
+    "coordinates": [121.033, 13.768],
+    "type": "gas",
+    "status": "operating",
+    "capacityMW": 1500,
+    "annualOutputGWh": null,
+    "yearCommissioned": 2000,
+    "yearRetirement": null,
+    "operator": "First Gen Corporation",
+    "owner": "First Gen Corporation",
+    "strategicNote": "Key natural gas facilities fueled by the Malampaya gas field; essential for the Luzon grid's baseload and mid-merit requirements.",
+    "notes": "Capacity includes Santa Rita (1000 MW) and San Lorenzo (500 MW).",
+    "attribution": {
+      "sources": [
+        { "name": "Global Energy Monitor", "url": "https://www.gem.wiki/Santa_Rita_power_station", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 1,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  },
+  {
+    "id": "PLANT-PHL-ILIJAN",
+    "name": "Ilijan Power Plant",
+    "countryId": "PHL",
+    "city": "Batangas City",
+    "coordinates": [121.031, 13.761],
+    "type": "gas",
+    "status": "operating",
+    "capacityMW": 1251,
+    "annualOutputGWh": null,
+    "yearCommissioned": 2002,
+    "yearRetirement": null,
+    "operator": "SMC Global Power",
+    "owner": "SMC Global Power",
+    "strategicNote": "One of the largest gas plants in the country, critical for powering the National Capital Region (NCR).",
+    "notes": "Transitioned to LNG fuel as Malampaya reserves decline.",
+    "attribution": {
+      "sources": [
+        { "name": "Global Energy Monitor", "url": "https://www.gem.wiki/Ilijan_power_station", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 1,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  },
+  {
+    "id": "PLANT-PHL-SUAL",
+    "name": "Sual Power Station",
+    "countryId": "PHL",
+    "city": "Sual",
+    "coordinates": [120.101, 16.124],
+    "type": "coal",
+    "status": "operating",
+    "capacityMW": 1218,
+    "annualOutputGWh": null,
+    "yearCommissioned": 1999,
+    "yearRetirement": null,
+    "operator": "Team Energy (Marubeni & JERA)",
+    "owner": "Team Energy / NPC",
+    "strategicNote": "The largest coal-fired power plant in the Philippines, providing a significant portion of Luzon's baseload power.",
+    "notes": null,
+    "attribution": {
+      "sources": [
+        { "name": "Global Energy Monitor", "url": "https://www.gem.wiki/Sual_power_station", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 1,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  },
+  {
+    "id": "PLANT-PHL-DINGININ",
+    "name": "Dinginin Power Station",
+    "countryId": "PHL",
+    "city": "Mariveles",
+    "coordinates": [120.538, 14.431],
+    "type": "coal",
+    "status": "operating",
+    "capacityMW": 1336,
+    "annualOutputGWh": null,
+    "yearCommissioned": 2021,
+    "yearRetirement": null,
+    "operator": "Aboitiz Power",
+    "owner": "Aboitiz Power",
+    "strategicNote": "Recently commissioned supercritical coal plant, using advanced technology to improve efficiency and lower emissions compared to older units.",
+    "notes": "Comprises two 668 MW units.",
+    "attribution": {
+      "sources": [
+        { "name": "Global Energy Monitor", "url": "https://www.gem.wiki/Dinginin_Power_Station", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 1,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  },
+  {
+    "id": "PLANT-PHL-PAGBILAO",
+    "name": "Pagbilao Power Station",
+    "countryId": "PHL",
+    "city": "Pagbilao",
+    "coordinates": [121.745, 13.891],
+    "type": "coal",
+    "status": "operating",
+    "capacityMW": 1155,
+    "annualOutputGWh": null,
+    "yearCommissioned": 1996,
+    "yearRetirement": null,
+    "operator": "Team Energy / Aboitiz Power",
+    "owner": "Team Energy / Aboitiz Power",
+    "strategicNote": "Major baseload provider for the southern Luzon grid.",
+    "notes": "Capacity includes Pagbilao 1, 2, and 3.",
+    "attribution": {
+      "sources": [
+        { "name": "Global Energy Monitor", "url": "https://www.gem.wiki/Pagbilao_power_station", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 1,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  },
+  {
+    "id": "PLANT-PHL-MASINLOC",
+    "name": "Masinloc Power Plant",
+    "countryId": "PHL",
+    "city": "Masinloc",
+    "coordinates": [119.924, 15.558],
+    "type": "coal",
+    "status": "operating",
+    "capacityMW": 1026,
+    "annualOutputGWh": null,
+    "yearCommissioned": 1998,
+    "yearRetirement": null,
+    "operator": "SMC Global Power",
+    "owner": "SMC Global Power",
+    "strategicNote": "Strategically located on the western coast of Luzon, providing stable power to central Luzon.",
+    "notes": "Expanding with Unit 4 and battery energy storage systems.",
+    "attribution": {
+      "sources": [
+        { "name": "Global Energy Monitor", "url": "https://www.gem.wiki/Masinloc_power_station", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 1,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  },
+  {
+    "id": "PLANT-PHL-KALAYAAN",
+    "name": "Kalayaan Pumped Storage Power Plant",
+    "countryId": "PHL",
+    "city": "Kalayaan",
+    "coordinates": [121.478, 14.351],
+    "type": "hydro",
+    "status": "operating",
+    "capacityMW": 736,
+    "annualOutputGWh": null,
+    "yearCommissioned": 1982,
+    "yearRetirement": null,
+    "operator": "CBK Power Company Ltd.",
+    "owner": "NPC / J-Power & Sumitomo",
+    "strategicNote": "The only pumped-storage facility in the Philippines; critical for grid frequency regulation and peak shaving.",
+    "notes": null,
+    "attribution": {
+      "sources": [
+        { "name": "Global Energy Monitor", "url": "https://www.gem.wiki/Kalayaan_Pumped_Storage_Power_Plant", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 1,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  },
+  {
+    "id": "PLANT-PHL-MAKBAN",
+    "name": "Makban (Tiwi-MakBan) Geothermal Power Plant",
+    "countryId": "PHL",
+    "city": "Bay/Calauan",
+    "coordinates": [121.225, 14.116],
+    "type": "geothermal",
+    "status": "operating",
+    "capacityMW": 460,
+    "annualOutputGWh": null,
+    "yearCommissioned": 1979,
+    "yearRetirement": null,
+    "operator": "AP Renewables Inc. (Aboitiz)",
+    "owner": "Aboitiz Power",
+    "strategicNote": "One of the largest geothermal complexes in the world, showcasing the Philippines' leadership in renewable volcanic energy.",
+    "notes": "Also known as the Makiling-Banahaw Geothermal Power Plant.",
+    "attribution": {
+      "sources": [
+        { "name": "Global Energy Monitor", "url": "https://www.gem.wiki/Makban_geothermal_power_plant", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 1,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  },
+  {
+    "id": "PLANT-PHL-SAN-ROQUE",
+    "name": "San Roque Hydroelectric Power Plant",
+    "countryId": "PHL",
+    "city": "San Manuel",
+    "coordinates": [120.685, 16.146],
+    "type": "hydro",
+    "status": "operating",
+    "capacityMW": 435,
+    "annualOutputGWh": null,
+    "yearCommissioned": 2003,
+    "yearRetirement": null,
+    "operator": "San Roque Power Corp.",
+    "owner": "Marubeni / J-Power / NPC",
+    "strategicNote": "A multi-purpose dam providing power, irrigation, and flood control for the Agno River basin.",
+    "notes": null,
+    "attribution": {
+      "sources": [
+        { "name": "Global Energy Monitor", "url": "https://www.gem.wiki/San_Roque_dam", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 1,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  },
+  {
+    "id": "PLANT-PHL-MAGAT",
+    "name": "Magat Hydroelectric Power Plant",
+    "countryId": "PHL",
+    "city": "Ramon/Alfonso Lista",
+    "coordinates": [121.456, 16.821],
+    "type": "hydro",
+    "status": "operating",
+    "capacityMW": 360,
+    "annualOutputGWh": null,
+    "yearCommissioned": 1983,
+    "yearRetirement": null,
+    "operator": "SN Aboitiz Power",
+    "owner": "SN Aboitiz Power",
+    "strategicNote": "Major hydropower asset in Northern Luzon; recently integrated with floating solar pilots.",
+    "notes": null,
+    "attribution": {
+      "sources": [
+        { "name": "Global Energy Monitor", "url": "https://www.gem.wiki/Magat_Dam", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 1,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  },
+  {
+    "id": "PLANT-PHL-TIWI",
+    "name": "Tiwi Geothermal Power Plant",
+    "countryId": "PHL",
+    "city": "Tiwi",
+    "coordinates": [123.635, 13.464],
+    "type": "geothermal",
+    "status": "operating",
+    "capacityMW": 234,
+    "annualOutputGWh": null,
+    "yearCommissioned": 1979,
+    "yearRetirement": null,
+    "operator": "AP Renewables Inc.",
+    "owner": "Aboitiz Power",
+    "strategicNote": "The first commercial geothermal field in the Philippines, essential for the Bicol region.",
+    "notes": null,
+    "attribution": {
+      "sources": [
+        { "name": "Global Energy Monitor", "url": "https://www.gem.wiki/Tiwi_geothermal_power_plant", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 1,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  },
+  {
+    "id": "PLANT-PHL-CADIZ-SOLAR",
+    "name": "Cadiz Solar Power Plant",
+    "countryId": "PHL",
+    "city": "Cadiz City",
+    "coordinates": [123.298, 10.916],
+    "type": "solar",
+    "status": "operating",
+    "capacityMW": 132,
+    "annualOutputGWh": null,
+    "yearCommissioned": 2016,
+    "yearRetirement": null,
+    "operator": "Equis Energy / Helios Solar Energy",
+    "owner": "Equis Energy / Helios Solar Energy",
+    "strategicNote": "One of the largest solar farms in Southeast Asia at the time of its commissioning; key for the Visayas grid.",
+    "notes": null,
+    "attribution": {
+      "sources": [
+        { "name": "Global Energy Monitor", "url": "https://www.gem.wiki/Cadiz_Solar_Power_Plant", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "medium",
+        "sourceCount": 1,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  },
+  {
+    "id": "PLANT-PHL-BURGOS-WIND",
+    "name": "Burgos Wind Farm",
+    "countryId": "PHL",
+    "city": "Burgos",
+    "coordinates": [120.645, 18.516],
+    "type": "wind",
+    "status": "operating",
+    "capacityMW": 150,
+    "annualOutputGWh": 370,
+    "yearCommissioned": 2014,
+    "yearRetirement": null,
+    "operator": "EDC (Energy Development Corp)",
+    "owner": "First Gen Corporation",
+    "strategicNote": "The largest wind farm in the Philippines, located in a high-wind corridor in Ilocos Norte.",
+    "notes": null,
+    "attribution": {
+      "sources": [
+        { "name": "Global Energy Monitor", "url": "https://www.gem.wiki/Burgos_Wind_Farm", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 1,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  }
+]

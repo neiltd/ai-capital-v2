@@ -1,0 +1,29 @@
+[
+  {
+    "countryId": "KAZ",
+    "year": 2023,
+    "gdpUsdBn": 261,
+    "gdpPerCapita": 13137,
+    "sectors": [
+      { "sector": "Trade (Wholesale & Retail)", "percentOfGDP": 18.0, "notes": null },
+      { "sector": "Mining & Quarrying", "percentOfGDP": 12.9, "notes": "Dominated by oil and gas production" },
+      { "sector": "Manufacturing", "percentOfGDP": 12.1, "notes": null },
+      { "sector": "Real Estate Operations", "percentOfGDP": 7.8, "notes": null },
+      { "sector": "Transport & Warehousing", "percentOfGDP": 5.4, "notes": null },
+      { "sector": "Construction", "percentOfGDP": 5.3, "notes": null },
+      { "sector": "Agriculture", "percentOfGDP": 4.3, "notes": "Affected by drought in 2023" },
+      { "sector": "Other Services", "percentOfGDP": 34.2, "notes": "Includes public administration, health, and finance" }
+    ],
+    "attribution": {
+      "sources": [
+        { "name": "Bureau of National Statistics Kazakhstan 2023", "url": "https://stat.gov.kz/", "accessedAt": "2025-05-14" },
+        { "name": "World Bank Kazakhstan Economic Update", "url": "https://www.worldbank.org/en/country/kazakhstan", "accessedAt": "2025-05-14" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 2,
+        "lastVerified": "2025-05-14"
+      }
+    }
+  }
+]

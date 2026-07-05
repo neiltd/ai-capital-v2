@@ -1,0 +1,66 @@
+{
+  "id": "MOZ",
+  "iso2": "MZ",
+  "name": "Mozambique",
+  "region": "Africa",
+  "subregion": "Southern Africa",
+  "capital": "Maputo",
+  "lastUpdated": "2025-05-15",
+  "summary": "Mozambique is an emerging energy powerhouse in Southern Africa, home to some of the world's largest offshore natural gas reserves. The country's economic future is closely tied to the multi-billion dollar LNG projects in the Rovuma Basin, which have the potential to transform its developmental trajectory. However, progress has been hampered by a violent insurgency in the northern Cabo Delgado province, which led to significant project delays. Under President Filipe Nyusi, the government has focused on restoring security with regional and international assistance. While the energy sector remains the primary driver of growth, Mozambique faces critical challenges, including high poverty levels, corruption scandals (such as the 'hidden debts'), and extreme vulnerability to climate-related disasters like cyclones.",
+  "indicators": {
+    "politicalStability":       { "score": 5, "trend": "rising", "confidence": "high", "note": "Security situation in Cabo Delgado is improving but remains fragile; FRELIMO remains dominant ahead of 2024 elections." },
+    "economicDirection":        { "score": 6, "trend": "rising", "confidence": "high", "note": "GDP growth accelerating as LNG projects restart and mining exports increase." },
+    "investmentAttractiveness": { "score": 6, "trend": "rising", "confidence": "high", "note": "High interest in energy and mining; improving macroeconomic stability following IMF re-engagement." },
+    "geopoliticalRisk":         { "score": 5, "trend": "falling", "confidence": "medium", "note": "Insurgency in the north remains a risk, but regional military intervention (SADC/Rwanda) has been effective." },
+    "educationQuality":         { "score": 3, "trend": "stable", "confidence": "medium", "note": "Significant gaps in literacy and vocational training, particularly in rural areas." },
+    "healthcareQuality":        { "score": 3, "trend": "stable", "confidence": "medium", "note": "Infrastructure is limited and unevenly distributed; heavily dependent on international aid." },
+    "technologyInvestment":     { "score": 4, "trend": "rising", "confidence": "medium", "note": "Expansion of fiber optic networks and mobile banking; digital economy is growing from a low base." }
+  },
+  "demographics": {
+    "population": 34800000,
+    "medianAge": 17.6,
+    "urbanizationRate": 38.5,
+    "majorEthnicGroups": ["Makua", "Tsonga", "Lomwe", "Sena"],
+    "religions": [
+      { "name": "Christian", "percent": 59.2 },
+      { "name": "Muslim", "percent": 18.9 },
+      { "name": "None", "percent": 13.9 },
+      { "name": "Other", "percent": 8.0 }
+    ]
+  },
+  "alliances": ["African Union", "SADC", "CPLP", "Commonwealth", "OIC"],
+  "relationships": [
+    { "countryId": "ZAF", "countryName": "South Africa", "type": "strategic_partner", "sentiment": "positive", "summary": "Most important regional economic and security partner; major destination for exports." },
+    { "countryId": "PRT", "countryName": "Portugal", "type": "historical_partner", "sentiment": "positive", "summary": "Strong cultural and business ties; Portugal provides significant security and development support." },
+    { "countryId": "CHN", "countryName": "China", "type": "economic_partner", "sentiment": "positive", "summary": "Major investor in infrastructure, mining, and timber; primary creditor." },
+    { "countryId": "RWA", "countryName": "Rwanda", "type": "security_partner", "sentiment": "positive", "summary": "Critical security provider in Cabo Delgado; relationship has deepened significantly since 2021." }
+  ],
+  "perspectives": [
+    { "source": "Maputo Economist", "bias": "Technocratic", "view": "The LNG revenues offer a once-in-a-generation opportunity, but only if we manage them through a transparent sovereign wealth fund." },
+    { "source": "Cabo Delgado Resident", "bias": "Vulnerable", "view": "Security is returning, but we need jobs and schools, not just soldiers, to keep the peace." },
+    { "source": "International Energy Investor", "bias": "Strategic", "view": "Mozambique is a world-class gas play. The logistical challenges are large, but the long-term fundamentals are excellent." },
+    { "source": "Opposition Activist", "bias": "Critical", "view": "The 'hidden debts' scandal showed that corruption remains the biggest threat to our development." }
+  ],
+  "historicalContext": {
+    "summary": "Following independence from Portugal in 1975, Mozambique suffered a devastating 16-year civil war (1977-1992) between the ruling FRELIMO and the rebel RENAMO. Since the peace deal, the country has maintained a fragile stability and transitioned to a market economy. Recent history has been marked by the discovery of massive gas reserves and a new conflict in the north.",
+    "keyEvents": [
+      { "year": 1975, "event": "Independence from Portugal; FRELIMO takes power." },
+      { "year": 1992, "event": "Rome General Peace Accords end the civil war." },
+      { "year": 2011, "event": "Discovery of massive offshore natural gas reserves in the Rovuma Basin." },
+      { "year": 2016, "event": "Disclosure of $2 billion in 'hidden debts' leads to a financial crisis and donor withdrawal." },
+      { "year": 2017, "event": "Beginning of the extremist insurgency in Cabo Delgado." },
+      { "year": 2021, "event": "TotalEnergies declares force majeure on its LNG project; Rwanda and SADC forces intervene." },
+      { "year": 2024, "event": "Gradual resumption of LNG infrastructure development as security situation stabilizes." }
+    ]
+  },
+  "investmentNotes": {
+    "strengths": ["World-class offshore natural gas reserves (Rovuma Basin)", "Strategic location with major ports serving landlocked neighbors (Beira, Maputo, Nacala)", "Significant deposits of graphite, heavy sands, and coal", "High potential for commercial agriculture and tourism"],
+    "risks": ["Security instability in northern provinces", "Extreme vulnerability to climate change (cyclones, floods)", "History of corruption and high public debt", "Limited skilled labor and infrastructure bottlenecks"],
+    "sectors": ["Energy (LNG & Power Generation)", "Mining (Graphite, Mineral Sands, Coal)", "Logistics & Transport (Port Corridors)", "Agriculture & Fisheries"]
+  },
+  "sources": [
+    { "name": "Bank of Mozambique", "url": "https://www.bancomoc.mz/", "type": "economic" },
+    { "name": "National Institute of Statistics (INE)", "url": "http://www.ine.gov.mz/", "type": "demographic" },
+    { "name": "Agency for the Promotion of Investment and Exports (APIEX)", "url": "https://apiex.gov.mz/", "type": "investment" }
+  ]
+}

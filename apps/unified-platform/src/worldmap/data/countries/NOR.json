@@ -1,0 +1,66 @@
+{
+  "id": "NOR",
+  "iso2": "NO",
+  "name": "Norway",
+  "region": "Europe",
+  "subregion": "Northern Europe",
+  "capital": "Oslo",
+  "lastUpdated": "2026-05-09",
+  "summary": "Norway is currently Europe's leading energy supplier and a critical security anchor for NATO's northern flank. Following the 2025 elections, the government remains stable under Prime Minister Jonas Gahr Støre, though it faces an increasingly vocal domestic opposition. Record energy revenues from the North and Barents Seas have pushed the Sovereign Wealth Fund to new heights, yet the nation is balancing this wealth against persistent inflation and the strategic challenges posed by a more militarized Arctic environment.",
+  "indicators": {
+    "politicalStability":       { "score": 8, "score_description": "Maintained continuity after 2025 elections; robust democratic institutions.", "trend": "stable", "confidence": "high", "note": "The coalition government remains functional, though the surge of the Progress Party has shifted the domestic debate on taxes and immigration." },
+    "economicDirection":        { "score": 7, "score_description": "Record energy revenues offset by domestic inflation and high interest rates.", "trend": "stable", "confidence": "high", "note": "Norway's mainland economy faces growth constraints, but its energy sector is booming due to high European and global demand." },
+    "investmentAttractiveness": { "score": 8, "score_description": "Reliable legal framework and world-leading energy/tech sectors.", "trend": "stable", "confidence": "high", "note": "The country remains a top destination for capital in energy, maritime technology, and sustainable industries." },
+    "geopoliticalRisk":         { "score": 6, "score_description": "Primary focus on Arctic security and Russian hybrid threats in the Barents Sea.", "trend": "rising", "confidence": "high", "note": "As NATO's 'eyes and ears' in the North, Norway is increasingly targeted by Russian espionage and maritime provocations." },
+    "educationQuality":         { "score": 8, "score_description": "High standards with strong integration into high-tech and maritime industries.", "trend": "stable", "confidence": "high", "note": "Education is highly geared towards the needs of the energy transition and advanced engineering sectors." },
+    "healthcareQuality":        { "score": 9, "score_description": "One of the world's best systems, though facing long-term demographic costs.", "trend": "stable", "confidence": "high", "note": "Universal healthcare remains a cornerstone of the welfare state, with high satisfaction and outcomes." },
+    "technologyInvestment":     { "score": 8, "score_description": "Leading in green maritime tech and carbon capture and storage (CCS).", "trend": "rising", "confidence": "high", "note": "Significant state and private funding is being poured into hydrogen, offshore wind, and CCS initiatives." }
+  },
+  "demographics": {
+    "population": 5600000,
+    "medianAge": 39.5,
+    "urbanizationRate": 83,
+    "majorEthnicGroups": ["Norwegian", "Sami", "Polish", "Lithuanian", "Somali"],
+    "religions": [
+      { "name": "Church of Norway (Lutheran)", "percent": 67.5 },
+      { "name": "None/Unaffiliated", "percent": 18.2 },
+      { "name": "Muslim", "percent": 3.4 },
+      { "name": "Roman Catholic", "percent": 3.1 },
+      { "name": "Other", "percent": 7.8 }
+    ]
+  },
+  "alliances": ["NATO", "EEA", "Nordic Council", "OECD", "Schengen Area"],
+  "relationships": [
+    { "countryId": "SWE", "countryName": "Sweden", "type": "ally", "sentiment": "positive", "summary": "Deeply integrated security and economic partner within the new Nordic NATO framework." },
+    { "countryId": "FIN", "countryName": "Finland", "type": "ally", "sentiment": "positive", "summary": "Close cooperation on Arctic defense and monitoring the Russian border." },
+    { "countryId": "GBR", "countryName": "United Kingdom", "type": "ally", "sentiment": "positive", "summary": "Strategic energy and security partner in the North Sea; shared focus on maritime security." },
+    { "countryId": "RUS", "countryName": "Russia", "type": "adversary", "sentiment": "negative", "summary": "Relations are at a historic low; tensions over Arctic sovereignty and border security." },
+    { "countryId": "USA", "countryName": "United States", "type": "treaty_ally", "sentiment": "positive", "summary": "Essential security guarantor with increasing military presence and cooperation in Norwegian bases." }
+  ],
+  "perspectives": [
+    { "source": "Government Official", "bias": "Pro-Støre", "view": "Norway's role as Europe's energy stabilizer is paramount, and our recent electoral success validates our balanced approach to the green transition." },
+    { "source": "Progress Party Supporter", "bias": "Populist Right", "view": "The government is too slow to address the cost-of-living crisis despite our massive energy wealth; we need stricter immigration and lower taxes." },
+    { "source": "NATO Strategic Analyst", "bias": "Pro-Defense", "view": "Norway is the indispensable 'eyes and ears' of NATO in the Arctic; the 2025 High North Strategy is a necessary shift to meet Russian aggression." }
+  ],
+  "historicalContext": {
+    "summary": "Norway transitioned from a fishing and farming nation to one of the world's wealthiest countries after the discovery of North Sea oil in 1969. It has a long tradition of peaceful diplomacy, but its strategic location in the High North has always made it a key player in European security. The 2024-2026 period has seen Norway solidify its role as Europe's primary energy lifeline following the decoupling from Russian gas.",
+    "keyEvents": [
+      { "year": 1814, "event": "Declaration of independence from Denmark; union with Sweden." },
+      { "year": 1905, "event": "Dissolution of the union with Sweden; Norway becomes fully independent." },
+      { "year": 1949, "event": "Becomes a founding member of NATO." },
+      { "year": 1969, "event": "Discovery of oil in the Ekofisk field, transforming the economy." },
+      { "year": 2025, "event": "General elections see the Labour-led coalition retain power amid high energy prices." },
+      { "year": 2026, "event": "The Sovereign Wealth Fund hits record highs as Norway's energy exports reach maximum capacity." }
+    ]
+  },
+  "investmentNotes": {
+    "strengths": ["Enormous sovereign wealth fund and fiscal stability", "Strategic energy leadership and resources", "Highly educated and digitally literate workforce", "High levels of social trust and political stability"],
+    "risks": ["Exposure to global energy price volatility", "Domestic inflation and high housing costs", "Increasing geopolitical tension in the Arctic"],
+    "sectors": ["Oil & Gas", "Renewable Energy (Wind/Hydro)", "Green Maritime Technology", "Fish & Aquaculture", "Carbon Capture and Storage (CCS)"]
+  },
+  "sources": [
+    { "name": "Statistics Norway (SSB)", "url": "https://www.ssb.no/en", "type": "economic" },
+    { "name": "Norges Bank", "url": "https://www.norges-bank.no/en/", "type": "economic" },
+    { "name": "Ministry of Foreign Affairs", "url": "https://www.regjeringen.no/en/dep/ud/", "type": "political" }
+  ]
+}

@@ -1,0 +1,67 @@
+{
+  "id": "MNE",
+  "iso2": "ME",
+  "name": "Montenegro",
+  "region": "Europe",
+  "subregion": "Southeast Europe",
+  "capital": "Podgorica",
+  "lastUpdated": "2026-05-09",
+  "summary": "In 2026, Montenegro maintains its position as the leading candidate for EU accession in the Western Balkans, having successfully closed several key negotiation chapters. The country's economy is buoyed by a world-class luxury tourism sector and increasing investments in the blue economy and renewable energy. Podgorica is evolving into a more modern administrative and tech center, while the coastal regions continue to attract significant international capital for high-end hospitality projects. Geopolitically, Montenegro's firm anchoring in NATO provides a secure environment that is crucial for its economic stability and regional influence. While the political landscape has seen a successful transition toward a new generation of reform-oriented leaders, the government remains focused on strengthening the rule of law and diversifying the economy to reduce its high dependence on seasonal tourism.",
+  "indicators": {
+    "politicalStability":       { "score": 7, "score_description": "Stable parliamentary democracy with a focus on institutional reform.", "trend": "improving", "confidence": "high", "note": "The emergence of new, policy-focused political movements has shifted the focus toward EU integration and economic development." },
+    "economicDirection":        { "score": 6, "score_description": "Growth driven by tourism, foreign investment, and green energy.", "trend": "improving", "confidence": "high", "note": "GDP growth is robust at 3.5%, supported by the recovery of international travel and new energy projects." },
+    "investmentAttractiveness": { "score": 7, "score_description": "Highly attractive for high-end tourism and renewable energy.", "trend": "rising", "confidence": "high", "note": "Montenegro offers a business-friendly environment with competitive taxes and a strategic Adriatic location." },
+    "geopoliticalRisk":         { "score": 4, "score_description": "Low risk; secured by NATO membership and clear EU path.", "trend": "stable", "confidence": "high", "note": "The country is a reliable partner in regional security and is well-protected against external malign influence." },
+    "educationQuality":         { "score": 6, "score_description": "Good fundamental education with efforts to align with EU standards.", "trend": "stable", "confidence": "medium", "note": "Reforms are underway to improve vocational training and higher education in line with the needs of the service and tech sectors." },
+    "healthcareQuality":        { "score": 6, "score_description": "Universal system undergoing modernization and digitalization.", "trend": "improving", "confidence": "medium", "note": "New medical facilities and improved health insurance schemes are enhancing the quality of care for citizens." },
+    "technologyInvestment":     { "score": 6, "score_description": "Growing focus on digital services, green energy, and the blue economy.", "trend": "rising", "confidence": "high", "note": "Significant investments in underwater power cables and wind farms are positioning Montenegro as a regional energy hub." }
+  },
+  "demographics": {
+    "population": 620000,
+    "medianAge": 39.4,
+    "urbanizationRate": 68,
+    "majorEthnicGroups": ["Montenegrin", "Serb", "Bosniak", "Albanian"],
+    "religions": [
+      { "name": "Orthodox Christian", "percent": 72.1 },
+      { "name": "Muslim", "percent": 19.1 },
+      { "name": "Roman Catholic", "percent": 3.4 },
+      { "name": "Other/None", "percent": 5.4 }
+    ]
+  },
+  "alliances": ["EU (Candidate)", "NATO", "OSCE", "WTO"],
+  "relationships": [
+    { "countryId": "HRV", "countryName": "Croatia", "type": "ally", "sentiment": "positive", "summary": "Close regional partner and NATO ally; Croatia is a leading supporter and mentor for Montenegro's EU integration." },
+    { "countryId": "SRB", "countryName": "Serbia", "type": "partner", "sentiment": "neutral", "summary": "Key neighbor with deep historical and economic ties; focus is on pragmatic cooperation and regional stability." },
+    { "countryId": "USA", "countryName": "United States", "type": "treaty_ally", "sentiment": "positive", "summary": "Essential security partner; strong cooperation on defense, cyber-security, and the rule of law." },
+    { "countryId": "ALB", "countryName": "Albania", "type": "ally", "sentiment": "positive", "summary": "Close regional neighbor and fellow NATO member; joint efforts on border management and environmental protection." },
+    { "countryId": "ITA", "countryName": "Italy", "type": "partner", "sentiment": "positive", "summary": "Significant economic and energy partner; the underwater power cable (Monita) connects the two countries' electricity grids." }
+  ],
+  "perspectives": [
+    { "source": "Podgorica Reformer", "bias": "Pro-European", "view": "Our future is in the EU; we must continue to dismantle old structures and build a merit-based, transparent society." },
+    { "source": "Tourism Investor", "bias": "Business-focused", "view": "Montenegro is the hidden gem of the Mediterranean; our focus on high-quality, sustainable luxury is paying off." },
+    { "source": "Local Environmentalist", "bias": "Ecological-focused", "view": "As an 'Ecological State', we must ensure that our rapid development doesn't compromise our unique biodiversity and natural beauty." }
+  ],
+  "historicalContext": {
+    "summary": "Montenegro has a long history of independence, having resisted Ottoman conquest for centuries. It was recognized as an independent state at the Congress of Berlin in 1878. After being part of the various iterations of Yugoslavia throughout the 20th century, Montenegro regained its independence in a 2006 referendum. Since then, it has decisively pivoted toward Western integration, joining NATO in 2017.",
+    "keyEvents": [
+      { "year": 1878, "event": "Montenegro's independence is internationally recognized at the Congress of Berlin." },
+      { "year": 1918, "event": "Montenegro is incorporated into the Kingdom of Serbs, Croats, and Slovenes." },
+      { "year": 1945, "event": "Montenegro becomes one of the six republics of the Socialist Federal Republic of Yugoslavia." },
+      { "year": 2006, "event": "Independence referendum leads to the restoration of Montenegrin sovereignty." },
+      { "year": 2010, "event": "Montenegro officially becomes a candidate for EU membership." },
+      { "year": 2012, "event": "Accession negotiations with the EU formally begin." },
+      { "year": 2017, "event": "Montenegro joins NATO." },
+      { "year": 2024, "event": "Montenegro receives a positive Interim Benchmark Assessment Report (IBAR) from the EU." }
+    ]
+  },
+  "investmentNotes": {
+    "strengths": ["Strategic Adriatic location and world-class tourism potential", "NATO membership providing a secure and stable investment climate", "Competitive and flat tax system", "Significant potential for renewable energy development"],
+    "risks": ["High economic concentration in seasonal tourism", "Relatively small internal market and limited industrial base", "Challenges in public administration and the judicial system", "High level of public debt relative to GDP"],
+    "sectors": ["Luxury Tourism & Hospitality", "Renewable Energy (Wind, Solar, Hydro)", "Blue Economy & Maritime Transport", "Information Technology", "High-Value Agriculture"]
+  },
+  "sources": [
+    { "name": "Statistical Office of Montenegro (MONSTAT)", "url": "https://www.monstat.org/eng/index.php", "type": "economic" },
+    { "name": "Central Bank of Montenegro", "url": "https://www.cbcg.me/en", "type": "economic" },
+    { "name": "Montenegrin Investment Agency", "url": "https://mia.gov.me/en/", "type": "economic" }
+  ]
+}

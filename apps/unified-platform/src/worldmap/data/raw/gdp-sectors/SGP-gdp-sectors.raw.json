@@ -1,0 +1,36 @@
+[
+  {
+    "countryId": "SGP",
+    "year": 2023,
+    "gdpUsdBn": 501.4,
+    "gdpPerCapita": 84734.4,
+    "sectors": [
+      { "sector": "Wholesale Trade", "percentOfGDP": 22.3, "notes": "Largest sector, reflecting Singapore's status as a global trading hub" },
+      { "sector": "Manufacturing", "percentOfGDP": 18.6, "notes": "Dominated by electronics, chemicals, and precision engineering" },
+      { "sector": "Finance & Insurance", "percentOfGDP": 13.8, "notes": "Major global financial center" },
+      { "sector": "Other Services Industries", "percentOfGDP": 9.6, "notes": "Includes healthcare, education, and arts" },
+      { "sector": "Transportation & Storage", "percentOfGDP": 6.8, "notes": "Hub for maritime and aviation" },
+      { "sector": "Information & Communications", "percentOfGDP": 5.7, "notes": "Driven by digital transformation" },
+      { "sector": "Professional Services", "percentOfGDP": 5.7, "notes": null },
+      { "sector": "Ownership of Dwellings", "percentOfGDP": 3.6, "notes": null },
+      { "sector": "Construction", "percentOfGDP": 3.5, "notes": null },
+      { "sector": "Real Estate", "percentOfGDP": 3.1, "notes": null },
+      { "sector": "Administrative & Support Services", "percentOfGDP": 2.8, "notes": null },
+      { "sector": "Utilities", "percentOfGDP": 1.5, "notes": null },
+      { "sector": "Retail Trade", "percentOfGDP": 1.3, "notes": null },
+      { "sector": "Food & Beverage Services", "percentOfGDP": 0.9, "notes": null },
+      { "sector": "Accommodation", "percentOfGDP": 0.8, "notes": "Strong recovery in 2023 due to tourism" }
+    ],
+    "attribution": {
+      "sources": [
+        { "name": "World Bank DataBank 2023", "url": "https://databank.worldbank.org/", "accessedAt": "2024-05-10" },
+        { "name": "Ministry of Trade and Industry (MTI) Singapore 2023", "url": "https://www.mti.gov.sg/Resources/Economic-Survey-of-Singapore-2023", "accessedAt": "2024-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 2,
+        "lastVerified": "2024-05-10"
+      }
+    }
+  }
+]

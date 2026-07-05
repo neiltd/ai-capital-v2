@@ -1,0 +1,63 @@
+{
+  "id": "AND",
+  "iso2": "AD",
+  "name": "Andorra",
+  "region": "Europe",
+  "subregion": "Southern Europe",
+  "capital": "Andorra la Vella",
+  "lastUpdated": "2026-05-24",
+  "summary": "Andorra is currently at a historic crossroads as it prepares for the final ratification and implementation of its Association Agreement with the European Union in 2025-2026. This landmark agreement aims to grant the Principality access to the EU's internal market while preserving its competitive tax status and unique co-principality governance. The economy remains resilient, driven by a recovering tourism sector and a strong financial services industry, though it faces a severe housing shortage and the long-term threat of climate change to its vital winter tourism. Under the leadership of Head of Government Xavier Espot, Andorra is actively diversifying its economy through digital innovation and international tax cooperation. Geopolitically, the country maintains exceptional stability through its balanced relationship with its two 'co-princes'—the President of France and the Bishop of Urgell in Spain.",
+  "indicators": {
+    "politicalStability":       { "score": 9, "score_description": "Extremely stable with a unique co-principality system.", "trend": "stable", "confidence": "high", "note": "The Espot administration enjoys a stable mandate and a broad consensus on the EU Association Agreement." },
+    "economicDirection":        { "score": 7, "score_description": "Steady growth with a focus on EU integration.", "trend": "rising", "confidence": "high", "note": "Growth is projected to stabilize around 1.7% in 2025 as the country integrates more deeply into the European market." },
+    "investmentAttractiveness": { "score": 8, "score_description": "Highly attractive for tech nomads and low-tax businesses.", "trend": "rising", "confidence": "high", "note": "Andorra's low corporate and personal tax rates, combined with its safety and high quality of life, make it a magnet for digital entrepreneurs." },
+    "geopoliticalRisk":         { "score": 2, "score_description": "Very low risk; secure position between France and Spain.", "trend": "stable", "confidence": "high", "note": "Relations with the EU are the primary focus of foreign policy, ensuring long-term institutional stability." },
+    "educationQuality":         { "score": 8, "score_description": "Excellent multilingual and multicultural education system.", "trend": "stable", "confidence": "high", "note": "Andorra offers three co-existing school systems (Andorran, French, and Spanish), ensuring high linguistic competence." },
+    "healthcareQuality":        { "score": 9, "score_description": "Top-tier universal healthcare system with high outcomes.", "trend": "stable", "confidence": "high", "note": "Andorra consistently ranks among the highest in the world for life expectancy and healthcare quality." },
+    "technologyInvestment":     { "score": 7, "score_description": "Growing focus on digital economy and innovation.", "trend": "rising", "confidence": "high", "note": "The 'Andorra Digital' initiative is successfully attracting tech startups and blockchain-based businesses." }
+  },
+  "demographics": {
+    "population": 80000,
+    "medianAge": 46.2,
+    "urbanizationRate": 88,
+    "majorEthnicGroups": ["Andorran (48%)", "Spanish (24%)", "Portuguese (11%)", "French (4%)"],
+    "religions": [
+      { "name": "Roman Catholic", "percent": 90 },
+      { "name": "Other", "percent": 10 }
+    ]
+  },
+  "alliances": ["UN", "Council of Europe", "OSCE", "Eurozone (through monetary agreement)", "Schengen (Non-member, open borders)"],
+  "relationships": [
+    { "countryId": "ESP", "countryName": "Spain", "type": "ally", "sentiment": "positive", "summary": "Essential neighbor and primary trade partner; the Bishop of Urgell serves as one of Andorra's two co-princes." },
+    { "countryId": "FRA", "countryName": "France", "type": "ally", "sentiment": "positive", "summary": "Essential neighbor and security guarantor; the President of France serves as the other co-prince of Andorra." },
+    { "countryId": "EU", "countryName": "European Union", "type": "partner", "sentiment": "positive", "summary": "Current priority; the Association Agreement will define Andorra's economic future within the single market." },
+    { "countryId": "PRT", "countryName": "Portugal", "type": "partner", "sentiment": "positive", "summary": "Significant cultural and labor ties due to the large Portuguese community residing in Andorra." }
+  ],
+  "perspectives": [
+    { "source": "Demòcrates per Andorra (Governing)", "bias": "Center-Right / Pro-EU", "view": "The Association Agreement is the only path to modernize our economy and ensure a prosperous future while maintaining our identity." },
+    { "source": "Social Democratic Party (Opposition)", "bias": "Center-Left", "view": "We support EU integration but must ensure that the transition includes strong social protections and addresses the housing crisis." },
+    { "source": "Andorran Chamber of Commerce", "bias": "Pro-Business", "view": "The agreement offers immense opportunities for our businesses to scale within the EU, provided we manage the regulatory transition effectively." }
+  ],
+  "historicalContext": {
+    "summary": "Andorra was created by a charter in 1278 (the 'Pareatges'), which established the joint sovereignty of the Bishop of Urgell and the Count of Foix (whose rights passed to the French crown). For over 700 years, this unique system ensured Andorra's peace and neutrality. In 1993, the country adopted its first modern constitution, establishing it as a parliamentary co-principality and a member of the UN.",
+    "keyEvents": [
+      { "year": 1278, "event": "Signing of the Pareatges, establishing the co-principality." },
+      { "year": 1419, "event": "Creation of the 'Consell de la Terra', one of the oldest parliaments in Europe." },
+      { "year": 1933, "event": "Suffrage granted to all adult males; period of social unrest." },
+      { "year": 1993, "event": "First Constitution adopted, transforming Andorra into a modern parliamentary state." },
+      { "year": 2011, "event": "Introduction of the first direct taxes (corporate and income) to meet international standards." },
+      { "year": 2024, "event": "Finalization of the EU Association Agreement text." },
+      { "year": 2025, "event": "Ratification process for the EU Association Agreement begins." }
+    ]
+  },
+  "investmentNotes": {
+    "strengths": ["Low tax environment (10% corporate and income tax)", "Exceptional safety and high political stability", "Strategic location between two major EU economies", "High quality of life and multilingual workforce"],
+    "risks": ["Severe housing shortage and rising cost of living", "Small domestic market and limited land for development", "Vulnerability to climate change impacts on ski tourism", "Regulatory burden of adapting to EU single market rules"],
+    "sectors": ["Digital Innovation and Fintech", "Luxury Tourism and Retail", "Private Banking and Wealth Management", "Real Estate and Construction"]
+  },
+  "sources": [
+    { "name": "Department of Statistics of Andorra", "url": "https://www.estadistica.ad/", "type": "economic" },
+    { "name": "Andorra Business", "url": "https://www.andorragenera.ad/", "type": "investment" },
+    { "name": "Government of Andorra", "url": "https://www.govern.ad/", "type": "political" }
+  ]
+}

@@ -1,0 +1,212 @@
+[
+  {
+    "id": "PORT-KEN-MOMBASA",
+    "name": "Port of Mombasa",
+    "countryId": "KEN",
+    "city": "Mombasa",
+    "coordinates": [39.6631, -4.0396],
+    "type": "container",
+    "annualThroughputTEU": 2110000,
+    "annualThroughputTonnes": 45450000,
+    "berthCount": 19,
+    "maxDraftM": 15.0,
+    "strategicImportance": "critical",
+    "riskLevel": "medium",
+    "geopoliticalNotes": "Principal gateway for East and Central Africa, serving the Northern Corridor (Uganda, Rwanda, DRC). Vital for regional trade stability.",
+    "notes": "Ongoing expansion of berths 23 and 24 to increase container capacity.",
+    "attribution": {
+      "sources": [
+        { "name": "Kenya Ports Authority", "url": "https://www.kpa.co.ke", "accessedAt": "2026-05-10" },
+        { "name": "Port Technology International", "url": "https://www.porttechnology.org", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 2,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  },
+  {
+    "id": "PORT-KEN-LAMU",
+    "name": "Port of Lamu",
+    "countryId": "KEN",
+    "city": "Lamu",
+    "coordinates": [40.9083, -2.2581],
+    "type": "container",
+    "annualThroughputTEU": 55687,
+    "annualThroughputTonnes": 799161,
+    "berthCount": 3,
+    "maxDraftM": 18.0,
+    "strategicImportance": "high",
+    "riskLevel": "medium",
+    "geopoliticalNotes": "Part of the LAPSSET corridor aimed at connecting Kenya, South Sudan, and Ethiopia. Designed for post-Panamax vessels.",
+    "notes": "First three berths operational; planned to expand to 32 berths.",
+    "attribution": {
+      "sources": [
+        { "name": "LAPSSET Corridor Development Authority", "url": "http://www.lapsset.go.ke", "accessedAt": "2026-05-10" },
+        { "name": "The Coast", "url": "https://thecoast.co.ke", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 2,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  },
+  {
+    "id": "PORT-KEN-SHIMONI",
+    "name": "Port of Shimoni",
+    "countryId": "KEN",
+    "city": "Shimoni",
+    "coordinates": [39.3852, -4.6472],
+    "type": "mixed",
+    "annualThroughputTEU": null,
+    "annualThroughputTonnes": null,
+    "berthCount": 4,
+    "maxDraftM": 12.0,
+    "strategicImportance": "medium",
+    "riskLevel": "low",
+    "geopoliticalNotes": "Strategically located near the Tanzanian border; being developed into a modern fishing and commercial port.",
+    "notes": "Transformation into a large-scale commercial port is ongoing as of 2025.",
+    "attribution": {
+      "sources": [
+        { "name": "Kenya Ports Authority", "url": "https://www.kpa.co.ke", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "medium",
+        "sourceCount": 1,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  },
+  {
+    "id": "PORT-KEN-MALINDI",
+    "name": "Port of Malindi",
+    "countryId": "KEN",
+    "city": "Malindi",
+    "coordinates": [40.1281, -3.2205],
+    "type": "mixed",
+    "annualThroughputTEU": null,
+    "annualThroughputTonnes": null,
+    "berthCount": 1,
+    "maxDraftM": 5.0,
+    "strategicImportance": "low",
+    "riskLevel": "low",
+    "geopoliticalNotes": "Serves the local tourism and fishing industries; limited commercial cargo capacity.",
+    "notes": "Primarily a jetty for small vessels and fishing boats.",
+    "attribution": {
+      "sources": [
+        { "name": "Kenya Ports Authority", "url": "https://www.kpa.co.ke", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "medium",
+        "sourceCount": 1,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  },
+  {
+    "id": "PORT-KEN-KILIFI",
+    "name": "Port of Kilifi",
+    "countryId": "KEN",
+    "city": "Kilifi",
+    "coordinates": [39.8550, -3.6350],
+    "type": "mixed",
+    "annualThroughputTEU": null,
+    "annualThroughputTonnes": null,
+    "berthCount": 1,
+    "maxDraftM": 4.0,
+    "strategicImportance": "low",
+    "riskLevel": "low",
+    "geopoliticalNotes": "Local port serving agriculture and limestone industries in the coastal region.",
+    "notes": "Significant for regional logistics but limited in scale.",
+    "attribution": {
+      "sources": [
+        { "name": "Kenya Ports Authority", "url": "https://www.kpa.co.ke", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "low",
+        "sourceCount": 1,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  },
+  {
+    "id": "PORT-KEN-MTWAPA",
+    "name": "Port of Mtwapa",
+    "countryId": "KEN",
+    "city": "Mtwapa",
+    "coordinates": [39.7600, -3.9400],
+    "type": "mixed",
+    "annualThroughputTEU": null,
+    "annualThroughputTonnes": null,
+    "berthCount": 1,
+    "maxDraftM": 3.0,
+    "strategicImportance": "low",
+    "riskLevel": "low",
+    "geopoliticalNotes": "Minor port used for local trade and fishing.",
+    "notes": "Limited infrastructure for large-scale maritime operations.",
+    "attribution": {
+      "sources": [
+        { "name": "Kenya Ports Authority", "url": "https://www.kpa.co.ke", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "low",
+        "sourceCount": 1,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  },
+  {
+    "id": "PORT-KEN-KIUNGA",
+    "name": "Port of Kiunga",
+    "countryId": "KEN",
+    "city": "Kiunga",
+    "coordinates": [41.4800, -1.7500],
+    "type": "mixed",
+    "annualThroughputTEU": null,
+    "annualThroughputTonnes": null,
+    "berthCount": 1,
+    "maxDraftM": 3.0,
+    "strategicImportance": "medium",
+    "riskLevel": "high",
+    "geopoliticalNotes": "Strategic location near the Somali border; critical for security monitoring and coastal surveillance.",
+    "notes": "Small port primarily used for local trade and security operations.",
+    "attribution": {
+      "sources": [
+        { "name": "Kenya Ports Authority", "url": "https://www.kpa.co.ke", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "medium",
+        "sourceCount": 1,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  },
+  {
+    "id": "PORT-KEN-FUNZI",
+    "name": "Port of Funzi",
+    "countryId": "KEN",
+    "city": "Funzi",
+    "coordinates": [39.4300, -4.5100],
+    "type": "mixed",
+    "annualThroughputTEU": null,
+    "annualThroughputTonnes": null,
+    "berthCount": 1,
+    "maxDraftM": 3.0,
+    "strategicImportance": "low",
+    "riskLevel": "low",
+    "geopoliticalNotes": "Small island port used for local transport and eco-tourism.",
+    "notes": "Minimal infrastructure, serving local community needs.",
+    "attribution": {
+      "sources": [
+        { "name": "Kenya Ports Authority", "url": "https://www.kpa.co.ke", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "low",
+        "sourceCount": 1,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  }
+]

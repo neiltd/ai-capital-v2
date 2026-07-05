@@ -1,0 +1,274 @@
+[
+  {
+    "id": "PLANT-BRA-ITAIPU",
+    "name": "Itaipu Hydroelectric Dam",
+    "countryId": "BRA",
+    "city": "Foz do Iguaçu",
+    "coordinates": [-54.5942, -25.4125],
+    "type": "hydro",
+    "status": "operating",
+    "capacityMW": 14000,
+    "annualOutputGWh": 103000,
+    "yearCommissioned": 1984,
+    "yearRetirement": null,
+    "operator": "Itaipu Binacional",
+    "owner": "Brazil and Paraguay",
+    "strategicNote": "World's second largest hydroelectric plant by capacity and often first by energy production. Critical for both Brazil and Paraguay's grids.",
+    "notes": "Binational facility on the Paraná River.",
+    "attribution": {
+      "sources": [
+        { "name": "Global Energy Monitor", "url": "https://www.gem.wiki/Itaipu_Dam", "accessedAt": "2025-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 1,
+        "lastVerified": "2025-05-10"
+      }
+    }
+  },
+  {
+    "id": "PLANT-BRA-BELO-MONTE",
+    "name": "Belo Monte Hydroelectric Complex",
+    "countryId": "BRA",
+    "city": "Altamira",
+    "coordinates": [-51.7758, -3.1278],
+    "type": "hydro",
+    "status": "operating",
+    "capacityMW": 11233,
+    "annualOutputGWh": 39500,
+    "yearCommissioned": 2016,
+    "yearRetirement": null,
+    "operator": "Norte Energia",
+    "owner": "Norte Energia (Consortium of Eletrobras, PETROS, FUNCEF, etc.)",
+    "strategicNote": "Largest entirely Brazilian-owned hydroelectric plant. Highly controversial due to environmental and indigenous impact on the Xingu River.",
+    "notes": "Full capacity reached in 2019.",
+    "attribution": {
+      "sources": [
+        { "name": "Global Energy Monitor", "url": "https://www.gem.wiki/Belo_Monte_Dam", "accessedAt": "2025-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 1,
+        "lastVerified": "2025-05-10"
+      }
+    }
+  },
+  {
+    "id": "PLANT-BRA-TUCURUI",
+    "name": "Tucuruí Hydroelectric Plant",
+    "countryId": "BRA",
+    "city": "Tucuruí",
+    "coordinates": [-49.6467, -3.8317],
+    "type": "hydro",
+    "status": "operating",
+    "capacityMW": 8370,
+    "annualOutputGWh": 41000,
+    "yearCommissioned": 1984,
+    "yearRetirement": null,
+    "operator": "Eletronorte",
+    "owner": "Eletrobras",
+    "strategicNote": "Major power source for the northern region of Brazil and the aluminum industry.",
+    "notes": null,
+    "attribution": {
+      "sources": [
+        { "name": "Global Energy Monitor", "url": "https://www.gem.wiki/Tucuru%C3%AD_Dam", "accessedAt": "2025-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 1,
+        "lastVerified": "2025-05-10"
+      }
+    }
+  },
+  {
+    "id": "PLANT-BRA-ANGRA-1",
+    "name": "Angra 1 Nuclear Power Plant",
+    "countryId": "BRA",
+    "city": "Angra dos Reis",
+    "coordinates": [-44.4739, -23.0083],
+    "type": "nuclear",
+    "status": "operating",
+    "capacityMW": 640,
+    "annualOutputGWh": null,
+    "yearCommissioned": 1985,
+    "yearRetirement": null,
+    "operator": "Eletronuclear",
+    "owner": "Eletrobras",
+    "strategicNote": "Brazil's first nuclear power plant, vital for the Rio de Janeiro regional grid.",
+    "notes": "Net capacity 609 MW.",
+    "attribution": {
+      "sources": [
+        { "name": "Global Energy Monitor", "url": "https://www.gem.wiki/Angra_Nuclear_Power_Plant", "accessedAt": "2025-05-10" },
+        { "name": "IAEA PRIS", "url": "https://pris.iaea.org/PRIS/CountryStatistics/ReactorDetails.aspx?current=21", "accessedAt": "2025-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 2,
+        "lastVerified": "2025-05-10"
+      }
+    }
+  },
+  {
+    "id": "PLANT-BRA-ANGRA-2",
+    "name": "Angra 2 Nuclear Power Plant",
+    "countryId": "BRA",
+    "city": "Angra dos Reis",
+    "coordinates": [-44.4739, -23.0083],
+    "type": "nuclear",
+    "status": "operating",
+    "capacityMW": 1350,
+    "annualOutputGWh": null,
+    "yearCommissioned": 2001,
+    "yearRetirement": null,
+    "operator": "Eletronuclear",
+    "owner": "Eletrobras",
+    "strategicNote": "Significant baseload power source for southeastern Brazil.",
+    "notes": "Net capacity 1275 MW.",
+    "attribution": {
+      "sources": [
+        { "name": "Global Energy Monitor", "url": "https://www.gem.wiki/Angra_Nuclear_Power_Plant", "accessedAt": "2025-05-10" },
+        { "name": "IAEA PRIS", "url": "https://pris.iaea.org/PRIS/CountryStatistics/ReactorDetails.aspx?current=23", "accessedAt": "2025-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 2,
+        "lastVerified": "2025-05-10"
+      }
+    }
+  },
+  {
+    "id": "PLANT-BRA-JIRAU",
+    "name": "Jirau Hydroelectric Plant",
+    "countryId": "BRA",
+    "city": "Porto Velho",
+    "coordinates": [-64.6500, -9.2667],
+    "type": "hydro",
+    "status": "operating",
+    "capacityMW": 3750,
+    "annualOutputGWh": null,
+    "yearCommissioned": 2013,
+    "yearRetirement": null,
+    "operator": "Energia Sustentável do Brasil",
+    "owner": "Engie (40%), Eletrobras (40%), Mitsui (20%)",
+    "strategicNote": "Major run-of-the-river plant on the Madeira River, part of the Madeira River Hydroelectric Complex.",
+    "notes": null,
+    "attribution": {
+      "sources": [
+        { "name": "Global Energy Monitor", "url": "https://www.gem.wiki/Jirau_Dam", "accessedAt": "2025-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 1,
+        "lastVerified": "2025-05-10"
+      }
+    }
+  },
+  {
+    "id": "PLANT-BRA-SANTO-ANTONIO",
+    "name": "Santo Antônio Hydroelectric Plant",
+    "countryId": "BRA",
+    "city": "Porto Velho",
+    "coordinates": [-63.9500, -8.8000],
+    "type": "hydro",
+    "status": "operating",
+    "capacityMW": 3568,
+    "annualOutputGWh": null,
+    "yearCommissioned": 2012,
+    "yearRetirement": null,
+    "operator": "Santo Antônio Energia",
+    "owner": "Eletrobras",
+    "strategicNote": "Critical facility on the Madeira River utilizing bulb turbines for lower head.",
+    "notes": null,
+    "attribution": {
+      "sources": [
+        { "name": "Global Energy Monitor", "url": "https://www.gem.wiki/Santo_Ant%C3%B4nio_Dam", "accessedAt": "2025-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 1,
+        "lastVerified": "2025-05-10"
+      }
+    }
+  },
+  {
+    "id": "PLANT-BRA-PORTO-DE-SERGIPE",
+    "name": "Porto de Sergipe I",
+    "countryId": "BRA",
+    "city": "Barra dos Coqueiros",
+    "coordinates": [-36.9186, -10.8447],
+    "type": "gas",
+    "status": "operating",
+    "capacityMW": 1516,
+    "annualOutputGWh": null,
+    "yearCommissioned": 2020,
+    "yearRetirement": null,
+    "operator": "CELSE",
+    "owner": "Eneva",
+    "strategicNote": "Largest natural gas-fired power plant in Latin America, integrated with an FSRU.",
+    "notes": null,
+    "attribution": {
+      "sources": [
+        { "name": "Global Energy Monitor", "url": "https://www.gem.wiki/Porto_de_Sergipe_I_power_station", "accessedAt": "2025-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 1,
+        "lastVerified": "2025-05-10"
+      }
+    }
+  },
+  {
+    "id": "PLANT-BRA-PIRAPORA",
+    "name": "Pirapora Solar Complex",
+    "countryId": "BRA",
+    "city": "Pirapora",
+    "coordinates": [-44.8575, -17.4197],
+    "type": "solar",
+    "status": "operating",
+    "capacityMW": 399,
+    "annualOutputGWh": null,
+    "yearCommissioned": 2017,
+    "yearRetirement": null,
+    "operator": "EDF Renewables",
+    "owner": "EDF Renewables (80%), Canadian Solar (20%)",
+    "strategicNote": "One of Brazil's largest solar complexes, representing the shift towards large-scale PV.",
+    "notes": null,
+    "attribution": {
+      "sources": [
+        { "name": "Global Energy Monitor", "url": "https://www.gem.wiki/Pirapora_Solar_Park", "accessedAt": "2025-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 1,
+        "lastVerified": "2025-05-10"
+      }
+    }
+  },
+  {
+    "id": "PLANT-BRA-ILHA-SOLTEIRA",
+    "name": "Ilha Solteira Hydroelectric Plant",
+    "countryId": "BRA",
+    "city": "Ilha Solteira",
+    "coordinates": [-51.3500, -20.3833],
+    "type": "hydro",
+    "status": "operating",
+    "capacityMW": 3444,
+    "annualOutputGWh": null,
+    "yearCommissioned": 1973,
+    "yearRetirement": null,
+    "operator": "CTP",
+    "owner": "CTP",
+    "strategicNote": "Major hydroelectric plant on the Paraná River, part of the Urubupungá complex.",
+    "notes": null,
+    "attribution": {
+      "sources": [
+        { "name": "Global Energy Monitor", "url": "https://www.gem.wiki/Ilha_Solteira_Dam", "accessedAt": "2025-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 1,
+        "lastVerified": "2025-05-10"
+      }
+    }
+  }
+]

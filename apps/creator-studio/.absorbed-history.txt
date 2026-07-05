@@ -1,0 +1,23 @@
+9b7b235 2026-06-02 10:24:33 -0700 chore(security): untrack ruvector.db, agentdb.rvf, add db patterns to gitignore
+777a5d7 2026-05-23 01:02:13 -0700 fix: wire onSaved to router.refresh via DashboardActions wrapper
+df0ab66 2026-05-23 00:56:00 -0700 feat: add VideoForm and GrowthForm to dashboard
+08f9839 2026-05-23 00:54:12 -0700 fix: mark home page dynamic, add napi-rs/canvas to serverExternalPackages
+2bcd259 2026-05-23 00:50:56 -0700 feat: add archive page showing saved sessions
+c9c19d7 2026-05-23 00:38:51 -0700 fix: api route validation, error handling, and GET test coverage
+711e80f 2026-05-23 00:34:22 -0700 feat: add videos and growth snapshot API routes
+973d685 2026-05-22 23:51:01 -0700 chore: run prisma generate — sync client to schema
+f5e5dda 2026-05-22 23:48:48 -0700 feat: add archive page, growth tracker (manual + screenshot + TikTok sync), dashboard
+7e5d9e4 2026-05-22 23:24:40 -0700 feat: add visuals API routes (card, illustration, chart) and session logger
+45a8e05 2026-05-22 23:16:43 -0700 feat: add main page with morning topic pitch and chat interface
+1709768 2026-05-22 23:13:17 -0700 feat: add chat UI components — MessageBubble, VisualAttachment, ChatInterface
+88f900d 2026-05-22 02:09:13 -0700 feat: add streaming chat API with claude sonnet 4.6 and prompt caching
+0734cf2 2026-05-22 02:07:10 -0700 feat: add claude agent with creator persona system prompt
+a15eea3 2026-05-22 02:05:55 -0700 feat: add topic API route
+e462bc5 2026-05-22 02:01:40 -0700 fix: guard against empty events array in pickDailyTopic
+dccfbac 2026-05-22 01:51:30 -0700 feat: add topic engine with AI/investor scoring
+6a2cc72 2026-05-22 01:49:03 -0700 fix: add events array validation in loadWorldIntelligence
+26ae0a7 2026-05-22 01:45:45 -0700 feat: add hub data reader for world-intelligence exports
+8e9bd0c 2026-05-22 01:38:22 -0700 feat: add prisma schema and db client
+27a05b1 2026-05-22 00:52:06 -0700 chore: add .env.local.example template
+d29d2d4 2026-05-22 00:31:42 -0700 feat: scaffold creator-studio Next.js app
+6ada003 2026-05-22 00:21:43 -0700 Initial commit from Create Next App

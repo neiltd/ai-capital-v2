@@ -1,0 +1,218 @@
+[
+  {
+    "id": "PORT-MYS-KLANG",
+    "name": "Port Klang",
+    "countryId": "MYS",
+    "city": "Klang",
+    "coordinates": [101.392, 2.998],
+    "type": "container",
+    "annualThroughputTEU": 14640000,
+    "annualThroughputTonnes": 110000000,
+    "berthCount": 58,
+    "maxDraftM": 17.5,
+    "strategicImportance": "critical",
+    "riskLevel": "low",
+    "geopoliticalNotes": "Malaysia's primary gateway and the 10th busiest container port in the world; major transshipment hub connecting Asia with Europe.",
+    "notes": "Includes Westport, Northport, and Southpoint; National Load Centre.",
+    "attribution": {
+      "sources": [
+        { "name": "Port Klang Authority", "url": "https://www.pka.gov.my/", "accessedAt": "2024-05-10" },
+        { "name": "Lloyd's List port rankings", "url": "https://lloydslist.com/", "accessedAt": "2024-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 2,
+        "lastVerified": "2024-05-10"
+      }
+    }
+  },
+  {
+    "id": "PORT-MYS-TANJUNG-PELEPAS",
+    "name": "Port of Tanjung Pelepas (PTP)",
+    "countryId": "MYS",
+    "city": "Iskandar Puteri",
+    "coordinates": [103.545, 1.365],
+    "type": "container",
+    "annualThroughputTEU": 12250000,
+    "annualThroughputTonnes": null,
+    "berthCount": 14,
+    "maxDraftM": 16.5,
+    "strategicImportance": "critical",
+    "riskLevel": "low",
+    "geopoliticalNotes": "Premier global transshipment hub and main competitor to the Port of Singapore; key Asian hub for the Gemini Cooperation.",
+    "notes": "Strategically located at the confluence of the Malacca and Singapore Straits.",
+    "attribution": {
+      "sources": [
+        { "name": "Port of Tanjung Pelepas", "url": "https://www.ptp.com.my/", "accessedAt": "2024-05-10" },
+        { "name": "World Shipping Council", "url": "https://www.worldshipping.org", "accessedAt": "2024-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 2,
+        "lastVerified": "2024-05-10"
+      }
+    }
+  },
+  {
+    "id": "PORT-MYS-PENANG",
+    "name": "Penang Port",
+    "countryId": "MYS",
+    "city": "Butterworth",
+    "coordinates": [100.368, 5.415],
+    "type": "mixed",
+    "annualThroughputTEU": 1420000,
+    "annualThroughputTonnes": 32200000,
+    "berthCount": 26,
+    "maxDraftM": 12.0,
+    "strategicImportance": "high",
+    "riskLevel": "low",
+    "geopoliticalNotes": "Primary gateway for the Northern Corridor Economic Region (NCER) and Southern Thailand.",
+    "notes": "Vital link in the Indonesia-Malaysia-Thailand Growth Triangle (IMT-GT).",
+    "attribution": {
+      "sources": [
+        { "name": "Penang Port Sdn Bhd", "url": "https://www.penangport.com.my/", "accessedAt": "2024-05-10" },
+        { "name": "UNCTAD", "url": "https://unctad.org", "accessedAt": "2024-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 2,
+        "lastVerified": "2024-05-10"
+      }
+    }
+  },
+  {
+    "id": "PORT-MYS-JOHOR",
+    "name": "Johor Port (Pasir Gudang)",
+    "countryId": "MYS",
+    "city": "Pasir Gudang",
+    "coordinates": [103.883, 1.433],
+    "type": "mixed",
+    "annualThroughputTEU": 1080000,
+    "annualThroughputTonnes": 40000000,
+    "berthCount": 26,
+    "maxDraftM": 13.8,
+    "strategicImportance": "high",
+    "riskLevel": "low",
+    "geopoliticalNotes": "World’s largest palm oil terminal and major regional commodity hub; designated London Metal Exchange (LME) location.",
+    "notes": "Primary industrial port for Southern Peninsular Malaysia.",
+    "attribution": {
+      "sources": [
+        { "name": "Johor Port Berhad", "url": "https://www.johorport.com.my/", "accessedAt": "2024-05-10" },
+        { "name": "UNCTAD", "url": "https://unctad.org", "accessedAt": "2024-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 2,
+        "lastVerified": "2024-05-10"
+      }
+    }
+  },
+  {
+    "id": "PORT-MYS-BINTULU",
+    "name": "Bintulu Port",
+    "countryId": "MYS",
+    "city": "Bintulu",
+    "coordinates": [113.067, 3.25],
+    "type": "lng",
+    "annualThroughputTEU": 400000,
+    "annualThroughputTonnes": 51800000,
+    "berthCount": 15,
+    "maxDraftM": 15.0,
+    "strategicImportance": "critical",
+    "riskLevel": "low",
+    "geopoliticalNotes": "Malaysia's principal LNG export hub and one of the largest LNG terminals in the world.",
+    "notes": "Primary maritime gateway for East Malaysia and the BIMP-EAGA region.",
+    "attribution": {
+      "sources": [
+        { "name": "Bintulu Port Holdings Berhad", "url": "https://www.bintuluport.com.my/", "accessedAt": "2024-05-10" },
+        { "name": "UNCTAD", "url": "https://unctad.org", "accessedAt": "2024-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 2,
+        "lastVerified": "2024-05-10"
+      }
+    }
+  },
+  {
+    "id": "PORT-MYS-KUANTAN",
+    "name": "Kuantan Port",
+    "countryId": "MYS",
+    "city": "Kuantan",
+    "coordinates": [103.417, 3.967],
+    "type": "mixed",
+    "annualThroughputTEU": 600000,
+    "annualThroughputTonnes": 26000000,
+    "berthCount": 19,
+    "maxDraftM": 16.5,
+    "strategicImportance": "high",
+    "riskLevel": "low",
+    "geopoliticalNotes": "Main gateway to the East Coast of Peninsular Malaysia; key node in the 21st Century Maritime Silk Road.",
+    "notes": "Supported by significant Chinese investment; new deep water terminal capacity.",
+    "attribution": {
+      "sources": [
+        { "name": "Kuantan Port Consortium", "url": "https://www.kuantanport.com.my/", "accessedAt": "2024-05-10" },
+        { "name": "UNCTAD", "url": "https://unctad.org", "accessedAt": "2024-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 2,
+        "lastVerified": "2024-05-10"
+      }
+    }
+  },
+  {
+    "id": "PORT-MYS-SAPANGAR-BAY",
+    "name": "Sapangar Bay Container Port",
+    "countryId": "MYS",
+    "city": "Kota Kinabalu",
+    "coordinates": [116.117, 6.067],
+    "type": "container",
+    "annualThroughputTEU": 362449,
+    "annualThroughputTonnes": null,
+    "berthCount": 5,
+    "maxDraftM": 12.0,
+    "strategicImportance": "medium",
+    "riskLevel": "low",
+    "geopoliticalNotes": "Premier transshipment hub for the BIMP-EAGA region, facilitating trade in the Sulu-Celebes Seas.",
+    "notes": "Positioned to capture growing trade in the East ASEAN Growth Area.",
+    "attribution": {
+      "sources": [
+        { "name": "Sabah Ports Sdn Bhd", "url": "https://www.spsb.com.my/", "accessedAt": "2024-05-10" },
+        { "name": "Daily Express Sabah", "url": "https://www.dailyexpress.com.my", "accessedAt": "2024-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 2,
+        "lastVerified": "2024-05-10"
+      }
+    }
+  },
+  {
+    "id": "PORT-MYS-KEMAMAN",
+    "name": "Kemaman Port",
+    "countryId": "MYS",
+    "city": "Kemaman",
+    "coordinates": [103.467, 4.25],
+    "type": "mixed",
+    "annualThroughputTEU": null,
+    "annualThroughputTonnes": 5400000,
+    "berthCount": 12,
+    "maxDraftM": 18.4,
+    "strategicImportance": "medium",
+    "riskLevel": "low",
+    "geopoliticalNotes": "Specialized industrial port serving the Oil & Gas industry and heavy manufacturing on the East Coast.",
+    "notes": "Features some of the deepest water depths in Malaysia; critical for steel and petrochemicals.",
+    "attribution": {
+      "sources": [
+        { "name": "Kemaman Port Authority", "url": "https://www.lpkm.gov.my/", "accessedAt": "2024-05-10" },
+        { "name": "UNCTAD", "url": "https://unctad.org", "accessedAt": "2024-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 2,
+        "lastVerified": "2024-05-10"
+      }
+    }
+  }
+]

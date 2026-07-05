@@ -1,0 +1,66 @@
+{
+  "id": "TUR",
+  "iso2": "TR",
+  "name": "Turkey (Türkiye)",
+  "region": "Asia/Europe",
+  "subregion": "Western Asia",
+  "capital": "Ankara",
+  "lastUpdated": "2026-05-09",
+  "summary": "Turkey (Türkiye) is a critical transcontinental power that occupies a unique geostrategic position at the crossroads of Europe, Asia, and the Middle East. As a NATO member with the second-largest standing army in the alliance, Turkey pursues an assertive and increasingly independent foreign policy, often acting as a mediator in regional conflicts, most notably between Russia and Ukraine. Domestically, the country is navigating a complex transition following decades of rule under President Erdoğan, characterized by a mix of nationalist and religious conservatism. Economically, Turkey remains a major manufacturing and transit hub, although it has faced significant volatility driven by unconventional monetary policies and high inflation. Its 'Century of Türkiye' vision emphasizes technological self-sufficiency, particularly in defense, and a role as an indispensable energy bridge to Europe.",
+  "indicators": {
+    "politicalStability":       { "score": 5, "score_description": "Stable but centralized; navigating post-election institutional shifts.", "trend": "stable", "confidence": "high", "note": "High degree of executive control ensures rapid policy implementation but raises concerns regarding judicial independence and succession planning." },
+    "economicDirection":        { "score": 4, "score_description": "Fragile recovery following years of high inflation and currency volatility.", "trend": "improving", "confidence": "medium", "note": "A return to more orthodox monetary policy is beginning to stabilize the Lira, though the cost-of-living crisis remains a significant domestic pressure." },
+    "investmentAttractiveness": { "score": 6, "score_description": "Strong industrial base offset by regulatory and macro-economic risks.", "trend": "rising", "confidence": "high", "note": "Turkey remains a top choice for European firms diversifying supply chains due to low labor costs and high-quality manufacturing." },
+    "geopoliticalRisk":         { "score": 7, "score_description": "High risk due to regional volatility and 'balancing' foreign policy.", "trend": "rising", "confidence": "high", "note": "Turkey's involvement in multiple regional conflicts (Syria, Libya, Caucasus) and its complex relationship with Russia create a high-stakes security environment." },
+    "educationQuality":         { "score": 5, "score_description": "Improving access but variable quality and skill mismatches.", "trend": "stable", "confidence": "high", "note": "Significant expansion of the university system, yet youth unemployment remains high among graduates." },
+    "healthcareQuality":        { "score": 7, "score_description": "High-quality medical tourism hub with robust public infrastructure.", "trend": "stable", "confidence": "high", "note": "The 'City Hospitals' program has modernized healthcare, though brain drain of medical professionals is an emerging concern." },
+    "technologyInvestment":     { "score": 8, "score_description": "World-class performance in defense tech and drone systems.", "trend": "rising", "confidence": "high", "note": "Massive state investment in indigenous fighter jets, naval assets, and autonomous systems (Bayraktar legacy)." }
+  },
+  "demographics": {
+    "population": 85800000,
+    "medianAge": 33.5,
+    "urbanizationRate": 77,
+    "majorEthnicGroups": ["Turkish", "Kurdish", "Arab", "Circassian"],
+    "religions": [
+      { "name": "Muslim (Sunni/Alevi)", "percent": 99 },
+      { "name": "Other", "percent": 1 }
+    ]
+  },
+  "alliances": ["NATO", "G20", "Organization of Turkic States", "MIKTA", "Customs Union with EU"],
+  "relationships": [
+    { "countryId": "USA", "countryName": "United States", "type": "treaty_ally", "sentiment": "mixed", "summary": "Critical but strained partnership; disagreements over Syria (YPG), S-400s, and F-16 sales persist alongside deep security ties." },
+    { "countryId": "RUS", "countryName": "Russia", "type": "strategic_competitor", "sentiment": "mixed", "summary": "A complex 'co-opetition' relationship; partners in energy and trade, but rivals in Syria, Libya, and the South Caucasus." },
+    { "countryId": "GRE", "countryName": "Greece", "type": "rival", "sentiment": "neutral", "summary": "Persistent maritime and airspace disputes in the Aegean and Eastern Mediterranean, though recent 'earthquake diplomacy' has lowered tensions." },
+    { "countryId": "QAT", "countryName": "Qatar", "type": "ally", "sentiment": "positive", "summary": "Close strategic and ideological partner; provider of significant financial investment and host to a Turkish military base." },
+    { "countryId": "DEU", "countryName": "Germany", "type": "trade_partner", "sentiment": "mixed", "summary": "Largest trading partner and home to a massive Turkish diaspora; relations are pragmatic but often testy over human rights." }
+  ],
+  "perspectives": [
+    { "source": "Turkish Nationalist", "bias": "Neo-Ottoman/Sovereigntist", "view": "Turkey is a central power, not a peripheral one; we must pursue our own interests in the 'Blue Homeland' and beyond, regardless of Western approval." },
+    { "source": "Secular/Kemalist", "bias": "Pro-Western", "view": "Turkey's true path is Western-oriented democracy and secularism; the current drift toward authoritarianism and religious conservatism undermines our long-term stability." },
+    { "source": "Kurdish Rights Advocate", "bias": "Ethnic-Minority", "view": "True stability in Turkey can only be achieved through a political solution to the Kurdish question and the decentralization of power." }
+  ],
+  "historicalContext": {
+    "summary": "Modern Turkey was founded in 1923 by Mustafa Kemal Atatürk on the ruins of the Ottoman Empire. Atatürk's radical secularizing reforms transformed the country into a Western-style republic. Throughout the 20th century, Turkey navigated multiple military coups and a shift from a closed economy to a globalized one, eventually culminating in the rise of the AKP and the current presidential system.",
+    "keyEvents": [
+      { "year": 1923, "event": "Proclamation of the Republic of Turkey by Atatürk." },
+      { "year": 1945, "event": "Turkey joins the United Nations as a charter member." },
+      { "year": 1952, "event": "Turkey joins NATO, anchoring its security in the Western alliance." },
+      { "year": 1963, "event": "Ankara Agreement marks the start of Turkey's path toward the EEC/EU." },
+      { "year": 1974, "event": "Military intervention in Cyprus following a Greek-led coup." },
+      { "year": 2002, "event": "AK Party wins landslide victory, beginning the Erdoğan era." },
+      { "year": 2016, "event": "Failed military coup attempt leads to a state of emergency and constitutional changes." },
+      { "year": 2018, "event": "Transition to an executive presidential system." },
+      { "year": 2023, "event": "Centenary of the Republic; devastating February earthquakes." }
+    ]
+  },
+  "investmentNotes": {
+    "strengths": ["World-class manufacturing infrastructure", "Vibrant, young, and entrepreneurial population", "Logistical gateway between Asia and Europe", "Highly competitive and export-oriented private sector"],
+    "risks": ["High inflation and unconventional monetary history", "External debt and low foreign exchange reserves", "Political risk and institutional erosion", "Geopolitical exposure to neighboring conflicts"],
+    "sectors": ["Automotive", "Defense & Aerospace", "Textiles & Garments", "Logistics & Energy Transit", "Medical Tourism"]
+  },
+  "sources": [
+    { "name": "Turkish Statistical Institute (TÜİK)", "url": "https://www.tuik.gov.tr/Home/Index", "type": "economic" },
+    { "name": "Central Bank of the Republic of Türkiye", "url": "https://www.tcmb.gov.tr/wps/wcm/connect/en/tcmb+en", "type": "economic" },
+    { "name": "Ministry of Foreign Affairs", "url": "https://www.mfa.gov.tr/default.en.mfa", "type": "political" }
+  ]
+}

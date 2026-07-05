@@ -1,0 +1,212 @@
+[
+  {
+    "id": "PORT-UKR-PIVDENNYI",
+    "name": "Port of Pivdennyi",
+    "countryId": "UKR",
+    "city": "Yuzhne",
+    "coordinates": [31.0150, 46.6150],
+    "type": "mixed",
+    "annualThroughputTEU": null,
+    "annualThroughputTonnes": 35550000,
+    "berthCount": 34,
+    "maxDraftM": 18.9,
+    "strategicImportance": "critical",
+    "riskLevel": "high",
+    "geopoliticalNotes": "Deepest port in the Black Sea and Ukraine's primary export hub for iron ore and grain. Central to the Ukrainian Sea Corridor's success.",
+    "notes": "Capable of handling Capesize vessels. Regularly targeted by missile strikes but remains operational.",
+    "attribution": {
+      "sources": [
+        { "name": "Ukrainian Sea Ports Authority", "url": "https://www.uspa.gov.ua", "accessedAt": "2026-05-10" },
+        { "name": "Reuters", "url": "https://www.reuters.com", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 2,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  },
+  {
+    "id": "PORT-UKR-CHORNOMORSK",
+    "name": "Port of Chornomorsk",
+    "countryId": "UKR",
+    "city": "Chornomorsk",
+    "coordinates": [30.6550, 46.3250],
+    "type": "container",
+    "annualThroughputTEU": 150000,
+    "annualThroughputTonnes": 26040000,
+    "berthCount": 28,
+    "maxDraftM": 14.6,
+    "strategicImportance": "critical",
+    "riskLevel": "high",
+    "geopoliticalNotes": "Primary hub for the Ukrainian Sea Corridor and container logistics. Essential for grain exports and ferry connections to the Mediterranean.",
+    "notes": "Undergoing major concession tenders in 2025 to modernize terminal infrastructure.",
+    "attribution": {
+      "sources": [
+        { "name": "Ukrainian Sea Ports Authority", "url": "https://www.uspa.gov.ua", "accessedAt": "2026-05-10" },
+        { "name": "Port Technology International", "url": "https://www.porttechnology.org", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 2,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  },
+  {
+    "id": "PORT-UKR-ODESA",
+    "name": "Port of Odesa",
+    "countryId": "UKR",
+    "city": "Odesa",
+    "coordinates": [30.7450, 46.4950],
+    "type": "mixed",
+    "annualThroughputTEU": 215748,
+    "annualThroughputTonnes": 18300000,
+    "berthCount": 54,
+    "maxDraftM": 13.0,
+    "strategicImportance": "critical",
+    "riskLevel": "high",
+    "geopoliticalNotes": "Historic and strategic multi-purpose hub. Vital for Ukraine's overall maritime identity and global supply chain integration.",
+    "notes": "Handles significant container, oil, and grain traffic. High frequency of air raid alerts in the region.",
+    "attribution": {
+      "sources": [
+        { "name": "Ukrainian Sea Ports Authority", "url": "https://www.uspa.gov.ua", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 2,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  },
+  {
+    "id": "PORT-UKR-IZMAIL",
+    "name": "Port of Izmail",
+    "countryId": "UKR",
+    "city": "Izmail",
+    "coordinates": [28.8500, 45.3350],
+    "type": "bulk",
+    "annualThroughputTEU": null,
+    "annualThroughputTonnes": 13400000,
+    "berthCount": 24,
+    "maxDraftM": 7.0,
+    "strategicImportance": "high",
+    "riskLevel": "medium",
+    "geopoliticalNotes": "Ukraine's largest river port on the Danube. Served as a critical alternative route during the Black Sea blockade.",
+    "notes": "Key for iron ore exports to EU steel plants. Draft is sensitive to river levels.",
+    "attribution": {
+      "sources": [
+        { "name": "Ukrainian Sea Ports Authority", "url": "https://www.uspa.gov.ua", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 1,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  },
+  {
+    "id": "PORT-UKR-RENI",
+    "name": "Port of Reni",
+    "countryId": "UKR",
+    "city": "Reni",
+    "coordinates": [28.2850, 45.4450],
+    "type": "mixed",
+    "annualThroughputTEU": null,
+    "annualThroughputTonnes": 3430000,
+    "berthCount": 37,
+    "maxDraftM": 7.0,
+    "strategicImportance": "medium",
+    "riskLevel": "medium",
+    "geopoliticalNotes": "Strategic Danube port at the junction of Ukraine, Romania, and Moldova. Critical for liquid bulk and fertilizers.",
+    "notes": "Plays a vital role in the EU 'Solidarity Lanes' initiative.",
+    "attribution": {
+      "sources": [
+        { "name": "Ukrainian Sea Ports Authority", "url": "https://www.uspa.gov.ua", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "medium",
+        "sourceCount": 1,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  },
+  {
+    "id": "PORT-UKR-MYKOLAIV",
+    "name": "Port of Mykolaiv",
+    "countryId": "UKR",
+    "city": "Mykolaiv",
+    "coordinates": [31.9500, 46.9450],
+    "type": "mixed",
+    "annualThroughputTEU": null,
+    "annualThroughputTonnes": null,
+    "berthCount": 15,
+    "maxDraftM": 10.5,
+    "strategicImportance": "high",
+    "riskLevel": "critical",
+    "geopoliticalNotes": "Major shipbuilding and grain export hub. Currently blocked due to proximity to front lines and the Kinburn Spit.",
+    "notes": "Strategic value remains extremely high for post-war reconstruction and maritime security.",
+    "attribution": {
+      "sources": [
+        { "name": "Ukrainian Sea Ports Authority", "url": "https://www.uspa.gov.ua", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "medium",
+        "sourceCount": 1,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  },
+  {
+    "id": "PORT-UKR-MARIUPOL",
+    "name": "Port of Mariupol",
+    "countryId": "UKR",
+    "city": "Mariupol",
+    "coordinates": [37.5450, 47.0650],
+    "type": "bulk",
+    "annualThroughputTEU": null,
+    "annualThroughputTonnes": null,
+    "berthCount": 18,
+    "maxDraftM": 8.0,
+    "strategicImportance": "high",
+    "riskLevel": "critical",
+    "geopoliticalNotes": "Major industrial port on the Sea of Azov. Currently under Russian occupation and heavily damaged.",
+    "notes": "Excluded from official Ukrainian statistics due to occupation.",
+    "attribution": {
+      "sources": [
+        { "name": "Ukrainian Sea Ports Authority", "url": "https://www.uspa.gov.ua", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "medium",
+        "sourceCount": 1,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  },
+  {
+    "id": "PORT-UKR-BERDIANSK",
+    "name": "Port of Berdiansk",
+    "countryId": "UKR",
+    "city": "Berdiansk",
+    "coordinates": [36.7850, 46.7550],
+    "type": "mixed",
+    "annualThroughputTEU": null,
+    "annualThroughputTonnes": null,
+    "berthCount": 9,
+    "maxDraftM": 7.9,
+    "strategicImportance": "medium",
+    "riskLevel": "critical",
+    "geopoliticalNotes": "Export hub for agricultural products on the Sea of Azov. Currently under Russian occupation.",
+    "notes": "Strategic for regional logistics and control over the Azov coastline.",
+    "attribution": {
+      "sources": [
+        { "name": "Ukrainian Sea Ports Authority", "url": "https://www.uspa.gov.ua", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "low",
+        "sourceCount": 1,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  }
+]

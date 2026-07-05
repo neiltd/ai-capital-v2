@@ -1,0 +1,67 @@
+{
+  "id": "LKA",
+  "iso2": "LK",
+  "name": "Sri Lanka",
+  "region": "Asia",
+  "subregion": "Southern Asia",
+  "capital": "Colombo",
+  "lastUpdated": "2026-05-09",
+  "summary": "Sri Lanka is a strategically located island nation in the Indian Ocean, currently in a phase of steady recovery following a severe economic collapse and sovereign default in 2022. Under an IMF-supported reform program, the country has achieved remarkable macroeconomic stabilization, significantly reducing inflation and rebuilding foreign reserves. Geopolitically, Sri Lanka balances its 'India First' security policy with essential economic partnerships with China and other major creditors while leveraging its status as a critical maritime logistics hub.",
+  "indicators": {
+    "politicalStability":       { "score": 6, "trend": "stable", "confidence": "high", "note": "Stabilized following the 2022 protests; focus is now on policy continuity and long-term structural reforms." },
+    "economicDirection":        { "score": 6, "trend": "rising", "confidence": "high", "note": "Rebounding growth and drastically lower inflation; successful debt restructuring is the key to sustained recovery." },
+    "investmentAttractiveness": { "score": 5, "trend": "rising", "confidence": "medium", "note": "Renewed interest in tourism and logistics, though high corporate taxes and debt-related constraints remain." },
+    "geopoliticalRisk":         { "score": 4, "trend": "stable", "confidence": "high", "note": "Strategically positioned on Indian Ocean shipping lanes; primary challenge is balancing competing interests of India and China." },
+    "educationQuality":         { "score": 7, "trend": "stable", "confidence": "high", "note": "Highest literacy and primary education standards in South Asia; focus is shifting toward IT and technical skills." },
+    "healthcareQuality":        { "score": 7, "trend": "stable", "confidence": "high", "note": "Strong public healthcare system with good indicators for life expectancy and maternal health relative to the region." },
+    "technologyInvestment":     { "score": 5, "trend": "rising", "confidence": "medium", "note": "Growing IT services sector and push for digital government services; focus on developing the 'Colombo Port City' as a tech hub." }
+  },
+  "demographics": {
+    "population": 22200000,
+    "medianAge": 34.0,
+    "urbanizationRate": 19,
+    "majorEthnicGroups": ["Sinhalese", "Sri Lankan Tamil", "Sri Lankan Moor", "Indian Tamil"],
+    "religions": [
+      { "name": "Buddhist", "percent": 70.2 },
+      { "name": "Hindu", "percent": 12.6 },
+      { "name": "Muslim", "percent": 9.7 },
+      { "name": "Christian", "percent": 7.4 }
+    ]
+  },
+  "alliances": ["SAARC", "BIMSTEC", "IORA", "Belt and Road Initiative (BRI)"],
+  "relationships": [
+    { "countryId": "IND", "countryName": "India", "type": "strategic_partner", "sentiment": "positive", "summary": "Closest neighbor and provider of critical financial lifelines during the 2022 crisis; security interests are deeply intertwined." },
+    { "countryId": "CHN", "countryName": "China", "type": "economic_partner", "sentiment": "positive", "summary": "Major creditor and infrastructure developer (Hambantota Port, Port City); remains a vital partner for long-term investment." },
+    { "countryId": "JPN", "countryName": "Japan", "type": "strategic_partner", "sentiment": "positive", "summary": "Historically the largest bilateral donor and a key partner in infrastructure and urban development." },
+    { "countryId": "USA", "countryName": "United States", "type": "trade_partner", "sentiment": "neutral", "summary": "Major export market for apparel; USA is active in supporting maritime security and democratic institutions." }
+  ],
+  "perspectives": [
+    { "source": "Government Technocrat", "bias": "Reformist", "view": "Fiscal discipline and structural reforms are the only path to preventing another economic catastrophe." },
+    { "source": "Tourism Entrepreneur", "bias": "Optimistic", "view": "Sri Lanka is back on the map; we are seeing record arrivals and high-end investment interest in the hospitality sector." },
+    { "source": "Urban Middle Class", "bias": "Cautious", "view": "Inflation is down, but the cost of living remains high; we need to see the benefits of the recovery reach everyone." },
+    { "source": "Tamil Political Leader", "bias": "Regionalist", "view": "Economic recovery must be accompanied by meaningful political devolution and the resolution of long-standing ethnic grievances." }
+  ],
+  "historicalContext": {
+    "summary": "Sri Lanka (formerly Ceylon) has a rich history as a trade hub. Following independence in 1948, the nation faced a brutal 26-year civil war (1983-2009). The post-war era saw massive infrastructure spending that eventually led to a debt crisis and the unprecedented economic collapse of 2022.",
+    "keyEvents": [
+      { "year": 1948, "event": "Independence from the United Kingdom." },
+      { "year": 1972, "event": "Ceylon becomes the Republic of Sri Lanka." },
+      { "year": 1983, "event": "Beginning of the civil war between the government and the LTTE." },
+      { "year": 2004, "event": "Indian Ocean Tsunami causes widespread devastation on the island." },
+      { "year": 2009, "event": "End of the civil war with the military defeat of the LTTE." },
+      { "year": 2019, "event": "Easter Sunday bombings severely impact the tourism sector and social cohesion." },
+      { "year": 2022, "event": "Unprecedented economic crisis leads to sovereign default and mass protests (Aragalaya) ousting the President." },
+      { "year": 2024, "event": "Implementation of deep IMF-backed reforms and a return to positive economic growth." }
+    ]
+  },
+  "investmentNotes": {
+    "strengths": ["Strategic location at the center of East-West shipping lanes", "Highly literate and adaptable workforce", "World-class tourism potential and natural beauty", "Strong apparel manufacturing and IT services exports"],
+    "risks": ["High public debt-to-GDP ratio", "Vulnerability to external economic shocks", "Potential for social unrest if austerity measures are perceived as unfair", "Political risks associated with upcoming election cycles"],
+    "sectors": ["Logistics & Transshipment", "High-end Tourism & Wellness", "Renewable Energy (Wind/Solar)", "Information Technology & BPO"]
+  },
+  "sources": [
+    { "name": "Central Bank of Sri Lanka", "url": "https://www.cbsl.gov.lk/", "type": "economic" },
+    { "name": "Board of Investment (BOI) of Sri Lanka", "url": "https://investsrilanka.com/", "type": "investment" },
+    { "name": "IMF - Sri Lanka Country Page", "url": "https://www.imf.org/en/Countries/LKA", "type": "economic" }
+  ]
+}

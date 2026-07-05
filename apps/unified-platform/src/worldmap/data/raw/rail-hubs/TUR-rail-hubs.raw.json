@@ -1,0 +1,219 @@
+[
+  {
+    "id": "RAIL-TUR-HALKALI",
+    "name": "Istanbul Halkalı Station",
+    "countryId": "TUR",
+    "city": "Istanbul",
+    "coordinates": [28.77, 41.02],
+    "type": "mixed",
+    "dailyPassengers": null,
+    "annualFreightTonnes": null,
+    "connectedCountries": ["BGR"],
+    "gaugeType": "standard",
+    "lineCount": 6,
+    "strategicImportance": "high",
+    "isPartOfBRI": true,
+    "geopoliticalNotes": "Primary gateway to Europe and the western terminus for the Middle Corridor (Iron Silk Road). Connects Turkey to the EU rail network via Bulgaria.",
+    "notes": "Handles both high-speed passenger and trans-continental freight traffic.",
+    "attribution": {
+      "sources": [
+        { "name": "Invest in Turkey - Infrastructure", "url": "https://www.invest.gov.tr/en/sectors/pages/logistics.aspx", "accessedAt": "2026-05-10" },
+        { "name": "RailFreight.com Middle Corridor Analysis", "url": "https://www.railfreight.com/", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 2,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  },
+  {
+    "id": "RAIL-TUR-ANKARA-YHT",
+    "name": "Ankara YHT Station",
+    "countryId": "TUR",
+    "city": "Ankara",
+    "coordinates": [32.85, 39.93],
+    "type": "high_speed",
+    "dailyPassengers": 50000,
+    "annualFreightTonnes": null,
+    "connectedCountries": [],
+    "gaugeType": "standard",
+    "lineCount": 8,
+    "strategicImportance": "high",
+    "isPartOfBRI": true,
+    "geopoliticalNotes": "Central hub for Turkey's rapidly expanding High-Speed Rail (YHT) network and a key stop for Middle Corridor freight trains moving from China to Europe.",
+    "notes": "Dedicated high-speed terminal adjacent to the historic Ankara station.",
+    "attribution": {
+      "sources": [
+        { "name": "TCDD Taşımacılık Statistics", "url": "https://www.tcddtasimacilik.gov.tr/", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 1,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  },
+  {
+    "id": "RAIL-TUR-KOSEKOY",
+    "name": "Köseköy Logistics Center",
+    "countryId": "TUR",
+    "city": "Izmit",
+    "coordinates": [30.03, 40.73],
+    "type": "freight",
+    "dailyPassengers": null,
+    "annualFreightTonnes": 1500000,
+    "connectedCountries": [],
+    "gaugeType": "standard",
+    "lineCount": 12,
+    "strategicImportance": "high",
+    "isPartOfBRI": true,
+    "geopoliticalNotes": "The largest logistics center in the Marmara region; critical for industrial exports and a primary consolidation point for BRI freight.",
+    "notes": "Serves the Kocaeli industrial heartland.",
+    "attribution": {
+      "sources": [
+        { "name": "Middle Corridor Logistics Report", "url": "https://www.railfreight.com/", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "medium",
+        "sourceCount": 1,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  },
+  {
+    "id": "RAIL-TUR-KARS",
+    "name": "Kars Logistics Center",
+    "countryId": "TUR",
+    "city": "Kars",
+    "coordinates": [43.10, 40.60],
+    "type": "border_crossing",
+    "dailyPassengers": null,
+    "annualFreightTonnes": 412000,
+    "connectedCountries": ["GEO"],
+    "gaugeType": "standard",
+    "lineCount": 4,
+    "strategicImportance": "high",
+    "isPartOfBRI": true,
+    "geopoliticalNotes": "The Turkish gateway for the Baku-Tbilisi-Kars (BTK) railway, bypassing Russia to link China and Central Asia directly to Turkey.",
+    "notes": "Essential for the Trans-Caspian International Transport Route.",
+    "attribution": {
+      "sources": [
+        { "name": "BTK Railway Official Data", "url": "https://www.tcdd.gov.tr/", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 1,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  },
+  {
+    "id": "RAIL-TUR-MERSIN",
+    "name": "Mersin Port Rail Terminal",
+    "countryId": "TUR",
+    "city": "Mersin",
+    "coordinates": [34.63, 36.81],
+    "type": "port_interface",
+    "dailyPassengers": null,
+    "annualFreightTonnes": 3000000,
+    "connectedCountries": [],
+    "gaugeType": "standard",
+    "lineCount": 15,
+    "strategicImportance": "high",
+    "isPartOfBRI": false,
+    "geopoliticalNotes": "Major Mediterranean rail-port interface. Critical for the proposed 'Development Road' link from Iraq to Turkey and Europe.",
+    "notes": "One of the most active freight hubs in the Middle East/Mediterranean.",
+    "attribution": {
+      "sources": [
+        { "name": "Mersin Port Authority", "url": "https://www.mersinport.com.tr/", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 1,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  },
+  {
+    "id": "RAIL-TUR-KAPIKULE",
+    "name": "Kapıkule Border Station",
+    "countryId": "TUR",
+    "city": "Edirne",
+    "coordinates": [26.35, 41.72],
+    "type": "border_crossing",
+    "dailyPassengers": null,
+    "annualFreightTonnes": null,
+    "connectedCountries": ["BGR"],
+    "gaugeType": "standard",
+    "lineCount": 5,
+    "strategicImportance": "high",
+    "isPartOfBRI": true,
+    "geopoliticalNotes": "Busiest rail border crossing between Turkey and the European Union. Part of the Iron Silk Road's final leg into Europe.",
+    "notes": "Undergoing high-speed upgrades to connect with Istanbul.",
+    "attribution": {
+      "sources": [
+        { "name": "OSM", "url": "https://www.openstreetmap.org/", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 1,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  },
+  {
+    "id": "RAIL-TUR-ALSANCAK",
+    "name": "Izmir Alsancak Station",
+    "countryId": "TUR",
+    "city": "Izmir",
+    "coordinates": [27.14, 38.44],
+    "type": "port_interface",
+    "dailyPassengers": 180000,
+    "annualFreightTonnes": null,
+    "connectedCountries": [],
+    "gaugeType": "standard",
+    "lineCount": 6,
+    "strategicImportance": "medium",
+    "isPartOfBRI": false,
+    "geopoliticalNotes": "Key Aegean port interface for agricultural and industrial exports from Western Anatolia.",
+    "notes": "Integrates with the Izban suburban rail system.",
+    "attribution": {
+      "sources": [
+        { "name": "Izmir Port Operations", "url": "https://www.uab.gov.tr/", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "medium",
+        "sourceCount": 1,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  },
+  {
+    "id": "RAIL-TUR-ISKENDERUN",
+    "name": "İskenderun Port Terminal",
+    "countryId": "TUR",
+    "city": "İskenderun",
+    "coordinates": [36.17, 36.59],
+    "type": "port_interface",
+    "dailyPassengers": null,
+    "annualFreightTonnes": 1200000,
+    "connectedCountries": [],
+    "gaugeType": "standard",
+    "lineCount": 4,
+    "strategicImportance": "medium",
+    "isPartOfBRI": false,
+    "geopoliticalNotes": "Strategic port serving the heavy industry and steel production in Hatay. Potential southern node for future Middle East rail links.",
+    "notes": "Handles significant mineral and metal freight.",
+    "attribution": {
+      "sources": [
+        { "name": "Iskenderun Port Statistics", "url": "https://www.limakports.com.tr/", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "medium",
+        "sourceCount": 1,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  }
+]

@@ -1,0 +1,272 @@
+[
+  {
+    "id": "WAW",
+    "name": "Warsaw Chopin Airport",
+    "countryId": "POL",
+    "city": "Warsaw",
+    "iata": "WAW",
+    "icao": "EPWA",
+    "coordinates": [20.9671, 52.1657],
+    "passengerVolume": 18500000,
+    "cargoVolume": 103500,
+    "runwayCount": 2,
+    "elevationM": 110,
+    "strategicImportance": "critical",
+    "geopoliticalNotes": "Primary international gateway and hub for LOT Polish Airlines. Handles 80% of Poland's air cargo and maintains a military sector.",
+    "notes": "Main base for government and diplomatic flights.",
+    "attribution": {
+      "sources": [
+        { "name": "Warsaw Chopin Airport", "url": "https://www.lotnisko-chopina.pl", "accessedAt": "2026-05-10" },
+        { "name": "OurAirports", "url": "https://ourairports.com/airports/EPWA/", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 2,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  },
+  {
+    "id": "RZE",
+    "name": "Rzeszów-Jasionka Airport",
+    "countryId": "POL",
+    "city": "Rzeszów",
+    "iata": "RZE",
+    "icao": "EPRZ",
+    "coordinates": [22.019, 50.11],
+    "passengerVolume": 1020000,
+    "cargoVolume": 53100,
+    "runwayCount": 1,
+    "elevationM": 211,
+    "strategicImportance": "critical",
+    "geopoliticalNotes": "Most strategically critical airport on NATO's eastern flank. Primary logistics hub for military and humanitarian aid to Ukraine.",
+    "notes": "Protected by Allied Patriot missile systems; hosts significant NATO presence.",
+    "attribution": {
+      "sources": [
+        { "name": "Rzeszów-Jasionka Airport", "url": "https://www.rzeszowairport.pl", "accessedAt": "2026-05-10" },
+        { "name": "OurAirports", "url": "https://ourairports.com/airports/EPRZ/", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 2,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  },
+  {
+    "id": "KRK",
+    "name": "Kraków John Paul II International Airport",
+    "countryId": "POL",
+    "city": "Kraków",
+    "iata": "KRK",
+    "icao": "EPKK",
+    "coordinates": [19.7848, 50.0777],
+    "passengerVolume": 9400000,
+    "cargoVolume": null,
+    "runwayCount": 1,
+    "elevationM": 241,
+    "strategicImportance": "high",
+    "geopoliticalNotes": "Second-busiest airport and major tourism hub. Dual-use facility sharing its runway with the 8th Airlift Base of the Polish Air Force.",
+    "notes": "Key node for military transport in southern Poland.",
+    "attribution": {
+      "sources": [
+        { "name": "Kraków Airport", "url": "https://www.krakowairport.pl", "accessedAt": "2026-05-10" },
+        { "name": "OurAirports", "url": "https://ourairports.com/airports/EPKK/", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 2,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  },
+  {
+    "id": "KTW",
+    "name": "Katowice Airport",
+    "countryId": "POL",
+    "city": "Katowice",
+    "iata": "KTW",
+    "icao": "EPKT",
+    "coordinates": [19.08, 50.4742],
+    "passengerVolume": 5600000,
+    "cargoVolume": 29120,
+    "runwayCount": 1,
+    "elevationM": 303,
+    "strategicImportance": "high",
+    "geopoliticalNotes": "Leading regional cargo hub and primary airport for the industrial Silesian Metropolis. Major center for charter traffic.",
+    "notes": "Expanding cargo infrastructure to serve as backup logistics node.",
+    "attribution": {
+      "sources": [
+        { "name": "Katowice Airport", "url": "https://www.katowice-airport.com", "accessedAt": "2026-05-10" },
+        { "name": "OurAirports", "url": "https://ourairports.com/airports/EPKT/", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 2,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  },
+  {
+    "id": "GDN",
+    "name": "Gdańsk Lech Wałęsa Airport",
+    "countryId": "POL",
+    "city": "Gdańsk",
+    "iata": "GDN",
+    "icao": "EPGD",
+    "coordinates": [18.4662, 54.3776],
+    "passengerVolume": 5900000,
+    "cargoVolume": 9600,
+    "runwayCount": 1,
+    "elevationM": 149,
+    "strategicImportance": "high",
+    "geopoliticalNotes": "Primary hub for northern Poland. Vital for maritime-linked logistics and regional connectivity with Scandinavia.",
+    "notes": "Strategically vital for Baltic coast security.",
+    "attribution": {
+      "sources": [
+        { "name": "Gdańsk Airport", "url": "https://www.airport.gdansk.pl", "accessedAt": "2026-05-10" },
+        { "name": "OurAirports", "url": "https://ourairports.com/airports/EPGD/", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 2,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  },
+  {
+    "id": "WRO",
+    "name": "Wrocław Copernicus Airport",
+    "countryId": "POL",
+    "city": "Wrocław",
+    "iata": "WRO",
+    "icao": "EPWR",
+    "coordinates": [16.8858, 51.1027],
+    "passengerVolume": 3900000,
+    "cargoVolume": 1500,
+    "runwayCount": 1,
+    "elevationM": 123,
+    "strategicImportance": "high",
+    "geopoliticalNotes": "Dual-use airport hosting US military transport flights. Upgraded to enhance its role as a NATO logistics point.",
+    "notes": "Major business hub in western Poland.",
+    "attribution": {
+      "sources": [
+        { "name": "Wrocław Airport", "url": "https://airport.wroclaw.pl", "accessedAt": "2026-05-10" },
+        { "name": "OurAirports", "url": "https://ourairports.com/airports/EPWR/", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 2,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  },
+  {
+    "id": "POZ",
+    "name": "Poznań-Ławica Airport",
+    "countryId": "POL",
+    "city": "Poznań",
+    "iata": "POZ",
+    "icao": "EPPO",
+    "coordinates": [16.8263, 52.4211],
+    "passengerVolume": 2800000,
+    "cargoVolume": 32,
+    "runwayCount": 1,
+    "elevationM": 94,
+    "strategicImportance": "medium",
+    "geopoliticalNotes": "Strategic value tied to proximity to the 31st Tactical Air Base (Krzesiny). Role in western regional defense logistics.",
+    "notes": "One of Poland's oldest airports.",
+    "attribution": {
+      "sources": [
+        { "name": "Poznań Airport", "url": "https://poznanairport.pl", "accessedAt": "2026-05-10" },
+        { "name": "OurAirports", "url": "https://ourairports.com/airports/EPPO/", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 2,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  },
+  {
+    "id": "WMI",
+    "name": "Warsaw Modlin Airport",
+    "countryId": "POL",
+    "city": "Nowy Dwór Mazowiecki",
+    "iata": "WMI",
+    "icao": "EPMO",
+    "coordinates": [20.6514, 52.4511],
+    "passengerVolume": 3400000,
+    "cargoVolume": null,
+    "runwayCount": 1,
+    "elevationM": 104,
+    "strategicImportance": "medium",
+    "geopoliticalNotes": "Primary low-cost gateway for Warsaw. Acts as a secondary relief airport for Warsaw Chopin.",
+    "notes": "Identified for potential dual-use modernization to support military mobility.",
+    "attribution": {
+      "sources": [
+        { "name": "Modlin Airport", "url": "https://modlinairport.pl", "accessedAt": "2026-05-10" },
+        { "name": "OurAirports", "url": "https://ourairports.com/airports/EPMO/", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 2,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  },
+  {
+    "id": "SZZ",
+    "name": "Solidarity Szczecin–Goleniów Airport",
+    "countryId": "POL",
+    "city": "Goleniów",
+    "iata": "SZZ",
+    "icao": "EPSC",
+    "coordinates": [14.9022, 53.5847],
+    "passengerVolume": 470000,
+    "cargoVolume": null,
+    "runwayCount": 1,
+    "elevationM": 47,
+    "strategicImportance": "medium",
+    "geopoliticalNotes": "Gateway to northwestern Poland and the port of Szczecin. Strategic location near the German border.",
+    "notes": "Plans to adapt infrastructure for military troop movements.",
+    "attribution": {
+      "sources": [
+        { "name": "Szczecin Airport", "url": "https://airport.com.pl", "accessedAt": "2026-05-10" },
+        { "name": "OurAirports", "url": "https://ourairports.com/airports/EPSC/", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 2,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  },
+  {
+    "id": "LUZ",
+    "name": "Lublin Airport",
+    "countryId": "POL",
+    "city": "Lublin",
+    "iata": "LUZ",
+    "icao": "EPLB",
+    "coordinates": [22.7136, 51.2403],
+    "passengerVolume": 450000,
+    "cargoVolume": 8,
+    "runwayCount": 1,
+    "elevationM": 203,
+    "strategicImportance": "medium",
+    "geopoliticalNotes": "Key eastern gateway near the Ukrainian border. Vital for medical evacuations and eastern border surveillance.",
+    "notes": "Growing strategic importance due to proximity to the conflict zone.",
+    "attribution": {
+      "sources": [
+        { "name": "Lublin Airport", "url": "https://www.airport.lublin.pl", "accessedAt": "2026-05-10" },
+        { "name": "OurAirports", "url": "https://ourairports.com/airports/EPLB/", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 2,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  }
+]

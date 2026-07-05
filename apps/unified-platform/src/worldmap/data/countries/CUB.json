@@ -1,0 +1,67 @@
+{
+  "id": "CUB",
+  "iso2": "CU",
+  "name": "Cuba",
+  "region": "Americas",
+  "subregion": "Caribbean",
+  "capital": "Havana",
+  "lastUpdated": "2026-05-09",
+  "summary": "Cuba is currently facing its most severe multidimensional crisis since the 1959 Revolution. The country's centrally planned economy is struggling with chronic fuel shortages, a failing power grid, and historic lows in agricultural production, particularly in sugar. Under President Miguel Díaz-Canel, the government has introduced limited market reforms, such as the legalization of small and medium-sized private enterprises (MSMEs), but these have yet to alleviate widespread shortages. Geopolitically, Cuba remains under a comprehensive U.S. embargo, which was further tightened in early 2025. This has pushed Havana to deepen its reliance on strategic partners like Russia, China, and the BRICS bloc for energy and financial support. The island is also experiencing a demographic crisis, with unprecedented levels of emigration—over one million people since 2022—depleting its professional workforce and straining the social contract.",
+  "indicators": {
+    "politicalStability":       { "score": 4, "score_description": "Moderate stability maintained through state control, but rising social discontent.", "trend": "declining", "confidence": "high", "note": "Sporadic localized protests continue due to frequent blackouts and food insecurity." },
+    "economicDirection":        { "score": 2, "score_description": "Severe contraction with failing infrastructure and high debt-to-GDP.", "trend": "declining", "confidence": "high", "note": "Persistent energy crisis and fuel shortages have crippled industrial and transport sectors." },
+    "investmentAttractiveness": { "score": 2, "score_description": "Very low due to U.S. sanctions and lack of convertible currency.", "trend": "stable", "confidence": "high", "note": "Investment is restricted to state-sanctioned joint ventures, primarily in tourism and renewable energy." },
+    "geopoliticalRisk":         { "score": 8, "score_description": "Very high risk centered on hostile relations with the U.S. and debt defaults.", "trend": "rising", "confidence": "high", "note": "The reactivation of Title III of the Helms-Burton Act has increased legal risks for all foreign partners." },
+    "educationQuality":         { "score": 5, "score_description": "Historically high, but currently suffering from a massive brain drain and lack of resources.", "trend": "declining", "confidence": "medium", "note": "The exodus of teachers and professors is undermining a pillar of the Cuban social model." },
+    "healthcareQuality":        { "score": 4, "score_description": "Universal system faces severe shortages of medicine and basic supplies.", "trend": "declining", "confidence": "medium", "note": "While medical training remains strong, the lack of infrastructure and equipment has compromised care." },
+    "technologyInvestment":     { "score": 3, "score_description": "Limited investment focused on biotechnology and state-controlled internet expansion.", "trend": "stable", "confidence": "medium", "note": "Biotech remains a high-potential sector, though constrained by a lack of capital for clinical trials." }
+  },
+  "demographics": {
+    "population": 11000000,
+    "medianAge": 42.1,
+    "urbanizationRate": 77,
+    "majorEthnicGroups": ["White", "Mestizo or Mulatto", "Black"],
+    "religions": [
+      { "name": "Roman Catholic", "percent": 60 },
+      { "name": "Santería/Other African-Cuban", "percent": 20 },
+      { "name": "Protestant/Other", "percent": 5 },
+      { "name": "None/Unaffiliated", "percent": 15 }
+    ]
+  },
+  "alliances": ["ALBA", "CELAC", "UN", "G-77", "BRICS (Partner)"],
+  "relationships": [
+    { "countryId": "USA", "countryName": "United States", "type": "competitor", "sentiment": "negative", "summary": "Hostile relationship defined by a 60-year embargo and the State Sponsor of Terrorism designation." },
+    { "countryId": "RUS", "countryName": "Russia", "type": "ally", "sentiment": "positive", "summary": "Key strategic ally providing oil, wheat, and debt restructuring in exchange for regional influence." },
+    { "countryId": "CHN", "countryName": "China", "type": "partner", "sentiment": "positive", "summary": "Major trade partner and source of credit; China is heavily involved in Cuba's telecommunications and energy sectors." },
+    { "countryId": "VEN", "countryName": "Venezuela", "type": "ally", "sentiment": "positive", "summary": "Primary ideological partner; relationship is based on a 'doctors-for-oil' exchange, though Venezuelan oil shipments have decreased." },
+    { "countryId": "ESP", "countryName": "Spain", "type": "partner", "sentiment": "neutral", "summary": "Main European investor, particularly in the hotel industry; relationship is complicated by EU political stances." }
+  ],
+  "perspectives": [
+    { "source": "State Media", "bias": "Officialist", "view": "The country's economic woes are the direct result of the criminal and genocidal U.S. blockade, which seeks to suffocate the Cuban people." },
+    { "source": "Independent MSME Owner", "bias": "Pro-Market", "view": "The government's half-measures are not enough; we need real structural change and legal certainty to save the economy." },
+    { "source": "Exiled Dissident", "bias": "Anti-Regime", "view": "The regime is a failed state that only stays in power through repression and the exploitation of its people." }
+  ],
+  "historicalContext": {
+    "summary": "Cuba's modern history was transformed by the 1959 Revolution led by Fidel Castro, which established a socialist state and allied the island with the Soviet Union. The subsequent decades were defined by the Cold War, the U.S. embargo, and the 'Special Period' following the Soviet collapse. The 2021 protests marked the first major internal challenge to the one-party system in decades.",
+    "keyEvents": [
+      { "year": 1898, "event": "Spanish-American War ends Spanish rule in Cuba." },
+      { "year": 1959, "event": "Fidel Castro's 26th of July Movement ousts Fulgencio Batista." },
+      { "year": 1961, "event": "Failed Bay of Pigs invasion and Castro's declaration of the revolution's socialist character." },
+      { "year": 1962, "event": "Cuban Missile Crisis brings the world to the brink of nuclear war." },
+      { "year": 1991, "event": "Collapse of the Soviet Union triggers the 'Special Period' economic crisis." },
+      { "year": 2014, "event": "Normalization of relations announced by Presidents Obama and Raúl Castro." },
+      { "year": 2021, "event": "Historic '11J' protests erupt across the island over shortages and lack of freedom." },
+      { "year": 2024, "event": "Government announces major price hikes for fuel and utilities to address fiscal deficit." }
+    ]
+  },
+  "investmentNotes": {
+    "strengths": ["Strategic location and high potential for tourism", "Advanced biotechnology and pharmaceutical sector", "Highly literate and skilled workforce", "Potential for renewable energy (solar and wind)"],
+    "risks": ["Severe U.S. sanctions and legal risk (Helms-Burton)", "Lack of convertible currency and high inflation", "Unreliable infrastructure and power supply", "High level of bureaucratic and political control"],
+    "sectors": ["Tourism", "Biotechnology", "Renewable Energy", "Nickel Mining", "Agribusiness"]
+  },
+  "sources": [
+    { "name": "ONEI Cuba", "url": "http://www.onei.gob.cu/", "type": "official" },
+    { "name": "CIA World Factbook", "url": "https://www.cia.gov/the-world-factbook/countries/cuba/", "type": "general" },
+    { "name": "ECLAC", "url": "https://www.cepal.org/en/countries/cuba", "type": "economic" }
+  ]
+}

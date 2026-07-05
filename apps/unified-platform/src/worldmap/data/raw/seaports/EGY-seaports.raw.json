@@ -1,0 +1,214 @@
+[
+  {
+    "id": "PORT-EGY-ALEXANDRIA",
+    "name": "Alexandria Port",
+    "countryId": "EGY",
+    "city": "Alexandria",
+    "coordinates": [29.872, 31.183],
+    "type": "multipurpose",
+    "annualThroughputTEU": 1600000,
+    "annualThroughputTonnes": 35000000,
+    "berthCount": 67,
+    "maxDraftM": 15.5,
+    "strategicImportance": "critical",
+    "riskLevel": "low",
+    "geopoliticalNotes": "Egypt's main commercial gateway for over 2,000 years. Handles 60% of the country's foreign trade.",
+    "notes": "Connected to the Mediterranean; major hub for general cargo and agricultural exports.",
+    "attribution": {
+      "sources": [
+        { "name": "Alexandria Port Authority", "url": "http://www.apa.gov.eg", "accessedAt": "2026-05-10" },
+        { "name": "Wikipedia", "url": "https://en.wikipedia.org/wiki/Alexandria_Port", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 2,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  },
+  {
+    "id": "PORT-EGY-EAST-PORTSAID",
+    "name": "East Port Said",
+    "countryId": "EGY",
+    "city": "Port Said",
+    "coordinates": [32.367, 31.221],
+    "type": "container",
+    "annualThroughputTEU": 3540000,
+    "annualThroughputTonnes": null,
+    "berthCount": 12,
+    "maxDraftM": 18.5,
+    "strategicImportance": "critical",
+    "riskLevel": "medium",
+    "geopoliticalNotes": "Premier global transshipment hub at the northern entrance of the Suez Canal. Central to the Suez Canal Economic Zone (SCZONE).",
+    "notes": "Specifically designed for ultra-large container vessels (ULCVs).",
+    "attribution": {
+      "sources": [
+        { "name": "Suez Canal Economic Zone", "url": "https://sczone.eg", "accessedAt": "2026-05-10" },
+        { "name": "Wikipedia", "url": "https://en.wikipedia.org/wiki/East_Port_Said_Port", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 2,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  },
+  {
+    "id": "PORT-EGY-WEST-PORTSAID",
+    "name": "West Port Said",
+    "countryId": "EGY",
+    "city": "Port Said",
+    "coordinates": [32.295, 31.275],
+    "type": "mixed",
+    "annualThroughputTEU": 500000,
+    "annualThroughputTonnes": null,
+    "berthCount": 15,
+    "maxDraftM": 13.0,
+    "strategicImportance": "high",
+    "riskLevel": "medium",
+    "geopoliticalNotes": "Strategic location on the Mediterranean entrance of the Suez Canal; serves local trade and canal transit logistics.",
+    "notes": "Handles general cargo and passenger traffic.",
+    "attribution": {
+      "sources": [
+        { "name": "Port Said Port Authority", "url": "http://www.emdb.gov.eg/ports/port_said", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "medium",
+        "sourceCount": 1,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  },
+  {
+    "id": "PORT-EGY-DAMIETTA",
+    "name": "Damietta Port",
+    "countryId": "EGY",
+    "city": "Damietta",
+    "coordinates": [31.751, 31.472],
+    "type": "container",
+    "annualThroughputTEU": 1420000,
+    "annualThroughputTonnes": 30000000,
+    "berthCount": 22,
+    "maxDraftM": 15.0,
+    "strategicImportance": "high",
+    "riskLevel": "low",
+    "geopoliticalNotes": "Major Mediterranean hub for grain and LNG exports. Relieves pressure on Alexandria.",
+    "notes": "Features a large dedicated LNG terminal.",
+    "attribution": {
+      "sources": [
+        { "name": "Damietta Port Authority", "url": "http://www.dpa.gov.eg", "accessedAt": "2026-05-10" },
+        { "name": "Wikipedia", "url": "https://en.wikipedia.org/wiki/Damietta_Port", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 2,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  },
+  {
+    "id": "PORT-EGY-SOKHNA",
+    "name": "Sokhna Port",
+    "countryId": "EGY",
+    "city": "Ain Sokhna",
+    "coordinates": [32.332, 29.654],
+    "type": "container",
+    "annualThroughputTEU": 917000,
+    "annualThroughputTonnes": null,
+    "berthCount": 8,
+    "maxDraftM": 17.0,
+    "strategicImportance": "high",
+    "riskLevel": "low",
+    "geopoliticalNotes": "Closest deep-water port to Cairo. Key part of the Suez Canal Economic Zone (SCZONE) on the Red Sea side.",
+    "notes": "Operated by DP World Sokhna.",
+    "attribution": {
+      "sources": [
+        { "name": "DP World Sokhna", "url": "https://www.dpworld.com/sokhna", "accessedAt": "2026-05-10" },
+        { "name": "SCZONE", "url": "https://sczone.eg/ports/sokhna-port/", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 2,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  },
+  {
+    "id": "PORT-EGY-SAFAGA",
+    "name": "Safaga Port",
+    "countryId": "EGY",
+    "city": "Safaga",
+    "coordinates": [33.935, 26.738],
+    "type": "bulk",
+    "annualThroughputTEU": null,
+    "annualThroughputTonnes": 5500000,
+    "berthCount": 5,
+    "maxDraftM": 14.0,
+    "strategicImportance": "medium",
+    "riskLevel": "low",
+    "geopoliticalNotes": "Strategic for phosphate exports and pilgrim traffic to Saudi Arabia. Key Red Sea outlet for Upper Egypt.",
+    "notes": "Developing as a major commercial hub for the 'Golden Triangle' project.",
+    "attribution": {
+      "sources": [
+        { "name": "Red Sea Ports Authority", "url": "http://www.rspa.gov.eg", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "medium",
+        "sourceCount": 1,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  },
+  {
+    "id": "PORT-EGY-ABU-QIR",
+    "name": "Abu Qir Port",
+    "countryId": "EGY",
+    "city": "Alexandria",
+    "coordinates": [30.071, 31.322],
+    "type": "mixed",
+    "annualThroughputTEU": 2000000,
+    "annualThroughputTonnes": null,
+    "berthCount": 10,
+    "maxDraftM": 22.0,
+    "strategicImportance": "high",
+    "riskLevel": "low",
+    "geopoliticalNotes": "Rapidly expanding naval/commercial hybrid port. Strategically deep draft to handle the next generation of container ships.",
+    "notes": "Managed by the Egyptian Navy; undergoing massive expansion.",
+    "attribution": {
+      "sources": [
+        { "name": "Hutchison Ports Abu Qir", "url": "https://hutchisonports.com", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "medium",
+        "sourceCount": 1,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  },
+  {
+    "id": "PORT-EGY-ADABIYA",
+    "name": "Adabiya Port",
+    "countryId": "EGY",
+    "city": "Suez",
+    "coordinates": [32.483, 29.871],
+    "type": "mixed",
+    "annualThroughputTEU": null,
+    "annualThroughputTonnes": 7000000,
+    "berthCount": 9,
+    "maxDraftM": 12.0,
+    "strategicImportance": "medium",
+    "riskLevel": "low",
+    "geopoliticalNotes": "Specializes in oil, chemicals, and bulk cargo. Strategic location near the southern entrance of the Suez Canal.",
+    "notes": "Located on the western shore of the Gulf of Suez.",
+    "attribution": {
+      "sources": [
+        { "name": "SCZONE Adabiya", "url": "https://sczone.eg/ports/adabiya-port/", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "medium",
+        "sourceCount": 1,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  }
+]

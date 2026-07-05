@@ -1,0 +1,66 @@
+{
+  "id": "SLV",
+  "iso2": "SV",
+  "name": "El Salvador",
+  "region": "Americas",
+  "subregion": "Central America",
+  "capital": "San Salvador",
+  "lastUpdated": "2026-05-09",
+  "summary": "El Salvador is undergoing a radical transformation under President Nayib Bukele, who was overwhelmingly re-elected in 2024. The country has shifted from being one of the most violent in the world to one of the safest in Latin America following a massive and controversial security crackdown that has neutralized gang activity. This 'security dividend' is now being leveraged to attract investment in tourism, technology, and real estate. Economically, El Salvador remains unique for its adoption of Bitcoin as legal tender alongside the U.S. dollar, though the cryptocurrency's integration into the broader economy remains limited. While public approval of Bukele's 'territorial control plan' remains exceptionally high, international observers and human rights groups have raised serious concerns about the erosion of democratic checks and balances and the suspension of due process under the ongoing state of exception.",
+  "indicators": {
+    "politicalStability":       { "score": 7, "score_description": "High stability under a dominant executive, though concerns remain over democratic backsliding.", "trend": "stable", "confidence": "high", "note": "Bukele's control over all branches of government ensures rapid policy implementation but lacks institutional counterweights." },
+    "economicDirection":        { "score": 5, "score_description": "Moderate growth projected, driven by tourism and domestic investment, but limited by high debt.", "trend": "rising", "confidence": "high", "note": "The IMF has projected growth up to 3% - 4% as the security situation continues to improve business confidence." },
+    "investmentAttractiveness": { "score": 6, "score_description": "Improving appeal due to the dramatic reduction in crime and new tech-friendly laws.", "trend": "rising", "confidence": "high", "note": "Significant investment is flowing into 'Surf City' tourism projects and the nascent tech sector." },
+    "geopoliticalRisk":         { "score": 5, "score_description": "Moderate risk centered on relations with the U.S. and international financial institutions.", "trend": "stable", "confidence": "medium", "note": "Tensions with the U.S. over human rights are balanced by El Salvador's strategic importance in managing migration." },
+    "educationQuality":         { "score": 4, "score_description": "Improving through digital initiatives like 'Enlaces con la Educación'.", "trend": "rising", "confidence": "medium", "note": "Universal distribution of laptops to students aims to bridge the digital divide, though teacher training lags." },
+    "healthcareQuality":        { "score": 5, "score_description": "Infrastructure upgrades in the wake of the pandemic, but systemic gaps remain.", "trend": "stable", "confidence": "medium", "note": "New specialized hospitals have improved capacity, but rural access to primary care remains variable." },
+    "technologyInvestment":     { "score": 7, "score_description": "High focus on tech and crypto-economics, including the 'Innovation and Tech Manufacturing Incentive Act'.", "trend": "rising", "confidence": "high", "note": "The government is aggressively courting tech firms with 15-year tax exemptions on tech-related income." }
+  },
+  "demographics": {
+    "population": 6300000,
+    "medianAge": 28.1,
+    "urbanizationRate": 75,
+    "majorEthnicGroups": ["Mestizo", "European descent", "Indigenous"],
+    "religions": [
+      { "name": "Roman Catholic", "percent": 43 },
+      { "name": "Protestant/Evangelical", "percent": 37 },
+      { "name": "None/Unaffiliated", "percent": 17 },
+      { "name": "Other", "percent": 3 }
+    ]
+  },
+  "alliances": ["SICA", "CA-4", "OAS", "CELAC", "UN"],
+  "relationships": [
+    { "countryId": "USA", "countryName": "United States", "type": "partner", "sentiment": "neutral", "summary": "Key partner for trade and migration; relationship is a mix of security cooperation and friction over democratic standards." },
+    { "countryId": "CHN", "countryName": "China", "type": "partner", "sentiment": "positive", "summary": "Growing partner in infrastructure; China has funded several high-profile projects including a new national library and stadium." },
+    { "countryId": "GTM", "countryName": "Guatemala", "type": "neighbor", "sentiment": "neutral", "summary": "Partners in the CA-4 agreement; El Salvador is a major market for Guatemalan exports." },
+    { "countryId": "HND", "countryName": "Honduras", "type": "neighbor", "sentiment": "neutral", "summary": "Shared history and trade ties, though Bukele's regional popularity is sometimes viewed with caution by Honduran elites." }
+  ],
+  "perspectives": [
+    { "source": "Bukele Supporter", "bias": "Security-centric", "view": "For the first time in decades, we can walk the streets without fear; democracy is meaningless if you are being extorted or murdered by gangs." },
+    { "source": "Human Rights Advocate", "bias": "Legalistic", "view": "The state of exception has led to thousands of arbitrary arrests and the total dismantling of the rule of law under the guise of security." },
+    { "source": "Bitcoin Entrepreneur", "bias": "Techno-Optimist", "view": "El Salvador is the frontier of a new financial era; the regulatory freedom here is unmatched for the digital asset industry." }
+  ],
+  "historicalContext": {
+    "summary": "El Salvador's 20th century was defined by extreme inequality and a brutal 12-year civil war (1980-1992) between the military government and FMLN guerrillas. The post-war era was dominated by two main parties (ARENA and FMLN) and the rise of powerful transnational gangs (maras), until Nayib Bukele broke the two-party system in 2019.",
+    "keyEvents": [
+      { "year": 1821, "event": "El Salvador gains independence from Spain." },
+      { "year": 1932, "event": "The 'Matanza'; a massive peasant uprising is crushed by the military." },
+      { "year": 1980, "event": "Assassination of Archbishop Óscar Romero and start of the Civil War." },
+      { "year": 1992, "event": "Chapultepec Peace Accords sign the end of the conflict." },
+      { "year": 2001, "event": "El Salvador adopts the U.S. dollar as its official currency." },
+      { "year": 2019, "event": "Nayib Bukele is elected president, ending 30 years of bipartisan rule." },
+      { "year": 2021, "event": "El Salvador becomes the first country to adopt Bitcoin as legal tender." },
+      { "year": 2024, "event": "Bukele wins re-election with over 80% of the vote." }
+    ]
+  },
+  "investmentNotes": {
+    "strengths": ["Dramatically improved public safety", "Pro-investment and tech-friendly regulatory environment", "Full dollarization reducing exchange rate risk", "Strong infrastructure relative to regional peers"],
+    "risks": ["Institutional fragility and lack of checks and balances", "High public debt-to-GDP ratio", "Vulnerability to crypto-market volatility", "Potential for international sanctions"],
+    "sectors": ["Tourism", "Technology and Software Development", "Renewable Energy (Geothermal)", "Real Estate", "Light Manufacturing"]
+  },
+  "sources": [
+    { "name": "World Bank", "url": "https://data.worldbank.org/country/SLV", "type": "economic" },
+    { "name": "CIA World Factbook", "url": "https://www.cia.gov/the-world-factbook/countries/el-salvador/", "type": "general" },
+    { "name": "IMF Country Information", "url": "https://www.imf.org/en/Countries/SLV", "type": "economic" }
+  ]
+}

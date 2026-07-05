@@ -1,0 +1,33 @@
+[
+  {
+    "countryId": "ETH",
+    "year": 2023,
+    "electricityConsumptionTWh": 16.5,
+    "electricityProductionTWh": 18.3,
+    "electricityMix": {
+      "hydro": 96.5,
+      "wind": 3.3,
+      "solar": 0.2
+    },
+    "renewableSharePct": 100,
+    "waterStressScore": 0.81,
+    "waterWithdrawalPct": 8.6,
+    "foodSecurityScore": 44.5,
+    "aiAdoptionScore": 31.43,
+    "internetPenetration": 19.4,
+    "mobilePenetration": 60.4,
+    "attribution": {
+      "sources": [
+        { "name": "IEA World Energy Balances 2024", "url": "https://www.iea.org/data-and-statistics/data-product/world-energy-balances", "accessedAt": "2026-05-10" },
+        { "name": "WRI Aqueduct 4.0", "url": "https://www.wri.org/aqueduct", "accessedAt": "2026-05-10" },
+        { "name": "Oxford Insights Government AI Readiness Index 2023", "url": "https://oxfordinsights.com/government-ai-readiness-index-2023/", "accessedAt": "2026-05-10" },
+        { "name": "DataReportal Digital 2024: Ethiopia", "url": "https://datareportal.com/reports/digital-2024-ethiopia", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 4,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  }
+]

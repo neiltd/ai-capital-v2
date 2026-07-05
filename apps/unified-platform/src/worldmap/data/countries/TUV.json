@@ -1,0 +1,62 @@
+{
+  "id": "TUV",
+  "iso2": "TV",
+  "name": "Tuvalu",
+  "region": "Oceania",
+  "subregion": "Polynesia",
+  "capital": "Funafuti",
+  "lastUpdated": "2026-05-15",
+  "summary": "Tuvalu is a Polynesian microstate and one of the world's most vulnerable nations to climate change. Its 2024-2025 outlook is defined by the Falepili Union treaty with Australia, which provides security and migration pathways in exchange for Australian oversight of its security policies. The nation is pioneering 'Digital Sovereignty' by creating a digital twin in the metaverse to preserve its statehood. The economy remains heavily dependent on fishing licenses, foreign aid, and revenue from the .tv domain.",
+  "indicators": {
+    "politicalStability":       { "score": 8, "trend": "stable", "confidence": "high", "note": "Stable parliamentary democracy; no political parties; smooth transition to PM Feleti Teo in 2024." },
+    "economicDirection":        { "score": 4, "trend": "rising", "confidence": "high", "note": "Moderate growth driven by donor-funded construction and climate adaptation projects." },
+    "investmentAttractiveness": { "score": 3, "trend": "stable", "confidence": "medium", "note": "Niche opportunities in renewable energy and digital services; limited by extreme remoteness and small scale." },
+    "geopoliticalRisk":         { "score": 5, "trend": "rising", "confidence": "high", "note": "Strategic competition in the Pacific; Falepili Union reduces external threat but limits sovereignty." },
+    "educationQuality":         { "score": 6, "trend": "stable", "confidence": "medium", "note": "Universal primary education; reliance on regional institutions (USP) for higher education." },
+    "healthcareQuality":        { "score": 4, "trend": "stable", "confidence": "medium", "note": "Basic services available; critical cases require medical evacuation to Fiji, Australia, or New Zealand." },
+    "technologyInvestment":     { "score": 6, "trend": "rising", "confidence": "high", "note": "Strong focus on 'Digital Nation' initiatives and submarine cable connectivity." }
+  },
+  "demographics": {
+    "population": 11500,
+    "medianAge": 25.2,
+    "urbanizationRate": 66,
+    "majorEthnicGroups": ["Tuvaluan (Polynesian)"],
+    "religions": [
+      { "name": "Church of Tuvalu (Congregationalist)", "percent": 97.0 },
+      { "name": "Other", "percent": 3.0 }
+    ]
+  },
+  "alliances": ["Pacific Islands Forum", "Commonwealth", "United Nations", "Alliance of Small Island States (AOSIS)"],
+  "relationships": [
+    { "countryId": "AUS", "countryName": "Australia", "type": "treaty_ally", "sentiment": "positive", "summary": "Strategic partner through the Falepili Union; provides security guarantees and climate-related migration pathways." },
+    { "countryId": "TWN", "countryName": "Taiwan", "type": "diplomatic_partner", "sentiment": "positive", "summary": "One of the few remaining nations recognizing Taiwan; receives significant development and medical aid." },
+    { "countryId": "NZL", "countryName": "New Zealand", "type": "strategic_partner", "sentiment": "positive", "summary": "Long-standing development partner with a focus on education, seafarer training, and labor mobility." },
+    { "countryId": "FJI", "countryName": "Fiji", "type": "neighbor", "sentiment": "positive", "summary": "Regional hub for Tuvalu's trade, transportation, and higher education." }
+  ],
+  "perspectives": [
+    { "source": "Climate Negotiator", "bias": "Urgent", "view": "For us, climate change is an existential threat today, not a future risk. The world must act before we lose our homeland." },
+    { "source": "Young Professional", "bias": "Optimistic", "view": "The Falepili Union gives us a safety net, but our goal is to remain in our islands with dignity through technology and adaptation." },
+    { "source": "Fisheries Officer", "bias": "Pragmatic", "view": "Our EEZ is our only true resource. Protecting it from illegal fishing is vital for our economic survival." },
+    { "source": "Elder", "bias": "Traditional", "view": "We must preserve our culture and language, even if our physical land is taken by the sea. Our sovereignty is in our identity." }
+  ],
+  "historicalContext": {
+    "summary": "Formerly the Ellice Islands, Tuvalu separated from the Gilbert Islands (Kiribati) in 1975 and gained independence from the UK in 1978. It has since operated as a stable democracy, increasingly focused on international climate advocacy as sea levels rise.",
+    "keyEvents": [
+      { "year": 1978, "event": "Independence from the United Kingdom." },
+      { "year": 2000, "event": "Accession to the United Nations; lease of .tv domain begins to provide major revenue." },
+      { "year": 2022, "event": "Announcement of the Digital Nation project at COP27." },
+      { "year": 2024, "event": "General elections result in PM Feleti Teo taking office; Falepili Union with Australia enters force." },
+      { "year": 2025, "event": "Introduction of first-ever ATMs in Tuvalu, modernizing financial infrastructure." }
+    ]
+  },
+  "investmentNotes": {
+    "strengths": ["Strategic maritime location and vast EEZ", "Stable, peaceful political environment", "High commitment to digital transformation", "Strong donor support for climate-resilient infrastructure"],
+    "risks": ["Existential threat from sea-level rise and extreme weather", "Extreme remoteness and high cost of transportation", "Very small domestic market and labor pool", "Heavy reliance on volatile fishing license revenues"],
+    "sectors": ["Climate Adaptation & Resilient Infrastructure", "Blue Economy (Fisheries)", "Digital Services & Metaverse Sovereignty", "Renewable Energy (Solar)"]
+  },
+  "sources": [
+    { "name": "Government of Tuvalu - Official Portal", "url": "https://www.gov.tv/", "type": "official" },
+    { "name": "World Bank - Tuvalu Data", "url": "https://data.worldbank.org/country/tuvalu", "type": "economic" },
+    { "name": "IMF - Tuvalu Country Report", "url": "https://www.imf.org/en/Countries/TUV", "type": "economic" }
+  ]
+}

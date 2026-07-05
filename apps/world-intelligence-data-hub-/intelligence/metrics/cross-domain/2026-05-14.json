@@ -1,0 +1,1585 @@
+{
+  "date": "2026-05-14",
+  "generatedAt": "2026-05-15T04:13:16.322Z",
+  "observationWindowDays": 14,
+  "storylineBenchmarkLinks": [
+    {
+      "storylineId": "0f642015f6dda05d",
+      "storylineTitle": "Saudi Arabia and UAE Conducted Secret Airstrikes Against Iran During US-Israeli War",
+      "storylineState": "escalating",
+      "daysActive": 2,
+      "avgEscalation": 0.739,
+      "maxSeverity": 4,
+      "countries": [
+        "LBN",
+        "ISR",
+        "IRN",
+        "USA",
+        "SAU",
+        "ARE"
+      ],
+      "eventTypes": [
+        "airstrike",
+        "armed_conflict",
+        "military_operation"
+      ],
+      "linkedBenchmarks": [
+        "brent_crude",
+        "wti_crude"
+      ],
+      "linkStrength": 0.75,
+      "linkReasons": [
+        "geopolitical_event_in_energy_region:IRN,SAU,ARE",
+        "high_escalation_energy_country"
+      ]
+    },
+    {
+      "storylineId": "5f2def3fe9ef37df",
+      "storylineTitle": "ECB Governing Council Member Warns High Oil Prices Could Force Interest Rate Hike",
+      "storylineState": "stabilizing",
+      "daysActive": 2,
+      "avgEscalation": 0.413,
+      "maxSeverity": 5,
+      "countries": [
+        "IRN",
+        "USA",
+        "KOR",
+        "JPN",
+        "VNM",
+        "GRC",
+        "FRA",
+        "MWI",
+        "EU"
+      ],
+      "eventTypes": [
+        "energy_infrastructure",
+        "central_bank_action",
+        "supply_disruption",
+        "market_crash",
+        "economic_data_release",
+        "commodity_price_move"
+      ],
+      "linkedBenchmarks": [
+        "brent_crude",
+        "wti_crude",
+        "henry_hub"
+      ],
+      "linkStrength": 0.75,
+      "linkReasons": [
+        "energy_event_type:energy_infrastructure,supply_disruption,commodity_price_move"
+      ]
+    },
+    {
+      "storylineId": "8bcf9ef1e892a4d8",
+      "storylineTitle": "Iran's Foreign Minister Seeks BRICS Support for Tehran's War Against US at New Delhi Meeting",
+      "storylineState": "active",
+      "daysActive": 2,
+      "avgEscalation": 0.594,
+      "maxSeverity": 5,
+      "countries": [
+        "IRN",
+        "USA",
+        "CHN",
+        "PAK",
+        "ISR",
+        "TWN",
+        "IND",
+        "RUS",
+        "UKR",
+        "ARE",
+        "CUB",
+        "PHL",
+        "PSE"
+      ],
+      "eventTypes": [
+        "nuclear_incident",
+        "peace_negotiation",
+        "military_operation",
+        "armed_conflict",
+        "diplomatic_incident",
+        "military_exercise",
+        "sanctions",
+        "trade_dispute",
+        "protest"
+      ],
+      "linkedBenchmarks": [
+        "brent_crude",
+        "wti_crude"
+      ],
+      "linkStrength": 0.5,
+      "linkReasons": [
+        "geopolitical_event_in_energy_region:IRN,RUS,ARE"
+      ]
+    },
+    {
+      "storylineId": "3e36b585d79221c8",
+      "storylineTitle": "Russia Launches Largest Drone Attack of War on Kyiv, Killing at Least Seven",
+      "storylineState": "active",
+      "daysActive": 2,
+      "avgEscalation": 0.612,
+      "maxSeverity": 5,
+      "countries": [
+        "RUS",
+        "UKR",
+        "GBR"
+      ],
+      "eventTypes": [
+        "missile_attack",
+        "armed_conflict",
+        "nuclear_incident",
+        "military_exercise",
+        "other"
+      ],
+      "linkedBenchmarks": [
+        "brent_crude",
+        "wti_crude"
+      ],
+      "linkStrength": 0.5,
+      "linkReasons": [
+        "geopolitical_event_in_energy_region:RUS,GBR",
+        "high_escalation_energy_country"
+      ]
+    },
+    {
+      "storylineId": "2ee4f9525a699ef0",
+      "storylineTitle": "Iran War-Driven Oil Shock Tests India's Rupee as FX Reserves Remain Robust, Economists Say",
+      "storylineState": "emerging",
+      "daysActive": 0,
+      "avgEscalation": 0.275,
+      "maxSeverity": 2,
+      "countries": [
+        "IND",
+        "IRN"
+      ],
+      "eventTypes": [
+        "central_bank_action",
+        "commodity_price_move"
+      ],
+      "linkedBenchmarks": [
+        "brent_crude",
+        "wti_crude"
+      ],
+      "linkStrength": 0.25,
+      "linkReasons": [
+        "energy_event_type:commodity_price_move"
+      ]
+    },
+    {
+      "storylineId": "5aa09a29192b0d3a",
+      "storylineTitle": "Iran's Economy in Freefall After 2.5 Months of War: 2M Jobs Lost, Currency Down 60%, Internet Blackout Enters Day 75",
+      "storylineState": "active",
+      "daysActive": 2,
+      "avgEscalation": 0.483,
+      "maxSeverity": 4,
+      "countries": [
+        "IRN",
+        "MWI"
+      ],
+      "eventTypes": [
+        "natural_disaster",
+        "humanitarian_crisis"
+      ],
+      "linkedBenchmarks": [],
+      "linkStrength": 0,
+      "linkReasons": []
+    },
+    {
+      "storylineId": "720f87e0b2ef22da",
+      "storylineTitle": "Trump Declares Preventing Iran Nuclear Weapon Top Priority, Dismisses Americans' Economic Pain",
+      "storylineState": "escalating",
+      "daysActive": 2,
+      "avgEscalation": 0.53,
+      "maxSeverity": 4,
+      "countries": [
+        "FRA",
+        "IRN",
+        "USA",
+        "SAU",
+        "CHN"
+      ],
+      "eventTypes": [
+        "other",
+        "market_crash"
+      ],
+      "linkedBenchmarks": [],
+      "linkStrength": 0,
+      "linkReasons": []
+    },
+    {
+      "storylineId": "45bf9902bb70ff11",
+      "storylineTitle": "Rebel Fighters and Rwandan Troops Accused of Atrocities After Capturing DR Congo City of Uvira",
+      "storylineState": "emerging",
+      "daysActive": 0,
+      "avgEscalation": 0.6,
+      "maxSeverity": 4,
+      "countries": [
+        "COD",
+        "RWA"
+      ],
+      "eventTypes": [
+        "armed_conflict"
+      ],
+      "linkedBenchmarks": [],
+      "linkStrength": 0,
+      "linkReasons": []
+    },
+    {
+      "storylineId": "cc2bf7a71b388cfb",
+      "storylineTitle": "Syria's New Administration Puts Assad and Brother on Trial in Damascus for Regime-Era Crimes",
+      "storylineState": "emerging",
+      "daysActive": 0,
+      "avgEscalation": 0.25,
+      "maxSeverity": 3,
+      "countries": [
+        "SYR"
+      ],
+      "eventTypes": [
+        "regime_change"
+      ],
+      "linkedBenchmarks": [],
+      "linkStrength": 0,
+      "linkReasons": []
+    }
+  ],
+  "disruptionPriceWindows": [
+    {
+      "eventId": "c855aa8322c86e9f3f698baf",
+      "eventDate": "2026-05-13",
+      "eventType": "energy_infrastructure",
+      "eventTitle": "The United States has imposed a naval blockade of the Strait of Hormuz, straining Iranian oil exports",
+      "countries": [
+        "IRN",
+        "USA"
+      ],
+      "escalationPotential": 0.5,
+      "isSupplyDisruption": false,
+      "isHormuzRelated": true,
+      "benchmarkWindows": [
+        {
+          "benchmarkId": "brent_crude",
+          "priceOnDate": 111.37,
+          "priceOnDateDate": "2026-05-12",
+          "price7dBefore": 103.7,
+          "price7dBeforeDate": "2026-05-06",
+          "delta7dPct": 7.4,
+          "price3dAfter": null,
+          "price3dAfterDate": null,
+          "delta3dForwardPct": null
+        },
+        {
+          "benchmarkId": "wti_crude",
+          "priceOnDate": 105.78,
+          "priceOnDateDate": "2026-05-12",
+          "price7dBefore": 98.75,
+          "price7dBeforeDate": "2026-05-06",
+          "delta7dPct": 7.12,
+          "price3dAfter": null,
+          "price3dAfterDate": null,
+          "delta3dForwardPct": null
+        },
+        {
+          "benchmarkId": "henry_hub",
+          "priceOnDate": 2.91,
+          "priceOnDateDate": "2026-05-12",
+          "price7dBefore": 2.75,
+          "price7dBeforeDate": "2026-05-06",
+          "delta7dPct": 5.82,
+          "price3dAfter": null,
+          "price3dAfterDate": null,
+          "delta3dForwardPct": null
+        }
+      ]
+    },
+    {
+      "eventId": "e20257a3f7b0b2a104464d68",
+      "eventDate": "2026-05-13",
+      "eventType": "supply_disruption",
+      "eventTitle": "Iran War Drives Japan to Increase Coal Power as LNG Prices Surge",
+      "countries": [
+        "JPN",
+        "IRN"
+      ],
+      "escalationPotential": 0.4,
+      "isSupplyDisruption": true,
+      "isHormuzRelated": true,
+      "benchmarkWindows": [
+        {
+          "benchmarkId": "brent_crude",
+          "priceOnDate": 111.37,
+          "priceOnDateDate": "2026-05-12",
+          "price7dBefore": 103.7,
+          "price7dBeforeDate": "2026-05-06",
+          "delta7dPct": 7.4,
+          "price3dAfter": null,
+          "price3dAfterDate": null,
+          "delta3dForwardPct": null
+        },
+        {
+          "benchmarkId": "wti_crude",
+          "priceOnDate": 105.78,
+          "priceOnDateDate": "2026-05-12",
+          "price7dBefore": 98.75,
+          "price7dBeforeDate": "2026-05-06",
+          "delta7dPct": 7.12,
+          "price3dAfter": null,
+          "price3dAfterDate": null,
+          "delta3dForwardPct": null
+        },
+        {
+          "benchmarkId": "henry_hub",
+          "priceOnDate": 2.91,
+          "priceOnDateDate": "2026-05-12",
+          "price7dBefore": 2.75,
+          "price7dBeforeDate": "2026-05-06",
+          "delta7dPct": 5.82,
+          "price3dAfter": null,
+          "price3dAfterDate": null,
+          "delta3dForwardPct": null
+        }
+      ]
+    },
+    {
+      "eventId": "5e3f3885ba2e9fabb3b63f29",
+      "eventDate": "2026-05-13",
+      "eventType": "supply_disruption",
+      "eventTitle": "US Naval Blockade of Strait of Hormuz Halts Tanker Traffic; Vietnam Requests Exemption for Critical Oil Shipment",
+      "countries": [
+        "IRN",
+        "VNM",
+        "USA"
+      ],
+      "escalationPotential": 0.75,
+      "isSupplyDisruption": true,
+      "isHormuzRelated": true,
+      "benchmarkWindows": [
+        {
+          "benchmarkId": "brent_crude",
+          "priceOnDate": 111.37,
+          "priceOnDateDate": "2026-05-12",
+          "price7dBefore": 103.7,
+          "price7dBeforeDate": "2026-05-06",
+          "delta7dPct": 7.4,
+          "price3dAfter": null,
+          "price3dAfterDate": null,
+          "delta3dForwardPct": null
+        },
+        {
+          "benchmarkId": "wti_crude",
+          "priceOnDate": 105.78,
+          "priceOnDateDate": "2026-05-12",
+          "price7dBefore": 98.75,
+          "price7dBeforeDate": "2026-05-06",
+          "delta7dPct": 7.12,
+          "price3dAfter": null,
+          "price3dAfterDate": null,
+          "delta3dForwardPct": null
+        },
+        {
+          "benchmarkId": "henry_hub",
+          "priceOnDate": 2.91,
+          "priceOnDateDate": "2026-05-12",
+          "price7dBefore": 2.75,
+          "price7dBeforeDate": "2026-05-06",
+          "delta7dPct": 5.82,
+          "price3dAfter": null,
+          "price3dAfterDate": null,
+          "delta3dForwardPct": null
+        }
+      ]
+    },
+    {
+      "eventId": "08da6c7b8cb0d8a4a7bbcd52",
+      "eventDate": "2026-05-13",
+      "eventType": "supply_disruption",
+      "eventTitle": "US Navy Blockade of Strait of Hormuz Strains Iranian Oil Exports Amid Stalled Peace Talks",
+      "countries": [
+        "IRN",
+        "USA"
+      ],
+      "escalationPotential": 0.85,
+      "isSupplyDisruption": true,
+      "isHormuzRelated": true,
+      "benchmarkWindows": [
+        {
+          "benchmarkId": "brent_crude",
+          "priceOnDate": 111.37,
+          "priceOnDateDate": "2026-05-12",
+          "price7dBefore": 103.7,
+          "price7dBeforeDate": "2026-05-06",
+          "delta7dPct": 7.4,
+          "price3dAfter": null,
+          "price3dAfterDate": null,
+          "delta3dForwardPct": null
+        },
+        {
+          "benchmarkId": "wti_crude",
+          "priceOnDate": 105.78,
+          "priceOnDateDate": "2026-05-12",
+          "price7dBefore": 98.75,
+          "price7dBeforeDate": "2026-05-06",
+          "delta7dPct": 7.12,
+          "price3dAfter": null,
+          "price3dAfterDate": null,
+          "delta3dForwardPct": null
+        },
+        {
+          "benchmarkId": "henry_hub",
+          "priceOnDate": 2.91,
+          "priceOnDateDate": "2026-05-12",
+          "price7dBefore": 2.75,
+          "price7dBeforeDate": "2026-05-06",
+          "delta7dPct": 5.82,
+          "price3dAfter": null,
+          "price3dAfterDate": null,
+          "delta3dForwardPct": null
+        }
+      ]
+    },
+    {
+      "eventId": "eee13691702c3255521d693f",
+      "eventDate": "2026-05-13",
+      "eventType": "supply_disruption",
+      "eventTitle": "Iran-Linked LPG Tanker Breaches US Navy Blockade Line in Gulf",
+      "countries": [
+        "IRN",
+        "USA"
+      ],
+      "escalationPotential": 0.75,
+      "isSupplyDisruption": true,
+      "isHormuzRelated": true,
+      "benchmarkWindows": [
+        {
+          "benchmarkId": "brent_crude",
+          "priceOnDate": 111.37,
+          "priceOnDateDate": "2026-05-12",
+          "price7dBefore": 103.7,
+          "price7dBeforeDate": "2026-05-06",
+          "delta7dPct": 7.4,
+          "price3dAfter": null,
+          "price3dAfterDate": null,
+          "delta3dForwardPct": null
+        },
+        {
+          "benchmarkId": "wti_crude",
+          "priceOnDate": 105.78,
+          "priceOnDateDate": "2026-05-12",
+          "price7dBefore": 98.75,
+          "price7dBeforeDate": "2026-05-06",
+          "delta7dPct": 7.12,
+          "price3dAfter": null,
+          "price3dAfterDate": null,
+          "delta3dForwardPct": null
+        },
+        {
+          "benchmarkId": "henry_hub",
+          "priceOnDate": 2.91,
+          "priceOnDateDate": "2026-05-12",
+          "price7dBefore": 2.75,
+          "price7dBeforeDate": "2026-05-06",
+          "delta7dPct": 5.82,
+          "price3dAfter": null,
+          "price3dAfterDate": null,
+          "delta3dForwardPct": null
+        }
+      ]
+    },
+    {
+      "eventId": "b104bddc67eb3b43312eae3f",
+      "eventDate": "2026-05-13",
+      "eventType": "energy_infrastructure",
+      "eventTitle": "Japan Shifts to Coal Power as Middle East War Drives LNG Prices Higher",
+      "countries": [
+        "JPN",
+        "IRN"
+      ],
+      "escalationPotential": 0.35,
+      "isSupplyDisruption": false,
+      "isHormuzRelated": true,
+      "benchmarkWindows": [
+        {
+          "benchmarkId": "brent_crude",
+          "priceOnDate": 111.37,
+          "priceOnDateDate": "2026-05-12",
+          "price7dBefore": 103.7,
+          "price7dBeforeDate": "2026-05-06",
+          "delta7dPct": 7.4,
+          "price3dAfter": null,
+          "price3dAfterDate": null,
+          "delta3dForwardPct": null
+        },
+        {
+          "benchmarkId": "wti_crude",
+          "priceOnDate": 105.78,
+          "priceOnDateDate": "2026-05-12",
+          "price7dBefore": 98.75,
+          "price7dBeforeDate": "2026-05-06",
+          "delta7dPct": 7.12,
+          "price3dAfter": null,
+          "price3dAfterDate": null,
+          "delta3dForwardPct": null
+        },
+        {
+          "benchmarkId": "henry_hub",
+          "priceOnDate": 2.91,
+          "priceOnDateDate": "2026-05-12",
+          "price7dBefore": 2.75,
+          "price7dBeforeDate": "2026-05-06",
+          "delta7dPct": 5.82,
+          "price3dAfter": null,
+          "price3dAfterDate": null,
+          "delta3dForwardPct": null
+        }
+      ]
+    },
+    {
+      "eventId": "7c391210f1d28da8694bdd90",
+      "eventDate": "2026-05-13",
+      "eventType": "supply_disruption",
+      "eventTitle": "US Naval Blockade at Strait of Hormuz Halts Vietnamese Supertanker, Prompting Diplomatic Appeal",
+      "countries": [
+        "VNM",
+        "USA",
+        "IRN",
+        "GRC"
+      ],
+      "escalationPotential": 0.6,
+      "isSupplyDisruption": true,
+      "isHormuzRelated": true,
+      "benchmarkWindows": [
+        {
+          "benchmarkId": "brent_crude",
+          "priceOnDate": 111.37,
+          "priceOnDateDate": "2026-05-12",
+          "price7dBefore": 103.7,
+          "price7dBeforeDate": "2026-05-06",
+          "delta7dPct": 7.4,
+          "price3dAfter": null,
+          "price3dAfterDate": null,
+          "delta3dForwardPct": null
+        },
+        {
+          "benchmarkId": "wti_crude",
+          "priceOnDate": 105.78,
+          "priceOnDateDate": "2026-05-12",
+          "price7dBefore": 98.75,
+          "price7dBeforeDate": "2026-05-06",
+          "delta7dPct": 7.12,
+          "price3dAfter": null,
+          "price3dAfterDate": null,
+          "delta3dForwardPct": null
+        },
+        {
+          "benchmarkId": "henry_hub",
+          "priceOnDate": 2.91,
+          "priceOnDateDate": "2026-05-12",
+          "price7dBefore": 2.75,
+          "price7dBeforeDate": "2026-05-06",
+          "delta7dPct": 5.82,
+          "price3dAfter": null,
+          "price3dAfterDate": null,
+          "delta3dForwardPct": null
+        }
+      ]
+    },
+    {
+      "eventId": "2ab1558684a8206b8212d67c",
+      "eventDate": "2026-05-13",
+      "eventType": "supply_disruption",
+      "eventTitle": "Gulf Shipping Standoff Triggers Global Fertilizer Disruption, Threatening Food Security in Malawi and Other Vulnerable Nations",
+      "countries": [
+        "MWI",
+        "IRN"
+      ],
+      "escalationPotential": 0.35,
+      "isSupplyDisruption": true,
+      "isHormuzRelated": true,
+      "benchmarkWindows": [
+        {
+          "benchmarkId": "brent_crude",
+          "priceOnDate": 111.37,
+          "priceOnDateDate": "2026-05-12",
+          "price7dBefore": 103.7,
+          "price7dBeforeDate": "2026-05-06",
+          "delta7dPct": 7.4,
+          "price3dAfter": null,
+          "price3dAfterDate": null,
+          "delta3dForwardPct": null
+        },
+        {
+          "benchmarkId": "wti_crude",
+          "priceOnDate": 105.78,
+          "priceOnDateDate": "2026-05-12",
+          "price7dBefore": 98.75,
+          "price7dBeforeDate": "2026-05-06",
+          "delta7dPct": 7.12,
+          "price3dAfter": null,
+          "price3dAfterDate": null,
+          "delta3dForwardPct": null
+        },
+        {
+          "benchmarkId": "henry_hub",
+          "priceOnDate": 2.91,
+          "priceOnDateDate": "2026-05-12",
+          "price7dBefore": 2.75,
+          "price7dBeforeDate": "2026-05-06",
+          "delta7dPct": 5.82,
+          "price3dAfter": null,
+          "price3dAfterDate": null,
+          "delta3dForwardPct": null
+        }
+      ]
+    },
+    {
+      "eventId": "4917398a5e2427a2c08397ca",
+      "eventDate": "2026-05-13",
+      "eventType": "supply_disruption",
+      "eventTitle": "IEA: Global Oil Inventories Falling at Record Pace Due to Iran War Supply Disruption",
+      "countries": [
+        "IRN",
+        "USA"
+      ],
+      "escalationPotential": 0.6,
+      "isSupplyDisruption": true,
+      "isHormuzRelated": true,
+      "benchmarkWindows": [
+        {
+          "benchmarkId": "brent_crude",
+          "priceOnDate": 111.37,
+          "priceOnDateDate": "2026-05-12",
+          "price7dBefore": 103.7,
+          "price7dBeforeDate": "2026-05-06",
+          "delta7dPct": 7.4,
+          "price3dAfter": null,
+          "price3dAfterDate": null,
+          "delta3dForwardPct": null
+        },
+        {
+          "benchmarkId": "wti_crude",
+          "priceOnDate": 105.78,
+          "priceOnDateDate": "2026-05-12",
+          "price7dBefore": 98.75,
+          "price7dBeforeDate": "2026-05-06",
+          "delta7dPct": 7.12,
+          "price3dAfter": null,
+          "price3dAfterDate": null,
+          "delta3dForwardPct": null
+        },
+        {
+          "benchmarkId": "henry_hub",
+          "priceOnDate": 2.91,
+          "priceOnDateDate": "2026-05-12",
+          "price7dBefore": 2.75,
+          "price7dBeforeDate": "2026-05-06",
+          "delta7dPct": 5.82,
+          "price3dAfter": null,
+          "price3dAfterDate": null,
+          "delta3dForwardPct": null
+        }
+      ]
+    }
+  ],
+  "escalationVolatilityLog": [
+    {
+      "date": "2026-05-13",
+      "maxEscalation": 0.85,
+      "avgEscalation": 0.525,
+      "eventCount": 56,
+      "supplyDisruptionCount": 7,
+      "energyEventCount": 10,
+      "hormuzEventCount": 17,
+      "benchmarkDailyChange": [
+        {
+          "benchmarkId": "brent_crude",
+          "price": null,
+          "priorPrice": 111.37,
+          "changePct": null
+        },
+        {
+          "benchmarkId": "wti_crude",
+          "price": null,
+          "priorPrice": 105.78,
+          "changePct": null
+        },
+        {
+          "benchmarkId": "henry_hub",
+          "price": null,
+          "priorPrice": 2.91,
+          "changePct": null
+        }
+      ]
+    },
+    {
+      "date": "2026-05-14",
+      "maxEscalation": 0.92,
+      "avgEscalation": 0.584,
+      "eventCount": 25,
+      "supplyDisruptionCount": 0,
+      "energyEventCount": 1,
+      "hormuzEventCount": 4,
+      "benchmarkDailyChange": [
+        {
+          "benchmarkId": "brent_crude",
+          "price": null,
+          "priorPrice": 111.37,
+          "changePct": null
+        },
+        {
+          "benchmarkId": "wti_crude",
+          "price": null,
+          "priorPrice": 105.78,
+          "changePct": null
+        },
+        {
+          "benchmarkId": "henry_hub",
+          "price": null,
+          "priorPrice": 2.91,
+          "changePct": null
+        }
+      ]
+    }
+  ],
+  "chokepointPriceObservations": [
+    {
+      "eventId": "c855aa8322c86e9f3f698baf",
+      "eventDate": "2026-05-13",
+      "eventType": "energy_infrastructure",
+      "eventTitle": "The United States has imposed a naval blockade of the Strait of Hormuz, straining Iranian oil exports",
+      "countries": [
+        "IRN",
+        "USA"
+      ],
+      "escalationPotential": 0.5,
+      "chokepointLabel": "hormuz",
+      "benchmarkResponses": [
+        {
+          "benchmarkId": "brent_crude",
+          "priceAtEvent": 111.37,
+          "price3dBefore": 103.48,
+          "price3dAfter": null,
+          "deltaBefore": 7.62,
+          "deltaAfter": null
+        },
+        {
+          "benchmarkId": "wti_crude",
+          "priceAtEvent": 105.78,
+          "price3dBefore": 98.87,
+          "price3dAfter": null,
+          "deltaBefore": 6.99,
+          "deltaAfter": null
+        },
+        {
+          "benchmarkId": "henry_hub",
+          "priceAtEvent": 2.91,
+          "price3dBefore": 2.75,
+          "price3dAfter": null,
+          "deltaBefore": 5.82,
+          "deltaAfter": null
+        }
+      ]
+    },
+    {
+      "eventId": "79d881cfae94c8bb30a7757e",
+      "eventDate": "2026-05-13",
+      "eventType": "humanitarian_crisis",
+      "eventTitle": "Strait of Hormuz Shipping Standoff Disrupts Fertilizer Markets, Threatening Food Security in Vulnerable Nations",
+      "countries": [
+        "MWI",
+        "IRN"
+      ],
+      "escalationPotential": 0.4,
+      "chokepointLabel": "hormuz",
+      "benchmarkResponses": [
+        {
+          "benchmarkId": "brent_crude",
+          "priceAtEvent": 111.37,
+          "price3dBefore": 103.48,
+          "price3dAfter": null,
+          "deltaBefore": 7.62,
+          "deltaAfter": null
+        },
+        {
+          "benchmarkId": "wti_crude",
+          "priceAtEvent": 105.78,
+          "price3dBefore": 98.87,
+          "price3dAfter": null,
+          "deltaBefore": 6.99,
+          "deltaAfter": null
+        },
+        {
+          "benchmarkId": "henry_hub",
+          "priceAtEvent": 2.91,
+          "price3dBefore": 2.75,
+          "price3dAfter": null,
+          "deltaBefore": 5.82,
+          "deltaAfter": null
+        }
+      ]
+    },
+    {
+      "eventId": "e20257a3f7b0b2a104464d68",
+      "eventDate": "2026-05-13",
+      "eventType": "supply_disruption",
+      "eventTitle": "Iran War Drives Japan to Increase Coal Power as LNG Prices Surge",
+      "countries": [
+        "JPN",
+        "IRN"
+      ],
+      "escalationPotential": 0.4,
+      "chokepointLabel": "hormuz",
+      "benchmarkResponses": [
+        {
+          "benchmarkId": "brent_crude",
+          "priceAtEvent": 111.37,
+          "price3dBefore": 103.48,
+          "price3dAfter": null,
+          "deltaBefore": 7.62,
+          "deltaAfter": null
+        },
+        {
+          "benchmarkId": "wti_crude",
+          "priceAtEvent": 105.78,
+          "price3dBefore": 98.87,
+          "price3dAfter": null,
+          "deltaBefore": 6.99,
+          "deltaAfter": null
+        },
+        {
+          "benchmarkId": "henry_hub",
+          "priceAtEvent": 2.91,
+          "price3dBefore": 2.75,
+          "price3dAfter": null,
+          "deltaBefore": 5.82,
+          "deltaAfter": null
+        }
+      ]
+    },
+    {
+      "eventId": "5e3f3885ba2e9fabb3b63f29",
+      "eventDate": "2026-05-13",
+      "eventType": "supply_disruption",
+      "eventTitle": "US Naval Blockade of Strait of Hormuz Halts Tanker Traffic; Vietnam Requests Exemption for Critical Oil Shipment",
+      "countries": [
+        "IRN",
+        "VNM",
+        "USA"
+      ],
+      "escalationPotential": 0.75,
+      "chokepointLabel": "hormuz",
+      "benchmarkResponses": [
+        {
+          "benchmarkId": "brent_crude",
+          "priceAtEvent": 111.37,
+          "price3dBefore": 103.48,
+          "price3dAfter": null,
+          "deltaBefore": 7.62,
+          "deltaAfter": null
+        },
+        {
+          "benchmarkId": "wti_crude",
+          "priceAtEvent": 105.78,
+          "price3dBefore": 98.87,
+          "price3dAfter": null,
+          "deltaBefore": 6.99,
+          "deltaAfter": null
+        },
+        {
+          "benchmarkId": "henry_hub",
+          "priceAtEvent": 2.91,
+          "price3dBefore": 2.75,
+          "price3dAfter": null,
+          "deltaBefore": 5.82,
+          "deltaAfter": null
+        }
+      ]
+    },
+    {
+      "eventId": "6c641dac2b3228b5f5bac958",
+      "eventDate": "2026-05-13",
+      "eventType": "military_operation",
+      "eventTitle": "China's Missile Stockpile Expanding Rapidly via 80-Firm Network as US Stocks Depleted by Iran War",
+      "countries": [
+        "CHN",
+        "USA"
+      ],
+      "escalationPotential": 0.55,
+      "chokepointLabel": "hormuz",
+      "benchmarkResponses": [
+        {
+          "benchmarkId": "brent_crude",
+          "priceAtEvent": 111.37,
+          "price3dBefore": 103.48,
+          "price3dAfter": null,
+          "deltaBefore": 7.62,
+          "deltaAfter": null
+        },
+        {
+          "benchmarkId": "wti_crude",
+          "priceAtEvent": 105.78,
+          "price3dBefore": 98.87,
+          "price3dAfter": null,
+          "deltaBefore": 6.99,
+          "deltaAfter": null
+        },
+        {
+          "benchmarkId": "henry_hub",
+          "priceAtEvent": 2.91,
+          "price3dBefore": 2.75,
+          "price3dAfter": null,
+          "deltaBefore": 5.82,
+          "deltaAfter": null
+        }
+      ]
+    },
+    {
+      "eventId": "51c14d8eeb624691ab409039",
+      "eventDate": "2026-05-13",
+      "eventType": "armed_conflict",
+      "eventTitle": "Trump Warns Iran: Accept Deal or Face Renewed Military Attacks as War Continues",
+      "countries": [
+        "IRN",
+        "USA"
+      ],
+      "escalationPotential": 0.75,
+      "chokepointLabel": "hormuz",
+      "benchmarkResponses": [
+        {
+          "benchmarkId": "brent_crude",
+          "priceAtEvent": 111.37,
+          "price3dBefore": 103.48,
+          "price3dAfter": null,
+          "deltaBefore": 7.62,
+          "deltaAfter": null
+        },
+        {
+          "benchmarkId": "wti_crude",
+          "priceAtEvent": 105.78,
+          "price3dBefore": 98.87,
+          "price3dAfter": null,
+          "deltaBefore": 6.99,
+          "deltaAfter": null
+        },
+        {
+          "benchmarkId": "henry_hub",
+          "priceAtEvent": 2.91,
+          "price3dBefore": 2.75,
+          "price3dAfter": null,
+          "deltaBefore": 5.82,
+          "deltaAfter": null
+        }
+      ]
+    },
+    {
+      "eventId": "08da6c7b8cb0d8a4a7bbcd52",
+      "eventDate": "2026-05-13",
+      "eventType": "supply_disruption",
+      "eventTitle": "US Navy Blockade of Strait of Hormuz Strains Iranian Oil Exports Amid Stalled Peace Talks",
+      "countries": [
+        "IRN",
+        "USA"
+      ],
+      "escalationPotential": 0.85,
+      "chokepointLabel": "hormuz",
+      "benchmarkResponses": [
+        {
+          "benchmarkId": "brent_crude",
+          "priceAtEvent": 111.37,
+          "price3dBefore": 103.48,
+          "price3dAfter": null,
+          "deltaBefore": 7.62,
+          "deltaAfter": null
+        },
+        {
+          "benchmarkId": "wti_crude",
+          "priceAtEvent": 105.78,
+          "price3dBefore": 98.87,
+          "price3dAfter": null,
+          "deltaBefore": 6.99,
+          "deltaAfter": null
+        },
+        {
+          "benchmarkId": "henry_hub",
+          "priceAtEvent": 2.91,
+          "price3dBefore": 2.75,
+          "price3dAfter": null,
+          "deltaBefore": 5.82,
+          "deltaAfter": null
+        }
+      ]
+    },
+    {
+      "eventId": "44a1e9fe64e05dd290baaf9b",
+      "eventDate": "2026-05-13",
+      "eventType": "armed_conflict",
+      "eventTitle": "Israeli Strikes Kill 2,883 in Lebanon Since March 2 Amid Broader Iran Conflict",
+      "countries": [
+        "LBN",
+        "ISR",
+        "IRN"
+      ],
+      "escalationPotential": 0.85,
+      "chokepointLabel": "hormuz",
+      "benchmarkResponses": [
+        {
+          "benchmarkId": "brent_crude",
+          "priceAtEvent": 111.37,
+          "price3dBefore": 103.48,
+          "price3dAfter": null,
+          "deltaBefore": 7.62,
+          "deltaAfter": null
+        },
+        {
+          "benchmarkId": "wti_crude",
+          "priceAtEvent": 105.78,
+          "price3dBefore": 98.87,
+          "price3dAfter": null,
+          "deltaBefore": 6.99,
+          "deltaAfter": null
+        },
+        {
+          "benchmarkId": "henry_hub",
+          "priceAtEvent": 2.91,
+          "price3dBefore": 2.75,
+          "price3dAfter": null,
+          "deltaBefore": 5.82,
+          "deltaAfter": null
+        }
+      ]
+    },
+    {
+      "eventId": "eee13691702c3255521d693f",
+      "eventDate": "2026-05-13",
+      "eventType": "supply_disruption",
+      "eventTitle": "Iran-Linked LPG Tanker Breaches US Navy Blockade Line in Gulf",
+      "countries": [
+        "IRN",
+        "USA"
+      ],
+      "escalationPotential": 0.75,
+      "chokepointLabel": "hormuz",
+      "benchmarkResponses": [
+        {
+          "benchmarkId": "brent_crude",
+          "priceAtEvent": 111.37,
+          "price3dBefore": 103.48,
+          "price3dAfter": null,
+          "deltaBefore": 7.62,
+          "deltaAfter": null
+        },
+        {
+          "benchmarkId": "wti_crude",
+          "priceAtEvent": 105.78,
+          "price3dBefore": 98.87,
+          "price3dAfter": null,
+          "deltaBefore": 6.99,
+          "deltaAfter": null
+        },
+        {
+          "benchmarkId": "henry_hub",
+          "priceAtEvent": 2.91,
+          "price3dBefore": 2.75,
+          "price3dAfter": null,
+          "deltaBefore": 5.82,
+          "deltaAfter": null
+        }
+      ]
+    },
+    {
+      "eventId": "b104bddc67eb3b43312eae3f",
+      "eventDate": "2026-05-13",
+      "eventType": "energy_infrastructure",
+      "eventTitle": "Japan Shifts to Coal Power as Middle East War Drives LNG Prices Higher",
+      "countries": [
+        "JPN",
+        "IRN"
+      ],
+      "escalationPotential": 0.35,
+      "chokepointLabel": "hormuz",
+      "benchmarkResponses": [
+        {
+          "benchmarkId": "brent_crude",
+          "priceAtEvent": 111.37,
+          "price3dBefore": 103.48,
+          "price3dAfter": null,
+          "deltaBefore": 7.62,
+          "deltaAfter": null
+        },
+        {
+          "benchmarkId": "wti_crude",
+          "priceAtEvent": 105.78,
+          "price3dBefore": 98.87,
+          "price3dAfter": null,
+          "deltaBefore": 6.99,
+          "deltaAfter": null
+        },
+        {
+          "benchmarkId": "henry_hub",
+          "priceAtEvent": 2.91,
+          "price3dBefore": 2.75,
+          "price3dAfter": null,
+          "deltaBefore": 5.82,
+          "deltaAfter": null
+        }
+      ]
+    },
+    {
+      "eventId": "7c391210f1d28da8694bdd90",
+      "eventDate": "2026-05-13",
+      "eventType": "supply_disruption",
+      "eventTitle": "US Naval Blockade at Strait of Hormuz Halts Vietnamese Supertanker, Prompting Diplomatic Appeal",
+      "countries": [
+        "VNM",
+        "USA",
+        "IRN",
+        "GRC"
+      ],
+      "escalationPotential": 0.6,
+      "chokepointLabel": "hormuz",
+      "benchmarkResponses": [
+        {
+          "benchmarkId": "brent_crude",
+          "priceAtEvent": 111.37,
+          "price3dBefore": 103.48,
+          "price3dAfter": null,
+          "deltaBefore": 7.62,
+          "deltaAfter": null
+        },
+        {
+          "benchmarkId": "wti_crude",
+          "priceAtEvent": 105.78,
+          "price3dBefore": 98.87,
+          "price3dAfter": null,
+          "deltaBefore": 6.99,
+          "deltaAfter": null
+        },
+        {
+          "benchmarkId": "henry_hub",
+          "priceAtEvent": 2.91,
+          "price3dBefore": 2.75,
+          "price3dAfter": null,
+          "deltaBefore": 5.82,
+          "deltaAfter": null
+        }
+      ]
+    },
+    {
+      "eventId": "c66906d39cbba87806d5ad5e",
+      "eventDate": "2026-05-13",
+      "eventType": "military_operation",
+      "eventTitle": "US Navy Blockades Strait of Hormuz, Straining Iranian Oil Exports",
+      "countries": [
+        "IRN",
+        "USA"
+      ],
+      "escalationPotential": 0.75,
+      "chokepointLabel": "hormuz",
+      "benchmarkResponses": [
+        {
+          "benchmarkId": "brent_crude",
+          "priceAtEvent": 111.37,
+          "price3dBefore": 103.48,
+          "price3dAfter": null,
+          "deltaBefore": 7.62,
+          "deltaAfter": null
+        },
+        {
+          "benchmarkId": "wti_crude",
+          "priceAtEvent": 105.78,
+          "price3dBefore": 98.87,
+          "price3dAfter": null,
+          "deltaBefore": 6.99,
+          "deltaAfter": null
+        },
+        {
+          "benchmarkId": "henry_hub",
+          "priceAtEvent": 2.91,
+          "price3dBefore": 2.75,
+          "price3dAfter": null,
+          "deltaBefore": 5.82,
+          "deltaAfter": null
+        }
+      ]
+    },
+    {
+      "eventId": "017f8312b1fd156a088e5512",
+      "eventDate": "2026-05-13",
+      "eventType": "military_operation",
+      "eventTitle": "Iran-Linked LPG Tanker Breaches US Navy Blockade Line in Middle East",
+      "countries": [
+        "IRN",
+        "USA"
+      ],
+      "escalationPotential": 0.75,
+      "chokepointLabel": "hormuz",
+      "benchmarkResponses": [
+        {
+          "benchmarkId": "brent_crude",
+          "priceAtEvent": 111.37,
+          "price3dBefore": 103.48,
+          "price3dAfter": null,
+          "deltaBefore": 7.62,
+          "deltaAfter": null
+        },
+        {
+          "benchmarkId": "wti_crude",
+          "priceAtEvent": 105.78,
+          "price3dBefore": 98.87,
+          "price3dAfter": null,
+          "deltaBefore": 6.99,
+          "deltaAfter": null
+        },
+        {
+          "benchmarkId": "henry_hub",
+          "priceAtEvent": 2.91,
+          "price3dBefore": 2.75,
+          "price3dAfter": null,
+          "deltaBefore": 5.82,
+          "deltaAfter": null
+        }
+      ]
+    },
+    {
+      "eventId": "2ab1558684a8206b8212d67c",
+      "eventDate": "2026-05-13",
+      "eventType": "supply_disruption",
+      "eventTitle": "Gulf Shipping Standoff Triggers Global Fertilizer Disruption, Threatening Food Security in Malawi and Other Vulnerable Nations",
+      "countries": [
+        "MWI",
+        "IRN"
+      ],
+      "escalationPotential": 0.35,
+      "chokepointLabel": "hormuz",
+      "benchmarkResponses": [
+        {
+          "benchmarkId": "brent_crude",
+          "priceAtEvent": 111.37,
+          "price3dBefore": 103.48,
+          "price3dAfter": null,
+          "deltaBefore": 7.62,
+          "deltaAfter": null
+        },
+        {
+          "benchmarkId": "wti_crude",
+          "priceAtEvent": 105.78,
+          "price3dBefore": 98.87,
+          "price3dAfter": null,
+          "deltaBefore": 6.99,
+          "deltaAfter": null
+        },
+        {
+          "benchmarkId": "henry_hub",
+          "priceAtEvent": 2.91,
+          "price3dBefore": 2.75,
+          "price3dAfter": null,
+          "deltaBefore": 5.82,
+          "deltaAfter": null
+        }
+      ]
+    },
+    {
+      "eventId": "4917398a5e2427a2c08397ca",
+      "eventDate": "2026-05-13",
+      "eventType": "supply_disruption",
+      "eventTitle": "IEA: Global Oil Inventories Falling at Record Pace Due to Iran War Supply Disruption",
+      "countries": [
+        "IRN",
+        "USA"
+      ],
+      "escalationPotential": 0.6,
+      "chokepointLabel": "hormuz",
+      "benchmarkResponses": [
+        {
+          "benchmarkId": "brent_crude",
+          "priceAtEvent": 111.37,
+          "price3dBefore": 103.48,
+          "price3dAfter": null,
+          "deltaBefore": 7.62,
+          "deltaAfter": null
+        },
+        {
+          "benchmarkId": "wti_crude",
+          "priceAtEvent": 105.78,
+          "price3dBefore": 98.87,
+          "price3dAfter": null,
+          "deltaBefore": 6.99,
+          "deltaAfter": null
+        },
+        {
+          "benchmarkId": "henry_hub",
+          "priceAtEvent": 2.91,
+          "price3dBefore": 2.75,
+          "price3dAfter": null,
+          "deltaBefore": 5.82,
+          "deltaAfter": null
+        }
+      ]
+    },
+    {
+      "eventId": "776892829358df6e2f2c29c8",
+      "eventDate": "2026-05-13",
+      "eventType": "military_operation",
+      "eventTitle": "Hezbollah Fields Unjammable Drones as New Threat to Israel Amid Ongoing Conflict",
+      "countries": [
+        "LBN",
+        "ISR",
+        "IRN"
+      ],
+      "escalationPotential": 0.8,
+      "chokepointLabel": "hormuz",
+      "benchmarkResponses": [
+        {
+          "benchmarkId": "brent_crude",
+          "priceAtEvent": 111.37,
+          "price3dBefore": 103.48,
+          "price3dAfter": null,
+          "deltaBefore": 7.62,
+          "deltaAfter": null
+        },
+        {
+          "benchmarkId": "wti_crude",
+          "priceAtEvent": 105.78,
+          "price3dBefore": 98.87,
+          "price3dAfter": null,
+          "deltaBefore": 6.99,
+          "deltaAfter": null
+        },
+        {
+          "benchmarkId": "henry_hub",
+          "priceAtEvent": 2.91,
+          "price3dBefore": 2.75,
+          "price3dAfter": null,
+          "deltaBefore": 5.82,
+          "deltaAfter": null
+        }
+      ]
+    },
+    {
+      "eventId": "29a86efc78f952e164764be3",
+      "eventDate": "2026-05-13",
+      "eventType": "airstrike",
+      "eventTitle": "Israel Strikes South Lebanon Amid Washington Talks; 380 Killed Since April 17 Ceasefire",
+      "countries": [
+        "LBN",
+        "ISR",
+        "USA"
+      ],
+      "escalationPotential": 0.85,
+      "chokepointLabel": "hormuz",
+      "benchmarkResponses": [
+        {
+          "benchmarkId": "brent_crude",
+          "priceAtEvent": 111.37,
+          "price3dBefore": 103.48,
+          "price3dAfter": null,
+          "deltaBefore": 7.62,
+          "deltaAfter": null
+        },
+        {
+          "benchmarkId": "wti_crude",
+          "priceAtEvent": 105.78,
+          "price3dBefore": 98.87,
+          "price3dAfter": null,
+          "deltaBefore": 6.99,
+          "deltaAfter": null
+        },
+        {
+          "benchmarkId": "henry_hub",
+          "priceAtEvent": 2.91,
+          "price3dBefore": 2.75,
+          "price3dAfter": null,
+          "deltaBefore": 5.82,
+          "deltaAfter": null
+        }
+      ]
+    },
+    {
+      "eventId": "e9f6b007d60e05b4ab64b919",
+      "eventDate": "2026-05-14",
+      "eventType": "military_operation",
+      "eventTitle": "Iran Seizes 'Floating Armoury' Vessel in Gulf of Oman",
+      "countries": [
+        "IRN"
+      ],
+      "escalationPotential": 0.65,
+      "chokepointLabel": "hormuz",
+      "benchmarkResponses": [
+        {
+          "benchmarkId": "brent_crude",
+          "priceAtEvent": 111.37,
+          "price3dBefore": 106.11,
+          "price3dAfter": null,
+          "deltaBefore": 4.96,
+          "deltaAfter": null
+        },
+        {
+          "benchmarkId": "wti_crude",
+          "priceAtEvent": 105.78,
+          "price3dBefore": 101.56,
+          "price3dAfter": null,
+          "deltaBefore": 4.16,
+          "deltaAfter": null
+        },
+        {
+          "benchmarkId": "henry_hub",
+          "priceAtEvent": 2.91,
+          "price3dBefore": 2.82,
+          "price3dAfter": null,
+          "deltaBefore": 3.19,
+          "deltaAfter": null
+        }
+      ]
+    },
+    {
+      "eventId": "c79c448eb40bd4b56f2f5407",
+      "eventDate": "2026-05-14",
+      "eventType": "diplomatic_incident",
+      "eventTitle": "Commercial Vessel Seized Near UAE Amid Iran War as US-China Diplomatic Efforts Underway",
+      "countries": [
+        "ARE",
+        "IRN",
+        "USA",
+        "CHN"
+      ],
+      "escalationPotential": 0.75,
+      "chokepointLabel": "hormuz",
+      "benchmarkResponses": [
+        {
+          "benchmarkId": "brent_crude",
+          "priceAtEvent": 111.37,
+          "price3dBefore": 106.11,
+          "price3dAfter": null,
+          "deltaBefore": 4.96,
+          "deltaAfter": null
+        },
+        {
+          "benchmarkId": "wti_crude",
+          "priceAtEvent": 105.78,
+          "price3dBefore": 101.56,
+          "price3dAfter": null,
+          "deltaBefore": 4.16,
+          "deltaAfter": null
+        },
+        {
+          "benchmarkId": "henry_hub",
+          "priceAtEvent": 2.91,
+          "price3dBefore": 2.82,
+          "price3dAfter": null,
+          "deltaBefore": 3.19,
+          "deltaAfter": null
+        }
+      ]
+    },
+    {
+      "eventId": "26dba0771fbcd3037b768b51",
+      "eventDate": "2026-05-14",
+      "eventType": "airstrike",
+      "eventTitle": "Saudi Arabia and UAE Conducted Secret Airstrikes Against Iran During US-Israeli War",
+      "countries": [
+        "IRN",
+        "SAU",
+        "ARE",
+        "ISR",
+        "USA"
+      ],
+      "escalationPotential": 0.75,
+      "chokepointLabel": "hormuz",
+      "benchmarkResponses": [
+        {
+          "benchmarkId": "brent_crude",
+          "priceAtEvent": 111.37,
+          "price3dBefore": 106.11,
+          "price3dAfter": null,
+          "deltaBefore": 4.96,
+          "deltaAfter": null
+        },
+        {
+          "benchmarkId": "wti_crude",
+          "priceAtEvent": 105.78,
+          "price3dBefore": 101.56,
+          "price3dAfter": null,
+          "deltaBefore": 4.16,
+          "deltaAfter": null
+        },
+        {
+          "benchmarkId": "henry_hub",
+          "priceAtEvent": 2.91,
+          "price3dBefore": 2.82,
+          "price3dAfter": null,
+          "deltaBefore": 3.19,
+          "deltaAfter": null
+        }
+      ]
+    },
+    {
+      "eventId": "2cb15f9226bf1922be2934de",
+      "eventDate": "2026-05-14",
+      "eventType": "diplomatic_incident",
+      "eventTitle": "Iran Allows Chinese Ships Through Strait of Hormuz After Beijing Diplomatic Outreach Following Vessel Seizure",
+      "countries": [
+        "IRN",
+        "CHN"
+      ],
+      "escalationPotential": 0.55,
+      "chokepointLabel": "hormuz",
+      "benchmarkResponses": [
+        {
+          "benchmarkId": "brent_crude",
+          "priceAtEvent": 111.37,
+          "price3dBefore": 106.11,
+          "price3dAfter": null,
+          "deltaBefore": 4.96,
+          "deltaAfter": null
+        },
+        {
+          "benchmarkId": "wti_crude",
+          "priceAtEvent": 105.78,
+          "price3dBefore": 101.56,
+          "price3dAfter": null,
+          "deltaBefore": 4.16,
+          "deltaAfter": null
+        },
+        {
+          "benchmarkId": "henry_hub",
+          "priceAtEvent": 2.91,
+          "price3dBefore": 2.82,
+          "price3dAfter": null,
+          "deltaBefore": 3.19,
+          "deltaAfter": null
+        }
+      ]
+    }
+  ],
+  "summary": {
+    "totalActiveStorylines": 9,
+    "energyLinkedStorylines": 5,
+    "escalatingLinked": 1,
+    "avgEscalationLinked": 0.527,
+    "supplyDisruptionsRecent": 7,
+    "energyEventsRecent": 9,
+    "hormuzEventsRecent": 9,
+    "observationWindowDays": 14,
+    "benchmarkCoverage": [
+      {
+        "benchmarkId": "brent_crude",
+        "mostRecentDate": "2026-05-12",
+        "mostRecentPrice": 111.37,
+        "daysWithPairedData": 0
+      },
+      {
+        "benchmarkId": "wti_crude",
+        "mostRecentDate": "2026-05-12",
+        "mostRecentPrice": 105.78,
+        "daysWithPairedData": 0
+      },
+      {
+        "benchmarkId": "henry_hub",
+        "mostRecentDate": "2026-05-12",
+        "mostRecentPrice": 2.91,
+        "daysWithPairedData": 0
+      }
+    ],
+    "pairedObservationDays": 2,
+    "avgMaxEscalation": 0.885,
+    "maxSingleDayEscalation": 0.92,
+    "maxSingleDayPriceChangePct": null
+  }
+}

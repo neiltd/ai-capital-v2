@@ -1,0 +1,20 @@
+{
+  "benchmarkId": "henry_hub",
+  "name": "Henry Hub Natural Gas",
+  "assetClass": "commodity",
+  "subClass": "natural_gas",
+  "unit": "USD/MMBtu",
+  "currency": "USD",
+  "frequency": "daily",
+  "source": "eia",
+  "dataLag": "D+1",
+  "staleThresholdHours": 36,
+  "revisionWindowDays": 28,
+  "revisionThreshold": 0.001,
+  "eia": {
+    "route": "natural-gas/pri/fut/data/",
+    "seriesId": "RNGWHHD"
+  },
+  "schemaVersion": "1.0",
+  "lastModified": "2026-05-15T02:50:10.329Z"
+}

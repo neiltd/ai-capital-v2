@@ -1,0 +1,66 @@
+{
+  "id": "BTN",
+  "iso2": "BT",
+  "name": "Bhutan",
+  "region": "Asia",
+  "subregion": "Southern Asia",
+  "capital": "Thimphu",
+  "lastUpdated": "2026-05-09",
+  "summary": "Bhutan is a landlocked Himalayan kingdom that has recently graduated from 'Least Developed Country' status and is now transitioning toward a modern, diversified economy. Guided by the unique philosophy of 'Gross National Happiness' (GNH), the nation balances economic development with environmental conservation and cultural preservation. Bhutan is currently embarking on its most ambitious project yet—the 'Gelephu Mindfulness City,' a Special Administrative Region designed to be a carbon-neutral financial and technology hub. Geopolitically, Bhutan maintains a critical strategic partnership with India while navigating complex border negotiations with China.",
+  "indicators": {
+    "politicalStability":       { "score": 9, "trend": "stable", "confidence": "high", "note": "Strong institutional stability under a popular constitutional monarchy; smooth democratic transitions since 2008." },
+    "economicDirection":        { "score": 6, "trend": "rising", "confidence": "high", "note": "Buoyed by hydropower exports and a post-pandemic tourism rebound; focus is now on high-tech and financial services." },
+    "investmentAttractiveness": { "score": 6, "trend": "rising", "confidence": "medium", "note": "Increasingly attractive due to the 'Gelephu Mindfulness City' initiative and abundance of clean energy, despite being a small market." },
+    "geopoliticalRisk":         { "score": 5, "trend": "stable", "confidence": "high", "note": "Primary risk involves long-standing border disputes with China (e.g., Doklam) and maintaining a balance between giant neighbors." },
+    "educationQuality":         { "score": 6, "trend": "rising", "confidence": "medium", "note": "High investment in education; focusing on digital literacy and vocational training to curb youth emigration." },
+    "healthcareQuality":        { "score": 6, "trend": "stable", "confidence": "high", "note": "Provides free universal healthcare; made significant progress in life expectancy and basic health indicators." },
+    "technologyInvestment":     { "score": 7, "trend": "rising", "confidence": "high", "note": "Significant focus on digital transformation, blockchain, and green data centers (utilizing surplus hydropower)." }
+  },
+  "demographics": {
+    "population": 787000,
+    "medianAge": 29.5,
+    "urbanizationRate": 43,
+    "majorEthnicGroups": ["Ngalop", "Sharchop", "Lhotshampa"],
+    "religions": [
+      { "name": "Buddhist", "percent": 75.3 },
+      { "name": "Hindu", "percent": 22.1 },
+      { "name": "Other", "percent": 2.6 }
+    ]
+  },
+  "alliances": ["SAARC", "BIMSTEC", "IORA (Observer)", "BBIN"],
+  "relationships": [
+    { "countryId": "IND", "countryName": "India", "type": "strategic_partner", "sentiment": "positive", "summary": "Closest strategic and economic partner; India provides military assistance, infrastructure aid, and is the main buyer of Bhutanese hydropower." },
+    { "countryId": "CHN", "countryName": "China", "type": "neighbor", "sentiment": "neutral", "summary": "No formal diplomatic relations; relationship is dominated by ongoing border negotiations and China's increasing regional footprint." },
+    { "countryId": "THA", "countryName": "Thailand", "type": "strategic_partner", "sentiment": "positive", "summary": "Deep cultural and royal ties; Thailand is a key partner in tourism development and education." },
+    { "countryId": "BGD", "countryName": "Bangladesh", "type": "neighbor", "sentiment": "positive", "summary": "Important trade partner; cooperation on transit and hydropower exports through Indian territory is a key priority." }
+  ],
+  "perspectives": [
+    { "source": "Monarchy", "bias": "Visionary", "view": "Gelephu Mindfulness City will be a bridge between our tradition of GNH and the global digital economy, creating a future for our youth." },
+    { "source": "Bhutanese Student", "bias": "Aspirational", "view": "We love our country, but we need better jobs and more connection to the world so we don't have to move to Australia." },
+    { "source": "Environmentalist", "bias": "Preservationist", "view": "Development is necessary, but it must never come at the cost of our status as the world's only carbon-negative nation." },
+    { "source": "Hydro Engineer", "bias": "Pragmatic", "view": "Hydropower is our lifeline, but we must diversify into solar and wind to ensure energy security during the dry winters." }
+  ],
+  "historicalContext": {
+    "summary": "Bhutan remained largely isolated for centuries. It began a cautious modernization in the mid-20th century under its third and fourth Kings. In 2008, the Fourth King voluntarily abdicated in favor of his son and oversaw the transition from an absolute monarchy to a constitutional one.",
+    "keyEvents": [
+      { "year": 1907, "event": "Establishment of the hereditary monarchy under Ugyen Wangchuck." },
+      { "year": 1949, "event": "Treaty of Perpetual Peace and Friendship signed with newly independent India." },
+      { "year": 1971, "event": "Bhutan joins the United Nations." },
+      { "year": 1972, "event": "King Jigme Singye Wangchuck coins the term 'Gross National Happiness'." },
+      { "year": 1999, "event": "Television and internet are officially introduced in Bhutan." },
+      { "year": 2008, "event": "First democratic general elections; transition to a constitutional monarchy." },
+      { "year": 2017, "event": "Doklam standoff between Indian and Chinese troops on territory claimed by Bhutan." },
+      { "year": 2023, "event": "Official graduation from 'Least Developed Country' (LDC) status; announcement of the Gelephu Mindfulness City." }
+    ]
+  },
+  "investmentNotes": {
+    "strengths": ["Abundant clean energy (hydropower)", "Stable and visionary leadership", "Carbon-negative status and commitment to sustainability", "Strategic 'Mindfulness City' SEZ with unique regulatory framework"],
+    "risks": ["Small domestic market and landlocked geography", "Heavy reliance on hydropower revenue and Indian aid", "Youth emigration and potential labor shortages", "Vulnerability to climate change (glacial lake outburst floods)"],
+    "sectors": ["Hydropower & Renewable Energy", "Sustainable High-end Tourism", "Digital Assets & Green Data Centers", "Alternative Medicine & Wellness"]
+  },
+  "sources": [
+    { "name": "Royal Monetary Authority of Bhutan", "url": "https://www.rma.org.bt/", "type": "economic" },
+    { "name": "Ministry of Industry, Commerce and Employment", "url": "https://www.moice.gov.bt/", "type": "investment" },
+    { "name": "Gross National Happiness Commission (now Cabinet Secretariat)", "url": "https://www.cabinet.gov.bt/", "type": "policy" }
+  ]
+}

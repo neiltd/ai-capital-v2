@@ -1,0 +1,912 @@
+[
+  {
+    "id": "RUS-UKR-2022",
+    "name": "Russia–Ukraine War",
+    "type": "armed_conflict",
+    "intensity": "critical",
+    "status": "active",
+    "startYear": 2022,
+    "coordinates": [
+      32.0,
+      49.5
+    ],
+    "region": "Eastern Europe",
+    "parties": [
+      {
+        "countryId": "RUS",
+        "countryName": "Russia",
+        "role": "Aggressor / Occupying power"
+      },
+      {
+        "countryId": "UKR",
+        "countryName": "Ukraine",
+        "role": "Defender / Occupied state"
+      }
+    ],
+    "summary": "Russia launched a full-scale invasion of Ukraine on 24 February 2022, occupying large portions of eastern and southern Ukraine. The war has caused the largest armed conflict in Europe since World War II, with hundreds of thousands of casualties and millions of displaced persons.",
+    "currentStatus": "Active front lines across eastern Ukraine (Donetsk, Zaporizhzhia). Drone and missile exchanges targeting civilian infrastructure ongoing as of 2026.",
+    "casualties": "Est. 300,000–500,000+ combined military casualties; 10,000+ confirmed civilian deaths (UN). Likely undercounted.",
+    "internationalInvolvement": "NATO members supplying weapons, intelligence, and financial support to Ukraine. US is largest single donor. Russia backed diplomatically by China, North Korea (weapons), Iran (drones)."
+  },
+  {
+    "id": "ISR-GAZ-2023",
+    "name": "Israel–Gaza War",
+    "type": "armed_conflict",
+    "intensity": "critical",
+    "status": "active",
+    "startYear": 2023,
+    "coordinates": [
+      34.4,
+      31.4
+    ],
+    "region": "Middle East",
+    "parties": [
+      {
+        "countryId": "ISR",
+        "countryName": "Israel",
+        "role": "Military campaign"
+      },
+      {
+        "countryId": "PSE",
+        "countryName": "Palestine (Gaza/Hamas)",
+        "role": "Hamas governing authority / civilian population"
+      }
+    ],
+    "summary": "Following Hamas's October 7, 2023 attack on Israel (1,200 killed, 250 taken hostage), Israel launched a major military campaign in Gaza. The conflict has created one of the worst humanitarian crises in the region's modern history.",
+    "currentStatus": "Israeli military operations ongoing in Gaza and parts of the West Bank. Ceasefire negotiations ongoing through Qatar and Egypt. Regional spillover via Hezbollah (Lebanon), Houthi attacks (Yemen), Iran proxies.",
+    "casualties": "Est. 40,000+ Palestinian deaths (Gaza Health Ministry, 2024). 1,200+ Israeli deaths in Oct 7 attack. Significant Lebanese civilian casualties from Israeli operations.",
+    "internationalInvolvement": "US provides military and diplomatic support to Israel. Arab states, Iran support Palestinian cause. ICJ case filed by South Africa. UN Security Council deadlocked."
+  },
+  {
+    "id": "SDN-CIVIL-2023",
+    "name": "Sudan Civil War",
+    "type": "civil_war",
+    "intensity": "critical",
+    "status": "active",
+    "startYear": 2023,
+    "coordinates": [
+      30.0,
+      15.5
+    ],
+    "region": "Africa",
+    "parties": [
+      {
+        "countryId": "SDN",
+        "countryName": "Sudan Armed Forces (SAF)",
+        "role": "State military"
+      },
+      {
+        "countryId": "SDN",
+        "countryName": "Rapid Support Forces (RSF)",
+        "role": "Paramilitary / rebel force"
+      }
+    ],
+    "summary": "War between Sudan's national army and the paramilitary Rapid Support Forces erupted in April 2023 after a power struggle between generals al-Burhan (SAF) and Dagalo (RSF). It has triggered one of the world's largest humanitarian crises with millions displaced.",
+    "currentStatus": "RSF controls most of Darfur and parts of Khartoum. SAF conducting air strikes. Humanitarian access severely restricted. Over 10 million displaced — largest internal displacement crisis globally as of 2025.",
+    "casualties": "Est. 12,000–150,000 deaths (wide range due to access restrictions). UN warns of famine in multiple regions.",
+    "internationalInvolvement": "UAE accused of arming RSF. Egypt backs SAF. African Union and Arab League mediation attempts ongoing. US and UN sanctions on both sides."
+  },
+  {
+    "id": "MMR-CIVIL-2021",
+    "name": "Myanmar Civil War",
+    "type": "civil_war",
+    "intensity": "high",
+    "status": "escalating",
+    "startYear": 2021,
+    "coordinates": [
+      96.5,
+      19.5
+    ],
+    "region": "Southeast Asia",
+    "parties": [
+      {
+        "countryId": "MMR",
+        "countryName": "Myanmar Military Junta (SAC)",
+        "role": "Military government since 2021 coup"
+      },
+      {
+        "countryId": "MMR",
+        "countryName": "People's Defence Force / Ethnic Armed Organisations",
+        "role": "Resistance coalition"
+      }
+    ],
+    "summary": "Following the February 2021 military coup that removed elected leader Aung San Suu Kyi, Myanmar descended into civil war as a resistance movement aligned with ethnic armed groups mounted an increasingly effective insurgency against the junta.",
+    "currentStatus": "Resistance forces (Operation 1027 coalition) have captured significant territory in northern and northwestern Myanmar as of 2025. Junta controls major cities but losing rural areas rapidly.",
+    "casualties": "Est. 5,000+ civilian deaths. 2.5 million+ internally displaced. Junta conscription law imposed 2024 signals manpower crisis.",
+    "internationalInvolvement": "China maintains cautious ties with junta for border stability. ASEAN 'Five Point Consensus' largely failed. US, EU sanctions on junta. Thailand hosting significant refugee flows."
+  },
+  {
+    "id": "YEM-WAR-2015",
+    "name": "Yemen War",
+    "type": "armed_conflict",
+    "intensity": "high",
+    "status": "active",
+    "startYear": 2015,
+    "coordinates": [
+      44.5,
+      15.5
+    ],
+    "region": "Middle East",
+    "parties": [
+      {
+        "countryId": "YEM",
+        "countryName": "Houthi Movement (Ansar Allah)",
+        "role": "Controls northwest Yemen including capital Sanaa"
+      },
+      {
+        "countryId": "SAU",
+        "countryName": "Saudi-led Coalition",
+        "role": "Backing internationally recognized government"
+      }
+    ],
+    "summary": "Yemen's war began as a civil conflict between the Houthi movement and the internationally recognized government, escalating with Saudi-led military intervention in 2015. The Houthis, backed by Iran, control most population centers including Sanaa.",
+    "currentStatus": "Houthis attacking Red Sea shipping since Oct 2023 in solidarity with Gaza, triggering US/UK strikes. Fragile 2022 truce largely holding on main fronts but Houthi maritime campaign active.",
+    "casualties": "Est. 150,000–250,000+ deaths including conflict-induced famine and disease. Described by UN as world's worst humanitarian crisis.",
+    "internationalInvolvement": "Iran supplies weapons, training to Houthis. Saudi Arabia, UAE, US back coalition. US-UK conducting strikes on Houthi infrastructure since Jan 2024."
+  },
+  {
+    "id": "SHL-INSURGENCY",
+    "name": "Sahel Jihadist Insurgency",
+    "type": "armed_conflict",
+    "intensity": "high",
+    "status": "escalating",
+    "startYear": 2012,
+    "coordinates": [
+      -1.0,
+      14.5
+    ],
+    "region": "Africa",
+    "parties": [
+      {
+        "countryId": "MLI",
+        "countryName": "Mali / Burkina Faso / Niger Juntas",
+        "role": "Military governments"
+      },
+      {
+        "countryId": "MLI",
+        "countryName": "JNIM / ISGS (Al-Qaeda & ISIS affiliates)",
+        "role": "Jihadist insurgents"
+      }
+    ],
+    "summary": "A spreading Islamist insurgency originating in northern Mali has engulfed the tri-border Sahel region. Military coups in Mali (2021), Burkina Faso (2022), and Niger (2023) have expelled French forces and aligned the region with Russia's Wagner Group.",
+    "currentStatus": "JNIM controls significant rural territory. Burkina Faso and Mali expelled French/ECOWAS forces. Russian Wagner forces deployed. Civilian massacres increasing. Spread into coastal West Africa (Togo, Benin, Ghana) accelerating.",
+    "casualties": "Est. 20,000+ deaths; 3 million+ displaced across Mali, Burkina Faso, Niger.",
+    "internationalInvolvement": "France withdrew forces 2022-2023. Russia/Wagner deployed across all three countries. US maintains intelligence presence. ECOWAS imposed sanctions on Niger junta post-2023 coup."
+  },
+  {
+    "id": "ETH-TIGRAY",
+    "name": "Ethiopian Tigray Conflict",
+    "type": "armed_conflict",
+    "intensity": "medium",
+    "status": "ceasefire",
+    "startYear": 2020,
+    "coordinates": [
+      39.5,
+      13.5
+    ],
+    "region": "Africa",
+    "parties": [
+      {
+        "countryId": "ETH",
+        "countryName": "Ethiopian Federal Government",
+        "role": "Central government"
+      },
+      {
+        "countryId": "ETH",
+        "countryName": "Tigray People's Liberation Front (TPLF)",
+        "role": "Regional rebel force"
+      }
+    ],
+    "summary": "War between the Ethiopian federal government and the TPLF in Tigray from 2020-2022 caused mass atrocities and famine. A peace agreement was signed in November 2022 but implementation remains incomplete.",
+    "currentStatus": "Ceasefire holding since Nov 2022. Disarmament incomplete. Humanitarian access improving but economic recovery slow. Tensions with Eritrea (which fought alongside Ethiopian government) unresolved.",
+    "casualties": "Est. 300,000–500,000 deaths from conflict and associated famine — one of world's deadliest recent conflicts.",
+    "internationalInvolvement": "Eritrea fought alongside Ethiopia. AU brokered ceasefire. US, EU imposed sanctions. ICC investigation into atrocities ongoing."
+  },
+  {
+    "id": "SCS-DISPUTE",
+    "name": "South China Sea Dispute",
+    "type": "naval_tension",
+    "intensity": "high",
+    "status": "escalating",
+    "startYear": 1947,
+    "coordinates": [
+      114.0,
+      12.0
+    ],
+    "region": "Indo-Pacific",
+    "parties": [
+      {
+        "countryId": "CHN",
+        "countryName": "China",
+        "role": "Claims ~90% via 'nine-dash line'"
+      },
+      {
+        "countryId": "PHL",
+        "countryName": "Philippines",
+        "role": "EEZ claimant, US treaty ally"
+      },
+      {
+        "countryId": "VNM",
+        "countryName": "Vietnam",
+        "role": "EEZ claimant"
+      },
+      {
+        "countryId": "MYS",
+        "countryName": "Malaysia",
+        "role": "EEZ claimant"
+      }
+    ],
+    "summary": "China claims approximately 90% of the South China Sea via its 'nine-dash line', overlapping with the EEZs of Vietnam, Philippines, Malaysia, Brunei, and Taiwan. China has built and militarized artificial islands in the Spratly and Paracel chains.",
+    "currentStatus": "Chinese coast guard and maritime militia regularly confront Filipino supply vessels at Second Thomas Shoal. Water cannons, lasers deployed against Filipino ships. US conducts Freedom of Navigation Operations. Risk of miscalculation increasing.",
+    "casualties": "No large-scale combat deaths. Multiple incidents of ships rammed, water cannons deployed, lasers used.",
+    "internationalInvolvement": "US declared SCS disputes covered by US-Philippines Mutual Defense Treaty. 2016 UNCLOS arbitration ruled against China's nine-dash line (China rejects ruling). ASEAN divided on confronting China."
+  },
+  {
+    "id": "TWN-STRAIT",
+    "name": "Taiwan Strait Tensions",
+    "type": "territorial_dispute",
+    "intensity": "high",
+    "status": "escalating",
+    "startYear": 1949,
+    "coordinates": [
+      120.5,
+      24.0
+    ],
+    "region": "Indo-Pacific",
+    "parties": [
+      {
+        "countryId": "CHN",
+        "countryName": "China (PRC)",
+        "role": "Claims Taiwan as sovereign territory"
+      },
+      {
+        "countryId": "TWN",
+        "countryName": "Taiwan (ROC)",
+        "role": "De facto independent state"
+      }
+    ],
+    "summary": "China views Taiwan as a breakaway province and has never renounced the use of force to achieve 'reunification.' Taiwan has functioned as an independent democracy since 1949. The Taiwan Strait is the world's highest-stakes potential flashpoint.",
+    "currentStatus": "China conducting increasingly large military exercises around Taiwan. PLAAF violations of Taiwan's Air Defense Identification Zone near-daily. US arms sales and unofficial relations continue. Taiwan 2024 election re-elected pro-independence DPP.",
+    "casualties": "No armed conflict since 1950s. Risk of miscalculation in military exercises elevated.",
+    "internationalInvolvement": "US maintains 'strategic ambiguity' under Taiwan Relations Act. Japan, Australia have signaled concern over any Taiwan conflict. TSMC's semiconductor dominance makes Taiwan a global economic security issue."
+  },
+  {
+    "id": "IND-PAK-KASHMIR",
+    "name": "India–Pakistan Kashmir Dispute",
+    "type": "territorial_dispute",
+    "intensity": "medium",
+    "status": "active",
+    "startYear": 1947,
+    "coordinates": [
+      75.5,
+      34.0
+    ],
+    "region": "South Asia",
+    "parties": [
+      {
+        "countryId": "IND",
+        "countryName": "India",
+        "role": "Controls Jammu & Kashmir"
+      },
+      {
+        "countryId": "PAK",
+        "countryName": "Pakistan",
+        "role": "Controls Azad Kashmir and Gilgit-Baltistan"
+      }
+    ],
+    "summary": "Kashmir has been disputed between India and Pakistan since 1947 partition. Both countries are nuclear-armed. India revoked Jammu & Kashmir's special status in 2019, escalating tensions. Cross-border terrorism, artillery exchanges, and diplomatic crises are recurring.",
+    "currentStatus": "Ongoing low-level insurgency in Indian-administered Kashmir. Cross-border skirmishes along the Line of Control. Relations at near-historic lows following 2025 Pahalgam attack attributed to Pakistan-based militants.",
+    "casualties": "Est. 47,000+ deaths since 1989 insurgency began. Multiple cross-border military skirmishes. 2019 Balakot air strikes marked first India-Pakistan air combat since 1971.",
+    "internationalInvolvement": "China backs Pakistan, controls Aksai Chin (disputed with India). US walks tightrope as both India (strategic partner) and Pakistan (counterterrorism) partner. Nuclear risk prevents full-scale war."
+  },
+  {
+    "id": "SYR-CONFLICT",
+    "name": "Syria Conflict",
+    "type": "civil_war",
+    "intensity": "medium",
+    "status": "de-escalating",
+    "startYear": 2011,
+    "coordinates": [
+      38.5,
+      35.0
+    ],
+    "region": "Middle East",
+    "parties": [
+      {
+        "countryId": "SYR",
+        "countryName": "Syrian rebel factions (HTS)",
+        "role": "Now controlling Damascus post-Dec 2024"
+      },
+      {
+        "countryId": "SYR",
+        "countryName": "Assad regime remnants",
+        "role": "Collapsed Dec 2024"
+      }
+    ],
+    "summary": "Syria's civil war began in 2011 with Arab Spring protests. Assad's fall in December 2024 to HTS-led rebel coalition ended his family's 54-year rule. Syria now faces a complex transition with competing factions, foreign forces, and reconstruction challenges.",
+    "currentStatus": "Post-Assad transition underway. HTS (Hayat Tahrir al-Sham) controls much of Syria. Kurdish SDF controls northeast. Turkish-backed forces in northwest. Israel conducting strikes on Syrian military assets. ISIS resurging in eastern desert.",
+    "casualties": "500,000+ deaths; 13 million+ displaced (half internally) — one of largest displacement crises in history.",
+    "internationalInvolvement": "Russia, Iran backed Assad (now withdrawn). Turkey backed rebel factions. US supports Kurdish SDF (anti-ISIS). Israel conducting post-Assad strikes on Iranian weapons stockpiles."
+  },
+  {
+    "id": "ECS-DISPUTE",
+    "name": "East China Sea Dispute",
+    "type": "naval_tension",
+    "intensity": "medium",
+    "status": "active",
+    "startYear": 1968,
+    "coordinates": [
+      124.0,
+      28.0
+    ],
+    "region": "Indo-Pacific",
+    "parties": [
+      {
+        "countryId": "CHN",
+        "countryName": "China",
+        "role": "Claims Senkaku/Diaoyu Islands"
+      },
+      {
+        "countryId": "JPN",
+        "countryName": "Japan",
+        "role": "Administers Senkaku Islands"
+      }
+    ],
+    "summary": "Japan administers the Senkaku Islands; China calls them Diaoyu and claims sovereignty. Chinese coast guard vessels routinely enter Japanese-administered waters. The islands are covered by the US-Japan Mutual Defense Treaty, making any Chinese seizure a potential trigger for US military involvement.",
+    "currentStatus": "Chinese coast guard vessels entering Senkaku contiguous zone almost daily. Japan scrambling fighter jets regularly. Both sides maintaining military positioning without firing shots.",
+    "casualties": "No combat deaths in modern era. Significant near-miss incidents between vessels and aircraft.",
+    "internationalInvolvement": "US explicitly states Senkaku covered by Article 5 of US-Japan Security Treaty. Taiwan also claims the islands. Korea has separate dispute with Japan over Dokdo/Takeshima islands."
+  },
+  {
+    "id": "RUS-UKR-WAR",
+    "name": "Russia-Ukraine War",
+    "type": "armed_conflict",
+    "intensity": "critical",
+    "status": "active",
+    "startYear": 2014,
+    "coordinates": [
+      37.17,
+      48.28
+    ],
+    "region": "Eastern Europe",
+    "parties": [
+      {
+        "countryId": "UKR",
+        "countryName": "Ukraine",
+        "role": "defender"
+      },
+      {
+        "countryId": "RUS",
+        "countryName": "Russia",
+        "role": "aggressor"
+      }
+    ],
+    "summary": "A large-scale conventional war following Russia's full-scale invasion in 2022, rooted in the 2014 annexation of Crimea and Donbas conflict. It involves high-intensity trench warfare, extensive drone use, and missile strikes on infrastructure across a 1,000km frontline.",
+    "currentStatus": "Russia maintains a slow offensive in the Donbas region while Ukraine holds captured territory in Russia's Kursk Oblast. Both sides are engaged in a grueling war of attrition with periodic escalations in long-range strikes.",
+    "casualties": "Estimated 1,000,000+ total (military and civilian killed/wounded)",
+    "internationalInvolvement": "NATO and EU provide military and financial aid to Ukraine; Iran, North Korea, and China provide military hardware or economic support to Russia."
+  },
+  {
+    "id": "ISR-GAZ-HEZ",
+    "name": "Israel-Gaza & Hezbollah Conflict",
+    "type": "armed_conflict",
+    "intensity": "critical",
+    "status": "active",
+    "startYear": 2023,
+    "coordinates": [
+      34.46,
+      31.5
+    ],
+    "region": "Middle East",
+    "parties": [
+      {
+        "countryId": "ISR",
+        "countryName": "Israel",
+        "role": "state_actor"
+      },
+      {
+        "countryId": "PSE",
+        "countryName": "Palestine (Gaza)",
+        "role": "insurgent"
+      },
+      {
+        "countryId": "LBN",
+        "countryName": "Lebanon (Hezbollah)",
+        "role": "insurgent"
+      }
+    ],
+    "summary": "A multi-front war triggered by the October 7 Hamas attacks, leading to a massive Israeli military operation in Gaza and a significant escalation with Hezbollah in Lebanon. The conflict has caused unprecedented civilian displacement and a severe humanitarian crisis in Gaza.",
+    "currentStatus": "High-intensity operations continue in Gaza despite Hamas leadership decapitation, while a fragile ceasefire mediated by the U.S. and France is in effect on the Lebanon-Israel border as of late November 2024.",
+    "casualties": "44,000+ killed in Gaza; ~4,000 killed in Lebanon; ~1,300 killed in Israel",
+    "internationalInvolvement": "United States provides military support to Israel; Iran supports Hamas and Hezbollah via the 'Axis of Resistance'."
+  },
+  {
+    "id": "SDN-CIVIL-WAR",
+    "name": "Sudan Civil War",
+    "type": "civil_war",
+    "intensity": "critical",
+    "status": "active",
+    "startYear": 2023,
+    "coordinates": [
+      32.56,
+      15.5
+    ],
+    "region": "East Africa",
+    "parties": [
+      {
+        "countryId": "SDN",
+        "countryName": "Sudan (SAF)",
+        "role": "government"
+      },
+      {
+        "countryId": "SDN",
+        "countryName": "Rapid Support Forces (RSF)",
+        "role": "paramilitary"
+      }
+    ],
+    "summary": "A brutal power struggle between the Sudanese Armed Forces and the paramilitary Rapid Support Forces that has collapsed the state and triggered the world's largest displacement crisis. The war features widespread ethnic violence, particularly in Darfur, and the destruction of national infrastructure.",
+    "currentStatus": "The conflict is largely a stalemate with SAF making recent gains in Khartoum, while the RSF maintains control over much of Darfur and Kordofan. Famine conditions have been confirmed in parts of the country.",
+    "casualties": "Estimated 61,000 to 150,000+ deaths",
+    "internationalInvolvement": "UAE reportedly supports the RSF; Egypt, Iran, and Russia have provided varying levels of support to the SAF."
+  },
+  {
+    "id": "MMR-CIVIL-WAR",
+    "name": "Myanmar Civil War",
+    "type": "civil_war",
+    "intensity": "high",
+    "status": "active",
+    "startYear": 2021,
+    "coordinates": [
+      96.13,
+      19.75
+    ],
+    "region": "Southeast Asia",
+    "parties": [
+      {
+        "countryId": "MMR",
+        "countryName": "Myanmar (Junta)",
+        "role": "government"
+      },
+      {
+        "countryId": "MMR",
+        "countryName": "NUG/PDF/EAOs",
+        "role": "resistance"
+      }
+    ],
+    "summary": "A nationwide armed resistance against the military junta that seized power in a 2021 coup. A coalition of ethnic armed organizations and pro-democracy militias has successfully seized significant territory along the country's borders.",
+    "currentStatus": "The junta is in a defensive posture after losing control of major trade hubs and several regional commands to the Three Brotherhood Alliance and other resistance groups. Conflict is intensifying as rebels move toward central urban hubs.",
+    "casualties": "Estimated 52,000+ deaths since the coup",
+    "internationalInvolvement": "China acts as a mediator while maintaining ties to both sides; ASEAN remains divided on a diplomatic solution."
+  },
+  {
+    "id": "COL-GUERRILLA",
+    "name": "Colombia FARC Remnants Conflict",
+    "type": "civil_war",
+    "intensity": "medium",
+    "status": "escalating",
+    "startYear": 2016,
+    "coordinates": [
+      -77.25,
+      2.26
+    ],
+    "region": "South America",
+    "parties": [
+      {
+        "countryId": "COL",
+        "countryName": "Colombia",
+        "role": "government"
+      },
+      {
+        "countryId": "COL",
+        "countryName": "FARC Dissidents (EMC/SM)",
+        "role": "insurgent"
+      }
+    ],
+    "summary": "Ongoing violence involving FARC dissident groups who rejected or abandoned the 2016 peace agreement, fighting for control of drug trafficking and illegal mining territories. The conflict is increasingly fragmented into factional wars between rival dissident umbrellas.",
+    "currentStatus": "The 'Total Peace' policy faces challenges as ceasefires with major factions have collapsed, leading to a resumption of state military offensives in departments like Cauca and Nariño. Internal splits within dissident groups have further complicated the security landscape.",
+    "casualties": "Thousands of combatants and hundreds of social leaders killed since 2016",
+    "internationalInvolvement": "United States provides security assistance and counter-narcotics support to the Colombian government."
+  },
+  {
+    "id": "DRC-EAST-WAR",
+    "name": "DRC Eastern Conflict (M23/ADF)",
+    "type": "armed_conflict",
+    "intensity": "high",
+    "status": "active",
+    "startYear": 2021,
+    "coordinates": [
+      29.22,
+      -1.66
+    ],
+    "region": "Central Africa",
+    "parties": [
+      {
+        "countryId": "COD",
+        "countryName": "DR Congo",
+        "role": "government"
+      },
+      {
+        "countryId": "RWA",
+        "countryName": "Rwanda",
+        "role": "state_supporter"
+      },
+      {
+        "countryId": "UGA",
+        "countryName": "ADF (ISIS-affiliate)",
+        "role": "insurgent"
+      }
+    ],
+    "summary": "A complex regionalized conflict in eastern DRC involving the M23 rebellion and the Islamist ADF group. It is characterized by the seizure of major towns, the encirclement of Goma, and intense ethnic-based militia violence.",
+    "currentStatus": "M23 has expanded its territorial control toward North Kivu's northern gateway, while the ADF has increased massacres in Ituri. Regional SADC forces are deployed to assist the Congolese army as UN peacekeepers withdraw.",
+    "casualties": "Thousands killed annually; over 7 million internally displaced",
+    "internationalInvolvement": "Rwanda is accused by the UN of directly supporting M23; SADC (South Africa, Tanzania, Malawi) provides combat troops to the DRC government."
+  },
+  {
+    "id": "MOZ-CABO-DELGADO",
+    "name": "Mozambique Cabo Delgado Insurgency",
+    "type": "armed_conflict",
+    "intensity": "medium",
+    "status": "escalating",
+    "startYear": 2017,
+    "coordinates": [
+      40.33,
+      -11.35
+    ],
+    "region": "Southeast Africa",
+    "parties": [
+      {
+        "countryId": "MOZ",
+        "countryName": "Mozambique",
+        "role": "government"
+      },
+      {
+        "countryId": "MOZ",
+        "countryName": "IS-Mozambique",
+        "role": "insurgent"
+      }
+    ],
+    "summary": "An Islamist insurgency in the gas-rich Cabo Delgado province led by an ISIS-affiliated group. The conflict has caused massive displacement and periodic halts to multi-billion dollar international energy projects.",
+    "currentStatus": "Insurgents launched a significant southern offensive in 2024 following the withdrawal of regional SADC forces. The Mozambican military now relies heavily on bilateral support from Rwandan troops to protect strategic areas.",
+    "casualties": "Estimated 5,700+ deaths since 2017",
+    "internationalInvolvement": "Rwanda provides combat troops; SADC recently completed its mission withdrawal; EU provides training support."
+  },
+  {
+    "id": "HTI-GANG-CRISIS",
+    "name": "Haiti Gang Crisis",
+    "type": "armed_conflict",
+    "intensity": "high",
+    "status": "active",
+    "startYear": 2021,
+    "coordinates": [
+      -72.33,
+      18.58
+    ],
+    "region": "Caribbean",
+    "parties": [
+      {
+        "countryId": "HTI",
+        "countryName": "Haiti",
+        "role": "government"
+      },
+      {
+        "countryId": "HTI",
+        "countryName": "Viv Ansanm Coalition",
+        "role": "insurgent"
+      }
+    ],
+    "summary": "A total collapse of state authority in Port-au-Prince where a coalition of powerful gangs controls the majority of the capital. The crisis escalated in 2024 with coordinated attacks on government institutions and the forced resignation of the Prime Minister.",
+    "currentStatus": "Gangs maintain control over 85-90% of the capital despite the arrival of a Kenya-led international security mission. A transitional presidential council is attempting to organize elections amid ongoing violence and blockades.",
+    "casualties": "5,600+ killed in 2024 alone",
+    "internationalInvolvement": "Kenya leads a UN-authorized Multinational Security Support (MSS) mission; USA provides financial and logistical funding."
+  },
+  {
+    "id": "ARM-AZE-BORDER",
+    "name": "Armenia-Azerbaijan Territorial Dispute",
+    "type": "territorial_dispute",
+    "intensity": "low",
+    "status": "de-escalating",
+    "startYear": 1988,
+    "coordinates": [
+      46.75,
+      39.82
+    ],
+    "region": "Caucasus",
+    "parties": [
+      {
+        "countryId": "ARM",
+        "countryName": "Armenia",
+        "role": "disputant"
+      },
+      {
+        "countryId": "AZE",
+        "countryName": "Azerbaijan",
+        "role": "disputant"
+      }
+    ],
+    "summary": "A long-standing conflict over the Nagorno-Karabakh region, which ended in total Azerbaijani control after a 2023 offensive. The focus has now shifted to border delimitation and the normalization of state relations.",
+    "currentStatus": "Both nations are finalizing a peace treaty and have begun practical border demarcation, including the return of several border villages to Azerbaijan. Localized skirmishes occasionally occur, but large-scale hostilities have ceased.",
+    "casualties": "Dozens killed in post-2023 skirmishes; thousands in previous wars",
+    "internationalInvolvement": "EU and USA facilitate peace talks; Turkey strongly supports Azerbaijan; Russia has withdrawn its peacekeepers."
+  },
+  {
+    "id": "NGA-INSURGENCY",
+    "name": "Nigeria Boko Haram/ISWAP Conflict",
+    "type": "armed_conflict",
+    "intensity": "high",
+    "status": "active",
+    "startYear": 2009,
+    "coordinates": [
+      13.15,
+      11.83
+    ],
+    "region": "West Africa",
+    "parties": [
+      {
+        "countryId": "NGA",
+        "countryName": "Nigeria",
+        "role": "government"
+      },
+      {
+        "countryId": "NGA",
+        "countryName": "JAS (Boko Haram)",
+        "role": "insurgent"
+      },
+      {
+        "countryId": "NGA",
+        "countryName": "ISWAP",
+        "role": "insurgent"
+      }
+    ],
+    "summary": "A persistent Islamist insurgency in Northeast Nigeria that has fractured into a violent turf war between the original Boko Haram faction and the ISIS-affiliated ISWAP. The conflict involves mass abductions, suicide bombings, and raids on military outposts.",
+    "currentStatus": "The Nigerian military continues 'Operation Hadin Kai' while the two insurgent factions engage in deadly internal fighting for control of the Lake Chad Basin. Regional coordination remains strained following political changes in the Sahel.",
+    "casualties": "Estimated 40,000+ deaths since 2009; millions displaced",
+    "internationalInvolvement": "Multinational Joint Task Force (MNJTF) involves Chad, Niger, and Cameroon; USA and UK provide intelligence and training."
+  },
+  {
+    "id": "SOM-AL-SHABAAB",
+    "name": "Somalia Al-Shabaab Conflict",
+    "type": "armed_conflict",
+    "intensity": "high",
+    "status": "active",
+    "startYear": 2006,
+    "coordinates": [
+      45.32,
+      2.05
+    ],
+    "region": "East Africa",
+    "parties": [
+      {
+        "countryId": "SOM",
+        "countryName": "Somalia",
+        "role": "government"
+      },
+      {
+        "countryId": "SOM",
+        "countryName": "Al-Shabaab",
+        "role": "insurgent"
+      }
+    ],
+    "summary": "A long-running insurgency by the Al-Qaeda-affiliated Al-Shabaab seeking to establish an Islamic state in Somalia. The government has launched a 'total war' offensive involving the national army and local clan militias.",
+    "currentStatus": "Government forces have regained significant territory in central Somalia, but Al-Shabaab maintains resilient rural strongholds and continues to launch major suicide attacks in Mogadishu. African Union forces are currently drawing down as part of a security transition.",
+    "casualties": "Thousands killed annually; over 3 million displaced",
+    "internationalInvolvement": "USA (AFRICOM) provides drone strikes; ATMIS (AU) provides ground troops; Turkey provides military training."
+  },
+  {
+    "id": "LBY-FACTIONS",
+    "name": "Libya Factions Stalemate",
+    "type": "frozen_conflict",
+    "intensity": "low",
+    "status": "active",
+    "startYear": 2011,
+    "coordinates": [
+      13.19,
+      32.89
+    ],
+    "region": "North Africa",
+    "parties": [
+      {
+        "countryId": "LBY",
+        "countryName": "Libya (GNU)",
+        "role": "disputant"
+      },
+      {
+        "countryId": "LBY",
+        "countryName": "Libya (LNA/GNS)",
+        "role": "disputant"
+      }
+    ],
+    "summary": "A protracted political stalemate following the 2011 civil war, leaving the country divided between rival administrations in the West (Tripoli) and East (Benghazi). While a 2020 ceasefire holds, the lack of unified governance fuels periodic militia clashes and economic instability.",
+    "currentStatus": "The conflict has shifted toward institutional and financial struggles, including a recent crisis over the control of the Central Bank. National elections remain indefinitely postponed as factions compete for control of oil revenues.",
+    "casualties": "Dozens killed in localized 2024 clashes; thousands in previous civil wars",
+    "internationalInvolvement": "Turkey supports the GNU; Russia (Wagner), Egypt, and UAE support the LNA/Eastern factions."
+  },
+  {
+    "id": "IRQ-SYR-ISIS",
+    "name": "Iraq/Syria ISIS Remnants",
+    "type": "armed_conflict",
+    "intensity": "medium",
+    "status": "active",
+    "startYear": 2013,
+    "coordinates": [
+      38.27,
+      34.86
+    ],
+    "region": "Middle East",
+    "parties": [
+      {
+        "countryId": "IRQ",
+        "countryName": "Iraq",
+        "role": "government"
+      },
+      {
+        "countryId": "SYR",
+        "countryName": "Syria",
+        "role": "government"
+      },
+      {
+        "countryId": "SYR",
+        "countryName": "ISIS",
+        "role": "insurgent"
+      }
+    ],
+    "summary": "The ongoing fight against the remnants of the Islamic State following its territorial defeat. The group operates as a clandestine insurgency, utilizing desert hideouts to launch hit-and-run attacks and assassinations.",
+    "currentStatus": "ISIS is experiencing a notable resurgence in the Syrian desert following the recent collapse of the central Syrian government. In Iraq, the group remains largely contained by security forces but maintains active sleeper cells.",
+    "casualties": "Hundreds killed annually in insurgent attacks and counter-terror raids",
+    "internationalInvolvement": "U.S.-led Coalition (CENTCOM) and Syrian Democratic Forces (SDF) conduct ongoing anti-ISIS operations."
+  },
+  {
+    "id": "IND-MAOIST",
+    "name": "India Maoist (Naxalite) Insurgency",
+    "type": "civil_war",
+    "intensity": "low",
+    "status": "de-escalating",
+    "startYear": 1967,
+    "coordinates": [
+      80.9,
+      19.4
+    ],
+    "region": "South Asia",
+    "parties": [
+      {
+        "countryId": "IND",
+        "countryName": "India",
+        "role": "government"
+      },
+      {
+        "countryId": "IND",
+        "countryName": "CPI (Maoist)",
+        "role": "insurgent"
+      }
+    ],
+    "summary": "A long-standing communist insurgency seeking to overthrow the Indian state via protracted people's war, primarily active in the 'Red Corridor' of central and eastern India. The conflict is rooted in tribal rights and land distribution issues.",
+    "currentStatus": "Security forces have made significant gains in 2024, killing a record number of insurgents and establishing forward bases in former Maoist strongholds. The government has set a target to eliminate the insurgency by early 2026.",
+    "casualties": "250+ insurgents killed in 2024; 15,000+ total since 1967",
+    "internationalInvolvement": "None; considered an internal security matter by India."
+  },
+  {
+    "id": "PAK-TTP-WAR",
+    "name": "Pakistan TTP Insurgency",
+    "type": "armed_conflict",
+    "intensity": "high",
+    "status": "active",
+    "startYear": 2007,
+    "coordinates": [
+      70.26,
+      32.99
+    ],
+    "region": "South Asia",
+    "parties": [
+      {
+        "countryId": "PAK",
+        "countryName": "Pakistan",
+        "role": "government"
+      },
+      {
+        "countryId": "AFG",
+        "countryName": "TTP (Insurgents)",
+        "role": "insurgent"
+      }
+    ],
+    "summary": "A resurgent Islamist insurgency by the Tehrik-i-Taliban Pakistan (TTP) targeting Pakistani security forces. The group has intensified its campaign since the 2021 Taliban takeover of Afghanistan, utilizing cross-border sanctuaries.",
+    "currentStatus": "Attacks on police and military posts in Khyber Pakhtunkhwa have reached a decade high. The Pakistani government has launched a new national counter-terrorism campaign while tensions rise with the Afghan Taliban over militant hideouts.",
+    "casualties": "Estimated 2,500+ total deaths in 2024 operations",
+    "internationalInvolvement": "Afghanistan (Taliban) is accused of providing sanctuary to TTP; China is concerned due to attacks on CPEC projects."
+  },
+  {
+    "id": "CMR-AMBAZONIA",
+    "name": "Cameroon Anglophone Conflict",
+    "type": "civil_war",
+    "intensity": "medium",
+    "status": "active",
+    "startYear": 2017,
+    "coordinates": [
+      10.15,
+      5.96
+    ],
+    "region": "West Africa",
+    "parties": [
+      {
+        "countryId": "CMR",
+        "countryName": "Cameroon",
+        "role": "government"
+      },
+      {
+        "countryId": "CMR",
+        "countryName": "Ambazonia Separatists",
+        "role": "insurgent"
+      }
+    ],
+    "summary": "An armed struggle by English-speaking separatists in western Cameroon seeking independence as the state of 'Ambazonia'. The conflict originated from peaceful protests against the marginalization of the Anglophone minority.",
+    "currentStatus": "The conflict is in a violent stalemate with regular clashes between military forces and fragmented separatist groups. Civilians remain trapped between state raids and separatist-enforced lockdowns that have closed thousands of schools.",
+    "casualties": "6,500+ deaths since 2017; nearly 1 million displaced",
+    "internationalInvolvement": "Minimal international mediation; Nigeria hosts a significant refugee population."
+  },
+  {
+    "id": "PHL-INSURGENCY",
+    "name": "Philippines Communist & Islamist Insurgency",
+    "type": "civil_war",
+    "intensity": "low",
+    "status": "de-escalating",
+    "startYear": 1969,
+    "coordinates": [
+      123.0,
+      10.3
+    ],
+    "region": "Southeast Asia",
+    "parties": [
+      {
+        "countryId": "PHL",
+        "countryName": "Philippines",
+        "role": "government"
+      },
+      {
+        "countryId": "PHL",
+        "countryName": "NPA (Communist)",
+        "role": "insurgent"
+      },
+      {
+        "countryId": "PHL",
+        "countryName": "Abu Sayyaf (Islamist)",
+        "role": "insurgent"
+      }
+    ],
+    "summary": "Dual-track internal conflicts involving the Maoist New People's Army and remnants of Islamist groups like Abu Sayyaf. Both movements have been significantly weakened by decades of military pressure and government reintegration programs.",
+    "currentStatus": "The Abu Sayyaf Group was declared fully dismantled in early 2024, while the NPA has been reduced to a handful of weakened guerrilla fronts. The military expects to achieve 'total internal security' by the end of the year.",
+    "casualties": "150+ deaths in 2024; 40,000+ total since 1969",
+    "internationalInvolvement": "USA provides technical and training support to the Philippine military."
+  },
+  {
+    "id": "SCS-TENSION",
+    "name": "South China Sea Tensions",
+    "type": "naval_tension",
+    "intensity": "medium",
+    "status": "active",
+    "startYear": 1947,
+    "coordinates": [
+      115.87,
+      9.73
+    ],
+    "region": "Southeast Asia",
+    "parties": [
+      {
+        "countryId": "CHN",
+        "countryName": "China",
+        "role": "disputant"
+      },
+      {
+        "countryId": "PHL",
+        "countryName": "Philippines",
+        "role": "disputant"
+      },
+      {
+        "countryId": "VNM",
+        "countryName": "Vietnam",
+        "role": "disputant"
+      }
+    ],
+    "summary": "A complex maritime dispute over territorial sovereignty and resource rights in the South China Sea. Tensions involve competing claims over island chains and reefs, exacerbated by the construction of artificial islands and naval blockades.",
+    "currentStatus": "2024 has seen a sharp escalation in physical confrontations between the Chinese and Philippine coast guards at Second Thomas Shoal and Sabina Shoal. Gray-zone tactics, including water cannons and rammings, are frequently employed.",
+    "casualties": "None fatal in 2024; periodic injuries during naval standoffs",
+    "internationalInvolvement": "USA reaffirms its Mutual Defense Treaty with the Philippines; Japan and Australia conduct joint naval patrols."
+  }
+]

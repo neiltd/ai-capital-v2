@@ -1,0 +1,218 @@
+[
+  {
+    "id": "RAIL-MEX-PANTACO-TERMINAL",
+    "name": "Terminal Intermodal Pantaco",
+    "countryId": "MEX",
+    "city": "Mexico City",
+    "coordinates": [-99.17, 19.46],
+    "type": "freight",
+    "dailyPassengers": null,
+    "annualFreightTonnes": 30000000,
+    "connectedCountries": ["USA", "CAN"],
+    "gaugeType": "standard",
+    "lineCount": 8,
+    "strategicImportance": "high",
+    "isPartOfBRI": false,
+    "geopoliticalNotes": "Mexico's most important inland port and logistics hub, serving the capital's massive consumer market and industrial zones.",
+    "notes": "Primary destination for containerized cargo from both Atlantic and Pacific ports.",
+    "attribution": {
+      "sources": [
+        { "name": "Secretaría de Infraestructura, Comunicaciones y Transportes (SICT)", "url": "https://www.gob.mx/sict", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 1,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  },
+  {
+    "id": "RAIL-MEX-NUEVO-LAREDO-BORDER",
+    "name": "Nuevo Laredo Rail Gateway",
+    "countryId": "MEX",
+    "city": "Nuevo Laredo",
+    "coordinates": [-99.51, 27.49],
+    "type": "border_crossing",
+    "dailyPassengers": null,
+    "annualFreightTonnes": 35000000,
+    "connectedCountries": ["USA"],
+    "gaugeType": "standard",
+    "lineCount": 4,
+    "strategicImportance": "high",
+    "isPartOfBRI": false,
+    "geopoliticalNotes": "The busiest rail border crossing in North America. Critical for USMCA trade, especially automotive and industrial goods. Operated by CPKC.",
+    "notes": "Handles over 50% of all rail freight between Mexico and the United States.",
+    "attribution": {
+      "sources": [
+        { "name": "CPKC Railway Network Map", "url": "https://www.cpkcr.com/", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 2,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  },
+  {
+    "id": "RAIL-MEX-MONTERREY-HUB",
+    "name": "Monterrey Rail Yard (Ferromex/CPKC)",
+    "countryId": "MEX",
+    "city": "Monterrey",
+    "coordinates": [-100.32, 25.69],
+    "type": "mixed",
+    "dailyPassengers": 370000,
+    "annualFreightTonnes": 25000000,
+    "connectedCountries": ["USA"],
+    "gaugeType": "standard",
+    "lineCount": 10,
+    "strategicImportance": "high",
+    "isPartOfBRI": false,
+    "geopoliticalNotes": "Industrial heart of Mexico and key transit node for 'nearshoring' manufacturing exports to the US market.",
+    "notes": "Intersects major lines from the Pacific (Lázaro Cárdenas) and the North (Laredo/Juárez).",
+    "attribution": {
+      "sources": [
+        { "name": "Ferromex Corporate Report", "url": "https://www.ferromex.com.mx/", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "medium",
+        "sourceCount": 1,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  },
+  {
+    "id": "RAIL-MEX-VERACRUZ-PORT",
+    "name": "Port of Veracruz Rail Terminal",
+    "countryId": "MEX",
+    "city": "Veracruz",
+    "coordinates": [-96.14, 19.19],
+    "type": "port_interface",
+    "dailyPassengers": null,
+    "annualFreightTonnes": 20000000,
+    "connectedCountries": [],
+    "gaugeType": "standard",
+    "lineCount": 6,
+    "strategicImportance": "high",
+    "isPartOfBRI": false,
+    "geopoliticalNotes": "Mexico's primary Atlantic gateway. Essential for automotive exports and agricultural imports (grain).",
+    "notes": "Serves as the main rail link to the Bajío industrial region.",
+    "attribution": {
+      "sources": [
+        { "name": "Administración del Sistema Portuario Nacional (ASIPONA) Veracruz", "url": "https://www.puertoveracruz.com.mx/", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 1,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  },
+  {
+    "id": "RAIL-MEX-LAZARO-CARDENAS-PORT",
+    "name": "Lázaro Cárdenas Port Rail Hub",
+    "countryId": "MEX",
+    "city": "Lázaro Cárdenas",
+    "coordinates": [-102.20, 17.95],
+    "type": "port_interface",
+    "dailyPassengers": null,
+    "annualFreightTonnes": 18000000,
+    "connectedCountries": [],
+    "gaugeType": "standard",
+    "lineCount": 6,
+    "strategicImportance": "high",
+    "isPartOfBRI": false,
+    "geopoliticalNotes": "Deep-water Pacific port specializing in containerized cargo from Asia. Direct rail link (CPKC) extends all the way to Chicago.",
+    "notes": "A critical node in the Trans-Pacific supply chain.",
+    "attribution": {
+      "sources": [
+        { "name": "ASIPONA Lázaro Cárdenas", "url": "https://www.puertolazarocardenas.com.mx/", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 1,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  },
+  {
+    "id": "RAIL-MEX-COATZACOALCOS-HUB",
+    "name": "Coatzacoalcos Interoceanic Terminal",
+    "countryId": "MEX",
+    "city": "Coatzacoalcos",
+    "coordinates": [-94.42, 18.15],
+    "type": "mixed",
+    "dailyPassengers": 500,
+    "annualFreightTonnes": 5000000,
+    "connectedCountries": [],
+    "gaugeType": "standard",
+    "lineCount": 4,
+    "strategicImportance": "high",
+    "isPartOfBRI": false,
+    "geopoliticalNotes": "Atlantic terminus of the Tehuantepec Isthmus Interoceanic Corridor, a project designed as an alternative to the Panama Canal.",
+    "notes": "Heavily promoted by the Mexican government for industrial development and global transit.",
+    "attribution": {
+      "sources": [
+        { "name": "Corredor Interoceánico del Istmo de Tehuantepec (CIIT)", "url": "https://www.gob.mx/ciit", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "medium",
+        "sourceCount": 2,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  },
+  {
+    "id": "RAIL-MEX-JUAREZ-BORDER",
+    "name": "Ciudad Juárez Rail Crossing",
+    "countryId": "MEX",
+    "city": "Ciudad Juárez",
+    "coordinates": [-106.45, 31.74],
+    "type": "border_crossing",
+    "dailyPassengers": null,
+    "annualFreightTonnes": 12000000,
+    "connectedCountries": ["USA"],
+    "gaugeType": "standard",
+    "lineCount": 3,
+    "strategicImportance": "medium",
+    "isPartOfBRI": false,
+    "geopoliticalNotes": "Major border hub connecting the Ferromex network to the Union Pacific (UP) and BNSF systems in El Paso, Texas.",
+    "notes": "Focuses on maquiladora manufacturing and electronics logistics.",
+    "attribution": {
+      "sources": [
+        { "name": "Association of American Railroads (AAR)", "url": "https://www.aar.org/", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "medium",
+        "sourceCount": 1,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  },
+  {
+    "id": "RAIL-MEX-CANCUN-TREN-MAYA",
+    "name": "Cancún Airport Station (Tren Maya)",
+    "countryId": "MEX",
+    "city": "Cancún",
+    "coordinates": [-86.87, 21.04],
+    "type": "passenger",
+    "dailyPassengers": 5000,
+    "annualFreightTonnes": null,
+    "connectedCountries": [],
+    "gaugeType": "standard",
+    "lineCount": 4,
+    "strategicImportance": "medium",
+    "isPartOfBRI": false,
+    "geopoliticalNotes": "Flagship station of the Tren Maya project, designed to integrate the tourism economy of the Yucatán Peninsula.",
+    "notes": "Includes freight capabilities expected to launch in late 2025/2026.",
+    "attribution": {
+      "sources": [
+        { "name": "Tren Maya Official Site", "url": "https://www.trenmaya.gob.mx/", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 1,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  }
+]

@@ -1,0 +1,65 @@
+{
+  "id": "AZE",
+  "iso2": "AZ",
+  "name": "Azerbaijan",
+  "region": "Asia",
+  "subregion": "Western Asia",
+  "capital": "Baku",
+  "lastUpdated": "2025-05-15",
+  "summary": "Azerbaijan has emerged as a rising middle power and a critical energy and transit hub linking Europe with Central Asia and China. Following the restoration of its territorial integrity and the landmark 2025 peace treaty with Armenia, the nation is aggressively diversifying its economy, with the non-oil sector now accounting for nearly 70% of GDP. Azerbaijan's foreign policy is defined by strategic autonomy, characterized by deep ties with Turkey, a pragmatic relationship with Russia, and its recent expansion into the Central Asian 'C6' bloc. The development of the TRIPP and Middle Corridors further solidifies its position as a central player in global trade and energy security.",
+  "indicators": {
+    "politicalStability":       { "score": 8, "trend": "stable", "confidence": "high", "note": "High internal stability and clear executive continuity following successful territorial restoration." },
+    "economicDirection":        { "score": 7, "trend": "rising", "confidence": "high", "note": "Strong push for diversification and non-oil growth; massive investment in liberated territories." },
+    "investmentAttractiveness": { "score": 7, "trend": "rising", "confidence": "high", "note": "Improving business climate and massive infrastructure projects in energy, logistics, and 'smart' cities." },
+    "geopoliticalRisk":         { "score": 4, "trend": "falling", "confidence": "medium", "note": "Peace treaty with Armenia mitigates long-standing conflict risks, though regional power competition persists." },
+    "educationQuality":         { "score": 6, "trend": "stable", "confidence": "high", "note": "Focus on technical and energy-related education with increasing investment in vocational training." },
+    "healthcareQuality":        { "score": 6, "trend": "rising", "confidence": "high", "note": "Ongoing modernization of healthcare infrastructure and implementation of mandatory health insurance." },
+    "technologyInvestment":     { "score": 7, "trend": "rising", "confidence": "medium", "note": "Significant investment in digital governance, 'smart' village concepts, and fiber-optic connectivity." }
+  },
+  "demographics": {
+    "population": 10400000,
+    "medianAge": 32.3,
+    "urbanizationRate": 57.5,
+    "majorEthnicGroups": ["Azerbaijani", "Lezgin", "Russian", "Talysh"],
+    "religions": [
+      { "name": "Muslim (mostly Shi'a)", "percent": 96 },
+      { "name": "Christian", "percent": 3 },
+      { "name": "Other", "percent": 1 }
+    ]
+  },
+  "alliances": ["UN", "OIC", "CIS", "Turkic Council", "Non-Aligned Movement", "C6"],
+  "relationships": [
+    { "countryId": "TUR", "countryName": "Turkey", "type": "ally", "sentiment": "positive", "summary": "The 'one nation, two states' partnership; provides critical defense, economic, and political support." },
+    { "countryId": "RUS", "countryName": "Russia", "type": "pragmatic_partner", "sentiment": "neutral", "summary": "Maintains a complex balancing act focused on regional stability and energy market coordination." },
+    { "countryId": "ISR", "countryName": "Israel", "type": "strategic_partner", "sentiment": "positive", "summary": "Deep cooperation in defense technology, energy, and intelligence; Azerbaijan is a major oil supplier to Israel." },
+    { "countryId": "ARM", "countryName": "Armenia", "type": "neighbor", "sentiment": "neutral", "summary": "Transitioning to a pragmatic relationship following the 2025 peace treaty and joint infrastructure projects." },
+    { "countryId": "CHN", "countryName": "China", "type": "economic_partner", "sentiment": "positive", "summary": "Key partner in the Middle Corridor transit project and a major investor in non-oil infrastructure." }
+  ],
+  "perspectives": [
+    { "source": "Azerbaijani Technocrat", "bias": "Optimistic", "view": "We are the indispensable bridge of Eurasia; our investments in logistics and green energy will define the next decade of regional growth." },
+    { "source": "Energy Sector Expert", "bias": "Pragmatic", "view": "Azerbaijan's gas exports are critical for European energy security, but the real future lies in our role as a transit hub for Central Asian resources." },
+    { "source": "International Human Rights NGO", "bias": "Critical", "view": "Economic success and regional influence should not overshadow the need for greater political pluralism and freedom of expression." },
+    { "source": "Baku Entrepreneur", "bias": "Optimistic", "view": "The 'Baku spirit' is one of innovation and openness; we are finally seeing the non-oil economy take flight, especially in tech and tourism." }
+  ],
+  "historicalContext": {
+    "summary": "Azerbaijan was the first democratic republic in the Muslim world (1918) before being incorporated into the Soviet Union. It regained independence in 1991. The modern era has been defined by the development of its massive Caspian energy reserves and the conflict with Armenia over Nagorno-Karabakh. Under President Ilham Aliyev, the nation restored its territorial integrity in 2020 and 2023, leading to a new era of regional peace and economic focus.",
+    "keyEvents": [
+      { "year": 1991, "event": "Independence from the Soviet Union." },
+      { "year": 1994, "event": "Signing of the 'Contract of the Century' for Caspian oil development." },
+      { "year": 2003, "event": "Ilham Aliyev becomes President, continuing a period of rapid economic growth." },
+      { "year": 2020, "event": "44-Day War; Azerbaijan restores control over territories surrounding Nagorno-Karabakh." },
+      { "year": 2023, "event": "Anti-terror measures lead to full restoration of sovereignty over Nagorno-Karabakh." },
+      { "year": 2025, "event": "Signing of the historic peace treaty with Armenia; formal accession to the Central Asian 'C6' bloc." }
+    ]
+  },
+  "investmentNotes": {
+    "strengths": ["Central role in the Middle Corridor and TRIPP transit routes", "Substantial foreign exchange reserves and low public debt", "Modernized energy infrastructure and growing renewables sector", "Strong political will for economic diversification"],
+    "risks": ["Vulnerability to global energy price shifts", "Regional geopolitical competition (Iran/Russia)", "Bureaucratic and transparency challenges", "Concentrated political power"],
+    "sectors": ["Logistics & Transportation", "Renewable Energy (Wind/Solar)", "Petrochemicals", "Agriculture & Food Security"]
+  },
+  "sources": [
+    { "name": "State Statistical Committee - Azerbaijan", "url": "https://www.stat.gov.az", "type": "economic" },
+    { "name": "AZPROMO - Azerbaijan Export and Investment Promotion Agency", "url": "https://www.azpromo.az", "type": "economic" },
+    { "name": "Central Bank of Azerbaijan", "url": "https://www.cbar.az", "type": "economic" }
+  ]
+}

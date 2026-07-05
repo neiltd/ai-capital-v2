@@ -1,0 +1,272 @@
+[
+  {
+    "id": "GRU",
+    "name": "São Paulo/Guarulhos – Governor André Franco Montoro International Airport",
+    "countryId": "BRA",
+    "city": "São Paulo",
+    "iata": "GRU",
+    "icao": "SBGR",
+    "coordinates": [-46.4731, -23.4356],
+    "passengerVolume": 43600000,
+    "cargoVolume": 350000,
+    "runwayCount": 2,
+    "elevationM": 750,
+    "strategicImportance": "critical",
+    "geopoliticalNotes": "Busiest airport in South America and Brazil's primary international gateway. Handles nearly half of the country's international air cargo and is a critical node for high-value pharmaceutical and electronics imports.",
+    "notes": "Main hub for LATAM Brasil and GOL.",
+    "attribution": {
+      "sources": [
+        { "name": "Gov.br", "url": "https://www.gov.br", "accessedAt": "2026-05-10" },
+        { "name": "OurAirports", "url": "https://ourairports.com/airports/SBGR/", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 2,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  },
+  {
+    "id": "GIG",
+    "name": "Rio de Janeiro/Galeão – Antonio Carlos Jobim International Airport",
+    "countryId": "BRA",
+    "city": "Rio de Janeiro",
+    "iata": "GIG",
+    "icao": "SBGL",
+    "coordinates": [-43.2506, -22.81],
+    "passengerVolume": 14500000,
+    "cargoVolume": 175000,
+    "runwayCount": 2,
+    "elevationM": 9,
+    "strategicImportance": "high",
+    "geopoliticalNotes": "Major tourism and business gateway for the Southern Cone. Recent policy shifts have consolidated international traffic here, boosting its role as a regional freight hub.",
+    "notes": "Has one of the largest logistics terminals in Brazil.",
+    "attribution": {
+      "sources": [
+        { "name": "Aviation Week", "url": "https://aviationweek.com", "accessedAt": "2026-05-10" },
+        { "name": "OurAirports", "url": "https://ourairports.com/airports/SBGL/", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 2,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  },
+  {
+    "id": "VCP",
+    "name": "Viracopos – Campinas International Airport",
+    "countryId": "BRA",
+    "city": "Campinas",
+    "iata": "VCP",
+    "icao": "SBKP",
+    "coordinates": [-47.1344, -23.0069],
+    "passengerVolume": 12400000,
+    "cargoVolume": 366000,
+    "runwayCount": 1,
+    "elevationM": 661,
+    "strategicImportance": "high",
+    "geopoliticalNotes": "Brazil's premier cargo-centric airport, processing one-third of all air imports. Crucial for the automotive and technology sectors in the São Paulo industrial heartland.",
+    "notes": "Primary hub for Azul Brazilian Airlines.",
+    "attribution": {
+      "sources": [
+        { "name": "Routes Online", "url": "https://www.routesonline.com", "accessedAt": "2026-05-10" },
+        { "name": "OurAirports", "url": "https://ourairports.com/airports/SBKP/", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 2,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  },
+  {
+    "id": "BSB",
+    "name": "Brasília – President Juscelino Kubitschek International Airport",
+    "countryId": "BRA",
+    "city": "Brasília",
+    "iata": "BSB",
+    "icao": "SBBR",
+    "coordinates": [-47.9172, -15.8692],
+    "passengerVolume": 14000000,
+    "cargoVolume": 50000,
+    "runwayCount": 2,
+    "elevationM": 1066,
+    "strategicImportance": "high",
+    "geopoliticalNotes": "The federal capital's hub, essential for government connectivity and a major domestic transit point connecting the north and south of the country.",
+    "notes": "Operates with two parallel runways allowing simultaneous takeoffs.",
+    "attribution": {
+      "sources": [
+        { "name": "Inframerica", "url": "https://www.bsb.aero", "accessedAt": "2026-05-10" },
+        { "name": "OurAirports", "url": "https://ourairports.com/airports/SBBR/", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 2,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  },
+  {
+    "id": "CNF",
+    "name": "Belo Horizonte/Confins – Tancredo Neves International Airport",
+    "countryId": "BRA",
+    "city": "Belo Horizonte",
+    "iata": "CNF",
+    "icao": "SBCF",
+    "coordinates": [-43.9678, -19.6244],
+    "passengerVolume": 12000000,
+    "cargoVolume": 35000,
+    "runwayCount": 1,
+    "elevationM": 829,
+    "strategicImportance": "medium",
+    "geopoliticalNotes": "Functioning as a 'Multimodal Logistics Hub', it is strategically located near 70% of Brazil's GDP. Key for high-tech manufacturing in Minas Gerais.",
+    "notes": "Integrated with an industrial airport zone.",
+    "attribution": {
+      "sources": [
+        { "name": "BH Airport", "url": "https://www.bh-airport.com.br", "accessedAt": "2026-05-10" },
+        { "name": "OurAirports", "url": "https://ourairports.com/airports/SBCF/", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 2,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  },
+  {
+    "id": "REC",
+    "name": "Recife/Guararapes – Gilberto Freyre International Airport",
+    "countryId": "BRA",
+    "city": "Recife",
+    "iata": "REC",
+    "icao": "SBRF",
+    "coordinates": [-34.9228, -8.1264],
+    "passengerVolume": 9000000,
+    "cargoVolume": 25000,
+    "runwayCount": 1,
+    "elevationM": 12,
+    "strategicImportance": "high",
+    "geopoliticalNotes": "Strategically located as a gateway to the Northeast and the closest major airport to Africa and Europe, making it a key node for transatlantic connectivity.",
+    "notes": "Amajor hub for Azul in the Northeast.",
+    "attribution": {
+      "sources": [
+        { "name": "Aena Brasil", "url": "https://www.aenabrasil.com.br", "accessedAt": "2026-05-10" },
+        { "name": "OurAirports", "url": "https://ourairports.com/airports/SBRF/", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 2,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  },
+  {
+    "id": "MAO",
+    "name": "Manaus – Eduardo Gomes International Airport",
+    "countryId": "BRA",
+    "city": "Manaus",
+    "iata": "MAO",
+    "icao": "SBEG",
+    "coordinates": [-60.0506, -3.0411],
+    "passengerVolume": 3000000,
+    "cargoVolume": 160000,
+    "runwayCount": 1,
+    "elevationM": 80,
+    "strategicImportance": "high",
+    "geopoliticalNotes": "Critical logistics hub for the Amazon region and the Manaus Free Trade Zone. Essential for transporting electronics and high-value goods out of the rainforest.",
+    "notes": "Major cargo significance despite lower passenger numbers.",
+    "attribution": {
+      "sources": [
+        { "name": "Vinci Airports", "url": "https://www.vinci-airports.com", "accessedAt": "2026-05-10" },
+        { "name": "OurAirports", "url": "https://ourairports.com/airports/SBEG/", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 2,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  },
+  {
+    "id": "FOR",
+    "name": "Fortaleza – Pinto Martins International Airport",
+    "countryId": "BRA",
+    "city": "Fortaleza",
+    "iata": "FOR",
+    "icao": "SBFZ",
+    "coordinates": [-38.5325, -3.7758],
+    "passengerVolume": 6000000,
+    "cargoVolume": 45000,
+    "runwayCount": 1,
+    "elevationM": 25,
+    "strategicImportance": "high",
+    "geopoliticalNotes": "Key connectivity node for Europe and North America. Its location makes it a strategic point for undersea cable landings and intercontinental logistics.",
+    "notes": "Managed by Fraport Brasil.",
+    "attribution": {
+      "sources": [
+        { "name": "Fraport Brasil", "url": "https://fortaleza-airport.com.br", "accessedAt": "2026-05-10" },
+        { "name": "OurAirports", "url": "https://ourairports.com/airports/SBFZ/", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 2,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  },
+  {
+    "id": "BEL",
+    "name": "Belém – Val-de-Cans International Airport",
+    "countryId": "BRA",
+    "city": "Belém",
+    "iata": "BEL",
+    "icao": "SBBE",
+    "coordinates": [-48.4789, -1.3792],
+    "passengerVolume": 4000000,
+    "cargoVolume": 15000,
+    "runwayCount": 2,
+    "elevationM": 17,
+    "strategicImportance": "high",
+    "geopoliticalNotes": "Increasingly strategic as the host for COP30 in 2025. It serves as the primary gateway to the northern Amazon and a link to French Guiana and the Caribbean.",
+    "notes": "Undergoing significant expansion for COP30.",
+    "attribution": {
+      "sources": [
+        { "name": "TV BRICS", "url": "https://tvbrics.com", "accessedAt": "2026-05-10" },
+        { "name": "OurAirports", "url": "https://ourairports.com/airports/SBBE/", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 2,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  },
+  {
+    "id": "NAT",
+    "name": "Natal – Greater Natal International Airport",
+    "countryId": "BRA",
+    "city": "Natal",
+    "iata": "NAT",
+    "icao": "SBSG",
+    "coordinates": [-35.2475, -5.9114],
+    "passengerVolume": 2500000,
+    "cargoVolume": 10000,
+    "runwayCount": 1,
+    "elevationM": 83,
+    "strategicImportance": "medium",
+    "geopoliticalNotes": "Strategically positioned on the easternmost tip of South America. Important for transatlantic military and logistics ferry flights due to proximity to Africa.",
+    "notes": "Re-concessioned to Zurich Airport in 2024.",
+    "attribution": {
+      "sources": [
+        { "name": "Zurich Airport Brasil", "url": "https://www.zurichairportbrasil.com.br", "accessedAt": "2026-05-10" },
+        { "name": "OurAirports", "url": "https://ourairports.com/airports/SBSG/", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 2,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  }
+]

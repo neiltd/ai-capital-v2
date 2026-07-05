@@ -1,0 +1,118 @@
+{
+  "date": "2026-05-27",
+  "last_updated": "2026-05-27T21:28:53.637Z",
+  "collection": {
+    "last_run": "2026-05-27T21:28:53.637Z",
+    "run_count": 7,
+    "total_articles": 0,
+    "by_source": {},
+    "failed_sources": [],
+    "skipped_sources": [
+      "bbc-world",
+      "dw-world",
+      "aljazeera-english",
+      "france24-english",
+      "nytimes-world",
+      "washingtonpost-world",
+      "bloomberg-markets",
+      "npr-news",
+      "scmp-china",
+      "globaltimes-china",
+      "bangkokpost-top",
+      "khaosod-english"
+    ],
+    "stale_articles": 0,
+    "stale_feed_sources": [],
+    "avg_article_age_hours": 0,
+    "oldest_article_days": 0
+  },
+  "scoring": {
+    "last_run": "2026-05-27T19:13:28.232Z",
+    "run_count": 1,
+    "total_scored": 251,
+    "recommended": 38,
+    "filtered": 213,
+    "reduction_pct": 85,
+    "score_distribution": {
+      "urgent": 1,
+      "high": 7,
+      "relevant": 19,
+      "marginal": 53,
+      "noise": 171
+    },
+    "by_source": {
+      "aljazeera-english": {
+        "total": 25,
+        "recommended": 2,
+        "narrative": 0
+      },
+      "bangkokpost-top": {
+        "total": 10,
+        "recommended": 0,
+        "narrative": 0
+      },
+      "bbc-world": {
+        "total": 27,
+        "recommended": 4,
+        "narrative": 0
+      },
+      "bloomberg-markets": {
+        "total": 30,
+        "recommended": 6,
+        "narrative": 0
+      },
+      "dw-world": {
+        "total": 13,
+        "recommended": 4,
+        "narrative": 0
+      },
+      "france24-english": {
+        "total": 24,
+        "recommended": 6,
+        "narrative": 0
+      },
+      "khaosod-english": {
+        "total": 5,
+        "recommended": 0,
+        "narrative": 0
+      },
+      "npr-news": {
+        "total": 10,
+        "recommended": 0,
+        "narrative": 0
+      },
+      "nytimes-world": {
+        "total": 52,
+        "recommended": 12,
+        "narrative": 0
+      },
+      "scmp-china": {
+        "total": 50,
+        "recommended": 2,
+        "narrative": 0
+      },
+      "washingtonpost-world": {
+        "total": 5,
+        "recommended": 2,
+        "narrative": 0
+      }
+    }
+  },
+  "extraction": {
+    "last_run": "2026-05-27T19:15:41.766Z",
+    "run_count": 1,
+    "articles_sent_to_ai": 38,
+    "batches_run": 5,
+    "events_extracted": 25,
+    "events_merged": 0,
+    "low_confidence": 0,
+    "human_review": 6,
+    "api_tokens": {
+      "input": 8550,
+      "output": 10497,
+      "cache_write": 3824,
+      "cache_read": 15296
+    },
+    "estimated_cost_usd": 0.20203379999999999
+  }
+}

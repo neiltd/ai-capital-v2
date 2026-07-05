@@ -1,0 +1,32 @@
+[
+  {
+    "countryId": "IDN",
+    "year": 2023,
+    "gdpUsdBn": 1371.2,
+    "gdpPerCapita": 4920,
+    "sectors": [
+      { "sector": "Manufacturing", "percentOfGDP": 18.67, "notes": "Largest contributor to GDP" },
+      { "sector": "Trade", "percentOfGDP": 12.94, "notes": "Wholesale and retail; repair of vehicles" },
+      { "sector": "Agriculture, Forestry, & Fisheries", "percentOfGDP": 12.53, "notes": null },
+      { "sector": "Mining & Quarrying", "percentOfGDP": 10.52, "notes": "Significant resource sector" },
+      { "sector": "Construction", "percentOfGDP": 9.92, "notes": null },
+      { "sector": "Transportation & Warehousing", "percentOfGDP": 5.89, "notes": null },
+      { "sector": "Information & Communication", "percentOfGDP": 4.23, "notes": null },
+      { "sector": "Financial & Insurance Services", "percentOfGDP": 4.16, "notes": null },
+      { "sector": "Government Administration", "percentOfGDP": 3.14, "notes": "Includes defense and social security" },
+      { "sector": "Real Estate", "percentOfGDP": 2.40, "notes": null },
+      { "sector": "Other Services", "percentOfGDP": 15.60, "notes": "Residual including education and health" }
+    ],
+    "attribution": {
+      "sources": [
+        { "name": "BPS Statistics Indonesia 2023", "url": "https://www.bps.go.id/", "accessedAt": "2024-05-14" },
+        { "name": "World Bank", "url": "https://data.worldbank.org/country/indonesia", "accessedAt": "2024-05-14" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 2,
+        "lastVerified": "2024-05-14"
+      }
+    }
+  }
+]

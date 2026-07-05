@@ -1,0 +1,65 @@
+{
+  "id": "MDA",
+  "iso2": "MD",
+  "name": "Moldova",
+  "region": "Europe",
+  "subregion": "Eastern Europe",
+  "capital": "Chisinau",
+  "lastUpdated": "2025-05-15",
+  "summary": "Moldova is currently at a critical geopolitical crossroads, characterized by a fragile but determined pro-European trajectory under President Maia Sandu. Following her re-election in late 2024 and the narrowly successful EU integration referendum, the country is aggressively pursuing structural reforms to align with EU standards. However, the September 2025 parliamentary elections showed a narrowing mandate for the ruling PAS party amidst high social tension and persistent Russian hybrid warfare. The nation faces significant challenges, including the frozen conflict in Transnistria, which experienced a major energy crisis in early 2025, and deep-seated economic vulnerabilities exacerbated by the ongoing war in neighboring Ukraine.",
+  "indicators": {
+    "politicalStability":       { "score": 5, "trend": "neutral", "confidence": "high", "note": "Polarized electorate; government faces constant hybrid threats and social discontent over the cost of living." },
+    "economicDirection":        { "score": 5, "trend": "stable", "confidence": "high", "note": "Modest recovery in 2025 after a stagnant 2024, but heavily reliant on Western aid and vulnerable to energy shocks." },
+    "investmentAttractiveness": { "score": 4, "trend": "rising", "confidence": "medium", "note": "Improving due to EU accession progress and judicial reforms, though proximity to the war remains a deterrent." },
+    "geopoliticalRisk":         { "score": 8, "trend": "stable", "confidence": "high", "note": "Extreme risk due to the Transnistria conflict and Moldova's status as a primary target of Russian hybrid operations." },
+    "educationQuality":         { "score": 6, "trend": "stable", "confidence": "medium", "note": "Decent secondary education; higher education is undergoing modernization to meet EU standards and reduce outmigration." },
+    "healthcareQuality":        { "score": 5, "trend": "rising", "confidence": "medium", "note": "Standardized public system receiving significant EU support for modernization and rural health clinic upgrades." },
+    "technologyInvestment":     { "score": 6, "trend": "rising", "confidence": "high", "note": "Growing IT sector and successful digital government initiatives, positioning Moldova as a regional tech-service hub." }
+  },
+  "demographics": {
+    "population": 2500000,
+    "medianAge": 37.7,
+    "urbanizationRate": 43.0,
+    "majorEthnicGroups": ["Moldovan", "Ukrainian", "Russian", "Gagauz"],
+    "religions": [
+      { "name": "Orthodox (Metropolis of Moldova)", "percent": 75 },
+      { "name": "Orthodox (Metropolis of Bessarabia)", "percent": 15 },
+      { "name": "Other/None", "percent": 10 }
+    ]
+  },
+  "alliances": ["UN", "OSCE", "CoE", "EU (Candidate)", "CIS (Withdrawing)"],
+  "relationships": [
+    { "countryId": "ROU", "countryName": "Romania", "type": "strategic_partner", "sentiment": "positive", "summary": "The primary advocate for Moldova's EU integration; provides critical energy, economic, and security support." },
+    { "countryId": "UKR", "countryName": "Ukraine", "type": "strategic_partner", "sentiment": "positive", "summary": "Shared security interests and European aspirations; vital cooperation on border management and transit." },
+    { "countryId": "RUS", "countryName": "Russia", "type": "adversary", "sentiment": "negative", "summary": "Relations are at an all-time low; Moscow uses energy leverage and disinformation to destabilize the pro-EU government." },
+    { "countryId": "USA", "countryName": "United States", "type": "partner", "sentiment": "positive", "summary": "Key supporter of democratic reforms and resilience against Russian hybrid attacks; providing significant financial aid." },
+    { "countryId": "DEU", "countryName": "Germany", "type": "partner", "sentiment": "positive", "summary": "A major economic partner and influential voice in support of Moldova's European path." }
+  ],
+  "perspectives": [
+    { "source": "Pro-European Reformer", "bias": "Optimistic", "view": "EU membership is our only path to security and prosperity; we are building a European Moldova for future generations." },
+    { "source": "Opposition Politician", "bias": "Critical", "view": "The government is sacrificing our national interest and neutrality for the sake of Western geopolitical games." },
+    { "source": "Rural Pensioner", "bias": "Pragmatic", "view": "The talk of Europe is fine, but my pension hasn't kept up with the price of gas and bread. We need stability above all." },
+    { "source": "Regional Analyst", "bias": "Cautious", "view": "Moldova is a 'success story' of Western support, but its survival depends on its ability to manage domestic polarization and Gagauz autonomy demands." }
+  ],
+  "historicalContext": {
+    "summary": "Moldova gained independence from the Soviet Union in 1991, but its early years were marred by a brief civil war that resulted in the creation of the breakaway Transnistria region. The country has since cycled between pro-Western and pro-Russian governments, characterized by endemic corruption and state capture by oligarchs. The 2020 election of Maia Sandu and the 2021 parliamentary victory of the PAS party initiated a decisive shift toward European integration and judicial reform, which has only intensified following the 2022 invasion of Ukraine.",
+    "keyEvents": [
+      { "year": 1991, "event": "Independence from the Soviet Union." },
+      { "year": 1992, "event": "War of Transnistria; creation of a de facto independent breakaway region." },
+      { "year": 2014, "event": "Signing of the Association Agreement with the EU; 'The Billion Dollar Bank Fraud' exposed." },
+      { "year": 2022, "event": "Moldova granted EU Candidate status; massive refugee influx from Ukraine." },
+      { "year": 2024, "event": "Presidential election and EU referendum; narrow victory for the pro-European constitutional amendment." },
+      { "year": 2025, "event": "Transnistria energy crisis following Russian gas cutoff; Parliamentary elections see PAS retain a reduced majority." }
+    ]
+  },
+  "investmentNotes": {
+    "strengths": ["Strong commitment to EU-aligned structural and judicial reforms", "Competitive labor costs and growing IT and automotive sectors", "Deepening energy and transport integration with Romania and the EU", "Favorable trade access via the DCFTA with the EU"],
+    "risks": ["Vulnerability to Russian hybrid warfare and disinformation", "Political instability due to narrow parliamentary majority and domestic polarization", "High dependency on external financial assistance and energy transit", "Long-term demographics challenges due to significant workforce emigration"],
+    "sectors": ["ICT & Software Development", "Agribusiness & Wine Production", "Automotive Components", "Renewable Energy (Wind & Biomass)"]
+  },
+  "sources": [
+    { "name": "National Bureau of Statistics of the Republic of Moldova", "url": "https://statistica.gov.md", "type": "economic" },
+    { "name": "Moldova Investment Agency", "url": "https://invest.gov.md", "type": "economic" },
+    { "name": "Ministry of Foreign Affairs - Moldova", "url": "https://mfa.gov.md", "type": "government" }
+  ]
+}

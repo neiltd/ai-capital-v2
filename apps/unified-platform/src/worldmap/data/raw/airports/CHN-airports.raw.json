@@ -1,0 +1,272 @@
+[
+  {
+    "id": "PVG",
+    "name": "Shanghai Pudong International Airport",
+    "countryId": "CHN",
+    "city": "Shanghai",
+    "iata": "PVG",
+    "icao": "ZSPD",
+    "coordinates": [121.8053, 31.1433],
+    "passengerVolume": 76787039,
+    "cargoVolume": 3778331,
+    "runwayCount": 5,
+    "elevationM": 4,
+    "strategicImportance": "critical",
+    "geopoliticalNotes": "Undisputed champion of air freight in China and a top 3 global cargo hub. Primary gateway for high-value exports and anchoring the Yangtze River Delta's manufacturing power.",
+    "notes": "Operates a 5-runway system; 5th runway used primarily for COMAC testing.",
+    "attribution": {
+      "sources": [
+        { "name": "ACI World", "url": "https://aci.aero", "accessedAt": "2026-05-10" },
+        { "name": "OurAirports", "url": "https://ourairports.com", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 2,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  },
+  {
+    "id": "CAN",
+    "name": "Guangzhou Baiyun International Airport",
+    "countryId": "CHN",
+    "city": "Guangzhou",
+    "iata": "CAN",
+    "icao": "ZGGG",
+    "coordinates": [113.2990, 23.3925],
+    "passengerVolume": 76364767,
+    "cargoVolume": 2381901,
+    "runwayCount": 3,
+    "elevationM": 15,
+    "strategicImportance": "critical",
+    "geopoliticalNotes": "Primary Air Silk Road hub connecting China to the Global South (Africa, Middle East, Southeast Asia). Reclaimed status as China's busiest passenger airport in 2024.",
+    "notes": "Terminal 3 expansion expected late 2025.",
+    "attribution": {
+      "sources": [
+        { "name": "Guangzhou Baiyun International Airport", "url": "https://www.gbiac.net", "accessedAt": "2026-05-10" },
+        { "name": "IATA", "url": "https://www.iata.org", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 2,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  },
+  {
+    "id": "PEK",
+    "name": "Beijing Capital International Airport",
+    "countryId": "CHN",
+    "city": "Beijing",
+    "iata": "PEK",
+    "icao": "ZBAA",
+    "coordinates": [116.5975, 40.0725],
+    "passengerVolume": 67367428,
+    "cargoVolume": 1443286,
+    "runwayCount": 3,
+    "elevationM": 35,
+    "strategicImportance": "critical",
+    "geopoliticalNotes": "The premier political and diplomatic gateway to China. Essential node for government operations and primary international connectivity for Northern China.",
+    "notes": "National flagship carrier Air China's primary hub.",
+    "attribution": {
+      "sources": [
+        { "name": "Beijing Capital International Airport", "url": "https://www.bcia.com.cn", "accessedAt": "2026-05-10" },
+        { "name": "ICAO", "url": "https://www.icao.int", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 2,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  },
+  {
+    "id": "PKX",
+    "name": "Beijing Daxing International Airport",
+    "countryId": "CHN",
+    "city": "Beijing",
+    "iata": "PKX",
+    "icao": "ZBAD",
+    "coordinates": [116.4106, 39.5092],
+    "passengerVolume": 49441029,
+    "cargoVolume": 326240,
+    "runwayCount": 4,
+    "elevationM": 30,
+    "strategicImportance": "critical",
+    "geopoliticalNotes": "Core hub for the 'Air Silk Road' initiative, designed to integrate international trade and diplomatic missions. Features a massive Free Trade Zone.",
+    "notes": "World's largest single-terminal airport building.",
+    "attribution": {
+      "sources": [
+        { "name": "Beijing Daxing International Airport", "url": "https://www.bdia.com.cn", "accessedAt": "2026-05-10" },
+        { "name": "OurAirports", "url": "https://ourairports.com", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 2,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  },
+  {
+    "id": "SZX",
+    "name": "Shenzhen Bao'an International Airport",
+    "countryId": "CHN",
+    "city": "Shenzhen",
+    "iata": "SZX",
+    "icao": "ZGSZ",
+    "coordinates": [113.8108, 22.6394],
+    "passengerVolume": 61477337,
+    "cargoVolume": 1881468,
+    "runwayCount": 2,
+    "elevationM": 4,
+    "strategicImportance": "high",
+    "geopoliticalNotes": "Logistics backbone for China's high-tech manufacturing sector and the Greater Bay Area. Critical for rapid export of electronic components.",
+    "notes": "Third runway construction completed late 2025.",
+    "attribution": {
+      "sources": [
+        { "name": "Shenzhen Bao'an International Airport", "url": "http://www.szairport.com", "accessedAt": "2026-05-10" },
+        { "name": "ACI World", "url": "https://aci.aero", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 2,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  },
+  {
+    "id": "TFU",
+    "name": "Chengdu Tianfu International Airport",
+    "countryId": "CHN",
+    "city": "Chengdu",
+    "iata": "TFU",
+    "icao": "ZUTF",
+    "coordinates": [104.4450, 30.3189],
+    "passengerVolume": 54905784,
+    "cargoVolume": 384923,
+    "runwayCount": 3,
+    "elevationM": 440,
+    "strategicImportance": "high",
+    "geopoliticalNotes": "Centerpiece of China's 'Go West' policy and a strategic backup hub for coastal regions. Primary logistics node for tech and aerospace in Western China.",
+    "notes": "Began operations in 2021 to complement Shuangliu (CTU).",
+    "attribution": {
+      "sources": [
+        { "name": "Chengdu Tianfu International Airport", "url": "http://www.cdtfia.com", "accessedAt": "2026-05-10" },
+        { "name": "IATA", "url": "https://www.iata.org", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 2,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  },
+  {
+    "id": "URC",
+    "name": "Ürümqi Diwopu International Airport",
+    "countryId": "CHN",
+    "city": "Ürümqi",
+    "iata": "URC",
+    "icao": "ZWWW",
+    "coordinates": [87.4742, 43.9072],
+    "passengerVolume": 27800000,
+    "cargoVolume": 235900,
+    "runwayCount": 1,
+    "elevationM": 648,
+    "strategicImportance": "high",
+    "geopoliticalNotes": "Strategic 'land bridge' for e-commerce and cargo moving toward Central Asia and Europe. Westernmost major hub in the Silk Road Economic Belt.",
+    "notes": "Busiest single-runway airport in China during 2024; T4 expansion adding more runways.",
+    "attribution": {
+      "sources": [
+        { "name": "OurAirports", "url": "https://ourairports.com", "accessedAt": "2026-05-10" },
+        { "name": "ICAO", "url": "https://www.icao.int", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 2,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  },
+  {
+    "id": "KMG",
+    "name": "Kunming Changshui International Airport",
+    "countryId": "CHN",
+    "city": "Kunming",
+    "iata": "KMG",
+    "icao": "ZPPP",
+    "coordinates": [102.9292, 25.1019],
+    "passengerVolume": 47178347,
+    "cargoVolume": 385625,
+    "runwayCount": 2,
+    "elevationM": 2103,
+    "strategicImportance": "high",
+    "geopoliticalNotes": "China's primary gateway to Southeast Asia (ASEAN). Vital for regional integration and high-altitude logistics connectivity.",
+    "notes": "One of the highest major international airports in China.",
+    "attribution": {
+      "sources": [
+        { "name": "Kunming Changshui International Airport", "url": "http://www.kmiairport.com", "accessedAt": "2026-05-10" },
+        { "name": "ACI World", "url": "https://aci.aero", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 2,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  },
+  {
+    "id": "XIY",
+    "name": "Xi'an Xianyang International Airport",
+    "countryId": "CHN",
+    "city": "Xi'an",
+    "iata": "XIY",
+    "icao": "ZLXY",
+    "coordinates": [108.7567, 34.4372],
+    "passengerVolume": 47030407,
+    "cargoVolume": 290527,
+    "runwayCount": 4,
+    "elevationM": 479,
+    "strategicImportance": "high",
+    "geopoliticalNotes": "Historic Silk Road starting point and current BRI hub for Northwest China. Recently expanded to 4 runways to handle increased inland trade.",
+    "notes": "Phase III expansion adding two runways was completed in late 2024.",
+    "attribution": {
+      "sources": [
+        { "name": "Xi'an Xianyang International Airport", "url": "http://www.xxia.com", "accessedAt": "2026-05-10" },
+        { "name": "IATA", "url": "https://www.iata.org", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 2,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  },
+  {
+    "id": "EHU",
+    "name": "Ezhou Huahu International Airport",
+    "countryId": "CHN",
+    "city": "Ezhou",
+    "iata": "EHU",
+    "icao": "ZHEC",
+    "coordinates": [114.9917, 30.3117],
+    "passengerVolume": null,
+    "cargoVolume": 2000000,
+    "runwayCount": 2,
+    "elevationM": 20,
+    "strategicImportance": "high",
+    "geopoliticalNotes": "China's first dedicated professional air cargo hub, modeled after Memphis. Central node for SF Express and national express delivery logistics.",
+    "notes": "Primarily handles cargo; passenger service is secondary.",
+    "attribution": {
+      "sources": [
+        { "name": "OurAirports", "url": "https://ourairports.com", "accessedAt": "2026-05-10" },
+        { "name": "SF Express Official", "url": "https://www.sf-express.com", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 2,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  }
+]

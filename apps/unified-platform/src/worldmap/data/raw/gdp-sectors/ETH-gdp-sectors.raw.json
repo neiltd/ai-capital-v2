@@ -1,0 +1,44 @@
+[
+  {
+    "countryId": "ETH",
+    "year": 2023,
+    "gdpUsdBn": 163.7,
+    "gdpPerCapita": 1294,
+    "sectors": [
+      {
+        "sector": "Services",
+        "percentOfGDP": 40.3,
+        "notes": "Largest sector; driven by trade, transport (Ethiopian Airlines), and telecom."
+      },
+      {
+        "sector": "Agriculture",
+        "percentOfGDP": 32.1,
+        "notes": "Primary employer and source of exports (coffee, oilseeds, pulses)."
+      },
+      {
+        "sector": "Industry",
+        "percentOfGDP": 27.6,
+        "notes": "Construction accounts for over 70% of industrial output; manufacturing ~8%."
+      }
+    ],
+    "attribution": {
+      "sources": [
+        {
+          "name": "World Bank DataBank 2023",
+          "url": "https://databank.worldbank.org/",
+          "accessedAt": "2025-03-07"
+        },
+        {
+          "name": "National Bank of Ethiopia Annual Report 2022/23",
+          "url": "https://nbe.gov.et/",
+          "accessedAt": "2025-03-07"
+        }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 2,
+        "lastVerified": "2025-03-07"
+      }
+    }
+  }
+]

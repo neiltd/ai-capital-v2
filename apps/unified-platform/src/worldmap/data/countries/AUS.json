@@ -1,0 +1,67 @@
+{
+  "id": "AUS",
+  "iso2": "AU",
+  "name": "Australia",
+  "region": "Oceania",
+  "subregion": "Australia and New Zealand",
+  "capital": "Canberra",
+  "lastUpdated": "2025-05-20",
+  "summary": "Australia is a highly developed, resilient economy and a critical middle power in the Indo-Pacific. It is characterized by high political stability, a robust legal framework, and a wealth of natural resources, particularly critical minerals essential for the global energy transition. Australia's strategic posture is defined by its 'Integrated Deterrence' strategy, deepening its core security alliance with the United States and the United Kingdom through AUKUS, while carefully managing a stabilized but competitive relationship with China, its largest trading partner. The nation faces domestic challenges including housing affordability and a transition toward a lower-carbon economy.",
+  "indicators": {
+    "politicalStability":       { "score": 9, "trend": "stable", "confidence": "high", "note": "High institutional stability; upcoming 2025 election may lead to a minority government but without systemic risk." },
+    "economicDirection":        { "score": 7, "trend": "stable", "confidence": "high", "note": "Navigating a 'soft landing'; cost-of-living pressures persist, but labor market remains resilient." },
+    "investmentAttractiveness": { "score": 8, "trend": "stable", "confidence": "high", "note": "Top-tier destination for FDI; strong interest in critical minerals, renewable energy, and technology." },
+    "geopoliticalRisk":         { "score": 4, "trend": "stable", "confidence": "high", "note": "Low direct risk of conflict; primary focus is on regional maritime security and balancing US-China dynamics." },
+    "educationQuality":         { "score": 8, "trend": "stable", "confidence": "high", "note": "High-quality tertiary education system; a major global hub for international students." },
+    "healthcareQuality":        { "score": 9, "trend": "stable", "confidence": "high", "note": "World-class public and private healthcare systems; consistently high health outcomes." },
+    "technologyInvestment":     { "score": 7, "trend": "rising", "confidence": "high", "note": "Strong investment in AI, quantum computing, and space tech, supported by government and AUKUS Pillar II." }
+  },
+  "demographics": {
+    "population": 27500000,
+    "medianAge": 38.3,
+    "urbanizationRate": 86,
+    "majorEthnicGroups": ["English", "Australian", "Irish", "Scottish", "Chinese", "Italian", "Indian"],
+    "religions": [
+      { "name": "Christian", "percent": 43.9 },
+      { "name": "No Religion", "percent": 38.9 },
+      { "name": "Muslim", "percent": 3.2 },
+      { "name": "Other", "percent": 14.0 }
+    ]
+  },
+  "alliances": ["AUKUS", "Five Eyes", "The Quad", "ANZUS", "APEC", "G20", "OECD"],
+  "relationships": [
+    { "countryId": "USA", "countryName": "United States", "type": "treaty_ally", "sentiment": "positive", "summary": "Australia's closest security and intelligence partner; deep integration across defense and technology." },
+    { "countryId": "CHN", "countryName": "China", "type": "strategic_competitor", "sentiment": "neutral", "summary": "Largest trade partner; relationship has stabilized after years of tension, though strategic competition remains high." },
+    { "countryId": "GBR", "countryName": "United Kingdom", "type": "treaty_ally", "sentiment": "positive", "summary": "Deep historical and cultural ties; reinvigorated partnership through AUKUS and a new Free Trade Agreement." },
+    { "countryId": "JPN", "countryName": "Japan", "type": "strategic_partner", "sentiment": "positive", "summary": "Critical security and economic partner in the Indo-Pacific; close cooperation on energy and regional stability." },
+    { "countryId": "IDN", "countryName": "Indonesia", "type": "neighbor", "sentiment": "positive", "summary": "Relationship is at a high point following the 2024 Defense Cooperation Agreement; vital for regional security." }
+  ],
+  "perspectives": [
+    { "source": "Mining Executive", "bias": "Pragmatic", "view": "Our future lies in the energy transition. We have the critical minerals the world needs, but we need to move faster on approvals." },
+    { "source": "Security Analyst", "bias": "Hawkish", "view": "Deterrence is key. AUKUS isn't just about submarines; it's about maintaining a balance of power that prevents conflict." },
+    { "source": "Social Advocate", "bias": "Reformist", "view": "Australia is wealthy, but the housing crisis is pushing a generation to the brink. We need systemic change in how we build and tax homes." },
+    { "source": "Indigenous Leader", "bias": "Advocacy", "view": "True reconciliation requires a genuine say in the decisions that affect our land and our people, beyond just symbolic gestures." }
+  ],
+  "historicalContext": {
+    "summary": "Australia is home to the world's oldest continuous living culture. Since British colonization in 1788 and federation in 1901, it has evolved from a group of colonies into a diverse, multicultural democracy. It has maintained a continuous democratic tradition and a robust, market-oriented economy.",
+    "keyEvents": [
+      { "year": 1901, "event": "Federation of the six British colonies into the Commonwealth of Australia." },
+      { "year": 1951, "event": "Signing of the ANZUS Treaty, formalizing the security alliance with the U.S." },
+      { "year": 1967, "event": "Referendum grants the federal government power to make laws for Indigenous Australians." },
+      { "year": 1983, "event": "Floating of the Australian Dollar and commencement of major economic deregulation." },
+      { "year": 2021, "event": "Announcement of the AUKUS security partnership with the US and UK." },
+      { "year": 2023, "event": "National referendum on a 'Voice to Parliament' for Indigenous Australians is defeated." },
+      { "year": 2024, "event": "National Defence Strategy confirms a shift toward 'Integrated Deterrence'." }
+    ]
+  },
+  "investmentNotes": {
+    "strengths": ["World-leading critical minerals reserves (Lithium, Rare Earths)", "Robust and transparent legal/regulatory framework", "Strong, stable financial services sector", "High-growth potential in green hydrogen and renewable energy"],
+    "risks": ["High labor and energy costs", "Housing affordability crisis impacting workforce mobility", "Exposure to global commodity price cycles", "Increasing strategic competition in the region"],
+    "sectors": ["Critical Minerals & Mining Tech", "Renewable Energy & Green Hydrogen", "Cybersecurity & Defense Technology", "Agricultural Technology (AgTech)"]
+  },
+  "sources": [
+    { "name": "Reserve Bank of Australia", "url": "https://www.rba.gov.au/", "type": "economic" },
+    { "name": "Australian Bureau of Statistics", "url": "https://www.abs.gov.au/", "type": "demographic" },
+    { "name": "Austrade", "url": "https://www.austrade.gov.au/", "type": "investment" }
+  ]
+}

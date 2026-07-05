@@ -1,0 +1,27 @@
+[
+  {
+    "countryId": "PAK",
+    "year": 2023,
+    "overallScore": 52.2,
+    "availability": 58.3,
+    "access": 59.9,
+    "utilization": 49.4,
+    "stability": 37.7,
+    "undernourishedPct": 19.5,
+    "foodImportDependencyPct": -9.0,
+    "cerealYieldKgHa": 3634,
+    "climateVulnerability": "extreme",
+    "conflictExposure": "extreme",
+    "attribution": {
+      "sources": [
+        { "name": "GFSI 2022 — Pakistan", "url": "https://impact.economist.com/sustainability/project/food-security-index/", "accessedAt": "2025-05-15" },
+        { "name": "FAO FAOSTAT — Pakistan", "url": "https://www.fao.org/faostat/en/", "accessedAt": "2025-05-15" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 2,
+        "lastVerified": "2025-05-15"
+      }
+    }
+  }
+]

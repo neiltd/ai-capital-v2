@@ -1,0 +1,272 @@
+[
+  {
+    "id": "ALA",
+    "name": "Almaty International Airport",
+    "countryId": "KAZ",
+    "city": "Almaty",
+    "iata": "ALA",
+    "icao": "UAAA",
+    "coordinates": [77.0405, 43.3521],
+    "passengerVolume": 10000000,
+    "cargoVolume": 95800,
+    "runwayCount": 2,
+    "elevationM": 681,
+    "strategicImportance": "critical",
+    "geopoliticalNotes": "Largest hub in Central Asia; handles 70% of total air traffic in Kazakhstan. Key transit point for the Middle Corridor.",
+    "notes": "Major expansion completed in 2024 increasing capacity significantly.",
+    "attribution": {
+      "sources": [
+        { "name": "Almaty International Airport", "url": "https://www.alaport.com", "accessedAt": "2026-05-10" },
+        { "name": "OurAirports", "url": "https://ourairports.com/airports/UAAA/", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 2,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  },
+  {
+    "id": "NQZ",
+    "name": "Nursultan Nazarbayev International Airport",
+    "countryId": "KAZ",
+    "city": "Astana",
+    "iata": "NQZ",
+    "icao": "UACC",
+    "coordinates": [71.4667, 51.0222],
+    "passengerVolume": 8315108,
+    "cargoVolume": 12471,
+    "runwayCount": 1,
+    "elevationM": 355,
+    "strategicImportance": "critical",
+    "geopoliticalNotes": "Capital city hub and primary gateway for northern Kazakhstan and government/diplomatic travel.",
+    "notes": "Secondary hub for Air Astana.",
+    "attribution": {
+      "sources": [
+        { "name": "Astana International Airport", "url": "https://www.nn-airport.kz", "accessedAt": "2026-05-10" },
+        { "name": "OurAirports", "url": "https://ourairports.com/airports/UACC/", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 2,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  },
+  {
+    "id": "CIT",
+    "name": "Shymkent International Airport",
+    "countryId": "KAZ",
+    "city": "Shymkent",
+    "iata": "CIT",
+    "icao": "UAII",
+    "coordinates": [69.4761, 42.365],
+    "passengerVolume": 3200000,
+    "cargoVolume": 18500,
+    "runwayCount": 1,
+    "elevationM": 421,
+    "strategicImportance": "high",
+    "geopoliticalNotes": "Southern hub and gateway to Uzbekistan; intersection of major trade routes in the Trans-Caspian corridor.",
+    "notes": "New terminal opened in 2024.",
+    "attribution": {
+      "sources": [
+        { "name": "IATA", "url": "https://www.iata.org", "accessedAt": "2026-05-10" },
+        { "name": "OurAirports", "url": "https://ourairports.com/airports/UAII/", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 2,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  },
+  {
+    "id": "SCO",
+    "name": "Aktau International Airport",
+    "countryId": "KAZ",
+    "city": "Aktau",
+    "iata": "SCO",
+    "icao": "UATE",
+    "coordinates": [51.0919, 43.86],
+    "passengerVolume": 1200000,
+    "cargoVolume": 12500,
+    "runwayCount": 1,
+    "elevationM": 22,
+    "strategicImportance": "high",
+    "geopoliticalNotes": "Western hub and Caspian Sea gateway; critical for the oil and gas industry and maritime-air multimodal logistics.",
+    "notes": "Strategic for energy sector connectivity.",
+    "attribution": {
+      "sources": [
+        { "name": "Aktau Airport", "url": "https://www.aktau-airport.kz", "accessedAt": "2026-05-10" },
+        { "name": "OurAirports", "url": "https://ourairports.com/airports/UATE/", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 2,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  },
+  {
+    "id": "GUW",
+    "name": "Atyrau International Airport",
+    "countryId": "KAZ",
+    "city": "Atyrau",
+    "iata": "GUW",
+    "icao": "UATG",
+    "coordinates": [51.8214, 47.1219],
+    "passengerVolume": 1100000,
+    "cargoVolume": 15000,
+    "runwayCount": 1,
+    "elevationM": -22,
+    "strategicImportance": "high",
+    "geopoliticalNotes": "Vital for the energy sector; serves the oil and gas capital of Kazakhstan. World's lowest commercial airport.",
+    "notes": "Essential for Caspian oil field operations.",
+    "attribution": {
+      "sources": [
+        { "name": "Atyrau Airport", "url": "https://www.atyrau-airport.kz", "accessedAt": "2026-05-10" },
+        { "name": "OurAirports", "url": "https://ourairports.com/airports/UATG/", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 2,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  },
+  {
+    "id": "AKX",
+    "name": "Aliya Moldagulova International Airport",
+    "countryId": "KAZ",
+    "city": "Aktobe",
+    "iata": "AKX",
+    "icao": "UATT",
+    "coordinates": [57.2067, 50.2458],
+    "passengerVolume": 900000,
+    "cargoVolume": 12000,
+    "runwayCount": 1,
+    "elevationM": 225,
+    "strategicImportance": "medium",
+    "geopoliticalNotes": "Western connector developing a multimodal cargo terminal to link Russia and Central Asia.",
+    "notes": "Strategic for trans-Eurasian rail-air logistics.",
+    "attribution": {
+      "sources": [
+        { "name": "Aktobe Airport", "url": "https://www.aktobe-airport.kz", "accessedAt": "2026-05-10" },
+        { "name": "OurAirports", "url": "https://ourairports.com/airports/UATT/", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 2,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  },
+  {
+    "id": "HSA",
+    "name": "Hazret Sultan International Airport",
+    "countryId": "KAZ",
+    "city": "Turkistan",
+    "iata": "HSA",
+    "icao": "UAIT",
+    "coordinates": [68.5503, 43.3111],
+    "passengerVolume": 750000,
+    "cargoVolume": null,
+    "runwayCount": 1,
+    "elevationM": 301,
+    "strategicImportance": "medium",
+    "geopoliticalNotes": "First greenfield airport in Kazakhstan; major tourism hub for the Turkic world and spiritual capital hub.",
+    "notes": "Eco-friendly design and modern infrastructure.",
+    "attribution": {
+      "sources": [
+        { "name": "Hazret Sultan Airport", "url": "https://www.hazretsultan.aero", "accessedAt": "2026-05-10" },
+        { "name": "OurAirports", "url": "https://ourairports.com/airports/UAIT/", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 2,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  },
+  {
+    "id": "UKK",
+    "name": "Oskemen International Airport",
+    "countryId": "KAZ",
+    "city": "Oskemen",
+    "iata": "UKK",
+    "icao": "UASK",
+    "coordinates": [82.4941, 50.0361],
+    "passengerVolume": 450000,
+    "cargoVolume": 3200,
+    "runwayCount": 1,
+    "elevationM": 286,
+    "strategicImportance": "medium",
+    "geopoliticalNotes": "Eastern hub serving the industrial heartland near the Chinese and Russian borders.",
+    "notes": "Vital for metallurgical sector logistics.",
+    "attribution": {
+      "sources": [
+        { "name": "Oskemen Airport", "url": "https://www.oskemen-airport.kz", "accessedAt": "2026-05-10" },
+        { "name": "OurAirports", "url": "https://ourairports.com/airports/UASK/", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 2,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  },
+  {
+    "id": "KGF",
+    "name": "Sary-Arka Airport",
+    "countryId": "KAZ",
+    "city": "Karaganda",
+    "iata": "KGF",
+    "icao": "UAKK",
+    "coordinates": [73.3364, 49.6714],
+    "passengerVolume": 350000,
+    "cargoVolume": 15000,
+    "runwayCount": 1,
+    "elevationM": 538,
+    "strategicImportance": "high",
+    "geopoliticalNotes": "Central multimodal hub focusing on cargo transit between Europe and China. Also supports ISS crew recovery.",
+    "notes": "Primary air cargo gateway for central Kazakhstan.",
+    "attribution": {
+      "sources": [
+        { "name": "Karaganda Airport", "url": "https://www.kgf.aero", "accessedAt": "2026-05-10" },
+        { "name": "OurAirports", "url": "https://ourairports.com/airports/UAKK/", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 2,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  },
+  {
+    "id": "KZO",
+    "name": "Korkyt Ata International Airport",
+    "countryId": "KAZ",
+    "city": "Kyzylorda",
+    "iata": "KZO",
+    "icao": "UAOO",
+    "coordinates": [65.5925, 44.7069],
+    "passengerVolume": 300000,
+    "cargoVolume": null,
+    "runwayCount": 1,
+    "elevationM": 132,
+    "strategicImportance": "medium",
+    "geopoliticalNotes": "South-central connectivity hub; new terminal opened in 2024 to boost regional trade and agriculture.",
+    "notes": "Strategic for Baikonur Cosmodrome support.",
+    "attribution": {
+      "sources": [
+        { "name": "Kyzylorda Airport", "url": "https://www.kzo-airport.kz", "accessedAt": "2026-05-10" },
+        { "name": "OurAirports", "url": "https://ourairports.com/airports/UAOO/", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 2,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  }
+]

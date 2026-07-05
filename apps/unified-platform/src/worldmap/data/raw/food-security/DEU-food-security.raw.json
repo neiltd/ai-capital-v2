@@ -1,0 +1,27 @@
+[
+  {
+    "countryId": "DEU",
+    "year": 2022,
+    "overallScore": 77.0,
+    "availability": 67.0,
+    "access": 87.9,
+    "utilization": 79.9,
+    "stability": 70.8,
+    "undernourishedPct": 2.5,
+    "foodImportDependencyPct": 10.5,
+    "cerealYieldKgHa": 7126,
+    "climateVulnerability": "low",
+    "conflictExposure": "low",
+    "attribution": {
+      "sources": [
+        { "name": "GFSI 2022 — Germany", "url": "https://impact.economist.com/sustainability/project/food-security-index/", "accessedAt": "2024-05-15" },
+        { "name": "FAO FAOSTAT", "url": "https://www.fao.org/faostat/en/", "accessedAt": "2024-05-15" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 2,
+        "lastVerified": "2024-05-15"
+      }
+    }
+  }
+]

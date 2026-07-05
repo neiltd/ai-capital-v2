@@ -1,0 +1,67 @@
+{
+  "id": "BOL",
+  "iso2": "BO",
+  "name": "Bolivia",
+  "region": "Americas",
+  "subregion": "South America",
+  "capital": "La Paz / Sucre",
+  "lastUpdated": "2026-05-24",
+  "summary": "Bolivia is currently navigating a period of profound transition and economic adjustment following the end of nearly two decades of MAS (Movement Toward Socialism) rule. The election of Rodrigo Paz Pereira in 2025 marked a significant shift toward centrist, market-oriented policies. However, the country remains in the throes of a severe economic crisis characterized by depleted foreign reserves, a critical shortage of U.S. dollars, and rising inflation. The new administration is tasked with dismantling a complex system of state subsidies and state-led economic models while managing high social tensions. Despite these challenges, Bolivia's vast lithium reserves and potential for agricultural expansion remain key pillars for long-term recovery and international investment interest.",
+  "indicators": {
+    "politicalStability":       { "score": 4, "score_description": "Moderate-high risk due to leadership transition and social unrest.", "trend": "stable", "confidence": "medium", "note": "The new centrist government faces a divided society and the challenge of implementing unpopular but necessary economic reforms." },
+    "economicDirection":        { "score": 3, "score_description": "Severely challenged by fiscal deficits and currency shortages.", "trend": "declining", "confidence": "high", "note": "Inflation has surged and the lack of foreign currency continues to hamper trade and domestic production." },
+    "investmentAttractiveness": { "score": 5, "score_description": "High resource potential offset by significant macro-risks.", "trend": "rising", "confidence": "medium", "note": "Investors are cautiously watching the new administration's efforts to liberalize the economy and attract capital to the lithium sector." },
+    "geopoliticalRisk":         { "score": 5, "score_description": "Moderate risk focused on internal stability and regional realignments.", "trend": "rising", "confidence": "medium", "note": "Bolivia is shifting its foreign policy away from the ALBA bloc and seeking closer ties with Mercosur and Western partners." },
+    "educationQuality":         { "score": 5, "score_description": "Stable but underfunded system with regional disparities.", "trend": "stable", "confidence": "medium", "note": "Efforts to improve literacy have been successful, but higher education lacks alignment with modern market needs." },
+    "healthcareQuality":        { "score": 5, "score_description": "Universal system struggling with resource constraints.", "trend": "stable", "confidence": "medium", "note": "Rural access has improved, but specialized care and infrastructure in urban centers are under significant strain." },
+    "technologyInvestment":     { "score": 4, "score_description": "Developing tech sector with limited state R&D.", "trend": "stable", "confidence": "medium", "note": "Digital infrastructure is improving, but the startup ecosystem remains small and hampered by the current economic environment." }
+  },
+  "demographics": {
+    "population": 12500000,
+    "medianAge": 25.3,
+    "urbanizationRate": 71,
+    "majorEthnicGroups": ["Mestizo", "Quechua", "Aymara", "European descent"],
+    "religions": [
+      { "name": "Roman Catholic", "percent": 70 },
+      { "name": "Evangelical/Protestant", "percent": 17 },
+      { "name": "None", "percent": 9 },
+      { "name": "Other", "percent": 4 }
+    ]
+  },
+  "alliances": ["Mercosur (Member)", "UN", "CELAC", "OAS"],
+  "relationships": [
+    { "countryId": "BRA", "countryName": "Brazil", "type": "partner", "sentiment": "positive", "summary": "Critical energy partner and primary market for natural gas; relations are strengthening under Bolivia's full Mercosur membership." },
+    { "countryId": "ARG", "countryName": "Argentina", "type": "partner", "sentiment": "neutral", "summary": "Historical gas export market; relations have become more pragmatic as both nations undergo major economic shifts." },
+    { "countryId": "CHN", "countryName": "China", "type": "trade_partner", "sentiment": "positive", "summary": "Major investor in infrastructure and lithium; China remains a key strategic lender despite Bolivia's pivot in leadership." },
+    { "countryId": "USA", "countryName": "United States", "type": "partner", "sentiment": "improving", "summary": "The Paz Pereira administration is actively seeking to repair diplomatic ties and increase bilateral trade with Washington." }
+  ],
+  "perspectives": [
+    { "source": "Christian Democratic Party (Governing)", "bias": "Centrist/Market-Friendly", "view": "We must restore fiscal discipline and attract foreign investment to prevent total economic collapse after years of mismanagement." },
+    { "source": "MAS Opposition", "bias": "Socialist/Indigenous-Nationalist", "view": "The current government is undoing the social gains of the last two decades and selling national sovereignty to corporate interests." },
+    { "source": "International Lithium Investors", "bias": "Resource-Focused", "view": "Bolivia has the world's largest resources, but the regulatory environment and social stability must stabilize before major capital is committed." }
+  ],
+  "historicalContext": {
+    "summary": "Bolivia has a history marked by high political volatility, including numerous coups and a long struggle for indigenous rights. The 2006-2019 era under Evo Morales saw significant poverty reduction but ended in controversy. The subsequent years were defined by political polarization and the eventual transition away from the MAS model in 2025.",
+    "keyEvents": [
+      { "year": 1825, "event": "Independence from Spain; named after Simón Bolívar." },
+      { "year": 1879, "event": "War of the Pacific; Bolivia becomes landlocked after losing its coast to Chile." },
+      { "year": 1952, "event": "National Revolution leads to universal suffrage and land reform." },
+      { "year": 2006, "event": "Inauguration of Evo Morales, the country's first indigenous president." },
+      { "year": 2009, "event": "New constitution establishes Bolivia as a Plurinational State." },
+      { "year": 2019, "event": "Resignation of Evo Morales amid protests and election irregularities." },
+      { "year": 2020, "event": "Return of MAS to power under Luis Arce." },
+      { "year": 2024, "event": "Failed military coup attempt in June amid internal MAS fracturing." },
+      { "year": 2025, "event": "Election of Rodrigo Paz Pereira, ending the MAS era." }
+    ]
+  },
+  "investmentNotes": {
+    "strengths": ["World's largest lithium resources (Salar de Uyuni)", "Significant natural gas reserves", "Emerging agricultural frontier in the east", "Strong cultural identity and tourism potential"],
+    "risks": ["Severe foreign currency shortages", "High potential for social unrest and blockades", "Regulatory uncertainty during economic transition", "Landlocked status increasing logistics costs"],
+    "sectors": ["Mining (Lithium, Tin, Silver)", "Energy (Natural Gas)", "Agribusiness (Soy, Quinoa)", "Renewable Energy"]
+  },
+  "sources": [
+    { "name": "INE (Instituto Nacional de Estadística)", "url": "https://www.ine.gob.ar/", "type": "economic" },
+    { "name": "Banco Central de Bolivia", "url": "https://www.bcb.gob.bo/", "type": "economic" },
+    { "name": "Ministry of Foreign Affairs of Bolivia", "url": "https://www.cancilleria.gob.bo/", "type": "political" }
+  ]
+}

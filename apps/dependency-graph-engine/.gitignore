@@ -1,0 +1,9 @@
+node_modules/
+data/
+ruvector.db
+*.db
+*.db-shm
+*.db-wal
+dist/
+.env
+.DS_Store

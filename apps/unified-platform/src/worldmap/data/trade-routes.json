@@ -1,0 +1,1984 @@
+{
+  "routes": [
+    {
+      "id": "TR-TRANSPACIFIC-N",
+      "name": "Trans-Pacific (North)",
+      "from": {
+        "name": "Shanghai / East China",
+        "coords": [
+          121.5,
+          31.2
+        ]
+      },
+      "to": {
+        "name": "Los Angeles / US West Coast",
+        "coords": [
+          -118.2,
+          33.7
+        ]
+      },
+      "volume": "critical",
+      "type": "shipping",
+      "annualValue": "$1.5T+",
+      "keyGoods": [
+        "Electronics",
+        "Manufactured goods",
+        "Clothing",
+        "Machinery"
+      ],
+      "riskLevel": "low",
+      "notes": "World's highest-value trade lane. Connects China's manufacturing heartland to the US consumer market.",
+      "waypoints": [
+        [
+          121.5,
+          31.2
+        ],
+        [
+          135.0,
+          33.5
+        ],
+        [
+          152.0,
+          38.0
+        ],
+        [
+          175.0,
+          45.0
+        ],
+        [
+          -168.0,
+          47.0
+        ],
+        [
+          -148.0,
+          43.0
+        ],
+        [
+          -130.0,
+          38.0
+        ],
+        [
+          -118.2,
+          33.7
+        ]
+      ],
+      "cargoCategories": [
+        "container-goods",
+        "electronics",
+        "automotive"
+      ],
+      "strategicImportance": "critical",
+      "chokepointIds": [
+        "CP-TAIWAN-STRAIT",
+        "CP-SOUTH-CHINA-SEA"
+      ],
+      "sourceRegions": [
+        "CHN",
+        "JPN",
+        "KOR"
+      ],
+      "destinationRegions": [
+        "USA",
+        "CAN",
+        "MEX"
+      ]
+    },
+    {
+      "id": "TR-ASIA-EUROPE-SUEZ",
+      "name": "Asia\u2013Europe (Suez Canal Route)",
+      "from": {
+        "name": "Singapore / Strait of Malacca",
+        "coords": [
+          103.8,
+          1.3
+        ]
+      },
+      "to": {
+        "name": "Rotterdam / Northern Europe",
+        "coords": [
+          4.5,
+          51.9
+        ]
+      },
+      "volume": "critical",
+      "type": "shipping",
+      "annualValue": "$1T+",
+      "keyGoods": [
+        "Consumer goods",
+        "Oil",
+        "LNG",
+        "Chemicals",
+        "Auto parts"
+      ],
+      "riskLevel": "high",
+      "notes": "Critical artery connecting Asian manufacturing to European markets. Disrupted by Houthi attacks on Red Sea shipping since 2023, forcing rerouting around Cape of Good Hope.",
+      "waypoints": [
+        [
+          103.8,
+          1.3
+        ],
+        [
+          85.0,
+          7.0
+        ],
+        [
+          62.0,
+          10.0
+        ],
+        [
+          50.0,
+          12.0
+        ],
+        [
+          44.5,
+          12.5
+        ],
+        [
+          38.0,
+          14.0
+        ],
+        [
+          33.0,
+          22.0
+        ],
+        [
+          32.5,
+          30.0
+        ],
+        [
+          32.3,
+          31.3
+        ],
+        [
+          25.0,
+          34.0
+        ],
+        [
+          14.0,
+          37.0
+        ],
+        [
+          5.0,
+          38.0
+        ],
+        [
+          -4.0,
+          36.0
+        ],
+        [
+          4.5,
+          51.9
+        ]
+      ],
+      "cargoCategories": [
+        "container-goods",
+        "crude-oil",
+        "lng",
+        "chemicals",
+        "automotive"
+      ],
+      "strategicImportance": "critical",
+      "chokepointIds": [
+        "CP-MALACCA",
+        "CP-BAB-MANDEB",
+        "CP-SUEZ",
+        "CP-GIBRALTAR"
+      ],
+      "bypassRouteId": "TR-CAPE-OF-GOOD-HOPE",
+      "sourceRegions": [
+        "CHN",
+        "KOR",
+        "JPN",
+        "SGP"
+      ],
+      "destinationRegions": [
+        "DEU",
+        "NLD",
+        "GBR",
+        "FRA",
+        "ITA"
+      ]
+    },
+    {
+      "id": "TR-TRANSATLANTIC",
+      "name": "Transatlantic Route",
+      "from": {
+        "name": "New York / US East Coast",
+        "coords": [
+          -74.0,
+          40.7
+        ]
+      },
+      "to": {
+        "name": "London / Northern Europe",
+        "coords": [
+          -0.1,
+          51.5
+        ]
+      },
+      "volume": "very_high",
+      "type": "shipping",
+      "annualValue": "$800B+",
+      "keyGoods": [
+        "Financial services",
+        "Vehicles",
+        "Pharmaceuticals",
+        "Agricultural goods"
+      ],
+      "riskLevel": "low",
+      "notes": "Historic trade route underpinning the transatlantic economic relationship between the US and EU.",
+      "waypoints": [
+        [
+          -74.0,
+          40.7
+        ],
+        [
+          -60.0,
+          43.0
+        ],
+        [
+          -40.0,
+          47.0
+        ],
+        [
+          -20.0,
+          50.0
+        ],
+        [
+          -5.0,
+          50.0
+        ],
+        [
+          -0.1,
+          51.5
+        ]
+      ],
+      "cargoCategories": [
+        "container-goods",
+        "automotive",
+        "chemicals",
+        "general"
+      ],
+      "strategicImportance": "high",
+      "chokepointIds": [],
+      "sourceRegions": [
+        "USA",
+        "CAN"
+      ],
+      "destinationRegions": [
+        "GBR",
+        "DEU",
+        "NLD",
+        "FRA"
+      ]
+    },
+    {
+      "id": "TR-PERSIAN-GULF-ASIA",
+      "name": "Persian Gulf Oil Route (East)",
+      "from": {
+        "name": "Strait of Hormuz / Persian Gulf",
+        "coords": [
+          56.3,
+          26.6
+        ]
+      },
+      "to": {
+        "name": "Japan / South Korea / China",
+        "coords": [
+          128.0,
+          34.0
+        ]
+      },
+      "volume": "critical",
+      "type": "shipping",
+      "annualValue": "$500B+ (energy)",
+      "keyGoods": [
+        "Crude oil",
+        "LNG",
+        "Petrochemicals"
+      ],
+      "riskLevel": "high",
+      "notes": "~20% of global oil supply transits the Strait of Hormuz. Iran's ability to close the Strait is a constant geopolitical leverage point.",
+      "waypoints": [
+        [
+          56.3,
+          26.6
+        ],
+        [
+          60.0,
+          22.0
+        ],
+        [
+          68.0,
+          16.0
+        ],
+        [
+          78.0,
+          10.0
+        ],
+        [
+          90.0,
+          6.0
+        ],
+        [
+          103.8,
+          1.3
+        ],
+        [
+          110.0,
+          10.0
+        ],
+        [
+          116.0,
+          18.0
+        ],
+        [
+          120.0,
+          24.0
+        ],
+        [
+          128.0,
+          34.0
+        ]
+      ],
+      "cargoCategories": [
+        "crude-oil",
+        "lng",
+        "petroleum-products"
+      ],
+      "strategicImportance": "critical",
+      "chokepointIds": [
+        "CP-HORMUZ",
+        "CP-MALACCA",
+        "CP-SOUTH-CHINA-SEA"
+      ],
+      "sourceRegions": [
+        "SAU",
+        "IRQ",
+        "ARE",
+        "KWT",
+        "QAT"
+      ],
+      "destinationRegions": [
+        "JPN",
+        "KOR",
+        "CHN",
+        "IND"
+      ]
+    },
+    {
+      "id": "TR-PERSIAN-GULF-EUROPE",
+      "name": "Persian Gulf Oil Route (West)",
+      "from": {
+        "name": "Strait of Hormuz / Persian Gulf",
+        "coords": [
+          56.3,
+          26.6
+        ]
+      },
+      "to": {
+        "name": "Mediterranean / Europe",
+        "coords": [
+          14.0,
+          37.0
+        ]
+      },
+      "volume": "very_high",
+      "type": "shipping",
+      "annualValue": "$300B+ (energy)",
+      "keyGoods": [
+        "Crude oil",
+        "LNG"
+      ],
+      "riskLevel": "high",
+      "notes": "Passes through Bab el-Mandeb and Suez Canal. Houthi attacks in Red Sea 2023-present have significantly disrupted this route.",
+      "waypoints": [
+        [
+          56.3,
+          26.6
+        ],
+        [
+          50.0,
+          18.0
+        ],
+        [
+          44.5,
+          12.5
+        ],
+        [
+          38.0,
+          14.0
+        ],
+        [
+          33.0,
+          22.0
+        ],
+        [
+          32.5,
+          30.0
+        ],
+        [
+          32.3,
+          31.3
+        ],
+        [
+          20.0,
+          35.0
+        ],
+        [
+          5.0,
+          38.0
+        ],
+        [
+          14.0,
+          37.0
+        ]
+      ],
+      "cargoCategories": [
+        "crude-oil",
+        "lng"
+      ],
+      "strategicImportance": "critical",
+      "chokepointIds": [
+        "CP-HORMUZ",
+        "CP-BAB-MANDEB",
+        "CP-SUEZ",
+        "CP-GIBRALTAR"
+      ],
+      "sourceRegions": [
+        "SAU",
+        "IRQ",
+        "ARE",
+        "KWT"
+      ],
+      "destinationRegions": [
+        "ITA",
+        "GRC",
+        "ESP",
+        "DEU"
+      ]
+    },
+    {
+      "id": "TR-INTRA-ASIA",
+      "name": "Intra-Asia Route",
+      "from": {
+        "name": "Shanghai / East China",
+        "coords": [
+          121.5,
+          31.2
+        ]
+      },
+      "to": {
+        "name": "Singapore",
+        "coords": [
+          103.8,
+          1.3
+        ]
+      },
+      "volume": "very_high",
+      "type": "shipping",
+      "annualValue": "$600B+",
+      "keyGoods": [
+        "Intermediate goods",
+        "Components",
+        "Consumer goods",
+        "Raw materials"
+      ],
+      "riskLevel": "medium",
+      "notes": "Backbone of Asian regional supply chains. Passes through or near South China Sea territorial disputes.",
+      "waypoints": [
+        [
+          121.5,
+          31.2
+        ],
+        [
+          121.0,
+          25.0
+        ],
+        [
+          119.0,
+          20.0
+        ],
+        [
+          116.0,
+          15.0
+        ],
+        [
+          112.0,
+          8.0
+        ],
+        [
+          108.0,
+          5.0
+        ],
+        [
+          103.8,
+          1.3
+        ]
+      ],
+      "cargoCategories": [
+        "container-goods",
+        "electronics"
+      ],
+      "strategicImportance": "high",
+      "chokepointIds": [
+        "CP-SOUTH-CHINA-SEA",
+        "CP-LUZON-STR"
+      ],
+      "sourceRegions": [
+        "CHN"
+      ],
+      "destinationRegions": [
+        "SGP",
+        "MYS",
+        "IDN",
+        "THA",
+        "VNM"
+      ]
+    },
+    {
+      "id": "TR-CAPE-OF-GOOD-HOPE",
+      "name": "Cape of Good Hope Bypass",
+      "from": {
+        "name": "Singapore",
+        "coords": [
+          103.8,
+          1.3
+        ]
+      },
+      "to": {
+        "name": "Rotterdam",
+        "coords": [
+          4.5,
+          51.9
+        ]
+      },
+      "volume": "high",
+      "type": "shipping",
+      "annualValue": "Variable (surge route)",
+      "keyGoods": [
+        "All goods (diverted from Suez)"
+      ],
+      "riskLevel": "low",
+      "notes": "Usage surged 50%+ after 2023 Houthi attacks on Red Sea shipping. Adds 10-14 days to Asia-Europe transit, significantly increasing shipping costs.",
+      "waypoints": [
+        [
+          103.8,
+          1.3
+        ],
+        [
+          85.0,
+          5.0
+        ],
+        [
+          65.0,
+          0.0
+        ],
+        [
+          50.0,
+          -10.0
+        ],
+        [
+          35.0,
+          -30.0
+        ],
+        [
+          18.4,
+          -34.0
+        ],
+        [
+          5.0,
+          -20.0
+        ],
+        [
+          -5.0,
+          0.0
+        ],
+        [
+          -8.0,
+          20.0
+        ],
+        [
+          -8.0,
+          37.0
+        ],
+        [
+          -5.0,
+          48.0
+        ],
+        [
+          4.5,
+          51.9
+        ]
+      ],
+      "cargoCategories": [
+        "container-goods",
+        "crude-oil",
+        "general"
+      ],
+      "strategicImportance": "high",
+      "chokepointIds": [
+        "CP-MALACCA"
+      ],
+      "sourceRegions": [
+        "CHN",
+        "KOR",
+        "JPN",
+        "SGP"
+      ],
+      "destinationRegions": [
+        "DEU",
+        "NLD",
+        "GBR",
+        "FRA"
+      ]
+    },
+    {
+      "id": "TR-MALACCA-INDIA",
+      "name": "Malacca\u2013India Route",
+      "from": {
+        "name": "Strait of Malacca",
+        "coords": [
+          103.8,
+          1.3
+        ]
+      },
+      "to": {
+        "name": "Mumbai / Indian West Coast",
+        "coords": [
+          72.8,
+          18.9
+        ]
+      },
+      "volume": "high",
+      "type": "shipping",
+      "annualValue": "$200B+",
+      "keyGoods": [
+        "Oil",
+        "LNG",
+        "Consumer goods",
+        "Machinery"
+      ],
+      "riskLevel": "low",
+      "notes": "Key link for India's energy imports from the Gulf and trade with Southeast Asia.",
+      "waypoints": [
+        [
+          103.8,
+          1.3
+        ],
+        [
+          92.0,
+          10.0
+        ],
+        [
+          82.0,
+          14.0
+        ],
+        [
+          76.0,
+          18.0
+        ],
+        [
+          72.8,
+          18.9
+        ]
+      ],
+      "cargoCategories": [
+        "crude-oil",
+        "lng",
+        "container-goods"
+      ],
+      "strategicImportance": "high",
+      "chokepointIds": [
+        "CP-MALACCA"
+      ],
+      "sourceRegions": [
+        "SGP",
+        "MYS",
+        "IDN"
+      ],
+      "destinationRegions": [
+        "IND"
+      ]
+    },
+    {
+      "id": "TR-US-GULF-OIL",
+      "name": "US Gulf Coast oil exports",
+      "from": {
+        "name": "Corpus Christi/Houston, USA",
+        "coords": [
+          -97.39,
+          27.81
+        ]
+      },
+      "to": {
+        "name": "East Asian Ports",
+        "coords": [
+          139.69,
+          35.68
+        ]
+      },
+      "volume": "very_high",
+      "type": "shipping",
+      "annualValue": "$120 billion",
+      "keyGoods": [
+        "Crude oil",
+        "Petroleum products",
+        "LNG"
+      ],
+      "riskLevel": "low",
+      "notes": "Surged to record volumes following shift in global energy flows; primary destination Asia via Panama Canal.",
+      "waypoints": [
+        [
+          -97.39,
+          27.81
+        ],
+        [
+          -89.0,
+          22.0
+        ],
+        [
+          -83.0,
+          17.0
+        ],
+        [
+          -79.5,
+          9.0
+        ],
+        [
+          -90.0,
+          7.0
+        ],
+        [
+          -115.0,
+          12.0
+        ],
+        [
+          -140.0,
+          18.0
+        ],
+        [
+          -165.0,
+          22.0
+        ],
+        [
+          -178.0,
+          28.0
+        ],
+        [
+          170.0,
+          32.0
+        ],
+        [
+          155.0,
+          34.0
+        ],
+        [
+          139.69,
+          35.68
+        ]
+      ],
+      "cargoCategories": [
+        "crude-oil",
+        "petroleum-products",
+        "lng"
+      ],
+      "strategicImportance": "high",
+      "chokepointIds": [
+        "CP-PANAMA-CANAL"
+      ],
+      "sourceRegions": [
+        "USA"
+      ],
+      "destinationRegions": [
+        "JPN",
+        "KOR",
+        "CHN",
+        "IND"
+      ]
+    },
+    {
+      "id": "TR-AUS-ASIA-LNG",
+      "name": "Australia\u2013Asia LNG route",
+      "from": {
+        "name": "Withnell Bay, Australia",
+        "coords": [
+          116.78,
+          -20.6
+        ]
+      },
+      "to": {
+        "name": "Tokyo/Shanghai/Seoul",
+        "coords": [
+          121.47,
+          31.23
+        ]
+      },
+      "volume": "high",
+      "type": "shipping",
+      "annualValue": "$65 billion",
+      "keyGoods": [
+        "Liquefied Natural Gas"
+      ],
+      "riskLevel": "low",
+      "notes": "Critical energy artery for East Asia; Australia provides 30% of Asian LNG supply.",
+      "waypoints": [
+        [
+          116.78,
+          -20.6
+        ],
+        [
+          115.0,
+          -8.0
+        ],
+        [
+          118.0,
+          0.0
+        ],
+        [
+          122.0,
+          8.0
+        ],
+        [
+          125.0,
+          15.0
+        ],
+        [
+          122.0,
+          22.0
+        ],
+        [
+          121.47,
+          31.23
+        ]
+      ],
+      "cargoCategories": [
+        "lng"
+      ],
+      "strategicImportance": "high",
+      "chokepointIds": [
+        "CP-LOMBOK-STR",
+        "CP-SOUTH-CHINA-SEA"
+      ],
+      "sourceRegions": [
+        "AUS"
+      ],
+      "destinationRegions": [
+        "JPN",
+        "KOR",
+        "CHN"
+      ]
+    },
+    {
+      "id": "TR-BRA-CHN-IRON",
+      "name": "Brazil\u2013China iron ore route",
+      "from": {
+        "name": "Ponta da Madeira, Brazil",
+        "coords": [
+          -44.37,
+          -2.56
+        ]
+      },
+      "to": {
+        "name": "Luoyu/Qingdao, China",
+        "coords": [
+          118.97,
+          25.21
+        ]
+      },
+      "volume": "very_high",
+      "type": "shipping",
+      "annualValue": "$30 billion",
+      "keyGoods": [
+        "Iron ore",
+        "Soybeans"
+      ],
+      "riskLevel": "low",
+      "notes": "Dominanted by Valemax VLOCs; essential for China's steel production and infrastructure.",
+      "waypoints": [
+        [
+          -44.37,
+          -2.56
+        ],
+        [
+          -30.0,
+          -15.0
+        ],
+        [
+          -15.0,
+          -30.0
+        ],
+        [
+          5.0,
+          -35.0
+        ],
+        [
+          18.4,
+          -34.0
+        ],
+        [
+          40.0,
+          -25.0
+        ],
+        [
+          60.0,
+          -15.0
+        ],
+        [
+          80.0,
+          -5.0
+        ],
+        [
+          95.0,
+          5.0
+        ],
+        [
+          110.0,
+          10.0
+        ],
+        [
+          118.97,
+          25.21
+        ]
+      ],
+      "cargoCategories": [
+        "iron-ore",
+        "grain"
+      ],
+      "strategicImportance": "high",
+      "chokepointIds": [
+        "CP-SOUTH-CHINA-SEA"
+      ],
+      "sourceRegions": [
+        "BRA"
+      ],
+      "destinationRegions": [
+        "CHN",
+        "KOR"
+      ]
+    },
+    {
+      "id": "TR-AFR-EUR",
+      "name": "Africa\u2013Europe (West Africa-Rotterdam)",
+      "from": {
+        "name": "Lagos, Nigeria",
+        "coords": [
+          3.37,
+          6.45
+        ]
+      },
+      "to": {
+        "name": "Rotterdam, Netherlands",
+        "coords": [
+          4.47,
+          51.92
+        ]
+      },
+      "volume": "medium",
+      "type": "shipping",
+      "annualValue": "$45 billion",
+      "keyGoods": [
+        "Crude oil",
+        "Cocoa",
+        "Minerals"
+      ],
+      "riskLevel": "medium",
+      "notes": "Key route for West African resources; faces piracy risks in the Gulf of Guinea.",
+      "waypoints": [
+        [
+          3.37,
+          6.45
+        ],
+        [
+          0.0,
+          15.0
+        ],
+        [
+          -5.0,
+          25.0
+        ],
+        [
+          -10.0,
+          33.0
+        ],
+        [
+          -8.0,
+          38.0
+        ],
+        [
+          -5.0,
+          45.0
+        ],
+        [
+          4.47,
+          51.92
+        ]
+      ],
+      "cargoCategories": [
+        "crude-oil",
+        "general"
+      ],
+      "strategicImportance": "medium",
+      "chokepointIds": [
+        "CP-GIBRALTAR"
+      ],
+      "sourceRegions": [
+        "NGA",
+        "GHA",
+        "AGO"
+      ],
+      "destinationRegions": [
+        "NLD",
+        "GBR",
+        "FRA"
+      ]
+    },
+    {
+      "id": "TR-ARCTIC-NSR",
+      "name": "Arctic route (Northern Sea Route)",
+      "from": {
+        "name": "Kara Strait, Russia",
+        "coords": [
+          58.0,
+          70.5
+        ]
+      },
+      "to": {
+        "name": "Bering Strait",
+        "coords": [
+          -169.0,
+          66.0
+        ]
+      },
+      "volume": "medium",
+      "type": "shipping",
+      "annualValue": "$15 billion",
+      "keyGoods": [
+        "LNG",
+        "Crude oil",
+        "Nickel",
+        "Container transit"
+      ],
+      "riskLevel": "medium",
+      "notes": "Emerging seasonal shortcut between Europe and Asia; growth driven by ice melt and Russian energy exports.",
+      "waypoints": [
+        [
+          58.0,
+          70.5
+        ],
+        [
+          73.0,
+          73.0
+        ],
+        [
+          90.0,
+          75.0
+        ],
+        [
+          105.0,
+          73.0
+        ],
+        [
+          128.0,
+          72.0
+        ],
+        [
+          150.0,
+          70.0
+        ],
+        [
+          170.0,
+          67.0
+        ],
+        [
+          191.0,
+          66.0
+        ]
+      ],
+      "cargoCategories": [
+        "lng",
+        "crude-oil",
+        "general"
+      ],
+      "strategicImportance": "high",
+      "chokepointIds": [],
+      "sourceRegions": [
+        "RUS"
+      ],
+      "destinationRegions": [
+        "JPN",
+        "KOR",
+        "CHN"
+      ]
+    },
+    {
+      "id": "TR-TRANS-SIB",
+      "name": "Trans-Siberian rail",
+      "from": {
+        "name": "Moscow, Russia",
+        "coords": [
+          37.65,
+          55.77
+        ]
+      },
+      "to": {
+        "name": "Vladivostok, Russia",
+        "coords": [
+          131.89,
+          43.12
+        ]
+      },
+      "volume": "high",
+      "type": "rail",
+      "annualValue": "$40 billion",
+      "keyGoods": [
+        "Coal",
+        "Timber",
+        "Containers",
+        "Automotive parts"
+      ],
+      "riskLevel": "medium",
+      "notes": "World's longest railway; vital for Russian domestic logistics and overland Asia-Europe transit.",
+      "waypoints": [
+        [
+          37.65,
+          55.77
+        ],
+        [
+          55.0,
+          55.0
+        ],
+        [
+          73.0,
+          55.0
+        ],
+        [
+          93.0,
+          56.0
+        ],
+        [
+          107.0,
+          52.0
+        ],
+        [
+          120.0,
+          50.0
+        ],
+        [
+          131.89,
+          43.12
+        ]
+      ],
+      "cargoCategories": [
+        "coal",
+        "container-goods",
+        "general"
+      ],
+      "strategicImportance": "medium",
+      "chokepointIds": [],
+      "bypassRouteId": "TR-BRI-RAIL",
+      "sourceRegions": [
+        "RUS"
+      ],
+      "destinationRegions": [
+        "RUS",
+        "CHN"
+      ]
+    },
+    {
+      "id": "TR-BRI-RAIL",
+      "name": "China\u2013Europe rail (BRI)",
+      "from": {
+        "name": "Xi'an, China",
+        "coords": [
+          108.94,
+          34.26
+        ]
+      },
+      "to": {
+        "name": "Duisburg, Germany",
+        "coords": [
+          6.76,
+          51.43
+        ]
+      },
+      "volume": "medium",
+      "type": "rail",
+      "annualValue": "$57 billion",
+      "keyGoods": [
+        "Electronics",
+        "Machinery",
+        "E-commerce goods"
+      ],
+      "riskLevel": "medium",
+      "notes": "Cornerstone of the Belt and Road Initiative; provides a faster alternative to sea and cheaper than air.",
+      "waypoints": [
+        [
+          108.94,
+          34.26
+        ],
+        [
+          87.0,
+          43.0
+        ],
+        [
+          70.0,
+          43.0
+        ],
+        [
+          53.0,
+          50.0
+        ],
+        [
+          42.0,
+          50.0
+        ],
+        [
+          30.0,
+          50.0
+        ],
+        [
+          18.0,
+          50.0
+        ],
+        [
+          12.0,
+          51.0
+        ],
+        [
+          6.76,
+          51.43
+        ]
+      ],
+      "cargoCategories": [
+        "container-goods",
+        "electronics"
+      ],
+      "strategicImportance": "high",
+      "chokepointIds": [],
+      "bypassRouteId": "TR-TRANS-SIB",
+      "sourceRegions": [
+        "CHN"
+      ],
+      "destinationRegions": [
+        "DEU",
+        "NLD",
+        "POL"
+      ]
+    },
+    {
+      "id": "TR-IND-OCEAN",
+      "name": "India Ocean routes",
+      "from": {
+        "name": "Mumbai, India",
+        "coords": [
+          72.87,
+          19.07
+        ]
+      },
+      "to": {
+        "name": "Singapore",
+        "coords": [
+          103.85,
+          1.27
+        ]
+      },
+      "volume": "critical",
+      "type": "shipping",
+      "annualValue": "$1.2 trillion",
+      "keyGoods": [
+        "Oil",
+        "Containers",
+        "Bulk cargo"
+      ],
+      "riskLevel": "medium",
+      "notes": "Handles 50% of world's container traffic and 80% of seaborne oil; highly congested waypoints.",
+      "waypoints": [
+        [
+          72.87,
+          19.07
+        ],
+        [
+          77.0,
+          13.0
+        ],
+        [
+          82.0,
+          8.0
+        ],
+        [
+          88.0,
+          6.0
+        ],
+        [
+          95.0,
+          5.0
+        ],
+        [
+          103.85,
+          1.27
+        ]
+      ],
+      "cargoCategories": [
+        "crude-oil",
+        "container-goods",
+        "general"
+      ],
+      "strategicImportance": "critical",
+      "chokepointIds": [
+        "CP-MALACCA"
+      ],
+      "sourceRegions": [
+        "IND"
+      ],
+      "destinationRegions": [
+        "SGP",
+        "MYS",
+        "THA"
+      ]
+    },
+    {
+      "id": "TR-PAC-ISLANDS",
+      "name": "Pacific islands routes",
+      "from": {
+        "name": "Suva, Fiji",
+        "coords": [
+          178.42,
+          -18.13
+        ]
+      },
+      "to": {
+        "name": "Sydney, Australia",
+        "coords": [
+          151.2,
+          -33.86
+        ]
+      },
+      "volume": "low",
+      "type": "shipping",
+      "annualValue": "$4 billion",
+      "keyGoods": [
+        "Fish",
+        "Tourism supplies",
+        "Refined fuel",
+        "Consumer goods"
+      ],
+      "riskLevel": "low",
+      "notes": "Lifeline for island nations; highly dependent on transshipment from regional hubs.",
+      "waypoints": [
+        [
+          178.42,
+          -18.13
+        ],
+        [
+          175.0,
+          -22.0
+        ],
+        [
+          165.0,
+          -25.0
+        ],
+        [
+          155.0,
+          -28.0
+        ],
+        [
+          151.2,
+          -33.86
+        ]
+      ],
+      "cargoCategories": [
+        "general"
+      ],
+      "strategicImportance": "low",
+      "chokepointIds": [],
+      "sourceRegions": [
+        "FJI",
+        "VUT",
+        "WSM"
+      ],
+      "destinationRegions": [
+        "AUS",
+        "NZL"
+      ]
+    },
+    {
+      "id": "TR-EAST-ASIA-EUR",
+      "name": "East Asia-Europe",
+      "from": {
+        "name": "Shanghai, China",
+        "coords": [
+          121.47,
+          31.23
+        ]
+      },
+      "to": {
+        "name": "Rotterdam, Netherlands",
+        "coords": [
+          4.47,
+          51.92
+        ]
+      },
+      "volume": "critical",
+      "type": "shipping",
+      "annualValue": "$800 billion",
+      "keyGoods": [
+        "Consumer electronics",
+        "Textiles",
+        "Industrial machinery"
+      ],
+      "riskLevel": "high",
+      "notes": "Traditional main route via Suez; currently impacted by Red Sea security disruptions forcing Cape diversions.",
+      "waypoints": [
+        [
+          121.47,
+          31.23
+        ],
+        [
+          115.0,
+          22.0
+        ],
+        [
+          108.0,
+          10.0
+        ],
+        [
+          103.8,
+          1.3
+        ],
+        [
+          85.0,
+          7.0
+        ],
+        [
+          62.0,
+          10.0
+        ],
+        [
+          50.0,
+          12.0
+        ],
+        [
+          44.5,
+          12.5
+        ],
+        [
+          38.0,
+          14.0
+        ],
+        [
+          33.0,
+          22.0
+        ],
+        [
+          32.5,
+          30.0
+        ],
+        [
+          32.3,
+          31.3
+        ],
+        [
+          20.0,
+          35.0
+        ],
+        [
+          5.0,
+          38.0
+        ],
+        [
+          -4.0,
+          36.0
+        ],
+        [
+          4.47,
+          51.92
+        ]
+      ],
+      "cargoCategories": [
+        "container-goods",
+        "electronics"
+      ],
+      "strategicImportance": "critical",
+      "chokepointIds": [
+        "CP-TAIWAN-STRAIT",
+        "CP-SOUTH-CHINA-SEA",
+        "CP-MALACCA",
+        "CP-BAB-MANDEB",
+        "CP-SUEZ",
+        "CP-GIBRALTAR"
+      ],
+      "bypassRouteId": "TR-CAPE-OF-GOOD-HOPE",
+      "sourceRegions": [
+        "CHN",
+        "KOR",
+        "JPN"
+      ],
+      "destinationRegions": [
+        "DEU",
+        "NLD",
+        "GBR"
+      ]
+    },
+    {
+      "id": "TR-TRANS-PAC",
+      "name": "Trans-Pacific",
+      "from": {
+        "name": "Shanghai/Ningbo, China",
+        "coords": [
+          121.47,
+          31.23
+        ]
+      },
+      "to": {
+        "name": "Los Angeles/Long Beach, USA",
+        "coords": [
+          -118.24,
+          33.77
+        ]
+      },
+      "volume": "critical",
+      "type": "shipping",
+      "annualValue": "$950 billion",
+      "keyGoods": [
+        "Consumer goods",
+        "Semiconductors",
+        "Automobiles"
+      ],
+      "riskLevel": "low",
+      "notes": "World's busiest container route; connects the world's two largest economies.",
+      "waypoints": [
+        [
+          121.47,
+          31.23
+        ],
+        [
+          135.0,
+          33.0
+        ],
+        [
+          155.0,
+          37.0
+        ],
+        [
+          178.0,
+          41.0
+        ],
+        [
+          -168.0,
+          43.0
+        ],
+        [
+          -148.0,
+          40.0
+        ],
+        [
+          -130.0,
+          37.0
+        ],
+        [
+          -118.24,
+          33.77
+        ]
+      ],
+      "cargoCategories": [
+        "container-goods",
+        "electronics",
+        "automotive"
+      ],
+      "strategicImportance": "critical",
+      "chokepointIds": [
+        "CP-TAIWAN-STRAIT",
+        "CP-SOUTH-CHINA-SEA"
+      ],
+      "sourceRegions": [
+        "CHN"
+      ],
+      "destinationRegions": [
+        "USA",
+        "CAN"
+      ]
+    }
+  ],
+  "chokepoints": [
+    {
+      "id": "CP-MALACCA",
+      "name": "Strait of Malacca",
+      "coordinates": [
+        103.8,
+        1.3
+      ],
+      "importance": "critical",
+      "dailyVessels": 85,
+      "percentGlobalTrade": 30,
+      "controlledBy": [
+        "MYS",
+        "SGP",
+        "IDN"
+      ],
+      "riskLevel": "medium",
+      "summary": "World's busiest shipping strait connecting the Pacific and Indian Oceans. One-third of global trade passes through annually. Piracy historically present but suppressed by regional patrols.",
+      "currentThreat": "Piracy at low levels. China's ability to blockade Malacca is a core strategic anxiety for Beijing ('Malacca Dilemma').",
+      "onRoutes": [
+        "TR-ASIA-EUROPE-SUEZ",
+        "TR-PERSIAN-GULF-ASIA",
+        "TR-INTRA-ASIA",
+        "TR-MALACCA-INDIA",
+        "TR-CAPE-OF-GOOD-HOPE",
+        "TR-AUS-ASIA-LNG",
+        "TR-IND-OCEAN",
+        "TR-EAST-ASIA-EUR"
+      ]
+    },
+    {
+      "id": "CP-HORMUZ",
+      "name": "Strait of Hormuz",
+      "coordinates": [
+        56.4,
+        26.6
+      ],
+      "importance": "critical",
+      "dailyVessels": 21,
+      "percentGlobalTrade": 20,
+      "controlledBy": [
+        "IRN",
+        "OMN"
+      ],
+      "riskLevel": "high",
+      "summary": "The only sea route from the Persian Gulf to the open ocean. ~20% of global oil supply and ~25% of LNG trade passes through. Iran controls the northern shore and repeatedly threatens closure.",
+      "currentThreat": "Iran has mined tankers, seized vessels, and threatened closure multiple times. Iranian proxy (Houthi) attacks in adjacent Red Sea have elevated regional maritime risk.",
+      "onRoutes": [
+        "TR-PERSIAN-GULF-ASIA",
+        "TR-PERSIAN-GULF-EUROPE"
+      ]
+    },
+    {
+      "id": "CP-SUEZ",
+      "name": "Suez Canal",
+      "coordinates": [
+        32.5,
+        30.5
+      ],
+      "importance": "critical",
+      "dailyVessels": 50,
+      "percentGlobalTrade": 12,
+      "controlledBy": [
+        "EGY"
+      ],
+      "riskLevel": "medium",
+      "summary": "Connects the Mediterranean and Red Seas, providing the shortest sea route between Europe and Asia. ~12% of global trade transits the canal, including 30% of container traffic.",
+      "currentThreat": "Ever Given grounding (2021) demonstrated fragility. Houthi attacks in the Red Sea have reduced canal traffic ~40% since late 2023 as ships reroute around Africa.",
+      "onRoutes": [
+        "TR-ASIA-EUROPE-SUEZ",
+        "TR-PERSIAN-GULF-EUROPE",
+        "TR-EAST-ASIA-EUR"
+      ],
+      "alternateRouteId": "TR-CAPE-OF-GOOD-HOPE"
+    },
+    {
+      "id": "CP-BAB-MANDEB",
+      "name": "Bab el-Mandeb",
+      "coordinates": [
+        43.3,
+        12.5
+      ],
+      "importance": "critical",
+      "dailyVessels": 50,
+      "percentGlobalTrade": 10,
+      "controlledBy": [
+        "YEM",
+        "DJI",
+        "ERI"
+      ],
+      "riskLevel": "high",
+      "summary": "Narrow strait between Yemen and the Horn of Africa connecting the Red Sea to the Gulf of Aden. Gateway to the Suez Canal for Asia-Europe shipping. Only 29km wide at its narrowest point.",
+      "currentThreat": "ACTIVE THREAT: Houthi missile and drone attacks on commercial vessels since October 2023. Major shipping companies rerouting around Cape of Good Hope. US-UK conducting strikes on Houthi launch sites.",
+      "onRoutes": [
+        "TR-ASIA-EUROPE-SUEZ",
+        "TR-PERSIAN-GULF-EUROPE",
+        "TR-EAST-ASIA-EUR"
+      ],
+      "alternateRouteId": "TR-CAPE-OF-GOOD-HOPE"
+    },
+    {
+      "id": "CP-GIBRALTAR",
+      "name": "Strait of Gibraltar",
+      "coordinates": [
+        -5.4,
+        35.9
+      ],
+      "importance": "high",
+      "dailyVessels": 100,
+      "percentGlobalTrade": 5,
+      "controlledBy": [
+        "GBR",
+        "ESP"
+      ],
+      "riskLevel": "low",
+      "summary": "Gateway between the Atlantic Ocean and the Mediterranean Sea. Controlled by UK (Gibraltar) and Spain. Critical for European energy imports from North Africa and traffic between Atlantic and Mediterranean.",
+      "currentThreat": "Low threat. UK-Spain diplomatic friction over Gibraltar sovereignty. Strategic importance to NATO for Mediterranean access.",
+      "onRoutes": [
+        "TR-ASIA-EUROPE-SUEZ",
+        "TR-PERSIAN-GULF-EUROPE",
+        "TR-EAST-ASIA-EUR",
+        "TR-CAPE-OF-GOOD-HOPE",
+        "TR-AFR-EUR"
+      ]
+    },
+    {
+      "id": "CP-TURKISH-STRAITS",
+      "name": "Turkish Straits (Bosphorus)",
+      "coordinates": [
+        29.0,
+        41.0
+      ],
+      "importance": "high",
+      "dailyVessels": 45,
+      "percentGlobalTrade": 4,
+      "controlledBy": [
+        "TUR"
+      ],
+      "riskLevel": "medium",
+      "summary": "The Bosphorus and Dardanelles connect the Black Sea to the Mediterranean. Turkey controls access under the 1936 Montreux Convention. Critical for Russian Black Sea Fleet and Ukrainian grain exports.",
+      "currentThreat": "Turkey invoked Montreux Convention to block warship passage following Russia's 2022 Ukraine invasion. Russia's Black Sea Fleet significantly degraded by Ukrainian drone/missile attacks."
+    },
+    {
+      "id": "CP-TAIWAN-STRAIT",
+      "name": "Taiwan Strait",
+      "coordinates": [
+        120.0,
+        24.0
+      ],
+      "importance": "critical",
+      "dailyVessels": 200,
+      "percentGlobalTrade": 25,
+      "controlledBy": [
+        "TWN",
+        "CHN"
+      ],
+      "riskLevel": "high",
+      "summary": "~180km wide strait between Taiwan and mainland China. Approximately 88 vessels transit daily, carrying ~25% of global container traffic. Also home to TSMC's chip fabs \u2014 the world's most critical semiconductor supply.",
+      "currentThreat": "Any Chinese military action against Taiwan would likely trigger US military response and close this strait, causing catastrophic global supply chain disruption. China regularly conducts military exercises simulating blockade.",
+      "onRoutes": [
+        "TR-TRANSPACIFIC-N",
+        "TR-TRANS-PAC",
+        "TR-EAST-ASIA-EUR",
+        "TR-PERSIAN-GULF-ASIA"
+      ]
+    },
+    {
+      "id": "CP-SOUTH-CHINA-SEA",
+      "name": "South China Sea",
+      "coordinates": [
+        114.0,
+        12.0
+      ],
+      "importance": "critical",
+      "dailyVessels": 300,
+      "percentGlobalTrade": 33,
+      "controlledBy": [
+        "CHN"
+      ],
+      "riskLevel": "high",
+      "summary": "The South China Sea carries approximately one-third of global maritime trade, worth $3-5 trillion annually. China's expanding control of artificial islands and military installations threatens freedom of navigation.",
+      "currentThreat": "China's coast guard regularly confronts Philippine and Vietnamese vessels. US freedom of navigation operations ongoing. Risk of miscalculation between Chinese and US/allied naval forces increasing.",
+      "onRoutes": [
+        "TR-TRANSPACIFIC-N",
+        "TR-TRANS-PAC",
+        "TR-INTRA-ASIA",
+        "TR-PERSIAN-GULF-ASIA",
+        "TR-AUS-ASIA-LNG",
+        "TR-EAST-ASIA-EUR",
+        "TR-BRA-CHN-IRON"
+      ]
+    },
+    {
+      "id": "CP-DANISH-STR",
+      "name": "Danish Straits",
+      "coordinates": [
+        11.0,
+        56.0
+      ],
+      "importance": "high",
+      "dailyVessels": 200,
+      "percentGlobalTrade": 15,
+      "controlledBy": [
+        "DNK",
+        "SWE"
+      ],
+      "riskLevel": "medium",
+      "summary": "Connects the Baltic Sea to the North Sea. Critical for Russian oil exports and European trade.",
+      "currentThreat": "Increased monitoring of 'shadow fleet' tankers due to sanctions on Russia."
+    },
+    {
+      "id": "CP-LUZON-STR",
+      "name": "Luzon Strait",
+      "coordinates": [
+        121.0,
+        21.0
+      ],
+      "importance": "high",
+      "dailyVessels": 70,
+      "percentGlobalTrade": 21,
+      "controlledBy": [
+        "PHL",
+        "TWN"
+      ],
+      "riskLevel": "high",
+      "summary": "Key passage between the South China Sea and the Pacific Ocean. Vital for East Asian energy and resource imports.",
+      "currentThreat": "Geopolitical tensions in the South China Sea and proximity to Taiwan.",
+      "onRoutes": [
+        "TR-INTRA-ASIA"
+      ]
+    },
+    {
+      "id": "CP-LOMBOK-STR",
+      "name": "Lombok Strait",
+      "coordinates": [
+        115.73,
+        -8.77
+      ],
+      "importance": "medium",
+      "dailyVessels": 35,
+      "percentGlobalTrade": 1.7,
+      "controlledBy": [
+        "IDN"
+      ],
+      "riskLevel": "low",
+      "summary": "Deep-water alternative to the Strait of Malacca. Used by deep-draft tankers (post-Malaccamax) traveling between Australia and East Asia.",
+      "currentThreat": "Volcanic activity and potential for maritime accidents in narrow passages.",
+      "onRoutes": [
+        "TR-AUS-ASIA-LNG"
+      ]
+    },
+    {
+      "id": "CP-PANAMA-CANAL",
+      "name": "Panama Canal",
+      "coordinates": [
+        -79.92,
+        9.38
+      ],
+      "importance": "critical",
+      "dailyVessels": 32,
+      "percentGlobalTrade": 3,
+      "controlledBy": [
+        "PAN"
+      ],
+      "riskLevel": "medium",
+      "summary": "Connects the Atlantic and Pacific Oceans. Essential for US-Asia trade and grain exports.",
+      "currentThreat": "Climate change-induced droughts affecting freshwater levels and transit capacity.",
+      "onRoutes": [
+        "TR-US-GULF-OIL"
+      ]
+    },
+    {
+      "id": "CP-CAPE-HORN",
+      "name": "Cape Horn",
+      "coordinates": [
+        -67.28,
+        -55.98
+      ],
+      "importance": "medium",
+      "dailyVessels": 15,
+      "percentGlobalTrade": 0.5,
+      "controlledBy": [
+        "CHL"
+      ],
+      "riskLevel": "medium",
+      "summary": "Strategic southern tip of South America. Serves as a primary alternative when the Panama Canal is restricted.",
+      "currentThreat": "Extreme weather conditions and rogue waves pose significant navigation hazards."
+    },
+    {
+      "id": "CP-MOZ-CHANNEL",
+      "name": "Mozambique Channel",
+      "coordinates": [
+        41.0,
+        -18.0
+      ],
+      "importance": "medium",
+      "dailyVessels": 15,
+      "percentGlobalTrade": 2,
+      "controlledBy": [
+        "MOZ",
+        "MDG",
+        "FRA"
+      ],
+      "riskLevel": "medium",
+      "summary": "Key route for tankers from the Middle East to the Atlantic. Vital alternative route if the Suez Canal is blocked.",
+      "currentThreat": "Regional insurgency and maritime security concerns in Northern Mozambique."
+    },
+    {
+      "id": "CP-MALACCA-STR",
+      "name": "Strait of Malacca",
+      "coordinates": [
+        102.81,
+        1.43
+      ],
+      "importance": "critical",
+      "dailyVessels": 250,
+      "percentGlobalTrade": 30,
+      "controlledBy": [
+        "MYS",
+        "IDN",
+        "SGP"
+      ],
+      "riskLevel": "high",
+      "summary": "Shortest sea route between the Middle East and East Asia. The world's primary energy chokepoint.",
+      "currentThreat": "Extreme congestion, piracy risks, and high vulnerability to maritime blockades."
+    },
+    {
+      "id": "CP-SUEZ-CANAL",
+      "name": "Suez Canal",
+      "coordinates": [
+        32.33,
+        30.58
+      ],
+      "importance": "critical",
+      "dailyVessels": 55,
+      "percentGlobalTrade": 12,
+      "controlledBy": [
+        "EGY"
+      ],
+      "riskLevel": "high",
+      "summary": "Shortest link between Europe and Asia. Handles nearly 30% of global container traffic.",
+      "currentThreat": "Regional conflict instability and physical blockages (e.g., Ever Given incident)."
+    },
+    {
+      "id": "CP-HORMUZ-STR",
+      "name": "Strait of Hormuz",
+      "coordinates": [
+        56.25,
+        26.56
+      ],
+      "importance": "critical",
+      "dailyVessels": 115,
+      "percentGlobalTrade": 20,
+      "controlledBy": [
+        "IRN",
+        "OMN"
+      ],
+      "riskLevel": "high",
+      "summary": "The world's most critical oil chokepoint. Transits 20% of the world's total oil consumption daily.",
+      "currentThreat": "Geopolitical military tensions and potential for closure due to regional conflict."
+    },
+    {
+      "id": "CP-BAB-EL-MANDEB",
+      "name": "Bab-el-Mandeb",
+      "coordinates": [
+        43.33,
+        12.6
+      ],
+      "importance": "critical",
+      "dailyVessels": 65,
+      "percentGlobalTrade": 10,
+      "controlledBy": [
+        "DJI",
+        "YEM",
+        "ERI"
+      ],
+      "riskLevel": "high",
+      "summary": "The 'Gate of Grief' at the entrance to the Red Sea. Vital for all Suez Canal traffic.",
+      "currentThreat": "Active military strikes on commercial shipping and regional civil war spillover."
+    }
+  ]
+}

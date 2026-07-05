@@ -1,0 +1,276 @@
+[
+  {
+    "targetType": "country",
+    "countryId": "USA",
+    "countryName": "United States",
+    "region": "North America",
+    "enabledDataTypes": ["airports","seaports","powerPlants","utilities","gdpSectors","foodSecurity","aiAdoption","datacenters","railHubs"]
+  },
+  {
+    "targetType": "country",
+    "countryId": "CHN",
+    "countryName": "China",
+    "region": "East Asia",
+    "enabledDataTypes": ["airports","seaports","powerPlants","utilities","gdpSectors","foodSecurity","aiAdoption","datacenters","railHubs"]
+  },
+  {
+    "targetType": "country",
+    "countryId": "RUS",
+    "countryName": "Russia",
+    "region": "Eurasia",
+    "enabledDataTypes": ["airports","seaports","powerPlants","utilities","gdpSectors","foodSecurity","aiAdoption","datacenters","railHubs"]
+  },
+  {
+    "targetType": "country",
+    "countryId": "IND",
+    "countryName": "India",
+    "region": "South Asia",
+    "enabledDataTypes": ["airports","seaports","powerPlants","utilities","gdpSectors","foodSecurity","aiAdoption","datacenters","railHubs"]
+  },
+  {
+    "targetType": "country",
+    "countryId": "DEU",
+    "countryName": "Germany",
+    "region": "Europe",
+    "enabledDataTypes": ["airports","seaports","powerPlants","utilities","gdpSectors","foodSecurity","aiAdoption","datacenters","railHubs"]
+  },
+  {
+    "targetType": "country",
+    "countryId": "GBR",
+    "countryName": "United Kingdom",
+    "region": "Europe",
+    "enabledDataTypes": ["airports","seaports","powerPlants","utilities","gdpSectors","foodSecurity","aiAdoption","datacenters","railHubs"]
+  },
+  {
+    "targetType": "country",
+    "countryId": "FRA",
+    "countryName": "France",
+    "region": "Europe",
+    "enabledDataTypes": ["airports","seaports","powerPlants","utilities","gdpSectors","foodSecurity","aiAdoption","datacenters","railHubs"]
+  },
+  {
+    "targetType": "country",
+    "countryId": "JPN",
+    "countryName": "Japan",
+    "region": "East Asia",
+    "enabledDataTypes": ["airports","seaports","powerPlants","utilities","gdpSectors","foodSecurity","aiAdoption","datacenters","railHubs"]
+  },
+  {
+    "targetType": "country",
+    "countryId": "KOR",
+    "countryName": "South Korea",
+    "region": "East Asia",
+    "enabledDataTypes": ["airports","seaports","powerPlants","utilities","gdpSectors","foodSecurity","aiAdoption","datacenters","railHubs"]
+  },
+  {
+    "targetType": "country",
+    "countryId": "SGP",
+    "countryName": "Singapore",
+    "region": "Southeast Asia",
+    "enabledDataTypes": ["airports","seaports","utilities","gdpSectors","aiAdoption","datacenters"]
+  },
+  {
+    "targetType": "country",
+    "countryId": "MYS",
+    "countryName": "Malaysia",
+    "region": "Southeast Asia",
+    "enabledDataTypes": ["airports","seaports","powerPlants","utilities","gdpSectors","foodSecurity","datacenters","railHubs"]
+  },
+  {
+    "targetType": "country",
+    "countryId": "IDN",
+    "countryName": "Indonesia",
+    "region": "Southeast Asia",
+    "enabledDataTypes": ["airports","seaports","powerPlants","utilities","gdpSectors","foodSecurity","railHubs"]
+  },
+  {
+    "targetType": "country",
+    "countryId": "THA",
+    "countryName": "Thailand",
+    "region": "Southeast Asia",
+    "enabledDataTypes": ["airports","seaports","powerPlants","utilities","gdpSectors","foodSecurity","railHubs"]
+  },
+  {
+    "targetType": "country",
+    "countryId": "VNM",
+    "countryName": "Vietnam",
+    "region": "Southeast Asia",
+    "enabledDataTypes": ["airports","seaports","powerPlants","utilities","gdpSectors","foodSecurity","railHubs"]
+  },
+  {
+    "targetType": "country",
+    "countryId": "PHL",
+    "countryName": "Philippines",
+    "region": "Southeast Asia",
+    "enabledDataTypes": ["airports","seaports","powerPlants","utilities","gdpSectors","foodSecurity"]
+  },
+  {
+    "targetType": "country",
+    "countryId": "SAU",
+    "countryName": "Saudi Arabia",
+    "region": "Middle East",
+    "enabledDataTypes": ["airports","seaports","powerPlants","utilities","gdpSectors","foodSecurity","aiAdoption","datacenters"]
+  },
+  {
+    "targetType": "country",
+    "countryId": "ARE",
+    "countryName": "United Arab Emirates",
+    "region": "Middle East",
+    "enabledDataTypes": ["airports","seaports","powerPlants","utilities","gdpSectors","aiAdoption","datacenters"]
+  },
+  {
+    "targetType": "country",
+    "countryId": "IRN",
+    "countryName": "Iran",
+    "region": "Middle East",
+    "enabledDataTypes": ["airports","seaports","powerPlants","utilities","gdpSectors","foodSecurity","railHubs"]
+  },
+  {
+    "targetType": "country",
+    "countryId": "TUR",
+    "countryName": "Turkey",
+    "region": "Middle East",
+    "enabledDataTypes": ["airports","seaports","powerPlants","utilities","gdpSectors","foodSecurity","aiAdoption","datacenters","railHubs"]
+  },
+  {
+    "targetType": "country",
+    "countryId": "ISR",
+    "countryName": "Israel",
+    "region": "Middle East",
+    "enabledDataTypes": ["airports","seaports","powerPlants","utilities","gdpSectors","aiAdoption","datacenters"]
+  },
+  {
+    "targetType": "country",
+    "countryId": "PAK",
+    "countryName": "Pakistan",
+    "region": "South Asia",
+    "enabledDataTypes": ["airports","seaports","powerPlants","utilities","gdpSectors","foodSecurity","railHubs"]
+  },
+  {
+    "targetType": "country",
+    "countryId": "BGD",
+    "countryName": "Bangladesh",
+    "region": "South Asia",
+    "enabledDataTypes": ["seaports","powerPlants","utilities","gdpSectors","foodSecurity"]
+  },
+  {
+    "targetType": "country",
+    "countryId": "EGY",
+    "countryName": "Egypt",
+    "region": "North Africa",
+    "enabledDataTypes": ["airports","seaports","powerPlants","utilities","gdpSectors","foodSecurity","railHubs"]
+  },
+  {
+    "targetType": "country",
+    "countryId": "ZAF",
+    "countryName": "South Africa",
+    "region": "Sub-Saharan Africa",
+    "enabledDataTypes": ["airports","seaports","powerPlants","utilities","gdpSectors","foodSecurity","railHubs"]
+  },
+  {
+    "targetType": "country",
+    "countryId": "NGA",
+    "countryName": "Nigeria",
+    "region": "Sub-Saharan Africa",
+    "enabledDataTypes": ["airports","seaports","powerPlants","utilities","gdpSectors","foodSecurity"]
+  },
+  {
+    "targetType": "country",
+    "countryId": "ETH",
+    "countryName": "Ethiopia",
+    "region": "Sub-Saharan Africa",
+    "enabledDataTypes": ["airports","powerPlants","utilities","gdpSectors","foodSecurity","railHubs"]
+  },
+  {
+    "targetType": "country",
+    "countryId": "KEN",
+    "countryName": "Kenya",
+    "region": "Sub-Saharan Africa",
+    "enabledDataTypes": ["airports","seaports","powerPlants","utilities","gdpSectors","foodSecurity","railHubs"]
+  },
+  {
+    "targetType": "country",
+    "countryId": "BRA",
+    "countryName": "Brazil",
+    "region": "Latin America",
+    "enabledDataTypes": ["airports","seaports","powerPlants","utilities","gdpSectors","foodSecurity","aiAdoption","datacenters","railHubs"]
+  },
+  {
+    "targetType": "country",
+    "countryId": "MEX",
+    "countryName": "Mexico",
+    "region": "Latin America",
+    "enabledDataTypes": ["airports","seaports","powerPlants","utilities","gdpSectors","foodSecurity","railHubs"]
+  },
+  {
+    "targetType": "country",
+    "countryId": "ARG",
+    "countryName": "Argentina",
+    "region": "Latin America",
+    "enabledDataTypes": ["airports","seaports","powerPlants","utilities","gdpSectors","foodSecurity","railHubs"]
+  },
+  {
+    "targetType": "country",
+    "countryId": "KAZ",
+    "countryName": "Kazakhstan",
+    "region": "Central Asia",
+    "enabledDataTypes": ["airports","powerPlants","utilities","gdpSectors","foodSecurity","railHubs"]
+  },
+  {
+    "targetType": "country",
+    "countryId": "UKR",
+    "countryName": "Ukraine",
+    "region": "Europe",
+    "enabledDataTypes": ["airports","seaports","powerPlants","utilities","gdpSectors","foodSecurity","railHubs"]
+  },
+  {
+    "targetType": "country",
+    "countryId": "POL",
+    "countryName": "Poland",
+    "region": "Europe",
+    "enabledDataTypes": ["airports","seaports","powerPlants","utilities","gdpSectors","foodSecurity","datacenters","railHubs"]
+  },
+  {
+    "targetType": "country",
+    "countryId": "NLD",
+    "countryName": "Netherlands",
+    "region": "Europe",
+    "enabledDataTypes": ["airports","seaports","powerPlants","utilities","gdpSectors","aiAdoption","datacenters","railHubs"]
+  },
+  {
+    "targetType": "region",
+    "regionName": "Indian Ocean",
+    "region": "Indian Ocean",
+    "enabledDataTypes": ["submarineCables"]
+  },
+  {
+    "targetType": "region",
+    "regionName": "Pacific Ocean",
+    "region": "Pacific Ocean",
+    "enabledDataTypes": ["submarineCables"]
+  },
+  {
+    "targetType": "region",
+    "regionName": "Atlantic Ocean",
+    "region": "Atlantic Ocean",
+    "enabledDataTypes": ["submarineCables"]
+  },
+  {
+    "targetType": "region",
+    "regionName": "Mediterranean Sea",
+    "region": "Mediterranean",
+    "enabledDataTypes": ["submarineCables","seaports"]
+  },
+  {
+    "targetType": "region",
+    "regionName": "Southeast Asia",
+    "region": "Southeast Asia",
+    "enabledDataTypes": ["submarineCables"]
+  },
+  {
+    "targetType": "region",
+    "regionName": "Arctic",
+    "region": "Arctic",
+    "enabledDataTypes": ["submarineCables"]
+  }
+]

@@ -1,0 +1,292 @@
+{
+  "date": "2026-06-23",
+  "generatedAt": "2026-06-23T14:00:23.117Z",
+  "observationWindowDays": 14,
+  "storylineBenchmarkLinks": [
+    {
+      "storylineId": "8c23a00fbe759dde",
+      "storylineTitle": "Petrobras Raises Domestic Gasoline Prices After Brazil Approves Subsidies to Offset Iran War-Driven Crude Surge",
+      "storylineState": "stabilizing",
+      "daysActive": 2,
+      "avgEscalation": 0.44,
+      "maxSeverity": 5,
+      "countries": [
+        "USA",
+        "IRN",
+        "BGD",
+        "ISR",
+        "IND",
+        "AFR",
+        "CHN",
+        "CUB",
+        "QAT",
+        "KAZ",
+        "UZB",
+        "TKM",
+        "KGZ",
+        "TJK",
+        "BRA",
+        "UKR",
+        "RUS"
+      ],
+      "eventTypes": [
+        "market_crash",
+        "debt_crisis",
+        "peace_negotiation",
+        "supply_disruption",
+        "diplomatic_incident",
+        "commodity_price_move",
+        "economic_data_release",
+        "energy_infrastructure",
+        "central_bank_action",
+        "other"
+      ],
+      "linkedBenchmarks": [
+        "brent_crude",
+        "wti_crude",
+        "henry_hub"
+      ],
+      "linkStrength": 0.875,
+      "linkReasons": [
+        "energy_event_type:supply_disruption,commodity_price_move,energy_infrastructure",
+        "geopolitical_event_in_energy_region:IRN,QAT,KAZ,BRA,RUS"
+      ]
+    },
+    {
+      "storylineId": "2bb67e283e7dd93c",
+      "storylineTitle": "Israel Strikes Beirut Southern Suburb, First Near Capital in Weeks, Ahead of Washington Talks",
+      "storylineState": "escalating",
+      "daysActive": 1,
+      "avgEscalation": 0.833,
+      "maxSeverity": 5,
+      "countries": [
+        "PSE",
+        "ISR",
+        "LBN",
+        "IRN",
+        "SYR",
+        "USA",
+        "KWT"
+      ],
+      "eventTypes": [
+        "airstrike",
+        "military_operation",
+        "assassination",
+        "missile_attack"
+      ],
+      "linkedBenchmarks": [
+        "brent_crude",
+        "wti_crude"
+      ],
+      "linkStrength": 0.625,
+      "linkReasons": [
+        "geopolitical_event_in_energy_region:IRN,KWT",
+        "high_escalation_energy_country"
+      ]
+    },
+    {
+      "storylineId": "23f52bb8afdbba66",
+      "storylineTitle": "Putin Signs Decree Canceling Up to 10M Rubles in Debt for New Ukraine War Recruits",
+      "storylineState": "escalating",
+      "daysActive": 0,
+      "avgEscalation": 0.667,
+      "maxSeverity": 4,
+      "countries": [
+        "RUS",
+        "UKR",
+        "GBR"
+      ],
+      "eventTypes": [
+        "armed_conflict",
+        "military_operation",
+        "missile_attack"
+      ],
+      "linkedBenchmarks": [
+        "brent_crude",
+        "wti_crude"
+      ],
+      "linkStrength": 0.625,
+      "linkReasons": [
+        "geopolitical_event_in_energy_region:RUS,GBR",
+        "high_escalation_energy_country"
+      ]
+    },
+    {
+      "storylineId": "15b184aeb956d8e0",
+      "storylineTitle": "Drone Attacks Strike Three Russian Shadow Fleet Oil Tankers Off Turkey's Black Sea Coast",
+      "storylineState": "emerging",
+      "daysActive": 0,
+      "avgEscalation": 0.55,
+      "maxSeverity": 3,
+      "countries": [
+        "TUR",
+        "RUS"
+      ],
+      "eventTypes": [
+        "energy_infrastructure"
+      ],
+      "linkedBenchmarks": [
+        "brent_crude",
+        "wti_crude",
+        "henry_hub"
+      ],
+      "linkStrength": 0.25,
+      "linkReasons": [
+        "energy_event_type:energy_infrastructure"
+      ]
+    },
+    {
+      "storylineId": "03677fd6cd0112cf",
+      "storylineTitle": "EU and Germany Summon Russian Envoys Over Kyiv Attacks and Diplomat Expulsion Order",
+      "storylineState": "active",
+      "daysActive": 1,
+      "avgEscalation": 0.583,
+      "maxSeverity": 3,
+      "countries": [
+        "UKR",
+        "RUS",
+        "USA",
+        "DEU",
+        "GBR"
+      ],
+      "eventTypes": [
+        "peace_negotiation",
+        "diplomatic_incident"
+      ],
+      "linkedBenchmarks": [],
+      "linkStrength": 0.125,
+      "linkReasons": [
+        "geopolitical_event_in_energy_region:RUS,GBR"
+      ]
+    },
+    {
+      "storylineId": "16858a10db220f11",
+      "storylineTitle": "Iran Faces Medicine Shortages Amid War; Fragile US-Israel Ceasefire Holds",
+      "storylineState": "emerging",
+      "daysActive": 1,
+      "avgEscalation": 0.475,
+      "maxSeverity": 4,
+      "countries": [
+        "IRN",
+        "USA",
+        "ISR",
+        "PSE"
+      ],
+      "eventTypes": [
+        "humanitarian_crisis"
+      ],
+      "linkedBenchmarks": [],
+      "linkStrength": 0,
+      "linkReasons": []
+    },
+    {
+      "storylineId": "1eb59484e962c023",
+      "storylineTitle": "North Korea Tests New Lightweight Multi-Purpose Missile Launch System Under Kim Jong Un's Supervision",
+      "storylineState": "active",
+      "daysActive": 2,
+      "avgEscalation": 0.475,
+      "maxSeverity": 3,
+      "countries": [
+        "PRK",
+        "KOR"
+      ],
+      "eventTypes": [
+        "missile_attack",
+        "nuclear_incident"
+      ],
+      "linkedBenchmarks": [],
+      "linkStrength": 0,
+      "linkReasons": []
+    },
+    {
+      "storylineId": "2eb5f92d8da90087",
+      "storylineTitle": "ICC Trial of Former Philippine President Rodrigo Duterte Set to Begin 30 November on Drug War Charges",
+      "storylineState": "emerging",
+      "daysActive": 0,
+      "avgEscalation": 0.2,
+      "maxSeverity": 3,
+      "countries": [
+        "PHL"
+      ],
+      "eventTypes": [
+        "other"
+      ],
+      "linkedBenchmarks": [],
+      "linkStrength": 0,
+      "linkReasons": []
+    },
+    {
+      "storylineId": "3fb9575f4ecb60b7",
+      "storylineTitle": "Pakistan-Afghanistan Conflict Persists Despite Chinese Mediation Efforts",
+      "storylineState": "emerging",
+      "daysActive": 0,
+      "avgEscalation": 0.55,
+      "maxSeverity": 3,
+      "countries": [
+        "PAK",
+        "AFG",
+        "CHN"
+      ],
+      "eventTypes": [
+        "armed_conflict"
+      ],
+      "linkedBenchmarks": [],
+      "linkStrength": 0,
+      "linkReasons": []
+    },
+    {
+      "storylineId": "4466b70bdacf470c",
+      "storylineTitle": "New Report Reveals North Korea Heavily Investing in Chemical Weapons Capacity",
+      "storylineState": "emerging",
+      "daysActive": 0,
+      "avgEscalation": 0.45,
+      "maxSeverity": 3,
+      "countries": [
+        "PRK"
+      ],
+      "eventTypes": [
+        "other"
+      ],
+      "linkedBenchmarks": [],
+      "linkStrength": 0,
+      "linkReasons": []
+    }
+  ],
+  "disruptionPriceWindows": [],
+  "escalationVolatilityLog": [],
+  "chokepointPriceObservations": [],
+  "summary": {
+    "totalActiveStorylines": 10,
+    "energyLinkedStorylines": 4,
+    "escalatingLinked": 2,
+    "avgEscalationLinked": 0.623,
+    "supplyDisruptionsRecent": 0,
+    "energyEventsRecent": 0,
+    "hormuzEventsRecent": 0,
+    "observationWindowDays": 14,
+    "benchmarkCoverage": [
+      {
+        "benchmarkId": "brent_crude",
+        "mostRecentDate": null,
+        "mostRecentPrice": null,
+        "daysWithPairedData": 0
+      },
+      {
+        "benchmarkId": "wti_crude",
+        "mostRecentDate": null,
+        "mostRecentPrice": null,
+        "daysWithPairedData": 0
+      },
+      {
+        "benchmarkId": "henry_hub",
+        "mostRecentDate": null,
+        "mostRecentPrice": null,
+        "daysWithPairedData": 0
+      }
+    ],
+    "pairedObservationDays": 0,
+    "avgMaxEscalation": 0,
+    "maxSingleDayEscalation": 0,
+    "maxSingleDayPriceChangePct": null
+  }
+}

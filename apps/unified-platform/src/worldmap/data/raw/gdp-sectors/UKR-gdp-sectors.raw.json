@@ -1,0 +1,39 @@
+[
+  {
+    "countryId": "UKR",
+    "year": 2023,
+    "gdpUsdBn": 181.2,
+    "gdpPerCapita": 5140,
+    "sectors": [
+      {
+        "sector": "Services",
+        "percentOfGDP": 70.9,
+        "notes": "Includes Public Administration and Defense (approx. 22% of GDP)."
+      },
+      {
+        "sector": "Industry",
+        "percentOfGDP": 19.1,
+        "notes": "Significant impact from destruction of heavy industrial sites."
+      },
+      {
+        "sector": "Agriculture",
+        "percentOfGDP": 10.0,
+        "notes": "Remains a critical export sector despite logistics challenges."
+      }
+    ],
+    "attribution": {
+      "sources": [
+        {
+          "name": "State Statistics Service of Ukraine (SSSU) / World Bank 2023",
+          "url": "https://ukrstat.gov.ua/",
+          "accessedAt": "2025-02-14"
+        }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 2,
+        "lastVerified": "2025-02-14"
+      }
+    }
+  }
+]

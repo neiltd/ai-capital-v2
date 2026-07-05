@@ -1,0 +1,86 @@
+{
+  "date": "2026-05-12",
+  "last_updated": "2026-05-13T01:41:27.487Z",
+  "scoring": {
+    "last_run": "2026-05-13T01:41:27.487Z",
+    "run_count": 2,
+    "total_scored": 343,
+    "recommended": 61,
+    "filtered": 282,
+    "reduction_pct": 82,
+    "score_distribution": {
+      "urgent": 5,
+      "high": 3,
+      "relevant": 30,
+      "marginal": 74,
+      "noise": 231
+    },
+    "by_source": {
+      "aljazeera-english": {
+        "total": 25,
+        "recommended": 4,
+        "narrative": 0
+      },
+      "bangkokpost-top": {
+        "total": 10,
+        "recommended": 0,
+        "narrative": 0
+      },
+      "bbc-world": {
+        "total": 47,
+        "recommended": 8,
+        "narrative": 0
+      },
+      "bloomberg-markets": {
+        "total": 30,
+        "recommended": 9,
+        "narrative": 0
+      },
+      "dw-world": {
+        "total": 13,
+        "recommended": 3,
+        "narrative": 0
+      },
+      "france24-english": {
+        "total": 23,
+        "recommended": 4,
+        "narrative": 0
+      },
+      "globaltimes-china": {
+        "total": 50,
+        "recommended": 5,
+        "narrative": 4
+      },
+      "khaosod-english": {
+        "total": 5,
+        "recommended": 0,
+        "narrative": 0
+      },
+      "npr-news": {
+        "total": 10,
+        "recommended": 2,
+        "narrative": 0
+      },
+      "nytimes-world": {
+        "total": 54,
+        "recommended": 17,
+        "narrative": 0
+      },
+      "scmp-china": {
+        "total": 50,
+        "recommended": 5,
+        "narrative": 0
+      },
+      "washingtonpost-world": {
+        "total": 6,
+        "recommended": 2,
+        "narrative": 0
+      },
+      "xinhua-english": {
+        "total": 20,
+        "recommended": 2,
+        "narrative": 2
+      }
+    }
+  }
+}

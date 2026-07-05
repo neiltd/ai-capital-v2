@@ -1,0 +1,66 @@
+{
+  "id": "LUX",
+  "iso2": "LU",
+  "name": "Luxembourg",
+  "region": "Europe",
+  "subregion": "Western Europe",
+  "capital": "Luxembourg City",
+  "lastUpdated": "2026-05-24",
+  "summary": "Luxembourg is a highly developed, high-income country that serves as one of the world's leading financial centers and a core administrative hub of the European Union. Under the leadership of Prime Minister Luc Frieden, the government is currently focused on modernizing its economic model, strengthening international security through increased defense spending (targeting 2% of GDP), and navigating the challenges of housing affordability. With a uniquely international population—where nearly half of the residents are foreign nationals—Luxembourg maintains a reputation for political stability, social cohesion, and a pro-European foreign policy. The economy is showing signs of moderate recovery in 2025, driven by the resilient investment fund industry and a growing focus on space technology and digital services. As a founding member of the EU and the Benelux Union, Luxembourg continues to exercise outsized influence in regional and global diplomacy.",
+  "indicators": {
+    "politicalStability":       { "score": 9, "score_description": "Exceptionally stable with a strong consensus-based political culture.", "trend": "stable", "confidence": "high", "note": "The Frieden administration maintains a stable majority and focuses on long-term structural reforms." },
+    "economicDirection":        { "score": 7, "score_description": "Recovering growth with a focus on financial and tech diversification.", "trend": "rising", "confidence": "high", "note": "Growth is projected to recover to 0.9% in 2025, supported by the global financial sector's resilience." },
+    "investmentAttractiveness": { "score": 9, "score_description": "World-class destination for investment funds and corporate HQs.", "trend": "stable", "confidence": "high", "note": "Luxembourg is the second-largest investment fund center globally, after the United States." },
+    "geopoliticalRisk":         { "score": 2, "score_description": "Very low risk; deeply integrated into EU and NATO.", "trend": "stable", "confidence": "high", "note": "The country is a key advocate for European integration and multilateralism." },
+    "educationQuality":         { "score": 8, "score_description": "High-quality, multilingual education system.", "trend": "stable", "confidence": "high", "note": "The University of Luxembourg is rapidly becoming a center for excellence in research and technology." },
+    "healthcareQuality":        { "score": 9, "score_description": "Top-tier universal healthcare system with high outcomes.", "trend": "stable", "confidence": "high", "note": "Luxembourg has one of the highest healthcare expenditures per capita in the world." },
+    "technologyInvestment":     { "score": 8, "score_description": "Pioneer in space resources and high-performance computing.", "trend": "rising", "confidence": "high", "note": "The Luxembourg Space Agency is a leading global player in the emerging commercial space sector." }
+  },
+  "demographics": {
+    "population": 670000,
+    "medianAge": 39.7,
+    "urbanizationRate": 91,
+    "majorEthnicGroups": ["Luxembourger (52%)", "Portuguese (15%)", "French", "Italian", "Belgian"],
+    "religions": [
+      { "name": "Christian (mostly Catholic)", "percent": 70 },
+      { "name": "None", "percent": 27 },
+      { "name": "Muslim", "percent": 2 },
+      { "name": "Other", "percent": 1 }
+    ]
+  },
+  "alliances": ["EU", "NATO", "Benelux Union", "UN", "OECD", "Eurozone", "Schengen"],
+  "relationships": [
+    { "countryId": "BEL", "countryName": "Belgium", "type": "ally", "sentiment": "positive", "summary": "Key Benelux partner; very deep economic and political integration through the Belgium-Luxembourg Economic Union (BLEU)." },
+    { "countryId": "FRA", "countryName": "France", "type": "partner", "sentiment": "positive", "summary": "Major neighbor and source of cross-border workers; collaboration is strong in transport and energy." },
+    { "countryId": "DEU", "countryName": "Germany", "type": "partner", "sentiment": "positive", "summary": "Crucial economic partner and neighbor; shared focus on European stability and industrial cooperation." },
+    { "countryId": "USA", "countryName": "United States", "type": "ally", "sentiment": "positive", "summary": "Strong security and economic ally; Luxembourg is a major hub for US financial firms in Europe." }
+  ],
+  "perspectives": [
+    { "source": "CSV-DP Government", "bias": "Center-Right / Pro-Business", "view": "We are focused on tax relief, increasing defense readiness, and modernizing our infrastructure to keep Luxembourg competitive." },
+    { "source": "LSAP / Green Opposition", "bias": "Center-Left / Environmental", "view": "The focus should remain on social equity, affordable housing, and accelerating the ecological transition to meet climate targets." },
+    { "source": "Financial Sector (ABBL)", "bias": "Pro-Business", "view": "Luxembourg must continue to adapt its regulatory framework to maintain its lead in the global investment fund industry." }
+  ],
+  "historicalContext": {
+    "summary": "Strategically located at the crossroads of Europe, Luxembourg was once one of the most heavily fortified cities in the world. After centuries of being traded between major powers, it gained full independence in 1867. In the 20th century, it transitioned from a steel-dominated economy to a global financial powerhouse and was a founding member of nearly all major European and Atlantic institutions.",
+    "keyEvents": [
+      { "year": 1839, "event": "Treaty of London grants Luxembourg its current borders and independence." },
+      { "year": 1867, "event": "Luxembourg is declared perpetually neutral and independent." },
+      { "year": 1944, "event": "Liberation from Nazi occupation; formation of the Benelux Customs Union." },
+      { "year": 1949, "event": "Luxembourg becomes a founding member of NATO, ending its policy of neutrality." },
+      { "year": 1957, "event": "Founding member of the European Economic Community (EEC)." },
+      { "year": 1985, "event": "Schengen Agreement is signed in a small Luxembourgish village." },
+      { "year": 2013, "event": "Xavier Bettel becomes the first openly gay PM; period of significant social reform." },
+      { "year": 2023, "event": "Luc Frieden elected Prime Minister, marking a return to the center-right." }
+    ]
+  },
+  "investmentNotes": {
+    "strengths": ["AAA credit rating and political stability", "World-leading financial services ecosystem", "Multilingual and highly international workforce", "Strategic location as a gateway to the EU Single Market"],
+    "risks": ["High reliance on the financial sector's performance", "Extremely high housing costs and limited supply", "Aging infrastructure under pressure from cross-border commuters", "Exposure to changes in international tax and regulatory standards"],
+    "sectors": ["Financial Services (Funds, Banking, Private Equity)", "Space Technology and Satellites", "Information & Communication Technology", "Logistics and Supply Chain"]
+  },
+  "sources": [
+    { "name": "STATEC (National Institute of Statistics)", "url": "https://statistiques.public.lu/", "type": "economic" },
+    { "name": "Luxembourg for Finance", "url": "https://www.luxembourgforfinance.com/", "type": "investment" },
+    { "name": "Central Bank of Luxembourg", "url": "https://www.bcl.lu/", "type": "economic" }
+  ]
+}

@@ -1,0 +1,873 @@
+[
+  {
+    "id": "COMPANY-LMT",
+    "ticker": "LMT",
+    "name": "Lockheed Martin Corporation",
+    "exchange": "NYSE",
+    "gicsSector": "Industrials",
+    "gicsIndustryGroup": "Capital Goods",
+    "gicsIndustry": "Aerospace & Defense",
+    "countryOfIncorporation": "USA",
+    "countryOfHQ": "USA",
+    "marketCapUsdBn": 125.0,
+    "revenueUsdBn": 67.6,
+    "fiscalYear": 2024,
+    "description": "Lockheed Martin is a global security and aerospace company that is principally engaged in the research, design, development, manufacture, integration and sustainment of advanced technology systems, products and services.",
+    "businessModel": "Revenue is derived from four segments: Aeronautics, Missiles and Fire Control, Rotary and Mission Systems, and Space.",
+    "geopoliticalSummary": "Lockheed is heavily dependent on US government contracts and is sensitive to international trade policies and geopolitical conflicts, such as those in Ukraine and the Middle East, which drive demand.",
+    "revenueByGeography": [
+      {
+        "region": "United States",
+        "countryIds": ["USA"],
+        "percentOfRevenue": 74,
+        "revenueUsdBn": 50.0,
+        "year": 2024,
+        "note": "Exact segment: United States Government"
+      },
+      {
+        "region": "International",
+        "countryIds": [],
+        "percentOfRevenue": 26,
+        "revenueUsdBn": 17.6,
+        "year": 2024,
+        "note": "Includes Foreign Military Sales (FMS) and direct international sales"
+      }
+    ],
+    "keySuppliers": [
+      {
+        "role": "components",
+        "name": "RTX Corporation",
+        "countryId": "USA",
+        "percentOfSupply": null,
+        "isConcentrationRisk": false,
+        "strategicNote": "Major supplier of engines and sensors for various platforms."
+      }
+    ],
+    "keyCustomers": [
+      {
+        "role": "government",
+        "name": "US Department of Defense",
+        "countryId": "USA",
+        "percentOfRevenue": 70,
+        "isConcentrationRisk": true,
+        "strategicNote": "Primary customer for all major programs including the F-35."
+      }
+    ],
+    "manufacturingLocations": [
+      {
+        "countryId": "USA",
+        "city": "Fort Worth",
+        "percentOfCapacity": null,
+        "note": "Primary production facility for the F-35 Lightning II."
+      }
+    ],
+    "commodityDependencies": [
+      {
+        "commodity": "Rare Earth Elements",
+        "role": "input",
+        "primarySupplyCountries": ["CHN"],
+        "isHedged": false,
+        "geopoliticalRisk": "high",
+        "note": "Critical for advanced electronics and propulsion systems."
+      }
+    ],
+    "regionalExposures": [
+      {
+        "region": "Indo-Pacific",
+        "countryIds": ["TWN", "JPN", "AUS"],
+        "exposureType": "revenue/strategic",
+        "magnitude": "high",
+        "note": "Significant sales to regional allies to counter regional threats.",
+        "filingRefs": ["Item 1A"]
+      }
+    ],
+    "infrastructureDependencies": [],
+    "flags": {
+      "chinaRevenuePct": 0,
+      "chinaManufacturingDependent": false,
+      "russiaExposed": false,
+      "middleEastEnergyDependent": false,
+      "taiwanSemiconductorDependent": true,
+      "redSeaTradeRouteDependent": false,
+      "straitOfHormuzDependent": false,
+      "sanctionsSensitive": true,
+      "exportControlSensitive": true
+    },
+    "latestFilingId": "FILING-LMT-10K-2024",
+    "secCik": "0000936468",
+    "secEdgarUrl": "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0000936468&type=10-K",
+    "attribution": {
+      "sources": [
+        {
+          "name": "Lockheed Martin 10-K FY2024 — Item 1A Risk Factors",
+          "url": "https://www.sec.gov/Archives/edgar/data/936468/000093646824000013/lmt-20231231.htm",
+          "type": "filing",
+          "accessedAt": "2026-05-11",
+          "verbatimQuote": "We are subject to risks associated with our international operations and sales."
+        }
+      ],
+      "confidence": "high",
+      "lastVerified": "2026-05-11",
+      "generatedBy": "ai-assisted"
+    }
+  },
+  {
+    "id": "COMPANY-RTX",
+    "ticker": "RTX",
+    "name": "RTX Corporation",
+    "exchange": "NYSE",
+    "gicsSector": "Industrials",
+    "gicsIndustryGroup": "Capital Goods",
+    "gicsIndustry": "Aerospace & Defense",
+    "countryOfIncorporation": "USA",
+    "countryOfHQ": "USA",
+    "marketCapUsdBn": 135.0,
+    "revenueUsdBn": 68.9,
+    "fiscalYear": 2024,
+    "description": "RTX is an aerospace and defense company that provides advanced systems and services for commercial, military and government customers worldwide.",
+    "businessModel": "Revenue is derived from three businesses: Collins Aerospace, Pratt & Whitney, and Raytheon.",
+    "geopoliticalSummary": "RTX is sensitive to global commercial aviation trends and military demand driven by conflicts in Ukraine and the Middle East.",
+    "revenueByGeography": [
+      {
+        "region": "United States",
+        "countryIds": ["USA"],
+        "percentOfRevenue": 58,
+        "revenueUsdBn": 40.0,
+        "year": 2024,
+        "note": "Exact segment: United States"
+      },
+      {
+        "region": "International",
+        "countryIds": [],
+        "percentOfRevenue": 42,
+        "revenueUsdBn": 28.9,
+        "year": 2024,
+        "note": "Includes commercial and military sales outside the US"
+      }
+    ],
+    "keySuppliers": [],
+    "keyCustomers": [
+      {
+        "role": "government",
+        "name": "US Government",
+        "countryId": "USA",
+        "percentOfRevenue": 45,
+        "isConcentrationRisk": true,
+        "strategicNote": "Major customer for Raytheon and Pratt & Whitney segments."
+      }
+    ],
+    "manufacturingLocations": [],
+    "commodityDependencies": [
+      {
+        "commodity": "Titanium",
+        "role": "input",
+        "primarySupplyCountries": ["USA", "JPN"],
+        "isHedged": false,
+        "geopoliticalRisk": "medium",
+        "note": "Critical for jet engines and structural components."
+      }
+    ],
+    "regionalExposures": [
+      {
+        "region": "Middle East",
+        "countryIds": ["SAU", "ARE", "QAT"],
+        "exposureType": "revenue",
+        "magnitude": "high",
+        "note": "Significant sales of missile defense systems (Patriot) to regional allies.",
+        "filingRefs": ["Item 1A"]
+      }
+    ],
+    "infrastructureDependencies": [],
+    "flags": {
+      "chinaRevenuePct": 3,
+      "chinaManufacturingDependent": false,
+      "russiaExposed": false,
+      "middleEastEnergyDependent": false,
+      "taiwanSemiconductorDependent": true,
+      "redSeaTradeRouteDependent": false,
+      "straitOfHormuzDependent": false,
+      "sanctionsSensitive": true,
+      "exportControlSensitive": true
+    },
+    "latestFilingId": "FILING-RTX-10K-2024",
+    "secCik": "0000101829",
+    "secEdgarUrl": "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0000101829&type=10-K",
+    "attribution": {
+      "sources": [
+        {
+          "name": "RTX 10-K FY2024 — Item 1A Risk Factors",
+          "url": "https://www.sec.gov/Archives/edgar/data/101829/000010182924000008/rtx-20231231.htm",
+          "type": "filing",
+          "accessedAt": "2026-05-11",
+          "verbatimQuote": "Our international sales are subject to significant legal and regulatory requirements."
+        }
+      ],
+      "confidence": "high",
+      "lastVerified": "2026-05-11",
+      "generatedBy": "ai-assisted"
+    }
+  },
+  {
+    "id": "COMPANY-NOC",
+    "ticker": "NOC",
+    "name": "Northrop Grumman Corporation",
+    "exchange": "NYSE",
+    "gicsSector": "Industrials",
+    "gicsIndustryGroup": "Capital Goods",
+    "gicsIndustry": "Aerospace & Defense",
+    "countryOfIncorporation": "USA",
+    "countryOfHQ": "USA",
+    "marketCapUsdBn": 70.0,
+    "revenueUsdBn": 39.3,
+    "fiscalYear": 2024,
+    "description": "Northrop Grumman is a leading global security company providing innovative systems, products and solutions in autonomous systems, cyber, C4ISR, space, strike, and logistics.",
+    "businessModel": "Revenue is generated from Aeronautics Systems, Defense Systems, Mission Systems, and Space Systems.",
+    "geopoliticalSummary": "Northrop is a key contractor for the US nuclear triad and space programs, making it highly dependent on long-term US defense budget priorities.",
+    "revenueByGeography": [
+      {
+        "region": "United States",
+        "countryIds": ["USA"],
+        "percentOfRevenue": 85,
+        "revenueUsdBn": 33.4,
+        "year": 2024,
+        "note": "Exact segment: United States"
+      },
+      {
+        "region": "International",
+        "countryIds": [],
+        "percentOfRevenue": 15,
+        "revenueUsdBn": 5.9,
+        "year": 2024,
+        "note": "Includes FMS and direct international sales"
+      }
+    ],
+    "keySuppliers": [],
+    "keyCustomers": [
+      {
+        "role": "government",
+        "name": "US Government",
+        "countryId": "USA",
+        "percentOfRevenue": 85,
+        "isConcentrationRisk": true,
+        "strategicNote": "Primary customer, including classified programs."
+      }
+    ],
+    "manufacturingLocations": [],
+    "commodityDependencies": [],
+    "regionalExposures": [],
+    "infrastructureDependencies": [],
+    "flags": {
+      "chinaRevenuePct": 0,
+      "chinaManufacturingDependent": false,
+      "russiaExposed": false,
+      "middleEastEnergyDependent": false,
+      "taiwanSemiconductorDependent": true,
+      "redSeaTradeRouteDependent": false,
+      "straitOfHormuzDependent": false,
+      "sanctionsSensitive": true,
+      "exportControlSensitive": true
+    },
+    "latestFilingId": "FILING-NOC-10K-2024",
+    "secCik": "0001133421",
+    "secEdgarUrl": "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0001133421&type=10-K",
+    "attribution": {
+      "sources": [
+        {
+          "name": "Northrop Grumman 10-K FY2024 — Item 1A Risk Factors",
+          "url": "https://www.sec.gov/Archives/edgar/data/1133421/000113342124000005/noc-20231231.htm",
+          "type": "filing",
+          "accessedAt": "2026-05-11",
+          "verbatimQuote": "We depend on the U.S. Government for a substantial portion of our business."
+        }
+      ],
+      "confidence": "high",
+      "lastVerified": "2026-05-11",
+      "generatedBy": "ai-assisted"
+    }
+  },
+  {
+    "id": "COMPANY-GD",
+    "ticker": "GD",
+    "name": "General Dynamics Corporation",
+    "exchange": "NYSE",
+    "gicsSector": "Industrials",
+    "gicsIndustryGroup": "Capital Goods",
+    "gicsIndustry": "Aerospace & Defense",
+    "countryOfIncorporation": "USA",
+    "countryOfHQ": "USA",
+    "marketCapUsdBn": 75.0,
+    "revenueUsdBn": 42.3,
+    "fiscalYear": 2024,
+    "description": "General Dynamics is a global aerospace and defense company. It offers a broad portfolio of products and services in business aviation; ship construction and repair; land combat vehicles, weapons systems and munitions; and technology products and services.",
+    "businessModel": "Revenue is derived from Aerospace (Gulfstream), Marine Systems, Combat Systems, and Technologies.",
+    "geopoliticalSummary": "General Dynamics is sensitive to the US Navy's submarine program and global demand for business jets and armored vehicles.",
+    "revenueByGeography": [
+      {
+        "region": "United States",
+        "countryIds": ["USA"],
+        "percentOfRevenue": 70,
+        "revenueUsdBn": 29.6,
+        "year": 2024,
+        "note": "Exact segment: United States"
+      },
+      {
+        "region": "International",
+        "countryIds": [],
+        "percentOfRevenue": 30,
+        "revenueUsdBn": 12.7,
+        "year": 2024,
+        "note": "Significant international sales for Combat Systems and Gulfstream"
+      }
+    ],
+    "keySuppliers": [],
+    "keyCustomers": [
+      {
+        "role": "government",
+        "name": "US Government",
+        "countryId": "USA",
+        "percentOfRevenue": 70,
+        "isConcentrationRisk": true,
+        "strategicNote": "Primary customer for Marine and Combat systems."
+      }
+    ],
+    "manufacturingLocations": [],
+    "commodityDependencies": [],
+    "regionalExposures": [],
+    "infrastructureDependencies": [],
+    "flags": {
+      "chinaRevenuePct": 2,
+      "chinaManufacturingDependent": false,
+      "russiaExposed": false,
+      "middleEastEnergyDependent": false,
+      "taiwanSemiconductorDependent": true,
+      "redSeaTradeRouteDependent": false,
+      "straitOfHormuzDependent": false,
+      "sanctionsSensitive": true,
+      "exportControlSensitive": true
+    },
+    "latestFilingId": "FILING-GD-10K-2024",
+    "secCik": "0000040533",
+    "secEdgarUrl": "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0000040533&type=10-K",
+    "attribution": {
+      "sources": [
+        {
+          "name": "General Dynamics 10-K FY2024 — Item 1A Risk Factors",
+          "url": "https://www.sec.gov/Archives/edgar/data/40533/000004053324000010/gd-20231231.htm",
+          "type": "filing",
+          "accessedAt": "2026-05-11",
+          "verbatimQuote": "We are subject to risks associated with our international operations."
+        }
+      ],
+      "confidence": "high",
+      "lastVerified": "2026-05-11",
+      "generatedBy": "ai-assisted"
+    }
+  },
+  {
+    "id": "COMPANY-BA",
+    "ticker": "BA",
+    "name": "The Boeing Company",
+    "exchange": "NYSE",
+    "gicsSector": "Industrials",
+    "gicsIndustryGroup": "Capital Goods",
+    "gicsIndustry": "Aerospace & Defense",
+    "countryOfIncorporation": "USA",
+    "countryOfHQ": "USA",
+    "marketCapUsdBn": 110.0,
+    "revenueUsdBn": 77.8,
+    "fiscalYear": 2024,
+    "description": "Boeing is the world's largest aerospace company and leading manufacturer of commercial jetliners, defense, space and security systems, and service provider of aftermarket support.",
+    "businessModel": "Revenue is derived from Commercial Airplanes, Defense, Space & Security, and Global Services.",
+    "geopoliticalSummary": "Boeing is a major US exporter and is highly sensitive to US-China relations, particularly regarding commercial aircraft deliveries and certification in China.",
+    "revenueByGeography": [
+      {
+        "region": "United States",
+        "countryIds": ["USA"],
+        "percentOfRevenue": 58,
+        "revenueUsdBn": 45.1,
+        "year": 2024,
+        "note": "Exact segment: United States"
+      },
+      {
+        "region": "China",
+        "countryIds": ["CHN"],
+        "percentOfRevenue": 3,
+        "revenueUsdBn": 2.3,
+        "year": 2024,
+        "note": "Significantly lower than historical levels due to trade and regulatory issues"
+      },
+      {
+        "region": "Europe",
+        "countryIds": [],
+        "percentOfRevenue": 13,
+        "revenueUsdBn": 10.1,
+        "year": 2024,
+        "note": "Exact segment: Europe"
+      }
+    ],
+    "keySuppliers": [
+      {
+        "role": "aerostructures",
+        "name": "Spirit AeroSystems",
+        "countryId": "USA",
+        "percentOfSupply": null,
+        "isConcentrationRisk": true,
+        "strategicNote": "Sole source for many commercial aircraft fuselages."
+      }
+    ],
+    "keyCustomers": [],
+    "manufacturingLocations": [],
+    "commodityDependencies": [],
+    "regionalExposures": [
+      {
+        "region": "China",
+        "countryIds": ["CHN"],
+        "exposureType": "revenue/regulatory",
+        "magnitude": "high",
+        "note": "Dependency on China for future growth and 737 MAX delivery restart.",
+        "filingRefs": ["Item 1A"]
+      }
+    ],
+    "infrastructureDependencies": [],
+    "flags": {
+      "chinaRevenuePct": 3,
+      "chinaManufacturingDependent": false,
+      "russiaExposed": false,
+      "middleEastEnergyDependent": false,
+      "taiwanSemiconductorDependent": true,
+      "redSeaTradeRouteDependent": false,
+      "straitOfHormuzDependent": false,
+      "sanctionsSensitive": true,
+      "exportControlSensitive": true
+    },
+    "latestFilingId": "FILING-BA-10K-2024",
+    "secCik": "0000012927",
+    "secEdgarUrl": "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0000012927&type=10-K",
+    "attribution": {
+      "sources": [
+        {
+          "name": "Boeing 10-K FY2024 — Item 1A Risk Factors",
+          "url": "https://www.sec.gov/Archives/edgar/data/12927/000001292724000010/ba-20231231.htm",
+          "type": "filing",
+          "accessedAt": "2026-05-11",
+          "verbatimQuote": "We are subject to risks related to our international operations."
+        }
+      ],
+      "confidence": "high",
+      "lastVerified": "2026-05-11",
+      "generatedBy": "ai-assisted"
+    }
+  },
+  {
+    "id": "COMPANY-LHX",
+    "ticker": "LHX",
+    "name": "L3Harris Technologies Inc.",
+    "exchange": "NYSE",
+    "gicsSector": "Industrials",
+    "gicsIndustryGroup": "Capital Goods",
+    "gicsIndustry": "Aerospace & Defense",
+    "countryOfIncorporation": "USA",
+    "countryOfHQ": "USA",
+    "marketCapUsdBn": 40.0,
+    "revenueUsdBn": 21.3,
+    "fiscalYear": 2024,
+    "description": "L3Harris Technologies is an agile global aerospace and defense technology innovator, delivering end-to-end solutions that meet customers’ mission-critical needs.",
+    "businessModel": "Revenue is derived from Integrated Mission Systems, Space & Airborne Systems, Communication Systems, and Aerojet Rocketdyne.",
+    "geopoliticalSummary": "L3Harris is a key provider of secure communications and space systems, making it sensitive to US defense spending and international demand for tactical communications.",
+    "revenueByGeography": [
+      {
+        "region": "United States",
+        "countryIds": ["USA"],
+        "percentOfRevenue": 75,
+        "revenueUsdBn": 16.0,
+        "year": 2024,
+        "note": "Exact segment: United States"
+      },
+      {
+        "region": "International",
+        "countryIds": [],
+        "percentOfRevenue": 25,
+        "revenueUsdBn": 5.3,
+        "year": 2024,
+        "note": "Includes FMS and direct international sales"
+      }
+    ],
+    "keySuppliers": [],
+    "keyCustomers": [
+      {
+        "role": "government",
+        "name": "US Government",
+        "countryId": "USA",
+        "percentOfRevenue": 75,
+        "isConcentrationRisk": true,
+        "strategicNote": "Primary customer for all segments."
+      }
+    ],
+    "manufacturingLocations": [],
+    "commodityDependencies": [],
+    "regionalExposures": [],
+    "infrastructureDependencies": [],
+    "flags": {
+      "chinaRevenuePct": 0,
+      "chinaManufacturingDependent": false,
+      "russiaExposed": false,
+      "middleEastEnergyDependent": false,
+      "taiwanSemiconductorDependent": true,
+      "redSeaTradeRouteDependent": false,
+      "straitOfHormuzDependent": false,
+      "sanctionsSensitive": true,
+      "exportControlSensitive": true
+    },
+    "latestFilingId": "FILING-LHX-10K-2024",
+    "secCik": "0000202058",
+    "secEdgarUrl": "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0000202058&type=10-K",
+    "attribution": {
+      "sources": [
+        {
+          "name": "L3Harris 10-K FY2024 — Item 1A Risk Factors",
+          "url": "https://www.sec.gov/Archives/edgar/data/202058/000020205824000010/lhx-20231229.htm",
+          "type": "filing",
+          "accessedAt": "2026-05-11",
+          "verbatimQuote": "We depend on the U.S. Government for a significant portion of our revenue."
+        }
+      ],
+      "confidence": "high",
+      "lastVerified": "2026-05-11",
+      "generatedBy": "ai-assisted"
+    }
+  },
+  {
+    "id": "COMPANY-HII",
+    "ticker": "HII",
+    "name": "Huntington Ingalls Industries Inc.",
+    "exchange": "NYSE",
+    "gicsSector": "Industrials",
+    "gicsIndustryGroup": "Capital Goods",
+    "gicsIndustry": "Aerospace & Defense",
+    "countryOfIncorporation": "USA",
+    "countryOfHQ": "USA",
+    "marketCapUsdBn": 10.0,
+    "revenueUsdBn": 11.5,
+    "fiscalYear": 2024,
+    "description": "Huntington Ingalls Industries is America's largest military shipbuilding company and a provider of professional services to partners in government and industry.",
+    "businessModel": "Revenue is derived from Ingalls Shipbuilding, Newport News Shipbuilding, and Mission Technologies.",
+    "geopoliticalSummary": "HII is the sole builder of US Navy aircraft carriers and one of only two builders of nuclear-powered submarines, making it critically dependent on the US Navy's 30-year shipbuilding plan.",
+    "revenueByGeography": [
+      {
+        "region": "United States",
+        "countryIds": ["USA"],
+        "percentOfRevenue": 99,
+        "revenueUsdBn": 11.4,
+        "year": 2024,
+        "note": "Almost exclusively US Government"
+      }
+    ],
+    "keySuppliers": [],
+    "keyCustomers": [
+      {
+        "role": "government",
+        "name": "US Navy",
+        "countryId": "USA",
+        "percentOfRevenue": 90,
+        "isConcentrationRisk": true,
+        "strategicNote": "Sole source for nuclear aircraft carriers."
+      }
+    ],
+    "manufacturingLocations": [
+      {
+        "countryId": "USA",
+        "city": "Newport News",
+        "percentOfCapacity": null,
+        "note": "Only shipyard in the US capable of building nuclear aircraft carriers."
+      }
+    ],
+    "commodityDependencies": [
+      {
+        "commodity": "Steel",
+        "role": "input",
+        "primarySupplyCountries": ["USA"],
+        "isHedged": false,
+        "geopoliticalRisk": "medium",
+        "note": "Primary material for ship construction."
+      }
+    ],
+    "regionalExposures": [],
+    "infrastructureDependencies": [],
+    "flags": {
+      "chinaRevenuePct": 0,
+      "chinaManufacturingDependent": false,
+      "russiaExposed": false,
+      "middleEastEnergyDependent": false,
+      "taiwanSemiconductorDependent": false,
+      "redSeaTradeRouteDependent": false,
+      "straitOfHormuzDependent": false,
+      "sanctionsSensitive": false,
+      "exportControlSensitive": false
+    },
+    "latestFilingId": "FILING-HII-10K-2024",
+    "secCik": "0001501585",
+    "secEdgarUrl": "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0001501585&type=10-K",
+    "attribution": {
+      "sources": [
+        {
+          "name": "Huntington Ingalls 10-K FY2024 — Item 1A Risk Factors",
+          "url": "https://www.sec.gov/Archives/edgar/data/1501585/000150158524000008/hii-20231231.htm",
+          "type": "filing",
+          "accessedAt": "2026-05-11",
+          "verbatimQuote": "We depend on the U.S. Navy for substantially all of our revenue."
+        }
+      ],
+      "confidence": "high",
+      "lastVerified": "2026-05-11",
+      "generatedBy": "ai-assisted"
+    }
+  },
+  {
+    "id": "COMPANY-LDOS",
+    "ticker": "LDOS",
+    "name": "Leidos Holdings Inc.",
+    "exchange": "NYSE",
+    "gicsSector": "Industrials",
+    "gicsIndustryGroup": "Professional Services",
+    "gicsIndustry": "Research & Consulting Services",
+    "countryOfIncorporation": "USA",
+    "countryOfHQ": "USA",
+    "marketCapUsdBn": 18.0,
+    "revenueUsdBn": 16.7,
+    "fiscalYear": 2024,
+    "description": "Leidos is a global leader in the integration and application of information, technology and systems working to solve the world’s toughest challenges in the defense, intelligence, civil and health markets.",
+    "businessModel": "Revenue is derived from Defense Solutions, Civil, and Health segments.",
+    "geopoliticalSummary": "Leidos is a major IT and mission support provider for the US government, making it sensitive to cybersecurity threats and changes in government procurement policies.",
+    "revenueByGeography": [
+      {
+        "region": "United States",
+        "countryIds": ["USA"],
+        "percentOfRevenue": 87,
+        "revenueUsdBn": 14.5,
+        "year": 2024,
+        "note": "Exact segment: United States"
+      },
+      {
+        "region": "International",
+        "countryIds": [],
+        "percentOfRevenue": 13,
+        "revenueUsdBn": 2.2,
+        "year": 2024,
+        "note": "Includes operations in the UK and Australia"
+      }
+    ],
+    "keySuppliers": [],
+    "keyCustomers": [
+      {
+        "role": "government",
+        "name": "US Government",
+        "countryId": "USA",
+        "percentOfRevenue": 87,
+        "isConcentrationRisk": true,
+        "strategicNote": "Primary customer for IT and systems integration."
+      }
+    ],
+    "manufacturingLocations": [],
+    "commodityDependencies": [],
+    "regionalExposures": [],
+    "infrastructureDependencies": [],
+    "flags": {
+      "chinaRevenuePct": 0,
+      "chinaManufacturingDependent": false,
+      "russiaExposed": false,
+      "middleEastEnergyDependent": false,
+      "taiwanSemiconductorDependent": false,
+      "redSeaTradeRouteDependent": false,
+      "straitOfHormuzDependent": false,
+      "sanctionsSensitive": true,
+      "exportControlSensitive": true
+    },
+    "latestFilingId": "FILING-LDOS-10K-2024",
+    "secCik": "0001336920",
+    "secEdgarUrl": "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0001336920&type=10-K",
+    "attribution": {
+      "sources": [
+        {
+          "name": "Leidos 10-K FY2024 — Item 1A Risk Factors",
+          "url": "https://www.sec.gov/Archives/edgar/data/1336920/000133692024000011/ldos-20231229.htm",
+          "type": "filing",
+          "accessedAt": "2026-05-11",
+          "verbatimQuote": "We are subject to risks associated with our international operations."
+        }
+      ],
+      "confidence": "high",
+      "lastVerified": "2026-05-11",
+      "generatedBy": "ai-assisted"
+    }
+  },
+  {
+    "id": "COMPANY-TXT",
+    "ticker": "TXT",
+    "name": "Textron Inc.",
+    "exchange": "NYSE",
+    "gicsSector": "Industrials",
+    "gicsIndustryGroup": "Capital Goods",
+    "gicsIndustry": "Aerospace & Defense",
+    "countryOfIncorporation": "USA",
+    "countryOfHQ": "USA",
+    "marketCapUsdBn": 18.0,
+    "revenueUsdBn": 13.7,
+    "fiscalYear": 2024,
+    "description": "Textron is a multi-industry company that leverages its global network of aircraft, defense, industrial and finance businesses to provide customers with innovative solutions and services.",
+    "businessModel": "Revenue is derived from Textron Aviation (Cessna, Beechcraft), Bell, Textron Systems, and Industrial.",
+    "geopoliticalSummary": "Textron is sensitive to global demand for business jets and military rotorcraft, as well as trade policies affecting international sales.",
+    "revenueByGeography": [
+      {
+        "region": "United States",
+        "countryIds": ["USA"],
+        "percentOfRevenue": 71,
+        "revenueUsdBn": 9.7,
+        "year": 2024,
+        "note": "Exact segment: United States"
+      },
+      {
+        "region": "Europe",
+        "countryIds": [],
+        "percentOfRevenue": 9,
+        "revenueUsdBn": 1.2,
+        "year": 2024,
+        "note": "Exact segment: Europe"
+      },
+      {
+        "region": "International - Other",
+        "countryIds": [],
+        "percentOfRevenue": 20,
+        "revenueUsdBn": 2.8,
+        "year": 2024,
+        "note": "Includes Asia-Pacific and Latin America"
+      }
+    ],
+    "keySuppliers": [],
+    "keyCustomers": [],
+    "manufacturingLocations": [],
+    "commodityDependencies": [],
+    "regionalExposures": [],
+    "infrastructureDependencies": [],
+    "flags": {
+      "chinaRevenuePct": 5,
+      "chinaManufacturingDependent": false,
+      "russiaExposed": false,
+      "middleEastEnergyDependent": false,
+      "taiwanSemiconductorDependent": true,
+      "redSeaTradeRouteDependent": false,
+      "straitOfHormuzDependent": false,
+      "sanctionsSensitive": true,
+      "exportControlSensitive": true
+    },
+    "latestFilingId": "FILING-TXT-10K-2024",
+    "secCik": "0000252192",
+    "secEdgarUrl": "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0000252192&type=10-K",
+    "attribution": {
+      "sources": [
+        {
+          "name": "Textron 10-K FY2024 — Item 1A Risk Factors",
+          "url": "https://www.sec.gov/Archives/edgar/data/252192/000025219224000010/txt-20231230.htm",
+          "type": "filing",
+          "accessedAt": "2026-05-11",
+          "verbatimQuote": "We are subject to risks associated with our international operations."
+        }
+      ],
+      "confidence": "high",
+      "lastVerified": "2026-05-11",
+      "generatedBy": "ai-assisted"
+    }
+  },
+  {
+    "id": "COMPANY-AIR",
+    "ticker": "AIR",
+    "name": "Airbus SE",
+    "exchange": "PARIS",
+    "gicsSector": "Industrials",
+    "gicsIndustryGroup": "Capital Goods",
+    "gicsIndustry": "Aerospace & Defense",
+    "countryOfIncorporation": "NLD",
+    "countryOfHQ": "FRA",
+    "marketCapUsdBn": 130.0,
+    "revenueUsdBn": 71.0,
+    "fiscalYear": 2024,
+    "description": "Airbus is a global leader in aeronautics, space and related services. It is the world's largest commercial aircraft manufacturer and a major player in defense and space.",
+    "businessModel": "Revenue is derived from Airbus (Commercial Aircraft), Airbus Helicopters, and Airbus Defence and Space.",
+    "geopoliticalSummary": "Airbus is a European champion and is highly sensitive to US-EU trade relations, global commercial aviation demand, and European defense budget priorities.",
+    "revenueByGeography": [
+      {
+        "region": "Europe",
+        "countryIds": ["FRA", "DEU", "ESP", "GBR"],
+        "percentOfRevenue": 40,
+        "revenueUsdBn": 28.4,
+        "year": 2024,
+        "note": "Exact segment: Europe"
+      },
+      {
+        "region": "Asia-Pacific",
+        "countryIds": ["CHN", "IND"],
+        "percentOfRevenue": 30,
+        "revenueUsdBn": 21.3,
+        "year": 2024,
+        "note": "Exact segment: Asia-Pacific"
+      },
+      {
+        "region": "North America",
+        "countryIds": ["USA", "CAN"],
+        "percentOfRevenue": 20,
+        "revenueUsdBn": 14.2,
+        "year": 2024,
+        "note": "Exact segment: North America"
+      }
+    ],
+    "keySuppliers": [],
+    "keyCustomers": [],
+    "manufacturingLocations": [
+      {
+        "countryId": "FRA",
+        "city": "Toulouse",
+        "percentOfCapacity": null,
+        "note": "Primary assembly line for various aircraft models."
+      }
+    ],
+    "commodityDependencies": [],
+    "regionalExposures": [
+      {
+        "region": "China",
+        "countryIds": ["CHN"],
+        "exposureType": "revenue/strategic",
+        "magnitude": "high",
+        "note": "Dependency on China for commercial aircraft growth and local assembly in Tianjin.",
+        "filingRefs": ["Annual Report Risk Factors"]
+      }
+    ],
+    "infrastructureDependencies": [],
+    "flags": {
+      "chinaRevenuePct": 20,
+      "chinaManufacturingDependent": true,
+      "russiaExposed": false,
+      "middleEastEnergyDependent": false,
+      "taiwanSemiconductorDependent": true,
+      "redSeaTradeRouteDependent": false,
+      "straitOfHormuzDependent": false,
+      "sanctionsSensitive": true,
+      "exportControlSensitive": true
+    },
+    "latestFilingId": "FILING-AIRBUS-2024",
+    "secCik": "0001004838",
+    "secEdgarUrl": "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0001004838",
+    "attribution": {
+      "sources": [
+        {
+          "name": "Airbus Annual Report 2023 — Risk Factors",
+          "url": "https://www.airbus.com/en/investors/annual-reports",
+          "type": "filing",
+          "accessedAt": "2026-05-11",
+          "verbatimQuote": "The Group is subject to risks associated with its international operations and global supply chain."
+        }
+      ],
+      "confidence": "high",
+      "lastVerified": "2026-05-11",
+      "generatedBy": "ai-assisted"
+    }
+  }
+]

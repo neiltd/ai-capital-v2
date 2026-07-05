@@ -1,0 +1,67 @@
+{
+  "id": "HND",
+  "iso2": "HN",
+  "name": "Honduras",
+  "region": "Americas",
+  "subregion": "Central America",
+  "capital": "Tegucigalpa",
+  "lastUpdated": "2026-05-09",
+  "summary": "Honduras is entering a critical political phase as it prepares for general elections in late 2025. Under President Xiomara Castro, the country has seen a shift toward more populist and nationalist policies, including the 2023 diplomatic pivot from Taiwan to China. While the economy remains resilient, with growth supported by strong remittance inflows, the country continues to struggle with high poverty rates, systemic corruption, and significant security challenges from organized crime. The administration's efforts to repeal 'ZEDEs' (Special Economic Zones) and pass a controversial Tax Justice Law have created friction with the private sector and some international investors. Honduras remains deeply integrated with the U.S. economy, though it is increasingly seeking infrastructure investment and trade opportunities from its new relationship with Beijing.",
+  "indicators": {
+    "politicalStability":       { "score": 4, "score_description": "Moderate to high risk due to election-related polarization and internal coalition fractures.", "trend": "declining", "confidence": "high", "note": "The 2025 elections are expected to be highly contentious, with potential for social unrest." },
+    "economicDirection":        { "score": 5, "score_description": "Stable growth driven by remittances, but limited by high public debt and fiscal uncertainty.", "trend": "stable", "confidence": "high", "note": "Remittances account for over 25% of GDP, providing a critical buffer but reflecting a lack of local opportunities." },
+    "investmentAttractiveness": { "score": 4, "score_description": "Declining appeal due to regulatory changes and the dissolution of economic zones.", "trend": "declining", "confidence": "high", "note": "Legal disputes over ZEDEs and proposed tax reforms have raised concerns about the sanctity of contracts." },
+    "geopoliticalRisk":         { "score": 6, "score_description": "Significant risk stemming from the shift to China and ongoing migration pressures.", "trend": "rising", "confidence": "medium", "note": "Balancing U.S. security interests with Chinese economic promises presents a complex diplomatic challenge." },
+    "educationQuality":         { "score": 3, "score_description": "Low quality with high dropout rates and limited technical training.", "trend": "stable", "confidence": "medium", "note": "Literacy rates are improving slowly, but the education system remains underfunded." },
+    "healthcareQuality":        { "score": 3, "score_description": "Weak public infrastructure with persistent medicine shortages.", "trend": "stable", "confidence": "medium", "note": "Public health services are concentrated in urban areas, leaving rural populations underserved." },
+    "technologyInvestment":     { "score": 3, "score_description": "Low investment focused primarily on telecommunications and government digitalization.", "trend": "rising", "confidence": "medium", "note": "New agreements with China may lead to increased investment in digital infrastructure and 5G connectivity." }
+  },
+  "demographics": {
+    "population": 10800000,
+    "medianAge": 24.3,
+    "urbanizationRate": 60,
+    "majorEthnicGroups": ["Mestizo", "Indigenous (Lenca, Miskito)", "European descent", "Garifuna"],
+    "religions": [
+      { "name": "Roman Catholic", "percent": 41 },
+      { "name": "Protestant/Evangelical", "percent": 43 },
+      { "name": "None/Unaffiliated", "percent": 14 },
+      { "name": "Other", "percent": 2 }
+    ]
+  },
+  "alliances": ["SICA", "CA-4", "OAS", "CELAC", "UN", "G-77"],
+  "relationships": [
+    { "countryId": "USA", "countryName": "United States", "type": "partner", "sentiment": "neutral", "summary": "Remains the primary trade partner and source of remittances; relations are complicated by migration issues and Castro's populist rhetoric." },
+    { "countryId": "CHN", "countryName": "China", "type": "partner", "sentiment": "positive", "summary": "New diplomatic and economic partner since 2023; focus is on infrastructure investment and opening agricultural exports." },
+    { "countryId": "SLV", "countryName": "El Salvador", "type": "neighbor", "sentiment": "neutral", "summary": "Cooperation exists through the CA-4, but tensions occasionally surface over border security and Bukele's regional influence." },
+    { "countryId": "GTM", "countryName": "Guatemala", "type": "neighbor", "sentiment": "positive", "summary": "Strong trade ties and shared interest in managing northern migration routes." },
+    { "countryId": "NIC", "countryName": "Nicaragua", "type": "neighbor", "sentiment": "neutral", "summary": "Ideological alignment between the Castro and Ortega administrations, though functional cooperation remains limited." }
+  ],
+  "perspectives": [
+    { "source": "LIBRE Party Supporter", "bias": "Socialist", "view": "The administration is finally reclaiming national sovereignty from foreign interests and addressing the deep-seated inequality of the neoliberal era." },
+    { "source": "Private Sector Representative", "bias": "Pro-Business", "view": "Government hostility toward existing investments and the threat of new taxes are driving capital flight to more stable neighbors." },
+    { "source": "Civil Society Activist", "bias": "Anti-Corruption", "view": "The promised international anti-corruption commission (CICIH) has stalled, suggesting the current elite are as resistant to transparency as the last." }
+  ],
+  "historicalContext": {
+    "summary": "Honduras' history is marked by the dominance of the United Fruit Company in the early 20th century (the 'Banana Republic' era) and subsequent decades of military influence. More recently, the 2009 coup against Manuel Zelaya and the subsequent 12-year rule of the National Party—ended by Xiomara Castro's 2021 victory—have defined the current political polarization.",
+    "keyEvents": [
+      { "year": 1821, "event": "Honduras gains independence from Spain." },
+      { "year": 1969, "event": "The 'Football War' with El Salvador breaks out over land and migration issues." },
+      { "year": 1982, "event": "Return to civilian rule with a new constitution after years of military juntas." },
+      { "year": 1998, "event": "Hurricane Mitch devastates the country, causing billions in damage." },
+      { "year": 2009, "event": "President Manuel Zelaya is ousted in a military-backed coup." },
+      { "year": 2021, "event": "Xiomara Castro wins the presidency, becoming the country's first female leader." },
+      { "year": 2022, "event": "Former President Juan Orlando Hernández is extradited to the U.S. on drug trafficking charges." },
+      { "year": 2023, "event": "Honduras breaks ties with Taiwan and establishes diplomatic relations with China." }
+    ]
+  },
+  "investmentNotes": {
+    "strengths": ["Strategic location in the heart of Central America", "Abundant natural resources and agricultural potential", "Large and relatively young labor pool", "Strong apparel manufacturing sector"],
+    "risks": ["High political and regulatory uncertainty", "Weak rule of law and pervasive corruption", "Inadequate infrastructure and high energy costs", "High vulnerability to extreme weather events"],
+    "sectors": ["Textiles and Maquila", "Agribusiness (Coffee, Bananas, Shrimp)", "Tourism (Roatán)", "Renewable Energy", "Infrastructure Development"]
+  },
+  "sources": [
+    { "name": "World Bank", "url": "https://data.worldbank.org/country/HND", "type": "economic" },
+    { "name": "CIA World Factbook", "url": "https://www.cia.gov/the-world-factbook/countries/honduras/", "type": "general" },
+    { "name": "ECLAC", "url": "https://www.cepal.org/en/countries/honduras", "type": "economic" }
+  ]
+}

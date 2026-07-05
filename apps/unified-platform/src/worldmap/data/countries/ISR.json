@@ -1,0 +1,70 @@
+{
+  "id": "ISR",
+  "iso2": "IL",
+  "name": "Israel",
+  "region": "Asia",
+  "subregion": "Western Asia",
+  "capital": "Jerusalem",
+  "lastUpdated": "2026-05-09",
+  "summary": "Israel is a highly advanced, industrialized democracy in the Middle East, characterized by a world-leading technology sector and a robust military apparatus. Despite its small size and lack of natural resources, it has achieved high economic growth through innovation in cybersecurity, biotechnology, and agritech. However, the country faces persistent security challenges from regional adversaries and non-state actors, alongside internal social and political divisions regarding the judiciary, religious-secular balance, and the conflict with the Palestinians. Its foreign policy is centered on a deep strategic alliance with the United States and increasing efforts to normalize relations with regional Arab states through the Abraham Accords, even as it navigates the complexities of the ongoing regional conflict.",
+  "indicators": {
+    "politicalStability":       { "score": 4, "trend": "declining", "confidence": "high", "note": "High domestic polarization and recurring elections create institutional strain." },
+    "economicDirection":        { "score": 6, "trend": "stable", "confidence": "high", "note": "Strong tech exports and gas revenues are offset by high defense spending and inflation." },
+    "investmentAttractiveness": { "score": 8, "trend": "stable", "confidence": "high", "note": "A 'Startup Nation' with exceptional R&D, though geopolitical risk deters some conservative capital." },
+    "geopoliticalRisk":         { "score": 2, "trend": "rising", "confidence": "high", "note": "Intense conflict with Hamas, Hezbollah, and tensions with Iran present existential threats." },
+    "educationQuality":         { "score": 8, "trend": "stable", "confidence": "high", "note": "World-class higher education and research institutions, particularly in STEM." },
+    "healthcareQuality":        { "score": 9, "trend": "stable", "confidence": "high", "note": "Highly efficient healthcare system with advanced medical technology and universal coverage." },
+    "technologyInvestment":     { "score": 10, "trend": "stable", "confidence": "high", "note": "One of the highest R&D-to-GDP ratios in the world, focused on AI and cyber defense." }
+  },
+  "demographics": {
+    "population": 9840000,
+    "medianAge": 30.3,
+    "urbanizationRate": 93,
+    "majorEthnicGroups": ["Jewish", "Arab"],
+    "religions": [
+      { "name": "Jewish", "percent": 74 },
+      { "name": "Muslim", "percent": 18 },
+      { "name": "Christian", "percent": 2 },
+      { "name": "Druze", "percent": 2 },
+      { "name": "Other", "percent": 4 }
+    ]
+  },
+  "alliances": ["Abraham Accords", "Strategic Ally of USA (MNNA)", "OECD"],
+  "relationships": [
+    { "countryId": "USA", "countryName": "United States", "type": "treaty_ally", "sentiment": "positive", "summary": "An bedrock alliance based on shared values and deep military, intelligence, and economic cooperation." },
+    { "countryId": "DEU", "countryName": "Germany", "type": "ally", "sentiment": "positive", "summary": "Strong historical and strategic ties, with Germany serving as Israel's most important partner in Europe." },
+    { "countryId": "IRN", "countryName": "Iran", "type": "enemy", "sentiment": "negative", "summary": "Zero-sum geopolitical and ideological rivalry characterized by shadow wars and proxy conflicts." },
+    { "countryId": "EGY", "countryName": "Egypt", "type": "strategic_partner", "sentiment": "neutral", "summary": "A cold peace maintained by deep security coordination on border control and regional stability." },
+    { "countryId": "ARE", "countryName": "United Arab Emirates", "type": "ally", "sentiment": "positive", "summary": "Rapidly growing partnership in trade, aviation, and defense following the 2020 normalization." }
+  ],
+  "perspectives": [
+    { "source": "Zionist Security Realist", "bias": "Security-centric", "view": "Israel must maintain military superiority and 'iron-clad' defenses to ensure survival in a hostile neighborhood." },
+    { "source": "Tech Entrepreneur", "bias": "Pro-market", "view": "Global integration and technological leadership are the best ways to ensure Israel's long-term prosperity and soft power." },
+    { "source": "Arab-Israeli Citizen", "bias": "Minority Rights", "view": "Full civic equality and a resolution to the Palestinian conflict are essential for a truly stable and democratic Israel." },
+    { "source": "Ultra-Orthodox Leader", "bias": "Religious", "view": "The state's primary mission should be the preservation of Jewish law and tradition, which are the true foundation of the nation." }
+  ],
+  "historicalContext": {
+    "summary": "Established in 1948 as a homeland for the Jewish people following the Holocaust, Israel has been defined by its struggle for security and its rapid development from an agrarian economy to a global tech hub.",
+    "keyEvents": [
+      { "year": 1948, "event": "Declaration of Independence and the first Arab-Israeli War." },
+      { "year": 1967, "event": "Six-Day War; Israel captures the West Bank, Gaza, and Golan Heights." },
+      { "year": 1973, "event": "Yom Kippur War; leads to subsequent peace process with Egypt." },
+      { "year": 1979, "event": "Israel-Egypt Peace Treaty signed." },
+      { "year": 1993, "event": "Oslo Accords; attempt at a two-state solution framework." },
+      { "year": 2005, "event": "Disengagement from the Gaza Strip." },
+      { "year": 2010, "event": "Discovery of major offshore natural gas fields (Leviathan)." },
+      { "year": 2020, "event": "Signing of the Abraham Accords normalizing ties with UAE and Bahrain." },
+      { "year": 2023, "event": "Major domestic protests over judicial reform followed by the Oct 7 attacks and war." }
+    ]
+  },
+  "investmentNotes": {
+    "strengths": ["World-leading innovation ecosystem", "Highly skilled workforce", "Natural gas energy independence", "Resilient capital markets"],
+    "risks": ["Severe geopolitical instability/war", "High domestic political polarization", "Labor shortages in non-tech sectors", "Dependence on U.S. military aid"],
+    "sectors": ["Cybersecurity", "Medical Technology", "Artificial Intelligence", "Defense Technology"]
+  },
+  "sources": [
+    { "name": "Central Bureau of Statistics", "url": "https://www.cbs.gov.il/en", "type": "economic" },
+    { "name": "Bank of Israel", "url": "https://www.boi.org.il/en", "type": "economic" },
+    { "name": "Israel Innovation Authority", "url": "https://innovationisrael.org.il/en/", "type": "technology" }
+  ]
+}

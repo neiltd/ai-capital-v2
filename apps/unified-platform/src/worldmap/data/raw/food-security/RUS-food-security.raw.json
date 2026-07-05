@@ -1,0 +1,27 @@
+[
+  {
+    "countryId": "RUS",
+    "year": 2022,
+    "overallScore": 69.1,
+    "availability": 65.8,
+    "access": 83.4,
+    "utilization": 79.4,
+    "stability": 51.2,
+    "undernourishedPct": 2.5,
+    "foodImportDependencyPct": -72.6,
+    "cerealYieldKgHa": 3167,
+    "climateVulnerability": "low",
+    "conflictExposure": "extreme",
+    "attribution": {
+      "sources": [
+        { "name": "GFSI 2022 — Russia", "url": "https://impact.economist.com/sustainability/project/food-security-index/", "accessedAt": "2026-05-10" },
+        { "name": "FAO FAOSTAT", "url": "https://www.fao.org/faostat/en/", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 2,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  }
+]

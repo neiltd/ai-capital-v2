@@ -1,0 +1,64 @@
+{
+  "id": "ATG",
+  "iso2": "AG",
+  "name": "Antigua and Barbuda",
+  "region": "Americas",
+  "subregion": "Caribbean",
+  "capital": "Saint John's",
+  "lastUpdated": "2026-05-15",
+  "summary": "Antigua and Barbuda has successfully navigated the post-pandemic recovery, with its economy surpassing 2019 levels by late 2024. Under Prime Minister Gaston Browne, the nation has prioritized infrastructure development and tourism expansion, co-hosting major events like the 4th International Conference on SIDS and the T20 Cricket World Cup in 2024. While fiscal performance is improving, the government remains burdened by high gross financing needs and persistent arrears. The country is a staunch advocate for climate justice and has been at the forefront of international efforts to establish a multi-dimensional vulnerability index for small island states. Despite its high-income status, the twin-island nation faces challenges from environmental vulnerability and the need for greater economic diversification beyond the high-end tourism and yachting sectors.",
+  "indicators": {
+    "politicalStability":       { "score": 7, "score_description": "Stable parliamentary democracy with clear political leadership under the ABLP.", "trend": "stable", "confidence": "high", "note": "Gaston Browne's administration maintains a firm grip on policy direction despite occasional industrial friction." },
+    "economicDirection":        { "score": 6, "score_description": "Robust tourism-led growth tempered by high debt and fiscal arrears.", "trend": "rising", "confidence": "high", "note": "Real GDP growth remained strong at 4.3% in 2024, though debt sustainability remains a long-term concern." },
+    "investmentAttractiveness": { "score": 6, "score_description": "Highly attractive for luxury tourism and maritime services, with a growing energy sector.", "trend": "stable", "confidence": "high", "note": "The country offers a stable environment for FDI, particularly in the blue economy and hospitality." },
+    "geopoliticalRisk":         { "score": 3, "score_description": "Low risk, focused on regional cooperation and climate diplomacy.", "trend": "stable", "confidence": "high", "note": "Active role in CARICOM and OECS; leading voice for Small Island Developing States (SIDS)." },
+    "educationQuality":         { "score": 6, "score_description": "High literacy rates and home to the UWI Five Islands Campus.", "trend": "rising", "confidence": "medium", "note": "Expansion of the UWI campus is enhancing local access to higher education and technical training." },
+    "healthcareQuality":        { "score": 6, "score_description": "Modern facilities at Mount St. John's Medical Centre, but some specialized services require overseas travel.", "trend": "stable", "confidence": "medium", "note": "Continuous investment in health infrastructure is improving domestic outcomes." },
+    "technologyInvestment":     { "score": 5, "score_description": "Improving digital infrastructure and e-government services.", "trend": "rising", "confidence": "medium", "note": "The government is pushing for a more digitized public sector to improve efficiency and business ease." }
+  },
+  "demographics": {
+    "population": 95300,
+    "medianAge": 35.3,
+    "urbanizationRate": 24,
+    "majorEthnicGroups": ["Black African descent", "Mixed descent", "European", "East Indian"],
+    "religions": [
+      { "name": "Protestant", "percent": 68 },
+      { "name": "Roman Catholic", "percent": 8 },
+      { "name": "None/Unaffiliated", "percent": 6 },
+      { "name": "Other", "percent": 18 }
+    ]
+  },
+  "alliances": ["CARICOM", "OECS", "OAS", "UN", "Commonwealth", "SIDS", "CELAC"],
+  "relationships": [
+    { "countryId": "USA", "countryName": "United States", "type": "partner", "sentiment": "positive", "summary": "Close partner in regional security and trade; significant source of tourism." },
+    { "countryId": "CHN", "countryName": "China", "type": "partner", "sentiment": "neutral", "summary": "Provider of concessional loans and grants for major infrastructure projects, including the airport and cargo port." },
+    { "countryId": "GBR", "countryName": "United Kingdom", "type": "partner", "sentiment": "positive", "summary": "Strong historical ties; cooperation in justice and education sectors." },
+    { "countryId": "BRB", "countryName": "Barbados", "type": "neighbor", "sentiment": "positive", "summary": "Key regional ally within the OECS and CARICOM framework." }
+  ],
+  "perspectives": [
+    { "source": "Tourism Developer", "bias": "Pro-Growth", "view": "Antigua remains a premier destination; our focus on high-value tourism is paying off, but we need more consistent utility services." },
+    { "source": "Environmental Advocate", "bias": "Ecological", "view": "Development must not come at the cost of our mangroves and reefs; climate resilience is our only path forward." },
+    { "source": "Public Sector Employee", "bias": "Social Stability", "view": "While the economy is growing, the cost of living remains high, and we need to see the benefits reach the average worker." }
+  ],
+  "historicalContext": {
+    "summary": "Antigua was settled by the British in 1632 and became a major sugar colony. It gained independence in 1981. The political landscape was dominated by the Bird family for decades before transitioning to a more competitive two-party system. The nation has survived several major hurricanes, which have significantly shaped its economic and disaster-preparedness policies.",
+    "keyEvents": [
+      { "year": 1834, "event": "Slavery is abolished in Antigua and Barbuda." },
+      { "year": 1981, "event": "Independence from the United Kingdom." },
+      { "year": 1995, "event": "Hurricane Luis causes catastrophic damage, reshaping the tourism industry." },
+      { "year": 2017, "event": "Hurricane Irma necessitates the total evacuation of Barbuda." },
+      { "year": 2023, "event": "Gaston Browne is re-elected Prime Minister." },
+      { "year": 2024, "event": "Hosted the 4th UN International Conference on Small Island Developing States (SIDS4)." }
+    ]
+  },
+  "investmentNotes": {
+    "strengths": ["Stable political environment", "High-end tourism and yachting hub", "Strategic location for maritime services", "Improving infrastructure"],
+    "risks": ["Climate change and hurricane vulnerability", "High public debt levels", "Reliance on imported energy", "Small market size"],
+    "sectors": ["Luxury Tourism", "Real Estate", "Financial Services", "Renewable Energy", "Maritime Services"]
+  },
+  "sources": [
+    { "name": "Government of Antigua and Barbuda", "url": "https://ab.gov.ag/", "type": "official" },
+    { "name": "IMF Country Report", "url": "https://www.imf.org/en/Countries/ATG", "type": "economic" },
+    { "name": "Eastern Caribbean Central Bank", "url": "https://www.eccb-centralbank.org/", "type": "economic" }
+  ]
+}

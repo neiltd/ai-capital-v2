@@ -1,0 +1,38 @@
+[
+  {
+    "countryId": "JPN",
+    "year": 2023,
+    "electricityConsumptionTWh": 981.5,
+    "electricityProductionTWh": 1006.7,
+    "electricityMix": {
+      "gas": 29.0,
+      "coal": 28.3,
+      "solar": 11.2,
+      "oil": 9.3,
+      "nuclear": 7.7,
+      "hydro": 7.5,
+      "otherRenewables": 5.7,
+      "other": 1.3
+    },
+    "renewableSharePct": 25.7,
+    "waterStressScore": 1.8,
+    "waterWithdrawalPct": 18.0,
+    "foodSecurityScore": 79.5,
+    "aiAdoptionScore": 75.08,
+    "internetPenetration": 91.0,
+    "mobilePenetration": 160,
+    "attribution": {
+      "sources": [
+        { "name": "ISEP Japan Energy Mix 2023", "url": "https://www.isep.or.jp", "accessedAt": "2024-05-10" },
+        { "name": "WRI Aqueduct 4.0", "url": "https://www.wri.org/aqueduct", "accessedAt": "2024-05-10" },
+        { "name": "Global Food Security Index 2022", "url": "https://impact.economist.com/sustainability/project/food-security-index", "accessedAt": "2024-05-10" },
+        { "name": "Oxford Insights AI Readiness Index 2023", "url": "https://oxfordinsights.com", "accessedAt": "2024-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 4,
+        "lastVerified": "2024-05-10"
+      }
+    }
+  }
+]

@@ -1,0 +1,46 @@
+/* Tailwind is already loaded via app globals.css — no re-import needed */
+
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  background: #070B14;
+  color: #CBD5E1;
+  font-family: 'Inter', system-ui, -apple-system, sans-serif;
+  overflow: hidden;
+  -webkit-font-smoothing: antialiased;
+}
+
+#root {
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Scrollbar */
+::-webkit-scrollbar { width: 4px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: #1E2D4A; border-radius: 4px; }
+
+/* Conflict pulse animation */
+@keyframes conflict-pulse {
+  0%   { transform: scale(1); opacity: 0.6; }
+  70%  { transform: scale(3); opacity: 0; }
+  100% { transform: scale(1); opacity: 0; }
+}
+.conflict-pulse {
+  animation: conflict-pulse 2.2s ease-out infinite;
+  transform-origin: center;
+  transform-box: fill-box;
+}
+
+/* Smooth panel slide */
+.panel-enter { animation: slideIn 0.25s ease-out; }
+@keyframes slideIn {
+  from { transform: translateX(100%); opacity: 0; }
+  to   { transform: translateX(0);    opacity: 1; }
+}

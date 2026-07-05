@@ -1,0 +1,27 @@
+[
+  {
+    "countryId": "EGY",
+    "year": 2023,
+    "overallScore": 56.0,
+    "availability": 51.1,
+    "access": 49.3,
+    "utilization": 71.1,
+    "stability": 51.9,
+    "undernourishedPct": 8.5,
+    "foodImportDependencyPct": 44.0,
+    "cerealYieldKgHa": 7402,
+    "climateVulnerability": "high",
+    "conflictExposure": "medium",
+    "attribution": {
+      "sources": [
+        { "name": "GFSI 2022 — Egypt", "url": "https://impact.economist.com/sustainability/project/food-security-index/", "accessedAt": "2025-05-15" },
+        { "name": "FAO FAOSTAT — Egypt", "url": "https://www.fao.org/faostat/en/", "accessedAt": "2025-05-15" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 2,
+        "lastVerified": "2025-05-15"
+      }
+    }
+  }
+]

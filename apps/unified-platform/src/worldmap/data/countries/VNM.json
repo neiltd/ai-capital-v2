@@ -1,0 +1,71 @@
+{
+  "id": "VNM",
+  "iso2": "VN",
+  "name": "Vietnam",
+  "region": "Asia",
+  "subregion": "South-Eastern Asia",
+  "capital": "Hanoi",
+  "lastUpdated": "2026-05-09",
+  "summary": "Vietnam is one of Asia's most dynamic emerging economies and a primary beneficiary of the 'China Plus One' supply chain diversification strategy. Governed by a single-party socialist system, it offers high political stability and a rapidly industrializing economy. Vietnam has successfully integrated into the global trade network through numerous FTAs. Its foreign policy is characterized by 'Bamboo Diplomacy'—being flexible but firm—balancing its critical economic relationship with China against its growing strategic partnership with the United States.",
+  "indicators": {
+    "politicalStability":       { "score": 8, "trend": "stable", "confidence": "high", "note": "Stable single-party rule with a strong focus on order and economic development, though internal anti-corruption campaigns can create temporary friction." },
+    "economicDirection":        { "score": 8, "trend": "rising", "confidence": "high", "note": "Export-led growth, strong FDI inflows, and a transition from low-tech to high-tech manufacturing (e.g., semiconductors)." },
+    "investmentAttractiveness": { "score": 8, "trend": "rising", "confidence": "high", "note": "Competitive labor costs, favorable trade agreements, and proactive government support for manufacturing." },
+    "geopoliticalRisk":         { "score": 6, "trend": "rising", "confidence": "medium", "note": "Direct territorial disputes with China in the South China Sea remain a primary security concern." },
+    "educationQuality":         { "score": 6, "trend": "rising", "confidence": "high", "note": "High performance in standardized testing (PISA) and a strong emphasis on STEM, though higher education needs modernization." },
+    "healthcareQuality":        { "score": 5, "trend": "rising", "confidence": "medium", "note": "Improving public health metrics and expanding private hospital networks, particularly in urban centers." },
+    "technologyInvestment":     { "score": 6, "trend": "rising", "confidence": "high", "note": "Increasing investment in digital infrastructure and a national strategy to become a regional high-tech hub." }
+  },
+  "demographics": {
+    "population": 100300000,
+    "medianAge": 33.3,
+    "urbanizationRate": 39,
+    "majorEthnicGroups": ["Kinh (Viet)", "Tay", "Thai", "Muong", "Hmong"],
+    "religions": [
+      { "name": "None/Folk Religion", "percent": 73.2 },
+      { "name": "Buddhist", "percent": 14.9 },
+      { "name": "Catholic", "percent": 7.4 },
+      { "name": "Caodaist", "percent": 1.1 },
+      { "name": "Other", "percent": 3.4 }
+    ]
+  },
+  "alliances": ["ASEAN", "APEC", "CPTPP", "RCEP", "IPEF"],
+  "relationships": [
+    { "countryId": "CHN", "countryName": "China", "type": "strategic_partner", "sentiment": "neutral", "summary": "Essential economic partner and ideological peer, but deeply strained by South China Sea sovereignty disputes." },
+    { "countryId": "USA", "countryName": "United States", "type": "comprehensive_strategic_partner", "sentiment": "positive", "summary": "Rapidly deepening security and economic ties as a counterweight to Chinese regional dominance." },
+    { "countryId": "JPN", "countryName": "Japan", "type": "strategic_partner", "sentiment": "positive", "summary": "Major source of ODA and high-quality infrastructure investment; shared interest in maritime security." },
+    { "countryId": "KOR", "countryName": "South Korea", "type": "strategic_partner", "sentiment": "positive", "summary": "Largest source of FDI, particularly in the electronics sector (Samsung)." },
+    { "countryId": "RUS", "countryName": "Russia", "type": "strategic_partner", "sentiment": "neutral", "summary": "Historical defense partner; relationship continues but is complicated by global sanctions and Vietnam's diversification." }
+  ],
+  "perspectives": [
+    { "source": "Party Reformer", "bias": "Pro-Market Socialist", "view": "We must continue 'Doi Moi' reforms to integrate further into the world economy while ensuring the Party remains the vanguard of national stability." },
+    { "source": "Bamboo Diplomat", "bias": "Pragmatic Realist", "view": "Vietnam must maintain good relations with all major powers, acting like bamboo—strong roots but flexible branches—to avoid being crushed in Great Power competition." },
+    { "source": "Manufacturing Executive", "bias": "Economic Nationalist", "view": "Vietnam is the best alternative to China; our goal is to move from simple assembly to design and advanced component manufacturing." },
+    { "source": "Maritime Security Expert", "bias": "Defense-centric", "view": "The East Sea (South China Sea) is our existential lifeline; we must modernize our coast guard and navy to protect our sovereignty." }
+  ],
+  "historicalContext": {
+    "summary": "Vietnam has a long history of resisting foreign occupation, including a thousand years of Chinese rule and nearly a century of French colonialism. Following the division of the country and the Vietnam War, it was reunified in 1975. The 1986 'Doi Moi' reforms marked a pivotal shift toward a market-oriented economy.",
+    "keyEvents": [
+      { "year": 1945, "event": "Ho Chi Minh declares independence from France." },
+      { "year": 1954, "event": "Battle of Dien Bien Phu; Vietnam is partitioned into North and South." },
+      { "year": 1975, "event": "Fall of Saigon; reunification of Vietnam under Communist rule." },
+      { "year": 1986, "event": "Launching of 'Doi Moi' (Renovation) economic reforms." },
+      { "year": 1995, "event": "Normalization of diplomatic relations with the United States and joining ASEAN." },
+      { "year": 2007, "event": "Vietnam officially joins the World Trade Organization (WTO)." },
+      { "year": 2018, "event": "Vietnam signs the CPTPP, signaling deep commitment to high-standard trade." },
+      { "year": 2021, "event": "13th National Party Congress reaffirms focus on high-tech growth and anti-corruption." },
+      { "year": 2023, "event": "Diplomatic ties with the US upgraded to 'Comprehensive Strategic Partnership'." },
+      { "year": 2024, "event": "Leadership transitions emphasize continuity in 'Bamboo Diplomacy'." }
+    ]
+  },
+  "investmentNotes": {
+    "strengths": ["Strategic location next to China", "Young, literate, and cost-competitive workforce", "Stable political environment", "Broad network of Free Trade Agreements"],
+    "risks": ["Infrastructure bottlenecks (electricity)", "Regulatory opacity", "High corruption risk", "Limited domestic supply chain depth"],
+    "sectors": ["Electronics Manufacturing", "Semiconductors", "Renewable Energy (Wind/Solar)", "Textiles & Footwear"]
+  },
+  "sources": [
+    { "name": "General Statistics Office of Vietnam", "url": "https://www.gso.gov.vn/en/", "type": "demographic" },
+    { "name": "Ministry of Planning and Investment", "url": "https://www.mpi.gov.vn/en/", "type": "economic" },
+    { "name": "State Bank of Vietnam", "url": "https://www.sbv.gov.vn/", "type": "economic" }
+  ]
+}

@@ -1,0 +1,66 @@
+{
+  "id": "TTO",
+  "iso2": "TT",
+  "name": "Trinidad and Tobago",
+  "region": "Americas",
+  "subregion": "Caribbean",
+  "capital": "Port of Spain",
+  "lastUpdated": "2026-05-15",
+  "summary": "Trinidad and Tobago, the Caribbean’s leading industrial and energy powerhouse, underwent a major political shift in April 2025 with the return to power of the United National Congress (UNC) under Prime Minister Kamla Persad-Bissessar. The new administration is focused on revitalizing the energy sector, which faced production constraints in 2024, while aggressively promoting economic diversification in manufacturing, services, and the digital economy. The nation remains a key regional financial hub and the most developed economy in CARICOM. However, it continues to struggle with high rates of gang-related crime, leading to the extension of a State of Emergency into early 2025. With a sophisticated industrial base and a unique cultural heritage, Trinidad and Tobago is positioning itself as a gateway between the Americas and a leader in regional security and trade.",
+  "indicators": {
+    "politicalStability":       { "score": 7, "score_description": "Stable parliamentary democracy; the 2025 election saw a peaceful transition of power.", "trend": "stable", "confidence": "high", "note": "Vibrant political competition is a hallmark of the country's democracy." },
+    "economicDirection":        { "score": 6, "score_description": "Focus on energy revitalization and non-energy sector growth.", "trend": "rising", "confidence": "high", "note": "Efforts to optimize natural gas production and expand manufacturing are priorities." },
+    "investmentAttractiveness": { "score": 7, "score_description": "Highly attractive for energy, manufacturing, and financial services.", "trend": "stable", "confidence": "high", "note": "Offers a sophisticated infrastructure and a skilled professional workforce." },
+    "geopoliticalRisk":         { "score": 4, "score_description": "Moderate risk; significant regional player with complex neighborhood dynamics.", "trend": "stable", "confidence": "high", "note": "Key partner for the U.S. in security; maintains important ties with Venezuela for energy." },
+    "educationQuality":         { "score": 7, "score_description": "High standards of education with a well-established university system (UWI St. Augustine).", "trend": "stable", "confidence": "high", "note": "Strong focus on STEM and technical skills for the industrial sector." },
+    "healthcareQuality":        { "score": 6, "score_description": "Relatively advanced public and private systems; several new modern hospitals commissioned.", "trend": "stable", "confidence": "medium", "note": "Focus on improving service delivery and reducing wait times in public facilities." },
+    "technologyInvestment":     { "score": 6, "score_description": "Significant investment in digital infrastructure and fintech.", "trend": "rising", "confidence": "high", "note": "The country is a regional leader in ICT and digital government initiatives." }
+  },
+  "demographics": {
+    "population": 1370000,
+    "medianAge": 36.2,
+    "urbanizationRate": 53,
+    "majorEthnicGroups": ["East Indian descent", "Black African descent", "Mixed descent", "European/Chinese/Middle Eastern"],
+    "religions": [
+      { "name": "Protestant", "percent": 32 },
+      { "name": "Roman Catholic", "percent": 21 },
+      { "name": "Hindu", "percent": 18 },
+      { "name": "Muslim", "percent": 5 },
+      { "name": "Other Christian", "percent": 12 },
+      { "name": "None/Other", "percent": 12 }
+    ]
+  },
+  "alliances": ["CARICOM", "OAS", "UN", "Commonwealth", "SIDS", "CELAC"],
+  "relationships": [
+    { "countryId": "USA", "countryName": "United States", "type": "partner", "sentiment": "positive", "summary": "Major trade partner and source of FDI; close cooperation on security and counter-narcotics." },
+    { "countryId": "VEN", "countryName": "Venezuela", "type": "neighbor", "sentiment": "neutral", "summary": "Complex but vital relationship focusing on shared natural gas fields (Dragon Field)." },
+    { "countryId": "GUY", "countryName": "Guyana", "type": "partner", "sentiment": "positive", "summary": "Growing economic partnership as Guyana emerges as a major energy player." },
+    { "countryId": "GBR", "countryName": "United Kingdom", "type": "partner", "sentiment": "positive", "summary": "Strong historical, cultural, and legal ties." }
+  ],
+  "perspectives": [
+    { "source": "Energy Executive", "bias": "Industrial", "view": "The focus must remain on natural gas; it's our lifeblood and the key to our transition to a greener future." },
+    { "source": "Manufacturing Leader", "bias": "Diversification", "view": "We are more than just oil and gas; our products are found all over the Caribbean and we are ready for the global stage." },
+    { "source": "Civil Society Leader", "bias": "Social Justice", "view": "Economic wealth must be matched by public safety; crime is the single biggest threat to our quality of life." }
+  ],
+  "historicalContext": {
+    "summary": "Trinidad was a Spanish colony before being captured by the British in 1797. Tobago changed hands between the British, French, and Dutch many times before being joined with Trinidad in 1889. The country gained independence in 1962 and became a republic in 1976. Its history is uniquely shaped by the 19th-century arrival of indentured laborers from India, creating one of the most ethnically diverse societies in the region. The discovery of oil and gas in the 20th century transformed it into an industrial leader.",
+    "keyEvents": [
+      { "year": 1889, "event": "Trinidad and Tobago are formally joined as a single colony." },
+      { "year": 1962, "event": "Trinidad and Tobago gains independence from the United Kingdom." },
+      { "year": 1976, "event": "The country becomes a Republic." },
+      { "year": 1990, "event": "An attempted coup by the Jamaat al Muslimeen briefly destabilizes the nation." },
+      { "year": 2024, "event": "National symbol reform: Coat of Arms redesigned to remove Columbus's ships." },
+      { "year": 2025, "event": "The UNC wins the general election; Kamla Persad-Bissessar becomes Prime Minister." }
+    ]
+  },
+  "investmentNotes": {
+    "strengths": ["Most industrialized and diversified economy in the Caribbean", "Abundant natural gas and oil reserves", "Sophisticated financial and professional services sector", "Skilled and educated workforce"],
+    "risks": ["High rates of violent, gang-related crime", "Exposure to global energy price volatility", "Bureaucratic hurdles in the business environment", "Ageing energy infrastructure (being addressed)"],
+    "sectors": ["Oil and Natural Gas", "Petrochemicals", "Manufacturing (Food, Beverages, Materials)", "Financial Services", "ICT and Digital Economy"]
+  },
+  "sources": [
+    { "name": "Central Bank of Trinidad and Tobago", "url": "https://www.central-bank.org.tt/", "type": "official" },
+    { "name": "Central Statistical Office of T&T", "url": "https://cso.gov.tt/", "type": "official" },
+    { "name": "IMF Trinidad and Tobago Page", "url": "https://www.imf.org/en/Countries/TTO", "type": "economic" }
+  ]
+}

@@ -1,0 +1,30 @@
+[
+  {
+    "countryId": "SGP",
+    "year": 2023,
+    "aiReadinessScore": 81.97,
+    "aiAdoptionScore": 50.0,
+    "aiTalentScore": 39.38,
+    "aiInvestmentUsdM": 2000,
+    "aiStartupCount": 548,
+    "aiUnicornCount": 4,
+    "hasNationalAiStrategy": true,
+    "aiStrategyYear": 2019,
+    "aiPolicyScore": 79.82,
+    "cloudReadinessPct": null,
+    "broadbandPenetrationPct": 92.3,
+    "topAiSectors": ["Finance", "Healthcare", "Manufacturing", "Retail", "Logistics"],
+    "attribution": {
+      "sources": [
+        { "name": "Oxford Insights Government AI Readiness Index 2023", "url": "https://oxfordinsights.com/ai-readiness/ai-readiness-index/", "accessedAt": "2025-05-14" },
+        { "name": "Tortoise Media Global AI Index 2023", "url": "https://www.tortoisemedia.com/intelligence/global-ai/", "accessedAt": "2025-05-14" },
+        { "name": "Singapore Government & Tech Reports (2023)", "url": "https://www.aisingapore.org", "accessedAt": "2025-05-14" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 3,
+        "lastVerified": "2025-05-14"
+      }
+    }
+  }
+]

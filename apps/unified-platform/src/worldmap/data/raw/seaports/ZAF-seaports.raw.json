@@ -1,0 +1,218 @@
+[
+  {
+    "id": "PORT-ZAF-DURBAN",
+    "name": "Port of Durban",
+    "countryId": "ZAF",
+    "city": "Durban",
+    "coordinates": [31.0333, -29.8667],
+    "type": "container",
+    "annualThroughputTEU": 2700000,
+    "annualThroughputTonnes": 81200000,
+    "berthCount": 59,
+    "maxDraftM": 12.8,
+    "strategicImportance": "critical",
+    "riskLevel": "low",
+    "geopoliticalNotes": "Busiest port in Sub-Saharan Africa and primary container hub for South Africa. Gateway to Gauteng industrial heartland and SADC neighbors.",
+    "notes": "Handles over 60% of South Africa's container traffic.",
+    "attribution": {
+      "sources": [
+        { "name": "Transnet National Ports Authority", "url": "https://www.transnetnationalportsauthority.net", "accessedAt": "2026-05-10" },
+        { "name": "FreightMango", "url": "https://www.freightmango.com", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 2,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  },
+  {
+    "id": "PORT-ZAF-RICHARDS-BAY",
+    "name": "Port of Richards Bay",
+    "countryId": "ZAF",
+    "city": "Richards Bay",
+    "coordinates": [32.05, -28.8167],
+    "type": "bulk",
+    "annualThroughputTEU": null,
+    "annualThroughputTonnes": 91000000,
+    "berthCount": 21,
+    "maxDraftM": 19.0,
+    "strategicImportance": "high",
+    "riskLevel": "low",
+    "geopoliticalNotes": "South Africa's premier bulk cargo port. Houses the Richards Bay Coal Terminal (RBCT), the largest coal export facility in Africa.",
+    "notes": "Deep-water port designed for large-scale mineral exports.",
+    "attribution": {
+      "sources": [
+        { "name": "Transnet National Ports Authority", "url": "https://www.transnetnationalportsauthority.net", "accessedAt": "2026-05-10" },
+        { "name": "Wikipedia", "url": "https://en.wikipedia.org/wiki/Port_of_Richards_Bay", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 2,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  },
+  {
+    "id": "PORT-ZAF-CAPE-TOWN",
+    "name": "Port of Cape Town",
+    "countryId": "ZAF",
+    "city": "Cape Town",
+    "coordinates": [18.4333, -33.9],
+    "type": "container",
+    "annualThroughputTEU": 840000,
+    "annualThroughputTonnes": 5000000,
+    "berthCount": 34,
+    "maxDraftM": 15.5,
+    "strategicImportance": "high",
+    "riskLevel": "low",
+    "geopoliticalNotes": "'Gateway to the West' and primary hub for agricultural exports (deciduous fruit, wine). Major transshipment point between continents.",
+    "notes": "Handles significant volumes of perishables and high-value cargo.",
+    "attribution": {
+      "sources": [
+        { "name": "Transnet National Ports Authority", "url": "https://www.transnetnationalportsauthority.net", "accessedAt": "2026-05-10" },
+        { "name": "Wesgro", "url": "https://www.wesgro.co.za", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 2,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  },
+  {
+    "id": "PORT-ZAF-SALDANHA-BAY",
+    "name": "Port of Saldanha Bay",
+    "countryId": "ZAF",
+    "city": "Saldanha Bay",
+    "coordinates": [17.9833, -33.0],
+    "type": "bulk",
+    "annualThroughputTEU": null,
+    "annualThroughputTonnes": 67000000,
+    "berthCount": 6,
+    "maxDraftM": 21.5,
+    "strategicImportance": "high",
+    "riskLevel": "low",
+    "geopoliticalNotes": "Largest and deepest natural port in the Southern Hemisphere. Dedicated export hub for iron ore and critical crude oil storage.",
+    "notes": "Linked via 861km heavy-haul rail line to Sishen mines.",
+    "attribution": {
+      "sources": [
+        { "name": "Transnet National Ports Authority", "url": "https://www.transnetnationalportsauthority.net", "accessedAt": "2026-05-10" },
+        { "name": "Shipping Wilson", "url": "https://www.shippingwilson.com", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 2,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  },
+  {
+    "id": "PORT-ZAF-NGQURA",
+    "name": "Port of Ngqura",
+    "countryId": "ZAF",
+    "city": "Coega",
+    "coordinates": [25.6833, -33.8],
+    "type": "container",
+    "annualThroughputTEU": 620000,
+    "annualThroughputTonnes": 14300000,
+    "berthCount": 7,
+    "maxDraftM": 16.0,
+    "strategicImportance": "high",
+    "riskLevel": "low",
+    "geopoliticalNotes": "South Africa's newest and deepest container port. Designed as a transshipment hub to relieve Durban and Cape Town.",
+    "notes": "Integrated into Coega Special Economic Zone (SEZ); future manganese hub.",
+    "attribution": {
+      "sources": [
+        { "name": "Transnet National Ports Authority", "url": "https://www.transnetnationalportsauthority.net", "accessedAt": "2026-05-10" },
+        { "name": "Logistics Cluster", "url": "https://dlca.logcluster.org", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 2,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  },
+  {
+    "id": "PORT-ZAF-PORT-ELIZABETH",
+    "name": "Port of Port Elizabeth",
+    "countryId": "ZAF",
+    "city": "Gqeberha",
+    "coordinates": [25.6333, -33.95],
+    "type": "mixed",
+    "annualThroughputTEU": null,
+    "annualThroughputTonnes": 11000000,
+    "berthCount": 10,
+    "maxDraftM": 12.2,
+    "strategicImportance": "medium",
+    "riskLevel": "low",
+    "geopoliticalNotes": "Major hub for the automotive industry (exporting vehicles and components). Vital for Eastern Cape manufacturing.",
+    "notes": "Multi-cargo port; some bulk operations shifting to Ngqura.",
+    "attribution": {
+      "sources": [
+        { "name": "Transnet National Ports Authority", "url": "https://www.transnetnationalportsauthority.net", "accessedAt": "2026-05-10" },
+        { "name": "Engineering News", "url": "https://www.engineeringnews.co.za", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 2,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  },
+  {
+    "id": "PORT-ZAF-EAST-LONDON",
+    "name": "Port of East London",
+    "countryId": "ZAF",
+    "city": "East London",
+    "coordinates": [27.9167, -33.0167],
+    "type": "multipurpose",
+    "annualThroughputTEU": 90000,
+    "annualThroughputTonnes": null,
+    "berthCount": 11,
+    "maxDraftM": 10.4,
+    "strategicImportance": "medium",
+    "riskLevel": "low",
+    "geopoliticalNotes": "South Africa's only commercial river port. Strategically vital for the automotive sector (Mercedes-Benz).",
+    "notes": "Features the largest grain elevator in the country.",
+    "attribution": {
+      "sources": [
+        { "name": "Transnet National Ports Authority", "url": "https://www.transnetnationalportsauthority.net", "accessedAt": "2026-05-10" },
+        { "name": "Unisco", "url": "https://www.unisco.com", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 2,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  },
+  {
+    "id": "PORT-ZAF-MOSSEL-BAY",
+    "name": "Port of Mossel Bay",
+    "countryId": "ZAF",
+    "city": "Mossel Bay",
+    "coordinates": [22.1333, -34.1833],
+    "type": "oil",
+    "annualThroughputTEU": null,
+    "annualThroughputTonnes": 2000000,
+    "berthCount": 2,
+    "maxDraftM": 10.0,
+    "strategicImportance": "low",
+    "riskLevel": "low",
+    "geopoliticalNotes": "Smallest commercial port, primarily serving the oil and gas industry. Base for PetroSA's offshore operations.",
+    "notes": "Handles petroleum products for the Garden Route region.",
+    "attribution": {
+      "sources": [
+        { "name": "Transnet National Ports Authority", "url": "https://www.transnetnationalportsauthority.net", "accessedAt": "2026-05-10" },
+        { "name": "Shipping Wilson", "url": "https://www.shippingwilson.com", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 2,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  }
+]

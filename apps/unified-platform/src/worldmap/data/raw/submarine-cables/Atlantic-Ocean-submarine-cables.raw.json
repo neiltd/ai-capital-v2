@@ -1,0 +1,94 @@
+[
+  {
+    "id": "dunant",
+    "name": "Dunant",
+    "route": [
+      [-76.0, 36.8],
+      [-50.0, 40.0],
+      [-20.0, 45.0],
+      [-1.9, 46.7]
+    ],
+    "landingPoints": [
+      {
+        "name": "Virginia Beach",
+        "countryId": "USA",
+        "coordinates": [-75.98, 36.85],
+        "city": "Virginia Beach"
+      },
+      {
+        "name": "Saint-Hilaire-de-Riez",
+        "countryId": "FRA",
+        "coordinates": [-1.94, 46.72],
+        "city": "Saint-Hilaire-de-Riez"
+      }
+    ],
+    "status": "active",
+    "lengthKm": 6400,
+    "capacityTbps": 250,
+    "yearLaid": 2020,
+    "yearRepaired": null,
+    "owners": ["Google", "Orange"],
+    "vulnerabilities": "High-capacity trans-Atlantic link; damage would significantly impact US-Europe data traffic.",
+    "geopoliticalNotes": "A private cable by Google, highlighting the shift from carrier-owned to content-provider-owned infrastructure.",
+    "notes": "Utilizes Space Division Multiplexing (SDM) technology.",
+    "attribution": {
+      "sources": [
+        { "name": "TeleGeography SubmarineCableMap", "url": "https://www.submarinecablemap.com/submarine-cable/dunant", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 1,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  },
+  {
+    "id": "ellalink",
+    "name": "EllaLink",
+    "route": [
+      [-46.4, -23.9],
+      [-34.8, -8.0],
+      [-25.0, 15.0],
+      [-9.4, 38.7]
+    ],
+    "landingPoints": [
+      {
+        "name": "Praia Grande",
+        "countryId": "BRA",
+        "coordinates": [-46.40, -23.99],
+        "city": "Santos"
+      },
+      {
+        "name": "Fortaleza",
+        "countryId": "BRA",
+        "coordinates": [-38.48, -3.72],
+        "city": "Fortaleza"
+      },
+      {
+        "name": "Sines",
+        "countryId": "PRT",
+        "coordinates": [-8.87, 37.95],
+        "city": "Sines"
+      }
+    ],
+    "status": "active",
+    "lengthKm": 6000,
+    "capacityTbps": 100,
+    "yearLaid": 2021,
+    "yearRepaired": null,
+    "owners": ["EllaLink"],
+    "vulnerabilities": "Direct link bypassing the US, providing alternative routing and reducing latency between South America and Europe.",
+    "geopoliticalNotes": "Strategically important for data sovereignty between the EU and South America, reducing reliance on US-centric routing.",
+    "notes": "The first high-capacity direct link between the two continents.",
+    "attribution": {
+      "sources": [
+        { "name": "TeleGeography SubmarineCableMap", "url": "https://www.submarinecablemap.com/submarine-cable/ellalink", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 1,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  }
+]

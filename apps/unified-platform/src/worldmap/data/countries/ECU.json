@@ -1,0 +1,65 @@
+{
+  "id": "ECU",
+  "iso2": "EC",
+  "name": "Ecuador",
+  "region": "Americas",
+  "subregion": "South America",
+  "capital": "Quito",
+  "lastUpdated": "2025-05-23",
+  "summary": "Ecuador is currently navigating a period of significant domestic security reform and economic stabilization. Under the administration of Daniel Noboa, who secured a full term in the April 2025 elections, the country is prioritizing an 'Iron Fist' approach to combat powerful drug cartels and address an unprecedented internal armed conflict. Economically, Ecuador remains fully dollarized, providing unique currency stability despite fiscal liquidity constraints and an ongoing $4 billion IMF program. The country is a global leader in high-value agribusiness and is increasingly looking to unlock its massive untapped mineral reserves as a 'new oil' growth driver. However, severe energy shortages due to hydroelectric dependency and persistent security risks remain critical hurdles to its long-term development.",
+  "indicators": {
+    "politicalStability":       { "score": 6, "score_description": "Fragile but stabilizing after the 2025 elections.", "trend": "improving", "confidence": "high", "note": "President Noboa's re-election provides policy continuity, though he faces a fragmented legislature and strong left-wing opposition." },
+    "economicDirection":        { "score": 5, "score_description": "Recovery mode under strict IMF-guided fiscal discipline.", "trend": "improving", "confidence": "high", "note": "GDP growth is projected at 1.7% for 2025 as the country implements tax increases and seeks to diversify its energy and mining sectors." },
+    "investmentAttractiveness": { "score": 5, "score_description": "Selective; high potential in mining offset by security risks.", "trend": "stable", "confidence": "high", "note": "Dollarization eliminates currency risk, but 'Country Risk' scores are volatile due to the security situation and energy crisis." },
+    "geopoliticalRisk":         { "score": 7, "score_description": "High internal security risk; stable but cooling foreign ties.", "trend": "stable", "confidence": "high", "note": "Internal conflict with gangs is the primary concern; diplomatically, Ecuador is strengthening U.S. ties while balancing a key FTA with China." },
+    "educationQuality":         { "score": 5, "score_description": "High literacy but budget diversions to security affect quality.", "trend": "stable", "confidence": "medium", "note": "Basic education remains a priority, but the 'security tax' has limited the scope for major infrastructure improvements in rural schools." },
+    "healthcareQuality":        { "score": 5, "score_description": "Overburdened public system; high-quality private options.", "trend": "stable", "confidence": "high", "note": "Public healthcare (IESS) faces budget constraints, while the private sector remains an affordable destination for medical tourism." },
+    "technologyInvestment":     { "score": 6, "score_description": "Focus on digital transformation and government modernization.", "trend": "rising", "confidence": "high", "note": "A major partnership with Google Cloud in 2025 aims to modernize public services and use AI for crime prevention." }
+  },
+  "demographics": {
+    "population": 18500000,
+    "medianAge": 29.8,
+    "urbanizationRate": 64,
+    "majorEthnicGroups": ["Mestizo", "Indigenous", "Afro-Ecuadorian", "White"],
+    "religions": [
+      { "name": "Roman Catholic", "percent": 74 },
+      { "name": "Evangelical", "percent": 11 },
+      { "name": "None/Other", "percent": 15 }
+    ]
+  },
+  "alliances": ["Andean Community (CAN)", "Alliance for Development in Democracy (ADD)", "CELAC", "OPEC (Former Member)"],
+  "relationships": [
+    { "countryId": "USA", "countryName": "United States", "type": "strategic_partner", "sentiment": "positive", "summary": "Primary security and trade partner; critical collaborator in anti-narcotics and migration management." },
+    { "countryId": "CHN", "countryName": "China", "type": "partner", "sentiment": "positive", "summary": "Key trade partner with a new FTA in force as of 2024; major creditor for infrastructure projects." },
+    { "countryId": "MEX", "countryName": "Mexico", "type": "adversary", "sentiment": "negative", "summary": "Diplomatic ties broken in 2024 following the raid on the Mexican Embassy in Quito; currently managed through international courts." },
+    { "countryId": "COL", "countryName": "Colombia", "type": "partner", "sentiment": "neutral", "summary": "Essential neighbor for border security and energy exchange, though tensions occasionally arise over migration and drug transit." },
+    { "countryId": "BRA", "countryName": "Brazil", "type": "partner", "sentiment": "positive", "summary": "Growing cooperation on regional security and Amazonian environmental protection." }
+  ],
+  "perspectives": [
+    { "source": "Noboa Administration Official", "bias": "Security-focused/Pro-Market", "view": "Restoring security is the prerequisite for all economic growth; we are taking the necessary hard steps to reclaim our country from organized crime." },
+    { "source": "Mining Investor", "bias": "Corporate/Optimistic", "view": "Ecuador is the final frontier for mining in the Andes; with the right security guarantees, it will become a global copper powerhouse." },
+    { "source": "Rural Resident", "bias": "Social Welfare", "view": "The security measures are needed, but the government must also address the lack of electricity and high cost of living that affects us every day." }
+  ],
+  "historicalContext": {
+    "summary": "Ecuador's history in the 21st century was dominated by the decade-long 'Citizen's Revolution' under Rafael Correa (2007-2017), which saw significant infrastructure investment alongside an authoritarian shift. Subsequent administrations have moved back toward market-friendly policies and closer ties with the U.S. The early 2020s have been marked by a dramatic escalation in organized crime violence, leading to the current state of 'Internal Armed Conflict'.",
+    "keyEvents": [
+      { "year": 1830, "event": "Ecuador leaves Gran Colombia and becomes an independent republic." },
+      { "year": 2000, "event": "Official adoption of the U.S. Dollar as the national currency." },
+      { "year": 2007, "event": "Election of Rafael Correa; start of the Citizen's Revolution." },
+      { "year": 2019, "event": "Massive protests against the removal of fuel subsidies." },
+      { "year": 2023, "event": "Daniel Noboa wins snap election following 'Muerte Cruzada' dissolution of parliament." },
+      { "year": 2024, "event": "Declaration of 'Internal Armed Conflict' against drug cartels." },
+      { "year": 2025, "event": "Daniel Noboa wins a full four-year term in the general elections." }
+    ]
+  },
+  "investmentNotes": {
+    "strengths": ["Full dollarization providing unique currency and inflation stability", "Massive untapped reserves of gold and copper", "World-class producer of high-value agriculture (Shrimp, Bananas, Cacao)", "Strategic Pacific location and relatively young workforce"],
+    "risks": ["High internal security risk from organized crime and cartels", "Energy dependency on hydroelectric power susceptible to drought", "Fiscal liquidity constraints and high debt-to-GDP ratio", "Potential for social unrest over austerity measures"],
+    "sectors": ["Mining (Gold, Copper)", "Renewable Energy (Solar, Wind)", "Agribusiness (Sustainable Shrimp, Specialty Coffee)", "Logistics and Port Development", "Fintech and Digital Modernization"]
+  },
+  "sources": [
+    { "name": "Central Bank of Ecuador", "url": "https://www.bce.fin.ec/", "type": "economic" },
+    { "name": "INEC (National Institute of Statistics and Censuses)", "url": "https://www.ecuadorencifras.gob.ec/", "type": "economic" },
+    { "name": "Ministry of Foreign Affairs and Human Mobility", "url": "https://www.cancilleria.gob.ec/", "type": "political" }
+  ]
+}

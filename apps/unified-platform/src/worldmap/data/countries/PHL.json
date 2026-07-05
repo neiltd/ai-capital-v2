@@ -1,0 +1,69 @@
+{
+  "id": "PHL",
+  "iso2": "PH",
+  "name": "Philippines",
+  "region": "Asia",
+  "subregion": "South-Eastern Asia",
+  "capital": "Manila",
+  "lastUpdated": "2025-05-20",
+  "summary": "The Philippines is one of Southeast Asia's fastest-growing economies, currently characterized by a young, productive workforce and a strategic pivot toward traditional Western alliances under President Ferdinand Marcos Jr. The nation is navigating a period of significant political realignment following the collapse of the 'UniTeam' alliance and the high-profile impeachment of Vice President Sara Duterte. Strategically, the Philippines has adopted a policy of 'assertive transparency' in the West Philippine Sea (South China Sea), strengthening security ties with the U.S., Japan, and Australia to counter maritime pressure. Economic priorities include infrastructure development and attracting high-tech manufacturing through targeted fiscal reforms.",
+  "indicators": {
+    "politicalStability":       { "score": 4, "trend": "declining", "confidence": "high", "note": "High-level political rift between the Marcos and Duterte factions; upcoming 2025 midterms are a critical test." },
+    "economicDirection":        { "score": 7, "trend": "stable", "confidence": "high", "note": "Strong GDP growth driven by services and industry; inflation returning to target range." },
+    "investmentAttractiveness": { "score": 7, "trend": "rising", "confidence": "high", "note": "New tax incentives (CREATE MORE Act) and infrastructure push are attracting foreign interest in manufacturing and tech." },
+    "geopoliticalRisk":         { "score": 7, "trend": "rising", "confidence": "high", "note": "High risk of maritime incidents in the South China Sea; increasing frequency of confrontations with Chinese vessels." },
+    "educationQuality":         { "score": 5, "trend": "stable", "confidence": "medium", "note": "Strong English-speaking workforce, but significant challenges in public education quality and digital literacy gaps." },
+    "healthcareQuality":        { "score": 5, "trend": "stable", "confidence": "medium", "note": "Excellent private facilities in Manila and Cebu; rural areas face significant underfunding and a shortage of medical personnel." },
+    "technologyInvestment":     { "score": 6, "trend": "rising", "confidence": "high", "note": "Rapid digital adoption; growing focus on data centers, cybersecurity, and electronics manufacturing." }
+  },
+  "demographics": {
+    "population": 119100000,
+    "medianAge": 26.6,
+    "urbanizationRate": 47,
+    "majorEthnicGroups": ["Tagalog", "Bisaya/Binisaya", "Ilocano", "Hiligaynon/Ilonggo", "Bicolano"],
+    "religions": [
+      { "name": "Roman Catholic", "percent": 78.8 },
+      { "name": "Muslim", "percent": 6.4 },
+      { "name": "Iglesia ni Cristo", "percent": 2.6 },
+      { "name": "Other Christian", "percent": 6.7 },
+      { "name": "Other", "percent": 5.5 }
+    ]
+  },
+  "alliances": ["ASEAN", "Mutual Defense Treaty (US)", "APEC", "RCEP", "IPEF", "The Squad (US-JP-AU-PH)"],
+  "relationships": [
+    { "countryId": "USA", "countryName": "United States", "type": "treaty_ally", "sentiment": "positive", "summary": "Full restoration of security ties; expanded access to military bases and deepening economic cooperation." },
+    { "countryId": "CHN", "countryName": "China", "type": "strategic_competitor", "sentiment": "negative", "summary": "Relationship is at a low point due to maritime disputes; economic ties remain significant but are under geopolitical pressure." },
+    { "countryId": "JPN", "countryName": "Japan", "type": "strategic_partner", "sentiment": "positive", "summary": "Largest donor and major investor; security cooperation is deepening through a new Reciprocal Access Agreement (RAA)." },
+    { "countryId": "AUS", "countryName": "Australia", "type": "strategic_partner", "sentiment": "positive", "summary": "Strong security and development partner; frequent joint maritime exercises and cooperation on counter-terrorism." },
+    { "countryId": "VNM", "countryName": "Vietnam", "type": "neighbor", "sentiment": "positive", "summary": "Growing strategic alignment on maritime issues; both nations share concerns over territorial claims in the South China Sea." }
+  ],
+  "perspectives": [
+    { "source": "BPO Manager", "bias": "Optimistic", "view": "The world still wants Filipino talent. We are moving up from voice calls to AI and high-end services. The infrastructure just needs to catch up." },
+    { "source": "West Philippine Sea Fisherman", "bias": "Vulnerable", "view": "It's getting harder to make a living. The coast guard helps, but the big foreign ships are everywhere. We just want to fish in peace." },
+    { "source": "Political Analyst", "bias": "Critical", "view": "The collapse of the UniTeam was inevitable. The real question is how the 2025 election will reshape the power balance for 2028." },
+    { "source": "Infrastructure Developer", "bias": "Pragmatic", "view": "The 'Build, Better, More' program is a game changer. If we can fix the logistics and power costs, the Philippines will be the next manufacturing tiger." }
+  ],
+  "historicalContext": {
+    "summary": "After over 300 years of Spanish rule and nearly 50 years of American administration, the Philippines gained independence in 1946. It has experienced periods of authoritarian rule (Marcos Sr. era) and democratic restoration. The current era is marked by the return of the Marcos family to power and a significant recalibration of foreign policy.",
+    "keyEvents": [
+      { "year": 1898, "event": "Philippine Revolution ends Spanish rule; US takes control after the Spanish-American War." },
+      { "year": 1946, "event": "Philippines gains full independence from the United States." },
+      { "year": 1972, "event": "President Ferdinand Marcos Sr. declares martial law." },
+      { "year": 1986, "event": "People Power Revolution ousts Marcos Sr. and restores democracy." },
+      { "year": 2016, "event": "Rodrigo Duterte elected president, initiating a 'war on drugs' and a pivot toward China." },
+      { "year": 2022, "event": "Ferdinand Marcos Jr. wins the presidency in a landslide victory." },
+      { "year": 2024, "event": "Final collapse of the Marcos-Duterte 'UniTeam' alliance." },
+      { "year": 2025, "event": "Vice President Sara Duterte is impeached by the House of Representatives." }
+    ]
+  },
+  "investmentNotes": {
+    "strengths": ["Large, young, English-speaking demographic dividend", "Resilient services sector (BPO and IT-BPM)", "Strategic location for regional maritime trade", "Significant reforms to liberalize the economy and lower taxes"],
+    "risks": ["Vulnerability to climate change and natural disasters", "Endemic corruption and bureaucratic 'red tape'", "Geopolitical volatility in the South China Sea", "High electricity and logistics costs compared to regional peers"],
+    "sectors": ["Business Process Outsourcing (BPO)", "Electronics & Semiconductor Assembly", "Renewable Energy (Solar/Wind)", "Infrastructure & Digital Connectivity"]
+  },
+  "sources": [
+    { "name": "Bangko Sentral ng Pilipinas", "url": "https://www.bsp.gov.ph/", "type": "economic" },
+    { "name": "Philippine Statistics Authority", "url": "https://psa.gov.ph/", "type": "demographic" },
+    { "name": "Department of Trade and Industry", "url": "https://www.dti.gov.ph/", "type": "investment" }
+  ]
+}

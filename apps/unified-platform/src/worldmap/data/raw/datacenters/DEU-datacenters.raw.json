@@ -1,0 +1,302 @@
+[
+  {
+    "id": "DC-DEU-FRA-EQUINIX-FR2",
+    "name": "Equinix FR2 Frankfurt IBX",
+    "countryId": "DEU",
+    "city": "Frankfurt",
+    "coordinates": [8.627, 50.103],
+    "type": "colocation",
+    "status": "operational",
+    "tierLevel": "3",
+    "capacityMW": 25,
+    "floorSpaceM2": null,
+    "pue": null,
+    "operator": "Equinix",
+    "owner": "Equinix",
+    "yearOpened": null,
+    "yearPlanned": null,
+    "cloudRegion": null,
+    "geopoliticalNotes": "A critical interconnection hub in Frankfurt, serving as a primary node for the DE-CIX internet exchange. Its central location makes it vital for European financial data traffic.",
+    "notes": "Houses a large number of financial services and network providers.",
+    "attribution": {
+      "sources": [
+        { "name": "Equinix Frankfurt Data Centers", "url": "https://www.equinix.com/data-centers/europe-colocation/germany-colocation/frankfurt-data-centers", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 2,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  },
+  {
+    "id": "DC-DEU-FRA-AWS-FRA50",
+    "name": "AWS Frankfurt (FRA50)",
+    "countryId": "DEU",
+    "city": "Frankfurt",
+    "coordinates": [8.637, 50.102],
+    "type": "hyperscale",
+    "status": "operational",
+    "tierLevel": "3",
+    "capacityMW": null,
+    "floorSpaceM2": null,
+    "pue": null,
+    "operator": "Amazon Web Services",
+    "owner": "Amazon",
+    "yearOpened": 2014,
+    "yearPlanned": null,
+    "cloudRegion": "eu-central-1",
+    "geopoliticalNotes": "Core facility for AWS's German region, essential for providing data sovereignty to German enterprises and government agencies under GDPR.",
+    "notes": "Primary Availability Zone for eu-central-1.",
+    "attribution": {
+      "sources": [
+        { "name": "AWS Global Infrastructure", "url": "https://aws.amazon.com/about-aws/global-infrastructure/regions_az/", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "medium",
+        "sourceCount": 1,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  },
+  {
+    "id": "DC-DEU-HAN-GOOGLE-HANAU",
+    "name": "Google Cloud Hanau Campus",
+    "countryId": "DEU",
+    "city": "Hanau",
+    "coordinates": [8.920, 50.115],
+    "type": "hyperscale",
+    "status": "operational",
+    "tierLevel": "3",
+    "capacityMW": null,
+    "floorSpaceM2": null,
+    "pue": null,
+    "operator": "Google Cloud",
+    "owner": "Alphabet Inc.",
+    "yearOpened": 2023,
+    "yearPlanned": null,
+    "cloudRegion": "europe-west3",
+    "geopoliticalNotes": "Strategic expansion of Google's German footprint outside Frankfurt city center to bypass power constraints while maintaining low latency to DE-CIX.",
+    "notes": "Part of Google's €1 billion investment in Germany.",
+    "attribution": {
+      "sources": [
+        { "name": "Google Cloud Press Corner", "url": "https://cloud.google.com/about/locations/hanau", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 2,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  },
+  {
+    "id": "DC-DEU-FRA-DR-FRA18",
+    "name": "Digital Realty FRA18 (Hanauer Landstraße)",
+    "countryId": "DEU",
+    "city": "Frankfurt",
+    "coordinates": [8.745, 50.121],
+    "type": "colocation",
+    "status": "operational",
+    "tierLevel": "3",
+    "capacityMW": null,
+    "floorSpaceM2": null,
+    "pue": null,
+    "operator": "Digital Realty",
+    "owner": "Digital Realty",
+    "yearOpened": null,
+    "yearPlanned": null,
+    "cloudRegion": null,
+    "geopoliticalNotes": "Located on the Hanauer Landstraße 'data alley', this facility is AI-optimized and serves as a major node for cloud service providers and financial institutions.",
+    "notes": "Highly interconnected site with direct access to hundreds of carriers.",
+    "attribution": {
+      "sources": [
+        { "name": "Digital Realty Frankfurt", "url": "https://www.digitalrealty.com/data-centers/frankfurt", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "medium",
+        "sourceCount": 1,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  },
+  {
+    "id": "DC-DEU-FRA-NTT-FRA1",
+    "name": "NTT Frankfurt 1 Data Center",
+    "countryId": "DEU",
+    "city": "Frankfurt",
+    "coordinates": [8.650, 50.125],
+    "type": "colocation",
+    "status": "operational",
+    "tierLevel": "3",
+    "capacityMW": null,
+    "floorSpaceM2": 50000,
+    "pue": null,
+    "operator": "NTT Global Data Centers",
+    "owner": "NTT",
+    "yearOpened": null,
+    "yearPlanned": null,
+    "cloudRegion": null,
+    "geopoliticalNotes": "A flagship facility for NTT in Europe, providing critical infrastructure for Japanese and international enterprises operating within the EU's regulatory framework.",
+    "notes": "One of the largest colocation campuses in Germany.",
+    "attribution": {
+      "sources": [
+        { "name": "NTT Frankfurt 1", "url": "https://datacenter.hello.global.ntt/en-us/location/frankfurt/frankfurt-1-data-center", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "medium",
+        "sourceCount": 1,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  },
+  {
+    "id": "DC-DEU-FRA-MSFT-GERMANY-WEST-CENTRAL",
+    "name": "Microsoft Azure Germany West Central",
+    "countryId": "DEU",
+    "city": "Frankfurt",
+    "coordinates": [8.682, 50.111],
+    "type": "hyperscale",
+    "status": "operational",
+    "tierLevel": "3",
+    "capacityMW": null,
+    "floorSpaceM2": null,
+    "pue": null,
+    "operator": "Microsoft",
+    "owner": "Microsoft",
+    "yearOpened": 2019,
+    "yearPlanned": null,
+    "cloudRegion": "germanywestcentral",
+    "geopoliticalNotes": "Primary hub for Microsoft's sovereign cloud offerings in Germany, designed to meet the strict compliance requirements of the German public sector and highly regulated industries.",
+    "notes": "Supports three availability zones in the Frankfurt region.",
+    "attribution": {
+      "sources": [
+        { "name": "Azure Regions", "url": "https://azure.microsoft.com/en-us/explore/global-infrastructure/geographies/#geographies", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 2,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  },
+  {
+    "id": "DC-DEU-DIE-GOOGLE-DIETZENBACH",
+    "name": "Google Dietzenbach Campus",
+    "countryId": "DEU",
+    "city": "Dietzenbach",
+    "coordinates": [8.780, 50.010],
+    "type": "hyperscale",
+    "status": "planned",
+    "tierLevel": "3",
+    "capacityMW": null,
+    "floorSpaceM2": null,
+    "pue": null,
+    "operator": "Google Cloud",
+    "owner": "Alphabet Inc.",
+    "yearOpened": null,
+    "yearPlanned": 2026,
+    "cloudRegion": "europe-west3",
+    "geopoliticalNotes": "Part of a massive €5.5 billion investment to expand Google's cloud infrastructure in Germany, incorporating waste-heat recovery to support local sustainability goals.",
+    "notes": "Expected to be a major hub for AI and cloud services in the late 2020s.",
+    "attribution": {
+      "sources": [
+        { "name": "Google Cloud Germany Expansion", "url": "https://cloud.google.com/blog/topics/inside-google-cloud/expanding-our-infrastructure-in-germany", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 1,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  },
+  {
+    "id": "DC-DEU-FRA-EQUINIX-FR5",
+    "name": "Equinix FR5 Frankfurt IBX",
+    "countryId": "DEU",
+    "city": "Frankfurt",
+    "coordinates": [8.638, 50.101],
+    "type": "colocation",
+    "status": "operational",
+    "tierLevel": "3",
+    "capacityMW": 3,
+    "floorSpaceM2": null,
+    "pue": null,
+    "operator": "Equinix",
+    "owner": "Equinix",
+    "yearOpened": null,
+    "yearPlanned": null,
+    "cloudRegion": null,
+    "geopoliticalNotes": "Located in the Kleyerstraße carrier hotel, this facility is one of the most densely interconnected points in Europe, serving as a gateway for global data transit.",
+    "notes": "Key site for network density and peering.",
+    "attribution": {
+      "sources": [
+        { "name": "Equinix FR5", "url": "https://www.equinix.com/data-centers/europe-colocation/germany-colocation/frankfurt-data-centers/fr5", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "medium",
+        "sourceCount": 1,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  },
+  {
+    "id": "DC-DEU-FRA-AWS-FRA52",
+    "name": "AWS Frankfurt (FRA52)",
+    "countryId": "DEU",
+    "city": "Frankfurt",
+    "coordinates": [8.720, 50.118],
+    "type": "hyperscale",
+    "status": "operational",
+    "tierLevel": "3",
+    "capacityMW": null,
+    "floorSpaceM2": null,
+    "pue": null,
+    "operator": "Amazon Web Services",
+    "owner": "Amazon",
+    "yearOpened": null,
+    "yearPlanned": null,
+    "cloudRegion": "eu-central-1",
+    "geopoliticalNotes": "Another critical component of the AWS Frankfurt region, ensuring high availability and redundancy for cloud services within the European Union.",
+    "notes": "Located in the eastern part of Frankfurt.",
+    "attribution": {
+      "sources": [
+        { "name": "DataCenter Map - AWS Frankfurt", "url": "https://www.datacentermap.com/germany/frankfurt/aws-frankfurt.html", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "medium",
+        "sourceCount": 1,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  },
+  {
+    "id": "DC-DEU-FRA-DR-FRA10",
+    "name": "Digital Realty FRA10 (Ostend)",
+    "countryId": "DEU",
+    "city": "Frankfurt",
+    "coordinates": [8.710, 50.115],
+    "type": "colocation",
+    "status": "operational",
+    "tierLevel": "3",
+    "capacityMW": null,
+    "floorSpaceM2": null,
+    "pue": null,
+    "operator": "Digital Realty",
+    "owner": "Digital Realty",
+    "yearOpened": null,
+    "yearPlanned": null,
+    "cloudRegion": null,
+    "geopoliticalNotes": "Host to the DE-CIX management and core infrastructure, making it arguably the most strategically significant piece of internet infrastructure in Germany.",
+    "notes": "The heart of German internet connectivity.",
+    "attribution": {
+      "sources": [
+        { "name": "DE-CIX Frankfurt", "url": "https://www.de-cix.net/en/locations/germany/frankfurt", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 2,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  }
+]

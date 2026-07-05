@@ -1,0 +1,115 @@
+[
+  {
+    "id": "quintillion-subsea-cable-network",
+    "name": "Quintillion Subsea Cable Network",
+    "route": [
+      [-165.4, 64.5],
+      [-162.6, 66.9],
+      [-166.7, 68.3],
+      [-160.0, 70.6],
+      [-156.7, 71.3],
+      [-149.8, 70.5]
+    ],
+    "landingPoints": [
+      {
+        "name": "Nome",
+        "countryId": "USA",
+        "coordinates": [-165.41, 64.50],
+        "city": "Nome"
+      },
+      {
+        "name": "Kotzebue",
+        "countryId": "USA",
+        "coordinates": [-162.60, 66.90],
+        "city": "Kotzebue"
+      },
+      {
+        "name": "Utqiagvik",
+        "countryId": "USA",
+        "coordinates": [-156.78, 71.29],
+        "city": "Utqiagvik"
+      },
+      {
+        "name": "Oliktok Point",
+        "countryId": "USA",
+        "coordinates": [-149.85, 70.51],
+        "city": "Oliktok Point"
+      }
+    ],
+    "status": "active",
+    "lengthKm": 1900,
+    "capacityTbps": 30,
+    "yearLaid": 2017,
+    "yearRepaired": 2023,
+    "owners": ["Quintillion"],
+    "vulnerabilities": "Extreme environment with sea ice causing potential fiber damage (ice scour). Recently suffered a major break in 2023 due to ice movement.",
+    "geopoliticalNotes": "Critical for US telecommunications and defense infrastructure in the Arctic. First major commercial cable in the region.",
+    "notes": "Experienced a significant outage in June 2023 due to ice-related cable damage.",
+    "attribution": {
+      "sources": [
+        { "name": "TeleGeography SubmarineCableMap", "url": "https://www.submarinecablemap.com/submarine-cable/quintillion-subsea-cable-network", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 1,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  },
+  {
+    "id": "polar-express",
+    "name": "Polar Express",
+    "route": [
+      [35.1, 69.1],
+      [57.5, 70.6],
+      [80.0, 75.0],
+      [130.0, 72.0],
+      [170.0, 65.0]
+    ],
+    "landingPoints": [
+      {
+        "name": "Teriberka",
+        "countryId": "RUS",
+        "coordinates": [35.14, 69.16],
+        "city": "Teriberka"
+      },
+      {
+        "name": "Amderma",
+        "countryId": "RUS",
+        "coordinates": [61.66, 69.75],
+        "city": "Amderma"
+      },
+      {
+        "name": "Dikson",
+        "countryId": "RUS",
+        "coordinates": [80.53, 73.51],
+        "city": "Dikson"
+      },
+      {
+        "name": "Pevek",
+        "countryId": "RUS",
+        "coordinates": [170.33, 69.70],
+        "city": "Pevek"
+      }
+    ],
+    "status": "construction",
+    "lengthKm": 12650,
+    "capacityTbps": 104,
+    "yearLaid": 2021,
+    "yearRepaired": null,
+    "owners": ["Morsviazsputnik"],
+    "vulnerabilities": "Geopolitically significant as a Russian state-led project to bypass Western-controlled infrastructure. Subject to Arctic environmental risks.",
+    "geopoliticalNotes": "Aimed at providing high-speed internet to Russia's Arctic coast and connecting to East Asia, enhancing Russia's sovereignty over its northern data flows.",
+    "notes": "State-funded project under the 'Digital Economy' program.",
+    "attribution": {
+      "sources": [
+        { "name": "TeleGeography SubmarineCableMap", "url": "https://www.submarinecablemap.com/submarine-cable/polar-express", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 1,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  }
+]

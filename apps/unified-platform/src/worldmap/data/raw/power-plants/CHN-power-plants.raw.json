@@ -1,0 +1,407 @@
+[
+  {
+    "id": "PLANT-CHN-THREE-GORGES",
+    "name": "Three Gorges Dam",
+    "countryId": "CHN",
+    "city": "Sandouping",
+    "coordinates": [111.004, 30.830],
+    "type": "hydro",
+    "status": "operating",
+    "capacityMW": 22500,
+    "annualOutputGWh": 100000,
+    "yearCommissioned": 2003,
+    "yearRetirement": null,
+    "operator": "China Three Gorges Corporation",
+    "owner": "China Three Gorges Corporation",
+    "strategicNote": "World's largest power station by installed capacity; critical for flood control on the Yangtze River and China's renewable energy goals.",
+    "notes": "Full capacity reached in 2012.",
+    "attribution": {
+      "sources": [
+        { "name": "Global Energy Monitor", "url": "https://www.gem.wiki/Three_Gorges_Dam", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 2,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  },
+  {
+    "id": "PLANT-CHN-FUQING",
+    "name": "Fuqing Nuclear Power Plant",
+    "countryId": "CHN",
+    "city": "Fuqing",
+    "coordinates": [119.447, 25.446],
+    "type": "nuclear",
+    "status": "operating",
+    "capacityMW": 6678,
+    "annualOutputGWh": null,
+    "yearCommissioned": 2014,
+    "yearRetirement": null,
+    "operator": "CNNC Fujian Fuqing Nuclear Power Co., Ltd.",
+    "owner": "China National Nuclear Corporation (CNNC)",
+    "strategicNote": "First site to deploy the Hualong One (HPR1000) indigenous Gen-III reactor design.",
+    "notes": null,
+    "attribution": {
+      "sources": [
+        { "name": "IAEA PRIS", "url": "https://pris.iaea.org/PRIS/CountryStatistics/CountryDetails.aspx?current=CN", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 2,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  },
+  {
+    "id": "PLANT-CHN-YANGJIANG",
+    "name": "Yangjiang Nuclear Power Station",
+    "countryId": "CHN",
+    "city": "Yangjiang",
+    "coordinates": [112.261, 21.708],
+    "type": "nuclear",
+    "status": "operating",
+    "capacityMW": 6000,
+    "annualOutputGWh": null,
+    "yearCommissioned": 2014,
+    "yearRetirement": null,
+    "operator": "Yangjiang Nuclear Power Co., Ltd.",
+    "owner": "China General Nuclear Power Group (CGN)",
+    "strategicNote": "One of the largest nuclear power complexes in China, featuring six 1,000 MW units.",
+    "notes": null,
+    "attribution": {
+      "sources": [
+        { "name": "IAEA PRIS", "url": "https://pris.iaea.org/PRIS/CountryStatistics/CountryDetails.aspx?current=CN", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 2,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  },
+  {
+    "id": "PLANT-CHN-TIANWAN",
+    "name": "Tianwan Nuclear Power Station",
+    "countryId": "CHN",
+    "city": "Lianyungang",
+    "coordinates": [119.459, 34.687],
+    "type": "nuclear",
+    "status": "operating",
+    "capacityMW": 5890,
+    "annualOutputGWh": null,
+    "yearCommissioned": 2007,
+    "yearRetirement": null,
+    "operator": "Jiangsu Nuclear Power Corporation",
+    "owner": "China National Nuclear Corporation (CNNC)",
+    "strategicNote": "Largest nuclear power cooperation project between China and Russia; expanding to exceed 8,000 MW.",
+    "notes": null,
+    "attribution": {
+      "sources": [
+        { "name": "IAEA PRIS", "url": "https://pris.iaea.org/PRIS/CountryStatistics/CountryDetails.aspx?current=CN", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 2,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  },
+  {
+    "id": "PLANT-CHN-HONGYANHE",
+    "name": "Hongyanhe Nuclear Power Plant",
+    "countryId": "CHN",
+    "city": "Dalian",
+    "coordinates": [121.481, 39.796],
+    "type": "nuclear",
+    "status": "operating",
+    "capacityMW": 6712,
+    "annualOutputGWh": null,
+    "yearCommissioned": 2013,
+    "yearRetirement": null,
+    "operator": "Liaoning Hongyanhe Nuclear Power Co., Ltd.",
+    "owner": "CGN and SPIC JV",
+    "strategicNote": "The first nuclear power plant in Northeast China and the largest in the region.",
+    "notes": null,
+    "attribution": {
+      "sources": [
+        { "name": "IAEA PRIS", "url": "https://pris.iaea.org/PRIS/CountryStatistics/CountryDetails.aspx?current=CN", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 2,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  },
+  {
+    "id": "PLANT-CHN-NINGDE",
+    "name": "Ningde Nuclear Power Plant",
+    "countryId": "CHN",
+    "city": "Ningde",
+    "coordinates": [120.283, 27.044],
+    "type": "nuclear",
+    "status": "operating",
+    "capacityMW": 4356,
+    "annualOutputGWh": null,
+    "yearCommissioned": 2013,
+    "yearRetirement": null,
+    "operator": "Fujian Ningde Nuclear Power Co., Ltd.",
+    "owner": "China General Nuclear Power Group (CGN)",
+    "strategicNote": "A major component of Fujian's energy infrastructure, supporting the regional industrial hub.",
+    "notes": null,
+    "attribution": {
+      "sources": [
+        { "name": "IAEA PRIS", "url": "https://pris.iaea.org/PRIS/CountryStatistics/CountryDetails.aspx?current=CN", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 2,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  },
+  {
+    "id": "PLANT-CHN-QINSHAN",
+    "name": "Qinshan Nuclear Power Plant",
+    "countryId": "CHN",
+    "city": "Jiaxing",
+    "coordinates": [120.950, 30.433],
+    "type": "nuclear",
+    "status": "operating",
+    "capacityMW": 6500,
+    "annualOutputGWh": null,
+    "yearCommissioned": 1994,
+    "yearRetirement": null,
+    "operator": "Qinshan Nuclear Power Corporation",
+    "owner": "China National Nuclear Corporation (CNNC)",
+    "strategicNote": "China's first domestically designed and built nuclear power plant; the site has multiple phases and reactor types.",
+    "notes": "Includes Qinshan Phases I, II, and III.",
+    "attribution": {
+      "sources": [
+        { "name": "IAEA PRIS", "url": "https://pris.iaea.org/PRIS/CountryStatistics/CountryDetails.aspx?current=CN", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 2,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  },
+  {
+    "id": "PLANT-CHN-DAYA-BAY",
+    "name": "Daya Bay Nuclear Power Plant",
+    "countryId": "CHN",
+    "city": "Shenzhen",
+    "coordinates": [114.544, 22.597],
+    "type": "nuclear",
+    "status": "operating",
+    "capacityMW": 1888,
+    "annualOutputGWh": null,
+    "yearCommissioned": 1994,
+    "yearRetirement": null,
+    "operator": "Daya Bay Nuclear Power Operations and Management Co., Ltd.",
+    "owner": "China General Nuclear Power Group (CGN)",
+    "strategicNote": "Historically significant as China's first major commercial nuclear project, largely serving Hong Kong.",
+    "notes": null,
+    "attribution": {
+      "sources": [
+        { "name": "IAEA PRIS", "url": "https://pris.iaea.org/PRIS/CountryStatistics/CountryDetails.aspx?current=CN", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 2,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  },
+  {
+    "id": "PLANT-CHN-LING-AO",
+    "name": "Ling Ao Nuclear Power Plant",
+    "countryId": "CHN",
+    "city": "Shenzhen",
+    "coordinates": [114.551, 22.605],
+    "type": "nuclear",
+    "status": "operating",
+    "capacityMW": 3905,
+    "annualOutputGWh": null,
+    "yearCommissioned": 2002,
+    "yearRetirement": null,
+    "operator": "Daya Bay Nuclear Power Operations and Management Co., Ltd.",
+    "owner": "China General Nuclear Power Group (CGN)",
+    "strategicNote": "Adjacent to Daya Bay, this plant is a key power supplier to the Pearl River Delta.",
+    "notes": null,
+    "attribution": {
+      "sources": [
+        { "name": "IAEA PRIS", "url": "https://pris.iaea.org/PRIS/CountryStatistics/CountryDetails.aspx?current=CN", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 2,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  },
+  {
+    "id": "PLANT-CHN-SANMEN",
+    "name": "Sanmen Nuclear Power Plant",
+    "countryId": "CHN",
+    "city": "Sanmen",
+    "coordinates": [121.642, 29.101],
+    "type": "nuclear",
+    "status": "operating",
+    "capacityMW": 2500,
+    "annualOutputGWh": null,
+    "yearCommissioned": 2018,
+    "yearRetirement": null,
+    "operator": "Sanmen Nuclear Power Co., Ltd.",
+    "owner": "China National Nuclear Corporation (CNNC)",
+    "strategicNote": "First site to deploy the AP1000 Gen-III reactor technology designed by Westinghouse.",
+    "notes": "Additional units under construction.",
+    "attribution": {
+      "sources": [
+        { "name": "IAEA PRIS", "url": "https://pris.iaea.org/PRIS/CountryStatistics/CountryDetails.aspx?current=CN", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 2,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  },
+  {
+    "id": "PLANT-CHN-HAIYANG",
+    "name": "Haiyang Nuclear Power Plant",
+    "countryId": "CHN",
+    "city": "Haiyang",
+    "coordinates": [121.383, 36.708],
+    "type": "nuclear",
+    "status": "operating",
+    "capacityMW": 2500,
+    "annualOutputGWh": null,
+    "yearCommissioned": 2018,
+    "yearRetirement": null,
+    "operator": "Shandong Nuclear Power Co., Ltd.",
+    "owner": "State Power Investment Corporation (SPIC)",
+    "strategicNote": "Another key site for AP1000 technology; notable for its large-scale district heating project using waste heat.",
+    "notes": "Additional units under construction.",
+    "attribution": {
+      "sources": [
+        { "name": "IAEA PRIS", "url": "https://pris.iaea.org/PRIS/CountryStatistics/CountryDetails.aspx?current=CN", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 2,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  },
+  {
+    "id": "PLANT-CHN-TAISHAN",
+    "name": "Taishan Nuclear Power Plant",
+    "countryId": "CHN",
+    "city": "Taishan",
+    "coordinates": [112.982, 21.918],
+    "type": "nuclear",
+    "status": "operating",
+    "capacityMW": 3500,
+    "annualOutputGWh": null,
+    "yearCommissioned": 2018,
+    "yearRetirement": null,
+    "operator": "Taishan Nuclear Power Joint Venture Co., Ltd.",
+    "owner": "CGN and EDF JV",
+    "strategicNote": "World's first site to put the European Pressurized Reactor (EPR) into commercial operation.",
+    "notes": null,
+    "attribution": {
+      "sources": [
+        { "name": "IAEA PRIS", "url": "https://pris.iaea.org/PRIS/CountryStatistics/CountryDetails.aspx?current=CN", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 2,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  },
+  {
+    "id": "PLANT-CHN-FANGCHENGGANG",
+    "name": "Fangchenggang Nuclear Power Plant",
+    "countryId": "CHN",
+    "city": "Fangchenggang",
+    "coordinates": [108.558, 21.671],
+    "type": "nuclear",
+    "status": "operating",
+    "capacityMW": 2360,
+    "annualOutputGWh": null,
+    "yearCommissioned": 2016,
+    "yearRetirement": null,
+    "operator": "Guangxi Fangchenggang Nuclear Power Co., Ltd.",
+    "owner": "CGN and Guangxi Investment Group",
+    "strategicNote": "Strategic nuclear hub in Southwest China, near the border with Vietnam; deploying Hualong One units.",
+    "notes": null,
+    "attribution": {
+      "sources": [
+        { "name": "IAEA PRIS", "url": "https://pris.iaea.org/PRIS/CountryStatistics/CountryDetails.aspx?current=CN", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 2,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  },
+  {
+    "id": "PLANT-CHN-CHANGJIANG",
+    "name": "Changjiang Nuclear Power Plant",
+    "countryId": "CHN",
+    "city": "Changjiang",
+    "coordinates": [108.900, 19.461],
+    "type": "nuclear",
+    "status": "operating",
+    "capacityMW": 1300,
+    "annualOutputGWh": null,
+    "yearCommissioned": 2015,
+    "yearRetirement": null,
+    "operator": "Hainan Nuclear Power Co., Ltd.",
+    "owner": "CNNC and Huaneng JV",
+    "strategicNote": "The first nuclear power plant on Hainan Island, critical for the island's clean energy transition.",
+    "notes": null,
+    "attribution": {
+      "sources": [
+        { "name": "IAEA PRIS", "url": "https://pris.iaea.org/PRIS/CountryStatistics/CountryDetails.aspx?current=CN", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 2,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  },
+  {
+    "id": "PLANT-CHN-SHIDAOWAN",
+    "name": "Shidaowan Nuclear Power Plant",
+    "countryId": "CHN",
+    "city": "Rongcheng",
+    "coordinates": [122.529, 36.972],
+    "type": "nuclear",
+    "status": "operating",
+    "capacityMW": 210,
+    "annualOutputGWh": null,
+    "yearCommissioned": 2023,
+    "yearRetirement": null,
+    "operator": "Huaneng Shandong Shidao Bay Nuclear Power Co., Ltd.",
+    "owner": "China Huaneng Group",
+    "strategicNote": "World's first commercial high-temperature gas-cooled reactor (HTGR), representing Gen-IV nuclear technology.",
+    "notes": "HTR-PM unit.",
+    "attribution": {
+      "sources": [
+        { "name": "IAEA PRIS", "url": "https://pris.iaea.org/PRIS/CountryStatistics/CountryDetails.aspx?current=CN", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 2,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  }
+]

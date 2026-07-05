@@ -1,0 +1,44 @@
+[
+  {
+    "countryId": "ISR",
+    "year": 2023,
+    "gdpUsdBn": 512.2,
+    "gdpPerCapita": 52004,
+    "sectors": [
+      {
+        "sector": "Services",
+        "percentOfGDP": 74.0,
+        "notes": "Includes high-tech services (approx. 18% of GDP) and finance."
+      },
+      {
+        "sector": "Industry",
+        "percentOfGDP": 18.9,
+        "notes": "Includes high-technology manufacturing and utilities."
+      },
+      {
+        "sector": "Construction",
+        "percentOfGDP": 5.8,
+        "notes": "Hardest hit in Q4 2023 due to labor shortages."
+      },
+      {
+        "sector": "Agriculture",
+        "percentOfGDP": 1.3,
+        "notes": "Agri-tech and high-yield produce focus."
+      }
+    ],
+    "attribution": {
+      "sources": [
+        {
+          "name": "World Bank / Israel Central Bureau of Statistics 2023",
+          "url": "https://data.worldbank.org/",
+          "accessedAt": "2025-02-14"
+        }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 2,
+        "lastVerified": "2025-02-14"
+      }
+    }
+  }
+]

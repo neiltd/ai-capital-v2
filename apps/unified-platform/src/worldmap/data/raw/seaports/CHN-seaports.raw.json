@@ -1,0 +1,218 @@
+[
+  {
+    "id": "PORT-CHN-SHANGHAI",
+    "name": "Port of Shanghai",
+    "countryId": "CHN",
+    "city": "Shanghai",
+    "coordinates": [122.06, 30.63],
+    "type": "container",
+    "annualThroughputTEU": 49160000,
+    "annualThroughputTonnes": null,
+    "berthCount": 1160,
+    "maxDraftM": 16.0,
+    "strategicImportance": "critical",
+    "riskLevel": "low",
+    "geopoliticalNotes": "The world's busiest container port for 14 consecutive years. It serves as the primary gateway for the Yangtze River Delta, China's most developed economic region, and is a central node in the Belt and Road Initiative.",
+    "notes": "Home to the Yangshan Deep-Water Port, the world's largest automated container terminal, which is connected to the mainland by the 32km Donghai Bridge.",
+    "attribution": {
+      "sources": [
+        { "name": "Riviera Maritime Media", "url": "https://www.rivieramm.com", "accessedAt": "2026-05-10" },
+        { "name": "World Shipping Council", "url": "https://www.worldshipping.org", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 2,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  },
+  {
+    "id": "PORT-CHN-NINGBO-ZHOUSHAN",
+    "name": "Port of Ningbo-Zhoushan",
+    "countryId": "CHN",
+    "city": "Ningbo",
+    "coordinates": [121.84, 29.89],
+    "type": "mixed",
+    "annualThroughputTEU": 35300000,
+    "annualThroughputTonnes": 1310000000,
+    "berthCount": 200,
+    "maxDraftM": 22.5,
+    "strategicImportance": "critical",
+    "riskLevel": "low",
+    "geopoliticalNotes": "The world's largest port by total cargo tonnage. It is a critical hub for bulk commodities, including iron ore, crude oil, and coal, providing energy security and raw materials for China's industrial core.",
+    "notes": "Its natural deep-water channels allow it to accommodate the world's largest 400,000-DWT ore carriers.",
+    "attribution": {
+      "sources": [
+        { "name": "Xinde Marine News", "url": "https://www.xindemarinenews.com", "accessedAt": "2026-05-10" },
+        { "name": "UNCTAD Maritime Transport Report", "url": "https://unctad.org", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 2,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  },
+  {
+    "id": "PORT-CHN-SHENZHEN",
+    "name": "Port of Shenzhen",
+    "countryId": "CHN",
+    "city": "Shenzhen",
+    "coordinates": [113.88, 22.48],
+    "type": "container",
+    "annualThroughputTEU": 29880000,
+    "annualThroughputTonnes": null,
+    "berthCount": 140,
+    "maxDraftM": 17.5,
+    "strategicImportance": "critical",
+    "riskLevel": "low",
+    "geopoliticalNotes": "The primary export hub for China's high-tech and electronics industries. It is essential for global supply chains in consumer electronics.",
+    "notes": "Includes major terminal areas Yantian, Shekou, and Chiwan.",
+    "attribution": {
+      "sources": [
+        { "name": "Upply", "url": "https://upply.com", "accessedAt": "2026-05-10" },
+        { "name": "Lloyd's List", "url": "https://lloydslist.com", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 2,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  },
+  {
+    "id": "PORT-CHN-QINGDAO",
+    "name": "Port of Qingdao",
+    "countryId": "CHN",
+    "city": "Qingdao",
+    "coordinates": [120.32, 36.06],
+    "type": "mixed",
+    "annualThroughputTEU": 28750000,
+    "annualThroughputTonnes": 600000000,
+    "berthCount": 70,
+    "maxDraftM": 22.0,
+    "strategicImportance": "high",
+    "riskLevel": "low",
+    "geopoliticalNotes": "The leading gateway for Northern China and a major transshipment hub for Northeast Asia, particularly Japan and South Korea.",
+    "notes": "A global pioneer in fully automated 'Smart Port' technology and 5G integration.",
+    "attribution": {
+      "sources": [
+        { "name": "China Daily", "url": "https://www.chinadaily.com.cn", "accessedAt": "2026-05-10" },
+        { "name": "HiFleet", "url": "https://www.hifleet.com", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 2,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  },
+  {
+    "id": "PORT-CHN-GUANGZHOU",
+    "name": "Port of Guangzhou",
+    "countryId": "CHN",
+    "city": "Guangzhou",
+    "coordinates": [113.51, 22.75],
+    "type": "mixed",
+    "annualThroughputTEU": 25410000,
+    "annualThroughputTonnes": 600000000,
+    "berthCount": 4600,
+    "maxDraftM": 17.0,
+    "strategicImportance": "high",
+    "riskLevel": "low",
+    "geopoliticalNotes": "The largest comprehensive hub port in South China and a primary distribution center for automobiles and agricultural products (grain) in the Pearl River Delta.",
+    "notes": "The Nansha Port Area is the only deep-water specialized container terminal on the west bank of the Pearl River.",
+    "attribution": {
+      "sources": [
+        { "name": "Findaport", "url": "https://www.findaport.com", "accessedAt": "2026-05-10" },
+        { "name": "Port of Guangzhou Authority", "url": "http://www.gzport.gov.cn", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 2,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  },
+  {
+    "id": "PORT-CHN-TIANJIN",
+    "name": "Port of Tianjin",
+    "countryId": "CHN",
+    "city": "Tianjin",
+    "coordinates": [117.75, 38.98],
+    "type": "mixed",
+    "annualThroughputTEU": 22190000,
+    "annualThroughputTonnes": 450000000,
+    "berthCount": 150,
+    "maxDraftM": 21.0,
+    "strategicImportance": "high",
+    "riskLevel": "low",
+    "geopoliticalNotes": "The maritime gateway to Beijing and Northern China's largest artificial port. It is vital for grain security and industrial logistics in the Beijing-Tianjin-Hebei region.",
+    "notes": "Launched the world's first 'Smart Zero-Carbon' terminal in 2021.",
+    "attribution": {
+      "sources": [
+        { "name": "Global Times", "url": "https://www.globaltimes.cn", "accessedAt": "2026-05-10" },
+        { "name": "Port of Tianjin Authority", "url": "http://www.ptacn.com", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 2,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  },
+  {
+    "id": "PORT-CHN-XIAMEN",
+    "name": "Port of Xiamen",
+    "countryId": "CHN",
+    "city": "Xiamen",
+    "coordinates": [118.04, 24.45],
+    "type": "container",
+    "annualThroughputTEU": 12500000,
+    "annualThroughputTonnes": null,
+    "berthCount": 150,
+    "maxDraftM": 17.5,
+    "strategicImportance": "high",
+    "riskLevel": "low",
+    "geopoliticalNotes": "A critical hub for Cross-Strait trade with Taiwan and a major gateway for the '21st Century Maritime Silk Road' toward Southeast Asia.",
+    "notes": "Known for advanced 5G-driven automated gantry cranes and high efficiency.",
+    "attribution": {
+      "sources": [
+        { "name": "Xiamen Port Holding Group", "url": "http://www.xamportholding.com", "accessedAt": "2026-05-10" },
+        { "name": "ShipHub", "url": "https://www.shiphub.co", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 2,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  },
+  {
+    "id": "PORT-CHN-DALIAN",
+    "name": "Port of Dalian",
+    "countryId": "CHN",
+    "city": "Dalian",
+    "coordinates": [121.65, 38.93],
+    "type": "mixed",
+    "annualThroughputTEU": 5100000,
+    "annualThroughputTonnes": 400000000,
+    "berthCount": 80,
+    "maxDraftM": 27.0,
+    "strategicImportance": "high",
+    "riskLevel": "low",
+    "geopoliticalNotes": "The primary ice-free port in Northeast China and a major naval base for the Northern Theater Command Navy. Home to China's primary aircraft carrier shipyard (DSIC).",
+    "notes": "Handles 300,000+ DWT VLCCs and is a major hub for crude oil and iron ore in the North.",
+    "attribution": {
+      "sources": [
+        { "name": "Carnegie Endowment for International Peace", "url": "https://carnegieendowment.org", "accessedAt": "2026-05-10" },
+        { "name": "Findaport", "url": "https://www.findaport.com", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 2,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  }
+]

@@ -1,0 +1,68 @@
+{
+  "id": "PSE",
+  "iso2": "PS",
+  "name": "Palestine",
+  "region": "Middle East",
+  "subregion": "Western Asia",
+  "capital": "Ramallah",
+  "lastUpdated": "2026-05-09",
+  "summary": "Palestine consists of the West Bank and the Gaza Strip, territories that have been at the center of the Israeli-Palestinian conflict for decades. The Palestinian Authority (PA) exercises limited self-rule in parts of the West Bank, while Gaza has been under the control of Hamas since 2007. The region is characterized by extreme political fragmentation, a crippled economy dependent on foreign aid and Israeli clearance revenues, and a profound humanitarian crisis, particularly in Gaza following the 2023-2024 conflict. International recognition of Palestinian statehood is widespread but lacks the consensus of key Western powers and a clear path to sovereign implementation.",
+  "indicators": {
+    "politicalStability":       { "score": 2, "trend": "declining", "confidence": "high", "note": "Deep internal division between Fatah and Hamas, combined with a lack of national elections and the ongoing Israeli occupation." },
+    "economicDirection":        { "score": 2, "trend": "declining", "confidence": "high", "note": "Economy is severely restricted by movement barriers, lack of control over resources, and the total devastation of Gaza's infrastructure." },
+    "investmentAttractiveness": { "score": 2, "trend": "stable", "confidence": "high", "note": "High political risk and institutional instability deter almost all but the most risk-tolerant or politically motivated investors." },
+    "geopoliticalRisk":         { "score": 10, "trend": "rising", "confidence": "high", "note": "Epicenter of regional instability; risk of large-scale violence and humanitarian catastrophe remains extreme." },
+    "educationQuality":         { "score": 6, "trend": "declining", "confidence": "medium", "note": "Historically high literacy rates, but educational infrastructure is under severe strain due to conflict and funding shortages." },
+    "healthcareQuality":        { "score": 3, "trend": "declining", "confidence": "high", "note": "Healthcare system in Gaza has collapsed; West Bank facilities face constant shortages and access restrictions." },
+    "technologyInvestment":     { "score": 3, "trend": "stable", "confidence": "medium", "note": "Resilient but small tech sector in the West Bank; severely limited by infrastructure constraints and bandwidth restrictions." }
+  },
+  "demographics": {
+    "population": 5500000,
+    "medianAge": 19.6,
+    "urbanizationRate": 77,
+    "majorEthnicGroups": ["Palestinian Arab"],
+    "religions": [
+      { "name": "Muslim", "percent": 93 },
+      { "name": "Christian", "percent": 6 },
+      { "name": "Other", "percent": 1 }
+    ]
+  },
+  "alliances": ["Arab League", "OIC", "UN Observer State", "G77"],
+  "relationships": [
+    { "countryId": "ISR", "countryName": "Israel", "type": "adversary", "sentiment": "negative", "summary": "Occupying power; relationship defined by conflict, security control, and deep-seated territorial and political disputes." },
+    { "countryId": "EGY", "countryName": "Egypt", "type": "neighbor", "sentiment": "neutral", "summary": "Key mediator in conflict negotiations and controls the Rafah crossing into Gaza." },
+    { "countryId": "JOR", "countryName": "Jordan", "type": "neighbor", "sentiment": "positive", "summary": "Guardian of holy sites in Jerusalem; hosts a large Palestinian refugee population and maintains deep security and social ties." },
+    { "countryId": "USA", "countryName": "United States", "type": "diplomatic_partner", "sentiment": "neutral", "summary": "Major aid donor and traditional peace broker, though viewed with skepticism due to its strong alliance with Israel." }
+  ],
+  "perspectives": [
+    { "source": "Ramallah Bureaucrat", "bias": "Institutional", "view": "The PA is the only legitimate representative; we must focus on institution-building and international diplomacy despite the occupation." },
+    { "source": "Gaza Resident", "bias": "Survivalist", "view": "Political labels matter little when there is no food, water, or safety; the international community has failed us." },
+    { "source": "Young Activist", "bias": "Reformist", "view": "The old leadership is stagnant; we need a new unified national strategy that goes beyond the failed two-state paradigm." },
+    { "source": "Israeli Security Analyst", "bias": "Security-centric", "view": "Palestinian instability is a direct threat to Israel; we must maintain security control while preventing a total humanitarian collapse." }
+  ],
+  "historicalContext": {
+    "summary": "The Palestinian national movement emerged in the early 20th century in response to Zionism and the British Mandate. Since 1948, the history has been defined by a series of wars with Israel, the 1967 occupation of the West Bank and Gaza, and the failed peace process of the 1990s.",
+    "keyEvents": [
+      { "year": 1948, "event": "Nakba; hundreds of thousands of Palestinians flee or are expelled during the first Arab-Israeli war." },
+      { "year": 1964, "event": "Establishment of the Palestine Liberation Organization (PLO)." },
+      { "year": 1967, "event": "Six-Day War; Israel occupies the West Bank, Gaza Strip, and East Jerusalem." },
+      { "year": 1987, "event": "First Intifada begins." },
+      { "year": 1993, "event": "Oslo Accords; establishment of the Palestinian Authority." },
+      { "year": 2000, "event": "Second Intifada starts after the failure of the Camp David Summit." },
+      { "year": 2005, "event": "Israel unilaterally withdraws its settlers and military from the Gaza Strip." },
+      { "year": 2007, "event": "Hamas takes control of Gaza after a brief civil war with Fatah." },
+      { "year": 2012, "event": "Palestine becomes a Non-Member Observer State at the UN." },
+      { "year": 2023, "event": "Hamas attack on Israel triggers a devastating war in the Gaza Strip." }
+    ]
+  },
+  "investmentNotes": {
+    "strengths": ["Resilient and entrepreneurial population", "Significant diaspora capital", "Cultural and religious tourism potential", "Young and growing workforce"],
+    "risks": ["Active conflict and physical destruction", "Extreme political fragmentation", "Severe restrictions on trade and movement", "Institutional corruption and lack of legal clarity"],
+    "sectors": ["Agricultural Exports", "Information Technology (Outsourcing)", "Stone and Marble Industry", "Renewable Energy (Solar)"]
+  },
+  "sources": [
+    { "name": "Palestinian Central Bureau of Statistics", "url": "https://www.pcbs.gov.ps/", "type": "economic" },
+    { "name": "UNRWA", "url": "https://www.unrwa.org/", "type": "humanitarian" },
+    { "name": "Al-Haq", "url": "https://www.alhaq.org/", "type": "human_rights" }
+  ]
+}

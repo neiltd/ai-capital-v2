@@ -1,0 +1,67 @@
+{
+  "id": "HUN",
+  "iso2": "HU",
+  "name": "Hungary",
+  "region": "Europe",
+  "subregion": "Central Europe",
+  "capital": "Budapest",
+  "lastUpdated": "2026-05-09",
+  "summary": "In 2026, Hungary remains a distinctive and often contrarian actor within the European Union and NATO. Under the long-standing leadership of Viktor Orbán, the country continues to pursue a 'sovereigntist' foreign policy, characterized by the 'Eastern Opening' strategy which balances Western alliances with deep economic ties to China and Russia. Hungary has successfully positioned itself as a critical European hub for the global electric vehicle (EV) supply chain, attracting massive investments in battery manufacturing. However, persistent rule-of-law disputes with Brussels continue to complicate access to some EU funds, and the country faces significant demographic challenges and labor shortages in high-tech sectors.",
+  "indicators": {
+    "politicalStability":       { "score": 7, "score_description": "Strong centralized control with a fragmented opposition.", "trend": "stable", "confidence": "high", "note": "The Fidesz-KDNP coalition maintains a robust parliamentary majority, ensuring policy continuity despite international pressure." },
+    "economicDirection":        { "score": 6, "score_description": "Growth driven by foreign direct investment and industrial exports.", "trend": "improving", "confidence": "high", "note": "Real GDP growth is stabilizing around 2.5% as new EV-related industrial capacities come online." },
+    "investmentAttractiveness": { "score": 7, "score_description": "Attractive for large-scale manufacturing but concerns over regulatory predictability.", "trend": "stable", "confidence": "high", "note": "Competitive tax rates and strategic location are balanced against a complex political landscape." },
+    "geopoliticalRisk":         { "score": 6, "score_description": "Elevated due to 'bridge' policy and tensions with EU/NATO peers.", "trend": "stable", "confidence": "high", "note": "Hungary's semi-autonomous stance on regional conflicts creates friction within the Visegrád Group and the EU." },
+    "educationQuality":         { "score": 6, "score_description": "Solid fundamental education with a focus on vocational training.", "trend": "stable", "confidence": "medium", "note": "The higher education system is undergoing restructuring to better align with the needs of the industrial sector." },
+    "healthcareQuality":        { "score": 5, "score_description": "Public system facing underfunding and personnel shortages.", "trend": "stable", "confidence": "medium", "note": "While private healthcare is expanding in Budapest, rural public facilities struggle with wait times and aging infrastructure." },
+    "technologyInvestment":     { "score": 8, "score_description": "High investment in EV battery tech and energy infrastructure.", "trend": "rising", "confidence": "high", "note": "Hungary is becoming one of the world's largest producers of lithium-ion batteries." }
+  },
+  "demographics": {
+    "population": 9600000,
+    "medianAge": 43.8,
+    "urbanizationRate": 72,
+    "majorEthnicGroups": ["Hungarian", "Roma", "German", "Slovak"],
+    "religions": [
+      { "name": "Roman Catholic", "percent": 37.1 },
+      { "name": "None/Unaffiliated", "percent": 23.3 },
+      { "name": "Reformed (Calvinist)", "percent": 11.6 },
+      { "name": "Lutheran", "percent": 2.2 },
+      { "name": "Other", "percent": 25.8 }
+    ]
+  },
+  "alliances": ["EU", "NATO", "Visegrád Group", "OECD", "OSCE"],
+  "relationships": [
+    { "countryId": "AUT", "countryName": "Austria", "type": "partner", "sentiment": "neutral", "summary": "Key economic partner and gateway to Western markets; cooperation on migration is central to the relationship." },
+    { "countryId": "POL", "countryName": "Poland", "type": "partner", "sentiment": "mixed", "summary": "Traditional 'brotherly' ties have been strained by differing views on Russia and Ukraine, though tactical cooperation remains." },
+    { "countryId": "DEU", "countryName": "Germany", "type": "ally", "sentiment": "positive", "summary": "Crucial economic relationship; German automotive giants (Audi, Mercedes-Benz, BMW) are pillars of the Hungarian economy." },
+    { "countryId": "CHN", "countryName": "China", "type": "partner", "sentiment": "positive", "summary": "Primary source of non-EU investment; Hungary is a key node in the Belt and Road Initiative in Europe." },
+    { "countryId": "RUS", "countryName": "Russia", "type": "partner", "sentiment": "neutral", "summary": "Pragmatic cooperation on energy (gas and nuclear); Hungary maintains a more open channel to Moscow than most EU peers." }
+  ],
+  "perspectives": [
+    { "source": "Government Spokesperson", "bias": "Sovereigntist", "view": "Hungary is protecting its national interests by maintaining energy security and attracting investment from both East and West." },
+    { "source": "Opposition Activist", "bias": "Pro-European", "view": "The current trajectory risks isolating Hungary within the EU and undermines democratic institutions and the rule of law." },
+    { "source": "Chamber of Commerce", "bias": "Business-focused", "view": "The focus on the EV supply chain is the right strategic move, but the labor market needs more skilled workers to sustain growth." }
+  ],
+  "historicalContext": {
+    "summary": "Hungary's history is defined by its thousand-year kingdom and its role in the Austro-Hungarian Empire. The 1920 Treaty of Trianon, which saw the loss of two-thirds of its territory, remains a seminal event in national consciousness. Following the 1956 Uprising against Soviet rule and the eventual collapse of communism in 1989, Hungary pivoted to the West, joining NATO in 1999 and the EU in 2004.",
+    "keyEvents": [
+      { "year": 895, "event": "Arrival of the Magyars in the Carpathian Basin." },
+      { "year": 1867, "event": "Austro-Hungarian Compromise establishes the Dual Monarchy." },
+      { "year": 1920, "event": "Treaty of Trianon significantly reduces Hungary's territory." },
+      { "year": 1956, "event": "Hungarian Revolution against Soviet occupation." },
+      { "year": 1989, "event": "Opening of the border with Austria and the end of communist rule." },
+      { "year": 2004, "event": "Hungary joins the European Union." },
+      { "year": 2010, "event": "Viktor Orbán begins his second (and ongoing) term as Prime Minister." }
+    ]
+  },
+  "investmentNotes": {
+    "strengths": ["Central location and excellent logistics infrastructure", "Highly competitive corporate tax environment", "Global leadership in EV battery manufacturing capacity", "Strong presence of German industrial giants"],
+    "risks": ["Vulnerability to EU rule-of-law sanctions and funding freezes", "Severe labor shortages in skilled sectors", "High dependence on energy imports", "Potential for political friction with key EU partners"],
+    "sectors": ["Automotive & EV Batteries", "Electronics Manufacturing", "Information Technology", "Pharmaceuticals", "Logistics & Transport"]
+  },
+  "sources": [
+    { "name": "Hungarian Central Statistical Office (KSH)", "url": "https://www.ksh.hu/?lang=en", "type": "economic" },
+    { "name": "Magyar Nemzeti Bank (MNB)", "url": "https://www.mnb.hu/en", "type": "economic" },
+    { "name": "Ministry of Foreign Affairs and Trade", "url": "https://kormany.hu/kulgazdasagi-es-kulugyminiszterium", "type": "political" }
+  ]
+}

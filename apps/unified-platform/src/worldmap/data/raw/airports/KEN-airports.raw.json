@@ -1,0 +1,272 @@
+[
+  {
+    "id": "NBO",
+    "name": "Jomo Kenyatta International Airport",
+    "countryId": "KEN",
+    "city": "Nairobi",
+    "iata": "NBO",
+    "icao": "HKJK",
+    "coordinates": [36.9258, -1.3192],
+    "passengerVolume": 9060000,
+    "cargoVolume": 364822,
+    "runwayCount": 1,
+    "elevationM": 1624,
+    "strategicImportance": "critical",
+    "geopoliticalNotes": "Primary aviation hub for East and Central Africa. Global gateway for Kenya's horticulture exports and headquarters of Kenya Airways.",
+    "notes": "Key node for regional trade and diplomacy.",
+    "attribution": {
+      "sources": [
+        { "name": "Kenya Airports Authority", "url": "https://www.kaa.go.ke", "accessedAt": "2026-05-10" },
+        { "name": "OurAirports", "url": "https://ourairports.com/airports/HKJK/", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 2,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  },
+  {
+    "id": "MBA",
+    "name": "Moi International Airport",
+    "countryId": "KEN",
+    "city": "Mombasa",
+    "iata": "MBA",
+    "icao": "HKMO",
+    "coordinates": [39.59, -4.039],
+    "passengerVolume": 1300000,
+    "cargoVolume": 4806,
+    "runwayCount": 2,
+    "elevationM": 61,
+    "strategicImportance": "high",
+    "geopoliticalNotes": "Main gateway to Kenya's coastal tourism and secondary logistics hub for the Port of Mombasa.",
+    "notes": "Handles significant international charter traffic.",
+    "attribution": {
+      "sources": [
+        { "name": "IATA", "url": "https://www.iata.org", "accessedAt": "2026-05-10" },
+        { "name": "OurAirports", "url": "https://ourairports.com/airports/HKMO/", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 2,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  },
+  {
+    "id": "EDL",
+    "name": "Eldoret International Airport",
+    "countryId": "KEN",
+    "city": "Eldoret",
+    "iata": "EDL",
+    "icao": "HKEL",
+    "coordinates": [35.2389, 0.4044],
+    "passengerVolume": 500000,
+    "cargoVolume": 50000,
+    "runwayCount": 1,
+    "elevationM": 2150,
+    "strategicImportance": "high",
+    "geopoliticalNotes": "Designed to promote agricultural exports from the 'breadbasket' of Kenya to international markets.",
+    "notes": "Vital link for high-value agricultural logistics.",
+    "attribution": {
+      "sources": [
+        { "name": "Kenya Airports Authority", "url": "https://www.kaa.go.ke", "accessedAt": "2026-05-10" },
+        { "name": "OurAirports", "url": "https://ourairports.com/airports/HKEL/", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 2,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  },
+  {
+    "id": "KIS",
+    "name": "Kisumu International Airport",
+    "countryId": "KEN",
+    "city": "Kisumu",
+    "iata": "KIS",
+    "icao": "HKKI",
+    "coordinates": [34.7289, -0.0861],
+    "passengerVolume": 500000,
+    "cargoVolume": 2500,
+    "runwayCount": 1,
+    "elevationM": 1157,
+    "strategicImportance": "high",
+    "geopoliticalNotes": "Primary hub for the Lake Victoria basin, facilitating trade between Kenya, Uganda, and Tanzania.",
+    "notes": "Expanding to handle wide-body cargo for fish and fruit exports.",
+    "attribution": {
+      "sources": [
+        { "name": "ICAO", "url": "https://www.icao.int", "accessedAt": "2026-05-10" },
+        { "name": "OurAirports", "url": "https://ourairports.com/airports/HKKI/", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 2,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  },
+  {
+    "id": "WIL",
+    "name": "Wilson Airport",
+    "countryId": "KEN",
+    "city": "Nairobi",
+    "iata": "WIL",
+    "icao": "HKNW",
+    "coordinates": [36.815, -1.32],
+    "passengerVolume": 500000,
+    "cargoVolume": null,
+    "runwayCount": 2,
+    "elevationM": 1687,
+    "strategicImportance": "high",
+    "geopoliticalNotes": "One of the busiest light aircraft airports in Africa; nerve center for domestic tourism and medical evacuations.",
+    "notes": "Key hub for regional humanitarian missions and safari flights.",
+    "attribution": {
+      "sources": [
+        { "name": "Kenya Airports Authority", "url": "https://www.kaa.go.ke", "accessedAt": "2026-05-10" },
+        { "name": "OurAirports", "url": "https://ourairports.com/airports/HKNW/", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 2,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  },
+  {
+    "id": "WJR",
+    "name": "Wajir International Airport",
+    "countryId": "KEN",
+    "city": "Wajir",
+    "iata": "WJR",
+    "icao": "HKWJ",
+    "coordinates": [40.09, 1.73],
+    "passengerVolume": 125000,
+    "cargoVolume": null,
+    "runwayCount": 1,
+    "elevationM": 235,
+    "strategicImportance": "high",
+    "geopoliticalNotes": "Critical security and military hub near the Somalia border; mandatory security screening point for regional flights.",
+    "notes": "Vital base for counter-terrorism operations.",
+    "attribution": {
+      "sources": [
+        { "name": "Ministry of Defence (Kenya)", "url": "https://www.mod.go.ke", "accessedAt": "2026-05-10" },
+        { "name": "OurAirports", "url": "https://ourairports.com/airports/HKWJ/", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 2,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  },
+  {
+    "id": "HKIS",
+    "name": "Isiolo International Airport",
+    "countryId": "KEN",
+    "city": "Isiolo",
+    "iata": null,
+    "icao": "HKIS",
+    "coordinates": [37.5878, 0.3436],
+    "passengerVolume": null,
+    "cargoVolume": null,
+    "runwayCount": 1,
+    "elevationM": 1067,
+    "strategicImportance": "medium",
+    "geopoliticalNotes": "Cornerstone of the LAPSSET Corridor project, positioned as a future major logistics hub.",
+    "notes": "Strategic for northern tourism and livestock exports.",
+    "attribution": {
+      "sources": [
+        { "name": "LAPSSET Corridor Development Authority", "url": "https://www.lapsset.go.ke", "accessedAt": "2026-05-10" },
+        { "name": "OurAirports", "url": "https://ourairports.com/airports/HKIS/", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 2,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  },
+  {
+    "id": "MYD",
+    "name": "Malindi International Airport",
+    "countryId": "KEN",
+    "city": "Malindi",
+    "iata": "MYD",
+    "icao": "HKML",
+    "coordinates": [40.1, -3.215],
+    "passengerVolume": null,
+    "cargoVolume": null,
+    "runwayCount": 2,
+    "elevationM": 24,
+    "strategicImportance": "medium",
+    "geopoliticalNotes": "Essential for the North Coast tourism industry and supports the nearby San Marco Space Centre.",
+    "notes": "Serves a significant international expat and tourist community.",
+    "attribution": {
+      "sources": [
+        { "name": "Kenya Airports Authority", "url": "https://www.kaa.go.ke", "accessedAt": "2026-05-10" },
+        { "name": "OurAirports", "url": "https://ourairports.com/airports/HKML/", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 2,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  },
+  {
+    "id": "LAU",
+    "name": "Manda Airport",
+    "countryId": "KEN",
+    "city": "Lamu",
+    "iata": "LAU",
+    "icao": "HKLU",
+    "coordinates": [40.91, -2.246],
+    "passengerVolume": null,
+    "cargoVolume": null,
+    "runwayCount": 1,
+    "elevationM": 6,
+    "strategicImportance": "high",
+    "geopoliticalNotes": "Primary air link for the Lamu Port project and the UNESCO World Heritage site of Lamu.",
+    "notes": "Significance surging with the development of the Lamu Port.",
+    "attribution": {
+      "sources": [
+        { "name": "UNESCO", "url": "https://whc.unesco.org", "accessedAt": "2026-05-10" },
+        { "name": "OurAirports", "url": "https://ourairports.com/airports/HKLU/", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 2,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  },
+  {
+    "id": "LKG",
+    "name": "Lokichogio Airport",
+    "countryId": "KEN",
+    "city": "Lokichogio",
+    "iata": "LKG",
+    "icao": "HKLK",
+    "coordinates": [34.345, 4.205],
+    "passengerVolume": null,
+    "cargoVolume": null,
+    "runwayCount": 1,
+    "elevationM": 645,
+    "strategicImportance": "high",
+    "geopoliticalNotes": "Historically one of the world's largest humanitarian hubs; strategic launch point for relief into South Sudan.",
+    "notes": "Vital monitoring post for the volatile border region.",
+    "attribution": {
+      "sources": [
+        { "name": "WFP", "url": "https://www.wfp.org", "accessedAt": "2026-05-10" },
+        { "name": "OurAirports", "url": "https://ourairports.com/airports/HKLK/", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 2,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  }
+]

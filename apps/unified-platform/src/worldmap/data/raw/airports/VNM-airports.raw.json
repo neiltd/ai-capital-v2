@@ -1,0 +1,272 @@
+[
+  {
+    "id": "SGN",
+    "name": "Tan Son Nhat International Airport",
+    "countryId": "VNM",
+    "city": "Ho Chi Minh City",
+    "iata": "SGN",
+    "icao": "VVTS",
+    "coordinates": [106.6519, 10.8189],
+    "passengerVolume": 39800000,
+    "cargoVolume": 650000,
+    "runwayCount": 2,
+    "elevationM": 10,
+    "strategicImportance": "critical",
+    "geopoliticalNotes": "Vietnam's busiest airport and primary gateway to the southern economic hub; critical for high-tech manufacturing exports and international business connectivity.",
+    "notes": "Currently expanding with Terminal 3 to relieve chronic congestion.",
+    "attribution": {
+      "sources": [
+        { "name": "Airports Corporation of Vietnam (ACV)", "url": "https://www.vietnamairport.vn/en/", "accessedAt": "2026-05-10" },
+        { "name": "IATA", "url": "https://www.iata.org", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 2,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  },
+  {
+    "id": "HAN",
+    "name": "Noi Bai International Airport",
+    "countryId": "VNM",
+    "city": "Hanoi",
+    "iata": "HAN",
+    "icao": "VVNB",
+    "coordinates": [105.8072, 21.2211],
+    "passengerVolume": 30000000,
+    "cargoVolume": 700000,
+    "runwayCount": 2,
+    "elevationM": 12,
+    "strategicImportance": "critical",
+    "geopoliticalNotes": "Primary gateway to Northern Vietnam and the capital; essential for government operations and the massive electronics industrial zones (e.g., Samsung, Foxconn).",
+    "notes": "Handles the second-largest passenger and cargo volumes in the country.",
+    "attribution": {
+      "sources": [
+        { "name": "Noi Bai Airport", "url": "https://noibaiairport.vn/en/", "accessedAt": "2026-05-10" },
+        { "name": "OurAirports", "url": "https://ourairports.com/airports/VVNB/", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 2,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  },
+  {
+    "id": "DAD",
+    "name": "Da Nang International Airport",
+    "countryId": "VNM",
+    "city": "Da Nang",
+    "iata": "DAD",
+    "icao": "VVDN",
+    "coordinates": [108.1994, 16.0439],
+    "passengerVolume": 13400000,
+    "cargoVolume": 30000,
+    "runwayCount": 2,
+    "elevationM": 4,
+    "strategicImportance": "high",
+    "geopoliticalNotes": "The primary hub for Central Vietnam; critical for regional tourism and a growing high-tech industrial base in the Da Nang Hi-Tech Park.",
+    "notes": "Expanding its cargo terminal to handle increased regional logistics demand.",
+    "attribution": {
+      "sources": [
+        { "name": "Airports Corporation of Vietnam (ACV)", "url": "https://www.vietnamairport.vn/en/", "accessedAt": "2026-05-10" },
+        { "name": "IATA", "url": "https://www.iata.org", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 2,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  },
+  {
+    "id": "CXR",
+    "name": "Cam Ranh International Airport",
+    "countryId": "VNM",
+    "city": "Cam Ranh",
+    "iata": "CXR",
+    "icao": "VVCR",
+    "coordinates": [109.2194, 11.9981],
+    "passengerVolume": 7000000,
+    "cargoVolume": null,
+    "runwayCount": 2,
+    "elevationM": 12,
+    "strategicImportance": "high",
+    "geopoliticalNotes": "Highly strategic location near Cam Ranh Bay; vital for tourism and serves as a major gateway for the South China Sea region.",
+    "notes": "Significant international traffic from East Asia and Central Asia.",
+    "attribution": {
+      "sources": [
+        { "name": "Cam Ranh International Airport", "url": "https://camranhairport.vn/", "accessedAt": "2026-05-10" },
+        { "name": "ICAO", "url": "https://www.icao.int", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 2,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  },
+  {
+    "id": "PQC",
+    "name": "Phu Quoc International Airport",
+    "countryId": "VNM",
+    "city": "Phu Quoc",
+    "iata": "PQC",
+    "icao": "VVPQ",
+    "coordinates": [103.9911, 10.1717],
+    "passengerVolume": 4100000,
+    "cargoVolume": null,
+    "runwayCount": 1,
+    "elevationM": 7,
+    "strategicImportance": "high",
+    "geopoliticalNotes": "Serves Vietnam's largest island and a designated Special Economic Zone; critical for the national tourism strategy and visa-free access policies.",
+    "notes": "Strategically located in the Gulf of Thailand.",
+    "attribution": {
+      "sources": [
+        { "name": "Airports Corporation of Vietnam (ACV)", "url": "https://www.vietnamairport.vn/en/", "accessedAt": "2026-05-10" },
+        { "name": "OurAirports", "url": "https://ourairports.com/airports/VVPQ/", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 2,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  },
+  {
+    "id": "HPH",
+    "name": "Cat Bi International Airport",
+    "countryId": "VNM",
+    "city": "Hai Phong",
+    "iata": "HPH",
+    "icao": "VVCI",
+    "coordinates": [106.7247, 20.8192],
+    "passengerVolume": 3000000,
+    "cargoVolume": 20000,
+    "runwayCount": 1,
+    "elevationM": 4,
+    "strategicImportance": "high",
+    "geopoliticalNotes": "Secondary hub for the Red River Delta and primary airport for the north's largest port city, supporting maritime and industrial logistics.",
+    "notes": "Critical for the Hai Phong-Quang Ninh industrial corridor.",
+    "attribution": {
+      "sources": [
+        { "name": "Cat Bi Airport", "url": "https://catbiairport.vn/", "accessedAt": "2026-05-10" },
+        { "name": "ICAO", "url": "https://www.icao.int", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 2,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  },
+  {
+    "id": "VCA",
+    "name": "Can Tho International Airport",
+    "countryId": "VNM",
+    "city": "Can Tho",
+    "iata": "VCA",
+    "icao": "VVCT",
+    "coordinates": [105.7119, 10.0853],
+    "passengerVolume": 1200000,
+    "cargoVolume": null,
+    "runwayCount": 1,
+    "elevationM": 3,
+    "strategicImportance": "high",
+    "geopoliticalNotes": "The main gateway to the Mekong Delta region; strategically important for the export of high-value agricultural and seafood products.",
+    "notes": "Operates as a regional hub for the southern delta provinces.",
+    "attribution": {
+      "sources": [
+        { "name": "Can Tho Airport", "url": "https://canthoairport.vn/", "accessedAt": "2026-05-10" },
+        { "name": "OurAirports", "url": "https://ourairports.com/airports/VVCT/", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 2,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  },
+  {
+    "id": "VDO",
+    "name": "Van Don International Airport",
+    "countryId": "VNM",
+    "city": "Quang Ninh",
+    "iata": "VDO",
+    "icao": "VVVD",
+    "coordinates": [107.4122, 21.1208],
+    "passengerVolume": 1000000,
+    "cargoVolume": null,
+    "runwayCount": 1,
+    "elevationM": 5,
+    "strategicImportance": "high",
+    "geopoliticalNotes": "Vietnam's first private airport; serves the Ha Long Bay region and acts as a strategic gateway for the North-East border region with China.",
+    "notes": "Operated by Sun Group; model for private-public partnership in aviation.",
+    "attribution": {
+      "sources": [
+        { "name": "Van Don Airport", "url": "https://vandonairportvietnam.com/", "accessedAt": "2026-05-10" },
+        { "name": "IATA", "url": "https://www.iata.org", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 2,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  },
+  {
+    "id": "VII",
+    "name": "Vinh International Airport",
+    "countryId": "VNM",
+    "city": "Vinh",
+    "iata": "VII",
+    "icao": "VVVH",
+    "coordinates": [105.6708, 18.7367],
+    "passengerVolume": 2200000,
+    "cargoVolume": null,
+    "runwayCount": 1,
+    "elevationM": 6,
+    "strategicImportance": "medium",
+    "geopoliticalNotes": "Key regional hub for North-Central Vietnam; essential for domestic connectivity and labor export routes to neighboring regions.",
+    "notes": "Primary airport for the Nghe An province.",
+    "attribution": {
+      "sources": [
+        { "name": "Airports Corporation of Vietnam (ACV)", "url": "https://www.vietnamairport.vn/en/", "accessedAt": "2026-05-10" },
+        { "name": "OurAirports", "url": "https://ourairports.com/airports/VVVH/", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 2,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  },
+  {
+    "id": "HUI",
+    "name": "Phu Bai International Airport",
+    "countryId": "VNM",
+    "city": "Hue",
+    "iata": "HUI",
+    "icao": "VVPB",
+    "coordinates": [107.7028, 16.4017],
+    "passengerVolume": 2000000,
+    "cargoVolume": null,
+    "runwayCount": 1,
+    "elevationM": 15,
+    "strategicImportance": "medium",
+    "geopoliticalNotes": "Gateway to the former imperial capital of Hue; critical for cultural tourism and secondary central connectivity.",
+    "notes": "New Terminal 2 opened in 2023 to expand international capacity.",
+    "attribution": {
+      "sources": [
+        { "name": "Phu Bai Airport", "url": "https://phubaiairport.vn/", "accessedAt": "2026-05-10" },
+        { "name": "ICAO", "url": "https://www.icao.int", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 2,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  }
+]

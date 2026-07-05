@@ -1,0 +1,62 @@
+{
+  "id": "HKG",
+  "iso2": "HK",
+  "name": "Hong Kong",
+  "region": "Asia",
+  "subregion": "Eastern Asia",
+  "capital": "Hong Kong",
+  "lastUpdated": "2025-05-20",
+  "summary": "Hong Kong has fully transitioned into a dual-layered security regime following the 2024 enactment of the Safeguarding National Security Ordinance (Article 23). In 2024-2025, the city's legal and political environment has been redefined by broad definitions of 'state secrets' and 'external interference,' leading to a mono-tonal political landscape and a 'chilling effect' on civil society and international business. While remaining a major financial hub, it faces significant risks from unpredictable enforcement and talent outflow.",
+  "indicators": {
+    "politicalStability":       { "score": 7, "trend": "stable", "confidence": "high", "note": "High institutional stability under Beijing's direct influence; pro-democracy opposition has been effectively eliminated." },
+    "economicDirection":        { "score": 6, "trend": "stable", "confidence": "high", "note": "Remains a critical gateway to China; facing challenges from Western sanctions and a shifting business environment." },
+    "investmentAttractiveness": { "score": 6, "trend": "declining", "confidence": "high", "note": "Still attractive for China-focused capital, but international firms face increasing compliance and data security risks." },
+    "geopoliticalRisk":         { "score": 6, "trend": "increasing", "confidence": "high", "note": "Central point of friction in US-China relations; target of expanded Western sanctions and visa restrictions." },
+    "educationQuality":         { "score": 8, "trend": "declining", "confidence": "medium", "note": "Historically high standards; currently facing academic freedom constraints and a significant brain drain of teachers." },
+    "healthcareQuality":        { "score": 9, "trend": "stable", "confidence": "high", "note": "Excellent public and private healthcare systems, though facing long-term staffing shortages due to emigration." },
+    "technologyInvestment":     { "score": 7, "trend": "improving", "confidence": "high", "note": "Heavy government investment in the GBA integration, fintech, and biotech." }
+  },
+  "demographics": {
+    "population": 7496681,
+    "medianAge": 47.0,
+    "urbanizationRate": 100.0,
+    "majorEthnicGroups": ["Chinese", "Filipino", "Indonesian"],
+    "religions": [
+      { "name": "Buddhist / Taoist", "percent": 28.0 },
+      { "name": "Christian", "percent": 12.0 }
+    ]
+  },
+  "alliances": ["APEC", "WTO", "Greater Bay Area (GBA)"],
+  "relationships": [
+    { "countryId": "CHN", "countryName": "China", "type": "strategic_partner", "sentiment": "positive", "summary": "Sovereign power; Hong Kong is increasingly integrated into the mainland's political and security structures." },
+    { "countryId": "USA", "countryName": "United States", "type": "economic_partner", "sentiment": "negative", "summary": "Strained relations; USA no longer grants HK special treatment, applying sanctions to officials and restrictive business advisories." },
+    { "countryId": "GBR", "countryName": "United Kingdom", "type": "strategic_partner", "sentiment": "negative", "summary": "Tense relations; UK is a primary destination for HK emigrants and a vocal critic of the security laws." },
+    { "countryId": "SGP", "countryName": "Singapore", "type": "economic_partner", "sentiment": "neutral", "summary": "Primary regional competitor for financial services and talent; benefiting from HK's political shifts." }
+  ],
+  "perspectives": [
+    { "source": "HK Government Official", "bias": "Pro-Establishment", "view": "The new security laws have brought stability and closed the gaps exploited by foreign forces; Hong Kong is now safer for business than ever." },
+    { "source": "International Lawyer", "bias": "Critical", "view": "The broad definition of 'state secrets' makes routine due diligence a potential criminal offense; the legal landscape is now fundamentally unpredictable." },
+    { "source": "Expatriate Professional", "bias": "Neutral", "view": "The city still works perfectly for my job, but I'm careful about what I say in public; many of my local friends have already moved to London." }
+  ],
+  "historicalContext": {
+    "summary": "A British colony from 1841 to 1997, Hong Kong was returned to China under the 'One Country, Two Systems' framework. Following massive pro-democracy protests in 2019, Beijing imposed a National Security Law in 2020, which has been followed by local legislation that has effectively ended the city's political autonomy.",
+    "keyEvents": [
+      { "year": 1997, "event": "Handover from the UK to China." },
+      { "year": 2014, "event": "Umbrella Movement protests for universal suffrage." },
+      { "year": 2019, "event": "Massive anti-extradition bill protests." },
+      { "year": 2020, "event": "Enactment of the National Security Law (NSL) by Beijing." },
+      { "year": 2024, "event": "Enactment of the Safeguarding National Security Ordinance (Article 23)." },
+      { "year": 2025, "event": "Legislative Council elections held under 'Patriots Only' rules." }
+    ]
+  },
+  "investmentNotes": {
+    "strengths": ["Low tax regime and efficient financial infrastructure", "Unrivaled access to the Mainland Chinese market", "Excellent logistics and physical connectivity", "Member of the Greater Bay Area development zone"],
+    "risks": ["Unpredictable enforcement of vaguely defined national security laws", "Susceptibility to US and Western sanctions", "Significant loss of professional talent and middle management", "Data security and privacy concerns due to NSL integration"],
+    "sectors": ["Financial Services & Wealth Management", "Logistics & Professional Services", "Biotechnology", "Fintech & Digital Trade"]
+  },
+  "sources": [
+    { "name": "Hong Kong SAR National Security Website", "url": "https://www.nsol.gov.hk/en", "type": "government" },
+    { "name": "US State Department - Hong Kong Policy Act Report", "url": "https://www.state.gov/reports/2024-hong-kong-policy-act-report/", "type": "analytical" },
+    { "name": "Human Rights Watch - Hong Kong", "url": "https://www.hrw.org/asia/hong-kong", "type": "analytical" }
+  ]
+}

@@ -1,0 +1,37 @@
+[
+  {
+    "countryId": "ARG",
+    "year": 2023,
+    "electricityConsumptionTWh": 159.9,
+    "electricityProductionTWh": 148.6,
+    "electricityMix": {
+      "gas": 48.9,
+      "hydro": 24.5,
+      "wind": 10.6,
+      "nuclear": 7.3,
+      "oil": 3.6,
+      "solar": 2.6,
+      "otherRenewables": 1.7,
+      "coal": 0.8
+    },
+    "renewableSharePct": 39.4,
+    "waterStressScore": 1.8,
+    "waterWithdrawalPct": 10.46,
+    "foodSecurityScore": 64.8,
+    "aiAdoptionScore": 57.72,
+    "internetPenetration": 87.2,
+    "mobilePenetration": 133.7,
+    "attribution": {
+      "sources": [
+        { "name": "Ember Electricity Data Explorer 2024", "url": "https://ember-energy.org/data/electricity-data-explorer/", "accessedAt": "2026-05-10" },
+        { "name": "WRI Aqueduct 4.0", "url": "https://www.wri.org/aqueduct", "accessedAt": "2026-05-10" },
+        { "name": "Oxford Insights Government AI Readiness Index 2023", "url": "https://oxfordinsights.com/government-ai-readiness-index-2023/", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 3,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  }
+]

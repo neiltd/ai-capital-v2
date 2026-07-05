@@ -1,0 +1,272 @@
+[
+  {
+    "id": "FRA",
+    "name": "Frankfurt Airport",
+    "countryId": "DEU",
+    "city": "Frankfurt",
+    "iata": "FRA",
+    "icao": "EDDF",
+    "coordinates": [8.5705, 50.0333],
+    "passengerVolume": 61564957,
+    "cargoVolume": 2050000,
+    "runwayCount": 4,
+    "elevationM": 111,
+    "strategicImportance": "critical",
+    "geopoliticalNotes": "Germany's largest cargo and passenger hub, handling nearly 40% of the country's air freight. Critical node for global supply chains and pharmaceutical logistics.",
+    "notes": "Features 'CargoCity', Europe's largest pharmaceutical handling facility.",
+    "attribution": {
+      "sources": [
+        { "name": "Fraport AG", "url": "https://www.fraport.com", "accessedAt": "2026-05-10" },
+        { "name": "ACI World", "url": "https://aci.aero", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 2,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  },
+  {
+    "id": "MUC",
+    "name": "Munich Airport",
+    "countryId": "DEU",
+    "city": "Munich",
+    "iata": "MUC",
+    "icao": "EDDM",
+    "coordinates": [11.7861, 48.3538],
+    "passengerVolume": 41600000,
+    "cargoVolume": 311098,
+    "runwayCount": 2,
+    "elevationM": 453,
+    "strategicImportance": "critical",
+    "geopoliticalNotes": "Germany's second-largest hub and a major southern European gateway. Highly significant for Lufthansa's international network and regional connectivity.",
+    "notes": "Consistent high growth and major tech-industry link.",
+    "attribution": {
+      "sources": [
+        { "name": "Munich Airport", "url": "https://www.munich-airport.com", "accessedAt": "2026-05-10" },
+        { "name": "IATA", "url": "https://www.iata.org", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 2,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  },
+  {
+    "id": "LEJ",
+    "name": "Leipzig/Halle Airport",
+    "countryId": "DEU",
+    "city": "Leipzig",
+    "iata": "LEJ",
+    "icao": "EDDP",
+    "coordinates": [12.2359, 51.4240],
+    "passengerVolume": 2200981,
+    "cargoVolume": 1383319,
+    "runwayCount": 2,
+    "elevationM": 143,
+    "strategicImportance": "critical",
+    "geopoliticalNotes": "Second-busiest cargo airport in Germany and the main European hub for DHL. Serves as a vital technical stop for US DoD flights and NATO logistics (SALIS).",
+    "notes": "Key dual-use facility with significant military logistics role.",
+    "attribution": {
+      "sources": [
+        { "name": "Leipzig/Halle Airport", "url": "https://www.mdf-ag.com", "accessedAt": "2026-05-10" },
+        { "name": "ICAO", "url": "https://www.icao.int", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 2,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  },
+  {
+    "id": "CGN",
+    "name": "Cologne Bonn Airport",
+    "countryId": "DEU",
+    "city": "Cologne",
+    "iata": "CGN",
+    "icao": "EDDK",
+    "coordinates": [7.1427, 50.8659],
+    "passengerVolume": 10090000,
+    "cargoVolume": 840000,
+    "runwayCount": 3,
+    "elevationM": 92,
+    "strategicImportance": "high",
+    "geopoliticalNotes": "Major hub for UPS and FedEx. Home to the German Air Force Executive Transport Wing and a critical MedEvac center for NATO.",
+    "notes": "Significant government and military presence.",
+    "attribution": {
+      "sources": [
+        { "name": "Cologne Bonn Airport", "url": "https://www.cologne-bonn-airport.com", "accessedAt": "2026-05-10" },
+        { "name": "OurAirports", "url": "https://ourairports.com", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 2,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  },
+  {
+    "id": "BER",
+    "name": "Berlin Brandenburg Airport",
+    "countryId": "DEU",
+    "city": "Berlin",
+    "iata": "BER",
+    "icao": "EDDB",
+    "coordinates": [13.5033, 52.3667],
+    "passengerVolume": 25465872,
+    "cargoVolume": 44300,
+    "runwayCount": 2,
+    "elevationM": 48,
+    "strategicImportance": "high",
+    "geopoliticalNotes": "The primary gateway to Germany's capital. Increasing strategic value as a regional hub for Central and Eastern Europe connectivity.",
+    "notes": "Opened in 2020, replacing Tegel and Schönefeld.",
+    "attribution": {
+      "sources": [
+        { "name": "Berlin Brandenburg Airport", "url": "https://ber.berlin-airport.de", "accessedAt": "2026-05-10" },
+        { "name": "IATA", "url": "https://www.iata.org", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 2,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  },
+  {
+    "id": "HAM",
+    "name": "Hamburg Airport",
+    "countryId": "DEU",
+    "city": "Hamburg",
+    "iata": "HAM",
+    "icao": "EDDH",
+    "coordinates": [9.9882, 53.6304],
+    "passengerVolume": 14830000,
+    "cargoVolume": 35000,
+    "runwayCount": 2,
+    "elevationM": 16,
+    "strategicImportance": "high",
+    "geopoliticalNotes": "Major northern gateway and vital link for the aerospace industry (Airbus). Crucial for regional connectivity in Northern Germany and Scandinavia.",
+    "notes": "Oldest operational airport in Germany.",
+    "attribution": {
+      "sources": [
+        { "name": "Hamburg Airport", "url": "https://www.hamburg-airport.de", "accessedAt": "2026-05-10" },
+        { "name": "ACI World", "url": "https://aci.aero", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 2,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  },
+  {
+    "id": "DUS",
+    "name": "Düsseldorf Airport",
+    "countryId": "DEU",
+    "city": "Düsseldorf",
+    "iata": "DUS",
+    "icao": "EDDL",
+    "coordinates": [6.7668, 51.2895],
+    "passengerVolume": 20000000,
+    "cargoVolume": 38500,
+    "runwayCount": 2,
+    "elevationM": 45,
+    "strategicImportance": "high",
+    "geopoliticalNotes": "Primary international hub for Germany's most populous state (North Rhine-Westphalia). Critical for the Rhine-Ruhr industrial and business region.",
+    "notes": "Significant business and long-haul traffic gateway.",
+    "attribution": {
+      "sources": [
+        { "name": "Düsseldorf Airport", "url": "https://www.dus.com", "accessedAt": "2026-05-10" },
+        { "name": "IATA", "url": "https://www.iata.org", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 2,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  },
+  {
+    "id": "STR",
+    "name": "Stuttgart Airport",
+    "countryId": "DEU",
+    "city": "Stuttgart",
+    "iata": "STR",
+    "icao": "EDDS",
+    "coordinates": [9.2220, 48.6899],
+    "passengerVolume": 9140000,
+    "cargoVolume": 34500,
+    "runwayCount": 1,
+    "elevationM": 389,
+    "strategicImportance": "medium",
+    "geopoliticalNotes": "Key industrial hub for Southwestern Germany, home to major automotive giants. Vital for high-value export logistics and regional economic integration.",
+    "notes": "Single runway operation with high efficiency.",
+    "attribution": {
+      "sources": [
+        { "name": "Stuttgart Airport", "url": "https://www.stuttgart-airport.com", "accessedAt": "2026-05-10" },
+        { "name": "OurAirports", "url": "https://ourairports.com", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 2,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  },
+  {
+    "id": "HHN",
+    "name": "Frankfurt-Hahn Airport",
+    "countryId": "DEU",
+    "city": "Kirchberg",
+    "iata": "HHN",
+    "icao": "EDFH",
+    "coordinates": [7.2639, 49.9487],
+    "passengerVolume": 1700000,
+    "cargoVolume": 220000,
+    "runwayCount": 1,
+    "elevationM": 503,
+    "strategicImportance": "high",
+    "geopoliticalNotes": "Dedicated cargo hub with no night flight restrictions, serving as a critical backup and overflow for Frankfurt. Significant for express freight.",
+    "notes": "Former military base converted to a cargo-focused commercial airport.",
+    "attribution": {
+      "sources": [
+        { "name": "Frankfurt-Hahn Airport", "url": "https://www.hahn-airport.de", "accessedAt": "2026-05-10" },
+        { "name": "ICAO", "url": "https://www.icao.int", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 2,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  },
+  {
+    "id": "RLG",
+    "name": "Rostock-Laage Airport",
+    "countryId": "DEU",
+    "city": "Rostock",
+    "iata": "RLG",
+    "icao": "ETNL",
+    "coordinates": [12.2783, 53.9183],
+    "passengerVolume": 100000,
+    "cargoVolume": null,
+    "runwayCount": 1,
+    "elevationM": 42,
+    "strategicImportance": "high",
+    "geopoliticalNotes": "Critical dual-use airport on the Baltic coast. Serves as a primary Eurofighter base for NATO air shielding missions and securing the northern flank.",
+    "notes": "Joint-use military/civilian facility; home to Tactical Air Wing 73.",
+    "attribution": {
+      "sources": [
+        { "name": "Rostock-Laage Airport", "url": "https://www.rostock-airport.de", "accessedAt": "2026-05-10" },
+        { "name": "Luftwaffe Official", "url": "https://www.bundeswehr.de/de/organisation/luftwaffe", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 2,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  }
+]

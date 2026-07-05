@@ -1,0 +1,36 @@
+[
+  {
+    "countryId": "THA",
+    "year": 2023,
+    "electricityConsumptionTWh": 203.88,
+    "electricityProductionTWh": 195.98,
+    "electricityMix": {
+      "gas": 64.2,
+      "coal": 14.6,
+      "hydro": 3.0,
+      "solar": 1.4,
+      "wind": 0.2,
+      "otherRenewables": 5.8,
+      "other": 10.8
+    },
+    "renewableSharePct": 10.4,
+    "waterStressScore": 1.5,
+    "waterWithdrawalPct": 23.01,
+    "foodSecurityScore": 60.1,
+    "aiAdoptionScore": 63.03,
+    "internetPenetration": 85.3,
+    "mobilePenetration": 141.0,
+    "attribution": {
+      "sources": [
+        { "name": "EPPO Thailand Energy Statistics 2023", "url": "http://www.eppo.go.th/", "accessedAt": "2026-05-10" },
+        { "name": "WRI Aqueduct 4.0", "url": "https://www.wri.org/aqueduct", "accessedAt": "2026-05-10" },
+        { "name": "Oxford Insights Government AI Readiness Index 2023", "url": "https://oxfordinsights.com/government-ai-readiness-index-2023/", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 3,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  }
+]

@@ -1,0 +1,409 @@
+[
+  {
+    "id": "PLANT-IND-KUDANKULAM",
+    "name": "Kudankulam Nuclear Power Plant",
+    "countryId": "IND",
+    "city": "Kudankulam",
+    "coordinates": [77.7125, 8.1689],
+    "type": "nuclear",
+    "status": "operating",
+    "capacityMW": 2000,
+    "annualOutputGWh": null,
+    "yearCommissioned": 2013,
+    "yearRetirement": null,
+    "operator": "Nuclear Power Corporation of India Limited (NPCIL)",
+    "owner": "NPCIL",
+    "strategicNote": "India's largest nuclear power plant, built in collaboration with Russia; a major component of Indo-Russian strategic cooperation.",
+    "notes": "Four additional units are currently under construction.",
+    "attribution": {
+      "sources": [
+        { "name": "NPCIL", "url": "https://www.npcil.nic.in/content/150_1_KudankulamNuclearPowerProject.aspx", "accessedAt": "2026-05-10" },
+        { "name": "IAEA PRIS", "url": "https://pris.iaea.org/PRIS/CountryStatistics/CountryDetails.aspx?current=IN", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 2,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  },
+  {
+    "id": "PLANT-IND-VINDHYACHAL",
+    "name": "Vindhyachal Thermal Power Station",
+    "countryId": "IND",
+    "city": "Singrauli",
+    "coordinates": [82.6736, 24.0972],
+    "type": "coal",
+    "status": "operating",
+    "capacityMW": 4760,
+    "annualOutputGWh": null,
+    "yearCommissioned": 1987,
+    "yearRetirement": null,
+    "operator": "NTPC Limited",
+    "owner": "NTPC Limited",
+    "strategicNote": "Largest thermal power plant in India; a critical hub for the country's coal-based electricity generation.",
+    "notes": "Comprises multiple units commissioned in stages from 1987 to 2015.",
+    "attribution": {
+      "sources": [
+        { "name": "NTPC", "url": "https://www.ntpc.co.in/en/power-generation/coal-based-power-stations/vindhyachal", "accessedAt": "2026-05-10" },
+        { "name": "Global Energy Monitor", "url": "https://www.gem.wiki/Vindhyachal_Thermal_Power_Station", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 2,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  },
+  {
+    "id": "PLANT-IND-MUNDRA-ADANI",
+    "name": "Mundra Thermal Power Station",
+    "countryId": "IND",
+    "city": "Mundra",
+    "coordinates": [69.5528, 22.8228],
+    "type": "coal",
+    "status": "operating",
+    "capacityMW": 4620,
+    "annualOutputGWh": null,
+    "yearCommissioned": 2009,
+    "yearRetirement": null,
+    "operator": "Adani Power",
+    "owner": "Adani Power",
+    "strategicNote": "A major private sector power plant and a key part of the Mundra Special Economic Zone; uses supercritical technology.",
+    "notes": null,
+    "attribution": {
+      "sources": [
+        { "name": "Adani Power", "url": "https://www.adanipower.com/thermal-power/mundra", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 1,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  },
+  {
+    "id": "PLANT-IND-BHADLA-SOLAR",
+    "name": "Bhadla Solar Park",
+    "countryId": "IND",
+    "city": "Bhadla",
+    "coordinates": [71.9153, 27.5397],
+    "type": "solar",
+    "status": "operating",
+    "capacityMW": 2245,
+    "annualOutputGWh": null,
+    "yearCommissioned": 2017,
+    "yearRetirement": null,
+    "operator": "Multiple",
+    "owner": "Multiple (Rajasthan Solar Park Development Company Limited and others)",
+    "strategicNote": "One of the world's largest solar parks, located in the Thar Desert; a flagship project for India's renewable energy ambitions.",
+    "notes": "Developed in four phases.",
+    "attribution": {
+      "sources": [
+        { "name": "Global Energy Monitor", "url": "https://www.gem.wiki/Bhadla_Solar_Park", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 2,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  },
+  {
+    "id": "PLANT-IND-PAVAGADA-SOLAR",
+    "name": "Pavagada Solar Park",
+    "countryId": "IND",
+    "city": "Pavagada",
+    "coordinates": [77.4500, 14.2500],
+    "type": "solar",
+    "status": "operating",
+    "capacityMW": 2050,
+    "annualOutputGWh": null,
+    "yearCommissioned": 2018,
+    "yearRetirement": null,
+    "operator": "Karnataka Solar Power Development Corporation Ltd",
+    "owner": "KSPDCL (JV of KREDL and NTPC)",
+    "strategicNote": "Massive solar park in Karnataka, part of the 'Shakti Sthala' initiative to boost solar capacity.",
+    "notes": null,
+    "attribution": {
+      "sources": [
+        { "name": "KSPDCL", "url": "https://kspdcl.karnataka.gov.in/", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 1,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  },
+  {
+    "id": "PLANT-IND-TARAPUR",
+    "name": "Tarapur Atomic Power Station",
+    "countryId": "IND",
+    "city": "Tarapur",
+    "coordinates": [72.6611, 19.8289],
+    "type": "nuclear",
+    "status": "operating",
+    "capacityMW": 1400,
+    "annualOutputGWh": null,
+    "yearCommissioned": 1969,
+    "yearRetirement": null,
+    "operator": "Nuclear Power Corporation of India Limited (NPCIL)",
+    "owner": "NPCIL",
+    "strategicNote": "India's first commercial nuclear power station; houses both Boiling Water Reactors (BWRs) and Pressurized Heavy Water Reactors (PHWRs).",
+    "notes": null,
+    "attribution": {
+      "sources": [
+        { "name": "IAEA PRIS", "url": "https://pris.iaea.org/PRIS/CountryStatistics/CountryDetails.aspx?current=IN", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 1,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  },
+  {
+    "id": "PLANT-IND-RAJASTHAN",
+    "name": "Rajasthan Atomic Power Station",
+    "countryId": "IND",
+    "city": "Rawatbhata",
+    "coordinates": [75.6139, 24.8722],
+    "type": "nuclear",
+    "status": "operating",
+    "capacityMW": 1180,
+    "annualOutputGWh": null,
+    "yearCommissioned": 1973,
+    "yearRetirement": null,
+    "operator": "Nuclear Power Corporation of India Limited (NPCIL)",
+    "owner": "NPCIL",
+    "strategicNote": "Major nuclear facility in Northern India; home to multiple PHWR units.",
+    "notes": "Unit 1 is currently under extended shutdown.",
+    "attribution": {
+      "sources": [
+        { "name": "IAEA PRIS", "url": "https://pris.iaea.org/PRIS/CountryStatistics/CountryDetails.aspx?current=IN", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 1,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  },
+  {
+    "id": "PLANT-IND-KAKRAPAR",
+    "name": "Kakrapar Atomic Power Station",
+    "countryId": "IND",
+    "city": "Vyara",
+    "coordinates": [73.3500, 21.2386],
+    "type": "nuclear",
+    "status": "operating",
+    "capacityMW": 1140,
+    "annualOutputGWh": null,
+    "yearCommissioned": 1993,
+    "yearRetirement": null,
+    "operator": "Nuclear Power Corporation of India Limited (NPCIL)",
+    "owner": "NPCIL",
+    "strategicNote": "Notable for commissioning Unit 3 in 2023, the first of India's indigenous 700 MWe PHWR series.",
+    "notes": null,
+    "attribution": {
+      "sources": [
+        { "name": "IAEA PRIS", "url": "https://pris.iaea.org/PRIS/CountryStatistics/CountryDetails.aspx?current=IN", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 2,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  },
+  {
+    "id": "PLANT-IND-KAIGA",
+    "name": "Kaiga Atomic Power Station",
+    "countryId": "IND",
+    "city": "Kaiga",
+    "coordinates": [74.4394, 14.8653],
+    "type": "nuclear",
+    "status": "operating",
+    "capacityMW": 880,
+    "annualOutputGWh": null,
+    "yearCommissioned": 2000,
+    "yearRetirement": null,
+    "operator": "Nuclear Power Corporation of India Limited (NPCIL)",
+    "owner": "NPCIL",
+    "strategicNote": "Strategic nuclear facility in Southern India; Unit 1 holds a world record for continuous operation.",
+    "notes": null,
+    "attribution": {
+      "sources": [
+        { "name": "IAEA PRIS", "url": "https://pris.iaea.org/PRIS/CountryStatistics/CountryDetails.aspx?current=IN", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 1,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  },
+  {
+    "id": "PLANT-IND-KOYNA",
+    "name": "Koyna Hydroelectric Project",
+    "countryId": "IND",
+    "city": "Koynanagar",
+    "coordinates": [73.7514, 17.4017],
+    "type": "hydro",
+    "status": "operating",
+    "capacityMW": 1960,
+    "annualOutputGWh": null,
+    "yearCommissioned": 1962,
+    "yearRetirement": null,
+    "operator": "Maharashtra State Power Generation Company (MAHAGENCO)",
+    "owner": "Government of Maharashtra",
+    "strategicNote": "India's largest completed hydroelectric power plant; critical for peaking power and grid stability in Maharashtra.",
+    "notes": null,
+    "attribution": {
+      "sources": [
+        { "name": "Global Energy Monitor", "url": "https://www.gem.wiki/Koyna_Hydroelectric_Project", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 1,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  },
+  {
+    "id": "PLANT-IND-TEHRI",
+    "name": "Tehri Dam",
+    "countryId": "IND",
+    "city": "Tehri",
+    "coordinates": [78.4806, 30.3778],
+    "type": "hydro",
+    "status": "operating",
+    "capacityMW": 1000,
+    "annualOutputGWh": null,
+    "yearCommissioned": 2006,
+    "yearRetirement": null,
+    "operator": "THDC India Limited",
+    "owner": "THDC India Limited",
+    "strategicNote": "Highest dam in India and one of the highest in the world; a multi-purpose rock and earth-fill embankment dam.",
+    "notes": "Capacity listed is for the HPP (Hydro Power Plant) stage.",
+    "attribution": {
+      "sources": [
+        { "name": "THDC", "url": "https://www.thdc.co.in/en/projects/tehri-dam-hpp", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 1,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  },
+  {
+    "id": "PLANT-IND-KALPAKKAM",
+    "name": "Madras Atomic Power Station",
+    "countryId": "IND",
+    "city": "Kalpakkam",
+    "coordinates": [80.1750, 12.5575],
+    "type": "nuclear",
+    "status": "operating",
+    "capacityMW": 440,
+    "annualOutputGWh": null,
+    "yearCommissioned": 1984,
+    "yearRetirement": null,
+    "operator": "Nuclear Power Corporation of India Limited (NPCIL)",
+    "owner": "NPCIL",
+    "strategicNote": "India's first fully indigenous nuclear power station; also the site for the Prototype Fast Breeder Reactor (PFBR).",
+    "notes": null,
+    "attribution": {
+      "sources": [
+        { "name": "IAEA PRIS", "url": "https://pris.iaea.org/PRIS/CountryStatistics/CountryDetails.aspx?current=IN", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 1,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  },
+  {
+    "id": "PLANT-IND-NARORA",
+    "name": "Narora Atomic Power Station",
+    "countryId": "IND",
+    "city": "Narora",
+    "coordinates": [78.4094, 28.1581],
+    "type": "nuclear",
+    "status": "operating",
+    "capacityMW": 440,
+    "annualOutputGWh": null,
+    "yearCommissioned": 1991,
+    "yearRetirement": null,
+    "operator": "Nuclear Power Corporation of India Limited (NPCIL)",
+    "owner": "NPCIL",
+    "strategicNote": "Nuclear power plant located in Uttar Pradesh, critical for the Northern power grid.",
+    "notes": null,
+    "attribution": {
+      "sources": [
+        { "name": "IAEA PRIS", "url": "https://pris.iaea.org/PRIS/CountryStatistics/CountryDetails.aspx?current=IN", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 1,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  },
+  {
+    "id": "PLANT-IND-JAISALMER-WIND",
+    "name": "Jaisalmer Wind Park",
+    "countryId": "IND",
+    "city": "Jaisalmer",
+    "coordinates": [70.9000, 26.9200],
+    "type": "wind",
+    "status": "operating",
+    "capacityMW": 1064,
+    "annualOutputGWh": null,
+    "yearCommissioned": 2001,
+    "yearRetirement": null,
+    "operator": "Suzlon Energy and others",
+    "owner": "Multiple",
+    "strategicNote": "One of the largest onshore wind farms in India, located in Rajasthan; a key part of India's wind energy capacity.",
+    "notes": null,
+    "attribution": {
+      "sources": [
+        { "name": "Global Energy Monitor", "url": "https://www.gem.wiki/Jaisalmer_Wind_Park", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "medium",
+        "sourceCount": 1,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  },
+  {
+    "id": "PLANT-IND-KOODANKULAM-EXP",
+    "name": "Kudankulam Units 3-6 (Construction)",
+    "countryId": "IND",
+    "city": "Kudankulam",
+    "coordinates": [77.7126, 8.1690],
+    "type": "nuclear",
+    "status": "construction",
+    "capacityMW": 4000,
+    "annualOutputGWh": null,
+    "yearCommissioned": 2024,
+    "yearRetirement": null,
+    "operator": "Nuclear Power Corporation of India Limited (NPCIL)",
+    "owner": "NPCIL",
+    "strategicNote": "Expansion of the Kudankulam site, which will make it one of the largest nuclear complexes in the world.",
+    "notes": "Estimated commissioning for first units in 2024-2025.",
+    "attribution": {
+      "sources": [
+        { "name": "NPCIL", "url": "https://www.npcil.nic.in/content/150_1_KudankulamNuclearPowerProject.aspx", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 1,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  }
+]

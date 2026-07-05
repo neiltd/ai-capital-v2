@@ -1,0 +1,65 @@
+{
+  "id": "GHA",
+  "iso2": "GH",
+  "name": "Ghana",
+  "region": "Africa",
+  "subregion": "Western Africa",
+  "capital": "Accra",
+  "lastUpdated": "2025-05-22",
+  "summary": "Ghana is one of West Africa's most stable democracies, recently completing a peaceful transition of power following the 2024 general elections. The country is navigating a significant economic recovery phase after a period of severe debt distress and IMF-backed restructuring. Under the administration of President John Dramani Mahama, Ghana is prioritizing fiscal discipline, industrialization through value-added processing in mining and agriculture, and the expansion of its leading fintech ecosystem. While internal stability is high, the country remains vigilant against the spillover of Sahelian instability near its northern borders.",
+  "indicators": {
+    "politicalStability":       { "score": 8, "trend": "stable", "confidence": "high", "note": "Strong democratic institutions; peaceful 2024 election and transition of power." },
+    "economicDirection":        { "score": 6, "trend": "rising", "confidence": "high", "note": "Recovery underway after successful debt restructuring; inflation moderating from 2022 peaks." },
+    "investmentAttractiveness": { "score": 7, "trend": "rising", "confidence": "high", "note": "High interest in gold mining, lithium, and the burgeoning tech sector." },
+    "geopoliticalRisk":         { "score": 3, "trend": "stable", "confidence": "medium", "note": "Main risk is regional spillover from the Sahel; domestic security remains robust." },
+    "educationQuality":         { "score": 5, "trend": "rising", "confidence": "medium", "note": "Focus on TVET and digital literacy; tertiary education quality is high for the region." },
+    "healthcareQuality":        { "score": 4, "trend": "stable", "confidence": "medium", "note": "NHIS provides broad coverage, but infrastructure gaps remain in rural areas." },
+    "technologyInvestment":     { "score": 8, "trend": "rising", "confidence": "high", "note": "A leading African fintech hub; 26% growth in tech funding in 2024 despite global headwinds." }
+  },
+  "demographics": {
+    "population": 34800000,
+    "medianAge": 21.1,
+    "urbanizationRate": 59.8,
+    "majorEthnicGroups": ["Akan", "Mole-Dagbon", "Ewe", "Ga-Adangbe", "Gurma"],
+    "religions": [
+      { "name": "Christian", "percent": 71.3 },
+      { "name": "Muslim", "percent": 19.9 },
+      { "name": "Traditional", "percent": 3.2 },
+      { "name": "Other/None", "percent": 5.6 }
+    ]
+  },
+  "alliances": ["ECOWAS", "African Union", "Commonwealth", "Accra Initiative"],
+  "relationships": [
+    { "countryId": "USA", "countryName": "United States", "type": "strategic_partner", "sentiment": "positive", "summary": "Strong security cooperation and focus on democratic governance; major development aid recipient." },
+    { "countryId": "CHN", "countryName": "China", "type": "economic_partner", "sentiment": "positive", "summary": "Key partner in infrastructure and mining; significant debt restructuring recently concluded." },
+    { "countryId": "GBR", "countryName": "United Kingdom", "type": "historical_partner", "sentiment": "positive", "summary": "Strong historical, educational, and trade ties; major destination for the Ghanaian diaspora." },
+    { "countryId": "NGA", "countryName": "Nigeria", "type": "regional_partner", "sentiment": "positive", "summary": "Strong economic and cultural ties; healthy regional competition within ECOWAS." }
+  ],
+  "perspectives": [
+    { "source": "Tech Entrepreneur in Accra", "bias": "Optimistic", "view": "The growth in our fintech space shows that Ghanaian talent can compete globally if the regulatory environment stays favorable." },
+    { "source": "Small-scale Farmer in Northern Region", "bias": "Cautious", "view": "We need the government to fix the roads and ensure our safety from bandits crossing the border." },
+    { "source": "Civil Society Leader", "bias": "Vigilant", "view": "Our democracy is strong, but we must ensure the economic recovery benefits the most vulnerable, not just the urban elite." },
+    { "source": "Mining Executive", "bias": "Pragmatic", "view": "The shift toward local refineries is a challenge, but the stability here makes Ghana the best place for mining investment in West Africa." }
+  ],
+  "historicalContext": {
+    "summary": "Ghana was the first sub-Saharan African country to gain independence from colonial rule (1957). After several decades of political instability and coups, it returned to democratic rule in 1992 and has since held nine successful, peaceful elections, establishing itself as a beacon of stability in Africa.",
+    "keyEvents": [
+      { "year": 1957, "event": "Ghana gains independence from the United Kingdom." },
+      { "year": 1992, "event": "New constitution adopted, marking the return to multi-party democracy." },
+      { "year": 2011, "event": "Ghana officially becomes an oil-producing nation." },
+      { "year": 2022, "event": "Economic crisis leads to a $3 billion IMF bailout request." },
+      { "year": 2024, "event": "Successful general elections; John Dramani Mahama elected president." },
+      { "year": 2025, "event": "Completion of major external debt restructuring with Eurobond holders." }
+    ]
+  },
+  "investmentNotes": {
+    "strengths": ["Stable democratic environment and rule of law", "Top gold producer in Africa with growing lithium potential", "Thriving fintech and digital services ecosystem", "Highly urbanized and youthful workforce"],
+    "risks": ["Fiscal discipline during economic recovery", "Sensitivity to global commodity price fluctuations", "Regional security threats along the northern border", "High, though stabilizing, inflation rates"],
+    "sectors": ["Mining & Minerals Processing", "Fintech & Digital Infrastructure", "Agro-processing (Cocoa, Cashews)", "Renewable Energy (Solar and Wind)"]
+  },
+  "sources": [
+    { "name": "Bank of Ghana", "url": "https://www.bog.gov.gh/", "type": "economic" },
+    { "name": "Ghana Statistical Service", "url": "https://www.statsghana.gov.gh/", "type": "demographic" },
+    { "name": "Ghana Investment Promotion Centre", "url": "https://www.gipc.gov.gh/", "type": "investment" }
+  ]
+}

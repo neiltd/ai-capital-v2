@@ -1,0 +1,30 @@
+[
+  {
+    "countryId": "ARE",
+    "year": 2024,
+    "aiReadinessScore": 75.66,
+    "aiAdoptionScore": 65.0,
+    "aiTalentScore": 60.0,
+    "aiInvestmentUsdM": 4200,
+    "aiStartupCount": 490,
+    "aiUnicornCount": 2,
+    "hasNationalAiStrategy": true,
+    "aiStrategyYear": 2017,
+    "aiPolicyScore": 75.66,
+    "cloudReadinessPct": null,
+    "broadbandPenetrationPct": 99.0,
+    "topAiSectors": ["Public Services", "Energy", "Logistics", "Healthcare"],
+    "attribution": {
+      "sources": [
+        { "name": "Oxford Insights Government AI Readiness Index 2024", "url": "https://oxfordinsights.com/publications/2024-government-ai-readiness-index/", "accessedAt": "2025-05-10" },
+        { "name": "Stanford HAI AI Index Report 2024", "url": "https://aiindex.stanford.edu/report/", "accessedAt": "2025-05-10" },
+        { "name": "UAE Strategy for Artificial Intelligence 2031", "url": "https://u.ae/en/about-the-uae/strategies-initiatives-and-awards/federal-governments-strategies-and-plans/uae-strategy-for-artificial-intelligence", "accessedAt": "2025-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 3,
+        "lastVerified": "2025-05-10"
+      }
+    }
+  }
+]

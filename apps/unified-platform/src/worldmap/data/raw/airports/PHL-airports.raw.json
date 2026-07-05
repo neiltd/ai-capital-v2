@@ -1,0 +1,272 @@
+[
+  {
+    "id": "MNL",
+    "name": "Ninoy Aquino International Airport",
+    "countryId": "PHL",
+    "city": "Manila",
+    "iata": "MNL",
+    "icao": "RPLL",
+    "coordinates": [121.0197, 14.5086],
+    "passengerVolume": 50100000,
+    "cargoVolume": 616478,
+    "runwayCount": 2,
+    "elevationM": 23,
+    "strategicImportance": "critical",
+    "geopoliticalNotes": "Primary gateway to the Philippines and central hub for international trade; undergoing massive modernization under a 15-year program.",
+    "notes": "Privatized in September 2024 to expand capacity to 62 million passengers.",
+    "attribution": {
+      "sources": [
+        { "name": "Manila International Airport Authority (MIAA)", "url": "https://www.miaa.gov.ph", "accessedAt": "2026-05-10" },
+        { "name": "OurAirports", "url": "https://ourairports.com/airports/RPLL/", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 2,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  },
+  {
+    "id": "CEB",
+    "name": "Mactan-Cebu International Airport",
+    "countryId": "PHL",
+    "city": "Cebu",
+    "iata": "CEB",
+    "icao": "RPVM",
+    "coordinates": [123.9794, 10.3075],
+    "passengerVolume": 11320000,
+    "cargoVolume": 75000,
+    "runwayCount": 1,
+    "elevationM": 10,
+    "strategicImportance": "high",
+    "geopoliticalNotes": "Primary hub for the Visayas region and a critical alternative to Manila for international long-haul flights.",
+    "notes": "Award-winning airport for passenger experience in Asia-Pacific.",
+    "attribution": {
+      "sources": [
+        { "name": "Mactan-Cebu International Airport Authority", "url": "https://mciaa.gov.ph", "accessedAt": "2026-05-10" },
+        { "name": "OurAirports", "url": "https://ourairports.com/airports/RPVM/", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 2,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  },
+  {
+    "id": "CRK",
+    "name": "Clark International Airport",
+    "countryId": "PHL",
+    "city": "Angeles/Mabalacat",
+    "iata": "CRK",
+    "icao": "RPLC",
+    "coordinates": [120.5594, 15.1858],
+    "passengerVolume": 2400000,
+    "cargoVolume": 58459,
+    "runwayCount": 2,
+    "elevationM": 148,
+    "strategicImportance": "critical",
+    "geopoliticalNotes": "Former US airbase; serves as a major regional logistics hub for FedEx and UPS and a strategic backup for Manila.",
+    "notes": "Seeing massive growth in e-commerce charters.",
+    "attribution": {
+      "sources": [
+        { "name": "Clark International Airport Corporation", "url": "https://ciac.gov.ph", "accessedAt": "2026-05-10" },
+        { "name": "OurAirports", "url": "https://ourairports.com/airports/RPLC/", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 2,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  },
+  {
+    "id": "DVO",
+    "name": "Francisco Bangoy International Airport",
+    "countryId": "PHL",
+    "city": "Davao",
+    "iata": "DVO",
+    "icao": "RPMD",
+    "coordinates": [125.6456, 7.1253],
+    "passengerVolume": 4800000,
+    "cargoVolume": 52000,
+    "runwayCount": 1,
+    "elevationM": 29,
+    "strategicImportance": "high",
+    "geopoliticalNotes": "Busiest airport in Mindanao and a key gateway for the BIMP-EAGA growth area.",
+    "notes": "Undergoing a P56 billion PPP modernization project.",
+    "attribution": {
+      "sources": [
+        { "name": "Civil Aviation Authority of the Philippines", "url": "https://caap.gov.ph", "accessedAt": "2026-05-10" },
+        { "name": "OurAirports", "url": "https://ourairports.com/airports/RPMD/", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 2,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  },
+  {
+    "id": "ILO",
+    "name": "Iloilo International Airport",
+    "countryId": "PHL",
+    "city": "Iloilo",
+    "iata": "ILO",
+    "icao": "RPVI",
+    "coordinates": [122.4933, 10.8328],
+    "passengerVolume": 2780000,
+    "cargoVolume": 15000,
+    "runwayCount": 1,
+    "elevationM": 8,
+    "strategicImportance": "medium",
+    "geopoliticalNotes": "Critical gateway for Western Visayas, supporting regional BPO and tourism sectors.",
+    "notes": "Recently awarded a P12.79 billion expansion contract.",
+    "attribution": {
+      "sources": [
+        { "name": "Civil Aviation Authority of the Philippines", "url": "https://caap.gov.ph", "accessedAt": "2026-05-10" },
+        { "name": "OurAirports", "url": "https://ourairports.com/airports/RPVI/", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 2,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  },
+  {
+    "id": "CGY",
+    "name": "Laguindingan Airport",
+    "countryId": "PHL",
+    "city": "Cagayan de Oro",
+    "iata": "CGY",
+    "icao": "RPMY",
+    "coordinates": [124.4589, 8.6122],
+    "passengerVolume": 2600000,
+    "cargoVolume": 18000,
+    "runwayCount": 1,
+    "elevationM": 58,
+    "strategicImportance": "medium",
+    "geopoliticalNotes": "Primary gateway to Northern Mindanao, serving the industrial corridor of Cagayan de Oro and Iligan.",
+    "notes": "Privatized under Aboitiz InfraCapital in April 2025.",
+    "attribution": {
+      "sources": [
+        { "name": "Aboitiz InfraCapital", "url": "https://aboitizinfracapital.com", "accessedAt": "2026-05-10" },
+        { "name": "OurAirports", "url": "https://ourairports.com/airports/RPMY/", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 2,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  },
+  {
+    "id": "TAG",
+    "name": "Bohol-Panglao International Airport",
+    "countryId": "PHL",
+    "city": "Panglao",
+    "iata": "TAG",
+    "icao": "RPSP",
+    "coordinates": [123.7583, 9.5706],
+    "passengerVolume": 1900000,
+    "cargoVolume": 5000,
+    "runwayCount": 1,
+    "elevationM": 11,
+    "strategicImportance": "medium",
+    "geopoliticalNotes": "The Philippines' first 'eco-airport', strategic for promoting sustainable tourism in Central Visayas.",
+    "notes": "Replaced the old Tagbilaran Airport.",
+    "attribution": {
+      "sources": [
+        { "name": "Civil Aviation Authority of the Philippines", "url": "https://caap.gov.ph", "accessedAt": "2026-05-10" },
+        { "name": "OurAirports", "url": "https://ourairports.com/airports/RPSP/", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 2,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  },
+  {
+    "id": "KLO",
+    "name": "Kalibo International Airport",
+    "countryId": "PHL",
+    "city": "Kalibo",
+    "iata": "KLO",
+    "icao": "RPVK",
+    "coordinates": [122.3758, 11.6794],
+    "passengerVolume": 1200000,
+    "cargoVolume": 4000,
+    "runwayCount": 1,
+    "elevationM": 4,
+    "strategicImportance": "medium",
+    "geopoliticalNotes": "Primary international gateway for Boracay, handling significant traffic from East Asian markets.",
+    "notes": "Aklan's main international terminal.",
+    "attribution": {
+      "sources": [
+        { "name": "Civil Aviation Authority of the Philippines", "url": "https://caap.gov.ph", "accessedAt": "2026-05-10" },
+        { "name": "OurAirports", "url": "https://ourairports.com/airports/RPVK/", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 2,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  },
+  {
+    "id": "PPS",
+    "name": "Puerto Princesa International Airport",
+    "countryId": "PHL",
+    "city": "Puerto Princesa",
+    "iata": "PPS",
+    "icao": "RPVP",
+    "coordinates": [118.7589, 9.7417],
+    "passengerVolume": 1700000,
+    "cargoVolume": 8000,
+    "runwayCount": 1,
+    "elevationM": 22,
+    "strategicImportance": "high",
+    "geopoliticalNotes": "Strategic gateway for Palawan and critical for maritime domain awareness in the West Philippine Sea.",
+    "notes": "Capable of handling wide-body aircraft.",
+    "attribution": {
+      "sources": [
+        { "name": "Civil Aviation Authority of the Philippines", "url": "https://caap.gov.ph", "accessedAt": "2026-05-10" },
+        { "name": "OurAirports", "url": "https://ourairports.com/airports/RPVP/", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 2,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  },
+  {
+    "id": "BCD",
+    "name": "Bacolod-Silay Airport",
+    "countryId": "PHL",
+    "city": "Silay",
+    "iata": "BCD",
+    "icao": "RPVB",
+    "coordinates": [123.0153, 10.7761],
+    "passengerVolume": 1600000,
+    "cargoVolume": 12000,
+    "runwayCount": 1,
+    "elevationM": 10,
+    "strategicImportance": "medium",
+    "geopoliticalNotes": "Major regional hub for the newly formed Negros Island Region (NIR), facilitating trade and tourism.",
+    "notes": "Located 15km northeast of Bacolod City.",
+    "attribution": {
+      "sources": [
+        { "name": "Civil Aviation Authority of the Philippines", "url": "https://caap.gov.ph", "accessedAt": "2026-05-10" },
+        { "name": "OurAirports", "url": "https://ourairports.com/airports/RPVB/", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 2,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  }
+]

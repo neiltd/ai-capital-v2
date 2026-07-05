@@ -1,0 +1,65 @@
+{
+  "id": "LIE",
+  "iso2": "LI",
+  "name": "Liechtenstein",
+  "region": "Europe",
+  "subregion": "Western Europe",
+  "capital": "Vaduz",
+  "lastUpdated": "2026-05-09",
+  "summary": "Liechtenstein is a highly industrialized microstate with one of the highest GDPs per capita in the world. It maintains a unique political system as a constitutional hereditary monarchy on a democratic and parliamentary basis. In 2026, the Principality continues to thrive by balancing its traditional strength in private banking with a rapidly growing high-tech industrial sector and a pioneering role in blockchain regulation (the 'Blockchain Act'). Its customs and currency union with Switzerland remains the cornerstone of its economic stability, while its membership in the EEA provides vital access to the European Single Market. The country is currently focused on achieving climate neutrality by 2050 and further diversifying its economy away from traditional financial services.",
+  "indicators": {
+    "politicalStability":       { "score": 10, "score_description": "Exceptional stability under a popular monarchy.", "trend": "stable", "confidence": "high", "note": "The dual system of monarchy and democracy is deeply entrenched and provides long-term predictability." },
+    "economicDirection":        { "score": 9, "score_description": "Strong, diversified economy with zero public debt.", "trend": "stable", "confidence": "high", "note": "Industrial exports (precision tools, dental products) and high-end services drive consistent surpluses." },
+    "investmentAttractiveness": { "score": 9, "score_description": "Premier hub for wealth management and fintech.", "trend": "rising", "confidence": "high", "note": "Pro-business environment, low taxes, and clear regulations for emerging technologies like crypto-assets." },
+    "geopoliticalRisk":         { "score": 2, "score_description": "Negligible risk; integrated with Swiss and EEA frameworks.", "trend": "stable", "confidence": "high", "note": "Sovereignty is well-protected through international agreements and strategic neutrality." },
+    "educationQuality":         { "score": 9, "score_description": "Excellent education with strong vocational links.", "trend": "stable", "confidence": "high", "note": "High PISA scores and a workforce highly specialized in technical and financial fields." },
+    "healthcareQuality":        { "score": 9, "score_description": "World-class universal healthcare system.", "trend": "stable", "confidence": "high", "note": "Residents benefit from high-quality medical services and easy access to specialists in neighboring Switzerland and Austria." },
+    "technologyInvestment":     { "score": 8, "score_description": "Leader in blockchain and industrial innovation.", "trend": "rising", "confidence": "high", "note": "Significant R&D investment in precision manufacturing and digital finance infrastructure." }
+  },
+  "demographics": {
+    "population": 39800,
+    "medianAge": 44.2,
+    "urbanizationRate": 15,
+    "majorEthnicGroups": ["Liechtensteiner", "Swiss", "Austrian", "German"],
+    "religions": [
+      { "name": "Roman Catholic", "percent": 73.4 },
+      { "name": "Protestant", "percent": 8.2 },
+      { "name": "Muslim", "percent": 5.9 },
+      { "name": "Other/None", "percent": 12.5 }
+    ]
+  },
+  "alliances": ["EEA", "EFTA", "UN", "OSCE", "Council of Europe"],
+  "relationships": [
+    { "countryId": "CHE", "countryName": "Switzerland", "type": "strategic_partner", "sentiment": "positive", "summary": "Indispensable partner; shares a currency, customs union, and diplomatic representation in many countries." },
+    { "countryId": "AUT", "countryName": "Austria", "type": "ally", "sentiment": "positive", "summary": "Close neighbor and partner within the EEA; shared focus on regional stability and economic cooperation." },
+    { "countryId": "DEU", "countryName": "Germany", "type": "partner", "sentiment": "positive", "summary": "Major trading partner and cultural link; important for industrial exports." },
+    { "countryId": "EU", "countryName": "European Union", "type": "partner", "sentiment": "positive", "summary": "Access to the Single Market through the EEA is vital for Liechtenstein's industry and services." }
+  ],
+  "perspectives": [
+    { "source": "Princely House", "bias": "Traditionalist / Reformist", "view": "Our goal is to preserve Liechtenstein's unique heritage while embracing the digital and green transitions to ensure long-term prosperity." },
+    { "source": "Fintech Entrepreneur", "bias": "Innovation-focused", "view": "The 'Blockchain Act' has made Liechtenstein the best place in Europe to build the future of finance." },
+    { "source": "Environmental Advocate", "bias": "Progressive", "view": "As a wealthy alpine nation, we must lead by example in climate protection and sustainable mountain development." }
+  ],
+  "historicalContext": {
+    "summary": "Liechtenstein became a sovereign state within the Holy Roman Empire in 1719. After the collapse of the empire and a period of close ties with Austria-Hungary, it pivoted towards Switzerland following WWI. The 1923 Customs Treaty with Switzerland laid the foundation for its modern economic success. In the late 20th century, it transformed from an agrarian society into a global financial and industrial powerhouse.",
+    "keyEvents": [
+      { "year": 1719, "event": "Liechtenstein established as a Principality of the Holy Roman Empire." },
+      { "year": 1866, "event": "Liechtenstein gains full sovereignty following the dissolution of the German Confederation." },
+      { "year": 1921, "event": "Adoption of the modern Constitution." },
+      { "year": 1923, "event": "Customs Treaty with Switzerland signed." },
+      { "year": 1990, "event": "Liechtenstein joins the United Nations." },
+      { "year": 1995, "event": "Liechtenstein joins the European Economic Area (EEA)." },
+      { "year": 2020, "event": "Implementation of the 'Blockchain Act', formalizing digital asset regulation." }
+    ]
+  },
+  "investmentNotes": {
+    "strengths": ["Political stability and strong legal framework", "High industrial diversification and export-led growth", "Favorable tax environment and AAA credit rating", "Deep integration into Swiss and European markets"],
+    "risks": ["Small domestic market and labor pool", "Reliance on cross-border workers", "Vulnerability to global financial regulatory changes", "High cost of living and business operations"],
+    "sectors": ["Precision Manufacturing", "Wealth Management", "Fintech & Blockchain", "Dental Technology", "Renewable Energy"]
+  },
+  "sources": [
+    { "name": "Office of Statistics Liechtenstein", "url": "https://www.llv.li/inhalt/11/amtsstellen/amt-fur-statistik", "type": "economic" },
+    { "name": "Liechtenstein Marketing", "url": "https://www.liechtenstein.li/", "type": "general" },
+    { "name": "Liechtenstein Bankers Association", "url": "https://www.bankenverband.li/", "type": "economic" }
+  ]
+}

@@ -1,0 +1,68 @@
+{
+  "id": "EGY",
+  "iso2": "EG",
+  "name": "Egypt",
+  "region": "Africa",
+  "subregion": "Northern Africa",
+  "capital": "Cairo",
+  "lastUpdated": "2026-05-09",
+  "summary": "Egypt is a major regional power and the most populous country in the Arab world, strategically located at the junction of Africa and Asia. It controls the Suez Canal, a critical artery of global trade, and maintains one of the largest standing militaries in the Middle East. Under President Abdel Fattah el-Sisi, Egypt has focused on massive infrastructure development, including a new administrative capital, while struggling with persistent economic challenges such as high inflation, debt, and currency devaluation. Its foreign policy is characterized by a pragmatic balancing act between its traditional alliance with the U.S., growing security ties with Russia, and heavy financial dependence on Gulf Arab states. Domestically, the government prioritizes stability and counter-terrorism, often at the expense of political pluralism and civil liberties.",
+  "indicators": {
+    "politicalStability":       { "score": 5, "trend": "stable", "confidence": "high", "note": "Strong military-backed government maintains order, but underlying socio-economic grievances persist." },
+    "economicDirection":        { "score": 4, "trend": "rising", "confidence": "medium", "note": "Recent IMF-backed reforms and large-scale FDI (e.g., Ras El Hekma) offer a path to recovery, though debt remains high." },
+    "investmentAttractiveness": { "score": 5, "trend": "rising", "confidence": "medium", "note": "Large domestic market and strategic location attract interest in energy and logistics, despite bureaucratic hurdles." },
+    "geopoliticalRisk":         { "score": 6, "trend": "rising", "confidence": "high", "note": "Vulnerable to regional instability in Gaza, Sudan, and Libya, as well as threats to Suez Canal revenue." },
+    "educationQuality":         { "score": 4, "trend": "stable", "confidence": "high", "note": "Large education system facing quality challenges and a mismatch between graduates and labor market needs." },
+    "healthcareQuality":        { "score": 5, "trend": "rising", "confidence": "high", "note": "Implementation of Universal Health Insurance system is underway, though rural access remains limited." },
+    "technologyInvestment":     { "score": 5, "trend": "rising", "confidence": "high", "note": "Growing startup ecosystem and investment in digital government services and renewable energy (green hydrogen)." }
+  },
+  "demographics": {
+    "population": 112716000,
+    "medianAge": 24.1,
+    "urbanizationRate": 43,
+    "majorEthnicGroups": ["Egyptian", "Bedouin", "Nubian"],
+    "religions": [
+      { "name": "Muslim (mostly Sunni)", "percent": 90 },
+      { "name": "Christian (mostly Coptic Orthodox)", "percent": 10 }
+    ]
+  },
+  "alliances": ["Arab League", "African Union", "BRICS+", "Strategic Partner of USA (MNNA)", "OIC"],
+  "relationships": [
+    { "countryId": "USA", "countryName": "United States", "type": "strategic_partner", "sentiment": "neutral", "summary": "Long-standing security partnership centered on military aid, regional stability, and the peace treaty with Israel." },
+    { "countryId": "SAU", "countryName": "Saudi Arabia", "type": "ally", "sentiment": "positive", "summary": "Critical financial backer and regional ally, though relations can be complicated by differing regional priorities." },
+    { "countryId": "ARE", "countryName": "United Arab Emirates", "type": "ally", "sentiment": "positive", "summary": "Major investor and ideological partner in opposing Islamist movements and promoting regional order." },
+    { "countryId": "ISR", "countryName": "Israel", "type": "strategic_partner", "sentiment": "neutral", "summary": "Functional security relationship focused on counter-terrorism in Sinai and managing the Gaza Strip." },
+    { "countryId": "ETH", "countryName": "Ethiopia", "type": "competitor", "sentiment": "negative", "summary": "Deep-seated existential dispute over Nile water rights and the Grand Ethiopian Renaissance Dam (GERD)." }
+  ],
+  "perspectives": [
+    { "source": "State Nationalist", "bias": "Pro-government", "view": "President Sisi's 'New Republic' is building the infrastructure and stability necessary for Egypt to reclaim its historical role as the leader of the Arab world." },
+    { "source": "Liberal Critic", "bias": "Pro-democracy", "view": "The focus on grand construction projects and security has come at the cost of the middle class, human rights, and the rule of law." },
+    { "source": "Economic Reformer", "bias": "Technocratic", "view": "Egypt must transition from a state-led to a private-sector-led economy to create enough jobs for its rapidly growing youth population." },
+    { "source": "Regional Security Analyst", "bias": "Objective", "view": "Egypt is the indispensable stabilizer of the Middle East; its collapse would trigger an unprecedented migration and security crisis for Europe." }
+  ],
+  "historicalContext": {
+    "summary": "With a history spanning five millennia, Egypt is a cradle of civilization. Its modern history is marked by the end of the British protectorate in 1922, the 1952 Revolution, and its central role in the Arab-Israeli conflicts before pivoting to peace in 1979.",
+    "keyEvents": [
+      { "year": 1922, "event": "Unilateral Declaration of Egyptian Independence by the UK." },
+      { "year": 1952, "event": "Free Officers Movement overthrows King Farouk; Nasser rises to power." },
+      { "year": 1956, "event": "Suez Crisis; Egypt nationalizes the canal." },
+      { "year": 1967, "event": "Six-Day War; Israel occupies the Sinai Peninsula." },
+      { "year": 1973, "event": "October War (Yom Kippur War) leads to eventual return of Sinai." },
+      { "year": 1979, "event": "Egypt-Israel Peace Treaty; Egypt becomes first Arab nation to recognize Israel." },
+      { "year": 1981, "event": "Assassination of Anwar Sadat; Hosni Mubarak begins 30-year rule." },
+      { "year": 2011, "event": "Arab Spring protests lead to the ousting of Mubarak." },
+      { "year": 2013, "event": "Military removes President Morsi following mass protests; Sisi takes power." },
+      { "year": 2024, "event": "Egypt officially joins the BRICS group." }
+    ]
+  },
+  "investmentNotes": {
+    "strengths": ["Strategic control of Suez Canal", "Large and young domestic market", "Significant natural gas reserves (Zohr field)", "Aggressive infrastructure modernization"],
+    "risks": ["High public debt and fiscal deficit", "Currency instability and inflation", "Water scarcity/Nile water security", "Geopolitical spillover from neighboring conflicts"],
+    "sectors": ["Logistics & Suez Canal Economic Zone", "Renewable Energy (Solar & Wind)", "Tourism", "Real Estate & Construction"]
+  },
+  "sources": [
+    { "name": "CAPMAS (Central Agency for Public Mobilization and Statistics)", "url": "https://www.capmas.gov.eg/", "type": "economic" },
+    { "name": "Central Bank of Egypt", "url": "https://www.cbe.org.eg/en", "type": "economic" },
+    { "name": "Suez Canal Authority", "url": "https://www.suezcanal.gov.eg/", "type": "infrastructure" }
+  ]
+}

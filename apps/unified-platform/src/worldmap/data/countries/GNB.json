@@ -1,0 +1,64 @@
+{
+  "id": "GNB",
+  "iso2": "GW",
+  "name": "Guinea-Bissau",
+  "region": "Africa",
+  "subregion": "Western Africa",
+  "capital": "Bissau",
+  "lastUpdated": "2026-05-15",
+  "summary": "Guinea-Bissau is a West African nation currently enduring a period of intense political instability and constitutional crisis. Following the postponement of elections in 2024 and a subsequent military coup in late 2025 that removed President Umaro Sissoco Embaló, the country is in a state of political flux. The economy remains overwhelmingly dependent on the export of cashew nuts and continues to struggle with high rates of poverty and debt. Long-standing challenges include the legacy of military intervention in politics and its reputation as a hub for international narcotics trafficking.",
+  "indicators": {
+    "politicalStability":       { "score": 2, "trend": "declining", "confidence": "high", "note": "Highly unstable; 2025 military coup removed the president; constitutional order is currently disrupted." },
+    "economicDirection":        { "score": 3, "trend": "stable", "confidence": "high", "note": "Growth persists in the cashew sector but is overshadowed by political turmoil and high public debt." },
+    "investmentAttractiveness": { "score": 2, "trend": "declining", "confidence": "high", "note": "Extremely high risk for FDI; investment limited to extractives and cashew exports due to legal uncertainty." },
+    "geopoliticalRisk":         { "score": 7, "trend": "rising", "confidence": "high", "note": "Risk of further internal conflict and strained relations with ECOWAS following the 2025 coup." },
+    "educationQuality":         { "score": 2, "trend": "stable", "confidence": "medium", "note": "Low enrollment and quality; system is frequently disrupted by strikes and political instability." },
+    "healthcareQuality":        { "score": 2, "trend": "stable", "confidence": "medium", "note": "Critical shortages of staff and supplies; one of the world's highest maternal mortality rates." },
+    "technologyInvestment":     { "score": 2, "trend": "stable", "confidence": "low", "note": "Minimal investment beyond basic mobile networks; governance reforms have stalled." }
+  },
+  "demographics": {
+    "population": 2100000,
+    "medianAge": 18.8,
+    "urbanizationRate": 45,
+    "majorEthnicGroups": ["Fula 28.5%", "Balanta 22.5%", "Mandinka 14.7%", "Papel 9.1%", "Manjaco 8.3%"],
+    "religions": [
+      { "name": "Muslim", "percent": 45.1 },
+      { "name": "Christian", "percent": 22.1 },
+      { "name": "Indigenous/Other", "percent": 32.8 }
+    ]
+  },
+  "alliances": ["African Union", "ECOWAS", "CPLP", "United Nations"],
+  "relationships": [
+    { "countryId": "PRT", "countryName": "Portugal", "type": "strategic_partner", "sentiment": "neutral", "summary": "Main European partner and source of development aid; relations are strained by the 2025 coup and democratic backsliding." },
+    { "countryId": "SEN", "countryName": "Senegal", "type": "neighbor", "sentiment": "neutral", "summary": "Key neighbor with significant influence; relations are complex due to border security and regional stability concerns." },
+    { "countryId": "CHN", "countryName": "China", "type": "economic_partner", "sentiment": "positive", "summary": "Major partner for infrastructure and fisheries; provides diplomatic support without conditioning on political reform." },
+    { "countryId": "RUS", "countryName": "Russia", "type": "strategic_partner", "sentiment": "positive", "summary": "Former President Embaló sought closer security and economic ties with Moscow prior to his removal in 2025." }
+  ],
+  "perspectives": [
+    { "source": "Military Official", "bias": "Nationalist", "view": "The intervention was necessary to restore order and end the constitutional deadlock created by the former president." },
+    { "source": "Cashew Exporter", "bias": "Frustrated", "view": "The politics are a disaster, but the cashews must still move. We need a stable government to ensure the ports and roads function." },
+    { "source": "Human Rights Activist", "bias": "Alarmed", "view": "Every time we make progress toward democracy, the guns come back out. The people of Guinea-Bissau deserve better than perpetual coups." },
+    { "source": "Regional Diplomat", "bias": "Concerned", "view": "The 2025 coup is a major setback for ECOWAS. We must pressure for a swift return to civilian rule and credible elections." }
+  ],
+  "historicalContext": {
+    "summary": "Since gaining independence from Portugal in 1974 after a long guerrilla war, Guinea-Bissau has been plagued by extreme political instability. No elected president successfully completed a full five-year term until 2020. The nation has experienced four successful coups and numerous attempted ones, frequently driven by tensions between the military and civilian leadership.",
+    "keyEvents": [
+      { "year": 1974, "event": "Independence from Portugal after an eleven-year war." },
+      { "year": 1980, "event": "First successful military coup ousts the independence-era government." },
+      { "year": 2012, "event": "Military coup during a presidential election leads to a period of transition." },
+      { "year": 2020, "event": "Umaro Sissoco Embaló takes office as the first president to complete a full term in decades." },
+      { "year": 2024, "event": "General elections are postponed indefinitely, triggering a constitutional crisis." },
+      { "year": 2025, "event": "Military coup in November ousts President Embaló and dissolves the government." }
+    ]
+  },
+  "investmentNotes": {
+    "strengths": ["World-class potential for cashew nut production and processing", "Untapped mineral resources including phosphates and bauxite", "Strategic maritime location and rich fisheries within the EEZ", "Resilient informal sector despite decades of political turmoil"],
+    "risks": ["Extreme political instability and high risk of military intervention", "Weak rule of law and pervasive corruption", "Inadequate infrastructure (power/transport) outside Bissau", "Reputation as a transit hub for international drug trafficking"],
+    "sectors": ["Agriculture (Cashew Processing)", "Extractive Industries (Mining/Energy)", "Fisheries & Marine Services", "Infrastructure Development (Ports/Roads)"]
+  },
+  "sources": [
+    { "name": "BCEAO - Central Bank Data", "url": "https://www.bceao.int/", "type": "economic" },
+    { "name": "World Bank - Guinea-Bissau Country Overview", "url": "https://www.worldbank.org/en/country/guineabissau", "type": "economic" },
+    { "name": "African Center for Strategic Studies - GNB Profile", "url": "https://africacenter.org/", "type": "security" }
+  ]
+}

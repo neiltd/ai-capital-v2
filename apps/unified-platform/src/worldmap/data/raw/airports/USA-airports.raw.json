@@ -1,0 +1,272 @@
+[
+  {
+    "id": "ATL",
+    "name": "Hartsfield-Jackson Atlanta International Airport",
+    "countryId": "USA",
+    "city": "Atlanta",
+    "iata": "ATL",
+    "icao": "KATL",
+    "coordinates": [-84.4277, 33.6407],
+    "passengerVolume": 108100000,
+    "cargoVolume": 645834,
+    "runwayCount": 5,
+    "elevationM": 313,
+    "strategicImportance": "critical",
+    "geopoliticalNotes": "World's busiest passenger airport and a primary domestic hub. Serves as a critical node for national mobility and the Civil Reserve Air Fleet (CRAF).",
+    "notes": "Major hub for Delta Air Lines.",
+    "attribution": {
+      "sources": [
+        { "name": "ACI World", "url": "https://aci.aero", "accessedAt": "2026-05-10" },
+        { "name": "FAA", "url": "https://www.faa.gov", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 2,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  },
+  {
+    "id": "ORD",
+    "name": "O'Hare International Airport",
+    "countryId": "USA",
+    "city": "Chicago",
+    "iata": "ORD",
+    "icao": "KORD",
+    "coordinates": [-87.9073, 41.9742],
+    "passengerVolume": 80000000,
+    "cargoVolume": 2070000,
+    "runwayCount": 8,
+    "elevationM": 205,
+    "strategicImportance": "critical",
+    "geopoliticalNotes": "Premier Midwest logistics hub connecting rail, truck, and air cargo. Unique dual-hub status for major legacy carriers enhances national connectivity.",
+    "notes": "Features the highest number of runways in the U.S.",
+    "attribution": {
+      "sources": [
+        { "name": "O'Hare International Airport", "url": "https://www.flychicago.com/ohare", "accessedAt": "2026-05-10" },
+        { "name": "IATA", "url": "https://www.iata.org", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 2,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  },
+  {
+    "id": "ANC",
+    "name": "Ted Stevens Anchorage International Airport",
+    "countryId": "USA",
+    "city": "Anchorage",
+    "iata": "ANC",
+    "icao": "PANC",
+    "coordinates": [-149.9961, 61.1742],
+    "passengerVolume": 5300000,
+    "cargoVolume": 1570000,
+    "runwayCount": 3,
+    "elevationM": 46,
+    "strategicImportance": "critical",
+    "geopoliticalNotes": "Critical trans-Pacific cargo refueling stop and crossroads between Asia and North America. Co-located with Joint Base Elmendorf-Richardson for Arctic defense.",
+    "notes": "Handles ~80% of all air cargo between Asia and North America.",
+    "attribution": {
+      "sources": [
+        { "name": "Anchorage International Airport", "url": "https://dot.alaska.gov/anc/", "accessedAt": "2026-05-10" },
+        { "name": "OurAirports", "url": "https://ourairports.com", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 2,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  },
+  {
+    "id": "MIA",
+    "name": "Miami International Airport",
+    "countryId": "USA",
+    "city": "Miami",
+    "iata": "MIA",
+    "icao": "KMIA",
+    "coordinates": [-80.2870, 25.7959],
+    "passengerVolume": 55900000,
+    "cargoVolume": 3010000,
+    "runwayCount": 4,
+    "elevationM": 3,
+    "strategicImportance": "critical",
+    "geopoliticalNotes": "Primary gateway to Latin America and the Caribbean. Leading U.S. airport for international freight, specializing in perishables and pharmaceuticals.",
+    "notes": "Highest volume of international freight in the U.S.",
+    "attribution": {
+      "sources": [
+        { "name": "Miami-Dade Aviation Department", "url": "https://www.miami-airport.com", "accessedAt": "2026-05-10" },
+        { "name": "ACI World", "url": "https://aci.aero", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 2,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  },
+  {
+    "id": "DFW",
+    "name": "Dallas/Fort Worth International Airport",
+    "countryId": "USA",
+    "city": "Dallas",
+    "iata": "DFW",
+    "icao": "KDFW",
+    "coordinates": [-97.0403, 32.8998],
+    "passengerVolume": 81800000,
+    "cargoVolume": 1000000,
+    "runwayCount": 7,
+    "elevationM": 185,
+    "strategicImportance": "critical",
+    "geopoliticalNotes": "Massive central hub serving as a primary link between the U.S., Europe, Asia, and South America. High resilience and expansion capacity.",
+    "notes": "Primary hub for American Airlines.",
+    "attribution": {
+      "sources": [
+        { "name": "DFW Airport", "url": "https://www.dfwairport.com", "accessedAt": "2026-05-10" },
+        { "name": "FAA", "url": "https://www.faa.gov", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 2,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  },
+  {
+    "id": "LAX",
+    "name": "Los Angeles International Airport",
+    "countryId": "USA",
+    "city": "Los Angeles",
+    "iata": "LAX",
+    "icao": "KLAX",
+    "coordinates": [-118.4085, 33.9416],
+    "passengerVolume": 76600000,
+    "cargoVolume": 2300000,
+    "runwayCount": 4,
+    "elevationM": 39,
+    "strategicImportance": "critical",
+    "geopoliticalNotes": "Primary commercial gateway to the Pacific Rim. World's leading origin and destination airport, serving as a vital economic engine for the West Coast.",
+    "notes": "Major international gateway for multiple trans-Pacific carriers.",
+    "attribution": {
+      "sources": [
+        { "name": "Los Angeles World Airports", "url": "https://www.lawa.org", "accessedAt": "2026-05-10" },
+        { "name": "IATA", "url": "https://www.iata.org", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 2,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  },
+  {
+    "id": "MEM",
+    "name": "Memphis International Airport",
+    "countryId": "USA",
+    "city": "Memphis",
+    "iata": "MEM",
+    "icao": "KMEM",
+    "coordinates": [-89.9767, 35.0423],
+    "passengerVolume": 4900000,
+    "cargoVolume": 3750000,
+    "runwayCount": 4,
+    "elevationM": 104,
+    "strategicImportance": "high",
+    "geopoliticalNotes": "Global superhub for FedEx Express and a backbone of the just-in-time global economy. Essential for national and international overnight delivery logistics.",
+    "notes": "Houses the world's largest automated sorting facility.",
+    "attribution": {
+      "sources": [
+        { "name": "Memphis-Shelby County Airport Authority", "url": "https://flymemphis.com", "accessedAt": "2026-05-10" },
+        { "name": "ACI World", "url": "https://aci.aero", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 2,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  },
+  {
+    "id": "SDF",
+    "name": "Louisville Muhammad Ali International Airport",
+    "countryId": "USA",
+    "city": "Louisville",
+    "iata": "SDF",
+    "icao": "KSDF",
+    "coordinates": [-85.7360, 38.1744],
+    "passengerVolume": 4800000,
+    "cargoVolume": 3000000,
+    "runwayCount": 3,
+    "elevationM": 153,
+    "strategicImportance": "high",
+    "geopoliticalNotes": "Home to UPS Worldport, the largest automated package handling facility. Critical for e-commerce and global parcel distribution.",
+    "notes": "Strategically located within 2 hours of 75% of the U.S. population.",
+    "attribution": {
+      "sources": [
+        { "name": "Louisville Regional Airport Authority", "url": "https://flylouisville.com", "accessedAt": "2026-05-10" },
+        { "name": "FAA", "url": "https://www.faa.gov", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 2,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  },
+  {
+    "id": "HNL",
+    "name": "Daniel K. Inouye International Airport",
+    "countryId": "USA",
+    "city": "Honolulu",
+    "iata": "HNL",
+    "icao": "PHNL",
+    "coordinates": [-157.9225, 21.3187],
+    "passengerVolume": 21000000,
+    "cargoVolume": 200000,
+    "runwayCount": 4,
+    "elevationM": 4,
+    "strategicImportance": "critical",
+    "geopoliticalNotes": "Most vital military-civilian joint-use airport in the Pacific. Staging ground for U.S. Indo-Pacific Command (USINDOPACOM) and key to regional force deployment.",
+    "notes": "Co-located with Joint Base Pearl Harbor-Hickam.",
+    "attribution": {
+      "sources": [
+        { "name": "Hawaii Department of Transportation", "url": "https://airports.hawaii.gov/hnl/", "accessedAt": "2026-05-10" },
+        { "name": "ICAO", "url": "https://www.icao.int", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 2,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  },
+  {
+    "id": "JFK",
+    "name": "John F. Kennedy International Airport",
+    "countryId": "USA",
+    "city": "New York",
+    "iata": "JFK",
+    "icao": "KJFK",
+    "coordinates": [-73.7781, 40.6413],
+    "passengerVolume": 63300000,
+    "cargoVolume": 1500000,
+    "runwayCount": 4,
+    "elevationM": 4,
+    "strategicImportance": "critical",
+    "geopoliticalNotes": "Premier international gateway to the United States. Vital for global diplomacy and high-value cargo such as pharmaceuticals and high-tech equipment.",
+    "notes": "Handles more international passengers than any other U.S. airport.",
+    "attribution": {
+      "sources": [
+        { "name": "Port Authority of New York and New Jersey", "url": "https://www.jfkairport.com", "accessedAt": "2026-05-10" },
+        { "name": "IATA", "url": "https://www.iata.org", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 2,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  }
+]

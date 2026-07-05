@@ -1,0 +1,31 @@
+{
+  "name": "investment-analyst-agents",
+  "version": "0.1.0",
+  "type": "module",
+  "scripts": {
+    "brief": "tsx src/cli/cli-brief.ts",
+    "act": "tsx src/cli/cli-act.ts",
+    "ask": "tsx src/cli/cli-ask.ts",
+    "backtest": "tsx src/backtest/backtest-runner.ts",
+    "correlation": "tsx src/correlation/correlation-runner.ts",
+    "tax": "tsx src/tax/tax-harvest-runner.ts",
+    "risk": "tsx src/risk/risk-runner.ts",
+    "daily": "npm run pipeline --prefix ../capital-intelligence-ingestion && npm run analyze --prefix ../ai-analysis-engine && npm run simulate --prefix ../scenario-simulator && npm run brief",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "typecheck": "tsc --noEmit"
+  },
+  "dependencies": {
+    "@common/db":        "workspace:*",
+    "@anthropic-ai/sdk": "^0.39.0",
+    "better-sqlite3":    "^12.10.0",
+    "dotenv":            "^16.0.0"
+  },
+  "devDependencies": {
+    "@types/better-sqlite3": "^7.6.13",
+    "@types/node": "^22.0.0",
+    "tsx": "^4.0.0",
+    "typescript": "^5.0.0",
+    "vitest": "^3.0.0"
+  }
+}

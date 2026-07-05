@@ -1,0 +1,19 @@
+{
+  "name": "ai-capital-workspace",
+  "private": true,
+  "version": "0.0.0",
+  "description": "Monorepo for the AI Capital investment intelligence system.",
+  "packageManager": "pnpm@11.5.2",
+  "scripts": {
+    "build":     "pnpm -r --if-present build",
+    "typecheck": "pnpm -r --if-present typecheck",
+    "test":      "pnpm -r --if-present test"
+  },
+  "devDependencies": {
+    "tsx":         "^4.16.0",
+    "typescript": "^5.5.0"
+  },
+  "engines": {
+    "node": ">=20"
+  }
+}

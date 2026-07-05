@@ -1,0 +1,66 @@
+{
+  "id": "COL",
+  "iso2": "CO",
+  "name": "Colombia",
+  "region": "Americas",
+  "subregion": "South America",
+  "capital": "Bogotá",
+  "lastUpdated": "2025-05-23",
+  "summary": "Colombia is a key regional player in South America, currently undergoing a significant political and economic transition under its first leftist government. The administration of Gustavo Petro is pushing for a \"Total Peace\" strategy to end decades of internal conflict and a \"Green Economy\" shift away from fossil fuels. While the country maintains strong institutional resilience and a robust central bank, it faces challenges including legislative gridlock, persistent rural violence, and fiscal pressures. Colombia remains a strategic ally of the United States, though it is increasingly exploring multipolar engagements, including interest in the BRICS+ bloc. Its diverse economy, rich biodiversity, and strategic location with dual-ocean access continue to underpin its long-term potential.",
+  "indicators": {
+    "politicalStability":       { "score": 5, "score_description": "Moderate stability with high polarization and legislative gridlock.", "trend": "stable", "confidence": "high", "note": "President Petro faces low approval ratings and a fragmented Congress, leading to governance by decree in some fiscal matters." },
+    "economicDirection":        { "score": 5, "score_description": "Transitioning towards a green economy amidst slowing traditional sectors.", "trend": "improving", "confidence": "medium", "note": "GDP growth is recovering slowly (est. 2.5% for 2025) as the country balances energy transition with fiscal discipline." },
+    "investmentAttractiveness": { "score": 5, "score_description": "Mixed; attractive for fintech and renewables but risky for mining/oil.", "trend": "stable", "confidence": "high", "note": "Loss of investment-grade status and regulatory uncertainty in extractive industries are offset by a booming tourism sector and digital economy." },
+    "geopoliticalRisk":         { "score": 6, "score_description": "Elevated internal security risks and shifting foreign policy.", "trend": "stable", "confidence": "high", "note": "Violence from ELN and FARC dissidents persists in rural areas; diplomatic balancing between U.S. and new global blocs is key." },
+    "educationQuality":         { "score": 5, "score_description": "Reasonable access but significant quality and regional gaps.", "trend": "improving", "confidence": "medium", "note": "Proposed reforms aim to increase public funding and access, though implementation remains a challenge." },
+    "healthcareQuality":        { "score": 6, "score_description": "Comprehensive system facing major structural reform uncertainty.", "trend": "stable", "confidence": "high", "note": "Colombia has a high insurance coverage rate, but the government's push to nationalize aspects of the system has created sector-wide tension." },
+    "technologyInvestment":     { "score": 6, "score_description": "Emerging regional hub for Fintech and BPO services.", "trend": "rising", "confidence": "high", "note": "Bogotá and Medellín are increasingly recognized as tech hubs, attracting significant foreign venture capital in digital services." }
+  },
+  "demographics": {
+    "population": 52700000,
+    "medianAge": 33.1,
+    "urbanizationRate": 82.4,
+    "majorEthnicGroups": ["Mestizo & White", "Afro-Colombian", "Indigenous"],
+    "religions": [
+      { "name": "Roman Catholic", "percent": 79 },
+      { "name": "Protestant/Evangelical", "percent": 13 },
+      { "name": "None/Unaffiliated", "percent": 6 },
+      { "name": "Other", "percent": 2 }
+    ]
+  },
+  "alliances": ["Pacific Alliance", "Andean Community (CAN)", "OECD", "Major Non-NATO Ally (MNNA)", "CELAC"],
+  "relationships": [
+    { "countryId": "USA", "countryName": "United States", "type": "strategic_partner", "sentiment": "neutral", "summary": "Historic security and trade ally; relationship currently strained by differing views on drug policy and regional shifts." },
+    { "countryId": "VEN", "countryName": "Venezuela", "type": "partner", "sentiment": "positive", "summary": "Restored diplomatic and trade relations under Petro; key for border security and regional migration management." },
+    { "countryId": "BRA", "countryName": "Brazil", "type": "ally", "sentiment": "positive", "summary": "Strong alignment on Amazon preservation and South American integration initiatives." },
+    { "countryId": "CHN", "countryName": "China", "type": "partner", "sentiment": "positive", "summary": "Growing trade partner and investor in major infrastructure projects like the Bogotá Metro." },
+    { "countryId": "ESP", "countryName": "Spain", "type": "partner", "sentiment": "positive", "summary": "Major European investor and cultural partner; key advocate for Colombia within the EU." }
+  ],
+  "perspectives": [
+    { "source": "Petro Administration official", "bias": "Progressive/Environmentalist", "view": "Colombia must lead the global South in a just energy transition and achieve 'Total Peace' through social investment rather than just military force." },
+    { "source": "Business Leader (ANDI)", "bias": "Pro-Market", "view": "Regulatory stability and private sector incentives are crucial for recovery; current reforms risk undermining investment and fiscal health." },
+    { "source": "Rural Community Leader", "bias": "Social Justice", "view": "The peace process must deliver tangible security and land rights in the territories for it to be meaningful." }
+  ],
+  "historicalContext": {
+    "summary": "Colombia's history is marked by a long-standing democratic tradition interrupted by periods of intense internal conflict (La Violencia, the 52-year war with FARC). Since the 1990s, the country has modernized its economy and institutions. The 2016 Peace Accord with FARC was a landmark event, though its implementation remains a central and divisive issue in national politics.",
+    "keyEvents": [
+      { "year": 1810, "event": "Declaration of independence from Spain." },
+      { "year": 1819, "event": "Victory at the Battle of Boyacá secures independence." },
+      { "year": 1948, "event": "Assassination of Jorge Eliécer Gaitán triggers 'El Bogotazo'." },
+      { "year": 1991, "event": "Adoption of a new, progressive National Constitution." },
+      { "year": 2016, "event": "Signing of the Peace Accord with the FARC." },
+      { "year": 2022, "event": "Election of Gustavo Petro, Colombia's first leftist president." },
+      { "year": 2024, "event": "Colombia hosts COP16 in Cali, emphasizing biodiversity leadership." }
+    ]
+  },
+  "investmentNotes": {
+    "strengths": ["Strategic location with access to Atlantic and Pacific", "Independent and credible Central Bank", "Strong and growing tourism sector", "Resilient democratic institutions and vibrant civil society"],
+    "risks": ["Persistent internal security challenges in rural areas", "Regulatory uncertainty in energy and mining sectors", "High corporate tax burden and labor informality", "Fiscal deficit and public debt pressures"],
+    "sectors": ["Renewable Energy (Solar/Wind)", "Fintech and Digital Services", "Tourism and Eco-hospitality", "Agribusiness (Coffee, Cacao, Flowers)", "Infrastructure (Logistics and Transport)"]
+  },
+  "sources": [
+    { "name": "DANE (National Administrative Department of Statistics)", "url": "https://www.dane.gov.co/", "type": "economic" },
+    { "name": "Banco de la República (Central Bank of Colombia)", "url": "https://www.banrep.gov.co/en", "type": "economic" },
+    { "name": "Ministry of Foreign Affairs", "url": "https://www.cancilleria.gov.co/", "type": "political" }
+  ]
+}

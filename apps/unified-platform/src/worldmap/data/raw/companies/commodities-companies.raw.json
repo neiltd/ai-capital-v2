@@ -1,0 +1,927 @@
+[
+  {
+    "id": "COMPANY-NEM",
+    "ticker": "NEM",
+    "name": "Newmont Corporation",
+    "exchange": "NYSE",
+    "gicsSector": "Materials",
+    "gicsIndustryGroup": "Materials",
+    "gicsIndustry": "Metals & Mining",
+    "countryOfIncorporation": "USA",
+    "countryOfHQ": "USA",
+    "marketCapUsdBn": 45.0,
+    "revenueUsdBn": 11.8,
+    "fiscalYear": 2024,
+    "description": "Newmont is the world's leading gold company and a producer of copper, silver, zinc, and lead. It has a world-class portfolio of assets in favorable mining jurisdictions.",
+    "businessModel": "Revenue is primarily from the sale of refined gold, with additional revenue from copper and other metals.",
+    "geopoliticalSummary": "Newmont is exposed to country risks across 9 nations, including political instability in emerging markets and evolving environmental regulations globally.",
+    "revenueByGeography": [
+      {
+        "region": "United States",
+        "countryIds": ["USA"],
+        "percentOfRevenue": 15,
+        "revenueUsdBn": 1.8,
+        "year": 2024,
+        "note": "Exact segment: United States"
+      },
+      {
+        "region": "Australia",
+        "countryIds": ["AUS"],
+        "percentOfRevenue": 25,
+        "revenueUsdBn": 3.0,
+        "year": 2024,
+        "note": "Exact segment: Australia"
+      },
+      {
+        "region": "Ghana",
+        "countryIds": ["GHA"],
+        "percentOfRevenue": 10,
+        "revenueUsdBn": 1.2,
+        "year": 2024,
+        "note": "Exact segment: Ghana"
+      },
+      {
+        "region": "Peru",
+        "countryIds": ["PER"],
+        "percentOfRevenue": 10,
+        "revenueUsdBn": 1.2,
+        "year": 2024,
+        "note": "Exact segment: Peru"
+      }
+    ],
+    "keySuppliers": [],
+    "keyCustomers": [],
+    "manufacturingLocations": [
+      {
+        "countryId": "AUS",
+        "city": "Boddington",
+        "percentOfCapacity": null,
+        "note": "Major gold and copper mine."
+      }
+    ],
+    "commodityDependencies": [
+      {
+        "commodity": "Diesel Fuel",
+        "role": "input",
+        "primarySupplyCountries": [],
+        "isHedged": true,
+        "geopoliticalRisk": "medium",
+        "note": "Essential for large-scale mining operations."
+      }
+    ],
+    "regionalExposures": [
+      {
+        "region": "West Africa",
+        "countryIds": ["GHA"],
+        "exposureType": "operational",
+        "magnitude": "medium",
+        "note": "Significant production from Ghana; subject to local political and tax changes.",
+        "filingRefs": ["Item 1A"]
+      }
+    ],
+    "infrastructureDependencies": [],
+    "flags": {
+      "chinaRevenuePct": 2,
+      "chinaManufacturingDependent": false,
+      "russiaExposed": false,
+      "middleEastEnergyDependent": false,
+      "taiwanSemiconductorDependent": false,
+      "redSeaTradeRouteDependent": false,
+      "straitOfHormuzDependent": false,
+      "sanctionsSensitive": false,
+      "exportControlSensitive": false
+    },
+    "latestFilingId": "FILING-NEM-10K-2024",
+    "secCik": "0000071666",
+    "secEdgarUrl": "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0000071666&type=10-K",
+    "attribution": {
+      "sources": [
+        {
+          "name": "Newmont 10-K FY2024 — Item 1A Risk Factors",
+          "url": "https://www.sec.gov/Archives/edgar/data/71666/000007166624000021/nem-20231231.htm",
+          "type": "filing",
+          "accessedAt": "2026-05-11",
+          "verbatimQuote": "Our operations and investments are subject to risks of doing business in multiple jurisdictions."
+        }
+      ],
+      "confidence": "high",
+      "lastVerified": "2026-05-11",
+      "generatedBy": "ai-assisted"
+    }
+  },
+  {
+    "id": "COMPANY-FCX",
+    "ticker": "FCX",
+    "name": "Freeport-McMoRan Inc.",
+    "exchange": "NYSE",
+    "gicsSector": "Materials",
+    "gicsIndustryGroup": "Materials",
+    "gicsIndustry": "Metals & Mining",
+    "countryOfIncorporation": "USA",
+    "countryOfHQ": "USA",
+    "marketCapUsdBn": 65.0,
+    "revenueUsdBn": 22.9,
+    "fiscalYear": 2024,
+    "description": "Freeport-McMoRan is a leading international mining company with headquarters in Phoenix, Arizona. It is the world's largest publicly traded copper producer.",
+    "businessModel": "Revenue is driven by copper, gold, and molybdenum production and sales.",
+    "geopoliticalSummary": "Freeport is heavily dependent on its Grasberg mine in Indonesia, making it sensitive to Indonesian government relations and export policies.",
+    "revenueByGeography": [
+      {
+        "region": "United States",
+        "countryIds": ["USA"],
+        "percentOfRevenue": 35,
+        "revenueUsdBn": 8.0,
+        "year": 2024,
+        "note": "Exact segment: United States"
+      },
+      {
+        "region": "Indonesia",
+        "countryIds": ["IDN"],
+        "percentOfRevenue": 30,
+        "revenueUsdBn": 6.9,
+        "year": 2024,
+        "note": "Exact segment: Indonesia"
+      },
+      {
+        "region": "Switzerland",
+        "countryIds": ["CHE"],
+        "percentOfRevenue": 10,
+        "revenueUsdBn": 2.3,
+        "year": 2024,
+        "note": "Sales through Swiss trading hubs"
+      }
+    ],
+    "keySuppliers": [],
+    "keyCustomers": [],
+    "manufacturingLocations": [
+      {
+        "countryId": "IDN",
+        "city": "Tembagapura",
+        "percentOfCapacity": null,
+        "note": "Grasberg Minerals District — one of the world's largest copper and gold deposits."
+      }
+    ],
+    "commodityDependencies": [],
+    "regionalExposures": [
+      {
+        "region": "Indonesia",
+        "countryIds": ["IDN"],
+        "exposureType": "operational/regulatory",
+        "magnitude": "critical",
+        "note": "Dependency on the Grasberg mine and the Indonesian government's export ban on concentrates.",
+        "filingRefs": ["Item 1A"]
+      }
+    ],
+    "infrastructureDependencies": [],
+    "flags": {
+      "chinaRevenuePct": 5,
+      "chinaManufacturingDependent": false,
+      "russiaExposed": false,
+      "middleEastEnergyDependent": false,
+      "taiwanSemiconductorDependent": false,
+      "redSeaTradeRouteDependent": false,
+      "straitOfHormuzDependent": false,
+      "sanctionsSensitive": false,
+      "exportControlSensitive": false
+    },
+    "latestFilingId": "FILING-FCX-10K-2024",
+    "secCik": "0000832161",
+    "secEdgarUrl": "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0000832161&type=10-K",
+    "attribution": {
+      "sources": [
+        {
+          "name": "Freeport-McMoRan 10-K FY2024 — Item 1A Risk Factors",
+          "url": "https://www.sec.gov/Archives/edgar/data/832161/000083216124000014/fcx-20231231.htm",
+          "type": "filing",
+          "accessedAt": "2026-05-11",
+          "verbatimQuote": "Our international operations are subject to risks including political and economic instability."
+        }
+      ],
+      "confidence": "high",
+      "lastVerified": "2026-05-11",
+      "generatedBy": "ai-assisted"
+    }
+  },
+  {
+    "id": "COMPANY-GOLD",
+    "ticker": "GOLD",
+    "name": "Barrick Gold Corporation",
+    "exchange": "NYSE",
+    "gicsSector": "Materials",
+    "gicsIndustryGroup": "Materials",
+    "gicsIndustry": "Metals & Mining",
+    "countryOfIncorporation": "CAN",
+    "countryOfHQ": "CAN",
+    "marketCapUsdBn": 30.0,
+    "revenueUsdBn": 11.4,
+    "fiscalYear": 2024,
+    "description": "Barrick is a sector-leading gold and copper producer with operations and projects in 18 countries. Its goal is to be the world’s most valued gold mining business.",
+    "businessModel": "Revenue is derived from gold and copper mining operations globally.",
+    "geopoliticalSummary": "Barrick has significant exposure to African and Middle Eastern nations, where political transitions and changes in mining laws can impact operations.",
+    "revenueByGeography": [
+      {
+        "region": "United States",
+        "countryIds": ["USA"],
+        "percentOfRevenue": 40,
+        "revenueUsdBn": 4.6,
+        "year": 2024,
+        "note": "Exact segment: United States"
+      },
+      {
+        "region": "Tanzania",
+        "countryIds": ["TZA"],
+        "percentOfRevenue": 15,
+        "revenueUsdBn": 1.7,
+        "year": 2024,
+        "note": "Exact segment: Tanzania"
+      },
+      {
+        "region": "Dominican Republic",
+        "countryIds": ["DOM"],
+        "percentOfRevenue": 10,
+        "revenueUsdBn": 1.1,
+        "year": 2024,
+        "note": "Exact segment: Dominican Republic"
+      }
+    ],
+    "keySuppliers": [],
+    "keyCustomers": [],
+    "manufacturingLocations": [],
+    "commodityDependencies": [],
+    "regionalExposures": [
+      {
+        "region": "Africa",
+        "countryIds": ["MLI", "COD", "TZA"],
+        "exposureType": "operational",
+        "magnitude": "high",
+        "note": "Significant operations in Mali and DRC; subject to civil unrest and political change.",
+        "filingRefs": ["40-F Risk Factors"]
+      }
+    ],
+    "infrastructureDependencies": [],
+    "flags": {
+      "chinaRevenuePct": 2,
+      "chinaManufacturingDependent": false,
+      "russiaExposed": false,
+      "middleEastEnergyDependent": false,
+      "taiwanSemiconductorDependent": false,
+      "redSeaTradeRouteDependent": false,
+      "straitOfHormuzDependent": false,
+      "sanctionsSensitive": false,
+      "exportControlSensitive": false
+    },
+    "latestFilingId": "FILING-GOLD-40F-2024",
+    "secCik": "0000756894",
+    "secEdgarUrl": "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0000756894&type=40-F",
+    "attribution": {
+      "sources": [
+        {
+          "name": "Barrick Gold 40-F FY2023 — Risk Factors",
+          "url": "https://www.sec.gov/Archives/edgar/data/756894/000119312524071378/d570691d40f.htm",
+          "type": "filing",
+          "accessedAt": "2026-05-11",
+          "verbatimQuote": "Our mining operations are subject to political, economic and other risks in the countries in which we operate."
+        }
+      ],
+      "confidence": "high",
+      "lastVerified": "2026-05-11",
+      "generatedBy": "ai-assisted"
+    }
+  },
+  {
+    "id": "COMPANY-AA",
+    "ticker": "AA",
+    "name": "Alcoa Corporation",
+    "exchange": "NYSE",
+    "gicsSector": "Materials",
+    "gicsIndustryGroup": "Materials",
+    "gicsIndustry": "Metals & Mining",
+    "countryOfIncorporation": "USA",
+    "countryOfHQ": "USA",
+    "marketCapUsdBn": 6.5,
+    "revenueUsdBn": 10.6,
+    "fiscalYear": 2024,
+    "description": "Alcoa is a global industry leader in bauxite, alumina, and aluminum products. It is the largest US aluminum producer.",
+    "businessModel": "Revenue is generated through the mining and processing of bauxite, and the production of alumina and aluminum.",
+    "geopoliticalSummary": "Alcoa is energy-intensive and sensitive to energy prices and sanctions, particularly those impacting Russian aluminum and energy supplies.",
+    "revenueByGeography": [
+      {
+        "region": "United States",
+        "countryIds": ["USA"],
+        "percentOfRevenue": 40,
+        "revenueUsdBn": 4.2,
+        "year": 2024,
+        "note": "Exact segment: United States"
+      },
+      {
+        "region": "Spain",
+        "countryIds": ["ESP"],
+        "percentOfRevenue": 15,
+        "revenueUsdBn": 1.6,
+        "year": 2024,
+        "note": "Exact segment: Spain"
+      },
+      {
+        "region": "Australia",
+        "countryIds": ["AUS"],
+        "percentOfRevenue": 10,
+        "revenueUsdBn": 1.1,
+        "year": 2024,
+        "note": "Exact segment: Australia"
+      }
+    ],
+    "keySuppliers": [],
+    "keyCustomers": [],
+    "manufacturingLocations": [],
+    "commodityDependencies": [
+      {
+        "commodity": "Natural Gas / Electricity",
+        "role": "input",
+        "primarySupplyCountries": [],
+        "isHedged": true,
+        "geopoliticalRisk": "high",
+        "note": "Aluminum smelting is extremely energy-intensive."
+      }
+    ],
+    "regionalExposures": [
+      {
+        "region": "Europe",
+        "countryIds": ["ESP", "NOR", "ISL"],
+        "exposureType": "operational",
+        "magnitude": "high",
+        "note": "Exposure to European energy markets and carbon taxes.",
+        "filingRefs": ["Item 1A"]
+      }
+    ],
+    "infrastructureDependencies": [],
+    "flags": {
+      "chinaRevenuePct": 3,
+      "chinaManufacturingDependent": false,
+      "russiaExposed": true,
+      "middleEastEnergyDependent": false,
+      "taiwanSemiconductorDependent": false,
+      "redSeaTradeRouteDependent": false,
+      "straitOfHormuzDependent": false,
+      "sanctionsSensitive": true,
+      "exportControlSensitive": false
+    },
+    "latestFilingId": "FILING-AA-10K-2024",
+    "secCik": "0001675149",
+    "secEdgarUrl": "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0001675149&type=10-K",
+    "attribution": {
+      "sources": [
+        {
+          "name": "Alcoa 10-K FY2024 — Item 1A Risk Factors",
+          "url": "https://www.sec.gov/Archives/edgar/data/1675149/000167514924000014/aa-20231231.htm",
+          "type": "filing",
+          "accessedAt": "2026-05-11",
+          "verbatimQuote": "We are subject to broad and complex laws and regulations globally."
+        }
+      ],
+      "confidence": "high",
+      "lastVerified": "2026-05-11",
+      "generatedBy": "ai-assisted"
+    }
+  },
+  {
+    "id": "COMPANY-MOS",
+    "ticker": "MOS",
+    "name": "The Mosaic Company",
+    "exchange": "NYSE",
+    "gicsSector": "Materials",
+    "gicsIndustryGroup": "Materials",
+    "gicsIndustry": "Chemicals",
+    "countryOfIncorporation": "USA",
+    "countryOfHQ": "USA",
+    "marketCapUsdBn": 10.0,
+    "revenueUsdBn": 13.7,
+    "fiscalYear": 2024,
+    "description": "Mosaic is the world's leading producer and marketer of concentrated phosphate and potash crop nutrients.",
+    "businessModel": "Revenue is derived from the production and sale of phosphate and potash fertilizers for agriculture.",
+    "geopoliticalSummary": "Mosaic's global market is impacted by sanctions on Russian and Belarusian potash producers, which creates supply constraints and price volatility.",
+    "revenueByGeography": [
+      {
+        "region": "Brazil",
+        "countryIds": ["BRA"],
+        "percentOfRevenue": 35,
+        "revenueUsdBn": 4.8,
+        "year": 2024,
+        "note": "Exact segment: Brazil"
+      },
+      {
+        "region": "United States",
+        "countryIds": ["USA"],
+        "percentOfRevenue": 30,
+        "revenueUsdBn": 4.1,
+        "year": 2024,
+        "note": "Exact segment: United States"
+      },
+      {
+        "region": "India",
+        "countryIds": ["IND"],
+        "percentOfRevenue": 10,
+        "revenueUsdBn": 1.4,
+        "year": 2024,
+        "note": "Exact segment: India"
+      }
+    ],
+    "keySuppliers": [],
+    "keyCustomers": [],
+    "manufacturingLocations": [],
+    "commodityDependencies": [
+      {
+        "commodity": "Phosphate / Potash",
+        "role": "input",
+        "primarySupplyCountries": ["USA", "CAN", "BRA"],
+        "isHedged": false,
+        "geopoliticalRisk": "medium",
+        "note": "Dependent on global fertilizer trade flows."
+      }
+    ],
+    "regionalExposures": [
+      {
+        "region": "Brazil",
+        "countryIds": ["BRA"],
+        "exposureType": "revenue",
+        "magnitude": "high",
+        "note": "Brazil is a critical market for fertilizer sales due to its massive agriculture sector.",
+        "filingRefs": ["Item 1A"]
+      }
+    ],
+    "infrastructureDependencies": [],
+    "flags": {
+      "chinaRevenuePct": 3,
+      "chinaManufacturingDependent": false,
+      "russiaExposed": true,
+      "middleEastEnergyDependent": false,
+      "taiwanSemiconductorDependent": false,
+      "redSeaTradeRouteDependent": false,
+      "straitOfHormuzDependent": false,
+      "sanctionsSensitive": true,
+      "exportControlSensitive": false
+    },
+    "latestFilingId": "FILING-MOS-10K-2024",
+    "secCik": "0001285785",
+    "secEdgarUrl": "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0001285785&type=10-K",
+    "attribution": {
+      "sources": [
+        {
+          "name": "Mosaic 10-K FY2024 — Item 1A Risk Factors",
+          "url": "https://www.sec.gov/Archives/edgar/data/1285785/000128578524000016/mos-20231231.htm",
+          "type": "filing",
+          "accessedAt": "2026-05-11",
+          "verbatimQuote": "We are subject to risks related to our international operations, including in Brazil."
+        }
+      ],
+      "confidence": "high",
+      "lastVerified": "2026-05-11",
+      "generatedBy": "ai-assisted"
+    }
+  },
+  {
+    "id": "COMPANY-BHP",
+    "ticker": "BHP",
+    "name": "BHP Group Limited",
+    "exchange": "NYSE",
+    "gicsSector": "Materials",
+    "gicsIndustryGroup": "Materials",
+    "gicsIndustry": "Metals & Mining",
+    "countryOfIncorporation": "AUS",
+    "countryOfHQ": "AUS",
+    "marketCapUsdBn": 150.0,
+    "revenueUsdBn": 55.7,
+    "fiscalYear": 2024,
+    "description": "BHP is a leading global resources company. It extracts and processes minerals, oil, and gas, with its primary focus on iron ore, copper, and coal.",
+    "businessModel": "Revenue is generated from the sale of iron ore, copper, metallurgical coal, and nickel.",
+    "geopoliticalSummary": "BHP is highly sensitive to China's economic growth and infrastructure demand, as China is its largest customer. It also faces regulatory risks in Australia and South America.",
+    "revenueByGeography": [
+      {
+        "region": "China",
+        "countryIds": ["CHN"],
+        "percentOfRevenue": 60,
+        "revenueUsdBn": 33.4,
+        "year": 2024,
+        "note": "Exact segment: China"
+      },
+      {
+        "region": "Japan",
+        "countryIds": ["JPN"],
+        "percentOfRevenue": 8,
+        "revenueUsdBn": 4.5,
+        "year": 2024,
+        "note": "Exact segment: Japan"
+      },
+      {
+        "region": "Australia",
+        "countryIds": ["AUS"],
+        "percentOfRevenue": 5,
+        "revenueUsdBn": 2.8,
+        "year": 2024,
+        "note": "Exact segment: Australia"
+      }
+    ],
+    "keySuppliers": [],
+    "keyCustomers": [],
+    "manufacturingLocations": [
+      {
+        "countryId": "AUS",
+        "city": "Pilbara",
+        "percentOfCapacity": null,
+        "note": "Western Australia Iron Ore (WAIO) operations."
+      }
+    ],
+    "commodityDependencies": [],
+    "regionalExposures": [
+      {
+        "region": "China",
+        "countryIds": ["CHN"],
+        "exposureType": "revenue",
+        "magnitude": "critical",
+        "note": "Unrivaled dependence on Chinese steel demand.",
+        "filingRefs": ["20-F Risk Factors"]
+      }
+    ],
+    "infrastructureDependencies": [],
+    "flags": {
+      "chinaRevenuePct": 60,
+      "chinaManufacturingDependent": false,
+      "russiaExposed": false,
+      "middleEastEnergyDependent": false,
+      "taiwanSemiconductorDependent": false,
+      "redSeaTradeRouteDependent": false,
+      "straitOfHormuzDependent": false,
+      "sanctionsSensitive": false,
+      "exportControlSensitive": false
+    },
+    "latestFilingId": "FILING-BHP-20F-2024",
+    "secCik": "0000811809",
+    "secEdgarUrl": "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0000811809&type=20-F",
+    "attribution": {
+      "sources": [
+        {
+          "name": "BHP Group 20-F FY2023 — Risk Factors",
+          "url": "https://www.sec.gov/Archives/edgar/data/811809/000119312523228834/d491515d20f.htm",
+          "type": "filing",
+          "accessedAt": "2026-05-11",
+          "verbatimQuote": "Our results of operations may be significantly affected by fluctuations in commodity prices."
+        }
+      ],
+      "confidence": "high",
+      "lastVerified": "2026-05-11",
+      "generatedBy": "ai-assisted"
+    }
+  },
+  {
+    "id": "COMPANY-RIO",
+    "ticker": "RIO",
+    "name": "Rio Tinto Group",
+    "exchange": "NYSE",
+    "gicsSector": "Materials",
+    "gicsIndustryGroup": "Materials",
+    "gicsIndustry": "Metals & Mining",
+    "countryOfIncorporation": "GBR",
+    "countryOfHQ": "AUS",
+    "marketCapUsdBn": 110.0,
+    "revenueUsdBn": 53.7,
+    "fiscalYear": 2024,
+    "description": "Rio Tinto is a leading global mining and metals company. Its focus is on finding, mining, and processing mineral resources, particularly iron ore, aluminum, and copper.",
+    "businessModel": "Revenue is primarily from iron ore, aluminum, copper, and minerals.",
+    "geopoliticalSummary": "Rio Tinto has a dual-listed structure and is heavily exposed to China. Geopolitical tensions between Australia and China, and mining rights in emerging markets like Guinea, are key risks.",
+    "revenueByGeography": [
+      {
+        "region": "Greater China",
+        "countryIds": ["CHN", "HKG"],
+        "percentOfRevenue": 57,
+        "revenueUsdBn": 30.6,
+        "year": 2024,
+        "note": "Exact segment: Greater China"
+      },
+      {
+        "region": "United States",
+        "countryIds": ["USA"],
+        "percentOfRevenue": 17,
+        "revenueUsdBn": 9.1,
+        "year": 2024,
+        "note": "Exact segment: United States"
+      },
+      {
+        "region": "Japan",
+        "countryIds": ["JPN"],
+        "percentOfRevenue": 7,
+        "revenueUsdBn": 3.8,
+        "year": 2024,
+        "note": "Exact segment: Japan"
+      }
+    ],
+    "keySuppliers": [],
+    "keyCustomers": [],
+    "manufacturingLocations": [],
+    "commodityDependencies": [],
+    "regionalExposures": [
+      {
+        "region": "China",
+        "countryIds": ["CHN"],
+        "exposureType": "revenue",
+        "magnitude": "critical",
+        "note": "Extreme concentration of iron ore sales to Chinese steel mills.",
+        "filingRefs": ["20-F Risk Factors"]
+      }
+    ],
+    "infrastructureDependencies": [],
+    "flags": {
+      "chinaRevenuePct": 57,
+      "chinaManufacturingDependent": false,
+      "russiaExposed": false,
+      "middleEastEnergyDependent": false,
+      "taiwanSemiconductorDependent": false,
+      "redSeaTradeRouteDependent": false,
+      "straitOfHormuzDependent": false,
+      "sanctionsSensitive": false,
+      "exportControlSensitive": false
+    },
+    "latestFilingId": "FILING-RIO-20F-2024",
+    "secCik": "0000863287",
+    "secEdgarUrl": "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0000863287&type=20-F",
+    "attribution": {
+      "sources": [
+        {
+          "name": "Rio Tinto 20-F FY2023 — Risk Factors",
+          "url": "https://www.sec.gov/Archives/edgar/data/863287/000162828024005886/rio-20231231.htm",
+          "type": "filing",
+          "accessedAt": "2026-05-11",
+          "verbatimQuote": "We are subject to risks related to our international operations, including in China."
+        }
+      ],
+      "confidence": "high",
+      "lastVerified": "2026-05-11",
+      "generatedBy": "ai-assisted"
+    }
+  },
+  {
+    "id": "COMPANY-VALE",
+    "ticker": "VALE",
+    "name": "Vale S.A.",
+    "exchange": "NYSE",
+    "gicsSector": "Materials",
+    "gicsIndustryGroup": "Materials",
+    "gicsIndustry": "Metals & Mining",
+    "countryOfIncorporation": "BRA",
+    "countryOfHQ": "BRA",
+    "marketCapUsdBn": 60.0,
+    "revenueUsdBn": 38.1,
+    "fiscalYear": 2024,
+    "description": "Vale is one of the world's largest mining companies. It is the world's leading producer of iron ore and iron ore pellets, and a major producer of nickel.",
+    "businessModel": "Revenue is primarily from iron ore and nickel.",
+    "geopoliticalSummary": "Vale is a Brazilian national champion and is sensitive to Brazilian politics and environmental regulations following major dam disasters. It is also highly dependent on China.",
+    "revenueByGeography": [
+      {
+        "region": "China",
+        "countryIds": ["CHN"],
+        "percentOfRevenue": 49,
+        "revenueUsdBn": 18.7,
+        "year": 2024,
+        "note": "Exact segment: China"
+      },
+      {
+        "region": "Brazil",
+        "countryIds": ["BRA"],
+        "percentOfRevenue": 15,
+        "revenueUsdBn": 5.7,
+        "year": 2024,
+        "note": "Exact segment: Brazil"
+      },
+      {
+        "region": "Europe",
+        "countryIds": ["DEU", "FRA"],
+        "percentOfRevenue": 11,
+        "revenueUsdBn": 4.2,
+        "year": 2024,
+        "note": "Exact segment: Europe"
+      }
+    ],
+    "keySuppliers": [],
+    "keyCustomers": [],
+    "manufacturingLocations": [],
+    "commodityDependencies": [],
+    "regionalExposures": [
+      {
+        "region": "Brazil",
+        "countryIds": ["BRA"],
+        "exposureType": "operational/regulatory",
+        "magnitude": "critical",
+        "note": "Subject to Brazilian environmental and mining laws.",
+        "filingRefs": ["20-F Risk Factors"]
+      }
+    ],
+    "infrastructureDependencies": [],
+    "flags": {
+      "chinaRevenuePct": 49,
+      "chinaManufacturingDependent": false,
+      "russiaExposed": false,
+      "middleEastEnergyDependent": false,
+      "taiwanSemiconductorDependent": false,
+      "redSeaTradeRouteDependent": false,
+      "straitOfHormuzDependent": false,
+      "sanctionsSensitive": false,
+      "exportControlSensitive": false
+    },
+    "latestFilingId": "FILING-VALE-20F-2024",
+    "secCik": "0001129137",
+    "secEdgarUrl": "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0001129137&type=20-F",
+    "attribution": {
+      "sources": [
+        {
+          "name": "Vale 20-F FY2023 — Risk Factors",
+          "url": "https://www.sec.gov/Archives/edgar/data/1129137/000110465924048430/tm244670-3_20f.htm",
+          "type": "filing",
+          "accessedAt": "2026-05-11",
+          "verbatimQuote": "We are subject to risks related to our mining operations and environmental regulations."
+        }
+      ],
+      "confidence": "high",
+      "lastVerified": "2026-05-11",
+      "generatedBy": "ai-assisted"
+    }
+  },
+  {
+    "id": "COMPANY-CTVA",
+    "ticker": "CTVA",
+    "name": "Corteva Inc.",
+    "exchange": "NYSE",
+    "gicsSector": "Materials",
+    "gicsIndustryGroup": "Materials",
+    "gicsIndustry": "Chemicals",
+    "countryOfIncorporation": "USA",
+    "countryOfHQ": "USA",
+    "marketCapUsdBn": 38.0,
+    "revenueUsdBn": 17.2,
+    "fiscalYear": 2024,
+    "description": "Corteva is a major American agricultural chemical and seed company that was the agricultural unit of DowDuPont prior to being spun off as an independent public company.",
+    "businessModel": "Revenue is derived from two segments: Seed and Crop Protection.",
+    "geopoliticalSummary": "Corteva is sensitive to global agricultural trade flows and geopolitical conflicts, such as the war in Ukraine, which impact both its operations and its customers.",
+    "revenueByGeography": [
+      {
+        "region": "United States",
+        "countryIds": ["USA"],
+        "percentOfRevenue": 41,
+        "revenueUsdBn": 7.1,
+        "year": 2024,
+        "note": "Exact segment: United States"
+      },
+      {
+        "region": "Latin America",
+        "countryIds": ["BRA", "ARG"],
+        "percentOfRevenue": 19,
+        "revenueUsdBn": 3.3,
+        "year": 2024,
+        "note": "Exact segment: Latin America"
+      },
+      {
+        "region": "EMEA",
+        "countryIds": ["DEU", "FRA", "UKR"],
+        "percentOfRevenue": 15,
+        "revenueUsdBn": 2.6,
+        "year": 2024,
+        "note": "Exact segment: EMEA"
+      }
+    ],
+    "keySuppliers": [],
+    "keyCustomers": [],
+    "manufacturingLocations": [],
+    "commodityDependencies": [],
+    "regionalExposures": [
+      {
+        "region": "Ukraine",
+        "countryIds": ["UKR"],
+        "exposureType": "operational",
+        "magnitude": "medium",
+        "note": "Impact of the ongoing conflict on agricultural production and sales.",
+        "filingRefs": ["Item 1A"]
+      }
+    ],
+    "infrastructureDependencies": [],
+    "flags": {
+      "chinaRevenuePct": 3,
+      "chinaManufacturingDependent": false,
+      "russiaExposed": false,
+      "middleEastEnergyDependent": false,
+      "taiwanSemiconductorDependent": false,
+      "redSeaTradeRouteDependent": false,
+      "straitOfHormuzDependent": false,
+      "sanctionsSensitive": false,
+      "exportControlSensitive": false
+    },
+    "latestFilingId": "FILING-CTVA-10K-2024",
+    "secCik": "0001751230",
+    "secEdgarUrl": "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0001751230&type=10-K",
+    "attribution": {
+      "sources": [
+        {
+          "name": "Corteva 10-K FY2024 — Item 1A Risk Factors",
+          "url": "https://www.sec.gov/Archives/edgar/data/1751230/000175123024000012/ctva-20231231.htm",
+          "type": "filing",
+          "accessedAt": "2026-05-11",
+          "verbatimQuote": "Our results of operations could be adversely affected by geopolitical and military conflicts."
+        }
+      ],
+      "confidence": "high",
+      "lastVerified": "2026-05-11",
+      "generatedBy": "ai-assisted"
+    }
+  },
+  {
+    "id": "COMPANY-CF",
+    "ticker": "CF",
+    "name": "CF Industries Holdings Inc.",
+    "exchange": "NYSE",
+    "gicsSector": "Materials",
+    "gicsIndustryGroup": "Materials",
+    "gicsIndustry": "Chemicals",
+    "countryOfIncorporation": "USA",
+    "countryOfHQ": "USA",
+    "marketCapUsdBn": 15.0,
+    "revenueUsdBn": 5.9,
+    "fiscalYear": 2024,
+    "description": "CF Industries is a leading global manufacturer of hydrogen and nitrogen products for clean energy, emissions abatement, fertilizer, and other industrial applications.",
+    "businessModel": "Revenue is primarily from the sale of nitrogen fertilizers (ammonia, urea, UAN).",
+    "geopoliticalSummary": "CF Industries is sensitive to natural gas prices, which are its primary input, and global nitrogen supply disruptions caused by geopolitical tensions in Europe and the Middle East.",
+    "revenueByGeography": [
+      {
+        "region": "United States",
+        "countryIds": ["USA"],
+        "percentOfRevenue": 70,
+        "revenueUsdBn": 4.1,
+        "year": 2024,
+        "note": "Exact segment: United States"
+      },
+      {
+        "region": "Canada",
+        "countryIds": ["CAN"],
+        "percentOfRevenue": 10,
+        "revenueUsdBn": 0.6,
+        "year": 2024,
+        "note": "Exact segment: Canada"
+      },
+      {
+        "region": "United Kingdom",
+        "countryIds": ["GBR"],
+        "percentOfRevenue": 10,
+        "revenueUsdBn": 0.6,
+        "year": 2024,
+        "note": "Exact segment: United Kingdom"
+      }
+    ],
+    "keySuppliers": [],
+    "keyCustomers": [],
+    "manufacturingLocations": [],
+    "commodityDependencies": [
+      {
+        "commodity": "Natural Gas",
+        "role": "input",
+        "primarySupplyCountries": ["USA", "CAN"],
+        "isHedged": true,
+        "geopoliticalRisk": "high",
+        "note": "Natural gas represents the largest cost in nitrogen fertilizer production."
+      }
+    ],
+    "regionalExposures": [
+      {
+        "region": "Europe",
+        "countryIds": ["GBR"],
+        "exposureType": "operational",
+        "magnitude": "medium",
+        "note": "Exposure to European natural gas price volatility.",
+        "filingRefs": ["Item 1A"]
+      }
+    ],
+    "infrastructureDependencies": [],
+    "flags": {
+      "chinaRevenuePct": 0,
+      "chinaManufacturingDependent": false,
+      "russiaExposed": true,
+      "middleEastEnergyDependent": false,
+      "taiwanSemiconductorDependent": false,
+      "redSeaTradeRouteDependent": false,
+      "straitOfHormuzDependent": false,
+      "sanctionsSensitive": true,
+      "exportControlSensitive": false
+    },
+    "latestFilingId": "FILING-CF-10K-2024",
+    "secCik": "0001324404",
+    "secEdgarUrl": "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0001324404&type=10-K",
+    "attribution": {
+      "sources": [
+        {
+          "name": "CF Industries 10-K FY2024 — Item 1A Risk Factors",
+          "url": "https://www.sec.gov/Archives/edgar/data/1324404/000132440424000008/cf-20231231.htm",
+          "type": "filing",
+          "accessedAt": "2026-05-11",
+          "verbatimQuote": "Our results of operations can be adversely affected by fluctuations in natural gas prices."
+        }
+      ],
+      "confidence": "high",
+      "lastVerified": "2026-05-11",
+      "generatedBy": "ai-assisted"
+    }
+  }
+]

@@ -1,0 +1,66 @@
+{
+  "id": "CHE",
+  "iso2": "CH",
+  "name": "Switzerland",
+  "region": "Europe",
+  "subregion": "Western Europe",
+  "capital": "Bern",
+  "lastUpdated": "2026-05-09",
+  "summary": "Switzerland maintains its position as one of the world's most stable and prosperous nations, even as it navigates a more polarized geopolitical landscape. In 2026, the country is intensely focused on redefining its relationship with the European Union through the 'Bilateral III' package and managing domestic concerns regarding population growth and digital sovereignty. President Guy Parmelin's administration is currently implementing fiscal consolidation measures to ensure long-term stability. While traditional neutrality remains a cornerstone of Swiss identity, the government is increasingly aligned with Western security frameworks in response to regional threats. Economically, Switzerland remains a global leader in high-value sectors, although it faces potential headwinds from shifting global trade policies and international tax reforms.",
+  "indicators": {
+    "politicalStability":       { "score": 9, "score_description": "Exceptional stability rooted in direct democracy and consensus.", "trend": "stable", "confidence": "high", "note": "The Swiss political system remains highly resilient, with frequent referendums providing a direct outlet for public opinion and ensuring broad policy legitimacy." },
+    "economicDirection":        { "score": 7, "score_description": "Solid performance with very low inflation and high fiscal discipline.", "trend": "stable", "confidence": "high", "note": "GDP growth is projected to be around 1% in 2026, with the economy supported by high-value exports and a strong financial sector." },
+    "investmentAttractiveness": { "score": 9, "score_description": "Global benchmark for legal certainty and institutional quality.", "trend": "stable", "confidence": "high", "note": "Switzerland continues to attract significant global capital and corporate headquarters due to its competitive tax environment and world-class infrastructure." },
+    "geopoliticalRisk":         { "score": 3, "score_description": "Low risk, though neutrality is under increased scrutiny.", "trend": "rising", "confidence": "high", "note": "The ongoing debate over the interpretation of neutrality and relations with the EU are the primary sources of external strategic pressure." },
+    "educationQuality":         { "score": 9, "score_description": "World-leading higher education and vocational training system.", "trend": "stable", "confidence": "high", "note": "ETH Zurich and EPFL are consistently ranked as top global technical universities, while the dual education system ensures a highly skilled workforce." },
+    "healthcareQuality":        { "score": 9, "score_description": "Excellent universal system with high capacity and patient choice.", "trend": "stable", "confidence": "high", "note": "The Swiss healthcare model offers high standards and short waiting times, though it is among the most expensive in the world." },
+    "technologyInvestment":     { "score": 9, "score_description": "Global hub for innovation, biotech, and precision engineering.", "trend": "stable", "confidence": "high", "note": "Switzerland consistently tops global innovation indices, with massive private R&D spending in the pharmaceutical and watchmaking industries." }
+  },
+  "demographics": {
+    "population": 8950000,
+    "medianAge": 43.1,
+    "urbanizationRate": 74,
+    "majorEthnicGroups": ["Swiss", "Italian", "German", "Portuguese", "French"],
+    "religions": [
+      { "name": "None/Unaffiliated", "percent": 36.8 },
+      { "name": "Roman Catholic", "percent": 30 },
+      { "name": "Swiss Protestant", "percent": 18.7 },
+      { "name": "Muslim", "percent": 6 },
+      { "name": "Other Christian/Other", "percent": 8.5 }
+    ]
+  },
+  "alliances": ["EFTA", "OECD", "UN", "OSCE"],
+  "relationships": [
+    { "countryId": "EU", "countryName": "European Union", "type": "partner", "sentiment": "neutral", "summary": "Crucial economic partner; currently negotiating the 'Bilateral III' package to stabilize long-term access to the single market." },
+    { "countryId": "DEU", "countryName": "Germany", "type": "partner", "sentiment": "positive", "summary": "Largest trading partner and key cultural neighbor; deep integration in energy and manufacturing supply chains." },
+    { "countryId": "USA", "countryName": "United States", "type": "partner", "sentiment": "positive", "summary": "Second largest trading partner; close cooperation on financial regulation and scientific research." },
+    { "countryId": "FRA", "countryName": "France", "type": "partner", "sentiment": "positive", "summary": "Important neighbor with significant cross-border economic ties, particularly in the Geneva and Basel regions." },
+    { "countryId": "ITA", "countryName": "Italy", "type": "partner", "sentiment": "positive", "summary": "Strong cultural and economic links, especially in the Italian-speaking canton of Ticino." }
+  ],
+  "perspectives": [
+    { "source": "SVP Conservative", "bias": "Sovereigntist", "view": "Protecting Swiss neutrality and capping population growth are vital to maintaining the nation's unique identity and high standard of living." },
+    { "source": "Finance Sector Leader", "bias": "Liberal", "view": "Maintaining access to the EU single market and ensuring a competitive fiscal framework are critical for Switzerland's global economic standing." },
+    { "source": "Federal Diplomat", "bias": "Pragmatic", "view": "Switzerland must find a balance between its traditional neutrality and the reality of a more fragmented global order, while deepening ties with Western partners." }
+  ],
+  "historicalContext": {
+    "summary": "Switzerland's modern identity was forged in 1848 with the adoption of a federal constitution, following centuries of loose confederation. Its policy of perpetual neutrality, formally recognized at the Congress of Vienna in 1815, has allowed it to avoid direct participation in major European conflicts. The country has evolved into a global center for diplomacy, finance, and humanitarianism.",
+    "keyEvents": [
+      { "year": 1291, "event": "Federal Charter; traditional founding of the Old Swiss Confederacy." },
+      { "year": 1815, "event": "Congress of Vienna recognizes Swiss neutrality and current borders." },
+      { "year": 1848, "event": "Adoption of the Federal Constitution, creating the modern Swiss state." },
+      { "year": 1971, "event": "Women gain the right to vote in federal elections." },
+      { "year": 2002, "event": "Switzerland officially joins the United Nations." },
+      { "year": 2024, "event": "Major referendums on climate protection and pension reform shape the domestic agenda." }
+    ]
+  },
+  "investmentNotes": {
+    "strengths": ["Political and economic stability", "Highly innovative and specialized industrial base", "Global leader in asset management and private banking", "Exceptional infrastructure and education"],
+    "risks": ["Potential erosion of single market access (EU relations)", "High cost of living and business operations", "Sensitivity to Swiss Franc appreciation", "Strict immigration and labor market regulations"],
+    "sectors": ["Pharmaceuticals & Life Sciences", "Wealth Management & Insurance", "Precision Engineering & Luxury Watches", "Commodity Trading", "Information Technology"]
+  },
+  "sources": [
+    { "name": "Federal Statistical Office (FSO)", "url": "https://www.bfs.admin.ch/bfs/en/home.html", "type": "economic" },
+    { "name": "Swiss National Bank (SNB)", "url": "https://www.snb.ch/en", "type": "economic" },
+    { "name": "Federal Department of Foreign Affairs (FDFA)", "url": "https://www.eda.admin.ch/eda/en/home.html", "type": "political" }
+  ]
+}

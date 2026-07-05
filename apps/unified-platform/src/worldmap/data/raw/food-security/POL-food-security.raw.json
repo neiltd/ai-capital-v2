@@ -1,0 +1,27 @@
+[
+  {
+    "countryId": "POL",
+    "year": 2022,
+    "overallScore": 75.5,
+    "availability": 63.8,
+    "access": 87.4,
+    "utilization": 81.5,
+    "stability": 66.7,
+    "undernourishedPct": 2.5,
+    "foodImportDependencyPct": 0.0,
+    "cerealYieldKgHa": 4895,
+    "climateVulnerability": "low",
+    "conflictExposure": "low",
+    "attribution": {
+      "sources": [
+        { "name": "GFSI 2022 — Poland", "url": "https://impact.economist.com/sustainability/project/food-security-index/reports-and-resources", "accessedAt": "2025-02-13" },
+        { "name": "FAO FAOSTAT - Poland", "url": "https://www.fao.org/faostat/en/#country/174", "accessedAt": "2025-02-13" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 2,
+        "lastVerified": "2025-02-13"
+      }
+    }
+  }
+]

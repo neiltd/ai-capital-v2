@@ -1,0 +1,35 @@
+[
+  {
+    "countryId": "IDN",
+    "year": 2023,
+    "electricityConsumptionTWh": 346.0,
+    "electricityProductionTWh": 366.5,
+    "electricityMix": {
+      "coal": 65.5,
+      "gas": 13.0,
+      "oil": 2.0,
+      "hydro": 6.9,
+      "otherRenewables": 12.1,
+      "solar": 0.5
+    },
+    "renewableSharePct": 19.5,
+    "waterStressScore": 1.65,
+    "waterWithdrawalPct": 29.7,
+    "foodSecurityScore": 60.2,
+    "aiAdoptionScore": 61.03,
+    "internetPenetration": 77.0,
+    "mobilePenetration": 128.0,
+    "attribution": {
+      "sources": [
+        { "name": "Ember Electricity Data Explorer 2024", "url": "https://ember-energy.org/data/electricity-data-explorer/", "accessedAt": "2026-05-10" },
+        { "name": "WRI Aqueduct 4.0", "url": "https://www.wri.org/aqueduct", "accessedAt": "2026-05-10" },
+        { "name": "Oxford Insights Government AI Readiness Index 2023", "url": "https://oxfordinsights.com/government-ai-readiness-index-2023/", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 3,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  }
+]

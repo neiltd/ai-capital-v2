@@ -1,0 +1,219 @@
+[
+  {
+    "id": "RAIL-IND-DDU-MUGHALSARAI",
+    "name": "Pt. Deen Dayal Upadhyaya Junction",
+    "countryId": "IND",
+    "city": "Chandauli",
+    "coordinates": [83.131, 25.281],
+    "type": "mixed",
+    "dailyPassengers": 200000,
+    "annualFreightTonnes": 150000000,
+    "connectedCountries": [],
+    "gaugeType": "broad",
+    "lineCount": 40,
+    "strategicImportance": "high",
+    "isPartOfBRI": false,
+    "geopoliticalNotes": "Largest marshalling yard in Asia. Gateway between Northern and Eastern India. Critical node on the Eastern Dedicated Freight Corridor (EDFC) for coal and steel movement.",
+    "notes": "Formerly known as Mughalsarai Junction.",
+    "attribution": {
+      "sources": [
+        { "name": "Indian Railways (Ministry of Railways)", "url": "https://indianrailways.gov.in", "accessedAt": "2026-05-10" },
+        { "name": "World Bank - Eastern DFC Report", "url": "https://www.worldbank.org", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 2,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  },
+  {
+    "id": "RAIL-IND-HOWRAH",
+    "name": "Howrah Junction",
+    "countryId": "IND",
+    "city": "Kolkata",
+    "coordinates": [88.341, 22.583],
+    "type": "mixed",
+    "dailyPassengers": 1000000,
+    "annualFreightTonnes": 50000000,
+    "connectedCountries": ["BGD"],
+    "gaugeType": "broad",
+    "lineCount": 23,
+    "strategicImportance": "high",
+    "isPartOfBRI": false,
+    "geopoliticalNotes": "Busiest railway station in India by passenger volume. Key terminal for Eastern and South Eastern Railways, serving as a primary link to Northeast India and Bangladesh.",
+    "notes": "Anchor station for the Maitree Express to Dhaka.",
+    "attribution": {
+      "sources": [
+        { "name": "Eastern Railway Statistics", "url": "https://er.indianrailways.gov.in", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 1,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  },
+  {
+    "id": "RAIL-IND-NEW-DELHI",
+    "name": "New Delhi Railway Station",
+    "countryId": "IND",
+    "city": "New Delhi",
+    "coordinates": [77.220, 28.643],
+    "type": "mixed",
+    "dailyPassengers": 500000,
+    "annualFreightTonnes": null,
+    "connectedCountries": ["PAK"],
+    "gaugeType": "broad",
+    "lineCount": 16,
+    "strategicImportance": "high",
+    "isPartOfBRI": false,
+    "geopoliticalNotes": "National capital hub. Central node for the Vande Bharat high-speed network and primary military/administrative rail terminus.",
+    "notes": "Major transformation under the Amrit Bharat Station Scheme.",
+    "attribution": {
+      "sources": [
+        { "name": "Northern Railway", "url": "https://nr.indianrailways.gov.in", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 1,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  },
+  {
+    "id": "RAIL-IND-MUMBAI-CSMT",
+    "name": "Chhatrapati Shivaji Maharaj Terminus",
+    "countryId": "IND",
+    "city": "Mumbai",
+    "coordinates": [72.835, 18.940],
+    "type": "mixed",
+    "dailyPassengers": 800000,
+    "annualFreightTonnes": 30000000,
+    "connectedCountries": [],
+    "gaugeType": "broad",
+    "lineCount": 18,
+    "strategicImportance": "high",
+    "isPartOfBRI": false,
+    "geopoliticalNotes": "UNESCO World Heritage site and the commercial rail backbone of India's financial capital. Directly linked to the Port of Mumbai and Western DFC.",
+    "notes": "Hub for the Central Railway.",
+    "attribution": {
+      "sources": [
+        { "name": "Central Railway Statistics", "url": "https://cr.indianrailways.gov.in", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 1,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  },
+  {
+    "id": "RAIL-IND-SECUNDERABAD",
+    "name": "Secunderabad Junction",
+    "countryId": "IND",
+    "city": "Hyderabad",
+    "coordinates": [78.502, 17.433],
+    "type": "mixed",
+    "dailyPassengers": 180000,
+    "annualFreightTonnes": 45000000,
+    "connectedCountries": [],
+    "gaugeType": "broad",
+    "lineCount": 10,
+    "strategicImportance": "medium",
+    "isPartOfBRI": false,
+    "geopoliticalNotes": "Strategic pivot for South-Central India. Major hub for technology and defense logistics transport in the Deccan region.",
+    "notes": "Headquarters of the South Central Railway.",
+    "attribution": {
+      "sources": [
+        { "name": "South Central Railway", "url": "https://scr.indianrailways.gov.in", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 1,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  },
+  {
+    "id": "RAIL-IND-PETRAPOLE-BORDER",
+    "name": "Petrapole Railway Station",
+    "countryId": "IND",
+    "city": "Bongaon",
+    "coordinates": [88.905, 23.041],
+    "type": "border_crossing",
+    "dailyPassengers": 3000,
+    "annualFreightTonnes": 5000000,
+    "connectedCountries": ["BGD"],
+    "gaugeType": "broad",
+    "lineCount": 4,
+    "strategicImportance": "high",
+    "isPartOfBRI": false,
+    "geopoliticalNotes": "Most significant land border crossing for India-Bangladesh trade. Essential for the 'Maitri' (Friendship) connectivity projects.",
+    "notes": "Handles high volumes of agricultural and textile trade.",
+    "attribution": {
+      "sources": [
+        { "name": "EEPC India Trade Report", "url": "https://www.eepcindia.com", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "medium",
+        "sourceCount": 1,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  },
+  {
+    "id": "RAIL-IND-BILASPUR",
+    "name": "Bilaspur Junction",
+    "countryId": "IND",
+    "city": "Bilaspur",
+    "coordinates": [82.147, 22.032],
+    "type": "freight",
+    "dailyPassengers": 60000,
+    "annualFreightTonnes": 253000000,
+    "connectedCountries": [],
+    "gaugeType": "broad",
+    "lineCount": 12,
+    "strategicImportance": "high",
+    "isPartOfBRI": false,
+    "geopoliticalNotes": "Coal and mineral capital of Indian Railways. The highest freight-loading node in the country, powering thermal plants across Northern and Western India.",
+    "notes": "South East Central Railway (SECR) headquarters.",
+    "attribution": {
+      "sources": [
+        { "name": "South East Central Railway", "url": "https://secr.indianrailways.gov.in", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 1,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  },
+  {
+    "id": "RAIL-IND-DADRI-ICD",
+    "name": "Dadri Inland Container Depot",
+    "countryId": "IND",
+    "city": "Greater Noida",
+    "coordinates": [77.558, 28.558],
+    "type": "port_interface",
+    "dailyPassengers": null,
+    "annualFreightTonnes": 15000000,
+    "connectedCountries": [],
+    "gaugeType": "broad",
+    "lineCount": 15,
+    "strategicImportance": "high",
+    "isPartOfBRI": false,
+    "geopoliticalNotes": "Strategic junction of the Eastern and Western Dedicated Freight Corridors. One of Asia's largest inland container ports, essential for North India's export-import trade.",
+    "notes": "Critical intermodal node for JNPT port connectivity.",
+    "attribution": {
+      "sources": [
+        { "name": "Dedicated Freight Corridor Corporation of India (DFCCIL)", "url": "https://dfccil.com", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 1,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  }
+]

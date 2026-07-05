@@ -1,0 +1,44 @@
+[
+  {
+    "_comment": "TEMPLATE — electricityMix values must sum to 100. Use null for unknown. Remove _comment.",
+    "countryId": "CHN",
+    "year": 2023,
+    "electricityConsumptionTWh": 8800,
+    "electricityProductionTWh": 8900,
+    "electricityMix": {
+      "coal": 60,
+      "hydro": 16,
+      "wind": 9,
+      "nuclear": 5,
+      "solar": 5,
+      "gas": 3,
+      "otherRenewables": 2
+    },
+    "renewableSharePct": 32,
+    "waterStressScore": 3.2,
+    "waterWithdrawalPct": 21,
+    "foodSecurityScore": 71,
+    "aiAdoptionScore": 72,
+    "internetPenetration": 74,
+    "mobilePenetration": 118,
+    "attribution": {
+      "sources": [
+        {
+          "name": "IEA Electricity Statistics 2023",
+          "url": "https://www.iea.org/data-and-statistics/data-product/world-energy-balances",
+          "accessedAt": "2024-02-01"
+        },
+        {
+          "name": "WRI Aqueduct Water Risk Atlas",
+          "url": "https://www.wri.org/aqueduct",
+          "accessedAt": "2024-02-01"
+        }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 2,
+        "lastVerified": "2024-02-01"
+      }
+    }
+  }
+]

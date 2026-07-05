@@ -1,0 +1,219 @@
+[
+  {
+    "id": "RAIL-KEN-MOMBASA",
+    "name": "Mombasa Terminus (Miritini)",
+    "countryId": "KEN",
+    "city": "Mombasa",
+    "coordinates": [39.5794, -4.0214],
+    "type": "port_interface",
+    "dailyPassengers": 3700,
+    "annualFreightTonnes": 6530000,
+    "connectedCountries": ["UGA", "RWA", "SSD"],
+    "gaugeType": "standard",
+    "lineCount": 10,
+    "strategicImportance": "high",
+    "isPartOfBRI": true,
+    "geopoliticalNotes": "The coastal gateway for the Standard Gauge Railway (SGR), linking the Port of Mombasa to the East African hinterland; a critical node in the BRI's presence in East Africa.",
+    "notes": "Handles 40% of the Port of Mombasa's throughput.",
+    "attribution": {
+      "sources": [
+        { "name": "Kenya Railways Corporation (KRC)", "url": "https://krc.co.ke/", "accessedAt": "2024-05-15" },
+        { "name": "Kenya National Bureau of Statistics (KNBS) 2023 Report", "url": "https://www.knbs.or.ke/", "accessedAt": "2024-05-15" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 2,
+        "lastVerified": "2024-05-15"
+      }
+    }
+  },
+  {
+    "id": "RAIL-KEN-NAIROBI-TER",
+    "name": "Nairobi Terminus (Syokimau)",
+    "countryId": "KEN",
+    "city": "Nairobi",
+    "coordinates": [36.8983, -1.3544],
+    "type": "passenger",
+    "dailyPassengers": 4000,
+    "annualFreightTonnes": null,
+    "connectedCountries": ["UGA"],
+    "gaugeType": "standard",
+    "lineCount": 8,
+    "strategicImportance": "high",
+    "isPartOfBRI": true,
+    "geopoliticalNotes": "Central passenger hub for the Madaraka Express; connects the capital to the coast and serves as a model for modern rail transport in the region.",
+    "notes": "Integrated with the Nairobi Commuter Rail system.",
+    "attribution": {
+      "sources": [
+        { "name": "Kenya Railways - Madaraka Express Data", "url": "https://metickets.krc.co.ke/", "accessedAt": "2024-05-15" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 1,
+        "lastVerified": "2024-05-15"
+      }
+    }
+  },
+  {
+    "id": "RAIL-KEN-NAIROBI-ICD",
+    "name": "Nairobi Inland Container Depot (Embakasi)",
+    "countryId": "KEN",
+    "city": "Nairobi",
+    "coordinates": [36.8900, -1.3300],
+    "type": "freight",
+    "dailyPassengers": null,
+    "annualFreightTonnes": 5000000,
+    "connectedCountries": ["UGA", "RWA"],
+    "gaugeType": "standard",
+    "lineCount": 12,
+    "strategicImportance": "high",
+    "isPartOfBRI": true,
+    "geopoliticalNotes": "The primary inland freight terminal in Kenya; centralizes containerized cargo for domestic distribution and regional transit.",
+    "notes": "Directly linked to the SGR and the MGR for transshipment.",
+    "attribution": {
+      "sources": [
+        { "name": "Kenya Ports Authority - ICD Nairobi", "url": "https://www.kpa.co.ke/", "accessedAt": "2024-05-15" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 1,
+        "lastVerified": "2024-05-15"
+      }
+    }
+  },
+  {
+    "id": "RAIL-KEN-NAIVASHA-ICD",
+    "name": "Naivasha ICD (Suswa)",
+    "countryId": "KEN",
+    "city": "Naivasha",
+    "coordinates": [36.4400, -0.9100],
+    "type": "freight",
+    "dailyPassengers": 100,
+    "annualFreightTonnes": 100000,
+    "connectedCountries": ["UGA", "RWA", "SSD"],
+    "gaugeType": "standard",
+    "lineCount": 6,
+    "strategicImportance": "high",
+    "isPartOfBRI": true,
+    "geopoliticalNotes": "Transshipment hub for cargo destined for Western Kenya and neighboring countries; reduces congestion on the Nairobi-Nakuru highway.",
+    "notes": "Part of SGR Phase 2A; critical for the Northern Corridor's expansion.",
+    "attribution": {
+      "sources": [
+        { "name": "Standard Gauge Railway Phase 2A Project Data", "url": "https://www.crbc.com/", "accessedAt": "2024-05-15" }
+      ],
+      "confidence": {
+        "confidence": "medium",
+        "sourceCount": 1,
+        "lastVerified": "2024-05-15"
+      }
+    }
+  },
+  {
+    "id": "RAIL-KEN-ATHI-RIVER",
+    "name": "Athi River Station",
+    "countryId": "KEN",
+    "city": "Athi River",
+    "coordinates": [36.9800, -1.4500],
+    "type": "mixed",
+    "dailyPassengers": 300,
+    "annualFreightTonnes": null,
+    "connectedCountries": [],
+    "gaugeType": "standard",
+    "lineCount": 4,
+    "strategicImportance": "medium",
+    "isPartOfBRI": true,
+    "geopoliticalNotes": "Strategically located near Nairobi's industrial zones; facilitates the transport of cement and construction materials.",
+    "notes": "Major industrial node on the SGR line.",
+    "attribution": {
+      "sources": [
+        { "name": "OSM", "url": "https://www.openstreetmap.org/", "accessedAt": "2024-05-15" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 1,
+        "lastVerified": "2024-05-15"
+      }
+    }
+  },
+  {
+    "id": "RAIL-KEN-MARIAKANI",
+    "name": "Mariakani Station",
+    "countryId": "KEN",
+    "city": "Mariakani",
+    "coordinates": [39.4700, -3.8600],
+    "type": "freight",
+    "dailyPassengers": null,
+    "annualFreightTonnes": null,
+    "connectedCountries": [],
+    "gaugeType": "standard",
+    "lineCount": 6,
+    "strategicImportance": "medium",
+    "isPartOfBRI": true,
+    "geopoliticalNotes": "Logistics hub near Mombasa; serves as a weighbridge and marshalling point for up-country freight.",
+    "notes": "Key technical stop for SGR freight trains.",
+    "attribution": {
+      "sources": [
+        { "name": "Kenya Railways Operations Manual", "url": "https://krc.co.ke/", "accessedAt": "2024-05-15" }
+      ],
+      "confidence": {
+        "confidence": "medium",
+        "sourceCount": 1,
+        "lastVerified": "2024-05-15"
+      }
+    }
+  },
+  {
+    "id": "RAIL-KEN-VOI",
+    "name": "Voi Junction",
+    "countryId": "KEN",
+    "city": "Voi",
+    "coordinates": [38.5600, -3.3900],
+    "type": "mixed",
+    "dailyPassengers": 500,
+    "annualFreightTonnes": null,
+    "connectedCountries": ["TZA"],
+    "gaugeType": "mixed",
+    "lineCount": 4,
+    "strategicImportance": "medium",
+    "isPartOfBRI": true,
+    "geopoliticalNotes": "Strategic junction for the branch line to Taveta/Tanzania border; connects the SGR to the MGR network for regional integration.",
+    "notes": "Gateway to the Tsavo National Parks.",
+    "attribution": {
+      "sources": [
+        { "name": "East African Railways Master Plan", "url": "https://www.eac.int/", "accessedAt": "2024-05-15" }
+      ],
+      "confidence": {
+        "confidence": "medium",
+        "sourceCount": 1,
+        "lastVerified": "2024-05-15"
+      }
+    }
+  },
+  {
+    "id": "RAIL-KEN-KISUMU",
+    "name": "Kisumu Rail Port",
+    "countryId": "KEN",
+    "city": "Kisumu",
+    "coordinates": [34.7500, -0.1000],
+    "type": "port_interface",
+    "dailyPassengers": 200,
+    "annualFreightTonnes": 150000,
+    "connectedCountries": ["UGA", "TZA"],
+    "gaugeType": "narrow",
+    "lineCount": 6,
+    "strategicImportance": "high",
+    "isPartOfBRI": false,
+    "geopoliticalNotes": "Critical lake-rail interface on Lake Victoria; handles transit cargo to Uganda and Tanzania via wagon ferries.",
+    "notes": "Currently served by the rehabilitated Meter Gauge Railway (MGR).",
+    "attribution": {
+      "sources": [
+        { "name": "Kenya Railways - Kisumu Port Data", "url": "https://krc.co.ke/", "accessedAt": "2024-05-15" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 2,
+        "lastVerified": "2024-05-15"
+      }
+    }
+  }
+]

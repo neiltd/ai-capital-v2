@@ -1,0 +1,64 @@
+{
+  "id": "BMU",
+  "iso2": "BM",
+  "name": "Bermuda",
+  "region": "Americas",
+  "subregion": "Northern America",
+  "capital": "Hamilton",
+  "lastUpdated": "2026-05-09",
+  "summary": "Bermuda is a self-governing British Overseas Territory in the North Atlantic, renowned as a premier global hub for insurance and reinsurance. In 2026, the territory continues to maintain its position as the 'World's Risk Capital,' while also establishing itself as a leading jurisdiction for digital assets and climate-risk finance. Despite its small size, Bermuda has one of the highest GDPs per capita globally. The island is currently navigating the implementation of the Global Minimum Tax (GMT), a major shift in its historical tax-neutral model. While the territory faces challenges such as a high cost of living and the need for renewable energy transition, its sophisticated legal framework, political stability, and proximity to major North American markets ensure its continued economic prominence.",
+  "indicators": {
+    "politicalStability":       { "score": 9, "score_description": "Highly stable parliamentary democracy with a strong legal framework.", "trend": "stable", "confidence": "high", "note": "A self-governing territory with a sophisticated administration and ultimate UK oversight." },
+    "economicDirection":        { "score": 7, "score_description": "Steady economy navigating global tax reforms.", "trend": "stable", "confidence": "high", "note": "The transition to a 15% corporate tax for large multinationals is being managed carefully to maintain competitiveness." },
+    "investmentAttractiveness": { "score": 9, "score_description": "Top-tier destination for insurance, reinsurance, and fintech.", "trend": "stable", "confidence": "high", "note": "Sophisticated regulatory environment and a deep pool of financial expertise." },
+    "geopoliticalRisk":         { "score": 3, "score_description": "Low risk; strategically located and protected by the UK.", "trend": "stable", "confidence": "high", "note": "Primary risks are economic (global tax policy) and environmental (Atlantic storms)." },
+    "educationQuality":         { "score": 7, "score_description": "Solid education system with high levels of professional certification.", "trend": "stable", "confidence": "high", "note": "Strong focus on financial services and insurance-related training." },
+    "healthcareQuality":        { "score": 8, "score_description": "High-quality, albeit expensive, healthcare system.", "trend": "stable", "confidence": "high", "note": "The King Edward VII Memorial Hospital is the primary facility, with specialized care often sought in the US." },
+    "technologyInvestment":     { "score": 8, "score_description": "Leader in digital asset regulation and climate-tech finance.", "trend": "rising", "confidence": "high", "note": "The Bermuda Monetary Authority is a global pioneer in regulating digital asset businesses." }
+  },
+  "demographics": {
+    "population": 63500,
+    "medianAge": 44.8,
+    "urbanizationRate": 100,
+    "majorEthnicGroups": ["Black", "White", "Mixed", "Other"],
+    "religions": [
+      { "name": "Protestant", "percent": 46 },
+      { "name": "Roman Catholic", "percent": 15 },
+      { "name": "None", "percent": 18 },
+      { "name": "Other", "percent": 21 }
+    ]
+  },
+  "alliances": ["CARICOM (Associate)", "United Kingdom Overseas Territories"],
+  "relationships": [
+    { "countryId": "USA", "countryName": "United States", "type": "strategic_partner", "sentiment": "positive", "summary": "Most important economic partner; primary source of tourism, trade, and financial services activity." },
+    { "countryId": "GBR", "countryName": "United Kingdom", "type": "sovereign", "sentiment": "positive", "summary": "Bermuda is the oldest British Overseas Territory; UK provides defense and international representation." },
+    { "countryId": "CAN", "countryName": "Canada", "type": "partner", "sentiment": "positive", "summary": "Significant ties in the banking and insurance sectors, along with education." }
+  ],
+  "perspectives": [
+    { "source": "Business Leader (Hamilton)", "bias": "Finance-focused", "view": "Bermuda's agility and sophisticated regulation are our greatest assets; the move towards the Global Minimum Tax is a challenge we are ready to turn into an opportunity." },
+    { "source": "Environmental Scientist", "bias": "Ecological", "view": "As an island in the middle of the Atlantic, we must be at the forefront of climate-risk finance and renewable energy adoption." },
+    { "source": "Bermudian Resident", "bias": "Socio-economic", "view": "The high cost of living and housing remain the biggest concerns for average citizens, even with a strong economy." }
+  ],
+  "historicalContext": {
+    "summary": "Bermuda was first settled in 1609 by shipwrecked English colonists. It became a crown colony in 1684 and has since evolved into one of the most prosperous territories in the world. Its history is closely linked to its strategic maritime location, having served as a major naval base and now a global financial hub.",
+    "keyEvents": [
+      { "year": 1609, "event": "The Sea Venture shipwrecks, leading to the first permanent English settlement." },
+      { "year": 1684, "event": "Bermuda becomes a British Crown Colony." },
+      { "year": 1968, "event": "Adoption of a new Constitution, granting significant self-government." },
+      { "year": 1970, "event": "Bermuda becomes a pioneer in the international captive insurance market." },
+      { "year": 1995, "event": "Independence referendum; voters choose to remain a British Overseas Territory." },
+      { "year": 2018, "event": "The Digital Asset Business Act (DABA) is passed, establishing a framework for crypto-regulation." },
+      { "year": 2024, "event": "Bermuda introduces its first corporate income tax in response to global tax reforms." }
+    ]
+  },
+  "investmentNotes": {
+    "strengths": ["World-leading insurance and reinsurance hub", "Sophisticated and respected regulatory environment (BMA)", "Political stability and British legal system", "Strategic proximity to the US East Coast"],
+    "risks": ["Vulnerability to shifts in global tax policy (OECD/G20)", "High cost of living and business operations", "Aging population and labor market constraints", "Exposure to hurricanes and climate-related risks"],
+    "sectors": ["Insurance & Reinsurance", "Digital Assets & Fintech", "Climate Risk Finance", "Luxury Tourism", "International Legal Services"]
+  },
+  "sources": [
+    { "name": "Bermuda Government - Department of Statistics", "url": "https://www.gov.bm/department/statistics", "type": "economic" },
+    { "name": "Bermuda Monetary Authority (BMA)", "url": "https://www.bma.bm/", "type": "financial" },
+    { "name": "Bermuda Business Development Agency (BDA)", "url": "https://www.bermudabda.com/", "type": "investment" }
+  ]
+}

@@ -1,0 +1,65 @@
+{
+  "id": "ERI",
+  "iso2": "ER",
+  "name": "Eritrea",
+  "region": "Africa",
+  "subregion": "Eastern Africa",
+  "capital": "Asmara",
+  "lastUpdated": "2026-05-09",
+  "summary": "Eritrea is a country in the Horn of Africa, along the Red Sea, with a highly strategic coastline. It gained independence from Ethiopia in 1993 after a long war of independence. The country is characterized by a highly centralized and authoritarian government led by President Isaias Afwerki. Eritrea has a closed economy and a policy of national service that has led to significant emigration. Geopolitically, it has a complex relationship with its neighbors and has recently emerged from international sanctions, though it remains relatively isolated.",
+  "indicators": {
+    "politicalStability":       { "score": 3, "trend": "stable", "confidence": "high", "note": "Maintains strict control through a centralized system; no formal political opposition or independent media." },
+    "economicDirection":        { "score": 2, "trend": "stable", "confidence": "medium", "note": "Command economy with limited private sector activity; focus on mining and subsistence agriculture; lack of transparent economic data." },
+    "investmentAttractiveness": { "score": 1, "trend": "stable", "confidence": "high", "note": "Extremely challenging business environment; investment is limited to specific mining projects under state-controlled arrangements." },
+    "geopoliticalRisk":         { "score": 8, "trend": "stable", "confidence": "high", "note": "Complex regional dynamics, particularly with Ethiopia and Djibouti; history of border conflicts and involvement in regional tensions." },
+    "educationQuality":         { "score": 3, "trend": "stable", "confidence": "high", "note": "Universal primary education is a goal, but secondary and higher education are closely tied to the national service system." },
+    "healthcareQuality":        { "score": 3, "trend": "stable", "confidence": "medium", "note": "Significant progress in meeting some health targets (e.g., reducing maternal and child mortality) despite limited resources." },
+    "technologyInvestment":     { "score": 1, "trend": "stable", "confidence": "high", "note": "One of the lowest internet penetration rates in the world; tightly controlled communication infrastructure." }
+  },
+  "demographics": {
+    "population": 3800000,
+    "medianAge": 19.2,
+    "urbanizationRate": 23,
+    "majorEthnicGroups": ["Tigrinya", "Tigre", "Saho", "Kunama"],
+    "religions": [
+      { "name": "Christian (Orthodox, Catholic, Protestant)", "percent": 50.0 },
+      { "name": "Muslim (Sunni)", "percent": 50.0 }
+    ]
+  },
+  "alliances": ["AU", "CEN-SAD"],
+  "relationships": [
+    { "countryId": "ETH", "countryName": "Ethiopia", "type": "neighbor", "sentiment": "neutral", "summary": "Relations have fluctuated wildly; a historic 2018 peace deal ended years of 'no war, no peace', but tensions remain over regional security and border issues." },
+    { "countryId": "ARE", "countryName": "United Arab Emirates", "type": "security_partner", "sentiment": "positive", "summary": "Eritrea has provided logistics and basing support for UAE operations in the region; significant security and economic cooperation." },
+    { "countryId": "CHN", "countryName": "China", "type": "strategic_partner", "sentiment": "positive", "summary": "Main source of foreign investment and infrastructure development; China is active in the mining sector." },
+    { "countryId": "RUS", "countryName": "Russia", "type": "strategic_partner", "sentiment": "positive", "summary": "Growing diplomatic and security ties; Russia has expressed interest in developing logistical facilities on the Red Sea coast." }
+  ],
+  "perspectives": [
+    { "source": "Government Official", "bias": "Defensive", "view": "We are a resilient nation that prioritizes self-reliance and national unity above all else." },
+    { "source": "Eritrean Refugee", "bias": "Victim", "view": "We are forced into indefinite national service with no future; we have no choice but to leave to find freedom and opportunity." },
+    { "source": "Regional Analyst", "bias": "Critical", "view": "Eritrea's closed system and military-focused policy are major drivers of regional instability and humanitarian concern." },
+    { "source": "Mining Executive", "bias": "Pragmatic", "view": "The country has great geological potential, but operating here requires navigating a very complex and opaque political environment." }
+  ],
+  "historicalContext": {
+    "summary": "Eritrea was an Italian colony before being federated with Ethiopia in 1952. Ethiopia's annexation of Eritrea in 1962 sparked a 30-year war of independence. Eritrea officially gained independence in 1993. A border war with Ethiopia (1998-2000) resulted in tens of thousands of deaths and long-term regional tension.",
+    "keyEvents": [
+      { "year": 1890, "event": "Eritrea becomes an Italian colony." },
+      { "year": 1952, "event": "Federation with Ethiopia under UN resolution." },
+      { "year": 1962, "event": "Ethiopia annexes Eritrea, starting the war of independence." },
+      { "year": 1991, "event": "Eritrean People's Liberation Front (EPLF) captures Asmara." },
+      { "year": 1993, "event": "Eritrea votes for independence in a referendum." },
+      { "year": 1998, "event": "Border war with Ethiopia begins over the town of Badme." },
+      { "year": 2018, "event": "Peace agreement signed with Ethiopia, ending years of hostility." },
+      { "year": 2021, "event": "Eritrean forces participate in the conflict in Ethiopia's Tigray region." }
+    ]
+  },
+  "investmentNotes": {
+    "strengths": ["Strategic location on the Red Sea shipping lanes", "Untapped mineral wealth (Gold, Copper, Potash, Zinc)", "Pristine coastline and islands with significant tourism potential", "Disciplined and self-reliant workforce"],
+    "risks": ["Extremely high political and regulatory risk", "Lack of transparency and legal protections for investors", "Severe infrastructure deficits (energy, water, telecommunications)", "Risk of international sanctions and regional conflict"],
+    "sectors": ["Mining and Extractive Industries", "Port and Logistics Development", "Fisheries and Marine Resources", "Energy (Geothermal/Solar)"]
+  },
+  "sources": [
+    { "name": "World Bank - Eritrea Overview", "url": "https://www.worldbank.org/en/country/eritrea", "type": "economic" },
+    { "name": "Human Rights Watch - Eritrea", "url": "https://www.hrw.org/africa/eritrea", "type": "human_rights" },
+    { "name": "United Nations in Eritrea", "url": "https://eritrea.un.org/", "type": "humanitarian" }
+  ]
+}

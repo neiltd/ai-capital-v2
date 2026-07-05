@@ -1,0 +1,61 @@
+{
+  "id": "SMR",
+  "iso2": "SM",
+  "name": "San Marino",
+  "region": "Europe",
+  "subregion": "Southern Europe",
+  "capital": "San Marino",
+  "lastUpdated": "2026-05-09",
+  "summary": "San Marino, the world's oldest republic, is a landlocked microstate entirely surrounded by Italy. In 2026, the country is in the final stages of implementing its Association Agreement with the European Union, a milestone that is significantly reshaping its economic landscape by providing greater access to the Single Market while maintaining its fiscal sovereignty. The economy is transitioning from its historical reliance on banking and tourism towards a more diversified model including niche manufacturing, digital services, and high-quality agriculture. Despite the challenges of its small size, San Marino maintains a high standard of living and is actively seeking to attract foreign investment through competitive corporate tax rates and a streamlined regulatory environment.",
+  "indicators": {
+    "politicalStability":       { "score": 9, "score_description": "Stable parliamentary democracy with frequent but orderly rotations.", "trend": "stable", "confidence": "high", "note": "The unique system of two Captains Regent ensures a balance of power and continuity of republican traditions." },
+    "economicDirection":        { "score": 6, "score_description": "Steady recovery and integration with the EU market.", "trend": "rising", "confidence": "high", "note": "The EU Association Agreement is a major catalyst for structural reforms and economic modernization." },
+    "investmentAttractiveness": { "score": 7, "score_description": "Attractive for niche industries and digital nomads.", "trend": "rising", "confidence": "high", "note": "Low corporate taxes and a new 'San Marino Innovation' framework are drawing tech startups." },
+    "geopoliticalRisk":         { "score": 2, "score_description": "Very low risk; protected by its relationship with Italy.", "trend": "stable", "confidence": "high", "note": "Security and international representation are closely linked to Italy and the EU framework." },
+    "educationQuality":         { "score": 8, "score_description": "High standards with strong integration into the Italian system.", "trend": "stable", "confidence": "high", "note": "The University of the Republic of San Marino is expanding its specialized graduate programs." },
+    "healthcareQuality":        { "score": 8, "score_description": "Excellent universal system with close ties to Italy.", "trend": "stable", "confidence": "high", "note": "Residents have access to high-quality domestic care and specialized Italian facilities." },
+    "technologyInvestment":     { "score": 6, "score_description": "Focus on digital transformation and 5G infrastructure.", "trend": "rising", "confidence": "medium", "note": "San Marino was an early adopter of 5G and is positioning itself as a testbed for new technologies." }
+  },
+  "demographics": {
+    "population": 34200,
+    "medianAge": 46.5,
+    "urbanizationRate": 97,
+    "majorEthnicGroups": ["Sammarinese", "Italian"],
+    "religions": [
+      { "name": "Roman Catholic", "percent": 91.5 },
+      { "name": "Other/None", "percent": 8.5 }
+    ]
+  },
+  "alliances": ["UN", "OSCE", "Council of Europe", "Eurozone (monetary agreement)"],
+  "relationships": [
+    { "countryId": "ITA", "countryName": "Italy", "type": "strategic_partner", "sentiment": "positive", "summary": "Essential relationship; San Marino is an enclave within Italy, sharing deep cultural, economic, and security ties." },
+    { "countryId": "EU", "countryName": "European Union", "type": "partner", "sentiment": "positive", "summary": "The Association Agreement is the defining feature of San Marino's current foreign and economic policy." },
+    { "countryId": "USA", "countryName": "United States", "type": "partner", "sentiment": "positive", "summary": "Longstanding friendly relations; San Marino famously offered honorary citizenship to Abraham Lincoln." }
+  ],
+  "perspectives": [
+    { "source": "Captains Regent", "bias": "Institutional", "view": "We are committed to preserving our ancient liberty while modernizing our economy through closer European integration." },
+    { "source": "Local Business Owner", "bias": "Economic", "view": "The EU agreement is a challenge but also a massive opportunity for Sammarinese products to reach a wider market." },
+    { "source": "Youth Activist", "bias": "Progressive", "view": "San Marino must do more to attract young talent and become a leader in digital innovation and sustainability." }
+  ],
+  "historicalContext": {
+    "summary": "Founded in 301 AD by Saint Marinus, San Marino is the oldest sovereign state and constitutional republic in the world. It successfully maintained its independence throughout the unification of Italy, largely due to its hospitality to Garibaldi. The 1862 Treaty of Friendship with Italy remains the foundation of its international status.",
+    "keyEvents": [
+      { "year": 301, "event": "Saint Marinus founds a small community on Mount Titano." },
+      { "year": 1600, "event": "The Statutes of San Marino (the constitution) are written." },
+      { "year": 1862, "event": "Treaty of Friendship and Good Neighborliness with the newly unified Italy." },
+      { "year": 1992, "event": "San Marino joins the United Nations." },
+      { "year": 2002, "event": "Adoption of the Euro as the official currency." },
+      { "year": 2024, "event": "Initialing of the EU Association Agreement." }
+    ]
+  },
+  "investmentNotes": {
+    "strengths": ["Political stability and low crime", "Competitive tax rates (8.5% - 17%)", "Strategic location within the Italian market", "Increasing integration with the EU Single Market"],
+    "risks": ["Small domestic market", "Lack of an airport or railway within the territory", "Dependence on the Italian economy", "Historical reputational issues in the banking sector (now largely addressed)"],
+    "sectors": ["Manufacturing (Electronics, Ceramics, Furniture)", "Tourism", "Banking and Insurance", "E-commerce and Digital Services", "High-End Agriculture (Wine and Oil)"]
+  },
+  "sources": [
+    { "name": "Office of Economic Planning, Data Processing and Statistics", "url": "https://www.statistica.sm/", "type": "economic" },
+    { "name": "San Marino Innovation", "url": "https://www.sanmarinoinnovation.com/", "type": "technology" },
+    { "name": "State Secretariat for Foreign Affairs", "url": "https://www.esteri.sm/", "type": "political" }
+  ]
+}

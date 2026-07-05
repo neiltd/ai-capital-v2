@@ -1,0 +1,36 @@
+[
+  {
+    "countryId": "USA",
+    "year": 2023,
+    "electricityConsumptionTWh": 4085,
+    "electricityProductionTWh": 4178,
+    "electricityMix": {
+      "gas": 43.1,
+      "nuclear": 18.6,
+      "coal": 16.2,
+      "wind": 10.2,
+      "hydro": 5.7,
+      "solar": 5.6,
+      "otherRenewables": 0.6
+    },
+    "renewableSharePct": 22.1,
+    "waterStressScore": 1.5,
+    "waterWithdrawalPct": 19,
+    "foodSecurityScore": 78.0,
+    "aiAdoptionScore": 55,
+    "internetPenetration": 91.8,
+    "mobilePenetration": 113.1,
+    "attribution": {
+      "sources": [
+        { "name": "EIA Total Electricity Consumption 2023", "url": "https://www.eia.gov/electricity/annual/", "accessedAt": "2024-05-24" },
+        { "name": "WRI Aqueduct Water Risk Atlas", "url": "https://www.wri.org/aqueduct", "accessedAt": "2024-05-24" },
+        { "name": "Global Food Security Index 2022", "url": "https://impact.economist.com/sustainability/project/food-security-index", "accessedAt": "2024-05-24" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 3,
+        "lastVerified": "2024-05-24"
+      }
+    }
+  }
+]

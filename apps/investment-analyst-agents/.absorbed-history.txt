@@ -1,0 +1,27 @@
+836b80c 2026-06-06 14:00:04 -0700 feat(risk): Phase 1 item 2 — portfolio risk metrics dashboard
+705a9be 2026-06-06 13:47:46 -0700 feat(tax): Phase 1 item 1 — tax-loss harvesting + wash-sale tracking
+b3fdda0 2026-06-06 12:02:32 -0700 chore(ts): enable noUnusedLocals + noUnusedParameters + noFallthroughCasesInSwitch
+0599982 2026-06-06 11:55:11 -0700 feat(schema): loader warns on JSON schema version mismatch
+5b9a2c0 2026-06-06 11:37:44 -0700 feat(briefing): Phase 0 item 3 — self-calibration feedback loop
+00586d3 2026-06-06 11:27:09 -0700 feat(correlation): Phase 0 item 2 — portfolio correlation engine
+e263df7 2026-06-06 11:17:55 -0700 feat(backtest): Phase 0 — briefing accuracy backtest dashboard
+5180303 2026-06-05 22:55:36 -0700 feat(briefing): respect position strategy tag (tactical/dca/tax_locked)
+6fcdf3f 2026-06-02 10:25:45 -0700 chore(security): untrack trade-log.jsonl and personal briefing
+77ededb 2026-06-02 08:50:06 -0700 fix(briefing): complete and correct fund metadata for all portfolio funds
+9845af8 2026-06-02 01:54:54 -0700 feat(briefing): suggest global fund rotation alternatives on exit
+126d583 2026-06-01 22:01:31 -0700 feat(briefing): add Key People section to investment briefing
+1ddc38d 2026-06-01 21:26:45 -0700 feat(brief): cache daily briefing to avoid redundant Claude API calls
+39901c1 2026-06-01 18:06:33 -0700 fix(briefing): prevent LLM confusing THB baht amounts with USD dollars
+cfda752 2026-06-01 15:48:38 -0700 fix(briefing): use correct currency symbol for THB portfolio positions
+d90c551 2026-05-29 14:56:53 -0700 feat(briefing): include thesis memory in context and briefing output
+5923a7b 2026-05-29 14:33:01 -0700 fix(loader): point intel paths to hub exports directly
+13f676f 2026-05-28 19:43:58 -0700 feat(act): add cli-act autonomous portfolio action executor
+524f939 2026-05-26 02:02:37 -0700 feat: investment-analyst-agents integration smoke test passing
+0e0d132 2026-05-26 01:56:53 -0700 feat: add CLI entry points (brief + ask)
+10ee34f 2026-05-26 01:41:33 -0700 feat: add qa-agent (briefing-grounded Q&A with conversation history)
+648bcbe 2026-05-26 01:28:36 -0700 feat: add prediction-archiver and qa-archiver (append-only JSONL)
+bab87dd 2026-05-26 01:18:07 -0700 feat: add briefing-writer (saves briefings/YYYY-MM-DD.md)
+eefb004 2026-05-26 01:12:27 -0700 feat: add briefing-agent (Claude-generated daily Markdown briefing)
+179216d 2026-05-26 01:02:29 -0700 feat: add context loader
+5f6bf9a 2026-05-26 00:56:39 -0700 feat: add shared types for investment-analyst-agents
+91460dd 2026-05-26 00:37:33 -0700 chore: scaffold investment-analyst-agents project

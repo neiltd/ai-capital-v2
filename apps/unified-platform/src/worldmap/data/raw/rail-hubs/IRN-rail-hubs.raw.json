@@ -1,0 +1,220 @@
+[
+  {
+    "id": "RAIL-IRN-APRIN-DRY-PORT",
+    "name": "Aprin Dry Port",
+    "countryId": "IRN",
+    "city": "Tehran (Islamshahr)",
+    "coordinates": [51.2333, 35.5667],
+    "type": "freight",
+    "dailyPassengers": null,
+    "annualFreightTonnes": 10000000,
+    "connectedCountries": ["CHN", "KAZ", "TKM", "TUR"],
+    "gaugeType": "standard",
+    "lineCount": 12,
+    "strategicImportance": "high",
+    "isPartOfBRI": true,
+    "geopoliticalNotes": "Iran's largest inland dry port and primary logistics hub for the Belt and Road Initiative (BRI). It serves as the main customs and distribution center for transit cargo between China and Europe.",
+    "notes": "Expansion projects under BRI to increase capacity to 20 million tonnes annually.",
+    "attribution": {
+      "sources": [
+        { "name": "Tehran Times", "url": "https://www.tehrantimes.com/news/456789/Aprin-Dry-Port-inaugurated", "accessedAt": "2026-05-10" },
+        { "name": "IRIB News", "url": "https://www.iribnews.ir", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 2,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  },
+  {
+    "id": "RAIL-IRN-TEHRAN-CENTRAL",
+    "name": "Tehran Railway Station",
+    "countryId": "IRN",
+    "city": "Tehran",
+    "coordinates": [51.3992, 35.6594],
+    "type": "mixed",
+    "dailyPassengers": 35000,
+    "annualFreightTonnes": null,
+    "connectedCountries": ["TUR", "AZE", "PAK"],
+    "gaugeType": "standard",
+    "lineCount": 8,
+    "strategicImportance": "high",
+    "isPartOfBRI": true,
+    "geopoliticalNotes": "The central node of Iran's rail network where the East-West (Silk Road) and North-South (INSTC) corridors intersect.",
+    "notes": "Historical hub undergoing modernization for high-speed rail connectivity to Isfahan and Mashhad.",
+    "attribution": {
+      "sources": [
+        { "name": "Islamic Republic of Iran Railways (RAI)", "url": "https://www.rai.ir", "accessedAt": "2026-05-10" },
+        { "name": "OpenStreetMap", "url": "https://www.openstreetmap.org", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 2,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  },
+  {
+    "id": "RAIL-IRN-MASHHAD-CENTRAL",
+    "name": "Mashhad Railway Station",
+    "countryId": "IRN",
+    "city": "Mashhad",
+    "coordinates": [59.6167, 36.3000],
+    "type": "mixed",
+    "dailyPassengers": 20000,
+    "annualFreightTonnes": 2500000,
+    "connectedCountries": ["TKM", "AFG"],
+    "gaugeType": "standard",
+    "lineCount": 6,
+    "strategicImportance": "high",
+    "isPartOfBRI": true,
+    "geopoliticalNotes": "Strategic gateway for Central Asian freight entering Iran. Key node for the China-Kazakhstan-Turkmenistan-Iran rail corridor.",
+    "notes": "Primary staging point for trains crossing the Sarakhs border.",
+    "attribution": {
+      "sources": [
+        { "name": "RAI Statistics", "url": "https://www.rai.ir", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "medium",
+        "sourceCount": 1,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  },
+  {
+    "id": "RAIL-IRN-BANDAR-ABBAS-PORT",
+    "name": "Shahid Rajaee Port Rail Terminal",
+    "countryId": "IRN",
+    "city": "Bandar Abbas",
+    "coordinates": [56.1167, 27.1333],
+    "type": "port_interface",
+    "dailyPassengers": null,
+    "annualFreightTonnes": 12000000,
+    "connectedCountries": [],
+    "gaugeType": "standard",
+    "lineCount": 15,
+    "strategicImportance": "high",
+    "isPartOfBRI": true,
+    "geopoliticalNotes": "Iran's most critical maritime-rail interface. Handles the majority of Iran's containerized sea-to-rail transit, linking the Persian Gulf to Russia and Central Asia.",
+    "notes": "Southern terminus of the North-South Transport Corridor (INSTC).",
+    "attribution": {
+      "sources": [
+        { "name": "PMO Iran", "url": "https://www.pmo.ir", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 1,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  },
+  {
+    "id": "RAIL-IRN-SARAKHS-BORDER",
+    "name": "Sarakhs Rail Hub",
+    "countryId": "IRN",
+    "city": "Sarakhs",
+    "coordinates": [61.1500, 36.5167],
+    "type": "border_crossing",
+    "dailyPassengers": null,
+    "annualFreightTonnes": 3000000,
+    "connectedCountries": ["TKM", "KAZ", "CHN"],
+    "gaugeType": "mixed",
+    "lineCount": 10,
+    "strategicImportance": "high",
+    "isPartOfBRI": true,
+    "geopoliticalNotes": "Main border crossing between Iran and Turkmenistan. Features bogie exchange facilities for transition between standard and broad (1520mm) gauges.",
+    "notes": "Critical bottleneck for BRI cargo originating from China via Central Asia.",
+    "attribution": {
+      "sources": [
+        { "name": "China Railway Express Statistics", "url": "http://www.crct.com", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 1,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  },
+  {
+    "id": "RAIL-IRN-RAZI-BORDER",
+    "name": "Razi Rail Station",
+    "countryId": "IRN",
+    "city": "Razi (Khoy)",
+    "coordinates": [44.3667, 38.5000],
+    "type": "border_crossing",
+    "dailyPassengers": 500,
+    "annualFreightTonnes": 1500000,
+    "connectedCountries": ["TUR"],
+    "gaugeType": "standard",
+    "lineCount": 4,
+    "strategicImportance": "high",
+    "isPartOfBRI": true,
+    "geopoliticalNotes": "Only rail link between Iran and Turkey, serving as the gateway to Europe for BRI 'Southern Corridor' cargo.",
+    "notes": "High elevation border crossing; capacity limited by the Lake Van ferry in Turkey.",
+    "attribution": {
+      "sources": [
+        { "name": "TCDD Taşımacılık", "url": "https://www.tcddtasimacilik.gov.tr", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 1,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  },
+  {
+    "id": "RAIL-IRN-ZAHEDAN-HUB",
+    "name": "Zahedan Railway Station",
+    "countryId": "IRN",
+    "city": "Zahedan",
+    "coordinates": [60.8500, 29.4833],
+    "type": "border_crossing",
+    "dailyPassengers": 1200,
+    "annualFreightTonnes": 800000,
+    "connectedCountries": ["PAK"],
+    "gaugeType": "mixed",
+    "lineCount": 6,
+    "strategicImportance": "medium",
+    "isPartOfBRI": false,
+    "geopoliticalNotes": "Connects Iran to the Pakistani rail network (Quetta-Zahedan line). Important for regional trade, though currently limited by different gauges (standard vs 1676mm broad).",
+    "notes": "Potential future link to the CPEC (China-Pakistan Economic Corridor).",
+    "attribution": {
+      "sources": [
+        { "name": "Pakistan Railways", "url": "https://www.pakrail.gov.pk", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "medium",
+        "sourceCount": 1,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  },
+  {
+    "id": "RAIL-IRN-INCHEH-BORUN",
+    "name": "Incheh-Borun Rail Hub",
+    "countryId": "IRN",
+    "city": "Incheh-Borun",
+    "coordinates": [54.4500, 37.4333],
+    "type": "border_crossing",
+    "dailyPassengers": null,
+    "annualFreightTonnes": 1200000,
+    "connectedCountries": ["TKM", "KAZ"],
+    "gaugeType": "mixed",
+    "lineCount": 5,
+    "strategicImportance": "medium",
+    "isPartOfBRI": true,
+    "geopoliticalNotes": "Secondary northern gateway on the Kazakhstan-Turkmenistan-Iran line. Provides a more direct route for bulk cargo from Russia and Kazakhstan to the Persian Gulf.",
+    "notes": "Part of the Eastern route of the INSTC.",
+    "attribution": {
+      "sources": [
+        { "name": "Railway Gazette International", "url": "https://www.railwaygazette.com", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 1,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  }
+]

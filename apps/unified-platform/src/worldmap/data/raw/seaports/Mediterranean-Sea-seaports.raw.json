@@ -1,0 +1,218 @@
+[
+  {
+    "id": "PORT-MAR-TANGER-MED",
+    "name": "Tanger Med",
+    "countryId": "MAR",
+    "city": "Tangier",
+    "coordinates": [-5.5, 35.89],
+    "type": "container",
+    "annualThroughputTEU": 10240000,
+    "annualThroughputTonnes": 142000000,
+    "berthCount": 40,
+    "maxDraftM": 18.0,
+    "strategicImportance": "critical",
+    "riskLevel": "low",
+    "geopoliticalNotes": "The largest port in the Mediterranean and Africa. Strategically located on the Strait of Gibraltar, it serves as a primary global transshipment hub connecting Africa, Europe, and Asia.",
+    "notes": "Handles more than 50% of Morocco's exports and is a key driver of the national economy.",
+    "attribution": {
+      "sources": [
+        { "name": "Tanger Med Port Authority", "url": "https://www.tangermed.ma/en/", "accessedAt": "2026-05-10" },
+        { "name": "Malta News Agency", "url": "https://maltanewsagency.com/2024/01/tanger-med-becomes-largest-port-in-mediterranean/", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 2,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  },
+  {
+    "id": "PORT-ESP-VALENCIA",
+    "name": "Port of Valencia",
+    "countryId": "ESP",
+    "city": "Valencia",
+    "coordinates": [-0.32, 39.446],
+    "type": "container",
+    "annualThroughputTEU": 5610000,
+    "annualThroughputTonnes": 77200000,
+    "berthCount": 40,
+    "maxDraftM": 18.0,
+    "strategicImportance": "critical",
+    "riskLevel": "low",
+    "geopoliticalNotes": "Spain's leading container port and a major gateway for the Western Mediterranean. Handles over 50% of Spain's GDP-generating maritime trade.",
+    "notes": "Key logistics hub for the Iberian Peninsula and Southern Europe.",
+    "attribution": {
+      "sources": [
+        { "name": "Valenciaport Official", "url": "https://www.valenciaport.com/en/", "accessedAt": "2026-05-10" },
+        { "name": "Transport Events", "url": "https://www.transportevents.com/", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 2,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  },
+  {
+    "id": "PORT-GRC-PIRAEUS",
+    "name": "Port of Piraeus",
+    "countryId": "GRC",
+    "city": "Piraeus",
+    "coordinates": [23.638, 37.948],
+    "type": "mixed",
+    "annualThroughputTEU": 5100000,
+    "annualThroughputTonnes": 25000000,
+    "berthCount": 14,
+    "maxDraftM": 18.0,
+    "strategicImportance": "critical",
+    "riskLevel": "low",
+    "geopoliticalNotes": "The 'Gateway to Europe' for Chinese trade (COSCO managed). Largest passenger port in Europe and a vital hub for the Eastern Mediterranean and Balkans.",
+    "notes": "Critical node in the 21st Century Maritime Silk Road.",
+    "attribution": {
+      "sources": [
+        { "name": "Piraeus Port Authority", "url": "https://www.olp.gr/en/", "accessedAt": "2026-05-10" },
+        { "name": "Wikipedia - Port of Piraeus", "url": "https://en.wikipedia.org/wiki/Port_of_Piraeus", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 2,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  },
+  {
+    "id": "PORT-ESP-ALGECIRAS",
+    "name": "Port of Algeciras",
+    "countryId": "ESP",
+    "city": "Algeciras",
+    "coordinates": [-5.435, 36.136],
+    "type": "mixed",
+    "annualThroughputTEU": 4730000,
+    "annualThroughputTonnes": 104700000,
+    "berthCount": 30,
+    "maxDraftM": 18.5,
+    "strategicImportance": "critical",
+    "riskLevel": "low",
+    "geopoliticalNotes": "Pure transshipment powerhouse at the crossroads of the Mediterranean and Atlantic. Strategic for global East-West and North-South routes.",
+    "notes": "One of the largest ports in Europe by total tonnage. Critical bunker fuel hub.",
+    "attribution": {
+      "sources": [
+        { "name": "Port of Algeciras Authority", "url": "https://www.apba.es/en/", "accessedAt": "2026-05-10" },
+        { "name": "UNCTAD", "url": "https://unctad.org/", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 2,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  },
+  {
+    "id": "PORT-EGY-PORT-SAID",
+    "name": "Port Said",
+    "countryId": "EGY",
+    "city": "Port Said",
+    "coordinates": [32.306, 31.263],
+    "type": "container",
+    "annualThroughputTEU": 4440000,
+    "annualThroughputTonnes": 45500000,
+    "berthCount": 44,
+    "maxDraftM": 16.5,
+    "strategicImportance": "critical",
+    "riskLevel": "medium",
+    "geopoliticalNotes": "Located at the northern entrance of the Suez Canal. Essential for all vessels transiting between Asia and Europe. Highly strategic for global trade flow.",
+    "notes": "East Port Said is the primary container hub, while West Port Said handles general cargo and transit.",
+    "attribution": {
+      "sources": [
+        { "name": "Suez Canal Economic Zone", "url": "https://sczone.eg/", "accessedAt": "2026-05-10" },
+        { "name": "Amwal Al Ghad", "url": "https://amwalalghad.com/2024/01/east-port-said-throughput-2023/", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 2,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  },
+  {
+    "id": "PORT-ITA-GIOIA-TAURO",
+    "name": "Port of Gioia Tauro",
+    "countryId": "ITA",
+    "city": "Gioia Tauro",
+    "coordinates": [15.893, 38.425],
+    "type": "container",
+    "annualThroughputTEU": 3550000,
+    "annualThroughputTonnes": 43000000,
+    "berthCount": 7,
+    "maxDraftM": 18.0,
+    "strategicImportance": "high",
+    "riskLevel": "medium",
+    "geopoliticalNotes": "Italy's largest container port and a dedicated transshipment hub in the heart of the Mediterranean. Nexus for regional feeder routes.",
+    "notes": "Strategically located for redistributing cargo across the central and eastern Mediterranean.",
+    "attribution": {
+      "sources": [
+        { "name": "Gioia Tauro Port Authority", "url": "http://www.portodigioiatauro.it/", "accessedAt": "2026-05-10" },
+        { "name": "Wikipedia - Port of Gioia Tauro", "url": "https://en.wikipedia.org/wiki/Port_of_Gioia_Tauro", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 2,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  },
+  {
+    "id": "PORT-ESP-BARCELONA",
+    "name": "Port of Barcelona",
+    "countryId": "ESP",
+    "city": "Barcelona",
+    "coordinates": [2.158, 41.352],
+    "type": "mixed",
+    "annualThroughputTEU": 3890000,
+    "annualThroughputTonnes": 69700000,
+    "berthCount": 45,
+    "maxDraftM": 18.5,
+    "strategicImportance": "high",
+    "riskLevel": "low",
+    "geopoliticalNotes": "Diversified logistics hub and the main gateway for the Iberian Peninsula and Southern France. Strong focus on high-value cargo and vehicles.",
+    "notes": "Leading cruise port in the Mediterranean and Europe.",
+    "attribution": {
+      "sources": [
+        { "name": "Port de Barcelona Official", "url": "https://www.portdebarcelona.cat/en/", "accessedAt": "2026-05-10" },
+        { "name": "ShipHub", "url": "https://www.shiphub.co/port-of-barcelona/", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 2,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  },
+  {
+    "id": "PORT-MLT-MARSAXLOKK",
+    "name": "Malta Freeport",
+    "countryId": "MLT",
+    "city": "Marsaxlokk",
+    "coordinates": [14.543, 35.828],
+    "type": "container",
+    "annualThroughputTEU": 2860000,
+    "annualThroughputTonnes": 6500000,
+    "berthCount": 13,
+    "maxDraftM": 17.0,
+    "strategicImportance": "high",
+    "riskLevel": "low",
+    "geopoliticalNotes": "Highly specialized transshipment hub leverage Malta's central location. 96% of traffic is pure transshipment, redistributing cargo across the Mediterranean and Black Sea.",
+    "notes": "Crucial hub for major shipping lines like CMA CGM and MSC in the central Mediterranean.",
+    "attribution": {
+      "sources": [
+        { "name": "Malta Freeport Terminals Official", "url": "https://www.maltafreeport.com.mt/", "accessedAt": "2026-05-10" },
+        { "name": "Ballast Markets", "url": "https://ballastmarkets.com/port/malta-freeport/", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 2,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  }
+]

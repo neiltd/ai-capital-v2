@@ -1,0 +1,64 @@
+{
+  "id": "TJK",
+  "iso2": "TJ",
+  "name": "Tajikistan",
+  "region": "Asia",
+  "subregion": "Central Asia",
+  "capital": "Dushanbe",
+  "lastUpdated": "2025-05-15",
+  "summary": "Tajikistan is currently navigating a delicate period of dynastic succession and strategic realignment. President Emomali Rahmon continues to consolidate power, positioning his son, Rustam Emomali, as his successor following the March 2025 parliamentary elections. Economically, the country remains highly dependent on remittances from Russia, although a watershed shift occurred in early 2025 as China surpassed Russia as Tajikistan's largest trading partner. Security remains a top priority, with the regime maintaining a hardline stance against domestic dissent and regional extremist threats, while simultaneously achieving a landmark border resolution with Kyrgyzstan in late 2024.",
+  "indicators": {
+    "politicalStability":       { "score": 8, "trend": "stable", "confidence": "high", "note": "High authoritarian stability; successful management of parliamentary elections and succession planning." },
+    "economicDirection":        { "score": 5, "trend": "neutral", "confidence": "high", "note": "Strong GDP growth masked by extreme remittance dependency and mounting external debt to China." },
+    "investmentAttractiveness": { "score": 4, "trend": "rising", "confidence": "medium", "note": "Improving due to mining and energy projects (Rogun Dam), but hindered by corruption and a weak legal framework." },
+    "geopoliticalRisk":         { "score": 6, "trend": "falling", "confidence": "high", "note": "Border settlement with Kyrgyzstan reduces conflict risk, though proximity to Afghanistan and ISIS-K threats persist." },
+    "educationQuality":         { "score": 4, "trend": "stable", "confidence": "medium", "note": "Limited investment in higher education; significant brain drain as youth seek employment in Russia." },
+    "healthcareQuality":        { "score": 4, "trend": "stable", "confidence": "medium", "note": "Basic services available in Dushanbe; rural areas face significant infrastructure and staffing shortages." },
+    "technologyInvestment":     { "score": 3, "trend": "rising", "confidence": "medium", "note": "Slow but steady expansion of mobile internet and e-government services, primarily funded by Chinese investment." }
+  },
+  "demographics": {
+    "population": 10300000,
+    "medianAge": 23.5,
+    "urbanizationRate": 28.0,
+    "majorEthnicGroups": ["Tajik", "Uzbek", "Russian"],
+    "religions": [
+      { "name": "Sunni Muslim", "percent": 95 },
+      { "name": "Shia Muslim", "percent": 3 },
+      { "name": "Other", "percent": 2 }
+    ]
+  },
+  "alliances": ["UN", "CSTO", "SCO", "CIS", "OIC"],
+  "relationships": [
+    { "countryId": "CHN", "countryName": "China", "type": "strategic_partner", "sentiment": "positive", "summary": "Now the largest trading partner and primary infrastructure financier; holds significant leverage through debt." },
+    { "countryId": "RUS", "countryName": "Russia", "type": "security_guarantor", "sentiment": "positive", "summary": "Essential security partner via the 201st Military Base; destination for the majority of Tajik labor migrants." },
+    { "countryId": "KGZ", "countryName": "Kyrgyzstan", "type": "neighbor", "sentiment": "positive", "summary": "Relations have improved dramatically following the comprehensive 2024 border delimitation agreement." },
+    { "countryId": "USA", "countryName": "United States", "type": "partner", "sentiment": "neutral", "summary": "Engagement is focused on counter-terrorism and border security; limited economic footprint compared to China." },
+    { "countryId": "AFG", "countryName": "Afghanistan", "type": "neighbor", "sentiment": "negative", "summary": "Dushanbe remains a vocal critic of the Taliban, hosting elements of the Afghan resistance (NRF)." }
+  ],
+  "perspectives": [
+    { "source": "Government Official", "bias": "Optimistic", "view": "The completion of the Rogun Dam will transform Tajikistan into a regional energy powerhouse and ensure our total independence." },
+    { "source": "Civil Society Activist", "bias": "Critical", "view": "The facade of stability hides deep social grievances and the systematic erasure of political pluralism." },
+    { "source": "Labor Migrant", "bias": "Pragmatic", "view": "We build Moscow so our families can eat in Dushanbe; until there are jobs at home, our future remains abroad." },
+    { "source": "Security Analyst", "bias": "Cautious", "view": "The pivot to China provides economic relief but risks turning Tajikistan into a client state with limited strategic autonomy." }
+  ],
+  "historicalContext": {
+    "summary": "Tajikistan's modern history is defined by the devastating 1992-1997 civil war, which ended with a power-sharing agreement that President Rahmon has since systematically dismantled. After gaining independence from the Soviet Union in 1991, the country has struggled with poverty and isolation, relying heavily on Russian security and economic support. The recent era is marked by increasing Chinese influence and the long-term planning for a dynastic transfer of power.",
+    "keyEvents": [
+      { "year": 1991, "event": "Independence from the Soviet Union." },
+      { "year": 1997, "event": "Signing of the General Agreement on the Establishment of Peace and National Accord, ending the civil war." },
+      { "year": 2015, "event": "The Islamic Renaissance Party of Tajikistan (IRPT) is banned and designated a terrorist organization." },
+      { "year": 2024, "event": "Finalization of the landmark border agreement with Kyrgyzstan." },
+      { "year": 2025, "event": "Parliamentary elections solidify the ruling party's dominance ahead of planned presidential succession." }
+    ]
+  },
+  "investmentNotes": {
+    "strengths": ["Abundant hydroelectric potential (Rogun Dam)", "Significant mineral deposits including gold, silver, and zinc", "Young and growing labor force", "Strategic location on the 'Belt and Road' routes"],
+    "risks": ["Extreme vulnerability to Russian economic shocks", "High corruption and opaque regulatory environment", "Significant debt-to-GDP ratio, primarily owed to China", "Regional security threats stemming from Afghanistan"],
+    "sectors": ["Hydropower & Renewable Energy", "Mining & Metallurgy", "Agriculture (Cotton & Fruits)", "Logistics & Transport Infrastructure"]
+  },
+  "sources": [
+    { "name": "Agency on Statistics under President of Tajikistan", "url": "https://www.stat.tj", "type": "economic" },
+    { "name": "World Bank Tajikistan", "url": "https://www.worldbank.org/en/country/tajikistan", "type": "economic" },
+    { "name": "Ministry of Foreign Affairs - Tajikistan", "url": "https://mfa.tj", "type": "government" }
+  ]
+}

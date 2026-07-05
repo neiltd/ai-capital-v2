@@ -1,0 +1,63 @@
+{
+  "id": "LVA",
+  "iso2": "LV",
+  "name": "Latvia",
+  "region": "Europe",
+  "subregion": "Northern Europe",
+  "capital": "Riga",
+  "lastUpdated": "2025-05-20",
+  "summary": "Latvia is a Baltic state and member of NATO and the EU, currently facing a heightened security environment due to its proximity to Russia and Belarus. The national security focus for 2024-2025 is dominated by Russian military reforms along the border and persistent hybrid threats, including sabotage and cyberattacks. Latvia has aggressively increased defense spending and is actively synchronizing its power grid with Continental Europe to eliminate energy dependence on Russia by 2025.",
+  "indicators": {
+    "politicalStability":       { "score": 8, "trend": "stable", "confidence": "high", "note": "Strong democratic institutions and unified stance on national security; firm alignment with EU/NATO policies." },
+    "economicDirection":        { "score": 6, "trend": "improving", "confidence": "high", "note": "Recovering from energy shocks; transition away from Russian trade is nearly complete, focusing on Western markets." },
+    "investmentAttractiveness": { "score": 7, "trend": "stable", "confidence": "high", "note": "Attractive for tech and green energy, though geographic proximity to Russia remains a perceived risk for some investors." },
+    "geopoliticalRisk":         { "score": 7, "trend": "increasing", "confidence": "high", "note": "High risk of hybrid warfare and border provocations from Russia/Belarus; frontline state in NATO's eastern flank." },
+    "educationQuality":         { "score": 7, "trend": "stable", "confidence": "high", "note": "Well-educated workforce; ongoing reforms to transition all education to the Latvian language." },
+    "healthcareQuality":        { "score": 6, "trend": "stable", "confidence": "medium", "note": "Universal healthcare system facing some resource constraints and aging population challenges." },
+    "technologyInvestment":     { "score": 8, "trend": "improving", "confidence": "high", "note": "Strong focus on digitalization, cybersecurity, and fintech; active startup ecosystem in Riga." }
+  },
+  "demographics": {
+    "population": 1810240,
+    "medianAge": 43.6,
+    "urbanizationRate": 68.5,
+    "majorEthnicGroups": ["Latvian", "Russian", "Belarusian", "Ukrainian"],
+    "religions": [
+      { "name": "Lutheran", "percent": 36.0 },
+      { "name": "Roman Catholic", "percent": 19.0 },
+      { "name": "Orthodox", "percent": 19.0 }
+    ]
+  },
+  "alliances": ["NATO", "European Union", "OECD", "Three Seas Initiative"],
+  "relationships": [
+    { "countryId": "USA", "countryName": "United States", "type": "strategic_partner", "sentiment": "positive", "summary": "Key security guarantor; deep cooperation on defense, counter-hybrid threats, and economic resilience." },
+    { "countryId": "UKR", "countryName": "Ukraine", "type": "strategic_partner", "sentiment": "positive", "summary": "Strongest political and military supporter per capita; Latvia views Ukraine's victory as existential for its own security." },
+    { "countryId": "RUS", "countryName": "Russia", "type": "adversary", "sentiment": "negative", "summary": "Hostile relations; characterized by mutual sanctions, diplomatic downgrades, and intense hybrid conflict." },
+    { "countryId": "EST", "countryName": "Estonia", "type": "strategic_partner", "sentiment": "positive", "summary": "Close Baltic ally; joint procurement of defense systems and synchronized energy/transport projects (Rail Baltica)." }
+  ],
+  "perspectives": [
+    { "source": "Latvian Intelligence Official", "bias": "Security-focused", "view": "Russia is an existential threat; we must prepare for long-term hybrid warfare and ensure our border is impenetrable." },
+    { "source": "Business Leader", "bias": "Optimistic", "view": "Our transition to Western markets is complete; we are now a hub for high-tech and sustainable energy in the Baltics." },
+    { "source": "Russian Minority Resident", "bias": "Concerned", "view": "The transition to Latvian-only education and the tense geopolitical climate make us feel increasingly alienated." }
+  ],
+  "historicalContext": {
+    "summary": "Latvia gained independence from the Russian Empire in 1918, was occupied by the Soviet Union and Nazi Germany during WWII, and regained independence in 1991. Since then, it has rapidly integrated into Western structures, joining both the EU and NATO in 2004.",
+    "keyEvents": [
+      { "year": 1918, "event": "Proclamation of independence." },
+      { "year": 1940, "event": "Soviet occupation and annexation." },
+      { "year": 1991, "event": "Restoration of independence following the Soviet collapse." },
+      { "year": 2004, "event": "Joined the European Union and NATO." },
+      { "year": 2014, "event": "Adoption of the Euro; heightened security focus after Crimea annexation." },
+      { "year": 2025, "event": "Full synchronization of power grid with Continental Europe, ending reliance on Russia." }
+    ]
+  },
+  "investmentNotes": {
+    "strengths": ["Highly skilled, multilingual workforce", "Advanced digital and telecommunications infrastructure", "Stable regulatory environment as an EU member", "Strategic location for Baltic and Nordic trade"],
+    "risks": ["Geopolitical tension with neighboring Russia and Belarus", "Negative demographic trends (aging population and emigration)", "Vulnerability to energy price fluctuations (though mitigating via synchronization)", "Potential for Russian-linked money laundering risks (significantly reduced by recent reforms)"],
+    "sectors": ["Information Technology & Fintech", "Renewable Energy (Wind/Biomass)", "Wood Processing & Forestry", "Logistics & Transit (Rail Baltica)"]
+  },
+  "sources": [
+    { "name": "Latvian State Security Service (VDD)", "url": "https://vdd.gov.lv/en/", "type": "security" },
+    { "name": "Ministry of Foreign Affairs of Latvia", "url": "https://www.mfa.gov.lv/en", "type": "government" },
+    { "name": "Latvian Investment and Development Agency (LIAA)", "url": "https://www.liaa.gov.lv/en", "type": "economic" }
+  ]
+}

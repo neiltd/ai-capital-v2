@@ -1,0 +1,40 @@
+[
+  {
+    "countryId": "KAZ",
+    "year": 2022,
+    "overallScore": 72.1,
+    "availability": 67.2,
+    "access": 78.0,
+    "utilization": 76.3,
+    "stability": 65.4,
+    "undernourishedPct": 2.5,
+    "foodImportDependencyPct": 10.5,
+    "cerealYieldKgHa": 1037,
+    "climateVulnerability": "high",
+    "conflictExposure": "low",
+    "attribution": {
+      "sources": [
+        {
+          "name": "GFSI 2022 — Kazakhstan",
+          "url": "https://impact.economist.com/sustainability/project/food-security-index/reports-and-resources",
+          "accessedAt": "2026-05-10"
+        },
+        {
+          "name": "FAO FAOSTAT",
+          "url": "https://www.fao.org/faostat/en/#data/FS",
+          "accessedAt": "2026-05-10"
+        },
+        {
+          "name": "World Bank Food Import Dependency",
+          "url": "https://data.worldbank.org/indicator/TM.VAL.FOOD.ZS.UN",
+          "accessedAt": "2026-05-10"
+        }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 3,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  }
+]

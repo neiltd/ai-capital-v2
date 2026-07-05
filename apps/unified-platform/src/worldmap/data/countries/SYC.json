@@ -1,0 +1,64 @@
+{
+  "id": "SYC",
+  "iso2": "SC",
+  "name": "Seychelles",
+  "region": "Africa",
+  "subregion": "Eastern Africa",
+  "capital": "Victoria",
+  "lastUpdated": "2026-05-15",
+  "summary": "Seychelles is Africa's highest-income nation, characterized by a sophisticated tourism-driven economy and a pioneer status in the 'Blue Economy.' The 2025 general elections marked a significant political shift with the return to power of the United Seychelles party under Patrick Herminie. While the country enjoys high standards of living and a robust healthcare system, it faces acute social challenges, most notably a severe national heroin crisis, and remains highly vulnerable to external economic shocks and climate change.",
+  "indicators": {
+    "politicalStability":       { "score": 8, "trend": "stable", "confidence": "high", "note": "High institutional stability; peaceful democratic transition following the 2025 general elections." },
+    "economicDirection":        { "score": 7, "trend": "rising", "confidence": "high", "note": "Strong recovery in tourism; IMF-supported reforms are enhancing fiscal discipline and climate resilience." },
+    "investmentAttractiveness": { "score": 7, "trend": "stable", "confidence": "high", "note": "Top-tier African destination for FDI; strong emphasis on sustainable tourism and the blue economy." },
+    "geopoliticalRisk":         { "score": 3, "trend": "stable", "confidence": "high", "note": "Low risk of internal conflict; focus on maritime security and combating illegal fishing and piracy in the Indian Ocean." },
+    "educationQuality":         { "score": 7, "trend": "stable", "confidence": "high", "note": "Highest literacy rate in the region; well-established free education system up to secondary level." },
+    "healthcareQuality":        { "score": 8, "trend": "stable", "confidence": "high", "note": "Most advanced healthcare system in East Africa; universal health coverage and high life expectancy." },
+    "technologyInvestment":     { "score": 6, "trend": "rising", "confidence": "medium", "note": "Focus on digital government services and renewable energy integration (target of 15% by 2030)." }
+  },
+  "demographics": {
+    "population": 122730,
+    "medianAge": 36.8,
+    "urbanizationRate": 58,
+    "majorEthnicGroups": ["Seychellois (Creole - mix of French, African, Indian, Chinese)"],
+    "religions": [
+      { "name": "Roman Catholic", "percent": 76.2 },
+      { "name": "Protestant", "percent": 10.5 },
+      { "name": "Hindu", "percent": 2.4 },
+      { "name": "Other", "percent": 10.9 }
+    ]
+  },
+  "alliances": ["African Union", "Commonwealth", "SADC", "Indian Ocean Commission (IOC)", "United Nations"],
+  "relationships": [
+    { "countryId": "IND", "countryName": "India", "type": "strategic_partner", "sentiment": "positive", "summary": "Key security partner; provides patrol vessels, maritime surveillance, and infrastructure development (Assumption Island)." },
+    { "countryId": "FRA", "countryName": "France", "type": "strategic_partner", "sentiment": "positive", "summary": "Close cultural and economic ties; collaboration on maritime security and regional environmental protection." },
+    { "countryId": "CHN", "countryName": "China", "type": "economic_partner", "sentiment": "positive", "summary": "Major partner for infrastructure projects and development assistance; increasing cultural exchange." },
+    { "countryId": "ARE", "countryName": "United Arab Emirates", "type": "economic_partner", "sentiment": "positive", "summary": "Significant investor in luxury tourism and provider of grant aid for housing and healthcare." }
+  ],
+  "perspectives": [
+    { "source": "Tourism Operator", "bias": "Optimistic", "view": "Business is at record levels. We are seeing a shift toward high-value, low-impact eco-tourism which protects our natural assets." },
+    { "source": "Social Worker", "bias": "Critical", "view": "While the world sees a paradise, we are struggling with a heroin epidemic that is hollowing out our youth. We need more than just economic growth." },
+    { "source": "Marine Biologist", "bias": "Concerned", "view": "Our Blue Bonds are a global model, but coral bleaching and rising sea levels are constant threats that require global action." },
+    { "source": "New President Herminie", "bias": "Reformist", "view": "Our return to power reflects a desire for social justice and a more equitable distribution of our national wealth." }
+  ],
+  "historicalContext": {
+    "summary": "Uninhabited until the late 18th century, Seychelles was a French and then a British colony before gaining independence in 1976. A 1977 coup established a one-party socialist state that lasted until 1993. Since then, it has transitioned into a stable, vibrant multi-party democracy.",
+    "keyEvents": [
+      { "year": 1976, "event": "Independence from the United Kingdom." },
+      { "year": 1977, "event": "Coup d'état establishes one-party rule under France-Albert René." },
+      { "year": 1993, "event": "Return to multi-party democracy and adoption of a new constitution." },
+      { "year": 2020, "event": "Wavel Ramkalawan becomes the first opposition candidate to win the presidency since 1977." },
+      { "year": 2025, "event": "General elections result in Patrick Herminie (United Seychelles) winning the presidency, marking a shift in power." }
+    ]
+  },
+  "investmentNotes": {
+    "strengths": ["Highest GDP per capita and HDI in Africa", "Leading global position in 'Blue Economy' and conservation finance", "Political stability and strong rule of law", "Strategic location in the Western Indian Ocean"],
+    "risks": ["High economic concentration in the tourism sector", "Vulnerability to climate change and rising sea levels", "High cost of living and specialized labor shortages", "Exposure to global fuel and food price volatility"],
+    "sectors": ["High-end Eco-Tourism", "Sustainable Fisheries & Marine Biotechnology", "Renewable Energy (Solar/Wind)", "FinTech & Financial Services"]
+  },
+  "sources": [
+    { "name": "Central Bank of Seychelles", "url": "https://www.cbs.sc/", "type": "economic" },
+    { "name": "Seychelles Investment Board", "url": "https://www.sib.gov.sc/", "type": "investment" },
+    { "name": "IMF - Seychelles Country Data", "url": "https://www.imf.org/en/Countries/SYC", "type": "economic" }
+  ]
+}

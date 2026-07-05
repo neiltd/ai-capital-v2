@@ -1,0 +1,118 @@
+[
+  {
+    "id": "blue-raman",
+    "name": "Blue-Raman",
+    "route": [
+      [72.8, 19.1],
+      [55.0, 25.0],
+      [40.0, 20.0],
+      [35.0, 31.0],
+      [20.0, 35.0],
+      [10.0, 40.0],
+      [5.0, 43.0]
+    ],
+    "landingPoints": [
+      {
+        "name": "Mumbai",
+        "countryId": "IND",
+        "coordinates": [72.87, 19.07],
+        "city": "Mumbai"
+      },
+      {
+        "name": "Aqaba",
+        "countryId": "JOR",
+        "coordinates": [35.00, 29.53],
+        "city": "Aqaba"
+      },
+      {
+        "name": "Tel Aviv",
+        "countryId": "ISR",
+        "coordinates": [34.78, 32.08],
+        "city": "Tel Aviv"
+      },
+      {
+        "name": "Genoa",
+        "countryId": "ITA",
+        "coordinates": [8.94, 44.41],
+        "city": "Genoa"
+      }
+    ],
+    "status": "construction",
+    "lengthKm": 8000,
+    "capacityTbps": null,
+    "yearLaid": 2024,
+    "yearRepaired": null,
+    "owners": ["Google", "Telecom Italia Sparkle", "Omantel"],
+    "vulnerabilities": "Crosses multiple geopolitical flashpoints; relies on overland transit through Jordan.",
+    "geopoliticalNotes": "A landmark project that bypasses Egypt and the Suez Canal, historically a major chokepoint. Represents a significant diplomatic and technical shift in regional connectivity.",
+    "notes": "Divided into two segments: Blue (Europe to Israel) and Raman (Jordan to India).",
+    "attribution": {
+      "sources": [
+        { "name": "TeleGeography SubmarineCableMap", "url": "https://www.submarinecablemap.com/submarine-cable/blue", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 1,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  },
+  {
+    "id": "medusa-submarine-cable-system",
+    "name": "Medusa Submarine Cable System",
+    "route": [
+      [-9.0, 38.0],
+      [-2.0, 35.0],
+      [5.0, 43.0],
+      [12.0, 41.0],
+      [23.0, 38.0],
+      [33.0, 35.0],
+      [32.0, 31.0]
+    ],
+    "landingPoints": [
+      {
+        "name": "Sines",
+        "countryId": "PRT",
+        "coordinates": [-8.87, 37.95],
+        "city": "Sines"
+      },
+      {
+        "name": "Marseille",
+        "countryId": "FRA",
+        "coordinates": [5.37, 43.30],
+        "city": "Marseille"
+      },
+      {
+        "name": "Bizerte",
+        "countryId": "TUN",
+        "coordinates": [9.87, 37.27],
+        "city": "Bizerte"
+      },
+      {
+        "name": "Port Said",
+        "countryId": "EGY",
+        "coordinates": [32.30, 31.26],
+        "city": "Port Said"
+      }
+    ],
+    "status": "construction",
+    "lengthKm": 8760,
+    "capacityTbps": 480,
+    "yearLaid": 2024,
+    "yearRepaired": null,
+    "owners": ["AFR-IX telecom"],
+    "vulnerabilities": "High-density cable system in the Mediterranean; connects multiple North African and European states.",
+    "geopoliticalNotes": "Aims to enhance digital sovereignty for the Mediterranean region and provide a high-capacity link between Southern Europe and North Africa.",
+    "notes": "Will connect 11 landing points across 9 countries.",
+    "attribution": {
+      "sources": [
+        { "name": "TeleGeography SubmarineCableMap", "url": "https://www.submarinecablemap.com/submarine-cable/medusa-submarine-cable-system", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 1,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  }
+]

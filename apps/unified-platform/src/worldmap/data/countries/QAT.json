@@ -1,0 +1,70 @@
+{
+  "id": "QAT",
+  "iso2": "QA",
+  "name": "Qatar",
+  "region": "Asia",
+  "subregion": "Western Asia",
+  "capital": "Doha",
+  "lastUpdated": "2026-05-09",
+  "summary": "Qatar is a globally significant energy power and a key diplomatic mediator, wielding influence far beyond its small geographic size. As one of the world's leading exporters of liquefied natural gas (LNG), it maintains one of the highest GDPs per capita globally. Qatar's foreign policy is characterized by its role as an 'indispensable mediator' in regional conflicts and its ownership of the Al Jazeera Media Network. Following the successful hosting of the 2022 FIFA World Cup and the resolution of the 2017-2021 blockade, Qatar is focused on its National Vision 2030, which aims for economic diversification and human development, while solidifying its position as a Major Non-NATO Ally of the United States.",
+  "indicators": {
+    "politicalStability":       { "score": 9, "trend": "stable", "confidence": "high", "note": "High degree of internal consensus and strong social contract supported by immense wealth." },
+    "economicDirection":        { "score": 7, "trend": "stable", "confidence": "high", "note": "Continued dominance in LNG (North Field expansion) with steady progress in non-hydrocarbon sectors." },
+    "investmentAttractiveness": { "score": 8, "trend": "stable", "confidence": "high", "note": "Highly attractive for energy-related FDI and infrastructure, with growing interest in tech and finance." },
+    "geopoliticalRisk":         { "score": 5, "trend": "stable", "confidence": "medium", "note": "Regional tensions persist, but Qatar's role as a mediator and security ties with the U.S. provide a buffer." },
+    "educationQuality":         { "score": 7, "trend": "rising", "confidence": "high", "note": "Education City hosts branches of top-tier global universities, focusing on research and development." },
+    "healthcareQuality":        { "score": 8, "trend": "stable", "confidence": "high", "note": "Advanced healthcare infrastructure with high standards of public and private services." },
+    "technologyInvestment":     { "score": 7, "trend": "rising", "confidence": "medium", "note": "Increasing focus on digital transformation, cybersecurity, and smart city technologies like Lusail." }
+  },
+  "demographics": {
+    "population": 3140000,
+    "medianAge": 33.5,
+    "urbanizationRate": 99.4,
+    "majorEthnicGroups": ["Non-Qatari (Expatriates)", "Qatari"],
+    "religions": [
+      { "name": "Muslim", "percent": 67.7 },
+      { "name": "Christian", "percent": 13.8 },
+      { "name": "Hindu", "percent": 13.8 },
+      { "name": "Other", "percent": 4.7 }
+    ]
+  },
+  "alliances": ["GCC", "Arab League", "OIC", "UN", "Major Non-NATO Ally (US)"],
+  "relationships": [
+    { "countryId": "USA", "countryName": "United States", "type": "strategic_partner", "sentiment": "positive", "summary": "A vital security relationship; hosts the largest U.S. airbase in the Middle East (Al-Udeid)." },
+    { "countryId": "TUR", "countryName": "Turkey", "type": "ally", "sentiment": "positive", "summary": "Close military and economic alliance, particularly strengthened during the 2017 blockade." },
+    { "countryId": "CHN", "countryName": "China", "type": "economic_partner", "sentiment": "positive", "summary": "Growing energy partnership with long-term LNG supply agreements and infrastructure cooperation." },
+    { "countryId": "IRN", "countryName": "Iran", "type": "balanced", "sentiment": "neutral", "summary": "Pragmatic relationship necessitated by shared ownership of the world's largest gas field (South Pars/North Dome)." },
+    { "countryId": "SAU", "countryName": "Saudi Arabia", "type": "neighbor", "sentiment": "neutral", "summary": "Relations have normalized post-Al-Ula Declaration, though regional leadership competition remains." }
+  ],
+  "perspectives": [
+    { "source": "Qatari Diplomat", "bias": "Strategic", "view": "Our strength lies in our ability to talk to everyone. We are a small state that ensures its survival through global connectivity and mediation." },
+    { "source": "Energy Analyst", "bias": "Objective", "view": "Qatar's North Field expansion will ensure its dominance in the global LNG market for decades, providing the fiscal space for any transition." },
+    { "source": "Expatriate Professional", "bias": "Pragmatic", "view": "Qatar offers high living standards and safety, but the path to long-term residency or citizenship remains closed for most." },
+    { "source": "Regional Critic", "bias": "Critical", "view": "Qatar's use of soft power and media influence is often seen as interference in the internal affairs of other Arab nations." }
+  ],
+  "historicalContext": {
+    "summary": "Formerly a pearl-trading center, Qatar became a British protectorate in 1916 and gained independence in 1971. The discovery of the North Field (gas) in 1971 transformed the nation into a global energy titan. Under the leadership of the Al Thani family, Qatar has pursued a distinctive path of rapid modernization and active international engagement.",
+    "keyEvents": [
+      { "year": 1971, "event": "Independence from the United Kingdom." },
+      { "year": 1971, "event": "Discovery of the North Field, the world's largest non-associated gas field." },
+      { "year": 1995, "event": "Sheikh Hamad bin Khalifa Al Thani becomes Emir, initiating rapid modernization." },
+      { "year": 1996, "event": "Launch of the Al Jazeera Media Network." },
+      { "year": 2010, "event": "Qatar wins the bid to host the 2022 FIFA World Cup." },
+      { "year": 2013, "event": "Sheikh Tamim bin Hamad Al Thani becomes Emir after his father's abdication." },
+      { "year": 2017, "event": "Diplomatic crisis begins; Saudi Arabia, UAE, Bahrain, and Egypt sever ties and impose a blockade." },
+      { "year": 2021, "event": "Al-Ula Declaration ends the blockade and restores diplomatic relations." },
+      { "year": 2022, "event": "Host of the FIFA World Cup, the first in the Middle East." },
+      { "year": 2022, "event": "Designated as a Major Non-NATO Ally by the United States." }
+    ]
+  },
+  "investmentNotes": {
+    "strengths": ["World-leading LNG production and reserves", "Massive sovereign wealth (Qatar Investment Authority)", "Top-tier global connectivity and logistics", "High social and political stability"],
+    "risks": ["Heavy dependence on global energy prices", "Small domestic market and labor force", "Regional geopolitical volatility", "Reputational risks related to human rights perceptions"],
+    "sectors": ["LNG & Petrochemicals", "FinTech & Islamic Finance", "Sports & Tourism Infrastructure", "Digital Economy & AI"]
+  },
+  "sources": [
+    { "name": "Planning and Statistics Authority", "url": "https://www.psa.gov.qa/en", "type": "economic" },
+    { "name": "Qatar National Vision 2030 Portal", "url": "https://www.gco.gov.qa/en/about-qatar/national-vision-2030/", "type": "government" },
+    { "name": "Qatar Central Bank", "url": "https://www.qcb.gov.qa/English/", "type": "economic" }
+  ]
+}

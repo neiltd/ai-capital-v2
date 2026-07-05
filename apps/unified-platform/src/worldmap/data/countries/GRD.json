@@ -1,0 +1,66 @@
+{
+  "id": "GRD",
+  "iso2": "GD",
+  "name": "Grenada",
+  "region": "Americas",
+  "subregion": "Caribbean",
+  "capital": "Saint George's",
+  "lastUpdated": "2026-05-15",
+  "summary": "Grenada, the 'Spice Isle,' has demonstrated remarkable resilience following the devastation of Hurricane Beryl in July 2024. The administration of Prime Minister Dickon Mitchell has effectively managed the recovery process, suspending fiscal rules to prioritize reconstruction while maintaining a strong primary surplus. The economy is projected to grow robustly in 2025, driven by a surge in construction and a steady recovery in the tourism and agricultural sectors. Grenada remains a key player in the Citizenship by Investment (CBI) market, which provides vital funding for development projects. Politically, the landscape has shifted with the decline of the long-dominant New National Party (NNP), providing the ruling NDC with a clearer path for its reform agenda. The country continues to focus on youth empowerment, digital transformation, and climate adaptation as core pillars of its national development plan.",
+  "indicators": {
+    "politicalStability":       { "score": 7, "score_description": "Stable parliamentary democracy; ruling NDC has a strong mandate following the 2022 election.", "trend": "stable", "confidence": "high", "note": "Fragmentation of the opposition has temporarily reduced political friction." },
+    "economicDirection":        { "score": 6, "score_description": "Positive growth trajectory supported by reconstruction and tourism.", "trend": "rising", "confidence": "high", "note": "Unemployment hit a historic low of 7.5% in late 2025." },
+    "investmentAttractiveness": { "score": 6, "score_description": "Attractive for tourism, education, and real estate development.", "trend": "stable", "confidence": "high", "note": "St. George's University remains a major economic engine and draw for international students." },
+    "geopoliticalRisk":         { "score": 3, "score_description": "Low risk; strong relations with CARICOM and Western partners.", "trend": "stable", "confidence": "high", "note": "Active participant in regional security and environmental agreements." },
+    "educationQuality":         { "score": 7, "score_description": "Home to St. George's University, a world-class medical school.", "trend": "stable", "confidence": "high", "note": "Strong focus on education as a service export and local vocational training." },
+    "healthcareQuality":        { "score": 6, "score_description": "Decent public system supplemented by the university's medical resources.", "trend": "stable", "confidence": "medium", "note": "Post-hurricane efforts are focusing on repairing and upgrading rural clinics." },
+    "technologyInvestment":     { "score": 5, "score_description": "Growing focus on e-government and digital literacy for the youth.", "trend": "rising", "confidence": "medium", "note": "Government is pushing for a 'Digital Grenada' to modernize the economy." }
+  },
+  "demographics": {
+    "population": 117300,
+    "medianAge": 35.4,
+    "urbanizationRate": 36,
+    "majorEthnicGroups": ["Black African descent", "Mixed descent", "East Indian", "European"],
+    "religions": [
+      { "name": "Roman Catholic", "percent": 44 },
+      { "name": "Protestant", "percent": 33 },
+      { "name": "Jehovah's Witness", "percent": 2 },
+      { "name": "None/Unaffiliated", "percent": 4 },
+      { "name": "Other", "percent": 17 }
+    ]
+  },
+  "alliances": ["CARICOM", "OECS", "OAS", "UN", "Commonwealth", "SIDS", "CELAC"],
+  "relationships": [
+    { "countryId": "USA", "countryName": "United States", "type": "partner", "sentiment": "positive", "summary": "Strong ties since the 1983 intervention; partner in security and education." },
+    { "countryId": "GBR", "countryName": "United Kingdom", "type": "partner", "sentiment": "positive", "summary": "Strong historical and cultural ties; partner in development and justice." },
+    { "countryId": "CHN", "countryName": "China", "type": "partner", "sentiment": "positive", "summary": "Major investor in infrastructure and provider of agricultural technical assistance." },
+    { "countryId": "TTO", "countryName": "Trinidad and Tobago", "type": "neighbor", "sentiment": "positive", "summary": "Important regional trade partner and source of energy products." }
+  ],
+  "perspectives": [
+    { "source": "Young Professional", "bias": "Forward-looking", "view": "The Mitchell administration is finally giving the youth a seat at the table; we are moving toward a more modern, digital economy." },
+    { "source": "Spice Farmer", "bias": "Traditional", "view": "Beryl hit us hard, but the nutmeg and cocoa will return; we need better support for climate-resilient farming." },
+    { "source": "CBI Developer", "bias": "Business", "view": "Grenada has one of the best-run CBI programs; it's the engine that's funding our new hospitals and roads." }
+  ],
+  "historicalContext": {
+    "summary": "Grenada was a French and then British colony, known for its production of nutmeg and mace. In 1979, the New Jewel Movement led by Maurice Bishop took power in a revolution. Internal strife led to Bishop's execution and a U.S.-led intervention in 1983. Since then, Grenada has returned to a stable parliamentary democracy and has focused on economic development and hurricane recovery.",
+    "keyEvents": [
+      { "year": 1783, "event": "Treaty of Versailles awards Grenada to the British." },
+      { "year": 1974, "event": "Grenada gains independence from the United Kingdom." },
+      { "year": 1979, "event": "The People's Revolutionary Government (PRG) takes power." },
+      { "year": 1983, "event": "U.S.-led intervention (Operation Urgent Fury) restores democratic rule." },
+      { "year": 2004, "event": "Hurricane Ivan causes catastrophic damage, destroying 90% of the island's housing." },
+      { "year": 2022, "event": "Dickon Mitchell and the NDC win the general election." },
+      { "year": 2024, "event": "Hurricane Beryl devastates Carriacou and Petite Martinique." }
+    ]
+  },
+  "investmentNotes": {
+    "strengths": ["Strong tourism and education services (St. George's University)", "Well-regulated Citizenship by Investment program", "Resilient agricultural sector (nutmeg, cocoa)", "Stable political environment and fiscal discipline"],
+    "risks": ["Vulnerability to hurricanes and climate change", "Dependence on the U.S. and UK tourism markets", "High cost of energy and logistics", "Limited domestic market size"],
+    "sectors": ["Tourism and Hospitality", "Medical Education Services", "Agro-processing (Spices and Chocolate)", "Real Estate Development", "Renewable Energy"]
+  },
+  "sources": [
+    { "name": "Government of Grenada", "url": "https://www.gov.gd/", "type": "official" },
+    { "name": "Central Statistical Office of Grenada", "url": "https://stats.gov.gd/", "type": "official" },
+    { "name": "IMF Grenada Page", "url": "https://www.imf.org/en/Countries/GRD", "type": "economic" }
+  ]
+}

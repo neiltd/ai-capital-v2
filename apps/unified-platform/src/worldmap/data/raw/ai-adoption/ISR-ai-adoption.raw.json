@@ -1,0 +1,30 @@
+[
+  {
+    "countryId": "ISR",
+    "year": 2024,
+    "aiReadinessScore": 69.11,
+    "aiAdoptionScore": 70.0,
+    "aiTalentScore": 85.0,
+    "aiInvestmentUsdM": 5000,
+    "aiStartupCount": 2170,
+    "aiUnicornCount": 12,
+    "hasNationalAiStrategy": true,
+    "aiStrategyYear": 2021,
+    "aiPolicyScore": 54.44,
+    "cloudReadinessPct": null,
+    "broadbandPenetrationPct": 78.45,
+    "topAiSectors": ["Cybersecurity", "Healthcare", "Fintech", "Defense"],
+    "attribution": {
+      "sources": [
+        { "name": "Oxford Insights Government AI Readiness Index 2024", "url": "https://oxfordinsights.com/publications/2024-government-ai-readiness-index/", "accessedAt": "2025-05-10" },
+        { "name": "Stanford HAI AI Index Report 2024", "url": "https://aiindex.stanford.edu/report/", "accessedAt": "2025-05-10" },
+        { "name": "Tortoise Global AI Index 2024", "url": "https://www.tortoisemedia.com/intelligence/global-ai/", "accessedAt": "2025-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 3,
+        "lastVerified": "2025-05-10"
+      }
+    }
+  }
+]

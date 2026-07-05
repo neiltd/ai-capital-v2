@@ -1,0 +1,62 @@
+{
+  "id": "SVN",
+  "iso2": "SI",
+  "name": "Slovenia",
+  "region": "Europe",
+  "subregion": "Southern Europe",
+  "capital": "Ljubljana",
+  "lastUpdated": "2025-05-20",
+  "summary": "Slovenia is a stable EU and NATO member currently modernizing its security apparatus in response to a deteriorating European security environment. In 2024-2025, the country adopted a 'triplet' of strategies (Defence, Military, and Civil Defence) to enhance resilience against hybrid threats and cyberespionage. While the terrorism threat remains medium, focus has shifted toward securing critical energy infrastructure and countering foreign information manipulation from the Western Balkans and Russia.",
+  "indicators": {
+    "politicalStability":       { "score": 8, "trend": "stable", "confidence": "high", "note": "Stable parliamentary democracy; strong consensus on EU and NATO membership." },
+    "economicDirection":        { "score": 7, "trend": "stable", "confidence": "high", "note": "Advanced economy with high export orientation; strong performance in pharmaceuticals and high-tech manufacturing." },
+    "investmentAttractiveness": { "score": 7, "trend": "stable", "confidence": "high", "note": "Attractive for high-tech R&D and green industries; skilled workforce and good connectivity to Central Europe." },
+    "geopoliticalRisk":         { "score": 4, "trend": "increasing", "confidence": "high", "note": "Exposed to regional instability in the Western Balkans and Russian disinformation campaigns." },
+    "educationQuality":         { "score": 8, "trend": "stable", "confidence": "high", "note": "High-quality public education system; strong technical and vocational training tradition." },
+    "healthcareQuality":        { "score": 7, "trend": "stable", "confidence": "high", "note": "Universal healthcare system providing good quality of care, though facing wait-time challenges." },
+    "technologyInvestment":     { "score": 7, "trend": "improving", "confidence": "high", "note": "Strong focus on cybersecurity, AI, and green tech; growing startup ecosystem." }
+  },
+  "demographics": {
+    "population": 2118644,
+    "medianAge": 45.2,
+    "urbanizationRate": 56.2,
+    "majorEthnicGroups": ["Slovenian", "Serbian", "Croatian"],
+    "religions": [
+      { "name": "Catholic", "percent": 57.0 },
+      { "name": "Muslim", "percent": 2.5 }
+    ]
+  },
+  "alliances": ["European Union", "NATO", "OECD", "Three Seas Initiative"],
+  "relationships": [
+    { "countryId": "DEU", "countryName": "Germany", "type": "strategic_partner", "sentiment": "positive", "summary": "Most important economic partner and key ally in the EU." },
+    { "countryId": "ITA", "countryName": "Italy", "type": "neighbor", "sentiment": "positive", "summary": "Major trading partner and regional security collaborator." },
+    { "countryId": "AUT", "countryName": "Austria", "type": "neighbor", "sentiment": "positive", "summary": "Close economic and cultural ties; cooperation on Alpine security and transit." },
+    { "countryId": "HRV", "countryName": "Croatia", "type": "neighbor", "sentiment": "positive", "summary": "Improving relations; cooperation on Western Balkan stability and energy (Krsko nuclear plant)." }
+  ],
+  "perspectives": [
+    { "source": "Slovenian Security Official", "bias": "Modernizing", "view": "We are ending the 'peace dividend' era; our new strategies focus on deterrence and protecting our critical energy and digital infrastructure." },
+    { "source": "High-Tech CEO", "bias": "Optimistic", "view": "Slovenia is a hidden gem for R&D; our proximity to both the Balkans and the German market is a major competitive advantage." },
+    { "source": "Civil Society Activist", "bias": "Concerned", "view": "Disinformation is eroding trust in our institutions; we need to do more than just military spending to build real national resilience." }
+  ],
+  "historicalContext": {
+    "summary": "Formerly the most prosperous republic of Yugoslavia, Slovenia gained independence in 1991 following a brief 'Ten-Day War.' It was the first former Yugoslav state to join both the EU and NATO in 2004 and the first to adopt the Euro in 2007.",
+    "keyEvents": [
+      { "year": 1991, "event": "Independence from Yugoslavia after the Ten-Day War." },
+      { "year": 2004, "event": "Joined the European Union and NATO." },
+      { "year": 2007, "event": "Adoption of the Euro." },
+      { "year": 2023, "event": "Devastating floods lead to a refocus on climate resilience and civil defense." },
+      { "year": 2024, "event": "Adoption of a comprehensive 'triplet' of national security strategies." },
+      { "year": 2025, "event": "Term as a non-permanent member of the UN Security Council focus on conflict prevention." }
+    ]
+  },
+  "investmentNotes": {
+    "strengths": ["Highly skilled and productive workforce", "Strategic location at the crossroads of European transport corridors", "Stable political environment and strong rule of law", "Leader in green technologies and high-value manufacturing"],
+    "risks": ["Small domestic market and high dependence on German demand", "Aging population and associated demographic pressures", "Vulnerability to hybrid threats and cyberattacks on energy infrastructure", "Slow pace of privatization in some state-owned sectors"],
+    "sectors": ["Pharmaceuticals & Biotech", "Automotive & Industrial Manufacturing", "Information Technology & Cybersecurity", "Sustainable Energy & Logistics"]
+  },
+  "sources": [
+    { "name": "Ministry of Defence of Slovenia", "url": "https://www.gov.si/en/ministries/ministry-of-defence/", "type": "government" },
+    { "name": "SPIRIT Slovenia Business Development Agency", "url": "https://www.spiritslovenia.si/en", "type": "economic" },
+    { "name": "Slovenian Intelligence and Security Agency (SOVA)", "url": "https://www.sova.gov.si/en/", "type": "security" }
+  ]
+}

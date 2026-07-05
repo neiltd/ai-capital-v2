@@ -1,0 +1,219 @@
+[
+  {
+    "id": "RAIL-UKR-KYIV-PASA",
+    "name": "Kyiv-Pasazhyrskyi",
+    "countryId": "UKR",
+    "city": "Kyiv",
+    "coordinates": [30.4895, 50.4400],
+    "type": "mixed",
+    "dailyPassengers": 100000,
+    "annualFreightTonnes": null,
+    "connectedCountries": ["POL", "SVK", "HUN", "ROU", "MDA"],
+    "gaugeType": "broad",
+    "lineCount": 14,
+    "strategicImportance": "high",
+    "isPartOfBRI": true,
+    "geopoliticalNotes": "Central hub of the Ukrainian rail network; critical for both domestic troop movements and international passenger/freight corridors linking the EU to the East.",
+    "notes": "Primary station for the 'Solidarity Lanes' initiative.",
+    "attribution": {
+      "sources": [
+        { "name": "Ukrzaliznytsia Statistics", "url": "https://www.uz.gov.ua/", "accessedAt": "2024-05-15" },
+        { "name": "OSM", "url": "https://www.openstreetmap.org/", "accessedAt": "2024-05-15" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 2,
+        "lastVerified": "2024-05-15"
+      }
+    }
+  },
+  {
+    "id": "RAIL-UKR-LVIV-HOLO",
+    "name": "Lviv-Holovnyi",
+    "countryId": "UKR",
+    "city": "Lviv",
+    "coordinates": [24.0297, 49.8397],
+    "type": "mixed",
+    "dailyPassengers": 40000,
+    "annualFreightTonnes": null,
+    "connectedCountries": ["POL"],
+    "gaugeType": "mixed",
+    "lineCount": 8,
+    "strategicImportance": "high",
+    "isPartOfBRI": true,
+    "geopoliticalNotes": "Main western gateway to the EU; undergoing conversion to standard gauge to integrate with European TEN-T corridors.",
+    "notes": "Critical for logistics and humanitarian aid since 2022.",
+    "attribution": {
+      "sources": [
+        { "name": "EU Solidarity Lanes Report", "url": "https://transport.ec.europa.eu/", "accessedAt": "2024-05-15" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 2,
+        "lastVerified": "2024-05-15"
+      }
+    }
+  },
+  {
+    "id": "RAIL-UKR-CHOP",
+    "name": "Chop Rail Hub",
+    "countryId": "UKR",
+    "city": "Chop",
+    "coordinates": [22.2081, 48.4286],
+    "type": "border_crossing",
+    "dailyPassengers": null,
+    "annualFreightTonnes": 2500000,
+    "connectedCountries": ["HUN", "SVK"],
+    "gaugeType": "mixed",
+    "lineCount": 12,
+    "strategicImportance": "high",
+    "isPartOfBRI": true,
+    "geopoliticalNotes": "Triple-border transshipment hub where broad and standard gauge tracks meet; vital for BRI traffic from China to Budapest and Vienna.",
+    "notes": "Major bogie exchange and container transshipment facility.",
+    "attribution": {
+      "sources": [
+        { "name": "International Union of Railways (UIC)", "url": "https://uic.org/", "accessedAt": "2024-05-15" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 2,
+        "lastVerified": "2024-05-15"
+      }
+    }
+  },
+  {
+    "id": "RAIL-UKR-ODESA-HOLO",
+    "name": "Odesa-Holovna / Port Interface",
+    "countryId": "UKR",
+    "city": "Odesa",
+    "coordinates": [30.7405, 46.4673],
+    "type": "port_interface",
+    "dailyPassengers": 25000,
+    "annualFreightTonnes": 15000000,
+    "connectedCountries": ["MDA"],
+    "gaugeType": "broad",
+    "lineCount": 10,
+    "strategicImportance": "high",
+    "isPartOfBRI": true,
+    "geopoliticalNotes": "Main maritime-rail gateway for the 'Middle Corridor'; essential for grain exports and global food security.",
+    "notes": "Includes Chornomorsk and Pivdennyi port rail extensions.",
+    "attribution": {
+      "sources": [
+        { "name": "Odesa Port Authority", "url": "https://www.port.odessa.ua/", "accessedAt": "2024-05-15" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 2,
+        "lastVerified": "2024-05-15"
+      }
+    }
+  },
+  {
+    "id": "RAIL-UKR-YAHODYN",
+    "name": "Yahodyn Freight Hub",
+    "countryId": "UKR",
+    "city": "Yahodyn",
+    "coordinates": [23.7947, 51.2006],
+    "type": "border_crossing",
+    "dailyPassengers": null,
+    "annualFreightTonnes": 4000000,
+    "connectedCountries": ["POL"],
+    "gaugeType": "mixed",
+    "lineCount": 6,
+    "strategicImportance": "high",
+    "isPartOfBRI": false,
+    "geopoliticalNotes": "Busiest rail crossing to Poland for grain and iron ore; primary northern corridor to Warsaw and Berlin.",
+    "notes": "Key terminal for the Izov-Hrubieszow line.",
+    "attribution": {
+      "sources": [
+        { "name": "Transport Corridors Analysis", "url": "https://transportcorridors.com/", "accessedAt": "2024-05-15" }
+      ],
+      "confidence": {
+        "confidence": "medium",
+        "sourceCount": 1,
+        "lastVerified": "2024-05-15"
+      }
+    }
+  },
+  {
+    "id": "RAIL-UKR-KOVEL",
+    "name": "Kovel Junction",
+    "countryId": "UKR",
+    "city": "Kovel",
+    "coordinates": [24.7108, 51.2165],
+    "type": "freight",
+    "dailyPassengers": null,
+    "annualFreightTonnes": null,
+    "connectedCountries": ["POL", "BLR"],
+    "gaugeType": "broad",
+    "lineCount": 8,
+    "strategicImportance": "medium",
+    "isPartOfBRI": false,
+    "geopoliticalNotes": "Strategic northern junction connecting the central regions to the Polish border crossings and the Baltic states.",
+    "notes": "Hub for timber and mineral exports.",
+    "attribution": {
+      "sources": [
+        { "name": "OSM", "url": "https://www.openstreetmap.org/", "accessedAt": "2024-05-15" }
+      ],
+      "confidence": {
+        "confidence": "medium",
+        "sourceCount": 1,
+        "lastVerified": "2024-05-15"
+      }
+    }
+  },
+  {
+    "id": "RAIL-UKR-IZOV",
+    "name": "Izov Freight Terminal",
+    "countryId": "UKR",
+    "city": "Izov",
+    "coordinates": [24.0739, 50.8447],
+    "type": "freight",
+    "dailyPassengers": null,
+    "annualFreightTonnes": 10900000,
+    "connectedCountries": ["POL"],
+    "gaugeType": "broad",
+    "lineCount": 6,
+    "strategicImportance": "high",
+    "isPartOfBRI": false,
+    "geopoliticalNotes": "Primary exit point for iron ore exports to Poland via the Broad Gauge Metallurgy Line (LHS).",
+    "notes": "Crucial for the Ukrainian steel industry's exports to the EU.",
+    "attribution": {
+      "sources": [
+        { "name": "GMK Center", "url": "https://gmk.center/en/", "accessedAt": "2024-05-15" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 1,
+        "lastVerified": "2024-05-15"
+      }
+    }
+  },
+  {
+    "id": "RAIL-UKR-VADUL-SIRET",
+    "name": "Vadul-Siret Terminal",
+    "countryId": "UKR",
+    "city": "Vadul-Siret",
+    "coordinates": [25.9450, 47.9850],
+    "type": "border_crossing",
+    "dailyPassengers": null,
+    "annualFreightTonnes": 3300000,
+    "connectedCountries": ["ROU"],
+    "gaugeType": "mixed",
+    "lineCount": 6,
+    "strategicImportance": "medium",
+    "isPartOfBRI": false,
+    "geopoliticalNotes": "Main rail gateway to Romania and the Port of Constanța; key for bypassing the Black Sea blockade.",
+    "notes": "Handles significant grain and petroleum products.",
+    "attribution": {
+      "sources": [
+        { "name": "Romanian Railways (CFR) Data", "url": "https://www.cfr.ro/", "accessedAt": "2024-05-15" }
+      ],
+      "confidence": {
+        "confidence": "medium",
+        "sourceCount": 1,
+        "lastVerified": "2024-05-15"
+      }
+    }
+  }
+]

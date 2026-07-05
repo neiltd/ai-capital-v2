@@ -1,0 +1,302 @@
+[
+  {
+    "id": "DC-GBR-LONDON-TELEHOUSE-NORTH",
+    "name": "Telehouse North",
+    "countryId": "GBR",
+    "city": "London",
+    "coordinates": [-0.0045, 51.5105],
+    "type": "colocation",
+    "status": "operational",
+    "tierLevel": "3",
+    "capacityMW": null,
+    "floorSpaceM2": 9717,
+    "pue": null,
+    "operator": "Telehouse",
+    "owner": "KDDI",
+    "yearOpened": 1990,
+    "yearPlanned": null,
+    "cloudRegion": null,
+    "geopoliticalNotes": "The 'heart' of the UK internet and Europe’s first purpose-built colocation facility. It hosts the London Internet Exchange (LINX) and is a vital node for transatlantic data traffic between North America and Europe.",
+    "notes": "Most connected data center in Europe.",
+    "attribution": {
+      "sources": [
+        { "name": "Telehouse London North", "url": "https://www.telehouse.com/our-data-centers/london/north/", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 1,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  },
+  {
+    "id": "DC-GBR-SLOUGH-EQUINIX-LD4",
+    "name": "Equinix LD4",
+    "countryId": "GBR",
+    "city": "Slough",
+    "coordinates": [-0.6245, 51.5215],
+    "type": "colocation",
+    "status": "operational",
+    "tierLevel": "3",
+    "capacityMW": null,
+    "floorSpaceM2": 10000,
+    "pue": null,
+    "operator": "Equinix",
+    "owner": "Equinix",
+    "yearOpened": 2007,
+    "yearPlanned": null,
+    "cloudRegion": null,
+    "geopoliticalNotes": "The premier financial trading hub in Europe. It hosts the matching engines for major global equities and FX trading platforms, making it central to the stability of the City of London’s global financial markets.",
+    "notes": "Critical for low-latency financial services.",
+    "attribution": {
+      "sources": [
+        { "name": "Equinix LD4 Slough", "url": "https://www.equinix.co.uk/data-centers/europe-colocation/united-kingdom-colocation/london-data-centers/ld4", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 1,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  },
+  {
+    "id": "DC-GBR-LONDON-GS-EAST",
+    "name": "Global Switch London East",
+    "countryId": "GBR",
+    "city": "London",
+    "coordinates": [-0.0060, 51.5100],
+    "type": "colocation",
+    "status": "operational",
+    "tierLevel": "3",
+    "capacityMW": 40,
+    "floorSpaceM2": 65000,
+    "pue": null,
+    "operator": "Global Switch",
+    "owner": "Global Switch",
+    "yearOpened": 2002,
+    "yearPlanned": null,
+    "cloudRegion": null,
+    "geopoliticalNotes": "A massive wholesale hub for hyperscalers. Its ownership by Chinese investors has historically led to national security scrutiny and concerns over data sovereignty in the UK.",
+    "notes": "Subject of significant divestment and security debates in the 2020s.",
+    "attribution": {
+      "sources": [
+        { "name": "Global Switch London East", "url": "https://www.globalswitch.com/locations/london-east-data-center/", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 1,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  },
+  {
+    "id": "DC-GBR-LONDON-TELEHOUSE-N2",
+    "name": "Telehouse North Two",
+    "countryId": "GBR",
+    "city": "London",
+    "coordinates": [-0.0045, 51.5105],
+    "type": "colocation",
+    "status": "operational",
+    "tierLevel": "3",
+    "capacityMW": 73,
+    "floorSpaceM2": 24000,
+    "pue": 1.13,
+    "operator": "Telehouse",
+    "owner": "KDDI",
+    "yearOpened": 2016,
+    "yearPlanned": null,
+    "cloudRegion": null,
+    "geopoliticalNotes": "A high-rise expansion of the Telehouse campus featuring its own 132kV primary substation. It reinforces the UK's position as a sovereign connectivity hub post-Brexit.",
+    "notes": "One of the most advanced and power-secure facilities in London.",
+    "attribution": {
+      "sources": [
+        { "name": "Telehouse London North Two", "url": "https://www.telehouse.com/our-data-centers/london/north-two/", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 1,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  },
+  {
+    "id": "DC-GBR-LONDON-EQUINIX-LD8",
+    "name": "Equinix LD8 (Harbour Exchange)",
+    "countryId": "GBR",
+    "city": "London",
+    "coordinates": [-0.0115, 51.4965],
+    "type": "colocation",
+    "status": "operational",
+    "tierLevel": "3",
+    "capacityMW": null,
+    "floorSpaceM2": null,
+    "pue": null,
+    "operator": "Equinix",
+    "owner": "Equinix",
+    "yearOpened": null,
+    "yearPlanned": null,
+    "cloudRegion": null,
+    "geopoliticalNotes": "A critical 'failover' and redundancy site for the London Docklands cluster. It hosts a dense concentration of financial services and cloud on-ramps for major providers.",
+    "notes": "Formerly the Telecity Harbour Exchange (HEX) facility.",
+    "attribution": {
+      "sources": [
+        { "name": "Equinix LD8 London", "url": "https://www.equinix.co.uk/data-centers/europe-colocation/united-kingdom-colocation/london-data-centers/ld8", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 1,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  },
+  {
+    "id": "DC-GBR-HAYES-VIRTUS-LON5",
+    "name": "VIRTUS London5",
+    "countryId": "GBR",
+    "city": "Hayes",
+    "coordinates": [-0.4478, 51.5037],
+    "type": "hyperscale",
+    "status": "operational",
+    "tierLevel": "3",
+    "capacityMW": 24,
+    "floorSpaceM2": 11000,
+    "pue": null,
+    "operator": "VIRTUS Data Centres",
+    "owner": "STT GDC",
+    "yearOpened": 2018,
+    "yearPlanned": null,
+    "cloudRegion": null,
+    "geopoliticalNotes": "A massive hyperscale facility on the Western Corridor. Represents the UK's strategic move toward AI-ready compute capacity and sovereign data storage for enterprise and government.",
+    "notes": "Part of the Stockley Park campus.",
+    "attribution": {
+      "sources": [
+        { "name": "VIRTUS London5", "url": "https://virtusdatacentres.com/our-data-centres/london-data-centres/london5", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 1,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  },
+  {
+    "id": "DC-GBR-LONDON-GS-NORTH",
+    "name": "Global Switch London North",
+    "countryId": "GBR",
+    "city": "London",
+    "coordinates": [-0.0070, 51.5100],
+    "type": "colocation",
+    "status": "operational",
+    "tierLevel": "3",
+    "capacityMW": null,
+    "floorSpaceM2": 12000,
+    "pue": null,
+    "operator": "Global Switch",
+    "owner": "Global Switch",
+    "yearOpened": 1999,
+    "yearPlanned": null,
+    "cloudRegion": null,
+    "geopoliticalNotes": "A legacy site that established the Docklands as a global nexus. Historically served as the termination point for the AC1 transatlantic cable linking the UK and US.",
+    "notes": "Housed in a former printing works.",
+    "attribution": {
+      "sources": [
+        { "name": "Global Switch London North", "url": "https://www.globalswitch.com/locations/london-north-data-center/", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 1,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  },
+  {
+    "id": "DC-GBR-LONDON-DLR-SOVEREIGN",
+    "name": "Digital Realty Sovereign House",
+    "countryId": "GBR",
+    "city": "London",
+    "coordinates": [-0.0108, 51.4998],
+    "type": "colocation",
+    "status": "operational",
+    "tierLevel": "3",
+    "capacityMW": null,
+    "floorSpaceM2": null,
+    "pue": null,
+    "operator": "Digital Realty",
+    "owner": "Digital Realty",
+    "yearOpened": null,
+    "yearPlanned": null,
+    "cloudRegion": null,
+    "geopoliticalNotes": "Hosts AWS Direct Connect and LINX. It is a primary choice for firms requiring private access to global cloud tools while maintaining UK data under local jurisdiction.",
+    "notes": "A key interconnection hub in the Docklands area.",
+    "attribution": {
+      "sources": [
+        { "name": "Digital Realty London Sovereign House", "url": "https://www.digitalrealty.co.uk/data-centers/london/sovereign-house", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 1,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  },
+  {
+    "id": "DC-GBR-SLOUGH-EQUINIX-LD6",
+    "name": "Equinix LD6",
+    "countryId": "GBR",
+    "city": "Slough",
+    "coordinates": [-0.6350, 51.5230],
+    "type": "colocation",
+    "status": "operational",
+    "tierLevel": "3",
+    "capacityMW": null,
+    "floorSpaceM2": 8000,
+    "pue": null,
+    "operator": "Equinix",
+    "owner": "Equinix",
+    "yearOpened": 2015,
+    "yearPlanned": null,
+    "cloudRegion": null,
+    "geopoliticalNotes": "Flagship facility in the Slough campus that provides massive fiber cross-connect capacity linking various financial exchanges, ensuring the resilience of the UK's financial digital ecosystem.",
+    "notes": "Highly energy-efficient facility with LEED Gold certification.",
+    "attribution": {
+      "sources": [
+        { "name": "Equinix LD6 London", "url": "https://www.equinix.co.uk/data-centers/europe-colocation/united-kingdom-colocation/london-data-centers/ld6", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 1,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  },
+  {
+    "id": "DC-GBR-SLOUGH-VIRTUS-LON10",
+    "name": "VIRTUS London10",
+    "countryId": "GBR",
+    "city": "Slough",
+    "coordinates": [-0.6300, 51.5220],
+    "type": "hyperscale",
+    "status": "operational",
+    "tierLevel": "3",
+    "capacityMW": 34,
+    "floorSpaceM2": 15000,
+    "pue": null,
+    "operator": "VIRTUS Data Centres",
+    "owner": "STT GDC",
+    "yearOpened": 2020,
+    "yearPlanned": null,
+    "cloudRegion": null,
+    "geopoliticalNotes": "Part of the Slough Cluster, which is recognized as Critical National Infrastructure (CNI) by the UK government. It contributes to the largest data center hub in Europe by power capacity.",
+    "notes": "Large-scale carrier-neutral colocation facility.",
+    "attribution": {
+      "sources": [
+        { "name": "VIRTUS London10", "url": "https://virtusdatacentres.com/our-data-centres/london-data-centres/london10", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 1,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  }
+]

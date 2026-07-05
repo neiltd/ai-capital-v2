@@ -1,0 +1,64 @@
+{
+  "id": "TKM",
+  "iso2": "TM",
+  "name": "Turkmenistan",
+  "region": "Asia",
+  "subregion": "Central Asia",
+  "capital": "Ashgabat",
+  "lastUpdated": "2025-05-15",
+  "summary": "Turkmenistan remains one of the world's most closed and authoritarian states, characterized by 'permanent neutrality' and a totalitarian dual-leadership structure between President Serdar Berdimuhamedov and his father, Gurbanguly. The economy is almost entirely dependent on natural gas exports, with China as the primary monopsony buyer. Recent developments in 2024 and 2025 show a cautious effort to diversify energy export routes through projects like TAPI and potential Trans-Caspian connections, even as the state maintains total control over information and personal freedoms. Social control intensified in late 2024, with new restrictive measures on travel and digital access.",
+  "indicators": {
+    "politicalStability":       { "score": 9, "trend": "stable", "confidence": "high", "note": "Totalitarian stability; no organized opposition and absolute control by the Berdimuhamedov family." },
+    "economicDirection":        { "score": 4, "trend": "stable", "confidence": "medium", "note": "Heavily reliant on gas exports; significant gap between official and black market exchange rates hinders diversification." },
+    "investmentAttractiveness": { "score": 2, "trend": "neutral", "confidence": "high", "note": "Extremely difficult business environment; limited to state-sanctioned energy and infrastructure projects." },
+    "geopoliticalRisk":         { "score": 4, "trend": "stable", "confidence": "high", "note": "Policy of neutrality minimizes external conflict risk, though border security with Afghanistan remains a concern." },
+    "educationQuality":         { "score": 3, "trend": "stable", "confidence": "medium", "note": "State-controlled curriculum focused on national ideology; limited alignment with international standards." },
+    "healthcareQuality":        { "score": 3, "trend": "stable", "confidence": "medium", "note": "Modern facilities in Ashgabat, but overall quality and transparency in healthcare data remain extremely low." },
+    "technologyInvestment":     { "score": 2, "trend": "stable", "confidence": "high", "note": "Internet access is highly restricted and monitored; technology use is primarily for state surveillance and administration." }
+  },
+  "demographics": {
+    "population": 6500000,
+    "medianAge": 26.9,
+    "urbanizationRate": 53.0,
+    "majorEthnicGroups": ["Turkmen", "Uzbek", "Russian"],
+    "religions": [
+      { "name": "Muslim (mostly Sunni)", "percent": 89 },
+      { "name": "Eastern Orthodox", "percent": 9 },
+      { "name": "Other", "percent": 2 }
+    ]
+  },
+  "alliances": ["UN", "CIS (Associate)", "ECO", "OIC", "NAM"],
+  "relationships": [
+    { "countryId": "CHN", "countryName": "China", "type": "strategic_partner", "sentiment": "positive", "summary": "The dominant economic partner and sole major buyer of Turkmen gas; provides critical financing for energy infrastructure." },
+    { "countryId": "RUS", "countryName": "Russia", "type": "partner", "sentiment": "neutral", "summary": "Maintains a complex relationship focused on regional security and secondary gas trade; Russian is still a common lingua franca." },
+    { "countryId": "TUR", "countryName": "Turkey", "type": "strategic_partner", "sentiment": "positive", "summary": "Shares deep linguistic and cultural ties; a major source of consumer goods and construction expertise." },
+    { "countryId": "IRN", "countryName": "Iran", "type": "economic_partner", "sentiment": "positive", "summary": "Vital partner for gas swap arrangements and regional transit; shared interest in Caspian Sea legal status." },
+    { "countryId": "AFG", "countryName": "Afghanistan", "type": "neighbor", "sentiment": "neutral", "summary": "Focuses on pragmatic cooperation for the TAPI pipeline and regional electricity exports while monitoring security risks." }
+  ],
+  "perspectives": [
+    { "source": "State Media", "bias": "Propaganda", "view": "Under the leadership of the Arkadag and the President, the nation is in a 'New Era of Revival,' achieving unprecedented prosperity." },
+    { "source": "Exiled Opposition", "bias": "Critical", "view": "The country is a prison where the population suffers from food shortages and total isolation while the ruling elite squanders gas wealth." },
+    { "source": "Energy Analyst", "bias": "Pragmatic", "view": "Turkmenistan's survival depends on breaking China's monopsony and finally connecting its vast reserves to European markets." },
+    { "source": "International Human Rights Observer", "bias": "Critical", "view": "The state's pervasive surveillance and denial of basic freedoms make it one of the most repressive environments on earth." }
+  ],
+  "historicalContext": {
+    "summary": "Since independence from the Soviet Union in 1991, Turkmenistan has been ruled by three leaders who have fostered an intense cult of personality. Saparmurat Niyazov (Turkmenbashy) established the foundation of neutrality and totalitarianism. Gurbanguly Berdimuhamedov expanded the energy sector and further centralized power. In 2022, his son Serdar assumed the presidency in a managed transition, maintaining the established system of absolute control and economic isolation.",
+    "keyEvents": [
+      { "year": 1991, "event": "Independence from the Soviet Union." },
+      { "year": 1995, "event": "UN General Assembly recognizes Turkmenistan's status of 'Permanent Neutrality'." },
+      { "year": 2006, "event": "Death of Saparmurat Niyazov; Gurbanguly Berdimuhamedov takes power." },
+      { "year": 2022, "event": "Serdar Berdimuhamedov wins a snap presidential election, succeeding his father." },
+      { "year": 2024, "event": "Inauguration of major TAPI-related infrastructure at the Afghan border." }
+    ]
+  },
+  "investmentNotes": {
+    "strengths": ["World's fourth-largest natural gas reserves", "Debt to China for major energy projects reported as settled in 2024", "Strong state-led investment in modern infrastructure", "Strategic location for East-West energy corridors"],
+    "risks": ["Extreme lack of transparency and reliable data", "High levels of state intervention and corruption", "Vulnerability to global energy price fluctuations", "Lack of a functional private sector or independent judiciary"],
+    "sectors": ["Oil & Gas Extraction", "Chemicals & Petrochemicals", "Cotton & Textiles", "Large-scale Construction"]
+  },
+  "sources": [
+    { "name": "State Statistical Committee of Turkmenistan", "url": "https://www.stat.gov.tm", "type": "economic" },
+    { "name": "Turkmenistan Ministry of Foreign Affairs", "url": "https://www.mfa.gov.tm", "type": "government" },
+    { "name": "EBRD Turkmenistan Profile", "url": "https://www.ebrd.com/turkmenistan.html", "type": "economic" }
+  ]
+}

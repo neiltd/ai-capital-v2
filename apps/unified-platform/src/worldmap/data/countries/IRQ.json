@@ -1,0 +1,69 @@
+{
+  "id": "IRQ",
+  "iso2": "IQ",
+  "name": "Iraq",
+  "region": "Asia",
+  "subregion": "Western Asia",
+  "capital": "Baghdad",
+  "lastUpdated": "2026-05-09",
+  "summary": "Iraq is a nation of immense resource wealth and strategic importance, currently navigating a fragile path toward stability after decades of conflict and political upheaval. As a founding member of OPEC, it possesses some of the world's largest proven oil reserves, which underpin its economy and state budget. Iraq's primary challenge lies in overcoming ethno-sectarian political divisions, systemic corruption, and infrastructure deficits while balancing the competing influences of the United States and Iran. Despite these hurdles, Iraq has shown resilience, re-emerging as a regional diplomatic player and focusing on multi-billion dollar reconstruction projects and energy independence.",
+  "indicators": {
+    "politicalStability":       { "score": 3, "trend": "stable", "confidence": "high", "note": "Persistent ethno-sectarian tensions and periodic political deadlocks challenge governance." },
+    "economicDirection":        { "score": 4, "trend": "stable", "confidence": "medium", "note": "Heavy reliance on oil exports; slow progress on diversification and private sector growth." },
+    "investmentAttractiveness": { "score": 3, "trend": "rising", "confidence": "medium", "note": "High potential in energy and infrastructure, but hampered by security risks and bureaucracy." },
+    "geopoliticalRisk":         { "score": 8, "trend": "stable", "confidence": "high", "note": "Iraq remains a central arena for U.S.-Iran competition and regional security dynamics." },
+    "educationQuality":         { "score": 4, "trend": "stable", "confidence": "medium", "note": "Significant historical legacy, but current standards are affected by years of underinvestment." },
+    "healthcareQuality":        { "score": 4, "trend": "stable", "confidence": "medium", "note": "Infrastructure is being rebuilt, but high-quality services are often concentrated or private." },
+    "technologyInvestment":     { "score": 3, "trend": "rising", "confidence": "medium", "note": "Emerging focus on digital banking and e-government to reduce corruption and increase efficiency." }
+  },
+  "demographics": {
+    "population": 46120000,
+    "medianAge": 22.1,
+    "urbanizationRate": 70.2,
+    "majorEthnicGroups": ["Arab", "Kurdish", "Turkmen", "Assyrian"],
+    "religions": [
+      { "name": "Muslim (Shia/Sunni)", "percent": 95 },
+      { "name": "Christian/Other", "percent": 5 }
+    ]
+  },
+  "alliances": ["OPEC", "Arab League", "OIC", "UN"],
+  "relationships": [
+    { "countryId": "USA", "countryName": "United States", "type": "strategic_partner", "sentiment": "neutral", "summary": "A complex security relationship focused on counter-terrorism and energy transition." },
+    { "countryId": "IRN", "countryName": "Iran", "type": "strategic_neighbor", "sentiment": "neutral", "summary": "Deep religious, economic, and political ties; Iran exerts significant influence in Iraqi internal affairs." },
+    { "countryId": "TUR", "countryName": "Turkey", "type": "neighbor", "sentiment": "neutral", "summary": "Important trade partner, though relations are complicated by water rights and Kurdish security issues." },
+    { "countryId": "SAU", "countryName": "Saudi Arabia", "type": "emerging_partner", "sentiment": "positive", "summary": "Significant efforts toward regional reintegration through increased trade and energy grid connectivity." },
+    { "countryId": "KWT", "countryName": "Kuwait", "type": "neighbor", "sentiment": "neutral", "summary": "Relations have steadily improved post-1990, focused on debt resolution and border cooperation." }
+  ],
+  "perspectives": [
+    { "source": "Iraqi Youth Activist", "bias": "Reformist", "view": "We want a nation based on citizenship, not sectarianism. We need jobs, dignity, and an end to foreign interference." },
+    { "source": "Oil Sector Executive", "bias": "Pragmatic", "view": "Iraq is the world's most promising oil frontier, but we need legal certainty and a stable security environment to unlock it." },
+    { "source": "Regional Security Analyst", "bias": "Objective", "view": "Iraq's stability is the linchpin for Middle East security; if it fails, the entire region faces renewed chaos." },
+    { "source": "Kurdish Regional Official", "bias": "Autonomist", "view": "The federal relationship must be based on the constitution, ensuring the rights and budget of the Kurdistan Region." }
+  ],
+  "historicalContext": {
+    "summary": "Historically part of Mesopotamia, 'the cradle of civilization,' Iraq became a British mandate after WWI and a kingdom in 1932. Following the 1958 revolution, it became a republic, eventually dominated by the Ba'ath Party and Saddam Hussein. The 2003 U.S.-led invasion overthrew the regime, initiating a period of intense transition, insurgency, and the rise and fall of ISIS.",
+    "keyEvents": [
+      { "year": 1932, "event": "End of British mandate and independence of the Kingdom of Iraq." },
+      { "year": 1958, "event": "14 July Revolution ends the monarchy; Iraq becomes a republic." },
+      { "year": 1979, "event": "Saddam Hussein officially assumes the presidency." },
+      { "year": 1980, "event": "Beginning of the eight-year Iran-Iraq War." },
+      { "year": 1990, "event": "Invasion of Kuwait; leads to the Gulf War and subsequent international sanctions." },
+      { "year": 2003, "event": "U.S.-led invasion ousts Saddam Hussein's regime." },
+      { "year": 2005, "event": "Adoption of a new permanent constitution by referendum." },
+      { "year": 2014, "event": "ISIS captures Mosul and large swaths of Iraqi territory." },
+      { "year": 2017, "event": "Iraqi government declares final victory over ISIS." },
+      { "year": 2019, "event": "Massive 'Tishreen' protests erupt over corruption and lack of services." },
+      { "year": 2022, "event": "Election of President Abdul Latif Rashid and formation of a new government after a year-long deadlock." }
+    ]
+  },
+  "investmentNotes": {
+    "strengths": ["World-class oil reserves and low extraction costs", "Strategic geographic location connecting East and West", "Large, young, and resilient workforce", "Significant reconstruction and infrastructure needs"],
+    "risks": ["Ethno-sectarian political instability", "Systemic corruption and bureaucratic hurdles", "Security volatility in certain regions", "Dependency on a single commodity (oil)"],
+    "sectors": ["Energy (Oil & Gas)", "Housing & Infrastructure", "Agriculture & Food Processing", "Digital Finance & Telecommunications"]
+  },
+  "sources": [
+    { "name": "Iraq Ministry of Planning", "url": "https://mop.gov.iq/", "type": "government" },
+    { "name": "Central Bank of Iraq", "url": "https://cbi.iq/", "type": "economic" },
+    { "name": "World Bank Iraq Profile", "url": "https://www.worldbank.org/en/country/iraq", "type": "economic" }
+  ]
+}

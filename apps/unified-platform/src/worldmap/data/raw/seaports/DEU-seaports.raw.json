@@ -1,0 +1,218 @@
+[
+  {
+    "id": "PORT-DEU-HAMBURG",
+    "name": "Port of Hamburg",
+    "countryId": "DEU",
+    "city": "Hamburg",
+    "coordinates": [9.99, 53.55],
+    "type": "container",
+    "annualThroughputTEU": 7800000,
+    "annualThroughputTonnes": 114600000,
+    "berthCount": 320,
+    "maxDraftM": 16.1,
+    "strategicImportance": "critical",
+    "riskLevel": "low",
+    "geopoliticalNotes": "Germany's largest port and the primary gateway for trade with Asia and Northern/Eastern Europe. Critical hub for the German industrial heartland.",
+    "notes": "Third busiest container port in Europe. Known as the 'Gateway to the World'.",
+    "attribution": {
+      "sources": [
+        { "name": "Hafen Hamburg Official", "url": "https://www.hafen-hamburg.de/", "accessedAt": "2026-05-10" },
+        { "name": "Upply", "url": "https://www.upply.com/en-us/blog/logistics/germany-top-8-seaports", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 2,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  },
+  {
+    "id": "PORT-DEU-BREMERHAVEN",
+    "name": "Port of Bremerhaven",
+    "countryId": "DEU",
+    "city": "Bremerhaven",
+    "coordinates": [8.56, 53.54],
+    "type": "container",
+    "annualThroughputTEU": 4400000,
+    "annualThroughputTonnes": 42500000,
+    "berthCount": 14,
+    "maxDraftM": 15.5,
+    "strategicImportance": "critical",
+    "riskLevel": "low",
+    "geopoliticalNotes": "A leading global automotive logistics hub and a major North Sea container terminal. Strategic for US military logistics in Europe.",
+    "notes": "Part of the Bremen/Bremerhaven port group. One of the largest car ports in the world.",
+    "attribution": {
+      "sources": [
+        { "name": "Bremenports", "url": "https://bremenports.de/en/", "accessedAt": "2026-05-10" },
+        { "name": "Beacon", "url": "https://www.beacon.ai/blog/top-ports-in-germany", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 2,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  },
+  {
+    "id": "PORT-DEU-WILHELMSHAVEN",
+    "name": "Port of Wilhelmshaven",
+    "countryId": "DEU",
+    "city": "Wilhelmshaven",
+    "coordinates": [8.12, 53.53],
+    "type": "mixed",
+    "annualThroughputTEU": 700000,
+    "annualThroughputTonnes": 34500000,
+    "berthCount": 10,
+    "maxDraftM": 18.5,
+    "strategicImportance": "critical",
+    "riskLevel": "low",
+    "geopoliticalNotes": "Germany's only deep-water port (JadeWeserPort) and primary crude oil terminal. Expanding as a critical LNG and green energy hub.",
+    "notes": "Deepest port in Germany, accommodating fully-laden Ultra Large Container Vessels (ULCVs).",
+    "attribution": {
+      "sources": [
+        { "name": "JadeWeserPort Official", "url": "https://www.jadeweserport.de/", "accessedAt": "2026-05-10" },
+        { "name": "Nports", "url": "https://www.nports.de/en/locations/wilhelmshaven/", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 2,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  },
+  {
+    "id": "PORT-DEU-ROSTOCK",
+    "name": "Port of Rostock",
+    "countryId": "DEU",
+    "city": "Rostock",
+    "coordinates": [12.08, 54.16],
+    "type": "mixed",
+    "annualThroughputTEU": 23500,
+    "annualThroughputTonnes": 30100000,
+    "berthCount": 25,
+    "maxDraftM": 14.5,
+    "strategicImportance": "high",
+    "riskLevel": "low",
+    "geopoliticalNotes": "Largest German Baltic port. Vital for Scandinavian trade and energy security (crude oil pipeline link to refineries).",
+    "notes": "Major hub for liquid bulk and ferry traffic in the Baltic.",
+    "attribution": {
+      "sources": [
+        { "name": "Rostock Port Official", "url": "https://www.rostock-port.de/en/", "accessedAt": "2026-05-10" },
+        { "name": "Wikipedia - Port of Rostock", "url": "https://en.wikipedia.org/wiki/Port_of_Rostock", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 2,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  },
+  {
+    "id": "PORT-DEU-LUBECK",
+    "name": "Port of Lübeck",
+    "countryId": "DEU",
+    "city": "Lübeck",
+    "coordinates": [10.68, 53.88],
+    "type": "mixed",
+    "annualThroughputTEU": 115000,
+    "annualThroughputTonnes": 21600000,
+    "berthCount": 24,
+    "maxDraftM": 10.0,
+    "strategicImportance": "high",
+    "riskLevel": "low",
+    "geopoliticalNotes": "Europe's largest Ro-Ro port on the Baltic. Critical for paper, pulp, and Scandinavian logistics.",
+    "notes": "Historical Hanseatic hub, now specialized in modern Ro-Ro and forest product logistics.",
+    "attribution": {
+      "sources": [
+        { "name": "Lübecker Hafen-Gesellschaft", "url": "https://www.lhg.com/en/", "accessedAt": "2026-05-10" },
+        { "name": "UNCTAD", "url": "https://unctad.org/", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 2,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  },
+  {
+    "id": "PORT-DEU-BRAKE",
+    "name": "Port of Brake",
+    "countryId": "DEU",
+    "city": "Brake",
+    "coordinates": [8.48, 53.33],
+    "type": "bulk",
+    "annualThroughputTEU": null,
+    "annualThroughputTonnes": 12000000,
+    "berthCount": 8,
+    "maxDraftM": 11.9,
+    "strategicImportance": "medium",
+    "riskLevel": "low",
+    "geopoliticalNotes": "Specialized bulk port on the Weser. Germany's leading hub for agricultural products and cellulose.",
+    "notes": "River port with significant specialized handling capacity for grain and animal feed.",
+    "attribution": {
+      "sources": [
+        { "name": "Nports - Brake", "url": "https://www.nports.de/en/locations/brake/", "accessedAt": "2026-05-10" },
+        { "name": "Hafen Hamburg Info", "url": "https://www.hafen-hamburg.de/en/seaport/brake/", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 2,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  },
+  {
+    "id": "PORT-DEU-BRUNSBUTTEL",
+    "name": "Port of Brunsbüttel",
+    "countryId": "DEU",
+    "city": "Brunsbüttel",
+    "coordinates": [9.12, 53.89],
+    "type": "mixed",
+    "annualThroughputTEU": 2500,
+    "annualThroughputTonnes": 12100000,
+    "berthCount": 5,
+    "maxDraftM": 15.2,
+    "strategicImportance": "high",
+    "riskLevel": "low",
+    "geopoliticalNotes": "Strategic location at the Kiel Canal entrance and Elbe mouth. Critical for the chemical industry and new LNG imports.",
+    "notes": "Home to the Elbehafen and a new floating LNG terminal (FSRU).",
+    "attribution": {
+      "sources": [
+        { "name": "Brunsbüttel Ports", "url": "https://www.schrammgroup.de/en/locations/brunsbuettel-ports.html", "accessedAt": "2026-05-10" },
+        { "name": "SeaRates", "url": "https://www.searates.com/port/brunsbuettel_de.htm", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 2,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  },
+  {
+    "id": "PORT-DEU-EMDEN",
+    "name": "Port of Emden",
+    "countryId": "DEU",
+    "city": "Emden",
+    "coordinates": [7.2, 53.35],
+    "type": "mixed",
+    "annualThroughputTEU": null,
+    "annualThroughputTonnes": 6500000,
+    "berthCount": 6,
+    "maxDraftM": 10.7,
+    "strategicImportance": "medium",
+    "riskLevel": "low",
+    "geopoliticalNotes": "Europe's third-largest car terminal. Strategic export hub for the German automotive industry (Volkswagen).",
+    "notes": "Major hub for offshore wind energy components and timber.",
+    "attribution": {
+      "sources": [
+        { "name": "Seaport Emden", "url": "https://www.seaport-emden.de/en/", "accessedAt": "2026-05-10" },
+        { "name": "Nports - Emden", "url": "https://www.nports.de/en/locations/emden/", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 2,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  }
+]

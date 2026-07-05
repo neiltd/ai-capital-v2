@@ -1,0 +1,218 @@
+[
+  {
+    "id": "PORT-NLD-ROTTERDAM",
+    "name": "Port of Rotterdam",
+    "countryId": "NLD",
+    "city": "Rotterdam",
+    "coordinates": [4.14, 51.94],
+    "type": "mixed",
+    "annualThroughputTEU": 13400000,
+    "annualThroughputTonnes": 438800000,
+    "berthCount": 90,
+    "maxDraftM": 24.0,
+    "strategicImportance": "critical",
+    "riskLevel": "low",
+    "geopoliticalNotes": "Europe's largest port and the 'Gateway to Europe.' It is a critical node for NATO logistics and European energy security, handling over 35% of all North Range shipping. It is central to the Rhine-Meuse-Scheldt delta economy.",
+    "notes": "Home to Maasvlakte 2, featuring world-leading automated container terminals. It is also a premier energy hub with five refineries and major LNG facilities.",
+    "attribution": {
+      "sources": [
+        { "name": "Port of Rotterdam Authority", "url": "https://www.portofrotterdam.com", "accessedAt": "2026-05-10" },
+        { "name": "UNCTAD Maritime Transport Report", "url": "https://unctad.org", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 2,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  },
+  {
+    "id": "PORT-NLD-AMSTERDAM",
+    "name": "Port of Amsterdam",
+    "countryId": "NLD",
+    "city": "Amsterdam",
+    "coordinates": [4.81, 52.41],
+    "type": "oil",
+    "annualThroughputTEU": null,
+    "annualThroughputTonnes": 63000000,
+    "berthCount": 50,
+    "maxDraftM": 13.7,
+    "strategicImportance": "high",
+    "riskLevel": "low",
+    "geopoliticalNotes": "The world's largest gasoline port and a critical component of the ARA (Amsterdam-Rotterdam-Antwerp) energy trading hub. It plays a vital role in global petroleum product markets.",
+    "notes": "Currently transitioning from coal to become a major hub for biomass and green hydrogen. Home to the world's largest sea lock (Zeesluis IJmuiden).",
+    "attribution": {
+      "sources": [
+        { "name": "Port of Amsterdam Official Website", "url": "https://www.portofamsterdam.com", "accessedAt": "2026-05-10" },
+        { "name": "Lloyd's List", "url": "https://lloydslist.com", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 2,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  },
+  {
+    "id": "PORT-NLD-VLISSINGEN",
+    "name": "Port of Vlissingen",
+    "countryId": "NLD",
+    "city": "Vlissingen",
+    "coordinates": [3.57, 51.44],
+    "type": "multipurpose",
+    "annualThroughputTEU": null,
+    "annualThroughputTonnes": 35000000,
+    "berthCount": 30,
+    "maxDraftM": 16.5,
+    "strategicImportance": "high",
+    "riskLevel": "low",
+    "geopoliticalNotes": "A key 'Host Nation Support' port for US and NATO military deployments in Europe. It is also a primary hub for the assembly and maintenance of North Sea offshore wind farms.",
+    "notes": "Part of the cross-border North Sea Port (shared with Terneuzen and Ghent). Strategically located directly on the North Sea.",
+    "attribution": {
+      "sources": [
+        { "name": "North Sea Port Authority", "url": "https://www.northseaport.com", "accessedAt": "2026-05-10" },
+        { "name": "U.S. Army Europe and Africa", "url": "https://www.europeafrica.army.mil", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 2,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  },
+  {
+    "id": "PORT-NLD-TERNEUZEN",
+    "name": "Port of Terneuzen",
+    "countryId": "NLD",
+    "city": "Terneuzen",
+    "coordinates": [3.83, 51.33],
+    "type": "mixed",
+    "annualThroughputTEU": null,
+    "annualThroughputTonnes": 30000000,
+    "berthCount": 30,
+    "maxDraftM": 12.5,
+    "strategicImportance": "high",
+    "riskLevel": "low",
+    "geopoliticalNotes": "A major hub for the European chemical industry and the gateway to the Ghent-Terneuzen Canal. It is essential for the logistics of the industrial clusters in the Scheldt delta.",
+    "notes": "Part of the North Sea Port. It handles significant volumes of dry and liquid bulk for regional industrial processing.",
+    "attribution": {
+      "sources": [
+        { "name": "North Sea Port Authority", "url": "https://www.northseaport.com", "accessedAt": "2026-05-10" },
+        { "name": "Upply", "url": "https://upply.com", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 2,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  },
+  {
+    "id": "PORT-NLD-MOERDIJK",
+    "name": "Port of Moerdijk",
+    "countryId": "NLD",
+    "city": "Moerdijk",
+    "coordinates": [4.58, 51.68],
+    "type": "mixed",
+    "annualThroughputTEU": 600000,
+    "annualThroughputTonnes": 18200000,
+    "berthCount": 25,
+    "maxDraftM": 8.9,
+    "strategicImportance": "medium",
+    "riskLevel": "low",
+    "geopoliticalNotes": "The furthest inland seaport in the Netherlands with deep-sea access. It serves as a vital multimodal link between the ports of Rotterdam and Antwerp and is a major center for chemical recycling.",
+    "notes": "An essential node in the European inland waterway network, providing efficient hinterland connections.",
+    "attribution": {
+      "sources": [
+        { "name": "Port of Moerdijk Authority", "url": "https://www.portofmoerdijk.nl", "accessedAt": "2026-05-10" },
+        { "name": "Gorto Freight", "url": "https://gortofreight.com", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 2,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  },
+  {
+    "id": "PORT-NLD-EEMSHAVEN",
+    "name": "Port of Eemshaven",
+    "countryId": "NLD",
+    "city": "Eemshaven",
+    "coordinates": [6.83, 53.45],
+    "type": "lng",
+    "annualThroughputTEU": null,
+    "annualThroughputTonnes": 14100000,
+    "berthCount": 15,
+    "maxDraftM": 14.0,
+    "strategicImportance": "high",
+    "riskLevel": "medium",
+    "geopoliticalNotes": "A critical energy hub for the Netherlands and Northwest Europe. It hosts the EemsEnergyTerminal (LNG), which was rapidly deployed to replace Russian gas imports, and is the landing point for major trans-Atlantic data cables.",
+    "notes": "The primary logistics and O&M base for German and Dutch offshore wind farms in the North Sea.",
+    "attribution": {
+      "sources": [
+        { "name": "Groningen Seaports", "url": "https://www.groningen-seaports.com", "accessedAt": "2026-05-10" },
+        { "name": "Offshore Energy", "url": "https://www.offshore-energy.biz", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 2,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  },
+  {
+    "id": "PORT-NLD-DELFZIJL",
+    "name": "Port of Delfzijl",
+    "countryId": "NLD",
+    "city": "Delfzijl",
+    "coordinates": [6.93, 53.33],
+    "type": "mixed",
+    "annualThroughputTEU": null,
+    "annualThroughputTonnes": 4000000,
+    "berthCount": 15,
+    "maxDraftM": 9.0,
+    "strategicImportance": "medium",
+    "riskLevel": "low",
+    "geopoliticalNotes": "A major chemical cluster in Northern Netherlands, integrated with the regional energy transition efforts. It is specialized in green chemistry and the circular economy.",
+    "notes": "Part of Groningen Seaports. It provides critical industrial capacity for the Northern Dutch economy.",
+    "attribution": {
+      "sources": [
+        { "name": "Groningen Seaports", "url": "https://www.groningen-seaports.com", "accessedAt": "2026-05-10" },
+        { "name": "Bansar China", "url": "https://www.bansarchina.com", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 2,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  },
+  {
+    "id": "PORT-NLD-DEN-HELDER",
+    "name": "Port of Den Helder",
+    "countryId": "NLD",
+    "city": "Den Helder",
+    "coordinates": [4.78, 52.95],
+    "type": "naval",
+    "annualThroughputTEU": null,
+    "annualThroughputTonnes": 300000,
+    "berthCount": 15,
+    "maxDraftM": 8.5,
+    "strategicImportance": "high",
+    "riskLevel": "low",
+    "geopoliticalNotes": "The main home port of the Royal Netherlands Navy and a critical offshore service hub for the North Sea oil, gas, and wind sectors. It is essential for national defense and offshore energy maintenance.",
+    "notes": "Includes the historic Willemsoord naval yard and is the primary 'pit-stop' for vessels operating in the North Sea energy sectors.",
+    "attribution": {
+      "sources": [
+        { "name": "Port of Den Helder Official Website", "url": "https://www.portofdenhelder.nl", "accessedAt": "2026-05-10" },
+        { "name": "Royal Netherlands Navy", "url": "https://www.defensie.nl", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 2,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  }
+]

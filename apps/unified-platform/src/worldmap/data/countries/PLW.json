@@ -1,0 +1,67 @@
+{
+  "id": "PLW",
+  "iso2": "PW",
+  "name": "Palau",
+  "region": "Oceania",
+  "subregion": "Micronesia",
+  "capital": "Ngerulmud",
+  "lastUpdated": "2026-05-15",
+  "summary": "Palau is a Micronesian nation renowned for its pristine marine environment and innovative environmental policies. Like the Marshall Islands, its relationship with the United States is governed by the Compact of Free Association (COFA), providing security and financial aid. Palau is a global leader in marine conservation, having established the world's first shark sanctuary. The economy is primarily driven by tourism, particularly high-end diving, and US grant assistance. Geopolitically, Palau is a staunch ally of both the United States and Taiwan.",
+  "indicators": {
+    "politicalStability":       { "score": 8, "trend": "stable", "confidence": "high", "note": "Stable democratic system with a strong tradition of peaceful transitions and low levels of political violence." },
+    "economicDirection":        { "score": 5, "trend": "rising", "confidence": "medium", "note": "Recovering well through high-value tourism and renewed US Compact funding, though sensitive to global travel trends." },
+    "investmentAttractiveness": { "score": 6, "trend": "stable", "confidence": "medium", "note": "Attractive for sustainable tourism and blue economy initiatives; stable legal framework backed by US association." },
+    "geopoliticalRisk":         { "score": 4, "trend": "stable", "confidence": "high", "note": "Close strategic integration with the US; however, its recognition of Taiwan makes it a target for Chinese economic pressure." },
+    "educationQuality":         { "score": 5, "trend": "stable", "confidence": "medium", "note": "Universal basic education and good literacy; host to the Palau Community College, providing vocational and regional training." },
+    "healthcareQuality":        { "score": 5, "trend": "stable", "confidence": "medium", "note": "Relatively good medical services for the region; supported by US federal programs and referrals to Hawaii/Philippines." },
+    "technologyInvestment":     { "score": 5, "trend": "rising", "confidence": "high", "note": "Good fiber-optic connectivity; pioneered digital residency programs and explores blockchain for government services." }
+  },
+  "demographics": {
+    "population": 18000,
+    "medianAge": 33.9,
+    "urbanizationRate": 82,
+    "majorEthnicGroups": ["Palauan (Micronesian with Malayan and Melanesian admixtures)", "Filipino"],
+    "religions": [
+      { "name": "Roman Catholic", "percent": 45.0 },
+      { "name": "Protestant", "percent": 35.0 },
+      { "name": "Modekngei (Indigenous)", "percent": 9.0 },
+      { "name": "Other", "percent": 11.0 }
+    ]
+  },
+  "alliances": ["Pacific Islands Forum", "Compact of Free Association (USA)", "United Nations", "SIDS", "ACP"],
+  "relationships": [
+    { "countryId": "USA", "countryName": "United States", "type": "strategic_partner", "sentiment": "positive", "summary": "Deep and comprehensive relationship via COFA; US is the guarantor of security and a major source of aid." },
+    { "countryId": "TWN", "countryName": "Taiwan", "type": "diplomatic_partner", "sentiment": "positive", "summary": "Strong diplomatic and economic ties; Taiwan is a significant donor and source of tourists." },
+    { "countryId": "JPN", "countryName": "Japan", "type": "historical_partner", "sentiment": "positive", "summary": "Close historical ties from the mandate period; Japan is a major partner in infrastructure and tourism." },
+    { "countryId": "AUS", "countryName": "Australia", "type": "development_partner", "sentiment": "positive", "summary": "Increasingly active partner in maritime security, surveillance, and sustainable development aid." }
+  ],
+  "perspectives": [
+    { "source": "Palauan Environmentalist", "bias": "Conservationist", "view": "Our environment is our economy. Protecting our oceans is not just an ethical choice; it's a necessity for our survival." },
+    { "source": "Tourism Operator", "bias": "Pragmatic", "view": "We need to focus on high-value, low-impact tourism to preserve our resources while ensuring economic growth." },
+    { "source": "Government Official", "bias": "Pro-US", "view": "The Compact of Free Association is the cornerstone of our national security and economic stability in an increasingly complex Indo-Pacific." },
+    { "source": "Traditional Leader", "bias": "Traditionalist", "view": "The 'Council of Chiefs' ensures that modern governance remains rooted in the traditional values and customs of the Palauan people." }
+  ],
+  "historicalContext": {
+    "summary": "Palau was part of the Spanish East Indies, then sold to Germany, and later occupied by Japan under a League of Nations mandate. It was the site of the brutal Battle of Peleliu in WWII. Palau became a US-administered UN Trust Territory before gaining independence in 1994 under the Compact of Free Association.",
+    "keyEvents": [
+      { "year": 1899, "event": "Spain sells Palau and other Carolines to the German Empire." },
+      { "year": 1914, "event": "Japan occupies the islands at the start of WWI." },
+      { "year": 1944, "event": "The Battle of Peleliu, one of the most intense battles of the Pacific War." },
+      { "year": 1947, "event": "Palau becomes part of the Trust Territory of the Pacific Islands administered by the US." },
+      { "year": 1981, "event": "Palau adopts the world's first nuclear-free constitution." },
+      { "year": 1994, "event": "Palau gains independence and enters the Compact of Free Association with the US." },
+      { "year": 2009, "event": "Palau declares the world's first shark sanctuary, covering its entire EEZ." },
+      { "year": 2024, "event": "Renewal of the Compact of Free Association, further strengthening security and economic ties with the US." }
+    ]
+  },
+  "investmentNotes": {
+    "strengths": ["Strong and stable relationship with the United States", "World-class sustainable tourism brand", "Leader in marine conservation and blue economy", "Highly stable political and legal environment"],
+    "risks": ["Small domestic market and high dependence on tourism", "Vulnerability to global economic shocks and travel trends", "Geographical remoteness and infrastructure costs", "Vulnerability to climate change (though less than atoll nations)"],
+    "sectors": ["High-value Eco-tourism", "Sustainable Fisheries and Aquaculture", "Renewable Energy (Solar/Ocean Thermal)", "Digital Government and Residency Services"]
+  },
+  "sources": [
+    { "name": "Palau Ministry of Finance", "url": "https://www.palaugov.pw/finance/", "type": "economic" },
+    { "name": "Palau Bureau of Budget and Planning", "url": "https://www.palaugov.pw/budgetandplanning/", "type": "demographic" },
+    { "name": "Palau Visitors Authority", "url": "https://www.pristineparadisepalau.com/", "type": "investment" }
+  ]
+}

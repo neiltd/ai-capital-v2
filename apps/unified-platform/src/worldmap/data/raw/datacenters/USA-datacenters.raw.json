@@ -1,0 +1,307 @@
+[
+  {
+    "id": "DC-USA-ASHBURN-EQUINIX-DC2",
+    "name": "Equinix Ashburn Campus (DC2)",
+    "countryId": "USA",
+    "city": "Ashburn",
+    "coordinates": [-77.4594, 39.0167],
+    "type": "colocation",
+    "status": "operational",
+    "tierLevel": "3",
+    "capacityMW": null,
+    "floorSpaceM2": null,
+    "pue": null,
+    "operator": "Equinix",
+    "owner": "Equinix",
+    "yearOpened": 2000,
+    "yearPlanned": null,
+    "cloudRegion": null,
+    "geopoliticalNotes": "Located in 'Data Center Alley,' where approximately 70% of global internet traffic passes through. Its proximity to Washington D.C. makes it a critical hub for federal government agencies and international data flows to Europe.",
+    "notes": "Part of the massive Equinix Ashburn campus, the most interconnected hub in North America.",
+    "attribution": {
+      "sources": [
+        { "name": "Equinix Ashburn Data Centers", "url": "https://www.equinix.com/data-centers/north-america-colocation/united-states-colocation/ashburn-data-centers", "accessedAt": "2026-05-10" },
+        { "name": "Fierce Network", "url": "https://www.fierce-network.com", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 2,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  },
+  {
+    "id": "DC-USA-MIAMI-EQUINIX-MI1",
+    "name": "NAP of the Americas (Equinix MI1)",
+    "countryId": "USA",
+    "city": "Miami",
+    "coordinates": [-80.1931, 25.7824],
+    "type": "colocation",
+    "status": "operational",
+    "tierLevel": "4",
+    "capacityMW": null,
+    "floorSpaceM2": 70000,
+    "pue": null,
+    "operator": "Equinix",
+    "owner": "Equinix",
+    "yearOpened": 2001,
+    "yearPlanned": null,
+    "cloudRegion": null,
+    "geopoliticalNotes": "The primary gateway for data traffic between the U.S. and Latin America/Caribbean. It hosts the U.S. Department of State’s Diplomatic Telecommunications Service and connects to 15 subsea cables.",
+    "notes": "One of the largest and most connected data centers in the world.",
+    "attribution": {
+      "sources": [
+        { "name": "Equinix MI1", "url": "https://www.equinix.com/data-centers/north-america-colocation/united-states-colocation/miami-data-centers/mi1", "accessedAt": "2026-05-10" },
+        { "name": "Wikipedia - NAP of the Americas", "url": "https://en.wikipedia.org/wiki/NAP_of_the_Americas", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 2,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  },
+  {
+    "id": "DC-USA-LA-CORESITE-LA1",
+    "name": "One Wilshire",
+    "countryId": "USA",
+    "city": "Los Angeles",
+    "coordinates": [-118.2541, 34.0486],
+    "type": "colocation",
+    "status": "operational",
+    "tierLevel": "3",
+    "capacityMW": null,
+    "floorSpaceM2": null,
+    "pue": null,
+    "operator": "CoreSite",
+    "owner": "GI Partners",
+    "yearOpened": 1966,
+    "yearPlanned": null,
+    "cloudRegion": null,
+    "geopoliticalNotes": "The most important telecommunications hub on the West Coast and the primary terminus for fiber-optic cables connecting the U.S. to the Pacific Rim. One-third of all internet traffic between the U.S. and Asia passes through this building.",
+    "notes": "The building was converted from an office tower to a major carrier hotel starting in the 1990s.",
+    "attribution": {
+      "sources": [
+        { "name": "One Wilshire", "url": "https://www.onewilshire.com", "accessedAt": "2026-05-10" },
+        { "name": "CoreSite LA1", "url": "https://www.coresite.com/data-centers/los-angeles/one-wilshire", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 2,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  },
+  {
+    "id": "DC-USA-NYC-60HUDSON-CH",
+    "name": "60 Hudson Street (Carrier Hotel)",
+    "countryId": "USA",
+    "city": "New York City",
+    "coordinates": [-74.0089, 40.7178],
+    "type": "colocation",
+    "status": "operational",
+    "tierLevel": "3",
+    "capacityMW": null,
+    "floorSpaceM2": null,
+    "pue": null,
+    "operator": "Digital Realty / Multiple",
+    "owner": "Multiple",
+    "yearOpened": 1930,
+    "yearPlanned": null,
+    "cloudRegion": null,
+    "geopoliticalNotes": "A premier 'Carrier Hotel' and the landing point for numerous transatlantic cables. It is a critical node for global financial markets (Wall Street) and serves as a major interconnection point for international telecommunications.",
+    "notes": "Formerly the Western Union Building, now one of the most important hubs in the global internet backbone.",
+    "attribution": {
+      "sources": [
+        { "name": "Wikipedia - 60 Hudson Street", "url": "https://en.wikipedia.org/wiki/60_Hudson_Street", "accessedAt": "2026-05-10" },
+        { "name": "Data Center Map", "url": "https://www.datacentermap.com", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 2,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  },
+  {
+    "id": "DC-USA-CHICAGO-DLR-350CERMAK",
+    "name": "Lakeside Technology Center (350 East Cermak)",
+    "countryId": "USA",
+    "city": "Chicago",
+    "coordinates": [-87.6236, 41.8525],
+    "type": "colocation",
+    "status": "operational",
+    "tierLevel": "3",
+    "capacityMW": 100,
+    "floorSpaceM2": 100000,
+    "pue": null,
+    "operator": "Digital Realty",
+    "owner": "Digital Realty",
+    "yearOpened": 1999,
+    "yearPlanned": null,
+    "cloudRegion": null,
+    "geopoliticalNotes": "One of the world's largest data centers, serving as the central hub for the U.S. financial sector (CME Group) and the primary interconnection point for the Midwest.",
+    "notes": "Housed in the former R.R. Donnelley printing plant.",
+    "attribution": {
+      "sources": [
+        { "name": "Digital Realty - 350 E Cermak", "url": "https://www.digitalrealty.com/data-centers/chicago/350-e-cermak-rd", "accessedAt": "2026-05-10" },
+        { "name": "Coresite Chicago", "url": "https://www.coresite.com/data-centers/chicago", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 2,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  },
+  {
+    "id": "DC-USA-BLUFFDALE-NSA-BUMBLEHIVE",
+    "name": "Utah Data Center (Bumblehive)",
+    "countryId": "USA",
+    "city": "Bluffdale",
+    "coordinates": [-111.9310, 40.4310],
+    "type": "government",
+    "status": "operational",
+    "tierLevel": null,
+    "capacityMW": 65,
+    "floorSpaceM2": 140000,
+    "pue": null,
+    "operator": "National Security Agency (NSA)",
+    "owner": "U.S. Government",
+    "yearOpened": 2014,
+    "yearPlanned": null,
+    "cloudRegion": null,
+    "geopoliticalNotes": "Operated by the NSA, this facility is designed to store exabytes of data for the U.S. Intelligence Community. It is a key asset for national security and signal intelligence.",
+    "notes": "The facility's power capacity is estimated at 65 MW.",
+    "attribution": {
+      "sources": [
+        { "name": "Wikipedia - Utah Data Center", "url": "https://en.wikipedia.org/wiki/Utah_Data_Center", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "medium",
+        "sourceCount": 1,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  },
+  {
+    "id": "DC-USA-DALLAS-EQUINIX-DA11",
+    "name": "Infomart Dallas",
+    "countryId": "USA",
+    "city": "Dallas",
+    "coordinates": [-96.8208, 32.8014],
+    "type": "colocation",
+    "status": "operational",
+    "tierLevel": "3",
+    "capacityMW": null,
+    "floorSpaceM2": 150000,
+    "pue": null,
+    "operator": "Equinix",
+    "owner": "Equinix",
+    "yearOpened": 1985,
+    "yearPlanned": null,
+    "cloudRegion": null,
+    "geopoliticalNotes": "The dominant carrier-neutral hub in the Southern U.S., serving as a critical bridge for data traffic between the U.S. and Mexico and a major node for South American connectivity.",
+    "notes": "Equinix acquired the Infomart building in 2018.",
+    "attribution": {
+      "sources": [
+        { "name": "Equinix Dallas Data Centers", "url": "https://www.equinix.com/data-centers/north-america-colocation/united-states-colocation/dallas-data-centers", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 1,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  },
+  {
+    "id": "DC-USA-RENO-SWITCH-CITADEL",
+    "name": "Switch Citadel Campus",
+    "countryId": "USA",
+    "city": "Tahoe Reno",
+    "coordinates": [-119.3850, 39.5360],
+    "type": "hyperscale",
+    "status": "operational",
+    "tierLevel": "4",
+    "capacityMW": 650,
+    "floorSpaceM2": 670000,
+    "pue": 1.2,
+    "operator": "Switch",
+    "owner": "Switch",
+    "yearOpened": 2017,
+    "yearPlanned": null,
+    "cloudRegion": null,
+    "geopoliticalNotes": "The largest data center campus in the world. Its design emphasizes extreme physical security and 100% renewable energy, making it a strategic site for mission-critical hyperscale workloads and national-scale disaster recovery.",
+    "notes": "The campus is designed to scale up to 7.2 million square feet and 650 MW of power.",
+    "attribution": {
+      "sources": [
+        { "name": "Switch - The Citadel", "url": "https://www.switch.com/citadel/", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 1,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  },
+  {
+    "id": "DC-USA-NYC-GOOGLE-111EIGHTH",
+    "name": "111 Eighth Avenue",
+    "countryId": "USA",
+    "city": "New York City",
+    "coordinates": [-74.0020, 40.7411],
+    "type": "hyperscale",
+    "status": "operational",
+    "tierLevel": "3",
+    "capacityMW": null,
+    "floorSpaceM2": 270000,
+    "pue": null,
+    "operator": "Google",
+    "owner": "Google",
+    "yearOpened": 2010,
+    "yearPlanned": null,
+    "cloudRegion": "us-east4",
+    "geopoliticalNotes": "One of the most network-dense buildings in the world. It serves as a primary hub for Google’s global services and a major interconnection point for the East Coast's financial and media sectors.",
+    "notes": "Google purchased the building in 2010 and it serves as their NY headquarters and a major data center.",
+    "attribution": {
+      "sources": [
+        { "name": "Wikipedia - 111 Eighth Avenue", "url": "https://en.wikipedia.org/wiki/111_Eighth_Avenue", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 1,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  },
+  {
+    "id": "DC-USA-HILLSBORO-DLR-CAMPUS",
+    "name": "Digital Realty Hillsboro Campus",
+    "countryId": "USA",
+    "city": "Hillsboro",
+    "coordinates": [-122.9340, 45.5230],
+    "type": "hyperscale",
+    "status": "operational",
+    "tierLevel": "3",
+    "capacityMW": 150,
+    "floorSpaceM2": null,
+    "pue": null,
+    "operator": "Digital Realty",
+    "owner": "Digital Realty",
+    "yearOpened": 2012,
+    "yearPlanned": null,
+    "cloudRegion": null,
+    "geopoliticalNotes": "A critical 'Digital Gateway' to the Asia-Pacific region due to its proximity to several trans-Pacific subsea cable landings. It offers a low-latency, tax-advantaged alternative to Silicon Valley for major hyperscalers.",
+    "notes": "Hillsboro has become one of the fastest-growing data center markets in the U.S.",
+    "attribution": {
+      "sources": [
+        { "name": "Digital Realty - Hillsboro", "url": "https://www.digitalrealty.com/data-centers/hillsboro", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 1,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  }
+]

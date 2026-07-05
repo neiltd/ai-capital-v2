@@ -1,0 +1,272 @@
+[
+  {
+    "id": "ICN",
+    "name": "Incheon International Airport",
+    "countryId": "KOR",
+    "city": "Incheon",
+    "iata": "ICN",
+    "icao": "RKSI",
+    "coordinates": [126.4406, 37.4602],
+    "passengerVolume": 71150000,
+    "cargoVolume": 2800000,
+    "runwayCount": 4,
+    "elevationM": 7,
+    "strategicImportance": "critical",
+    "geopoliticalNotes": "South Korea's primary global gateway and a top-tier Northeast Asian hub. Completed Phase 4 expansion in late 2024, significantly increasing its capacity as a global air cargo leader.",
+    "notes": "Consistently ranked as one of the world's best airports.",
+    "attribution": {
+      "sources": [
+        { "name": "Incheon International Airport Corp", "url": "https://www.airport.kr", "accessedAt": "2026-05-10" },
+        { "name": "OurAirports", "url": "https://ourairports.com/airports/RKSI/", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 2,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  },
+  {
+    "id": "GMP",
+    "name": "Gimpo International Airport",
+    "countryId": "KOR",
+    "city": "Seoul",
+    "iata": "GMP",
+    "icao": "RKSS",
+    "coordinates": [126.7910, 37.5583],
+    "passengerVolume": 24500000,
+    "cargoVolume": 250000,
+    "runwayCount": 2,
+    "elevationM": 18,
+    "strategicImportance": "high",
+    "geopoliticalNotes": "The 'Business Hub' of Seoul, specializing in high-frequency regional routes to Tokyo and Shanghai. Vital for Northeast Asian business connectivity.",
+    "notes": "Served as the main international airport for Seoul until 2001.",
+    "attribution": {
+      "sources": [
+        { "name": "Korea Airports Corporation", "url": "https://www.airport.co.kr", "accessedAt": "2026-05-10" },
+        { "name": "OurAirports", "url": "https://ourairports.com/airports/RKSS/", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 2,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  },
+  {
+    "id": "CJU",
+    "name": "Jeju International Airport",
+    "countryId": "KOR",
+    "city": "Jeju",
+    "iata": "CJU",
+    "icao": "RKPC",
+    "coordinates": [126.4930, 33.5113],
+    "passengerVolume": 29600000,
+    "cargoVolume": 200000,
+    "runwayCount": 2,
+    "elevationM": 36,
+    "strategicImportance": "high",
+    "geopoliticalNotes": "Main gateway for Jeju Island tourism. The Seoul-Jeju route is the world's busiest air route, making this airport a critical node for national domestic connectivity.",
+    "notes": "Currently operating near maximum capacity.",
+    "attribution": {
+      "sources": [
+        { "name": "Korea Airports Corporation", "url": "https://www.airport.co.kr", "accessedAt": "2026-05-10" },
+        { "name": "OurAirports", "url": "https://ourairports.com/airports/RKPC/", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 2,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  },
+  {
+    "id": "PUS",
+    "name": "Gimhae International Airport",
+    "countryId": "KOR",
+    "city": "Busan",
+    "iata": "PUS",
+    "icao": "RKPK",
+    "coordinates": [128.9382, 35.1795],
+    "passengerVolume": 14000000,
+    "cargoVolume": 150000,
+    "runwayCount": 2,
+    "elevationM": 2,
+    "strategicImportance": "high",
+    "geopoliticalNotes": "The secondary international gateway for South Korea's southeastern industrial region. Critical for the Busan-Gyeongnam metropolitan area and regional long-haul expansion.",
+    "notes": "Shares facilities with the ROK Air Force (5th Air Mobility Wing).",
+    "attribution": {
+      "sources": [
+        { "name": "Korea Airports Corporation", "url": "https://www.airport.co.kr", "accessedAt": "2026-05-10" },
+        { "name": "OurAirports", "url": "https://ourairports.com/airports/RKPK/", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 2,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  },
+  {
+    "id": "CJJ",
+    "name": "Cheongju International Airport",
+    "countryId": "KOR",
+    "city": "Cheongju",
+    "iata": "CJJ",
+    "icao": "RKTU",
+    "coordinates": [127.4990, 36.7166],
+    "passengerVolume": 4600000,
+    "cargoVolume": 30000,
+    "runwayCount": 2,
+    "elevationM": 58,
+    "strategicImportance": "medium",
+    "geopoliticalNotes": "A rising hub for Low-Cost Carriers (LCCs) serving the central region and southern Gyeonggi. Serves as an alternative to the crowded Seoul metropolitan airports.",
+    "notes": "Co-located with a major ROK Air Force base.",
+    "attribution": {
+      "sources": [
+        { "name": "Korea Airports Corporation", "url": "https://www.airport.co.kr", "accessedAt": "2026-05-10" },
+        { "name": "OurAirports", "url": "https://ourairports.com/airports/RKTU/", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 2,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  },
+  {
+    "id": "TAE",
+    "name": "Daegu International Airport",
+    "countryId": "KOR",
+    "city": "Daegu",
+    "iata": "TAE",
+    "icao": "RKTN",
+    "coordinates": [128.6580, 35.8941],
+    "passengerVolume": 3600000,
+    "cargoVolume": 25000,
+    "runwayCount": 2,
+    "elevationM": 35,
+    "strategicImportance": "medium",
+    "geopoliticalNotes": "Key regional hub for the Daegu-Gyeongbuk area. Primarily focused on short-haul international routes to Japan and Taiwan.",
+    "notes": "Dual-use civil-military facility (K-2 Air Base).",
+    "attribution": {
+      "sources": [
+        { "name": "Korea Airports Corporation", "url": "https://www.airport.co.kr", "accessedAt": "2026-05-10" },
+        { "name": "OurAirports", "url": "https://ourairports.com/airports/RKTN/", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 2,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  },
+  {
+    "id": "MWX",
+    "name": "Muan International Airport",
+    "countryId": "KOR",
+    "city": "Muan",
+    "iata": "MWX",
+    "icao": "RKJB",
+    "coordinates": [126.3831, 34.9914],
+    "passengerVolume": 500000,
+    "cargoVolume": 5000,
+    "runwayCount": 1,
+    "elevationM": 38,
+    "strategicImportance": "medium",
+    "geopoliticalNotes": "Strategic gateway for the southwestern region (Jeolla province). Intended to replace Gwangju Airport for international operations.",
+    "notes": "Features a single 2,800m runway.",
+    "attribution": {
+      "sources": [
+        { "name": "Korea Airports Corporation", "url": "https://www.airport.co.kr", "accessedAt": "2026-05-10" },
+        { "name": "OurAirports", "url": "https://ourairports.com/airports/RKJB/", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 2,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  },
+  {
+    "id": "YNY",
+    "name": "Yangyang International Airport",
+    "countryId": "KOR",
+    "city": "Yangyang",
+    "iata": "YNY",
+    "icao": "RKNY",
+    "coordinates": [128.6690, 38.0614],
+    "passengerVolume": 20000,
+    "cargoVolume": 1000,
+    "runwayCount": 1,
+    "elevationM": 73,
+    "strategicImportance": "low",
+    "geopoliticalNotes": "Tourism gateway for Gangwon Province and nearby ski resorts. Important for regional connectivity to the northeast coast.",
+    "notes": "Often referred to as a 'ghost airport' due to low utilization.",
+    "attribution": {
+      "sources": [
+        { "name": "Korea Airports Corporation", "url": "https://www.airport.co.kr", "accessedAt": "2026-05-10" },
+        { "name": "OurAirports", "url": "https://ourairports.com/airports/RKNY/", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 2,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  },
+  {
+    "id": "KUV",
+    "name": "Gunsan Airport",
+    "countryId": "KOR",
+    "city": "Gunsan",
+    "iata": "KUV",
+    "icao": "RKJK",
+    "coordinates": [126.6153, 35.9259],
+    "passengerVolume": 400000,
+    "cargoVolume": 2000,
+    "runwayCount": 1,
+    "elevationM": 9,
+    "strategicImportance": "high",
+    "geopoliticalNotes": "A critical dual-use facility co-located with Kunsan Air Base, hosting significant US Air Force (8th Fighter Wing) and ROK Air Force presence near the Yellow Sea.",
+    "notes": "Only domestic flights (to Jeju) operate here commercially.",
+    "attribution": {
+      "sources": [
+        { "name": "US Air Force", "url": "https://www.kunsan.af.mil", "accessedAt": "2026-05-10" },
+        { "name": "OurAirports", "url": "https://ourairports.com/airports/RKJK/", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 2,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  },
+  {
+    "id": "OSN",
+    "name": "Osan Air Base",
+    "countryId": "KOR",
+    "city": "Pyeongtaek",
+    "iata": "null",
+    "icao": "RKSO",
+    "coordinates": [127.0294, 37.0906],
+    "passengerVolume": null,
+    "cargoVolume": null,
+    "runwayCount": 2,
+    "elevationM": 12,
+    "strategicImportance": "critical",
+    "geopoliticalNotes": "One of the most strategically significant military airfields in East Asia. Headquarter for the US 7th Air Force and the ROK Air Force Operations Command.",
+    "notes": "Military use only. No commercial IATA code assigned.",
+    "attribution": {
+      "sources": [
+        { "name": "US Air Force", "url": "https://www.osan.af.mil", "accessedAt": "2026-05-10" },
+        { "name": "OurAirports", "url": "https://ourairports.com/airports/RKSO/", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 2,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  }
+]

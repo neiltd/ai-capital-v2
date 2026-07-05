@@ -1,0 +1,65 @@
+{
+  "id": "DNK",
+  "iso2": "DK",
+  "name": "Denmark",
+  "region": "Europe",
+  "subregion": "Northern Europe",
+  "capital": "Copenhagen",
+  "lastUpdated": "2026-05-09",
+  "summary": "Denmark enters 2026 with strong economic momentum and a renewed sense of national unity under King Frederik X. The country remains a leading advocate for Ukraine within the EU and NATO, while its pharmaceutical sector continues to drive a significant trade surplus. However, the government faces a challenging October 2026 election as the 'Grand Coalition' navigates public demands for increased social spending alongside historic defense commitments.",
+  "indicators": {
+    "politicalStability":       { "score": 8, "score_description": "Stable coalition government with high public support for the monarchy.", "trend": "stable", "confidence": "high", "note": "The transition to King Frederik X has been seamless, though election year politics are beginning to strain the centrist coalition." },
+    "economicDirection":        { "score": 8, "score_description": "Robust growth driven by pharmaceutical exports and green energy.", "trend": "improving", "confidence": "high", "note": "Denmark maintains a strong fiscal position and one of the lowest inflation rates in Europe." },
+    "investmentAttractiveness": { "score": 9, "score_description": "Global leader in life sciences, shipping, and wind energy.", "trend": "stable", "confidence": "high", "note": "Denmark's business environment is consistently ranked among the best globally for transparency and ease of doing business." },
+    "geopoliticalRisk":         { "score": 4, "score_description": "Relatively low risk, focused on Arctic security and Baltic stability.", "trend": "stable", "confidence": "high", "note": "Strategic focus remains on Greenland's role in Arctic defense and the protection of critical maritime infrastructure." },
+    "educationQuality":         { "score": 8, "score_description": "High quality with a focus on creativity and vocational excellence.", "trend": "stable", "confidence": "high", "note": "The education system is well-aligned with the needs of the high-tech and pharmaceutical sectors." },
+    "healthcareQuality":        { "score": 8, "score_description": "High standards with advanced specialization in life sciences.", "trend": "stable", "confidence": "high", "note": "Public healthcare is efficient, though it faces workforce shortages in certain rural regions." },
+    "technologyInvestment":     { "score": 9, "score_description": "Leading global hub for green technology and biotechnology.", "trend": "rising", "confidence": "high", "note": "Substantial investments in 'Energy Islands' and biotech research parks continue to drive innovation." }
+  },
+  "demographics": {
+    "population": 6000000,
+    "medianAge": 42.0,
+    "urbanizationRate": 88,
+    "majorEthnicGroups": ["Danish", "Turkish", "Polish", "Syrian", "German"],
+    "religions": [
+      { "name": "Church of Denmark (Lutheran)", "percent": 72.0 },
+      { "name": "None/Unaffiliated", "percent": 20.0 },
+      { "name": "Muslim", "percent": 5.0 },
+      { "name": "Other", "percent": 3.0 }
+    ]
+  },
+  "alliances": ["EU", "NATO", "Nordic Council", "OECD", "Schengen Area"],
+  "relationships": [
+    { "countryId": "SWE", "countryName": "Sweden", "type": "ally", "sentiment": "positive", "summary": "Close cultural and economic partner; joint focus on Baltic Sea security and infrastructure." },
+    { "countryId": "DEU", "countryName": "Germany", "type": "ally", "sentiment": "positive", "summary": "Primary trading partner and key ally in EU policy and energy transition." },
+    { "countryId": "USA", "countryName": "United States", "type": "treaty_ally", "sentiment": "positive", "summary": "Critical security partner, especially regarding Greenland and intelligence sharing." },
+    { "countryId": "UKR", "countryName": "Ukraine", "type": "ally", "sentiment": "positive", "summary": "Major military and financial supporter; Denmark is a leading provider of F-16 training and equipment." },
+    { "countryId": "RUS", "countryName": "Russia", "type": "adversary", "sentiment": "negative", "summary": "Relations are minimal; Denmark is a vocal proponent of strict sanctions and Baltic defense." }
+  ],
+  "perspectives": [
+    { "source": "Social Democratic Supporter", "bias": "Center-Left", "view": "The 'Grand Coalition' has successfully navigated the energy crisis and the monarchical transition, but we must now prioritize the welfare state." },
+    { "source": "Danish Business Council", "bias": "Pro-Business", "view": "Denmark's pharmaceutical and green energy sectors are global champions; we need to ensure the labor market remains flexible to sustain this growth." },
+    { "source": "Security Analyst", "bias": "Atlanticist", "view": "Denmark's historic increase in defense spending and focus on the Arctic are essential to maintaining NATO's edge in the North Atlantic." }
+  ],
+  "historicalContext": {
+    "summary": "Denmark is one of the world's oldest monarchies, transitioning from a regional Baltic power to a modern, highly developed welfare state. Its history is marked by the loss of territories in the 19th century, which led to an internal focus on social cohesion and economic modernization. In the 21st century, Denmark has become an active participant in international security and a pioneer in renewable energy.",
+    "keyEvents": [
+      { "year": 1849, "event": "Adoption of the first democratic constitution, ending absolute monarchy." },
+      { "year": 1945, "event": "Liberation from Nazi occupation at the end of WWII." },
+      { "year": 1973, "event": "Denmark joins the European Economic Community (EEC)." },
+      { "year": 2024, "event": "Queen Margrethe II abdicates; King Frederik X accedes to the throne." },
+      { "year": 2025, "event": "The Tyra gas field reopens, significantly boosting domestic energy security." },
+      { "year": 2026, "event": "Denmark prepares for general elections amid record economic performance." }
+    ]
+  },
+  "investmentNotes": {
+    "strengths": ["World-class life sciences and biotech cluster", "Global leadership in wind energy and maritime shipping", "Strong fiscal position with low public debt", "Highly stable and transparent political environment"],
+    "risks": ["Labor shortages in high-tech and healthcare sectors", "Rising costs associated with defense modernization", "Sensitivity to global trade disruptions"],
+    "sectors": ["Life Sciences & Pharmaceuticals", "Green Energy (Offshore Wind)", "Maritime & Logistics", "Information Technology", "Agtech"]
+  },
+  "sources": [
+    { "name": "Statistics Denmark", "url": "https://www.dst.dk/en", "type": "economic" },
+    { "name": "Danmarks Nationalbank", "url": "https://www.nationalbanken.dk/en", "type": "economic" },
+    { "name": "Ministry of Foreign Affairs", "url": "https://um.dk/en", "type": "political" }
+  ]
+}

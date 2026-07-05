@@ -1,0 +1,27 @@
+[
+  {
+    "countryId": "BGD",
+    "year": 2022,
+    "overallScore": 54.0,
+    "availability": 61.5,
+    "access": 52.1,
+    "utilization": 58.4,
+    "stability": 43.9,
+    "undernourishedPct": 11.2,
+    "foodImportDependencyPct": 11.2,
+    "cerealYieldKgHa": 5160,
+    "climateVulnerability": "high",
+    "conflictExposure": "low",
+    "attribution": {
+      "sources": [
+        { "name": "GFSI 2022 — Bangladesh", "url": "https://impact.economist.com/sustainability/project/food-security-index/", "accessedAt": "2024-05-22" },
+        { "name": "FAO FAOSTAT", "url": "https://www.fao.org/faostat/en/", "accessedAt": "2024-05-22" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 2,
+        "lastVerified": "2024-05-22"
+      }
+    }
+  }
+]

@@ -1,0 +1,272 @@
+[
+  {
+    "id": "PLANT-IRN-BUSHEHR-1",
+    "name": "Bushehr Nuclear Power Plant (Unit 1)",
+    "countryId": "IRN",
+    "city": "Bushehr",
+    "coordinates": [50.8861, 28.8319],
+    "type": "nuclear",
+    "status": "operating",
+    "capacityMW": 1000,
+    "annualOutputGWh": null,
+    "yearCommissioned": 2011,
+    "yearRetirement": null,
+    "operator": "Nuclear Power Production and Development Company of Iran",
+    "owner": "Atomic Energy Organization of Iran (AEOI)",
+    "strategicNote": "Iran's first and only operational nuclear power plant, a central point of international geopolitical interest.",
+    "notes": "Built with Russian assistance. Units 2 and 3 are under construction.",
+    "attribution": {
+      "sources": [
+        { "name": "IAEA PRIS", "url": "https://pris.iaea.org/PRIS/CountryStatistics/ReactorDetails.aspx?current=311", "accessedAt": "2025-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 2,
+        "lastVerified": "2025-05-10"
+      }
+    }
+  },
+  {
+    "id": "PLANT-IRN-DAMAVAND",
+    "name": "Damavand (Pakdasht) Combined Cycle Power Plant",
+    "countryId": "IRN",
+    "city": "Pakdasht",
+    "coordinates": [51.6875, 35.4958],
+    "type": "gas",
+    "status": "operating",
+    "capacityMW": 2862,
+    "annualOutputGWh": null,
+    "yearCommissioned": 2004,
+    "yearRetirement": null,
+    "operator": "Tehran Power Generation Company",
+    "owner": "Damavand Power Generation Company",
+    "strategicNote": "The largest thermal power plant in Iran and one of the largest in the Middle East, critical for Tehran's stability.",
+    "notes": null,
+    "attribution": {
+      "sources": [
+        { "name": "Global Energy Monitor", "url": "https://www.gem.wiki/Damavand_power_station", "accessedAt": "2025-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 1,
+        "lastVerified": "2025-05-10"
+      }
+    }
+  },
+  {
+    "id": "PLANT-IRN-NEKA",
+    "name": "Shahid Salimi (Neka) Power Plant",
+    "countryId": "IRN",
+    "city": "Neka",
+    "coordinates": [53.2569, 36.8381],
+    "type": "gas",
+    "status": "operating",
+    "capacityMW": 2214,
+    "annualOutputGWh": null,
+    "yearCommissioned": 1979,
+    "yearRetirement": null,
+    "operator": "Mazandaran Power Generation Company",
+    "owner": "Government of Iran",
+    "strategicNote": "A major facility in northern Iran, capable of using both gas and fuel oil.",
+    "notes": null,
+    "attribution": {
+      "sources": [
+        { "name": "Global Energy Monitor", "url": "https://www.gem.wiki/Neka_power_station", "accessedAt": "2025-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 1,
+        "lastVerified": "2025-05-10"
+      }
+    }
+  },
+  {
+    "id": "PLANT-IRN-KARUN-3",
+    "name": "Karun-3 Hydroelectric Power Plant",
+    "countryId": "IRN",
+    "city": "Izeh",
+    "coordinates": [50.0833, 31.8],
+    "type": "hydro",
+    "status": "operating",
+    "capacityMW": 2280,
+    "annualOutputGWh": 4137,
+    "yearCommissioned": 2005,
+    "yearRetirement": null,
+    "operator": "Iran Water and Power Resources Development Co.",
+    "owner": "Government of Iran",
+    "strategicNote": "The largest hydroelectric plant in Iran, providing critical peak power and grid stability.",
+    "notes": null,
+    "attribution": {
+      "sources": [
+        { "name": "Global Energy Monitor", "url": "https://www.gem.wiki/Karun-3_Dam", "accessedAt": "2025-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 2,
+        "lastVerified": "2025-05-10"
+      }
+    }
+  },
+  {
+    "id": "PLANT-IRN-MASJED-SOLEYMAN",
+    "name": "Masjed Soleyman Hydroelectric Power Plant",
+    "countryId": "IRN",
+    "city": "Masjed Soleyman",
+    "coordinates": [49.3789, 32.0311],
+    "type": "hydro",
+    "status": "operating",
+    "capacityMW": 2000,
+    "annualOutputGWh": 3700,
+    "yearCommissioned": 2003,
+    "yearRetirement": null,
+    "operator": "Iran Water and Power Resources Development Co.",
+    "owner": "Government of Iran",
+    "strategicNote": "A key component of the Karun river cascade system.",
+    "notes": null,
+    "attribution": {
+      "sources": [
+        { "name": "Global Energy Monitor", "url": "https://www.gem.wiki/Masjed_Soleyman_Dam", "accessedAt": "2025-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 1,
+        "lastVerified": "2025-05-10"
+      }
+    }
+  },
+  {
+    "id": "PLANT-IRN-SHAHID-RAJAEE",
+    "name": "Shahid Rajaee Power Plant",
+    "countryId": "IRN",
+    "city": "Qazvin",
+    "coordinates": [50.2994, 36.1597],
+    "type": "gas",
+    "status": "operating",
+    "capacityMW": 2042,
+    "annualOutputGWh": null,
+    "yearCommissioned": 1992,
+    "yearRetirement": null,
+    "operator": "Shahid Rajaee Power Generation Company",
+    "owner": "Government of Iran",
+    "strategicNote": "Major thermal plant serving the Qazvin and Tehran industrial corridors.",
+    "notes": "Includes both steam and gas units.",
+    "attribution": {
+      "sources": [
+        { "name": "Global Energy Monitor", "url": "https://www.gem.wiki/Shahid_Rajaee_power_station", "accessedAt": "2025-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 1,
+        "lastVerified": "2025-05-10"
+      }
+    }
+  },
+  {
+    "id": "PLANT-IRN-RAMIN",
+    "name": "Ramin Power Plant",
+    "countryId": "IRN",
+    "city": "Ahvaz",
+    "coordinates": [48.8639, 31.4486],
+    "type": "gas",
+    "status": "operating",
+    "capacityMW": 1903,
+    "annualOutputGWh": null,
+    "yearCommissioned": 1979,
+    "yearRetirement": null,
+    "operator": "Ahvaz Power Generation Company",
+    "owner": "Government of Iran",
+    "strategicNote": "Largest thermal power plant in southwestern Iran, critical for the oil-rich Khuzestan province.",
+    "notes": null,
+    "attribution": {
+      "sources": [
+        { "name": "Global Energy Monitor", "url": "https://www.gem.wiki/Ramin_power_station", "accessedAt": "2025-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 1,
+        "lastVerified": "2025-05-10"
+      }
+    }
+  },
+  {
+    "id": "PLANT-IRN-SHAHID-MONTAZERI",
+    "name": "Shahid Montazeri Power Plant",
+    "countryId": "IRN",
+    "city": "Isfahan",
+    "coordinates": [51.5042, 32.7903],
+    "type": "gas",
+    "status": "operating",
+    "capacityMW": 1600,
+    "annualOutputGWh": null,
+    "yearCommissioned": 1984,
+    "yearRetirement": null,
+    "operator": "Isfahan Power Generation Company",
+    "owner": "Government of Iran",
+    "strategicNote": "Major power source for the central industrial city of Isfahan.",
+    "notes": null,
+    "attribution": {
+      "sources": [
+        { "name": "Global Energy Monitor", "url": "https://www.gem.wiki/Shahid_Montazeri_power_station", "accessedAt": "2025-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 1,
+        "lastVerified": "2025-05-10"
+      }
+    }
+  },
+  {
+    "id": "PLANT-IRN-GOTVAND",
+    "name": "Gotvand Hydroelectric Power Plant",
+    "countryId": "IRN",
+    "city": "Gotvand",
+    "coordinates": [48.8358, 32.2758],
+    "type": "hydro",
+    "status": "operating",
+    "capacityMW": 2000,
+    "annualOutputGWh": 4500,
+    "yearCommissioned": 2012,
+    "yearRetirement": null,
+    "operator": "Iran Water and Power Resources Development Co.",
+    "owner": "Government of Iran",
+    "strategicNote": "High-capacity hydro plant; has faced environmental controversies due to salt domes in its reservoir.",
+    "notes": null,
+    "attribution": {
+      "sources": [
+        { "name": "Global Energy Monitor", "url": "https://www.gem.wiki/Gotvand_Dam", "accessedAt": "2025-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 1,
+        "lastVerified": "2025-05-10"
+      }
+    }
+  },
+  {
+    "id": "PLANT-IRN-SIAH-BISHE",
+    "name": "Siah Bishe Pumped Storage Power Plant",
+    "countryId": "IRN",
+    "city": "Kandovan",
+    "coordinates": [51.3053, 36.2178],
+    "type": "hydro",
+    "status": "operating",
+    "capacityMW": 1040,
+    "annualOutputGWh": null,
+    "yearCommissioned": 2013,
+    "yearRetirement": null,
+    "operator": "Iran Water and Power Resources Development Co.",
+    "owner": "Government of Iran",
+    "strategicNote": "Iran's first pumped-storage plant, essential for grid frequency control and peak shaving near Tehran.",
+    "notes": null,
+    "attribution": {
+      "sources": [
+        { "name": "Global Energy Monitor", "url": "https://www.gem.wiki/Siah_Bishe_Pumped_Storage_Power_Station", "accessedAt": "2025-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 1,
+        "lastVerified": "2025-05-10"
+      }
+    }
+  }
+]

@@ -1,0 +1,68 @@
+{
+  "id": "ROU",
+  "iso2": "RO",
+  "name": "Romania",
+  "region": "Europe",
+  "subregion": "Southeast Europe",
+  "capital": "Bucharest",
+  "lastUpdated": "2026-05-09",
+  "summary": "In 2026, Romania has emerged as a significant regional power and an indispensable pillar of NATO's Eastern Flank. The country is experiencing a period of sustained economic expansion, fueled by a sophisticated IT sector, a resurgent manufacturing base, and strategic energy projects in the Black Sea (Neptun Deep) that are transforming it into a net energy exporter. Bucharest has solidified its status as a major European tech hub, while large-scale infrastructure projects are finally bridging the historic divide between its three major provinces. Romania's proactive foreign policy, centered on supporting Moldova's EU path and securing the Black Sea region, has significantly increased its diplomatic weight in Brussels and Washington. However, the nation still faces the dual challenges of improving administrative capacity and addressing the long-term impact of large-scale emigration.",
+  "indicators": {
+    "politicalStability":       { "score": 7, "score_description": "Stable coalition governance with a strong pro-Western consensus.", "trend": "stable", "confidence": "high", "note": "Major political parties maintain a unified front on national security and EU integration, providing a predictable environment for investors." },
+    "economicDirection":        { "score": 7, "score_description": "Robust growth driven by investment, exports, and energy development.", "trend": "improving", "confidence": "high", "note": "GDP growth is outperforming the EU average, with a focus on high-value services and industrial modernization." },
+    "investmentAttractiveness": { "score": 8, "score_description": "Highly attractive due to scale, skilled tech labor, and energy potential.", "trend": "rising", "confidence": "high", "note": "Romania is a primary destination for companies seeking to diversify their European supply chains and tech operations." },
+    "geopoliticalRisk":         { "score": 6, "score_description": "Elevated due to Black Sea security concerns; mitigated by NATO presence.", "trend": "stable", "confidence": "high", "note": "The country hosts significant NATO multinational forces and is a central hub for regional security cooperation." },
+    "educationQuality":         { "score": 6, "score_description": "Strong tradition in mathematics and computer science.", "trend": "improving", "confidence": "medium", "note": "Universities are increasingly collaborating with the private sector to bridge the skills gap in emerging tech fields." },
+    "healthcareQuality":        { "score": 5, "score_description": "Public system in transition; significant investment in new infrastructure.", "trend": "improving", "confidence": "medium", "note": "A series of new regional emergency hospitals are coming online, funded by the EU and the World Bank." },
+    "technologyInvestment":     { "score": 8, "score_description": "Leading regional hub for software development and cybersecurity.", "trend": "rising", "confidence": "high", "note": "Romania hosts the EU Cybersecurity Competence Centre and continues to attract major global tech firms." }
+  },
+  "demographics": {
+    "population": 18900000,
+    "medianAge": 42.5,
+    "urbanizationRate": 56,
+    "majorEthnicGroups": ["Romanian", "Hungarian", "Roma", "Ukrainian", "German"],
+    "religions": [
+      { "name": "Orthodox Christian", "percent": 81.5 },
+      { "name": "Roman Catholic", "percent": 4.5 },
+      { "name": "Reformed (Calvinist)", "percent": 3.0 },
+      { "name": "None/Unaffiliated", "percent": 0.9 },
+      { "name": "Other", "percent": 10.1 }
+    ]
+  },
+  "alliances": ["EU", "NATO", "Bucharest Nine", "Three Seas Initiative", "OECD (Candidate)"],
+  "relationships": [
+    { "countryId": "MDA", "countryName": "Moldova", "type": "ally", "sentiment": "positive", "summary": "Strategic and cultural partnership; Romania is the primary advocate and supporter of Moldova's integration into the European Union." },
+    { "countryId": "USA", "countryName": "United States", "type": "treaty_ally", "sentiment": "positive", "summary": "Essential security and strategic partner; strong cooperation on defense, energy (nuclear/gas), and regional stability." },
+    { "countryId": "UKR", "countryName": "Ukraine", "type": "partner", "sentiment": "positive", "summary": "Critical partner for security and logistics; Romania serves as a major transit route for Ukrainian grain and a hub for regional support." },
+    { "countryId": "BGR", "countryName": "Bulgaria", "type": "ally", "sentiment": "positive", "summary": "Close regional partner; joint efforts on Schengen integration and Black Sea security cooperation." },
+    { "countryId": "HUN", "countryName": "Hungary", "type": "partner", "sentiment": "neutral", "summary": "Complex relationship involving shared history and minority rights; focus remains on pragmatic economic and infrastructure cooperation." }
+  ],
+  "perspectives": [
+    { "source": "Bucharest Tech CEO", "bias": "Innovation-focused", "view": "Romania is no longer just an outsourcing destination; we are building world-class products and becoming the digital engine of the region." },
+    { "source": "Energy Strategist", "bias": "Resource-focused", "view": "The Neptun Deep project is a game-changer that will not only secure our independence but also make Romania a key energy provider for Central and Southeast Europe." },
+    { "source": "Rural Community Leader", "bias": "Social-focused", "view": "The growth in the cities is impressive, but we must ensure that the benefits of modernization and better infrastructure reach the villages and small towns." }
+  ],
+  "historicalContext": {
+    "summary": "Modern Romania was formed through the 1859 union of Moldavia and Wallachia, followed by the acquisition of Transylvania after WWI. The country endured a brutal communist dictatorship under Nicolae Ceaușescu, which ended in a violent revolution in 1989. Since then, Romania has undergone a profound transformation, successfully transitioning to a market economy and joining NATO in 2004 and the EU in 2007.",
+    "keyEvents": [
+      { "year": 1859, "event": "Unification of Moldavia and Wallachia under Alexandru Ioan Cuza." },
+      { "year": 1878, "event": "Romania achieves full independence from the Ottoman Empire." },
+      { "year": 1918, "event": "Great Union: Transylvania, Bessarabia, and Bukovina join the Romanian Kingdom." },
+      { "year": 1947, "event": "Abolition of the monarchy and the establishment of a communist People's Republic." },
+      { "year": 1989, "event": "Romanian Revolution ends the Ceaușescu regime." },
+      { "year": 2004, "event": "Romania joins NATO." },
+      { "year": 2007, "event": "Romania joins the European Union." },
+      { "year": 2024, "event": "Partial accession to the Schengen Area (Air and Sea)." }
+    ]
+  },
+  "investmentNotes": {
+    "strengths": ["One of the fastest-growing economies in the EU", "Large internal market and strategic access to the Black Sea", "Abundant natural resources including offshore natural gas", "Talented and cost-competitive IT and engineering workforce"],
+    "risks": ["Administrative inefficiency and bureaucratic hurdles", "Significant regional development disparities", "Demographic decline and skilled labor migration", "Geopolitical volatility in the Black Sea region"],
+    "sectors": ["Information Technology & Software Development", "Energy (Oil, Gas, & Renewables)", "Automotive & Manufacturing", "Agriculture & Food Processing", "Logistics & Infrastructure"]
+  },
+  "sources": [
+    { "name": "National Institute of Statistics (INS)", "url": "https://insse.ro/cms/en", "type": "economic" },
+    { "name": "National Bank of Romania (BNR)", "url": "https://www.bnr.ro/Home.aspx", "type": "economic" },
+    { "name": "Ministry of Economy, Entrepreneurship and Tourism", "url": "https://economie.gov.ro/", "type": "economic" }
+  ]
+}

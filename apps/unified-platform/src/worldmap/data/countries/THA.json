@@ -1,0 +1,70 @@
+{
+  "id": "THA",
+  "iso2": "TH",
+  "name": "Thailand",
+  "region": "Asia",
+  "subregion": "South-Eastern Asia",
+  "capital": "Bangkok",
+  "lastUpdated": "2026-05-09",
+  "summary": "Thailand is the second-largest economy in Southeast Asia and a central hub for automotive and electronics manufacturing. It is a constitutional monarchy characterized by cycles of political volatility and military intervention, balanced by a resilient bureaucracy and a highly capable private sector. Thailand follows a 'hedging' foreign policy, maintaining a formal security alliance with the United States while fostering deep economic integration with China. The nation faces long-term structural challenges including a rapidly aging population and a middle-income trap.",
+  "indicators": {
+    "politicalStability":       { "score": 4, "trend": "stable", "confidence": "high", "note": "Frequent shifts between civilian and military-backed governments; deep-seated social divisions remain unresolved." },
+    "economicDirection":        { "score": 6, "trend": "stable", "confidence": "high", "note": "Strong tourism and manufacturing sectors, but growth is hampered by structural inefficiencies and demographics." },
+    "investmentAttractiveness": { "score": 7, "trend": "stable", "confidence": "high", "note": "Excellent infrastructure and strategic location (Eastern Economic Corridor), though political uncertainty can deter long-term FDI." },
+    "geopoliticalRisk":         { "score": 3, "trend": "stable", "confidence": "high", "note": "Generally low risk of external conflict; primary focus is on internal stability and regional connectivity." },
+    "educationQuality":         { "score": 5, "trend": "declining", "confidence": "medium", "note": "Variability in education standards; mismatch between graduate skills and industry needs in high-tech sectors." },
+    "healthcareQuality":        { "score": 8, "trend": "stable", "confidence": "high", "note": "A regional leader in medical services and universal healthcare; a major global destination for medical tourism." },
+    "technologyInvestment":     { "score": 6, "trend": "rising", "confidence": "high", "note": "Strong emphasis on 'Thailand 4.0' initiatives and digital transformation, particularly in the 5G and EV space." }
+  },
+  "demographics": {
+    "population": 71800000,
+    "medianAge": 39.5,
+    "urbanizationRate": 54,
+    "majorEthnicGroups": ["Thai", "Thai-Chinese", "Malay", "Khmer"],
+    "religions": [
+      { "name": "Buddhist", "percent": 93.5 },
+      { "name": "Muslim", "percent": 5.4 },
+      { "name": "Christian", "percent": 1.1 },
+      { "name": "Other", "percent": 0.0 }
+    ]
+  },
+  "alliances": ["ASEAN", "APEC", "Major Non-NATO Ally (US)", "RCEP", "IPEF"],
+  "relationships": [
+    { "countryId": "USA", "countryName": "United States", "type": "treaty_ally", "sentiment": "positive", "summary": "Long-standing security alliance, though political differences have occasionally cooled diplomatic relations." },
+    { "countryId": "CHN", "countryName": "China", "type": "strategic_partner", "sentiment": "positive", "summary": "Deep economic, cultural, and increasingly military ties; China is Thailand's largest trade partner." },
+    { "countryId": "JPN", "countryName": "Japan", "type": "strategic_partner", "sentiment": "positive", "summary": "Japan remains the largest historical investor, particularly in the critical automotive supply chain." },
+    { "countryId": "MMR", "countryName": "Myanmar", "type": "neighbor", "sentiment": "neutral", "summary": "Complex relationship focused on border security, energy imports, and managing the fallout of Myanmar's internal conflict." },
+    { "countryId": "MYS", "countryName": "Malaysia", "type": "neighbor", "sentiment": "positive", "summary": "Key economic partner; cooperation is essential for managing security in the southern border provinces." }
+  ],
+  "perspectives": [
+    { "source": "Business Elite", "bias": "Pragmatic", "view": "Political stability is the priority for economic growth; we must maintain a balance between U.S. security and Chinese capital." },
+    { "source": "Pro-Democracy Activist", "bias": "Reformist", "view": "Thailand needs genuine structural reform to move beyond military-dominated politics and ensure the monarchy is truly under the constitution." },
+    { "source": "Bureaucratic Technocrat", "bias": "Institutional", "view": "Our role is to maintain the state's function and the 'Thailand 4.0' vision regardless of the political turbulence at the top." },
+    { "source": "Southern Security Specialist", "bias": "Regionalist", "view": "Stability in the deep south requires a nuanced approach combining development with sensitive political decentralization." }
+  ],
+  "historicalContext": {
+    "summary": "Thailand (formerly Siam) is the only Southeast Asian nation never colonized by a European power. It transitioned from an absolute to a constitutional monarchy in 1932. Since then, it has experienced numerous coups and constitution changes, yet has maintained a consistent pro-market economic trajectory.",
+    "keyEvents": [
+      { "year": 1932, "event": "Siamese Revolution ends absolute monarchy, establishing a constitutional system." },
+      { "year": 1946, "event": "King Bhumibol Adulyadej (Rama IX) begins his 70-year reign." },
+      { "year": 1960, "event": "Thailand becomes a key U.S. ally during the Vietnam War." },
+      { "year": 1997, "event": "The Asian Financial Crisis begins in Bangkok with the devaluation of the Baht." },
+      { "year": 2001, "event": "Thaksin Shinawatra elected PM, initiating a period of populist politics and deep polarization." },
+      { "year": 2006, "event": "Military coup ousts Thaksin Shinawatra." },
+      { "year": 2014, "event": "Military coup led by General Prayut Chan-o-cha after months of political unrest." },
+      { "year": 2016, "event": "King Rama IX passes away; succeeded by King Maha Vajiralongkorn (Rama X)." },
+      { "year": 2019, "event": "Return to a form of civilian government after general elections." },
+      { "year": 2023, "event": "General election leads to a new coalition government after a period of post-election deadlock." }
+    ]
+  },
+  "investmentNotes": {
+    "strengths": ["World-class manufacturing hub (Automotive/Electronics)", "Robust infrastructure (Logistics/Telecom)", "Strategic location in the heart of mainland SE Asia", "Thriving tourism and hospitality sector"],
+    "risks": ["Aging population (labor shortages)", "High household debt", "Frequent political/constitutional changes", "Vulnerability to global trade shifts"],
+    "sectors": ["Electric Vehicle Manufacturing", "Smart Electronics", "Medical Tourism & Wellness", "Agriculture & Food Biotechnology"]
+  },
+  "sources": [
+    { "name": "Bank of Thailand", "url": "https://www.bot.or.th/", "type": "economic" },
+    { "name": "National Economic and Social Development Council", "url": "https://www.nesdc.go.th/", "type": "economic" },
+    { "name": "Board of Investment (BOI)", "url": "https://www.boi.go.th/", "type": "investment" }
+  ]
+}

@@ -1,0 +1,69 @@
+{
+  "id": "UGA",
+  "iso2": "UG",
+  "name": "Uganda",
+  "region": "Africa",
+  "subregion": "Eastern Africa",
+  "capital": "Kampala",
+  "lastUpdated": "2026-05-15",
+  "summary": "Uganda is at a critical crossroads, balancing a transformative economic boom from imminent commercial oil production against the structural risks of a 40-year incumbency and a massive 'youth bulge.' President Yoweri Museveni's 2026 re-election ensures short-term policy continuity and security leadership in the Great Lakes, but succession dynamics and democratic backsliding have strained relations with the West. The country is increasingly pivoting toward China and Russia for infrastructure and defense, while seeking to leverage the Lake Albert Oil Project to achieve middle-income status.",
+  "indicators": {
+    "politicalStability":       { "score": 6, "trend": "stable", "confidence": "high", "note": "Entrenched NRM control ensures order, but succession and urban youth unrest are medium-term risks." },
+    "economicDirection":        { "score": 9, "trend": "rising", "confidence": "high", "note": "Commercial oil production and EACOP completion expected to drive double-digit GDP growth." },
+    "investmentAttractiveness": { "score": 7, "trend": "rising", "confidence": "medium", "note": "Oil sector boom and agricultural potential offset by corruption and Western sanctions." },
+    "geopoliticalRisk":         { "score": 5, "trend": "rising", "confidence": "medium", "note": "Strained US/EU ties due to the Anti-Homosexuality Act and democratic decline." },
+    "educationQuality":         { "score": 6, "trend": "stable", "confidence": "high", "note": "High primary enrollment and literacy; however, youth unemployment exceeds 70%." },
+    "healthcareQuality":        { "score": 4, "trend": "stable", "confidence": "medium", "note": "Excellence in infectious disease management (Ebola) but underfunded primary care." },
+    "technologyInvestment":     { "score": 6, "trend": "stable", "confidence": "medium", "note": "Robust mobile money adoption; emerging focus on nuclear energy and industrial tech." }
+  },
+  "demographics": {
+    "population": 54600000,
+    "medianAge": 17.1,
+    "urbanizationRate": 31,
+    "majorEthnicGroups": ["Baganda", "Banyankole", "Basoga", "Bakiga", "Iteso"],
+    "religions": [
+      { "name": "Roman Catholic", "percent": 39 },
+      { "name": "Anglican", "percent": 32 },
+      { "name": "Muslim", "percent": 14 },
+      { "name": "Pentecostal", "percent": 11 },
+      { "name": "Traditional/Other", "percent": 4 }
+    ]
+  },
+  "alliances": ["East African Community (EAC)", "African Union", "IGAD", "Non-Aligned Movement"],
+  "relationships": [
+    { "countryId": "FRA", "countryName": "France", "type": "partner", "sentiment": "neutral", "summary": "Critical partner in the oil sector via TotalEnergies' leadership of EACOP." },
+    { "countryId": "CHN", "countryName": "China", "type": "partner", "sentiment": "positive", "summary": "Major financier of roads, Entebbe airport expansion, and hydropower." },
+    { "countryId": "RUS", "countryName": "Russia", "type": "partner", "sentiment": "positive", "summary": "Strategic ally in defense, intelligence, and nuclear energy development." },
+    { "countryId": "USA", "countryName": "United States", "type": "partner", "sentiment": "negative", "summary": "Sanctioned relationship over human rights; removed from AGOA trade pact." },
+    { "countryId": "RWA", "countryName": "Rwanda", "type": "rival", "sentiment": "neutral", "summary": "Competitive and security-focused relationship; history of border closures." }
+  ],
+  "perspectives": [
+    { "source": "NRM Party Elder", "bias": "Nationalist", "view": "The President's 'Vision 2040' is finally being realized through oil; we will no longer be dictated to by foreign powers." },
+    { "source": "NUP Opposition Supporter", "bias": "Reformist", "view": "The oil wealth will only benefit the ruling clique while the youth remain jobless and repressed." },
+    { "source": "Regional Security Expert", "bias": "Realist", "view": "Uganda remains the indispensable security guarantor for the DRC and Somalia, regardless of its internal politics." },
+    { "source": "Oil Industry Analyst", "bias": "Pragmatic", "view": "Uganda is the most exciting upstream oil play in Africa, but the 'Dutch Disease' risk is high." }
+  ],
+  "historicalContext": {
+    "summary": "Uganda's post-independence history was marred by the brutal Idi Amin and Obote II regimes. Since 1986, Yoweri Museveni's National Resistance Movement (NRM) has overseen a period of unprecedented stability and growth, though the transition to a post-Museveni era remains the nation's great unknown.",
+    "keyEvents": [
+      { "year": 1962, "event": "Independence from British colonial rule; Milton Obote becomes PM." },
+      { "year": 1971, "event": "Idi Amin seizes power in a military coup, ushering in eight years of terror." },
+      { "year": 1980, "event": "Return to civilian rule under Milton Obote (Obote II) and outbreak of the Bush War." },
+      { "year": 1986, "event": "Museveni's NRA seizes Kampala, establishing the NRM government." },
+      { "year": 2005, "event": "Constitutional amendment removes presidential term limits." },
+      { "year": 2023, "event": "Signing of the Anti-Homosexuality Act, leading to Western sanctions." },
+      { "year": 2026, "event": "Museveni re-elected for a 7th term; commencement of commercial oil production." },
+      { "year": 2026, "event": "Launch of the 10-fold growth strategy to reach $500B GDP by 2040." }
+    ]
+  },
+  "investmentNotes": {
+    "strengths": ["Imminent commercial oil export revenues", "Vast, under-exploited arable land", "Stable macroeconomic management and low inflation", "Regional security leadership providing leverage"],
+    "risks": ["Succession-related political volatility", "Corruption and informal power dynamics", "International sanctions and aid reductions", "High youth unemployment and urban unrest"],
+    "sectors": ["Oil & Gas (Upstream and Services)", "Agro-industrialization", "Mineral Development (REEs, Graphite)", "FinTech"]
+  },
+  "sources": [
+    { "name": "Uganda Investment Authority", "url": "https://www.ugandainvest.go.ug/", "type": "economic" },
+    { "name": "International Monetary Fund", "url": "https://www.imf.org/en/Countries/UGA", "type": "economic" },
+    { "name": "CIA World Factbook", "url": "https://www.cia.gov/the-world-factbook/countries/uganda/", "type": "general" }
+  ]
+}

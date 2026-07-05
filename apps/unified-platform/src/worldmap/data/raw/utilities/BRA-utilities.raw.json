@@ -1,0 +1,35 @@
+[
+  {
+    "countryId": "BRA",
+    "year": 2023,
+    "electricityConsumptionTWh": 608.5,
+    "electricityProductionTWh": 708.1,
+    "electricityMix": {
+      "hydro": 60.0,
+      "wind": 15.0,
+      "solar": 10.0,
+      "otherRenewables": 8.5,
+      "nuclear": 2.0,
+      "gas": 4.5
+    },
+    "renewableSharePct": 93.5,
+    "waterStressScore": 1.0,
+    "waterWithdrawalPct": 1.5,
+    "foodSecurityScore": 65.1,
+    "aiAdoptionScore": 63.70,
+    "internetPenetration": 88.0,
+    "mobilePenetration": 102.4,
+    "attribution": {
+      "sources": [
+        { "name": "Ember Electricity Data Explorer 2024", "url": "https://ember-energy.org/data/electricity-data-explorer/", "accessedAt": "2026-05-10" },
+        { "name": "WRI Aqueduct 4.0", "url": "https://www.wri.org/aqueduct", "accessedAt": "2026-05-10" },
+        { "name": "Oxford Insights Government AI Readiness Index 2023", "url": "https://oxfordinsights.com/government-ai-readiness-index-2023/", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 3,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  }
+]

@@ -1,0 +1,36 @@
+[
+  {
+    "countryId": "ZAF",
+    "year": 2023,
+    "electricityConsumptionTWh": 206,
+    "electricityProductionTWh": 229.3,
+    "electricityMix": {
+      "coal": 81.8,
+      "wind": 5.1,
+      "nuclear": 3.7,
+      "hydro": 2.9,
+      "solar": 2.3,
+      "other": 4.2
+    },
+    "renewableSharePct": 10.3,
+    "waterStressScore": 4.17,
+    "waterWithdrawalPct": 85,
+    "foodSecurityScore": 61.7,
+    "aiAdoptionScore": 47.28,
+    "internetPenetration": 72.3,
+    "mobilePenetration": 187.4,
+    "attribution": {
+      "sources": [
+        { "name": "IEA World Energy Balances 2023", "url": "https://www.iea.org/data-and-statistics/data-product/world-energy-balances", "accessedAt": "2025-05-15" },
+        { "name": "WRI Aqueduct 4.0 (2023)", "url": "https://www.wri.org/aqueduct", "accessedAt": "2025-05-15" },
+        { "name": "Economist Impact Global Food Security Index 2022", "url": "https://impact.economist.com/sustainability/project/food-security-index", "accessedAt": "2025-05-15" },
+        { "name": "Oxford Insights Government AI Readiness Index 2023", "url": "https://oxfordinsights.com/government-ai-readiness-index-2023/", "accessedAt": "2025-05-15" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 4,
+        "lastVerified": "2025-05-15"
+      }
+    }
+  }
+]

@@ -1,0 +1,63 @@
+{
+  "id": "MLT",
+  "iso2": "MT",
+  "name": "Malta",
+  "region": "Europe",
+  "subregion": "Southern Europe",
+  "capital": "Valletta",
+  "lastUpdated": "2026-05-09",
+  "summary": "Malta is a strategically located island nation in the Mediterranean Sea, serving as a gateway between Europe, North Africa, and the Middle East. Since joining the European Union in 2004, it has transformed its economy into a diversified hub for services, with global leadership in iGaming, maritime services, and increasingly, fintech and digital assets. In 2026, Malta is focused on addressing structural challenges related to infrastructure capacity, sustainable tourism, and the implementation of international standards for financial transparency. The political landscape remains dominated by the two-party system, with a strong emphasis on maintaining economic growth while navigating the complexities of its Mediterranean identity and EU obligations.",
+  "indicators": {
+    "politicalStability":       { "score": 7, "score_description": "Stable two-party democracy with high voter engagement.", "trend": "stable", "confidence": "high", "note": "Political polarization is high, but the institutional framework is robust and aligned with EU standards." },
+    "economicDirection":        { "score": 8, "score_description": "Strong growth driven by services and tourism.", "trend": "stable", "confidence": "high", "note": "GDP growth continues to outperform the EU average, though inflationary pressures and labor shortages are persistent." },
+    "investmentAttractiveness": { "score": 8, "score_description": "Highly attractive for digital services and maritime ventures.", "trend": "rising", "confidence": "high", "note": "Malta's competitive tax regime and English-speaking workforce remain significant draws for foreign direct investment." },
+    "geopoliticalRisk":         { "score": 4, "score_description": "Moderate risk linked to migration and regional instability.", "trend": "stable", "confidence": "medium", "note": "Its location makes it a frontline state for Mediterranean migration flows and regional security concerns." },
+    "educationQuality":         { "score": 7, "score_description": "Solid education system with a focus on vocational and tertiary growth.", "trend": "stable", "confidence": "high", "note": "The University of Malta and MCAST are key drivers of the skills needed for the digital economy." },
+    "healthcareQuality":        { "score": 8, "score_description": "High-quality public and private healthcare.", "trend": "stable", "confidence": "high", "note": "Mater Dei Hospital is a leading regional facility, and the country ranks high in global health indices." },
+    "technologyInvestment":     { "score": 8, "score_description": "Leader in iGaming and emerging tech regulation.", "trend": "rising", "confidence": "high", "note": "Significant investment in AI and blockchain through the 'Digital Malta' strategy." }
+  },
+  "demographics": {
+    "population": 545000,
+    "medianAge": 40.2,
+    "urbanizationRate": 95,
+    "majorEthnicGroups": ["Maltese", "Other EU", "British", "Indian", "Philippine"],
+    "religions": [
+      { "name": "Roman Catholic", "percent": 85 },
+      { "name": "None/Other", "percent": 15 }
+    ]
+  },
+  "alliances": ["EU", "Eurozone", "Schengen Area", "Commonwealth", "UN"],
+  "relationships": [
+    { "countryId": "ITA", "countryName": "Italy", "type": "strategic_partner", "sentiment": "positive", "summary": "Closest neighbor and major trading partner; shared interests in Mediterranean security and migration." },
+    { "countryId": "GBR", "countryName": "United Kingdom", "type": "partner", "sentiment": "positive", "summary": "Strong historical ties, large expat community, and close cooperation in financial services." },
+    { "countryId": "LBY", "countryName": "Libya", "type": "partner", "sentiment": "neutral", "summary": "Important for energy and migration management; relations are complex due to Libya's internal instability." },
+    { "countryId": "USA", "countryName": "United States", "type": "partner", "sentiment": "positive", "summary": "Cooperation on regional security, counter-terrorism, and economic development." }
+  ],
+  "perspectives": [
+    { "source": "Government Policymaker", "bias": "Pro-Growth", "view": "Malta will continue to be a pioneer in the digital economy while ensuring our islands remain a top-tier destination for investment and talent." },
+    { "source": "Local NGO", "bias": "Environmental", "view": "Rapid economic growth is putting unsustainable pressure on our environment and infrastructure; we need a more sustainable model." },
+    { "source": "Expat Entrepreneur", "bias": "Business-focused", "view": "Malta offers a fantastic environment for tech startups, though bureaucratic hurdles and the cost of living are increasing." }
+  ],
+  "historicalContext": {
+    "summary": "Malta has a rich history shaped by its strategic location, ruled by the Phoenicians, Romans, Arabs, Knights of St. John, French, and British. It played a pivotal role in WWII and gained independence from the UK in 1964. Joining the EU in 2004 was a transformative event that redefined its modern economic and political trajectory.",
+    "keyEvents": [
+      { "year": 1565, "event": "The Great Siege of Malta; Knights of St. John defeat the Ottoman Empire." },
+      { "year": 1800, "event": "Malta becomes a British protectorate." },
+      { "year": 1942, "event": "The entire population of Malta is awarded the George Cross for heroism in WWII." },
+      { "year": 1964, "event": "Malta gains independence from the United Kingdom." },
+      { "year": 1974, "event": "Malta becomes a Republic." },
+      { "year": 2004, "event": "Malta joins the European Union." },
+      { "year": 2008, "event": "Malta adopts the Euro." }
+    ]
+  },
+  "investmentNotes": {
+    "strengths": ["Strategic location and world-class maritime infrastructure", "Robust and innovative iGaming and Fintech clusters", "Highly skilled, English-speaking workforce", "Competitive fiscal incentives for international companies"],
+    "risks": ["Vulnerability to changes in international tax standards", "Infrastructure and housing pressure from population growth", "Reliance on imported energy and water", "Regional security risks in the Mediterranean"],
+    "sectors": ["iGaming and E-sports", "Financial Services & Fintech", "Maritime & Aviation Services", "Sustainable Tourism", "Life Sciences & Pharma"]
+  },
+  "sources": [
+    { "name": "National Statistics Office (NSO) Malta", "url": "https://nso.gov.mt/", "type": "economic" },
+    { "name": "Malta Enterprise", "url": "https://www.maltaenterprise.com/", "type": "investment" },
+    { "name": "Central Bank of Malta", "url": "https://www.centralbankmalta.org/", "type": "economic" }
+  ]
+}

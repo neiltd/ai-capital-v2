@@ -1,0 +1,69 @@
+{
+  "id": "SAU",
+  "iso2": "SA",
+  "name": "Saudi Arabia",
+  "region": "Asia",
+  "subregion": "Western Asia",
+  "capital": "Riyadh",
+  "lastUpdated": "2026-05-09",
+  "summary": "Saudi Arabia is undergoing a historic social and economic transformation under its Vision 2030 program, aimed at reducing its reliance on oil and developing a diverse, modern economy. As the world's leading oil exporter and the custodian of Islam's holiest sites, it wields significant regional and global influence. Under Crown Prince Mohammed bin Salman, the Kingdom has adopted a more assertive and pragmatic foreign policy, seeking to balance its traditional security partnership with the U.S. against growing economic ties with China and Russia. While the pace of social liberalization is unprecedented, the Kingdom maintains a centralized political system and faces challenges related to regional security, human rights perceptions, and the long-term viability of its fiscal transition.",
+  "indicators": {
+    "politicalStability":       { "score": 7, "trend": "stable", "confidence": "high", "note": "Strong central authority and popular support for modernization, though succession risks remain." },
+    "economicDirection":        { "score": 8, "trend": "rising", "confidence": "high", "note": "Aggressive diversification through Public Investment Fund (PIF) and giga-projects like NEOM." },
+    "investmentAttractiveness": { "score": 7, "trend": "rising", "confidence": "medium", "note": "Opening of capital markets and regulatory reforms attract FDI, though legal transparency is still evolving." },
+    "geopoliticalRisk":         { "score": 5, "trend": "stable", "confidence": "medium", "note": "Regional tensions with Iran have eased slightly, but Yemen and broader Middle East instability persist." },
+    "educationQuality":         { "score": 6, "trend": "rising", "confidence": "high", "note": "Heavy investment in STEM and vocational training to align with labor market needs." },
+    "healthcareQuality":        { "score": 7, "trend": "rising", "confidence": "high", "note": "Expansion of healthcare infrastructure and privatization of services under Vision 2030." },
+    "technologyInvestment":     { "score": 8, "trend": "rising", "confidence": "high", "note": "Significant focus on AI, gaming, and green hydrogen technologies." }
+  },
+  "demographics": {
+    "population": 36947000,
+    "medianAge": 30.8,
+    "urbanizationRate": 85,
+    "majorEthnicGroups": ["Arab", "Afro-Asian"],
+    "religions": [
+      { "name": "Muslim", "percent": 93 },
+      { "name": "Other (Expatriates)", "percent": 7 }
+    ]
+  },
+  "alliances": ["GCC", "OPEC", "OIC", "Arab League", "BRICS+"],
+  "relationships": [
+    { "countryId": "USA", "countryName": "United States", "type": "strategic_partner", "sentiment": "neutral", "summary": "A complex, decade-long security-for-oil partnership now strained by diverging interests in energy and geopolitics." },
+    { "countryId": "CHN", "countryName": "China", "type": "economic_partner", "sentiment": "positive", "summary": "Largest trade partner and critical collaborator in infrastructure, technology, and energy transition." },
+    { "countryId": "ARE", "countryName": "United Arab Emirates", "type": "ally", "sentiment": "positive", "summary": "Close regional ally, though increasingly competitive in economic hubs and regional leadership." },
+    { "countryId": "IRN", "countryName": "Iran", "type": "competitor", "sentiment": "neutral", "summary": "Recent diplomatic rapprochement mediated by China has lowered tensions, but deep-seated mistrust remains." },
+    { "countryId": "EGY", "countryName": "Egypt", "type": "ally", "sentiment": "positive", "summary": "Key security partner in the Red Sea and recipient of significant Saudi financial support." }
+  ],
+  "perspectives": [
+    { "source": "Vision 2030 Technocrat", "bias": "Reformist", "view": "The Kingdom is shedding its past to become a global hub for investment and culture, prioritizing economic pragmatism over ideology." },
+    { "source": "Traditional Conservative", "bias": "Traditionalist", "view": "While economic growth is welcome, the pace of social liberalization must not undermine the Kingdom's Islamic identity and values." },
+    { "source": "Western Human Rights Advocate", "bias": "Critical", "view": "The modernization effort is a facade that masks continued political repression and a lack of fundamental freedoms." },
+    { "source": "Energy Market Analyst", "bias": "Objective", "view": "Saudi Arabia remains the 'central bank of oil,' but its future depends on its ability to lead the global transition to hydrogen and renewables." }
+  ],
+  "historicalContext": {
+    "summary": "Founded in 1932 by Ibn Saud, the Kingdom was transformed by the discovery of oil in 1938. It has since evolved from a collection of tribal territories into a modern G20 economy and the spiritual center of the Islamic world.",
+    "keyEvents": [
+      { "year": 1932, "event": "Unification of the Kingdom of Saudi Arabia." },
+      { "year": 1938, "event": "Discovery of commercial quantities of oil at Dammam." },
+      { "year": 1960, "event": "Founding member of OPEC." },
+      { "year": 1973, "event": "Oil embargo leads to massive wealth accumulation and global influence." },
+      { "year": 1979, "event": "Seizure of the Grand Mosque in Mecca leads to increased social conservatism." },
+      { "year": 1990, "event": "Iraqi invasion of Kuwait; U.S. troops deployed to Saudi Arabia." },
+      { "year": 2005, "event": "Accession to the World Trade Organization (WTO)." },
+      { "year": 2015, "event": "King Salman ascends the throne; military intervention in Yemen begins." },
+      { "year": 2016, "event": "Launch of Saudi Vision 2030." },
+      { "year": 2017, "event": "Mohammed bin Salman named Crown Prince." },
+      { "year": 2023, "event": "Restoration of diplomatic ties with Iran and invitation to join BRICS+." }
+    ]
+  },
+  "investmentNotes": {
+    "strengths": ["World's lowest oil extraction costs", "Massive sovereign wealth fund (PIF)", "Strategic location connecting three continents", "Young and tech-savvy population"],
+    "risks": ["Oil price volatility", "Regional geopolitical instability", "Transparency and rule of law concerns", "Dependency on expatriate labor"],
+    "sectors": ["Tourism & Entertainment", "Renewable Energy (Green Hydrogen)", "Mining & Minerals", "Digital Infrastructure"]
+  },
+  "sources": [
+    { "name": "General Authority for Statistics", "url": "https://www.stats.gov.sa/en", "type": "economic" },
+    { "name": "Vision 2030 Official Portal", "url": "https://www.vision2030.gov.sa/", "type": "government" },
+    { "name": "IMF Country Report", "url": "https://www.imf.org/en/Countries/SAU", "type": "economic" }
+  ]
+}

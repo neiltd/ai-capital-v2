@@ -1,0 +1,67 @@
+{
+  "id": "SLB",
+  "iso2": "SB",
+  "name": "Solomon Islands",
+  "region": "Oceania",
+  "subregion": "Melanesia",
+  "capital": "Honiara",
+  "lastUpdated": "2026-05-15",
+  "summary": "The Solomon Islands is a Melanesian nation that has recently become a focal point of geopolitical competition in the Pacific. Its political landscape is characterized by high turnover of parliamentary seats and a central role for the Prime Minister in navigating shifting domestic and international alliances. Historically marked by internal conflict known as 'The Tensions', the country remains fragile with significant development needs. Economically, it relies heavily on logging, mining, and fishing, while its foreign policy has notably shifted toward China in recent years.",
+  "indicators": {
+    "politicalStability":       { "score": 4, "trend": "stable", "confidence": "high", "note": "Post-election stability in 2024, but underlying social and provincial tensions (particularly in Malaita) persist." },
+    "economicDirection":        { "score": 4, "trend": "stable", "confidence": "medium", "note": "Economic growth is supported by infrastructure projects and resource extraction, but logging revenues are declining." },
+    "investmentAttractiveness": { "score": 3, "trend": "rising", "confidence": "medium", "note": "Increased Chinese investment in infrastructure and mining, though Western investors remain cautious due to political risks and land issues." },
+    "geopoliticalRisk":         { "score": 6, "trend": "rising", "confidence": "high", "note": "Heightened risk due to the 2022 security pact with China and the subsequent response from Australia and the United States." },
+    "educationQuality":         { "score": 3, "trend": "stable", "confidence": "medium", "note": "Significant barriers to education access and quality, particularly in rural provinces." },
+    "healthcareQuality":        { "score": 3, "trend": "stable", "confidence": "medium", "note": "Healthcare facilities are basic; heavy reliance on international aid for medical services and supplies." },
+    "technologyInvestment":     { "score": 4, "trend": "rising", "confidence": "high", "note": "Major upgrades in telecommunications infrastructure, including a new submarine cable and Huawei-built cell towers." }
+  },
+  "demographics": {
+    "population": 740000,
+    "medianAge": 20.3,
+    "urbanizationRate": 26,
+    "majorEthnicGroups": ["Melanesian", "Polynesian", "Micronesian"],
+    "religions": [
+      { "name": "Protestant", "percent": 73.0 },
+      { "name": "Roman Catholic", "percent": 20.0 },
+      { "name": "Other/Traditional", "percent": 7.0 }
+    ]
+  },
+  "alliances": ["Pacific Islands Forum", "Commonwealth", "United Nations", "MSG", "ACP"],
+  "relationships": [
+    { "countryId": "CHN", "countryName": "China", "type": "strategic_partner", "sentiment": "positive", "summary": "Primary economic and increasingly security partner since the diplomatic switch from Taiwan in 2019." },
+    { "countryId": "AUS", "countryName": "Australia", "type": "traditional_partner", "sentiment": "neutral", "summary": "Remains the largest aid donor and traditional security provider, though the relationship has become more complex." },
+    { "countryId": "USA", "countryName": "United States", "type": "emerging_partner", "sentiment": "positive", "summary": "Re-establishing a diplomatic presence and increasing aid as part of a strategic pivot to the Pacific." },
+    { "countryId": "PNG", "countryName": "Papua New Guinea", "type": "regional_partner", "sentiment": "positive", "summary": "Close cultural and political ties within the Melanesian Spearhead Group (MSG)." }
+  ],
+  "perspectives": [
+    { "source": "Government Official", "bias": "Pro-Sogavare/Manele", "view": "Diversifying our international partnerships is essential for securing the development funding the Solomon Islands desperately needs." },
+    { "source": "Malaita Provincial Leader", "bias": "Regionalist", "view": "Central government policies, especially regarding China, often ignore provincial autonomy and traditional values." },
+    { "source": "Civil Society Activist", "bias": "Reformist", "view": "Increased foreign investment must be accompanied by greater transparency and environmental protections, particularly in logging." },
+    { "source": "Local Business Owner", "bias": "Pragmatic", "view": "Infrastructure improvements are welcome, but we need more support for local entrepreneurs beyond just large-scale resource projects." }
+  ],
+  "historicalContext": {
+    "summary": "A British protectorate since the 1890s, the Solomon Islands saw major battles during WWII (e.g., Guadalcanal). It gained independence in 1978. Between 1998 and 2003, the country suffered from 'The Tensions', a period of civil unrest and ethnic violence that required the intervention of the Regional Assistance Mission to Solomon Islands (RAMSI).",
+    "keyEvents": [
+      { "year": 1893, "event": "British Solomon Islands Protectorate is established." },
+      { "year": 1942, "event": "Japanese occupation and the Battle of Guadalcanal, a turning point in the Pacific War." },
+      { "year": 1978, "event": "Independence from the United Kingdom." },
+      { "year": 1998, "event": "Beginning of 'The Tensions', ethnic conflict between Guale and Malaitan groups." },
+      { "year": 2003, "event": "Arrival of RAMSI, an Australian-led regional mission to restore law and order." },
+      { "year": 2017, "event": "RAMSI officially concludes its mission." },
+      { "year": 2019, "event": "Solomon Islands switches diplomatic recognition from Taiwan to China." },
+      { "year": 2022, "event": "Signing of a controversial security agreement with China, sparking regional concerns." },
+      { "year": 2024, "event": "General elections result in Jeremiah Manele becoming Prime Minister, continuing the policy direction of the previous administration." }
+    ]
+  },
+  "investmentNotes": {
+    "strengths": ["Rich natural resources (Gold, Nickel, Bauxite)", "Extensive maritime resources", "Growing infrastructure investment", "Untapped tourism potential"],
+    "risks": ["Political volatility and potential for social unrest", "High dependence on logging (a declining resource)", "Complex land tenure system", "Infrastructure and logistics gaps"],
+    "sectors": ["Sustainable Forestry and Agriculture", "Mining (Nickel and Gold)", "Fisheries and Marine Processing", "Tourism Development"]
+  },
+  "sources": [
+    { "name": "Central Bank of Solomon Islands", "url": "https://www.cbsi.com.sb/", "type": "economic" },
+    { "name": "Solomon Islands Ministry of Commerce, Industry, Labour and Immigration", "url": "https://www.commerce.gov.sb/", "type": "investment" },
+    { "name": "Solomon Islands National Statistics Office", "url": "https://www.statistics.gov.sb/", "type": "demographic" }
+  ]
+}

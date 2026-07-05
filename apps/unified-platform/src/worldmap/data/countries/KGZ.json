@@ -1,0 +1,64 @@
+{
+  "id": "KGZ",
+  "iso2": "KG",
+  "name": "Kyrgyzstan",
+  "region": "Asia",
+  "subregion": "Central Asia",
+  "capital": "Bishkek",
+  "lastUpdated": "2025-05-15",
+  "summary": "Kyrgyzstan is undergoing a significant autocratic consolidation under President Sadyr Japarov, who has successfully dismantled the previous parliamentary system in favor of a strong executive presidency. Economically, the country has experienced an unprecedented boom in 2024 and early 2025, driven by 're-export' trade to Russia, gold mining, and a surge in construction. Geopolitically, Bishkek is balancing its strategic alliance with Russia against a growing dependence on Chinese infrastructure projects, notably the China-Kyrgyzstan-Uzbekistan (CKU) railway. A landmark border agreement with Tajikistan in late 2024 has significantly reduced regional security risks.",
+  "indicators": {
+    "politicalStability":       { "score": 7, "trend": "stable", "confidence": "high", "note": "High stability through autocratic consolidation; the November 2025 snap elections solidified Japarov's control." },
+    "economicDirection":        { "score": 8, "trend": "rising", "confidence": "high", "note": "Exceptional growth driven by re-exports and mining; record high international reserves in early 2025." },
+    "investmentAttractiveness": { "score": 5, "trend": "rising", "confidence": "medium", "note": "Improving due to fiscal health and new infrastructure, though legal risks and political pressure on business remain." },
+    "geopoliticalRisk":         { "score": 5, "trend": "falling", "confidence": "high", "note": "Border settlement with Tajikistan lowers immediate conflict risk; balancing Russia and China remains a delicate act." },
+    "educationQuality":         { "score": 5, "trend": "stable", "confidence": "medium", "note": "Reasonable literacy levels; ongoing reforms to align vocational training with the needs of the growing construction and mining sectors." },
+    "healthcareQuality":        { "score": 5, "trend": "stable", "confidence": "medium", "note": "Basic universal coverage; urban centers seeing private sector growth while rural services remain underfunded." },
+    "technologyInvestment":     { "score": 6, "trend": "rising", "confidence": "high", "note": "Active development of digital services (Tunduk system) and growing interest in fintech and blockchain applications." }
+  },
+  "demographics": {
+    "population": 7100000,
+    "medianAge": 26.5,
+    "urbanizationRate": 37.0,
+    "majorEthnicGroups": ["Kyrgyz", "Uzbek", "Russian"],
+    "religions": [
+      { "name": "Muslim (mostly Sunni)", "percent": 90 },
+      { "name": "Christian (mostly Orthodox)", "percent": 7 },
+      { "name": "Other", "percent": 3 }
+    ]
+  },
+  "alliances": ["UN", "EAEU", "CSTO", "SCO", "CIS", "OIC"],
+  "relationships": [
+    { "countryId": "RUS", "countryName": "Russia", "type": "strategic_partner", "sentiment": "positive", "summary": "Remains the primary security ally and destination for labor migrants; key partner in the EAEU trade bloc." },
+    { "countryId": "CHN", "countryName": "China", "type": "strategic_partner", "sentiment": "positive", "summary": "Main investor in the CKU railway and other major infrastructure; largest external creditor." },
+    { "countryId": "UZB", "countryName": "Uzbekistan", "type": "neighbor", "sentiment": "positive", "summary": "Relations are at a historic high following the resolution of border and water disputes." },
+    { "countryId": "TJK", "countryName": "Tajikistan", "type": "neighbor", "sentiment": "positive", "summary": "Transitioning from adversary to partner after the late 2024 comprehensive border agreement." },
+    { "countryId": "TUR", "countryName": "Turkey", "type": "strategic_partner", "sentiment": "positive", "summary": "Significant partner in education, defense (drones), and trade; shares deep Turkic cultural links." }
+  ],
+  "perspectives": [
+    { "source": "Business Leader", "bias": "Optimistic", "view": "The economic boom is real; for the first time in decades, we have the fiscal space to build our own future." },
+    { "source": "Human Rights Defender", "bias": "Critical", "view": "Kyrgyzstan was once the 'island of democracy' in Central Asia; today, it is becoming just another autocracy where dissent is silenced." },
+    { "source": "Regional Analyst", "bias": "Pragmatic", "view": "Japarov has delivered the stability people craved, but the economy's reliance on war-related re-exports is a significant long-term risk." },
+    { "source": "Rural Resident", "bias": "Supportive", "view": "Finally, we have a leader who speaks our language and is actually finishing projects like the new schools and roads." }
+  ],
+  "historicalContext": {
+    "summary": "Kyrgyzstan has a history of political volatility, with three presidents ousted in popular uprisings since 2005. Independence from the Soviet Union in 1991 was followed by a period of relative democratic pluralism compared to its neighbors. However, the 2020 political crisis brought Sadyr Japarov to power, marking a shift toward presidentialism. The recent era is defined by the consolidation of this new order and an economic pivot toward transit-led growth.",
+    "keyEvents": [
+      { "year": 1991, "event": "Independence from the Soviet Union." },
+      { "year": 2005, "event": "Tulip Revolution; ousting of President Askar Akayev." },
+      { "year": 2010, "event": "April Revolution; ousting of President Kurmanbek Bakiyev; inter-ethnic violence in the south." },
+      { "year": 2020, "event": "October protests following disputed elections; Sadyr Japarov rises from prison to the presidency." },
+      { "year": 2024, "event": "Signing of the China-Kyrgyzstan-Uzbekistan (CKU) railway agreement and border treaty with Tajikistan." }
+    ]
+  },
+  "investmentNotes": {
+    "strengths": ["Strategic position on new East-West transit routes (CKU railway)", "Significant gold and mineral reserves (Kumtor mine)", "Liberalized trade regime within the EAEU", "Abundant and inexpensive hydroelectric power"],
+    "risks": ["Vulnerability to changes in Russian sanctions regimes", "Political pressure on independent media and civil society", "High levels of informality in the economy", "Exposure to Chinese debt and investment conditions"],
+    "sectors": ["Mining & Metallurgy", "Transport & Logistics", "Construction & Real Estate", "Agribusiness & Food Processing"]
+  },
+  "sources": [
+    { "name": "National Statistical Committee of the Kyrgyz Republic", "url": "http://www.stat.kg", "type": "economic" },
+    { "name": "Ministry of Economy and Commerce - Kyrgyzstan", "url": "https://mineconom.gov.kg", "type": "government" },
+    { "name": "World Bank Kyrgyzstan", "url": "https://www.worldbank.org/en/country/kyrgyzrepublic", "type": "economic" }
+  ]
+}

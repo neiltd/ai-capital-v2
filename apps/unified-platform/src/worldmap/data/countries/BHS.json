@@ -1,0 +1,66 @@
+{
+  "id": "BHS",
+  "iso2": "BS",
+  "name": "The Bahamas",
+  "region": "Americas",
+  "subregion": "Caribbean",
+  "capital": "Nassau",
+  "lastUpdated": "2026-05-15",
+  "summary": "The Bahamas maintains its position as one of the wealthiest nations in the Caribbean, driven by a world-class tourism sector and a sophisticated financial services industry. The Davis administration, in power since 2021, has overseen a strong post-pandemic rebound, though growth began to moderate to historical norms by 2025. The government is currently engaged in significant fiscal consolidation and digital transformation to manage a high debt-to-GDP ratio and improve tax compliance. As an archipelago of over 700 islands, The Bahamas is uniquely vulnerable to climate change, particularly rising sea levels and intensifying hurricanes. Geopolitically, the country remains a close ally of the United States, collaborating extensively on maritime security and border control, while also expanding its diplomatic and economic footprint through initiatives like the blue economy.",
+  "indicators": {
+    "politicalStability":       { "score": 8, "score_description": "Robust parliamentary democracy with regular, peaceful transfers of power.", "trend": "stable", "confidence": "high", "note": "The country maintains high levels of civil liberty and political rights." },
+    "economicDirection":        { "score": 6, "score_description": "Steady recovery with a focus on fiscal responsibility and digitalization.", "trend": "stable", "confidence": "high", "note": "The government is successfully implementing reforms to broaden the tax base and reduce the deficit." },
+    "investmentAttractiveness": { "score": 7, "score_description": "Highly attractive for tourism, real estate, and financial services; stable regulatory environment.", "trend": "stable", "confidence": "high", "note": "Strong institutional framework for FDI and a well-regulated offshore banking sector." },
+    "geopoliticalRisk":         { "score": 3, "score_description": "Low risk, characterized by strong ties with the U.S. and CARICOM.", "trend": "stable", "confidence": "high", "note": "Key partner in the Caribbean Basin Security Initiative." },
+    "educationQuality":         { "score": 6, "score_description": "Well-funded public system and a reputable national university (UB).", "trend": "stable", "confidence": "medium", "note": "Focus is shifting toward vocational training and digital literacy to meet industry demands." },
+    "healthcareQuality":        { "score": 6, "score_description": "High standards in Nassau and Freeport, though island-wide accessibility remains a challenge.", "trend": "rising", "confidence": "medium", "note": "Ongoing investments in the Princess Margaret Hospital and peripheral clinics." },
+    "technologyInvestment":     { "score": 6, "score_description": "Leader in regional digital currency (Sand Dollar) and e-government initiatives.", "trend": "rising", "confidence": "high", "note": "Aggressive push toward a 'Digital Bahamas' to improve ease of doing business." }
+  },
+  "demographics": {
+    "population": 403000,
+    "medianAge": 35.7,
+    "urbanizationRate": 89,
+    "majorEthnicGroups": ["Black African descent", "Mixed descent", "European", "Haitian descent"],
+    "religions": [
+      { "name": "Baptist", "percent": 35 },
+      { "name": "Anglican", "percent": 14 },
+      { "name": "Roman Catholic", "percent": 12 },
+      { "name": "Pentecostal", "percent": 9 },
+      { "name": "Other Christian", "percent": 18 },
+      { "name": "None/Other", "percent": 12 }
+    ]
+  },
+  "alliances": ["CARICOM", "OAS", "UN", "Commonwealth", "SIDS", "CELAC"],
+  "relationships": [
+    { "countryId": "USA", "countryName": "United States", "type": "ally", "sentiment": "positive", "summary": "Closest economic and security partner; source of over 80% of tourists." },
+    { "countryId": "GBR", "countryName": "United Kingdom", "type": "partner", "sentiment": "positive", "summary": "Strong historical and legal ties; fellow Commonwealth member." },
+    { "countryId": "HTI", "countryName": "Haiti", "type": "neighbor", "sentiment": "neutral", "summary": "Complex relationship due to significant migration flows; The Bahamas participates in regional stability efforts." },
+    { "countryId": "CAN", "countryName": "Canada", "type": "partner", "sentiment": "positive", "summary": "Important partner in banking and seasonal tourism." }
+  ],
+  "perspectives": [
+    { "source": "Finance Professional", "bias": "Institutional", "view": "Our regulatory standards are world-class; we are navigating global tax transparency requirements while remaining competitive." },
+    { "source": "Grand Bahama Resident", "bias": "Regional", "view": "Recovery from Hurricane Dorian is still ongoing; we need more focus on decentralizing economic activity beyond Nassau." },
+    { "source": "Fisherman", "bias": "Resource-based", "view": "The blue economy sounds good, but we must protect our waters from poaching and the effects of warming seas." }
+  ],
+  "historicalContext": {
+    "summary": "The Bahamas was the site of Columbus's first landfall in the New World in 1492. It later became a haven for pirates and a British colony. The country gained independence in 1973. Its history is marked by its strategic location for trade and, more recently, its development into a global tourism and financial hub.",
+    "keyEvents": [
+      { "year": 1718, "event": "The British establish formal control and expel the pirate Republic of Nassau." },
+      { "year": 1967, "event": "Majority Rule is achieved, ending decades of minority-led government." },
+      { "year": 1973, "event": "The Bahamas gains independence from the United Kingdom." },
+      { "year": 2019, "event": "Hurricane Dorian causes unprecedented damage to Abaco and Grand Bahama." },
+      { "year": 2021, "event": "Philip Davis (PLP) becomes Prime Minister after a landslide election victory." },
+      { "year": 2025, "event": "Refinancing of US$1.1 billion in debt through a major Eurobond issuance." }
+    ]
+  },
+  "investmentNotes": {
+    "strengths": ["High-income economy with stable currency (par with USD)", "Sophisticated financial services infrastructure", "Proximity to the U.S. market", "Stable political and legal system"],
+    "risks": ["High vulnerability to extreme weather events", "Heavy reliance on tourism and a single external market", "Relatively high cost of electricity and labor", "Elevated public debt"],
+    "sectors": ["Luxury Tourism and Resorts", "Offshore Banking and Wealth Management", "Real Estate and Second Homes", "Renewable Energy (Solar)", "Blue Economy/Fisheries"]
+  },
+  "sources": [
+    { "name": "Central Bank of The Bahamas", "url": "https://www.centralbankbahamas.com/", "type": "official" },
+    { "name": "The Bahamas Department of Statistics", "url": "https://www.bahamas.gov.bs/statistics", "type": "official" },
+    { "name": "IMF Country Information", "url": "https://www.imf.org/en/Countries/BHS", "type": "economic" }
+  ]
+}

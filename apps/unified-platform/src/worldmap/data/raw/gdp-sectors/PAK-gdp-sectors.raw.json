@@ -1,0 +1,39 @@
+[
+  {
+    "countryId": "PAK",
+    "year": 2023,
+    "gdpUsdBn": 338.2,
+    "gdpPerCapita": 1471,
+    "sectors": [
+      {
+        "sector": "Services",
+        "percentOfGDP": 58.4,
+        "notes": "Dominant sector, includes wholesale/retail trade and transport."
+      },
+      {
+        "sector": "Agriculture",
+        "percentOfGDP": 23.2,
+        "notes": "Recovery constrained by the 2022 floods; includes livestock and crops."
+      },
+      {
+        "sector": "Industry",
+        "percentOfGDP": 18.4,
+        "notes": "Includes large-scale manufacturing (LSM), mining, and construction."
+      }
+    ],
+    "attribution": {
+      "sources": [
+        {
+          "name": "Pakistan Bureau of Statistics (PBS) / IMF 2023",
+          "url": "https://www.pbs.gov.pk/",
+          "accessedAt": "2025-02-14"
+        }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 2,
+        "lastVerified": "2025-02-14"
+      }
+    }
+  }
+]

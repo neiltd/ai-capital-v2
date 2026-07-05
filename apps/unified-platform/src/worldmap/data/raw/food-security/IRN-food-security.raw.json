@@ -1,0 +1,35 @@
+[
+  {
+    "countryId": "IRN",
+    "year": 2022,
+    "overallScore": null,
+    "availability": null,
+    "access": null,
+    "utilization": null,
+    "stability": null,
+    "undernourishedPct": 5.5,
+    "foodImportDependencyPct": 15.2,
+    "cerealYieldKgHa": 2420,
+    "climateVulnerability": "high",
+    "conflictExposure": "medium",
+    "attribution": {
+      "sources": [
+        {
+          "name": "FAO FAOSTAT",
+          "url": "https://www.fao.org/faostat/en/#data/FS",
+          "accessedAt": "2026-05-10"
+        },
+        {
+          "name": "World Bank Food Import Dependency",
+          "url": "https://data.worldbank.org/indicator/TM.VAL.FOOD.ZS.UN",
+          "accessedAt": "2026-05-10"
+        }
+      ],
+      "confidence": {
+        "confidence": "low",
+        "sourceCount": 2,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  }
+]

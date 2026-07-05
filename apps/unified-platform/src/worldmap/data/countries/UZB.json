@@ -1,0 +1,68 @@
+{
+  "id": "UZB",
+  "iso2": "UZ",
+  "name": "Uzbekistan",
+  "region": "Asia",
+  "subregion": "Central Asia",
+  "capital": "Tashkent",
+  "lastUpdated": "2026-05-09",
+  "summary": "Uzbekistan is the demographic heart of Central Asia, currently undergoing a profound transformation from a closed, state-controlled system to a more open and market-driven economy. Since 2016, under the leadership of President Shavkat Mirziyoyev, the nation has implemented sweeping reforms, including currency liberalization, tax reform, and the elimination of systemic forced labor in its critical cotton sector. Uzbekistan's foreign policy has shifted toward proactive regionalism, seeking to resolve long-standing border and water disputes with its neighbors while attracting diverse international investment. As it seeks to join the WTO and modernize its industrial base, the country faces the challenge of deepening structural reforms while maintaining social stability.",
+  "indicators": {
+    "politicalStability":       { "score": 7, "trend": "stable", "confidence": "high", "note": "Strong central authority with high popular support for the ongoing reform agenda." },
+    "economicDirection":        { "score": 8, "trend": "rising", "confidence": "high", "note": "Aggressive transition toward a market economy and privatization of large state-owned enterprises." },
+    "investmentAttractiveness": { "score": 7, "trend": "rising", "confidence": "high", "note": "Rapidly improving business climate and significant new opportunities in textiles, mining, and energy." },
+    "geopoliticalRisk":         { "score": 5, "trend": "stable", "confidence": "medium", "note": "Strategic location requires a balanced approach between Russia, China, and Western interests." },
+    "educationQuality":         { "score": 6, "trend": "rising", "confidence": "medium", "note": "Major expansion of higher education and emphasis on vocational training to meet labor market needs." },
+    "healthcareQuality":        { "score": 6, "trend": "rising", "confidence": "medium", "note": "Ongoing reforms to modernize the healthcare system and expand digital health services." },
+    "technologyInvestment":     { "score": 6, "trend": "rising", "confidence": "high", "note": "Significant focus on digitalizing the economy and building a regional IT hub in Tashkent." }
+  },
+  "demographics": {
+    "population": 37130000,
+    "medianAge": 28.5,
+    "urbanizationRate": 50.6,
+    "majorEthnicGroups": ["Uzbek", "Tajik", "Kazakh", "Russian"],
+    "religions": [
+      { "name": "Muslim", "percent": 88 },
+      { "name": "Christian (Orthodox)", "percent": 9 },
+      { "name": "Other", "percent": 3 }
+    ]
+  },
+  "alliances": ["CIS", "SCO", "Organization of Turkic States", "UN"],
+  "relationships": [
+    { "countryId": "RUS", "countryName": "Russia", "type": "strategic_partner", "sentiment": "neutral", "summary": "A critical economic and security partner, particularly regarding labor migration and regional stability." },
+    { "countryId": "CHN", "countryName": "China", "type": "economic_partner", "sentiment": "positive", "summary": "Largest trade partner and a major investor in energy, infrastructure, and manufacturing." },
+    { "countryId": "USA", "countryName": "United States", "type": "strategic_partner", "sentiment": "positive", "summary": "Relations have warmed significantly, focused on investment, human rights reforms, and security cooperation." },
+    { "countryId": "KAZ", "countryName": "Kazakhstan", "type": "regional_partner", "sentiment": "positive", "summary": "Strategic relationship focused on Central Asian integration and regional connectivity." },
+    { "countryId": "AFG", "countryName": "Afghanistan", "type": "neighbor", "sentiment": "neutral", "summary": "Pragmatic engagement focused on trade, energy exports, and border security." }
+  ],
+  "perspectives": [
+    { "source": "Uzbek Reformer", "bias": "Optimistic", "view": "We are reclaiming our place at the center of the Silk Road. The transition is difficult, but there is no going back to the old ways." },
+    { "source": "Foreign Investor", "bias": "Pragmatic", "view": "Uzbekistan is the most exciting growth story in Central Asia, though we watch the pace of judicial reform and anti-corruption efforts closely." },
+    { "source": "Traditionalist Citizen", "bias": "Cautious", "view": "The economic changes are welcome, but we must ensure that modernization does not erode our national and religious values." },
+    { "source": "Human Rights Advocate", "bias": "Hopeful", "view": "The end of forced labor was a historic milestone; now the focus must be on civil society and freedom of the press." }
+  ],
+  "historicalContext": {
+    "summary": "Uzbekistan, home to the ancient cities of Samarkand and Bukhara, was a key part of various Persian, Turkic, and Mongol empires. After a century of Russian and Soviet rule, it gained independence in 1991. The first president, Islam Karimov, maintained a highly centralized and isolationist system until his death in 2016, which ushered in the current era of rapid reform under Shavkat Mirziyoyev.",
+    "keyEvents": [
+      { "year": 1991, "event": "Independence from the Soviet Union; Islam Karimov becomes President." },
+      { "year": 2001, "event": "Uzbekistan becomes a key U.S. partner in the War in Terror (K2 airbase)." },
+      { "year": 2005, "event": "Unrest in Andijan leads to a significant cooling of relations with the West." },
+      { "year": 2016, "event": "Death of Islam Karimov; Shavkat Mirziyoyev becomes President." },
+      { "year": 2017, "event": "Liberalization of the Som (currency), a major milestone in economic reform." },
+      { "year": 2018, "event": "Uzbekistan initiates a 'neighborly' policy, resolving several border disputes." },
+      { "year": 2021, "event": "Uzbekistan is removed from the list of countries with systemic forced labor in cotton." },
+      { "year": 2022, "event": "Hosting of the SCO Summit in Samarkand." },
+      { "year": 2023, "event": "Constitutional referendum extends presidential terms and guarantees social rights." }
+    ]
+  },
+  "investmentNotes": {
+    "strengths": ["Most populous and central market in Central Asia", "Significant reserves of gold, natural gas, and copper", "Rapidly improving regulatory and business environment", "Low debt-to-GDP ratio and strong fiscal position"],
+    "risks": ["Continued dominance of state-owned enterprises", "Bureaucratic inertia and lingering corruption risks", "Exposure to regional geopolitical shocks", "Vulnerability of the agricultural sector to climate change"],
+    "sectors": ["Textiles & Value-Added Agriculture", "Mining & Metallurgy", "Renewable Energy (Solar)", "Chemicals & Petrochemicals"]
+  },
+  "sources": [
+    { "name": "Statistics Agency of Uzbekistan", "url": "https://stat.uz/en/", "type": "economic" },
+    { "name": "Ministry of Investments, Industry and Trade", "url": "https://miit.uz/en", "type": "investment" },
+    { "name": "Central Bank of Uzbekistan", "url": "https://cbu.uz/en/", "type": "economic" }
+  ]
+}

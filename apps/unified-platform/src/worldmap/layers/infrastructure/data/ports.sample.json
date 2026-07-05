@@ -1,0 +1,68 @@
+[
+  {
+    "id": "PORT-SHANGHAI",
+    "name": "Port of Shanghai",
+    "countryId": "CHN",
+    "city": "Shanghai",
+    "coordinates": [121.8707, 31.3882],
+    "type": "container",
+    "annualThroughput": 47300000,
+    "strategicImportance": "high",
+    "notes": "World's largest container port by volume. China's primary export gateway; disruption would affect global electronics and manufacturing supply chains."
+  },
+  {
+    "id": "PORT-SINGAPORE",
+    "name": "Port of Singapore",
+    "countryId": "SGP",
+    "city": "Singapore",
+    "coordinates": [103.8198, 1.2655],
+    "type": "container",
+    "annualThroughput": 37500000,
+    "strategicImportance": "high",
+    "notes": "World's second busiest port. Sits at the Malacca Strait chokepoint; controls Southeast Asian trade flows."
+  },
+  {
+    "id": "PORT-ROTTERDAM",
+    "name": "Port of Rotterdam",
+    "countryId": "NLD",
+    "city": "Rotterdam",
+    "coordinates": [4.0658, 51.9225],
+    "type": "mixed",
+    "annualThroughput": 14500000,
+    "strategicImportance": "high",
+    "notes": "Europe's largest port. Gateway for European energy imports and manufacturing inputs."
+  },
+  {
+    "id": "PORT-JEBEL-ALI",
+    "name": "Jebel Ali Port",
+    "countryId": "ARE",
+    "city": "Dubai",
+    "coordinates": [55.0272, 25.0118],
+    "type": "container",
+    "annualThroughput": 14000000,
+    "strategicImportance": "high",
+    "notes": "Middle East's largest port. Critical Gulf logistics hub; US Navy's largest foreign port call location."
+  },
+  {
+    "id": "PORT-BUSAN",
+    "name": "Port of Busan",
+    "countryId": "KOR",
+    "city": "Busan",
+    "coordinates": [129.0403, 35.1000],
+    "type": "container",
+    "annualThroughput": 22000000,
+    "strategicImportance": "high",
+    "notes": "Northeast Asia's logistics hub. Critical for Korean electronics and automotive exports; US military supply chain."
+  },
+  {
+    "id": "PORT-KARACHI",
+    "name": "Port of Karachi",
+    "countryId": "PAK",
+    "city": "Karachi",
+    "coordinates": [66.9750, 24.8500],
+    "type": "mixed",
+    "annualThroughput": 2300000,
+    "strategicImportance": "medium",
+    "notes": "Pakistan's primary port. CPEC terminus; strategically significant for China's Arabian Sea access."
+  }
+]

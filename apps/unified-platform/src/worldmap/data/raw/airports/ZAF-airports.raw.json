@@ -1,0 +1,272 @@
+[
+  {
+    "id": "JNB",
+    "name": "O.R. Tambo International Airport",
+    "countryId": "ZAF",
+    "city": "Johannesburg",
+    "iata": "JNB",
+    "icao": "FAOR",
+    "coordinates": [28.246, -26.139],
+    "passengerVolume": 20083399,
+    "cargoVolume": 140000,
+    "runwayCount": 2,
+    "elevationM": 1694,
+    "strategicImportance": "critical",
+    "geopoliticalNotes": "Africa's premier hub and South Africa's primary international gateway; handles approx. 87% of national international air freight.",
+    "notes": "Located at high altitude, affecting aircraft performance; primary hub for South African Airways.",
+    "attribution": {
+      "sources": [
+        { "name": "Airports Company South Africa (ACSA)", "url": "https://www.airports.co.za/", "accessedAt": "2026-05-10" },
+        { "name": "IATA", "url": "https://www.iata.org/", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 2,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  },
+  {
+    "id": "CPT",
+    "name": "Cape Town International Airport",
+    "countryId": "ZAF",
+    "city": "Cape Town",
+    "iata": "CPT",
+    "icao": "FACT",
+    "coordinates": [18.602, -33.971],
+    "passengerVolume": 11333736,
+    "cargoVolume": 75000,
+    "runwayCount": 2,
+    "elevationM": 46,
+    "strategicImportance": "critical",
+    "geopoliticalNotes": "Major tourism and logistics hub; critical for the Western Cape's agricultural exports and maritime logistics support.",
+    "notes": "Consistently ranked as one of the best airports in Africa for service quality.",
+    "attribution": {
+      "sources": [
+        { "name": "ACSA", "url": "https://www.airports.co.za/", "accessedAt": "2026-05-10" },
+        { "name": "SkyVector", "url": "https://skyvector.com/airport/FACT/Cape-Town-International-Airport", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 2,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  },
+  {
+    "id": "DUR",
+    "name": "King Shaka International Airport",
+    "countryId": "ZAF",
+    "city": "Durban",
+    "iata": "DUR",
+    "icao": "FALE",
+    "coordinates": [31.114, -29.613],
+    "passengerVolume": 5616199,
+    "cargoVolume": 110000,
+    "runwayCount": 1,
+    "elevationM": 93,
+    "strategicImportance": "high",
+    "geopoliticalNotes": "Key component of the Dube TradePort Special Economic Zone; primary gateway for KwaZulu-Natal's trade and tourism.",
+    "notes": "Designed with a strong focus on cargo and logistics integration.",
+    "attribution": {
+      "sources": [
+        { "name": "ACSA", "url": "https://www.airports.co.za/", "accessedAt": "2026-05-10" },
+        { "name": "Dube TradePort", "url": "https://www.dubetradeport.co.za/", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 2,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  },
+  {
+    "id": "WKF",
+    "name": "Air Force Base Waterkloof",
+    "countryId": "ZAF",
+    "city": "Pretoria",
+    "iata": null,
+    "icao": "FAWK",
+    "coordinates": [28.222, -25.830],
+    "passengerVolume": null,
+    "cargoVolume": null,
+    "runwayCount": 2,
+    "elevationM": 1500,
+    "strategicImportance": "critical",
+    "geopoliticalNotes": "South Africa's primary military airbase; handles VIP transport and major military logistics for regional peacekeeping missions.",
+    "notes": "Highly restricted facility; primary hub for the South African Air Force (SAAF) transport fleet.",
+    "attribution": {
+      "sources": [
+        { "name": "South African Air Force", "url": "http://www.af.mil.za/", "accessedAt": "2026-05-10" },
+        { "name": "SkyVector", "url": "https://skyvector.com/airport/FAWK/Waterkloof-AFB", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 2,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  },
+  {
+    "id": "PLZ",
+    "name": "Chief Dawid Stuurman International Airport",
+    "countryId": "ZAF",
+    "city": "Gqeberha",
+    "iata": "PLZ",
+    "icao": "FAPE",
+    "coordinates": [25.618, -33.984],
+    "passengerVolume": 1200000,
+    "cargoVolume": 5000,
+    "runwayCount": 2,
+    "elevationM": 69,
+    "strategicImportance": "high",
+    "geopoliticalNotes": "Critical for the Eastern Cape's automotive industry and regional trade; serves the Coega Special Economic Zone.",
+    "notes": "Formerly Port Elizabeth International Airport.",
+    "attribution": {
+      "sources": [
+        { "name": "ACSA", "url": "https://www.airports.co.za/", "accessedAt": "2026-05-10" },
+        { "name": "IATA", "url": "https://www.iata.org/", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 2,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  },
+  {
+    "id": "BFN",
+    "name": "Bram Fischer International Airport",
+    "countryId": "ZAF",
+    "city": "Bloemfontein",
+    "iata": "BFN",
+    "icao": "FABL",
+    "coordinates": [26.301, -29.091],
+    "passengerVolume": 431359,
+    "cargoVolume": 1000,
+    "runwayCount": 2,
+    "elevationM": 1358,
+    "strategicImportance": "medium",
+    "geopoliticalNotes": "Centrally located hub serving the Free State province; shares facilities with AFB Bloemspruit for military logistics.",
+    "notes": "Critical node for national connectivity and rapid deployment in central South Africa.",
+    "attribution": {
+      "sources": [
+        { "name": "ACSA", "url": "https://www.airports.co.za/", "accessedAt": "2026-05-10" },
+        { "name": "SkyVector", "url": "https://skyvector.com/airport/FABL/Bloemfontein-Bram-Fischer-International-Airport", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 2,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  },
+  {
+    "id": "HLA",
+    "name": "Lanseria International Airport",
+    "countryId": "ZAF",
+    "city": "Johannesburg",
+    "iata": "HLA",
+    "icao": "FALA",
+    "coordinates": [27.926, -25.938],
+    "passengerVolume": 1500000,
+    "cargoVolume": 2000,
+    "runwayCount": 1,
+    "elevationM": 1378,
+    "strategicImportance": "medium",
+    "geopoliticalNotes": "Primary alternative to OR Tambo for regional and business aviation; privately owned and critical for corporate logistics.",
+    "notes": "Key gateway for charter operations and high-net-worth travel in Gauteng.",
+    "attribution": {
+      "sources": [
+        { "name": "Lanseria International Airport", "url": "https://lanseria.co.za/", "accessedAt": "2026-05-10" },
+        { "name": "IATA", "url": "https://www.iata.org/", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 2,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  },
+  {
+    "id": "GRJ",
+    "name": "George Airport",
+    "countryId": "ZAF",
+    "city": "George",
+    "iata": "GRJ",
+    "icao": "FAGG",
+    "coordinates": [22.378, -34.006],
+    "passengerVolume": 800000,
+    "cargoVolume": 1000,
+    "runwayCount": 1,
+    "elevationM": 195,
+    "strategicImportance": "medium",
+    "geopoliticalNotes": "Key gateway for the Garden Route; supports regional tourism and light industrial logistics.",
+    "notes": "Award-winning regional airport known for its green initiatives.",
+    "attribution": {
+      "sources": [
+        { "name": "ACSA", "url": "https://www.airports.co.za/", "accessedAt": "2026-05-10" },
+        { "name": "SkyVector", "url": "https://skyvector.com/airport/FAGG/George-Airport", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 2,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  },
+  {
+    "id": "ELS",
+    "name": "King Phalo Airport",
+    "countryId": "ZAF",
+    "city": "East London",
+    "iata": "ELS",
+    "icao": "FAEL",
+    "coordinates": [27.819, -33.036],
+    "passengerVolume": 946000,
+    "cargoVolume": 4200,
+    "runwayCount": 2,
+    "elevationM": 133,
+    "strategicImportance": "medium",
+    "geopoliticalNotes": "Supports the industrial sector in East London, particularly manufacturing and exports.",
+    "notes": "Formerly East London Airport.",
+    "attribution": {
+      "sources": [
+        { "name": "ACSA", "url": "https://www.airports.co.za/", "accessedAt": "2026-05-10" },
+        { "name": "IATA", "url": "https://www.iata.org/", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 2,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  },
+  {
+    "id": "KIM",
+    "name": "Kimberley Airport",
+    "countryId": "ZAF",
+    "city": "Kimberley",
+    "iata": "KIM",
+    "icao": "FAKM",
+    "coordinates": [24.766, -28.803],
+    "passengerVolume": 150000,
+    "cargoVolume": null,
+    "runwayCount": 2,
+    "elevationM": 1204,
+    "strategicImportance": "low",
+    "geopoliticalNotes": "Regional hub for the Northern Cape; primarily serves the mining industry and administrative needs.",
+    "notes": "Critical for connectivity in the sparsely populated Northern Cape region.",
+    "attribution": {
+      "sources": [
+        { "name": "ACSA", "url": "https://www.airports.co.za/", "accessedAt": "2026-05-10" },
+        { "name": "SkyVector", "url": "https://skyvector.com/airport/FAKM/Kimberley-Airport", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 2,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  }
+]

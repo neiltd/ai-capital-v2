@@ -1,0 +1,66 @@
+{
+  "id": "LCA",
+  "iso2": "LC",
+  "name": "Saint Lucia",
+  "region": "Americas",
+  "subregion": "Caribbean",
+  "capital": "Castries",
+  "lastUpdated": "2026-05-15",
+  "summary": "Saint Lucia is currently experiencing a period of robust growth and significant public investment under the 'Year of Infrastructure' initiative led by Prime Minister Philip J. Pierre. Following a landslide victory in the December 2025 general elections, the SLP administration has a strong mandate to continue its focus on large-scale public works, social safety nets, and economic diversification. The economy is primarily driven by a thriving tourism sector, which saw record arrivals in 2024. However, the country faces persistent challenges including high youth unemployment and a recent spike in gang-related crime, which the government is addressing through community policing and social intervention. Saint Lucia is a key member of the OECS and a leading advocate for regional integration and climate resilience in the Caribbean.",
+  "indicators": {
+    "politicalStability":       { "score": 8, "score_description": "Highly stable; the December 2025 election provided a clear and overwhelming mandate.", "trend": "stable", "confidence": "high", "note": "The country has a long history of peaceful democratic transitions." },
+    "economicDirection":        { "score": 6, "score_description": "Strong tourism-led growth supported by massive infrastructure spending.", "trend": "rising", "confidence": "high", "note": "Focus on the 'blue economy' and youth entrepreneurship is beginning to show results." },
+    "investmentAttractiveness": { "score": 6, "score_description": "Attractive for tourism, hospitality, and manufacturing; stable regulatory environment.", "trend": "stable", "confidence": "high", "note": "Active Citizenship by Investment program provides capital for major resort developments." },
+    "geopoliticalRisk":         { "score": 3, "score_description": "Low risk; active and respected member of the regional and international community.", "trend": "stable", "confidence": "high", "note": "Maintains balanced relations with both Western and non-traditional partners." },
+    "educationQuality":         { "score": 6, "score_description": "Strong foundation; focus on aligning vocational training with industry needs.", "trend": "stable", "confidence": "medium", "note": "Expansion of the Sir Arthur Lewis Community College is a priority for the government." },
+    "healthcareQuality":        { "score": 6, "score_description": "Improving facilities with the full commissioning of the Owen King EU Hospital.", "trend": "stable", "confidence": "medium", "note": "Universal health care initiatives are being expanded to improve access for low-income citizens." },
+    "technologyInvestment":     { "score": 5, "score_description": "Steady progress in digital connectivity and e-government services.", "trend": "rising", "confidence": "medium", "note": "Focus on the 'Digital Saint Lucia' project to improve public service delivery." }
+  },
+  "demographics": {
+    "population": 180000,
+    "medianAge": 34.8,
+    "urbanizationRate": 19,
+    "majorEthnicGroups": ["Black African descent", "Mixed descent", "East Indian", "European"],
+    "religions": [
+      { "name": "Roman Catholic", "percent": 61 },
+      { "name": "Seventh-day Adventist", "percent": 7 },
+      { "name": "Pentecostal", "percent": 6 },
+      { "name": "Rastafarian", "percent": 2 },
+      { "name": "Other Christian", "percent": 11 },
+      { "name": "None/Other", "percent": 13 }
+    ]
+  },
+  "alliances": ["CARICOM", "OECS", "OAS", "UN", "Commonwealth", "SIDS", "CELAC"],
+  "relationships": [
+    { "countryId": "USA", "countryName": "United States", "type": "partner", "sentiment": "positive", "summary": "Close partner in regional security and trade; primary source of tourists." },
+    { "countryId": "GBR", "countryName": "United Kingdom", "type": "partner", "sentiment": "positive", "summary": "Strong historical ties; shared legal and educational frameworks." },
+    { "countryId": "TWN", "countryName": "Taiwan", "type": "ally", "sentiment": "positive", "summary": "Critical partner providing aid in agriculture, digital literacy, and community development." },
+    { "countryId": "FRA", "countryName": "France", "type": "neighbor", "sentiment": "positive", "summary": "Close proximity to Martinique facilitates trade and cultural exchange." }
+  ],
+  "perspectives": [
+    { "source": "Castries Merchant", "bias": "Optimistic", "view": "The new roads and port upgrades are making a real difference; we are seeing more activity in the city than ever before." },
+    { "source": "Social Worker", "bias": "Concerned", "view": "The economic growth is good, but we need to do more for our young men to steer them away from gangs and toward opportunity." },
+    { "source": "Eco-tourism Guide", "bias": "Ecological", "view": "Saint Lucia is the most beautiful island in the world; we must protect our Pitons and our reefs while we grow." }
+  ],
+  "historicalContext": {
+    "summary": "Saint Lucia changed hands between the British and French 14 times, earning the nickname 'The Helen of the West Indies.' This dual heritage is reflected in its culture, legal system, and the widespread use of Kwéyòl (French-based Creole). It became a British colony in 1814 and gained independence in 1979. Its modern history has been one of transitioning from a banana-based economy to a tourism and services powerhouse.",
+    "keyEvents": [
+      { "year": 1814, "event": "Treaty of Paris grants final control of Saint Lucia to Great Britain." },
+      { "year": 1979, "event": "Saint Lucia gains independence from the United Kingdom." },
+      { "year": 1992, "event": "Derek Walcott wins the Nobel Prize in Literature, highlighting the island's rich culture." },
+      { "year": 2010, "event": "Hurricane Tomas causes significant damage and landslides." },
+      { "year": 2021, "event": "Philip J. Pierre (SLP) becomes Prime Minister after a landslide victory." },
+      { "year": 2025, "event": "Prime Minister Pierre secures a second landslide victory in the December elections." }
+    ]
+  },
+  "investmentNotes": {
+    "strengths": ["Strong and stable democratic framework", "Diverse and world-renowned tourism offering", "Aggressive public infrastructure development program", "High levels of regional and international cooperation"],
+    "risks": ["Vulnerability to natural disasters and climate change", "High rates of youth unemployment", "Challenges with gang-related crime in urban areas", "Reliance on external tourism markets"],
+    "sectors": ["Tourism and Hospitality", "Infrastructure and Construction", "Agro-processing", "Business Process Outsourcing (BPO)", "Manufacturing"]
+  },
+  "sources": [
+    { "name": "Government of Saint Lucia", "url": "https://www.govt.lc/", "type": "official" },
+    { "name": "Saint Lucia Central Statistical Office", "url": "https://stats.gov.lc/", "type": "official" },
+    { "name": "IMF Saint Lucia Information", "url": "https://www.imf.org/en/Countries/LCA", "type": "economic" }
+  ]
+}

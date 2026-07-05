@@ -1,0 +1,272 @@
+[
+  {
+    "id": "KHI",
+    "name": "Jinnah International Airport",
+    "countryId": "PAK",
+    "city": "Karachi",
+    "iata": "KHI",
+    "icao": "OPKC",
+    "coordinates": [67.161, 24.907],
+    "passengerVolume": 6711131,
+    "cargoVolume": 104273,
+    "runwayCount": 2,
+    "elevationM": 30,
+    "strategicImportance": "critical",
+    "geopoliticalNotes": "Pakistan's primary commercial gateway and major logistics hub; critical for maritime trade connectivity via the Arabian Sea.",
+    "notes": "Houses major maintenance facilities and serves as the primary hub for the national carrier.",
+    "attribution": {
+      "sources": [
+        { "name": "Pakistan Civil Aviation Authority (PCAA)", "url": "https://www.caapakistan.com.pk/", "accessedAt": "2026-05-10" },
+        { "name": "IATA", "url": "https://www.iata.org/", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 2,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  },
+  {
+    "id": "ISB",
+    "name": "Islamabad International Airport",
+    "countryId": "PAK",
+    "city": "Islamabad",
+    "iata": "ISB",
+    "icao": "OPIS",
+    "coordinates": [72.826, 33.549],
+    "passengerVolume": 6804439,
+    "cargoVolume": 70455,
+    "runwayCount": 2,
+    "elevationM": 537,
+    "strategicImportance": "high",
+    "geopoliticalNotes": "Serves the national capital; increasingly vital for CPEC-related trade and connectivity with Western China (Urumqi route).",
+    "notes": "State-of-the-art facility opened in 2018 to replace the old Benazir Bhutto International Airport.",
+    "attribution": {
+      "sources": [
+        { "name": "PCAA", "url": "https://www.caapakistan.com.pk/", "accessedAt": "2026-05-10" },
+        { "name": "SkyVector", "url": "https://skyvector.com/airport/OPIS/Islamabad-International-Airport", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 2,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  },
+  {
+    "id": "LHE",
+    "name": "Allama Iqbal International Airport",
+    "countryId": "PAK",
+    "city": "Lahore",
+    "iata": "LHE",
+    "icao": "OPLA",
+    "coordinates": [74.403, 31.521],
+    "passengerVolume": 6048541,
+    "cargoVolume": 114882,
+    "runwayCount": 2,
+    "elevationM": 213,
+    "strategicImportance": "high",
+    "geopoliticalNotes": "Major hub for Punjab province; handles significant cargo volumes for the region's industrial and agricultural sectors.",
+    "notes": "Currently undergoing terminal expansion to double its handling capacity by 2026.",
+    "attribution": {
+      "sources": [
+        { "name": "PCAA", "url": "https://www.caapakistan.com.pk/", "accessedAt": "2026-05-10" },
+        { "name": "IATA", "url": "https://www.iata.org/", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 2,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  },
+  {
+    "id": "GWD",
+    "name": "New Gwadar International Airport",
+    "countryId": "PAK",
+    "city": "Gwadar",
+    "iata": "GWD",
+    "icao": "OPGD",
+    "coordinates": [62.499, 25.297],
+    "passengerVolume": 400000,
+    "cargoVolume": 30000,
+    "runwayCount": 1,
+    "elevationM": 20,
+    "strategicImportance": "high",
+    "geopoliticalNotes": "Flagship project of the China-Pakistan Economic Corridor (CPEC); links the deep-sea port to global air routes.",
+    "notes": "Commenced commercial operations in January 2025; values represent initial annual capacity.",
+    "attribution": {
+      "sources": [
+        { "name": "CPEC Official Portal", "url": "http://cpec.gov.pk/", "accessedAt": "2026-05-10" },
+        { "name": "PCAA", "url": "https://www.caapakistan.com.pk/", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 2,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  },
+  {
+    "id": "PEW",
+    "name": "Bacha Khan International Airport",
+    "countryId": "PAK",
+    "city": "Peshawar",
+    "iata": "PEW",
+    "icao": "OPPS",
+    "coordinates": [71.514, 33.994],
+    "passengerVolume": 1161063,
+    "cargoVolume": 9514,
+    "runwayCount": 1,
+    "elevationM": 369,
+    "strategicImportance": "high",
+    "geopoliticalNotes": "Critical hub for security operations in the northwest and transit to Afghanistan and Central Asia.",
+    "notes": "Shares runway with PAF Base Peshawar; high secondary strategic value for rapid deployment.",
+    "attribution": {
+      "sources": [
+        { "name": "PCAA", "url": "https://www.caapakistan.com.pk/", "accessedAt": "2026-05-10" },
+        { "name": "OurAirports", "url": "https://ourairports.com/airports/OPPS/", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 2,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  },
+  {
+    "id": "SKT",
+    "name": "Sialkot International Airport",
+    "countryId": "PAK",
+    "city": "Sialkot",
+    "iata": "SKT",
+    "icao": "OPST",
+    "coordinates": [74.364, 32.536],
+    "passengerVolume": 939899,
+    "cargoVolume": 9873,
+    "runwayCount": 1,
+    "elevationM": 255,
+    "strategicImportance": "high",
+    "geopoliticalNotes": "Privately owned export-oriented hub; essential for the global supply chain of sports goods and surgical instruments.",
+    "notes": "Features the longest runway in Pakistan (3,658 meters) capable of handling heavy cargo aircraft.",
+    "attribution": {
+      "sources": [
+        { "name": "Sialkot International Airport Limited", "url": "https://www.sial.com.pk/", "accessedAt": "2026-05-10" },
+        { "name": "PCAA", "url": "https://www.caapakistan.com.pk/", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 2,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  },
+  {
+    "id": "MUX",
+    "name": "Multan International Airport",
+    "countryId": "PAK",
+    "city": "Multan",
+    "iata": "MUX",
+    "icao": "OPMT",
+    "coordinates": [71.419, 30.203],
+    "passengerVolume": 1386973,
+    "cargoVolume": 7276,
+    "runwayCount": 1,
+    "elevationM": 123,
+    "strategicImportance": "medium",
+    "geopoliticalNotes": "Important regional hub for Southern Punjab; serves as a node for agricultural exports and religious tourism.",
+    "notes": "Expanded in 2015 to handle international wide-body aircraft.",
+    "attribution": {
+      "sources": [
+        { "name": "PCAA", "url": "https://www.caapakistan.com.pk/", "accessedAt": "2026-05-10" },
+        { "name": "SkyVector", "url": "https://skyvector.com/airport/OPMT/Multan-International-Airport", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 2,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  },
+  {
+    "id": "UET",
+    "name": "Quetta International Airport",
+    "countryId": "PAK",
+    "city": "Quetta",
+    "iata": "UET",
+    "icao": "OPQT",
+    "coordinates": [66.940, 30.240],
+    "passengerVolume": 535065,
+    "cargoVolume": 2056,
+    "runwayCount": 1,
+    "elevationM": 1605,
+    "strategicImportance": "high",
+    "geopoliticalNotes": "Highest altitude international airport in Pakistan; strategically located near the western border for regional security.",
+    "notes": "Critical for logistics in Balochistan; shares facilities with PAF Base Samungli.",
+    "attribution": {
+      "sources": [
+        { "name": "PCAA", "url": "https://www.caapakistan.com.pk/", "accessedAt": "2026-05-10" },
+        { "name": "OurAirports", "url": "https://ourairports.com/airports/OPQT/", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 2,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  },
+  {
+    "id": "LYP",
+    "name": "Faisalabad International Airport",
+    "countryId": "PAK",
+    "city": "Faisalabad",
+    "iata": "LYP",
+    "icao": "OPFA",
+    "coordinates": [72.995, 31.365],
+    "passengerVolume": 417203,
+    "cargoVolume": 52,
+    "runwayCount": 1,
+    "elevationM": 185,
+    "strategicImportance": "medium",
+    "geopoliticalNotes": "Serves Pakistan's 'Manchester' (textile hub); important for industrial cargo and labor migration to the Gulf.",
+    "notes": "Underwent significant renovation in 2018 to upgrade passenger facilities.",
+    "attribution": {
+      "sources": [
+        { "name": "PCAA", "url": "https://www.caapakistan.com.pk/", "accessedAt": "2026-05-10" },
+        { "name": "IATA", "url": "https://www.iata.org/", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 2,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  },
+  {
+    "id": "KDU",
+    "name": "Skardu Airport",
+    "countryId": "PAK",
+    "city": "Skardu",
+    "iata": "KDU",
+    "icao": "OPSD",
+    "coordinates": [75.537, 35.335],
+    "passengerVolume": 300000,
+    "cargoVolume": null,
+    "runwayCount": 2,
+    "elevationM": 2230,
+    "strategicImportance": "high",
+    "geopoliticalNotes": "Critical hub for tourism and logistics in the Gilgit-Baltistan region; holds immense strategic value due to its proximity to the line of control.",
+    "notes": "Upgraded to international status in 2021; primarily handles narrow-body aircraft.",
+    "attribution": {
+      "sources": [
+        { "name": "PCAA", "url": "https://www.caapakistan.com.pk/", "accessedAt": "2026-05-10" },
+        { "name": "SkyVector", "url": "https://skyvector.com/airport/OPSD/Skardu-Airport", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 2,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  }
+]

@@ -1,0 +1,38 @@
+[
+  {
+    "countryId": "DEU",
+    "year": 2023,
+    "electricityConsumptionTWh": 457.0,
+    "electricityProductionTWh": 436.8,
+    "electricityMix": {
+      "wind": 32.5,
+      "coal": 26.0,
+      "solar": 13.7,
+      "otherRenewables": 11.2,
+      "gas": 10.5,
+      "hydro": 4.5,
+      "nuclear": 1.5,
+      "oil": 0.1
+    },
+    "renewableSharePct": 61.9,
+    "waterStressScore": 2.0,
+    "waterWithdrawalPct": 31.5,
+    "foodSecurityScore": 77.0,
+    "aiAdoptionScore": 75.26,
+    "internetPenetration": 93.5,
+    "mobilePenetration": 128,
+    "attribution": {
+      "sources": [
+        { "name": "Fraunhofer ISE Energy Charts 2023", "url": "https://www.energy-charts.info", "accessedAt": "2024-05-10" },
+        { "name": "WRI Aqueduct 4.0", "url": "https://www.wri.org/aqueduct", "accessedAt": "2024-05-10" },
+        { "name": "Global Food Security Index 2022", "url": "https://impact.economist.com/sustainability/project/food-security-index", "accessedAt": "2024-05-10" },
+        { "name": "Oxford Insights AI Readiness Index 2023", "url": "https://oxfordinsights.com", "accessedAt": "2024-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 4,
+        "lastVerified": "2024-05-10"
+      }
+    }
+  }
+]

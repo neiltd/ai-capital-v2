@@ -1,0 +1,65 @@
+{
+  "id": "CYP",
+  "iso2": "CY",
+  "name": "Cyprus",
+  "region": "Europe",
+  "subregion": "Southern Europe",
+  "capital": "Nicosia",
+  "lastUpdated": "2025-05-15",
+  "summary": "Cyprus is a robust Mediterranean island economy and a strategic EU member state serving as a bridge between Europe and the Middle East. The nation has successfully repositioned itself as a leading regional hub for technology, fintech, and shipping, while shifting away from its traditional reliance on Russian capital. Despite its economic resilience and high fiscal stability, the island remains politically divided, with the 'Cyprus Issue' continuing to shape its foreign policy and security landscape. Recent UN-led efforts in 2025 aim to revive settlement talks, while the government focuses on energy security via the Great Sea Interconnector and maintaining its status as a premier global business destination.",
+  "indicators": {
+    "politicalStability":       { "score": 7, "trend": "stable", "confidence": "high", "note": "Stable democratic governance within the EU; long-term risk remains the unresolved division of the island." },
+    "economicDirection":        { "score": 8, "trend": "rising", "confidence": "high", "note": "Strong growth driven by tech and shipping; successful diversification into new tourist and investment markets." },
+    "investmentAttractiveness": { "score": 8, "trend": "rising", "confidence": "high", "note": "Highly competitive tax regime (12.5% corporate tax) and a thriving IP and digital nomad ecosystem." },
+    "geopoliticalRisk":         { "score": 5, "trend": "stable", "confidence": "high", "note": "Ongoing tensions with Turkey regarding maritime boundaries and the status of the North." },
+    "educationQuality":         { "score": 7, "trend": "stable", "confidence": "high", "note": "High tertiary education rates and a growing number of private universities catering to international students." },
+    "healthcareQuality":        { "score": 7, "trend": "rising", "confidence": "high", "note": "Well-regarded public and private healthcare system (GeSY) with a focus on medical tourism." },
+    "technologyInvestment":     { "score": 8, "trend": "rising", "confidence": "high", "note": "Rapid growth of the ICT sector, now a primary driver of GDP and FDI." }
+  },
+  "demographics": {
+    "population": 1260000,
+    "medianAge": 38.3,
+    "urbanizationRate": 67.0,
+    "majorEthnicGroups": ["Greek Cypriot", "Turkish Cypriot", "Other EU nationals", "Other (including British, Russian, Filipino)"],
+    "religions": [
+      { "name": "Orthodox Christian", "percent": 89 },
+      { "name": "Muslim", "percent": 2 },
+      { "name": "Other (including Roman Catholic, Maronite)", "percent": 9 }
+    ]
+  },
+  "alliances": ["EU", "UN", "CoE", "OSCE", "UfM", "Commonwealth"],
+  "relationships": [
+    { "countryId": "GRC", "countryName": "Greece", "type": "strategic_partner", "sentiment": "positive", "summary": "Cyprus' closest ethnic and political ally; deep cooperation on defense, energy, and EU policy." },
+    { "countryId": "USA", "countryName": "United States", "type": "strategic_partner", "sentiment": "positive", "summary": "Deepening security and intelligence cooperation; recent lifting of the U.S. arms embargo on Cyprus." },
+    { "countryId": "ISR", "countryName": "Israel", "type": "strategic_partner", "sentiment": "positive", "summary": "Key partner in Eastern Mediterranean energy and security; collaboration on the Great Sea Interconnector." },
+    { "countryId": "GBR", "countryName": "United Kingdom", "type": "partner", "sentiment": "neutral", "summary": "Maintains sovereign base areas on the island; critical trade and tourism partner." },
+    { "countryId": "TUR", "countryName": "Turkey", "type": "adversary", "sentiment": "negative", "summary": "Does not recognize the ROC; ongoing disputes over maritime rights and the presence of Turkish troops in the North." }
+  ],
+  "perspectives": [
+    { "source": "Cypriot Tech Executive", "bias": "Optimistic", "view": "Cyprus is no longer just a tax haven; it is a genuine tech island where talent from Europe and the Levant comes to scale global ideas." },
+    { "source": "Shipping Magnate", "bias": "Pragmatic", "view": "Our registry is our strength; as global trade shifts, Cyprus remains a stable and reliable flag of choice for the world's fleet." },
+    { "source": "UN Diplomat", "bias": "Cautious", "view": "The window for a bizonal, bicommunal federation is still open, but we need political courage from both sides to finally turn the page." },
+    { "source": "Citizen of Nicosia", "bias": "Resilient", "view": "We live in the world's last divided capital; we want the prosperity of our tech boom to eventually lead to a reunited and peaceful island." }
+  ],
+  "historicalContext": {
+    "summary": "Cyprus gained independence from British colonial rule in 1960. In 1974, a Greek-backed coup followed by a Turkish military intervention led to the division of the island. The Republic of Cyprus (ROC) joined the EU in 2004. In recent years, the ROC has undergone a major transformation, emerging from a 2013 financial crisis to become one of the EU's fastest-growing economies, focused on innovation and high-value services.",
+    "keyEvents": [
+      { "year": 1960, "event": "Independence from the United Kingdom." },
+      { "year": 1974, "event": "Coup attempt and subsequent Turkish military intervention; division of the island." },
+      { "year": 2004, "event": "Cyprus joins the European Union." },
+      { "year": 2013, "event": "Financial crisis and subsequent radical restructuring of the banking sector." },
+      { "year": 2022, "event": "U.S. completely lifts the arms embargo on the Republic of Cyprus." },
+      { "year": 2025, "event": "Informal UN-led trilateral meetings in Geneva to revive settlement talks." }
+    ]
+  },
+  "investmentNotes": {
+    "strengths": ["Strategic EU gateway to the Middle East and Africa", "Highly favorable tax and IP box regimes", "World-class maritime and shipmanagement infrastructure", "Safe and high quality of life for international talent"],
+    "risks": ["Unresolved political division and geopolitical tensions with Turkey", "Vulnerability to external energy and tourism shocks", "Large trade deficit in goods offset by services surplus", "Strict compliance requirements following recent sanctions shifts"],
+    "sectors": ["ICT & FinTech", "Shipmanagement & Maritime Services", "Renewable Energy & Gas Infrastructure", "Luxury Real Estate & Tourism"]
+  },
+  "sources": [
+    { "name": "Statistical Service of Cyprus (CYSTAT)", "url": "https://www.cystat.gov.cy", "type": "economic" },
+    { "name": "Invest Cyprus (CIPA)", "url": "https://www.investcyprus.org.cy", "type": "economic" },
+    { "name": "Central Bank of Cyprus", "url": "https://www.centralbank.cy", "type": "economic" }
+  ]
+}

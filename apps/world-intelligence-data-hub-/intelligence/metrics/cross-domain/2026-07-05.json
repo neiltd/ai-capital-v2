@@ -1,0 +1,701 @@
+{
+  "date": "2026-07-05",
+  "generatedAt": "2026-07-05T16:00:42.807Z",
+  "observationWindowDays": 14,
+  "storylineBenchmarkLinks": [
+    {
+      "storylineId": "33400b9c3e99f3c3",
+      "storylineTitle": "OPEC+ Agrees Modest Oil Output Quota Hike for August as Gulf Flows Rebound",
+      "storylineState": "active",
+      "daysActive": 3,
+      "avgEscalation": 0.2,
+      "maxSeverity": 3,
+      "countries": [
+        "ARE",
+        "SAU",
+        "IRN",
+        "USA",
+        "RUS"
+      ],
+      "eventTypes": [
+        "commodity_price_move",
+        "supply_disruption",
+        "opec_decision"
+      ],
+      "linkedBenchmarks": [
+        "brent_crude",
+        "wti_crude"
+      ],
+      "linkStrength": 0.75,
+      "linkReasons": [
+        "energy_event_type:commodity_price_move,supply_disruption,opec_decision"
+      ]
+    },
+    {
+      "storylineId": "67ec25703c0b5e29",
+      "storylineTitle": "Russian Warships Including Varyag Cruiser and Ufa Submarine Dock in Qingdao Ahead of Sino-Russian Joint Sea Exercises",
+      "storylineState": "active",
+      "daysActive": 2,
+      "avgEscalation": 0.592,
+      "maxSeverity": 4,
+      "countries": [
+        "UKR",
+        "RUS",
+        "MCO",
+        "EUR",
+        "CHN"
+      ],
+      "eventTypes": [
+        "military_operation",
+        "assassination",
+        "terrorist_attack",
+        "missile_attack",
+        "airstrike",
+        "armed_conflict",
+        "military_exercise"
+      ],
+      "linkedBenchmarks": [
+        "brent_crude",
+        "wti_crude"
+      ],
+      "linkStrength": 0.5,
+      "linkReasons": [
+        "geopolitical_event_in_energy_region:RUS"
+      ]
+    },
+    {
+      "storylineId": "3bac099cf9a7a11e",
+      "storylineTitle": "State Funeral Held in Tehran for Ayatollah Khamenei, Killed in U.S.-Israeli Strikes",
+      "storylineState": "active",
+      "daysActive": 2,
+      "avgEscalation": 0.621,
+      "maxSeverity": 5,
+      "countries": [
+        "IRN",
+        "ISR",
+        "USA",
+        "IND"
+      ],
+      "eventTypes": [
+        "assassination",
+        "other",
+        "humanitarian_crisis",
+        "energy_infrastructure"
+      ],
+      "linkedBenchmarks": [
+        "brent_crude",
+        "wti_crude",
+        "henry_hub"
+      ],
+      "linkStrength": 0.375,
+      "linkReasons": [
+        "energy_event_type:energy_infrastructure",
+        "high_escalation_energy_country"
+      ]
+    },
+    {
+      "storylineId": "643e1e7c13d46c42",
+      "storylineTitle": "ECB Governing Council Member Signals Comfort With Policy Outlook After June Rate Hike",
+      "storylineState": "active",
+      "daysActive": 0,
+      "avgEscalation": 0.267,
+      "maxSeverity": 3,
+      "countries": [
+        "DEU",
+        "FRA",
+        "EUR",
+        "UKR",
+        "RUS",
+        "CHN"
+      ],
+      "eventTypes": [
+        "central_bank_action",
+        "energy_infrastructure",
+        "trade_dispute"
+      ],
+      "linkedBenchmarks": [
+        "brent_crude",
+        "wti_crude",
+        "henry_hub"
+      ],
+      "linkStrength": 0.25,
+      "linkReasons": [
+        "energy_event_type:energy_infrastructure"
+      ]
+    },
+    {
+      "storylineId": "7c9e4eef819a0ef6",
+      "storylineTitle": "Canada's Carney Unveils Multibillion-Dollar Alberta-to-Pacific Oil Pipeline to Diversify Trade Away from US",
+      "storylineState": "emerging",
+      "daysActive": 0,
+      "avgEscalation": 0.2,
+      "maxSeverity": 2,
+      "countries": [
+        "CAN"
+      ],
+      "eventTypes": [
+        "energy_infrastructure"
+      ],
+      "linkedBenchmarks": [
+        "brent_crude",
+        "wti_crude",
+        "henry_hub"
+      ],
+      "linkStrength": 0.25,
+      "linkReasons": [
+        "energy_event_type:energy_infrastructure"
+      ]
+    },
+    {
+      "storylineId": "a7de307cb8397409",
+      "storylineTitle": "Trump-Backed Lebanon Truce Faces Collapse as Hezbollah Threatens to Block Deal Critical to Iran Peace",
+      "storylineState": "escalating",
+      "daysActive": 3,
+      "avgEscalation": 0.775,
+      "maxSeverity": 4,
+      "countries": [
+        "LBN",
+        "IRN",
+        "ISR",
+        "USA",
+        "QAT"
+      ],
+      "eventTypes": [
+        "peace_negotiation"
+      ],
+      "linkedBenchmarks": [
+        "brent_crude",
+        "wti_crude"
+      ],
+      "linkStrength": 0.25,
+      "linkReasons": [
+        "high_escalation_energy_country"
+      ]
+    },
+    {
+      "storylineId": "ee3fcabea3577b8f",
+      "storylineTitle": "NATO Summit in Turkey Overshadowed by Iran War Aftermath and Burden-Sharing Disputes",
+      "storylineState": "active",
+      "daysActive": 3,
+      "avgEscalation": 0.55,
+      "maxSeverity": 3,
+      "countries": [
+        "UKR",
+        "RUS",
+        "DEU",
+        "GBR",
+        "FRA",
+        "TUR",
+        "USA",
+        "IRN"
+      ],
+      "eventTypes": [
+        "diplomatic_incident"
+      ],
+      "linkedBenchmarks": [],
+      "linkStrength": 0.125,
+      "linkReasons": [
+        "geopolitical_event_in_energy_region:RUS,GBR,IRN"
+      ]
+    },
+    {
+      "storylineId": "3ac6c8e65bfca151",
+      "storylineTitle": "South Africa and Ghana in Diplomatic Row Over Alleged Killing of Ghanaian Migrant in Cape Town",
+      "storylineState": "emerging",
+      "daysActive": 0,
+      "avgEscalation": 0.4,
+      "maxSeverity": 2,
+      "countries": [
+        "ZAF",
+        "GHA"
+      ],
+      "eventTypes": [
+        "diplomatic_incident"
+      ],
+      "linkedBenchmarks": [],
+      "linkStrength": 0,
+      "linkReasons": []
+    },
+    {
+      "storylineId": "84e257e9a29ef5dd",
+      "storylineTitle": "Chinese Expert Warns Japan-Philippines Maritime Delimitation Talks Serve Ulterior Purposes Targeting China",
+      "storylineState": "emerging",
+      "daysActive": 0,
+      "avgEscalation": 0.4,
+      "maxSeverity": 2,
+      "countries": [
+        "CHN",
+        "PHL",
+        "JPN"
+      ],
+      "eventTypes": [
+        "diplomatic_incident"
+      ],
+      "linkedBenchmarks": [],
+      "linkStrength": 0,
+      "linkReasons": []
+    },
+    {
+      "storylineId": "cf238d4052494490",
+      "storylineTitle": "China's Fujian Aircraft Carrier Claimed to Be First Equipped With Anti-Torpedo Torpedo System",
+      "storylineState": "emerging",
+      "daysActive": 0,
+      "avgEscalation": 0.3,
+      "maxSeverity": 2,
+      "countries": [
+        "CHN"
+      ],
+      "eventTypes": [
+        "other"
+      ],
+      "linkedBenchmarks": [],
+      "linkStrength": 0,
+      "linkReasons": []
+    }
+  ],
+  "disruptionPriceWindows": [
+    {
+      "eventId": "aefebd7a40868acae783ff98",
+      "eventDate": "2026-07-03",
+      "eventType": "supply_disruption",
+      "eventTitle": "Strait of Hormuz Closure During Iran War Disrupts Global Fertilizer and Natural Gas Shipments",
+      "countries": [
+        "IRN",
+        "USA"
+      ],
+      "escalationPotential": 0.1,
+      "isSupplyDisruption": true,
+      "isHormuzRelated": true,
+      "benchmarkWindows": [
+        {
+          "benchmarkId": "brent_crude",
+          "priceOnDate": null,
+          "priceOnDateDate": null,
+          "price7dBefore": null,
+          "price7dBeforeDate": null,
+          "delta7dPct": null,
+          "price3dAfter": null,
+          "price3dAfterDate": null,
+          "delta3dForwardPct": null
+        },
+        {
+          "benchmarkId": "wti_crude",
+          "priceOnDate": null,
+          "priceOnDateDate": null,
+          "price7dBefore": null,
+          "price7dBeforeDate": null,
+          "delta7dPct": null,
+          "price3dAfter": null,
+          "price3dAfterDate": null,
+          "delta3dForwardPct": null
+        },
+        {
+          "benchmarkId": "henry_hub",
+          "priceOnDate": null,
+          "priceOnDateDate": null,
+          "price7dBefore": null,
+          "price7dBeforeDate": null,
+          "delta7dPct": null,
+          "price3dAfter": null,
+          "price3dAfterDate": null,
+          "delta3dForwardPct": null
+        }
+      ]
+    },
+    {
+      "eventId": "f52e45791bea6cc213d94a9a",
+      "eventDate": "2026-07-03",
+      "eventType": "energy_infrastructure",
+      "eventTitle": "Canada's Carney Unveils Multibillion-Dollar Alberta-to-Pacific Oil Pipeline to Diversify Trade Away from US",
+      "countries": [
+        "CAN"
+      ],
+      "escalationPotential": 0.2,
+      "isSupplyDisruption": false,
+      "isHormuzRelated": false,
+      "benchmarkWindows": [
+        {
+          "benchmarkId": "brent_crude",
+          "priceOnDate": null,
+          "priceOnDateDate": null,
+          "price7dBefore": null,
+          "price7dBeforeDate": null,
+          "delta7dPct": null,
+          "price3dAfter": null,
+          "price3dAfterDate": null,
+          "delta3dForwardPct": null
+        },
+        {
+          "benchmarkId": "wti_crude",
+          "priceOnDate": null,
+          "priceOnDateDate": null,
+          "price7dBefore": null,
+          "price7dBeforeDate": null,
+          "delta7dPct": null,
+          "price3dAfter": null,
+          "price3dAfterDate": null,
+          "delta3dForwardPct": null
+        },
+        {
+          "benchmarkId": "henry_hub",
+          "priceOnDate": null,
+          "priceOnDateDate": null,
+          "price7dBefore": null,
+          "price7dBeforeDate": null,
+          "delta7dPct": null,
+          "price3dAfter": null,
+          "price3dAfterDate": null,
+          "delta3dForwardPct": null
+        }
+      ]
+    },
+    {
+      "eventId": "45692865e5e2ac272653b93e",
+      "eventDate": "2026-07-03",
+      "eventType": "energy_infrastructure",
+      "eventTitle": "Ukrainian National Charged With Sabotaging Russia-Germany Gas Pipelines in 2022 Undersea Bombing",
+      "countries": [
+        "UKR",
+        "RUS",
+        "DEU"
+      ],
+      "escalationPotential": 0.35,
+      "isSupplyDisruption": false,
+      "isHormuzRelated": false,
+      "benchmarkWindows": [
+        {
+          "benchmarkId": "brent_crude",
+          "priceOnDate": null,
+          "priceOnDateDate": null,
+          "price7dBefore": null,
+          "price7dBeforeDate": null,
+          "delta7dPct": null,
+          "price3dAfter": null,
+          "price3dAfterDate": null,
+          "delta3dForwardPct": null
+        },
+        {
+          "benchmarkId": "wti_crude",
+          "priceOnDate": null,
+          "priceOnDateDate": null,
+          "price7dBefore": null,
+          "price7dBeforeDate": null,
+          "delta7dPct": null,
+          "price3dAfter": null,
+          "price3dAfterDate": null,
+          "delta3dForwardPct": null
+        },
+        {
+          "benchmarkId": "henry_hub",
+          "priceOnDate": null,
+          "priceOnDateDate": null,
+          "price7dBefore": null,
+          "price7dBeforeDate": null,
+          "delta7dPct": null,
+          "price3dAfter": null,
+          "price3dAfterDate": null,
+          "delta3dForwardPct": null
+        }
+      ]
+    },
+    {
+      "eventId": "10bf49e2924b2e33b5e86591",
+      "eventDate": "2026-07-05",
+      "eventType": "energy_infrastructure",
+      "eventTitle": "India Expands Domestic Oil Exploration After Strait of Hormuz Disruptions During Middle East War",
+      "countries": [
+        "IND",
+        "IRN"
+      ],
+      "escalationPotential": 0.3,
+      "isSupplyDisruption": false,
+      "isHormuzRelated": true,
+      "benchmarkWindows": [
+        {
+          "benchmarkId": "brent_crude",
+          "priceOnDate": null,
+          "priceOnDateDate": null,
+          "price7dBefore": null,
+          "price7dBeforeDate": null,
+          "delta7dPct": null,
+          "price3dAfter": null,
+          "price3dAfterDate": null,
+          "delta3dForwardPct": null
+        },
+        {
+          "benchmarkId": "wti_crude",
+          "priceOnDate": null,
+          "priceOnDateDate": null,
+          "price7dBefore": null,
+          "price7dBeforeDate": null,
+          "delta7dPct": null,
+          "price3dAfter": null,
+          "price3dAfterDate": null,
+          "delta3dForwardPct": null
+        },
+        {
+          "benchmarkId": "henry_hub",
+          "priceOnDate": null,
+          "priceOnDateDate": null,
+          "price7dBefore": null,
+          "price7dBeforeDate": null,
+          "delta7dPct": null,
+          "price3dAfter": null,
+          "price3dAfterDate": null,
+          "delta3dForwardPct": null
+        }
+      ]
+    }
+  ],
+  "escalationVolatilityLog": [
+    {
+      "date": "2026-07-03",
+      "maxEscalation": 0.9,
+      "avgEscalation": 0.482,
+      "eventCount": 20,
+      "supplyDisruptionCount": 1,
+      "energyEventCount": 4,
+      "hormuzEventCount": 2,
+      "benchmarkDailyChange": [
+        {
+          "benchmarkId": "brent_crude",
+          "price": null,
+          "priorPrice": null,
+          "changePct": null
+        },
+        {
+          "benchmarkId": "wti_crude",
+          "price": null,
+          "priorPrice": null,
+          "changePct": null
+        },
+        {
+          "benchmarkId": "henry_hub",
+          "price": null,
+          "priorPrice": null,
+          "changePct": null
+        }
+      ]
+    },
+    {
+      "date": "2026-07-05",
+      "maxEscalation": 0.75,
+      "avgEscalation": 0.554,
+      "eventCount": 14,
+      "supplyDisruptionCount": 0,
+      "energyEventCount": 2,
+      "hormuzEventCount": 2,
+      "benchmarkDailyChange": [
+        {
+          "benchmarkId": "brent_crude",
+          "price": null,
+          "priorPrice": null,
+          "changePct": null
+        },
+        {
+          "benchmarkId": "wti_crude",
+          "price": null,
+          "priorPrice": null,
+          "changePct": null
+        },
+        {
+          "benchmarkId": "henry_hub",
+          "price": null,
+          "priorPrice": null,
+          "changePct": null
+        }
+      ]
+    }
+  ],
+  "chokepointPriceObservations": [
+    {
+      "eventId": "aefebd7a40868acae783ff98",
+      "eventDate": "2026-07-03",
+      "eventType": "supply_disruption",
+      "eventTitle": "Strait of Hormuz Closure During Iran War Disrupts Global Fertilizer and Natural Gas Shipments",
+      "countries": [
+        "IRN",
+        "USA"
+      ],
+      "escalationPotential": 0.1,
+      "chokepointLabel": "hormuz",
+      "benchmarkResponses": [
+        {
+          "benchmarkId": "brent_crude",
+          "priceAtEvent": null,
+          "price3dBefore": null,
+          "price3dAfter": null,
+          "deltaBefore": null,
+          "deltaAfter": null
+        },
+        {
+          "benchmarkId": "wti_crude",
+          "priceAtEvent": null,
+          "price3dBefore": null,
+          "price3dAfter": null,
+          "deltaBefore": null,
+          "deltaAfter": null
+        },
+        {
+          "benchmarkId": "henry_hub",
+          "priceAtEvent": null,
+          "price3dBefore": null,
+          "price3dAfter": null,
+          "deltaBefore": null,
+          "deltaAfter": null
+        }
+      ]
+    },
+    {
+      "eventId": "ce284f01e2b8d507987120cf",
+      "eventDate": "2026-07-03",
+      "eventType": "peace_negotiation",
+      "eventTitle": "Trump-Backed Lebanon Truce Faces Collapse as Hezbollah Threatens to Block Deal Critical to Iran Peace",
+      "countries": [
+        "LBN",
+        "IRN",
+        "ISR",
+        "USA"
+      ],
+      "escalationPotential": 0.8,
+      "chokepointLabel": "hormuz",
+      "benchmarkResponses": [
+        {
+          "benchmarkId": "brent_crude",
+          "priceAtEvent": null,
+          "price3dBefore": null,
+          "price3dAfter": null,
+          "deltaBefore": null,
+          "deltaAfter": null
+        },
+        {
+          "benchmarkId": "wti_crude",
+          "priceAtEvent": null,
+          "price3dBefore": null,
+          "price3dAfter": null,
+          "deltaBefore": null,
+          "deltaAfter": null
+        },
+        {
+          "benchmarkId": "henry_hub",
+          "priceAtEvent": null,
+          "price3dBefore": null,
+          "price3dAfter": null,
+          "deltaBefore": null,
+          "deltaAfter": null
+        }
+      ]
+    },
+    {
+      "eventId": "10bf49e2924b2e33b5e86591",
+      "eventDate": "2026-07-05",
+      "eventType": "energy_infrastructure",
+      "eventTitle": "India Expands Domestic Oil Exploration After Strait of Hormuz Disruptions During Middle East War",
+      "countries": [
+        "IND",
+        "IRN"
+      ],
+      "escalationPotential": 0.3,
+      "chokepointLabel": "hormuz",
+      "benchmarkResponses": [
+        {
+          "benchmarkId": "brent_crude",
+          "priceAtEvent": null,
+          "price3dBefore": null,
+          "price3dAfter": null,
+          "deltaBefore": null,
+          "deltaAfter": null
+        },
+        {
+          "benchmarkId": "wti_crude",
+          "priceAtEvent": null,
+          "price3dBefore": null,
+          "price3dAfter": null,
+          "deltaBefore": null,
+          "deltaAfter": null
+        },
+        {
+          "benchmarkId": "henry_hub",
+          "priceAtEvent": null,
+          "price3dBefore": null,
+          "price3dAfter": null,
+          "deltaBefore": null,
+          "deltaAfter": null
+        }
+      ]
+    },
+    {
+      "eventId": "db4254ad62be74241ebfc88b",
+      "eventDate": "2026-07-05",
+      "eventType": "peace_negotiation",
+      "eventTitle": "Strait of Hormuz Remains in Strategic Limbo as Iran-US Doha Talks Fail and Demining Stalls",
+      "countries": [
+        "IRN",
+        "USA",
+        "QAT"
+      ],
+      "escalationPotential": 0.75,
+      "chokepointLabel": "hormuz",
+      "benchmarkResponses": [
+        {
+          "benchmarkId": "brent_crude",
+          "priceAtEvent": null,
+          "price3dBefore": null,
+          "price3dAfter": null,
+          "deltaBefore": null,
+          "deltaAfter": null
+        },
+        {
+          "benchmarkId": "wti_crude",
+          "priceAtEvent": null,
+          "price3dBefore": null,
+          "price3dAfter": null,
+          "deltaBefore": null,
+          "deltaAfter": null
+        },
+        {
+          "benchmarkId": "henry_hub",
+          "priceAtEvent": null,
+          "price3dBefore": null,
+          "price3dAfter": null,
+          "deltaBefore": null,
+          "deltaAfter": null
+        }
+      ]
+    }
+  ],
+  "summary": {
+    "totalActiveStorylines": 10,
+    "energyLinkedStorylines": 6,
+    "escalatingLinked": 1,
+    "avgEscalationLinked": 0.443,
+    "supplyDisruptionsRecent": 1,
+    "energyEventsRecent": 4,
+    "hormuzEventsRecent": 2,
+    "observationWindowDays": 14,
+    "benchmarkCoverage": [
+      {
+        "benchmarkId": "brent_crude",
+        "mostRecentDate": null,
+        "mostRecentPrice": null,
+        "daysWithPairedData": 0
+      },
+      {
+        "benchmarkId": "wti_crude",
+        "mostRecentDate": null,
+        "mostRecentPrice": null,
+        "daysWithPairedData": 0
+      },
+      {
+        "benchmarkId": "henry_hub",
+        "mostRecentDate": null,
+        "mostRecentPrice": null,
+        "daysWithPairedData": 0
+      }
+    ],
+    "pairedObservationDays": 2,
+    "avgMaxEscalation": 0.825,
+    "maxSingleDayEscalation": 0.9,
+    "maxSingleDayPriceChangePct": null
+  }
+}

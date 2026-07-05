@@ -1,0 +1,65 @@
+{
+  "id": "ARM",
+  "iso2": "AM",
+  "name": "Armenia",
+  "region": "Asia",
+  "subregion": "Western Asia",
+  "capital": "Yerevan",
+  "lastUpdated": "2025-05-15",
+  "summary": "Armenia is undergoing a historic strategic pivot toward the West, seeking to reduce its long-standing security and economic dependence on Russia. This realignment is highlighted by the landmark 2025 peace treaty with Azerbaijan, which aims to resolve decades of conflict and unlock regional connectivity. Armenia's economy has shown remarkable resilience, transitioning from a period of high growth driven by capital inflows to a more stable trajectory focused on high-tech, tourism, and services. The Pashinyan administration is focused on deep democratic reforms and military modernization, while navigating the complex challenges of regional integration and the implementation of the TRIPP transit corridor.",
+  "indicators": {
+    "politicalStability":       { "score": 6, "trend": "stable", "confidence": "high", "note": "Strong democratic mandate for the Pashinyan administration, though opposition remains vocal regarding the peace process." },
+    "economicDirection":        { "score": 7, "trend": "rising", "confidence": "high", "note": "Stabilizing growth focused on sustainable sectors; successful absorption of recent capital and labor inflows." },
+    "investmentAttractiveness": { "score": 7, "trend": "rising", "confidence": "medium", "note": "Improving business climate and high-tech potential, bolstered by Western support and regional peace." },
+    "geopoliticalRisk":         { "score": 5, "trend": "falling", "confidence": "medium", "note": "Peace treaty with Azerbaijan significantly reduces immediate conflict risk, though the transition away from Russian security remains delicate." },
+    "educationQuality":         { "score": 7, "trend": "stable", "confidence": "high", "note": "Strong tradition in STEM and increasing focus on aligning higher education with the global tech market." },
+    "healthcareQuality":        { "score": 6, "trend": "stable", "confidence": "high", "note": "Well-established healthcare services in urban centers with ongoing reforms in universal health insurance." },
+    "technologyInvestment":     { "score": 8, "trend": "rising", "confidence": "high", "note": "A primary economic driver; Yerevan is a growing regional hub for software development, AI, and microelectronics." }
+  },
+  "demographics": {
+    "population": 3075000,
+    "medianAge": 36.5,
+    "urbanizationRate": 64.0,
+    "majorEthnicGroups": ["Armenian", "Yezidi", "Russian"],
+    "religions": [
+      { "name": "Armenian Apostolic", "percent": 93 },
+      { "name": "Other Christian", "percent": 5 },
+      { "name": "Other", "percent": 2 }
+    ]
+  },
+  "alliances": ["UN", "OSCE", "CoE", "EAEU", "CSTO (Frozen)"],
+  "relationships": [
+    { "countryId": "USA", "countryName": "United States", "type": "strategic_partner", "sentiment": "positive", "summary": "A critical partner in Armenia's democratic transition and security diversification; host of the 2025 Trilateral Summit." },
+    { "countryId": "FRA", "countryName": "France", "type": "strategic_partner", "sentiment": "positive", "summary": "Armenia's closest European ally, providing significant political, cultural, and defense support." },
+    { "countryId": "AZE", "countryName": "Azerbaijan", "type": "neighbor", "sentiment": "neutral", "summary": "Transitioning from adversary to pragmatic neighbor following the 2025 peace treaty and border delimitation." },
+    { "countryId": "RUS", "countryName": "Russia", "type": "partner", "sentiment": "negative", "summary": "Historically the primary security guarantor; relations are currently strained as Armenia seeks strategic autonomy." },
+    { "countryId": "IRN", "countryName": "Iran", "type": "economic_partner", "sentiment": "positive", "summary": "A vital southern trade and energy partner; shares interests in maintaining regional stability and transit routes." }
+  ],
+  "perspectives": [
+    { "source": "Armenian Diplomat", "bias": "Optimistic", "view": "The peace treaty is the foundation for a 'Crossroad of Peace,' transforming Armenia into a vital link between East and West." },
+    { "source": "Tech Entrepreneur", "bias": "Optimistic", "view": "Our brain power is our primary resource; the regional opening will allow our startups to finally access the global markets they deserve." },
+    { "source": "Opposition Politician", "bias": "Critical", "view": "The government is making dangerous concessions that jeopardize our long-term security and heritage for the sake of an uncertain peace." },
+    { "source": "Regional Analyst", "bias": "Pragmatic", "view": "Armenia's pivot is bold but risky; it must ensure that Western support translates into tangible security guarantees during this transition." }
+  ],
+  "historicalContext": {
+    "summary": "Armenia has a history dating back to antiquity and was the first nation to adopt Christianity. It gained independence from the Soviet Union in 1991. The modern era has been dominated by the conflict with Azerbaijan over Nagorno-Karabakh. The 2018 'Velvet Revolution' brought Nikol Pashinyan to power, initiating a period of democratic reform and, following the 2020 and 2023 conflicts, a fundamental shift in foreign and security policy.",
+    "keyEvents": [
+      { "year": 1991, "event": "Independence from the Soviet Union." },
+      { "year": 2018, "event": "Velvet Revolution; Nikol Pashinyan becomes Prime Minister." },
+      { "year": 2020, "event": "44-Day War with Azerbaijan over Nagorno-Karabakh." },
+      { "year": 2023, "event": "Azerbaijan restores full control over Nagorno-Karabakh; massive displacement of ethnic Armenians." },
+      { "year": 2024, "event": "Armenia effectively freezes its participation in the CSTO." },
+      { "year": 2025, "event": "Signing of a comprehensive peace treaty with Azerbaijan in Washington." }
+    ]
+  },
+  "investmentNotes": {
+    "strengths": ["Highly skilled tech and engineering talent pool", "Aggressive democratic and anti-corruption reforms", "Favorable trade agreements with the EU and US", "Strategic potential as a regional transit hub"],
+    "risks": ["Vulnerability to shifts in Russian policy", "Ongoing implementation challenges of the peace treaty", "Small domestic market and landlocked geography", "Energy dependence during transition to renewables"],
+    "sectors": ["ICT & Software Engineering", "High-Tech Manufacturing", "Tourism & Cultural Heritage", "Renewable Energy (Solar & Nuclear)"]
+  },
+  "sources": [
+    { "name": "Statistical Committee of Armenia", "url": "https://armstat.am", "type": "economic" },
+    { "name": "Armenia Investment Support Center", "url": "https://investin.am", "type": "economic" },
+    { "name": "Ministry of Foreign Affairs - Armenia", "url": "https://www.mfa.am", "type": "government" }
+  ]
+}

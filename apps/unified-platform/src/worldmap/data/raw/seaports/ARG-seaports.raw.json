@@ -1,0 +1,218 @@
+[
+  {
+    "id": "PORT-ARG-BUENOS-AIRES",
+    "name": "Port of Buenos Aires",
+    "countryId": "ARG",
+    "city": "Buenos Aires",
+    "coordinates": [-58.3667, -34.5946],
+    "type": "container",
+    "annualThroughputTEU": 1500000,
+    "annualThroughputTonnes": 11000000,
+    "berthCount": 25,
+    "maxDraftM": 10.5,
+    "strategicImportance": "critical",
+    "riskLevel": "low",
+    "geopoliticalNotes": "Nation's principal gateway for containerized trade and high-value imports. Connects Atlantic to Paraguay-Paraná river system.",
+    "notes": "Multimodal hub and primary distribution center for the Southern Cone.",
+    "attribution": {
+      "sources": [
+        { "name": "Administración General de Puertos SE", "url": "https://www.argentina.gob.ar/puertos-vias-navegables-y-marina-mercante", "accessedAt": "2026-05-10" },
+        { "name": "Sea-Seek", "url": "http://www.sea-seek.com", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 2,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  },
+  {
+    "id": "PORT-ARG-BAHIA-BLANCA",
+    "name": "Port of Bahía Blanca",
+    "countryId": "ARG",
+    "city": "Bahía Blanca",
+    "coordinates": [-62.2694, -38.7953],
+    "type": "mixed",
+    "annualThroughputTEU": null,
+    "annualThroughputTonnes": 27000000,
+    "berthCount": 12,
+    "maxDraftM": 13.7,
+    "strategicImportance": "high",
+    "riskLevel": "low",
+    "geopoliticalNotes": "Premier petrochemical hub and natural deep-water port critical for large vessels. Primary terminal for energy resources (LNG/Crude).",
+    "notes": "Major exit point for grains from the southern Pampas.",
+    "attribution": {
+      "sources": [
+        { "name": "Consorcio de Gestión del Puerto de Bahía Blanca", "url": "https://puertobahiablanca.com", "accessedAt": "2026-05-10" },
+        { "name": "VesselFinder", "url": "https://www.vesselfinder.com", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 2,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  },
+  {
+    "id": "PORT-ARG-SAN-LORENZO",
+    "name": "Port of San Lorenzo-San Martín",
+    "countryId": "ARG",
+    "city": "San Lorenzo",
+    "coordinates": [-60.7324, -32.7186],
+    "type": "bulk",
+    "annualThroughputTEU": null,
+    "annualThroughputTonnes": 22000000,
+    "berthCount": 15,
+    "maxDraftM": 10.5,
+    "strategicImportance": "high",
+    "riskLevel": "low",
+    "geopoliticalNotes": "World's leading hub for soybean meal and oil exports. Heart of Argentina's agricultural export economy.",
+    "notes": "Located on the Paraná River; part of a massive agro-industrial cluster.",
+    "attribution": {
+      "sources": [
+        { "name": "Cámara de Actividades Portuarias y Marítimas", "url": "https://www.capym.org.ar", "accessedAt": "2026-05-10" },
+        { "name": "ResearchGate", "url": "https://www.researchgate.net", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 2,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  },
+  {
+    "id": "PORT-ARG-ROSARIO",
+    "name": "Port of Rosario",
+    "countryId": "ARG",
+    "city": "Rosario",
+    "coordinates": [-60.6281, -32.9629],
+    "type": "mixed",
+    "annualThroughputTEU": 85000,
+    "annualThroughputTonnes": 3570000,
+    "berthCount": 8,
+    "maxDraftM": 10.5,
+    "strategicImportance": "medium",
+    "riskLevel": "low",
+    "geopoliticalNotes": "Vital inland river port and key logistics node for central/northern agricultural regions.",
+    "notes": "Secondary hub to San Lorenzo for grain exports.",
+    "attribution": {
+      "sources": [
+        { "name": "Ente Administrador Puerto Rosario (ENAPRO)", "url": "https://enapro.com.ar", "accessedAt": "2026-05-10" },
+        { "name": "Sea-Seek", "url": "http://www.sea-seek.com", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 2,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  },
+  {
+    "id": "PORT-ARG-QUEQUEN",
+    "name": "Port of Quequén",
+    "countryId": "ARG",
+    "city": "Necochea",
+    "coordinates": [-58.7005, -38.5839],
+    "type": "bulk",
+    "annualThroughputTEU": null,
+    "annualThroughputTonnes": 9010000,
+    "berthCount": 6,
+    "maxDraftM": 13.5,
+    "strategicImportance": "medium",
+    "riskLevel": "low",
+    "geopoliticalNotes": "Specialized in grains and oilseeds. Deep water allows large vessels to load fully without top-off.",
+    "notes": "Critical link for southeastern agricultural production of Buenos Aires Province.",
+    "attribution": {
+      "sources": [
+        { "name": "Consorcio de Gestión del Puerto de Quequén", "url": "https://puertoquequen.com", "accessedAt": "2026-05-10" },
+        { "name": "VesselFinder", "url": "https://www.vesselfinder.com", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 2,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  },
+  {
+    "id": "PORT-ARG-LA-PLATA",
+    "name": "Port of La Plata",
+    "countryId": "ARG",
+    "city": "Ensenada",
+    "coordinates": [-57.8796, -34.8292],
+    "type": "mixed",
+    "annualThroughputTEU": 9000,
+    "annualThroughputTonnes": 1500000,
+    "berthCount": 10,
+    "maxDraftM": 10.0,
+    "strategicImportance": "medium",
+    "riskLevel": "low",
+    "geopoliticalNotes": "Major petrochemical and fuel hub, home to the country's largest refinery (YPF).",
+    "notes": "TecPlata terminal provides a strategic alternative for container traffic.",
+    "attribution": {
+      "sources": [
+        { "name": "Consorcio de Gestión del Puerto de La Plata", "url": "https://puertolaplata.com", "accessedAt": "2026-05-10" },
+        { "name": "Connecta Network", "url": "https://connecta-network.com", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 2,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  },
+  {
+    "id": "PORT-ARG-MAR-DEL-PLATA",
+    "name": "Port of Mar del Plata",
+    "countryId": "ARG",
+    "city": "Mar del Plata",
+    "coordinates": [-57.5196, -38.0365],
+    "type": "mixed",
+    "annualThroughputTEU": 8500,
+    "annualThroughputTonnes": 140000,
+    "berthCount": 5,
+    "maxDraftM": 9.0,
+    "strategicImportance": "low",
+    "riskLevel": "low",
+    "geopoliticalNotes": "Leading fishing port accounting for nearly 45% of the national catch.",
+    "notes": "Major tourism hub for cruise ships; undergoing modernization.",
+    "attribution": {
+      "sources": [
+        { "name": "Consorcio Portuario Regional de Mar del Plata", "url": "https://puertomardelplata.net", "accessedAt": "2026-05-10" },
+        { "name": "VesselFinder", "url": "https://www.vesselfinder.com", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 2,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  },
+  {
+    "id": "PORT-ARG-USHUAIA",
+    "name": "Port of Ushuaia",
+    "countryId": "ARG",
+    "city": "Ushuaia",
+    "coordinates": [-68.3044, -54.8086],
+    "type": "multipurpose",
+    "annualThroughputTEU": 18000,
+    "annualThroughputTonnes": null,
+    "berthCount": 3,
+    "maxDraftM": 10.0,
+    "strategicImportance": "high",
+    "riskLevel": "low",
+    "geopoliticalNotes": "Gateway to Antarctica, handling 90% of global Antarctic cruise traffic. Critical for South Atlantic maritime security.",
+    "notes": "Provides logistics for Tierra del Fuego special economic zone.",
+    "attribution": {
+      "sources": [
+        { "name": "Dirección Provincial de Puertos", "url": "https://dpp.tierradelfuego.gov.ar", "accessedAt": "2026-05-10" },
+        { "name": "Sea-Seek", "url": "http://www.sea-seek.com", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 2,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  }
+]

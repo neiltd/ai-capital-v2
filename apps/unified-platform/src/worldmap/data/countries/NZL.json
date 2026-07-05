@@ -1,0 +1,62 @@
+{
+  "id": "NZL",
+  "iso2": "NZ",
+  "name": "New Zealand",
+  "region": "Oceania",
+  "subregion": "Australia and New Zealand",
+  "capital": "Wellington",
+  "lastUpdated": "2025-05-20",
+  "summary": "New Zealand is an island nation in the South Pacific with a stable democracy and a growing focus on regional security resilience. In 2024-2025, the intelligence posture has shifted toward proactive transparency, identifying China, Russia, and Iran as primary foreign interference threats. Under the 'Secure Together' strategy, New Zealand is strengthening its Pacific partnerships to counter coercive statecraft while monitoring domestic lone-actor extremism.",
+  "indicators": {
+    "politicalStability":       { "score": 9, "trend": "stable", "confidence": "high", "note": "One of the world's most stable democracies; high levels of transparency and low corruption." },
+    "economicDirection":        { "score": 6, "trend": "stable", "confidence": "high", "note": "Steady economy focused on exports; facing challenges with inflation and high housing costs." },
+    "investmentAttractiveness": { "score": 8, "trend": "stable", "confidence": "high", "note": "Very easy to do business; attractive for agritech, film production, and green energy." },
+    "geopoliticalRisk":         { "score": 3, "trend": "increasing", "confidence": "high", "note": "Geographically isolated but increasingly affected by great power competition in the Pacific." },
+    "educationQuality":         { "score": 8, "trend": "stable", "confidence": "high", "note": "High-quality education system; world-class universities with a strong international student sector." },
+    "healthcareQuality":        { "score": 7, "trend": "stable", "confidence": "high", "note": "Public healthcare system providing good care, though facing wait-time and staffing pressures." },
+    "technologyInvestment":     { "score": 7, "trend": "improving", "confidence": "high", "note": "Growing tech sector, particularly in software, space (Rocket Lab), and agritech." }
+  },
+  "demographics": {
+    "population": 5269939,
+    "medianAge": 38.1,
+    "urbanizationRate": 87.0,
+    "majorEthnicGroups": ["European", "Maori", "Asian", "Pacific Peoples"],
+    "religions": [
+      { "name": "No religion", "percent": 48.0 },
+      { "name": "Christian", "percent": 37.0 }
+    ]
+  },
+  "alliances": ["Five Eyes", "ANZUS (De facto)", "Pacific Islands Forum", "OECD"],
+  "relationships": [
+    { "countryId": "AUS", "countryName": "Australia", "type": "strategic_partner", "sentiment": "positive", "summary": "Closest ally and economic partner; deep integration across defense, trade, and social policy." },
+    { "countryId": "USA", "countryName": "United States", "type": "strategic_partner", "sentiment": "positive", "summary": "Key security partner and Five Eyes member; cooperation focused on Indo-Pacific stability." },
+    { "countryId": "CHN", "countryName": "China", "type": "economic_partner", "sentiment": "neutral", "summary": "Largest trading partner; a complex relationship balancing economic dependency with security concerns over interference." },
+    { "countryId": "GBR", "countryName": "United Kingdom", "type": "strategic_partner", "sentiment": "positive", "summary": "Deep historical and cultural ties; strong cooperation on intelligence and trade post-Brexit." }
+  ],
+  "perspectives": [
+    { "source": "NZ Intelligence Official", "bias": "Proactive", "view": "We are being more open about threats; foreign interference in our democratic processes and diaspora communities is a real risk." },
+    { "source": "Pacific Island Diplomat", "bias": "Expectant", "view": "We look to New Zealand for leadership on climate and security, but we don't want to be caught in a US-China tug-of-war." },
+    { "source": "Auckland Tech Entrepreneur", "bias": "Global", "view": "New Zealand is a great test bed for tech; distance is no longer a barrier for software, but we need more venture capital." }
+  ],
+  "historicalContext": {
+    "summary": "Settled by Maori around 700 years ago, New Zealand became a British colony with the Treaty of Waitangi in 1840. It is a pioneer in social policy, being the first country to grant women the vote in 1893, and has transitioned into a modern, multi-cultural South Pacific nation.",
+    "keyEvents": [
+      { "year": 1840, "event": "Signing of the Treaty of Waitangi." },
+      { "year": 1893, "event": "First country to grant women the right to vote." },
+      { "year": 1985, "event": "Enactment of nuclear-free legislation, straining ANZUS ties." },
+      { "year": 2004, "event": "Establishment of the Maori Party; focus on biculturalism." },
+      { "year": 2019, "event": "Christchurch mosque attacks, leading to major gun law reforms." },
+      { "year": 2024, "event": "Launch of the 'Secure Together' national security strategy." }
+    ]
+  },
+  "investmentNotes": {
+    "strengths": ["Extremely low corruption and high ease of doing business", "Highly stable political and legal environment", "Strong property rights and transparent regulatory framework", "Innovation leader in agritech and commercial space flight"],
+    "risks": ["Vulnerability to global commodity price fluctuations (dairy/tourism)", "High housing costs and household debt", "Geographical distance from major markets (logistics costs)", "Increasing threat of foreign economic coercion"],
+    "sectors": ["Agriculture & Food Processing", "Technology (SaaS/Space)", "Renewable Energy (Geothermal/Hydro)", "Tourism & International Education"]
+  },
+  "sources": [
+    { "name": "NZ Security Intelligence Service (NZSIS)", "url": "https://www.nzsis.govt.nz/", "type": "security" },
+    { "name": "New Zealand Trade and Enterprise (NZTE)", "url": "https://www.nzte.govt.nz/", "type": "economic" },
+    { "name": "Department of the Prime Minister and Cabinet (DPMC)", "url": "https://www.dpmc.govt.nz/", "type": "government" }
+  ]
+}

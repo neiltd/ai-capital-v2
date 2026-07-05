@@ -1,0 +1,219 @@
+[
+  {
+    "id": "RAIL-BRA-SANTOS-PORT",
+    "name": "Port of Santos Rail Terminal",
+    "countryId": "BRA",
+    "city": "Santos",
+    "coordinates": [-46.33, -23.96],
+    "type": "port_interface",
+    "dailyPassengers": null,
+    "annualFreightTonnes": 50000000,
+    "connectedCountries": [],
+    "gaugeType": "mixed",
+    "lineCount": 12,
+    "strategicImportance": "high",
+    "isPartOfBRI": false,
+    "geopoliticalNotes": "Largest port in South America; primary exit point for Brazilian soy, corn, and sugar. Operated by Rumo and MRS Logística.",
+    "notes": "Connects the state of São Paulo and the agricultural heartland to global markets.",
+    "attribution": {
+      "sources": [
+        { "name": "Port of Santos Authority", "url": "https://www.portodesantos.com.br/", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 2,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  },
+  {
+    "id": "RAIL-BRA-SAO-LUIS-ITAQUI",
+    "name": "Itaqui Rail Terminal (EFC)",
+    "countryId": "BRA",
+    "city": "São Luís",
+    "coordinates": [-44.37, -2.58],
+    "type": "port_interface",
+    "dailyPassengers": 1500,
+    "annualFreightTonnes": 200000000,
+    "connectedCountries": [],
+    "gaugeType": "broad",
+    "lineCount": 8,
+    "strategicImportance": "high",
+    "isPartOfBRI": false,
+    "geopoliticalNotes": "Terminus of the Carajás Railroad (EFC). Critical for iron ore exports from the Carajás Mine, the world's largest iron ore deposit.",
+    "notes": "Handles some of the world's heaviest and longest trains (up to 330 cars).",
+    "attribution": {
+      "sources": [
+        { "name": "Vale S.A. Logistics", "url": "https://www.vale.com/", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 1,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  },
+  {
+    "id": "RAIL-BRA-VITORIA-TUBARAO",
+    "name": "Tubarao Port Rail Terminal",
+    "countryId": "BRA",
+    "city": "Vitória",
+    "coordinates": [-40.24, -20.28],
+    "type": "port_interface",
+    "dailyPassengers": 3000,
+    "annualFreightTonnes": 120000000,
+    "connectedCountries": [],
+    "gaugeType": "narrow",
+    "lineCount": 6,
+    "strategicImportance": "high",
+    "isPartOfBRI": false,
+    "geopoliticalNotes": "Terminus of the Vitória-Minas Railway (EFVM). Essential for the Minas Gerais mining triangle logistics.",
+    "notes": "Operates one of the few daily long-distance passenger services in Brazil.",
+    "attribution": {
+      "sources": [
+        { "name": "Vale S.A. Investors", "url": "https://www.vale.com/", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 1,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  },
+  {
+    "id": "RAIL-BRA-SAO-PAULO-LUZ",
+    "name": "Estação da Luz",
+    "countryId": "BRA",
+    "city": "São Paulo",
+    "coordinates": [-46.63, -23.53],
+    "type": "passenger",
+    "dailyPassengers": 450000,
+    "annualFreightTonnes": null,
+    "connectedCountries": [],
+    "gaugeType": "broad",
+    "lineCount": 6,
+    "strategicImportance": "medium",
+    "isPartOfBRI": false,
+    "geopoliticalNotes": "Historical and functional heart of São Paulo's metropolitan rail network (CPTM and Metro).",
+    "notes": "Critical for labor mobility in South America's largest city.",
+    "attribution": {
+      "sources": [
+        { "name": "CPTM Statistics", "url": "https://www.cptm.sp.gov.br/", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "medium",
+        "sourceCount": 1,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  },
+  {
+    "id": "RAIL-BRA-RIO-CENTRAL",
+    "name": "Central do Brasil",
+    "countryId": "BRA",
+    "city": "Rio de Janeiro",
+    "coordinates": [-43.19, -22.90],
+    "type": "passenger",
+    "dailyPassengers": 600000,
+    "annualFreightTonnes": null,
+    "connectedCountries": [],
+    "gaugeType": "broad",
+    "lineCount": 10,
+    "strategicImportance": "medium",
+    "isPartOfBRI": false,
+    "geopoliticalNotes": "Main terminus for Rio's suburban rail network (SuperVia) and connection point for urban logistics.",
+    "notes": "Iconic cultural and logistical landmark in Rio de Janeiro.",
+    "attribution": {
+      "sources": [
+        { "name": "SuperVia Data", "url": "https://www.supervia.com.br/", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "medium",
+        "sourceCount": 1,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  },
+  {
+    "id": "RAIL-BRA-ARARAQUARA-HUB",
+    "name": "Araraquara Rail Junction",
+    "countryId": "BRA",
+    "city": "Araraquara",
+    "coordinates": [-48.17, -21.79],
+    "type": "freight",
+    "dailyPassengers": null,
+    "annualFreightTonnes": 15000000,
+    "connectedCountries": [],
+    "gaugeType": "mixed",
+    "lineCount": 5,
+    "strategicImportance": "medium",
+    "isPartOfBRI": false,
+    "geopoliticalNotes": "Strategic inland hub and manufacturing site for CRRC (China Railway Rolling Stock Corporation), representing Chinese industrial presence in Brazil.",
+    "notes": "Key junction for lines moving agricultural goods to the coast.",
+    "attribution": {
+      "sources": [
+        { "name": "Rumo Logística", "url": "https://www.rumolog.com/", "accessedAt": "2026-05-10" },
+        { "name": "CRRC Brazil Facility News", "url": "https://www.crrcgc.cc/en", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "medium",
+        "sourceCount": 2,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  },
+  {
+    "id": "RAIL-BRA-RONDONOPOLIS-TERMINAL",
+    "name": "Rondonópolis Intermodal Terminal",
+    "countryId": "BRA",
+    "city": "Rondonópolis",
+    "coordinates": [-54.61, -16.46],
+    "type": "freight",
+    "dailyPassengers": null,
+    "annualFreightTonnes": 20000000,
+    "connectedCountries": [],
+    "gaugeType": "broad",
+    "lineCount": 4,
+    "strategicImportance": "high",
+    "isPartOfBRI": false,
+    "geopoliticalNotes": "Critical agro-logistics hub in Mato Grosso. Connects the 'soy belt' to the Port of Santos via the Ferronorte line.",
+    "notes": "Essential for global food security logistics.",
+    "attribution": {
+      "sources": [
+        { "name": "Rumo Logística Operations", "url": "https://www.rumolog.com/", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 1,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  },
+  {
+    "id": "RAIL-BRA-CORUMBA-BORDER",
+    "name": "Corumbá Rail Terminal",
+    "countryId": "BRA",
+    "city": "Corumbá",
+    "coordinates": [-57.65, -19.01],
+    "type": "border_crossing",
+    "dailyPassengers": null,
+    "annualFreightTonnes": 2500000,
+    "connectedCountries": ["BOL"],
+    "gaugeType": "narrow",
+    "lineCount": 3,
+    "strategicImportance": "medium",
+    "isPartOfBRI": false,
+    "geopoliticalNotes": "Primary rail border crossing with Bolivia. Part of the proposed Bioceanic Corridor to connect the Atlantic and Pacific.",
+    "notes": "Mainly handles minerals and fuels between Brazil and Bolivia.",
+    "attribution": {
+      "sources": [
+        { "name": "ANUT - National Association of Transport Users", "url": "https://anut.org.br/", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "medium",
+        "sourceCount": 1,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  }
+]

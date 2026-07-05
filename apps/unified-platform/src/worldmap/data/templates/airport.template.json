@@ -1,0 +1,38 @@
+[
+  {
+    "_comment": "TEMPLATE — replace all values with real researched data. Remove this _comment field.",
+    "id": "DXB",
+    "name": "Dubai International Airport",
+    "countryId": "ARE",
+    "city": "Dubai",
+    "iata": "DXB",
+    "icao": "OMDB",
+    "coordinates": [55.3644, 25.2532],
+    "passengerVolume": 86900000,
+    "cargoVolume": 2600000,
+    "runwayCount": 2,
+    "elevationM": 19,
+    "strategicImportance": "high",
+    "geopoliticalNotes": "World's busiest international airport by international passengers. UAE leverage point connecting Asia, Europe, Africa. UAE government uses airport access as a diplomatic tool.",
+    "notes": "Two parallel runways. Hub for Emirates airline.",
+    "attribution": {
+      "sources": [
+        {
+          "name": "Dubai Airports Official Statistics 2023",
+          "url": "https://www.dubaiairports.ae/corporate/media-centre/statistics",
+          "accessedAt": "2024-01-15"
+        },
+        {
+          "name": "ACI World Airport Traffic Report",
+          "url": "https://aci.aero/2024/04/30/aci-world-releases-preliminary-world-airport-traffic-rankings-2023/",
+          "accessedAt": "2024-04-30"
+        }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 2,
+        "lastVerified": "2024-04-30"
+      }
+    }
+  }
+]

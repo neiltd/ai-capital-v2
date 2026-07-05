@@ -1,0 +1,65 @@
+{
+  "id": "PRT",
+  "iso2": "PT",
+  "name": "Portugal",
+  "region": "Europe",
+  "subregion": "Southern Europe",
+  "capital": "Lisbon",
+  "lastUpdated": "2026-05-09",
+  "summary": "Portugal is experiencing a period of sustained economic growth driven by high-tech exports and a record-breaking tourism sector. The nation is a European leader in the green energy transition, aiming for nearly 80% renewable electricity by late 2026. While political stability remains high, the government is under pressure to address a deepening housing crisis and the integration needs of a rapidly growing foreign resident population.",
+  "indicators": {
+    "politicalStability":       { "score": 8, "score_description": "Stable democratic environment with strong institutional consensus.", "trend": "stable", "confidence": "high", "note": "Portugal remains one of the most stable countries in Southern Europe, though the housing crisis is a growing point of political friction." },
+    "economicDirection":        { "score": 7, "score_description": "Sustained growth outperforming the Eurozone average.", "trend": "improving", "confidence": "high", "note": "Growth is being driven by strong domestic demand, high-tech startups, and a booming tourism sector." },
+    "investmentAttractiveness": { "score": 8, "score_description": "Thriving tech hub with attractive tax incentives for innovation.", "trend": "stable", "confidence": "high", "note": "Portugal's 'Web Summit' legacy and growing startup ecosystem continue to attract significant international venture capital." },
+    "geopoliticalRisk":         { "score": 3, "score_description": "Low risk profile with strong Atlanticist and European orientation.", "trend": "stable", "confidence": "high", "note": "Portugal's strategic focus is on maritime security and strengthening ties within the Lusophone world (CPLP)." },
+    "educationQuality":         { "score": 7, "score_description": "Steadily improving with a focus on digital literacy and STEM.", "trend": "stable", "confidence": "high", "note": "Significant investments in digital transformation have modernized the education system, though vocational training remains a priority." },
+    "healthcareQuality":        { "score": 7, "score_description": "Good standards with universal coverage, though facing wait times.", "trend": "stable", "confidence": "high", "note": "The National Health Service (SNS) is under pressure from an aging population and localized staffing shortages." },
+    "technologyInvestment":     { "score": 8, "score_description": "Strong focus on renewable energy tech and digital economy.", "trend": "rising", "confidence": "high", "note": "Portugal is a leader in floating offshore wind and is rapidly expanding its digital infrastructure and data center capacity." }
+  },
+  "demographics": {
+    "population": 10400000,
+    "medianAge": 46.2,
+    "urbanizationRate": 68,
+    "majorEthnicGroups": ["Portuguese", "Brazilian", "Angolan", "Cape Verdean", "Ukrainian"],
+    "religions": [
+      { "name": "Roman Catholic", "percent": 80.0 },
+      { "name": "None/Unaffiliated", "percent": 14.0 },
+      { "name": "Protestant", "percent": 2.0 },
+      { "name": "Other", "percent": 4.0 }
+    ]
+  },
+  "alliances": ["EU", "NATO", "OECD", "CPLP", "Schengen Area"],
+  "relationships": [
+    { "countryId": "ESP", "countryName": "Spain", "type": "ally", "sentiment": "positive", "summary": "Primary economic partner; deep integration in energy markets and cross-border infrastructure." },
+    { "countryId": "BRA", "countryName": "Brazil", "type": "ally", "sentiment": "positive", "summary": "Special historical and cultural relationship; key partner in the Lusophone world and trade." },
+    { "countryId": "USA", "countryName": "United States", "type": "treaty_ally", "sentiment": "positive", "summary": "Critical security partner; strategic importance of the Lajes Field in the Azores." },
+    { "countryId": "FRA", "countryName": "France", "type": "ally", "sentiment": "positive", "summary": "Close political and economic ties; major destination for Portuguese emigration and investment." },
+    { "countryId": "UKR", "countryName": "Ukraine", "type": "ally", "sentiment": "positive", "summary": "Vocal supporter within the EU; providing military training and humanitarian aid." }
+  ],
+  "perspectives": [
+    { "source": "Lisbon Tech Startup Founder", "bias": "Pro-Innovation", "view": "Portugal has successfully rebranded itself as a global tech hub; the challenge now is to ensure the infrastructure can keep up with this growth." },
+    { "source": "Housing Rights Advocate", "bias": "Social Justice", "view": "The economic boom and foreign investment are pricing locals out of their own cities; we need urgent rent controls and social housing." },
+    { "source": "Energy Policy Analyst", "bias": "Green Transition", "view": "Portugal's early bet on renewables is paying off; we are now one of the few European countries with a clear path to energy independence." }
+  ],
+  "historicalContext": {
+    "summary": "Portugal is one of the world's oldest nation-states, transitioning from a global maritime empire to a modern European democracy. Its 20th-century history was marked by the long-standing 'Estado Novo' dictatorship, which ended peacefully in the 1974 Carnation Revolution. Since joining the EU in 1986, Portugal has undergone rapid modernization and emerged as a leader in social liberalism and green energy.",
+    "keyEvents": [
+      { "year": 1143, "event": "Treaty of Zamora; Portugal is recognized as an independent kingdom." },
+      { "year": 1494, "event": "Treaty of Tordesillas; Portugal and Spain divide the newly discovered lands outside Europe." },
+      { "year": 1910, "event": "The monarchy is abolished, and the Portuguese Republic is proclaimed." },
+      { "year": 1974, "event": "The Carnation Revolution ends decades of dictatorship and starts decolonization." },
+      { "year": 1986, "event": "Portugal joins the European Economic Community (EEC)." },
+      { "year": 2024, "event": "Portugal celebrates the 50th anniversary of the restoration of democracy." }
+    ]
+  },
+  "investmentNotes": {
+    "strengths": ["Global leadership in renewable energy transition", "Vibrant tech ecosystem and highly skilled talent pool", "High quality of life and social stability", "Strategic Atlantic location and maritime infrastructure"],
+    "risks": ["Deepening housing crisis and property price inflation", "Persistent low average wages and 'brain drain'", "Relatively high levels of public debt (though falling)"],
+    "sectors": ["Renewable Energy (Wind/Solar)", "Information Technology & Startups", "Tourism & Hospitality", "Blue Economy & Maritime", "Agtech"]
+  },
+  "sources": [
+    { "name": "Statistics Portugal (INE)", "url": "https://www.ine.pt/xportal/xmain?xpgid=ine_main&xpid=INE&xlang=en", "type": "economic" },
+    { "name": "Banco de Portugal", "url": "https://www.bportugal.pt/en", "type": "economic" },
+    { "name": "AICEP Portugal Global", "url": "https://www.portugalglobal.pt/EN/Pages/Index.aspx", "type": "investment" }
+  ]
+}

@@ -1,0 +1,26 @@
+[
+  {
+    "countryId": "NLD",
+    "year": 2023,
+    "gdpUsdBn": 1150,
+    "gdpPerCapita": 66000,
+    "sectors": [
+      { "sector": "Services", "percentOfGDP": 77.4, "notes": "Strong performance in financial and business services." },
+      { "sector": "Industry", "percentOfGDP": 15.0, "notes": "Includes manufacturing of machinery and chemicals." },
+      { "sector": "Construction", "percentOfGDP": 5.0, "notes": null },
+      { "sector": "Agriculture", "percentOfGDP": 1.6, "notes": "Highly productive greenhouse horticulture." },
+      { "sector": "Mining & Quarrying", "percentOfGDP": 1.0, "notes": "Declining due to Groningen gas field closure." }
+    ],
+    "attribution": {
+      "sources": [
+        { "name": "Statistics Netherlands (CBS) 2023", "url": "https://www.cbs.nl/", "accessedAt": "2025-02-11" },
+        { "name": "World Bank DataBank 2023", "url": "https://databank.worldbank.org/", "accessedAt": "2025-02-11" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 2,
+        "lastVerified": "2025-02-11"
+      }
+    }
+  }
+]

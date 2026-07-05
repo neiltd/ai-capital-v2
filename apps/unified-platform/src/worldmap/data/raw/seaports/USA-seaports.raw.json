@@ -1,0 +1,218 @@
+[
+  {
+    "id": "PORT-USA-LOS-ANGELES",
+    "name": "Port of Los Angeles",
+    "countryId": "USA",
+    "city": "Los Angeles",
+    "coordinates": [-118.26, 33.73],
+    "type": "container",
+    "annualThroughputTEU": 10300000,
+    "annualThroughputTonnes": null,
+    "berthCount": 80,
+    "maxDraftM": 16.1,
+    "strategicImportance": "critical",
+    "riskLevel": "low",
+    "geopoliticalNotes": "Known as 'America's Port,' it is the busiest container hub in the Western Hemisphere and the primary gateway for trans-Pacific trade with Asia. It is a critical node in the U.S. national supply chain, handling 17% of all U.S. waterborne trade.",
+    "notes": "A Designated Strategic Seaport by the DoD. It features 25 terminals and encompasses 43 miles of waterfront.",
+    "attribution": {
+      "sources": [
+        { "name": "Port of Los Angeles Official Website", "url": "https://www.portoflosangeles.org", "accessedAt": "2026-05-10" },
+        { "name": "Pacific Maritime Association", "url": "https://www.pmsaship.com", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 2,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  },
+  {
+    "id": "PORT-USA-LONG-BEACH",
+    "name": "Port of Long Beach",
+    "countryId": "USA",
+    "city": "Long Beach",
+    "coordinates": [-118.19, 33.77],
+    "type": "container",
+    "annualThroughputTEU": 9600000,
+    "annualThroughputTonnes": null,
+    "berthCount": 80,
+    "maxDraftM": 23.1,
+    "strategicImportance": "critical",
+    "riskLevel": "low",
+    "geopoliticalNotes": "The second busiest U.S. container port and a major gateway for trans-Pacific trade. Its deep-water berths (the deepest in the U.S.) allow it to handle the world's largest container ships, making it essential for high-volume consumer goods imports.",
+    "notes": "A Designated Strategic Seaport and a global leader in 'Green Port' environmental initiatives.",
+    "attribution": {
+      "sources": [
+        { "name": "Port of Long Beach Official Website", "url": "https://www.polb.com", "accessedAt": "2026-05-10" },
+        { "name": "World Shipping Council", "url": "https://www.worldshipping.org", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 2,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  },
+  {
+    "id": "PORT-USA-NY-NJ",
+    "name": "Port of New York and New Jersey",
+    "countryId": "USA",
+    "city": "New York / Newark",
+    "coordinates": [-74.05, 40.67],
+    "type": "container",
+    "annualThroughputTEU": 8700000,
+    "annualThroughputTonnes": null,
+    "berthCount": 25,
+    "maxDraftM": 15.2,
+    "strategicImportance": "critical",
+    "riskLevel": "low",
+    "geopoliticalNotes": "The largest port on the U.S. East Coast and the primary hub for transatlantic trade with Europe. It serves over 60 million regional consumers and is critical for the economic stability of the Northeast corridor.",
+    "notes": "A Designated Strategic Seaport consisting of a complex of six container terminals and multiple specialized cargo facilities.",
+    "attribution": {
+      "sources": [
+        { "name": "Port Authority of NY & NJ", "url": "https://www.panynj.gov", "accessedAt": "2026-05-10" },
+        { "name": "Lloyd's List", "url": "https://lloydslist.com", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 2,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  },
+  {
+    "id": "PORT-USA-SAVANNAH",
+    "name": "Port of Savannah",
+    "countryId": "USA",
+    "city": "Savannah",
+    "coordinates": [-81.15, 32.12],
+    "type": "container",
+    "annualThroughputTEU": 5500000,
+    "annualThroughputTonnes": null,
+    "berthCount": 9,
+    "maxDraftM": 14.3,
+    "strategicImportance": "high",
+    "riskLevel": "low",
+    "geopoliticalNotes": "The fastest-growing container port in the U.S. and a major export gateway for the American Southeast. Its single-terminal design maximizes operational efficiency for large-scale logistics operations.",
+    "notes": "A Designated Strategic Seaport. The Garden City Terminal is the largest single-terminal container facility in North America.",
+    "attribution": {
+      "sources": [
+        { "name": "Georgia Ports Authority", "url": "https://gaports.com", "accessedAt": "2026-05-10" },
+        { "name": "Supply Chain 24/7", "url": "https://www.supplychain247.com", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 2,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  },
+  {
+    "id": "PORT-USA-HOUSTON",
+    "name": "Port of Houston",
+    "countryId": "USA",
+    "city": "Houston",
+    "coordinates": [-95.26, 29.75],
+    "type": "mixed",
+    "annualThroughputTEU": 4100000,
+    "annualThroughputTonnes": 275000000,
+    "berthCount": 200,
+    "maxDraftM": 13.7,
+    "strategicImportance": "critical",
+    "riskLevel": "medium",
+    "geopoliticalNotes": "The world's leading hub for petrochemicals and refined oil products. It is the largest U.S. port by waterborne tonnage and is fundamental to U.S. energy security and the global export of liquefied natural gas (LNG) and plastics.",
+    "notes": "A 25-mile-long complex of over 200 public and private terminals along the Houston Ship Channel.",
+    "attribution": {
+      "sources": [
+        { "name": "Port Houston Official Website", "url": "https://porthouston.com", "accessedAt": "2026-05-10" },
+        { "name": "UNCTAD", "url": "https://unctad.org", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 2,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  },
+  {
+    "id": "PORT-USA-VIRGINIA",
+    "name": "Port of Virginia",
+    "countryId": "USA",
+    "city": "Norfolk",
+    "coordinates": [-76.29, 36.85],
+    "type": "mixed",
+    "annualThroughputTEU": 3500000,
+    "annualThroughputTonnes": 30000000,
+    "berthCount": 20,
+    "maxDraftM": 16.7,
+    "strategicImportance": "high",
+    "riskLevel": "low",
+    "geopoliticalNotes": "The world's premier coal export hub and home to the deepest natural harbor on the U.S. East Coast. It is strategically vital due to its proximity to Naval Station Norfolk, the world's largest naval base.",
+    "notes": "A Designated Strategic Seaport. Currently dredging to 55 feet to accommodate the next generation of ultra-large ships.",
+    "attribution": {
+      "sources": [
+        { "name": "Port of Virginia Official Website", "url": "https://www.portofvirginia.com", "accessedAt": "2026-05-10" },
+        { "name": "Virginia Business", "url": "https://www.virginiabusiness.com", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 2,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  },
+  {
+    "id": "PORT-USA-NWSA",
+    "name": "Northwest Seaport Alliance",
+    "countryId": "USA",
+    "city": "Seattle / Tacoma",
+    "coordinates": [-122.44, 47.25],
+    "type": "container",
+    "annualThroughputTEU": 3300000,
+    "annualThroughputTonnes": null,
+    "berthCount": 23,
+    "maxDraftM": 15.5,
+    "strategicImportance": "high",
+    "riskLevel": "low",
+    "geopoliticalNotes": "A critical gateway for trade with Alaska and a major trans-Pacific hub for Asian imports and U.S. agricultural exports. It provides essential logistical support for the Pacific Northwest economy.",
+    "notes": "A Designated Strategic Seaport formed by a marine cargo operating partnership between the Port of Seattle and the Port of Tacoma.",
+    "attribution": {
+      "sources": [
+        { "name": "Northwest Seaport Alliance", "url": "https://www.nwseaportalliance.com", "accessedAt": "2026-05-10" },
+        { "name": "U.S. Maritime Administration (MARAD)", "url": "https://www.marad.dot.gov", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 2,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  },
+  {
+    "id": "PORT-USA-CHARLESTON",
+    "name": "Port of Charleston",
+    "countryId": "USA",
+    "city": "Charleston",
+    "coordinates": [-79.93, 32.78],
+    "type": "container",
+    "annualThroughputTEU": 2500000,
+    "annualThroughputTonnes": null,
+    "berthCount": 15,
+    "maxDraftM": 15.8,
+    "strategicImportance": "high",
+    "riskLevel": "low",
+    "geopoliticalNotes": "One of the deepest harbors in the Southeastern U.S. and a major export hub for the American automotive industry (e.g., BMW, Volvo). It is also significant for handling specialized DOE nuclear material shipments.",
+    "notes": "A Designated Strategic Seaport. Recently completed a major deepening project to 52 feet.",
+    "attribution": {
+      "sources": [
+        { "name": "South Carolina Ports Authority", "url": "https://scspa.com", "accessedAt": "2026-05-10" },
+        { "name": "U.S. Department of Energy", "url": "https://www.energy.gov", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 2,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  }
+]

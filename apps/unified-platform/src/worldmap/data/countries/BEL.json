@@ -1,0 +1,66 @@
+{
+  "id": "BEL",
+  "iso2": "BE",
+  "name": "Belgium",
+  "region": "Europe",
+  "subregion": "Western Europe",
+  "capital": "Brussels",
+  "lastUpdated": "2026-05-09",
+  "summary": "Belgium is currently governed by a center-right coalition led by Prime Minister Bart De Wever, which took office in early 2025. The administration is focused on significant labor market and pension reforms aimed at addressing the country's high public debt and fiscal deficit. As the host of the EU and NATO, Belgium remains a critical diplomatic hub, though it continues to grapple with the complexities of its federal structure and the persistent challenge of forming regional governments, particularly in Brussels. Economically, Belgium shows resilience through its strong pharmaceutical and chemical sectors, but high energy costs and global trade uncertainty remain significant headwinds.",
+  "indicators": {
+    "politicalStability":       { "score": 4, "score_description": "Moderate risk due to complex federal dynamics and fiscal pressure.", "trend": "stable", "confidence": "high", "note": "While the federal government is stable, the ongoing lack of a functional regional government in Brussels complicates national policy implementation." },
+    "economicDirection":        { "score": 5, "score_description": "Modest growth hindered by high debt and fiscal consolidation.", "trend": "stable", "confidence": "high", "note": "Growth is projected at 1.1% for 2026, with domestic demand being offset by the need for significant spending cuts to rein in the deficit." },
+    "investmentAttractiveness": { "score": 7, "score_description": "Strong in specialized sectors like pharma and logistics.", "trend": "stable", "confidence": "high", "note": "Belgium remains a top global hub for clinical trials and vaccine production, attracting significant FDI in the life sciences." },
+    "geopoliticalRisk":         { "score": 4, "score_description": "Moderate risk centered on European security and trade stability.", "trend": "stable", "confidence": "high", "note": "As a key node in European infrastructure, Belgium is sensitive to energy security and maritime trade disruptions." },
+    "educationQuality":         { "score": 8, "score_description": "High quality with strong technical and linguistic focus.", "trend": "stable", "confidence": "high", "note": "The country produces highly skilled graduates, though educational outcomes show regional disparities between Flanders and Wallonia." },
+    "healthcareQuality":        { "score": 9, "score_description": "Excellent universal system with high accessibility and advanced tech.", "trend": "stable", "confidence": "high", "note": "Belgium's healthcare system is world-renowned for its efficiency and research capabilities, particularly in oncology and immunology." },
+    "technologyInvestment":     { "score": 8, "score_description": "Leader in biotechnology, green chemicals, and nanotechnology.", "trend": "rising", "confidence": "high", "note": "Significant investments are being made in the decarbonization of the Port of Antwerp-Bruges and the 'Vlaamse Veerkracht' recovery plan." }
+  },
+  "demographics": {
+    "population": 11850000,
+    "medianAge": 41.6,
+    "urbanizationRate": 98,
+    "majorEthnicGroups": ["Belgian", "Moroccan", "Italian", "French", "Turkish", "Dutch"],
+    "religions": [
+      { "name": "Roman Catholic", "percent": 50 },
+      { "name": "None/Unaffiliated", "percent": 42 },
+      { "name": "Muslim", "percent": 5 },
+      { "name": "Protestant/Other Christian", "percent": 2.5 },
+      { "name": "Other", "percent": 0.5 }
+    ]
+  },
+  "alliances": ["EU", "NATO", "OECD", "Benelux", "G10"],
+  "relationships": [
+    { "countryId": "FRA", "countryName": "France", "type": "ally", "sentiment": "positive", "summary": "Key political and security partner; deep industrial ties, especially in energy and defense." },
+    { "countryId": "DEU", "countryName": "Germany", "type": "ally", "sentiment": "positive", "summary": "Largest trading partner; cooperation on energy corridors and the transition to a low-carbon economy." },
+    { "countryId": "NLD", "countryName": "Netherlands", "type": "ally", "sentiment": "positive", "summary": "Close Benelux and North Sea partner; the Antwerp-Rotterdam axis is the heart of European logistics." },
+    { "countryId": "USA", "countryName": "United States", "type": "treaty_ally", "sentiment": "positive", "summary": "Strong security relationship; Belgium hosts major U.S. military and diplomatic presence." },
+    { "countryId": "CHN", "countryName": "China", "type": "partner", "sentiment": "neutral", "summary": "Significant trade partner, particularly through the Port of Zeebrugge, but facing increased scrutiny over critical infrastructure." }
+  ],
+  "perspectives": [
+    { "source": "Flemish Reformer", "bias": "Center-Right", "view": "The current federal reforms are essential to modernize the labor market and ensure the long-term sustainability of the Belgian social model." },
+    { "source": "Francophone Socialist", "bias": "Center-Left", "view": "Fiscal consolidation must not come at the expense of social cohesion; investment in public services and education is paramount." },
+    { "source": "EU Policy Analyst", "bias": "Pro-European", "view": "Belgium's stability is critical for the EU; the country must lead by example in fiscal discipline while remaining a neutral arbiter in Brussels." }
+  ],
+  "historicalContext": {
+    "summary": "Belgium was established as an independent, neutral buffer state in 1830. Its history is marked by its role as a battleground in both World Wars and its subsequent transformation into the administrative heart of a unified Europe. The country's unique federal system evolved to manage the linguistic and cultural differences between its Flemish and Walloon populations.",
+    "keyEvents": [
+      { "year": 1830, "event": "Belgian Revolution and independence from the Netherlands." },
+      { "year": 1914, "event": "German invasion violates Belgian neutrality, drawing the UK into WWI." },
+      { "year": 1944, "event": "Liberation by Allied forces; founding of the Benelux Union." },
+      { "year": 1958, "event": "Brussels hosts the World Expo and becomes the seat of the European Commission." },
+      { "year": 1993, "event": "Belgium officially becomes a federal state with the St. Michael's Agreement." },
+      { "year": 2024, "event": "General elections lead to a protracted formation period and the De Wever government." }
+    ]
+  },
+  "investmentNotes": {
+    "strengths": ["Central location and world-class logistics (Antwerp-Bruges)", "Global leadership in pharmaceuticals and vaccines", "Highly skilled and multilingual workforce", "Strong R&D ecosystem and tax incentives"],
+    "risks": ["High public debt-to-GDP ratio", "Complex and sometimes slow regulatory environment", "Labor market rigidities", "Exposure to global trade shocks"],
+    "sectors": ["Pharmaceuticals & Biotech", "Chemicals", "Logistics & Maritime", "Renewable Energy (Offshore Wind)", "Fintech"]
+  },
+  "sources": [
+    { "name": "Statbel (Belgian Statistical Office)", "url": "https://statbel.fgov.be/en", "type": "economic" },
+    { "name": "National Bank of Belgium (NBB)", "url": "https://www.nbb.be/en", "type": "economic" },
+    { "name": "FPS Foreign Affairs", "url": "https://diplomatie.belgium.be/en", "type": "political" }
+  ]
+}

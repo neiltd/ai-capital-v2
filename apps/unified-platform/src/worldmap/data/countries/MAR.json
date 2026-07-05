@@ -1,0 +1,68 @@
+{
+  "id": "MAR",
+  "iso2": "MA",
+  "name": "Morocco",
+  "region": "Africa",
+  "subregion": "Northern Africa",
+  "capital": "Rabat",
+  "lastUpdated": "2026-05-09",
+  "summary": "Morocco is a stable constitutional monarchy and a pivotal regional power in North Africa. Under King Mohammed VI, the country has pursued a strategy of rapid modernization, positioning itself as a strategic gateway between Europe and Sub-Saharan Africa. The economy has successfully diversified into high-value sectors like automotive and aerospace manufacturing, while leveraging its status as a global leader in phosphate production and renewable energy. Diplomatic successes, including the U.S. recognition of its sovereignty over Western Sahara and the normalization of ties with Israel, have bolstered its international standing, although tensions with neighboring Algeria remain a primary geopolitical challenge.",
+  "indicators": {
+    "politicalStability":       { "score": 8, "trend": "stable", "confidence": "high", "note": "Strong monarchical system provides exceptional continuity and stability compared to regional peers." },
+    "economicDirection":        { "score": 7, "trend": "rising", "confidence": "high", "note": "Aggressive industrialization and infrastructure projects (Tanger Med) are driving consistent growth." },
+    "investmentAttractiveness": { "score": 8, "trend": "rising", "confidence": "high", "note": "Favorable business climate and strategic location make it a top destination for foreign direct investment in Africa." },
+    "geopoliticalRisk":         { "score": 5, "trend": "stable", "confidence": "medium", "note": "Persistent rivalry with Algeria and the unresolved Western Sahara issue are the main sources of risk." },
+    "educationQuality":         { "score": 5, "trend": "rising", "confidence": "medium", "note": "Systemic reforms are underway to address the mismatch between education and the needs of the modern labor market." },
+    "healthcareQuality":        { "score": 6, "trend": "rising", "confidence": "high", "note": "Major expansion of the social protection system and universal health coverage is significantly improving access." },
+    "technologyInvestment":     { "score": 7, "trend": "rising", "confidence": "high", "note": "Heavy investment in green hydrogen, solar energy (Noor Ouarzazate), and the digital economy." }
+  },
+  "demographics": {
+    "population": 38210000,
+    "medianAge": 29.5,
+    "urbanizationRate": 65,
+    "majorEthnicGroups": ["Arab-Berber"],
+    "religions": [
+      { "name": "Muslim (mostly Sunni)", "percent": 99 },
+      { "name": "Other (Christian, Jewish)", "percent": 1 }
+    ]
+  },
+  "alliances": ["Arab League", "African Union", "Major Non-NATO Ally (USA)", "OIC", "CEN-SAD"],
+  "relationships": [
+    { "countryId": "USA", "countryName": "United States", "type": "ally", "sentiment": "positive", "summary": "One of America's oldest allies; relationship bolstered by recognition of Western Sahara and the Abraham Accords." },
+    { "countryId": "FRA", "countryName": "France", "type": "strategic_partner", "sentiment": "positive", "summary": "Deep historical, economic, and cultural ties; France is a primary trade partner and supporter on regional issues." },
+    { "countryId": "ISR", "countryName": "Israel", "type": "strategic_partner", "sentiment": "positive", "summary": "Normalized relations in 2020 leading to significant security, technological, and tourism cooperation." },
+    { "countryId": "ESP", "countryName": "Spain", "type": "strategic_partner", "sentiment": "positive", "summary": "Critical economic partner; relations improved significantly after Spain's shift on the Western Sahara autonomy plan." },
+    { "countryId": "DZA", "countryName": "Algeria", "type": "competitor", "sentiment": "negative", "summary": "Deep-seated rivalry over regional hegemony and Western Sahara; diplomatic relations are currently severed." }
+  ],
+  "perspectives": [
+    { "source": "Monarchist", "bias": "Pro-monarchy", "view": "The King's vision is the sole guarantor of Morocco's exceptionalism, stability, and modernization in a turbulent region." },
+    { "source": "Modernizing Entrepreneur", "bias": "Pro-business", "view": "Morocco is the most logical hub for global value chains looking to bridge the gap between the EU and the African continent." },
+    { "source": "Sahrawi Nationalist (Pro-Morocco)", "bias": "Unionist", "view": "The autonomy plan is the only realistic way to achieve peace and prosperity while preserving the territorial integrity of the Kingdom." },
+    { "source": "Social Critic", "bias": "Pro-reform", "view": "While the macro-economy is booming, more must be done to reduce the wealth gap and improve the quality of life in rural areas." }
+  ],
+  "historicalContext": {
+    "summary": "Morocco is a kingdom with a history of independence that predates the colonial era. After becoming a French and Spanish protectorate in 1912, it regained independence in 1956. The modern era is defined by the stability of the Alaouite dynasty and the rapid development under Mohammed VI.",
+    "keyEvents": [
+      { "year": 1912, "event": "Treaty of Fez establishes French and Spanish protectorates." },
+      { "year": 1956, "event": "Morocco regains independence from France and Spain." },
+      { "year": 1961, "event": "Hassan II ascends to the throne." },
+      { "year": 1975, "event": "The Green March; 350,000 Moroccans march into Western Sahara to claim the territory." },
+      { "year": 1999, "event": "Mohammed VI succeeds his father, initiating a series of social and economic reforms." },
+      { "year": 2004, "event": "Moudawana (Family Code) reform significantly expands women's rights." },
+      { "year": 2011, "event": "Constitutional reforms in response to the Arab Spring delegate more power to the Prime Minister." },
+      { "year": 2017, "event": "Morocco officially rejoins the African Union." },
+      { "year": 2020, "event": "United States recognizes Moroccan sovereignty over Western Sahara; Morocco normalizes ties with Israel." },
+      { "year": 2023, "event": "A devastating earthquake in the High Atlas mountains triggers a massive national and international response." }
+    ]
+  },
+  "investmentNotes": {
+    "strengths": ["Strategic location and Tanger Med world-class port", "Aggressive shift toward renewable energy", "Political stability and continuity", "Growing aerospace and automotive industrial clusters"],
+    "risks": ["Water scarcity and climate change impact on agriculture", "Dependence on the European economy", "Regional tensions with Algeria", "High youth unemployment in certain sectors"],
+    "sectors": ["Automotive Manufacturing", "Aerospace", "Renewable Energy (Green Hydrogen)", "Logistics & Shipping", "Agribusiness"]
+  },
+  "sources": [
+    { "name": "Haut-Commissariat au Plan (HCP)", "url": "https://www.hcp.ma/", "type": "economic" },
+    { "name": "Bank Al-Maghrib", "url": "https://www.bkam.ma/", "type": "economic" },
+    { "name": "Moroccan Investment and Export Development Agency (AMDIE)", "url": "https://www.morocconow.com/", "type": "investment" }
+  ]
+}

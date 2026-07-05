@@ -1,0 +1,31 @@
+[
+  {
+    "countryId": "ZAF",
+    "year": 2023,
+    "gdpUsdBn": 377.7,
+    "gdpPerCapita": 6191,
+    "sectors": [
+      { "sector": "Finance & Business Services", "percentOfGDP": 24.0, "notes": "Largest single industry sector" },
+      { "sector": "Government Services", "percentOfGDP": 17.0, "notes": null },
+      { "sector": "Manufacturing", "percentOfGDP": 12.0, "notes": null },
+      { "sector": "Trade, Catering & Accommodation", "percentOfGDP": 13.0, "notes": null },
+      { "sector": "Mining & Quarrying", "percentOfGDP": 6.2, "notes": "Key export sector, impacted by logistics" },
+      { "sector": "Transport & Communication", "percentOfGDP": 8.0, "notes": "Grew by 4.3% in 2023" },
+      { "sector": "Personal Services", "percentOfGDP": 6.0, "notes": null },
+      { "sector": "Agriculture", "percentOfGDP": 2.6, "notes": "Contracted by 12.2% in 2023" },
+      { "sector": "Construction", "percentOfGDP": 2.5, "notes": "First positive growth since 2016" },
+      { "sector": "Utilities", "percentOfGDP": 8.7, "notes": "Includes Electricity, Gas & Water" }
+    ],
+    "attribution": {
+      "sources": [
+        { "name": "Statistics South Africa (Stats SA) 2023", "url": "https://www.statssa.gov.za/", "accessedAt": "2024-05-14" },
+        { "name": "World Bank", "url": "https://data.worldbank.org/country/south-africa", "accessedAt": "2024-05-14" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 2,
+        "lastVerified": "2024-05-14"
+      }
+    }
+  }
+]

@@ -1,0 +1,65 @@
+{
+  "id": "ISL",
+  "iso2": "IS",
+  "name": "Iceland",
+  "region": "Europe",
+  "subregion": "Northern Europe",
+  "capital": "Reykjavik",
+  "lastUpdated": "2026-05-24",
+  "summary": "Iceland is currently navigating a period of economic recovery and political transition following the formation of the 'Valkyrie government' in late 2024. Led by Prime Minister Kristrún Frostadóttir, the centrist coalition is focused on stabilizing the economy after a period of high inflation and managing the long-term impacts of significant volcanic activity on the Reykjanes peninsula. The country remains a global leader in renewable energy and gender equality, with a highly developed welfare state and a resilient tourism sector. A defining political theme for 2025-2026 is the renewed debate over European Union membership, with the government committed to a public referendum by 2027. Despite its small size, Iceland's strategic location in the North Atlantic and its commitment to sustainability ensure its continued relevance in Arctic geopolitics and global climate action.",
+  "indicators": {
+    "politicalStability":       { "score": 8, "score_description": "Stable democracy with a new centrist coalition mandate.", "trend": "stable", "confidence": "high", "note": "The transition to the Frostadóttir administration was smooth, and the government enjoys a workable legislative majority." },
+    "economicDirection":        { "score": 7, "score_description": "Recovering growth with falling but persistent inflation.", "trend": "rising", "confidence": "high", "note": "Growth is projected to accelerate to 3.1% in 2025 as monetary policy begins to ease and the tourism sector remains robust." },
+    "investmentAttractiveness": { "score": 8, "score_description": "Highly attractive for green energy and high-tech industries.", "trend": "stable", "confidence": "high", "note": "Iceland's 100% renewable energy grid is a major draw for data centers and sustainable manufacturing (e.g., green aluminum)." },
+    "geopoliticalRisk":         { "score": 2, "score_description": "Very low risk; secure North Atlantic position.", "trend": "stable", "confidence": "high", "note": "Iceland's strategic importance within NATO is rising due to increased activity in the Arctic region." },
+    "educationQuality":         { "score": 8, "score_description": "High-quality, equitable education system.", "trend": "stable", "confidence": "high", "note": "Iceland has very high rates of tertiary education and is a leader in lifelong learning and vocational training." },
+    "healthcareQuality":        { "score": 8, "score_description": "High-standard universal healthcare system.", "trend": "stable", "confidence": "high", "note": "The system is well-funded but faces challenges related to wait times for certain elective procedures and rural service delivery." },
+    "technologyInvestment":     { "score": 7, "score_description": "Leader in geothermal tech and carbon capture.", "trend": "rising", "confidence": "high", "note": "Iceland is a global pioneer in carbon mineralisation (Carbfix) and geothermal energy utilization." }
+  },
+  "demographics": {
+    "population": 385000,
+    "medianAge": 37.1,
+    "urbanizationRate": 94,
+    "majorEthnicGroups": ["Icelandic (89%)", "Polish", "Other European"],
+    "religions": [
+      { "name": "Evangelical Lutheran Church", "percent": 60 },
+      { "name": "Other Christian", "percent": 12 },
+      { "name": "None/Other", "percent": 28 }
+    ]
+  },
+  "alliances": ["NATO", "EEA", "Nordic Council", "EFTA", "Arctic Council"],
+  "relationships": [
+    { "countryId": "USA", "countryName": "United States", "type": "ally", "sentiment": "positive", "summary": "Core security ally; the US provides defense for Iceland under a bilateral agreement and is a key partner in Arctic security." },
+    { "countryId": "NOR", "countryName": "Norway", "type": "partner", "sentiment": "positive", "summary": "Close Nordic partner with deep historical, cultural, and economic ties; collaboration is strong in energy and fisheries." },
+    { "countryId": "GBR", "countryName": "United Kingdom", "type": "partner", "sentiment": "positive", "summary": "Important trade partner, particularly in the fisheries sector; relations have stabilized post-Brexit." },
+    { "countryId": "EU", "countryName": "European Union", "type": "partner", "sentiment": "positive", "summary": "Iceland is deeply integrated into the EU through the EEA; the question of full membership is a central domestic political issue." }
+  ],
+  "perspectives": [
+    { "source": "Social Democratic Alliance (Governing)", "bias": "Social Democratic / Pro-EU", "view": "We must strengthen our social safety net and pursue deeper integration with Europe to ensure long-term stability and prosperity." },
+    { "source": "Independence Party (Opposition)", "bias": "Liberal-Conservative / Euroskeptic", "view": "Iceland's sovereignty and control over its fisheries are best maintained outside the EU while preserving our strong ties through the EEA." },
+    { "source": "Central Bank of Iceland", "bias": "Technical", "view": "The primary challenge is to anchor inflation expectations and ensure that the recovery remains sustainable without overheating the housing market." }
+  ],
+  "historicalContext": {
+    "summary": "Settled by Norsemen in the 9th century, Iceland had the world's first parliament (Althing) in 930. After centuries of Norwegian and Danish rule, it gained full independence in 1944. Its modern history is defined by a rapid transition from a fishing-dependent economy to a highly diversified, high-income society, including its resilient recovery from the 2008 financial crisis.",
+    "keyEvents": [
+      { "year": 930, "event": "Establishment of the Althing, the world's oldest surviving parliament." },
+      { "year": 1944, "event": "Republic of Iceland is established, ending the union with Denmark." },
+      { "year": 1949, "event": "Iceland becomes a founding member of NATO." },
+      { "year": 1958, "event": "Start of the 'Cod Wars' with the UK over fishing rights." },
+      { "year": 1994, "event": "Iceland joins the European Economic Area (EEA)." },
+      { "year": 2008, "event": "Collapse of the Icelandic banking system and start of a severe financial crisis." },
+      { "year": 2010, "event": "Eruption of Eyjafjallajökull volcano disrupts global air travel." },
+      { "year": 2024, "event": "Formation of the 'Valkyrie government' led by Kristrún Frostadóttir." }
+    ]
+  },
+  "investmentNotes": {
+    "strengths": ["100% renewable energy matrix (Geothermal and Hydro)", "High institutional quality and low corruption", "Strategically important location for Arctic logistics and data centers", "Highly skilled and innovative workforce"],
+    "risks": ["Vulnerability to volcanic activity and natural disasters", "Small, open economy highly sensitive to global shocks", "High cost of living and labor", "Limited domestic market size"],
+    "sectors": ["Renewable Energy and Green Tech", "Tourism", "Fisheries and Marine Biotech", "Data Centers and High-Tech Services"]
+  },
+  "sources": [
+    { "name": "Central Bank of Iceland", "url": "https://www.cb.is/", "type": "economic" },
+    { "name": "Statistics Iceland", "url": "https://www.statice.is/", "type": "economic" },
+    { "name": "Business Iceland", "url": "https://www.businessiceland.is/", "type": "investment" }
+  ]
+}

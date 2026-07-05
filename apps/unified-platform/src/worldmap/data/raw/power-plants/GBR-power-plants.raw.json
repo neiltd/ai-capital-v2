@@ -1,0 +1,407 @@
+[
+  {
+    "id": "PLANT-GBR-HINKLEY-POINT-C",
+    "name": "Hinkley Point C Nuclear Power Station",
+    "countryId": "GBR",
+    "city": "Bridgwater",
+    "coordinates": [-3.143, 51.206],
+    "type": "nuclear",
+    "status": "construction",
+    "capacityMW": 3260,
+    "annualOutputGWh": null,
+    "yearCommissioned": 2030,
+    "yearRetirement": null,
+    "operator": "EDF Energy",
+    "owner": "EDF / CGN",
+    "strategicNote": "The first new nuclear plant in the UK in over 20 years, critical for meeting net-zero targets and future energy security.",
+    "notes": "Consists of two EPR reactors.",
+    "attribution": {
+      "sources": [
+        { "name": "Global Energy Monitor", "url": "https://www.gem.wiki/Hinkley_Point_C_Nuclear_Power_Station", "accessedAt": "2025-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 1,
+        "lastVerified": "2025-05-10"
+      }
+    }
+  },
+  {
+    "id": "PLANT-GBR-PEMBROKE",
+    "name": "Pembroke Power Station",
+    "countryId": "GBR",
+    "city": "Pembroke",
+    "coordinates": [-4.988, 51.683],
+    "type": "gas",
+    "status": "operating",
+    "capacityMW": 2200,
+    "annualOutputGWh": null,
+    "yearCommissioned": 2012,
+    "yearRetirement": null,
+    "operator": "RWE",
+    "owner": "RWE",
+    "strategicNote": "The UK's largest and most efficient CCGT power station, vital for flexible grid support.",
+    "notes": null,
+    "attribution": {
+      "sources": [
+        { "name": "Global Energy Monitor", "url": "https://www.gem.wiki/Pembroke_Power_Station", "accessedAt": "2025-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 1,
+        "lastVerified": "2025-05-10"
+      }
+    }
+  },
+  {
+    "id": "PLANT-GBR-STAYTHORPE-C",
+    "name": "Staythorpe C Power Station",
+    "countryId": "GBR",
+    "city": "Newark-on-Trent",
+    "coordinates": [-0.856, 53.075],
+    "type": "gas",
+    "status": "operating",
+    "capacityMW": 1735,
+    "annualOutputGWh": null,
+    "yearCommissioned": 2010,
+    "yearRetirement": null,
+    "operator": "RWE",
+    "owner": "RWE",
+    "strategicNote": "A major contributor to the UK's natural gas generation fleet.",
+    "notes": null,
+    "attribution": {
+      "sources": [
+        { "name": "Global Energy Monitor", "url": "https://www.gem.wiki/Staythorpe_C_Power_Station", "accessedAt": "2025-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 1,
+        "lastVerified": "2025-05-10"
+      }
+    }
+  },
+  {
+    "id": "PLANT-GBR-DINORWIG",
+    "name": "Dinorwig Power Station",
+    "countryId": "GBR",
+    "city": "Llanberis",
+    "coordinates": [-4.114, 53.119],
+    "type": "hydro",
+    "status": "operating",
+    "capacityMW": 1728,
+    "annualOutputGWh": null,
+    "yearCommissioned": 1984,
+    "yearRetirement": null,
+    "operator": "First Hydro Company",
+    "owner": "Engie / Mitsui & Co.",
+    "strategicNote": "The UK's largest pumped-storage facility, essential for rapid response to grid frequency fluctuations.",
+    "notes": "Built inside a mountain in Snowdonia.",
+    "attribution": {
+      "sources": [
+        { "name": "Global Energy Monitor", "url": "https://www.gem.wiki/Dinorwig_Power_Station", "accessedAt": "2025-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 1,
+        "lastVerified": "2025-05-10"
+      }
+    }
+  },
+  {
+    "id": "PLANT-GBR-DIDCOT-B",
+    "name": "Didcot B Power Station",
+    "countryId": "GBR",
+    "city": "Didcot",
+    "coordinates": [-1.266, 51.624],
+    "type": "gas",
+    "status": "operating",
+    "capacityMW": 1440,
+    "annualOutputGWh": null,
+    "yearCommissioned": 1997,
+    "yearRetirement": null,
+    "operator": "RWE",
+    "owner": "RWE",
+    "strategicNote": "Key gas-fired station serving the South of England.",
+    "notes": null,
+    "attribution": {
+      "sources": [
+        { "name": "Global Energy Monitor", "url": "https://www.gem.wiki/Didcot_B_Power_Station", "accessedAt": "2025-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 1,
+        "lastVerified": "2025-05-10"
+      }
+    }
+  },
+  {
+    "id": "PLANT-GBR-CONNAHS-QUAY",
+    "name": "Connah's Quay Power Station",
+    "countryId": "GBR",
+    "city": "Connah's Quay",
+    "coordinates": [-3.072, 53.229],
+    "type": "gas",
+    "status": "operating",
+    "capacityMW": 1380,
+    "annualOutputGWh": null,
+    "yearCommissioned": 1996,
+    "yearRetirement": null,
+    "operator": "Uniper",
+    "owner": "Uniper",
+    "strategicNote": "Significant CCGT plant in North Wales.",
+    "notes": null,
+    "attribution": {
+      "sources": [
+        { "name": "Global Energy Monitor", "url": "https://www.gem.wiki/Connah%27s_Quay_Power_Station", "accessedAt": "2025-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 1,
+        "lastVerified": "2025-05-10"
+      }
+    }
+  },
+  {
+    "id": "PLANT-GBR-WEST-BURTON-B",
+    "name": "West Burton B Power Station",
+    "countryId": "GBR",
+    "city": "Retford",
+    "coordinates": [-0.82, 53.361],
+    "type": "gas",
+    "status": "operating",
+    "capacityMW": 1332,
+    "annualOutputGWh": null,
+    "yearCommissioned": 2013,
+    "yearRetirement": null,
+    "operator": "EDF Energy",
+    "owner": "EDF Energy",
+    "strategicNote": "Modern gas plant located on the site of a former coal station.",
+    "notes": null,
+    "attribution": {
+      "sources": [
+        { "name": "Global Energy Monitor", "url": "https://www.gem.wiki/West_Burton_B_Power_Station", "accessedAt": "2025-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 1,
+        "lastVerified": "2025-05-10"
+      }
+    }
+  },
+  {
+    "id": "PLANT-GBR-SOUTH-HUMBER-BANK",
+    "name": "South Humber Bank Power Station",
+    "countryId": "GBR",
+    "city": "Stallingborough",
+    "coordinates": [-0.126, 53.615],
+    "type": "gas",
+    "status": "operating",
+    "capacityMW": 1310,
+    "annualOutputGWh": null,
+    "yearCommissioned": 1997,
+    "yearRetirement": null,
+    "operator": "EP UK Investments",
+    "owner": "EPH",
+    "strategicNote": "A major industrial power hub on the Humber estuary.",
+    "notes": null,
+    "attribution": {
+      "sources": [
+        { "name": "Global Energy Monitor", "url": "https://www.gem.wiki/South_Humber_Bank_Power_Station", "accessedAt": "2025-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 1,
+        "lastVerified": "2025-05-10"
+      }
+    }
+  },
+  {
+    "id": "PLANT-GBR-HEYSHAM-2",
+    "name": "Heysham 2 Nuclear Power Station",
+    "countryId": "GBR",
+    "city": "Heysham",
+    "coordinates": [-2.916, 54.029],
+    "type": "nuclear",
+    "status": "operating",
+    "capacityMW": 1230,
+    "annualOutputGWh": 8000,
+    "yearCommissioned": 1988,
+    "yearRetirement": 2028,
+    "operator": "EDF Energy",
+    "owner": "EDF Energy",
+    "strategicNote": "The UK's most advanced Advanced Gas-cooled Reactor (AGR) station.",
+    "notes": null,
+    "attribution": {
+      "sources": [
+        { "name": "IAEA PRIS", "url": "https://pris.iaea.org/PRIS/CountryStatistics/ReactorDetails.aspx?current=267", "accessedAt": "2025-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 2,
+        "lastVerified": "2025-05-10"
+      }
+    }
+  },
+  {
+    "id": "PLANT-GBR-SALTEND",
+    "name": "Saltend Power Station",
+    "countryId": "GBR",
+    "city": "Hull",
+    "coordinates": [-0.238, 53.738],
+    "type": "gas",
+    "status": "operating",
+    "capacityMW": 1200,
+    "annualOutputGWh": null,
+    "yearCommissioned": 2000,
+    "yearRetirement": null,
+    "operator": "Triton Power",
+    "owner": "Equinor / SSE",
+    "strategicNote": "Key gas plant in the Humber region, part of the Zero Carbon Humber initiative.",
+    "notes": null,
+    "attribution": {
+      "sources": [
+        { "name": "Global Energy Monitor", "url": "https://www.gem.wiki/Saltend_Power_Station", "accessedAt": "2025-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 1,
+        "lastVerified": "2025-05-10"
+      }
+    }
+  },
+  {
+    "id": "PLANT-GBR-SIZEWELL-B",
+    "name": "Sizewell B Nuclear Power Station",
+    "countryId": "GBR",
+    "city": "Leiston",
+    "coordinates": [1.619, 52.213],
+    "type": "nuclear",
+    "status": "operating",
+    "capacityMW": 1198,
+    "annualOutputGWh": 9000,
+    "yearCommissioned": 1995,
+    "yearRetirement": 2035,
+    "operator": "EDF Energy",
+    "owner": "EDF Energy",
+    "strategicNote": "The UK's only Pressurized Water Reactor (PWR) currently in operation.",
+    "notes": null,
+    "attribution": {
+      "sources": [
+        { "name": "IAEA PRIS", "url": "https://pris.iaea.org/PRIS/CountryStatistics/ReactorDetails.aspx?current=269", "accessedAt": "2025-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 2,
+        "lastVerified": "2025-05-10"
+      }
+    }
+  },
+  {
+    "id": "PLANT-GBR-PETERHEAD",
+    "name": "Peterhead Power Station",
+    "countryId": "GBR",
+    "city": "Peterhead",
+    "coordinates": [-1.788, 57.485],
+    "type": "gas",
+    "status": "operating",
+    "capacityMW": 1180,
+    "annualOutputGWh": null,
+    "yearCommissioned": 1982,
+    "yearRetirement": null,
+    "operator": "SSE Thermal",
+    "owner": "SSE",
+    "strategicNote": "Critical plant for grid stability in Scotland; site of a major CCS project proposal.",
+    "notes": null,
+    "attribution": {
+      "sources": [
+        { "name": "Global Energy Monitor", "url": "https://www.gem.wiki/Peterhead_Power_Station", "accessedAt": "2025-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 1,
+        "lastVerified": "2025-05-10"
+      }
+    }
+  },
+  {
+    "id": "PLANT-GBR-TORNESS",
+    "name": "Torness Nuclear Power Station",
+    "countryId": "GBR",
+    "city": "Dunbar",
+    "coordinates": [-2.409, 55.968],
+    "type": "nuclear",
+    "status": "operating",
+    "capacityMW": 1185,
+    "annualOutputGWh": 8000,
+    "yearCommissioned": 1988,
+    "yearRetirement": 2028,
+    "operator": "EDF Energy",
+    "owner": "EDF Energy",
+    "strategicNote": "Key nuclear asset for Scotland's power supply.",
+    "notes": null,
+    "attribution": {
+      "sources": [
+        { "name": "IAEA PRIS", "url": "https://pris.iaea.org/PRIS/CountryStatistics/ReactorDetails.aspx?current=271", "accessedAt": "2025-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 2,
+        "lastVerified": "2025-05-10"
+      }
+    }
+  },
+  {
+    "id": "PLANT-GBR-HARTLEPOOL",
+    "name": "Hartlepool Nuclear Power Station",
+    "countryId": "GBR",
+    "city": "Hartlepool",
+    "coordinates": [-1.181, 54.635],
+    "type": "nuclear",
+    "status": "operating",
+    "capacityMW": 1180,
+    "annualOutputGWh": 8000,
+    "yearCommissioned": 1983,
+    "yearRetirement": 2026,
+    "operator": "EDF Energy",
+    "owner": "EDF Energy",
+    "strategicNote": "Major employer and power source in North-East England.",
+    "notes": null,
+    "attribution": {
+      "sources": [
+        { "name": "IAEA PRIS", "url": "https://pris.iaea.org/PRIS/CountryStatistics/ReactorDetails.aspx?current=254", "accessedAt": "2025-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 2,
+        "lastVerified": "2025-05-10"
+      }
+    }
+  },
+  {
+    "id": "PLANT-GBR-RATCLIFFE-ON-SOAR",
+    "name": "Ratcliffe-on-Soar Power Station",
+    "countryId": "GBR",
+    "city": "Ratcliffe-on-Soar",
+    "coordinates": [-1.254, 52.868],
+    "type": "coal",
+    "status": "decommissioned",
+    "capacityMW": 2000,
+    "annualOutputGWh": null,
+    "yearCommissioned": 1968,
+    "yearRetirement": 2024,
+    "operator": "Uniper",
+    "owner": "Uniper",
+    "strategicNote": "The UK's last operating coal-fired power station, shut down in September 2024, marking the end of the UK's coal era.",
+    "notes": null,
+    "attribution": {
+      "sources": [
+        { "name": "Global Energy Monitor", "url": "https://www.gem.wiki/Ratcliffe-on-Soar_Power_Station", "accessedAt": "2025-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 1,
+        "lastVerified": "2025-05-10"
+      }
+    }
+  }
+]

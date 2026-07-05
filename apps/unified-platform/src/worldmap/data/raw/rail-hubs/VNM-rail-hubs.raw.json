@@ -1,0 +1,219 @@
+[
+  {
+    "id": "RAIL-VNM-DONG-DANG",
+    "name": "Đồng Đăng International Railway Station",
+    "countryId": "VNM",
+    "city": "Đồng Đăng",
+    "coordinates": [106.6967, 21.9444],
+    "type": "border_crossing",
+    "dailyPassengers": 500,
+    "annualFreightTonnes": 1500000,
+    "connectedCountries": ["CHN"],
+    "gaugeType": "mixed",
+    "lineCount": 6,
+    "strategicImportance": "high",
+    "isPartOfBRI": true,
+    "geopoliticalNotes": "The primary rail gateway between Vietnam and China. Features dual-gauge tracks (1,000mm and 1,435mm) enabling direct transit of Chinese standard-gauge trains into the Hanoi region.",
+    "notes": "Key entry point for the China-Indochina Peninsula Economic Corridor.",
+    "attribution": {
+      "sources": [
+        { "name": "Vietnam Railways (VNR)", "url": "https://vr.com.vn", "accessedAt": "2026-05-10" },
+        { "name": "China Railway Express", "url": "http://www.crct.com", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 2,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  },
+  {
+    "id": "RAIL-VNM-YEN-VIEN",
+    "name": "Yên Viên Railway Station",
+    "countryId": "VNM",
+    "city": "Hanoi",
+    "coordinates": [105.9181, 21.0883],
+    "type": "freight",
+    "dailyPassengers": null,
+    "annualFreightTonnes": 2000000,
+    "connectedCountries": ["CHN", "KAZ", "RUS", "DEU"],
+    "gaugeType": "mixed",
+    "lineCount": 10,
+    "strategicImportance": "high",
+    "isPartOfBRI": true,
+    "geopoliticalNotes": "The most important freight hub in Northern Vietnam. Serves as the consolidation point for international container trains bound for Central Asia and Europe via China.",
+    "notes": "Handles the 'Hanoi-Chengdu' and 'Hanoi-Liege' intermodal services.",
+    "attribution": {
+      "sources": [
+        { "name": "RailFreight.com", "url": "https://www.railfreight.com/intermodal/2024/05/vietnam-china-rail-freight-surge", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 1,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  },
+  {
+    "id": "RAIL-VNM-SONG-THAN",
+    "name": "Sóng Thần Railway Station",
+    "countryId": "VNM",
+    "city": "Dĩ An (Ho Chi Minh City)",
+    "coordinates": [106.7483, 10.9000],
+    "type": "freight",
+    "dailyPassengers": null,
+    "annualFreightTonnes": 1800000,
+    "connectedCountries": [],
+    "gaugeType": "narrow",
+    "lineCount": 12,
+    "strategicImportance": "high",
+    "isPartOfBRI": false,
+    "geopoliticalNotes": "The largest and most critical freight terminal in Southern Vietnam. Connects the industrial heartland of Binh Duong and HCMC to the national network.",
+    "notes": "Planned southern terminus for the future North-South High-Speed Rail (standard gauge).",
+    "attribution": {
+      "sources": [
+        { "name": "Vietnam Ministry of Transport", "url": "https://mt.gov.vn", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 1,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  },
+  {
+    "id": "RAIL-VNM-LAO-CAI",
+    "name": "Lào Cai Railway Station",
+    "countryId": "VNM",
+    "city": "Lào Cai",
+    "coordinates": [103.9783, 22.4836],
+    "type": "border_crossing",
+    "dailyPassengers": 2000,
+    "annualFreightTonnes": 1200000,
+    "connectedCountries": ["CHN"],
+    "gaugeType": "narrow",
+    "lineCount": 8,
+    "strategicImportance": "high",
+    "isPartOfBRI": true,
+    "geopoliticalNotes": "Major border crossing connecting to Hekou, China (Yunnan province). Critical for the export of minerals and agricultural products to Southwest China.",
+    "notes": "Standard-gauge upgrade project (Lao Cai-Hanoi-Haiphong) is a top priority for BRI integration.",
+    "attribution": {
+      "sources": [
+        { "name": "Vietnam News", "url": "https://vietnamnews.vn/economy/1654321/viet-nam-china-railway-connectivity-bolstered.html", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 1,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  },
+  {
+    "id": "RAIL-VNM-HANOI-CENTRAL",
+    "name": "Hanoi Railway Station",
+    "countryId": "VNM",
+    "city": "Hanoi",
+    "coordinates": [105.8403, 21.0244],
+    "type": "mixed",
+    "dailyPassengers": 12000,
+    "annualFreightTonnes": null,
+    "connectedCountries": ["CHN"],
+    "gaugeType": "narrow",
+    "lineCount": 6,
+    "strategicImportance": "high",
+    "isPartOfBRI": false,
+    "geopoliticalNotes": "The administrative and passenger heart of the Vietnamese rail network. Connecting point for the North-South (Reunification Express) and Northern lines.",
+    "notes": "Subject to major urban redevelopment and future integration with Hanoi Metro.",
+    "attribution": {
+      "sources": [
+        { "name": "VNR Operations", "url": "https://vr.com.vn", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 1,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  },
+  {
+    "id": "RAIL-VNM-HAIPHONG-PORT",
+    "name": "Haiphong Railway Station",
+    "countryId": "VNM",
+    "city": "Haiphong",
+    "coordinates": [106.6853, 20.8553],
+    "type": "port_interface",
+    "dailyPassengers": 3000,
+    "annualFreightTonnes": 3500000,
+    "connectedCountries": [],
+    "gaugeType": "narrow",
+    "lineCount": 8,
+    "strategicImportance": "high",
+    "isPartOfBRI": true,
+    "geopoliticalNotes": "The primary rail-to-sea gateway for Northern Vietnam. Serves as the maritime terminus for the Lao Cai-Hanoi-Haiphong economic corridor.",
+    "notes": "Critical for fertilizer, sulfur, and industrial container transit.",
+    "attribution": {
+      "sources": [
+        { "name": "Haiphong Port Authority", "url": "https://haiphongport.com.vn", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 1,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  },
+  {
+    "id": "RAIL-VNM-DA-NANG",
+    "name": "Da Nang Railway Station",
+    "countryId": "VNM",
+    "city": "Da Nang",
+    "coordinates": [108.2142, 16.0708],
+    "type": "mixed",
+    "dailyPassengers": 5000,
+    "annualFreightTonnes": 800000,
+    "connectedCountries": [],
+    "gaugeType": "narrow",
+    "lineCount": 5,
+    "strategicImportance": "medium",
+    "isPartOfBRI": false,
+    "geopoliticalNotes": "The main rail hub for Central Vietnam, facilitating trade and tourism along the North-South axis.",
+    "notes": "Strategically located midway between Hanoi and HCMC.",
+    "attribution": {
+      "sources": [
+        { "name": "Da Nang Portal", "url": "https://danang.gov.vn", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 1,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  },
+  {
+    "id": "RAIL-VNM-VINH",
+    "name": "Vinh Railway Station",
+    "countryId": "VNM",
+    "city": "Vinh",
+    "coordinates": [105.6719, 18.6750],
+    "type": "mixed",
+    "dailyPassengers": 3000,
+    "annualFreightTonnes": 500000,
+    "connectedCountries": ["LAO"],
+    "gaugeType": "narrow",
+    "lineCount": 4,
+    "strategicImportance": "medium",
+    "isPartOfBRI": false,
+    "geopoliticalNotes": "Strategic hub in North-Central Vietnam. Potential future connection point for the planned Vung Ang–Vientiane railway linking Vietnam and Laos.",
+    "notes": "Handles significant transit traffic between the north and south.",
+    "attribution": {
+      "sources": [
+        { "name": "Nghe An Portal", "url": "https://nghean.gov.vn", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "medium",
+        "sourceCount": 1,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  }
+]

@@ -1,0 +1,68 @@
+{
+  "id": "LBY",
+  "iso2": "LY",
+  "name": "Libya",
+  "region": "Africa",
+  "subregion": "Northern Africa",
+  "capital": "Tripoli",
+  "lastUpdated": "2026-05-09",
+  "summary": "Libya remains a deeply divided nation, characterized by 'managed fragmentation' between rival administrations in the West (Tripoli) and East (Benghazi). While a permanent ceasefire has largely held since 2020, the country is plagued by institutional stalemate and periodic militia clashes. The economy is almost entirely dependent on the hydrocarbon sector, which is frequently used as a political lever by competing factions. Despite its immense oil wealth and strategic Mediterranean position, Libya's recovery is hindered by the absence of a unified government and the persistent influence of foreign powers, including Turkey and Russia.",
+  "indicators": {
+    "politicalStability":       { "score": 2, "trend": "stable", "confidence": "high", "note": "Persistent division between rival governments and the lack of a clear path to national elections sustain a fragile and volatile environment." },
+    "economicDirection":        { "score": 4, "trend": "rising", "confidence": "medium", "note": "Growth is highly sensitive to oil production levels; recent rebounds are promising but remain vulnerable to political blockades." },
+    "investmentAttractiveness": { "score": 3, "trend": "rising", "confidence": "low", "note": "High potential in energy and infrastructure, but severe security risks and legal ambiguity deter most long-term foreign investors." },
+    "geopoliticalRisk":         { "score": 8, "trend": "stable", "confidence": "high", "note": "Significant risk from militia-led violence, proxy competition, and Libya's role as a major transit point for irregular migration." },
+    "educationQuality":         { "score": 3, "trend": "stable", "confidence": "medium", "note": "System severely degraded by years of conflict; many schools are damaged or repurposed for displaced populations." },
+    "healthcareQuality":        { "score": 3, "trend": "stable", "confidence": "medium", "note": "Critical shortages of supplies and specialized personnel; the system is fragmented and heavily dependent on international aid." },
+    "technologyInvestment":     { "score": 3, "trend": "stable", "confidence": "low", "note": "Limited focus beyond basic telecommunications restoration and digital tools for managing the central bank and oil revenues." }
+  },
+  "demographics": {
+    "population": 7500000,
+    "medianAge": 28.0,
+    "urbanizationRate": 78,
+    "majorEthnicGroups": ["Arab-Berber", "Tuareg", "Tebu"],
+    "religions": [
+      { "name": "Muslim (mostly Sunni)", "percent": 97 },
+      { "name": "Other (Christian, Buddhist)", "percent": 3 }
+    ]
+  },
+  "alliances": ["Arab League", "African Union", "OPEC", "OIC", "CEN-SAD"],
+  "relationships": [
+    { "countryId": "TUR", "countryName": "Turkey", "type": "strategic_partner", "sentiment": "positive", "summary": "Primary security and economic backer of the Tripoli-based administration; maintains a significant military presence in the West." },
+    { "countryId": "RUS", "countryName": "Russia", "type": "strategic_partner", "sentiment": "positive", "summary": "Key supporter of the Eastern administration and Haftar; utilizes Libya as a strategic hub for its operations across the Sahel." },
+    { "countryId": "EGY", "countryName": "Egypt", "type": "strategic_partner", "sentiment": "neutral", "summary": "Focused on border security and regional stability; increasingly playing a mediator role between East and West." },
+    { "countryId": "ITA", "countryName": "Italy", "type": "strategic_partner", "sentiment": "neutral", "summary": "Major energy partner and primary interlocutor on managing migration; maintains diplomatic ties with both rival factions." },
+    { "countryId": "USA", "countryName": "United States", "type": "diplomatic_partner", "sentiment": "neutral", "summary": "Focused on stability management, counter-terrorism, and ensuring the unhindered flow of oil to global markets." }
+  ],
+  "perspectives": [
+    { "source": "Tripoli Resident", "bias": "Localist", "view": "We want a unified state and elections, but we fear that any shift in the current balance will bring the militias back into the streets." },
+    { "source": "Eastern Official", "bias": "Regionalist", "view": "Tripoli's control over the central bank and oil wealth is unfair; the East deserves its share of national resources and political representation." },
+    { "source": "International Oil Company", "bias": "Pragmatic", "view": "Libya has some of the lowest production costs in the world, but we need political guarantees before committing to major new projects." },
+    { "source": "UN Mediator", "bias": "Neutral", "view": "The political process is in a cycle of stalemates; the main players are more interested in maintaining their personal status than in national unity." }
+  ],
+  "historicalContext": {
+    "summary": "Libya's modern history was defined by the 42-year rule of Muammar Gaddafi, which ended with a NATO-backed uprising in 2011. Since then, the country has struggled to build a new state, descending into multiple civil wars and becoming a battleground for regional proxies.",
+    "keyEvents": [
+      { "year": 1951, "event": "Libya gains independence as a kingdom under Idris I." },
+      { "year": 1969, "event": "Muammar Gaddafi leads a military coup, overthrowing the monarchy." },
+      { "year": 2011, "event": "Arab Spring uprising leads to NATO intervention and the death of Gaddafi." },
+      { "year": 2014, "event": "Contested elections lead to the split between rival governments in East and West." },
+      { "year": 2019, "event": "Khalifa Haftar's LNA launches a 14-month offensive to seize Tripoli." },
+      { "year": 2020, "event": "A permanent nationwide ceasefire is signed in Geneva, ending the second civil war." },
+      { "year": 2021, "event": "The Government of National Unity (GNU) is formed to lead the country to elections, which fail to materialize." },
+      { "year": 2023, "event": "Storm Daniel causes catastrophic flooding in Derna, highlighting the impact of state failure on infrastructure." },
+      { "year": 2024, "event": "A major crisis over the leadership of the Central Bank of Libya leads to a nationwide oil production shutdown." },
+      { "year": 2025, "event": "The Libyan Dinar is significantly devalued to manage the fiscal impact of production fluctuations and debt." }
+    ]
+  },
+  "investmentNotes": {
+    "strengths": ["Largest proven oil reserves in Africa", "Strategically located at the crossroads of Africa, Europe, and the Middle East", "Extensive coastlines with potential for port and logistics development", "Young population with a desire for modernization and economic openness"],
+    "risks": ["Institutional fragmentation and lack of a unified legal framework", "Frequent political blockades of oil facilities", "Presence of uncontrolled armed groups and foreign mercenaries", "Severe corruption and lack of financial transparency"],
+    "sectors": ["Oil & Gas Exploration & Services", "Infrastructure Restoration (Power, Water, Transport)", "Telecommunications & Digital Banking", "Renewable Energy (Solar)", "Logistics & Maritime Services"]
+  },
+  "sources": [
+    { "name": "Central Bank of Libya", "url": "https://cbl.gov.ly/en/", "type": "economic" },
+    { "name": "National Oil Corporation (NOC)", "url": "https://noc.ly/index.php/en/", "type": "industry" },
+    { "name": "Libyan Bureau of Statistics and Census", "url": "https://bsc.ly/", "type": "demographic" }
+  ]
+}

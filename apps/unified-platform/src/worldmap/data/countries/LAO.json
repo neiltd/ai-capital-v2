@@ -1,0 +1,66 @@
+{
+  "id": "LAO",
+  "iso2": "LA",
+  "name": "Laos",
+  "region": "Asia",
+  "subregion": "South-Eastern Asia",
+  "capital": "Vientiane",
+  "lastUpdated": "2026-05-09",
+  "summary": "Laos is a landlocked, mountainous country in Southeast Asia that is striving to become a 'land-linked' regional hub through ambitious infrastructure projects. As a one-party Marxist-Leninist state, it maintains tight political control while pursuing market-oriented reforms. However, the nation is currently facing a severe economic crisis characterized by unsustainable public debt (largely to China) and high inflation. Laos leverages its strategic location and hydropower potential to maintain relevance in regional geopolitics, particularly as the 2024 ASEAN Chair.",
+  "indicators": {
+    "politicalStability":       { "score": 8, "trend": "stable", "confidence": "high", "note": "Strong one-party rule under the LPRP; limited internal dissent or organized opposition." },
+    "economicDirection":        { "score": 3, "trend": "stable", "confidence": "high", "note": "Hampered by high inflation, currency depreciation, and a critical debt-to-GDP ratio exceeding 100%." },
+    "investmentAttractiveness": { "score": 4, "trend": "declining", "confidence": "medium", "note": "Hydropower and mining sectors remain active, but macroeconomic instability and debt distress deter new diversified FDI." },
+    "geopoliticalRisk":         { "score": 5, "trend": "stable", "confidence": "high", "note": "Primary risk is extreme economic dependence on China; also needs to balance a 'special relationship' with Vietnam." },
+    "educationQuality":         { "score": 3, "trend": "stable", "confidence": "medium", "note": "Low public spending on education; high dropout rates and limited vocational training for a modern economy." },
+    "healthcareQuality":        { "score": 3, "trend": "stable", "confidence": "medium", "note": "Significant disparities between urban and rural areas; many citizens seek medical treatment in Thailand." },
+    "technologyInvestment":     { "score": 4, "trend": "rising", "confidence": "medium", "note": "Focus on digital connectivity and the Laos-China railway logistics; limited but growing mobile internet penetration." }
+  },
+  "demographics": {
+    "population": 7800000,
+    "medianAge": 24.4,
+    "urbanizationRate": 37,
+    "majorEthnicGroups": ["Lao", "Khmmu", "Hmong", "Phouthay"],
+    "religions": [
+      { "name": "Buddhist", "percent": 64.7 },
+      { "name": "Christian", "percent": 1.7 },
+      { "name": "Other / Traditional", "percent": 33.6 }
+    ]
+  },
+  "alliances": ["ASEAN", "RCEP", "Belt and Road Initiative (BRI)"],
+  "relationships": [
+    { "countryId": "CHN", "countryName": "China", "type": "strategic_partner", "sentiment": "positive", "summary": "Largest creditor and investor; China provides critical infrastructure but holds significant leverage due to debt." },
+    { "countryId": "VNM", "countryName": "Vietnam", "type": "strategic_partner", "sentiment": "positive", "summary": "Maintains a 'special relationship' based on historical and ideological party-to-party ties." },
+    { "countryId": "THA", "countryName": "Thailand", "type": "neighbor", "sentiment": "positive", "summary": "Essential economic partner; Thailand is the primary buyer of Lao electricity and a main source of imported goods." },
+    { "countryId": "USA", "countryName": "United States", "type": "development_partner", "sentiment": "neutral", "summary": "Cooperation focused on UXO clearance and health; USA seeks to provide a counterweight to Chinese influence." }
+  ],
+  "perspectives": [
+    { "source": "LPRP Leadership", "bias": "State-Centric", "view": "Our 'land-linked' strategy and hydropower development are the keys to graduating from LDC status by 2026." },
+    { "source": "Lao Citizen", "bias": "Pragmatic", "view": "Rising prices for food and fuel make daily life very difficult; many young people look for work in Thailand." },
+    { "source": "Foreign Investor", "bias": "Cautious", "view": "The resources are there, but the debt situation and lack of foreign exchange are major red flags for new ventures." },
+    { "source": "Environmental Activist", "bias": "Critical", "view": "Rapid dam construction on the Mekong threatens the river's ecosystem and the livelihoods of millions of downstream residents." }
+  ],
+  "historicalContext": {
+    "summary": "Laos was a French protectorate and later a kingdom before becoming a battleground during the Vietnam War (Secret War). The communist Pathet Lao took power in 1975, establishing the Lao PDR. Since the late 1980s, the country has cautiously opened its economy while maintaining a one-party system.",
+    "keyEvents": [
+      { "year": 1953, "event": "Independence from France as the Kingdom of Laos." },
+      { "year": 1964, "event": "Heavy U.S. bombing begins during the 'Secret War' against North Vietnamese supply lines." },
+      { "year": 1975, "event": "Communist Pathet Lao take power; abolition of the monarchy." },
+      { "year": 1986, "event": "Introduction of 'New Economic Mechanism' (Chintanakan Mai) for market reforms." },
+      { "year": 1997, "event": "Laos joins ASEAN." },
+      { "year": 2013, "event": "Laos joins the World Trade Organization (WTO)." },
+      { "year": 2021, "event": "Inauguration of the $6 billion Laos-China Railway." },
+      { "year": 2024, "event": "Laos serves as the ASEAN Chair under the theme 'Connectivity and Resilience'." }
+    ]
+  },
+  "investmentNotes": {
+    "strengths": ["Abundant hydropower potential ('Battery of Southeast Asia')", "Rich mineral resources (Copper, Gold, Bauxite)", "Improved regional connectivity via the Laos-China Railway", "Political stability and safe environment"],
+    "risks": ["Unsustainable public and publicly guaranteed debt", "High inflation and foreign exchange shortages", "Small domestic market and landlocked geography", "Weak regulatory framework and transparency"],
+    "sectors": ["Renewable Energy (Hydropower, Solar)", "Mining & Quarrying", "Logistics & Dry Ports", "Eco-tourism"]
+  },
+  "sources": [
+    { "name": "Ministry of Planning and Investment (MPI)", "url": "http://www.investlaos.gov.la/", "type": "investment" },
+    { "name": "Bank of the Lao PDR", "url": "https://www.bol.gov.la/", "type": "economic" },
+    { "name": "World Bank - Lao PDR Economic Monitor", "url": "https://www.worldbank.org/en/country/lao", "type": "economic" }
+  ]
+}

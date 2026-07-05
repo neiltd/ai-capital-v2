@@ -1,0 +1,34 @@
+[
+  {
+    "countryId": "ARE",
+    "year": 2023,
+    "electricityConsumptionTWh": 158.0,
+    "electricityProductionTWh": 165.0,
+    "electricityMix": {
+      "gas": 71.1,
+      "nuclear": 19.7,
+      "solar": 8.6,
+      "oil": 0.5,
+      "other": 0.1
+    },
+    "renewableSharePct": 8.6,
+    "waterStressScore": 5.0,
+    "waterWithdrawalPct": 1510,
+    "foodSecurityScore": 75.2,
+    "aiAdoptionScore": 42.0,
+    "internetPenetration": 99.0,
+    "mobilePenetration": 200.9,
+    "attribution": {
+      "sources": [
+        { "name": "IEA World Energy Balances 2023", "url": "https://www.iea.org/data-and-statistics/data-product/world-energy-balances", "accessedAt": "2024-05-15" },
+        { "name": "WRI Aqueduct 4.0", "url": "https://www.wri.org/aqueduct", "accessedAt": "2024-05-15" },
+        { "name": "Ember Global Electricity Review 2024", "url": "https://ember-climate.org/countries-and-regions/countries/united-arab-emirates/", "accessedAt": "2024-05-15" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 3,
+        "lastVerified": "2024-05-15"
+      }
+    }
+  }
+]

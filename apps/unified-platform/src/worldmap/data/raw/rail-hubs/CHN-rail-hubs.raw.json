@@ -1,0 +1,219 @@
+[
+  {
+    "id": "RAIL-CHN-XIAN-INTL-PORT",
+    "name": "Xi'an International Port Station",
+    "countryId": "CHN",
+    "city": "Xi'an",
+    "coordinates": [109.074, 34.397],
+    "type": "freight",
+    "dailyPassengers": null,
+    "annualFreightTonnes": 66000000,
+    "connectedCountries": ["KAZ", "RUS", "DEU", "POL", "UZB"],
+    "gaugeType": "standard",
+    "lineCount": 54,
+    "strategicImportance": "high",
+    "isPartOfBRI": true,
+    "geopoliticalNotes": "Primary assembly center for China-Europe Railway Express (CRE). Handles the highest volume of BRI freight trains in China.",
+    "notes": "Capacity expanded in 2024 to handle over 6,000 trains annually.",
+    "attribution": {
+      "sources": [
+        { "name": "China State Railway Group", "url": "http://www.railway.gov.cn", "accessedAt": "2026-05-10" },
+        { "name": "SCIO China", "url": "http://www.scio.gov.cn", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 2,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  },
+  {
+    "id": "RAIL-CHN-ZHENGZHOU-NORTH",
+    "name": "Zhengzhou North Railway Station",
+    "countryId": "CHN",
+    "city": "Zhengzhou",
+    "coordinates": [113.626, 34.821],
+    "type": "freight",
+    "dailyPassengers": null,
+    "annualFreightTonnes": 45000000,
+    "connectedCountries": ["KAZ", "RUS", "DEU", "VNM"],
+    "gaugeType": "standard",
+    "lineCount": 90,
+    "strategicImportance": "high",
+    "isPartOfBRI": true,
+    "geopoliticalNotes": "Largest freight marshaling yard in Asia. Key logistics crossroads for North-South and East-West corridors.",
+    "notes": "Heart of China's 'Cross-shaped' rail network.",
+    "attribution": {
+      "sources": [
+        { "name": "International Union of Railways", "url": "https://uic.org", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 1,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  },
+  {
+    "id": "RAIL-CHN-ALASHANKOU-BORDER",
+    "name": "Alashankou Railway Station",
+    "countryId": "CHN",
+    "city": "Alashankou",
+    "coordinates": [82.564, 45.171],
+    "type": "border_crossing",
+    "dailyPassengers": null,
+    "annualFreightTonnes": 26000000,
+    "connectedCountries": ["KAZ"],
+    "gaugeType": "mixed",
+    "lineCount": 12,
+    "strategicImportance": "high",
+    "isPartOfBRI": true,
+    "geopoliticalNotes": "Primary land port for BRI trade with Central Asia and Europe. Critical break-of-gauge point (standard to broad).",
+    "notes": "Handles over 8,000 trains annually as of 2025.",
+    "attribution": {
+      "sources": [
+        { "name": "China Daily", "url": "https://www.chinadaily.com.cn", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 1,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  },
+  {
+    "id": "RAIL-CHN-HORGOS-BORDER",
+    "name": "Khorgas Railway Station",
+    "countryId": "CHN",
+    "city": "Khorgas",
+    "coordinates": [80.407, 44.205],
+    "type": "border_crossing",
+    "dailyPassengers": null,
+    "annualFreightTonnes": 10000000,
+    "connectedCountries": ["KAZ"],
+    "gaugeType": "mixed",
+    "lineCount": 8,
+    "strategicImportance": "high",
+    "isPartOfBRI": true,
+    "geopoliticalNotes": "Strategic gateway for the southern BRI corridor. Integral to the Khorgas-Eastern Gate SEZ.",
+    "notes": "Fastest growing border crossing for CRE trains.",
+    "attribution": {
+      "sources": [
+        { "name": "Xinhua News", "url": "http://www.xinhuanet.com", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 1,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  },
+  {
+    "id": "RAIL-CHN-MANZHOULI-BORDER",
+    "name": "Manzhouli Railway Station",
+    "countryId": "CHN",
+    "city": "Manzhouli",
+    "coordinates": [117.435, 49.589],
+    "type": "border_crossing",
+    "dailyPassengers": null,
+    "annualFreightTonnes": 20000000,
+    "connectedCountries": ["RUS"],
+    "gaugeType": "mixed",
+    "lineCount": 15,
+    "strategicImportance": "high",
+    "isPartOfBRI": true,
+    "geopoliticalNotes": "Largest land port on the China-Russia border. Handles timber, coal, and CRE freight.",
+    "notes": "Key entry point for the Trans-Siberian rail connection.",
+    "attribution": {
+      "sources": [
+        { "name": "Railway Gazette", "url": "https://www.railwaygazette.com", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 1,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  },
+  {
+    "id": "RAIL-CHN-CHENGDU-INTL-PORT",
+    "name": "Chengdu International Railway Port",
+    "countryId": "CHN",
+    "city": "Chengdu",
+    "coordinates": [104.254, 30.887],
+    "type": "freight",
+    "dailyPassengers": null,
+    "annualFreightTonnes": 30000000,
+    "connectedCountries": ["KAZ", "RUS", "POL", "DEU", "LAO"],
+    "gaugeType": "standard",
+    "lineCount": 22,
+    "strategicImportance": "high",
+    "isPartOfBRI": true,
+    "geopoliticalNotes": "Core hub for Western China's BRI outreach and the New Land-Sea Trade Corridor.",
+    "notes": "Major node for electronics and automotive exports.",
+    "attribution": {
+      "sources": [
+        { "name": "Chengdu International Railway Port", "url": "http://www.cdrailwayport.com", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "medium",
+        "sourceCount": 1,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  },
+  {
+    "id": "RAIL-CHN-ERENHOT-BORDER",
+    "name": "Erenhot Railway Station",
+    "countryId": "CHN",
+    "city": "Erenhot",
+    "coordinates": [111.977, 43.649],
+    "type": "border_crossing",
+    "dailyPassengers": null,
+    "annualFreightTonnes": 15000000,
+    "connectedCountries": ["MNG", "RUS"],
+    "gaugeType": "mixed",
+    "lineCount": 10,
+    "strategicImportance": "medium",
+    "isPartOfBRI": true,
+    "geopoliticalNotes": "Primary node for the China-Mongolia-Russia Economic Corridor.",
+    "notes": "Main route for Mongolia's transit trade.",
+    "attribution": {
+      "sources": [
+        { "name": "Ministry of Transport PRC", "url": "http://www.mot.gov.cn", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 1,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  },
+  {
+    "id": "RAIL-CHN-CHONGQING-TUANJIECUN",
+    "name": "Chongqing Tuanjiecun Freight Station",
+    "countryId": "CHN",
+    "city": "Chongqing",
+    "coordinates": [106.368, 29.658],
+    "type": "freight",
+    "dailyPassengers": null,
+    "annualFreightTonnes": 25180000,
+    "connectedCountries": ["KAZ", "DEU", "VNM", "LAO"],
+    "gaugeType": "standard",
+    "lineCount": 18,
+    "strategicImportance": "high",
+    "isPartOfBRI": true,
+    "geopoliticalNotes": "Birthplace of the China-Europe Railway Express (YuXinOu line). Linking the Silk Road Economic Belt with the 21st Century Maritime Silk Road via the Yangtze.",
+    "notes": "Critical intermodal hub.",
+    "attribution": {
+      "sources": [
+        { "name": "Chongqing Port & Logistics Office", "url": "http://llb.cq.gov.cn", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 1,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  }
+]

@@ -1,0 +1,37 @@
+d9a05ff 2026-05-27 14:42:54 -0700 chore: commit metrics history, docs, and sources config
+38679b1 2026-05-27 14:36:48 -0700 fix: correct twitterapi.io response shape, add 429 retry, disable RSS-duplicate accounts
+c84d221 2026-05-27 14:14:41 -0700 fix: add column header to Twitter results table
+22f3ca3 2026-05-27 14:13:01 -0700 feat: wire Twitter collector into npm run collect
+6281ec3 2026-05-27 14:09:53 -0700 fix: null-safety and api key guard in twitter-collector
+641227b 2026-05-27 14:05:49 -0700 feat: implement twitter-collector module (twitterapi.io)
+c0b4c2a 2026-05-27 13:59:34 -0700 feat: expand twitter accounts to 57 (added media, crypto, auto/pharma executives)
+1ba2902 2026-05-27 13:55:29 -0700 feat: add twitter paths and accounts list (22 accounts)
+a8789ad 2026-05-27 13:46:22 -0700 docs: add Twitter/X integration design spec
+b2bd643 2026-05-22 01:57:05 -0700 fix: address code review findings (JSON.parse guards, gitignore, validation, NaN guard)
+65163f9 2026-05-22 00:56:47 -0700 feat: include human intel events + analysis + country briefs in v2 WorldMap exports
+a20a7a9 2026-05-22 00:52:32 -0700 feat: add Submit, Draft, and Briefs views for admin panel
+a7ba99c 2026-05-22 00:49:17 -0700 feat: scaffold React client (Vite, tsconfig, styles, App)
+e1ca6b4 2026-05-22 00:46:58 -0700 feat: add Express admin API server
+aed92f9 2026-05-22 00:31:50 -0700 feat: add brief-synthesizer (Claude country rolling brief)
+06cebd3 2026-05-22 00:23:20 -0700 feat: add Claude analyser with political science / social science / history framework
+e804b9b 2026-05-22 00:19:58 -0700 feat: add analysis-store CRUD for EventAnalysis and CountryBrief
+05463ee 2026-05-22 00:18:04 -0700 feat: add shared admin types (EventAnalysis, CountryBrief, BlocPerspective)
+f6bca07 2026-05-22 00:03:15 -0700 feat: add admin and analysis paths to PATHS constant
+042e028 2026-05-22 00:01:48 -0700 feat: add express, react, vite deps for admin panel
+5d50e00 2026-05-21 23:51:22 -0700 docs: add admin panel implementation plan (12 tasks)
+e06e0e3 2026-05-21 23:30:40 -0700 docs: add admin panel + analytical intelligence design spec
+7b104f8 2026-05-21 15:35:12 -0700 feat: add human-intel and economist Claude Code skills
+a5befe8 2026-05-21 15:30:04 -0700 feat: add human-intel inbox processor script
+189f3a6 2026-05-21 15:25:24 -0700 feat: merge pending human-intel records into export files
+1bbb9f3 2026-05-21 15:23:06 -0700 feat: add economist module (quick analysis + scenario drilling)
+8f71045 2026-05-21 15:21:22 -0700 feat: add Claude extractor for human intel submissions
+3460dfa 2026-05-21 15:19:15 -0700 feat: add HumanIntelRecord type and store CRUD
+acc85df 2026-05-21 15:17:23 -0700 feat: add human intel paths to PATHS constant
+52b4159 2026-05-14 21:45:51 -0700 feat: cross-domain observation layer — geopolitical ↔ commodity linkage
+0ccc45c 2026-05-14 19:57:12 -0700 feat: Phase 1 commodity time-series store and export pipeline
+b818c26 2026-05-14 18:38:09 -0700 docs: canonical historical commodity time-series architecture
+80d1eae 2026-05-14 14:59:29 -0700 feat: export contract layer — internal snake_case → external camelCase
+192df82 2026-05-14 14:23:05 -0700 feat: expand oil-events.json to 38-event frontend integration sample
+ed0c1fd 2026-05-14 14:12:44 -0700 feat: geocoordinate enrichment + oil sample export package
+6f728e0 2026-05-14 11:38:19 -0700 chore: add Day 2 calibration metrics (2026-05-14)
+8313b9e 2026-05-14 00:47:24 -0700 feat: calibrated intelligence pipeline — stable milestone v1

@@ -1,0 +1,68 @@
+{
+  "id": "IRN",
+  "iso2": "IR",
+  "name": "Iran",
+  "region": "Asia",
+  "subregion": "Southern Asia",
+  "capital": "Tehran",
+  "lastUpdated": "2026-05-09",
+  "summary": "Iran is a pivotal power in the Middle East, possessing vast energy reserves and a strategic location at the crossroads of Eurasia. Since the 1979 Revolution, it has been governed as a theocratic republic, characterized by a complex dual system of elected and unelected institutions. Its foreign policy is defined by 'revolutionary' principles, opposition to U.S. and Israeli influence, and the cultivation of a 'Resistance Axis' of regional proxies. Economically, Iran has shown significant resilience despite decades of international sanctions, developing a diversified industrial base, though it suffers from high inflation, currency devaluation, and structural inefficiencies. The country faces significant internal pressure for social and political reform, particularly from its young and educated population, alongside ongoing international concerns regarding its nuclear program.",
+  "indicators": {
+    "politicalStability":       { "score": 3, "trend": "declining", "confidence": "high", "note": "Widespread social unrest and generational disconnect from the ruling clerical establishment." },
+    "economicDirection":        { "score": 4, "trend": "stable", "confidence": "medium", "note": "Resilient 'resistance economy' but crippled by sanctions, corruption, and fiscal mismanagement." },
+    "investmentAttractiveness": { "score": 2, "trend": "stable", "confidence": "high", "note": "High potential in energy and minerals, but largely inaccessible to Western capital due to sanctions." },
+    "geopoliticalRisk":         { "score": 8, "trend": "rising", "confidence": "high", "note": "High risk of direct conflict with Israel and the U.S. over nuclear ambitions and regional proxies." },
+    "educationQuality":         { "score": 7, "trend": "stable", "confidence": "high", "note": "Strong emphasis on higher education and STEM, though 'brain drain' remains a critical issue." },
+    "healthcareQuality":        { "score": 6, "trend": "stable", "confidence": "high", "note": "Robust domestic pharmaceutical production and medical expertise, despite supply constraints." },
+    "technologyInvestment":     { "score": 6, "trend": "rising", "confidence": "medium", "note": "Significant advancements in drone technology, missiles, and cyber capabilities." }
+  },
+  "demographics": {
+    "population": 89173000,
+    "medianAge": 32.0,
+    "urbanizationRate": 76,
+    "majorEthnicGroups": ["Persian", "Azeri", "Kurd", "Lur", "Baloch", "Arab"],
+    "religions": [
+      { "name": "Shia Muslim", "percent": 90 },
+      { "name": "Sunni Muslim", "percent": 9 },
+      { "name": "Other (Zoroastrian, Christian, Jewish, Baha'i)", "percent": 1 }
+    ]
+  },
+  "alliances": ["SCO", "BRICS+", "CSTO (Observer Status)", "Axis of Resistance"],
+  "relationships": [
+    { "countryId": "RUS", "countryName": "Russia", "type": "strategic_partner", "sentiment": "positive", "summary": "Deepening military and economic cooperation, particularly in drone technology and bypassing Western sanctions." },
+    { "countryId": "CHN", "countryName": "China", "type": "economic_partner", "sentiment": "positive", "summary": "Critical economic lifeline and primary buyer of Iranian oil through a 25-year strategic agreement." },
+    { "countryId": "USA", "countryName": "United States", "type": "enemy", "sentiment": "negative", "summary": "Decades of hostility centered on the nuclear program, regional influence, and human rights." },
+    { "countryId": "ISR", "countryName": "Israel", "type": "enemy", "sentiment": "negative", "summary": "Existential ideological rivalry characterized by shadow wars and potential for direct military escalation." },
+    { "countryId": "SAU", "countryName": "Saudi Arabia", "type": "competitor", "sentiment": "neutral", "summary": "Fragile restoration of diplomatic ties; competing for regional hegemony and leadership of the Islamic world." }
+  ],
+  "perspectives": [
+    { "source": "Revolutionary Guard Strategist", "bias": "Hardline", "view": "Iran's survival depends on its nuclear deterrent, regional proxy network, and strategic pivot toward the East to defeat U.S. hegemony." },
+    { "source": "Reformist Intellectual", "bias": "Moderate", "view": "Iran's prosperity requires normalization of relations with the world and meaningful internal political and social liberalization." },
+    { "source": "Z-Generation Protester", "bias": "Secular/Anti-establishment", "view": "The current system is an anachronism that denies basic human rights and economic future to the youth." },
+    { "source": "Expatriate Opposition", "bias": "Regime Change", "view": "The Islamic Republic is fundamentally unreformable; only a transition to a secular democracy can save the nation." }
+  ],
+  "historicalContext": {
+    "summary": "One of the world's oldest continuous civilizations, Iran's modern history is defined by the 1979 Revolution that overthrew the Pahlavi monarchy and established the Islamic Republic, leading to a major shift in regional and global geopolitics.",
+    "keyEvents": [
+      { "year": 1953, "event": "CIA-backed coup overthrows Prime Minister Mossadegh." },
+      { "year": 1979, "event": "Islamic Revolution; Shah flees and Ayatollah Khomeini returns." },
+      { "year": 1980, "event": "Outbreak of the 8-year Iran-Iraq War." },
+      { "year": 1989, "event": "Death of Khomeini; Ali Khamenei becomes Supreme Leader." },
+      { "year": 2015, "event": "Signing of the JCPOA nuclear deal with world powers." },
+      { "year": 2018, "event": "U.S. withdrawal from JCPOA and imposition of 'maximum pressure' sanctions." },
+      { "year": 2020, "event": "Assassination of General Qasem Soleimani." },
+      { "year": 2022, "event": "Outbreak of 'Woman, Life, Freedom' protests following death of Mahsa Amini." },
+      { "year": 2023, "event": "Joins the Shanghai Cooperation Organization (SCO) and invited to BRICS+." }
+    ]
+  },
+  "investmentNotes": {
+    "strengths": ["World's second-largest gas and fourth-largest oil reserves", "Strong domestic manufacturing and engineering base", "Highly educated and large youth population", "Debt-free economy relative to peers"],
+    "risks": ["Severe international sanctions and banking isolation", "High political and regime-stability risk", "Systemic corruption and lack of rule of law", "Environmental challenges (water scarcity)"],
+    "sectors": ["Energy & Petrochemicals", "Mining (Copper, Iron Ore)", "Pharmaceuticals", "Information Technology (Domestic Ecosystem)"]
+  },
+  "sources": [
+    { "name": "Statistical Centre of Iran", "url": "https://www.amar.org.ir/english", "type": "economic" },
+    { "name": "Central Bank of Iran", "url": "https://www.cbi.ir/default_en.aspx", "type": "economic" },
+    { "name": "International Atomic Energy Agency (IAEA)", "url": "https://www.iaea.org/countries/iran", "type": "security" }
+  ]
+}

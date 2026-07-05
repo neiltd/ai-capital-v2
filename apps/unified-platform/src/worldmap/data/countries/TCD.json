@@ -1,0 +1,65 @@
+{
+  "id": "TCD",
+  "iso2": "TD",
+  "name": "Chad",
+  "region": "Africa",
+  "subregion": "Middle Africa",
+  "capital": "N'Djamena",
+  "lastUpdated": "2026-05-09",
+  "summary": "Chad is a large, landlocked country in north-central Africa, strategically positioned but facing immense challenges. It is characterized by its arid northern landscapes, central Sahelian belt, and more fertile southern regions. Chad is a significant regional military power, often intervening in neighboring conflicts. The country has undergone a complex political transition following the death of longtime leader Idriss Déby in 2021. The economy is heavily dependent on oil exports, making it vulnerable to global price fluctuations, while the majority of the population relies on subsistence farming and herding.",
+  "indicators": {
+    "politicalStability":       { "score": 3, "trend": "stable", "confidence": "medium", "note": "Transitioned from military council to elected government under Mahamat Déby; internal opposition exists but is tightly managed." },
+    "economicDirection":        { "score": 3, "trend": "stable", "confidence": "medium", "note": "Oil-dependent economy faces structural challenges; high debt levels and limited diversification beyond agriculture." },
+    "investmentAttractiveness": { "score": 2, "trend": "stable", "confidence": "medium", "note": "Investment is concentrated in the oil sector; broader business environment is hampered by bureaucracy and high costs." },
+    "geopoliticalRisk":         { "score": 8, "trend": "stable", "confidence": "high", "note": "Surrounded by unstable neighbors (Sudan, Libya, CAR, Niger); risk of spillover from regional conflicts is persistent." },
+    "educationQuality":         { "score": 2, "trend": "stable", "confidence": "high", "note": "Low literacy rates; significant disparities between urban and rural areas; limited higher education capacity." },
+    "healthcareQuality":        { "score": 2, "trend": "stable", "confidence": "high", "note": "Underfunded health system; high prevalence of malaria and other infectious diseases; reliant on international aid." },
+    "technologyInvestment":     { "score": 2, "trend": "improving", "confidence": "medium", "note": "Internet access is growing from a low base; some recent investments in fiber optic infrastructure connecting to neighbors." }
+  },
+  "demographics": {
+    "population": 18500000,
+    "medianAge": 16.1,
+    "urbanizationRate": 24,
+    "majorEthnicGroups": ["Sara", "Arabs", "Mayo-Kebbi", "Kanem-Bornu"],
+    "religions": [
+      { "name": "Muslim", "percent": 52.1 },
+      { "name": "Protestant", "percent": 23.9 },
+      { "name": "Roman Catholic", "percent": 20.0 }
+    ]
+  },
+  "alliances": ["AU", "G5 Sahel", "CEN-SAD", "ECCAS"],
+  "relationships": [
+    { "countryId": "FRA", "countryName": "France", "type": "strategic_partner", "sentiment": "positive", "summary": "Maintains a strong military partnership; Chad hosts a major French base and is a key ally in regional counter-terrorism." },
+    { "countryId": "SDN", "countryName": "Sudan", "type": "neighbor", "sentiment": "negative", "summary": "Historically tense relations often exacerbated by cross-border rebel activities and the ongoing conflict in Darfur." },
+    { "countryId": "USA", "countryName": "United States", "type": "security_partner", "sentiment": "neutral", "summary": "Cooperation focused on security and counter-terrorism in the Sahel; provide significant humanitarian assistance." },
+    { "countryId": "CHN", "countryName": "China", "type": "economic_partner", "sentiment": "positive", "summary": "Significant investor in the oil sector and infrastructure projects; providing loans and technical assistance." }
+  ],
+  "perspectives": [
+    { "source": "Government Official", "bias": "Authoritarian", "view": "We are the anchor of stability in a troubled region; our military is essential for continental security." },
+    { "source": "Chadian Student", "bias": "Hopeful", "view": "We want more opportunities and a real say in our future, beyond just oil and military power." },
+    { "source": "Sudanese Refugee", "bias": "Victim", "view": "Chad has given us safety, but the conditions in the camps are very difficult as more people arrive." },
+    { "source": "Oil Industry Analyst", "bias": "Neutral", "view": "Chad's economic future depends on managing oil revenues better and diversifying into agriculture and livestock." }
+  ],
+  "historicalContext": {
+    "summary": "Chad gained independence from France in 1960. Its history has been marked by long periods of civil war and conflict with its neighbors, particularly Libya. Idriss Déby took power in 1990 and ruled until his death in 2021 while fighting rebels. His son, Mahamat Déby, then took over, leading a transition that culminated in elections in 2024.",
+    "keyEvents": [
+      { "year": 1960, "event": "Independence from France." },
+      { "year": 1975, "event": "First president Tombalbaye killed in a coup; start of prolonged civil war." },
+      { "year": 1987, "event": "End of the 'Toyota War' with Libya; Chad regains control of the Aouzou Strip." },
+      { "year": 1990, "event": "Idriss Déby seizes power." },
+      { "year": 2003, "event": "Chad begins exporting oil." },
+      { "year": 2021, "event": "Idriss Déby killed; Transitional Military Council takes power." },
+      { "year": 2024, "event": "Mahamat Déby elected president in a vote questioned by the opposition." }
+    ]
+  },
+  "investmentNotes": {
+    "strengths": ["Proven oil reserves and potential for further discovery", "Significant livestock sector with export potential to regional markets", "Strategic military and diplomatic importance in Central Africa", "Large areas of underutilized arable land"],
+    "risks": ["Extreme regional security threats from multiple borders", "High levels of poverty and social inequality", "Weak governance and lack of transparency in the extractive sector", "Severe climate change impacts (desertification, shrinking Lake Chad)"],
+    "sectors": ["Oil and Gas", "Agriculture and Livestock", "Infrastructure and Construction", "Mining (Gold, Natron)"]
+  },
+  "sources": [
+    { "name": "World Bank - Chad Overview", "url": "https://www.worldbank.org/en/country/chad", "type": "economic" },
+    { "name": "IMF - Chad", "url": "https://www.imf.org/en/Countries/TCD", "type": "economic" },
+    { "name": "UN OCHA Chad", "url": "https://www.unocha.org/chad", "type": "humanitarian" }
+  ]
+}

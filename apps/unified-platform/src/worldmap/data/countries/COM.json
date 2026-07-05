@@ -1,0 +1,62 @@
+{
+  "id": "COM",
+  "iso2": "KM",
+  "name": "Comoros",
+  "region": "Africa",
+  "subregion": "Eastern Africa",
+  "capital": "Moroni",
+  "lastUpdated": "2026-05-15",
+  "summary": "Comoros is an archipelago nation in the Indian Ocean currently focused on infrastructure modernization and economic reform under the consolidated leadership of President Azali Assoumani. Following his controversial re-election in 2024 and subsequent legislative wins in 2025, the political landscape is stable but faces underlying social tension and accusations of authoritarianism. The economy is heavily dependent on remittances and agricultural exports (vanilla, cloves, ylang-ylang), with significant donor-led efforts to upgrade healthcare and transport facilities.",
+  "indicators": {
+    "politicalStability":       { "score": 5, "trend": "stable", "confidence": "high", "note": "Power is consolidated under President Assoumani; opposition is fragmented, though social unrest remains a risk due to cost-of-living pressures." },
+    "economicDirection":        { "score": 4, "trend": "rising", "confidence": "high", "note": "Growth is accelerating due to public investment and IMF-supported reforms; inflation has stabilized following 2024 shocks." },
+    "investmentAttractiveness": { "score": 3, "trend": "stable", "confidence": "medium", "note": "Focus on infrastructure and tourism; limited by high debt distress risk and bureaucratic hurdles." },
+    "geopoliticalRisk":         { "score": 4, "trend": "stable", "confidence": "high", "note": "Low risk of external conflict; primary focus is on managing relations with France regarding Mayotte and regional maritime security." },
+    "educationQuality":         { "score": 4, "trend": "stable", "confidence": "medium", "note": "Improving access but challenges with quality and high youth unemployment persist." },
+    "healthcareQuality":        { "score": 3, "trend": "rising", "confidence": "high", "note": "Significant upgrades underway with the El-Maarouf Hospital project; strained by the 2024 cholera outbreak." },
+    "technologyInvestment":     { "score": 3, "trend": "stable", "confidence": "medium", "note": "Limited to basic telecommunications; some interest in digital financial services for remittance management." }
+  },
+  "demographics": {
+    "population": 900000,
+    "medianAge": 21.0,
+    "urbanizationRate": 30,
+    "majorEthnicGroups": ["Antalote", "Cafre", "Makoa", "Oimatsaha", "Sakalava"],
+    "religions": [
+      { "name": "Sunni Muslim", "percent": 98.0 },
+      { "name": "Roman Catholic", "percent": 2.0 }
+    ]
+  },
+  "alliances": ["African Union", "Arab League", "Indian Ocean Commission (IOC)", "COMESA", "United Nations"],
+  "relationships": [
+    { "countryId": "FRA", "countryName": "France", "type": "strategic_partner", "sentiment": "neutral", "summary": "Main donor and trade partner; relationship is complicated by the dispute over the status of Mayotte and migration flows." },
+    { "countryId": "ARE", "countryName": "United Arab Emirates", "type": "economic_partner", "sentiment": "positive", "summary": "Increasingly important partner for infrastructure investment, particularly in tourism and hospitality sectors." },
+    { "countryId": "SAU", "countryName": "Saudi Arabia", "type": "economic_partner", "sentiment": "positive", "summary": "Significant provider of development aid and support for religious and educational institutions." },
+    { "countryId": "CHN", "countryName": "China", "type": "economic_partner", "sentiment": "positive", "summary": "Major partner for large-scale infrastructure projects, including government buildings and sports facilities." }
+  ],
+  "perspectives": [
+    { "source": "Government Official", "bias": "Optimistic", "view": "Our 'Emerging Comoros 2030' plan is transforming the nation through new hospitals, hotels, and ports." },
+    { "source": "Opposition Activist", "bias": "Critical", "view": "Stability is maintained through the suppression of dissent. The people are struggling while the elite consolidate power." },
+    { "source": "Small-scale Farmer", "bias": "Pragmatic", "view": "Prices for vanilla and cloves are volatile. We need better support to process our crops here instead of just exporting raw materials." },
+    { "source": "Remittance Receiver", "bias": "Dependent", "view": "Without the money from our family in France, we could not survive the rising cost of rice and fuel." }
+  ],
+  "historicalContext": {
+    "summary": "Comoros gained independence from France in 1975, except for Mayotte, which chose to remain French. The nation's history has been marked by numerous coups and political instability until the 2001 constitution established a rotating presidency among the three main islands. President Azali Assoumani, who first took power in a 1999 coup, has dominated politics since 2016.",
+    "keyEvents": [
+      { "year": 1975, "event": "Independence from France." },
+      { "year": 2001, "event": "Fomboni Agreement establishes a new constitution and rotating presidency." },
+      { "year": 2018, "event": "Constitutional referendum allows the president to run for consecutive terms." },
+      { "year": 2024, "event": "President Azali Assoumani re-elected in the first round amid opposition protests; cholera outbreak strains health system." },
+      { "year": 2025, "event": "Legislative elections further consolidate the ruling party's power." }
+    ]
+  },
+  "investmentNotes": {
+    "strengths": ["Strategic location in the Mozambique Channel", "Untapped potential in high-end eco-tourism and fisheries", "Strong support from multilateral development banks for infrastructure", "Stable, currency-pegged economy (Comorian Franc to Euro via France)"],
+    "risks": ["High risk of external debt distress", "Limited domestic market and low private sector development", "Vulnerability to natural disasters (volcanic activity, cyclones)", "High dependence on volatile commodity exports and remittances"],
+    "sectors": ["Infrastructure (Energy/Transport)", "Agriculture & Agro-processing", "Tourism & Hospitality", "Maritime Services"]
+  },
+  "sources": [
+    { "name": "Central Bank of Comoros", "url": "https://www.banque-comores.km/", "type": "economic" },
+    { "name": "World Bank - Comoros Country Profile", "url": "https://www.worldbank.org/en/country/comoros", "type": "economic" },
+    { "name": "IMF - Comoros Data", "url": "https://www.imf.org/en/Countries/COM", "type": "economic" }
+  ]
+}

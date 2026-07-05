@@ -1,0 +1,65 @@
+{
+  "id": "GRC",
+  "iso2": "GR",
+  "name": "Greece",
+  "region": "Europe",
+  "subregion": "Southern Europe",
+  "capital": "Athens",
+  "lastUpdated": "2026-05-09",
+  "summary": "Greece has emerged as one of the Eurozone's growth leaders, successfully shedding its image of fiscal instability. The country is leveraging massive EU recovery funds and record tourism revenues to modernize its infrastructure and transition into a regional energy hub. Despite this progress, the administration faces challenges related to labor shortages and the high cost of living, while navigating a complex security environment in the Eastern Mediterranean.",
+  "indicators": {
+    "politicalStability":       { "score": 7, "score_description": "Stable government with a clear mandate for modernization.", "trend": "stable", "confidence": "high", "note": "The New Democracy administration maintains a solid majority, focusing on economic reforms and institutional strengthening." },
+    "economicDirection":        { "score": 8, "score_description": "Strong growth driven by investment and tourism.", "trend": "improving", "confidence": "high", "note": "Greece is consistently outperforming the Eurozone average, with public debt on a steep downward trajectory." },
+    "investmentAttractiveness": { "score": 7, "score_description": "Improving investor confidence following return to investment grade.", "trend": "rising", "confidence": "high", "note": "The restoration of investment-grade status in 2024 has opened the door to significant institutional capital." },
+    "geopoliticalRisk":         { "score": 5, "score_description": "Moderate risk focused on Eastern Mediterranean tensions.", "trend": "stable", "confidence": "high", "note": "While relations with Turkey have entered a period of pragmatic calm, the broader region remains volatile." },
+    "educationQuality":         { "score": 7, "score_description": "Good standards with a focus on higher education and research.", "trend": "stable", "confidence": "high", "note": "Greece produces a high number of university graduates, though it faces challenges with the 'brain drain' of skilled professionals." },
+    "healthcareQuality":        { "score": 7, "score_description": "Stable system with significant post-pandemic modernization.", "trend": "stable", "confidence": "high", "note": "Public healthcare is undergoing digital transformation, though rural access and specialized care remain points of focus." },
+    "technologyInvestment":     { "score": 7, "score_description": "Growing focus on digital governance and renewable energy.", "trend": "rising", "confidence": "high", "note": "Greece is rapidly expanding its solar and wind capacity, aiming to become a green energy exporter to Central Europe." }
+  },
+  "demographics": {
+    "population": 10300000,
+    "medianAge": 45.6,
+    "urbanizationRate": 80,
+    "majorEthnicGroups": ["Greek", "Albanian", "Egyptian", "Georgian", "Pakistani"],
+    "religions": [
+      { "name": "Greek Orthodox", "percent": 90.0 },
+      { "name": "Muslim", "percent": 2.0 },
+      { "name": "None/Unaffiliated", "percent": 4.0 },
+      { "name": "Other", "percent": 4.0 }
+    ]
+  },
+  "alliances": ["EU", "NATO", "OECD", "Schengen Area"],
+  "relationships": [
+    { "countryId": "CYP", "countryName": "Cyprus", "type": "ally", "sentiment": "positive", "summary": "Deepest strategic and cultural partner; joint focus on Eastern Mediterranean security and energy." },
+    { "countryId": "TUR", "countryName": "Turkey", "type": "rival", "sentiment": "neutral", "summary": "Relations have stabilized into a 'pragmatic calm' focused on trade and managing migration." },
+    { "countryId": "USA", "countryName": "United States", "type": "treaty_ally", "sentiment": "positive", "summary": "Critical security partner; growing U.S. military presence in Souda Bay and Alexandroupoli." },
+    { "countryId": "EGY", "countryName": "Egypt", "type": "ally", "sentiment": "positive", "summary": "Strategic partner in energy and maritime delimitation in the Mediterranean." },
+    { "countryId": "FRA", "countryName": "France", "type": "ally", "sentiment": "positive", "summary": "Key European security ally with a formal mutual defense agreement." }
+  ],
+  "perspectives": [
+    { "source": "Athens Financial Analyst", "bias": "Pro-Reform", "view": "Greece's economic turnaround is a structural reality, not just a cyclical boom; the return to investment grade was a watershed moment." },
+    { "source": "Tourism Sector Professional", "bias": "Pro-Growth", "view": "Tourism is our engine, but we must pivot towards higher-value, sustainable models to protect our natural and cultural assets." },
+    { "source": "Foreign Policy Expert", "bias": "Realist", "view": "Greece is successfully positioning itself as an indispensable energy and security bridge between Europe, the Middle East, and Africa." }
+  ],
+  "historicalContext": {
+    "summary": "Greece is the birthplace of Western democracy and philosophy, with a modern history defined by its 1821 independence from the Ottoman Empire. Following a turbulent 20th century marked by wars and a military junta, Greece joined the EU in 1981. After surviving a severe debt crisis in the 2010s, the nation has undergone a remarkable economic recovery and institutional modernization in the mid-2020s.",
+    "keyEvents": [
+      { "year": 1821, "event": "Outbreak of the Greek War of Independence against the Ottoman Empire." },
+      { "year": 1981, "event": "Greece becomes the tenth member of the European Economic Community (EEC)." },
+      { "year": 2001, "event": "Greece adopts the Euro as its official currency." },
+      { "year": 2010, "event": "The first of three international bailouts is signed to address the sovereign debt crisis." },
+      { "year": 2024, "event": "Greece officially returns to investment-grade status, marking the end of the crisis era." },
+      { "year": 2026, "event": "Greece reaches record-low unemployment levels and solidifies its role as a regional LNG hub." }
+    ]
+  },
+  "investmentNotes": {
+    "strengths": ["Strategic location as an energy and logistics hub", "Rapidly improving fiscal health and investment-grade status", "Global leadership in shipping and maritime services", "Massive untapped potential in renewable energy"],
+    "risks": ["Vulnerability to regional geopolitical instability", "Labor shortages in tourism and construction", "High sensitivity to global economic shifts due to reliance on tourism"],
+    "sectors": ["Shipping & Maritime", "Renewable Energy (Solar/Wind/Hydrogen)", "Tourism & Luxury Real Estate", "Logistics & Infrastructure", "Information Technology"]
+  },
+  "sources": [
+    { "name": "Hellenic Statistical Authority (ELSTAT)", "url": "https://www.statistics.gr/en/home/", "type": "economic" },
+    { "name": "Bank of Greece", "url": "https://www.bankofgreece.gr/en", "type": "economic" },
+    { "name": "Enterprise Greece", "url": "https://www.enterprisegreece.gov.gr/en/", "type": "investment" }
+  ]
+}

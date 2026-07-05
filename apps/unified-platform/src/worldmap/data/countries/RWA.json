@@ -1,0 +1,69 @@
+{
+  "id": "RWA",
+  "iso2": "RW",
+  "name": "Rwanda",
+  "region": "Africa",
+  "subregion": "Eastern Africa",
+  "capital": "Kigali",
+  "lastUpdated": "2026-05-15",
+  "summary": "Rwanda is a 'developmental autocracy' known for its disciplined governance, exceptional ease of doing business, and rapid transformation into a service and technology hub. Under President Paul Kagame, the country has leveraged its military effectiveness to gain outsized diplomatic influence across Africa. However, its involvement in the conflict in the eastern Democratic Republic of Congo has led to diplomatic isolation and aid suspensions from Western partners. Internally, the high concentration of power around Kagame creates a significant 'key-man risk' for long-term institutional stability.",
+  "indicators": {
+    "politicalStability":       { "score": 8, "trend": "stable", "confidence": "high", "note": "High physical security and top-down order; limited political pluralism under RPF dominance." },
+    "economicDirection":        { "score": 8, "trend": "stable", "confidence": "high", "note": "Consistent 7%+ growth; successful shift toward a service-led 'Start-Up Nation' economy." },
+    "investmentAttractiveness": { "score": 9, "trend": "stable", "confidence": "high", "note": "Top-tier business environment with low corruption and fast registration processes." },
+    "geopoliticalRisk":         { "score": 3, "trend": "declining", "confidence": "high", "note": "Rising international friction and potential for sanctions due to the conflict in eastern DRC." },
+    "educationQuality":         { "score": 6, "trend": "rising", "confidence": "medium", "note": "Aggressive focus on STEM and vocational training to build a knowledge-based economy." },
+    "healthcareQuality":        { "score": 7, "trend": "rising", "confidence": "high", "note": "Regional leader in community health insurance (Mutuelle de Santé) and drone-based delivery." },
+    "technologyInvestment":     { "score": 10, "trend": "rising", "confidence": "high", "note": "Kigali Innovation City: the regional leader in AI, fintech, and digital services." }
+  },
+  "demographics": {
+    "population": 14300000,
+    "medianAge": 19.0,
+    "urbanizationRate": 19,
+    "majorEthnicGroups": ["Hutu", "Tutsi", "Twa"],
+    "religions": [
+      { "name": "Roman Catholic", "percent": 44 },
+      { "name": "Protestant", "percent": 38 },
+      { "name": "Adventist", "percent": 12 },
+      { "name": "Muslim", "percent": 2 },
+      { "name": "Traditional/None", "percent": 4 }
+    ]
+  },
+  "alliances": ["East African Community (EAC)", "Commonwealth", "Organisation internationale de la Francophonie (OIF)", "African Union"],
+  "relationships": [
+    { "countryId": "COD", "countryName": "Democratic Republic of the Congo", "type": "enemy", "sentiment": "negative", "summary": "Direct conflict and proxy war in the eastern DRC; accusations of supporting M23 rebels." },
+    { "countryId": "MOZ", "countryName": "Mozambique", "type": "ally", "sentiment": "positive", "summary": "Strategic security guarantor in Cabo Delgado; military presence for diplomatic leverage." },
+    { "countryId": "USA", "countryName": "United States", "type": "partner", "sentiment": "neutral", "summary": "Tense partnership balanced between security cooperation and human rights criticism." },
+    { "countryId": "BEL", "countryName": "Belgium", "type": "partner", "sentiment": "negative", "summary": "Strained relations following aid suspensions over Rwanda's role in the DRC conflict." },
+    { "countryId": "ISR", "countryName": "Israel", "type": "partner", "sentiment": "positive", "summary": "Deepening ties in technology, security, and migration management." }
+  ],
+  "perspectives": [
+    { "source": "RPF Official", "bias": "Loyalist", "view": "Rwanda's model proves that strong leadership and national discipline are the only paths to development after tragedy." },
+    { "source": "Exiled Opposition Member", "bias": "Dissident", "view": "The development is a mirage built on fear; without true democracy, the system will eventually fracture." },
+    { "source": "International Tech CEO", "bias": "Optimistic", "view": "Kigali is the most efficient city in Africa for business; the government actually delivers on its digital promises." },
+    { "source": "Great Lakes Security Analyst", "bias": "Realist", "view": "Rwanda's military is the most effective in the region, but its interventionist doctrine is creating a cycle of regional isolation." }
+  ],
+  "historicalContext": {
+    "summary": "Rwanda's modern identity is defined by the 1994 Genocide against the Tutsi. Since then, the Rwandan Patriotic Front (RPF) led by Paul Kagame has overseen a miraculous reconstruction, transforming the nation from a failed state into a regional leader in governance and technology.",
+    "keyEvents": [
+      { "year": 1962, "event": "Independence from Belgium; establishment of the Hutu-led republic." },
+      { "year": 1990, "event": "Outbreak of the civil war between the government and the RPF." },
+      { "year": 1994, "event": "Genocide against the Tutsi: Over 800,000 killed in 100 days." },
+      { "year": 1994, "event": "RPF captures Kigali, ending the genocide and establishing the current order." },
+      { "year": 2000, "event": "Paul Kagame becomes President, initiating Vision 2020." },
+      { "year": 2015, "event": "Constitutional amendment allows Kagame to reset his term limits." },
+      { "year": 2024, "event": "Synchronized presidential and parliamentary elections; Kagame wins 99% of the vote." },
+      { "year": 2025, "event": "Escalation of conflict in eastern DRC; M23 captures strategic territory." }
+    ]
+  },
+  "investmentNotes": {
+    "strengths": ["Least corrupt and most efficient business environment in the region", "High physical security and political predictability", "Strategic hub for tech (Kigali Innovation City)", "Leader in green finance and sustainability"],
+    "risks": ["Geopolitical sanctions and aid dependency", "Intense competition for land due to high population density", "Key-man risk regarding presidential succession", "Vulnerability to regional instability (DRC)"],
+    "sectors": ["ICT & Digital Services", "Tourism (MICE and High-end)", "Agro-processing (Value-added)", "Green Finance"]
+  },
+  "sources": [
+    { "name": "Rwanda Development Board", "url": "https://rdb.rw/", "type": "economic" },
+    { "name": "National Bank of Rwanda", "url": "https://www.bnr.rw/", "type": "economic" },
+    { "name": "BTI Transformation Index", "url": "https://bti-project.org/en/reports/country-report/RWA", "type": "political" }
+  ]
+}

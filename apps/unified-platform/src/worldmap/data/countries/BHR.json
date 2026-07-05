@@ -1,0 +1,67 @@
+{
+  "id": "BHR",
+  "iso2": "BH",
+  "name": "Bahrain",
+  "region": "Asia",
+  "subregion": "Western Asia",
+  "capital": "Manama",
+  "lastUpdated": "2025-05-15",
+  "summary": "Bahrain is a small, highly diversified island economy that has successfully positioned itself as a regional hub for financial services, tourism, and ICT. As the first Gulf state to discover oil, it was also the first to aggressively diversify, with the non-oil sector now contributing over 85% of its GDP. Bahrain maintains a close strategic alliance with Saudi Arabia and the United States, hosting the U.S. Navy's 5th Fleet. While facing historical social tensions and fiscal challenges, the government has focused on regional integration, economic modernization, and leveraging its role as a stable, business-friendly gateway to the broader Gulf market.",
+  "indicators": {
+    "politicalStability":       { "score": 6, "trend": "stable", "confidence": "high", "note": "Maintains stability through strong security apparatus and close GCC backing." },
+    "economicDirection":        { "score": 7, "trend": "rising", "confidence": "high", "note": "High level of diversification and successful growth in financial and tech sectors." },
+    "investmentAttractiveness": { "score": 8, "trend": "rising", "confidence": "high", "note": "Competitive tax environment, 100% foreign ownership, and strategic access to the Saudi market." },
+    "geopoliticalRisk":         { "score": 5, "trend": "stable", "confidence": "medium", "note": "Positioned between regional powers; relies on Saudi security umbrella and U.S. naval presence." },
+    "educationQuality":         { "score": 7, "trend": "stable", "confidence": "high", "note": "Well-established education system with a strong focus on technical and financial training." },
+    "healthcareQuality":        { "score": 8, "trend": "rising", "confidence": "high", "note": "High standard of healthcare with a growing private sector and medical tourism focus." },
+    "technologyInvestment":     { "score": 8, "trend": "rising", "confidence": "high", "note": "Strong push into FinTech (Bahrain Fintech Bay) and cloud computing (AWS regional hub)." }
+  },
+  "demographics": {
+    "population": 1590000,
+    "medianAge": 32.9,
+    "urbanizationRate": 89.6,
+    "majorEthnicGroups": ["Bahraini Arab", "South Asian", "Other Arab", "Iranian"],
+    "religions": [
+      { "name": "Muslim", "percent": 70 },
+      { "name": "Christian", "percent": 15 },
+      { "name": "Hindu", "percent": 10 },
+      { "name": "Other", "percent": 5 }
+    ]
+  },
+  "alliances": ["GCC", "Arab League", "OIC", "UN", "MNNA"],
+  "relationships": [
+    { "countryId": "SAU", "countryName": "Saudi Arabia", "type": "ally", "sentiment": "positive", "summary": "The most critical relationship; provides essential economic aid and security support." },
+    { "countryId": "USA", "countryName": "United States", "type": "strategic_partner", "sentiment": "positive", "summary": "Hosts the U.S. 5th Fleet; Major Non-NATO Ally with a recently established U.S. Trade Zone." },
+    { "countryId": "ISR", "countryName": "Israel", "type": "strategic_partner", "sentiment": "neutral", "summary": "Relations normalized via Abraham Accords; economic ties growing despite domestic public sensitivity." },
+    { "countryId": "ARE", "countryName": "United Arab Emirates", "type": "ally", "sentiment": "positive", "summary": "Close regional partner with shared economic and security visions within the GCC." },
+    { "countryId": "CHN", "countryName": "China", "type": "economic_partner", "sentiment": "positive", "summary": "Significant trade partner and investor in manufacturing and infrastructure." }
+  ],
+  "perspectives": [
+    { "source": "Bahraini Banker", "bias": "Optimistic", "view": "We are the region's most established financial center; our regulatory depth and talent pool are unmatched in the Gulf." },
+    { "source": "Regional Security Expert", "bias": "Pragmatic", "view": "Bahrain's security is inextricably linked to the Saudi-U.S. axis, which provides a vital buffer against regional threats." },
+    { "source": "International Human Rights NGO", "bias": "Critical", "view": "The suppression of political dissent and use of advanced surveillance remain significant concerns for the international community." },
+    { "source": "Small Business Owner", "bias": "Cautious", "view": "The business environment is great, but regional competition for talent and the cost of living are rising challenges." }
+  ],
+  "historicalContext": {
+    "summary": "Bahrain has a long history as a center for trade and pearl diving. It was a British protectorate until 1971. Following the 2011 Arab Spring protests, the government implemented reforms while strengthening its security ties with GCC neighbors. It has since focused on becoming a pioneer in the 'new economy,' particularly in the digital and financial sectors.",
+    "keyEvents": [
+      { "year": 1971, "event": "Independence from the United Kingdom." },
+      { "year": 1932, "event": "First discovery of oil on the Arabian side of the Gulf." },
+      { "year": 2002, "event": "Bahrain becomes a kingdom; constitutional reforms introduced." },
+      { "year": 2011, "event": "Pro-democracy protests; GCC forces intervene to restore order." },
+      { "year": 2020, "event": "Signing of the Abraham Accords, normalizing relations with Israel." },
+      { "year": 2024, "event": "Completion of Phase 1 of the U.S. Trade Zone (USTZ) in Manama." },
+      { "year": 2025, "event": "Bahrain elected to a rotating seat on the UN Security Council." }
+    ]
+  },
+  "investmentNotes": {
+    "strengths": ["Zero corporate tax (for most) and no income tax", "Highly skilled and bilingual local workforce", "Strategic proximity to the massive Saudi market", "Leading regional FinTech and digital regulations"],
+    "risks": ["Small domestic market size", "Relatively high public debt levels", "Sensitivity to regional geopolitical shifts", "Intense competition from larger Gulf neighbors"],
+    "sectors": ["Financial Services & FinTech", "ICT & Data Centers", "Tourism & Leisure", "Manufacturing & Logistics"]
+  },
+  "sources": [
+    { "name": "Bahrain Information & eGovernment Authority", "url": "https://www.iga.gov.bh", "type": "economic" },
+    { "name": "Bahrain Economic Development Board (EDB)", "url": "https://www.bahrainedb.com", "type": "economic" },
+    { "name": "Central Bank of Bahrain", "url": "https://www.cbb.gov.bh", "type": "economic" }
+  ]
+}

@@ -1,0 +1,27 @@
+[
+  {
+    "countryId": "JPN",
+    "year": 2022,
+    "overallScore": 79.5,
+    "availability": 81.2,
+    "access": 89.8,
+    "utilization": 77.4,
+    "stability": 66.1,
+    "undernourishedPct": 2.5,
+    "foodImportDependencyPct": 72.4,
+    "cerealYieldKgHa": 6273,
+    "climateVulnerability": "medium",
+    "conflictExposure": "low",
+    "attribution": {
+      "sources": [
+        { "name": "GFSI 2022 — Japan", "url": "https://impact.economist.com/sustainability/project/food-security-index/", "accessedAt": "2025-02-13" },
+        { "name": "FAO FAOSTAT", "url": "https://www.fao.org/faostat/en/", "accessedAt": "2025-02-13" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 2,
+        "lastVerified": "2025-02-13"
+      }
+    }
+  }
+]

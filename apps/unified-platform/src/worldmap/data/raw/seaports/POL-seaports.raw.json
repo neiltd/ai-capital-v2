@@ -1,0 +1,218 @@
+[
+  {
+    "id": "PORT-POL-GDANSK",
+    "name": "Port of Gdańsk",
+    "countryId": "POL",
+    "city": "Gdańsk",
+    "coordinates": [18.667, 54.367],
+    "type": "container",
+    "annualThroughputTEU": 2800000,
+    "annualThroughputTonnes": 80400000,
+    "berthCount": 30,
+    "maxDraftM": 15.0,
+    "strategicImportance": "critical",
+    "riskLevel": "low",
+    "geopoliticalNotes": "Poland's largest port and the second-largest in the Baltic Sea. Critical energy gateway (Naftoport) and major container hub for Central and Eastern Europe.",
+    "notes": "Home to the Baltic Hub (formerly DCT Gdańsk), the largest container terminal in the Baltic.",
+    "attribution": {
+      "sources": [
+        { "name": "Port of Gdańsk Official", "url": "https://www.portgdansk.pl/en/", "accessedAt": "2026-05-10" },
+        { "name": "Wikipedia - Port of Gdańsk", "url": "https://en.wikipedia.org/wiki/Port_of_Gda%C5%84sk", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 2,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  },
+  {
+    "id": "PORT-POL-GDYNIA",
+    "name": "Port of Gdynia",
+    "countryId": "POL",
+    "city": "Gdynia",
+    "coordinates": [18.567, 54.533],
+    "type": "mixed",
+    "annualThroughputTEU": 1000000,
+    "annualThroughputTonnes": 26900000,
+    "berthCount": 24,
+    "maxDraftM": 13.0,
+    "strategicImportance": "critical",
+    "riskLevel": "low",
+    "geopoliticalNotes": "A universal port and Poland's primary gateway for grain exports. Strategic naval base and container terminal.",
+    "notes": "Major investments ongoing to deepen the port to 15.5m to accommodate larger vessels.",
+    "attribution": {
+      "sources": [
+        { "name": "Port of Gdynia Official", "url": "https://www.port.gdynia.pl/en/", "accessedAt": "2026-05-10" },
+        { "name": "UNCTAD", "url": "https://unctad.org/", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 2,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  },
+  {
+    "id": "PORT-POL-SWINOUJSCIE",
+    "name": "Port of Świnoujście",
+    "countryId": "POL",
+    "city": "Świnoujście",
+    "coordinates": [14.267, 53.9],
+    "type": "lng",
+    "annualThroughputTEU": null,
+    "annualThroughputTonnes": 23000000,
+    "berthCount": 15,
+    "maxDraftM": 13.5,
+    "strategicImportance": "critical",
+    "riskLevel": "medium",
+    "geopoliticalNotes": "Strategically vital for energy security due to the Lech Kaczyński LNG Terminal. Major ferry link to Scandinavia.",
+    "notes": "Part of the Szczecin-Świnoujście port complex. Key to diversifying gas supplies away from Russia.",
+    "attribution": {
+      "sources": [
+        { "name": "Szczecin-Świnoujście Seaports Authority", "url": "https://www.port.szczecin.pl/en/", "accessedAt": "2026-05-10" },
+        { "name": "Wikipedia - Świnoujście LNG terminal", "url": "https://en.wikipedia.org/wiki/%C5%9Awinouj%C5%9Bcie_LNG_terminal", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 2,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  },
+  {
+    "id": "PORT-POL-SZCZECIN",
+    "name": "Port of Szczecin",
+    "countryId": "POL",
+    "city": "Szczecin",
+    "coordinates": [14.567, 53.417],
+    "type": "mixed",
+    "annualThroughputTEU": 100000,
+    "annualThroughputTonnes": 11800000,
+    "berthCount": 103,
+    "maxDraftM": 12.5,
+    "strategicImportance": "high",
+    "riskLevel": "low",
+    "geopoliticalNotes": "Major inland seaport located at the mouth of the Oder. Strategic hub for bulk cargo and general goods for the Western Polish and East German markets.",
+    "notes": "Recently deepened fairway from Świnoujście allows much larger ships to reach the port.",
+    "attribution": {
+      "sources": [
+        { "name": "Port of Szczecin Official", "url": "https://www.port.szczecin.pl/en/", "accessedAt": "2026-05-10" },
+        { "name": "MarineTraffic", "url": "https://www.marinetraffic.com/", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 2,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  },
+  {
+    "id": "PORT-POL-POLICE",
+    "name": "Port of Police",
+    "countryId": "POL",
+    "city": "Police",
+    "coordinates": [14.6, 53.55],
+    "type": "bulk",
+    "annualThroughputTEU": null,
+    "annualThroughputTonnes": 2000000,
+    "berthCount": 10,
+    "maxDraftM": 12.5,
+    "strategicImportance": "medium",
+    "riskLevel": "low",
+    "geopoliticalNotes": "Specialized industrial port serving the Police Chemical Works. Critical for fertilizer and chemical exports.",
+    "notes": "Poland's fourth busiest port by tonnage. Deep-water sea terminal for raw material imports.",
+    "attribution": {
+      "sources": [
+        { "name": "Port of Police Official", "url": "https://portpolice.pl/en/", "accessedAt": "2026-05-10" },
+        { "name": "Wikipedia - Port of Police", "url": "https://en.wikipedia.org/wiki/Port_of_Police", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 2,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  },
+  {
+    "id": "PORT-POL-KOLOBRZEG",
+    "name": "Port of Kołobrzeg",
+    "countryId": "POL",
+    "city": "Kołobrzeg",
+    "coordinates": [15.55, 54.183],
+    "type": "mixed",
+    "annualThroughputTEU": null,
+    "annualThroughputTonnes": 277800,
+    "berthCount": 12,
+    "maxDraftM": 6.0,
+    "strategicImportance": "low",
+    "riskLevel": "low",
+    "geopoliticalNotes": "Leading regional port on the central coast. Strategic for fishing, local commerce, and seasonal passenger traffic.",
+    "notes": "Combines commercial, fishing, and yachting functions.",
+    "attribution": {
+      "sources": [
+        { "name": "Port of Kołobrzeg Authority", "url": "https://www.port.kolobrzeg.pl/en/", "accessedAt": "2026-05-10" },
+        { "name": "VesselTracker", "url": "https://www.vesseltracker.com/en/Ports/Kolobrzeg-Pl.html", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 2,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  },
+  {
+    "id": "PORT-POL-ELBLAG",
+    "name": "Port of Elbląg",
+    "countryId": "POL",
+    "city": "Elbląg",
+    "coordinates": [19.4, 54.167],
+    "type": "mixed",
+    "annualThroughputTEU": null,
+    "annualThroughputTonnes": 150000,
+    "berthCount": 8,
+    "maxDraftM": 2.2,
+    "strategicImportance": "medium",
+    "riskLevel": "medium",
+    "geopoliticalNotes": "Gained strategic importance following the opening of the Vistula Spit canal, allowing access to the Baltic bypassing Russian-controlled Pilawa Strait.",
+    "notes": "Targeting 2-3 million tonnes of throughput following planned infrastructure upgrades.",
+    "attribution": {
+      "sources": [
+        { "name": "Port of Elbląg Official", "url": "http://www.port.elblag.pl/", "accessedAt": "2026-05-10" },
+        { "name": "Reuters - Vistula Spit Canal", "url": "https://www.reuters.com/world/europe/poland-opens-new-sea-canal-bypass-russia-2022-09-17/", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 2,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  },
+  {
+    "id": "PORT-POL-DARLOWO",
+    "name": "Port of Darłowo",
+    "countryId": "POL",
+    "city": "Darłowo",
+    "coordinates": [16.367, 54.433],
+    "type": "mixed",
+    "annualThroughputTEU": null,
+    "annualThroughputTonnes": 119952,
+    "berthCount": 23,
+    "maxDraftM": 4.0,
+    "strategicImportance": "low",
+    "riskLevel": "low",
+    "geopoliticalNotes": "Regional commercial and fishing port. Strategic for agricultural and timber exports from the central Pomeranian region.",
+    "notes": "Located at the mouth of the Wieprza river.",
+    "attribution": {
+      "sources": [
+        { "name": "Port of Darłowo Authority", "url": "https://www.darlowo.pl/pl/miasto/port", "accessedAt": "2026-05-10" },
+        { "name": "Wikipedia - Darłowo", "url": "https://en.wikipedia.org/wiki/Dar%C5%82owo", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 2,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  }
+]

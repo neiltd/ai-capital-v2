@@ -1,0 +1,219 @@
+[
+  {
+    "id": "RAIL-DEU-DUISBURG-DUISPORT",
+    "name": "Duisburg Port (Duisport)",
+    "countryId": "DEU",
+    "city": "Duisburg",
+    "coordinates": [6.764, 51.450],
+    "type": "freight",
+    "dailyPassengers": null,
+    "annualFreightTonnes": 40000000,
+    "connectedCountries": ["NLD", "BEL", "FRA", "POL", "CHN", "KAZ", "RUS"],
+    "gaugeType": "standard",
+    "lineCount": 12,
+    "strategicImportance": "high",
+    "isPartOfBRI": true,
+    "geopoliticalNotes": "World's largest inland port and the primary European gateway for the Belt and Road Initiative (BRI). Handles approximately 30% of all China-Europe rail trade.",
+    "notes": "Freight volume cited as total port capacity including significant rail share.",
+    "attribution": {
+      "sources": [
+        { "name": "Duisport Official Statistics", "url": "https://www.duisport.de/en/statistics/", "accessedAt": "2025-03-04" },
+        { "name": "China Railway Express Statistics", "url": "https://english.mofcom.gov.cn/", "accessedAt": "2025-03-04" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 2,
+        "lastVerified": "2025-03-04"
+      }
+    }
+  },
+  {
+    "id": "RAIL-DEU-HAMBURG-PORT",
+    "name": "Port of Hamburg Railway",
+    "countryId": "DEU",
+    "city": "Hamburg",
+    "coordinates": [9.975, 53.535],
+    "type": "port_interface",
+    "dailyPassengers": null,
+    "annualFreightTonnes": 46200000,
+    "connectedCountries": ["DNK", "POL", "CZE", "AUT", "CHE", "CHN"],
+    "gaugeType": "standard",
+    "lineCount": 200,
+    "strategicImportance": "high",
+    "isPartOfBRI": true,
+    "geopoliticalNotes": "Europe's largest rail port. Major sea-rail combined hub for both maritime and overland Silk Road routes.",
+    "notes": "Handles over 200 freight trains daily.",
+    "attribution": {
+      "sources": [
+        { "name": "Port of Hamburg 2024 Statistics", "url": "https://www.hafen-hamburg.de/", "accessedAt": "2025-03-04" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 1,
+        "lastVerified": "2025-03-04"
+      }
+    }
+  },
+  {
+    "id": "RAIL-DEU-BERLIN-HBF",
+    "name": "Berlin Hauptbahnhof",
+    "countryId": "DEU",
+    "city": "Berlin",
+    "coordinates": [13.369, 52.525],
+    "type": "mixed",
+    "dailyPassengers": 300000,
+    "annualFreightTonnes": null,
+    "connectedCountries": ["POL", "CZE"],
+    "gaugeType": "standard",
+    "lineCount": 16,
+    "strategicImportance": "high",
+    "isPartOfBRI": true,
+    "geopoliticalNotes": "Central transit node for East-West corridors. Increasing BRI-related air-rail cargo through surrounding logistics centers.",
+    "notes": "Major passenger hub with growing freight significance on the East-West axis.",
+    "attribution": {
+      "sources": [
+        { "name": "Deutsche Bahn Station Info", "url": "https://www.bahnhof.de/berlin-hauptbahnhof", "accessedAt": "2025-03-04" }
+      ],
+      "confidence": {
+        "confidence": "medium",
+        "sourceCount": 1,
+        "lastVerified": "2025-03-04"
+      }
+    }
+  },
+  {
+    "id": "RAIL-DEU-MUNICH-HBF",
+    "name": "München Hauptbahnhof",
+    "countryId": "DEU",
+    "city": "Munich",
+    "coordinates": [11.558, 48.140],
+    "type": "mixed",
+    "dailyPassengers": 413000,
+    "annualFreightTonnes": null,
+    "connectedCountries": ["AUT", "ITA", "CHE"],
+    "gaugeType": "standard",
+    "lineCount": 32,
+    "strategicImportance": "high",
+    "isPartOfBRI": false,
+    "geopoliticalNotes": "Southern gateway for the Scan-Med Corridor. Critical for trans-Alpine rail freight and passenger transit to Italy and Austria.",
+    "notes": null,
+    "attribution": {
+      "sources": [
+        { "name": "Deutsche Bahn Station Data", "url": "https://www.bahnhof.de/muenchen-hauptbahnhof", "accessedAt": "2025-03-04" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 1,
+        "lastVerified": "2025-03-04"
+      }
+    }
+  },
+  {
+    "id": "RAIL-DEU-FRANKFURT-HBF",
+    "name": "Frankfurt (Main) Hauptbahnhof",
+    "countryId": "DEU",
+    "city": "Frankfurt",
+    "coordinates": [8.662, 50.106],
+    "type": "mixed",
+    "dailyPassengers": 450000,
+    "annualFreightTonnes": null,
+    "connectedCountries": ["FRA", "CHE", "BEL", "NLD"],
+    "gaugeType": "standard",
+    "lineCount": 25,
+    "strategicImportance": "high",
+    "isPartOfBRI": false,
+    "geopoliticalNotes": "Germany's busiest passenger hub and a vital link for connecting the Rhine-Main region. Extensive rail feeder services for Europe's largest air freight hub.",
+    "notes": null,
+    "attribution": {
+      "sources": [
+        { "name": "Deutsche Bahn Data", "url": "https://www.bahnhof.de/frankfurt-hauptbahnhof", "accessedAt": "2025-03-04" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 1,
+        "lastVerified": "2025-03-04"
+      }
+    }
+  },
+  {
+    "id": "RAIL-DEU-LEIPZIG-HALLE",
+    "name": "Leipzig/Halle Freight Terminal",
+    "countryId": "DEU",
+    "city": "Leipzig",
+    "coordinates": [12.235, 51.401],
+    "type": "freight",
+    "dailyPassengers": null,
+    "annualFreightTonnes": 1600000,
+    "connectedCountries": ["POL", "CZE", "CHN"],
+    "gaugeType": "standard",
+    "lineCount": 6,
+    "strategicImportance": "high",
+    "isPartOfBRI": true,
+    "geopoliticalNotes": "Major cargo hub integrating air and rail. Key for automotive logistics and BRI connections to China via the Via Regia corridor.",
+    "notes": "Freight volume reflects the rail-integrated air freight hub capacity.",
+    "attribution": {
+      "sources": [
+        { "name": "Leipzig City Logistics Report", "url": "https://www.leipzig.de/", "accessedAt": "2025-03-04" }
+      ],
+      "confidence": {
+        "confidence": "medium",
+        "sourceCount": 1,
+        "lastVerified": "2025-03-04"
+      }
+    }
+  },
+  {
+    "id": "RAIL-DEU-NUREMBERG-HAFEN",
+    "name": "Nürnberg Hafen Rail Terminal",
+    "countryId": "DEU",
+    "city": "Nuremberg",
+    "coordinates": [11.050, 49.390],
+    "type": "freight",
+    "dailyPassengers": null,
+    "annualFreightTonnes": 4300000,
+    "connectedCountries": ["AUT", "CZE", "CHN"],
+    "gaugeType": "standard",
+    "lineCount": 8,
+    "strategicImportance": "high",
+    "isPartOfBRI": true,
+    "geopoliticalNotes": "Central logistics hub in Bavaria with direct weekly rail connections to Chengdu, China. Vital node for South Germany's industrial exports.",
+    "notes": null,
+    "attribution": {
+      "sources": [
+        { "name": "Newsilkroaddiscovery Statistics", "url": "https://newsilkroaddiscovery.com/", "accessedAt": "2025-03-04" }
+      ],
+      "confidence": {
+        "confidence": "medium",
+        "sourceCount": 1,
+        "lastVerified": "2025-03-04"
+      }
+    }
+  },
+  {
+    "id": "RAIL-DEU-COLOGNE-GREMBERG",
+    "name": "Cologne-Gremberg Marshalling Yard",
+    "countryId": "DEU",
+    "city": "Cologne",
+    "coordinates": [7.030, 50.910],
+    "type": "freight",
+    "dailyPassengers": null,
+    "annualFreightTonnes": 5000000,
+    "connectedCountries": ["BEL", "NLD", "FRA"],
+    "gaugeType": "standard",
+    "lineCount": 32,
+    "strategicImportance": "high",
+    "isPartOfBRI": false,
+    "geopoliticalNotes": "One of Germany's largest marshalling yards. Key for North-South and East-West transit in the industrial Rhineland.",
+    "notes": "Critical node for DB Cargo operations in Western Germany.",
+    "attribution": {
+      "sources": [
+        { "name": "DB Cargo Operational Data", "url": "https://dbcargo.com/", "accessedAt": "2025-03-04" }
+      ],
+      "confidence": {
+        "confidence": "medium",
+        "sourceCount": 1,
+        "lastVerified": "2025-03-04"
+      }
+    }
+  }
+]

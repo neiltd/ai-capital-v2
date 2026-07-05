@@ -1,0 +1,27 @@
+[
+  {
+    "countryId": "CHN",
+    "year": 2022,
+    "overallScore": 74.2,
+    "availability": 74.8,
+    "access": 89.4,
+    "utilization": 73.6,
+    "stability": 51.4,
+    "undernourishedPct": 2.5,
+    "foodImportDependencyPct": 5.0,
+    "cerealYieldKgHa": 6418,
+    "climateVulnerability": "high",
+    "conflictExposure": "low",
+    "attribution": {
+      "sources": [
+        { "name": "GFSI 2022 — China", "url": "https://impact.economist.com/sustainability/project/food-security-index/reports-and-resources", "accessedAt": "2025-02-13" },
+        { "name": "FAO FAOSTAT - China", "url": "https://www.fao.org/faostat/en/#country/351", "accessedAt": "2025-02-13" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 2,
+        "lastVerified": "2025-02-13"
+      }
+    }
+  }
+]

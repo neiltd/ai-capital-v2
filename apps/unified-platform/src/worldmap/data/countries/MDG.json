@@ -1,0 +1,64 @@
+{
+  "id": "MDG",
+  "iso2": "MG",
+  "name": "Madagascar",
+  "region": "Africa",
+  "subregion": "Eastern Africa",
+  "capital": "Antananarivo",
+  "lastUpdated": "2025-05-15",
+  "summary": "Madagascar is a unique island nation celebrated for its unparalleled biodiversity and rich natural resources, including significant deposits of nickel, cobalt, and graphite. Despite its enormous potential, the country has been hindered by cycles of political instability, weak infrastructure, and extreme vulnerability to climate change, particularly cyclones and droughts. Under President Andry Rajoelina, the government has launched the 'Emergence of Madagascar Plan' (PEM) to drive industrialization, tourism, and energy development. Madagascar remains one of the world's poorest nations, with a heavy reliance on agriculture, especially vanilla. The country's future depends on stabilizing its political environment, attracting sustainable investment in its mining and energy sectors, and building resilience against environmental shocks.",
+  "indicators": {
+    "politicalStability":       { "score": 4, "trend": "stable", "confidence": "high", "note": "Political landscape remains polarized following the 2023 elections; institutional strengthening is ongoing." },
+    "economicDirection":        { "score": 5, "trend": "rising", "confidence": "high", "note": "GDP growth supported by a rebound in tourism and mining; focus on infrastructure investment." },
+    "investmentAttractiveness": { "score": 4, "trend": "rising", "confidence": "medium", "note": "Enormous potential in critical minerals; business environment is being reformed to attract more foreign capital." },
+    "geopoliticalRisk":         { "score": 2, "trend": "stable", "confidence": "high", "note": "Island status provides geographical security; active in regional Indian Ocean diplomacy." },
+    "educationQuality":         { "score": 3, "trend": "stable", "confidence": "medium", "note": "Significant challenges in literacy and school infrastructure, especially in remote rural areas." },
+    "healthcareQuality":        { "score": 3, "trend": "stable", "confidence": "medium", "note": "Public health system is overburdened; focus on improving access to basic care and nutrition." },
+    "technologyInvestment":     { "score": 4, "trend": "rising", "confidence": "medium", "note": "Expansion of undersea cables and mobile banking; digital economy starting to grow from a low base." }
+  },
+  "demographics": {
+    "population": 30300000,
+    "medianAge": 19.6,
+    "urbanizationRate": 39.5,
+    "majorEthnicGroups": ["Merina", "Betsimisaraka", "Tsimihety", "Sakalava"],
+    "religions": [
+      { "name": "Christian", "percent": 41 },
+      { "name": "Traditional (Indigenous)", "percent": 52 },
+      { "name": "Muslim", "percent": 7 }
+    ]
+  },
+  "alliances": ["African Union", "SADC", "COMESA", "Indian Ocean Commission", "OIF"],
+  "relationships": [
+    { "countryId": "FRA", "countryName": "France", "type": "strategic_partner", "sentiment": "positive", "summary": "Most important trade and development partner; strong cultural and historical ties." },
+    { "countryId": "CHN", "countryName": "China", "type": "economic_partner", "sentiment": "positive", "summary": "Significant investor in infrastructure, mining, and agriculture." },
+    { "countryId": "USA", "countryName": "United States", "type": "economic_partner", "sentiment": "positive", "summary": "Important market for vanilla and textiles; significant provider of humanitarian aid." },
+    { "countryId": "MUS", "countryName": "Mauritius", "type": "regional_partner", "sentiment": "positive", "summary": "Key regional investor and collaborator within the Indian Ocean Commission." }
+  ],
+  "perspectives": [
+    { "source": "Vanilla Farmer (Sava)", "bias": "Vulnerable", "view": "Vanilla is our life, but the market is volatile and the cyclones are getting worse. We need more stability and support." },
+    { "source": "Antananarivo Entrepreneur", "bias": "Optimistic", "view": "The digital economy is opening new doors for Malagasy youth to work globally and innovate locally." },
+    { "source": "Mining Engineer", "bias": "Strategic", "view": "Our nickel and graphite are essential for the global energy transition. We need better infrastructure to unlock this wealth." },
+    { "source": "Environmentalist", "bias": "Concerned", "view": "We must find a balance between mining and protecting our unique species, which are found nowhere else on earth." }
+  ],
+  "historicalContext": {
+    "summary": "Madagascar was an independent kingdom before becoming a French colony in 1897. It regained independence in 1960. Since then, the country has experienced several cycles of political crises and leadership changes, often through unconstitutional means. However, the last decade has seen a return to constitutional order and efforts to build a more resilient democratic system.",
+    "keyEvents": [
+      { "year": 1960, "event": "Independence from France." },
+      { "year": 1975, "event": "Didier Ratsiraka takes power, ushering in a period of socialist policies." },
+      { "year": 2002, "event": "Political crisis following contested elections leads to Marc Ravalomanana becoming president." },
+      { "year": 2009, "event": "Controversial transition of power from Ravalomanana to Andry Rajoelina." },
+      { "year": 2018, "event": "Return to peaceful democratic transition; Rajoelina wins the presidency." },
+      { "year": 2023, "event": "Andry Rajoelina is re-elected as President in a contested but legally validated election." }
+    ]
+  },
+  "investmentNotes": {
+    "strengths": ["World-class deposits of nickel, cobalt, and battery-grade graphite", "Global leader in vanilla and essential oils production", "Massive untapped potential for high-value eco-tourism", "Youthful population and strategic position in the Indian Ocean"],
+    "risks": ["High vulnerability to climate change (cyclones, droughts)", "Weak transport and energy infrastructure", "History of political instability affecting investor confidence", "High levels of poverty and limited skilled labor pool"],
+    "sectors": ["Mining (Nickel, Cobalt, Graphite, Gemstones)", "Agribusiness (Vanilla, Cloves, Cocoa)", "Tourism & Hospitality", "Renewable Energy (Hydro & Solar)"]
+  },
+  "sources": [
+    { "name": "Central Bank of Madagascar", "url": "https://www.banky-foibe.mg/", "type": "economic" },
+    { "name": "National Institute of Statistics (INSTAT)", "url": "https://www.instat.mg/", "type": "demographic" },
+    { "name": "Economic Development Board of Madagascar (EDBM)", "url": "https://edbm.mg/", "type": "investment" }
+  ]
+}

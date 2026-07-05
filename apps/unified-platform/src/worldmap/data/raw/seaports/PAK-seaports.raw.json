@@ -1,0 +1,213 @@
+[
+  {
+    "id": "PORT-PAK-KARACHI",
+    "name": "Karachi Port",
+    "countryId": "PAK",
+    "city": "Karachi",
+    "coordinates": [66.9667, 24.8333],
+    "type": "container",
+    "annualThroughputTEU": 2650000,
+    "annualThroughputTonnes": 51650000,
+    "berthCount": 30,
+    "maxDraftM": 13.0,
+    "strategicImportance": "critical",
+    "riskLevel": "low",
+    "geopoliticalNotes": "Pakistan's busiest and oldest seaport, handling approximately 60% of the nation's total trade. Highly strategic for national economic security.",
+    "notes": "Includes the Pakistan Deep Water Container Terminal (PDWCT) operated by Hutchison Ports.",
+    "attribution": {
+      "sources": [
+        { "name": "Karachi Port Trust", "url": "https://kpt.gov.pk", "accessedAt": "2025-05-10" },
+        { "name": "Hutchison Ports Pakistan", "url": "https://hutchisonportspakistan.com", "accessedAt": "2025-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 2,
+        "lastVerified": "2025-05-10"
+      }
+    }
+  },
+  {
+    "id": "PORT-PAK-PORT-QASIM",
+    "name": "Port Muhammad Bin Qasim",
+    "countryId": "PAK",
+    "city": "Karachi",
+    "coordinates": [67.3167, 24.7667],
+    "type": "mixed",
+    "annualThroughputTEU": 1500000,
+    "annualThroughputTonnes": 45000000,
+    "berthCount": 18,
+    "maxDraftM": 13.0,
+    "strategicImportance": "critical",
+    "riskLevel": "low",
+    "geopoliticalNotes": "Pakistan's second largest port and the primary hub for the country's energy sector, handling LNG, coal, and industrial raw materials.",
+    "notes": "Home to the Qasim International Container Terminal (QICT) and multiple dedicated energy terminals.",
+    "attribution": {
+      "sources": [
+        { "name": "Port Qasim Authority", "url": "https://www.pqa.gov.pk", "accessedAt": "2025-05-10" },
+        { "name": "UNCTAD", "url": "https://unctad.org", "accessedAt": "2025-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 2,
+        "lastVerified": "2025-05-10"
+      }
+    }
+  },
+  {
+    "id": "PORT-PAK-GWADAR",
+    "name": "Gwadar Port",
+    "countryId": "PAK",
+    "city": "Gwadar",
+    "coordinates": [62.3333, 25.1],
+    "type": "mixed",
+    "annualThroughputTEU": null,
+    "annualThroughputTonnes": 200000,
+    "berthCount": 3,
+    "maxDraftM": 14.5,
+    "strategicImportance": "critical",
+    "riskLevel": "medium",
+    "geopoliticalNotes": "The flagship project of the China-Pakistan Economic Corridor (CPEC). A deep-sea port designed to provide China with a direct link to the Arabian Sea, bypassing the Malacca Strait.",
+    "notes": "Managed by China Overseas Port Holding Company (COPHC). Strategic focus on regional transshipment.",
+    "attribution": {
+      "sources": [
+        { "name": "Gwadar Port Authority", "url": "https://www.gwadarport.gov.pk", "accessedAt": "2025-05-10" },
+        { "name": "CPEC Official Website", "url": "https://cpec.gov.pk", "accessedAt": "2025-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 2,
+        "lastVerified": "2025-05-10"
+      }
+    }
+  },
+  {
+    "id": "PORT-PAK-ORMARA",
+    "name": "Jinnah Naval Base",
+    "countryId": "PAK",
+    "city": "Ormara",
+    "coordinates": [64.5833, 25.2667],
+    "type": "naval",
+    "annualThroughputTEU": null,
+    "annualThroughputTonnes": null,
+    "berthCount": 10,
+    "maxDraftM": 12.0,
+    "strategicImportance": "high",
+    "riskLevel": "low",
+    "geopoliticalNotes": "The second largest naval base of the Pakistan Navy, providing strategic depth and a secure alternative to the Karachi naval base. Critical for maritime defense and logistics.",
+    "notes": "Offers a secure deep-water harbor for submarines and surface vessels.",
+    "attribution": {
+      "sources": [
+        { "name": "Pakistan Navy Official Site", "url": "https://www.paknavy.gov.pk", "accessedAt": "2025-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 1,
+        "lastVerified": "2025-05-10"
+      }
+    }
+  },
+  {
+    "id": "PORT-PAK-PASNI",
+    "name": "Pasni Port",
+    "countryId": "PAK",
+    "city": "Pasni",
+    "coordinates": [63.4667, 25.25],
+    "type": "mixed",
+    "annualThroughputTEU": null,
+    "annualThroughputTonnes": null,
+    "berthCount": 2,
+    "maxDraftM": 6.0,
+    "strategicImportance": "medium",
+    "riskLevel": "medium",
+    "geopoliticalNotes": "Strategically located between Gwadar and Ormara. Proposed as a major hub for mineral exports (copper, antimony) to international markets.",
+    "notes": "Currently primarily a fishing harbor; undergoing significant expansion for industrial use.",
+    "attribution": {
+      "sources": [
+        { "name": "Government of Balochistan", "url": "https://balochistan.gov.pk", "accessedAt": "2025-05-10" }
+      ],
+      "confidence": {
+        "confidence": "medium",
+        "sourceCount": 1,
+        "lastVerified": "2025-05-10"
+      }
+    }
+  },
+  {
+    "id": "PORT-PAK-JIWANI",
+    "name": "Jiwani Port",
+    "countryId": "PAK",
+    "city": "Jiwani",
+    "coordinates": [61.7333, 25.0333],
+    "type": "naval",
+    "annualThroughputTEU": null,
+    "annualThroughputTonnes": null,
+    "berthCount": 2,
+    "maxDraftM": 5.0,
+    "strategicImportance": "high",
+    "riskLevel": "medium",
+    "geopoliticalNotes": "Located near the Iranian border and the mouth of the Gulf of Oman. Highly strategic for monitoring maritime traffic entering the Strait of Hormuz.",
+    "notes": "Small harbor with significant naval and surveillance importance.",
+    "attribution": {
+      "sources": [
+        { "name": "Pakistan Navy", "url": "https://www.paknavy.gov.pk", "accessedAt": "2025-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 1,
+        "lastVerified": "2025-05-10"
+      }
+    }
+  },
+  {
+    "id": "PORT-PAK-KETI-BANDAR",
+    "name": "Keti Bandar Port",
+    "countryId": "PAK",
+    "city": "Thatta",
+    "coordinates": [67.45, 24.1333],
+    "type": "bulk",
+    "annualThroughputTEU": null,
+    "annualThroughputTonnes": null,
+    "berthCount": 0,
+    "maxDraftM": null,
+    "strategicImportance": "medium",
+    "riskLevel": "low",
+    "geopoliticalNotes": "A historic port being revived to serve as an energy hub, specifically for the export of Thar coal and the development of power plants.",
+    "notes": "Strategic focus on national energy security and coal-based industries.",
+    "attribution": {
+      "sources": [
+        { "name": "Government of Sindh", "url": "https://sindh.gov.pk", "accessedAt": "2025-05-10" }
+      ],
+      "confidence": {
+        "confidence": "medium",
+        "sourceCount": 1,
+        "lastVerified": "2025-05-10"
+      }
+    }
+  },
+  {
+    "id": "PORT-PAK-KORANGI",
+    "name": "Korangi Fish Harbour",
+    "countryId": "PAK",
+    "city": "Karachi",
+    "coordinates": [67.2, 24.8],
+    "type": "mixed",
+    "annualThroughputTEU": null,
+    "annualThroughputTonnes": 150000,
+    "berthCount": 5,
+    "maxDraftM": 4.5,
+    "strategicImportance": "medium",
+    "riskLevel": "low",
+    "geopoliticalNotes": "Pakistan's primary seafood export hub, critical for the country's blue economy and foreign exchange earnings from fish exports.",
+    "notes": "Undergoing modernization to meet international sanitary and phytosanitary standards.",
+    "attribution": {
+      "sources": [
+        { "name": "Korangi Fisheries Harbour Authority", "url": "https://kfha.gov.pk", "accessedAt": "2025-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 1,
+        "lastVerified": "2025-05-10"
+      }
+    }
+  }
+]

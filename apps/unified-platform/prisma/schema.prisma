@@ -1,0 +1,42 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+model Session {
+  id        String   @id @default(cuid())
+  date      DateTime @default(now())
+  topic     String   // JSON: { eventId, title, summary, suggestedAngle, suggestedVisualType }
+  storyArc  String?  // JSON: { hook, beats, personalAngle, cta }
+  visuals   String   @default("[]") // JSON array: [{ type, url }]
+  notes     String?
+  videoId   String?
+  createdAt DateTime @default(now())
+}
+
+model Video {
+  id        String    @id @default(cuid())
+  tiktokId  String?   @unique
+  title     String
+  postedAt  DateTime?
+  views     Int       @default(0)
+  likes     Int       @default(0)
+  comments  Int       @default(0)
+  shares    Int       @default(0)
+  topicType String    @default("ai-news")
+  sessionId String?
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+}
+
+model GrowthSnapshot {
+  id           String   @id @default(cuid())
+  date         DateTime @default(now())
+  followers    Int
+  profileViews Int      @default(0)
+  source       String   // "api" | "manual" | "screenshot"
+}

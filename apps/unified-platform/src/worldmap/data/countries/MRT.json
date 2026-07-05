@@ -1,0 +1,62 @@
+{
+  "id": "MRT",
+  "iso2": "MR",
+  "name": "Mauritania",
+  "region": "Africa",
+  "subregion": "Western Africa",
+  "capital": "Nouakchott",
+  "lastUpdated": "2026-05-15",
+  "summary": "Mauritania is emerging as a regional anchor of stability and a burgeoning energy hub in West Africa. The 2024 re-election of President Mohamed Ould Ghazouani has provided political continuity, allowing the nation to focus on its massive green hydrogen potential and the start of gas exports from the Greater Tortue Ahmeyim (GTA) project in 2025. While Mauritania faces significant social challenges, including complex ethnic dynamics and high poverty, its strategic partnership with the EU on migration and its role in regional security make it a critical player in the Sahel. The economy is currently transitioning toward a more diversified energy and mining-based model.",
+  "indicators": {
+    "politicalStability":       { "score": 7, "trend": "stable", "confidence": "high", "note": "Stable representative democracy; President Ghazouani re-elected in 2024; successful management of post-election protests." },
+    "economicDirection":        { "score": 6, "trend": "rising", "confidence": "high", "note": "Growth accelerating due to start of gas exports and iron ore price resilience; inflation remains low." },
+    "investmentAttractiveness": { "score": 5, "trend": "rising", "confidence": "high", "note": "Revised Investment Code (2025) and new PPP Law (2024) are attracting major capital to the energy and mining sectors." },
+    "geopoliticalRisk":         { "score": 5, "trend": "stable", "confidence": "high", "note": "Risk from instability in neighboring Mali and militant activity in the Sahel; well-managed internal security and strong EU/US partnerships." },
+    "educationQuality":         { "score": 3, "trend": "stable", "confidence": "medium", "note": "Improving access but quality and literacy rates remain low; challenges with linguistic and ethnic integration in schools." },
+    "healthcareQuality":        { "score": 3, "trend": "stable", "confidence": "medium", "note": "Basic services available in urban areas; significant investment needed to reach rural populations and improve specialized care." },
+    "technologyInvestment":     { "score": 4, "trend": "rising", "confidence": "medium", "note": "Focus on digital economy and fiber optic expansion; strategic interest in green hydrogen technology." }
+  },
+  "demographics": {
+    "population": 5000000,
+    "medianAge": 21.0,
+    "urbanizationRate": 61,
+    "majorEthnicGroups": ["Haratin (Black Moors) 40%", "Beidane (White Moors) 30%", "Sub-Saharan groups (Halpulaar, Soninke, Wolof) 30%"],
+    "religions": [
+      { "name": "Muslim (Official)", "percent": 100.0 }
+    ]
+  },
+  "alliances": ["African Union", "Arab League", "G5 Sahel", "OIC", "United Nations"],
+  "relationships": [
+    { "countryId": "ESP", "countryName": "Spain", "type": "strategic_partner", "sentiment": "positive", "summary": "Key partner for migration control and fisheries; host of major Spanish-funded reception centers and security cooperation." },
+    { "countryId": "FRA", "countryName": "France", "type": "strategic_partner", "sentiment": "positive", "summary": "Long-standing security and economic partner; collaboration on counter-terrorism in the Sahel and development projects." },
+    { "countryId": "CHN", "countryName": "China", "type": "economic_partner", "sentiment": "positive", "summary": "Major partner for infrastructure development and iron ore exports; provider of significant development assistance." },
+    { "countryId": "USA", "countryName": "United States", "type": "strategic_partner", "sentiment": "positive", "summary": "Increasing security cooperation focused on counter-terrorism and maritime security in the Atlantic." }
+  ],
+  "perspectives": [
+    { "source": "Energy Executive", "bias": "Ambitious", "view": "The start of gas exports in 2025 is just the beginning. Our true future is in green hydrogen, where we can become a global leader." },
+    { "source": "Social Reformer", "bias": "Critical", "view": "Economic growth must be inclusive. We cannot ignore the legacy of slavery and the ongoing marginalization of Haratin and Sub-Saharan groups." },
+    { "source": "Security Analyst", "bias": "Pragmatic", "view": "Mauritania is the only Sahelian country that has avoided a terrorist attack since 2011. Our model of security and religious engagement is working." },
+    { "source": "Iron Ore Miner", "bias": "Supportive", "view": "The expansion of the SNIM mines is providing stable jobs. We are the backbone of the national economy." }
+  ],
+  "historicalContext": {
+    "summary": "Mauritania gained independence from France in 1960. Its history was dominated by military rule and ethnic tensions until the first successful peaceful transfer of power between elected presidents in 2019. The country has successfully managed to avoid the wave of coups and extremist violence that has destabilized its neighbors in the Sahel in recent years.",
+    "keyEvents": [
+      { "year": 1960, "event": "Independence from France." },
+      { "year": 1989, "event": "Ethnic conflict with Senegal leads to massive population displacements." },
+      { "year": 2008, "event": "Military coup led by Mohamed Ould Abdel Aziz, who later wins elections." },
+      { "year": 2019, "event": "Mohamed Ould Ghazouani wins the presidency, marking the first peaceful transfer of power." },
+      { "year": 2024, "event": "President Ghazouani re-elected for a final term; GTA gas project nears completion." },
+      { "year": 2025, "event": "Mauritania begins exporting liquefied natural gas (LNG) from the Tortue field." }
+    ]
+  },
+  "investmentNotes": {
+    "strengths": ["World-class reserves of iron ore, gold, and copper", "Vast potential for green hydrogen and solar/wind energy", "Political stability relative to Sahelian peers", "Strategic location as a bridge between the Arab world and Sub-Saharan Africa"],
+    "risks": ["Vulnerability to regional instability and spillover from Mali", "Complex social and ethnic dynamics impacting long-term cohesion", "High rates of poverty and low human capital development", "Heavy reliance on global commodity price cycles (Iron Ore/Gold)"],
+    "sectors": ["Green Hydrogen & Renewables", "Extractive Industries (Mining/Energy)", "Fisheries & Agro-industry", "Infrastructure & Logistics"]
+  },
+  "sources": [
+    { "name": "Banque Centrale de Mauritanie", "url": "https://www.bcm.mr/", "type": "economic" },
+    { "name": "Agence de Promotion des Investissements en Mauritanie (APIM)", "url": "https://apim.gov.mr/", "type": "investment" },
+    { "name": "World Bank - Mauritania Data", "url": "https://data.worldbank.org/country/mauritania", "type": "economic" }
+  ]
+}

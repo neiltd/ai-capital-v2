@@ -1,0 +1,66 @@
+{
+  "id": "GNQ",
+  "iso2": "GQ",
+  "name": "Equatorial Guinea",
+  "region": "Africa",
+  "subregion": "Middle Africa",
+  "capital": "Malabo",
+  "lastUpdated": "2026-05-09",
+  "summary": "Equatorial Guinea is a small country on the west coast of Central Africa, consisting of a mainland region and several islands. It became one of the wealthiest countries in Africa per capita following the discovery of large oil and gas reserves in the 1990s. However, this wealth is highly concentrated, and the country faces significant challenges with inequality, corruption, and human rights. It has been ruled by Teodoro Obiang Nguema Mbasogo since 1979, making him the world's longest-serving president. The economy remains heavily dependent on hydrocarbon exports, though there are efforts to diversify into other sectors.",
+  "indicators": {
+    "politicalStability":       { "score": 4, "trend": "stable", "confidence": "high", "note": "Maintains stability through a centralized and authoritarian system; concerns over succession and political space are prominent." },
+    "economicDirection":        { "score": 3, "trend": "declining", "confidence": "medium", "note": "Economy is struggling due to declining oil production and lack of diversification; working on fiscal reforms with international partners." },
+    "investmentAttractiveness": { "score": 2, "trend": "stable", "confidence": "medium", "note": "Investment is focused on hydrocarbons; broader business environment is hampered by bureaucracy and transparency issues." },
+    "geopoliticalRisk":         { "score": 4, "trend": "stable", "confidence": "medium", "note": "Relatively stable regional position; member of OPEC and regional economic blocs." },
+    "educationQuality":         { "score": 3, "trend": "stable", "confidence": "high", "note": "Literacy rates are high for the region, but quality and access to higher education remain limited." },
+    "healthcareQuality":        { "score": 3, "trend": "stable", "confidence": "medium", "note": "Significant investment in health infrastructure in urban areas, but service delivery and rural access are inconsistent." },
+    "technologyInvestment":     { "score": 3, "trend": "improving", "confidence": "medium", "note": "Improving internet connectivity through undersea cables; focus on digitalizing government and expanding mobile services." }
+  },
+  "demographics": {
+    "population": 1700000,
+    "medianAge": 22.3,
+    "urbanizationRate": 73,
+    "majorEthnicGroups": ["Fang", "Bubi"],
+    "religions": [
+      { "name": "Roman Catholic", "percent": 87.0 },
+      { "name": "Protestant", "percent": 5.0 },
+      { "name": "Muslim", "percent": 2.0 }
+    ]
+  },
+  "alliances": ["AU", "OPEC", "CEMAC", "ECCAS", "CPLP"],
+  "relationships": [
+    { "countryId": "USA", "countryName": "United States", "type": "economic_partner", "sentiment": "positive", "summary": "Major investor in the oil and gas sector; U.S. companies have played a leading role in developing the country's energy resources." },
+    { "countryId": "ESP", "countryName": "Spain", "type": "former_colonizer", "sentiment": "neutral", "summary": "Maintains complex relations involving significant economic, cultural, and migration ties." },
+    { "countryId": "CHN", "countryName": "China", "type": "strategic_partner", "sentiment": "positive", "summary": "Key partner in infrastructure development and trade; China has provided significant loans and technical assistance." },
+    { "countryId": "FRA", "countryName": "France", "type": "strategic_partner", "sentiment": "positive", "summary": "Significant economic partner, particularly in the banking and energy sectors; member of the Franc Zone." }
+  ],
+  "perspectives": [
+    { "source": "Government Official", "bias": "Defensive", "view": "We have used our resources to transform the country's infrastructure and improve the lives of our citizens." },
+    { "source": "Human Rights Activist", "bias": "Critical", "view": "The country's wealth has not benefited the majority; there is a severe lack of political freedom and transparency." },
+    { "source": "Oil Industry Worker", "bias": "Pragmatic", "view": "The sector provides good jobs, but we need to see more investment in other areas to ensure long-term stability." },
+    { "source": "International Observer", "bias": "Neutral", "view": "Equatorial Guinea is at a crossroads; it needs to manage its energy transition and diversify its economy while improving governance." }
+  ],
+  "historicalContext": {
+    "summary": "Equatorial Guinea gained independence from Spain in 1960. The first president, Francisco Macías Nguema, led a brutal regime until he was overthrown in 1979 by his nephew, Teodoro Obiang Nguema Mbasogo. Since then, Obiang has consolidated power, overseen an oil boom, and faced several attempted coups.",
+    "keyEvents": [
+      { "year": 1968, "event": "Independence from Spain." },
+      { "year": 1979, "event": "Teodoro Obiang Nguema Mbasogo takes power in a coup." },
+      { "year": 1991, "event": "New constitution adopted, theoretically introducing multi-partyism." },
+      { "year": 1995, "event": "Discovery of major offshore oil reserves." },
+      { "year": 2004, "event": "Thwarted 'Wonga' coup attempt involving foreign mercenaries." },
+      { "year": 2011, "event": "Referendum on constitutional changes, including the creation of a vice-president role." },
+      { "year": 2017, "event": "Government foils another alleged coup attempt." },
+      { "year": 2022, "event": "Obiang re-elected for another seven-year term." }
+    ]
+  },
+  "investmentNotes": {
+    "strengths": ["Abundant oil and natural gas reserves", "Modern infrastructure (roads, ports, airports) compared to regional peers", "Strategic location in the Gulf of Guinea", "Member of stable regional currency and economic blocs"],
+    "risks": ["Heavy dependence on oil revenue and vulnerability to price shocks", "Concerns over governance, transparency, and the rule of law", "High levels of social inequality and poverty", "Limited economic diversification beyond hydrocarbons"],
+    "sectors": ["Oil and Gas", "Fisheries and Marine Resources", "Agriculture (Cocoa/Coffee)", "Tourism and Logistics"]
+  },
+  "sources": [
+    { "name": "World Bank - Equatorial Guinea", "url": "https://www.worldbank.org/en/country/equatorialguinea", "type": "economic" },
+    { "name": "IMF - Equatorial Guinea", "url": "https://www.imf.org/en/Countries/GNQ", "type": "economic" },
+    { "name": "EITI - Equatorial Guinea", "url": "https://eiti.org/countries/equatorial-guinea", "type": "transparency" }
+  ]
+}

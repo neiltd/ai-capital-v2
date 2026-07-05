@@ -1,0 +1,272 @@
+[
+  {
+    "id": "CAI",
+    "name": "Cairo International Airport",
+    "countryId": "EGY",
+    "city": "Cairo",
+    "iata": "CAI",
+    "icao": "HECA",
+    "coordinates": [31.406, 30.122],
+    "passengerVolume": 26000000,
+    "cargoVolume": 340000,
+    "runwayCount": 3,
+    "elevationM": 116,
+    "strategicImportance": "critical",
+    "geopoliticalNotes": "Africa's busiest hub and primary gateway for Egypt; critical logistics center connecting Europe, Middle East, and Africa.",
+    "notes": "Features a dedicated 'Cargo Village'; major hub for EgyptAir.",
+    "attribution": {
+      "sources": [
+        { "name": "Egyptian Ministry of Civil Aviation", "url": "http://www.civilaviation.gov.eg/", "accessedAt": "2026-05-10" },
+        { "name": "IATA", "url": "https://www.iata.org/", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 2,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  },
+  {
+    "id": "SSH",
+    "name": "Sharm El Sheikh International Airport",
+    "countryId": "EGY",
+    "city": "Sharm El Sheikh",
+    "iata": "SSH",
+    "icao": "HESH",
+    "coordinates": [34.395, 27.977],
+    "passengerVolume": 5900000,
+    "cargoVolume": 52000,
+    "runwayCount": 2,
+    "elevationM": 44,
+    "strategicImportance": "high",
+    "geopoliticalNotes": "Vital hub for South Sinai tourism and international diplomacy; key site for global summits and regional security.",
+    "notes": "Strategically important for Red Sea maritime security and rapid response.",
+    "attribution": {
+      "sources": [
+        { "name": "Egyptian Ministry of Civil Aviation", "url": "http://www.civilaviation.gov.eg/", "accessedAt": "2026-05-10" },
+        { "name": "SkyVector", "url": "https://skyvector.com/airport/HESH/Sharm-El-Sheikh-International-Airport", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 2,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  },
+  {
+    "id": "HRG",
+    "name": "Hurghada International Airport",
+    "countryId": "EGY",
+    "city": "Hurghada",
+    "iata": "HRG",
+    "icao": "HEGN",
+    "coordinates": [33.799, 27.178],
+    "passengerVolume": 8700000,
+    "cargoVolume": 48200,
+    "runwayCount": 2,
+    "elevationM": 16,
+    "strategicImportance": "high",
+    "geopoliticalNotes": "Primary gateway for Red Sea tourism; undergoing modernization under a Public-Private Partnership model.",
+    "notes": "Critical for Egypt's tourism revenue and regional connectivity.",
+    "attribution": {
+      "sources": [
+        { "name": "Egyptian Ministry of Civil Aviation", "url": "http://www.civilaviation.gov.eg/", "accessedAt": "2026-05-10" },
+        { "name": "IATA", "url": "https://www.iata.org/", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 2,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  },
+  {
+    "id": "HBE",
+    "name": "Borg El Arab Airport",
+    "countryId": "EGY",
+    "city": "Alexandria",
+    "iata": "HBE",
+    "icao": "HEBA",
+    "coordinates": [29.696, 30.918],
+    "passengerVolume": 2000000,
+    "cargoVolume": 10000,
+    "runwayCount": 1,
+    "elevationM": 54,
+    "strategicImportance": "high",
+    "geopoliticalNotes": "Principal airport for Alexandria and the Nile Delta; major industrial and trade gateway for northern Egypt.",
+    "notes": "Replaced Alexandria International (ALY) as the region's main commercial hub.",
+    "attribution": {
+      "sources": [
+        { "name": "Egyptian Ministry of Civil Aviation", "url": "http://www.civilaviation.gov.eg/", "accessedAt": "2026-05-10" },
+        { "name": "AIP Egypt", "url": "http://www.nans-egypt.net/", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 2,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  },
+  {
+    "id": "SPX",
+    "name": "Sphinx International Airport",
+    "countryId": "EGY",
+    "city": "Giza",
+    "iata": "SPX",
+    "icao": "HESX",
+    "coordinates": [30.894, 30.110],
+    "passengerVolume": 1000000,
+    "cargoVolume": null,
+    "runwayCount": 1,
+    "elevationM": 169,
+    "strategicImportance": "high",
+    "geopoliticalNotes": "Designed to serve the Giza Pyramids and Grand Egyptian Museum; relieves pressure on Cairo International.",
+    "notes": "Rapidly growing hub for low-cost carriers and tourism logistics.",
+    "attribution": {
+      "sources": [
+        { "name": "Egyptian Ministry of Civil Aviation", "url": "http://www.civilaviation.gov.eg/", "accessedAt": "2026-05-10" },
+        { "name": "SkyVector", "url": "https://skyvector.com/airport/HESX/Sphinx-International-Airport", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 2,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  },
+  {
+    "id": "LXR",
+    "name": "Luxor International Airport",
+    "countryId": "EGY",
+    "city": "Luxor",
+    "iata": "LXR",
+    "icao": "HELX",
+    "coordinates": [32.706, 25.671],
+    "passengerVolume": 1230000,
+    "cargoVolume": 18000,
+    "runwayCount": 1,
+    "elevationM": 90,
+    "strategicImportance": "medium",
+    "geopoliticalNotes": "Critical hub for cultural tourism in Upper Egypt; supports regional logistics and heritage preservation.",
+    "notes": "Handles significant seasonal international charter traffic.",
+    "attribution": {
+      "sources": [
+        { "name": "Egyptian Ministry of Civil Aviation", "url": "http://www.civilaviation.gov.eg/", "accessedAt": "2026-05-10" },
+        { "name": "IATA", "url": "https://www.iata.org/", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 2,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  },
+  {
+    "id": "ASW",
+    "name": "Aswan International Airport",
+    "countryId": "EGY",
+    "city": "Aswan",
+    "iata": "ASW",
+    "icao": "HESN",
+    "coordinates": [32.820, 23.964],
+    "passengerVolume": 323000,
+    "cargoVolume": 8200,
+    "runwayCount": 1,
+    "elevationM": 198,
+    "strategicImportance": "medium",
+    "geopoliticalNotes": "Strategically located near the Aswan High Dam; vital for southern border security and tourism.",
+    "notes": "Also known as Darau Airport.",
+    "attribution": {
+      "sources": [
+        { "name": "Egyptian Ministry of Civil Aviation", "url": "http://www.civilaviation.gov.eg/", "accessedAt": "2026-05-10" },
+        { "name": "SkyVector", "url": "https://skyvector.com/airport/HESN/Aswan-International-Airport", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 2,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  },
+  {
+    "id": "AAR",
+    "name": "Al Arish International Airport",
+    "countryId": "EGY",
+    "city": "Al Arish",
+    "iata": "AAR",
+    "icao": "HEAR",
+    "coordinates": [33.836, 31.073],
+    "passengerVolume": null,
+    "cargoVolume": null,
+    "runwayCount": 1,
+    "elevationM": 35,
+    "strategicImportance": "high",
+    "geopoliticalNotes": "Highly strategic location in northern Sinai near the Gaza border; critical for humanitarian aid and regional security operations.",
+    "notes": "Frequently used for emergency logistics and military coordination.",
+    "attribution": {
+      "sources": [
+        { "name": "Egyptian Ministry of Civil Aviation", "url": "http://www.civilaviation.gov.eg/", "accessedAt": "2026-05-10" },
+        { "name": "OurAirports", "url": "https://ourairports.com/airports/HEAR/", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 2,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  },
+  {
+    "id": "TCP",
+    "name": "Taba International Airport",
+    "countryId": "EGY",
+    "city": "Taba",
+    "iata": "TCP",
+    "icao": "HETB",
+    "coordinates": [34.760, 29.587],
+    "passengerVolume": null,
+    "cargoVolume": null,
+    "runwayCount": 1,
+    "elevationM": 311,
+    "strategicImportance": "medium",
+    "geopoliticalNotes": "Located near the border with Israel; serves as a strategic node for tourism and border logistics.",
+    "notes": "Important for regional connectivity in the Gulf of Aqaba.",
+    "attribution": {
+      "sources": [
+        { "name": "Egyptian Ministry of Civil Aviation", "url": "http://www.civilaviation.gov.eg/", "accessedAt": "2026-05-10" },
+        { "name": "AIP Egypt", "url": "http://www.nans-egypt.net/", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 2,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  },
+  {
+    "id": "MUH",
+    "name": "Marsa Matruh International Airport",
+    "countryId": "EGY",
+    "city": "Marsa Matruh",
+    "iata": "MUH",
+    "icao": "HEMM",
+    "coordinates": [27.221, 31.326],
+    "passengerVolume": null,
+    "cargoVolume": null,
+    "runwayCount": 1,
+    "elevationM": 28,
+    "strategicImportance": "high",
+    "geopoliticalNotes": "Strategic outpost on the Mediterranean coast; critical for maritime security and logistics near the Libyan border.",
+    "notes": "Dual-use facility supporting both commercial tourism and military operations.",
+    "attribution": {
+      "sources": [
+        { "name": "Egyptian Ministry of Civil Aviation", "url": "http://www.civilaviation.gov.eg/", "accessedAt": "2026-05-10" },
+        { "name": "SkyVector", "url": "https://skyvector.com/airport/HEMM/Marsa-Matruh-Airport", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 2,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  }
+]

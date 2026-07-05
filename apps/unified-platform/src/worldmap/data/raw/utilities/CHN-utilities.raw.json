@@ -1,0 +1,36 @@
+[
+  {
+    "countryId": "CHN",
+    "year": 2023,
+    "electricityConsumptionTWh": 9224,
+    "electricityProductionTWh": 9456,
+    "electricityMix": {
+      "coal": 60.5,
+      "hydro": 13.0,
+      "wind": 9.5,
+      "solar": 6.5,
+      "nuclear": 5.0,
+      "gas": 3.0,
+      "otherRenewables": 2.5
+    },
+    "renewableSharePct": 31.5,
+    "waterStressScore": 3.5,
+    "waterWithdrawalPct": 40,
+    "foodSecurityScore": 74.2,
+    "aiAdoptionScore": 72,
+    "internetPenetration": 77.5,
+    "mobilePenetration": 119.5,
+    "attribution": {
+      "sources": [
+        { "name": "China Electricity Council 2023", "url": "https://english.cec.org.cn/", "accessedAt": "2024-05-24" },
+        { "name": "WRI Aqueduct Water Risk Atlas", "url": "https://www.wri.org/aqueduct", "accessedAt": "2024-05-24" },
+        { "name": "Global Food Security Index 2022", "url": "https://impact.economist.com/sustainability/project/food-security-index", "accessedAt": "2024-05-24" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 3,
+        "lastVerified": "2024-05-24"
+      }
+    }
+  }
+]

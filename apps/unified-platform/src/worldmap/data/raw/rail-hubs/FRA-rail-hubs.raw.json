@@ -1,0 +1,218 @@
+[
+  {
+    "id": "RAIL-FRA-LYON-HERRIOT",
+    "name": "Port Édouard-Herriot Rail Terminal",
+    "countryId": "FRA",
+    "city": "Lyon",
+    "coordinates": [4.846, 45.720],
+    "type": "freight",
+    "dailyPassengers": null,
+    "annualFreightTonnes": 1900000,
+    "connectedCountries": ["DEU", "CHE", "ITA", "CHN"],
+    "gaugeType": "standard",
+    "lineCount": 8,
+    "strategicImportance": "high",
+    "isPartOfBRI": true,
+    "geopoliticalNotes": "Principal inland hub for the Belt and Road Initiative (BRI) in France. Primary arrival point for direct trains from Wuhan, China.",
+    "notes": "Handles significant volumes of containers via rail.",
+    "attribution": {
+      "sources": [
+        { "name": "CNR Port Édouard-Herriot Statistics", "url": "https://www.cnr.tm.fr/", "accessedAt": "2025-03-04" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 1,
+        "lastVerified": "2025-03-04"
+      }
+    }
+  },
+  {
+    "id": "RAIL-FRA-LILLE-DOURGES",
+    "name": "Delta 3 Dourges Terminal",
+    "countryId": "FRA",
+    "city": "Lille",
+    "coordinates": [3.003, 50.435],
+    "type": "freight",
+    "dailyPassengers": null,
+    "annualFreightTonnes": 6400000,
+    "connectedCountries": ["BEL", "GBR", "DEU", "CHN"],
+    "gaugeType": "standard",
+    "lineCount": 10,
+    "strategicImportance": "high",
+    "isPartOfBRI": true,
+    "geopoliticalNotes": "Major northern logistics hub and BRI node with direct links to Wuhan and Jinhua. Gateway to the UK and Benelux.",
+    "notes": "Freight volume estimated based on TEU capacity (320,000 TEUs).",
+    "attribution": {
+      "sources": [
+        { "name": "Delta 3 Terminal Data", "url": "https://www.delta-3.com/", "accessedAt": "2025-03-04" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 1,
+        "lastVerified": "2025-03-04"
+      }
+    }
+  },
+  {
+    "id": "RAIL-FRA-DUNKIRK-PORT",
+    "name": "Port of Dunkirk Rail Terminal",
+    "countryId": "FRA",
+    "city": "Dunkirk",
+    "coordinates": [2.370, 51.040],
+    "type": "port_interface",
+    "dailyPassengers": null,
+    "annualFreightTonnes": 10000000,
+    "connectedCountries": ["BEL", "GBR"],
+    "gaugeType": "standard",
+    "lineCount": 12,
+    "strategicImportance": "high",
+    "isPartOfBRI": false,
+    "geopoliticalNotes": "France's leading multimodal port for rail. Major hub for heavy industry and cross-Channel logistics.",
+    "notes": "Handles 30% of the port's total land-based traffic.",
+    "attribution": {
+      "sources": [
+        { "name": "Dunkerque Port Authority", "url": "https://www.dunkerque-port.fr/", "accessedAt": "2025-03-04" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 1,
+        "lastVerified": "2025-03-04"
+      }
+    }
+  },
+  {
+    "id": "RAIL-FRA-LE-HAVRE-HAROPA",
+    "name": "HAROPA Port Rail Hub",
+    "countryId": "FRA",
+    "city": "Le Havre",
+    "coordinates": [0.100, 49.480],
+    "type": "port_interface",
+    "dailyPassengers": null,
+    "annualFreightTonnes": 2900000,
+    "connectedCountries": ["BEL", "CHE", "DEU"],
+    "gaugeType": "standard",
+    "lineCount": 15,
+    "strategicImportance": "high",
+    "isPartOfBRI": false,
+    "geopoliticalNotes": "France's largest container port. Vital for Atlantic trade and connecting the Seine axis to the European rail network.",
+    "notes": "Freight volume based on 145,000 TEUs handled in 2024.",
+    "attribution": {
+      "sources": [
+        { "name": "HAROPA Port Statistics", "url": "https://www.haropaport.com/", "accessedAt": "2025-03-04" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 1,
+        "lastVerified": "2025-03-04"
+      }
+    }
+  },
+  {
+    "id": "RAIL-FRA-MARSEILLE-FOS",
+    "name": "Marseille-Fos Rail Terminal",
+    "countryId": "FRA",
+    "city": "Marseille",
+    "coordinates": [4.860, 43.430],
+    "type": "port_interface",
+    "dailyPassengers": null,
+    "annualFreightTonnes": 4100000,
+    "connectedCountries": ["ITA", "CHE", "ESP"],
+    "gaugeType": "standard",
+    "lineCount": 14,
+    "strategicImportance": "high",
+    "isPartOfBRI": false,
+    "geopoliticalNotes": "Key Mediterranean gateway and container hub. Strong connections to the Lyon-Paris national corridor.",
+    "notes": "Freight volume based on 205,000 TEUs handled in 2024.",
+    "attribution": {
+      "sources": [
+        { "name": "Port of Marseille-Fos", "url": "https://www.marseille-port.fr/", "accessedAt": "2025-03-04" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 1,
+        "lastVerified": "2025-03-04"
+      }
+    }
+  },
+  {
+    "id": "RAIL-FRA-PARIS-VALENTON",
+    "name": "Valenton Intermodal Terminal",
+    "countryId": "FRA",
+    "city": "Paris",
+    "coordinates": [2.460, 48.740],
+    "type": "freight",
+    "dailyPassengers": null,
+    "annualFreightTonnes": 2500000,
+    "connectedCountries": ["BEL", "DEU", "ITA", "ESP"],
+    "gaugeType": "standard",
+    "lineCount": 12,
+    "strategicImportance": "high",
+    "isPartOfBRI": true,
+    "geopoliticalNotes": "Critical national hub connecting Paris to all major French corridors and the BRI routes via Germany and Belgium.",
+    "notes": null,
+    "attribution": {
+      "sources": [
+        { "name": "SNCF Réseau Freight Data", "url": "https://www.sncf-reseau.com/", "accessedAt": "2025-03-04" }
+      ],
+      "confidence": {
+        "confidence": "medium",
+        "sourceCount": 1,
+        "lastVerified": "2025-03-04"
+      }
+    }
+  },
+  {
+    "id": "RAIL-FRA-PERPIGNAN-SAINT-CHARLES",
+    "name": "Saint-Charles International Terminal",
+    "countryId": "FRA",
+    "city": "Perpignan",
+    "coordinates": [2.860, 42.680],
+    "type": "freight",
+    "dailyPassengers": null,
+    "annualFreightTonnes": 1500000,
+    "connectedCountries": ["ESP"],
+    "gaugeType": "mixed",
+    "lineCount": 8,
+    "strategicImportance": "high",
+    "isPartOfBRI": false,
+    "geopoliticalNotes": "Vital hub for fresh produce and Mediterranean trade. Key link for the rail motorway between Spain and Northern Europe.",
+    "notes": "Supports gauge-changing operations for traffic from Spain.",
+    "attribution": {
+      "sources": [
+        { "name": "Saint-Charles International Statistics", "url": "https://www.saintcharlesinternational.com/", "accessedAt": "2025-03-04" }
+      ],
+      "confidence": {
+        "confidence": "medium",
+        "sourceCount": 1,
+        "lastVerified": "2025-03-04"
+      }
+    }
+  },
+  {
+    "id": "RAIL-FRA-MODANE-FRONTIERE",
+    "name": "Modane Border Crossing Hub",
+    "countryId": "FRA",
+    "city": "Modane",
+    "coordinates": [6.700, 45.190],
+    "type": "border_crossing",
+    "dailyPassengers": null,
+    "annualFreightTonnes": 3000000,
+    "connectedCountries": ["ITA"],
+    "gaugeType": "standard",
+    "lineCount": 6,
+    "strategicImportance": "high",
+    "isPartOfBRI": false,
+    "geopoliticalNotes": "Primary gateway for the Alpine crossing to Italy. Critical node for the trans-European transport network (TEN-T) Mediterranean corridor.",
+    "notes": "Strategic importance remains high despite temporary line restrictions.",
+    "attribution": {
+      "sources": [
+        { "name": "SNCF Réseau International Corridors", "url": "https://www.sncf-reseau.com/", "accessedAt": "2025-03-04" }
+      ],
+      "confidence": {
+        "confidence": "medium",
+        "sourceCount": 1,
+        "lastVerified": "2025-03-04"
+      }
+    }
+  }
+]

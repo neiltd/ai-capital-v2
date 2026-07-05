@@ -1,0 +1,275 @@
+[
+  {
+    "id": "PLANT-ARG-ATUCHA-1",
+    "name": "Atucha I Nuclear Power Plant",
+    "countryId": "ARG",
+    "city": "Lima",
+    "coordinates": [-59.2075, -33.9672],
+    "type": "nuclear",
+    "status": "operating",
+    "capacityMW": 362,
+    "annualOutputGWh": null,
+    "yearCommissioned": 1974,
+    "yearRetirement": null,
+    "operator": "Nucleoeléctrica Argentina S.A.",
+    "owner": "State of Argentina",
+    "strategicNote": "First nuclear power plant in Latin America. Currently undergoing life extension works.",
+    "notes": "Net capacity is 319 MW. Life extension expected to last until 2026/27.",
+    "attribution": {
+      "sources": [
+        { "name": "Global Energy Monitor", "url": "https://www.gem.wiki/Atucha_I_Nuclear_Power_Plant", "accessedAt": "2025-05-10" },
+        { "name": "IAEA PRIS", "url": "https://pris.iaea.org/PRIS/CountryStatistics/ReactorDetails.aspx?current=3", "accessedAt": "2025-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 2,
+        "lastVerified": "2025-05-10"
+      }
+    }
+  },
+  {
+    "id": "PLANT-ARG-ATUCHA-2",
+    "name": "Atucha II Nuclear Power Plant",
+    "countryId": "ARG",
+    "city": "Lima",
+    "coordinates": [-59.2075, -33.9672],
+    "type": "nuclear",
+    "status": "operating",
+    "capacityMW": 745,
+    "annualOutputGWh": null,
+    "yearCommissioned": 2014,
+    "yearRetirement": null,
+    "operator": "Nucleoeléctrica Argentina S.A.",
+    "owner": "State of Argentina",
+    "strategicNote": "Largest nuclear reactor in Argentina, significantly boosting base-load capacity.",
+    "notes": "Net capacity is 692 MW.",
+    "attribution": {
+      "sources": [
+        { "name": "Global Energy Monitor", "url": "https://www.gem.wiki/Atucha_II_Nuclear_Power_Plant", "accessedAt": "2025-05-10" },
+        { "name": "IAEA PRIS", "url": "https://pris.iaea.org/PRIS/CountryStatistics/ReactorDetails.aspx?current=4", "accessedAt": "2025-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 2,
+        "lastVerified": "2025-05-10"
+      }
+    }
+  },
+  {
+    "id": "PLANT-ARG-EMBALSE",
+    "name": "Embalse Nuclear Power Plant",
+    "countryId": "ARG",
+    "city": "Embalse",
+    "coordinates": [-64.4431, -32.2319],
+    "type": "nuclear",
+    "status": "operating",
+    "capacityMW": 683,
+    "annualOutputGWh": null,
+    "yearCommissioned": 1984,
+    "yearRetirement": null,
+    "operator": "Nucleoeléctrica Argentina S.A.",
+    "owner": "State of Argentina",
+    "strategicNote": "Critical facility providing baseload power and producing Cobalt-60 for medical use.",
+    "notes": "Completed life extension in 2019. Net capacity 608 MW.",
+    "attribution": {
+      "sources": [
+        { "name": "Global Energy Monitor", "url": "https://www.gem.wiki/Embalse_Nuclear_Power_Plant", "accessedAt": "2025-05-10" },
+        { "name": "IAEA PRIS", "url": "https://pris.iaea.org/PRIS/CountryStatistics/ReactorDetails.aspx?current=2", "accessedAt": "2025-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 2,
+        "lastVerified": "2025-05-10"
+      }
+    }
+  },
+  {
+    "id": "PLANT-ARG-YACYRETA",
+    "name": "Yacyretá Hydroelectric Dam",
+    "countryId": "ARG",
+    "city": "Ituzaingó",
+    "coordinates": [-56.7250, -27.4828],
+    "type": "hydro",
+    "status": "operating",
+    "capacityMW": 3100,
+    "annualOutputGWh": 19000,
+    "yearCommissioned": 1994,
+    "yearRetirement": null,
+    "operator": "Entidad Binacional Yacyretá",
+    "owner": "Argentina and Paraguay",
+    "strategicNote": "Argentina's largest power producer, providing roughly 15% of national demand.",
+    "notes": "Binational facility on the Paraná River.",
+    "attribution": {
+      "sources": [
+        { "name": "Global Energy Monitor", "url": "https://www.gem.wiki/Yacyret%C3%A1_hydroelectric_plant", "accessedAt": "2025-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 1,
+        "lastVerified": "2025-05-10"
+      }
+    }
+  },
+  {
+    "id": "PLANT-ARG-SALTO-GRANDE",
+    "name": "Salto Grande Hydroelectric Plant",
+    "countryId": "ARG",
+    "city": "Concordia",
+    "coordinates": [-57.9383, -31.2747],
+    "type": "hydro",
+    "status": "operating",
+    "capacityMW": 1890,
+    "annualOutputGWh": null,
+    "yearCommissioned": 1979,
+    "yearRetirement": null,
+    "operator": "Comisión Técnica Mixta de Salto Grande",
+    "owner": "Argentina and Uruguay",
+    "strategicNote": "Major binational hydro facility on the Uruguay River.",
+    "notes": "Argentina share is 945 MW.",
+    "attribution": {
+      "sources": [
+        { "name": "Global Energy Monitor", "url": "https://www.gem.wiki/Salto_Grande_hydroelectric_plant", "accessedAt": "2025-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 1,
+        "lastVerified": "2025-05-10"
+      }
+    }
+  },
+  {
+    "id": "PLANT-ARG-PIEDRA-DEL-AGUILA",
+    "name": "Piedra del Águila Hydroelectric Plant",
+    "countryId": "ARG",
+    "city": "Piedra del Águila",
+    "coordinates": [-70.0333, -40.0167],
+    "type": "hydro",
+    "status": "operating",
+    "capacityMW": 1400,
+    "annualOutputGWh": null,
+    "yearCommissioned": 1993,
+    "yearRetirement": null,
+    "operator": "Centrales Térmicas del Comahue S.A.",
+    "owner": "Pampa Energía",
+    "strategicNote": "Key peaking plant in the Comahue region.",
+    "notes": null,
+    "attribution": {
+      "sources": [
+        { "name": "Global Energy Monitor", "url": "https://www.gem.wiki/Piedra_del_Ag%C3%BAila_hydro_plant", "accessedAt": "2025-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 1,
+        "lastVerified": "2025-05-10"
+      }
+    }
+  },
+  {
+    "id": "PLANT-ARG-EL-CHOCON",
+    "name": "El Chocón Hydroelectric Plant",
+    "countryId": "ARG",
+    "city": "Villa El Chocón",
+    "coordinates": [-69.2833, -39.2667],
+    "type": "hydro",
+    "status": "operating",
+    "capacityMW": 1200,
+    "annualOutputGWh": null,
+    "yearCommissioned": 1972,
+    "yearRetirement": null,
+    "operator": "Enel Generación El Chocón",
+    "owner": "Enel (majority)",
+    "strategicNote": "Major hydroelectric facility on the Limay River.",
+    "notes": null,
+    "attribution": {
+      "sources": [
+        { "name": "Global Energy Monitor", "url": "https://www.gem.wiki/El_Choc%C3%B3n_hydro_plant", "accessedAt": "2025-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 1,
+        "lastVerified": "2025-05-10"
+      }
+    }
+  },
+  {
+    "id": "PLANT-ARG-CAUCHARI",
+    "name": "Cauchari Solar Park",
+    "countryId": "ARG",
+    "city": "Olacapato",
+    "coordinates": [-66.7236, -24.0950],
+    "type": "solar",
+    "status": "operating",
+    "capacityMW": 300,
+    "annualOutputGWh": null,
+    "yearCommissioned": 2020,
+    "yearRetirement": null,
+    "operator": "JEMSE",
+    "owner": "Provincial Government of Jujuy",
+    "strategicNote": "One of the highest solar parks in the world, developed with Chinese financing and technology.",
+    "notes": "Comprises Cauchari I, II, and III (100 MW each).",
+    "attribution": {
+      "sources": [
+        { "name": "Global Energy Monitor", "url": "https://www.gem.wiki/Cauchari_Solar_Park", "accessedAt": "2025-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 1,
+        "lastVerified": "2025-05-10"
+      }
+    }
+  },
+  {
+    "id": "PLANT-ARG-MANUEL-BELGRANO",
+    "name": "Termoeléctrica Manuel Belgrano",
+    "countryId": "ARG",
+    "city": "Campana",
+    "coordinates": [-58.9833, -34.2500],
+    "type": "gas",
+    "status": "operating",
+    "capacityMW": 823,
+    "annualOutputGWh": null,
+    "yearCommissioned": 2008,
+    "yearRetirement": null,
+    "operator": "Termoeléctrica Manuel Belgrano S.A.",
+    "owner": "State/Private consortium",
+    "strategicNote": "Major combined cycle gas plant serving the Greater Buenos Aires area.",
+    "notes": null,
+    "attribution": {
+      "sources": [
+        { "name": "Global Energy Monitor", "url": "https://www.gem.wiki/Manuel_Belgrano_power_station", "accessedAt": "2025-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 1,
+        "lastVerified": "2025-05-10"
+      }
+    }
+  },
+  {
+    "id": "PLANT-ARG-TIMBUES",
+    "name": "Central Térmica José de San Martín (Timbúes)",
+    "countryId": "ARG",
+    "city": "Timbúes",
+    "coordinates": [-60.7833, -32.6667],
+    "type": "gas",
+    "status": "operating",
+    "capacityMW": 825,
+    "annualOutputGWh": null,
+    "yearCommissioned": 2008,
+    "yearRetirement": null,
+    "operator": "Termoeléctrica José de San Martín S.A.",
+    "owner": "State/Private consortium",
+    "strategicNote": "Critical gas-fired plant serving the industrial belt of Rosario.",
+    "notes": null,
+    "attribution": {
+      "sources": [
+        { "name": "Global Energy Monitor", "url": "https://www.gem.wiki/Jos%C3%A9_de_San_Mart%C3%ADn_power_station", "accessedAt": "2025-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 1,
+        "lastVerified": "2025-05-10"
+      }
+    }
+  }
+]

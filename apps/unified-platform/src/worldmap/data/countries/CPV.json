@@ -1,0 +1,63 @@
+{
+  "id": "CPV",
+  "iso2": "CV",
+  "name": "Cabo Verde",
+  "region": "Africa",
+  "subregion": "Western Africa",
+  "capital": "Praia",
+  "lastUpdated": "2026-05-15",
+  "summary": "Cabo Verde is one of Africa's most stable and advanced democracies, recently elevated to upper-middle-income status in 2025. The archipelago's economy is service-oriented, heavily reliant on tourism and remittances, and maintains a special partnership with the European Union. Despite its limited natural resources and vulnerability to climate-induced drought, Cabo Verde has achieved remarkable success in human development, including being declared malaria-free by the WHO in 2024. The nation is currently focused on economic diversification through its 'Blue Economy' and renewable energy transition.",
+  "indicators": {
+    "politicalStability":       { "score": 9, "trend": "stable", "confidence": "high", "note": "High institutional stability; consistent peaceful transitions between major parties (MpD and PAICV); upcoming 2026 elections." },
+    "economicDirection":        { "score": 7, "trend": "stable", "confidence": "high", "note": "Robust growth driven by tourism surge; elevation to upper-middle-income status in 2025 reflects long-term progress." },
+    "investmentAttractiveness": { "score": 7, "trend": "rising", "confidence": "high", "note": "Strong destination for FDI in West Africa due to transparent governance and EU peg; focus on eco-tourism and digital services." },
+    "geopoliticalRisk":         { "score": 2, "trend": "stable", "confidence": "high", "note": "Low risk of internal or external conflict; strategic partner for maritime security and counter-narcotics in the Atlantic." },
+    "educationQuality":         { "score": 8, "trend": "stable", "confidence": "high", "note": "High literacy rates and well-developed primary and secondary education systems." },
+    "healthcareQuality":        { "score": 7, "trend": "rising", "confidence": "high", "note": "Strong healthcare outcomes; officially declared malaria-free by the WHO in February 2024." },
+    "technologyInvestment":     { "score": 6, "trend": "rising", "confidence": "medium", "note": "Advancing as a regional digital hub; significant investment in renewable energy and submarine fiber optic cables." }
+  },
+  "demographics": {
+    "population": 525000,
+    "medianAge": 28.5,
+    "urbanizationRate": 68,
+    "majorEthnicGroups": ["Creole (Mulatto) 71%", "African 28%", "European 1%"],
+    "religions": [
+      { "name": "Roman Catholic", "percent": 77.3 },
+      { "name": "Protestant", "percent": 4.6 },
+      { "name": "Other", "percent": 18.1 }
+    ]
+  },
+  "alliances": ["African Union", "ECOWAS", "CPLP", "United Nations", "SIDS"],
+  "relationships": [
+    { "countryId": "PRT", "countryName": "Portugal", "type": "strategic_partner", "sentiment": "positive", "summary": "Former colonial power and closest European partner; deep historical, cultural, and economic ties." },
+    { "countryId": "USA", "countryName": "United States", "type": "strategic_partner", "sentiment": "positive", "summary": "Key partner for maritime security and development aid (Millennium Challenge Account); large Cabo Verdean diaspora in the US." },
+    { "countryId": "CHN", "countryName": "China", "type": "economic_partner", "sentiment": "positive", "summary": "Major partner for infrastructure development and healthcare cooperation; increasing investment in digital economy." },
+    { "countryId": "SEN", "countryName": "Senegal", "type": "neighbor", "sentiment": "positive", "summary": "Important regional partner for trade, migration management, and security cooperation." }
+  ],
+  "perspectives": [
+    { "source": "Tourism Developer", "bias": "Optimistic", "view": "The surge in visitors is creating thousands of jobs. Our future lies in high-quality, sustainable eco-tourism." },
+    { "source": "Environmental Scientist", "bias": "Concerned", "view": "Water scarcity is our biggest challenge. Desalination powered by renewables is essential for our survival as the climate changes." },
+    { "source": "Diaspora Entrepreneur", "bias": "Supportive", "view": "We are bringing back skills and capital from the US and Europe to invest in the digital future of our islands." },
+    { "source": "Public Health Official", "bias": "Proud", "view": "Being malaria-free is a monumental achievement that proves our health system's strength and our commitment to our people." }
+  ],
+  "historicalContext": {
+    "summary": "Uninhabited until the 15th century, Cabo Verde was a Portuguese colony and a major hub for the transatlantic slave trade. It gained independence in 1975 and, after a period of one-party rule, successfully transitioned to a multi-party democracy in 1991. It has since become a model for democratic governance and economic development in Africa.",
+    "keyEvents": [
+      { "year": 1975, "event": "Independence from Portugal." },
+      { "year": 1991, "event": "First multi-party elections mark the transition to democracy." },
+      { "year": 2007, "event": "Cabo Verde graduates from the UN's Least Developed Country (LDC) status." },
+      { "year": 2024, "event": "WHO officially declares Cabo Verde malaria-free; Secretary Blinken visits to strengthen US-CPV ties." },
+      { "year": 2025, "event": "Cabo Verde is officially elevated to upper-middle-income status by the World Bank." }
+    ]
+  },
+  "investmentNotes": {
+    "strengths": ["One of Africa's most stable democratic environments", "Strategic maritime location and special partnership with the EU", "Transparent legal system and strong protection of property rights", "Malaria-free status enhancing tourism and living standards"],
+    "risks": ["Extreme vulnerability to climate-induced drought and water scarcity", "Small domestic market and high cost of inter-island transport", "Heavy reliance on external economic conditions in Europe", "Limited natural resources and dependence on food/energy imports"],
+    "sectors": ["Blue Economy (Maritime Services/Fisheries)", "Eco-Tourism & Real Estate", "Renewable Energy (Wind/Solar)", "Information & Communication Technology (ICT)"]
+  },
+  "sources": [
+    { "name": "Banco de Cabo Verde", "url": "https://www.bcv.cv/", "type": "economic" },
+    { "name": "Cabo Verde TradeInvest", "url": "https://cvtradeinvest.com/", "type": "investment" },
+    { "name": "World Bank - Cabo Verde Data", "url": "https://data.worldbank.org/country/cabo-verde", "type": "economic" }
+  ]
+}

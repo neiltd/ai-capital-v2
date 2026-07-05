@@ -1,0 +1,218 @@
+[
+  {
+    "id": "PORT-KOR-BUSAN",
+    "name": "Port of Busan",
+    "countryId": "KOR",
+    "city": "Busan",
+    "coordinates": [129.044, 35.104],
+    "type": "container",
+    "annualThroughputTEU": 24400000,
+    "annualThroughputTonnes": 434000000,
+    "berthCount": 190,
+    "maxDraftM": 17.0,
+    "strategicImportance": "critical",
+    "riskLevel": "low",
+    "geopoliticalNotes": "World's 6th busiest container port and 2nd largest transshipment hub; primary gateway for Northeast Asian trade.",
+    "notes": "Includes Busan New Port and North Port; critical for global shipping alliances.",
+    "attribution": {
+      "sources": [
+        { "name": "Busan Port Authority", "url": "https://www.busanpa.com/eng/", "accessedAt": "2024-05-10" },
+        { "name": "UNCTAD Maritime Transport Report", "url": "https://unctad.org/topic/transport-and-trade-logistics/maritime-transport-report", "accessedAt": "2024-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 2,
+        "lastVerified": "2024-05-10"
+      }
+    }
+  },
+  {
+    "id": "PORT-KOR-INCHEON",
+    "name": "Port of Incheon",
+    "countryId": "KOR",
+    "city": "Incheon",
+    "coordinates": [126.617, 37.45],
+    "type": "container",
+    "annualThroughputTEU": 3560000,
+    "annualThroughputTonnes": 147000000,
+    "berthCount": 128,
+    "maxDraftM": 14.0,
+    "strategicImportance": "high",
+    "riskLevel": "medium",
+    "geopoliticalNotes": "Primary maritime gateway to the Seoul Metropolitan Area; central hub for trade with China.",
+    "notes": "Ongoing expansion at Incheon New Port; major hub for e-commerce.",
+    "attribution": {
+      "sources": [
+        { "name": "Incheon Port Authority", "url": "https://www.icpa.or.kr/eng/index.do", "accessedAt": "2024-05-10" },
+        { "name": "World Shipping Council", "url": "https://www.worldshipping.org", "accessedAt": "2024-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 2,
+        "lastVerified": "2024-05-10"
+      }
+    }
+  },
+  {
+    "id": "PORT-KOR-GWANGYANG",
+    "name": "Port of Gwangyang",
+    "countryId": "KOR",
+    "city": "Gwangyang",
+    "coordinates": [127.683, 34.9],
+    "type": "mixed",
+    "annualThroughputTEU": 2010000,
+    "annualThroughputTonnes": 276000000,
+    "berthCount": 99,
+    "maxDraftM": 15.0,
+    "strategicImportance": "high",
+    "riskLevel": "low",
+    "geopoliticalNotes": "Specialized industrial powerhouse supporting POSCO Steel Works and Yeosu National Industrial Complex.",
+    "notes": "South Korea's leading port for dry and liquid bulk shipments.",
+    "attribution": {
+      "sources": [
+        { "name": "Yeosu Gwangyang Port Authority", "url": "https://www.ygpa.or.kr/en/", "accessedAt": "2024-05-10" },
+        { "name": "UNCTAD", "url": "https://unctad.org", "accessedAt": "2024-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 2,
+        "lastVerified": "2024-05-10"
+      }
+    }
+  },
+  {
+    "id": "PORT-KOR-ULSAN",
+    "name": "Port of Ulsan",
+    "countryId": "KOR",
+    "city": "Ulsan",
+    "coordinates": [129.4, 35.467],
+    "type": "oil",
+    "annualThroughputTEU": 400000,
+    "annualThroughputTonnes": 192000000,
+    "berthCount": 123,
+    "maxDraftM": 17.0,
+    "strategicImportance": "high",
+    "riskLevel": "low",
+    "geopoliticalNotes": "Known as the 'Oil Capital,' handles over 30% of the nation's liquid cargo; home to world's largest automobile export terminal.",
+    "notes": "Major global shipbuilding hub (Hyundai Heavy Industries).",
+    "attribution": {
+      "sources": [
+        { "name": "Ulsan Port Authority", "url": "https://www.upa.or.kr/en/Main.do", "accessedAt": "2024-05-10" },
+        { "name": "UNCTAD", "url": "https://unctad.org", "accessedAt": "2024-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 2,
+        "lastVerified": "2024-05-10"
+      }
+    }
+  },
+  {
+    "id": "PORT-KOR-PYEONGTAEK-DANGJIN",
+    "name": "Port of Pyeongtaek-Dangjin",
+    "countryId": "KOR",
+    "city": "Pyeongtaek",
+    "coordinates": [126.8, 36.967],
+    "type": "mixed",
+    "annualThroughputTEU": 800000,
+    "annualThroughputTonnes": 116000000,
+    "berthCount": 64,
+    "maxDraftM": 18.0,
+    "strategicImportance": "medium",
+    "riskLevel": "low",
+    "geopoliticalNotes": "Closest Korean port to China's eastern economic zones; primary hub for automobile imports/exports.",
+    "notes": "Fastest-growing port in South Korea; critical for LNG supply to the capital region.",
+    "attribution": {
+      "sources": [
+        { "name": "Pyeongtaek Regional Office of Oceans and Fisheries", "url": "https://pyeongtaek.mof.go.kr/", "accessedAt": "2024-05-10" },
+        { "name": "Shiphub", "url": "https://shiphub.co", "accessedAt": "2024-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 2,
+        "lastVerified": "2024-05-10"
+      }
+    }
+  },
+  {
+    "id": "PORT-KOR-POHANG",
+    "name": "Port of Pohang",
+    "countryId": "KOR",
+    "city": "Pohang",
+    "coordinates": [129.4, 36.017],
+    "type": "bulk",
+    "annualThroughputTEU": 500000,
+    "annualThroughputTonnes": 112000000,
+    "berthCount": 24,
+    "maxDraftM": 17.0,
+    "strategicImportance": "medium",
+    "riskLevel": "low",
+    "geopoliticalNotes": "The 'Steel Industry Lifeline' developed to support POSCO's steel production.",
+    "notes": "Main industrial gateway for the Daegu-Gyeongbuk inland region.",
+    "attribution": {
+      "sources": [
+        { "name": "Pohang Regional Office of Oceans and Fisheries", "url": "https://pohang.mof.go.kr/", "accessedAt": "2024-05-10" },
+        { "name": "World Shipping Council", "url": "https://www.worldshipping.org", "accessedAt": "2024-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 2,
+        "lastVerified": "2024-05-10"
+      }
+    }
+  },
+  {
+    "id": "PORT-KOR-GUNSAN",
+    "name": "Port of Gunsan",
+    "countryId": "KOR",
+    "city": "Gunsan",
+    "coordinates": [126.683, 35.967],
+    "type": "mixed",
+    "annualThroughputTEU": 51000,
+    "annualThroughputTonnes": 25000000,
+    "berthCount": 31,
+    "maxDraftM": 9.0,
+    "strategicImportance": "low",
+    "riskLevel": "low",
+    "geopoliticalNotes": "Key industrial and export hub on the Yellow Sea; benefits from a Free Trade Zone.",
+    "notes": "Focuses on heavy machinery, grain, and proximity to Saemangeum project.",
+    "attribution": {
+      "sources": [
+        { "name": "Gunsan Regional Office of Oceans and Fisheries", "url": "https://gunsan.mof.go.kr/", "accessedAt": "2024-05-10" },
+        { "name": "UNISCO", "url": "https://unisco.com", "accessedAt": "2024-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 2,
+        "lastVerified": "2024-05-10"
+      }
+    }
+  },
+  {
+    "id": "PORT-KOR-MOKPO",
+    "name": "Port of Mokpo",
+    "countryId": "KOR",
+    "city": "Mokpo",
+    "coordinates": [126.35, 34.767],
+    "type": "mixed",
+    "annualThroughputTEU": 110000,
+    "annualThroughputTonnes": 22000000,
+    "berthCount": 15,
+    "maxDraftM": 9.0,
+    "strategicImportance": "low",
+    "riskLevel": "low",
+    "geopoliticalNotes": "Southwestern gateway for cargo and passenger traffic between Korea, China, and Japan.",
+    "notes": "Vital for the Daebul Industrial Complex, specializing in ship blocks.",
+    "attribution": {
+      "sources": [
+        { "name": "Mokpo Regional Office of Oceans and Fisheries", "url": "https://mokpo.mof.go.kr/", "accessedAt": "2024-05-10" },
+        { "name": "Vesseltracker", "url": "https://www.vesseltracker.com", "accessedAt": "2024-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 2,
+        "lastVerified": "2024-05-10"
+      }
+    }
+  }
+]

@@ -1,0 +1,218 @@
+[
+  {
+    "id": "PORT-GBR-FELIXSTOWE",
+    "name": "Port of Felixstowe",
+    "countryId": "GBR",
+    "city": "Felixstowe",
+    "coordinates": [1.31, 51.955],
+    "type": "container",
+    "annualThroughputTEU": 4000000,
+    "annualThroughputTonnes": 28000000,
+    "berthCount": 9,
+    "maxDraftM": 18.0,
+    "strategicImportance": "critical",
+    "riskLevel": "low",
+    "geopoliticalNotes": "The UK's largest and busiest container port, handling nearly 50% of the country's containerized trade. Primary gateway for Asian imports.",
+    "notes": "Deepest water container port in the UK. Managed by Hutchison Ports.",
+    "attribution": {
+      "sources": [
+        { "name": "Port of Felixstowe Official", "url": "https://www.portoffelixstowe.co.uk/", "accessedAt": "2026-05-10" },
+        { "name": "Cogoport", "url": "https://www.cogoport.com/en-IN/shipping-guides/ports/united-kingdom", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 2,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  },
+  {
+    "id": "PORT-GBR-LONDON-GATEWAY",
+    "name": "DP World London Gateway",
+    "countryId": "GBR",
+    "city": "Stanford-le-Hope",
+    "coordinates": [0.46, 51.51],
+    "type": "container",
+    "annualThroughputTEU": 3500000,
+    "annualThroughputTonnes": 53200000,
+    "berthCount": 3,
+    "maxDraftM": 17.0,
+    "strategicImportance": "critical",
+    "riskLevel": "low",
+    "geopoliticalNotes": "State-of-the-art automated terminal serving the London metropolitan area. Part of the Thames Freeport.",
+    "notes": "Throughput and tonnage combined with Tilbury as Port of London hub. Highly automated operations.",
+    "attribution": {
+      "sources": [
+        { "name": "DP World London Gateway", "url": "https://www.dpworld.com/london-gateway", "accessedAt": "2026-05-10" },
+        { "name": "Port of London Authority", "url": "https://www.pla.co.uk/", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 2,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  },
+  {
+    "id": "PORT-GBR-IMMINGHAM",
+    "name": "Port of Immingham",
+    "countryId": "GBR",
+    "city": "Immingham",
+    "coordinates": [-0.183, 53.633],
+    "type": "bulk",
+    "annualThroughputTEU": 300000,
+    "annualThroughputTonnes": 50000000,
+    "berthCount": 10,
+    "maxDraftM": 16.5,
+    "strategicImportance": "high",
+    "riskLevel": "low",
+    "geopoliticalNotes": "The UK's largest port by tonnage, critical for energy security (biomass, coal, and oil) and industrial supply chains in the North.",
+    "notes": "Part of the ABP Humber cluster. Major hub for the UK's energy transition.",
+    "attribution": {
+      "sources": [
+        { "name": "Associated British Ports", "url": "https://www.abports.co.uk/locations/humber/immingham/", "accessedAt": "2026-05-10" },
+        { "name": "Lloyd's List", "url": "https://lloydslist.maritimeintelligence.informa.com/", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 2,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  },
+  {
+    "id": "PORT-GBR-SOUTHAMPTON",
+    "name": "Port of Southampton",
+    "countryId": "GBR",
+    "city": "Southampton",
+    "coordinates": [-1.397, 50.896],
+    "type": "mixed",
+    "annualThroughputTEU": 2000000,
+    "annualThroughputTonnes": 34500000,
+    "berthCount": 45,
+    "maxDraftM": 15.5,
+    "strategicImportance": "high",
+    "riskLevel": "low",
+    "geopoliticalNotes": "Busiest cruise port in Europe and leading hub for automotive exports (Rolls-Royce, MINI). Critical for trade with North America.",
+    "notes": "Operated by ABP. Second largest container port in the UK.",
+    "attribution": {
+      "sources": [
+        { "name": "ABP Southampton", "url": "https://www.southamptonvts.co.uk/", "accessedAt": "2026-05-10" },
+        { "name": "World Shipping Council", "url": "https://www.worldshipping.org/", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 2,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  },
+  {
+    "id": "PORT-GBR-LIVERPOOL",
+    "name": "Port of Liverpool",
+    "countryId": "GBR",
+    "city": "Liverpool",
+    "coordinates": [-2.992, 53.409],
+    "type": "mixed",
+    "annualThroughputTEU": 900000,
+    "annualThroughputTonnes": 32000000,
+    "berthCount": 100,
+    "maxDraftM": 12.8,
+    "strategicImportance": "high",
+    "riskLevel": "low",
+    "geopoliticalNotes": "Primary gateway for transatlantic trade. Liverpool2 terminal enables handling of largest container ships on the West coast.",
+    "notes": "Managed by Peel Ports. Vital hub for North West industrial cluster.",
+    "attribution": {
+      "sources": [
+        { "name": "Peel Ports Liverpool", "url": "https://www.peelports.com/ports/liverpool", "accessedAt": "2026-05-10" },
+        { "name": "UNCTAD", "url": "https://unctad.org/topic/transport-and-trade-logistics", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 2,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  },
+  {
+    "id": "PORT-GBR-MILFORD-HAVEN",
+    "name": "Port of Milford Haven",
+    "countryId": "GBR",
+    "city": "Milford Haven",
+    "coordinates": [-5.033, 51.7],
+    "type": "oil",
+    "annualThroughputTEU": null,
+    "annualThroughputTonnes": 39000000,
+    "berthCount": 5,
+    "maxDraftM": 19.0,
+    "strategicImportance": "high",
+    "riskLevel": "low",
+    "geopoliticalNotes": "The UK's largest energy port. Handles 25% of UK petrol/diesel and 30% of gas requirements via major LNG terminals.",
+    "notes": "Home to South Hook LNG, one of the largest LNG terminals in the world.",
+    "attribution": {
+      "sources": [
+        { "name": "Port of Milford Haven Authority", "url": "https://www.mhpa.co.uk/", "accessedAt": "2026-05-10" },
+        { "name": "Magic Port AI", "url": "https://magicport.ai/ports/united-kingdom/milford-haven", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 2,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  },
+  {
+    "id": "PORT-GBR-TEESPORT",
+    "name": "Port of Teesport",
+    "countryId": "GBR",
+    "city": "Middlesbrough",
+    "coordinates": [-1.158, 54.604],
+    "type": "mixed",
+    "annualThroughputTEU": 500000,
+    "annualThroughputTonnes": 28000000,
+    "berthCount": 11,
+    "maxDraftM": 14.5,
+    "strategicImportance": "medium",
+    "riskLevel": "low",
+    "geopoliticalNotes": "Major northern logistics hub with Teesside Freeport status. Strategic for steel, chemicals, and retail logistics.",
+    "notes": "Operated by PD Ports. Largest port in the North East.",
+    "attribution": {
+      "sources": [
+        { "name": "PD Ports Teesport", "url": "https://www.pdports.co.uk/teesport/", "accessedAt": "2026-05-10" },
+        { "name": "Wikipedia - Teesport", "url": "https://en.wikipedia.org/wiki/Teesport", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 2,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  },
+  {
+    "id": "PORT-GBR-DOVER",
+    "name": "Port of Dover",
+    "countryId": "GBR",
+    "city": "Dover",
+    "coordinates": [1.317, 51.117],
+    "type": "mixed",
+    "annualThroughputTEU": null,
+    "annualThroughputTonnes": 30000000,
+    "berthCount": 10,
+    "maxDraftM": 9.5,
+    "strategicImportance": "critical",
+    "riskLevel": "medium",
+    "geopoliticalNotes": "The world's busiest ferry port. Most vital link for just-in-time supply chains between the UK and EU, handling £144bn in trade.",
+    "notes": "Primarily Ro-Ro freight. Critical sensitivity to post-Brexit customs and border security.",
+    "attribution": {
+      "sources": [
+        { "name": "Port of Dover Official", "url": "https://www.portofdover.com/", "accessedAt": "2026-05-10" },
+        { "name": "Freightos", "url": "https://www.freightos.com/shipping-knowledge/port-of-dover/", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 2,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  }
+]

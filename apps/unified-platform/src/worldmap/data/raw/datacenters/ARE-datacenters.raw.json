@@ -1,0 +1,302 @@
+[
+  {
+    "id": "DC-ARE-DXB-AWS-MEC1",
+    "name": "AWS Middle East (UAE) Region",
+    "countryId": "ARE",
+    "city": "Dubai",
+    "coordinates": [55.18, 25.05],
+    "type": "hyperscale",
+    "status": "operational",
+    "tierLevel": "3",
+    "capacityMW": null,
+    "floorSpaceM2": null,
+    "pue": null,
+    "operator": "Amazon Web Services",
+    "owner": "Amazon",
+    "yearOpened": 2022,
+    "yearPlanned": null,
+    "cloudRegion": "me-central-1",
+    "geopoliticalNotes": "AWS's first full region in the UAE, providing local data residency for government and financial sectors, reducing reliance on foreign hubs.",
+    "notes": "Spans multiple availability zones across Dubai and Abu Dhabi.",
+    "attribution": {
+      "sources": [
+        { "name": "AWS Global Infrastructure", "url": "https://aws.amazon.com/about-aws/global-infrastructure/regions_az/", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 2,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  },
+  {
+    "id": "DC-ARE-DXB-MSFT-NORTH",
+    "name": "Microsoft Azure UAE North",
+    "countryId": "ARE",
+    "city": "Dubai",
+    "coordinates": [55.20, 25.08],
+    "type": "hyperscale",
+    "status": "operational",
+    "tierLevel": "3",
+    "capacityMW": null,
+    "floorSpaceM2": null,
+    "pue": null,
+    "operator": "Microsoft",
+    "owner": "Microsoft",
+    "yearOpened": 2019,
+    "yearPlanned": null,
+    "cloudRegion": "uaenorth",
+    "geopoliticalNotes": "Primary hub for Azure in the Middle East; part of the strategic partnership with G42 to pivot UAE's AI infrastructure towards US technology.",
+    "notes": "Includes three availability zones for high availability.",
+    "attribution": {
+      "sources": [
+        { "name": "Microsoft Azure Regions", "url": "https://azure.microsoft.com/en-us/explore/global-infrastructure/geographies/", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 2,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  },
+  {
+    "id": "DC-ARE-AUH-MSFT-CENTRAL",
+    "name": "Microsoft Azure UAE Central",
+    "countryId": "ARE",
+    "city": "Abu Dhabi",
+    "coordinates": [54.60, 24.45],
+    "type": "hyperscale",
+    "status": "operational",
+    "tierLevel": "3",
+    "capacityMW": null,
+    "floorSpaceM2": null,
+    "pue": null,
+    "operator": "Microsoft",
+    "owner": "Microsoft",
+    "yearOpened": 2019,
+    "yearPlanned": null,
+    "cloudRegion": "uaecentral",
+    "geopoliticalNotes": "Restricted region focused on government and disaster recovery for Dubai-based workloads, ensuring Abu Dhabi's data sovereignty.",
+    "notes": null,
+    "attribution": {
+      "sources": [
+        { "name": "Microsoft Azure Regions", "url": "https://azure.microsoft.com/en-us/explore/global-infrastructure/geographies/", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 1,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  },
+  {
+    "id": "DC-ARE-AUH-KHAZNA-AUH6",
+    "name": "Khazna AUH6 (Masdar City)",
+    "countryId": "ARE",
+    "city": "Abu Dhabi",
+    "coordinates": [54.617, 24.431],
+    "type": "hyperscale",
+    "status": "operational",
+    "tierLevel": "3",
+    "capacityMW": 31.8,
+    "floorSpaceM2": null,
+    "pue": null,
+    "operator": "Khazna Data Centers",
+    "owner": "G42",
+    "yearOpened": 2023,
+    "yearPlanned": null,
+    "cloudRegion": null,
+    "geopoliticalNotes": "A critical node for G42's AI initiatives, hosting local compute for the Falcon LLM and supporting the UAE's National AI Strategy.",
+    "notes": "Located in the Masdar City sustainable tech hub.",
+    "attribution": {
+      "sources": [
+        { "name": "Khazna Data Centers", "url": "https://www.khazna.ae/our-data-centers/", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 2,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  },
+  {
+    "id": "DC-ARE-AUH-KHAZNA-AUH5",
+    "name": "Khazna AUH5 (KIZAD)",
+    "countryId": "ARE",
+    "city": "Abu Dhabi",
+    "coordinates": [54.712, 24.845],
+    "type": "hyperscale",
+    "status": "operational",
+    "tierLevel": "3",
+    "capacityMW": 36,
+    "floorSpaceM2": null,
+    "pue": null,
+    "operator": "Khazna Data Centers",
+    "owner": "G42",
+    "yearOpened": 2022,
+    "yearPlanned": null,
+    "cloudRegion": null,
+    "geopoliticalNotes": "Designed for high-density AI clusters; strategic location in the industrial zone to support national logistics and digital economy.",
+    "notes": "Supports racks up to 60kW for AI workloads.",
+    "attribution": {
+      "sources": [
+        { "name": "Data Center Dynamics", "url": "https://www.datacenterdynamics.com/en/news/khazna-opens-36mw-data-center-in-abu-dhabi-uae/", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 2,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  },
+  {
+    "id": "DC-ARE-DXB-KHAZNA-DXB1",
+    "name": "Khazna DXB1 (Al Meydan)",
+    "countryId": "ARE",
+    "city": "Dubai",
+    "coordinates": [55.30, 25.15],
+    "type": "hyperscale",
+    "status": "operational",
+    "tierLevel": "3",
+    "capacityMW": 18,
+    "floorSpaceM2": null,
+    "pue": null,
+    "operator": "Khazna Data Centers",
+    "owner": "G42",
+    "yearOpened": 2014,
+    "yearPlanned": null,
+    "cloudRegion": null,
+    "geopoliticalNotes": "One of the foundational facilities for the UAE's domestic cloud strategy, serving as a primary site for government digital services.",
+    "notes": null,
+    "attribution": {
+      "sources": [
+        { "name": "Khazna Data Centers", "url": "https://www.khazna.ae/our-data-centers/", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 1,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  },
+  {
+    "id": "DC-ARE-DXB-EQX-DX1",
+    "name": "Equinix DX1 Dubai IBX",
+    "countryId": "ARE",
+    "city": "Dubai",
+    "coordinates": [55.187, 25.026],
+    "type": "colocation",
+    "status": "operational",
+    "tierLevel": "3",
+    "capacityMW": 5.58,
+    "floorSpaceM2": 1920,
+    "pue": null,
+    "operator": "Equinix",
+    "owner": "Equinix",
+    "yearOpened": 2012,
+    "yearPlanned": null,
+    "cloudRegion": null,
+    "geopoliticalNotes": "Hosts the UAE-IX, the region's most significant internet exchange point, making it a critical node for international data traffic transit.",
+    "notes": "Connectivity hub with 50+ network providers.",
+    "attribution": {
+      "sources": [
+        { "name": "Equinix Data Centers", "url": "https://www.equinix.com/data-centers/middle-east-africa/uae/dubai-data-center", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 2,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  },
+  {
+    "id": "DC-ARE-DXB-EQX-DX3",
+    "name": "Equinix DX3 Dubai IBX",
+    "countryId": "ARE",
+    "city": "Dubai",
+    "coordinates": [55.185, 25.025],
+    "type": "colocation",
+    "status": "operational",
+    "tierLevel": "3",
+    "capacityMW": null,
+    "floorSpaceM2": null,
+    "pue": null,
+    "operator": "Equinix",
+    "owner": "Equinix",
+    "yearOpened": 2023,
+    "yearPlanned": null,
+    "cloudRegion": null,
+    "geopoliticalNotes": "Expansion of Equinix's footprint to meet the surging demand for interconnected cloud services and edge computing in the Gulf.",
+    "notes": "Located adjacent to DX1.",
+    "attribution": {
+      "sources": [
+        { "name": "Data Center Map", "url": "https://www.datacentermap.com/uae/dubai/equinix-dx3.html", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "medium",
+        "sourceCount": 1,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  },
+  {
+    "id": "DC-ARE-AUH-EQX-AD1",
+    "name": "Equinix AD1 Abu Dhabi IBX",
+    "countryId": "ARE",
+    "city": "Abu Dhabi",
+    "coordinates": [54.615, 24.430],
+    "type": "colocation",
+    "status": "operational",
+    "tierLevel": "3",
+    "capacityMW": null,
+    "floorSpaceM2": null,
+    "pue": null,
+    "operator": "Equinix",
+    "owner": "Equinix",
+    "yearOpened": 2014,
+    "yearPlanned": null,
+    "cloudRegion": null,
+    "geopoliticalNotes": "Strategic interconnection point in the capital, serving as a secondary hub for financial services and government agencies.",
+    "notes": null,
+    "attribution": {
+      "sources": [
+        { "name": "Equinix Data Centers", "url": "https://www.equinix.com/data-centers/middle-east-africa/uae/abu-dhabi-data-center", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 1,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  },
+  {
+    "id": "DC-ARE-AUH-G42-AI",
+    "name": "G42 AI Supercomputing Center",
+    "countryId": "ARE",
+    "city": "Abu Dhabi",
+    "coordinates": [54.62, 24.42],
+    "type": "hyperscale",
+    "status": "operational",
+    "tierLevel": "3",
+    "capacityMW": null,
+    "floorSpaceM2": null,
+    "pue": null,
+    "operator": "G42 / Khazna",
+    "owner": "G42",
+    "yearOpened": 2020,
+    "yearPlanned": null,
+    "cloudRegion": null,
+    "geopoliticalNotes": "Home to the Artemis supercomputer; the technological core of the UAE's push for AI sovereignty and its strategic pivot away from Chinese hardware in favor of NVIDIA and Microsoft.",
+    "notes": "Highly secure facility focused on massive AI model training.",
+    "attribution": {
+      "sources": [
+        { "name": "Reuters: Microsoft-G42 Deal", "url": "https://www.reuters.com/technology/microsoft-invest-15-billion-uaes-g42-2024-04-16/", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "medium",
+        "sourceCount": 1,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  }
+]

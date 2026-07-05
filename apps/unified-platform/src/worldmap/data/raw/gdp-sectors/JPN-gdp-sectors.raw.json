@@ -1,0 +1,26 @@
+[
+  {
+    "countryId": "JPN",
+    "year": 2023,
+    "gdpUsdBn": 4210,
+    "gdpPerCapita": 34000,
+    "sectors": [
+      { "sector": "Services", "percentOfGDP": 70.5, "notes": "Includes wholesale, retail, and real estate." },
+      { "sector": "Manufacturing", "percentOfGDP": 20.6, "notes": "Core industry, particularly automotive and electronics." },
+      { "sector": "Construction", "percentOfGDP": 5.3, "notes": null },
+      { "sector": "Utilities", "percentOfGDP": 2.7, "notes": "Electricity, gas, and water supply." },
+      { "sector": "Agriculture, Forestry, & Fishing", "percentOfGDP": 0.9, "notes": null }
+    ],
+    "attribution": {
+      "sources": [
+        { "name": "Statistics Bureau of Japan 2023", "url": "https://www.stat.go.jp/", "accessedAt": "2025-02-11" },
+        { "name": "World Bank DataBank 2023", "url": "https://databank.worldbank.org/", "accessedAt": "2025-02-11" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 2,
+        "lastVerified": "2025-02-11"
+      }
+    }
+  }
+]

@@ -1,0 +1,62 @@
+{
+  "id": "NRU",
+  "iso2": "NR",
+  "name": "Nauru",
+  "region": "Oceania",
+  "subregion": "Micronesia",
+  "capital": "Yaren",
+  "lastUpdated": "2026-05-15",
+  "summary": "Nauru is the world's smallest island republic, currently navigating a major geopolitical shift following its 2024 decision to recognize China over Taiwan. The nation's economy is heavily reliant on the Australian Regional Processing Centre (RPC) and fishing licenses. A landmark 2024 treaty with Australia provides significant budget support while granting Australia oversight of Nauru's security arrangements, reflecting a trend toward 'securitized aid' in the Pacific. Nauru also faces major environmental challenges from past phosphate mining and significant public health issues.",
+  "indicators": {
+    "politicalStability":       { "score": 7, "trend": "stable", "confidence": "high", "note": "President David Adeang re-elected in 2025; voter rejection of term extensions in referendum shows active civic engagement." },
+    "economicDirection":        { "score": 4, "trend": "stable", "confidence": "high", "note": "Economy is largely a service economy for the RPC; efforts to diversify into deep-sea mining and renewables are ongoing." },
+    "investmentAttractiveness": { "score": 3, "trend": "rising", "confidence": "medium", "note": "New banking partnership with CBA in 2025 reduces 'de-banking' risks; focus on land rehabilitation and ICT." },
+    "geopoliticalRisk":         { "score": 6, "trend": "rising", "confidence": "high", "note": "High exposure to US-China competition; 2024 Nauru-Australia treaty creates a security buffer but limits policy independence." },
+    "educationQuality":         { "score": 5, "trend": "stable", "confidence": "medium", "note": "Free education; challenges with high dropout rates and limited local tertiary options." },
+    "healthcareQuality":        { "score": 3, "trend": "stable", "confidence": "high", "note": "Strained system; highest rates of obesity and NCDs globally; heavy reliance on overseas medical referrals." },
+    "technologyInvestment":     { "score": 5, "trend": "rising", "confidence": "medium", "note": "Fiber optic cable improvements and digital banking reforms (2025) are key priorities." }
+  },
+  "demographics": {
+    "population": 12500,
+    "medianAge": 21.5,
+    "urbanizationRate": 100,
+    "majorEthnicGroups": ["Nauruan", "Other Pacific Islander", "Chinese", "European"],
+    "religions": [
+      { "name": "Nauru Congregational Church", "percent": 35.7 },
+      { "name": "Roman Catholic", "percent": 33.0 },
+      { "name": "Other", "percent": 31.3 }
+    ]
+  },
+  "alliances": ["Pacific Islands Forum", "Commonwealth", "United Nations", "Alliance of Small Island States (AOSIS)"],
+  "relationships": [
+    { "countryId": "AUS", "countryName": "Australia", "type": "strategic_partner", "sentiment": "positive", "summary": "Dominant economic and security partner; provider of the RPC and significant budget support under the 2024 Treaty." },
+    { "countryId": "CHN", "countryName": "China", "type": "economic_partner", "sentiment": "positive", "summary": "New diplomatic partner as of Jan 2024; focusing on infrastructure and development projects." },
+    { "countryId": "USA", "countryName": "United States", "type": "strategic_partner", "sentiment": "neutral", "summary": "Engagement is primarily through regional security frameworks and concern over Chinese influence." },
+    { "countryId": "TWN", "countryName": "Taiwan", "type": "former_partner", "sentiment": "negative", "summary": "Relations severed in Jan 2024 as Nauru switched recognition to the PRC." }
+  ],
+  "perspectives": [
+    { "source": "Government Official", "bias": "Strategic", "view": "We are maximizing our sovereignty by leveraging our strategic value to both Australia and China for the development of our people." },
+    { "source": "Environmental Activist", "bias": "Concerned", "view": "Deep-sea mining might be our future wealth, but we cannot afford to destroy our ocean after already losing our land to phosphate mining." },
+    { "source": "Health Worker", "bias": "Critical", "view": "The NCD crisis is a slow-motion disaster. We need systemic change in our food security and lifestyle to save the next generation." },
+    { "source": "Voter", "bias": "Pragmatic", "view": "The 2025 referendum showed we want our leaders to follow the rules. Stability is good, but accountability is better." }
+  ],
+  "historicalContext": {
+    "summary": "Once one of the world's wealthiest nations per capita due to phosphate mining, Nauru's economy collapsed as reserves were depleted in the late 20th century. Since 2001, it has hosted the Australian Regional Processing Centre, which has become the bedrock of the national economy.",
+    "keyEvents": [
+      { "year": 1968, "event": "Independence from Australia, New Zealand, and the United Kingdom." },
+      { "year": 2001, "event": "Establishment of the first Australian Regional Processing Centre (the 'Pacific Solution')." },
+      { "year": 2024, "event": "Nauru switches diplomatic recognition from Taiwan to China; signs 2024 Treaty with Australia." },
+      { "year": 2025, "event": "General elections held; David Adeang re-elected; constitutional referendum on term extension is defeated." }
+    ]
+  },
+  "investmentNotes": {
+    "strengths": ["Strategic location for maritime and security engagement", "Stable revenue stream from the RPC and Australia treaty", "Potential for deep-sea mineral extraction (The Metals Company engagement)", "Renewed banking stability with CBA entry in 2025"],
+    "risks": ["Heavy economic concentration in a single sector (RPC)", "Extreme vulnerability to climate-induced storm surges", "High public health costs and small, specialized labor force", "Degraded land requiring massive long-term rehabilitation costs"],
+    "sectors": ["Extractive Industries (Potential Deep-Sea Mining)", "Climate Resilience & Land Rehabilitation", "ICT & Digital Banking", "Renewable Energy (Solar/Storage)"]
+  },
+  "sources": [
+    { "name": "Republic of Nauru - Government Portal", "url": "http://naurugov.nr/", "type": "official" },
+    { "name": "ADB - Nauru Economic Forecast", "url": "https://www.adb.org/countries/nauru/main", "type": "economic" },
+    { "name": "Lowy Institute - Nauru Profile", "url": "https://www.lowyinstitute.org/", "type": "analysis" }
+  ]
+}

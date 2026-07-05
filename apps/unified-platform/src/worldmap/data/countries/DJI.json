@@ -1,0 +1,65 @@
+{
+  "id": "DJI",
+  "iso2": "DJ",
+  "name": "Djibouti",
+  "region": "Africa",
+  "subregion": "Eastern Africa",
+  "capital": "Djibouti",
+  "lastUpdated": "2026-05-09",
+  "summary": "Djibouti is a small, strategically located country on the Horn of Africa, at the entrance to the Red Sea. It serves as a vital maritime hub and hosts numerous foreign military bases due to its stability in a volatile region. The economy is heavily centered around its advanced port facilities and logistics services, particularly for landlocked Ethiopia. While Djibouti has experienced significant infrastructure-led growth, it faces challenges with high public debt, high unemployment, and a lack of natural resources.",
+  "indicators": {
+    "politicalStability":       { "score": 6, "trend": "stable", "confidence": "high", "note": "Maintains stability under President Ismaïl Omar Guelleh; strategic importance ensures international support, but political space is limited." },
+    "economicDirection":        { "score": 5, "trend": "stable", "confidence": "medium", "note": "Growth driven by port services and infrastructure projects; high debt levels, primarily to China, are a concern." },
+    "investmentAttractiveness": { "score": 4, "trend": "stable", "confidence": "medium", "note": "Attractive for logistics and energy projects; business environment is improving but still faces bureaucratic hurdles." },
+    "geopoliticalRisk":         { "score": 6, "trend": "stable", "confidence": "high", "note": "Located in a high-risk region (near Somalia, Yemen, Ethiopia); potential for regional instability but mitigated by foreign military presence." },
+    "educationQuality":         { "score": 3, "trend": "stable", "confidence": "high", "note": "Significant investment in education, but quality and alignment with labor market needs remain challenges." },
+    "healthcareQuality":        { "score": 3, "trend": "stable", "confidence": "medium", "note": "Improving health indicators in urban areas; rural access is limited; focus on reducing maternal and child mortality." },
+    "technologyInvestment":     { "score": 4, "trend": "improving", "confidence": "medium", "note": "Major landing point for international undersea cables; focus on becoming a regional ICT hub and expanding digital services." }
+  },
+  "demographics": {
+    "population": 1100000,
+    "medianAge": 25.4,
+    "urbanizationRate": 78,
+    "majorEthnicGroups": ["Somali (Issa)", "Afar"],
+    "religions": [
+      { "name": "Muslim", "percent": 94.0 },
+      { "name": "Christian", "percent": 6.0 }
+    ]
+  },
+  "alliances": ["AU", "Arab League", "IGAD", "COMESA"],
+  "relationships": [
+    { "countryId": "ETH", "countryName": "Ethiopia", "type": "strategic_partner", "sentiment": "positive", "summary": "Critical economic partnership; Djibouti ports handle over 90% of Ethiopia's trade; connected by a modern railway." },
+    { "countryId": "CHN", "countryName": "China", "type": "strategic_partner", "sentiment": "positive", "summary": "Major investor in infrastructure and ports; China operates its first overseas military support base in Djibouti." },
+    { "countryId": "USA", "countryName": "United States", "type": "security_partner", "sentiment": "positive", "summary": "Hosts Camp Lemonnier, the only permanent U.S. military base in Africa; key partner in regional counter-terrorism." },
+    { "countryId": "FRA", "countryName": "France", "type": "former_colonizer", "sentiment": "positive", "summary": "Maintains a significant military presence and strong diplomatic and cultural ties." }
+  ],
+  "perspectives": [
+    { "source": "Government Official", "bias": "Optimistic", "view": "Our vision is to become the logistics and digital hub of Africa, leveraging our unique strategic location." },
+    { "source": "Port Worker", "bias": "Pragmatic", "view": "The ports are the lifeblood of our city, but we need more jobs for our youth beyond the docks." },
+    { "source": "Afar Elder", "bias": "Concerned", "view": "We must ensure that development is inclusive and respects the traditions and needs of all our people." },
+    { "source": "International Debt Analyst", "bias": "Critical", "view": "Djibouti's infrastructure boom has come at the cost of high debt distress, which could limit future fiscal space." }
+  ],
+  "historicalContext": {
+    "summary": "Djibouti gained independence from France in 1977. Its history has been relatively stable, though it experienced an internal conflict between the Issa and Afar groups in the 1990s. Ismaïl Omar Guelleh has been president since 1999, overseeing the country's transformation into a major regional maritime and military hub.",
+    "keyEvents": [
+      { "year": 1977, "event": "Independence from France." },
+      { "year": 1991, "event": "Start of civil conflict between the government and FRUD (Afar rebels)." },
+      { "year": 1994, "event": "Peace agreement signed, ending the main conflict." },
+      { "year": 1999, "event": "Ismaïl Omar Guelleh succeeds Hassan Gouled Aptidon as president." },
+      { "year": 2002, "event": "U.S. establishes Camp Lemonnier." },
+      { "year": 2017, "event": "Opening of the Doraleh Multipurpose Port and the Djibouti-Addis Ababa railway." },
+      { "year": 2017, "event": "China officially opens its military support base." },
+      { "year": 2021, "event": "President Guelleh re-elected for a fifth term." }
+    ]
+  },
+  "investmentNotes": {
+    "strengths": ["Prime strategic location on the world's busiest shipping lanes", "Modern and expanding port and logistics infrastructure", "Stable political environment and strong international security partnerships", "Emerging potential in geothermal and solar energy"],
+    "risks": ["High level of external debt and limited fiscal flexibility", "Exposure to regional instability and security threats", "Small domestic market and high cost of living", "Environmental challenges including water scarcity and extreme heat"],
+    "sectors": ["Logistics and Transportation", "Renewable Energy (Geothermal/Solar)", "Information and Communication Technology", "Tourism (Ecotourism/Diving)"]
+  },
+  "sources": [
+    { "name": "World Bank - Djibouti Overview", "url": "https://www.worldbank.org/en/country/djibouti", "type": "economic" },
+    { "name": "African Development Bank - Djibouti", "url": "https://www.afdb.org/en/countries/east-africa/djibouti", "type": "economic" },
+    { "name": "Djibouti Ports & Free Zones Authority", "url": "https://www.dpfza.gov.dj/", "type": "logistics" }
+  ]
+}

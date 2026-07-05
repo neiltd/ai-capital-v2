@@ -1,0 +1,66 @@
+{
+  "id": "DMA",
+  "iso2": "DM",
+  "name": "Dominica",
+  "region": "Americas",
+  "subregion": "Caribbean",
+  "capital": "Roseau",
+  "lastUpdated": "2026-05-15",
+  "summary": "Known as the 'Nature Isle of the Caribbean,' Dominica is currently on an ambitious mission to become the world’s first climate-resilient nation. The Roosevelt Skerrit administration, which has held power for over two decades, is focusing on large-scale infrastructure projects, including a national geothermal power plant and a new international airport, primarily funded by the country's Citizenship by Investment (CBI) program. The economy is showing steady growth, though it remains highly dependent on CBI revenues and vulnerable to external shocks. Politically, the country has undergone recent electoral reforms to modernize its voting system. Dominica's development strategy is heavily centered on sustainable tourism, geothermal energy exports, and agricultural diversification, aiming to mitigate the impact of the frequent hurricanes that have historically devastated its economy.",
+  "indicators": {
+    "politicalStability":       { "score": 6, "score_description": "Stable but centralized power under the DLP; recent electoral reforms aimed at transparency.", "trend": "stable", "confidence": "high", "note": "PM Skerrit's long tenure provides policy continuity but also draws criticism from the opposition." },
+    "economicDirection":        { "score": 5, "score_description": "Moderate growth fueled by CBI-funded public works and geothermal potential.", "trend": "rising", "confidence": "medium", "note": "Dependence on CBI revenue is a significant fiscal risk if global regulations tighten." },
+    "investmentAttractiveness": { "score": 5, "score_description": "Growing opportunities in green energy and ecotourism; infrastructure is a work in progress.", "trend": "rising", "confidence": "high", "note": "The new international airport is expected to be a game-changer for investment." },
+    "geopoliticalRisk":         { "score": 4, "score_description": "Low risk; active in OECS and CARICOM; maintains diverse international partnerships.", "trend": "stable", "confidence": "high", "note": "Close ties with China and Venezuela, alongside traditional Western partners." },
+    "educationQuality":         { "score": 5, "score_description": "Decent primary and secondary foundation; focus on vocational training for the energy sector.", "trend": "stable", "confidence": "medium", "note": "Government is investing in skills training to support the geothermal industry." },
+    "healthcareQuality":        { "score": 5, "score_description": "Improving with the new China-Dominica Friendship Hospital and local health centers.", "trend": "rising", "confidence": "medium", "note": "The resilient health system initiative is building clinics capable of withstanding hurricanes." },
+    "technologyInvestment":     { "score": 4, "score_description": "Expanding broadband access; focus on digital transformation of the public sector.", "trend": "stable", "confidence": "medium", "note": "Digitalization is a key component of the national resilience strategy." }
+  },
+  "demographics": {
+    "population": 65900,
+    "medianAge": 35.0,
+    "urbanizationRate": 71,
+    "majorEthnicGroups": ["Black African descent", "Mixed descent", "Indigenous Kalinago", "European"],
+    "religions": [
+      { "name": "Roman Catholic", "percent": 61 },
+      { "name": "Seventh-day Adventist", "percent": 6 },
+      { "name": "Pentecostal", "percent": 6 },
+      { "name": "Baptist", "percent": 4 },
+      { "name": "Other Christian", "percent": 11 },
+      { "name": "None/Other", "percent": 12 }
+    ]
+  },
+  "alliances": ["CARICOM", "OECS", "OAS", "UN", "Commonwealth", "SIDS", "ALBA", "CELAC"],
+  "relationships": [
+    { "countryId": "CHN", "countryName": "China", "type": "partner", "sentiment": "positive", "summary": "Major provider of developmental aid and infrastructure funding, including the national hospital." },
+    { "countryId": "USA", "countryName": "United States", "type": "partner", "sentiment": "positive", "summary": "Partner in security and disaster response; source of tourism." },
+    { "countryId": "GBR", "countryName": "United Kingdom", "type": "partner", "sentiment": "positive", "summary": "Strong historical ties and support for climate resilience initiatives." },
+    { "countryId": "VEN", "countryName": "Venezuela", "type": "partner", "sentiment": "positive", "summary": "Historical partner through PetroCaribe; provides aid for housing and infrastructure." }
+  ],
+  "perspectives": [
+    { "source": "Resilience Official", "bias": "Optimistic", "view": "We are building the template for the future of small island states; our geothermal and airport projects will break our cycle of dependency." },
+    { "source": "Small Farmer", "bias": "Practical", "view": "The climate is changing fast; we need better insurance and market access more than we need big buildings." },
+    { "source": "Opposition Activist", "bias": "Critical", "view": "CBI funds are a black box; we need more accountability and a fair playing field for our democracy to thrive." }
+  ],
+  "historicalContext": {
+    "summary": "Dominica was the last Caribbean island to be colonized, largely due to the fierce resistance of the indigenous Kalinago. It changed hands between the French and British multiple times before becoming a British colony. It gained independence as a republic in 1978. Its modern history has been defined by its recovery from devastating storms, most notably Hurricane David (1979) and Hurricane Maria (2017).",
+    "keyEvents": [
+      { "year": 1763, "event": "Treaty of Paris awards Dominica to Great Britain." },
+      { "year": 1838, "event": "Dominica becomes the first British Caribbean colony to have a Black-controlled legislature." },
+      { "year": 1978, "event": "Dominica gains independence as a Republic." },
+      { "year": 2017, "event": "Hurricane Maria destroys or damages 90% of the island's structures." },
+      { "year": 2022, "event": "Roosevelt Skerrit's DLP wins another general election in a landslide." },
+      { "year": 2025, "event": "Major progress on the national geothermal plant, aiming for grid integration." }
+    ]
+  },
+  "investmentNotes": {
+    "strengths": ["Abundant geothermal and hydro energy potential", "Strong commitment to climate-resilient infrastructure", "Unique 'Eco-tourism' brand", "Successful Citizenship by Investment program"],
+    "risks": ["Extreme hurricane vulnerability", "High reliance on a single revenue source (CBI)", "Limited air connectivity (currently being addressed)", "Small population and labor market"],
+    "sectors": ["Geothermal Energy", "Eco-tourism and Wellness", "Sustainable Agriculture", "Infrastructure Development", "Specialized Financial Services"]
+  },
+  "sources": [
+    { "name": "Government of the Commonwealth of Dominica", "url": "https://www.dominica.gov.dm/", "type": "official" },
+    { "name": "Dominica Statistics Department", "url": "https://stats.gov.dm/", "type": "official" },
+    { "name": "ECCB Statistics", "url": "https://www.eccb-centralbank.org/statistics", "type": "economic" }
+  ]
+}

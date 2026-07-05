@@ -1,0 +1,272 @@
+[
+  {
+    "id": "JED",
+    "name": "King Abdulaziz International Airport",
+    "countryId": "SAU",
+    "city": "Jeddah",
+    "iata": "JED",
+    "icao": "OEJN",
+    "coordinates": [39.1567, 21.6794],
+    "passengerVolume": 49100000,
+    "cargoVolume": null,
+    "runwayCount": 3,
+    "elevationM": 15,
+    "strategicImportance": "critical",
+    "geopoliticalNotes": "Primary gateway for Hajj and Umrah pilgrims and a major global transit hub connecting East and West; central to Saudi Arabia's Vision 2030 aviation goals.",
+    "notes": "Reached a record 50 million passengers in 2025.",
+    "attribution": {
+      "sources": [
+        { "name": "General Authority of Civil Aviation (GACA)", "url": "https://gaca.gov.sa/web/en-gb/page/home", "accessedAt": "2026-05-10" },
+        { "name": "King Abdulaziz International Airport", "url": "https://www.jeddah-airport.com/", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 2,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  },
+  {
+    "id": "RUH",
+    "name": "King Khalid International Airport",
+    "countryId": "SAU",
+    "city": "Riyadh",
+    "iata": "RUH",
+    "icao": "OERK",
+    "coordinates": [46.6989, 24.9578],
+    "passengerVolume": 37600000,
+    "cargoVolume": null,
+    "runwayCount": 2,
+    "elevationM": 612,
+    "strategicImportance": "critical",
+    "geopoliticalNotes": "Capital city hub and future home of Riyadh Air; critical for business connectivity and diplomatic travel in the Middle East.",
+    "notes": "Ranked #1 globally for on-time departure performance in 2024.",
+    "attribution": {
+      "sources": [
+        { "name": "Riyadh Airports Company", "url": "https://www.kkia.sa/en/Pages/default.aspx", "accessedAt": "2026-05-10" },
+        { "name": "GACA", "url": "https://gaca.gov.sa", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 2,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  },
+  {
+    "id": "DMM",
+    "name": "King Fahd International Airport",
+    "countryId": "SAU",
+    "city": "Dammam",
+    "iata": "DMM",
+    "icao": "OEDF",
+    "coordinates": [49.7978, 26.4711],
+    "passengerVolume": 12800000,
+    "cargoVolume": null,
+    "runwayCount": 2,
+    "elevationM": 22,
+    "strategicImportance": "high",
+    "geopoliticalNotes": "World's largest airport by land area; serves as the primary gateway for the Eastern Province's massive oil and gas industrial complex.",
+    "notes": "Key logistics node for the Gulf region.",
+    "attribution": {
+      "sources": [
+        { "name": "King Fahd International Airport", "url": "https://kfia.gov.sa/", "accessedAt": "2026-05-10" },
+        { "name": "OurAirports", "url": "https://ourairports.com/airports/OEDF/", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 2,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  },
+  {
+    "id": "MED",
+    "name": "Prince Mohammad bin Abdulaziz International Airport",
+    "countryId": "SAU",
+    "city": "Medina",
+    "iata": "MED",
+    "icao": "OEMA",
+    "coordinates": [39.705, 24.5533],
+    "passengerVolume": 10900000,
+    "cargoVolume": null,
+    "runwayCount": 2,
+    "elevationM": 656,
+    "strategicImportance": "high",
+    "geopoliticalNotes": "Second major religious tourism hub in the Kingdom; critical for managing the influx of international pilgrims to the Prophet's Mosque.",
+    "notes": "Named Best Regional Airport in the Middle East 2024 by Skytrax.",
+    "attribution": {
+      "sources": [
+        { "name": "Madinah Airport", "url": "https://www.madinahairport.com/", "accessedAt": "2026-05-10" },
+        { "name": "IATA", "url": "https://www.iata.org", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 2,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  },
+  {
+    "id": "AHB",
+    "name": "Abha International Airport",
+    "countryId": "SAU",
+    "city": "Abha",
+    "iata": "AHB",
+    "icao": "OEAB",
+    "coordinates": [42.6567, 18.2403],
+    "passengerVolume": 4000000,
+    "cargoVolume": null,
+    "runwayCount": 1,
+    "elevationM": 2090,
+    "strategicImportance": "medium",
+    "geopoliticalNotes": "Primary hub for the Asir region's domestic tourism and southern connectivity; currently undergoing major expansion.",
+    "notes": "Located in a high-elevation mountainous region.",
+    "attribution": {
+      "sources": [
+        { "name": "GACA Performance Reports", "url": "https://gaca.gov.sa", "accessedAt": "2026-05-10" },
+        { "name": "OurAirports", "url": "https://ourairports.com/airports/OEAB/", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 2,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  },
+  {
+    "id": "GIZ",
+    "name": "King Abdullah bin Abdulaziz Airport",
+    "countryId": "SAU",
+    "city": "Jizan",
+    "iata": "GIZ",
+    "icao": "OEGN",
+    "coordinates": [42.5858, 16.9011],
+    "passengerVolume": 3000000,
+    "cargoVolume": null,
+    "runwayCount": 1,
+    "elevationM": 6,
+    "strategicImportance": "medium",
+    "geopoliticalNotes": "Strategic southern airport serving the Jazan Economic City and vital for regional trade near the Yemeni border.",
+    "notes": "Crucial for southern logistics and military support.",
+    "attribution": {
+      "sources": [
+        { "name": "GACA", "url": "https://gaca.gov.sa", "accessedAt": "2026-05-10" },
+        { "name": "ICAO", "url": "https://www.icao.int", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 2,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  },
+  {
+    "id": "NUM",
+    "name": "Neom Bay Airport",
+    "countryId": "SAU",
+    "city": "NEOM",
+    "iata": "NUM",
+    "icao": "OENN",
+    "coordinates": [35.02, 28.0594],
+    "passengerVolume": 250000,
+    "cargoVolume": null,
+    "runwayCount": 1,
+    "elevationM": 12,
+    "strategicImportance": "high",
+    "geopoliticalNotes": "Primary entry point for the NEOM giga-project; a flagship for high-tech, future-oriented aviation infrastructure.",
+    "notes": "First airport in the region to implement 5G technology.",
+    "attribution": {
+      "sources": [
+        { "name": "NEOM Official Site", "url": "https://www.neom.com/en-us/connecting-neom/airports", "accessedAt": "2026-05-10" },
+        { "name": "Arab News", "url": "https://www.arabnews.com/", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 2,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  },
+  {
+    "id": "RSI",
+    "name": "Red Sea International Airport",
+    "countryId": "SAU",
+    "city": "Hanakiya",
+    "iata": "RSI",
+    "icao": "OERS",
+    "coordinates": [37.5833, 25.4675],
+    "passengerVolume": 100000,
+    "cargoVolume": null,
+    "runwayCount": 1,
+    "elevationM": 15,
+    "strategicImportance": "medium",
+    "geopoliticalNotes": "Dedicated luxury tourism gateway powered 100% by renewable energy; central to The Red Sea destination giga-project.",
+    "notes": "Operational since late 2023 with international flights starting in 2024.",
+    "attribution": {
+      "sources": [
+        { "name": "Red Sea Global", "url": "https://www.redseaglobal.com/en/our-destinations/red-sea-international-airport", "accessedAt": "2026-05-10" },
+        { "name": "International Airport Review", "url": "https://www.internationalairportreview.com/", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 2,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  },
+  {
+    "id": "TUU",
+    "name": "Prince Sultan bin Abdulaziz International Airport",
+    "countryId": "SAU",
+    "city": "Tabuk",
+    "iata": "TUU",
+    "icao": "OETB",
+    "coordinates": [36.6175, 28.3825],
+    "passengerVolume": 2000000,
+    "cargoVolume": null,
+    "runwayCount": 1,
+    "elevationM": 768,
+    "strategicImportance": "high",
+    "geopoliticalNotes": "Strategic northern hub supporting logistics for NEOM and Amaala; significant military-civilian co-use history.",
+    "notes": "Vital for northern border security and development.",
+    "attribution": {
+      "sources": [
+        { "name": "GACA", "url": "https://gaca.gov.sa", "accessedAt": "2026-05-10" },
+        { "name": "OurAirports", "url": "https://ourairports.com/airports/OETB/", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 2,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  },
+  {
+    "id": "TIF",
+    "name": "Taif International Airport",
+    "countryId": "SAU",
+    "city": "Taif",
+    "iata": "TIF",
+    "icao": "OETF",
+    "coordinates": [40.5444, 21.4833],
+    "passengerVolume": 1500000,
+    "cargoVolume": null,
+    "runwayCount": 1,
+    "elevationM": 1478,
+    "strategicImportance": "medium",
+    "geopoliticalNotes": "Relief airport for Jeddah during peak seasons; gateway to the Kingdom's summer capital and agricultural regions.",
+    "notes": "Launched a new international departure terminal in 2024.",
+    "attribution": {
+      "sources": [
+        { "name": "GACA", "url": "https://gaca.gov.sa", "accessedAt": "2026-05-10" },
+        { "name": "IATA", "url": "https://www.iata.org", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 2,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  }
+]

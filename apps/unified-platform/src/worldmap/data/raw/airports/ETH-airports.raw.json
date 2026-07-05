@@ -1,0 +1,272 @@
+[
+  {
+    "id": "ADD",
+    "name": "Addis Ababa Bole International Airport",
+    "countryId": "ETH",
+    "city": "Addis Ababa",
+    "iata": "ADD",
+    "icao": "HAAB",
+    "coordinates": [38.7993, 8.9779],
+    "passengerVolume": 12100000,
+    "cargoVolume": 450000,
+    "runwayCount": 2,
+    "elevationM": 2334,
+    "strategicImportance": "critical",
+    "geopoliticalNotes": "Primary global hub for East Africa and headquarters of Ethiopian Airlines. Serves as a major diplomatic gateway for the African Union and UN.",
+    "notes": "Africa's 3rd busiest airport; key node for BRI logistics.",
+    "attribution": {
+      "sources": [
+        { "name": "Ethiopian Airlines Group", "url": "https://www.ethiopianairlines.com", "accessedAt": "2026-05-10" },
+        { "name": "OurAirports", "url": "https://ourairports.com/airports/HAAB/", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 2,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  },
+  {
+    "id": "DIR",
+    "name": "Dire Dawa Aba Tenna Dejazmach Yilma International Airport",
+    "countryId": "ETH",
+    "city": "Dire Dawa",
+    "iata": "DIR",
+    "icao": "HADR",
+    "coordinates": [41.8542, 9.6244],
+    "passengerVolume": 450000,
+    "cargoVolume": 2100,
+    "runwayCount": 1,
+    "elevationM": 1167,
+    "strategicImportance": "high",
+    "geopoliticalNotes": "Critical trade nexus between Ethiopia and Djibouti/Somalia. Also serves as a dual-use military base.",
+    "notes": "Gateway to the historic city of Harar.",
+    "attribution": {
+      "sources": [
+        { "name": "IATA", "url": "https://www.iata.org", "accessedAt": "2026-05-10" },
+        { "name": "OurAirports", "url": "https://ourairports.com/airports/HADR/", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 2,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  },
+  {
+    "id": "BJR",
+    "name": "Bahir Dar Belay Zeleke Airport",
+    "countryId": "ETH",
+    "city": "Bahir Dar",
+    "iata": "BJR",
+    "icao": "HABD",
+    "coordinates": [37.3214, 11.6081],
+    "passengerVolume": 350000,
+    "cargoVolume": null,
+    "runwayCount": 1,
+    "elevationM": 1821,
+    "strategicImportance": "high",
+    "geopoliticalNotes": "Vital for northern security and tourism; regional capital hub for Amhara. Significant for military operations.",
+    "notes": "Gateway to Lake Tana and the Blue Nile Falls.",
+    "attribution": {
+      "sources": [
+        { "name": "ICAO", "url": "https://www.icao.int", "accessedAt": "2026-05-10" },
+        { "name": "OurAirports", "url": "https://ourairports.com/airports/HABD/", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 2,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  },
+  {
+    "id": "MQX",
+    "name": "Mekelle Alula Aba Nega Airport",
+    "countryId": "ETH",
+    "city": "Mekelle",
+    "iata": "MQX",
+    "icao": "HAMK",
+    "coordinates": [39.5336, 13.4672],
+    "passengerVolume": 350000,
+    "cargoVolume": null,
+    "runwayCount": 1,
+    "elevationM": 2257,
+    "strategicImportance": "high",
+    "geopoliticalNotes": "Primary industrial and humanitarian hub for northern Ethiopia. Essential for Tigray regional stability.",
+    "notes": "Key base for UNHAS flights.",
+    "attribution": {
+      "sources": [
+        { "name": "UNHAS", "url": "https://www.wfp.org/unhas", "accessedAt": "2026-05-10" },
+        { "name": "OurAirports", "url": "https://ourairports.com/airports/HAMK/", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 2,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  },
+  {
+    "id": "GDQ",
+    "name": "Gonder Atse Tewodros Airport",
+    "countryId": "ETH",
+    "city": "Gondar",
+    "iata": "GDQ",
+    "icao": "HAGN",
+    "coordinates": [37.4319, 12.5222],
+    "passengerVolume": 250000,
+    "cargoVolume": null,
+    "runwayCount": 1,
+    "elevationM": 1994,
+    "strategicImportance": "medium",
+    "geopoliticalNotes": "Strategic northern security outpost and primary tourism gateway for the historic castle circuit.",
+    "notes": "Important for regional connectivity in the Amhara region.",
+    "attribution": {
+      "sources": [
+        { "name": "Ethiopian Airports", "url": "https://www.ethiopianairlines.com", "accessedAt": "2026-05-10" },
+        { "name": "OurAirports", "url": "https://ourairports.com/airports/HAGN/", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 2,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  },
+  {
+    "id": "JIJ",
+    "name": "Jijiga Wilwal International Airport",
+    "countryId": "ETH",
+    "city": "Jijiga",
+    "iata": "JIJ",
+    "icao": "HAJJ",
+    "coordinates": [42.9167, 9.3333],
+    "passengerVolume": 150000,
+    "cargoVolume": null,
+    "runwayCount": 1,
+    "elevationM": 1650,
+    "strategicImportance": "high",
+    "geopoliticalNotes": "Vital for eastern border security and cross-border trade with Somalia. Capital of the Somali Region.",
+    "notes": "Upgraded recently to support regional logistics.",
+    "attribution": {
+      "sources": [
+        { "name": "IATA", "url": "https://www.iata.org", "accessedAt": "2026-05-10" },
+        { "name": "OurAirports", "url": "https://ourairports.com/airports/HAJJ/", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 2,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  },
+  {
+    "id": "JIM",
+    "name": "Jimma Aba Segud Airport",
+    "countryId": "ETH",
+    "city": "Jimma",
+    "iata": "JIM",
+    "icao": "HAJM",
+    "coordinates": [36.8167, 7.6667],
+    "passengerVolume": 120000,
+    "cargoVolume": null,
+    "runwayCount": 1,
+    "elevationM": 1703,
+    "strategicImportance": "medium",
+    "geopoliticalNotes": "Agricultural hub for Ethiopia's coffee-growing region and southwestern administrative center.",
+    "notes": "Strategic for southwestern regional integration.",
+    "attribution": {
+      "sources": [
+        { "name": "ICAO", "url": "https://www.icao.int", "accessedAt": "2026-05-10" },
+        { "name": "OurAirports", "url": "https://ourairports.com/airports/HAJM/", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 2,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  },
+  {
+    "id": "GMB",
+    "name": "Gambella Airport",
+    "countryId": "ETH",
+    "city": "Gambella",
+    "iata": "GMB",
+    "icao": "HAGM",
+    "coordinates": [34.5631, 8.1288],
+    "passengerVolume": 100000,
+    "cargoVolume": null,
+    "runwayCount": 1,
+    "elevationM": 530,
+    "strategicImportance": "high",
+    "geopoliticalNotes": "Critical for western border security and UNHCR refugee operations. Supports oil exploration in the Gambella basin.",
+    "notes": "Essential for western regional stability.",
+    "attribution": {
+      "sources": [
+        { "name": "UNHCR", "url": "https://www.unhcr.org", "accessedAt": "2026-05-10" },
+        { "name": "OurAirports", "url": "https://ourairports.com/airports/HAGM/", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 2,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  },
+  {
+    "id": "GDE",
+    "name": "Gode Ugaas Miraad Airport",
+    "countryId": "ETH",
+    "city": "Gode",
+    "iata": "GDE",
+    "icao": "HAGO",
+    "coordinates": [43.5833, 5.9333],
+    "passengerVolume": 80000,
+    "cargoVolume": null,
+    "runwayCount": 1,
+    "elevationM": 254,
+    "strategicImportance": "medium",
+    "geopoliticalNotes": "Southeastern security hub; recently upgraded to support border monitoring and humanitarian aid.",
+    "notes": "Vital for the arid southeast region.",
+    "attribution": {
+      "sources": [
+        { "name": "IATA", "url": "https://www.iata.org", "accessedAt": "2026-05-10" },
+        { "name": "OurAirports", "url": "https://ourairports.com/airports/HAGO/", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 2,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  },
+  {
+    "id": "SZE",
+    "name": "Semera Airport",
+    "countryId": "ETH",
+    "city": "Semera",
+    "iata": "SZE",
+    "icao": "HASM",
+    "coordinates": [41.0111, 11.7922],
+    "passengerVolume": 60000,
+    "cargoVolume": null,
+    "runwayCount": 1,
+    "elevationM": 433,
+    "strategicImportance": "high",
+    "geopoliticalNotes": "Situated on the vital Addis-Djibouti trade corridor; capital of the Afar region. Supports mining and geothermal energy sectors.",
+    "notes": "Crucial logistics node for landlocked Ethiopia.",
+    "attribution": {
+      "sources": [
+        { "name": "ICAO", "url": "https://www.icao.int", "accessedAt": "2026-05-10" },
+        { "name": "OurAirports", "url": "https://ourairports.com/airports/HASM/", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 2,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  }
+]

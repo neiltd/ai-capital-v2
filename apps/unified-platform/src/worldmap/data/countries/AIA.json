@@ -1,0 +1,62 @@
+{
+  "id": "AIA",
+  "iso2": "AI",
+  "name": "Anguilla",
+  "region": "Americas",
+  "subregion": "Caribbean",
+  "capital": "The Valley",
+  "lastUpdated": "2026-05-09",
+  "summary": "Anguilla is a British Overseas Territory in the Eastern Caribbean, known for its high-end luxury tourism and its growing status as a niche offshore financial center. In 2026, the island's economy is experiencing a significant boost from its unique control over the '.ai' top-level domain, which has become a major source of government revenue amid the global AI boom. The territory is focused on resilient infrastructure development following past hurricane impacts and is seeking to diversify its economy through sustainable 'blue economy' initiatives and digital services. While politically stable under British administration, Anguilla continues to navigate the complexities of its relationship with the UK, particularly regarding fiscal autonomy and climate change adaptation.",
+  "indicators": {
+    "politicalStability":       { "score": 8, "score_description": "Stable parliamentary democracy as a British Overseas Territory.", "trend": "stable", "confidence": "high", "note": "Governance is characterized by local autonomy with ultimate oversight by the UK." },
+    "economicDirection":        { "score": 7, "score_description": "Strong growth driven by tourism and digital assets (.ai domain).", "trend": "rising", "confidence": "high", "note": "Revenue from the .ai domain has provided a unique fiscal cushion and funding for infrastructure." },
+    "investmentAttractiveness": { "score": 7, "score_description": "Highly attractive for luxury tourism and niche financial services.", "trend": "stable", "confidence": "medium", "note": "A tax-neutral environment and political stability are key draws, though the small scale limits massive projects." },
+    "geopoliticalRisk":         { "score": 3, "score_description": "Low risk; protected by the UK, but vulnerable to climate change.", "trend": "stable", "confidence": "high", "note": "The primary risks are external: hurricanes and changes in international financial regulations." },
+    "educationQuality":         { "score": 6, "score_description": "Solid primary and secondary education; reliant on regional tertiary institutions.", "trend": "stable", "confidence": "medium", "note": "Efforts are being made to expand vocational training for the tourism and digital sectors." },
+    "healthcareQuality":        { "score": 6, "score_description": "Adequate local facilities with reliance on regional hubs for complex care.", "trend": "stable", "confidence": "medium", "note": "The Princess Alexandra Hospital provides essential services, but specialized care often requires travel." },
+    "technologyInvestment":     { "score": 7, "score_description": "Growing focus on digital infrastructure and the AI economy.", "trend": "rising", "confidence": "high", "note": "The government is leveraging .ai revenue to improve island-wide connectivity and digital literacy." }
+  },
+  "demographics": {
+    "population": 16200,
+    "medianAge": 35.5,
+    "urbanizationRate": 100,
+    "majorEthnicGroups": ["African descent", "Mixed", "European"],
+    "religions": [
+      { "name": "Protestant", "percent": 70 },
+      { "name": "Roman Catholic", "percent": 5 },
+      { "name": "Other/None", "percent": 25 }
+    ]
+  },
+  "alliances": ["CARICOM (Associate)", "OECS (Associate)", "United Kingdom Overseas Territories"],
+  "relationships": [
+    { "countryId": "GBR", "countryName": "United Kingdom", "type": "sovereign", "sentiment": "positive", "summary": "The UK provides defense, international representation, and financial oversight; relations are generally collaborative." },
+    { "countryId": "USA", "countryName": "United States", "type": "partner", "sentiment": "positive", "summary": "Primary source of tourists and a major trading partner." },
+    { "countryId": "KNA", "countryName": "Saint Kitts and Nevis", "type": "partner", "sentiment": "positive", "summary": "Close regional neighbor with shared history and cultural ties." }
+  ],
+  "perspectives": [
+    { "source": "Government Official", "bias": "Optimistic", "view": "The .ai domain has changed our fiscal future, allowing us to invest in our people and protect our beautiful environment." },
+    { "source": "Tourism Operator", "bias": "Business-focused", "view": "We are the premier luxury destination in the Caribbean; our focus is on maintaining exclusivity and world-class service." },
+    { "source": "Local Youth", "bias": "Progressive", "view": "We need to ensure the new digital wealth is used to create diverse jobs for young Anguillans beyond the hotel industry." }
+  ],
+  "historicalContext": {
+    "summary": "Originally inhabited by Arawaks and Caribs, Anguilla was colonized by the British in the 17th century. A unique part of its history is the 1967 Anguillian Revolution, when the islanders successfully broke away from the Saint Christopher-Nevis-Anguilla federation to remain a separate British territory. Today, it is a stable and prosperous island focused on sustainable development.",
+    "keyEvents": [
+      { "year": 1650, "event": "British colonization begins." },
+      { "year": 1967, "event": "The Anguillian Revolution; the island seeks to break away from the St. Kitts-Nevis federation." },
+      { "year": 1980, "event": "Anguilla formally becomes a separate British Overseas Territory." },
+      { "year": 1995, "event": "Top-level domain .ai is delegated to Anguilla." },
+      { "year": 2017, "event": "Hurricane Irma causes catastrophic damage, leading to a major rebuilding effort." },
+      { "year": 2023, "event": "The AI boom leads to a massive surge in revenue from .ai domain registrations." }
+    ]
+  },
+  "investmentNotes": {
+    "strengths": ["Political stability and British legal system", "Premier luxury tourism brand", "Unique revenue stream from .ai domain", "Tax-neutral jurisdiction"],
+    "risks": ["Vulnerability to hurricanes and climate change", "Small, specialized labor market", "Reliance on a single tourism demographic (US luxury market)", "Small scale of infrastructure"],
+    "sectors": ["Luxury Tourism & Real Estate", "Digital Assets & Domain Services", "Niche Financial Services", "Sustainable Fishing & Blue Economy"]
+  },
+  "sources": [
+    { "name": "Anguilla Statistics Department", "url": "http://statistics.gov.ai/", "type": "economic" },
+    { "name": "Anguilla Tourist Board", "url": "https://www.ivisitanguilla.com/", "type": "general" },
+    { "name": "Government of Anguilla", "url": "https://www.gov.ai/", "type": "political" }
+  ]
+}

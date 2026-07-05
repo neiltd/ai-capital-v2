@@ -1,0 +1,36 @@
+[
+  {
+    "countryId": "IND",
+    "year": 2023,
+    "electricityConsumptionTWh": 1623,
+    "electricityProductionTWh": 1919,
+    "electricityMix": {
+      "coal": 74.9,
+      "hydro": 7.8,
+      "solar": 5.9,
+      "wind": 4.3,
+      "nuclear": 2.5,
+      "gas": 1.6,
+      "otherRenewables": 3.0
+    },
+    "renewableSharePct": 21.0,
+    "waterStressScore": 4.2,
+    "waterWithdrawalPct": 85,
+    "foodSecurityScore": 58.9,
+    "aiAdoptionScore": 59,
+    "internetPenetration": 55.0,
+    "mobilePenetration": 77.0,
+    "attribution": {
+      "sources": [
+        { "name": "Ember India Electricity Review 2023", "url": "https://www.ember-energy.org/data/global-electricity/", "accessedAt": "2024-05-24" },
+        { "name": "WRI Aqueduct 4.0", "url": "https://www.wri.org/aqueduct", "accessedAt": "2024-05-24" },
+        { "name": "Global Food Security Index 2022", "url": "https://impact.economist.com/sustainability/project/food-security-index", "accessedAt": "2024-05-24" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 3,
+        "lastVerified": "2024-05-24"
+      }
+    }
+  }
+]

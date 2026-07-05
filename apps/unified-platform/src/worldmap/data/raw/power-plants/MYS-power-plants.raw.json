@@ -1,0 +1,326 @@
+[
+  {
+    "id": "PLANT-MYS-MANJUNG",
+    "name": "Sultan Azlan Shah (Manjung) Power Station",
+    "countryId": "MYS",
+    "city": "Manjung",
+    "coordinates": [100.643, 4.161],
+    "type": "coal",
+    "status": "operating",
+    "capacityMW": 4100,
+    "annualOutputGWh": null,
+    "yearCommissioned": 2002,
+    "yearRetirement": null,
+    "operator": "TNB Janamanjung",
+    "owner": "Tenaga Nasional Berhad (TNB)",
+    "strategicNote": "The largest coal-fired power plant in Malaysia, providing a massive share of Peninsular Malaysia's baseload power.",
+    "notes": "Includes Janamanjung units 1-5; Unit 4 and 5 use ultra-supercritical technology.",
+    "attribution": {
+      "sources": [
+        { "name": "Global Energy Monitor", "url": "https://www.gem.wiki/Manjung_power_station", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 2,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  },
+  {
+    "id": "PLANT-MYS-TANJUNG-BIN",
+    "name": "Tanjung Bin Power Station",
+    "countryId": "MYS",
+    "city": "Pontian",
+    "coordinates": [103.546, 1.335],
+    "type": "coal",
+    "status": "operating",
+    "capacityMW": 3100,
+    "annualOutputGWh": null,
+    "yearCommissioned": 2006,
+    "yearRetirement": null,
+    "operator": "Malakoff Corporation",
+    "owner": "Malakoff Corporation",
+    "strategicNote": "Strategically located near the Port of Tanjung Pelepas; a major independent power producer (IPP) facility in the south.",
+    "notes": "Includes Tanjung Bin Power Plant (2100 MW) and Tanjung Bin Energy (1000 MW).",
+    "attribution": {
+      "sources": [
+        { "name": "Global Energy Monitor", "url": "https://www.gem.wiki/Tanjung_Bin_power_station", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 1,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  },
+  {
+    "id": "PLANT-MYS-BAKUN",
+    "name": "Bakun Hydroelectric Dam",
+    "countryId": "MYS",
+    "city": "Belaga",
+    "coordinates": [114.057, 2.761],
+    "type": "hydro",
+    "status": "operating",
+    "capacityMW": 2400,
+    "annualOutputGWh": null,
+    "yearCommissioned": 2011,
+    "yearRetirement": null,
+    "operator": "Sarawak Energy",
+    "owner": "Sarawak Energy Berhad",
+    "strategicNote": "Largest hydroelectric dam in Malaysia; the cornerstone of the Sarawak Corridor of Renewable Energy (SCORE).",
+    "notes": null,
+    "attribution": {
+      "sources": [
+        { "name": "Global Energy Monitor", "url": "https://www.gem.wiki/Bakun_Dam", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 2,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  },
+  {
+    "id": "PLANT-MYS-KAPAR",
+    "name": "Sultan Salahuddin Abdul Aziz (Kapar) Power Station",
+    "countryId": "MYS",
+    "city": "Kapar",
+    "coordinates": [101.317, 3.117],
+    "type": "coal",
+    "status": "operating",
+    "capacityMW": 2420,
+    "annualOutputGWh": null,
+    "yearCommissioned": 1987,
+    "yearRetirement": null,
+    "operator": "Kapar Energy Ventures",
+    "owner": "TNB / Malakoff",
+    "strategicNote": "A unique multi-fuel power station (coal, gas, oil) serving the Selangor industrial heartland.",
+    "notes": "Capacity reflects the combined output of all multi-fuel units.",
+    "attribution": {
+      "sources": [
+        { "name": "Global Energy Monitor", "url": "https://www.gem.wiki/Kapar_power_station", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 1,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  },
+  {
+    "id": "PLANT-MYS-EDRA-MELAKA",
+    "name": "Edra Melaka Power Plant (EMPP)",
+    "countryId": "MYS",
+    "city": "Alor Gajah",
+    "coordinates": [102.150, 2.383],
+    "type": "gas",
+    "status": "operating",
+    "capacityMW": 2242,
+    "annualOutputGWh": null,
+    "yearCommissioned": 2022,
+    "yearRetirement": null,
+    "operator": "Edra Energy",
+    "owner": "Edra Power Holdings (CGN)",
+    "strategicNote": "Malaysia's largest combined cycle gas turbine (CCGT) power plant, significantly boosting the national grid's efficiency.",
+    "notes": null,
+    "attribution": {
+      "sources": [
+        { "name": "Global Energy Monitor", "url": "https://www.gem.wiki/Edra_Melaka_power_station", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 1,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  },
+  {
+    "id": "PLANT-MYS-JIMAH-EAST",
+    "name": "Jimah East Power Plant (Tuanku Muhriz)",
+    "countryId": "MYS",
+    "city": "Port Dickson",
+    "coordinates": [101.725, 2.592],
+    "type": "coal",
+    "status": "operating",
+    "capacityMW": 2000,
+    "annualOutputGWh": null,
+    "yearCommissioned": 2019,
+    "yearRetirement": null,
+    "operator": "Jimah East Power",
+    "owner": "TNB / Mitsui / Chugoku Electric",
+    "strategicNote": "Major coal plant near Port Dickson utilizing ultra-supercritical technology for the Peninsular grid.",
+    "notes": null,
+    "attribution": {
+      "sources": [
+        { "name": "Global Energy Monitor", "url": "https://www.gem.wiki/Jimah_East_power_station", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 1,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  },
+  {
+    "id": "PLANT-MYS-LUMUT-SEGARI",
+    "name": "Lumut Segari Power Plant",
+    "countryId": "MYS",
+    "city": "Lumut",
+    "coordinates": [100.633, 4.150],
+    "type": "gas",
+    "status": "operating",
+    "capacityMW": 1943,
+    "annualOutputGWh": null,
+    "yearCommissioned": 1996,
+    "yearRetirement": null,
+    "operator": "Segari Energy Ventures",
+    "owner": "Malakoff Corporation",
+    "strategicNote": "One of the largest gas-fired IPPs in Malaysia, supporting the Perak and northern regions.",
+    "notes": null,
+    "attribution": {
+      "sources": [
+        { "name": "Global Energy Monitor", "url": "https://www.gem.wiki/Lumut_power_station", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 1,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  },
+  {
+    "id": "PLANT-MYS-PENGERANG-COGEN",
+    "name": "Pengerang Cogeneration Plant",
+    "countryId": "MYS",
+    "city": "Pengerang",
+    "coordinates": [104.150, 1.367],
+    "type": "gas",
+    "status": "operating",
+    "capacityMW": 1729,
+    "annualOutputGWh": null,
+    "yearCommissioned": 2017,
+    "yearRetirement": null,
+    "operator": "PETRONAS",
+    "owner": "PETRONAS",
+    "strategicNote": "Supplies electricity and steam to the Pengerang Integrated Complex (PIC), a massive oil and gas hub in Johor.",
+    "notes": null,
+    "attribution": {
+      "sources": [
+        { "name": "Global Energy Monitor", "url": "https://www.gem.wiki/Pengerang_cogeneration_plant", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 1,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  },
+  {
+    "id": "PLANT-MYS-MURUM",
+    "name": "Murum Hydroelectric Dam",
+    "countryId": "MYS",
+    "city": "Belaga",
+    "coordinates": [114.368, 2.649],
+    "type": "hydro",
+    "status": "operating",
+    "capacityMW": 944,
+    "annualOutputGWh": null,
+    "yearCommissioned": 2014,
+    "yearRetirement": null,
+    "operator": "Sarawak Energy",
+    "owner": "Sarawak Energy Berhad",
+    "strategicNote": "Second major hydro project in Sarawak, following Bakun, critical for industrial expansion in East Malaysia.",
+    "notes": null,
+    "attribution": {
+      "sources": [
+        { "name": "Global Energy Monitor", "url": "https://www.gem.wiki/Murum_Dam", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 1,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  },
+  {
+    "id": "PLANT-MYS-PERGAU",
+    "name": "Pergau Dam",
+    "countryId": "MYS",
+    "city": "Jeli",
+    "coordinates": [101.700, 5.625],
+    "type": "hydro",
+    "status": "operating",
+    "capacityMW": 600,
+    "annualOutputGWh": null,
+    "yearCommissioned": 2000,
+    "yearRetirement": null,
+    "operator": "TNB",
+    "owner": "Tenaga Nasional Berhad",
+    "strategicNote": "A major peak-load hydroelectric station in Kelantan, historically significant due to its funding and scale.",
+    "notes": null,
+    "attribution": {
+      "sources": [
+        { "name": "Global Energy Monitor", "url": "https://www.gem.wiki/Pergau_Dam", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 1,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  },
+  {
+    "id": "PLANT-MYS-TUANKU-JAAFAR",
+    "name": "Tuanku Jaafar Power Station",
+    "countryId": "MYS",
+    "city": "Port Dickson",
+    "coordinates": [101.783, 2.517],
+    "type": "gas",
+    "status": "operating",
+    "capacityMW": 1422,
+    "annualOutputGWh": null,
+    "yearCommissioned": 2005,
+    "yearRetirement": null,
+    "operator": "TNB",
+    "owner": "Tenaga Nasional Berhad",
+    "strategicNote": "Large gas-fired plant near Port Dickson; essential for the central Peninsular grid.",
+    "notes": null,
+    "attribution": {
+      "sources": [
+        { "name": "Global Energy Monitor", "url": "https://www.gem.wiki/Tuanku_Jaafar_power_station", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 1,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  },
+  {
+    "id": "PLANT-MYS-BALEH",
+    "name": "Baleh Hydroelectric Project",
+    "countryId": "MYS",
+    "city": "Kapit",
+    "coordinates": [113.800, 2.000],
+    "type": "hydro",
+    "status": "construction",
+    "capacityMW": 1285,
+    "annualOutputGWh": null,
+    "yearCommissioned": null,
+    "yearRetirement": null,
+    "operator": "Sarawak Energy",
+    "owner": "Sarawak Energy Berhad",
+    "strategicNote": "Massive hydro project under construction in Sarawak; will be a major contributor to the ASEAN Power Grid.",
+    "notes": null,
+    "attribution": {
+      "sources": [
+        { "name": "Global Energy Monitor", "url": "https://www.gem.wiki/Baleh_Dam", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "medium",
+        "sourceCount": 1,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  }
+]

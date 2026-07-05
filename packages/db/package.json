@@ -1,0 +1,40 @@
+{
+  "name": "@common/db",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "main": "./src/index.ts",
+  "types": "./src/index.ts",
+  "exports": {
+    ".": {
+      "types": "./src/index.ts",
+      "import": "./src/index.ts"
+    },
+    "./pool": {
+      "types": "./src/pool.ts",
+      "import": "./src/pool.ts"
+    }
+  },
+  "bin": {
+    "db-migrate":      "./bin/migrate.ts",
+    "db-migrate-data": "./bin/migrate-from-sqlite.ts"
+  },
+  "scripts": {
+    "typecheck":        "tsc --noEmit",
+    "migrate":          "tsx bin/migrate.ts",
+    "migrate-data":     "tsx bin/migrate-from-sqlite.ts",
+    "migrate-vectors":  "tsx bin/migrate-from-lance.ts"
+  },
+  "dependencies": {
+    "@lancedb/lancedb": "^0.29.0",
+    "better-sqlite3":   "^12.0.0",
+    "pg":               "^8.13.0"
+  },
+  "devDependencies": {
+    "@types/better-sqlite3": "^7.6.11",
+    "@types/node":           "^22.0.0",
+    "@types/pg":             "^8.11.10",
+    "tsx":                   "^4.16.0",
+    "typescript":            "^5.5.0"
+  }
+}

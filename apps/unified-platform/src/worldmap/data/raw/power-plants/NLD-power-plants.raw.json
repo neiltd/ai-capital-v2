@@ -1,0 +1,299 @@
+[
+  {
+    "id": "PLANT-NLD-EEMS",
+    "name": "Eems Power Plant (Eemscentrale)",
+    "countryId": "NLD",
+    "city": "Eemshaven",
+    "coordinates": [6.8783, 53.4350],
+    "type": "gas",
+    "status": "operating",
+    "capacityMW": 2442,
+    "annualOutputGWh": null,
+    "yearCommissioned": 1996,
+    "yearRetirement": null,
+    "operator": "Engie",
+    "owner": "Engie",
+    "strategicNote": "Major gas-fired facility in the Eemshaven energy hub, critical for Dutch grid stability.",
+    "notes": null,
+    "attribution": {
+      "sources": [
+        { "name": "Global Energy Monitor", "url": "https://www.gem.wiki/Eems_power_station", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 2,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  },
+  {
+    "id": "PLANT-NLD-EEMSHAVEN-RWE",
+    "name": "Eemshaven Power Station",
+    "countryId": "NLD",
+    "city": "Eemshaven",
+    "coordinates": [6.8600, 53.4400],
+    "type": "coal",
+    "status": "operating",
+    "capacityMW": 1560,
+    "annualOutputGWh": null,
+    "yearCommissioned": 2015,
+    "yearRetirement": 2029,
+    "operator": "RWE",
+    "owner": "RWE",
+    "strategicNote": "One of the most modern and largest coal-fired plants in Europe, facing phase-out by 2029.",
+    "notes": null,
+    "attribution": {
+      "sources": [
+        { "name": "Global Energy Monitor", "url": "https://www.gem.wiki/Eemshaven_power_station_(RWE)", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 2,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  },
+  {
+    "id": "PLANT-NLD-HK-ZUID",
+    "name": "Hollandse Kust Zuid Offshore Wind Farm",
+    "countryId": "NLD",
+    "city": "North Sea",
+    "coordinates": [4.1167, 52.3667],
+    "type": "wind",
+    "status": "operating",
+    "capacityMW": 1529,
+    "annualOutputGWh": null,
+    "yearCommissioned": 2023,
+    "yearRetirement": null,
+    "operator": "Vattenfall",
+    "owner": "Vattenfall / BASF / Allianz",
+    "strategicNote": "The largest offshore wind farm in the Netherlands and a pioneer in subsidy-free offshore wind.",
+    "notes": null,
+    "attribution": {
+      "sources": [
+        { "name": "Global Energy Monitor", "url": "https://www.gem.wiki/Hollandse_Kust_Zuid_Offshore_wind_farm", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 2,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  },
+  {
+    "id": "PLANT-NLD-MAGNUM",
+    "name": "Magnum Power Station",
+    "countryId": "NLD",
+    "city": "Eemshaven",
+    "coordinates": [6.8500, 53.4500],
+    "type": "gas",
+    "status": "operating",
+    "capacityMW": 1311,
+    "annualOutputGWh": null,
+    "yearCommissioned": 2013,
+    "yearRetirement": null,
+    "operator": "RWE",
+    "owner": "RWE",
+    "strategicNote": "Strategically significant multi-fuel plant (currently gas) designed for future hydrogen conversion.",
+    "notes": "Acquired by RWE from Vattenfall in 2022.",
+    "attribution": {
+      "sources": [
+        { "name": "Global Energy Monitor", "url": "https://www.gem.wiki/Magnum_power_station", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 2,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  },
+  {
+    "id": "PLANT-NLD-CLAUS",
+    "name": "Claus Power Plant",
+    "countryId": "NLD",
+    "city": "Maasbracht",
+    "coordinates": [5.9106, 51.1540],
+    "type": "gas",
+    "status": "operating",
+    "capacityMW": 1304,
+    "annualOutputGWh": null,
+    "yearCommissioned": 1977,
+    "yearRetirement": null,
+    "operator": "RWE",
+    "owner": "RWE",
+    "strategicNote": "Major gas-fired station in the southern Netherlands, providing flexible capacity.",
+    "notes": "Modernized to combined cycle.",
+    "attribution": {
+      "sources": [
+        { "name": "Global Energy Monitor", "url": "https://www.gem.wiki/Claus_power_station", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 1,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  },
+  {
+    "id": "PLANT-NLD-MAASVLAKTE-MPP3",
+    "name": "Maasvlakte Power Plant (MPP3)",
+    "countryId": "NLD",
+    "city": "Rotterdam",
+    "coordinates": [4.0260, 51.9588],
+    "type": "coal",
+    "status": "operating",
+    "capacityMW": 1070,
+    "annualOutputGWh": null,
+    "yearCommissioned": 2016,
+    "yearRetirement": 2029,
+    "operator": "Uniper",
+    "owner": "Uniper",
+    "strategicNote": "Large modern coal plant at the Port of Rotterdam, integrating biomass co-firing.",
+    "notes": null,
+    "attribution": {
+      "sources": [
+        { "name": "Global Energy Monitor", "url": "https://www.gem.wiki/Maasvlakte_Power_Plant_3", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 1,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  },
+  {
+    "id": "PLANT-NLD-HK-NOORD",
+    "name": "Hollandse Kust Noord Offshore Wind Farm",
+    "countryId": "NLD",
+    "city": "North Sea",
+    "coordinates": [4.2510, 52.7151],
+    "type": "wind",
+    "status": "operating",
+    "capacityMW": 759,
+    "annualOutputGWh": null,
+    "yearCommissioned": 2023,
+    "yearRetirement": null,
+    "operator": "CrossWind",
+    "owner": "Shell / Eneco",
+    "strategicNote": "Innovative offshore wind project featuring green hydrogen production and floating solar trials.",
+    "notes": null,
+    "attribution": {
+      "sources": [
+        { "name": "Global Energy Monitor", "url": "https://www.gem.wiki/Hollandse_Kust_Noord_Offshore_wind_farm", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 1,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  },
+  {
+    "id": "PLANT-NLD-ONYX-ROTTERDAM",
+    "name": "Onyx Centrale Rotterdam",
+    "countryId": "NLD",
+    "city": "Rotterdam",
+    "coordinates": [4.0260, 51.9588],
+    "type": "coal",
+    "status": "operating",
+    "capacityMW": 731,
+    "annualOutputGWh": null,
+    "yearCommissioned": 2015,
+    "yearRetirement": 2029,
+    "operator": "Onyx Power",
+    "owner": "Riverstone Holdings",
+    "strategicNote": "Coal-fired plant in Rotterdam, subject to national coal phase-out laws.",
+    "notes": null,
+    "attribution": {
+      "sources": [
+        { "name": "Global Energy Monitor", "url": "https://www.gem.wiki/Rotterdam_power_station_(Engie)", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "medium",
+        "sourceCount": 1,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  },
+  {
+    "id": "PLANT-NLD-GEMINI",
+    "name": "Gemini Wind Farm",
+    "countryId": "NLD",
+    "city": "North Sea",
+    "coordinates": [6.0170, 54.0330],
+    "type": "wind",
+    "status": "operating",
+    "capacityMW": 600,
+    "annualOutputGWh": null,
+    "yearCommissioned": 2017,
+    "yearRetirement": null,
+    "operator": "Northland Power",
+    "owner": "Northland Power / Siemens Financial / HVC / ALTE LEIPZIGER",
+    "strategicNote": "One of the world's largest offshore wind farms at the time of commissioning, located far offshore.",
+    "notes": null,
+    "attribution": {
+      "sources": [
+        { "name": "Global Energy Monitor", "url": "https://www.gem.wiki/Gemini_Offshore_wind_farm", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 2,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  },
+  {
+    "id": "PLANT-NLD-BORSSELE-NUCLEAR",
+    "name": "Borssele Nuclear Power Station",
+    "countryId": "NLD",
+    "city": "Borssele",
+    "coordinates": [3.7167, 51.4319],
+    "type": "nuclear",
+    "status": "operating",
+    "capacityMW": 485,
+    "annualOutputGWh": null,
+    "yearCommissioned": 1973,
+    "yearRetirement": null,
+    "operator": "EPZ",
+    "owner": "PZEM / RWE",
+    "strategicNote": "The only operational nuclear power plant in the Netherlands; lifespan recently extended to support carbon goals.",
+    "notes": "Single Pressurized Water Reactor (PWR).",
+    "attribution": {
+      "sources": [
+        { "name": "IAEA PRIS", "url": "https://pris.iaea.org/PRIS/CountryStatistics/ReactorDetails.aspx?current=412", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 2,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  },
+  {
+    "id": "PLANT-NLD-WINDPLAN-GROEN",
+    "name": "Windplan Groen",
+    "countryId": "NLD",
+    "city": "Dronten/Lelystad",
+    "coordinates": [5.6000, 52.5500],
+    "type": "wind",
+    "status": "operating",
+    "capacityMW": 515,
+    "annualOutputGWh": null,
+    "yearCommissioned": 2024,
+    "yearRetirement": null,
+    "operator": "Various",
+    "owner": "Local cooperatives and developers",
+    "strategicNote": "The largest onshore wind project in the Netherlands, commissioned in 2024.",
+    "notes": "Consists of multiple parks in Flevoland.",
+    "attribution": {
+      "sources": [
+        { "name": "NedZero", "url": "https://nedzero.nl/windplan-groen-officieel-geopend/", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 1,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  }
+]

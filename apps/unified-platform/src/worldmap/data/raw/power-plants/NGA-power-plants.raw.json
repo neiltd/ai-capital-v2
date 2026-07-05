@@ -1,0 +1,380 @@
+[
+  {
+    "id": "PLANT-NGA-EGBIN",
+    "name": "Egbin Thermal Power Station",
+    "countryId": "NGA",
+    "city": "Lagos",
+    "coordinates": [3.613, 6.564],
+    "type": "gas",
+    "status": "operating",
+    "capacityMW": 1320,
+    "annualOutputGWh": null,
+    "yearCommissioned": 1985,
+    "yearRetirement": null,
+    "operator": "Egbin Power Plc",
+    "owner": "Sahara Group",
+    "strategicNote": "The largest power generating station in Nigeria, critical for the Lagos metropolitan area.",
+    "notes": "Natural gas-fired thermal plant.",
+    "attribution": {
+      "sources": [
+        { "name": "Global Energy Monitor", "url": "https://www.gem.wiki/Egbin_power_station", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 2,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  },
+  {
+    "id": "PLANT-NGA-ALAOJI",
+    "name": "Alaoji Power Station",
+    "countryId": "NGA",
+    "city": "Aba",
+    "coordinates": [7.342, 5.083],
+    "type": "gas",
+    "status": "operating",
+    "capacityMW": 1074,
+    "annualOutputGWh": null,
+    "yearCommissioned": 2015,
+    "yearRetirement": null,
+    "operator": "Niger Delta Power Holding Company (NDPHC)",
+    "owner": "Government of Nigeria",
+    "strategicNote": "Large NIPP (National Integrated Power Project) plant supporting the industrial southeast.",
+    "notes": "Combined cycle gas turbine.",
+    "attribution": {
+      "sources": [
+        { "name": "Global Energy Monitor", "url": "https://www.gem.wiki/Alaoji_power_station", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "medium",
+        "sourceCount": 1,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  },
+  {
+    "id": "PLANT-NGA-SAPELE-I",
+    "name": "Sapele Power Station",
+    "countryId": "NGA",
+    "city": "Sapele",
+    "coordinates": [5.675, 5.912],
+    "type": "gas",
+    "status": "operating",
+    "capacityMW": 1020,
+    "annualOutputGWh": null,
+    "yearCommissioned": 1978,
+    "yearRetirement": null,
+    "operator": "Sapele Power Plc",
+    "owner": "Government of Nigeria",
+    "strategicNote": "Major thermal plant in the Niger Delta region.",
+    "notes": null,
+    "attribution": {
+      "sources": [
+        { "name": "Global Energy Monitor", "url": "https://www.gem.wiki/Sapele_power_station", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "medium",
+        "sourceCount": 1,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  },
+  {
+    "id": "PLANT-NGA-UGHELLI",
+    "name": "Ughelli (Delta) Power Plant",
+    "countryId": "NGA",
+    "city": "Ughelli",
+    "coordinates": [5.914, 5.512],
+    "type": "gas",
+    "status": "operating",
+    "capacityMW": 900,
+    "annualOutputGWh": null,
+    "yearCommissioned": 1966,
+    "yearRetirement": null,
+    "operator": "Transcorp Power Limited",
+    "owner": "Transcorp",
+    "strategicNote": "One of Nigeria's oldest and largest gas-fired power plants.",
+    "notes": null,
+    "attribution": {
+      "sources": [
+        { "name": "Global Energy Monitor", "url": "https://www.gem.wiki/Delta_power_station_(Nigeria)", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 1,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  },
+  {
+    "id": "PLANT-NGA-KAINJI",
+    "name": "Kainji Dam",
+    "countryId": "NGA",
+    "city": "Kainji",
+    "coordinates": [4.512, 9.861],
+    "type": "hydro",
+    "status": "operating",
+    "capacityMW": 760,
+    "annualOutputGWh": null,
+    "yearCommissioned": 1968,
+    "yearRetirement": null,
+    "operator": "Mainstream Energy Solutions Limited",
+    "owner": "Government of Nigeria",
+    "strategicNote": "First major hydroelectric project in Nigeria, critical for grid stability.",
+    "notes": null,
+    "attribution": {
+      "sources": [
+        { "name": "Global Energy Monitor", "url": "https://www.gem.wiki/Kainji_hydroelectric_plant", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 2,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  },
+  {
+    "id": "PLANT-NGA-ZUNGERU",
+    "name": "Zungeru Hydroelectric Power Plant",
+    "countryId": "NGA",
+    "city": "Zungeru",
+    "coordinates": [6.294, 9.912],
+    "type": "hydro",
+    "status": "operating",
+    "capacityMW": 700,
+    "annualOutputGWh": null,
+    "yearCommissioned": 2023,
+    "yearRetirement": null,
+    "operator": "Mainstream Energy Solutions Limited",
+    "owner": "Government of Nigeria",
+    "strategicNote": "Newly commissioned large-scale hydro facility, a major boost to national capacity.",
+    "notes": "Financed by the Export-Import Bank of China.",
+    "attribution": {
+      "sources": [
+        { "name": "Global Energy Monitor", "url": "https://www.gem.wiki/Zungeru_hydroelectric_plant", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 1,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  },
+  {
+    "id": "PLANT-NGA-OLORUNSOGO-II",
+    "name": "Olorunsogo II Power Station",
+    "countryId": "NGA",
+    "city": "Olorunsogo",
+    "coordinates": [3.314, 6.882],
+    "type": "gas",
+    "status": "operating",
+    "capacityMW": 676,
+    "annualOutputGWh": null,
+    "yearCommissioned": 2015,
+    "yearRetirement": null,
+    "operator": "Niger Delta Power Holding Company (NDPHC)",
+    "owner": "Government of Nigeria",
+    "strategicNote": "Key NIPP combined cycle plant in Ogun State.",
+    "notes": null,
+    "attribution": {
+      "sources": [
+        { "name": "Global Energy Monitor", "url": "https://www.gem.wiki/Olorunsogo_power_station", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "medium",
+        "sourceCount": 1,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  },
+  {
+    "id": "PLANT-NGA-AFAM-VI",
+    "name": "Afam VI Power Plant",
+    "countryId": "NGA",
+    "city": "Afam",
+    "coordinates": [7.257, 4.849],
+    "type": "gas",
+    "status": "operating",
+    "capacityMW": 642,
+    "annualOutputGWh": null,
+    "yearCommissioned": 2009,
+    "yearRetirement": null,
+    "operator": "Shell Petroleum Development Company (SPDC)",
+    "owner": "SPDC Joint Venture",
+    "strategicNote": "High-efficiency combined cycle plant utilizing domestic gas resources.",
+    "notes": null,
+    "attribution": {
+      "sources": [
+        { "name": "Global Energy Monitor", "url": "https://www.gem.wiki/Afam_power_station", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 1,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  },
+  {
+    "id": "PLANT-NGA-SHIRORO",
+    "name": "Shiroro Dam",
+    "countryId": "NGA",
+    "city": "Shiroro",
+    "coordinates": [6.834, 9.972],
+    "type": "hydro",
+    "status": "operating",
+    "capacityMW": 600,
+    "annualOutputGWh": null,
+    "yearCommissioned": 1990,
+    "yearRetirement": null,
+    "operator": "North South Power Company Limited",
+    "owner": "Government of Nigeria",
+    "strategicNote": "Major hydroelectric facility on the Kaduna River.",
+    "notes": null,
+    "attribution": {
+      "sources": [
+        { "name": "Global Energy Monitor", "url": "https://www.gem.wiki/Shiroro_hydroelectric_plant", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 1,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  },
+  {
+    "id": "PLANT-NGA-JEBBA",
+    "name": "Jebba Hydroelectric Power Station",
+    "countryId": "NGA",
+    "city": "Jebba",
+    "coordinates": [4.812, 9.142],
+    "type": "hydro",
+    "status": "operating",
+    "capacityMW": 578,
+    "annualOutputGWh": null,
+    "yearCommissioned": 1985,
+    "yearRetirement": null,
+    "operator": "Mainstream Energy Solutions Limited",
+    "owner": "Government of Nigeria",
+    "strategicNote": "Strategically located on the Niger River downstream from Kainji.",
+    "notes": null,
+    "attribution": {
+      "sources": [
+        { "name": "Global Energy Monitor", "url": "https://www.gem.wiki/Jebba_hydroelectric_plant", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 1,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  },
+  {
+    "id": "PLANT-NGA-GEREGU-I-II",
+    "name": "Geregu I & II Power Stations",
+    "countryId": "NGA",
+    "city": "Geregu",
+    "coordinates": [6.690, 7.570],
+    "type": "gas",
+    "status": "operating",
+    "capacityMW": 848,
+    "annualOutputGWh": null,
+    "yearCommissioned": 2007,
+    "yearRetirement": null,
+    "operator": "Geregu Power Plc / NDPHC",
+    "owner": "Amperion Power / Government of Nigeria",
+    "strategicNote": "Major gas-fired cluster in Kogi State, adjacent to proposed nuclear site.",
+    "notes": "Combined capacity of Geregu I (414 MW) and Geregu II (434 MW).",
+    "attribution": {
+      "sources": [
+        { "name": "Global Energy Monitor", "url": "https://www.gem.wiki/Geregu_power_station", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 1,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  },
+  {
+    "id": "PLANT-NGA-AZURA-EDO",
+    "name": "Azura-Edo IPP",
+    "countryId": "NGA",
+    "city": "Benin City",
+    "coordinates": [5.684, 6.409],
+    "type": "gas",
+    "status": "operating",
+    "capacityMW": 461,
+    "annualOutputGWh": null,
+    "yearCommissioned": 2018,
+    "yearRetirement": null,
+    "operator": "Azura Power West Africa",
+    "owner": "Azura Power",
+    "strategicNote": "Nigeria's first privately financed independent power plant (IPP).",
+    "notes": null,
+    "attribution": {
+      "sources": [
+        { "name": "Global Energy Monitor", "url": "https://www.gem.wiki/Azura-Edo_power_station", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 1,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  },
+  {
+    "id": "PLANT-NGA-GEREGU-NUCLEAR",
+    "name": "Geregu Nuclear Power Plant",
+    "countryId": "NGA",
+    "city": "Geregu",
+    "coordinates": [6.690, 7.570],
+    "type": "nuclear",
+    "status": "planned",
+    "capacityMW": 2400,
+    "annualOutputGWh": null,
+    "yearCommissioned": null,
+    "yearRetirement": null,
+    "operator": "Nigeria Atomic Energy Commission (NAEC)",
+    "owner": "Government of Nigeria",
+    "strategicNote": "Proposed nuclear facility in collaboration with Rosatom to address energy deficit.",
+    "notes": "Planned for 2 x 1200 MW VVER reactors.",
+    "attribution": {
+      "sources": [
+        { "name": "WNA", "url": "https://www.world-nuclear.org/information-library/country-profiles/countries-g-n/nigeria.aspx", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "medium",
+        "sourceCount": 1,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  },
+  {
+    "id": "PLANT-NGA-ITU-NUCLEAR",
+    "name": "Itu Nuclear Power Plant",
+    "countryId": "NGA",
+    "city": "Itu",
+    "coordinates": [7.980, 5.200],
+    "type": "nuclear",
+    "status": "planned",
+    "capacityMW": 2400,
+    "annualOutputGWh": null,
+    "yearCommissioned": null,
+    "yearRetirement": null,
+    "operator": "Nigeria Atomic Energy Commission (NAEC)",
+    "owner": "Government of Nigeria",
+    "strategicNote": "Second proposed nuclear site in Akwa Ibom State.",
+    "notes": "Planned for 2 x 1200 MW reactors.",
+    "attribution": {
+      "sources": [
+        { "name": "WNA", "url": "https://www.world-nuclear.org/information-library/country-profiles/countries-g-n/nigeria.aspx", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "medium",
+        "sourceCount": 1,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  }
+]

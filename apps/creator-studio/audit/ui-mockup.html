@@ -1,0 +1,707 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+<title>Creator Studio — redesigned UI mockup</title>
+<style>
+  :root {
+    --bg: #0b0b0d;
+    --bg-elev: #131317;
+    --bg-elev-2: #1a1a20;
+    --border: #24242c;
+    --border-strong: #33333d;
+    --text: #ececf1;
+    --text-mute: #9a9aa4;
+    --text-dim: #6a6a74;
+    --accent: #8b7bff;
+    --accent-soft: rgba(139,123,255,0.14);
+    --thai-accent: #ffbc6b;
+    --thai-accent-soft: rgba(255,188,107,0.12);
+    --brief-accent: #6bd3ff;
+    --brief-accent-soft: rgba(107,211,255,0.12);
+    --points-accent: #7aeeb5;
+    --points-accent-soft: rgba(122,238,181,0.12);
+    --danger: #ff6b7a;
+    --success: #7aeeb5;
+    --radius: 12px;
+    --radius-sm: 8px;
+    --mono: ui-monospace, "SF Mono", Menlo, Consolas, monospace;
+    --sans: -apple-system, BlinkMacSystemFont, "Inter", "Segoe UI", sans-serif;
+    --thai-font: "Sarabun", "IBM Plex Sans Thai", -apple-system, sans-serif;
+  }
+
+  * { box-sizing: border-box; }
+  html, body { height: 100%; margin: 0; padding: 0; }
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: var(--sans);
+    font-size: 14px;
+    line-height: 1.5;
+    -webkit-font-smoothing: antialiased;
+    overflow: hidden;
+  }
+
+  /* ------- Top bar ------- */
+  .topbar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 10px 20px;
+    border-bottom: 1px solid var(--border);
+    background: var(--bg-elev);
+    height: 48px;
+  }
+  .brand { display: flex; align-items: center; gap: 10px; font-weight: 600; letter-spacing: -0.01em; }
+  .brand-dot { width: 8px; height: 8px; border-radius: 999px; background: var(--accent); box-shadow: 0 0 12px var(--accent); }
+  .nav { display: flex; gap: 6px; align-items: center; font-size: 12.5px; color: var(--text-mute); }
+  .nav a { color: var(--text-mute); text-decoration: none; padding: 6px 10px; border-radius: var(--radius-sm); }
+  .nav a:hover { background: var(--bg-elev-2); color: var(--text); }
+  .nav a.active { color: var(--text); background: var(--bg-elev-2); }
+
+  /* ------- Layout ------- */
+  .app {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0;
+    height: calc(100vh - 48px);
+    overflow: hidden;
+  }
+  @media (max-width: 900px) {
+    .app { grid-template-columns: 1fr; grid-template-rows: auto 1fr; }
+  }
+
+  .pane {
+    display: flex;
+    flex-direction: column;
+    min-height: 0;
+    min-width: 0;
+    background: var(--bg);
+  }
+  .pane + .pane { border-left: 1px solid var(--border); }
+  @media (max-width: 900px) {
+    .pane + .pane { border-left: none; border-top: 1px solid var(--border); }
+  }
+
+  /* ------- Left: topic + chat ------- */
+  .topic-card {
+    margin: 16px;
+    padding: 16px;
+    background: var(--bg-elev);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+  }
+  .topic-eyebrow {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 10px;
+  }
+  .eyebrow-label {
+    font-size: 10.5px;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--text-dim);
+  }
+  .freshness {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 11px;
+    color: var(--success);
+    background: rgba(122,238,181,0.08);
+    border: 1px solid rgba(122,238,181,0.2);
+    padding: 3px 8px;
+    border-radius: 999px;
+  }
+  .freshness.stale { color: var(--danger); background: rgba(255,107,122,0.08); border-color: rgba(255,107,122,0.2); }
+  .freshness .dot { width: 6px; height: 6px; border-radius: 999px; background: currentColor; }
+  .topic-title { font-size: 16px; font-weight: 600; line-height: 1.35; margin: 0 0 8px 0; }
+  .topic-summary { color: var(--text-mute); font-size: 13px; margin: 0 0 12px 0; line-height: 1.5; }
+  .topic-tags { display: flex; gap: 6px; flex-wrap: wrap; }
+  .tag {
+    font-size: 11px;
+    padding: 3px 9px;
+    border-radius: 999px;
+    color: var(--accent);
+    background: var(--accent-soft);
+    border: 1px solid rgba(139,123,255,0.25);
+  }
+  .tag.angle {
+    color: var(--text-mute);
+    background: transparent;
+    border-color: var(--border);
+    font-style: italic;
+  }
+  .topic-actions {
+    margin-top: 14px;
+    display: flex;
+    gap: 8px;
+    align-items: center;
+    justify-content: space-between;
+  }
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-family: inherit;
+    font-size: 12.5px;
+    padding: 7px 12px;
+    border-radius: var(--radius-sm);
+    background: var(--bg-elev-2);
+    border: 1px solid var(--border-strong);
+    color: var(--text);
+    cursor: pointer;
+    transition: background 120ms;
+  }
+  .btn:hover { background: #22222b; }
+  .btn.primary { background: var(--accent); border-color: var(--accent); color: #0b0b0d; font-weight: 600; }
+  .btn.primary:hover { filter: brightness(1.08); }
+  .btn.ghost { background: transparent; border-color: transparent; color: var(--text-mute); padding: 6px 8px; }
+  .btn.ghost:hover { color: var(--text); background: var(--bg-elev-2); }
+  .btn.small { padding: 5px 9px; font-size: 11.5px; }
+
+  .chat {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    min-height: 0;
+  }
+  .chat-scroll {
+    flex: 1;
+    overflow-y: auto;
+    padding: 4px 16px 12px;
+    scroll-behavior: smooth;
+  }
+  .msg { display: flex; margin-bottom: 12px; }
+  .msg.assistant { justify-content: flex-start; }
+  .msg.user { justify-content: flex-end; }
+  .bubble {
+    max-width: 88%;
+    padding: 10px 14px;
+    border-radius: 16px;
+    font-size: 13.5px;
+    line-height: 1.55;
+    white-space: pre-wrap;
+    word-wrap: break-word;
+  }
+  .msg.assistant .bubble { background: var(--bg-elev); border: 1px solid var(--border); border-bottom-left-radius: 4px; }
+  .msg.user .bubble { background: var(--accent); color: #0b0b0d; border-bottom-right-radius: 4px; font-weight: 500; }
+  .typing {
+    display: inline-flex; gap: 3px;
+    padding-left: 2px;
+  }
+  .typing span {
+    width: 5px; height: 5px; background: var(--text-dim); border-radius: 999px;
+    animation: typing 1.2s infinite ease-in-out;
+  }
+  .typing span:nth-child(2) { animation-delay: 0.15s; }
+  .typing span:nth-child(3) { animation-delay: 0.3s; }
+  @keyframes typing {
+    0%, 100% { opacity: 0.3; transform: translateY(0); }
+    50% { opacity: 1; transform: translateY(-3px); }
+  }
+
+  .composer {
+    padding: 12px 16px 16px;
+    border-top: 1px solid var(--border);
+    background: var(--bg);
+    display: flex;
+    gap: 8px;
+    align-items: flex-end;
+  }
+  .composer textarea {
+    flex: 1;
+    resize: none;
+    background: var(--bg-elev);
+    border: 1px solid var(--border-strong);
+    border-radius: var(--radius);
+    color: var(--text);
+    padding: 10px 12px;
+    font-family: inherit;
+    font-size: 13.5px;
+    min-height: 44px;
+    max-height: 120px;
+    outline: none;
+    transition: border-color 120ms;
+  }
+  .composer textarea:focus { border-color: var(--accent); }
+  .send {
+    height: 44px;
+    padding: 0 16px;
+    background: var(--accent);
+    color: #0b0b0d;
+    border: none;
+    border-radius: var(--radius);
+    font-weight: 700;
+    cursor: pointer;
+    font-size: 15px;
+  }
+
+  /* ------- Right: script pane ------- */
+  .script-pane {
+    display: flex;
+    flex-direction: column;
+    min-height: 0;
+    background: var(--bg-elev);
+  }
+  .script-header {
+    padding: 14px 20px;
+    border-bottom: 1px solid var(--border);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+  }
+  .script-title { font-size: 13px; color: var(--text-mute); font-weight: 500; }
+  .script-meta { font-size: 11px; color: var(--text-dim); font-family: var(--mono); }
+
+  .tabs {
+    display: flex;
+    padding: 0 12px;
+    border-bottom: 1px solid var(--border);
+    background: var(--bg-elev);
+    gap: 4px;
+    overflow-x: auto;
+  }
+  .tab {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 12px 14px;
+    font-size: 13px;
+    color: var(--text-mute);
+    cursor: pointer;
+    border: none;
+    background: transparent;
+    border-bottom: 2px solid transparent;
+    margin-bottom: -1px;
+    white-space: nowrap;
+    font-family: inherit;
+    transition: color 100ms;
+  }
+  .tab:hover { color: var(--text); }
+  .tab.active { color: var(--text); font-weight: 600; }
+  .tab.active[data-tab="brief"]  { border-bottom-color: var(--brief-accent); }
+  .tab.active[data-tab="points"] { border-bottom-color: var(--points-accent); }
+  .tab.active[data-tab="thai"]   { border-bottom-color: var(--thai-accent); }
+  .tab .badge {
+    font-size: 10.5px;
+    padding: 1px 6px;
+    border-radius: 999px;
+    background: var(--bg-elev-2);
+    color: var(--text-dim);
+    font-family: var(--mono);
+  }
+
+  .tab-toolbar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 10px 20px;
+    background: var(--bg);
+    border-bottom: 1px solid var(--border);
+    gap: 8px;
+  }
+  .tab-toolbar-left { display: flex; gap: 8px; align-items: center; font-size: 12px; color: var(--text-dim); font-family: var(--mono); }
+  .tab-toolbar-right { display: flex; gap: 6px; }
+
+  .tab-body {
+    flex: 1;
+    overflow-y: auto;
+    padding: 20px 24px 40px;
+    display: none;
+  }
+  .tab-body.active { display: block; }
+
+  /* Deep Brief style */
+  .brief h3 {
+    color: var(--brief-accent);
+    font-size: 12px;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    margin: 22px 0 8px;
+    font-weight: 700;
+  }
+  .brief h3:first-child { margin-top: 4px; }
+  .brief p { margin: 0 0 12px; color: var(--text); line-height: 1.7; font-size: 14px; }
+  .brief strong { color: var(--text); }
+  .brief .thread {
+    padding: 12px 14px;
+    border-left: 3px solid var(--brief-accent);
+    background: var(--brief-accent-soft);
+    border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+    margin: 10px 0 14px;
+  }
+  .brief .thread .thread-name {
+    font-weight: 700;
+    color: var(--brief-accent);
+    font-size: 13px;
+    margin-bottom: 6px;
+    letter-spacing: 0.01em;
+  }
+
+  /* Talking Points style */
+  .points .group { margin-bottom: 24px; }
+  .points .group-label {
+    display: inline-block;
+    color: var(--points-accent);
+    background: var(--points-accent-soft);
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    padding: 4px 10px;
+    border-radius: 6px;
+    margin-bottom: 10px;
+  }
+  .points ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+  .points li {
+    padding: 8px 0 8px 22px;
+    position: relative;
+    font-size: 14.5px;
+    color: var(--text);
+    line-height: 1.55;
+    border-bottom: 1px dashed var(--border);
+  }
+  .points li:last-child { border-bottom: none; }
+  .points li::before {
+    content: "•";
+    color: var(--points-accent);
+    position: absolute;
+    left: 4px;
+    font-size: 18px;
+    top: 4px;
+  }
+  .points .num {
+    font-family: var(--mono);
+    color: var(--accent);
+    font-weight: 600;
+  }
+
+  /* Thai script style */
+  .thai-toolbar {
+    background: var(--thai-accent-soft);
+    border-bottom-color: rgba(255,188,107,0.22);
+  }
+  .thai-body {
+    font-family: var(--thai-font);
+    font-size: 17px;
+    line-height: 1.85;
+    color: var(--text);
+    letter-spacing: 0.005em;
+  }
+  .thai-body p { margin: 0 0 16px; }
+  .thai-body .hook-line {
+    background: var(--thai-accent-soft);
+    border-left: 3px solid var(--thai-accent);
+    padding: 14px 16px;
+    border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+    font-size: 19px;
+    font-weight: 600;
+    margin-bottom: 18px;
+  }
+  .thai-copy-fab {
+    position: sticky;
+    bottom: 12px;
+    float: right;
+    background: var(--thai-accent);
+    color: #0b0b0d;
+    border: none;
+    padding: 10px 16px;
+    border-radius: 999px;
+    font-weight: 700;
+    font-size: 13px;
+    cursor: pointer;
+    box-shadow: 0 4px 16px rgba(0,0,0,0.4);
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+  }
+  .thai-copy-fab.copied { background: var(--success); }
+
+  .empty-state {
+    display: flex; align-items: center; justify-content: center;
+    height: 100%; text-align: center; padding: 40px 20px;
+    color: var(--text-dim); font-size: 13px;
+  }
+
+  /* Mobile: script pane becomes a collapsed panel with just tabs */
+  @media (max-width: 900px) {
+    .app { height: auto; overflow-y: auto; }
+    body { overflow: auto; }
+    .pane { min-height: auto; }
+    .chat-scroll { max-height: 40vh; }
+    .tab-body { max-height: 55vh; }
+    .thai-body { font-size: 18.5px; line-height: 1.9; }
+    .topic-card { margin: 12px; padding: 14px; }
+  }
+
+  /* Recording mode: fullscreen jumbo Thai */
+  .recording-mode {
+    position: fixed;
+    inset: 0;
+    background: #000;
+    color: #f5f5f5;
+    z-index: 100;
+    padding: 6vh 5vw;
+    overflow-y: auto;
+    font-family: var(--thai-font);
+    font-size: 32px;
+    line-height: 1.7;
+    display: none;
+  }
+  .recording-mode.on { display: block; }
+  .recording-mode .exit {
+    position: fixed; top: 12px; right: 12px;
+    padding: 8px 14px; border-radius: 999px;
+    background: rgba(255,255,255,0.1); color: #fff;
+    border: 1px solid rgba(255,255,255,0.2);
+    font-size: 14px; font-family: var(--sans); cursor: pointer;
+  }
+</style>
+</head>
+<body>
+  <div class="topbar">
+    <div class="brand">
+      <span class="brand-dot"></span>
+      <span>Creator Studio</span>
+      <span style="color: var(--text-dim); font-weight: 400; font-size: 12px; margin-left: 4px;">Morning · Fri Jul 3</span>
+    </div>
+    <nav class="nav">
+      <a href="#" class="active">Today</a>
+      <a href="#">Archive</a>
+      <a href="#">Dashboard</a>
+    </nav>
+  </div>
+
+  <div class="app">
+
+    <!-- LEFT PANE: topic + chat -->
+    <section class="pane">
+      <div class="topic-card">
+        <div class="topic-eyebrow">
+          <span class="eyebrow-label">Today's story</span>
+          <span class="freshness"><span class="dot"></span>seen 4h ago</span>
+        </div>
+        <h1 class="topic-title">Oil spikes, global stocks fall as US–Iran strikes rattle markets</h1>
+        <p class="topic-summary">Brent up 7% overnight. US Treasuries down for the first time in six sessions on faster-inflation fears. Markets pricing that the US–Iran war doesn't end this quarter.</p>
+        <div class="topic-tags">
+          <span class="tag">chart</span>
+          <span class="tag angle">investor angle — who wins, who loses</span>
+        </div>
+        <div class="topic-actions">
+          <div style="display:flex; gap:6px;">
+            <button class="btn small ghost" title="Show 3 topic options">↺ Next topic</button>
+            <button class="btn small ghost" title="Not this one">👎 Skip</button>
+          </div>
+          <button class="btn small">Save session</button>
+        </div>
+      </div>
+
+      <div class="chat">
+        <div class="chat-scroll">
+          <div class="msg assistant">
+            <div class="bubble">Morning. Big one today — oil ripped 7% overnight because US strikes on Iranian assets in the Gulf spooked traders. What's fun is the second-order story: bond yields are also up, which means the market thinks this = inflation, not just risk-off. Feels like an Elena "the house always wins, but this time the house is at the pump" setup. Want to go investor-angle or workforce/regular-people angle?</div>
+          </div>
+          <div class="msg user">
+            <div class="bubble">investor angle. also i want to talk about how thai importers pay for this in baht.</div>
+          </div>
+          <div class="msg assistant">
+            <div class="bubble">Perfect. So the 3 threads I'd weave: (1) who's making money on this — commodity hedge funds and specifically the Middle East sovereign wealth funds re-buying at the top; (2) who's paying — Thai/Asian net-importers watching baht weaken while oil rises, double squeeze; (3) the political-cover thread — how "market volatility" gets used to justify things governments wanted to do anyway. Ready for the script?</div>
+          </div>
+          <div class="msg user">
+            <div class="bubble">yes go</div>
+          </div>
+          <div class="msg assistant">
+            <div class="bubble">On it — writing the brief, points, and Thai script now. <span class="typing"><span></span><span></span><span></span></span></div>
+          </div>
+        </div>
+
+        <div class="composer">
+          <textarea placeholder="Chat about the topic…  ⌘K to regenerate a section"></textarea>
+          <button class="send">→</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- RIGHT PANE: script with tabs -->
+    <section class="pane script-pane">
+      <div class="script-header">
+        <div>
+          <div class="script-title">Script draft</div>
+          <div class="script-meta">v1 · 4:32 delivery · generated 14s ago</div>
+        </div>
+        <div style="display:flex; gap:6px;">
+          <button class="btn ghost small" title="Recording mode" onclick="document.getElementById('rec').classList.add('on')">🎥 Record mode</button>
+          <button class="btn ghost small" title="Regenerate current tab">↻</button>
+        </div>
+      </div>
+
+      <div class="tabs" role="tablist">
+        <button class="tab active" data-tab="brief" onclick="showTab('brief')">
+          <span>📚</span> Deep Brief <span class="badge">1,040 w</span>
+        </button>
+        <button class="tab" data-tab="points" onclick="showTab('points')">
+          <span>🎯</span> Talking Points <span class="badge">14</span>
+        </button>
+        <button class="tab" data-tab="thai" onclick="showTab('thai')">
+          <span>🇹🇭</span> Thai Script <span class="badge">712 w</span>
+        </button>
+      </div>
+
+      <!-- Deep Brief -->
+      <div class="tab-body active brief" id="tab-brief">
+        <div class="tab-toolbar" style="margin: -20px -24px 20px;">
+          <div class="tab-toolbar-left">Read this first — background you need to talk without notes</div>
+          <div class="tab-toolbar-right">
+            <button class="btn small ghost">Copy</button>
+            <button class="btn small ghost">↻ Regenerate</button>
+          </div>
+        </div>
+
+        <h3>Central theme</h3>
+        <p>The oil spike is being reported as chaos, but the money flow tells you exactly who wanted this: the same sovereign wealth funds that were long crude going into the strikes. Volatility isn't the story — the story is who was pre-positioned.</p>
+
+        <h3>Connected threads</h3>
+
+        <div class="thread">
+          <div class="thread-name">Thread 1 — Who was long crude before Monday</div>
+          <p>Commodity hedge fund net-long positioning hit a 3-year high the week before the strikes. Public data from the CFTC Commitment of Traders report shows managed money net-long positions up $18B in 6 weeks. Bridgewater, Millennium, and two named Middle East sovereign funds all added exposure through options that only pay out on a spike above $92/barrel. Oil closed at $94.20 Monday. This isn't a coincidence you can prove — but the pattern is one Elena would call "the setup you notice after the fact."</p>
+        </div>
+
+        <div class="thread">
+          <div class="thread-name">Thread 2 — Why bond yields are up (the real signal)</div>
+          <p>Normally, a shooting-war-in-the-Gulf headline sends money into US Treasuries. This time yields went UP, not down. That means the bond market is telling you: the Fed can't cut rates now, because oil-driven inflation is coming back. This is the second-order story. It matters more than the oil price because it means every mortgage, every car loan, every Thai baht-denominated dollar-debt payment just got more expensive to service for the rest of 2026.</p>
+        </div>
+
+        <div class="thread">
+          <div class="thread-name">Thread 3 — The Thai importer squeeze (regular-people angle)</div>
+          <p>Thailand imports ~85% of its crude. When Brent moves from $88 to $94, that's a 7% shock — but the baht also weakened 1.4% against USD in 48 hours, so the real cost to a Thai refiner is closer to 8.5%. PTT and Bangchak have hedges, but the pass-through to gasoline pumps in Bangkok will hit within 2 weeks. Your parents will notice this at the gas station before any news anchor explains it.</p>
+        </div>
+
+        <h3>Background everyone needs</h3>
+        <p>The US-Iran situation didn't start last week — it's been escalating since the March strikes on the two IRGC-linked tankers. What changed is that Iran's oil ministry announced Monday morning that they'd re-route exports through a "safe corridor" managed by a Chinese state carrier, and the US responded within 6 hours with a targeted strike. This is the pattern: escalation via commercial infrastructure, not military bases — which markets can price much faster than they can price a full war.</p>
+      </div>
+
+      <!-- Talking Points -->
+      <div class="tab-body points" id="tab-points">
+        <div class="tab-toolbar" style="margin: -20px -24px 20px;">
+          <div class="tab-toolbar-left">Delivery map · glance while recording</div>
+          <div class="tab-toolbar-right">
+            <button class="btn small ghost">Copy</button>
+            <button class="btn small ghost">↻ Regenerate</button>
+          </div>
+        </div>
+
+        <div class="group">
+          <span class="group-label">Hook</span>
+          <ul>
+            <li>Oil ripped <span class="num">7% overnight</span> — but the story isn't the war, it's who was already long before the first missile flew.</li>
+          </ul>
+        </div>
+
+        <div class="group">
+          <span class="group-label">Thread 1 · Who was long</span>
+          <ul>
+            <li>Managed money net-long crude positions up <span class="num">$18B in 6 weeks</span> before Monday.</li>
+            <li>Middle East sovereign wealth funds added <span class="num">$92-strike call options</span> — oil closed at $94.</li>
+            <li>Not proof. Just a pattern that keeps happening.</li>
+          </ul>
+        </div>
+
+        <div class="group">
+          <span class="group-label">Thread 2 · The bond yield tell</span>
+          <ul>
+            <li>Normally: war → Treasuries UP. This time: Treasuries DOWN. Yields UP.</li>
+            <li>Translation — the bond market thinks the Fed can't cut anymore. Inflation is coming back via the pump.</li>
+            <li>This is the actual story. Not the oil chart. The bond chart.</li>
+          </ul>
+        </div>
+
+        <div class="group">
+          <span class="group-label">Thread 3 · Who pays</span>
+          <ul>
+            <li>Thailand imports <span class="num">85%</span> of its crude.</li>
+            <li>Baht down <span class="num">1.4%</span> in 48h → real cost of oil to a Thai refiner is ~8.5%, not 7%.</li>
+            <li>You'll see it at the pump in 2 weeks. Your parents will notice before CNN explains it.</li>
+          </ul>
+        </div>
+
+        <div class="group">
+          <span class="group-label">Zoom out</span>
+          <ul>
+            <li>2003 parallel: same "chaos + sovereign fund positioning" pattern before Iraq.</li>
+            <li>Investor takeaway: watch the bond yield, not the CNN chyron.</li>
+            <li>Closing: the house always wins. This time the house has an oil rig.</li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- Thai script -->
+      <div class="tab-body" id="tab-thai">
+        <div class="tab-toolbar thai-toolbar" style="margin: -20px -24px 20px;">
+          <div class="tab-toolbar-left">พูดสิ่งนี้บนกล้อง · 4:32 min · conversational Thai</div>
+          <div class="tab-toolbar-right">
+            <button class="btn small ghost">A+ larger</button>
+            <button class="btn small ghost">↻ Regenerate</button>
+          </div>
+        </div>
+
+        <div class="thai-body">
+          <div class="hook-line">น้ำมันขึ้น 7% ในคืนเดียว แต่เรื่องจริงมันไม่ใช่สงคราม เรื่องจริงคือ ใครที่ซื้อน้ำมันไว้ก่อนที่ระเบิดลูกแรกจะตก</div>
+
+          <p>เมื่อเช้าตลาดหุ้นทั่วโลกร่วง น้ำมันเบรนต์จาก 88 ทะลุ 94 ในคืนเดียว ทุกคนพูดเรื่อง US โจมตีอิหร่านในอ่าวเปอร์เซีย ซึ่งก็ใช่ แต่นั่นไม่ใช่ story ที่น่าสนใจที่สุด</p>
+
+          <p>เอาให้เห็นภาพ — 6 สัปดาห์ก่อนหน้านี้ กองทุน hedge fund เพิ่ม net-long positions ในน้ำมันขึ้นมา 18 พันล้านดอลลาร์ กองทุน sovereign wealth จากตะวันออกกลางสองแห่ง เพิ่ม options ที่จะได้เงินเฉพาะตอนน้ำมันทะลุ 92 น้ำมันปิดที่ 94 บังเอิญไหม อาจจะ</p>
+
+          <p>แต่เรื่องที่ผมอยากให้ทุกคนสังเกตจริงๆ ไม่ใช่ราคาน้ำมัน มันคือพันธบัตร US Treasury ปกติเวลาเกิดสงคราม เงินจะไหลเข้าพันธบัตร ผลตอบแทนจะลง ครั้งนี้ตรงข้าม ผลตอบแทนขึ้น หกวันติดต่อกันแล้วที่พันธบัตรลง แปลว่าอะไร แปลว่าตลาดพันธบัตรกำลังบอกว่า Fed จะลดดอกเบี้ยไม่ได้แล้ว เพราะเงินเฟ้อจากน้ำมันกำลังจะกลับมา</p>
+
+          <p>อันนี้คือ story จริง ไม่ใช่กราฟน้ำมัน กราฟที่คุณต้องดูคือกราฟผลตอบแทนพันธบัตร มันบอกว่า ทุกๆ ค่างวดบ้าน ค่างวดรถ ทุกๆ หนี้สกุลดอลลาร์ที่คนไทยหรือคนเอเชียถืออยู่ กำลังจะแพงขึ้นตลอดปี 2026</p>
+
+          <p>ถ้าเชื่อมกลับมาที่ประเทศไทย ประเทศไทยนำเข้าน้ำมันดิบประมาณ 85 เปอร์เซ็นต์ น้ำมันขึ้น 7% แต่บาทอ่อนอีก 1.4% ใน 48 ชั่วโมง แปลว่าต้นทุนน้ำมันจริงๆ ของโรงกลั่นไทย ขึ้นประมาณ 8.5% ไม่ใช่ 7% ปตท กับ บางจาก มี hedge แหละ แต่ 2 สัปดาห์ข้างหน้า คุณจะเห็นราคาที่ปั๊ม พ่อแม่คุณจะรู้สึกก่อนที่ข่าวจะอธิบายเสร็จ</p>
+
+          <p>ย้อนกลับไปดูปี 2003 ก่อน US บุกอิรัก pattern เดียวกันเป๊ะ กองทุน sovereign wealth positioning ล่วงหน้า สื่อพูดเรื่อง "chaos" ตลาดพันธบัตรพูดเรื่องอื่น สุดท้ายคนที่ถือน้ำมันไว้ก่อน คือคนได้เงิน คนที่จ่ายค่างวดบ้าน คือคนจ่ายบิล</p>
+
+          <p>เพราะฉะนั้น takeaway วันนี้ อย่าดู CNN อย่าดูกราฟน้ำมัน ดูกราฟผลตอบแทน 10-year Treasury ถ้ามันยังขึ้นต่อ Fed cut ไม่ได้ แปลว่าตลาดจะเจ็บอีกยาว</p>
+
+          <p style="font-weight:600;">The house always wins. คราวนี้ house มีบ่อน้ำมัน</p>
+
+          <button class="thai-copy-fab" onclick="copyThai(this)">📋 Copy Thai script</button>
+        </div>
+      </div>
+    </section>
+  </div>
+
+  <!-- Recording mode overlay -->
+  <div class="recording-mode" id="rec">
+    <button class="exit" onclick="document.getElementById('rec').classList.remove('on')">Exit recording mode</button>
+    <p><b>น้ำมันขึ้น 7% ในคืนเดียว</b> — แต่เรื่องจริงมันไม่ใช่สงคราม เรื่องจริงคือ ใครที่ซื้อน้ำมันไว้ก่อนที่ระเบิดลูกแรกจะตก</p>
+    <p>เมื่อเช้าตลาดหุ้นทั่วโลกร่วง น้ำมันเบรนต์จาก 88 ทะลุ 94 ในคืนเดียว…</p>
+    <p style="opacity:0.5; font-size:0.6em; margin-top:40px;">Scroll to continue · A+ / A– to resize · tap to exit</p>
+  </div>
+
+<script>
+  function showTab(name) {
+    document.querySelectorAll('.tab').forEach(t => t.classList.toggle('active', t.dataset.tab === name));
+    document.querySelectorAll('.tab-body').forEach(b => b.classList.toggle('active', b.id === 'tab-' + name));
+  }
+  function copyThai(btn) {
+    const text = document.querySelector('#tab-thai .thai-body').innerText
+      .replace(/📋 Copy Thai script/, '').trim();
+    navigator.clipboard?.writeText(text);
+    btn.classList.add('copied');
+    btn.textContent = '✓ Copied to clipboard';
+    setTimeout(() => {
+      btn.classList.remove('copied');
+      btn.textContent = '📋 Copy Thai script';
+    }, 2000);
+  }
+</script>
+</body>
+</html>

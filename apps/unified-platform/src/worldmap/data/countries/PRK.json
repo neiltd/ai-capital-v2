@@ -1,0 +1,61 @@
+{
+  "id": "PRK",
+  "iso2": "KP",
+  "name": "North Korea",
+  "region": "Asia",
+  "subregion": "Eastern Asia",
+  "capital": "Pyongyang",
+  "lastUpdated": "2025-05-20",
+  "summary": "North Korea (DPRK) is a highly centralized authoritarian state currently in its strongest strategic position in years due to a deepening partnership with Russia. In 2025, the country reorganized its military intelligence (RIGB) to integrate satellite and cyber capabilities. Leveraging the 2024 pact with Moscow, the DPRK is acquiring advanced missile and space technology in exchange for munitions and troops, while continuing its shift from opportunistic cyber theft to sophisticated state-targeted operations.",
+  "indicators": {
+    "politicalStability":       { "score": 9, "trend": "stable", "confidence": "high", "note": "Totalitarian control remains absolute; no viable internal opposition or dissent tolerated." },
+    "economicDirection":        { "score": 2, "trend": "improving", "confidence": "medium", "note": "Economy is boosting from Russian military orders and illicit trade; however, overall living standards remain extremely low." },
+    "investmentAttractiveness": { "score": 1, "trend": "stable", "confidence": "high", "note": "Virtually non-existent for non-sanctioned actors; extreme risk of asset seizure and legal isolation." },
+    "geopoliticalRisk":         { "score": 9, "trend": "increasing", "confidence": "high", "note": "High risk of escalation due to nuclear/missile advancement and active participation in the Russia-Ukraine theater." },
+    "educationQuality":         { "score": 3, "trend": "stable", "confidence": "medium", "note": "High literacy but education is heavily ideologically focused; advanced training limited to military and cyber elites." },
+    "healthcareQuality":        { "score": 2, "trend": "stable", "confidence": "medium", "note": "Basic system for most, elite care for few; chronic shortages of medicine and modern equipment." },
+    "technologyInvestment":     { "score": 6, "trend": "improving", "confidence": "high", "note": "Significant state investment in missiles, satellites, and cyber warfare capabilities." }
+  },
+  "demographics": {
+    "population": 26244582,
+    "medianAge": 36.3,
+    "urbanizationRate": 63.2,
+    "majorEthnicGroups": ["Korean"],
+    "religions": [
+      { "name": "Atheist / None", "percent": 99.0 }
+    ]
+  },
+  "alliances": ["Comprehensive Strategic Partnership with Russia", "Sino-North Korean Treaty"],
+  "relationships": [
+    { "countryId": "RUS", "countryName": "Russia", "type": "strategic_partner", "sentiment": "positive", "summary": "Main strategic ally; cooperation includes arms transfers, troop deployments, and technology sharing for satellites and missiles." },
+    { "countryId": "CHN", "countryName": "China", "type": "strategic_partner", "sentiment": "positive", "summary": "Long-term security and economic lifeline; China provides essential fuel and food while balancing PRK's destabilizing actions." },
+    { "countryId": "KOR", "countryName": "South Korea", "type": "adversary", "sentiment": "negative", "summary": "Hostile relations; Pyongyang has officially abandoned the goal of peaceful reunification, labeling the South as a primary enemy." },
+    { "countryId": "USA", "countryName": "United States", "type": "adversary", "sentiment": "negative", "summary": "Deep-seated hostility; focus on nuclear deterrence and countering US-led sanctions through illicit means and Russian support." }
+  ],
+  "perspectives": [
+    { "source": "DPRK State Media", "bias": "Totalitarian", "view": "Under the brilliant leadership of the Marshal, we have achieved invincible nuclear strength and a glorious alliance with Russia." },
+    { "source": "Regional Security Analyst", "bias": "Critical", "view": "North Korea is no longer just a regional nuisance; its role as an 'arsenal for autocracy' in Ukraine has changed the global security math." },
+    { "source": "Defector in Seoul", "bias": "Victim", "view": "The border is tighter than ever; the state uses Russian technology not to help the people, but to surveillance and control us more effectively." }
+  ],
+  "historicalContext": {
+    "summary": "Established in 1948 after the division of the Korean Peninsula, the DPRK is a hereditary dictatorship. It survived the Korean War (1950-1953) with Chinese support and has since developed an extensive nuclear weapons program despite extreme international isolation and multiple famines.",
+    "keyEvents": [
+      { "year": 1948, "event": "Establishment of the Democratic People's Republic of Korea." },
+      { "year": 1950, "event": "Invasion of South Korea, starting the Korean War." },
+      { "year": 1994, "event": "Death of Kim Il Sung; start of the 'Arduous March' famine." },
+      { "year": 2006, "event": "First nuclear test." },
+      { "year": 2011, "event": "Kim Jong Un takes power." },
+      { "year": 2024, "event": "Signing of the Comprehensive Strategic Partnership with Russia; deployment of troops to Russia." }
+    ]
+  },
+  "investmentNotes": {
+    "strengths": ["Large and disciplined labor force (though restricted)", "Significant untapped mineral resources (Rare earths, Coal, Iron)", "World-class capabilities in specific tech (Missiles/Cyber)", "Strong state-led focus on strategic projects"],
+    "risks": ["Extreme international sanctions and total lack of financial transparency", "High risk of sudden political collapse or military conflict", "Total absence of private property rights or independent legal system", "Severe humanitarian and human rights crises"],
+    "sectors": ["Military Equipment (Sanctioned)", "Mineral Extraction (Sanctioned)", "Illicit Cyber Services", "State-controlled Agriculture"]
+  },
+  "sources": [
+    { "name": "38 North (Stimson Center)", "url": "https://www.38north.org/", "type": "analytical" },
+    { "name": "NK News", "url": "https://www.nknews.org/", "type": "media" },
+    { "name": "UN Security Council Panel of Experts on DPRK", "url": "https://www.un.org/securitycouncil/sanctions/1718/panel_experts/reports", "type": "oversight" }
+  ]
+}

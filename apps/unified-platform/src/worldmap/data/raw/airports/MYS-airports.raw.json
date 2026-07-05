@@ -1,0 +1,272 @@
+[
+  {
+    "id": "KUL",
+    "name": "Kuala Lumpur International Airport",
+    "countryId": "MYS",
+    "city": "Sepang",
+    "iata": "KUL",
+    "icao": "WMKK",
+    "coordinates": [101.698, 2.743],
+    "passengerVolume": 57080000,
+    "cargoVolume": 794943,
+    "runwayCount": 3,
+    "elevationM": 21,
+    "strategicImportance": "critical",
+    "geopoliticalNotes": "Primary national gateway and regional hub; central node for KLIA Aeropolis and Cainiao Aeropolis eWTP Hub supporting regional e-commerce logistics.",
+    "notes": "Houses dedicated facilities for major international cargo operators; significant for ASEAN connectivity.",
+    "attribution": {
+      "sources": [
+        { "name": "Malaysia Airports Holdings Berhad (MAHB)", "url": "https://www.malaysiaairports.com.my/", "accessedAt": "2026-05-10" },
+        { "name": "IATA", "url": "https://www.iata.org/", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 2,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  },
+  {
+    "id": "PEN",
+    "name": "Penang International Airport",
+    "countryId": "MYS",
+    "city": "Bayan Lepas",
+    "iata": "PEN",
+    "icao": "WMKP",
+    "coordinates": [100.277, 5.297],
+    "passengerVolume": 7660000,
+    "cargoVolume": 103423,
+    "runwayCount": 1,
+    "elevationM": 3,
+    "strategicImportance": "high",
+    "geopoliticalNotes": "Critical for Malaysia's electronics and semiconductor exports; handles approx. 70% of national air cargo value.",
+    "notes": "Undergoing expansion to increase capacity for high-value manufacturing logistics.",
+    "attribution": {
+      "sources": [
+        { "name": "MAHB Annual Report", "url": "https://www.malaysiaairports.com.my/", "accessedAt": "2026-05-10" },
+        { "name": "AIP Malaysia", "url": "https://aip.caam.gov.my/", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 2,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  },
+  {
+    "id": "BKI",
+    "name": "Kota Kinabalu International Airport",
+    "countryId": "MYS",
+    "city": "Kota Kinabalu",
+    "iata": "BKI",
+    "icao": "WBKK",
+    "coordinates": [116.059, 5.945],
+    "passengerVolume": 7950000,
+    "cargoVolume": 54154,
+    "runwayCount": 1,
+    "elevationM": 3,
+    "strategicImportance": "high",
+    "geopoliticalNotes": "Second busiest airport in Malaysia; gateway to East Malaysia and BIMP-EAGA region; strategically close to Indonesia's new capital Nusantara.",
+    "notes": "Critical for regional integration in Borneo.",
+    "attribution": {
+      "sources": [
+        { "name": "MAHB", "url": "https://www.malaysiaairports.com.my/", "accessedAt": "2026-05-10" },
+        { "name": "IATA", "url": "https://www.iata.org/", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 2,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  },
+  {
+    "id": "KCH",
+    "name": "Kuching International Airport",
+    "countryId": "MYS",
+    "city": "Kuching",
+    "iata": "KCH",
+    "icao": "WBGG",
+    "coordinates": [110.342, 1.487],
+    "passengerVolume": 5760000,
+    "cargoVolume": 47836,
+    "runwayCount": 1,
+    "elevationM": 27,
+    "strategicImportance": "high",
+    "geopoliticalNotes": "Logistics backbone for Sarawak; supports remote area supply chains and oil/gas operations.",
+    "notes": "Co-located with RMAF Kuching airbase.",
+    "attribution": {
+      "sources": [
+        { "name": "MAHB", "url": "https://www.malaysiaairports.com.my/", "accessedAt": "2026-05-10" },
+        { "name": "SkyVector", "url": "https://skyvector.com/airport/WBGG/Kuching-International-Airport", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 2,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  },
+  {
+    "id": "JHB",
+    "name": "Senai International Airport",
+    "countryId": "MYS",
+    "city": "Johor Bahru",
+    "iata": "JHB",
+    "icao": "WMKJ",
+    "coordinates": [103.670, 1.641],
+    "passengerVolume": 3360000,
+    "cargoVolume": 80000,
+    "runwayCount": 1,
+    "elevationM": 39,
+    "strategicImportance": "high",
+    "geopoliticalNotes": "Dedicated logistics hub for Southern Malaysia; captures spillover from Singapore; key component of the Johor-Singapore Special Economic Zone (JS-SEZ).",
+    "notes": "Managed by Senai Airport Terminal Services; features DHL South Region Hub.",
+    "attribution": {
+      "sources": [
+        { "name": "Senai Airport", "url": "https://www.senaiairport.com/", "accessedAt": "2026-05-10" },
+        { "name": "IATA", "url": "https://www.iata.org/", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 2,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  },
+  {
+    "id": "SZB",
+    "name": "Sultan Abdul Aziz Shah Airport",
+    "countryId": "MYS",
+    "city": "Subang",
+    "iata": "SZB",
+    "icao": "WMSA",
+    "coordinates": [101.548, 3.131],
+    "passengerVolume": 2300000,
+    "cargoVolume": 26400,
+    "runwayCount": 1,
+    "elevationM": 27,
+    "strategicImportance": "high",
+    "geopoliticalNotes": "Backbone of Malaysian military airlift; houses RMAF A400M and C-130 fleet; major aerospace maintenance hub.",
+    "notes": "Shares runway with RMAF Subang airbase; handles regional turboprop operations.",
+    "attribution": {
+      "sources": [
+        { "name": "MAHB", "url": "https://www.malaysiaairports.com.my/", "accessedAt": "2026-05-10" },
+        { "name": "RMAF Official", "url": "http://www.airforce.mil.my/", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 2,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  },
+  {
+    "id": "LBU",
+    "name": "Labuan Airport",
+    "countryId": "MYS",
+    "city": "Labuan",
+    "iata": "LBU",
+    "icao": "WBKL",
+    "coordinates": [115.248, 5.302],
+    "passengerVolume": 270959,
+    "cargoVolume": 3354,
+    "runwayCount": 1,
+    "elevationM": 31,
+    "strategicImportance": "high",
+    "geopoliticalNotes": "Strategic outpost for the South China Sea; primary base for Malaysian ISR assets and offshore energy logistics.",
+    "notes": "Co-located with RMAF Labuan airbase.",
+    "attribution": {
+      "sources": [
+        { "name": "AIP Malaysia", "url": "https://aip.caam.gov.my/", "accessedAt": "2026-05-10" },
+        { "name": "MAHB", "url": "https://www.malaysiaairports.com.my/", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 2,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  },
+  {
+    "id": "KUA",
+    "name": "Sultan Haji Ahmad Shah Airport",
+    "countryId": "MYS",
+    "city": "Kuantan",
+    "iata": "KUA",
+    "icao": "WMKD",
+    "coordinates": [103.209, 3.775],
+    "passengerVolume": 250000,
+    "cargoVolume": 500,
+    "runwayCount": 1,
+    "elevationM": 18,
+    "strategicImportance": "medium",
+    "geopoliticalNotes": "Primary interceptor base for Malaysia's East Coast; critical for South China Sea maritime security.",
+    "notes": "Shares facilities with RMAF Kuantan airbase.",
+    "attribution": {
+      "sources": [
+        { "name": "AIP Malaysia", "url": "https://aip.caam.gov.my/", "accessedAt": "2026-05-10" },
+        { "name": "MAHB", "url": "https://www.malaysiaairports.com.my/", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 2,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  },
+  {
+    "id": "LGK",
+    "name": "Langkawi International Airport",
+    "countryId": "MYS",
+    "city": "Langkawi",
+    "iata": "LGK",
+    "icao": "WMKL",
+    "coordinates": [99.733, 6.333],
+    "passengerVolume": 2550000,
+    "cargoVolume": 157,
+    "runwayCount": 1,
+    "elevationM": 5,
+    "strategicImportance": "medium",
+    "geopoliticalNotes": "Major tourism hub; hosts the biennial Langkawi International Maritime and Aerospace (LIMA) exhibition.",
+    "notes": "Critical for regional tourism and defense diplomacy during LIMA.",
+    "attribution": {
+      "sources": [
+        { "name": "MAHB", "url": "https://www.malaysiaairports.com.my/", "accessedAt": "2026-05-10" },
+        { "name": "SkyVector", "url": "https://skyvector.com/airport/WMKL/Langkawi-International-Airport", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 2,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  },
+  {
+    "id": "MYY",
+    "name": "Miri Airport",
+    "countryId": "MYS",
+    "city": "Miri",
+    "iata": "MYY",
+    "icao": "WBGR",
+    "coordinates": [113.988, 4.325],
+    "passengerVolume": 2270000,
+    "cargoVolume": 3456,
+    "runwayCount": 1,
+    "elevationM": 18,
+    "strategicImportance": "medium",
+    "geopoliticalNotes": "Primary hub for Sarawak's oil and gas industry; supports offshore operations and regional connectivity.",
+    "notes": "Busiest domestic-only focus airport in East Malaysia.",
+    "attribution": {
+      "sources": [
+        { "name": "MAHB", "url": "https://www.malaysiaairports.com.my/", "accessedAt": "2026-05-10" },
+        { "name": "SkyVector", "url": "https://skyvector.com/airport/WBGR/Miri-Airport", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 2,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  }
+]

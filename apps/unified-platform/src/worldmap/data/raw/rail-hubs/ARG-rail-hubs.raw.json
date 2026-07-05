@@ -1,0 +1,219 @@
+[
+  {
+    "id": "RAIL-ARG-CONSTITUCION",
+    "name": "Estación Plaza Constitución",
+    "countryId": "ARG",
+    "city": "Buenos Aires",
+    "coordinates": [-58.381, -34.628],
+    "type": "passenger",
+    "dailyPassengers": 500000,
+    "annualFreightTonnes": null,
+    "connectedCountries": [],
+    "gaugeType": "broad",
+    "lineCount": 14,
+    "strategicImportance": "high",
+    "isPartOfBRI": true,
+    "geopoliticalNotes": "Primary terminus for the Roca Line, the most heavily used commuter rail in Argentina. Beneficiary of BRI-funded rolling stock and infrastructure upgrades.",
+    "notes": "Main gateway for the southern Buenos Aires metropolitan area.",
+    "attribution": {
+      "sources": [
+        { "name": "Trenes Argentinos Statistics", "url": "https://www.argentina.gob.ar/transporte/trenes-argentinos", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 1,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  },
+  {
+    "id": "RAIL-ARG-RETIRO-HUB",
+    "name": "Retiro Station Complex",
+    "countryId": "ARG",
+    "city": "Buenos Aires",
+    "coordinates": [-58.375, -34.591],
+    "type": "passenger",
+    "dailyPassengers": 350000,
+    "annualFreightTonnes": null,
+    "connectedCountries": [],
+    "gaugeType": "mixed",
+    "lineCount": 12,
+    "strategicImportance": "high",
+    "isPartOfBRI": true,
+    "geopoliticalNotes": "Convergent point for the Mitre, Belgrano Norte, and San Martín lines. Central to the BRI-backed modernization of northern metropolitan lines.",
+    "notes": "Adjacent to the Port of Buenos Aires, facilitating urban logistics.",
+    "attribution": {
+      "sources": [
+        { "name": "Ministry of Transport, Argentina", "url": "https://www.argentina.gob.ar/transporte", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 1,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  },
+  {
+    "id": "RAIL-ARG-ROSARIO-PORT",
+    "name": "Rosario Rail Export Terminal",
+    "countryId": "ARG",
+    "city": "Rosario",
+    "coordinates": [-60.653, -32.944],
+    "type": "port_interface",
+    "dailyPassengers": null,
+    "annualFreightTonnes": 15000000,
+    "connectedCountries": [],
+    "gaugeType": "mixed",
+    "lineCount": 8,
+    "strategicImportance": "high",
+    "isPartOfBRI": true,
+    "geopoliticalNotes": "The heart of Argentina's 'Agro-export' corridor. Terminus for the Belgrano Cargas (BRI project) bringing grain from the north.",
+    "notes": "Critical for global soy and corn supply chains.",
+    "attribution": {
+      "sources": [
+        { "name": "Bolsa de Comercio de Rosario", "url": "https://www.bcr.com.ar/", "accessedAt": "2026-05-10" },
+        { "name": "Belgrano Cargas y Logística S.A.", "url": "https://www.bcyl.com.ar/", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 2,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  },
+  {
+    "id": "RAIL-ARG-CORDOBA-HUB",
+    "name": "Córdoba Rail Terminal",
+    "countryId": "ARG",
+    "city": "Córdoba",
+    "coordinates": [-64.183, -31.417],
+    "type": "mixed",
+    "dailyPassengers": 5000,
+    "annualFreightTonnes": 4000000,
+    "connectedCountries": [],
+    "gaugeType": "mixed",
+    "lineCount": 6,
+    "strategicImportance": "medium",
+    "isPartOfBRI": true,
+    "geopoliticalNotes": "Major industrial hub in central Argentina. Facilitates the movement of automotive parts and agricultural machinery to the ports.",
+    "notes": "Key junction for the Central Argentine Railway network.",
+    "attribution": {
+      "sources": [
+        { "name": "CNRT (Comisión Nacional de Regulación del Transporte)", "url": "https://www.argentina.gob.ar/cnrt", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "medium",
+        "sourceCount": 1,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  },
+  {
+    "id": "RAIL-ARG-PASO-DE-LOS-LIBRES",
+    "name": "Paso de los Libres Border Hub",
+    "countryId": "ARG",
+    "city": "Paso de los Libres",
+    "coordinates": [-57.087, -29.712],
+    "type": "border_crossing",
+    "dailyPassengers": null,
+    "annualFreightTonnes": 1500000,
+    "connectedCountries": ["BRA"],
+    "gaugeType": "standard",
+    "lineCount": 3,
+    "strategicImportance": "medium",
+    "isPartOfBRI": true,
+    "geopoliticalNotes": "Critical rail border crossing with Brazil (Uruguaiana). Part of the Urquiza line and Mercosur logistics corridor.",
+    "notes": "Handles significant trade in industrial components and foodstuffs between Argentina and Brazil.",
+    "attribution": {
+      "sources": [
+        { "name": "Mercosur Trade Statistics", "url": "https://www.mercosur.int/", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "medium",
+        "sourceCount": 1,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  },
+  {
+    "id": "RAIL-ARG-MENDOZA-HUB",
+    "name": "Mendoza Rail Terminal",
+    "countryId": "ARG",
+    "city": "Mendoza",
+    "coordinates": [-68.84, -32.89],
+    "type": "freight",
+    "dailyPassengers": null,
+    "annualFreightTonnes": 2500000,
+    "connectedCountries": ["CHL"],
+    "gaugeType": "broad",
+    "lineCount": 4,
+    "strategicImportance": "medium",
+    "isPartOfBRI": true,
+    "geopoliticalNotes": "Gateway to the Andes. While the trans-Andean rail is currently limited, Mendoza remains the primary collection point for wine and mineral exports heading east.",
+    "notes": "BRI investment plans include the reactivation of the San Martín line to Mendoza.",
+    "attribution": {
+      "sources": [
+        { "name": "China-Argentina Infrastructure Cooperation Plan", "url": "http://www.china-embassy.org/", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "medium",
+        "sourceCount": 1,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  },
+  {
+    "id": "RAIL-ARG-BAHIA-BLANCA-PORT",
+    "name": "Bahía Blanca Port Rail Hub",
+    "countryId": "ARG",
+    "city": "Bahía Blanca",
+    "coordinates": [-62.26, -38.72],
+    "type": "port_interface",
+    "dailyPassengers": null,
+    "annualFreightTonnes": 10000000,
+    "connectedCountries": [],
+    "gaugeType": "broad",
+    "lineCount": 6,
+    "strategicImportance": "high",
+    "isPartOfBRI": true,
+    "geopoliticalNotes": "Deep-water port interface. Essential for liquid bulk (petroleum) and grain exports from southern Buenos Aires province.",
+    "notes": "Major terminus for the Roca Line freight services.",
+    "attribution": {
+      "sources": [
+        { "name": "Consorcio de Gestión del Puerto de Bahía Blanca", "url": "https://puertobahiablanca.com/", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 1,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  },
+  {
+    "id": "RAIL-ARG-SALTA-C14",
+    "name": "Salta Rail Junction (Line C14)",
+    "countryId": "ARG",
+    "city": "Salta",
+    "coordinates": [-65.41, -24.78],
+    "type": "freight",
+    "dailyPassengers": null,
+    "annualFreightTonnes": 800000,
+    "connectedCountries": ["CHL"],
+    "gaugeType": "narrow",
+    "lineCount": 3,
+    "strategicImportance": "medium",
+    "isPartOfBRI": true,
+    "geopoliticalNotes": "Strategic link for the 'Lithium Triangle'. The C14 line connects northern Argentina to the Chilean port of Antofagasta.",
+    "notes": "Part of the Belgrano Cargas network under renovation with Chinese financing.",
+    "attribution": {
+      "sources": [
+        { "name": "Belgrano Cargas y Logística S.A.", "url": "https://www.bcyl.com.ar/", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "medium",
+        "sourceCount": 1,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  }
+]

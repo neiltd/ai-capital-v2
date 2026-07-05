@@ -1,0 +1,27 @@
+[
+  {
+    "countryId": "PHL",
+    "year": 2022,
+    "overallScore": 59.3,
+    "availability": 55.2,
+    "access": 71.5,
+    "utilization": 65.3,
+    "stability": 41.8,
+    "undernourishedPct": 9.4,
+    "foodImportDependencyPct": 25.0,
+    "cerealYieldKgHa": 3869,
+    "climateVulnerability": "extreme",
+    "conflictExposure": "medium",
+    "attribution": {
+      "sources": [
+        { "name": "GFSI 2022 — Philippines", "url": "https://impact.economist.com/sustainability/project/food-security-index/", "accessedAt": "2024-05-22" },
+        { "name": "FAO FAOSTAT", "url": "https://www.fao.org/faostat/en/", "accessedAt": "2024-05-22" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 2,
+        "lastVerified": "2024-05-22"
+      }
+    }
+  }
+]

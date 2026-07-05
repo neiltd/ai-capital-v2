@@ -1,0 +1,33 @@
+[
+  {
+    "countryId": "SGP",
+    "year": 2023,
+    "electricityConsumptionTWh": 57.0,
+    "electricityProductionTWh": 57.0,
+    "electricityMix": {
+      "gas": 94.3,
+      "solar": 2.0,
+      "other": 3.7
+    },
+    "renewableSharePct": 2.0,
+    "waterStressScore": 5.0,
+    "waterWithdrawalPct": null,
+    "foodSecurityScore": 73.1,
+    "aiAdoptionScore": 81.97,
+    "internetPenetration": 96.9,
+    "mobilePenetration": 153.8,
+    "attribution": {
+      "sources": [
+        { "name": "EMA Singapore Energy Statistics 2023", "url": "https://www.ema.gov.sg/singapore-energy-statistics", "accessedAt": "2024-05-22" },
+        { "name": "WRI Aqueduct 3.0", "url": "https://www.wri.org/aqueduct", "accessedAt": "2024-05-22" },
+        { "name": "GFSI 2022", "url": "https://impact.economist.com/sustainability/project/food-security-index", "accessedAt": "2024-05-22" },
+        { "name": "Oxford Insights Government AI Readiness Index 2023", "url": "https://oxfordinsights.com/government-ai-readiness-index-2023/", "accessedAt": "2024-05-22" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 4,
+        "lastVerified": "2024-05-22"
+      }
+    }
+  }
+]

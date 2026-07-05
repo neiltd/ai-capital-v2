@@ -1,0 +1,272 @@
+[
+  {
+    "id": "IKA",
+    "name": "Tehran Imam Khomeini International Airport",
+    "countryId": "IRN",
+    "city": "Tehran",
+    "iata": "IKA",
+    "icao": "OIIE",
+    "coordinates": [51.1522, 35.4161],
+    "passengerVolume": 9000000,
+    "cargoVolume": 160000,
+    "runwayCount": 2,
+    "elevationM": 1007,
+    "strategicImportance": "critical",
+    "geopoliticalNotes": "Primary international gateway for Iran and main hub for Iran Air. Transit point for Europe-Asia routes.",
+    "notes": "Handles almost all long-haul international traffic for the capital.",
+    "attribution": {
+      "sources": [
+        { "name": "Iran Airports Company", "url": "https://www.airport.ir", "accessedAt": "2026-05-10" },
+        { "name": "OurAirports", "url": "https://ourairports.com/airports/OIIE/", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 2,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  },
+  {
+    "id": "THR",
+    "name": "Tehran Mehrabad International Airport",
+    "countryId": "IRN",
+    "city": "Tehran",
+    "iata": "THR",
+    "icao": "OIII",
+    "coordinates": [51.3136, 35.6892],
+    "passengerVolume": 17500000,
+    "cargoVolume": 120000,
+    "runwayCount": 2,
+    "elevationM": 1208,
+    "strategicImportance": "critical",
+    "geopoliticalNotes": "Busiest airport in Iran; central hub for domestic connectivity and government aviation. Major IRIAF base.",
+    "notes": "Primary hub for domestic and regional government flights.",
+    "attribution": {
+      "sources": [
+        { "name": "IATA", "url": "https://www.iata.org", "accessedAt": "2026-05-10" },
+        { "name": "OurAirports", "url": "https://ourairports.com/airports/OIII/", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 2,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  },
+  {
+    "id": "MHD",
+    "name": "Mashhad Shahid Hasheminejad International Airport",
+    "countryId": "IRN",
+    "city": "Mashhad",
+    "iata": "MHD",
+    "icao": "OIMM",
+    "coordinates": [59.6408, 36.235],
+    "passengerVolume": 10500000,
+    "cargoVolume": 94000,
+    "runwayCount": 2,
+    "elevationM": 995,
+    "strategicImportance": "high",
+    "geopoliticalNotes": "Religious capital hub serving millions of pilgrims; strategic link to Central Asia and Afghanistan.",
+    "notes": "Second busiest international airport in Iran.",
+    "attribution": {
+      "sources": [
+        { "name": "Iran Airports Company", "url": "https://www.airport.ir", "accessedAt": "2026-05-10" },
+        { "name": "OurAirports", "url": "https://ourairports.com/airports/OIMM/", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 2,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  },
+  {
+    "id": "SYZ",
+    "name": "Shiraz Shahid Dastgheib International Airport",
+    "countryId": "IRN",
+    "city": "Shiraz",
+    "iata": "SYZ",
+    "icao": "OISS",
+    "coordinates": [52.59, 29.5392],
+    "passengerVolume": 3500000,
+    "cargoVolume": 33000,
+    "runwayCount": 2,
+    "elevationM": 1500,
+    "strategicImportance": "high",
+    "geopoliticalNotes": "Main hub for southern Iran and a major military/electronic navigation center.",
+    "notes": "Primary gateway for tourism to Persepolis.",
+    "attribution": {
+      "sources": [
+        { "name": "ICAO", "url": "https://www.icao.int", "accessedAt": "2026-05-10" },
+        { "name": "OurAirports", "url": "https://ourairports.com/airports/OISS/", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 2,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  },
+  {
+    "id": "AWZ",
+    "name": "Ahvaz Qasem Soleimani International Airport",
+    "countryId": "IRN",
+    "city": "Ahvaz",
+    "iata": "AWZ",
+    "icao": "OIAW",
+    "coordinates": [48.7619, 31.3375],
+    "passengerVolume": 2900000,
+    "cargoVolume": 26000,
+    "runwayCount": 1,
+    "elevationM": 20,
+    "strategicImportance": "high",
+    "geopoliticalNotes": "Logistical heart of Iran's oil and gas industry; vital for energy sector personnel and regional trade.",
+    "notes": "Strategic for economic stability and cross-border trade with Iraq.",
+    "attribution": {
+      "sources": [
+        { "name": "Iran Airports Company", "url": "https://www.airport.ir", "accessedAt": "2026-05-10" },
+        { "name": "OurAirports", "url": "https://ourairports.com/airports/OIAW/", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 2,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  },
+  {
+    "id": "KIH",
+    "name": "Kish International Airport",
+    "countryId": "IRN",
+    "city": "Kish Island",
+    "iata": "KIH",
+    "icao": "OIBK",
+    "coordinates": [53.9803, 26.5261],
+    "passengerVolume": 2900000,
+    "cargoVolume": 32000,
+    "runwayCount": 2,
+    "elevationM": 31,
+    "strategicImportance": "medium",
+    "geopoliticalNotes": "Primary tourism and economic hub in the Persian Gulf Free Trade Zone with visa-free entry.",
+    "notes": "Strategic for offshore energy and tourism.",
+    "attribution": {
+      "sources": [
+        { "name": "Kish Free Zone Organization", "url": "https://www.kish.ir", "accessedAt": "2026-05-10" },
+        { "name": "OurAirports", "url": "https://ourairports.com/airports/OIBK/", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 2,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  },
+  {
+    "id": "IFN",
+    "name": "Isfahan Shahid Beheshti International Airport",
+    "countryId": "IRN",
+    "city": "Isfahan",
+    "iata": "IFN",
+    "icao": "OIFM",
+    "coordinates": [51.8611, 32.7508],
+    "passengerVolume": 2800000,
+    "cargoVolume": 25000,
+    "runwayCount": 2,
+    "elevationM": 1542,
+    "strategicImportance": "high",
+    "geopoliticalNotes": "Central industrial and cultural hub; adjacent to Khatami Air Base housing Iran's F-14 fleet.",
+    "notes": "Vital joint-use facility in central Iran.",
+    "attribution": {
+      "sources": [
+        { "name": "Iran Airports Company", "url": "https://www.airport.ir", "accessedAt": "2026-05-10" },
+        { "name": "OurAirports", "url": "https://ourairports.com/airports/OIFM/", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 2,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  },
+  {
+    "id": "TBZ",
+    "name": "Tabriz Shahid Madani International Airport",
+    "countryId": "IRN",
+    "city": "Tabriz",
+    "iata": "TBZ",
+    "icao": "OITT",
+    "coordinates": [46.235, 38.1339],
+    "passengerVolume": 2000000,
+    "cargoVolume": 15000,
+    "runwayCount": 2,
+    "elevationM": 1359,
+    "strategicImportance": "high",
+    "geopoliticalNotes": "Gateway to the Northwest; critical for trade with Turkey and the Caucasus region. Major tactical air base.",
+    "notes": "Strategic for regional defense and international trade.",
+    "attribution": {
+      "sources": [
+        { "name": "IATA", "url": "https://www.iata.org", "accessedAt": "2026-05-10" },
+        { "name": "OurAirports", "url": "https://ourairports.com/airports/OITT/", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 2,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  },
+  {
+    "id": "BND",
+    "name": "Bandar Abbas International Airport",
+    "countryId": "IRN",
+    "city": "Bandar Abbas",
+    "iata": "BND",
+    "icao": "OIKB",
+    "coordinates": [56.3778, 27.2181],
+    "passengerVolume": 1300000,
+    "cargoVolume": 13000,
+    "runwayCount": 1,
+    "elevationM": 7,
+    "strategicImportance": "high",
+    "geopoliticalNotes": "Vital for maritime-air multimodal logistics on the Strait of Hormuz. Major naval support hub.",
+    "notes": "Strategically positioned at the mouth of the Persian Gulf.",
+    "attribution": {
+      "sources": [
+        { "name": "Iran Airports Company", "url": "https://www.airport.ir", "accessedAt": "2026-05-10" },
+        { "name": "OurAirports", "url": "https://ourairports.com/airports/OIKB/", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 2,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  },
+  {
+    "id": "ZBR",
+    "name": "Chabahar Konarak Airport",
+    "countryId": "IRN",
+    "city": "Chabahar",
+    "iata": "ZBR",
+    "icao": "OIZC",
+    "coordinates": [60.3819, 25.4433],
+    "passengerVolume": 250000,
+    "cargoVolume": 2500,
+    "runwayCount": 2,
+    "elevationM": 13,
+    "strategicImportance": "high",
+    "geopoliticalNotes": "High strategic value as the gateway to the Makran Coast and the deep-sea port corridor.",
+    "notes": "Critical for the INSTC (International North-South Transport Corridor).",
+    "attribution": {
+      "sources": [
+        { "name": "Chabahar Free Zone", "url": "https://www.cfzo.ir", "accessedAt": "2026-05-10" },
+        { "name": "OurAirports", "url": "https://ourairports.com/airports/OIZC/", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 2,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  }
+]

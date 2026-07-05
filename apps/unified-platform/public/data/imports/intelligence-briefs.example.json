@@ -1,0 +1,26 @@
+{
+  "schemaVersion": "1.0.0",
+  "generatedAt": "2026-05-22T00:00:00.000Z",
+  "briefs": [
+    {
+      "iso3": "IRN",
+      "situation_overview": "Iran remains under comprehensive Western sanctions following the collapse of the JCPOA revival talks. The government faces dual pressure from domestic economic strain and external nuclear negotiations.",
+      "key_dynamics": "The Islamic Republic balances factional politics between hardliners and pragmatists while managing an economy hit by oil export restrictions and dollar-denominated sanctions.",
+      "historical_roots": "Iran's revolutionary identity, shaped by the 1979 Islamic Revolution and the 1980-88 Iran-Iraq War, drives its anti-Western posture. The 2015 JCPOA and its 2018 US withdrawal under Trump created the current nuclear impasse.",
+      "actor_map": "Supreme Leader Khamenei holds ultimate authority. IRGC controls key economic sectors and proxy networks. President Pezeshkian represents pragmatist faction. Hardliners dominate parliament.",
+      "alignment_map": {
+        "primary_alignment": "Russia-China axis — deepening defense and trade ties as Western isolation increases",
+        "secondary_ties": "Maintains outreach to Global South; Qatar serves as informal channel to US",
+        "internal_factions": "Pragmatists favor diplomatic engagement; IRGC and hardliners prefer resistance economy",
+        "fault_lines": "Economic deterioration could strengthen reformist voices; nuclear escalation risks IRGC dominance"
+      },
+      "watchlist": [
+        "IAEA quarterly report on uranium enrichment levels",
+        "IRGC proxy activity in Iraq and Syria as tension indicator",
+        "IRR exchange rate as economic pressure gauge"
+      ],
+      "last_reviewed": "2026-05-22",
+      "last_synthesized": "2026-05-22T00:00:00.000Z"
+    }
+  ]
+}

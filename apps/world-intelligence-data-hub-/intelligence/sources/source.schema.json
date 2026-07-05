@@ -1,0 +1,130 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "source.schema.json",
+  "title": "NewsSource",
+  "description": "A registered news source in the World Intelligence source registry. At least one of rss_url or api_url must be present.",
+  "type": "object",
+  "required": [
+    "id",
+    "name",
+    "country",
+    "language",
+    "source_type",
+    "access_type",
+    "topics",
+    "reliability_tier",
+    "enabled"
+  ],
+  "additionalProperties": false,
+  "anyOf": [
+    { "required": ["rss_url"] },
+    { "required": ["api_url"] }
+  ],
+  "properties": {
+
+    "id": {
+      "type": "string",
+      "pattern": "^[a-z0-9][a-z0-9-]*[a-z0-9]$",
+      "description": "Unique kebab-case identifier. Used as a key in pipeline configs."
+    },
+
+    "name": {
+      "type": "string",
+      "minLength": 1,
+      "description": "Human-readable display name of the source."
+    },
+
+    "country": {
+      "type": "string",
+      "pattern": "^[A-Z]{2}$",
+      "description": "ISO 3166-1 alpha-2 code of the country where the source is based."
+    },
+
+    "language": {
+      "type": "string",
+      "pattern": "^[a-z]{2}(-[A-Z]{2})?$",
+      "description": "Primary language of published content. ISO 639-1 code (e.g. 'en', 'zh', 'th')."
+    },
+
+    "region_focus": {
+      "type": "array",
+      "items": { "type": "string" },
+      "description": "Geographic regions this source primarily covers. Free-form strings (e.g. 'Southeast Asia', 'Global', 'Middle East')."
+    },
+
+    "source_type": {
+      "type": "string",
+      "enum": [
+        "wire_agency",
+        "newspaper",
+        "broadcaster",
+        "financial",
+        "government",
+        "think_tank",
+        "aggregator"
+      ],
+      "description": "Organizational category of the news source."
+    },
+
+    "access_type": {
+      "type": "string",
+      "enum": ["rss", "api", "rss_and_api"],
+      "description": "How the collector will access this source."
+    },
+
+    "rss_url": {
+      "type": "string",
+      "format": "uri",
+      "description": "Primary RSS or Atom feed URL. Required if access_type is 'rss' or 'rss_and_api'."
+    },
+
+    "api_url": {
+      "type": "string",
+      "format": "uri",
+      "description": "Base API endpoint URL. Required if access_type is 'api' or 'rss_and_api'."
+    },
+
+    "topics": {
+      "type": "array",
+      "minItems": 1,
+      "uniqueItems": true,
+      "items": {
+        "type": "string",
+        "enum": [
+          "politics",
+          "conflict",
+          "economy",
+          "energy",
+          "diplomacy",
+          "markets",
+          "society",
+          "technology",
+          "general"
+        ]
+      },
+      "description": "Topic domains this source covers. Used by the reporter-agent to route articles."
+    },
+
+    "reliability_tier": {
+      "type": "integer",
+      "minimum": 1,
+      "maximum": 3,
+      "description": "Editorial reliability rating. 1 = high reliability and editorial independence (wire agencies, established public broadcasters). 2 = generally reliable, may have noted limitations or commercial pressure. 3 = state-affiliated, strong institutional bias, or limited editorial independence."
+    },
+
+    "bias_note": {
+      "type": "string",
+      "description": "Factual, neutral note on the source's known editorial position, ownership, or state affiliation. Not a judgment — context for the reporter-agent."
+    },
+
+    "usage_notes": {
+      "type": "string",
+      "description": "Technical notes for the collector: auth requirements, known quirks, feed freshness, URL stability."
+    },
+
+    "enabled": {
+      "type": "boolean",
+      "description": "Whether the collector should actively fetch from this source. Set false to pause without removing the entry."
+    }
+  }
+}

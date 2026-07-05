@@ -1,0 +1,273 @@
+[
+  {
+    "id": "PLANT-EGY-EL-DABAA",
+    "name": "El Dabaa Nuclear Power Plant",
+    "countryId": "EGY",
+    "city": "El Dabaa",
+    "coordinates": [28.4978, 31.0442],
+    "type": "nuclear",
+    "status": "construction",
+    "capacityMW": 4800,
+    "annualOutputGWh": null,
+    "yearCommissioned": 2028,
+    "yearRetirement": null,
+    "operator": "Nuclear Power Plants Authority",
+    "owner": "State of Egypt / Rosatom",
+    "strategicNote": "Egypt's first nuclear power plant, a flagship project to diversify energy sources and establish nuclear technology in the country.",
+    "notes": "Consists of four VVER-1200 reactors.",
+    "attribution": {
+      "sources": [
+        { "name": "Global Energy Monitor", "url": "https://www.gem.wiki/El_Dabaa_Nuclear_Power_Plant", "accessedAt": "2025-05-10" },
+        { "name": "IAEA PRIS", "url": "https://pris.iaea.org/PRIS/CountryStatistics/CountryDetails.aspx?current=EG", "accessedAt": "2025-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 2,
+        "lastVerified": "2025-05-10"
+      }
+    }
+  },
+  {
+    "id": "PLANT-EGY-ASWAN-HIGH-DAM",
+    "name": "Aswan High Dam",
+    "countryId": "EGY",
+    "city": "Aswan",
+    "coordinates": [32.8772, 23.9711],
+    "type": "hydro",
+    "status": "operating",
+    "capacityMW": 2100,
+    "annualOutputGWh": 10000,
+    "yearCommissioned": 1967,
+    "yearRetirement": null,
+    "operator": "Egyptian Electricity Holding Company",
+    "owner": "State of Egypt",
+    "strategicNote": "Historically the most significant infrastructure project in modern Egypt, providing electricity and controlling Nile floods.",
+    "notes": null,
+    "attribution": {
+      "sources": [
+        { "name": "Global Energy Monitor", "url": "https://www.gem.wiki/Aswan_High_Dam_hydroelectric_plant", "accessedAt": "2025-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 1,
+        "lastVerified": "2025-05-10"
+      }
+    }
+  },
+  {
+    "id": "PLANT-EGY-BENBAN",
+    "name": "Benban Solar Park",
+    "countryId": "EGY",
+    "city": "Benban",
+    "coordinates": [32.7389, 24.4558],
+    "type": "solar",
+    "status": "operating",
+    "capacityMW": 1650,
+    "annualOutputGWh": 3800,
+    "yearCommissioned": 2019,
+    "yearRetirement": null,
+    "operator": "Various IPPs",
+    "owner": "New and Renewable Energy Authority (NREA)",
+    "strategicNote": "One of the world's largest solar installations, central to Egypt's goal of generating 42% of its energy from renewables by 2035.",
+    "notes": "Composed of 41 individual solar plants.",
+    "attribution": {
+      "sources": [
+        { "name": "Global Energy Monitor", "url": "https://www.gem.wiki/Benban_Solar_Park", "accessedAt": "2025-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 1,
+        "lastVerified": "2025-05-10"
+      }
+    }
+  },
+  {
+    "id": "PLANT-EGY-NEW-CAPITAL",
+    "name": "New Capital Power Plant",
+    "countryId": "EGY",
+    "city": "New Administrative Capital",
+    "coordinates": [31.7550, 29.9081],
+    "type": "gas",
+    "status": "operating",
+    "capacityMW": 4800,
+    "annualOutputGWh": null,
+    "yearCommissioned": 2018,
+    "yearRetirement": null,
+    "operator": "Egyptian Electricity Holding Company",
+    "owner": "State of Egypt",
+    "strategicNote": "One of the three Siemens megaprojects that ended Egypt's electricity deficit.",
+    "notes": "Largest gas-fired plant in Egypt.",
+    "attribution": {
+      "sources": [
+        { "name": "Global Energy Monitor", "url": "https://www.gem.wiki/New_Capital_power_station", "accessedAt": "2025-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 1,
+        "lastVerified": "2025-05-10"
+      }
+    }
+  },
+  {
+    "id": "PLANT-EGY-BENI-SUEF",
+    "name": "Beni Suef Power Plant",
+    "countryId": "EGY",
+    "city": "Beni Suef",
+    "coordinates": [31.0061, 28.9211],
+    "type": "gas",
+    "status": "operating",
+    "capacityMW": 4800,
+    "annualOutputGWh": null,
+    "yearCommissioned": 2018,
+    "yearRetirement": null,
+    "operator": "Egyptian Electricity Holding Company",
+    "owner": "State of Egypt",
+    "strategicNote": "Critical combined-cycle gas plant serving Middle Egypt, part of the Siemens megaproject.",
+    "notes": null,
+    "attribution": {
+      "sources": [
+        { "name": "Global Energy Monitor", "url": "https://www.gem.wiki/Beni_Suef_power_station", "accessedAt": "2025-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 1,
+        "lastVerified": "2025-05-10"
+      }
+    }
+  },
+  {
+    "id": "PLANT-EGY-BURULLUS",
+    "name": "Burullus Power Plant",
+    "countryId": "EGY",
+    "city": "Burullus",
+    "coordinates": [30.8089, 31.5294],
+    "type": "gas",
+    "status": "operating",
+    "capacityMW": 4800,
+    "annualOutputGWh": null,
+    "yearCommissioned": 2018,
+    "yearRetirement": null,
+    "operator": "Egyptian Electricity Holding Company",
+    "owner": "State of Egypt",
+    "strategicNote": "Major coastal power plant serving the Delta region, part of the Siemens megaproject.",
+    "notes": null,
+    "attribution": {
+      "sources": [
+        { "name": "Global Energy Monitor", "url": "https://www.gem.wiki/Burullus_power_station", "accessedAt": "2025-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 1,
+        "lastVerified": "2025-05-10"
+      }
+    }
+  },
+  {
+    "id": "PLANT-EGY-GULF-EL-ZAYT",
+    "name": "Gulf of El Zayt Wind Farm",
+    "countryId": "EGY",
+    "city": "Gulf of El Zayt",
+    "coordinates": [33.5833, 28.0000],
+    "type": "wind",
+    "status": "operating",
+    "capacityMW": 580,
+    "annualOutputGWh": null,
+    "yearCommissioned": 2015,
+    "yearRetirement": null,
+    "operator": "New and Renewable Energy Authority (NREA)",
+    "owner": "State of Egypt",
+    "strategicNote": "Major wind power facility on the Red Sea coast, taking advantage of high wind speeds in the area.",
+    "notes": null,
+    "attribution": {
+      "sources": [
+        { "name": "Global Energy Monitor", "url": "https://www.gem.wiki/Gulf_of_El_Zayt_wind_farm", "accessedAt": "2025-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 1,
+        "lastVerified": "2025-05-10"
+      }
+    }
+  },
+  {
+    "id": "PLANT-EGY-AIN-SOKHNA",
+    "name": "Ain Sokhna Power Plant",
+    "countryId": "EGY",
+    "city": "Ain Sokhna",
+    "coordinates": [32.3500, 29.6000],
+    "type": "oil",
+    "status": "operating",
+    "capacityMW": 1300,
+    "annualOutputGWh": null,
+    "yearCommissioned": 2014,
+    "yearRetirement": null,
+    "operator": "East Delta Electricity Production Company",
+    "owner": "State of Egypt",
+    "strategicNote": "Major supercritical thermal plant serving the Suez industrial zone.",
+    "notes": "Dual-fuel capability (Gas/Oil).",
+    "attribution": {
+      "sources": [
+        { "name": "Global Energy Monitor", "url": "https://www.gem.wiki/Ain_Sokhna_power_station", "accessedAt": "2025-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 1,
+        "lastVerified": "2025-05-10"
+      }
+    }
+  },
+  {
+    "id": "PLANT-EGY-WEST-DAMIETTA",
+    "name": "West Damietta Power Plant",
+    "countryId": "EGY",
+    "city": "Damietta",
+    "coordinates": [31.7500, 31.4500],
+    "type": "gas",
+    "status": "operating",
+    "capacityMW": 1500,
+    "annualOutputGWh": null,
+    "yearCommissioned": 2011,
+    "yearRetirement": null,
+    "operator": "East Delta Electricity Production Company",
+    "owner": "State of Egypt",
+    "strategicNote": "Key gas plant in the northern Delta region, supporting the industrial port of Damietta.",
+    "notes": null,
+    "attribution": {
+      "sources": [
+        { "name": "Global Energy Monitor", "url": "https://www.gem.wiki/West_Damietta_power_station", "accessedAt": "2025-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 1,
+        "lastVerified": "2025-05-10"
+      }
+    }
+  },
+  {
+    "id": "PLANT-EGY-RAS-GHAREB",
+    "name": "Ras Ghareb Wind Farm",
+    "countryId": "EGY",
+    "city": "Ras Ghareb",
+    "coordinates": [33.0000, 28.3500],
+    "type": "wind",
+    "status": "operating",
+    "capacityMW": 262,
+    "annualOutputGWh": null,
+    "yearCommissioned": 2019,
+    "yearRetirement": null,
+    "operator": "Ras Ghareb Wind Energy",
+    "owner": "Engie, Toyota Tsusho, Orascom",
+    "strategicNote": "First independent power producer (IPP) wind project in Egypt.",
+    "notes": null,
+    "attribution": {
+      "sources": [
+        { "name": "Global Energy Monitor", "url": "https://www.gem.wiki/Ras_Ghareb_wind_farm", "accessedAt": "2025-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 1,
+        "lastVerified": "2025-05-10"
+      }
+    }
+  }
+]

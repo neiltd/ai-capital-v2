@@ -1,0 +1,69 @@
+{
+  "id": "KEN",
+  "iso2": "KE",
+  "name": "Kenya",
+  "region": "Africa",
+  "subregion": "Eastern Africa",
+  "capital": "Nairobi",
+  "lastUpdated": "2026-05-15",
+  "summary": "Kenya is the economic and logistical hub of East Africa, characterized by a resilient private sector, a pioneering digital economy, and a leadership role in green energy. However, the nation faces significant fiscal pressures from high public debt and social volatility, underscored by the landmark Gen Z-led protests of 2024. As a Major Non-NATO Ally of the United States, Kenya balances its strategic Western partnerships with deep economic ties to China and the UAE, while navigating internal political realignments ahead of the 2027 elections.",
+  "indicators": {
+    "politicalStability":       { "score": 5, "trend": "declining", "confidence": "high", "note": "Lingering social grievances post-2024 protests and rising 2027 election cycle friction." },
+    "economicDirection":        { "score": 7, "trend": "stable", "confidence": "high", "note": "Resilient growth and stable inflation, though constrained by heavy debt servicing." },
+    "investmentAttractiveness": { "score": 8, "trend": "stable", "confidence": "high", "note": "Leading regional destination for VC and tech, supported by a sophisticated workforce." },
+    "geopoliticalRisk":         { "score": 6, "trend": "stable", "confidence": "medium", "note": "Strategic balancer between the US and China; active in regional peacekeeping." },
+    "educationQuality":         { "score": 7, "trend": "stable", "confidence": "high", "note": "High regional literacy rates and a robust network of private and public universities." },
+    "healthcareQuality":        { "score": 5, "trend": "stable", "confidence": "medium", "note": "Emerging medical hub for the region, though universal coverage faces funding gaps." },
+    "technologyInvestment":     { "score": 9, "trend": "rising", "confidence": "high", "note": "Silicon Savannah: global leader in mobile money and emerging AI governance." }
+  },
+  "demographics": {
+    "population": 60000000,
+    "medianAge": 20.3,
+    "urbanizationRate": 33,
+    "majorEthnicGroups": ["Kikuyu", "Luhya", "Kalenjin", "Luo", "Kamba"],
+    "religions": [
+      { "name": "Protestant", "percent": 47 },
+      { "name": "Catholic", "percent": 23 },
+      { "name": "Muslim", "percent": 11 },
+      { "name": "Other Christian", "percent": 12 },
+      { "name": "None/Traditional", "percent": 7 }
+    ]
+  },
+  "alliances": ["East African Community (EAC)", "Major Non-NATO Ally (US)", "African Union", "IGAD"],
+  "relationships": [
+    { "countryId": "USA", "countryName": "United States", "type": "treaty_ally", "sentiment": "positive", "summary": "Strategic security partnership and anchor for US policy in East Africa." },
+    { "countryId": "CHN", "countryName": "China", "type": "partner", "sentiment": "neutral", "summary": "Major infrastructure creditor and partner in digital economy development." },
+    { "countryId": "ARE", "countryName": "United Arab Emirates", "type": "partner", "sentiment": "positive", "summary": "Growing investment in logistics, port management, and renewable energy." },
+    { "countryId": "UGA", "countryName": "Uganda", "type": "partner", "sentiment": "neutral", "summary": "Primary regional trading partner; interdependent on port and energy corridors." },
+    { "countryId": "SOM", "countryName": "Somalia", "type": "partner", "sentiment": "neutral", "summary": "Critical security cooperation against Al-Shabaab and maritime border management." }
+  ],
+  "perspectives": [
+    { "source": "Bottom-Up Economic Strategist", "bias": "Technocratic", "view": "Kenya is navigating a painful but necessary fiscal consolidation to secure long-term investment grade status." },
+    { "source": "Gen Z Activist", "bias": "Reformist", "view": "The 2024 awakening proved that youth will no longer tolerate opaque governance or tax burdens without representation." },
+    { "source": "Nairobi Tech CEO", "bias": "Optimistic", "view": "Despite political noise, Kenya remains the undisputed entry point for global capital into the African digital ecosystem." },
+    { "source": "Regional Security Expert", "bias": "Realist", "view": "Kenya's internal stability is the linchpin for the entire East African region; any fracture here has immediate spillover effects." }
+  ],
+  "historicalContext": {
+    "summary": "Since independence from Britain in 1963, Kenya transitioned from a de facto one-party state to a vibrant, albeit volatile, multi-party democracy. It has largely avoided the civil wars of its neighbors, maintaining a steady role as a regional diplomatic and economic anchor.",
+    "keyEvents": [
+      { "year": 1963, "event": "Independence from British colonial rule; Jomo Kenyatta becomes first president." },
+      { "year": 1978, "event": "Daniel arap Moi begins 24-year presidency characterized by centralization." },
+      { "year": 1991, "event": "Restoration of multi-party democracy following domestic and international pressure." },
+      { "year": 2007, "event": "Post-election violence leads to a national accord and constitutional overhaul." },
+      { "year": 2010, "event": "Promulgation of a new Constitution, introducing radical devolution." },
+      { "year": 2024, "event": "Unprecedented youth-led protests against the Finance Bill force government retreat." },
+      { "year": 2024, "event": "Designation as a Major Non-NATO Ally by the United States." },
+      { "year": 2025, "event": "Full integration into the African Continental Free Trade Area (AfCFTA) protocols." }
+    ]
+  },
+  "investmentNotes": {
+    "strengths": ["Advanced digital and financial ecosystem", "90%+ renewable energy grid", "Sophisticated legal and corporate framework", "Strategic port and air connectivity"],
+    "risks": ["High public debt and fiscal volatility", "Political instability around election cycles", "Corruption in public procurement", "Climate vulnerability affecting agriculture"],
+    "sectors": ["FinTech", "Green Energy (Geothermal)", "Agro-processing", "Logistics & Supply Chain"]
+  },
+  "sources": [
+    { "name": "Central Bank of Kenya", "url": "https://www.centralbank.go.ke/", "type": "economic" },
+    { "name": "Kenya National Bureau of Statistics", "url": "https://www.knbs.or.ke/", "type": "demographic" },
+    { "name": "CIA World Factbook", "url": "https://www.cia.gov/the-world-factbook/countries/kenya/", "type": "general" }
+  ]
+}

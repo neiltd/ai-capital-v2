@@ -1,0 +1,62 @@
+{
+  "id": "SSD",
+  "iso2": "SS",
+  "name": "South Sudan",
+  "region": "Africa",
+  "subregion": "Eastern Africa",
+  "capital": "Juba",
+  "lastUpdated": "2025-05-20",
+  "summary": "South Sudan is currently facing a 'perfect storm' of economic collapse and political crisis. In late 2024, the government postponed elections to 2026, and by March 2025, the power-sharing agreement effectively collapsed following the house arrest of First Vice President Riek Machar. The economy has been shattered by the rupture of the main oil export pipeline in Sudan, leading to hyperinflation and unpaid salaries, while over 7 million people face acute food insecurity.",
+  "indicators": {
+    "politicalStability":       { "score": 1, "trend": "declining", "confidence": "high", "note": "Power-sharing agreement has collapsed; regime consolidation under President Kiir following Machar's arrest in 2025." },
+    "economicDirection":        { "score": 1, "trend": "declining", "confidence": "high", "note": "Near-total economic collapse due to the loss of 70% of revenue after the oil pipeline rupture in Sudan." },
+    "investmentAttractiveness": { "score": 1, "trend": "declining", "confidence": "high", "note": "Extreme risk; infrastructure is non-existent and the legal environment is dominated by military elites." },
+    "geopoliticalRisk":         { "score": 8, "trend": "increasing", "confidence": "high", "note": "High risk of return to full-scale civil war; significant destabilizing spillover from the ongoing war in Sudan." },
+    "educationQuality":         { "score": 1, "trend": "stable", "confidence": "high", "note": "Lowest education indicators in the world; system is non-functional in most of the country." },
+    "healthcareQuality":        { "score": 1, "trend": "stable", "confidence": "high", "note": "Nearly entirely dependent on international NGOs; facing recurring cholera and malnutrition crises." },
+    "technologyInvestment":     { "score": 1, "trend": "stable", "confidence": "medium", "note": "Minimal; limited to urban mobile networks and basic military communications." }
+  },
+  "demographics": {
+    "population": 11277061,
+    "medianAge": 18.6,
+    "urbanizationRate": 21.1,
+    "majorEthnicGroups": ["Dinka", "Nuer", "Shilluk", "Bari"],
+    "religions": [
+      { "name": "Christian", "percent": 60.0 },
+      { "name": "Animist", "percent": 32.0 },
+      { "name": "Muslim", "percent": 6.0 }
+    ]
+  },
+  "alliances": ["East African Community", "African Union", "IGAD"],
+  "relationships": [
+    { "countryId": "SDN", "countryName": "Sudan", "type": "neighbor", "sentiment": "negative", "summary": "Relationship dominated by the Sudanese civil war, which has destroyed SSD's oil exports and sent nearly 1 million refugees into SSD." },
+    { "countryId": "UGA", "countryName": "Uganda", "type": "strategic_partner", "sentiment": "positive", "summary": "Key security guarantor and political ally of President Kiir; major trading partner." },
+    { "countryId": "KEN", "countryName": "Kenya", "type": "strategic_partner", "sentiment": "positive", "summary": "Lead mediator in the 'Tumaini Initiative' peace talks with holdout groups; key financial transit point." },
+    { "countryId": "USA", "countryName": "United States", "type": "strategic_partner", "sentiment": "neutral", "summary": "Primary humanitarian donor but increasingly critical of the government's failure to implement peace and hold elections." }
+  ],
+  "perspectives": [
+    { "source": "SSPDF General", "bias": "Authoritarian", "view": "We are maintaining order in the face of rebel aggression; the international community must respect our sovereignty." },
+    { "source": "Aid Worker in Upper Nile", "bias": "Critical", "view": "The state has basically vanished; people are eating leaves to survive while the elites in Juba fight over whatever oil money is left." },
+    { "source": "Youth in Juba", "bias": "Desperate", "view": "There are no jobs and even if you have one, you don't get paid. We just want peace so we can go to school." }
+  ],
+  "historicalContext": {
+    "summary": "After decades of civil war with the north, South Sudan became the world's newest nation in 2011. However, it plunged into its own ethnic-based civil war in 2013. Despite multiple peace agreements, the country has remained in a state of fragile transition and recurring conflict.",
+    "keyEvents": [
+      { "year": 2011, "event": "Independence from Sudan following a referendum." },
+      { "year": 2013, "event": "Beginning of the civil war between President Kiir and VP Machar." },
+      { "year": 2018, "event": "Signing of the Revitalized Peace Agreement (R-ARCSS)." },
+      { "year": 2024, "event": "Rupture of the Petrodar oil pipeline; postponement of national elections to 2026." },
+      { "year": 2025, "event": "House arrest of Riek Machar; effective collapse of the power-sharing government." }
+    ]
+  },
+  "investmentNotes": {
+    "strengths": ["Vast untapped oil and mineral reserves", "Significant agricultural potential with fertile land and Nile access", "Young and resilient population", "Strategic location within the East African Community"],
+    "risks": ["High risk of full-scale civil war and ethnic cleansing", "Complete lack of legal transparency and pervasive corruption", "Economic collapse and hyperinflation", "Severe lack of physical infrastructure and skilled labor"],
+    "sectors": ["Oil & Gas (Struggling)", "Agriculture (Subsistence)", "Humanitarian Logistics", "Extractive Minerals (Gold)"]
+  },
+  "sources": [
+    { "name": "UN Mission in South Sudan (UNMISS)", "url": "https://unmiss.unmissions.org/", "type": "security" },
+    { "name": "World Bank - South Sudan Overview", "url": "https://www.worldbank.org/en/country/southsudan", "type": "economic" },
+    { "name": "International Crisis Group - South Sudan", "url": "https://www.crisisgroup.org/africa/horn-africa/south-sudan", "type": "analytical" }
+  ]
+}

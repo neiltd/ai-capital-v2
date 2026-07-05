@@ -1,0 +1,66 @@
+{
+  "id": "PRY",
+  "iso2": "PY",
+  "name": "Paraguay",
+  "region": "Americas",
+  "subregion": "South America",
+  "capital": "Asunción",
+  "lastUpdated": "2026-05-24",
+  "summary": "Paraguay is currently positioning itself as a regional hub for economic freedom and industrial transformation. Under the leadership of President Santiago Peña, the country has achieved a significant milestone by attaining 'Investment Grade' status in 2024. Characterized by a low-tax regime and a stable macroeconomic environment, Paraguay is attracting significant foreign direct investment, particularly in agribusiness, forestry, and manufacturing. While the country enjoys high growth rates, it continues to face challenges related to institutional quality, corruption, and the concentration of political power within the Colorado Party. Geopolitically, Paraguay remains a staunch ally of Taiwan and is seeking to diversify its export markets through closer integration with Mercosur and the global economy.",
+  "indicators": {
+    "politicalStability":       { "score": 7, "score_description": "Stable government with strong legislative majority.", "trend": "stable", "confidence": "high", "note": "The Colorado Party's long-term dominance ensures policy continuity but raises concerns about democratic checks and balances." },
+    "economicDirection":        { "score": 8, "score_description": "Strong growth and recent upgrade to investment grade.", "trend": "rising", "confidence": "high", "note": "Paraguay is one of the fastest-growing economies in the region, driven by structural reforms and export diversification." },
+    "investmentAttractiveness": { "score": 8, "score_description": "Highly attractive due to low taxes and demographic dividend.", "trend": "rising", "confidence": "high", "note": "The 'Maquila' regime and new forestry investments are key drivers of foreign interest." },
+    "geopoliticalRisk":         { "score": 3, "score_description": "Low risk with stable regional relationships.", "trend": "stable", "confidence": "medium", "note": "Relations with Brazil and Argentina are centered on hydroelectric energy (Itaipu) and trade." },
+    "educationQuality":         { "score": 5, "score_description": "Improving access but quality remains below regional averages.", "trend": "rising", "confidence": "medium", "note": "The government is increasing investment in vocational training to support the growing industrial sector." },
+    "healthcareQuality":        { "score": 6, "score_description": "Dual system with significant urban-rural gaps.", "trend": "stable", "confidence": "medium", "note": "Private healthcare is expanding, but the public sector faces chronic funding and management issues." },
+    "technologyInvestment":     { "score": 5, "score_description": "Developing digital economy and fintech sector.", "trend": "rising", "confidence": "medium", "note": "Paraguay is becoming a destination for green data centers and crypto-mining due to its surplus hydroelectric power." }
+  },
+  "demographics": {
+    "population": 7500000,
+    "medianAge": 26.5,
+    "urbanizationRate": 63,
+    "majorEthnicGroups": ["Mestizo (95%)", "European", "Amerindian"],
+    "religions": [
+      { "name": "Roman Catholic", "percent": 88 },
+      { "name": "Protestant", "percent": 8 },
+      { "name": "None", "percent": 2 },
+      { "name": "Other", "percent": 2 }
+    ]
+  },
+  "alliances": ["Mercosur", "UN", "OAS", "PROSUR", "CELAC"],
+  "relationships": [
+    { "countryId": "BRA", "countryName": "Brazil", "type": "ally", "sentiment": "positive", "summary": "Most important strategic and trade partner; co-owners of the Itaipu dam." },
+    { "countryId": "USA", "countryName": "United States", "type": "partner", "sentiment": "positive", "summary": "Key security partner; cooperation focuses on anti-corruption and counter-narcotics in the Tri-Border Area." },
+    { "countryId": "TWN", "countryName": "Taiwan", "type": "ally", "sentiment": "positive", "summary": "Paraguay is the last remaining South American nation to maintain full diplomatic ties with Taiwan." },
+    { "countryId": "ARG", "countryName": "Argentina", "type": "partner", "sentiment": "neutral", "summary": "Significant trade partner; relationship often focuses on the Yacyretá dam and regional transit." }
+  ],
+  "perspectives": [
+    { "source": "Colorado Party (ANR)", "bias": "Conservative/Market-Friendly", "view": "Paraguay is a land of opportunity; our low taxes and stability are the engines of a new industrial era." },
+    { "source": "Liberal Opposition (PLRA)", "bias": "Centrist", "view": "Economic growth must be accompanied by stronger institutions and a more effective fight against corruption." },
+    { "source": "Moody's / Investors", "bias": "Market-Optimist", "view": "The upgrade to investment grade reflects years of fiscal prudence and a positive structural transformation of the economy." }
+  ],
+  "historicalContext": {
+    "summary": "Paraguay's history is marked by devastating conflicts, including the War of the Triple Alliance (1864-1870), and a long period of authoritarian rule under Alfredo Stroessner (1954-1989). Since the return to democracy, the country has transitioned from a primarily agricultural economy to a more diversified and open market.",
+    "keyEvents": [
+      { "year": 1811, "event": "Independence from Spain." },
+      { "year": 1864, "event": "War of the Triple Alliance begins, leading to catastrophic population loss." },
+      { "year": 1932, "event": "Chaco War with Bolivia results in territorial gains for Paraguay." },
+      { "year": 1954, "event": "Alfredo Stroessner takes power in a military coup." },
+      { "year": 1989, "event": "Overthrow of Stroessner and start of democratic transition." },
+      { "year": 1991, "event": "Signing of the Treaty of Asunción, founding Mercosur." },
+      { "year": 2023, "event": "Election of Santiago Peña, continuing Colorado Party rule." },
+      { "year": 2024, "event": "Paraguay achieves Investment Grade status from Moody's." }
+    ]
+  },
+  "investmentNotes": {
+    "strengths": ["Investment grade rating", "Lowest tax burden in the region (10-10-10 system)", "Abundant and cheap renewable energy (hydroelectric)", "Young and growing population"],
+    "risks": ["Weak institutional framework and corruption", "Vulnerability to commodity price fluctuations (soy and beef)", "Inland location and reliance on river logistics", "Rising concerns over drug trafficking routes"],
+    "sectors": ["Agribusiness (Soy, Beef)", "Light Manufacturing (Maquila)", "Forestry and Pulp", "Renewable Energy and Data Centers"]
+  },
+  "sources": [
+    { "name": "BCP (Banco Central del Paraguay)", "url": "https://www.bcp.gov.py/", "type": "economic" },
+    { "name": "Ministry of Economy and Finance", "url": "https://www.mef.gov.py/", "type": "economic" },
+    { "name": "REDIEX (Investment and Export Network)", "url": "https://www.rediex.gov.py/", "type": "investment" }
+  ]
+}

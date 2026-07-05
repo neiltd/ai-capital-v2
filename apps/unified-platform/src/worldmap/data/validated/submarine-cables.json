@@ -1,0 +1,8078 @@
+[
+  {
+    "id": "sea-me-we-5",
+    "name": "SEA-ME-WE 5",
+    "operator": "Consortium",
+    "lengthKm": 20000,
+    "capacityTbps": 24,
+    "yearReady": 2017,
+    "landingPoints": [
+      {
+        "country": "FRA",
+        "city": "Marseille",
+        "lat": 43.3,
+        "lng": 5.4
+      },
+      {
+        "country": "SGP",
+        "city": "Tuas",
+        "lat": 1.3,
+        "lng": 103.7
+      }
+    ],
+    "status": "active",
+    "sourceUrl": "https://submarinecablemap.com"
+  },
+  {
+    "id": "grace-hopper",
+    "name": "Grace Hopper",
+    "operator": "Google",
+    "lengthKm": 6250,
+    "capacityTbps": 340,
+    "yearReady": 2022,
+    "landingPoints": [
+      {
+        "country": "USA",
+        "city": "New York",
+        "lat": 40.7,
+        "lng": -74.0
+      },
+      {
+        "country": "GBR",
+        "city": "Bude",
+        "lat": 50.8,
+        "lng": -4.5
+      },
+      {
+        "country": "ESP",
+        "city": "Bilbao",
+        "lat": 43.3,
+        "lng": -2.9
+      }
+    ],
+    "status": "active",
+    "sourceUrl": "https://submarinecablemap.com"
+  },
+  {
+    "id": "2africa",
+    "name": "2Africa",
+    "operator": "Consortium (Meta, etc.)",
+    "lengthKm": 45000,
+    "capacityTbps": 180,
+    "yearReady": 2024,
+    "landingPoints": [
+      {
+        "country": "GBR",
+        "city": "Bude",
+        "lat": 50.8,
+        "lng": -4.5
+      },
+      {
+        "country": "ZAF",
+        "city": "Cape Town",
+        "lat": -33.9,
+        "lng": 18.4
+      },
+      {
+        "country": "EGY",
+        "city": "Suez",
+        "lat": 29.9,
+        "lng": 32.5
+      }
+    ],
+    "status": "active",
+    "sourceUrl": "https://submarinecablemap.com"
+  },
+  {
+    "id": "marea",
+    "name": "MAREA",
+    "operator": "Microsoft, Meta, Telxius",
+    "lengthKm": 6600,
+    "capacityTbps": 200,
+    "yearReady": 2018,
+    "landingPoints": [
+      {
+        "country": "USA",
+        "city": "Virginia Beach",
+        "lat": 36.8,
+        "lng": -75.9
+      },
+      {
+        "country": "ESP",
+        "city": "Bilbao",
+        "lat": 43.3,
+        "lng": -2.9
+      }
+    ],
+    "status": "active",
+    "sourceUrl": "https://submarinecablemap.com"
+  },
+  {
+    "id": "equiano",
+    "name": "Equiano",
+    "operator": "Google",
+    "lengthKm": 15000,
+    "capacityTbps": 144,
+    "yearReady": 2022,
+    "landingPoints": [
+      {
+        "country": "PRT",
+        "city": "Lisbon",
+        "lat": 38.7,
+        "lng": -9.1
+      },
+      {
+        "country": "ZAF",
+        "city": "Cape Town",
+        "lat": -33.9,
+        "lng": 18.4
+      },
+      {
+        "country": "NGA",
+        "city": "Lagos",
+        "lat": 6.4,
+        "lng": 3.4
+      }
+    ],
+    "status": "active",
+    "sourceUrl": "https://submarinecablemap.com"
+  },
+  {
+    "id": "peace",
+    "name": "PEACE Cable",
+    "operator": "PCCW Global",
+    "lengthKm": 15000,
+    "capacityTbps": 96,
+    "yearReady": 2022,
+    "landingPoints": [
+      {
+        "country": "CHN",
+        "city": "Gwadar (PK)",
+        "lat": 25.1,
+        "lng": 62.3
+      },
+      {
+        "country": "FRA",
+        "city": "Marseille",
+        "lat": 43.3,
+        "lng": 5.4
+      },
+      {
+        "country": "KEN",
+        "city": "Mombasa",
+        "lat": -4.0,
+        "lng": 39.6
+      }
+    ],
+    "status": "active",
+    "sourceUrl": "https://submarinecablemap.com"
+  },
+  {
+    "id": "amitite",
+    "name": "Amitie",
+    "operator": "Consortium",
+    "lengthKm": 6800,
+    "capacityTbps": 320,
+    "yearReady": 2023,
+    "landingPoints": [
+      {
+        "country": "USA",
+        "city": "Lynn",
+        "lat": 42.4,
+        "lng": -70.9
+      },
+      {
+        "country": "FRA",
+        "city": "Le Porge",
+        "lat": 44.9,
+        "lng": -1.2
+      },
+      {
+        "country": "GBR",
+        "city": "Bude",
+        "lat": 50.8,
+        "lng": -4.5
+      }
+    ],
+    "status": "active",
+    "sourceUrl": "https://submarinecablemap.com"
+  },
+  {
+    "id": "dunant",
+    "name": "Dunant",
+    "operator": "Google",
+    "lengthKm": 6400,
+    "capacityTbps": 250,
+    "yearReady": 2021,
+    "landingPoints": [
+      {
+        "country": "USA",
+        "city": "Virginia Beach",
+        "lat": 36.8,
+        "lng": -75.9
+      },
+      {
+        "country": "FRA",
+        "city": "Saint-Hilaire-de-Riez",
+        "lat": 46.7,
+        "lng": -1.9
+      }
+    ],
+    "status": "active",
+    "sourceUrl": "https://submarinecablemap.com"
+  },
+  {
+    "id": "blue-raman",
+    "name": "Blue-Raman",
+    "operator": "Google, Sparkle, Omantel",
+    "lengthKm": 10000,
+    "capacityTbps": 120,
+    "yearReady": 2024,
+    "landingPoints": [
+      {
+        "country": "ITA",
+        "city": "Genoa",
+        "lat": 44.4,
+        "lng": 8.9
+      },
+      {
+        "country": "IND",
+        "city": "Mumbai",
+        "lat": 19.1,
+        "lng": 72.9
+      },
+      {
+        "country": "ISR",
+        "city": "Tel Aviv",
+        "lat": 32.1,
+        "lng": 34.8
+      }
+    ],
+    "status": "active",
+    "sourceUrl": "https://submarinecablemap.com"
+  },
+  {
+    "id": "echo",
+    "name": "Echo",
+    "operator": "Google, Meta",
+    "lengthKm": 16000,
+    "capacityTbps": 120,
+    "yearReady": 2024,
+    "landingPoints": [
+      {
+        "country": "USA",
+        "city": "Eureka",
+        "lat": 40.8,
+        "lng": -124.1
+      },
+      {
+        "country": "SGP",
+        "city": "Tuas",
+        "lat": 1.3,
+        "lng": 103.7
+      },
+      {
+        "country": "IDN",
+        "city": "Jakarta",
+        "lat": -6.2,
+        "lng": 106.8
+      }
+    ],
+    "status": "active",
+    "sourceUrl": "https://submarinecablemap.com"
+  },
+  {
+    "id": "cable-regional-1",
+    "name": "Regional Link 1",
+    "operator": "Amazon",
+    "lengthKm": 5260,
+    "capacityTbps": 129,
+    "yearReady": 2020,
+    "landingPoints": [
+      {
+        "country": "NGA",
+        "city": "Landing City 1",
+        "lat": 30.83,
+        "lng": 117.11
+      },
+      {
+        "country": "AUS",
+        "city": "Landing City 1",
+        "lat": -1.71,
+        "lng": -120.09
+      }
+    ],
+    "status": "active",
+    "sourceUrl": "https://submarinecablemap.com"
+  },
+  {
+    "id": "cable-regional-2",
+    "name": "Regional Link 2",
+    "operator": "Tata Communications",
+    "lengthKm": 3522,
+    "capacityTbps": 178,
+    "yearReady": 2025,
+    "landingPoints": [
+      {
+        "country": "VNM",
+        "city": "Landing City 2",
+        "lat": -12.08,
+        "lng": 20.33
+      },
+      {
+        "country": "PHL",
+        "city": "Landing City 2",
+        "lat": 10.68,
+        "lng": -131.79
+      }
+    ],
+    "status": "planned",
+    "sourceUrl": "https://submarinecablemap.com"
+  },
+  {
+    "id": "cable-regional-3",
+    "name": "Regional Link 3",
+    "operator": "Tata Communications",
+    "lengthKm": 5312,
+    "capacityTbps": 196,
+    "yearReady": 2021,
+    "landingPoints": [
+      {
+        "country": "IND",
+        "city": "Landing City 3",
+        "lat": -3.11,
+        "lng": -158.25
+      },
+      {
+        "country": "VNM",
+        "city": "Landing City 3",
+        "lat": 32.78,
+        "lng": 139.74
+      },
+      {
+        "country": "IDN",
+        "city": "Landing City 3",
+        "lat": 50.88,
+        "lng": 50.92
+      }
+    ],
+    "status": "active",
+    "sourceUrl": "https://submarinecablemap.com"
+  },
+  {
+    "id": "cable-regional-4",
+    "name": "Regional Link 4",
+    "operator": "Google",
+    "lengthKm": 1012,
+    "capacityTbps": 142,
+    "yearReady": 2015,
+    "landingPoints": [
+      {
+        "country": "THA",
+        "city": "Landing City 4",
+        "lat": -39.08,
+        "lng": -161.26
+      },
+      {
+        "country": "PRT",
+        "city": "Landing City 4",
+        "lat": 58.8,
+        "lng": -0.12
+      },
+      {
+        "country": "EGY",
+        "city": "Landing City 4",
+        "lat": -31.26,
+        "lng": -133.09
+      }
+    ],
+    "status": "active",
+    "sourceUrl": "https://submarinecablemap.com"
+  },
+  {
+    "id": "cable-regional-5",
+    "name": "Regional Link 5",
+    "operator": "Orange",
+    "lengthKm": 4663,
+    "capacityTbps": 180,
+    "yearReady": 2015,
+    "landingPoints": [
+      {
+        "country": "IDN",
+        "city": "Landing City 5",
+        "lat": -36.95,
+        "lng": 111.94
+      },
+      {
+        "country": "FRA",
+        "city": "Landing City 5",
+        "lat": -11.07,
+        "lng": 117.08
+      }
+    ],
+    "status": "active",
+    "sourceUrl": "https://submarinecablemap.com"
+  },
+  {
+    "id": "cable-regional-6",
+    "name": "Regional Link 6",
+    "operator": "Google",
+    "lengthKm": 5934,
+    "capacityTbps": 192,
+    "yearReady": 2017,
+    "landingPoints": [
+      {
+        "country": "KOR",
+        "city": "Landing City 6",
+        "lat": 2.16,
+        "lng": 167.47
+      },
+      {
+        "country": "ZAF",
+        "city": "Landing City 6",
+        "lat": 46.5,
+        "lng": -4.13
+      },
+      {
+        "country": "PRT",
+        "city": "Landing City 6",
+        "lat": -33.77,
+        "lng": 116.74
+      }
+    ],
+    "status": "active",
+    "sourceUrl": "https://submarinecablemap.com"
+  },
+  {
+    "id": "cable-regional-7",
+    "name": "Regional Link 7",
+    "operator": "Singtel",
+    "lengthKm": 1525,
+    "capacityTbps": 57,
+    "yearReady": 2015,
+    "landingPoints": [
+      {
+        "country": "BRA",
+        "city": "Landing City 7",
+        "lat": 41.42,
+        "lng": -153.09
+      },
+      {
+        "country": "THA",
+        "city": "Landing City 7",
+        "lat": -31.09,
+        "lng": 99.66
+      },
+      {
+        "country": "FRA",
+        "city": "Landing City 7",
+        "lat": -26.42,
+        "lng": -119.38
+      }
+    ],
+    "status": "active",
+    "sourceUrl": "https://submarinecablemap.com"
+  },
+  {
+    "id": "cable-regional-8",
+    "name": "Regional Link 8",
+    "operator": "Singtel",
+    "lengthKm": 5871,
+    "capacityTbps": 192,
+    "yearReady": 2011,
+    "landingPoints": [
+      {
+        "country": "FRA",
+        "city": "Landing City 8",
+        "lat": 10.65,
+        "lng": -75.63
+      },
+      {
+        "country": "IDN",
+        "city": "Landing City 8",
+        "lat": -25.28,
+        "lng": 122.97
+      }
+    ],
+    "status": "active",
+    "sourceUrl": "https://submarinecablemap.com"
+  },
+  {
+    "id": "cable-regional-9",
+    "name": "Regional Link 9",
+    "operator": "Verizon",
+    "lengthKm": 4405,
+    "capacityTbps": 149,
+    "yearReady": 2020,
+    "landingPoints": [
+      {
+        "country": "GBR",
+        "city": "Landing City 9",
+        "lat": -27.51,
+        "lng": -163.55
+      },
+      {
+        "country": "ESP",
+        "city": "Landing City 9",
+        "lat": -24.81,
+        "lng": -156.66
+      }
+    ],
+    "status": "active",
+    "sourceUrl": "https://submarinecablemap.com"
+  },
+  {
+    "id": "cable-regional-10",
+    "name": "Regional Link 10",
+    "operator": "Google",
+    "lengthKm": 3611,
+    "capacityTbps": 59,
+    "yearReady": 2014,
+    "landingPoints": [
+      {
+        "country": "USA",
+        "city": "Landing City 10",
+        "lat": 53.71,
+        "lng": 60.59
+      },
+      {
+        "country": "VNM",
+        "city": "Landing City 10",
+        "lat": -29.63,
+        "lng": 167.26
+      },
+      {
+        "country": "ISR",
+        "city": "Landing City 10",
+        "lat": 19.73,
+        "lng": 101.81
+      }
+    ],
+    "status": "active",
+    "sourceUrl": "https://submarinecablemap.com"
+  },
+  {
+    "id": "cable-regional-11",
+    "name": "Regional Link 11",
+    "operator": "Amazon",
+    "lengthKm": 3636,
+    "capacityTbps": 87,
+    "yearReady": 2021,
+    "landingPoints": [
+      {
+        "country": "BRA",
+        "city": "Landing City 11",
+        "lat": -38.84,
+        "lng": 173.35
+      },
+      {
+        "country": "JPN",
+        "city": "Landing City 11",
+        "lat": 16.45,
+        "lng": 53.11
+      },
+      {
+        "country": "KEN",
+        "city": "Landing City 11",
+        "lat": -29.22,
+        "lng": 65.29
+      }
+    ],
+    "status": "active",
+    "sourceUrl": "https://submarinecablemap.com"
+  },
+  {
+    "id": "cable-regional-12",
+    "name": "Regional Link 12",
+    "operator": "Tata Communications",
+    "lengthKm": 1267,
+    "capacityTbps": 35,
+    "yearReady": 2015,
+    "landingPoints": [
+      {
+        "country": "SGP",
+        "city": "Landing City 12",
+        "lat": -7.92,
+        "lng": 69.19
+      },
+      {
+        "country": "ISR",
+        "city": "Landing City 12",
+        "lat": 23.29,
+        "lng": -139.0
+      }
+    ],
+    "status": "active",
+    "sourceUrl": "https://submarinecablemap.com"
+  },
+  {
+    "id": "cable-regional-13",
+    "name": "Regional Link 13",
+    "operator": "Google",
+    "lengthKm": 2886,
+    "capacityTbps": 37,
+    "yearReady": 2026,
+    "landingPoints": [
+      {
+        "country": "BRA",
+        "city": "Landing City 13",
+        "lat": 13.79,
+        "lng": -33.85
+      },
+      {
+        "country": "ZAF",
+        "city": "Landing City 13",
+        "lat": 55.55,
+        "lng": -143.07
+      },
+      {
+        "country": "KOR",
+        "city": "Landing City 13",
+        "lat": 20.14,
+        "lng": -145.61
+      }
+    ],
+    "status": "planned",
+    "sourceUrl": "https://submarinecablemap.com"
+  },
+  {
+    "id": "cable-regional-14",
+    "name": "Regional Link 14",
+    "operator": "AT&T",
+    "lengthKm": 1539,
+    "capacityTbps": 72,
+    "yearReady": 2017,
+    "landingPoints": [
+      {
+        "country": "MYS",
+        "city": "Landing City 14",
+        "lat": 15.09,
+        "lng": 55.59
+      },
+      {
+        "country": "ZAF",
+        "city": "Landing City 14",
+        "lat": 49.04,
+        "lng": -94.72
+      }
+    ],
+    "status": "active",
+    "sourceUrl": "https://submarinecablemap.com"
+  },
+  {
+    "id": "cable-regional-15",
+    "name": "Regional Link 15",
+    "operator": "Vodafone",
+    "lengthKm": 2585,
+    "capacityTbps": 136,
+    "yearReady": 2013,
+    "landingPoints": [
+      {
+        "country": "SGP",
+        "city": "Landing City 15",
+        "lat": -5.06,
+        "lng": 110.96
+      },
+      {
+        "country": "BRA",
+        "city": "Landing City 15",
+        "lat": -33.71,
+        "lng": -56.44
+      },
+      {
+        "country": "ISR",
+        "city": "Landing City 15",
+        "lat": 48.21,
+        "lng": -3.44
+      }
+    ],
+    "status": "active",
+    "sourceUrl": "https://submarinecablemap.com"
+  },
+  {
+    "id": "cable-regional-16",
+    "name": "Regional Link 16",
+    "operator": "China Telecom",
+    "lengthKm": 2028,
+    "capacityTbps": 151,
+    "yearReady": 2016,
+    "landingPoints": [
+      {
+        "country": "BRA",
+        "city": "Landing City 16",
+        "lat": 44.39,
+        "lng": -80.13
+      },
+      {
+        "country": "GBR",
+        "city": "Landing City 16",
+        "lat": 39.84,
+        "lng": 20.99
+      },
+      {
+        "country": "PHL",
+        "city": "Landing City 16",
+        "lat": 18.9,
+        "lng": 17.74
+      }
+    ],
+    "status": "active",
+    "sourceUrl": "https://submarinecablemap.com"
+  },
+  {
+    "id": "cable-regional-17",
+    "name": "Regional Link 17",
+    "operator": "Google",
+    "lengthKm": 1584,
+    "capacityTbps": 172,
+    "yearReady": 2023,
+    "landingPoints": [
+      {
+        "country": "NGA",
+        "city": "Landing City 17",
+        "lat": -12.19,
+        "lng": 163.12
+      },
+      {
+        "country": "ZAF",
+        "city": "Landing City 17",
+        "lat": -19.27,
+        "lng": 4.41
+      }
+    ],
+    "status": "active",
+    "sourceUrl": "https://submarinecablemap.com"
+  },
+  {
+    "id": "cable-regional-18",
+    "name": "Regional Link 18",
+    "operator": "Orange",
+    "lengthKm": 1358,
+    "capacityTbps": 162,
+    "yearReady": 2021,
+    "landingPoints": [
+      {
+        "country": "EGY",
+        "city": "Landing City 18",
+        "lat": 15.89,
+        "lng": -29.87
+      },
+      {
+        "country": "IND",
+        "city": "Landing City 18",
+        "lat": 24.2,
+        "lng": 168.41
+      },
+      {
+        "country": "NGA",
+        "city": "Landing City 18",
+        "lat": -17.56,
+        "lng": 17.99
+      }
+    ],
+    "status": "active",
+    "sourceUrl": "https://submarinecablemap.com"
+  },
+  {
+    "id": "cable-regional-19",
+    "name": "Regional Link 19",
+    "operator": "Microsoft",
+    "lengthKm": 5303,
+    "capacityTbps": 89,
+    "yearReady": 2013,
+    "landingPoints": [
+      {
+        "country": "ARE",
+        "city": "Landing City 19",
+        "lat": 38.91,
+        "lng": -56.71
+      },
+      {
+        "country": "BRA",
+        "city": "Landing City 19",
+        "lat": -38.54,
+        "lng": 175.2
+      }
+    ],
+    "status": "active",
+    "sourceUrl": "https://submarinecablemap.com"
+  },
+  {
+    "id": "cable-regional-20",
+    "name": "Regional Link 20",
+    "operator": "Amazon",
+    "lengthKm": 3199,
+    "capacityTbps": 157,
+    "yearReady": 2010,
+    "landingPoints": [
+      {
+        "country": "VNM",
+        "city": "Landing City 20",
+        "lat": 5.04,
+        "lng": -166.03
+      },
+      {
+        "country": "MYS",
+        "city": "Landing City 20",
+        "lat": -29.49,
+        "lng": 167.29
+      }
+    ],
+    "status": "active",
+    "sourceUrl": "https://submarinecablemap.com"
+  },
+  {
+    "id": "cable-regional-21",
+    "name": "Regional Link 21",
+    "operator": "Google",
+    "lengthKm": 6453,
+    "capacityTbps": 196,
+    "yearReady": 2020,
+    "landingPoints": [
+      {
+        "country": "EGY",
+        "city": "Landing City 21",
+        "lat": 33.69,
+        "lng": -25.78
+      },
+      {
+        "country": "ESP",
+        "city": "Landing City 21",
+        "lat": 32.59,
+        "lng": 134.4
+      },
+      {
+        "country": "ISR",
+        "city": "Landing City 21",
+        "lat": -39.12,
+        "lng": -106.9
+      }
+    ],
+    "status": "active",
+    "sourceUrl": "https://submarinecablemap.com"
+  },
+  {
+    "id": "cable-regional-22",
+    "name": "Regional Link 22",
+    "operator": "China Telecom",
+    "lengthKm": 5621,
+    "capacityTbps": 16,
+    "yearReady": 2022,
+    "landingPoints": [
+      {
+        "country": "ZAF",
+        "city": "Landing City 22",
+        "lat": 14.16,
+        "lng": -128.93
+      },
+      {
+        "country": "IDN",
+        "city": "Landing City 22",
+        "lat": -36.06,
+        "lng": -160.14
+      }
+    ],
+    "status": "active",
+    "sourceUrl": "https://submarinecablemap.com"
+  },
+  {
+    "id": "cable-regional-23",
+    "name": "Regional Link 23",
+    "operator": "Verizon",
+    "lengthKm": 1674,
+    "capacityTbps": 146,
+    "yearReady": 2021,
+    "landingPoints": [
+      {
+        "country": "GBR",
+        "city": "Landing City 23",
+        "lat": -33.56,
+        "lng": 141.6
+      },
+      {
+        "country": "ISR",
+        "city": "Landing City 23",
+        "lat": 55.17,
+        "lng": 11.96
+      },
+      {
+        "country": "AUS",
+        "city": "Landing City 23",
+        "lat": 16.81,
+        "lng": 73.16
+      }
+    ],
+    "status": "active",
+    "sourceUrl": "https://submarinecablemap.com"
+  },
+  {
+    "id": "cable-regional-24",
+    "name": "Regional Link 24",
+    "operator": "Vodafone",
+    "lengthKm": 5083,
+    "capacityTbps": 40,
+    "yearReady": 2017,
+    "landingPoints": [
+      {
+        "country": "BRA",
+        "city": "Landing City 24",
+        "lat": -36.45,
+        "lng": 94.74
+      },
+      {
+        "country": "ITA",
+        "city": "Landing City 24",
+        "lat": -31.77,
+        "lng": 170.81
+      }
+    ],
+    "status": "active",
+    "sourceUrl": "https://submarinecablemap.com"
+  },
+  {
+    "id": "cable-regional-25",
+    "name": "Regional Link 25",
+    "operator": "Vodafone",
+    "lengthKm": 3065,
+    "capacityTbps": 12,
+    "yearReady": 2013,
+    "landingPoints": [
+      {
+        "country": "VNM",
+        "city": "Landing City 25",
+        "lat": 37.33,
+        "lng": -51.96
+      },
+      {
+        "country": "FRA",
+        "city": "Landing City 25",
+        "lat": -11.23,
+        "lng": -108.51
+      }
+    ],
+    "status": "active",
+    "sourceUrl": "https://submarinecablemap.com"
+  },
+  {
+    "id": "cable-regional-26",
+    "name": "Regional Link 26",
+    "operator": "Meta",
+    "lengthKm": 2184,
+    "capacityTbps": 94,
+    "yearReady": 2019,
+    "landingPoints": [
+      {
+        "country": "EGY",
+        "city": "Landing City 26",
+        "lat": 29.84,
+        "lng": -40.5
+      },
+      {
+        "country": "IND",
+        "city": "Landing City 26",
+        "lat": 44.01,
+        "lng": 15.95
+      }
+    ],
+    "status": "active",
+    "sourceUrl": "https://submarinecablemap.com"
+  },
+  {
+    "id": "cable-regional-27",
+    "name": "Regional Link 27",
+    "operator": "Verizon",
+    "lengthKm": 6917,
+    "capacityTbps": 79,
+    "yearReady": 2015,
+    "landingPoints": [
+      {
+        "country": "BRA",
+        "city": "Landing City 27",
+        "lat": 59.31,
+        "lng": 52.32
+      },
+      {
+        "country": "MYS",
+        "city": "Landing City 27",
+        "lat": 51.47,
+        "lng": -168.38
+      },
+      {
+        "country": "NGA",
+        "city": "Landing City 27",
+        "lat": 11.37,
+        "lng": 51.78
+      }
+    ],
+    "status": "active",
+    "sourceUrl": "https://submarinecablemap.com"
+  },
+  {
+    "id": "cable-regional-28",
+    "name": "Regional Link 28",
+    "operator": "China Telecom",
+    "lengthKm": 725,
+    "capacityTbps": 127,
+    "yearReady": 2021,
+    "landingPoints": [
+      {
+        "country": "ZAF",
+        "city": "Landing City 28",
+        "lat": -25.19,
+        "lng": 47.4
+      },
+      {
+        "country": "JPN",
+        "city": "Landing City 28",
+        "lat": 11.12,
+        "lng": -158.81
+      }
+    ],
+    "status": "active",
+    "sourceUrl": "https://submarinecablemap.com"
+  },
+  {
+    "id": "cable-regional-29",
+    "name": "Regional Link 29",
+    "operator": "Google",
+    "lengthKm": 2546,
+    "capacityTbps": 156,
+    "yearReady": 2023,
+    "landingPoints": [
+      {
+        "country": "MAR",
+        "city": "Landing City 29",
+        "lat": 26.16,
+        "lng": 33.0
+      },
+      {
+        "country": "KOR",
+        "city": "Landing City 29",
+        "lat": -3.15,
+        "lng": -153.56
+      }
+    ],
+    "status": "active",
+    "sourceUrl": "https://submarinecablemap.com"
+  },
+  {
+    "id": "cable-regional-30",
+    "name": "Regional Link 30",
+    "operator": "AT&T",
+    "lengthKm": 7237,
+    "capacityTbps": 142,
+    "yearReady": 2025,
+    "landingPoints": [
+      {
+        "country": "USA",
+        "city": "Landing City 30",
+        "lat": -21.34,
+        "lng": 95.33
+      },
+      {
+        "country": "IND",
+        "city": "Landing City 30",
+        "lat": 40.65,
+        "lng": -19.81
+      }
+    ],
+    "status": "planned",
+    "sourceUrl": "https://submarinecablemap.com"
+  },
+  {
+    "id": "cable-regional-31",
+    "name": "Regional Link 31",
+    "operator": "Vodafone",
+    "lengthKm": 3375,
+    "capacityTbps": 181,
+    "yearReady": 2017,
+    "landingPoints": [
+      {
+        "country": "SGP",
+        "city": "Landing City 31",
+        "lat": -37.85,
+        "lng": -10.68
+      },
+      {
+        "country": "MYS",
+        "city": "Landing City 31",
+        "lat": 48.73,
+        "lng": 128.91
+      },
+      {
+        "country": "EGY",
+        "city": "Landing City 31",
+        "lat": 16.67,
+        "lng": 94.59
+      }
+    ],
+    "status": "active",
+    "sourceUrl": "https://submarinecablemap.com"
+  },
+  {
+    "id": "cable-regional-32",
+    "name": "Regional Link 32",
+    "operator": "Tata Communications",
+    "lengthKm": 5234,
+    "capacityTbps": 26,
+    "yearReady": 2010,
+    "landingPoints": [
+      {
+        "country": "AUS",
+        "city": "Landing City 32",
+        "lat": -15.94,
+        "lng": -79.68
+      },
+      {
+        "country": "ARE",
+        "city": "Landing City 32",
+        "lat": 1.98,
+        "lng": 17.15
+      },
+      {
+        "country": "KOR",
+        "city": "Landing City 32",
+        "lat": -28.4,
+        "lng": 28.12
+      }
+    ],
+    "status": "active",
+    "sourceUrl": "https://submarinecablemap.com"
+  },
+  {
+    "id": "cable-regional-33",
+    "name": "Regional Link 33",
+    "operator": "Meta",
+    "lengthKm": 4871,
+    "capacityTbps": 87,
+    "yearReady": 2017,
+    "landingPoints": [
+      {
+        "country": "GBR",
+        "city": "Landing City 33",
+        "lat": -13.15,
+        "lng": 140.66
+      },
+      {
+        "country": "MAR",
+        "city": "Landing City 33",
+        "lat": -30.5,
+        "lng": -41.4
+      }
+    ],
+    "status": "active",
+    "sourceUrl": "https://submarinecablemap.com"
+  },
+  {
+    "id": "cable-regional-34",
+    "name": "Regional Link 34",
+    "operator": "Verizon",
+    "lengthKm": 1584,
+    "capacityTbps": 135,
+    "yearReady": 2026,
+    "landingPoints": [
+      {
+        "country": "PHL",
+        "city": "Landing City 34",
+        "lat": -19.71,
+        "lng": -22.05
+      },
+      {
+        "country": "KEN",
+        "city": "Landing City 34",
+        "lat": 3.18,
+        "lng": 56.44
+      }
+    ],
+    "status": "planned",
+    "sourceUrl": "https://submarinecablemap.com"
+  },
+  {
+    "id": "cable-regional-35",
+    "name": "Regional Link 35",
+    "operator": "Microsoft",
+    "lengthKm": 6630,
+    "capacityTbps": 103,
+    "yearReady": 2015,
+    "landingPoints": [
+      {
+        "country": "MAR",
+        "city": "Landing City 35",
+        "lat": -39.02,
+        "lng": -61.52
+      },
+      {
+        "country": "MYS",
+        "city": "Landing City 35",
+        "lat": -34.83,
+        "lng": -17.63
+      },
+      {
+        "country": "EGY",
+        "city": "Landing City 35",
+        "lat": 44.38,
+        "lng": 158.86
+      }
+    ],
+    "status": "active",
+    "sourceUrl": "https://submarinecablemap.com"
+  },
+  {
+    "id": "cable-regional-36",
+    "name": "Regional Link 36",
+    "operator": "AT&T",
+    "lengthKm": 4501,
+    "capacityTbps": 47,
+    "yearReady": 2020,
+    "landingPoints": [
+      {
+        "country": "AUS",
+        "city": "Landing City 36",
+        "lat": -4.75,
+        "lng": 90.94
+      },
+      {
+        "country": "EGY",
+        "city": "Landing City 36",
+        "lat": 9.43,
+        "lng": 102.32
+      },
+      {
+        "country": "PHL",
+        "city": "Landing City 36",
+        "lat": -11.21,
+        "lng": 108.47
+      }
+    ],
+    "status": "active",
+    "sourceUrl": "https://submarinecablemap.com"
+  },
+  {
+    "id": "cable-regional-37",
+    "name": "Regional Link 37",
+    "operator": "Orange",
+    "lengthKm": 3150,
+    "capacityTbps": 39,
+    "yearReady": 2024,
+    "landingPoints": [
+      {
+        "country": "ITA",
+        "city": "Landing City 37",
+        "lat": 44.81,
+        "lng": -0.43
+      },
+      {
+        "country": "THA",
+        "city": "Landing City 37",
+        "lat": -18.3,
+        "lng": -150.39
+      },
+      {
+        "country": "AUS",
+        "city": "Landing City 37",
+        "lat": -14.36,
+        "lng": 115.42
+      }
+    ],
+    "status": "active",
+    "sourceUrl": "https://submarinecablemap.com"
+  },
+  {
+    "id": "cable-regional-38",
+    "name": "Regional Link 38",
+    "operator": "Meta",
+    "lengthKm": 6370,
+    "capacityTbps": 19,
+    "yearReady": 2011,
+    "landingPoints": [
+      {
+        "country": "EGY",
+        "city": "Landing City 38",
+        "lat": 43.97,
+        "lng": 85.6
+      },
+      {
+        "country": "BRA",
+        "city": "Landing City 38",
+        "lat": 32.43,
+        "lng": -38.15
+      },
+      {
+        "country": "VNM",
+        "city": "Landing City 38",
+        "lat": -11.51,
+        "lng": -40.3
+      }
+    ],
+    "status": "active",
+    "sourceUrl": "https://submarinecablemap.com"
+  },
+  {
+    "id": "cable-regional-39",
+    "name": "Regional Link 39",
+    "operator": "Amazon",
+    "lengthKm": 4098,
+    "capacityTbps": 32,
+    "yearReady": 2015,
+    "landingPoints": [
+      {
+        "country": "SGP",
+        "city": "Landing City 39",
+        "lat": -5.12,
+        "lng": 134.64
+      },
+      {
+        "country": "FRA",
+        "city": "Landing City 39",
+        "lat": 50.18,
+        "lng": 49.72
+      },
+      {
+        "country": "BRA",
+        "city": "Landing City 39",
+        "lat": -1.78,
+        "lng": 135.71
+      }
+    ],
+    "status": "active",
+    "sourceUrl": "https://submarinecablemap.com"
+  },
+  {
+    "id": "cable-regional-40",
+    "name": "Regional Link 40",
+    "operator": "Microsoft",
+    "lengthKm": 6239,
+    "capacityTbps": 128,
+    "yearReady": 2013,
+    "landingPoints": [
+      {
+        "country": "ISR",
+        "city": "Landing City 40",
+        "lat": 36.39,
+        "lng": 174.86
+      },
+      {
+        "country": "KOR",
+        "city": "Landing City 40",
+        "lat": 5.34,
+        "lng": 86.03
+      }
+    ],
+    "status": "active",
+    "sourceUrl": "https://submarinecablemap.com"
+  },
+  {
+    "id": "cable-regional-41",
+    "name": "Regional Link 41",
+    "operator": "Amazon",
+    "lengthKm": 832,
+    "capacityTbps": 200,
+    "yearReady": 2010,
+    "landingPoints": [
+      {
+        "country": "MYS",
+        "city": "Landing City 41",
+        "lat": -25.1,
+        "lng": 30.21
+      },
+      {
+        "country": "PRT",
+        "city": "Landing City 41",
+        "lat": 58.05,
+        "lng": 111.56
+      },
+      {
+        "country": "FRA",
+        "city": "Landing City 41",
+        "lat": -23.66,
+        "lng": -28.36
+      }
+    ],
+    "status": "active",
+    "sourceUrl": "https://submarinecablemap.com"
+  },
+  {
+    "id": "cable-regional-42",
+    "name": "Regional Link 42",
+    "operator": "Tata Communications",
+    "lengthKm": 6724,
+    "capacityTbps": 112,
+    "yearReady": 2024,
+    "landingPoints": [
+      {
+        "country": "ARE",
+        "city": "Landing City 42",
+        "lat": 2.8,
+        "lng": 151.55
+      },
+      {
+        "country": "KOR",
+        "city": "Landing City 42",
+        "lat": 27.93,
+        "lng": 38.16
+      }
+    ],
+    "status": "active",
+    "sourceUrl": "https://submarinecablemap.com"
+  },
+  {
+    "id": "cable-regional-43",
+    "name": "Regional Link 43",
+    "operator": "China Telecom",
+    "lengthKm": 3282,
+    "capacityTbps": 48,
+    "yearReady": 2025,
+    "landingPoints": [
+      {
+        "country": "MAR",
+        "city": "Landing City 43",
+        "lat": 51.48,
+        "lng": 67.12
+      },
+      {
+        "country": "IDN",
+        "city": "Landing City 43",
+        "lat": -21.06,
+        "lng": -138.47
+      },
+      {
+        "country": "IND",
+        "city": "Landing City 43",
+        "lat": 48.92,
+        "lng": -77.9
+      }
+    ],
+    "status": "planned",
+    "sourceUrl": "https://submarinecablemap.com"
+  },
+  {
+    "id": "cable-regional-44",
+    "name": "Regional Link 44",
+    "operator": "Orange",
+    "lengthKm": 5700,
+    "capacityTbps": 88,
+    "yearReady": 2024,
+    "landingPoints": [
+      {
+        "country": "ITA",
+        "city": "Landing City 44",
+        "lat": 26.65,
+        "lng": 8.62
+      },
+      {
+        "country": "GBR",
+        "city": "Landing City 44",
+        "lat": 59.74,
+        "lng": -135.0
+      }
+    ],
+    "status": "active",
+    "sourceUrl": "https://submarinecablemap.com"
+  },
+  {
+    "id": "cable-regional-45",
+    "name": "Regional Link 45",
+    "operator": "AT&T",
+    "lengthKm": 1958,
+    "capacityTbps": 25,
+    "yearReady": 2010,
+    "landingPoints": [
+      {
+        "country": "KEN",
+        "city": "Landing City 45",
+        "lat": -31.06,
+        "lng": -15.29
+      },
+      {
+        "country": "USA",
+        "city": "Landing City 45",
+        "lat": 4.66,
+        "lng": 144.13
+      }
+    ],
+    "status": "active",
+    "sourceUrl": "https://submarinecablemap.com"
+  },
+  {
+    "id": "cable-regional-46",
+    "name": "Regional Link 46",
+    "operator": "Singtel",
+    "lengthKm": 798,
+    "capacityTbps": 108,
+    "yearReady": 2011,
+    "landingPoints": [
+      {
+        "country": "AUS",
+        "city": "Landing City 46",
+        "lat": 5.61,
+        "lng": -21.45
+      },
+      {
+        "country": "SAU",
+        "city": "Landing City 46",
+        "lat": -27.29,
+        "lng": 80.06
+      }
+    ],
+    "status": "active",
+    "sourceUrl": "https://submarinecablemap.com"
+  },
+  {
+    "id": "cable-regional-47",
+    "name": "Regional Link 47",
+    "operator": "Verizon",
+    "lengthKm": 5966,
+    "capacityTbps": 91,
+    "yearReady": 2017,
+    "landingPoints": [
+      {
+        "country": "ARE",
+        "city": "Landing City 47",
+        "lat": 12.34,
+        "lng": 168.57
+      },
+      {
+        "country": "ZAF",
+        "city": "Landing City 47",
+        "lat": 33.8,
+        "lng": -29.0
+      }
+    ],
+    "status": "active",
+    "sourceUrl": "https://submarinecablemap.com"
+  },
+  {
+    "id": "cable-regional-48",
+    "name": "Regional Link 48",
+    "operator": "Tata Communications",
+    "lengthKm": 6318,
+    "capacityTbps": 105,
+    "yearReady": 2016,
+    "landingPoints": [
+      {
+        "country": "FRA",
+        "city": "Landing City 48",
+        "lat": -10.93,
+        "lng": 179.77
+      },
+      {
+        "country": "THA",
+        "city": "Landing City 48",
+        "lat": 21.06,
+        "lng": 6.22
+      },
+      {
+        "country": "GBR",
+        "city": "Landing City 48",
+        "lat": -18.67,
+        "lng": 54.09
+      }
+    ],
+    "status": "active",
+    "sourceUrl": "https://submarinecablemap.com"
+  },
+  {
+    "id": "cable-regional-49",
+    "name": "Regional Link 49",
+    "operator": "Orange",
+    "lengthKm": 5133,
+    "capacityTbps": 81,
+    "yearReady": 2022,
+    "landingPoints": [
+      {
+        "country": "MYS",
+        "city": "Landing City 49",
+        "lat": 22.27,
+        "lng": 58.86
+      },
+      {
+        "country": "AUS",
+        "city": "Landing City 49",
+        "lat": -2.44,
+        "lng": 40.34
+      },
+      {
+        "country": "ARE",
+        "city": "Landing City 49",
+        "lat": -17.03,
+        "lng": -84.69
+      }
+    ],
+    "status": "active",
+    "sourceUrl": "https://submarinecablemap.com"
+  },
+  {
+    "id": "cable-regional-50",
+    "name": "Regional Link 50",
+    "operator": "Meta",
+    "lengthKm": 4188,
+    "capacityTbps": 30,
+    "yearReady": 2022,
+    "landingPoints": [
+      {
+        "country": "VNM",
+        "city": "Landing City 50",
+        "lat": -34.45,
+        "lng": 120.26
+      },
+      {
+        "country": "MYS",
+        "city": "Landing City 50",
+        "lat": -33.06,
+        "lng": -70.49
+      },
+      {
+        "country": "ZAF",
+        "city": "Landing City 50",
+        "lat": 31.79,
+        "lng": -37.56
+      }
+    ],
+    "status": "active",
+    "sourceUrl": "https://submarinecablemap.com"
+  },
+  {
+    "id": "cable-regional-51",
+    "name": "Regional Link 51",
+    "operator": "China Telecom",
+    "lengthKm": 6151,
+    "capacityTbps": 39,
+    "yearReady": 2022,
+    "landingPoints": [
+      {
+        "country": "IDN",
+        "city": "Landing City 51",
+        "lat": 29.72,
+        "lng": -108.52
+      },
+      {
+        "country": "KEN",
+        "city": "Landing City 51",
+        "lat": 7.98,
+        "lng": 2.85
+      },
+      {
+        "country": "THA",
+        "city": "Landing City 51",
+        "lat": -9.43,
+        "lng": 162.49
+      }
+    ],
+    "status": "active",
+    "sourceUrl": "https://submarinecablemap.com"
+  },
+  {
+    "id": "cable-regional-52",
+    "name": "Regional Link 52",
+    "operator": "Microsoft",
+    "lengthKm": 5874,
+    "capacityTbps": 174,
+    "yearReady": 2013,
+    "landingPoints": [
+      {
+        "country": "KEN",
+        "city": "Landing City 52",
+        "lat": -37.96,
+        "lng": -23.03
+      },
+      {
+        "country": "VNM",
+        "city": "Landing City 52",
+        "lat": 53.61,
+        "lng": 127.49
+      }
+    ],
+    "status": "active",
+    "sourceUrl": "https://submarinecablemap.com"
+  },
+  {
+    "id": "cable-regional-53",
+    "name": "Regional Link 53",
+    "operator": "Meta",
+    "lengthKm": 5157,
+    "capacityTbps": 18,
+    "yearReady": 2017,
+    "landingPoints": [
+      {
+        "country": "KOR",
+        "city": "Landing City 53",
+        "lat": -14.11,
+        "lng": -99.64
+      },
+      {
+        "country": "GBR",
+        "city": "Landing City 53",
+        "lat": -26.32,
+        "lng": -31.39
+      }
+    ],
+    "status": "active",
+    "sourceUrl": "https://submarinecablemap.com"
+  },
+  {
+    "id": "cable-regional-54",
+    "name": "Regional Link 54",
+    "operator": "Meta",
+    "lengthKm": 2553,
+    "capacityTbps": 82,
+    "yearReady": 2023,
+    "landingPoints": [
+      {
+        "country": "IDN",
+        "city": "Landing City 54",
+        "lat": 57.54,
+        "lng": -7.2
+      },
+      {
+        "country": "ARE",
+        "city": "Landing City 54",
+        "lat": -35.38,
+        "lng": -52.6
+      }
+    ],
+    "status": "active",
+    "sourceUrl": "https://submarinecablemap.com"
+  },
+  {
+    "id": "cable-regional-55",
+    "name": "Regional Link 55",
+    "operator": "Tata Communications",
+    "lengthKm": 4158,
+    "capacityTbps": 75,
+    "yearReady": 2023,
+    "landingPoints": [
+      {
+        "country": "JPN",
+        "city": "Landing City 55",
+        "lat": -30.03,
+        "lng": -103.34
+      },
+      {
+        "country": "NGA",
+        "city": "Landing City 55",
+        "lat": -11.39,
+        "lng": 175.04
+      }
+    ],
+    "status": "active",
+    "sourceUrl": "https://submarinecablemap.com"
+  },
+  {
+    "id": "cable-regional-56",
+    "name": "Regional Link 56",
+    "operator": "Verizon",
+    "lengthKm": 3584,
+    "capacityTbps": 114,
+    "yearReady": 2022,
+    "landingPoints": [
+      {
+        "country": "KEN",
+        "city": "Landing City 56",
+        "lat": 8.34,
+        "lng": -114.64
+      },
+      {
+        "country": "ARE",
+        "city": "Landing City 56",
+        "lat": -11.94,
+        "lng": 93.68
+      }
+    ],
+    "status": "active",
+    "sourceUrl": "https://submarinecablemap.com"
+  },
+  {
+    "id": "cable-regional-57",
+    "name": "Regional Link 57",
+    "operator": "Google",
+    "lengthKm": 1371,
+    "capacityTbps": 113,
+    "yearReady": 2016,
+    "landingPoints": [
+      {
+        "country": "MAR",
+        "city": "Landing City 57",
+        "lat": 42.51,
+        "lng": -108.61
+      },
+      {
+        "country": "ARE",
+        "city": "Landing City 57",
+        "lat": -16.75,
+        "lng": -152.32
+      }
+    ],
+    "status": "active",
+    "sourceUrl": "https://submarinecablemap.com"
+  },
+  {
+    "id": "cable-regional-58",
+    "name": "Regional Link 58",
+    "operator": "Meta",
+    "lengthKm": 679,
+    "capacityTbps": 183,
+    "yearReady": 2025,
+    "landingPoints": [
+      {
+        "country": "THA",
+        "city": "Landing City 58",
+        "lat": -26.46,
+        "lng": 70.04
+      },
+      {
+        "country": "SAU",
+        "city": "Landing City 58",
+        "lat": -36.3,
+        "lng": -77.56
+      }
+    ],
+    "status": "planned",
+    "sourceUrl": "https://submarinecablemap.com"
+  },
+  {
+    "id": "cable-regional-59",
+    "name": "Regional Link 59",
+    "operator": "Meta",
+    "lengthKm": 6099,
+    "capacityTbps": 31,
+    "yearReady": 2024,
+    "landingPoints": [
+      {
+        "country": "MYS",
+        "city": "Landing City 59",
+        "lat": 3.94,
+        "lng": 166.52
+      },
+      {
+        "country": "ZAF",
+        "city": "Landing City 59",
+        "lat": 58.8,
+        "lng": 67.74
+      },
+      {
+        "country": "SGP",
+        "city": "Landing City 59",
+        "lat": -10.14,
+        "lng": 120.79
+      }
+    ],
+    "status": "active",
+    "sourceUrl": "https://submarinecablemap.com"
+  },
+  {
+    "id": "cable-regional-60",
+    "name": "Regional Link 60",
+    "operator": "AT&T",
+    "lengthKm": 5693,
+    "capacityTbps": 61,
+    "yearReady": 2023,
+    "landingPoints": [
+      {
+        "country": "ZAF",
+        "city": "Landing City 60",
+        "lat": -20.47,
+        "lng": -41.96
+      },
+      {
+        "country": "EGY",
+        "city": "Landing City 60",
+        "lat": 37.7,
+        "lng": 173.24
+      }
+    ],
+    "status": "active",
+    "sourceUrl": "https://submarinecablemap.com"
+  },
+  {
+    "id": "cable-regional-61",
+    "name": "Regional Link 61",
+    "operator": "Verizon",
+    "lengthKm": 3588,
+    "capacityTbps": 151,
+    "yearReady": 2017,
+    "landingPoints": [
+      {
+        "country": "CHN",
+        "city": "Landing City 61",
+        "lat": 16.5,
+        "lng": -62.86
+      },
+      {
+        "country": "EGY",
+        "city": "Landing City 61",
+        "lat": 30.32,
+        "lng": -179.51
+      },
+      {
+        "country": "THA",
+        "city": "Landing City 61",
+        "lat": 54.83,
+        "lng": -95.19
+      }
+    ],
+    "status": "active",
+    "sourceUrl": "https://submarinecablemap.com"
+  },
+  {
+    "id": "cable-regional-62",
+    "name": "Regional Link 62",
+    "operator": "Amazon",
+    "lengthKm": 5971,
+    "capacityTbps": 24,
+    "yearReady": 2010,
+    "landingPoints": [
+      {
+        "country": "ARE",
+        "city": "Landing City 62",
+        "lat": -14.78,
+        "lng": -136.65
+      },
+      {
+        "country": "ZAF",
+        "city": "Landing City 62",
+        "lat": 24.24,
+        "lng": -76.13
+      },
+      {
+        "country": "SGP",
+        "city": "Landing City 62",
+        "lat": 13.95,
+        "lng": -45.69
+      }
+    ],
+    "status": "active",
+    "sourceUrl": "https://submarinecablemap.com"
+  },
+  {
+    "id": "cable-regional-63",
+    "name": "Regional Link 63",
+    "operator": "China Telecom",
+    "lengthKm": 663,
+    "capacityTbps": 140,
+    "yearReady": 2018,
+    "landingPoints": [
+      {
+        "country": "MYS",
+        "city": "Landing City 63",
+        "lat": 2.76,
+        "lng": -148.88
+      },
+      {
+        "country": "EGY",
+        "city": "Landing City 63",
+        "lat": 41.36,
+        "lng": -17.64
+      },
+      {
+        "country": "GBR",
+        "city": "Landing City 63",
+        "lat": 48.93,
+        "lng": -78.36
+      }
+    ],
+    "status": "active",
+    "sourceUrl": "https://submarinecablemap.com"
+  },
+  {
+    "id": "cable-regional-64",
+    "name": "Regional Link 64",
+    "operator": "Verizon",
+    "lengthKm": 2555,
+    "capacityTbps": 196,
+    "yearReady": 2022,
+    "landingPoints": [
+      {
+        "country": "NGA",
+        "city": "Landing City 64",
+        "lat": 45.72,
+        "lng": -26.27
+      },
+      {
+        "country": "THA",
+        "city": "Landing City 64",
+        "lat": -3.54,
+        "lng": -101.42
+      }
+    ],
+    "status": "active",
+    "sourceUrl": "https://submarinecablemap.com"
+  },
+  {
+    "id": "cable-regional-65",
+    "name": "Regional Link 65",
+    "operator": "Microsoft",
+    "lengthKm": 1717,
+    "capacityTbps": 159,
+    "yearReady": 2024,
+    "landingPoints": [
+      {
+        "country": "MAR",
+        "city": "Landing City 65",
+        "lat": 9.11,
+        "lng": 75.36
+      },
+      {
+        "country": "IND",
+        "city": "Landing City 65",
+        "lat": 28.72,
+        "lng": 172.07
+      }
+    ],
+    "status": "active",
+    "sourceUrl": "https://submarinecablemap.com"
+  },
+  {
+    "id": "cable-regional-66",
+    "name": "Regional Link 66",
+    "operator": "Tata Communications",
+    "lengthKm": 3308,
+    "capacityTbps": 138,
+    "yearReady": 2015,
+    "landingPoints": [
+      {
+        "country": "FRA",
+        "city": "Landing City 66",
+        "lat": -0.21,
+        "lng": 98.8
+      },
+      {
+        "country": "PHL",
+        "city": "Landing City 66",
+        "lat": -5.14,
+        "lng": 131.35
+      },
+      {
+        "country": "THA",
+        "city": "Landing City 66",
+        "lat": 22.99,
+        "lng": 78.29
+      }
+    ],
+    "status": "active",
+    "sourceUrl": "https://submarinecablemap.com"
+  },
+  {
+    "id": "cable-regional-67",
+    "name": "Regional Link 67",
+    "operator": "Singtel",
+    "lengthKm": 4033,
+    "capacityTbps": 119,
+    "yearReady": 2016,
+    "landingPoints": [
+      {
+        "country": "PRT",
+        "city": "Landing City 67",
+        "lat": -33.04,
+        "lng": -143.9
+      },
+      {
+        "country": "JPN",
+        "city": "Landing City 67",
+        "lat": 26.82,
+        "lng": 113.03
+      }
+    ],
+    "status": "active",
+    "sourceUrl": "https://submarinecablemap.com"
+  },
+  {
+    "id": "cable-regional-68",
+    "name": "Regional Link 68",
+    "operator": "Vodafone",
+    "lengthKm": 836,
+    "capacityTbps": 22,
+    "yearReady": 2015,
+    "landingPoints": [
+      {
+        "country": "EGY",
+        "city": "Landing City 68",
+        "lat": 34.19,
+        "lng": -63.49
+      },
+      {
+        "country": "KOR",
+        "city": "Landing City 68",
+        "lat": 14.54,
+        "lng": 92.4
+      }
+    ],
+    "status": "active",
+    "sourceUrl": "https://submarinecablemap.com"
+  },
+  {
+    "id": "cable-regional-69",
+    "name": "Regional Link 69",
+    "operator": "Orange",
+    "lengthKm": 777,
+    "capacityTbps": 53,
+    "yearReady": 2021,
+    "landingPoints": [
+      {
+        "country": "USA",
+        "city": "Landing City 69",
+        "lat": 54.62,
+        "lng": -44.41
+      },
+      {
+        "country": "MAR",
+        "city": "Landing City 69",
+        "lat": 36.31,
+        "lng": 122.93
+      }
+    ],
+    "status": "active",
+    "sourceUrl": "https://submarinecablemap.com"
+  },
+  {
+    "id": "cable-regional-70",
+    "name": "Regional Link 70",
+    "operator": "AT&T",
+    "lengthKm": 4675,
+    "capacityTbps": 98,
+    "yearReady": 2024,
+    "landingPoints": [
+      {
+        "country": "EGY",
+        "city": "Landing City 70",
+        "lat": -35.0,
+        "lng": -20.53
+      },
+      {
+        "country": "FRA",
+        "city": "Landing City 70",
+        "lat": 18.16,
+        "lng": 1.3
+      }
+    ],
+    "status": "active",
+    "sourceUrl": "https://submarinecablemap.com"
+  },
+  {
+    "id": "cable-regional-71",
+    "name": "Regional Link 71",
+    "operator": "AT&T",
+    "lengthKm": 1136,
+    "capacityTbps": 166,
+    "yearReady": 2012,
+    "landingPoints": [
+      {
+        "country": "MYS",
+        "city": "Landing City 71",
+        "lat": -17.37,
+        "lng": 33.8
+      },
+      {
+        "country": "ITA",
+        "city": "Landing City 71",
+        "lat": 25.19,
+        "lng": -143.78
+      },
+      {
+        "country": "PHL",
+        "city": "Landing City 71",
+        "lat": 0.3,
+        "lng": 79.68
+      }
+    ],
+    "status": "active",
+    "sourceUrl": "https://submarinecablemap.com"
+  },
+  {
+    "id": "cable-regional-72",
+    "name": "Regional Link 72",
+    "operator": "Amazon",
+    "lengthKm": 5829,
+    "capacityTbps": 173,
+    "yearReady": 2015,
+    "landingPoints": [
+      {
+        "country": "IDN",
+        "city": "Landing City 72",
+        "lat": -32.52,
+        "lng": -45.51
+      },
+      {
+        "country": "GBR",
+        "city": "Landing City 72",
+        "lat": 51.06,
+        "lng": -80.68
+      },
+      {
+        "country": "EGY",
+        "city": "Landing City 72",
+        "lat": 50.11,
+        "lng": 77.06
+      }
+    ],
+    "status": "active",
+    "sourceUrl": "https://submarinecablemap.com"
+  },
+  {
+    "id": "cable-regional-73",
+    "name": "Regional Link 73",
+    "operator": "Vodafone",
+    "lengthKm": 6170,
+    "capacityTbps": 117,
+    "yearReady": 2020,
+    "landingPoints": [
+      {
+        "country": "CHN",
+        "city": "Landing City 73",
+        "lat": 14.72,
+        "lng": 26.49
+      },
+      {
+        "country": "MAR",
+        "city": "Landing City 73",
+        "lat": -35.55,
+        "lng": 102.32
+      }
+    ],
+    "status": "active",
+    "sourceUrl": "https://submarinecablemap.com"
+  },
+  {
+    "id": "cable-regional-74",
+    "name": "Regional Link 74",
+    "operator": "Orange",
+    "lengthKm": 5184,
+    "capacityTbps": 44,
+    "yearReady": 2010,
+    "landingPoints": [
+      {
+        "country": "ITA",
+        "city": "Landing City 74",
+        "lat": 9.52,
+        "lng": -173.05
+      },
+      {
+        "country": "CHN",
+        "city": "Landing City 74",
+        "lat": -34.9,
+        "lng": 157.45
+      }
+    ],
+    "status": "active",
+    "sourceUrl": "https://submarinecablemap.com"
+  },
+  {
+    "id": "cable-regional-75",
+    "name": "Regional Link 75",
+    "operator": "Verizon",
+    "lengthKm": 5264,
+    "capacityTbps": 193,
+    "yearReady": 2021,
+    "landingPoints": [
+      {
+        "country": "EGY",
+        "city": "Landing City 75",
+        "lat": -38.49,
+        "lng": 95.16
+      },
+      {
+        "country": "NGA",
+        "city": "Landing City 75",
+        "lat": 43.67,
+        "lng": 104.86
+      }
+    ],
+    "status": "active",
+    "sourceUrl": "https://submarinecablemap.com"
+  },
+  {
+    "id": "cable-regional-76",
+    "name": "Regional Link 76",
+    "operator": "Tata Communications",
+    "lengthKm": 3272,
+    "capacityTbps": 104,
+    "yearReady": 2016,
+    "landingPoints": [
+      {
+        "country": "IDN",
+        "city": "Landing City 76",
+        "lat": 55.52,
+        "lng": -173.79
+      },
+      {
+        "country": "GBR",
+        "city": "Landing City 76",
+        "lat": 15.62,
+        "lng": 112.59
+      }
+    ],
+    "status": "active",
+    "sourceUrl": "https://submarinecablemap.com"
+  },
+  {
+    "id": "cable-regional-77",
+    "name": "Regional Link 77",
+    "operator": "Google",
+    "lengthKm": 4944,
+    "capacityTbps": 42,
+    "yearReady": 2026,
+    "landingPoints": [
+      {
+        "country": "ISR",
+        "city": "Landing City 77",
+        "lat": 18.3,
+        "lng": 128.75
+      },
+      {
+        "country": "VNM",
+        "city": "Landing City 77",
+        "lat": -17.16,
+        "lng": -136.08
+      }
+    ],
+    "status": "planned",
+    "sourceUrl": "https://submarinecablemap.com"
+  },
+  {
+    "id": "cable-regional-78",
+    "name": "Regional Link 78",
+    "operator": "Tata Communications",
+    "lengthKm": 4175,
+    "capacityTbps": 177,
+    "yearReady": 2012,
+    "landingPoints": [
+      {
+        "country": "MAR",
+        "city": "Landing City 78",
+        "lat": 56.21,
+        "lng": 21.43
+      },
+      {
+        "country": "USA",
+        "city": "Landing City 78",
+        "lat": -15.1,
+        "lng": 177.2
+      },
+      {
+        "country": "KEN",
+        "city": "Landing City 78",
+        "lat": -22.45,
+        "lng": 157.14
+      }
+    ],
+    "status": "active",
+    "sourceUrl": "https://submarinecablemap.com"
+  },
+  {
+    "id": "cable-regional-79",
+    "name": "Regional Link 79",
+    "operator": "AT&T",
+    "lengthKm": 1273,
+    "capacityTbps": 104,
+    "yearReady": 2026,
+    "landingPoints": [
+      {
+        "country": "ISR",
+        "city": "Landing City 79",
+        "lat": 33.06,
+        "lng": 25.51
+      },
+      {
+        "country": "ARE",
+        "city": "Landing City 79",
+        "lat": 37.92,
+        "lng": 88.0
+      }
+    ],
+    "status": "planned",
+    "sourceUrl": "https://submarinecablemap.com"
+  },
+  {
+    "id": "cable-regional-80",
+    "name": "Regional Link 80",
+    "operator": "Singtel",
+    "lengthKm": 4805,
+    "capacityTbps": 138,
+    "yearReady": 2013,
+    "landingPoints": [
+      {
+        "country": "ISR",
+        "city": "Landing City 80",
+        "lat": 6.48,
+        "lng": -95.14
+      },
+      {
+        "country": "IND",
+        "city": "Landing City 80",
+        "lat": -26.23,
+        "lng": -51.68
+      },
+      {
+        "country": "CHN",
+        "city": "Landing City 80",
+        "lat": 4.79,
+        "lng": -8.5
+      }
+    ],
+    "status": "active",
+    "sourceUrl": "https://submarinecablemap.com"
+  },
+  {
+    "id": "cable-regional-81",
+    "name": "Regional Link 81",
+    "operator": "Amazon",
+    "lengthKm": 644,
+    "capacityTbps": 110,
+    "yearReady": 2021,
+    "landingPoints": [
+      {
+        "country": "NGA",
+        "city": "Landing City 81",
+        "lat": -25.82,
+        "lng": 86.83
+      },
+      {
+        "country": "KEN",
+        "city": "Landing City 81",
+        "lat": 50.85,
+        "lng": -33.88
+      },
+      {
+        "country": "CHN",
+        "city": "Landing City 81",
+        "lat": -29.08,
+        "lng": -100.08
+      }
+    ],
+    "status": "active",
+    "sourceUrl": "https://submarinecablemap.com"
+  },
+  {
+    "id": "cable-regional-82",
+    "name": "Regional Link 82",
+    "operator": "Meta",
+    "lengthKm": 5221,
+    "capacityTbps": 66,
+    "yearReady": 2022,
+    "landingPoints": [
+      {
+        "country": "IND",
+        "city": "Landing City 82",
+        "lat": -24.93,
+        "lng": 68.04
+      },
+      {
+        "country": "THA",
+        "city": "Landing City 82",
+        "lat": -30.68,
+        "lng": -60.62
+      }
+    ],
+    "status": "active",
+    "sourceUrl": "https://submarinecablemap.com"
+  },
+  {
+    "id": "cable-regional-83",
+    "name": "Regional Link 83",
+    "operator": "Vodafone",
+    "lengthKm": 3500,
+    "capacityTbps": 116,
+    "yearReady": 2021,
+    "landingPoints": [
+      {
+        "country": "GBR",
+        "city": "Landing City 83",
+        "lat": 37.09,
+        "lng": -106.65
+      },
+      {
+        "country": "FRA",
+        "city": "Landing City 83",
+        "lat": 54.22,
+        "lng": -177.73
+      }
+    ],
+    "status": "active",
+    "sourceUrl": "https://submarinecablemap.com"
+  },
+  {
+    "id": "cable-regional-84",
+    "name": "Regional Link 84",
+    "operator": "Microsoft",
+    "lengthKm": 7058,
+    "capacityTbps": 20,
+    "yearReady": 2018,
+    "landingPoints": [
+      {
+        "country": "IDN",
+        "city": "Landing City 84",
+        "lat": -31.47,
+        "lng": -170.52
+      },
+      {
+        "country": "ISR",
+        "city": "Landing City 84",
+        "lat": 10.29,
+        "lng": 86.91
+      }
+    ],
+    "status": "active",
+    "sourceUrl": "https://submarinecablemap.com"
+  },
+  {
+    "id": "cable-regional-85",
+    "name": "Regional Link 85",
+    "operator": "Vodafone",
+    "lengthKm": 1537,
+    "capacityTbps": 35,
+    "yearReady": 2022,
+    "landingPoints": [
+      {
+        "country": "THA",
+        "city": "Landing City 85",
+        "lat": 9.67,
+        "lng": 126.44
+      },
+      {
+        "country": "ESP",
+        "city": "Landing City 85",
+        "lat": -35.67,
+        "lng": -71.79
+      }
+    ],
+    "status": "active",
+    "sourceUrl": "https://submarinecablemap.com"
+  },
+  {
+    "id": "cable-regional-86",
+    "name": "Regional Link 86",
+    "operator": "Google",
+    "lengthKm": 1639,
+    "capacityTbps": 191,
+    "yearReady": 2021,
+    "landingPoints": [
+      {
+        "country": "NGA",
+        "city": "Landing City 86",
+        "lat": 27.1,
+        "lng": -24.76
+      },
+      {
+        "country": "GBR",
+        "city": "Landing City 86",
+        "lat": 27.51,
+        "lng": 81.45
+      }
+    ],
+    "status": "active",
+    "sourceUrl": "https://submarinecablemap.com"
+  },
+  {
+    "id": "cable-regional-87",
+    "name": "Regional Link 87",
+    "operator": "Tata Communications",
+    "lengthKm": 3219,
+    "capacityTbps": 200,
+    "yearReady": 2017,
+    "landingPoints": [
+      {
+        "country": "MAR",
+        "city": "Landing City 87",
+        "lat": 45.32,
+        "lng": 104.76
+      },
+      {
+        "country": "BRA",
+        "city": "Landing City 87",
+        "lat": -35.65,
+        "lng": 38.52
+      }
+    ],
+    "status": "active",
+    "sourceUrl": "https://submarinecablemap.com"
+  },
+  {
+    "id": "cable-regional-88",
+    "name": "Regional Link 88",
+    "operator": "Microsoft",
+    "lengthKm": 585,
+    "capacityTbps": 123,
+    "yearReady": 2019,
+    "landingPoints": [
+      {
+        "country": "THA",
+        "city": "Landing City 88",
+        "lat": 14.62,
+        "lng": -157.85
+      },
+      {
+        "country": "KEN",
+        "city": "Landing City 88",
+        "lat": 53.03,
+        "lng": -119.27
+      }
+    ],
+    "status": "active",
+    "sourceUrl": "https://submarinecablemap.com"
+  },
+  {
+    "id": "cable-regional-89",
+    "name": "Regional Link 89",
+    "operator": "Meta",
+    "lengthKm": 5967,
+    "capacityTbps": 124,
+    "yearReady": 2019,
+    "landingPoints": [
+      {
+        "country": "IND",
+        "city": "Landing City 89",
+        "lat": 7.9,
+        "lng": 171.54
+      },
+      {
+        "country": "PHL",
+        "city": "Landing City 89",
+        "lat": 7.1,
+        "lng": -160.19
+      },
+      {
+        "country": "FRA",
+        "city": "Landing City 89",
+        "lat": 24.49,
+        "lng": -62.95
+      }
+    ],
+    "status": "active",
+    "sourceUrl": "https://submarinecablemap.com"
+  },
+  {
+    "id": "cable-regional-90",
+    "name": "Regional Link 90",
+    "operator": "Google",
+    "lengthKm": 4194,
+    "capacityTbps": 150,
+    "yearReady": 2017,
+    "landingPoints": [
+      {
+        "country": "ISR",
+        "city": "Landing City 90",
+        "lat": 24.65,
+        "lng": -159.9
+      },
+      {
+        "country": "NGA",
+        "city": "Landing City 90",
+        "lat": 14.7,
+        "lng": 18.28
+      }
+    ],
+    "status": "active",
+    "sourceUrl": "https://submarinecablemap.com"
+  },
+  {
+    "id": "cable-regional-91",
+    "name": "Regional Link 91",
+    "operator": "Singtel",
+    "lengthKm": 853,
+    "capacityTbps": 75,
+    "yearReady": 2017,
+    "landingPoints": [
+      {
+        "country": "MAR",
+        "city": "Landing City 91",
+        "lat": -3.54,
+        "lng": 13.27
+      },
+      {
+        "country": "ITA",
+        "city": "Landing City 91",
+        "lat": 8.63,
+        "lng": -151.74
+      }
+    ],
+    "status": "active",
+    "sourceUrl": "https://submarinecablemap.com"
+  },
+  {
+    "id": "cable-regional-92",
+    "name": "Regional Link 92",
+    "operator": "Orange",
+    "lengthKm": 5155,
+    "capacityTbps": 140,
+    "yearReady": 2010,
+    "landingPoints": [
+      {
+        "country": "JPN",
+        "city": "Landing City 92",
+        "lat": -18.01,
+        "lng": -73.15
+      },
+      {
+        "country": "MAR",
+        "city": "Landing City 92",
+        "lat": 55.07,
+        "lng": -173.64
+      },
+      {
+        "country": "MYS",
+        "city": "Landing City 92",
+        "lat": 15.3,
+        "lng": 167.35
+      }
+    ],
+    "status": "active",
+    "sourceUrl": "https://submarinecablemap.com"
+  },
+  {
+    "id": "cable-regional-93",
+    "name": "Regional Link 93",
+    "operator": "Meta",
+    "lengthKm": 1039,
+    "capacityTbps": 69,
+    "yearReady": 2018,
+    "landingPoints": [
+      {
+        "country": "IND",
+        "city": "Landing City 93",
+        "lat": 44.71,
+        "lng": -38.95
+      },
+      {
+        "country": "ESP",
+        "city": "Landing City 93",
+        "lat": 44.85,
+        "lng": -60.73
+      },
+      {
+        "country": "IDN",
+        "city": "Landing City 93",
+        "lat": -33.41,
+        "lng": 6.48
+      }
+    ],
+    "status": "active",
+    "sourceUrl": "https://submarinecablemap.com"
+  },
+  {
+    "id": "cable-regional-94",
+    "name": "Regional Link 94",
+    "operator": "Tata Communications",
+    "lengthKm": 1146,
+    "capacityTbps": 191,
+    "yearReady": 2011,
+    "landingPoints": [
+      {
+        "country": "IND",
+        "city": "Landing City 94",
+        "lat": 3.35,
+        "lng": -33.34
+      },
+      {
+        "country": "CHN",
+        "city": "Landing City 94",
+        "lat": 47.29,
+        "lng": -37.34
+      }
+    ],
+    "status": "active",
+    "sourceUrl": "https://submarinecablemap.com"
+  },
+  {
+    "id": "cable-regional-95",
+    "name": "Regional Link 95",
+    "operator": "Amazon",
+    "lengthKm": 3273,
+    "capacityTbps": 60,
+    "yearReady": 2019,
+    "landingPoints": [
+      {
+        "country": "PRT",
+        "city": "Landing City 95",
+        "lat": 12.6,
+        "lng": -99.86
+      },
+      {
+        "country": "NGA",
+        "city": "Landing City 95",
+        "lat": 44.22,
+        "lng": -81.41
+      }
+    ],
+    "status": "active",
+    "sourceUrl": "https://submarinecablemap.com"
+  },
+  {
+    "id": "cable-regional-96",
+    "name": "Regional Link 96",
+    "operator": "AT&T",
+    "lengthKm": 7237,
+    "capacityTbps": 36,
+    "yearReady": 2026,
+    "landingPoints": [
+      {
+        "country": "AUS",
+        "city": "Landing City 96",
+        "lat": 37.04,
+        "lng": 115.08
+      },
+      {
+        "country": "VNM",
+        "city": "Landing City 96",
+        "lat": 57.34,
+        "lng": -103.47
+      }
+    ],
+    "status": "planned",
+    "sourceUrl": "https://submarinecablemap.com"
+  },
+  {
+    "id": "cable-regional-97",
+    "name": "Regional Link 97",
+    "operator": "Verizon",
+    "lengthKm": 1092,
+    "capacityTbps": 173,
+    "yearReady": 2019,
+    "landingPoints": [
+      {
+        "country": "THA",
+        "city": "Landing City 97",
+        "lat": 5.45,
+        "lng": 119.9
+      },
+      {
+        "country": "SGP",
+        "city": "Landing City 97",
+        "lat": 7.05,
+        "lng": -170.98
+      }
+    ],
+    "status": "active",
+    "sourceUrl": "https://submarinecablemap.com"
+  },
+  {
+    "id": "cable-regional-98",
+    "name": "Regional Link 98",
+    "operator": "AT&T",
+    "lengthKm": 6474,
+    "capacityTbps": 22,
+    "yearReady": 2025,
+    "landingPoints": [
+      {
+        "country": "KEN",
+        "city": "Landing City 98",
+        "lat": 27.41,
+        "lng": -173.12
+      },
+      {
+        "country": "PRT",
+        "city": "Landing City 98",
+        "lat": 18.59,
+        "lng": 114.0
+      }
+    ],
+    "status": "planned",
+    "sourceUrl": "https://submarinecablemap.com"
+  },
+  {
+    "id": "cable-regional-99",
+    "name": "Regional Link 99",
+    "operator": "Amazon",
+    "lengthKm": 5638,
+    "capacityTbps": 173,
+    "yearReady": 2026,
+    "landingPoints": [
+      {
+        "country": "SAU",
+        "city": "Landing City 99",
+        "lat": 19.91,
+        "lng": 46.84
+      },
+      {
+        "country": "PRT",
+        "city": "Landing City 99",
+        "lat": 12.18,
+        "lng": 56.82
+      },
+      {
+        "country": "CHN",
+        "city": "Landing City 99",
+        "lat": 40.31,
+        "lng": 58.47
+      }
+    ],
+    "status": "planned",
+    "sourceUrl": "https://submarinecablemap.com"
+  },
+  {
+    "id": "cable-regional-100",
+    "name": "Regional Link 100",
+    "operator": "Tata Communications",
+    "lengthKm": 6883,
+    "capacityTbps": 93,
+    "yearReady": 2025,
+    "landingPoints": [
+      {
+        "country": "BRA",
+        "city": "Landing City 100",
+        "lat": 11.18,
+        "lng": -47.69
+      },
+      {
+        "country": "JPN",
+        "city": "Landing City 100",
+        "lat": 25.39,
+        "lng": 72.16
+      },
+      {
+        "country": "MYS",
+        "city": "Landing City 100",
+        "lat": 40.25,
+        "lng": 114.34
+      }
+    ],
+    "status": "planned",
+    "sourceUrl": "https://submarinecablemap.com"
+  },
+  {
+    "id": "cable-regional-101",
+    "name": "Regional Link 101",
+    "operator": "China Telecom",
+    "lengthKm": 4510,
+    "capacityTbps": 199,
+    "yearReady": 2019,
+    "landingPoints": [
+      {
+        "country": "SAU",
+        "city": "Landing City 101",
+        "lat": -30.41,
+        "lng": -75.72
+      },
+      {
+        "country": "EGY",
+        "city": "Landing City 101",
+        "lat": -19.36,
+        "lng": -34.42
+      },
+      {
+        "country": "ITA",
+        "city": "Landing City 101",
+        "lat": 59.32,
+        "lng": -161.6
+      }
+    ],
+    "status": "active",
+    "sourceUrl": "https://submarinecablemap.com"
+  },
+  {
+    "id": "cable-regional-102",
+    "name": "Regional Link 102",
+    "operator": "Meta",
+    "lengthKm": 6088,
+    "capacityTbps": 43,
+    "yearReady": 2013,
+    "landingPoints": [
+      {
+        "country": "FRA",
+        "city": "Landing City 102",
+        "lat": 43.53,
+        "lng": 75.81
+      },
+      {
+        "country": "IND",
+        "city": "Landing City 102",
+        "lat": 24.99,
+        "lng": 87.56
+      }
+    ],
+    "status": "active",
+    "sourceUrl": "https://submarinecablemap.com"
+  },
+  {
+    "id": "cable-regional-103",
+    "name": "Regional Link 103",
+    "operator": "Google",
+    "lengthKm": 6648,
+    "capacityTbps": 193,
+    "yearReady": 2026,
+    "landingPoints": [
+      {
+        "country": "IDN",
+        "city": "Landing City 103",
+        "lat": 28.82,
+        "lng": 68.9
+      },
+      {
+        "country": "ESP",
+        "city": "Landing City 103",
+        "lat": 22.17,
+        "lng": -120.37
+      },
+      {
+        "country": "PHL",
+        "city": "Landing City 103",
+        "lat": 4.36,
+        "lng": 29.85
+      }
+    ],
+    "status": "planned",
+    "sourceUrl": "https://submarinecablemap.com"
+  },
+  {
+    "id": "cable-regional-104",
+    "name": "Regional Link 104",
+    "operator": "Verizon",
+    "lengthKm": 7288,
+    "capacityTbps": 80,
+    "yearReady": 2019,
+    "landingPoints": [
+      {
+        "country": "CHN",
+        "city": "Landing City 104",
+        "lat": 9.54,
+        "lng": 166.5
+      },
+      {
+        "country": "PHL",
+        "city": "Landing City 104",
+        "lat": 4.44,
+        "lng": 98.56
+      }
+    ],
+    "status": "active",
+    "sourceUrl": "https://submarinecablemap.com"
+  },
+  {
+    "id": "cable-regional-105",
+    "name": "Regional Link 105",
+    "operator": "Google",
+    "lengthKm": 4565,
+    "capacityTbps": 30,
+    "yearReady": 2011,
+    "landingPoints": [
+      {
+        "country": "PRT",
+        "city": "Landing City 105",
+        "lat": -9.88,
+        "lng": -89.82
+      },
+      {
+        "country": "NGA",
+        "city": "Landing City 105",
+        "lat": 23.33,
+        "lng": -43.74
+      }
+    ],
+    "status": "active",
+    "sourceUrl": "https://submarinecablemap.com"
+  },
+  {
+    "id": "cable-regional-106",
+    "name": "Regional Link 106",
+    "operator": "AT&T",
+    "lengthKm": 5426,
+    "capacityTbps": 53,
+    "yearReady": 2019,
+    "landingPoints": [
+      {
+        "country": "AUS",
+        "city": "Landing City 106",
+        "lat": 23.87,
+        "lng": 30.56
+      },
+      {
+        "country": "KOR",
+        "city": "Landing City 106",
+        "lat": 35.54,
+        "lng": -5.53
+      }
+    ],
+    "status": "active",
+    "sourceUrl": "https://submarinecablemap.com"
+  },
+  {
+    "id": "cable-regional-107",
+    "name": "Regional Link 107",
+    "operator": "China Telecom",
+    "lengthKm": 1768,
+    "capacityTbps": 29,
+    "yearReady": 2019,
+    "landingPoints": [
+      {
+        "country": "ISR",
+        "city": "Landing City 107",
+        "lat": -19.35,
+        "lng": 71.33
+      },
+      {
+        "country": "ZAF",
+        "city": "Landing City 107",
+        "lat": 21.88,
+        "lng": -153.39
+      },
+      {
+        "country": "SAU",
+        "city": "Landing City 107",
+        "lat": 49.48,
+        "lng": -178.51
+      }
+    ],
+    "status": "active",
+    "sourceUrl": "https://submarinecablemap.com"
+  },
+  {
+    "id": "cable-regional-108",
+    "name": "Regional Link 108",
+    "operator": "Orange",
+    "lengthKm": 2153,
+    "capacityTbps": 80,
+    "yearReady": 2015,
+    "landingPoints": [
+      {
+        "country": "VNM",
+        "city": "Landing City 108",
+        "lat": 34.31,
+        "lng": -112.25
+      },
+      {
+        "country": "ITA",
+        "city": "Landing City 108",
+        "lat": 13.98,
+        "lng": 144.96
+      }
+    ],
+    "status": "active",
+    "sourceUrl": "https://submarinecablemap.com"
+  },
+  {
+    "id": "cable-regional-109",
+    "name": "Regional Link 109",
+    "operator": "Tata Communications",
+    "lengthKm": 6884,
+    "capacityTbps": 198,
+    "yearReady": 2018,
+    "landingPoints": [
+      {
+        "country": "JPN",
+        "city": "Landing City 109",
+        "lat": -24.9,
+        "lng": 152.14
+      },
+      {
+        "country": "GBR",
+        "city": "Landing City 109",
+        "lat": 6.3,
+        "lng": 60.9
+      },
+      {
+        "country": "KEN",
+        "city": "Landing City 109",
+        "lat": -36.46,
+        "lng": 22.28
+      }
+    ],
+    "status": "active",
+    "sourceUrl": "https://submarinecablemap.com"
+  },
+  {
+    "id": "cable-regional-110",
+    "name": "Regional Link 110",
+    "operator": "Vodafone",
+    "lengthKm": 2801,
+    "capacityTbps": 110,
+    "yearReady": 2011,
+    "landingPoints": [
+      {
+        "country": "PHL",
+        "city": "Landing City 110",
+        "lat": 42.88,
+        "lng": -26.87
+      },
+      {
+        "country": "MYS",
+        "city": "Landing City 110",
+        "lat": 30.17,
+        "lng": 8.07
+      },
+      {
+        "country": "CHN",
+        "city": "Landing City 110",
+        "lat": 19.5,
+        "lng": -179.56
+      }
+    ],
+    "status": "active",
+    "sourceUrl": "https://submarinecablemap.com"
+  },
+  {
+    "id": "cable-regional-111",
+    "name": "Regional Link 111",
+    "operator": "Vodafone",
+    "lengthKm": 883,
+    "capacityTbps": 150,
+    "yearReady": 2012,
+    "landingPoints": [
+      {
+        "country": "KOR",
+        "city": "Landing City 111",
+        "lat": -29.06,
+        "lng": 162.95
+      },
+      {
+        "country": "IDN",
+        "city": "Landing City 111",
+        "lat": 40.93,
+        "lng": -84.93
+      },
+      {
+        "country": "EGY",
+        "city": "Landing City 111",
+        "lat": 44.89,
+        "lng": -48.65
+      }
+    ],
+    "status": "active",
+    "sourceUrl": "https://submarinecablemap.com"
+  },
+  {
+    "id": "cable-regional-112",
+    "name": "Regional Link 112",
+    "operator": "Google",
+    "lengthKm": 1189,
+    "capacityTbps": 130,
+    "yearReady": 2023,
+    "landingPoints": [
+      {
+        "country": "KEN",
+        "city": "Landing City 112",
+        "lat": 54.0,
+        "lng": 149.19
+      },
+      {
+        "country": "EGY",
+        "city": "Landing City 112",
+        "lat": 16.69,
+        "lng": 93.01
+      }
+    ],
+    "status": "active",
+    "sourceUrl": "https://submarinecablemap.com"
+  },
+  {
+    "id": "cable-regional-113",
+    "name": "Regional Link 113",
+    "operator": "Singtel",
+    "lengthKm": 1487,
+    "capacityTbps": 172,
+    "yearReady": 2025,
+    "landingPoints": [
+      {
+        "country": "PHL",
+        "city": "Landing City 113",
+        "lat": -25.3,
+        "lng": -43.38
+      },
+      {
+        "country": "ISR",
+        "city": "Landing City 113",
+        "lat": 33.08,
+        "lng": -35.96
+      },
+      {
+        "country": "MYS",
+        "city": "Landing City 113",
+        "lat": -19.45,
+        "lng": -126.43
+      }
+    ],
+    "status": "planned",
+    "sourceUrl": "https://submarinecablemap.com"
+  },
+  {
+    "id": "cable-regional-114",
+    "name": "Regional Link 114",
+    "operator": "Orange",
+    "lengthKm": 4607,
+    "capacityTbps": 148,
+    "yearReady": 2022,
+    "landingPoints": [
+      {
+        "country": "ZAF",
+        "city": "Landing City 114",
+        "lat": 17.26,
+        "lng": 169.23
+      },
+      {
+        "country": "JPN",
+        "city": "Landing City 114",
+        "lat": 34.53,
+        "lng": -129.96
+      }
+    ],
+    "status": "active",
+    "sourceUrl": "https://submarinecablemap.com"
+  },
+  {
+    "id": "cable-regional-115",
+    "name": "Regional Link 115",
+    "operator": "Microsoft",
+    "lengthKm": 5229,
+    "capacityTbps": 177,
+    "yearReady": 2022,
+    "landingPoints": [
+      {
+        "country": "EGY",
+        "city": "Landing City 115",
+        "lat": 10.26,
+        "lng": 77.37
+      },
+      {
+        "country": "KEN",
+        "city": "Landing City 115",
+        "lat": 10.06,
+        "lng": -144.82
+      },
+      {
+        "country": "FRA",
+        "city": "Landing City 115",
+        "lat": -30.39,
+        "lng": -136.97
+      }
+    ],
+    "status": "active",
+    "sourceUrl": "https://submarinecablemap.com"
+  },
+  {
+    "id": "cable-regional-116",
+    "name": "Regional Link 116",
+    "operator": "Microsoft",
+    "lengthKm": 6576,
+    "capacityTbps": 138,
+    "yearReady": 2022,
+    "landingPoints": [
+      {
+        "country": "MAR",
+        "city": "Landing City 116",
+        "lat": 11.75,
+        "lng": 147.62
+      },
+      {
+        "country": "KEN",
+        "city": "Landing City 116",
+        "lat": -0.54,
+        "lng": 151.69
+      },
+      {
+        "country": "ZAF",
+        "city": "Landing City 116",
+        "lat": -26.43,
+        "lng": 137.31
+      }
+    ],
+    "status": "active",
+    "sourceUrl": "https://submarinecablemap.com"
+  },
+  {
+    "id": "cable-regional-117",
+    "name": "Regional Link 117",
+    "operator": "Tata Communications",
+    "lengthKm": 6136,
+    "capacityTbps": 28,
+    "yearReady": 2013,
+    "landingPoints": [
+      {
+        "country": "BRA",
+        "city": "Landing City 117",
+        "lat": 47.45,
+        "lng": -56.05
+      },
+      {
+        "country": "ZAF",
+        "city": "Landing City 117",
+        "lat": -25.31,
+        "lng": -37.28
+      }
+    ],
+    "status": "active",
+    "sourceUrl": "https://submarinecablemap.com"
+  },
+  {
+    "id": "cable-regional-118",
+    "name": "Regional Link 118",
+    "operator": "Tata Communications",
+    "lengthKm": 1238,
+    "capacityTbps": 15,
+    "yearReady": 2018,
+    "landingPoints": [
+      {
+        "country": "ISR",
+        "city": "Landing City 118",
+        "lat": -28.68,
+        "lng": -153.41
+      },
+      {
+        "country": "MAR",
+        "city": "Landing City 118",
+        "lat": 7.24,
+        "lng": -167.43
+      },
+      {
+        "country": "ITA",
+        "city": "Landing City 118",
+        "lat": -39.59,
+        "lng": -5.85
+      }
+    ],
+    "status": "active",
+    "sourceUrl": "https://submarinecablemap.com"
+  },
+  {
+    "id": "cable-regional-119",
+    "name": "Regional Link 119",
+    "operator": "Google",
+    "lengthKm": 6373,
+    "capacityTbps": 103,
+    "yearReady": 2022,
+    "landingPoints": [
+      {
+        "country": "FRA",
+        "city": "Landing City 119",
+        "lat": -1.6,
+        "lng": 150.46
+      },
+      {
+        "country": "PRT",
+        "city": "Landing City 119",
+        "lat": 48.03,
+        "lng": 136.88
+      },
+      {
+        "country": "JPN",
+        "city": "Landing City 119",
+        "lat": -23.11,
+        "lng": -55.21
+      }
+    ],
+    "status": "active",
+    "sourceUrl": "https://submarinecablemap.com"
+  },
+  {
+    "id": "cable-regional-120",
+    "name": "Regional Link 120",
+    "operator": "Google",
+    "lengthKm": 6434,
+    "capacityTbps": 158,
+    "yearReady": 2016,
+    "landingPoints": [
+      {
+        "country": "SGP",
+        "city": "Landing City 120",
+        "lat": -24.06,
+        "lng": 48.28
+      },
+      {
+        "country": "ISR",
+        "city": "Landing City 120",
+        "lat": -11.74,
+        "lng": 52.71
+      }
+    ],
+    "status": "active",
+    "sourceUrl": "https://submarinecablemap.com"
+  },
+  {
+    "id": "cable-regional-121",
+    "name": "Regional Link 121",
+    "operator": "Tata Communications",
+    "lengthKm": 4097,
+    "capacityTbps": 45,
+    "yearReady": 2016,
+    "landingPoints": [
+      {
+        "country": "IDN",
+        "city": "Landing City 121",
+        "lat": -39.45,
+        "lng": -57.05
+      },
+      {
+        "country": "PHL",
+        "city": "Landing City 121",
+        "lat": 7.91,
+        "lng": 17.86
+      },
+      {
+        "country": "GBR",
+        "city": "Landing City 121",
+        "lat": -22.05,
+        "lng": -142.05
+      }
+    ],
+    "status": "active",
+    "sourceUrl": "https://submarinecablemap.com"
+  },
+  {
+    "id": "cable-regional-122",
+    "name": "Regional Link 122",
+    "operator": "Verizon",
+    "lengthKm": 2398,
+    "capacityTbps": 110,
+    "yearReady": 2011,
+    "landingPoints": [
+      {
+        "country": "PRT",
+        "city": "Landing City 122",
+        "lat": -19.17,
+        "lng": 42.85
+      },
+      {
+        "country": "KOR",
+        "city": "Landing City 122",
+        "lat": 17.49,
+        "lng": 120.48
+      }
+    ],
+    "status": "active",
+    "sourceUrl": "https://submarinecablemap.com"
+  },
+  {
+    "id": "cable-regional-123",
+    "name": "Regional Link 123",
+    "operator": "Orange",
+    "lengthKm": 7722,
+    "capacityTbps": 91,
+    "yearReady": 2015,
+    "landingPoints": [
+      {
+        "country": "ESP",
+        "city": "Landing City 123",
+        "lat": -0.47,
+        "lng": 21.96
+      },
+      {
+        "country": "BRA",
+        "city": "Landing City 123",
+        "lat": -23.45,
+        "lng": 88.39
+      }
+    ],
+    "status": "active",
+    "sourceUrl": "https://submarinecablemap.com"
+  },
+  {
+    "id": "cable-regional-124",
+    "name": "Regional Link 124",
+    "operator": "Microsoft",
+    "lengthKm": 5820,
+    "capacityTbps": 80,
+    "yearReady": 2012,
+    "landingPoints": [
+      {
+        "country": "ZAF",
+        "city": "Landing City 124",
+        "lat": -11.35,
+        "lng": -83.39
+      },
+      {
+        "country": "KOR",
+        "city": "Landing City 124",
+        "lat": 47.41,
+        "lng": 7.12
+      },
+      {
+        "country": "SGP",
+        "city": "Landing City 124",
+        "lat": -39.11,
+        "lng": -86.85
+      }
+    ],
+    "status": "active",
+    "sourceUrl": "https://submarinecablemap.com"
+  },
+  {
+    "id": "cable-regional-125",
+    "name": "Regional Link 125",
+    "operator": "Microsoft",
+    "lengthKm": 1724,
+    "capacityTbps": 193,
+    "yearReady": 2010,
+    "landingPoints": [
+      {
+        "country": "KEN",
+        "city": "Landing City 125",
+        "lat": -4.36,
+        "lng": -35.01
+      },
+      {
+        "country": "AUS",
+        "city": "Landing City 125",
+        "lat": -21.53,
+        "lng": 67.99
+      },
+      {
+        "country": "SAU",
+        "city": "Landing City 125",
+        "lat": -4.92,
+        "lng": -97.05
+      }
+    ],
+    "status": "active",
+    "sourceUrl": "https://submarinecablemap.com"
+  },
+  {
+    "id": "cable-regional-126",
+    "name": "Regional Link 126",
+    "operator": "AT&T",
+    "lengthKm": 1758,
+    "capacityTbps": 74,
+    "yearReady": 2013,
+    "landingPoints": [
+      {
+        "country": "MYS",
+        "city": "Landing City 126",
+        "lat": -28.31,
+        "lng": 145.95
+      },
+      {
+        "country": "SGP",
+        "city": "Landing City 126",
+        "lat": 12.88,
+        "lng": -21.6
+      }
+    ],
+    "status": "active",
+    "sourceUrl": "https://submarinecablemap.com"
+  },
+  {
+    "id": "cable-regional-127",
+    "name": "Regional Link 127",
+    "operator": "AT&T",
+    "lengthKm": 6786,
+    "capacityTbps": 12,
+    "yearReady": 2026,
+    "landingPoints": [
+      {
+        "country": "FRA",
+        "city": "Landing City 127",
+        "lat": 44.58,
+        "lng": 61.42
+      },
+      {
+        "country": "JPN",
+        "city": "Landing City 127",
+        "lat": 51.15,
+        "lng": -40.82
+      },
+      {
+        "country": "ESP",
+        "city": "Landing City 127",
+        "lat": -6.49,
+        "lng": 25.44
+      }
+    ],
+    "status": "planned",
+    "sourceUrl": "https://submarinecablemap.com"
+  },
+  {
+    "id": "cable-regional-128",
+    "name": "Regional Link 128",
+    "operator": "AT&T",
+    "lengthKm": 1438,
+    "capacityTbps": 68,
+    "yearReady": 2013,
+    "landingPoints": [
+      {
+        "country": "KOR",
+        "city": "Landing City 128",
+        "lat": -6.76,
+        "lng": -178.02
+      },
+      {
+        "country": "ISR",
+        "city": "Landing City 128",
+        "lat": -25.48,
+        "lng": -100.99
+      }
+    ],
+    "status": "active",
+    "sourceUrl": "https://submarinecablemap.com"
+  },
+  {
+    "id": "cable-regional-129",
+    "name": "Regional Link 129",
+    "operator": "Singtel",
+    "lengthKm": 5077,
+    "capacityTbps": 170,
+    "yearReady": 2015,
+    "landingPoints": [
+      {
+        "country": "KOR",
+        "city": "Landing City 129",
+        "lat": 20.61,
+        "lng": 127.01
+      },
+      {
+        "country": "FRA",
+        "city": "Landing City 129",
+        "lat": 21.31,
+        "lng": 19.7
+      },
+      {
+        "country": "USA",
+        "city": "Landing City 129",
+        "lat": -19.69,
+        "lng": 1.56
+      }
+    ],
+    "status": "active",
+    "sourceUrl": "https://submarinecablemap.com"
+  },
+  {
+    "id": "cable-regional-130",
+    "name": "Regional Link 130",
+    "operator": "Orange",
+    "lengthKm": 7706,
+    "capacityTbps": 41,
+    "yearReady": 2011,
+    "landingPoints": [
+      {
+        "country": "ZAF",
+        "city": "Landing City 130",
+        "lat": -2.88,
+        "lng": 158.81
+      },
+      {
+        "country": "BRA",
+        "city": "Landing City 130",
+        "lat": 0.91,
+        "lng": -49.68
+      },
+      {
+        "country": "CHN",
+        "city": "Landing City 130",
+        "lat": -20.38,
+        "lng": 46.68
+      }
+    ],
+    "status": "active",
+    "sourceUrl": "https://submarinecablemap.com"
+  },
+  {
+    "id": "cable-regional-131",
+    "name": "Regional Link 131",
+    "operator": "Amazon",
+    "lengthKm": 2255,
+    "capacityTbps": 160,
+    "yearReady": 2023,
+    "landingPoints": [
+      {
+        "country": "MAR",
+        "city": "Landing City 131",
+        "lat": 6.22,
+        "lng": -9.56
+      },
+      {
+        "country": "THA",
+        "city": "Landing City 131",
+        "lat": 34.23,
+        "lng": -129.11
+      },
+      {
+        "country": "PHL",
+        "city": "Landing City 131",
+        "lat": 2.32,
+        "lng": 146.89
+      }
+    ],
+    "status": "active",
+    "sourceUrl": "https://submarinecablemap.com"
+  },
+  {
+    "id": "cable-regional-132",
+    "name": "Regional Link 132",
+    "operator": "Singtel",
+    "lengthKm": 4266,
+    "capacityTbps": 97,
+    "yearReady": 2018,
+    "landingPoints": [
+      {
+        "country": "EGY",
+        "city": "Landing City 132",
+        "lat": 48.93,
+        "lng": 23.11
+      },
+      {
+        "country": "KOR",
+        "city": "Landing City 132",
+        "lat": 1.41,
+        "lng": 32.31
+      },
+      {
+        "country": "THA",
+        "city": "Landing City 132",
+        "lat": -18.23,
+        "lng": 153.16
+      }
+    ],
+    "status": "active",
+    "sourceUrl": "https://submarinecablemap.com"
+  },
+  {
+    "id": "cable-regional-133",
+    "name": "Regional Link 133",
+    "operator": "Google",
+    "lengthKm": 638,
+    "capacityTbps": 193,
+    "yearReady": 2023,
+    "landingPoints": [
+      {
+        "country": "VNM",
+        "city": "Landing City 133",
+        "lat": 29.6,
+        "lng": -25.93
+      },
+      {
+        "country": "EGY",
+        "city": "Landing City 133",
+        "lat": -15.49,
+        "lng": -28.45
+      }
+    ],
+    "status": "active",
+    "sourceUrl": "https://submarinecablemap.com"
+  },
+  {
+    "id": "cable-regional-134",
+    "name": "Regional Link 134",
+    "operator": "Singtel",
+    "lengthKm": 2845,
+    "capacityTbps": 117,
+    "yearReady": 2010,
+    "landingPoints": [
+      {
+        "country": "KOR",
+        "city": "Landing City 134",
+        "lat": -29.77,
+        "lng": -51.71
+      },
+      {
+        "country": "BRA",
+        "city": "Landing City 134",
+        "lat": 52.85,
+        "lng": -47.33
+      }
+    ],
+    "status": "active",
+    "sourceUrl": "https://submarinecablemap.com"
+  },
+  {
+    "id": "cable-regional-135",
+    "name": "Regional Link 135",
+    "operator": "Singtel",
+    "lengthKm": 7781,
+    "capacityTbps": 166,
+    "yearReady": 2025,
+    "landingPoints": [
+      {
+        "country": "IND",
+        "city": "Landing City 135",
+        "lat": -3.13,
+        "lng": 135.63
+      },
+      {
+        "country": "KEN",
+        "city": "Landing City 135",
+        "lat": -11.43,
+        "lng": -112.4
+      },
+      {
+        "country": "MYS",
+        "city": "Landing City 135",
+        "lat": 13.93,
+        "lng": -98.0
+      }
+    ],
+    "status": "planned",
+    "sourceUrl": "https://submarinecablemap.com"
+  },
+  {
+    "id": "cable-regional-136",
+    "name": "Regional Link 136",
+    "operator": "Singtel",
+    "lengthKm": 4645,
+    "capacityTbps": 28,
+    "yearReady": 2014,
+    "landingPoints": [
+      {
+        "country": "GBR",
+        "city": "Landing City 136",
+        "lat": 8.73,
+        "lng": -176.68
+      },
+      {
+        "country": "ZAF",
+        "city": "Landing City 136",
+        "lat": 2.99,
+        "lng": -175.56
+      },
+      {
+        "country": "PHL",
+        "city": "Landing City 136",
+        "lat": 51.68,
+        "lng": 42.62
+      }
+    ],
+    "status": "active",
+    "sourceUrl": "https://submarinecablemap.com"
+  },
+  {
+    "id": "cable-regional-137",
+    "name": "Regional Link 137",
+    "operator": "Orange",
+    "lengthKm": 6528,
+    "capacityTbps": 70,
+    "yearReady": 2021,
+    "landingPoints": [
+      {
+        "country": "IDN",
+        "city": "Landing City 137",
+        "lat": -5.22,
+        "lng": -7.33
+      },
+      {
+        "country": "ESP",
+        "city": "Landing City 137",
+        "lat": 27.7,
+        "lng": -113.1
+      }
+    ],
+    "status": "active",
+    "sourceUrl": "https://submarinecablemap.com"
+  },
+  {
+    "id": "cable-regional-138",
+    "name": "Regional Link 138",
+    "operator": "Vodafone",
+    "lengthKm": 6402,
+    "capacityTbps": 102,
+    "yearReady": 2026,
+    "landingPoints": [
+      {
+        "country": "PRT",
+        "city": "Landing City 138",
+        "lat": 15.39,
+        "lng": -58.54
+      },
+      {
+        "country": "ESP",
+        "city": "Landing City 138",
+        "lat": -8.71,
+        "lng": 32.73
+      },
+      {
+        "country": "ZAF",
+        "city": "Landing City 138",
+        "lat": -1.45,
+        "lng": -53.27
+      }
+    ],
+    "status": "planned",
+    "sourceUrl": "https://submarinecablemap.com"
+  },
+  {
+    "id": "cable-regional-139",
+    "name": "Regional Link 139",
+    "operator": "AT&T",
+    "lengthKm": 3343,
+    "capacityTbps": 128,
+    "yearReady": 2021,
+    "landingPoints": [
+      {
+        "country": "JPN",
+        "city": "Landing City 139",
+        "lat": -17.51,
+        "lng": 167.32
+      },
+      {
+        "country": "GBR",
+        "city": "Landing City 139",
+        "lat": 28.82,
+        "lng": 19.56
+      },
+      {
+        "country": "PHL",
+        "city": "Landing City 139",
+        "lat": 7.81,
+        "lng": -145.31
+      }
+    ],
+    "status": "active",
+    "sourceUrl": "https://submarinecablemap.com"
+  },
+  {
+    "id": "cable-regional-140",
+    "name": "Regional Link 140",
+    "operator": "Singtel",
+    "lengthKm": 6849,
+    "capacityTbps": 28,
+    "yearReady": 2015,
+    "landingPoints": [
+      {
+        "country": "EGY",
+        "city": "Landing City 140",
+        "lat": -10.73,
+        "lng": 156.6
+      },
+      {
+        "country": "KEN",
+        "city": "Landing City 140",
+        "lat": 24.56,
+        "lng": -144.44
+      },
+      {
+        "country": "SGP",
+        "city": "Landing City 140",
+        "lat": 8.98,
+        "lng": -156.38
+      }
+    ],
+    "status": "active",
+    "sourceUrl": "https://submarinecablemap.com"
+  },
+  {
+    "id": "cable-regional-141",
+    "name": "Regional Link 141",
+    "operator": "Google",
+    "lengthKm": 2633,
+    "capacityTbps": 171,
+    "yearReady": 2021,
+    "landingPoints": [
+      {
+        "country": "ESP",
+        "city": "Landing City 141",
+        "lat": 57.39,
+        "lng": -23.32
+      },
+      {
+        "country": "PRT",
+        "city": "Landing City 141",
+        "lat": -36.81,
+        "lng": 121.61
+      },
+      {
+        "country": "AUS",
+        "city": "Landing City 141",
+        "lat": -35.25,
+        "lng": 122.65
+      }
+    ],
+    "status": "active",
+    "sourceUrl": "https://submarinecablemap.com"
+  },
+  {
+    "id": "cable-regional-142",
+    "name": "Regional Link 142",
+    "operator": "Google",
+    "lengthKm": 2913,
+    "capacityTbps": 105,
+    "yearReady": 2013,
+    "landingPoints": [
+      {
+        "country": "ESP",
+        "city": "Landing City 142",
+        "lat": 23.94,
+        "lng": 4.31
+      },
+      {
+        "country": "USA",
+        "city": "Landing City 142",
+        "lat": 55.29,
+        "lng": 33.83
+      }
+    ],
+    "status": "active",
+    "sourceUrl": "https://submarinecablemap.com"
+  },
+  {
+    "id": "cable-regional-143",
+    "name": "Regional Link 143",
+    "operator": "Verizon",
+    "lengthKm": 2721,
+    "capacityTbps": 23,
+    "yearReady": 2016,
+    "landingPoints": [
+      {
+        "country": "MAR",
+        "city": "Landing City 143",
+        "lat": 47.31,
+        "lng": -22.33
+      },
+      {
+        "country": "GBR",
+        "city": "Landing City 143",
+        "lat": 32.33,
+        "lng": 109.81
+      },
+      {
+        "country": "AUS",
+        "city": "Landing City 143",
+        "lat": -31.73,
+        "lng": -154.61
+      }
+    ],
+    "status": "active",
+    "sourceUrl": "https://submarinecablemap.com"
+  },
+  {
+    "id": "cable-regional-144",
+    "name": "Regional Link 144",
+    "operator": "Tata Communications",
+    "lengthKm": 5397,
+    "capacityTbps": 83,
+    "yearReady": 2020,
+    "landingPoints": [
+      {
+        "country": "SAU",
+        "city": "Landing City 144",
+        "lat": -9.99,
+        "lng": 45.95
+      },
+      {
+        "country": "SGP",
+        "city": "Landing City 144",
+        "lat": -14.78,
+        "lng": -20.15
+      },
+      {
+        "country": "KOR",
+        "city": "Landing City 144",
+        "lat": -24.44,
+        "lng": -38.97
+      }
+    ],
+    "status": "active",
+    "sourceUrl": "https://submarinecablemap.com"
+  },
+  {
+    "id": "cable-regional-145",
+    "name": "Regional Link 145",
+    "operator": "Meta",
+    "lengthKm": 1483,
+    "capacityTbps": 59,
+    "yearReady": 2021,
+    "landingPoints": [
+      {
+        "country": "GBR",
+        "city": "Landing City 145",
+        "lat": -29.51,
+        "lng": 174.84
+      },
+      {
+        "country": "MYS",
+        "city": "Landing City 145",
+        "lat": 57.28,
+        "lng": 144.92
+      },
+      {
+        "country": "ESP",
+        "city": "Landing City 145",
+        "lat": 38.09,
+        "lng": -19.78
+      }
+    ],
+    "status": "active",
+    "sourceUrl": "https://submarinecablemap.com"
+  },
+  {
+    "id": "cable-regional-146",
+    "name": "Regional Link 146",
+    "operator": "Vodafone",
+    "lengthKm": 3708,
+    "capacityTbps": 123,
+    "yearReady": 2023,
+    "landingPoints": [
+      {
+        "country": "MYS",
+        "city": "Landing City 146",
+        "lat": 59.91,
+        "lng": 169.15
+      },
+      {
+        "country": "BRA",
+        "city": "Landing City 146",
+        "lat": -2.1,
+        "lng": 87.54
+      }
+    ],
+    "status": "active",
+    "sourceUrl": "https://submarinecablemap.com"
+  },
+  {
+    "id": "cable-regional-147",
+    "name": "Regional Link 147",
+    "operator": "Verizon",
+    "lengthKm": 1576,
+    "capacityTbps": 133,
+    "yearReady": 2013,
+    "landingPoints": [
+      {
+        "country": "ARE",
+        "city": "Landing City 147",
+        "lat": -7.15,
+        "lng": 169.06
+      },
+      {
+        "country": "USA",
+        "city": "Landing City 147",
+        "lat": -2.55,
+        "lng": 100.65
+      },
+      {
+        "country": "ZAF",
+        "city": "Landing City 147",
+        "lat": 4.11,
+        "lng": -58.29
+      }
+    ],
+    "status": "active",
+    "sourceUrl": "https://submarinecablemap.com"
+  },
+  {
+    "id": "cable-regional-148",
+    "name": "Regional Link 148",
+    "operator": "Amazon",
+    "lengthKm": 1046,
+    "capacityTbps": 32,
+    "yearReady": 2022,
+    "landingPoints": [
+      {
+        "country": "BRA",
+        "city": "Landing City 148",
+        "lat": -2.94,
+        "lng": 46.36
+      },
+      {
+        "country": "SGP",
+        "city": "Landing City 148",
+        "lat": 54.56,
+        "lng": -22.79
+      }
+    ],
+    "status": "active",
+    "sourceUrl": "https://submarinecablemap.com"
+  },
+  {
+    "id": "cable-regional-149",
+    "name": "Regional Link 149",
+    "operator": "Amazon",
+    "lengthKm": 852,
+    "capacityTbps": 148,
+    "yearReady": 2024,
+    "landingPoints": [
+      {
+        "country": "KOR",
+        "city": "Landing City 149",
+        "lat": -15.75,
+        "lng": 167.52
+      },
+      {
+        "country": "THA",
+        "city": "Landing City 149",
+        "lat": 54.16,
+        "lng": 51.28
+      }
+    ],
+    "status": "active",
+    "sourceUrl": "https://submarinecablemap.com"
+  },
+  {
+    "id": "cable-regional-150",
+    "name": "Regional Link 150",
+    "operator": "Meta",
+    "lengthKm": 5783,
+    "capacityTbps": 27,
+    "yearReady": 2021,
+    "landingPoints": [
+      {
+        "country": "MAR",
+        "city": "Landing City 150",
+        "lat": -37.85,
+        "lng": 84.57
+      },
+      {
+        "country": "ISR",
+        "city": "Landing City 150",
+        "lat": -32.06,
+        "lng": 161.72
+      }
+    ],
+    "status": "active",
+    "sourceUrl": "https://submarinecablemap.com"
+  },
+  {
+    "id": "cable-regional-151",
+    "name": "Regional Link 151",
+    "operator": "Tata Communications",
+    "lengthKm": 973,
+    "capacityTbps": 80,
+    "yearReady": 2021,
+    "landingPoints": [
+      {
+        "country": "MAR",
+        "city": "Landing City 151",
+        "lat": -7.08,
+        "lng": -164.53
+      },
+      {
+        "country": "FRA",
+        "city": "Landing City 151",
+        "lat": 42.8,
+        "lng": -86.78
+      }
+    ],
+    "status": "active",
+    "sourceUrl": "https://submarinecablemap.com"
+  },
+  {
+    "id": "cable-regional-152",
+    "name": "Regional Link 152",
+    "operator": "AT&T",
+    "lengthKm": 1822,
+    "capacityTbps": 157,
+    "yearReady": 2011,
+    "landingPoints": [
+      {
+        "country": "KOR",
+        "city": "Landing City 152",
+        "lat": -3.49,
+        "lng": 152.6
+      },
+      {
+        "country": "MAR",
+        "city": "Landing City 152",
+        "lat": -1.76,
+        "lng": -96.25
+      }
+    ],
+    "status": "active",
+    "sourceUrl": "https://submarinecablemap.com"
+  },
+  {
+    "id": "cable-regional-153",
+    "name": "Regional Link 153",
+    "operator": "Singtel",
+    "lengthKm": 2756,
+    "capacityTbps": 66,
+    "yearReady": 2017,
+    "landingPoints": [
+      {
+        "country": "PRT",
+        "city": "Landing City 153",
+        "lat": -35.48,
+        "lng": 58.75
+      },
+      {
+        "country": "BRA",
+        "city": "Landing City 153",
+        "lat": 16.98,
+        "lng": 173.64
+      }
+    ],
+    "status": "active",
+    "sourceUrl": "https://submarinecablemap.com"
+  },
+  {
+    "id": "cable-regional-154",
+    "name": "Regional Link 154",
+    "operator": "Verizon",
+    "lengthKm": 3248,
+    "capacityTbps": 183,
+    "yearReady": 2025,
+    "landingPoints": [
+      {
+        "country": "SGP",
+        "city": "Landing City 154",
+        "lat": 55.2,
+        "lng": -90.05
+      },
+      {
+        "country": "NGA",
+        "city": "Landing City 154",
+        "lat": 18.96,
+        "lng": 141.22
+      }
+    ],
+    "status": "planned",
+    "sourceUrl": "https://submarinecablemap.com"
+  },
+  {
+    "id": "cable-regional-155",
+    "name": "Regional Link 155",
+    "operator": "Meta",
+    "lengthKm": 1641,
+    "capacityTbps": 120,
+    "yearReady": 2016,
+    "landingPoints": [
+      {
+        "country": "ITA",
+        "city": "Landing City 155",
+        "lat": 27.65,
+        "lng": 6.4
+      },
+      {
+        "country": "THA",
+        "city": "Landing City 155",
+        "lat": 44.76,
+        "lng": -146.58
+      },
+      {
+        "country": "ESP",
+        "city": "Landing City 155",
+        "lat": 3.37,
+        "lng": -132.15
+      }
+    ],
+    "status": "active",
+    "sourceUrl": "https://submarinecablemap.com"
+  },
+  {
+    "id": "cable-regional-156",
+    "name": "Regional Link 156",
+    "operator": "Singtel",
+    "lengthKm": 1699,
+    "capacityTbps": 192,
+    "yearReady": 2016,
+    "landingPoints": [
+      {
+        "country": "USA",
+        "city": "Landing City 156",
+        "lat": 43.99,
+        "lng": 75.15
+      },
+      {
+        "country": "ITA",
+        "city": "Landing City 156",
+        "lat": 54.57,
+        "lng": 64.89
+      },
+      {
+        "country": "BRA",
+        "city": "Landing City 156",
+        "lat": 24.42,
+        "lng": 87.47
+      }
+    ],
+    "status": "active",
+    "sourceUrl": "https://submarinecablemap.com"
+  },
+  {
+    "id": "cable-regional-157",
+    "name": "Regional Link 157",
+    "operator": "Meta",
+    "lengthKm": 3050,
+    "capacityTbps": 99,
+    "yearReady": 2021,
+    "landingPoints": [
+      {
+        "country": "ZAF",
+        "city": "Landing City 157",
+        "lat": -13.97,
+        "lng": 64.44
+      },
+      {
+        "country": "PHL",
+        "city": "Landing City 157",
+        "lat": 6.38,
+        "lng": 31.31
+      },
+      {
+        "country": "CHN",
+        "city": "Landing City 157",
+        "lat": -5.92,
+        "lng": -152.71
+      }
+    ],
+    "status": "active",
+    "sourceUrl": "https://submarinecablemap.com"
+  },
+  {
+    "id": "cable-regional-158",
+    "name": "Regional Link 158",
+    "operator": "Orange",
+    "lengthKm": 4838,
+    "capacityTbps": 158,
+    "yearReady": 2018,
+    "landingPoints": [
+      {
+        "country": "FRA",
+        "city": "Landing City 158",
+        "lat": 14.8,
+        "lng": 87.35
+      },
+      {
+        "country": "VNM",
+        "city": "Landing City 158",
+        "lat": -17.42,
+        "lng": -20.82
+      },
+      {
+        "country": "AUS",
+        "city": "Landing City 158",
+        "lat": -21.14,
+        "lng": 17.68
+      }
+    ],
+    "status": "active",
+    "sourceUrl": "https://submarinecablemap.com"
+  },
+  {
+    "id": "cable-regional-159",
+    "name": "Regional Link 159",
+    "operator": "Orange",
+    "lengthKm": 2112,
+    "capacityTbps": 141,
+    "yearReady": 2025,
+    "landingPoints": [
+      {
+        "country": "ITA",
+        "city": "Landing City 159",
+        "lat": 22.86,
+        "lng": -35.91
+      },
+      {
+        "country": "IDN",
+        "city": "Landing City 159",
+        "lat": 6.08,
+        "lng": 18.51
+      },
+      {
+        "country": "AUS",
+        "city": "Landing City 159",
+        "lat": -17.56,
+        "lng": 72.84
+      }
+    ],
+    "status": "planned",
+    "sourceUrl": "https://submarinecablemap.com"
+  },
+  {
+    "id": "cable-regional-160",
+    "name": "Regional Link 160",
+    "operator": "Singtel",
+    "lengthKm": 6879,
+    "capacityTbps": 37,
+    "yearReady": 2023,
+    "landingPoints": [
+      {
+        "country": "VNM",
+        "city": "Landing City 160",
+        "lat": 48.79,
+        "lng": -42.57
+      },
+      {
+        "country": "KEN",
+        "city": "Landing City 160",
+        "lat": 44.49,
+        "lng": 175.75
+      }
+    ],
+    "status": "active",
+    "sourceUrl": "https://submarinecablemap.com"
+  },
+  {
+    "id": "cable-regional-161",
+    "name": "Regional Link 161",
+    "operator": "Singtel",
+    "lengthKm": 7498,
+    "capacityTbps": 54,
+    "yearReady": 2026,
+    "landingPoints": [
+      {
+        "country": "SGP",
+        "city": "Landing City 161",
+        "lat": 3.76,
+        "lng": -65.19
+      },
+      {
+        "country": "MYS",
+        "city": "Landing City 161",
+        "lat": -5.02,
+        "lng": -40.89
+      },
+      {
+        "country": "VNM",
+        "city": "Landing City 161",
+        "lat": 29.05,
+        "lng": 38.97
+      }
+    ],
+    "status": "planned",
+    "sourceUrl": "https://submarinecablemap.com"
+  },
+  {
+    "id": "cable-regional-162",
+    "name": "Regional Link 162",
+    "operator": "Meta",
+    "lengthKm": 2810,
+    "capacityTbps": 162,
+    "yearReady": 2025,
+    "landingPoints": [
+      {
+        "country": "BRA",
+        "city": "Landing City 162",
+        "lat": 53.45,
+        "lng": 94.97
+      },
+      {
+        "country": "IND",
+        "city": "Landing City 162",
+        "lat": 23.19,
+        "lng": 44.26
+      },
+      {
+        "country": "THA",
+        "city": "Landing City 162",
+        "lat": 59.19,
+        "lng": 124.96
+      }
+    ],
+    "status": "planned",
+    "sourceUrl": "https://submarinecablemap.com"
+  },
+  {
+    "id": "cable-regional-163",
+    "name": "Regional Link 163",
+    "operator": "Microsoft",
+    "lengthKm": 6387,
+    "capacityTbps": 67,
+    "yearReady": 2016,
+    "landingPoints": [
+      {
+        "country": "EGY",
+        "city": "Landing City 163",
+        "lat": 29.47,
+        "lng": -77.94
+      },
+      {
+        "country": "PRT",
+        "city": "Landing City 163",
+        "lat": 56.05,
+        "lng": 106.44
+      }
+    ],
+    "status": "active",
+    "sourceUrl": "https://submarinecablemap.com"
+  },
+  {
+    "id": "cable-regional-164",
+    "name": "Regional Link 164",
+    "operator": "Orange",
+    "lengthKm": 1999,
+    "capacityTbps": 90,
+    "yearReady": 2025,
+    "landingPoints": [
+      {
+        "country": "PHL",
+        "city": "Landing City 164",
+        "lat": 28.56,
+        "lng": -24.72
+      },
+      {
+        "country": "NGA",
+        "city": "Landing City 164",
+        "lat": 12.82,
+        "lng": 29.54
+      }
+    ],
+    "status": "planned",
+    "sourceUrl": "https://submarinecablemap.com"
+  },
+  {
+    "id": "cable-regional-165",
+    "name": "Regional Link 165",
+    "operator": "Tata Communications",
+    "lengthKm": 2913,
+    "capacityTbps": 118,
+    "yearReady": 2014,
+    "landingPoints": [
+      {
+        "country": "PHL",
+        "city": "Landing City 165",
+        "lat": 39.71,
+        "lng": 170.08
+      },
+      {
+        "country": "CHN",
+        "city": "Landing City 165",
+        "lat": 50.31,
+        "lng": -158.17
+      }
+    ],
+    "status": "active",
+    "sourceUrl": "https://submarinecablemap.com"
+  },
+  {
+    "id": "cable-regional-166",
+    "name": "Regional Link 166",
+    "operator": "Microsoft",
+    "lengthKm": 922,
+    "capacityTbps": 75,
+    "yearReady": 2022,
+    "landingPoints": [
+      {
+        "country": "PRT",
+        "city": "Landing City 166",
+        "lat": -9.73,
+        "lng": 106.8
+      },
+      {
+        "country": "SGP",
+        "city": "Landing City 166",
+        "lat": 3.92,
+        "lng": 47.34
+      }
+    ],
+    "status": "active",
+    "sourceUrl": "https://submarinecablemap.com"
+  },
+  {
+    "id": "cable-regional-167",
+    "name": "Regional Link 167",
+    "operator": "Microsoft",
+    "lengthKm": 5073,
+    "capacityTbps": 19,
+    "yearReady": 2018,
+    "landingPoints": [
+      {
+        "country": "USA",
+        "city": "Landing City 167",
+        "lat": 53.23,
+        "lng": 32.31
+      },
+      {
+        "country": "KOR",
+        "city": "Landing City 167",
+        "lat": -34.3,
+        "lng": -134.4
+      },
+      {
+        "country": "IND",
+        "city": "Landing City 167",
+        "lat": -7.81,
+        "lng": -56.26
+      }
+    ],
+    "status": "active",
+    "sourceUrl": "https://submarinecablemap.com"
+  },
+  {
+    "id": "cable-regional-168",
+    "name": "Regional Link 168",
+    "operator": "Vodafone",
+    "lengthKm": 1790,
+    "capacityTbps": 134,
+    "yearReady": 2013,
+    "landingPoints": [
+      {
+        "country": "FRA",
+        "city": "Landing City 168",
+        "lat": 36.68,
+        "lng": 152.75
+      },
+      {
+        "country": "VNM",
+        "city": "Landing City 168",
+        "lat": 27.4,
+        "lng": -124.35
+      },
+      {
+        "country": "NGA",
+        "city": "Landing City 168",
+        "lat": 24.44,
+        "lng": -48.8
+      }
+    ],
+    "status": "active",
+    "sourceUrl": "https://submarinecablemap.com"
+  },
+  {
+    "id": "cable-regional-169",
+    "name": "Regional Link 169",
+    "operator": "Vodafone",
+    "lengthKm": 6334,
+    "capacityTbps": 177,
+    "yearReady": 2014,
+    "landingPoints": [
+      {
+        "country": "ESP",
+        "city": "Landing City 169",
+        "lat": -12.94,
+        "lng": 38.91
+      },
+      {
+        "country": "KOR",
+        "city": "Landing City 169",
+        "lat": 55.88,
+        "lng": -98.17
+      },
+      {
+        "country": "ISR",
+        "city": "Landing City 169",
+        "lat": -11.07,
+        "lng": 143.23
+      }
+    ],
+    "status": "active",
+    "sourceUrl": "https://submarinecablemap.com"
+  },
+  {
+    "id": "cable-regional-170",
+    "name": "Regional Link 170",
+    "operator": "Amazon",
+    "lengthKm": 7709,
+    "capacityTbps": 61,
+    "yearReady": 2010,
+    "landingPoints": [
+      {
+        "country": "IDN",
+        "city": "Landing City 170",
+        "lat": -27.6,
+        "lng": 89.35
+      },
+      {
+        "country": "MAR",
+        "city": "Landing City 170",
+        "lat": 3.12,
+        "lng": -9.57
+      },
+      {
+        "country": "THA",
+        "city": "Landing City 170",
+        "lat": 11.36,
+        "lng": 99.09
+      }
+    ],
+    "status": "active",
+    "sourceUrl": "https://submarinecablemap.com"
+  },
+  {
+    "id": "cable-regional-171",
+    "name": "Regional Link 171",
+    "operator": "Meta",
+    "lengthKm": 5890,
+    "capacityTbps": 40,
+    "yearReady": 2024,
+    "landingPoints": [
+      {
+        "country": "THA",
+        "city": "Landing City 171",
+        "lat": -2.16,
+        "lng": -154.83
+      },
+      {
+        "country": "CHN",
+        "city": "Landing City 171",
+        "lat": -39.26,
+        "lng": -22.93
+      },
+      {
+        "country": "PRT",
+        "city": "Landing City 171",
+        "lat": 48.75,
+        "lng": -128.38
+      }
+    ],
+    "status": "active",
+    "sourceUrl": "https://submarinecablemap.com"
+  },
+  {
+    "id": "cable-regional-172",
+    "name": "Regional Link 172",
+    "operator": "Amazon",
+    "lengthKm": 7794,
+    "capacityTbps": 182,
+    "yearReady": 2016,
+    "landingPoints": [
+      {
+        "country": "IND",
+        "city": "Landing City 172",
+        "lat": 13.48,
+        "lng": 98.96
+      },
+      {
+        "country": "EGY",
+        "city": "Landing City 172",
+        "lat": -15.35,
+        "lng": -173.03
+      },
+      {
+        "country": "ESP",
+        "city": "Landing City 172",
+        "lat": 14.19,
+        "lng": 53.3
+      }
+    ],
+    "status": "active",
+    "sourceUrl": "https://submarinecablemap.com"
+  },
+  {
+    "id": "cable-regional-173",
+    "name": "Regional Link 173",
+    "operator": "Meta",
+    "lengthKm": 1926,
+    "capacityTbps": 27,
+    "yearReady": 2018,
+    "landingPoints": [
+      {
+        "country": "IDN",
+        "city": "Landing City 173",
+        "lat": -21.62,
+        "lng": 2.2
+      },
+      {
+        "country": "PHL",
+        "city": "Landing City 173",
+        "lat": 2.29,
+        "lng": -168.75
+      }
+    ],
+    "status": "active",
+    "sourceUrl": "https://submarinecablemap.com"
+  },
+  {
+    "id": "cable-regional-174",
+    "name": "Regional Link 174",
+    "operator": "Orange",
+    "lengthKm": 5208,
+    "capacityTbps": 42,
+    "yearReady": 2024,
+    "landingPoints": [
+      {
+        "country": "GBR",
+        "city": "Landing City 174",
+        "lat": -4.59,
+        "lng": -94.87
+      },
+      {
+        "country": "SAU",
+        "city": "Landing City 174",
+        "lat": -10.84,
+        "lng": 62.02
+      }
+    ],
+    "status": "active",
+    "sourceUrl": "https://submarinecablemap.com"
+  },
+  {
+    "id": "cable-regional-175",
+    "name": "Regional Link 175",
+    "operator": "AT&T",
+    "lengthKm": 3635,
+    "capacityTbps": 75,
+    "yearReady": 2011,
+    "landingPoints": [
+      {
+        "country": "AUS",
+        "city": "Landing City 175",
+        "lat": 12.7,
+        "lng": 97.19
+      },
+      {
+        "country": "ESP",
+        "city": "Landing City 175",
+        "lat": 59.14,
+        "lng": 100.68
+      },
+      {
+        "country": "BRA",
+        "city": "Landing City 175",
+        "lat": 26.58,
+        "lng": -36.33
+      }
+    ],
+    "status": "active",
+    "sourceUrl": "https://submarinecablemap.com"
+  },
+  {
+    "id": "cable-regional-176",
+    "name": "Regional Link 176",
+    "operator": "AT&T",
+    "lengthKm": 3784,
+    "capacityTbps": 64,
+    "yearReady": 2019,
+    "landingPoints": [
+      {
+        "country": "SGP",
+        "city": "Landing City 176",
+        "lat": -8.46,
+        "lng": 87.58
+      },
+      {
+        "country": "ISR",
+        "city": "Landing City 176",
+        "lat": -13.0,
+        "lng": 135.85
+      }
+    ],
+    "status": "active",
+    "sourceUrl": "https://submarinecablemap.com"
+  },
+  {
+    "id": "cable-regional-177",
+    "name": "Regional Link 177",
+    "operator": "Meta",
+    "lengthKm": 4771,
+    "capacityTbps": 179,
+    "yearReady": 2023,
+    "landingPoints": [
+      {
+        "country": "FRA",
+        "city": "Landing City 177",
+        "lat": 4.67,
+        "lng": -84.84
+      },
+      {
+        "country": "BRA",
+        "city": "Landing City 177",
+        "lat": -30.16,
+        "lng": -123.01
+      }
+    ],
+    "status": "active",
+    "sourceUrl": "https://submarinecablemap.com"
+  },
+  {
+    "id": "cable-regional-178",
+    "name": "Regional Link 178",
+    "operator": "Microsoft",
+    "lengthKm": 3880,
+    "capacityTbps": 122,
+    "yearReady": 2015,
+    "landingPoints": [
+      {
+        "country": "BRA",
+        "city": "Landing City 178",
+        "lat": 9.49,
+        "lng": -72.68
+      },
+      {
+        "country": "IDN",
+        "city": "Landing City 178",
+        "lat": 28.48,
+        "lng": -7.3
+      }
+    ],
+    "status": "active",
+    "sourceUrl": "https://submarinecablemap.com"
+  },
+  {
+    "id": "cable-regional-179",
+    "name": "Regional Link 179",
+    "operator": "Google",
+    "lengthKm": 1917,
+    "capacityTbps": 75,
+    "yearReady": 2022,
+    "landingPoints": [
+      {
+        "country": "KEN",
+        "city": "Landing City 179",
+        "lat": 38.22,
+        "lng": 66.13
+      },
+      {
+        "country": "IDN",
+        "city": "Landing City 179",
+        "lat": -15.99,
+        "lng": 126.29
+      }
+    ],
+    "status": "active",
+    "sourceUrl": "https://submarinecablemap.com"
+  },
+  {
+    "id": "cable-regional-180",
+    "name": "Regional Link 180",
+    "operator": "Orange",
+    "lengthKm": 3841,
+    "capacityTbps": 27,
+    "yearReady": 2017,
+    "landingPoints": [
+      {
+        "country": "MAR",
+        "city": "Landing City 180",
+        "lat": 48.98,
+        "lng": -144.08
+      },
+      {
+        "country": "SGP",
+        "city": "Landing City 180",
+        "lat": -8.96,
+        "lng": -130.61
+      }
+    ],
+    "status": "active",
+    "sourceUrl": "https://submarinecablemap.com"
+  },
+  {
+    "id": "cable-regional-181",
+    "name": "Regional Link 181",
+    "operator": "China Telecom",
+    "lengthKm": 1767,
+    "capacityTbps": 175,
+    "yearReady": 2010,
+    "landingPoints": [
+      {
+        "country": "BRA",
+        "city": "Landing City 181",
+        "lat": -36.45,
+        "lng": -15.01
+      },
+      {
+        "country": "ISR",
+        "city": "Landing City 181",
+        "lat": 10.71,
+        "lng": 128.88
+      }
+    ],
+    "status": "active",
+    "sourceUrl": "https://submarinecablemap.com"
+  },
+  {
+    "id": "cable-regional-182",
+    "name": "Regional Link 182",
+    "operator": "Orange",
+    "lengthKm": 6409,
+    "capacityTbps": 108,
+    "yearReady": 2019,
+    "landingPoints": [
+      {
+        "country": "SAU",
+        "city": "Landing City 182",
+        "lat": 28.88,
+        "lng": 127.64
+      },
+      {
+        "country": "USA",
+        "city": "Landing City 182",
+        "lat": -25.71,
+        "lng": -127.42
+      },
+      {
+        "country": "AUS",
+        "city": "Landing City 182",
+        "lat": 16.1,
+        "lng": -38.28
+      }
+    ],
+    "status": "active",
+    "sourceUrl": "https://submarinecablemap.com"
+  },
+  {
+    "id": "cable-regional-183",
+    "name": "Regional Link 183",
+    "operator": "Verizon",
+    "lengthKm": 2690,
+    "capacityTbps": 190,
+    "yearReady": 2011,
+    "landingPoints": [
+      {
+        "country": "ISR",
+        "city": "Landing City 183",
+        "lat": 32.53,
+        "lng": -166.84
+      },
+      {
+        "country": "THA",
+        "city": "Landing City 183",
+        "lat": -29.84,
+        "lng": 44.31
+      },
+      {
+        "country": "JPN",
+        "city": "Landing City 183",
+        "lat": -16.77,
+        "lng": -159.65
+      }
+    ],
+    "status": "active",
+    "sourceUrl": "https://submarinecablemap.com"
+  },
+  {
+    "id": "cable-regional-184",
+    "name": "Regional Link 184",
+    "operator": "AT&T",
+    "lengthKm": 1727,
+    "capacityTbps": 23,
+    "yearReady": 2021,
+    "landingPoints": [
+      {
+        "country": "ZAF",
+        "city": "Landing City 184",
+        "lat": -12.2,
+        "lng": -123.68
+      },
+      {
+        "country": "KEN",
+        "city": "Landing City 184",
+        "lat": 38.07,
+        "lng": -110.71
+      },
+      {
+        "country": "PHL",
+        "city": "Landing City 184",
+        "lat": 55.3,
+        "lng": -130.85
+      }
+    ],
+    "status": "active",
+    "sourceUrl": "https://submarinecablemap.com"
+  },
+  {
+    "id": "cable-regional-185",
+    "name": "Regional Link 185",
+    "operator": "Meta",
+    "lengthKm": 3743,
+    "capacityTbps": 161,
+    "yearReady": 2012,
+    "landingPoints": [
+      {
+        "country": "IND",
+        "city": "Landing City 185",
+        "lat": 26.79,
+        "lng": -80.76
+      },
+      {
+        "country": "VNM",
+        "city": "Landing City 185",
+        "lat": -34.79,
+        "lng": -102.89
+      },
+      {
+        "country": "CHN",
+        "city": "Landing City 185",
+        "lat": 16.52,
+        "lng": -24.04
+      }
+    ],
+    "status": "active",
+    "sourceUrl": "https://submarinecablemap.com"
+  },
+  {
+    "id": "cable-regional-186",
+    "name": "Regional Link 186",
+    "operator": "AT&T",
+    "lengthKm": 1479,
+    "capacityTbps": 41,
+    "yearReady": 2013,
+    "landingPoints": [
+      {
+        "country": "ZAF",
+        "city": "Landing City 186",
+        "lat": 9.91,
+        "lng": 113.0
+      },
+      {
+        "country": "KOR",
+        "city": "Landing City 186",
+        "lat": 36.13,
+        "lng": 133.15
+      },
+      {
+        "country": "ARE",
+        "city": "Landing City 186",
+        "lat": 8.11,
+        "lng": -54.51
+      }
+    ],
+    "status": "active",
+    "sourceUrl": "https://submarinecablemap.com"
+  },
+  {
+    "id": "cable-regional-187",
+    "name": "Regional Link 187",
+    "operator": "Amazon",
+    "lengthKm": 1938,
+    "capacityTbps": 200,
+    "yearReady": 2010,
+    "landingPoints": [
+      {
+        "country": "ITA",
+        "city": "Landing City 187",
+        "lat": -21.0,
+        "lng": 38.95
+      },
+      {
+        "country": "ZAF",
+        "city": "Landing City 187",
+        "lat": -18.64,
+        "lng": -19.44
+      },
+      {
+        "country": "IDN",
+        "city": "Landing City 187",
+        "lat": 28.15,
+        "lng": 49.78
+      }
+    ],
+    "status": "active",
+    "sourceUrl": "https://submarinecablemap.com"
+  },
+  {
+    "id": "cable-regional-188",
+    "name": "Regional Link 188",
+    "operator": "Orange",
+    "lengthKm": 3789,
+    "capacityTbps": 174,
+    "yearReady": 2023,
+    "landingPoints": [
+      {
+        "country": "SGP",
+        "city": "Landing City 188",
+        "lat": 10.34,
+        "lng": 95.54
+      },
+      {
+        "country": "ITA",
+        "city": "Landing City 188",
+        "lat": 2.68,
+        "lng": 142.53
+      }
+    ],
+    "status": "active",
+    "sourceUrl": "https://submarinecablemap.com"
+  },
+  {
+    "id": "cable-regional-189",
+    "name": "Regional Link 189",
+    "operator": "Vodafone",
+    "lengthKm": 603,
+    "capacityTbps": 198,
+    "yearReady": 2014,
+    "landingPoints": [
+      {
+        "country": "ITA",
+        "city": "Landing City 189",
+        "lat": -18.65,
+        "lng": 171.38
+      },
+      {
+        "country": "FRA",
+        "city": "Landing City 189",
+        "lat": 0.78,
+        "lng": 157.56
+      }
+    ],
+    "status": "active",
+    "sourceUrl": "https://submarinecablemap.com"
+  },
+  {
+    "id": "cable-regional-190",
+    "name": "Regional Link 190",
+    "operator": "Tata Communications",
+    "lengthKm": 1563,
+    "capacityTbps": 127,
+    "yearReady": 2025,
+    "landingPoints": [
+      {
+        "country": "NGA",
+        "city": "Landing City 190",
+        "lat": 47.04,
+        "lng": -99.07
+      },
+      {
+        "country": "BRA",
+        "city": "Landing City 190",
+        "lat": -7.19,
+        "lng": 48.12
+      },
+      {
+        "country": "VNM",
+        "city": "Landing City 190",
+        "lat": -26.24,
+        "lng": 77.27
+      }
+    ],
+    "status": "planned",
+    "sourceUrl": "https://submarinecablemap.com"
+  },
+  {
+    "id": "cable-regional-191",
+    "name": "Regional Link 191",
+    "operator": "China Telecom",
+    "lengthKm": 526,
+    "capacityTbps": 162,
+    "yearReady": 2010,
+    "landingPoints": [
+      {
+        "country": "BRA",
+        "city": "Landing City 191",
+        "lat": -19.46,
+        "lng": 146.42
+      },
+      {
+        "country": "PHL",
+        "city": "Landing City 191",
+        "lat": 36.68,
+        "lng": -155.49
+      },
+      {
+        "country": "CHN",
+        "city": "Landing City 191",
+        "lat": 8.45,
+        "lng": 89.52
+      }
+    ],
+    "status": "active",
+    "sourceUrl": "https://submarinecablemap.com"
+  },
+  {
+    "id": "cable-regional-192",
+    "name": "Regional Link 192",
+    "operator": "Verizon",
+    "lengthKm": 4500,
+    "capacityTbps": 65,
+    "yearReady": 2024,
+    "landingPoints": [
+      {
+        "country": "SAU",
+        "city": "Landing City 192",
+        "lat": -13.53,
+        "lng": 118.44
+      },
+      {
+        "country": "FRA",
+        "city": "Landing City 192",
+        "lat": -31.53,
+        "lng": -155.4
+      }
+    ],
+    "status": "active",
+    "sourceUrl": "https://submarinecablemap.com"
+  },
+  {
+    "id": "cable-regional-193",
+    "name": "Regional Link 193",
+    "operator": "China Telecom",
+    "lengthKm": 4560,
+    "capacityTbps": 110,
+    "yearReady": 2010,
+    "landingPoints": [
+      {
+        "country": "KEN",
+        "city": "Landing City 193",
+        "lat": -30.78,
+        "lng": 126.6
+      },
+      {
+        "country": "ESP",
+        "city": "Landing City 193",
+        "lat": -20.66,
+        "lng": 79.71
+      },
+      {
+        "country": "KOR",
+        "city": "Landing City 193",
+        "lat": 12.74,
+        "lng": 179.53
+      }
+    ],
+    "status": "active",
+    "sourceUrl": "https://submarinecablemap.com"
+  },
+  {
+    "id": "cable-regional-194",
+    "name": "Regional Link 194",
+    "operator": "Verizon",
+    "lengthKm": 2216,
+    "capacityTbps": 69,
+    "yearReady": 2025,
+    "landingPoints": [
+      {
+        "country": "EGY",
+        "city": "Landing City 194",
+        "lat": 48.13,
+        "lng": -58.18
+      },
+      {
+        "country": "IDN",
+        "city": "Landing City 194",
+        "lat": -4.29,
+        "lng": -56.13
+      },
+      {
+        "country": "ESP",
+        "city": "Landing City 194",
+        "lat": 12.1,
+        "lng": -34.33
+      }
+    ],
+    "status": "planned",
+    "sourceUrl": "https://submarinecablemap.com"
+  },
+  {
+    "id": "cable-regional-195",
+    "name": "Regional Link 195",
+    "operator": "Verizon",
+    "lengthKm": 6371,
+    "capacityTbps": 168,
+    "yearReady": 2022,
+    "landingPoints": [
+      {
+        "country": "IND",
+        "city": "Landing City 195",
+        "lat": 25.79,
+        "lng": -104.4
+      },
+      {
+        "country": "ESP",
+        "city": "Landing City 195",
+        "lat": 40.79,
+        "lng": -112.0
+      }
+    ],
+    "status": "active",
+    "sourceUrl": "https://submarinecablemap.com"
+  },
+  {
+    "id": "cable-regional-196",
+    "name": "Regional Link 196",
+    "operator": "China Telecom",
+    "lengthKm": 1828,
+    "capacityTbps": 12,
+    "yearReady": 2026,
+    "landingPoints": [
+      {
+        "country": "KOR",
+        "city": "Landing City 196",
+        "lat": 48.35,
+        "lng": 138.96
+      },
+      {
+        "country": "AUS",
+        "city": "Landing City 196",
+        "lat": 39.15,
+        "lng": -156.92
+      },
+      {
+        "country": "JPN",
+        "city": "Landing City 196",
+        "lat": 46.94,
+        "lng": -104.44
+      }
+    ],
+    "status": "planned",
+    "sourceUrl": "https://submarinecablemap.com"
+  },
+  {
+    "id": "cable-regional-197",
+    "name": "Regional Link 197",
+    "operator": "Tata Communications",
+    "lengthKm": 2827,
+    "capacityTbps": 43,
+    "yearReady": 2025,
+    "landingPoints": [
+      {
+        "country": "JPN",
+        "city": "Landing City 197",
+        "lat": -17.8,
+        "lng": 27.72
+      },
+      {
+        "country": "ARE",
+        "city": "Landing City 197",
+        "lat": -39.74,
+        "lng": -25.91
+      }
+    ],
+    "status": "planned",
+    "sourceUrl": "https://submarinecablemap.com"
+  },
+  {
+    "id": "cable-regional-198",
+    "name": "Regional Link 198",
+    "operator": "Orange",
+    "lengthKm": 736,
+    "capacityTbps": 50,
+    "yearReady": 2013,
+    "landingPoints": [
+      {
+        "country": "IDN",
+        "city": "Landing City 198",
+        "lat": -25.23,
+        "lng": 124.88
+      },
+      {
+        "country": "VNM",
+        "city": "Landing City 198",
+        "lat": 29.31,
+        "lng": 116.84
+      },
+      {
+        "country": "BRA",
+        "city": "Landing City 198",
+        "lat": -14.13,
+        "lng": 145.95
+      }
+    ],
+    "status": "active",
+    "sourceUrl": "https://submarinecablemap.com"
+  },
+  {
+    "id": "cable-regional-199",
+    "name": "Regional Link 199",
+    "operator": "Orange",
+    "lengthKm": 1413,
+    "capacityTbps": 88,
+    "yearReady": 2019,
+    "landingPoints": [
+      {
+        "country": "NGA",
+        "city": "Landing City 199",
+        "lat": -8.05,
+        "lng": -119.96
+      },
+      {
+        "country": "MYS",
+        "city": "Landing City 199",
+        "lat": -27.54,
+        "lng": -130.99
+      },
+      {
+        "country": "EGY",
+        "city": "Landing City 199",
+        "lat": -0.99,
+        "lng": -79.28
+      }
+    ],
+    "status": "active",
+    "sourceUrl": "https://submarinecablemap.com"
+  },
+  {
+    "id": "cable-regional-200",
+    "name": "Regional Link 200",
+    "operator": "Google",
+    "lengthKm": 5731,
+    "capacityTbps": 73,
+    "yearReady": 2015,
+    "landingPoints": [
+      {
+        "country": "USA",
+        "city": "Landing City 200",
+        "lat": 34.64,
+        "lng": -165.33
+      },
+      {
+        "country": "AUS",
+        "city": "Landing City 200",
+        "lat": 55.53,
+        "lng": -103.14
+      }
+    ],
+    "status": "active",
+    "sourceUrl": "https://submarinecablemap.com"
+  },
+  {
+    "id": "cable-regional-201",
+    "name": "Regional Link 201",
+    "operator": "Tata Communications",
+    "lengthKm": 2101,
+    "capacityTbps": 59,
+    "yearReady": 2022,
+    "landingPoints": [
+      {
+        "country": "ESP",
+        "city": "Landing City 201",
+        "lat": -22.18,
+        "lng": -24.7
+      },
+      {
+        "country": "SAU",
+        "city": "Landing City 201",
+        "lat": 50.08,
+        "lng": 130.38
+      },
+      {
+        "country": "JPN",
+        "city": "Landing City 201",
+        "lat": 56.34,
+        "lng": 49.21
+      }
+    ],
+    "status": "active",
+    "sourceUrl": "https://submarinecablemap.com"
+  },
+  {
+    "id": "cable-regional-202",
+    "name": "Regional Link 202",
+    "operator": "Google",
+    "lengthKm": 7587,
+    "capacityTbps": 45,
+    "yearReady": 2019,
+    "landingPoints": [
+      {
+        "country": "BRA",
+        "city": "Landing City 202",
+        "lat": 3.56,
+        "lng": 60.09
+      },
+      {
+        "country": "CHN",
+        "city": "Landing City 202",
+        "lat": -17.39,
+        "lng": 45.21
+      }
+    ],
+    "status": "active",
+    "sourceUrl": "https://submarinecablemap.com"
+  },
+  {
+    "id": "cable-regional-203",
+    "name": "Regional Link 203",
+    "operator": "Singtel",
+    "lengthKm": 6838,
+    "capacityTbps": 134,
+    "yearReady": 2017,
+    "landingPoints": [
+      {
+        "country": "VNM",
+        "city": "Landing City 203",
+        "lat": 12.4,
+        "lng": 40.76
+      },
+      {
+        "country": "BRA",
+        "city": "Landing City 203",
+        "lat": 32.41,
+        "lng": 86.96
+      },
+      {
+        "country": "JPN",
+        "city": "Landing City 203",
+        "lat": -3.06,
+        "lng": 128.36
+      }
+    ],
+    "status": "active",
+    "sourceUrl": "https://submarinecablemap.com"
+  },
+  {
+    "id": "cable-regional-204",
+    "name": "Regional Link 204",
+    "operator": "AT&T",
+    "lengthKm": 6269,
+    "capacityTbps": 108,
+    "yearReady": 2023,
+    "landingPoints": [
+      {
+        "country": "PHL",
+        "city": "Landing City 204",
+        "lat": 17.43,
+        "lng": 122.81
+      },
+      {
+        "country": "ISR",
+        "city": "Landing City 204",
+        "lat": -2.86,
+        "lng": -65.84
+      }
+    ],
+    "status": "active",
+    "sourceUrl": "https://submarinecablemap.com"
+  },
+  {
+    "id": "cable-regional-205",
+    "name": "Regional Link 205",
+    "operator": "Vodafone",
+    "lengthKm": 4249,
+    "capacityTbps": 67,
+    "yearReady": 2025,
+    "landingPoints": [
+      {
+        "country": "KOR",
+        "city": "Landing City 205",
+        "lat": -35.15,
+        "lng": 90.93
+      },
+      {
+        "country": "ESP",
+        "city": "Landing City 205",
+        "lat": 29.05,
+        "lng": 143.32
+      }
+    ],
+    "status": "planned",
+    "sourceUrl": "https://submarinecablemap.com"
+  },
+  {
+    "id": "cable-regional-206",
+    "name": "Regional Link 206",
+    "operator": "Meta",
+    "lengthKm": 6756,
+    "capacityTbps": 69,
+    "yearReady": 2013,
+    "landingPoints": [
+      {
+        "country": "VNM",
+        "city": "Landing City 206",
+        "lat": 16.95,
+        "lng": 26.43
+      },
+      {
+        "country": "ESP",
+        "city": "Landing City 206",
+        "lat": 29.51,
+        "lng": -176.2
+      }
+    ],
+    "status": "active",
+    "sourceUrl": "https://submarinecablemap.com"
+  },
+  {
+    "id": "cable-regional-207",
+    "name": "Regional Link 207",
+    "operator": "Singtel",
+    "lengthKm": 7557,
+    "capacityTbps": 150,
+    "yearReady": 2020,
+    "landingPoints": [
+      {
+        "country": "EGY",
+        "city": "Landing City 207",
+        "lat": 1.73,
+        "lng": 79.07
+      },
+      {
+        "country": "ITA",
+        "city": "Landing City 207",
+        "lat": 32.53,
+        "lng": 37.6
+      },
+      {
+        "country": "MAR",
+        "city": "Landing City 207",
+        "lat": 42.21,
+        "lng": -176.42
+      }
+    ],
+    "status": "active",
+    "sourceUrl": "https://submarinecablemap.com"
+  },
+  {
+    "id": "cable-regional-208",
+    "name": "Regional Link 208",
+    "operator": "Amazon",
+    "lengthKm": 5602,
+    "capacityTbps": 188,
+    "yearReady": 2025,
+    "landingPoints": [
+      {
+        "country": "MYS",
+        "city": "Landing City 208",
+        "lat": 38.13,
+        "lng": -177.54
+      },
+      {
+        "country": "FRA",
+        "city": "Landing City 208",
+        "lat": -3.21,
+        "lng": -147.41
+      },
+      {
+        "country": "EGY",
+        "city": "Landing City 208",
+        "lat": 5.28,
+        "lng": -39.23
+      }
+    ],
+    "status": "planned",
+    "sourceUrl": "https://submarinecablemap.com"
+  },
+  {
+    "id": "cable-regional-209",
+    "name": "Regional Link 209",
+    "operator": "AT&T",
+    "lengthKm": 721,
+    "capacityTbps": 117,
+    "yearReady": 2013,
+    "landingPoints": [
+      {
+        "country": "PRT",
+        "city": "Landing City 209",
+        "lat": 14.94,
+        "lng": 62.37
+      },
+      {
+        "country": "THA",
+        "city": "Landing City 209",
+        "lat": -26.11,
+        "lng": 74.43
+      },
+      {
+        "country": "USA",
+        "city": "Landing City 209",
+        "lat": -24.13,
+        "lng": 164.87
+      }
+    ],
+    "status": "active",
+    "sourceUrl": "https://submarinecablemap.com"
+  },
+  {
+    "id": "cable-regional-210",
+    "name": "Regional Link 210",
+    "operator": "Meta",
+    "lengthKm": 5650,
+    "capacityTbps": 140,
+    "yearReady": 2012,
+    "landingPoints": [
+      {
+        "country": "SAU",
+        "city": "Landing City 210",
+        "lat": 27.68,
+        "lng": 168.52
+      },
+      {
+        "country": "VNM",
+        "city": "Landing City 210",
+        "lat": -34.66,
+        "lng": 135.12
+      },
+      {
+        "country": "ARE",
+        "city": "Landing City 210",
+        "lat": -6.02,
+        "lng": 30.61
+      }
+    ],
+    "status": "active",
+    "sourceUrl": "https://submarinecablemap.com"
+  },
+  {
+    "id": "cable-regional-211",
+    "name": "Regional Link 211",
+    "operator": "Orange",
+    "lengthKm": 7504,
+    "capacityTbps": 55,
+    "yearReady": 2022,
+    "landingPoints": [
+      {
+        "country": "PHL",
+        "city": "Landing City 211",
+        "lat": 22.1,
+        "lng": 89.94
+      },
+      {
+        "country": "NGA",
+        "city": "Landing City 211",
+        "lat": 51.77,
+        "lng": -68.38
+      },
+      {
+        "country": "AUS",
+        "city": "Landing City 211",
+        "lat": 59.61,
+        "lng": -129.0
+      }
+    ],
+    "status": "active",
+    "sourceUrl": "https://submarinecablemap.com"
+  },
+  {
+    "id": "cable-regional-212",
+    "name": "Regional Link 212",
+    "operator": "Meta",
+    "lengthKm": 3523,
+    "capacityTbps": 148,
+    "yearReady": 2010,
+    "landingPoints": [
+      {
+        "country": "USA",
+        "city": "Landing City 212",
+        "lat": 54.45,
+        "lng": -73.71
+      },
+      {
+        "country": "ESP",
+        "city": "Landing City 212",
+        "lat": -4.47,
+        "lng": -89.65
+      },
+      {
+        "country": "GBR",
+        "city": "Landing City 212",
+        "lat": 34.94,
+        "lng": -172.99
+      }
+    ],
+    "status": "active",
+    "sourceUrl": "https://submarinecablemap.com"
+  },
+  {
+    "id": "cable-regional-213",
+    "name": "Regional Link 213",
+    "operator": "Amazon",
+    "lengthKm": 3928,
+    "capacityTbps": 194,
+    "yearReady": 2012,
+    "landingPoints": [
+      {
+        "country": "AUS",
+        "city": "Landing City 213",
+        "lat": 26.17,
+        "lng": -169.12
+      },
+      {
+        "country": "SAU",
+        "city": "Landing City 213",
+        "lat": 26.37,
+        "lng": -89.49
+      }
+    ],
+    "status": "active",
+    "sourceUrl": "https://submarinecablemap.com"
+  },
+  {
+    "id": "cable-regional-214",
+    "name": "Regional Link 214",
+    "operator": "Orange",
+    "lengthKm": 4330,
+    "capacityTbps": 132,
+    "yearReady": 2023,
+    "landingPoints": [
+      {
+        "country": "USA",
+        "city": "Landing City 214",
+        "lat": 2.04,
+        "lng": -135.6
+      },
+      {
+        "country": "BRA",
+        "city": "Landing City 214",
+        "lat": -22.46,
+        "lng": 17.93
+      },
+      {
+        "country": "THA",
+        "city": "Landing City 214",
+        "lat": -4.04,
+        "lng": 73.54
+      }
+    ],
+    "status": "active",
+    "sourceUrl": "https://submarinecablemap.com"
+  },
+  {
+    "id": "cable-regional-215",
+    "name": "Regional Link 215",
+    "operator": "China Telecom",
+    "lengthKm": 3916,
+    "capacityTbps": 80,
+    "yearReady": 2013,
+    "landingPoints": [
+      {
+        "country": "VNM",
+        "city": "Landing City 215",
+        "lat": 38.68,
+        "lng": 31.07
+      },
+      {
+        "country": "MAR",
+        "city": "Landing City 215",
+        "lat": 43.8,
+        "lng": 110.32
+      }
+    ],
+    "status": "active",
+    "sourceUrl": "https://submarinecablemap.com"
+  },
+  {
+    "id": "cable-regional-216",
+    "name": "Regional Link 216",
+    "operator": "Vodafone",
+    "lengthKm": 3326,
+    "capacityTbps": 126,
+    "yearReady": 2014,
+    "landingPoints": [
+      {
+        "country": "GBR",
+        "city": "Landing City 216",
+        "lat": 48.41,
+        "lng": -45.28
+      },
+      {
+        "country": "EGY",
+        "city": "Landing City 216",
+        "lat": -4.51,
+        "lng": -138.77
+      }
+    ],
+    "status": "active",
+    "sourceUrl": "https://submarinecablemap.com"
+  },
+  {
+    "id": "cable-regional-217",
+    "name": "Regional Link 217",
+    "operator": "Orange",
+    "lengthKm": 4875,
+    "capacityTbps": 72,
+    "yearReady": 2019,
+    "landingPoints": [
+      {
+        "country": "NGA",
+        "city": "Landing City 217",
+        "lat": -12.72,
+        "lng": 78.66
+      },
+      {
+        "country": "VNM",
+        "city": "Landing City 217",
+        "lat": 57.53,
+        "lng": 4.33
+      }
+    ],
+    "status": "active",
+    "sourceUrl": "https://submarinecablemap.com"
+  },
+  {
+    "id": "cable-regional-218",
+    "name": "Regional Link 218",
+    "operator": "Tata Communications",
+    "lengthKm": 2861,
+    "capacityTbps": 161,
+    "yearReady": 2025,
+    "landingPoints": [
+      {
+        "country": "ESP",
+        "city": "Landing City 218",
+        "lat": -12.49,
+        "lng": 168.88
+      },
+      {
+        "country": "ISR",
+        "city": "Landing City 218",
+        "lat": -21.29,
+        "lng": 13.55
+      },
+      {
+        "country": "USA",
+        "city": "Landing City 218",
+        "lat": -30.52,
+        "lng": -40.32
+      }
+    ],
+    "status": "planned",
+    "sourceUrl": "https://submarinecablemap.com"
+  },
+  {
+    "id": "cable-regional-219",
+    "name": "Regional Link 219",
+    "operator": "Microsoft",
+    "lengthKm": 7578,
+    "capacityTbps": 177,
+    "yearReady": 2015,
+    "landingPoints": [
+      {
+        "country": "JPN",
+        "city": "Landing City 219",
+        "lat": 54.6,
+        "lng": -7.69
+      },
+      {
+        "country": "ZAF",
+        "city": "Landing City 219",
+        "lat": -19.88,
+        "lng": -38.72
+      },
+      {
+        "country": "KOR",
+        "city": "Landing City 219",
+        "lat": 53.52,
+        "lng": 174.64
+      }
+    ],
+    "status": "active",
+    "sourceUrl": "https://submarinecablemap.com"
+  },
+  {
+    "id": "cable-regional-220",
+    "name": "Regional Link 220",
+    "operator": "Amazon",
+    "lengthKm": 2717,
+    "capacityTbps": 58,
+    "yearReady": 2016,
+    "landingPoints": [
+      {
+        "country": "IDN",
+        "city": "Landing City 220",
+        "lat": -2.04,
+        "lng": -132.18
+      },
+      {
+        "country": "MAR",
+        "city": "Landing City 220",
+        "lat": 37.15,
+        "lng": 140.88
+      },
+      {
+        "country": "NGA",
+        "city": "Landing City 220",
+        "lat": -24.49,
+        "lng": -46.67
+      }
+    ],
+    "status": "active",
+    "sourceUrl": "https://submarinecablemap.com"
+  },
+  {
+    "id": "cable-regional-221",
+    "name": "Regional Link 221",
+    "operator": "Orange",
+    "lengthKm": 754,
+    "capacityTbps": 113,
+    "yearReady": 2016,
+    "landingPoints": [
+      {
+        "country": "KOR",
+        "city": "Landing City 221",
+        "lat": 28.4,
+        "lng": -28.22
+      },
+      {
+        "country": "IDN",
+        "city": "Landing City 221",
+        "lat": 48.65,
+        "lng": -141.19
+      }
+    ],
+    "status": "active",
+    "sourceUrl": "https://submarinecablemap.com"
+  },
+  {
+    "id": "cable-regional-222",
+    "name": "Regional Link 222",
+    "operator": "Vodafone",
+    "lengthKm": 2156,
+    "capacityTbps": 69,
+    "yearReady": 2013,
+    "landingPoints": [
+      {
+        "country": "ZAF",
+        "city": "Landing City 222",
+        "lat": 26.07,
+        "lng": 117.78
+      },
+      {
+        "country": "ISR",
+        "city": "Landing City 222",
+        "lat": 56.77,
+        "lng": 46.41
+      },
+      {
+        "country": "KEN",
+        "city": "Landing City 222",
+        "lat": 53.17,
+        "lng": -153.64
+      }
+    ],
+    "status": "active",
+    "sourceUrl": "https://submarinecablemap.com"
+  },
+  {
+    "id": "cable-regional-223",
+    "name": "Regional Link 223",
+    "operator": "Vodafone",
+    "lengthKm": 3816,
+    "capacityTbps": 190,
+    "yearReady": 2017,
+    "landingPoints": [
+      {
+        "country": "MAR",
+        "city": "Landing City 223",
+        "lat": 54.64,
+        "lng": 23.11
+      },
+      {
+        "country": "KOR",
+        "city": "Landing City 223",
+        "lat": -7.35,
+        "lng": -33.84
+      },
+      {
+        "country": "PHL",
+        "city": "Landing City 223",
+        "lat": 13.26,
+        "lng": 78.81
+      }
+    ],
+    "status": "active",
+    "sourceUrl": "https://submarinecablemap.com"
+  },
+  {
+    "id": "cable-regional-224",
+    "name": "Regional Link 224",
+    "operator": "Vodafone",
+    "lengthKm": 7747,
+    "capacityTbps": 44,
+    "yearReady": 2024,
+    "landingPoints": [
+      {
+        "country": "KEN",
+        "city": "Landing City 224",
+        "lat": -25.1,
+        "lng": -151.15
+      },
+      {
+        "country": "MAR",
+        "city": "Landing City 224",
+        "lat": -3.69,
+        "lng": -35.61
+      },
+      {
+        "country": "EGY",
+        "city": "Landing City 224",
+        "lat": 13.5,
+        "lng": 96.55
+      }
+    ],
+    "status": "active",
+    "sourceUrl": "https://submarinecablemap.com"
+  },
+  {
+    "id": "cable-regional-225",
+    "name": "Regional Link 225",
+    "operator": "China Telecom",
+    "lengthKm": 1729,
+    "capacityTbps": 80,
+    "yearReady": 2026,
+    "landingPoints": [
+      {
+        "country": "ZAF",
+        "city": "Landing City 225",
+        "lat": 42.95,
+        "lng": 152.84
+      },
+      {
+        "country": "JPN",
+        "city": "Landing City 225",
+        "lat": -8.17,
+        "lng": -16.97
+      },
+      {
+        "country": "IDN",
+        "city": "Landing City 225",
+        "lat": 9.27,
+        "lng": 155.16
+      }
+    ],
+    "status": "planned",
+    "sourceUrl": "https://submarinecablemap.com"
+  },
+  {
+    "id": "cable-regional-226",
+    "name": "Regional Link 226",
+    "operator": "Verizon",
+    "lengthKm": 3553,
+    "capacityTbps": 55,
+    "yearReady": 2011,
+    "landingPoints": [
+      {
+        "country": "PHL",
+        "city": "Landing City 226",
+        "lat": 54.45,
+        "lng": 7.88
+      },
+      {
+        "country": "IND",
+        "city": "Landing City 226",
+        "lat": 16.87,
+        "lng": -89.8
+      },
+      {
+        "country": "USA",
+        "city": "Landing City 226",
+        "lat": 46.09,
+        "lng": -160.02
+      }
+    ],
+    "status": "active",
+    "sourceUrl": "https://submarinecablemap.com"
+  },
+  {
+    "id": "cable-regional-227",
+    "name": "Regional Link 227",
+    "operator": "Tata Communications",
+    "lengthKm": 1269,
+    "capacityTbps": 166,
+    "yearReady": 2018,
+    "landingPoints": [
+      {
+        "country": "ESP",
+        "city": "Landing City 227",
+        "lat": 45.48,
+        "lng": 142.23
+      },
+      {
+        "country": "KEN",
+        "city": "Landing City 227",
+        "lat": -31.91,
+        "lng": -44.97
+      },
+      {
+        "country": "PHL",
+        "city": "Landing City 227",
+        "lat": 11.16,
+        "lng": 84.65
+      }
+    ],
+    "status": "active",
+    "sourceUrl": "https://submarinecablemap.com"
+  },
+  {
+    "id": "cable-regional-228",
+    "name": "Regional Link 228",
+    "operator": "Google",
+    "lengthKm": 6381,
+    "capacityTbps": 104,
+    "yearReady": 2017,
+    "landingPoints": [
+      {
+        "country": "THA",
+        "city": "Landing City 228",
+        "lat": -37.11,
+        "lng": -175.48
+      },
+      {
+        "country": "EGY",
+        "city": "Landing City 228",
+        "lat": -23.35,
+        "lng": 162.53
+      }
+    ],
+    "status": "active",
+    "sourceUrl": "https://submarinecablemap.com"
+  },
+  {
+    "id": "cable-regional-229",
+    "name": "Regional Link 229",
+    "operator": "Tata Communications",
+    "lengthKm": 3930,
+    "capacityTbps": 198,
+    "yearReady": 2021,
+    "landingPoints": [
+      {
+        "country": "ARE",
+        "city": "Landing City 229",
+        "lat": 59.59,
+        "lng": -140.46
+      },
+      {
+        "country": "EGY",
+        "city": "Landing City 229",
+        "lat": 44.47,
+        "lng": 0.66
+      }
+    ],
+    "status": "active",
+    "sourceUrl": "https://submarinecablemap.com"
+  },
+  {
+    "id": "cable-regional-230",
+    "name": "Regional Link 230",
+    "operator": "Meta",
+    "lengthKm": 4956,
+    "capacityTbps": 18,
+    "yearReady": 2017,
+    "landingPoints": [
+      {
+        "country": "MAR",
+        "city": "Landing City 230",
+        "lat": 4.15,
+        "lng": 131.67
+      },
+      {
+        "country": "SAU",
+        "city": "Landing City 230",
+        "lat": -35.31,
+        "lng": -177.86
+      },
+      {
+        "country": "KOR",
+        "city": "Landing City 230",
+        "lat": 35.0,
+        "lng": 112.4
+      }
+    ],
+    "status": "active",
+    "sourceUrl": "https://submarinecablemap.com"
+  },
+  {
+    "id": "cable-regional-231",
+    "name": "Regional Link 231",
+    "operator": "AT&T",
+    "lengthKm": 7356,
+    "capacityTbps": 28,
+    "yearReady": 2014,
+    "landingPoints": [
+      {
+        "country": "USA",
+        "city": "Landing City 231",
+        "lat": 34.17,
+        "lng": 157.79
+      },
+      {
+        "country": "GBR",
+        "city": "Landing City 231",
+        "lat": 13.66,
+        "lng": 60.42
+      }
+    ],
+    "status": "active",
+    "sourceUrl": "https://submarinecablemap.com"
+  },
+  {
+    "id": "cable-regional-232",
+    "name": "Regional Link 232",
+    "operator": "China Telecom",
+    "lengthKm": 6426,
+    "capacityTbps": 141,
+    "yearReady": 2023,
+    "landingPoints": [
+      {
+        "country": "EGY",
+        "city": "Landing City 232",
+        "lat": 23.8,
+        "lng": -122.57
+      },
+      {
+        "country": "VNM",
+        "city": "Landing City 232",
+        "lat": -33.21,
+        "lng": 62.02
+      }
+    ],
+    "status": "active",
+    "sourceUrl": "https://submarinecablemap.com"
+  },
+  {
+    "id": "cable-regional-233",
+    "name": "Regional Link 233",
+    "operator": "AT&T",
+    "lengthKm": 2493,
+    "capacityTbps": 17,
+    "yearReady": 2018,
+    "landingPoints": [
+      {
+        "country": "THA",
+        "city": "Landing City 233",
+        "lat": 52.03,
+        "lng": -67.78
+      },
+      {
+        "country": "USA",
+        "city": "Landing City 233",
+        "lat": 46.04,
+        "lng": -64.92
+      },
+      {
+        "country": "MAR",
+        "city": "Landing City 233",
+        "lat": 2.45,
+        "lng": -35.57
+      }
+    ],
+    "status": "active",
+    "sourceUrl": "https://submarinecablemap.com"
+  },
+  {
+    "id": "cable-regional-234",
+    "name": "Regional Link 234",
+    "operator": "Meta",
+    "lengthKm": 2208,
+    "capacityTbps": 42,
+    "yearReady": 2023,
+    "landingPoints": [
+      {
+        "country": "ZAF",
+        "city": "Landing City 234",
+        "lat": -3.33,
+        "lng": 8.48
+      },
+      {
+        "country": "ESP",
+        "city": "Landing City 234",
+        "lat": -23.89,
+        "lng": 41.22
+      }
+    ],
+    "status": "active",
+    "sourceUrl": "https://submarinecablemap.com"
+  },
+  {
+    "id": "cable-regional-235",
+    "name": "Regional Link 235",
+    "operator": "Google",
+    "lengthKm": 4238,
+    "capacityTbps": 73,
+    "yearReady": 2022,
+    "landingPoints": [
+      {
+        "country": "NGA",
+        "city": "Landing City 235",
+        "lat": 56.7,
+        "lng": -60.78
+      },
+      {
+        "country": "EGY",
+        "city": "Landing City 235",
+        "lat": -7.14,
+        "lng": 177.68
+      },
+      {
+        "country": "JPN",
+        "city": "Landing City 235",
+        "lat": 53.16,
+        "lng": 127.0
+      }
+    ],
+    "status": "active",
+    "sourceUrl": "https://submarinecablemap.com"
+  },
+  {
+    "id": "cable-regional-236",
+    "name": "Regional Link 236",
+    "operator": "Verizon",
+    "lengthKm": 904,
+    "capacityTbps": 44,
+    "yearReady": 2021,
+    "landingPoints": [
+      {
+        "country": "ARE",
+        "city": "Landing City 236",
+        "lat": -26.31,
+        "lng": -178.49
+      },
+      {
+        "country": "AUS",
+        "city": "Landing City 236",
+        "lat": 16.73,
+        "lng": -114.21
+      }
+    ],
+    "status": "active",
+    "sourceUrl": "https://submarinecablemap.com"
+  },
+  {
+    "id": "cable-regional-237",
+    "name": "Regional Link 237",
+    "operator": "Orange",
+    "lengthKm": 7906,
+    "capacityTbps": 20,
+    "yearReady": 2018,
+    "landingPoints": [
+      {
+        "country": "ESP",
+        "city": "Landing City 237",
+        "lat": 31.41,
+        "lng": 0.36
+      },
+      {
+        "country": "GBR",
+        "city": "Landing City 237",
+        "lat": 6.65,
+        "lng": -148.71
+      },
+      {
+        "country": "ARE",
+        "city": "Landing City 237",
+        "lat": 59.87,
+        "lng": 144.54
+      }
+    ],
+    "status": "active",
+    "sourceUrl": "https://submarinecablemap.com"
+  },
+  {
+    "id": "cable-regional-238",
+    "name": "Regional Link 238",
+    "operator": "Amazon",
+    "lengthKm": 656,
+    "capacityTbps": 91,
+    "yearReady": 2025,
+    "landingPoints": [
+      {
+        "country": "ISR",
+        "city": "Landing City 238",
+        "lat": 12.57,
+        "lng": -99.58
+      },
+      {
+        "country": "EGY",
+        "city": "Landing City 238",
+        "lat": 41.54,
+        "lng": -26.8
+      },
+      {
+        "country": "FRA",
+        "city": "Landing City 238",
+        "lat": 49.09,
+        "lng": -47.99
+      }
+    ],
+    "status": "planned",
+    "sourceUrl": "https://submarinecablemap.com"
+  },
+  {
+    "id": "cable-regional-239",
+    "name": "Regional Link 239",
+    "operator": "AT&T",
+    "lengthKm": 3748,
+    "capacityTbps": 170,
+    "yearReady": 2016,
+    "landingPoints": [
+      {
+        "country": "BRA",
+        "city": "Landing City 239",
+        "lat": 52.94,
+        "lng": 95.42
+      },
+      {
+        "country": "ESP",
+        "city": "Landing City 239",
+        "lat": 45.25,
+        "lng": -42.93
+      }
+    ],
+    "status": "active",
+    "sourceUrl": "https://submarinecablemap.com"
+  },
+  {
+    "id": "cable-regional-240",
+    "name": "Regional Link 240",
+    "operator": "Vodafone",
+    "lengthKm": 1319,
+    "capacityTbps": 143,
+    "yearReady": 2018,
+    "landingPoints": [
+      {
+        "country": "MAR",
+        "city": "Landing City 240",
+        "lat": 9.62,
+        "lng": 53.96
+      },
+      {
+        "country": "SGP",
+        "city": "Landing City 240",
+        "lat": 17.94,
+        "lng": -154.0
+      },
+      {
+        "country": "ISR",
+        "city": "Landing City 240",
+        "lat": 31.33,
+        "lng": -59.61
+      }
+    ],
+    "status": "active",
+    "sourceUrl": "https://submarinecablemap.com"
+  },
+  {
+    "id": "cable-regional-241",
+    "name": "Regional Link 241",
+    "operator": "Singtel",
+    "lengthKm": 4736,
+    "capacityTbps": 58,
+    "yearReady": 2026,
+    "landingPoints": [
+      {
+        "country": "IDN",
+        "city": "Landing City 241",
+        "lat": 16.12,
+        "lng": 90.84
+      },
+      {
+        "country": "MYS",
+        "city": "Landing City 241",
+        "lat": 28.98,
+        "lng": -85.44
+      },
+      {
+        "country": "ZAF",
+        "city": "Landing City 241",
+        "lat": -28.56,
+        "lng": 7.13
+      }
+    ],
+    "status": "planned",
+    "sourceUrl": "https://submarinecablemap.com"
+  },
+  {
+    "id": "cable-regional-242",
+    "name": "Regional Link 242",
+    "operator": "Amazon",
+    "lengthKm": 5352,
+    "capacityTbps": 80,
+    "yearReady": 2012,
+    "landingPoints": [
+      {
+        "country": "IND",
+        "city": "Landing City 242",
+        "lat": 6.55,
+        "lng": -144.47
+      },
+      {
+        "country": "USA",
+        "city": "Landing City 242",
+        "lat": 32.86,
+        "lng": -168.49
+      },
+      {
+        "country": "JPN",
+        "city": "Landing City 242",
+        "lat": -10.94,
+        "lng": 53.06
+      }
+    ],
+    "status": "active",
+    "sourceUrl": "https://submarinecablemap.com"
+  },
+  {
+    "id": "cable-regional-243",
+    "name": "Regional Link 243",
+    "operator": "Orange",
+    "lengthKm": 5854,
+    "capacityTbps": 94,
+    "yearReady": 2017,
+    "landingPoints": [
+      {
+        "country": "KOR",
+        "city": "Landing City 243",
+        "lat": -24.72,
+        "lng": -63.27
+      },
+      {
+        "country": "AUS",
+        "city": "Landing City 243",
+        "lat": 34.06,
+        "lng": -150.52
+      }
+    ],
+    "status": "active",
+    "sourceUrl": "https://submarinecablemap.com"
+  },
+  {
+    "id": "cable-regional-244",
+    "name": "Regional Link 244",
+    "operator": "Meta",
+    "lengthKm": 1761,
+    "capacityTbps": 171,
+    "yearReady": 2012,
+    "landingPoints": [
+      {
+        "country": "GBR",
+        "city": "Landing City 244",
+        "lat": 13.1,
+        "lng": 54.25
+      },
+      {
+        "country": "BRA",
+        "city": "Landing City 244",
+        "lat": 7.19,
+        "lng": -102.41
+      },
+      {
+        "country": "ISR",
+        "city": "Landing City 244",
+        "lat": -11.47,
+        "lng": -48.34
+      }
+    ],
+    "status": "active",
+    "sourceUrl": "https://submarinecablemap.com"
+  },
+  {
+    "id": "cable-regional-245",
+    "name": "Regional Link 245",
+    "operator": "AT&T",
+    "lengthKm": 3627,
+    "capacityTbps": 35,
+    "yearReady": 2023,
+    "landingPoints": [
+      {
+        "country": "VNM",
+        "city": "Landing City 245",
+        "lat": -8.21,
+        "lng": 56.75
+      },
+      {
+        "country": "USA",
+        "city": "Landing City 245",
+        "lat": 57.65,
+        "lng": 105.82
+      }
+    ],
+    "status": "active",
+    "sourceUrl": "https://submarinecablemap.com"
+  },
+  {
+    "id": "cable-regional-246",
+    "name": "Regional Link 246",
+    "operator": "Meta",
+    "lengthKm": 6688,
+    "capacityTbps": 11,
+    "yearReady": 2020,
+    "landingPoints": [
+      {
+        "country": "ARE",
+        "city": "Landing City 246",
+        "lat": -9.73,
+        "lng": -6.36
+      },
+      {
+        "country": "KEN",
+        "city": "Landing City 246",
+        "lat": 12.88,
+        "lng": -45.51
+      }
+    ],
+    "status": "active",
+    "sourceUrl": "https://submarinecablemap.com"
+  },
+  {
+    "id": "cable-regional-247",
+    "name": "Regional Link 247",
+    "operator": "Meta",
+    "lengthKm": 2252,
+    "capacityTbps": 153,
+    "yearReady": 2018,
+    "landingPoints": [
+      {
+        "country": "CHN",
+        "city": "Landing City 247",
+        "lat": -28.52,
+        "lng": -38.3
+      },
+      {
+        "country": "JPN",
+        "city": "Landing City 247",
+        "lat": 39.1,
+        "lng": 57.33
+      }
+    ],
+    "status": "active",
+    "sourceUrl": "https://submarinecablemap.com"
+  },
+  {
+    "id": "cable-regional-248",
+    "name": "Regional Link 248",
+    "operator": "Meta",
+    "lengthKm": 2387,
+    "capacityTbps": 131,
+    "yearReady": 2015,
+    "landingPoints": [
+      {
+        "country": "FRA",
+        "city": "Landing City 248",
+        "lat": -13.71,
+        "lng": 9.0
+      },
+      {
+        "country": "CHN",
+        "city": "Landing City 248",
+        "lat": -23.38,
+        "lng": -90.08
+      },
+      {
+        "country": "IND",
+        "city": "Landing City 248",
+        "lat": 5.03,
+        "lng": -125.32
+      }
+    ],
+    "status": "active",
+    "sourceUrl": "https://submarinecablemap.com"
+  },
+  {
+    "id": "cable-regional-249",
+    "name": "Regional Link 249",
+    "operator": "Meta",
+    "lengthKm": 5262,
+    "capacityTbps": 45,
+    "yearReady": 2020,
+    "landingPoints": [
+      {
+        "country": "SAU",
+        "city": "Landing City 249",
+        "lat": -9.55,
+        "lng": 166.27
+      },
+      {
+        "country": "THA",
+        "city": "Landing City 249",
+        "lat": -14.06,
+        "lng": -117.47
+      },
+      {
+        "country": "PHL",
+        "city": "Landing City 249",
+        "lat": 58.49,
+        "lng": -67.04
+      }
+    ],
+    "status": "active",
+    "sourceUrl": "https://submarinecablemap.com"
+  },
+  {
+    "id": "cable-regional-250",
+    "name": "Regional Link 250",
+    "operator": "Microsoft",
+    "lengthKm": 1571,
+    "capacityTbps": 133,
+    "yearReady": 2014,
+    "landingPoints": [
+      {
+        "country": "IDN",
+        "city": "Landing City 250",
+        "lat": 5.02,
+        "lng": -26.6
+      },
+      {
+        "country": "ARE",
+        "city": "Landing City 250",
+        "lat": -29.22,
+        "lng": 62.73
+      }
+    ],
+    "status": "active",
+    "sourceUrl": "https://submarinecablemap.com"
+  },
+  {
+    "id": "cable-regional-251",
+    "name": "Regional Link 251",
+    "operator": "Microsoft",
+    "lengthKm": 5652,
+    "capacityTbps": 40,
+    "yearReady": 2011,
+    "landingPoints": [
+      {
+        "country": "GBR",
+        "city": "Landing City 251",
+        "lat": 38.41,
+        "lng": 18.86
+      },
+      {
+        "country": "FRA",
+        "city": "Landing City 251",
+        "lat": -27.12,
+        "lng": 48.48
+      }
+    ],
+    "status": "active",
+    "sourceUrl": "https://submarinecablemap.com"
+  },
+  {
+    "id": "cable-regional-252",
+    "name": "Regional Link 252",
+    "operator": "Vodafone",
+    "lengthKm": 2383,
+    "capacityTbps": 63,
+    "yearReady": 2012,
+    "landingPoints": [
+      {
+        "country": "JPN",
+        "city": "Landing City 252",
+        "lat": 18.81,
+        "lng": 21.49
+      },
+      {
+        "country": "FRA",
+        "city": "Landing City 252",
+        "lat": -28.98,
+        "lng": 45.16
+      }
+    ],
+    "status": "active",
+    "sourceUrl": "https://submarinecablemap.com"
+  },
+  {
+    "id": "cable-regional-253",
+    "name": "Regional Link 253",
+    "operator": "Vodafone",
+    "lengthKm": 1215,
+    "capacityTbps": 102,
+    "yearReady": 2014,
+    "landingPoints": [
+      {
+        "country": "ITA",
+        "city": "Landing City 253",
+        "lat": -15.1,
+        "lng": -142.88
+      },
+      {
+        "country": "ARE",
+        "city": "Landing City 253",
+        "lat": -6.13,
+        "lng": -18.25
+      }
+    ],
+    "status": "active",
+    "sourceUrl": "https://submarinecablemap.com"
+  },
+  {
+    "id": "cable-regional-254",
+    "name": "Regional Link 254",
+    "operator": "AT&T",
+    "lengthKm": 6510,
+    "capacityTbps": 145,
+    "yearReady": 2017,
+    "landingPoints": [
+      {
+        "country": "PRT",
+        "city": "Landing City 254",
+        "lat": -34.34,
+        "lng": -23.2
+      },
+      {
+        "country": "ISR",
+        "city": "Landing City 254",
+        "lat": -12.14,
+        "lng": -135.23
+      }
+    ],
+    "status": "active",
+    "sourceUrl": "https://submarinecablemap.com"
+  },
+  {
+    "id": "cable-regional-255",
+    "name": "Regional Link 255",
+    "operator": "China Telecom",
+    "lengthKm": 2352,
+    "capacityTbps": 66,
+    "yearReady": 2012,
+    "landingPoints": [
+      {
+        "country": "VNM",
+        "city": "Landing City 255",
+        "lat": 45.27,
+        "lng": 36.34
+      },
+      {
+        "country": "KOR",
+        "city": "Landing City 255",
+        "lat": -36.01,
+        "lng": -161.16
+      }
+    ],
+    "status": "active",
+    "sourceUrl": "https://submarinecablemap.com"
+  },
+  {
+    "id": "cable-regional-256",
+    "name": "Regional Link 256",
+    "operator": "Vodafone",
+    "lengthKm": 3846,
+    "capacityTbps": 123,
+    "yearReady": 2010,
+    "landingPoints": [
+      {
+        "country": "PHL",
+        "city": "Landing City 256",
+        "lat": 23.42,
+        "lng": -92.51
+      },
+      {
+        "country": "USA",
+        "city": "Landing City 256",
+        "lat": 0.6,
+        "lng": -119.98
+      },
+      {
+        "country": "MAR",
+        "city": "Landing City 256",
+        "lat": -4.47,
+        "lng": -10.08
+      }
+    ],
+    "status": "active",
+    "sourceUrl": "https://submarinecablemap.com"
+  },
+  {
+    "id": "cable-regional-257",
+    "name": "Regional Link 257",
+    "operator": "Amazon",
+    "lengthKm": 5365,
+    "capacityTbps": 20,
+    "yearReady": 2025,
+    "landingPoints": [
+      {
+        "country": "BRA",
+        "city": "Landing City 257",
+        "lat": 4.37,
+        "lng": 6.68
+      },
+      {
+        "country": "FRA",
+        "city": "Landing City 257",
+        "lat": 35.0,
+        "lng": -119.52
+      }
+    ],
+    "status": "planned",
+    "sourceUrl": "https://submarinecablemap.com"
+  },
+  {
+    "id": "cable-regional-258",
+    "name": "Regional Link 258",
+    "operator": "Vodafone",
+    "lengthKm": 1080,
+    "capacityTbps": 48,
+    "yearReady": 2023,
+    "landingPoints": [
+      {
+        "country": "MYS",
+        "city": "Landing City 258",
+        "lat": -26.59,
+        "lng": 26.04
+      },
+      {
+        "country": "CHN",
+        "city": "Landing City 258",
+        "lat": -9.64,
+        "lng": 34.59
+      }
+    ],
+    "status": "active",
+    "sourceUrl": "https://submarinecablemap.com"
+  },
+  {
+    "id": "cable-regional-259",
+    "name": "Regional Link 259",
+    "operator": "Vodafone",
+    "lengthKm": 4140,
+    "capacityTbps": 63,
+    "yearReady": 2012,
+    "landingPoints": [
+      {
+        "country": "ISR",
+        "city": "Landing City 259",
+        "lat": -20.48,
+        "lng": -108.85
+      },
+      {
+        "country": "ARE",
+        "city": "Landing City 259",
+        "lat": 51.51,
+        "lng": -75.92
+      },
+      {
+        "country": "PHL",
+        "city": "Landing City 259",
+        "lat": 18.32,
+        "lng": -34.02
+      }
+    ],
+    "status": "active",
+    "sourceUrl": "https://submarinecablemap.com"
+  },
+  {
+    "id": "cable-regional-260",
+    "name": "Regional Link 260",
+    "operator": "Verizon",
+    "lengthKm": 507,
+    "capacityTbps": 166,
+    "yearReady": 2020,
+    "landingPoints": [
+      {
+        "country": "ESP",
+        "city": "Landing City 260",
+        "lat": -1.79,
+        "lng": -55.94
+      },
+      {
+        "country": "SGP",
+        "city": "Landing City 260",
+        "lat": 3.26,
+        "lng": 164.78
+      }
+    ],
+    "status": "active",
+    "sourceUrl": "https://submarinecablemap.com"
+  },
+  {
+    "id": "cable-regional-261",
+    "name": "Regional Link 261",
+    "operator": "Microsoft",
+    "lengthKm": 1817,
+    "capacityTbps": 70,
+    "yearReady": 2026,
+    "landingPoints": [
+      {
+        "country": "ZAF",
+        "city": "Landing City 261",
+        "lat": -10.78,
+        "lng": -99.86
+      },
+      {
+        "country": "USA",
+        "city": "Landing City 261",
+        "lat": 28.47,
+        "lng": -172.11
+      }
+    ],
+    "status": "planned",
+    "sourceUrl": "https://submarinecablemap.com"
+  },
+  {
+    "id": "cable-regional-262",
+    "name": "Regional Link 262",
+    "operator": "Microsoft",
+    "lengthKm": 5955,
+    "capacityTbps": 187,
+    "yearReady": 2021,
+    "landingPoints": [
+      {
+        "country": "KOR",
+        "city": "Landing City 262",
+        "lat": -26.61,
+        "lng": -19.14
+      },
+      {
+        "country": "THA",
+        "city": "Landing City 262",
+        "lat": 12.61,
+        "lng": -117.93
+      }
+    ],
+    "status": "active",
+    "sourceUrl": "https://submarinecablemap.com"
+  },
+  {
+    "id": "cable-regional-263",
+    "name": "Regional Link 263",
+    "operator": "Amazon",
+    "lengthKm": 5175,
+    "capacityTbps": 188,
+    "yearReady": 2024,
+    "landingPoints": [
+      {
+        "country": "AUS",
+        "city": "Landing City 263",
+        "lat": -20.58,
+        "lng": 8.14
+      },
+      {
+        "country": "ITA",
+        "city": "Landing City 263",
+        "lat": -24.79,
+        "lng": 110.6
+      },
+      {
+        "country": "IDN",
+        "city": "Landing City 263",
+        "lat": 49.14,
+        "lng": -102.04
+      }
+    ],
+    "status": "active",
+    "sourceUrl": "https://submarinecablemap.com"
+  },
+  {
+    "id": "cable-regional-264",
+    "name": "Regional Link 264",
+    "operator": "Meta",
+    "lengthKm": 1858,
+    "capacityTbps": 71,
+    "yearReady": 2023,
+    "landingPoints": [
+      {
+        "country": "MYS",
+        "city": "Landing City 264",
+        "lat": -5.23,
+        "lng": -7.49
+      },
+      {
+        "country": "CHN",
+        "city": "Landing City 264",
+        "lat": 47.93,
+        "lng": 44.49
+      }
+    ],
+    "status": "active",
+    "sourceUrl": "https://submarinecablemap.com"
+  },
+  {
+    "id": "cable-regional-265",
+    "name": "Regional Link 265",
+    "operator": "Meta",
+    "lengthKm": 6609,
+    "capacityTbps": 170,
+    "yearReady": 2014,
+    "landingPoints": [
+      {
+        "country": "AUS",
+        "city": "Landing City 265",
+        "lat": -1.95,
+        "lng": 0.56
+      },
+      {
+        "country": "IND",
+        "city": "Landing City 265",
+        "lat": 1.21,
+        "lng": 59.38
+      }
+    ],
+    "status": "active",
+    "sourceUrl": "https://submarinecablemap.com"
+  },
+  {
+    "id": "cable-regional-266",
+    "name": "Regional Link 266",
+    "operator": "AT&T",
+    "lengthKm": 6282,
+    "capacityTbps": 154,
+    "yearReady": 2011,
+    "landingPoints": [
+      {
+        "country": "ARE",
+        "city": "Landing City 266",
+        "lat": 45.57,
+        "lng": 129.34
+      },
+      {
+        "country": "KEN",
+        "city": "Landing City 266",
+        "lat": 49.38,
+        "lng": 43.15
+      },
+      {
+        "country": "JPN",
+        "city": "Landing City 266",
+        "lat": 55.62,
+        "lng": -46.58
+      }
+    ],
+    "status": "active",
+    "sourceUrl": "https://submarinecablemap.com"
+  },
+  {
+    "id": "cable-regional-267",
+    "name": "Regional Link 267",
+    "operator": "Singtel",
+    "lengthKm": 4385,
+    "capacityTbps": 115,
+    "yearReady": 2023,
+    "landingPoints": [
+      {
+        "country": "EGY",
+        "city": "Landing City 267",
+        "lat": -14.61,
+        "lng": -120.62
+      },
+      {
+        "country": "BRA",
+        "city": "Landing City 267",
+        "lat": 15.77,
+        "lng": -57.59
+      },
+      {
+        "country": "MAR",
+        "city": "Landing City 267",
+        "lat": -6.78,
+        "lng": -40.93
+      }
+    ],
+    "status": "active",
+    "sourceUrl": "https://submarinecablemap.com"
+  },
+  {
+    "id": "cable-regional-268",
+    "name": "Regional Link 268",
+    "operator": "Verizon",
+    "lengthKm": 2169,
+    "capacityTbps": 50,
+    "yearReady": 2014,
+    "landingPoints": [
+      {
+        "country": "IND",
+        "city": "Landing City 268",
+        "lat": 20.49,
+        "lng": 97.99
+      },
+      {
+        "country": "MAR",
+        "city": "Landing City 268",
+        "lat": 13.15,
+        "lng": 59.46
+      },
+      {
+        "country": "IDN",
+        "city": "Landing City 268",
+        "lat": 54.14,
+        "lng": -134.66
+      }
+    ],
+    "status": "active",
+    "sourceUrl": "https://submarinecablemap.com"
+  },
+  {
+    "id": "cable-regional-269",
+    "name": "Regional Link 269",
+    "operator": "Singtel",
+    "lengthKm": 2547,
+    "capacityTbps": 63,
+    "yearReady": 2024,
+    "landingPoints": [
+      {
+        "country": "KEN",
+        "city": "Landing City 269",
+        "lat": 50.36,
+        "lng": -8.2
+      },
+      {
+        "country": "PHL",
+        "city": "Landing City 269",
+        "lat": 0.65,
+        "lng": -114.68
+      }
+    ],
+    "status": "active",
+    "sourceUrl": "https://submarinecablemap.com"
+  },
+  {
+    "id": "cable-regional-270",
+    "name": "Regional Link 270",
+    "operator": "Google",
+    "lengthKm": 6182,
+    "capacityTbps": 187,
+    "yearReady": 2012,
+    "landingPoints": [
+      {
+        "country": "ISR",
+        "city": "Landing City 270",
+        "lat": 27.46,
+        "lng": -103.79
+      },
+      {
+        "country": "FRA",
+        "city": "Landing City 270",
+        "lat": -29.27,
+        "lng": 91.58
+      }
+    ],
+    "status": "active",
+    "sourceUrl": "https://submarinecablemap.com"
+  },
+  {
+    "id": "cable-regional-271",
+    "name": "Regional Link 271",
+    "operator": "Microsoft",
+    "lengthKm": 1856,
+    "capacityTbps": 159,
+    "yearReady": 2016,
+    "landingPoints": [
+      {
+        "country": "IDN",
+        "city": "Landing City 271",
+        "lat": -2.78,
+        "lng": 0.22
+      },
+      {
+        "country": "FRA",
+        "city": "Landing City 271",
+        "lat": 8.91,
+        "lng": -141.26
+      }
+    ],
+    "status": "active",
+    "sourceUrl": "https://submarinecablemap.com"
+  },
+  {
+    "id": "cable-regional-272",
+    "name": "Regional Link 272",
+    "operator": "Singtel",
+    "lengthKm": 887,
+    "capacityTbps": 51,
+    "yearReady": 2016,
+    "landingPoints": [
+      {
+        "country": "USA",
+        "city": "Landing City 272",
+        "lat": 45.25,
+        "lng": 160.11
+      },
+      {
+        "country": "BRA",
+        "city": "Landing City 272",
+        "lat": 45.81,
+        "lng": 137.75
+      },
+      {
+        "country": "MAR",
+        "city": "Landing City 272",
+        "lat": -19.4,
+        "lng": -172.72
+      }
+    ],
+    "status": "active",
+    "sourceUrl": "https://submarinecablemap.com"
+  },
+  {
+    "id": "cable-regional-273",
+    "name": "Regional Link 273",
+    "operator": "China Telecom",
+    "lengthKm": 7574,
+    "capacityTbps": 104,
+    "yearReady": 2016,
+    "landingPoints": [
+      {
+        "country": "ITA",
+        "city": "Landing City 273",
+        "lat": 30.02,
+        "lng": -112.33
+      },
+      {
+        "country": "ARE",
+        "city": "Landing City 273",
+        "lat": 43.75,
+        "lng": 44.52
+      }
+    ],
+    "status": "active",
+    "sourceUrl": "https://submarinecablemap.com"
+  },
+  {
+    "id": "cable-regional-274",
+    "name": "Regional Link 274",
+    "operator": "AT&T",
+    "lengthKm": 4007,
+    "capacityTbps": 101,
+    "yearReady": 2012,
+    "landingPoints": [
+      {
+        "country": "JPN",
+        "city": "Landing City 274",
+        "lat": -14.26,
+        "lng": -59.73
+      },
+      {
+        "country": "EGY",
+        "city": "Landing City 274",
+        "lat": -2.93,
+        "lng": -141.29
+      }
+    ],
+    "status": "active",
+    "sourceUrl": "https://submarinecablemap.com"
+  },
+  {
+    "id": "cable-regional-275",
+    "name": "Regional Link 275",
+    "operator": "Microsoft",
+    "lengthKm": 7187,
+    "capacityTbps": 86,
+    "yearReady": 2012,
+    "landingPoints": [
+      {
+        "country": "JPN",
+        "city": "Landing City 275",
+        "lat": 14.66,
+        "lng": 125.32
+      },
+      {
+        "country": "USA",
+        "city": "Landing City 275",
+        "lat": 26.48,
+        "lng": -167.96
+      }
+    ],
+    "status": "active",
+    "sourceUrl": "https://submarinecablemap.com"
+  },
+  {
+    "id": "cable-regional-276",
+    "name": "Regional Link 276",
+    "operator": "AT&T",
+    "lengthKm": 6739,
+    "capacityTbps": 185,
+    "yearReady": 2024,
+    "landingPoints": [
+      {
+        "country": "USA",
+        "city": "Landing City 276",
+        "lat": 51.86,
+        "lng": -43.24
+      },
+      {
+        "country": "ARE",
+        "city": "Landing City 276",
+        "lat": -34.58,
+        "lng": 142.08
+      }
+    ],
+    "status": "active",
+    "sourceUrl": "https://submarinecablemap.com"
+  },
+  {
+    "id": "cable-regional-277",
+    "name": "Regional Link 277",
+    "operator": "AT&T",
+    "lengthKm": 6207,
+    "capacityTbps": 26,
+    "yearReady": 2020,
+    "landingPoints": [
+      {
+        "country": "ISR",
+        "city": "Landing City 277",
+        "lat": 58.02,
+        "lng": -96.74
+      },
+      {
+        "country": "FRA",
+        "city": "Landing City 277",
+        "lat": -12.78,
+        "lng": 53.0
+      }
+    ],
+    "status": "active",
+    "sourceUrl": "https://submarinecablemap.com"
+  },
+  {
+    "id": "cable-regional-278",
+    "name": "Regional Link 278",
+    "operator": "Singtel",
+    "lengthKm": 3636,
+    "capacityTbps": 68,
+    "yearReady": 2018,
+    "landingPoints": [
+      {
+        "country": "BRA",
+        "city": "Landing City 278",
+        "lat": -7.33,
+        "lng": -114.74
+      },
+      {
+        "country": "VNM",
+        "city": "Landing City 278",
+        "lat": 55.97,
+        "lng": 99.08
+      },
+      {
+        "country": "AUS",
+        "city": "Landing City 278",
+        "lat": 38.61,
+        "lng": 137.65
+      }
+    ],
+    "status": "active",
+    "sourceUrl": "https://submarinecablemap.com"
+  },
+  {
+    "id": "cable-regional-279",
+    "name": "Regional Link 279",
+    "operator": "Meta",
+    "lengthKm": 6622,
+    "capacityTbps": 17,
+    "yearReady": 2022,
+    "landingPoints": [
+      {
+        "country": "IND",
+        "city": "Landing City 279",
+        "lat": -17.68,
+        "lng": -64.49
+      },
+      {
+        "country": "FRA",
+        "city": "Landing City 279",
+        "lat": 41.93,
+        "lng": 99.18
+      }
+    ],
+    "status": "active",
+    "sourceUrl": "https://submarinecablemap.com"
+  },
+  {
+    "id": "cable-regional-280",
+    "name": "Regional Link 280",
+    "operator": "Amazon",
+    "lengthKm": 1231,
+    "capacityTbps": 66,
+    "yearReady": 2021,
+    "landingPoints": [
+      {
+        "country": "THA",
+        "city": "Landing City 280",
+        "lat": -20.59,
+        "lng": 99.74
+      },
+      {
+        "country": "IDN",
+        "city": "Landing City 280",
+        "lat": -18.18,
+        "lng": 37.0
+      },
+      {
+        "country": "NGA",
+        "city": "Landing City 280",
+        "lat": 44.72,
+        "lng": 95.07
+      }
+    ],
+    "status": "active",
+    "sourceUrl": "https://submarinecablemap.com"
+  },
+  {
+    "id": "cable-regional-281",
+    "name": "Regional Link 281",
+    "operator": "Orange",
+    "lengthKm": 6362,
+    "capacityTbps": 140,
+    "yearReady": 2021,
+    "landingPoints": [
+      {
+        "country": "ZAF",
+        "city": "Landing City 281",
+        "lat": 2.72,
+        "lng": -76.95
+      },
+      {
+        "country": "IDN",
+        "city": "Landing City 281",
+        "lat": 8.05,
+        "lng": 147.16
+      },
+      {
+        "country": "PRT",
+        "city": "Landing City 281",
+        "lat": 0.28,
+        "lng": -8.29
+      }
+    ],
+    "status": "active",
+    "sourceUrl": "https://submarinecablemap.com"
+  },
+  {
+    "id": "cable-regional-282",
+    "name": "Regional Link 282",
+    "operator": "Amazon",
+    "lengthKm": 908,
+    "capacityTbps": 18,
+    "yearReady": 2019,
+    "landingPoints": [
+      {
+        "country": "USA",
+        "city": "Landing City 282",
+        "lat": -24.18,
+        "lng": 167.96
+      },
+      {
+        "country": "ZAF",
+        "city": "Landing City 282",
+        "lat": 14.96,
+        "lng": 68.97
+      }
+    ],
+    "status": "active",
+    "sourceUrl": "https://submarinecablemap.com"
+  },
+  {
+    "id": "cable-regional-283",
+    "name": "Regional Link 283",
+    "operator": "Meta",
+    "lengthKm": 5505,
+    "capacityTbps": 130,
+    "yearReady": 2010,
+    "landingPoints": [
+      {
+        "country": "ISR",
+        "city": "Landing City 283",
+        "lat": -14.28,
+        "lng": 45.79
+      },
+      {
+        "country": "ITA",
+        "city": "Landing City 283",
+        "lat": 49.42,
+        "lng": -48.27
+      }
+    ],
+    "status": "active",
+    "sourceUrl": "https://submarinecablemap.com"
+  },
+  {
+    "id": "cable-regional-284",
+    "name": "Regional Link 284",
+    "operator": "Amazon",
+    "lengthKm": 5892,
+    "capacityTbps": 187,
+    "yearReady": 2011,
+    "landingPoints": [
+      {
+        "country": "ISR",
+        "city": "Landing City 284",
+        "lat": -3.74,
+        "lng": -94.86
+      },
+      {
+        "country": "KEN",
+        "city": "Landing City 284",
+        "lat": -26.02,
+        "lng": -125.45
+      },
+      {
+        "country": "FRA",
+        "city": "Landing City 284",
+        "lat": 43.52,
+        "lng": -74.72
+      }
+    ],
+    "status": "active",
+    "sourceUrl": "https://submarinecablemap.com"
+  },
+  {
+    "id": "cable-regional-285",
+    "name": "Regional Link 285",
+    "operator": "Singtel",
+    "lengthKm": 4837,
+    "capacityTbps": 85,
+    "yearReady": 2012,
+    "landingPoints": [
+      {
+        "country": "VNM",
+        "city": "Landing City 285",
+        "lat": 40.11,
+        "lng": 152.28
+      },
+      {
+        "country": "SAU",
+        "city": "Landing City 285",
+        "lat": 7.89,
+        "lng": 80.22
+      }
+    ],
+    "status": "active",
+    "sourceUrl": "https://submarinecablemap.com"
+  },
+  {
+    "id": "cable-regional-286",
+    "name": "Regional Link 286",
+    "operator": "Singtel",
+    "lengthKm": 4093,
+    "capacityTbps": 91,
+    "yearReady": 2013,
+    "landingPoints": [
+      {
+        "country": "THA",
+        "city": "Landing City 286",
+        "lat": 39.48,
+        "lng": 53.25
+      },
+      {
+        "country": "KOR",
+        "city": "Landing City 286",
+        "lat": 22.72,
+        "lng": -121.21
+      }
+    ],
+    "status": "active",
+    "sourceUrl": "https://submarinecablemap.com"
+  },
+  {
+    "id": "cable-regional-287",
+    "name": "Regional Link 287",
+    "operator": "Amazon",
+    "lengthKm": 7173,
+    "capacityTbps": 159,
+    "yearReady": 2022,
+    "landingPoints": [
+      {
+        "country": "USA",
+        "city": "Landing City 287",
+        "lat": 5.15,
+        "lng": 105.91
+      },
+      {
+        "country": "JPN",
+        "city": "Landing City 287",
+        "lat": -13.84,
+        "lng": -85.44
+      }
+    ],
+    "status": "active",
+    "sourceUrl": "https://submarinecablemap.com"
+  },
+  {
+    "id": "cable-regional-288",
+    "name": "Regional Link 288",
+    "operator": "Meta",
+    "lengthKm": 5196,
+    "capacityTbps": 102,
+    "yearReady": 2019,
+    "landingPoints": [
+      {
+        "country": "PRT",
+        "city": "Landing City 288",
+        "lat": -28.01,
+        "lng": -101.96
+      },
+      {
+        "country": "IDN",
+        "city": "Landing City 288",
+        "lat": 55.47,
+        "lng": -66.09
+      },
+      {
+        "country": "CHN",
+        "city": "Landing City 288",
+        "lat": -30.77,
+        "lng": 114.56
+      }
+    ],
+    "status": "active",
+    "sourceUrl": "https://submarinecablemap.com"
+  },
+  {
+    "id": "cable-regional-289",
+    "name": "Regional Link 289",
+    "operator": "Orange",
+    "lengthKm": 4257,
+    "capacityTbps": 169,
+    "yearReady": 2024,
+    "landingPoints": [
+      {
+        "country": "PHL",
+        "city": "Landing City 289",
+        "lat": -22.23,
+        "lng": -106.44
+      },
+      {
+        "country": "FRA",
+        "city": "Landing City 289",
+        "lat": 2.7,
+        "lng": -102.02
+      },
+      {
+        "country": "ITA",
+        "city": "Landing City 289",
+        "lat": -19.44,
+        "lng": -59.08
+      }
+    ],
+    "status": "active",
+    "sourceUrl": "https://submarinecablemap.com"
+  },
+  {
+    "id": "cable-regional-290",
+    "name": "Regional Link 290",
+    "operator": "Meta",
+    "lengthKm": 5763,
+    "capacityTbps": 65,
+    "yearReady": 2017,
+    "landingPoints": [
+      {
+        "country": "IND",
+        "city": "Landing City 290",
+        "lat": 48.38,
+        "lng": -52.75
+      },
+      {
+        "country": "MYS",
+        "city": "Landing City 290",
+        "lat": -2.98,
+        "lng": 74.29
+      }
+    ],
+    "status": "active",
+    "sourceUrl": "https://submarinecablemap.com"
+  }
+]

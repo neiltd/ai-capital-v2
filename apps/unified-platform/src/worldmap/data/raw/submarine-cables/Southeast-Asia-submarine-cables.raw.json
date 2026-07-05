@@ -1,0 +1,132 @@
+[
+  {
+    "id": "sea-me-we-5",
+    "name": "South East Asia-Middle East-Western Europe 5",
+    "route": [
+      [103.94, 1.35],
+      [100.0, 5.0],
+      [90.0, 15.0],
+      [80.0, 6.0],
+      [67.0, 24.0],
+      [55.0, 20.0],
+      [43.0, 12.0],
+      [32.0, 30.0],
+      [15.0, 35.0],
+      [5.0, 43.0]
+    ],
+    "landingPoints": [
+      {
+        "name": "Tuas",
+        "countryId": "SGP",
+        "coordinates": [103.62, 1.31],
+        "city": "Singapore"
+      },
+      {
+        "name": "Melaka",
+        "countryId": "MYS",
+        "coordinates": [102.25, 2.19],
+        "city": "Melaka"
+      },
+      {
+        "name": "Batam",
+        "countryId": "IDN",
+        "coordinates": [104.05, 1.12],
+        "city": "Batam"
+      },
+      {
+        "name": "Songkhla",
+        "countryId": "THA",
+        "coordinates": [100.62, 7.21],
+        "city": "Songkhla"
+      },
+      {
+        "name": "Kuakata",
+        "countryId": "BGD",
+        "coordinates": [90.13, 21.82],
+        "city": "Kuakata"
+      }
+    ],
+    "status": "active",
+    "lengthKm": 20000,
+    "capacityTbps": 24,
+    "yearLaid": 2016,
+    "yearRepaired": null,
+    "owners": ["Singtel", "Telkom Indonesia", "Telekom Malaysia", "Tata Communications", "Orange", "TATA", "Telecom Italia Sparkle"],
+    "vulnerabilities": "Crosses the Strait of Malacca and the Red Sea, both high-traffic and geopolitically sensitive areas.",
+    "geopoliticalNotes": "Critical digital infrastructure linking Southeast Asia directly to Europe, bypassing traditional hubs in some segments.",
+    "notes": null,
+    "attribution": {
+      "sources": [
+        { "name": "TeleGeography SubmarineCableMap", "url": "https://www.submarinecablemap.com/submarine-cable/south-east-asia-middle-east-western-europe-5-sea-me-we-5", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 1,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  },
+  {
+    "id": "asia-america-gateway-aag",
+    "name": "Asia-America Gateway (AAG)",
+    "route": [
+      [103.98, 1.35],
+      [106.7, 10.7],
+      [120.9, 14.5],
+      [144.7, 13.4],
+      [-157.8, 21.3],
+      [-122.4, 37.7]
+    ],
+    "landingPoints": [
+      {
+        "name": "Changi",
+        "countryId": "SGP",
+        "coordinates": [103.98, 1.35],
+        "city": "Singapore"
+      },
+      {
+        "name": "Vung Tau",
+        "countryId": "VNM",
+        "coordinates": [107.08, 10.35],
+        "city": "Vung Tau"
+      },
+      {
+        "name": "La Union",
+        "countryId": "PHL",
+        "coordinates": [120.32, 16.61],
+        "city": "San Fernando"
+      },
+      {
+        "name": "Tanguisson Point",
+        "countryId": "GUM",
+        "coordinates": [144.81, 13.55],
+        "city": "Dededo"
+      },
+      {
+        "name": "San Luis Obispo",
+        "countryId": "USA",
+        "coordinates": [-120.85, 35.29],
+        "city": "San Luis Obispo"
+      }
+    ],
+    "status": "active",
+    "lengthKm": 20000,
+    "capacityTbps": 1.92,
+    "yearLaid": 2009,
+    "yearRepaired": 2024,
+    "owners": ["AT&T", "PLDT", "Singtel", "Telekom Malaysia", "Telstra", "Viettel"],
+    "vulnerabilities": "Highly prone to cable breaks in the South China Sea due to fishing and anchoring activities.",
+    "geopoliticalNotes": "First major cable system directly linking Southeast Asia to the US Mainland, bypassing Japan.",
+    "notes": "Frequent maintenance and repair issues in the Vietnam segment.",
+    "attribution": {
+      "sources": [
+        { "name": "TeleGeography SubmarineCableMap", "url": "https://www.submarinecablemap.com/submarine-cable/asia-america-gateway-aag", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 1,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  }
+]

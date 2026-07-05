@@ -1,0 +1,65 @@
+{
+  "id": "SYR",
+  "iso2": "SY",
+  "name": "Syria",
+  "region": "Asia",
+  "subregion": "Western Asia",
+  "capital": "Damascus",
+  "lastUpdated": "2025-05-15",
+  "summary": "Syria is currently navigating a profound and uncertain transition following the collapse of the 50-year Assad dynasty in December 2024. A transitional government led by Ahmad al-Sharaa is attempting to consolidate control, restore basic services, and gain international legitimacy. The nation faces a monumental humanitarian and economic crisis, with over 90% of the population living below the poverty line and infrastructure decimated by over a decade of civil war. Syria's future depends on its ability to integrate diverse armed factions, attract massive reconstruction investment—particularly from the Gulf—and manage the competing interests of regional and global powers on its soil.",
+  "indicators": {
+    "politicalStability":       { "score": 2, "trend": "rising", "confidence": "low", "note": "Transitional phase following regime collapse; high risk of fragmentation and factional infighting." },
+    "economicDirection":        { "score": 1, "trend": "rising", "confidence": "medium", "note": "Starting from near-total collapse; potential for recovery depends on reconstruction aid and sanctions relief." },
+    "investmentAttractiveness": { "score": 1, "trend": "rising", "confidence": "low", "note": "Extremely high risk; investment is currently limited to humanitarian aid and speculative regional interest." },
+    "geopoliticalRisk":         { "score": 9, "trend": "falling", "confidence": "medium", "note": "Regime change has shifted regional dynamics; risk remains very high due to foreign military presence and non-state actors." },
+    "educationQuality":         { "score": 2, "trend": "stable", "confidence": "high", "note": "Education system is severely degraded; millions of children have lost years of schooling." },
+    "healthcareQuality":        { "score": 2, "trend": "stable", "confidence": "high", "note": "Healthcare infrastructure is largely destroyed; heavily dependent on international humanitarian organizations." },
+    "technologyInvestment":     { "score": 1, "trend": "stable", "confidence": "high", "note": "Minimal investment beyond basic telecommunications restoration in secured areas." }
+  },
+  "demographics": {
+    "population": 23500000,
+    "medianAge": 23.5,
+    "urbanizationRate": 57.0,
+    "majorEthnicGroups": ["Arab", "Kurdish", "Turkmen", "Assyrian/Armenian"],
+    "religions": [
+      { "name": "Muslim (Sunni, Alawite, Druze)", "percent": 87 },
+      { "name": "Christian (various denominations)", "percent": 10 },
+      { "name": "Other", "percent": 3 }
+    ]
+  },
+  "alliances": ["Arab League", "OIC", "UN"],
+  "relationships": [
+    { "countryId": "TUR", "countryName": "Turkey", "type": "strategic_partner", "sentiment": "neutral", "summary": "Supports the transitional authority and maintains a significant military presence in northern Syria." },
+    { "countryId": "QAT", "countryName": "Qatar", "type": "partner", "sentiment": "positive", "summary": "A primary supporter of the transitional government and a potential lead investor in reconstruction." },
+    { "countryId": "RUS", "countryName": "Russia", "type": "partner", "sentiment": "neutral", "summary": "Influence has significantly diminished since the Assad collapse, but maintains naval and air assets." },
+    { "countryId": "IRN", "countryName": "Iran", "type": "adversary", "sentiment": "negative", "summary": "Maintained the former regime; currently faces hostility from the new authorities and their regional backers." },
+    { "countryId": "USA", "countryName": "United States", "type": "partner", "sentiment": "neutral", "summary": "Provides humanitarian aid and maintains a small presence in the east; key to future sanctions relief." }
+  ],
+  "perspectives": [
+    { "source": "Transitional Official", "bias": "Optimistic", "view": "We are building a new Syria that is open to the world, market-oriented, and focused on national reconciliation." },
+    { "source": "Syrian Refugee", "bias": "Cautious", "view": "The regime is gone, but I will only return when I am sure that my family will be safe from the various armed groups still roaming the country." },
+    { "source": "Gulf Investor", "bias": "Pragmatic", "view": "Syria is the world's largest reconstruction opportunity, but we need clear legal guarantees and a stable security environment before committing capital." },
+    { "source": "Human Rights Observer", "bias": "Critical", "view": "The fall of the dictatorship is a victory, but we must ensure that the new authorities do not replicate the abuses of the past." }
+  ],
+  "historicalContext": {
+    "summary": "Syria gained independence from France in 1946. Following a series of coups, Hafez al-Assad took power in 1970, establishing a secular but authoritarian regime. His son Bashar al-Assad succeeded him in 2000. In 2011, a peaceful uprising escalated into a brutal civil war that displaced millions. The conflict took a decisive turn in late 2024 when a lightning offensive led to the fall of Damascus and the end of Assad rule.",
+    "keyEvents": [
+      { "year": 1946, "event": "Independence from France." },
+      { "year": 1970, "event": "Hafez al-Assad takes power in the 'Corrective Movement'." },
+      { "year": 2000, "event": "Death of Hafez al-Assad; Bashar al-Assad becomes President." },
+      { "year": 2011, "event": "Start of the Syrian uprising and subsequent civil war." },
+      { "year": 2024, "event": "Fall of Damascus (Dec 8); collapse of the Assad regime." },
+      { "year": 2025, "event": "Establishment of a transitional government led by Ahmad al-Sharaa." }
+    ]
+  },
+  "investmentNotes": {
+    "strengths": ["Massive reconstruction needs representing significant market potential", "Strategic location linking Europe, Asia, and the Arab world", "Fertile agricultural land and diverse natural resources", "Entrepreneurial and resilient workforce"],
+    "risks": ["High risk of political instability and factional violence", "Total collapse of financial and physical infrastructure", "Complexity of international sanctions and legal frameworks", "Deep-seated sectarian and social divisions"],
+    "sectors": ["Infrastructure (Power, Water, Transport)", "Construction & Building Materials", "Agriculture & Food Processing", "Telecommunications"]
+  },
+  "sources": [
+    { "name": "Syrian Transitional Government Portal", "url": "https://syria-transitional.org", "type": "government" },
+    { "name": "UNOCHA - Syria", "url": "https://www.unocha.org/syria", "type": "humanitarian" },
+    { "name": "World Bank - Syria", "url": "https://www.worldbank.org/en/country/syria", "type": "economic" }
+  ]
+}

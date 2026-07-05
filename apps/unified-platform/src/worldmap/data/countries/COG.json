@@ -1,0 +1,66 @@
+{
+  "id": "COG",
+  "iso2": "CG",
+  "name": "Republic of the Congo",
+  "region": "Africa",
+  "subregion": "Middle Africa",
+  "capital": "Brazzaville",
+  "lastUpdated": "2026-05-09",
+  "summary": "The Republic of the Congo, also known as Congo-Brazzaville, is a sparsely populated country in Central Africa with significant oil and timber resources. It is dominated by the Congo River and its vast tropical rainforests. The country has been ruled for most of its post-independence history by Denis Sassou Nguesso. The economy is highly dependent on oil, which accounts for the majority of government revenue and exports. Despite its wealth, poverty remains widespread, and the country faces challenges with debt management and economic diversification.",
+  "indicators": {
+    "politicalStability":       { "score": 5, "trend": "stable", "confidence": "high", "note": "Long-term rule by President Sassou Nguesso provides stability but with limited political competition and concerns over succession." },
+    "economicDirection":        { "score": 4, "trend": "stable", "confidence": "medium", "note": "Slow recovery from previous oil price shocks; working with IMF on structural reforms and debt sustainability." },
+    "investmentAttractiveness": { "score": 3, "trend": "stable", "confidence": "medium", "note": "Investment primarily in oil, gas, and timber; business environment is challenging due to bureaucracy and transparency issues." },
+    "geopoliticalRisk":         { "score": 5, "trend": "stable", "confidence": "medium", "note": "Relatively stable compared to its neighbor DRC; plays a role in regional mediation efforts." },
+    "educationQuality":         { "score": 4, "trend": "stable", "confidence": "high", "note": "High literacy rates compared to regional peers, but quality of higher education and vocational training is limited." },
+    "healthcareQuality":        { "score": 3, "trend": "stable", "confidence": "medium", "note": "Basic healthcare services available in urban centers; rural areas are underserved; focus on improving maternal health." },
+    "technologyInvestment":     { "score": 3, "trend": "improving", "confidence": "medium", "note": "Expanding fiber optic network; growing mobile internet usage; focus on digitalizing government services." }
+  },
+  "demographics": {
+    "population": 6200000,
+    "medianAge": 19.2,
+    "urbanizationRate": 68,
+    "majorEthnicGroups": ["Kongo", "Sangha", "M'Bochi", "Teke"],
+    "religions": [
+      { "name": "Roman Catholic", "percent": 33.1 },
+      { "name": "Awakening Churches/Protestant", "percent": 45.0 },
+      { "name": "Muslim", "percent": 1.6 }
+    ]
+  },
+  "alliances": ["AU", "CEMAC", "ECCAS", "OPEC"],
+  "relationships": [
+    { "countryId": "CHN", "countryName": "China", "type": "strategic_partner", "sentiment": "positive", "summary": "Main trade partner and source of infrastructure financing; China has invested heavily in roads, ports, and energy." },
+    { "countryId": "FRA", "countryName": "France", "type": "former_colonizer", "sentiment": "neutral", "summary": "Maintains strong economic and cultural ties; French companies are major players in the oil and timber sectors." },
+    { "countryId": "COD", "countryName": "DRC", "type": "neighbor", "sentiment": "neutral", "summary": "Close but complex relationship; Brazzaville and Kinshasa are the world's two closest capital cities, sharing deep cultural links." },
+    { "countryId": "RUS", "countryName": "Russia", "type": "strategic_partner", "sentiment": "positive", "summary": "Historical ties from the Cold War era; recent revival of cooperation in security and energy." }
+  ],
+  "perspectives": [
+    { "source": "Government Official", "bias": "Defensive", "view": "We are managing our resources responsibly and investing in the diversification of our economy for future generations." },
+    { "source": "Urban Youth", "bias": "Frustrated", "view": "Life is expensive and jobs are hard to find, even for those of us with university degrees." },
+    { "source": "Environmentalist", "bias": "Concerned", "view": "The rainforests are our greatest treasure, but they are threatened by unsustainable logging and industrial expansion." },
+    { "source": "IMF Representative", "bias": "Analytical", "view": "Congo has made progress in fiscal consolidation, but continued reforms are needed to ensure debt sustainability and inclusive growth." }
+  ],
+  "historicalContext": {
+    "summary": "The Republic of the Congo gained independence from France in 1960. It experienced a period of Marxist-Leninist rule under the Congolese Party of Labour (PCT) from 1969 to 1991. After a brief period of multi-party democracy, a civil war in 1997 returned Denis Sassou Nguesso to power, where he has remained since.",
+    "keyEvents": [
+      { "year": 1960, "event": "Independence from France." },
+      { "year": 1969, "event": "Proclamation of the People's Republic of the Congo." },
+      { "year": 1979, "event": "Denis Sassou Nguesso becomes president for the first time." },
+      { "year": 1992, "event": "First multi-party elections; Pascal Lissouba elected president." },
+      { "year": 1997, "event": "Civil war breaks out; Sassou Nguesso returns to power." },
+      { "year": 2002, "event": "New constitution adopted; peace agreement signed with rebels in the Pool region." },
+      { "year": 2016, "event": "Re-election of Sassou Nguesso following a constitutional referendum." },
+      { "year": 2021, "event": "Sassou Nguesso wins another term; death of main opposition leader Guy-Brice Parfait Kolélas." }
+    ]
+  },
+  "investmentNotes": {
+    "strengths": ["Large proven oil and natural gas reserves", "Significant tropical timber resources and carbon credit potential", "Strategic maritime gateway (Port of Pointe-Noire) for Central Africa", "Relatively high urbanization and literacy rates"],
+    "risks": ["Heavy dependence on oil revenue and vulnerability to price volatility", "High level of public debt and governance challenges", "Bureaucratic hurdles and corruption in the business sector", "Limited economic diversification and infrastructure gaps"],
+    "sectors": ["Oil and Gas", "Timber and Forestry", "Agriculture (Palm Oil/Rubber)", "Mining (Iron Ore/Potash)"]
+  },
+  "sources": [
+    { "name": "World Bank - Republic of Congo", "url": "https://www.worldbank.org/en/country/congo", "type": "economic" },
+    { "name": "African Development Bank - Congo", "url": "https://www.afdb.org/en/countries/central-africa/congo", "type": "economic" },
+    { "name": "Extractive Industries Transparency Initiative (EITI) - Congo", "url": "https://eiti.org/countries/republic-of-the-congo", "type": "transparency" }
+  ]
+}

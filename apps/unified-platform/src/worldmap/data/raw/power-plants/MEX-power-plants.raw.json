@@ -1,0 +1,354 @@
+[
+  {
+    "id": "PLANT-MEX-PETACALCO",
+    "name": "Petacalco (Plutarco Elías Calles) Power Plant",
+    "countryId": "MEX",
+    "city": "La Unión",
+    "coordinates": [-102.118, 17.984],
+    "type": "coal",
+    "status": "operating",
+    "capacityMW": 2768,
+    "annualOutputGWh": null,
+    "yearCommissioned": 1993,
+    "yearRetirement": null,
+    "operator": "Comisión Federal de Electricidad (CFE)",
+    "owner": "Government of Mexico",
+    "strategicNote": "One of Mexico's largest thermal power plants, critical for baseload power on the Pacific coast.",
+    "notes": "Uses both coal and oil.",
+    "attribution": {
+      "sources": [
+        { "name": "Global Energy Monitor", "url": "https://www.gem.wiki/Petacalco_power_station", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 2,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  },
+  {
+    "id": "PLANT-MEX-CHICOASEN",
+    "name": "Manuel Moreno Torres (Chicoasén) Dam",
+    "countryId": "MEX",
+    "city": "Chicoasén",
+    "coordinates": [-93.101, 16.941],
+    "type": "hydro",
+    "status": "operating",
+    "capacityMW": 2400,
+    "annualOutputGWh": null,
+    "yearCommissioned": 1980,
+    "yearRetirement": null,
+    "operator": "Comisión Federal de Electricidad (CFE)",
+    "owner": "Government of Mexico",
+    "strategicNote": "The largest hydroelectric plant in Mexico, utilizing the Grijalva River.",
+    "notes": null,
+    "attribution": {
+      "sources": [
+        { "name": "Global Energy Monitor", "url": "https://www.gem.wiki/Chicoas%C3%A9n_hydroelectric_plant", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 2,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  },
+  {
+    "id": "PLANT-MEX-TUXPAN",
+    "name": "Tuxpan (Adolfo López Mateos) Power Plant",
+    "countryId": "MEX",
+    "city": "Tuxpan",
+    "coordinates": [-97.328, 20.954],
+    "type": "gas",
+    "status": "operating",
+    "capacityMW": 2100,
+    "annualOutputGWh": null,
+    "yearCommissioned": 1991,
+    "yearRetirement": null,
+    "operator": "Comisión Federal de Electricidad (CFE)",
+    "owner": "Government of Mexico",
+    "strategicNote": "Major thermal plant on the Gulf coast, vital for electricity supply to central Mexico.",
+    "notes": "Dual-fuel capability (Gas/Oil).",
+    "attribution": {
+      "sources": [
+        { "name": "Global Energy Monitor", "url": "https://www.gem.wiki/Tuxpan_power_station", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 2,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  },
+  {
+    "id": "PLANT-MEX-LAGUNA-VERDE",
+    "name": "Laguna Verde Nuclear Power Plant",
+    "countryId": "MEX",
+    "city": "Alto Lucero",
+    "coordinates": [-96.406, 19.721],
+    "type": "nuclear",
+    "status": "operating",
+    "capacityMW": 1620,
+    "annualOutputGWh": null,
+    "yearCommissioned": 1990,
+    "yearRetirement": null,
+    "operator": "Comisión Federal de Electricidad (CFE)",
+    "owner": "Government of Mexico",
+    "strategicNote": "Mexico's only nuclear power plant; provides roughly 4% of the country's electricity.",
+    "notes": "Two Boiling Water Reactors (BWR).",
+    "attribution": {
+      "sources": [
+        { "name": "IAEA PRIS", "url": "https://pris.iaea.org/PRIS/CountryStatistics/CountryDetails.aspx?current=MX", "accessedAt": "2026-05-10" },
+        { "name": "Global Energy Monitor", "url": "https://www.gem.wiki/Laguna_Verde_Nuclear_Power_Station", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 2,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  },
+  {
+    "id": "PLANT-MEX-EMPALME",
+    "name": "Empalme Combined Cycle Power Plant",
+    "countryId": "MEX",
+    "city": "Empalme",
+    "coordinates": [-110.812, 27.958],
+    "type": "gas",
+    "status": "operating",
+    "capacityMW": 1561,
+    "annualOutputGWh": null,
+    "yearCommissioned": 2017,
+    "yearRetirement": null,
+    "operator": "Comisión Federal de Electricidad (CFE)",
+    "owner": "Government of Mexico",
+    "strategicNote": "Major modern natural gas facility supporting the industrial northwest.",
+    "notes": null,
+    "attribution": {
+      "sources": [
+        { "name": "Global Energy Monitor", "url": "https://www.gem.wiki/Empalme_power_station", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 1,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  },
+  {
+    "id": "PLANT-MEX-TULA",
+    "name": "Tula (Francisco Pérez Ríos) Power Plant",
+    "countryId": "MEX",
+    "city": "Tula de Allende",
+    "coordinates": [-99.278, 20.051],
+    "type": "gas",
+    "status": "operating",
+    "capacityMW": 1500,
+    "annualOutputGWh": null,
+    "yearCommissioned": 1975,
+    "yearRetirement": null,
+    "operator": "Comisión Federal de Electricidad (CFE)",
+    "owner": "Government of Mexico",
+    "strategicNote": "Strategically located near Mexico City, historically critical but controversial due to emissions.",
+    "notes": "Historically oil-fired, transitioned to gas.",
+    "attribution": {
+      "sources": [
+        { "name": "Global Energy Monitor", "url": "https://www.gem.wiki/Tula_power_station", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 2,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  },
+  {
+    "id": "PLANT-MEX-CARBON-II",
+    "name": "Carbon II Power Plant",
+    "countryId": "MEX",
+    "city": "Nava",
+    "coordinates": [-101.204, 28.463],
+    "type": "coal",
+    "status": "operating",
+    "capacityMW": 1400,
+    "annualOutputGWh": null,
+    "yearCommissioned": 1993,
+    "yearRetirement": null,
+    "operator": "Comisión Federal de Electricidad (CFE)",
+    "owner": "Government of Mexico",
+    "strategicNote": "One of two large coal plants in Coahuila, near the US border.",
+    "notes": null,
+    "attribution": {
+      "sources": [
+        { "name": "Global Energy Monitor", "url": "https://www.gem.wiki/Carbon_II_power_station", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 1,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  },
+  {
+    "id": "PLANT-MEX-MANZANILLO-I",
+    "name": "Manzanillo I (Manuel Álvarez Moreno) Power Plant",
+    "countryId": "MEX",
+    "city": "Manzanillo",
+    "coordinates": [-104.312, 19.058],
+    "type": "gas",
+    "status": "operating",
+    "capacityMW": 1414,
+    "annualOutputGWh": null,
+    "yearCommissioned": 1982,
+    "yearRetirement": null,
+    "operator": "Comisión Federal de Electricidad (CFE)",
+    "owner": "Government of Mexico",
+    "strategicNote": "Key facility for the port city of Manzanillo and the western grid.",
+    "notes": "Converted to natural gas.",
+    "attribution": {
+      "sources": [
+        { "name": "Global Energy Monitor", "url": "https://www.gem.wiki/Manzanillo_power_station", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 1,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  },
+  {
+    "id": "PLANT-MEX-CARBON-I",
+    "name": "Carbon I (José López Portillo) Power Plant",
+    "countryId": "MEX",
+    "city": "Nava",
+    "coordinates": [-101.211, 28.458],
+    "type": "coal",
+    "status": "operating",
+    "capacityMW": 1200,
+    "annualOutputGWh": null,
+    "yearCommissioned": 1982,
+    "yearRetirement": null,
+    "operator": "Comisión Federal de Electricidad (CFE)",
+    "owner": "Government of Mexico",
+    "strategicNote": "Major coal-fired facility in northern Mexico.",
+    "notes": null,
+    "attribution": {
+      "sources": [
+        { "name": "Global Energy Monitor", "url": "https://www.gem.wiki/Carbon_I_power_station", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 1,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  },
+  {
+    "id": "PLANT-MEX-ALTAMIRA-V",
+    "name": "Altamira V Power Plant",
+    "countryId": "MEX",
+    "city": "Altamira",
+    "coordinates": [-97.934, 22.481],
+    "type": "gas",
+    "status": "operating",
+    "capacityMW": 1121,
+    "annualOutputGWh": null,
+    "yearCommissioned": 2005,
+    "yearRetirement": null,
+    "operator": "Iberdrola",
+    "owner": "Iberdrola / Mexico Infrastructure Partners",
+    "strategicNote": "One of the largest IPP (Independent Power Producer) plants in Mexico.",
+    "notes": null,
+    "attribution": {
+      "sources": [
+        { "name": "Global Energy Monitor", "url": "https://www.gem.wiki/Altamira_V_power_station", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 1,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  },
+  {
+    "id": "PLANT-MEX-INFIERNILLO",
+    "name": "Infiernillo (Adolfo López Mateos) Dam",
+    "countryId": "MEX",
+    "city": "La Huacana",
+    "coordinates": [-101.897, 18.274],
+    "type": "hydro",
+    "status": "operating",
+    "capacityMW": 1120,
+    "annualOutputGWh": null,
+    "yearCommissioned": 1964,
+    "yearRetirement": null,
+    "operator": "Comisión Federal de Electricidad (CFE)",
+    "owner": "Government of Mexico",
+    "strategicNote": "Strategically important hydroelectric facility on the Balsas River.",
+    "notes": null,
+    "attribution": {
+      "sources": [
+        { "name": "Global Energy Monitor", "url": "https://www.gem.wiki/Infiernillo_hydroelectric_plant", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 1,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  },
+  {
+    "id": "PLANT-MEX-MALPASO",
+    "name": "Malpaso (Nezahualcóyotl) Dam",
+    "countryId": "MEX",
+    "city": "Tecpatán",
+    "coordinates": [-93.598, 17.181],
+    "type": "hydro",
+    "status": "operating",
+    "capacityMW": 1080,
+    "annualOutputGWh": null,
+    "yearCommissioned": 1966,
+    "yearRetirement": null,
+    "operator": "Comisión Federal de Electricidad (CFE)",
+    "owner": "Government of Mexico",
+    "strategicNote": "Major hydro plant in the Chiapas region.",
+    "notes": null,
+    "attribution": {
+      "sources": [
+        { "name": "Global Energy Monitor", "url": "https://www.gem.wiki/Malpaso_hydroelectric_plant", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 1,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  },
+  {
+    "id": "PLANT-MEX-AGUAMILPA",
+    "name": "Aguamilpa (Solidaridad) Dam",
+    "countryId": "MEX",
+    "city": "Tepic",
+    "coordinates": [-104.803, 21.839],
+    "type": "hydro",
+    "status": "operating",
+    "capacityMW": 960,
+    "annualOutputGWh": null,
+    "yearCommissioned": 1994,
+    "yearRetirement": null,
+    "operator": "Comisión Federal de Electricidad (CFE)",
+    "owner": "Government of Mexico",
+    "strategicNote": "Large hydroelectric facility on the Santiago River.",
+    "notes": null,
+    "attribution": {
+      "sources": [
+        { "name": "Global Energy Monitor", "url": "https://www.gem.wiki/Aguamilpa_hydroelectric_plant", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 1,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  }
+]

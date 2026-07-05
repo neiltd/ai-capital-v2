@@ -1,0 +1,69 @@
+{
+  "id": "MYS",
+  "iso2": "MY",
+  "name": "Malaysia",
+  "region": "Asia",
+  "subregion": "South-Eastern Asia",
+  "capital": "Kuala Lumpur",
+  "lastUpdated": "2025-05-20",
+  "summary": "Malaysia is a dynamic, upper-middle-income economy in Southeast Asia, currently experiencing an investment 'renaissance' under Prime Minister Anwar Ibrahim's 'Ekonomi MADANI' framework. As the ASEAN Chair for 2025, Malaysia is positioning itself as a strategic, neutral hub amidst global trade tensions, attracting significant foreign direct investment from both the West and China, particularly in semiconductors and digital infrastructure. The nation is characterized by its multicultural society and a parliamentary democracy that has recently achieved a period of stability after years of political volatility. However, Malaysia continues to manage long-term challenges related to ethnic wealth disparities and the transition toward a more sustainable, high-value economy.",
+  "indicators": {
+    "politicalStability":       { "score": 7, "trend": "stable", "confidence": "high", "note": "Increased stability under the Unity Government; Anwar Ibrahim holds a strong parliamentary majority." },
+    "economicDirection":        { "score": 8, "trend": "rising", "confidence": "high", "note": "Robust GDP growth exceeding targets; successful implementation of fiscal reforms and targeted subsidies." },
+    "investmentAttractiveness": { "score": 9, "trend": "rising", "confidence": "high", "note": "A top destination for data centers and advanced packaging; strong national semiconductor and green investment strategies." },
+    "geopoliticalRisk":         { "score": 3, "trend": "stable", "confidence": "high", "note": "Low risk of external conflict; pursuit of 'Strategic Neutrality' and active leadership within ASEAN." },
+    "educationQuality":         { "score": 6, "trend": "rising", "confidence": "high", "note": "Strong vocational training and university system; increasing focus on high-tech and engineering skills." },
+    "healthcareQuality":        { "score": 8, "trend": "stable", "confidence": "high", "note": "High-quality public and private healthcare; a major regional destination for medical tourism." },
+    "technologyInvestment":     { "score": 8, "trend": "rising", "confidence": "high", "note": "Significant investment from global tech giants (Google, Microsoft, Amazon); leader in regional backend semiconductor manufacturing." }
+  },
+  "demographics": {
+    "population": 34200000,
+    "medianAge": 31.3,
+    "urbanizationRate": 78,
+    "majorEthnicGroups": ["Malay", "Chinese", "Other Bumiputera", "Indian"],
+    "religions": [
+      { "name": "Muslim", "percent": 63.5 },
+      { "name": "Buddhist", "percent": 18.7 },
+      { "name": "Christian", "percent": 9.1 },
+      { "name": "Hindu", "percent": 6.1 },
+      { "name": "Other", "percent": 2.6 }
+    ]
+  },
+  "alliances": ["ASEAN (2025 Chair)", "APEC", "OIC", "Commonwealth", "CPTPP", "RCEP", "IPEF", "BRICS (Engaging)"],
+  "relationships": [
+    { "countryId": "CHN", "countryName": "China", "type": "strategic_partner", "sentiment": "positive", "summary": "Largest trade partner; deep economic integration and cooperation on 'Belt and Road' projects." },
+    { "countryId": "USA", "countryName": "United States", "type": "strategic_partner", "sentiment": "positive", "summary": "Critical source of high-tech investment and a key security partner, particularly in maritime domain awareness." },
+    { "countryId": "SGP", "countryName": "Singapore", "type": "neighbor", "sentiment": "positive", "summary": "Deeply integrated economies; close cooperation on cross-border infrastructure and trade (Johor-Singapore SEZ)." },
+    { "countryId": "IDN", "countryName": "Indonesia", "type": "neighbor", "sentiment": "positive", "summary": "Close cultural and economic ties; collaboration on regional security and palm oil industry issues." },
+    { "countryId": "THA", "countryName": "Thailand", "type": "neighbor", "sentiment": "positive", "summary": "Important trade partner; cooperation on border security and regional connectivity." }
+  ],
+  "perspectives": [
+    { "source": "Tech Entrepreneur", "bias": "Optimistic", "view": "Malaysia is the perfect middle ground. We have the talent and the infrastructure to be the AI hub of Southeast Asia." },
+    { "source": "Rural Bumiputera Farmer", "bias": "Vulnerable", "view": "The cost of living is rising, and we need to make sure the new economy doesn't leave the kampungs behind." },
+    { "source": "Civil Society Advocate", "bias": "Reformist", "view": "Stability is good, but we need deeper institutional reforms to ensure the corruption of the past never returns." },
+    { "source": "Foreign Investor", "bias": "Pragmatic", "view": "The policy consistency under Anwar is a relief. The semiconductor and green energy strategies provide a clear roadmap for long-term capital." }
+  ],
+  "historicalContext": {
+    "summary": "Malaysia gained independence from Britain in 1957. It has transitioned from a commodity-based economy to a diversified industrial and service-oriented nation. The 1970s New Economic Policy aimed to address ethnic economic imbalances, while the Mahathir era (1981-2003) saw rapid modernization. Recent years have been marked by a return to democratic pluralism after the 1MDB scandal.",
+    "keyEvents": [
+      { "year": 1957, "event": "Federation of Malaya gains independence from the United Kingdom." },
+      { "year": 1963, "event": "Formation of Malaysia (including Sabah, Sarawak, and Singapore)." },
+      { "year": 1965, "event": "Singapore separates from Malaysia." },
+      { "year": 1971, "event": "Introduction of the New Economic Policy (NEP)." },
+      { "year": 1997, "event": "Asian Financial Crisis; Malaysia implements controversial capital controls." },
+      { "year": 2018, "event": "Barisan Nasional loses power for the first time since independence in the 'GE14' election." },
+      { "year": 2022, "event": "Anwar Ibrahim appointed Prime Minister, leading a Unity Government." },
+      { "year": 2025, "event": "Malaysia assumes the Chairmanship of ASEAN." }
+    ]
+  },
+  "investmentNotes": {
+    "strengths": ["Global hub for Semiconductor backend and IC design", "Highly strategic location on the Malacca Strait", "Strong, mature financial and legal systems", "Abundant natural resources and growing green energy sector"],
+    "risks": ["Vulnerability to global trade shifts and tariff changes", "Persistent talent drain (brain drain) to neighboring countries", "Complexity of managing multi-ethnic social dynamics", "Need for further productivity gains to avoid the middle-income trap"],
+    "sectors": ["Semiconductors & Electronics", "Digital Economy & Data Centers", "Green Energy & EV Supply Chain", "Islamic Finance & Halal Industry"]
+  },
+  "sources": [
+    { "name": "Bank Negara Malaysia", "url": "https://www.bnm.gov.my/", "type": "economic" },
+    { "name": "Department of Statistics Malaysia (DOSM)", "url": "https://www.dosm.gov.my/", "type": "demographic" },
+    { "name": "MIDA (Malaysian Investment Development Authority)", "url": "https://www.mida.gov.my/", "type": "investment" }
+  ]
+}

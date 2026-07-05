@@ -1,0 +1,66 @@
+{
+  "id": "NGA",
+  "iso2": "NG",
+  "name": "Nigeria",
+  "region": "Africa",
+  "subregion": "Western Africa",
+  "capital": "Abuja",
+  "lastUpdated": "2025-05-20",
+  "summary": "Nigeria is Africa's most populous nation and a leading economic power, currently undergoing a significant transition under the administration of President Bola Tinubu. The country is navigating deep structural reforms, including the removal of fuel subsidies and currency unification, which have caused short-term economic hardship but are aimed at long-term stability and attracting foreign investment. Nigeria remains a regional leader within ECOWAS and is increasingly positioning itself as a key player in the 'Global South,' recently becoming a BRICS partner. However, it continues to face substantial internal security challenges and persistent infrastructure deficits.",
+  "indicators": {
+    "politicalStability":       { "score": 3, "trend": "stable", "confidence": "high", "note": "Stable democratic transition, but high social tension due to inflation and cost-of-living crisis." },
+    "economicDirection":        { "score": 5, "trend": "rising", "confidence": "medium", "note": "Bold structural reforms underway; macroeconomic indicators show signs of stabilization despite high inflation." },
+    "investmentAttractiveness": { "score": 6, "trend": "rising", "confidence": "high", "note": "High interest in energy, fintech, and agriculture; successful Eurobond issuance signals returning confidence." },
+    "geopoliticalRisk":         { "score": 4, "trend": "stable", "confidence": "high", "note": "Primary risks are internal (banditry, insurgency); regional instability in the Sahel is a concern." },
+    "educationQuality":         { "score": 4, "trend": "stable", "confidence": "medium", "note": "Strong tertiary institutions in urban centers, but significant gaps in primary and secondary education access." },
+    "healthcareQuality":        { "score": 3, "trend": "stable", "confidence": "medium", "note": "Improving private healthcare in major cities; public system remains underfunded and understaffed." },
+    "technologyInvestment":     { "score": 7, "trend": "rising", "confidence": "high", "note": "A major African tech hub; thriving fintech ecosystem and increasing investment in digital infrastructure." }
+  },
+  "demographics": {
+    "population": 229000000,
+    "medianAge": 18.1,
+    "urbanizationRate": 54,
+    "majorEthnicGroups": ["Hausa", "Yoruba", "Igbo", "Fulani"],
+    "religions": [
+      { "name": "Muslim", "percent": 53.5 },
+      { "name": "Christian", "percent": 45.9 },
+      { "name": "Other", "percent": 0.6 }
+    ]
+  },
+  "alliances": ["ECOWAS", "African Union", "OPEC", "BRICS (Partner)", "Commonwealth"],
+  "relationships": [
+    { "countryId": "USA", "countryName": "United States", "type": "strategic_partner", "sentiment": "positive", "summary": "Strong security cooperation and Nigeria's largest foreign investor; focus on counter-terrorism." },
+    { "countryId": "CHN", "countryName": "China", "type": "strategic_partner", "sentiment": "positive", "summary": "Key partner for infrastructure development and trade; significant Chinese loans for rail and port projects." },
+    { "countryId": "GBR", "countryName": "United Kingdom", "type": "historical_partner", "sentiment": "positive", "summary": "Strong cultural and economic ties; major destination for Nigerian diaspora and education." },
+    { "countryId": "ZAF", "countryName": "South Africa", "type": "regional_rival", "sentiment": "neutral", "summary": "Complex relationship between the two largest economies in Africa; competition for regional leadership." }
+  ],
+  "perspectives": [
+    { "source": "Young Urban Professional", "bias": "Optimistic/Reformist", "view": "The tech scene in Lagos is proof of our potential; we just need the government to fix the power and stay out of the way." },
+    { "source": "Northern Smallholder Farmer", "bias": "Vulnerable", "view": "Security is the only thing that matters. We can't farm if we are constantly afraid of bandits." },
+    { "source": "Southern Industrialist", "bias": "Pragmatic", "view": "The reforms are painful, but necessary to stop the bleeding. We need consistent policy to encourage long-term manufacturing." },
+    { "source": "Government Technocrat", "bias": "Institutional", "view": "We are resetting the economy for the 21st century. Strategic autonomy and the '4D' policy will secure our place in the world." }
+  ],
+  "historicalContext": {
+    "summary": "Nigeria gained independence from Britain in 1960. It experienced a series of military coups and a devastating civil war (1967-1970) before returning to stable democratic rule in 1999. Since then, it has maintained an uninterrupted democratic cycle, though it continues to struggle with ethnic and religious divisions.",
+    "keyEvents": [
+      { "year": 1960, "event": "Nigeria gains independence from the United Kingdom." },
+      { "year": 1967, "event": "Biafran Civil War begins after the eastern region attempts to secede." },
+      { "year": 1970, "event": "Civil War ends with the surrender of Biafran forces." },
+      { "year": 1999, "event": "Return to civilian rule with the election of Olusegun Obasanjo." },
+      { "year": 2014, "event": "Nigeria's economy is rebased, becoming the largest in Africa." },
+      { "year": 2015, "event": "First peaceful transfer of power between opposing political parties (Jonathan to Buhari)." },
+      { "year": 2023, "event": "Bola Tinubu elected president; immediately initiates major economic reforms." },
+      { "year": 2024, "event": "Nigeria becomes a partner country of BRICS." }
+    ]
+  },
+  "investmentNotes": {
+    "strengths": ["Massive, young, and entrepreneurial population", "Leading African hub for fintech and startups", "Vast natural gas reserves ('Decade of Gas')", "Rapidly improving digital infrastructure"],
+    "risks": ["High inflation and currency volatility", "Persistent security challenges in the North and Southeast", "Infrastructure gaps, particularly in power and logistics", "Regulatory inconsistency"],
+    "sectors": ["Fintech & Digital Payments", "Natural Gas & Renewable Energy", "Agriculture & Food Processing", "Infrastructure Development"]
+  },
+  "sources": [
+    { "name": "Central Bank of Nigeria", "url": "https://www.cbn.gov.ng/", "type": "economic" },
+    { "name": "National Bureau of Statistics", "url": "https://www.nigerianstat.gov.ng/", "type": "demographic" },
+    { "name": "Nigerian Investment Promotion Commission", "url": "https://www.nipc.gov.ng/", "type": "investment" }
+  ]
+}

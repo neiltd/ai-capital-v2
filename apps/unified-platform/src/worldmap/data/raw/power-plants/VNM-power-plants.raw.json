@@ -1,0 +1,326 @@
+[
+  {
+    "id": "PLANT-VNM-SON-LA",
+    "name": "Son La Hydroelectric Power Plant",
+    "countryId": "VNM",
+    "city": "Muong La",
+    "coordinates": [103.995, 21.495],
+    "type": "hydro",
+    "status": "operating",
+    "capacityMW": 2400,
+    "annualOutputGWh": 10246,
+    "yearCommissioned": 2012,
+    "yearRetirement": null,
+    "operator": "Vietnam Electricity (EVN)",
+    "owner": "Vietnam Electricity (EVN)",
+    "strategicNote": "Largest hydroelectric plant in Southeast Asia, critical for northern Vietnam's power supply and flood control.",
+    "notes": null,
+    "attribution": {
+      "sources": [
+        { "name": "Global Energy Monitor", "url": "https://www.gem.wiki/Son_La_Dam", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 2,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  },
+  {
+    "id": "PLANT-VNM-HOA-BINH",
+    "name": "Hoa Binh Hydroelectric Power Plant",
+    "countryId": "VNM",
+    "city": "Hoa Binh",
+    "coordinates": [105.325, 20.815],
+    "type": "hydro",
+    "status": "operating",
+    "capacityMW": 1920,
+    "annualOutputGWh": 8160,
+    "yearCommissioned": 1994,
+    "yearRetirement": null,
+    "operator": "Vietnam Electricity (EVN)",
+    "owner": "Vietnam Electricity (EVN)",
+    "strategicNote": "Second largest hydro plant in Vietnam, vital for grid stability and irrigation in the Red River Delta.",
+    "notes": null,
+    "attribution": {
+      "sources": [
+        { "name": "Global Energy Monitor", "url": "https://www.gem.wiki/Hoa_Binh_Dam", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 2,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  },
+  {
+    "id": "PLANT-VNM-LAI-CHAU",
+    "name": "Lai Chau Hydroelectric Power Plant",
+    "countryId": "VNM",
+    "city": "Nam Nhun",
+    "coordinates": [102.995, 22.145],
+    "type": "hydro",
+    "status": "operating",
+    "capacityMW": 1200,
+    "annualOutputGWh": 4670,
+    "yearCommissioned": 2016,
+    "yearRetirement": null,
+    "operator": "Vietnam Electricity (EVN)",
+    "owner": "Vietnam Electricity (EVN)",
+    "strategicNote": "Part of the Da River hydropower cascade, essential for energy security in the remote northwest.",
+    "notes": null,
+    "attribution": {
+      "sources": [
+        { "name": "Global Energy Monitor", "url": "https://www.gem.wiki/Lai_Chau_Dam", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 1,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  },
+  {
+    "id": "PLANT-VNM-PHU-MY-COMPLEX",
+    "name": "Phu My Power Center",
+    "countryId": "VNM",
+    "city": "Phu My",
+    "coordinates": [107.025, 10.595],
+    "type": "gas",
+    "status": "operating",
+    "capacityMW": 3975,
+    "annualOutputGWh": null,
+    "yearCommissioned": 1997,
+    "yearRetirement": null,
+    "operator": "EVNGENCO 3 / PV Power",
+    "owner": "Vietnam Electricity / PetroVietnam",
+    "strategicNote": "The largest gas-fired power complex in Vietnam, supplying roughly 40% of the south's electricity.",
+    "notes": "Includes Phu My 1, 2.1, 2.2, 3, and 4 units.",
+    "attribution": {
+      "sources": [
+        { "name": "Global Energy Monitor", "url": "https://www.gem.wiki/Ph%C3%BA_M%E1%BB%B9_power_station", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 2,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  },
+  {
+    "id": "PLANT-VNM-DUYEN-HAI-COMPLEX",
+    "name": "Duyen Hai Power Center",
+    "countryId": "VNM",
+    "city": "Tra Vinh",
+    "coordinates": [106.552, 9.571],
+    "type": "coal",
+    "status": "operating",
+    "capacityMW": 4490,
+    "annualOutputGWh": null,
+    "yearCommissioned": 2015,
+    "yearRetirement": null,
+    "operator": "EVNGENCO 1",
+    "owner": "Vietnam Electricity",
+    "strategicNote": "Critical coal power hub in the Mekong Delta, supporting industrial growth in southern Vietnam.",
+    "notes": "Includes Duyen Hai 1 (1245MW), Duyen Hai 3 (1245MW), and Duyen Hai 3 Extension (688MW). Total capacity reflected is for the operational hub.",
+    "attribution": {
+      "sources": [
+        { "name": "Global Energy Monitor", "url": "https://www.gem.wiki/Duyen_Hai_power_station", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 1,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  },
+  {
+    "id": "PLANT-VNM-VINH-TAN-COMPLEX",
+    "name": "Vinh Tan Power Center",
+    "countryId": "VNM",
+    "city": "Tuy Phong",
+    "coordinates": [108.885, 11.325],
+    "type": "coal",
+    "status": "operating",
+    "capacityMW": 6224,
+    "annualOutputGWh": null,
+    "yearCommissioned": 2014,
+    "yearRetirement": null,
+    "operator": "Various (EVN, PV Power, etc.)",
+    "owner": "Vietnam Electricity / Others",
+    "strategicNote": "One of the largest coal complexes in Vietnam, central to the national energy security strategy despite environmental concerns.",
+    "notes": "Includes Vinh Tan 1, 2, 4, and 4 Extension.",
+    "attribution": {
+      "sources": [
+        { "name": "Global Energy Monitor", "url": "https://www.gem.wiki/Vinh_Tan_power_station", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 1,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  },
+  {
+    "id": "PLANT-VNM-MONG-DUONG-COMPLEX",
+    "name": "Mong Duong Power Center",
+    "countryId": "VNM",
+    "city": "Cam Pha",
+    "coordinates": [107.353, 21.072],
+    "type": "coal",
+    "status": "operating",
+    "capacityMW": 2320,
+    "annualOutputGWh": null,
+    "yearCommissioned": 2015,
+    "yearRetirement": null,
+    "operator": "EVNGENCO 3 / AES-VCM",
+    "owner": "Vietnam Electricity / AES Corporation",
+    "strategicNote": "Major coal hub in Quang Ninh province, leveraging local coal reserves for northern grid stability.",
+    "notes": "Includes Mong Duong 1 (1080MW) and Mong Duong 2 (1240MW).",
+    "attribution": {
+      "sources": [
+        { "name": "Global Energy Monitor", "url": "https://www.gem.wiki/Mong_Duong_power_station", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 2,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  },
+  {
+    "id": "PLANT-VNM-NGHI-SON-COMPLEX",
+    "name": "Nghi Son Power Center",
+    "countryId": "VNM",
+    "city": "Nghi Son",
+    "coordinates": [105.795, 19.325],
+    "type": "coal",
+    "status": "operating",
+    "capacityMW": 1800,
+    "annualOutputGWh": null,
+    "yearCommissioned": 2013,
+    "yearRetirement": null,
+    "operator": "EVNGENCO 1 / NS2PC",
+    "owner": "Vietnam Electricity / Marubeni-Kepco",
+    "strategicNote": "Supports the Nghi Son Economic Zone, a key industrial hub in North-Central Vietnam.",
+    "notes": "Includes Nghi Son 1 (600MW) and Nghi Son 2 (1200MW).",
+    "attribution": {
+      "sources": [
+        { "name": "Global Energy Monitor", "url": "https://www.gem.wiki/Nghi_Son_power_station", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 1,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  },
+  {
+    "id": "PLANT-VNM-CA-MAU-COMPLEX",
+    "name": "Ca Mau Power Center",
+    "countryId": "VNM",
+    "city": "Ca Mau",
+    "coordinates": [104.835, 9.215],
+    "type": "gas",
+    "status": "operating",
+    "capacityMW": 1500,
+    "annualOutputGWh": null,
+    "yearCommissioned": 2008,
+    "yearRetirement": null,
+    "operator": "PetroVietnam Power (PV Power)",
+    "owner": "PetroVietnam",
+    "strategicNote": "Utilizes offshore gas from the PM3-CAA field; critical for the southernmost region's development.",
+    "notes": "Consists of Ca Mau 1 and Ca Mau 2 plants (750MW each).",
+    "attribution": {
+      "sources": [
+        { "name": "Global Energy Monitor", "url": "https://www.gem.wiki/C%C3%A0_Mau_power_station", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 1,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  },
+  {
+    "id": "PLANT-VNM-NHON-TRACH-COMPLEX",
+    "name": "Nhon Trach Power Center",
+    "countryId": "VNM",
+    "city": "Nhon Trach",
+    "coordinates": [106.855, 10.685],
+    "type": "gas",
+    "status": "operating",
+    "capacityMW": 1200,
+    "annualOutputGWh": null,
+    "yearCommissioned": 2009,
+    "yearRetirement": null,
+    "operator": "PV Power",
+    "owner": "PetroVietnam",
+    "strategicNote": "Key gas power facility serving the industrial clusters of Dong Nai and Ho Chi Minh City.",
+    "notes": "Includes Nhon Trach 1 (450MW) and Nhon Trach 2 (750MW). Nhon Trach 3 & 4 are under construction.",
+    "attribution": {
+      "sources": [
+        { "name": "Global Energy Monitor", "url": "https://www.gem.wiki/Nh%C6%A1n_Tr%E1%BA%A1ch_power_station", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 1,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  },
+  {
+    "id": "PLANT-VNM-TRUNG-NAM-THUAN-NAM",
+    "name": "Trung Nam Thuan Nam Solar Farm",
+    "countryId": "VNM",
+    "city": "Thuan Nam",
+    "coordinates": [108.925, 11.415],
+    "type": "solar",
+    "status": "operating",
+    "capacityMW": 450,
+    "annualOutputGWh": null,
+    "yearCommissioned": 2020,
+    "yearRetirement": null,
+    "operator": "Trung Nam Group",
+    "owner": "Trung Nam Group",
+    "strategicNote": "One of the largest solar installations in Southeast Asia; includes a critical 500kV substation for regional integration.",
+    "notes": null,
+    "attribution": {
+      "sources": [
+        { "name": "Global Energy Monitor", "url": "https://www.gem.wiki/Trung_Nam_Thuan_Nam_solar_farm", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "medium",
+        "sourceCount": 1,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  },
+  {
+    "id": "PLANT-VNM-NINH-THUAN-1",
+    "name": "Ninh Thuan 1 Nuclear Power Plant",
+    "countryId": "VNM",
+    "city": "Phuoc Dinh",
+    "coordinates": [109.015, 11.435],
+    "type": "nuclear",
+    "status": "planned",
+    "capacityMW": 2000,
+    "annualOutputGWh": null,
+    "yearCommissioned": null,
+    "yearRetirement": null,
+    "operator": "Vietnam Electricity (EVN)",
+    "owner": "Government of Vietnam",
+    "strategicNote": "Vietnam's first planned nuclear site. Although suspended in 2016, it remains in long-term strategic plans (PDP8) for potential revival.",
+    "notes": "Currently suspended but of high geopolitical interest due to former Russian partnership.",
+    "attribution": {
+      "sources": [
+        { "name": "World Nuclear Association", "url": "https://world-nuclear.org/information-library/country-profiles/countries-t-z/vietnam.aspx", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 2,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  }
+]

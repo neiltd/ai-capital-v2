@@ -1,0 +1,65 @@
+{
+  "id": "BLR",
+  "iso2": "BY",
+  "name": "Belarus",
+  "region": "Europe",
+  "subregion": "Eastern Europe",
+  "capital": "Minsk",
+  "lastUpdated": "2025-05-15",
+  "summary": "Belarus is characterized by deep authoritarian entrenchment and near-total integration with the Russian Federation within the 'Union State' framework. President Alexander Lukashenko secured a seventh term in the January 2025 elections, which were widely condemned by Western nations for the total absence of opposition. The country serves as a critical strategic and military staging ground for Russia, hosting tactical nuclear weapons and preparing for the major Zapad-2025 exercises. Economically, Belarus is heavily reliant on Russian demand and subsidies to offset the impact of severe Western sanctions, leading to a state-managed resilience that is highly vulnerable to external shocks.",
+  "indicators": {
+    "politicalStability":       { "score": 8, "trend": "stable", "confidence": "high", "note": "High stability through total repression of dissent; the 2025 elections confirmed the regime's control." },
+    "economicDirection":        { "score": 3, "trend": "stagnant", "confidence": "high", "note": "Growth is artificial, driven by Russian military demand and price controls; long-term sustainability is low." },
+    "investmentAttractiveness": { "score": 1, "trend": "neutral", "confidence": "high", "note": "Non-existent for Western investors; limited to Russian and selective Chinese state-backed projects." },
+    "geopoliticalRisk":         { "score": 9, "trend": "stable", "confidence": "high", "note": "Extreme risk due to status as a co-aggressor in Ukraine and the hosting of Russian nuclear assets." },
+    "educationQuality":         { "score": 6, "trend": "falling", "confidence": "medium", "note": "Historically strong technical education, but suffering from ideological purges and significant brain drain of academics." },
+    "healthcareQuality":        { "score": 5, "trend": "stable", "confidence": "medium", "note": "Standardized state-run system; facing shortages of Western pharmaceuticals and high-end medical technology." },
+    "technologyInvestment":     { "score": 4, "trend": "falling", "confidence": "high", "note": "The once-vibrant Hi-Tech Park (HTP) has been decimated by the exodus of IT professionals and Western companies." }
+  },
+  "demographics": {
+    "population": 9200000,
+    "medianAge": 41.2,
+    "urbanizationRate": 80.0,
+    "majorEthnicGroups": ["Belarusian", "Russian", "Polish"],
+    "religions": [
+      { "name": "Orthodox", "percent": 80 },
+      { "name": "Catholic", "percent": 10 },
+      { "name": "Other/None", "percent": 10 }
+    ]
+  },
+  "alliances": ["CSTO", "EAEU", "CIS", "Union State", "SCO (Full Member as of 2024)"],
+  "relationships": [
+    { "countryId": "RUS", "countryName": "Russia", "type": "strategic_partner", "sentiment": "positive", "summary": "The indispensable patron; provides security, energy subsidies, and the primary market for Belarusian exports." },
+    { "countryId": "UKR", "countryName": "Ukraine", "type": "adversary", "sentiment": "negative", "summary": "Relations are hostile; Belarus is viewed as a participant in the Russian invasion, providing logistical support." },
+    { "countryId": "POL", "countryName": "Poland", "type": "adversary", "sentiment": "negative", "summary": "Extreme tension over border security, migration pressure, and Poland's support for the Belarusian democratic movement." },
+    { "countryId": "CHN", "countryName": "China", "type": "partner", "sentiment": "positive", "summary": "A secondary strategic partner providing a diplomatic hedge and investment in the Great Stone Industrial Park." },
+    { "countryId": "LTU", "countryName": "Lithuania", "type": "adversary", "sentiment": "negative", "summary": "Strongest critic in the EU; hosts the Belarusian government-in-exile led by Sviatlana Tsikhanouskaya." }
+  ],
+  "perspectives": [
+    { "source": "Regime Loyalist", "bias": "Supportive", "view": "The President has saved the country from Western-backed chaos and ensured our sovereignty through the Union State." },
+    { "source": "Exiled Opposition Leader", "bias": "Critical", "view": "Lukashenko has sold our independence to Putin; the 2025 election was a crime against the Belarusian people." },
+    { "source": "Industrial Worker", "bias": "Pragmatic", "view": "As long as the factories are running and the Russians are buying, we have a living. The alternative is the uncertainty of the 90s." },
+    { "source": "Security Analyst", "bias": "Cautious", "view": "Belarus is effectively a Russian military district; its strategic value to Moscow makes any democratic transition nearly impossible without Russian collapse." }
+  ],
+  "historicalContext": {
+    "summary": "Belarus gained independence in 1991 following the dissolution of the Soviet Union. Alexander Lukashenko has been the only president of the country since 1994, presiding over a Soviet-style planned economy and a centralized political system. The 2020 mass protests following a disputed election marked a turning point, leading to a massive crackdown and a total pivot toward Russia. Since 2022, the country's fate has been inextricably linked to Russia's war in Ukraine.",
+    "keyEvents": [
+      { "year": 1991, "event": "Independence from the Soviet Union." },
+      { "year": 1994, "event": "Alexander Lukashenko is elected President in the country's first and only free election." },
+      { "year": 1999, "event": "Signing of the Treaty on the Creation of a Union State with Russia." },
+      { "year": 2020, "event": "Massive anti-government protests following a fraudulent presidential election; start of unprecedented repression." },
+      { "year": 2022, "event": "Belarus used as a primary launchpad for the Russian invasion of Ukraine." },
+      { "year": 2025, "event": "Lukashenko 're-elected' in January; tactical nuclear weapons and Oreshnik missiles deployed on territory." }
+    ]
+  },
+  "investmentNotes": {
+    "strengths": ["Strong industrial base in heavy machinery and potash mining", "Highly disciplined and technically skilled workforce", "Integrated infrastructure with the Russian market", "Strategic transit location for Eurasian trade (though restricted by sanctions)"],
+    "risks": ["Severe international sanctions and isolation from Western financial markets", "Extreme political risk and lack of an independent judiciary", "High dependency on Russian energy and market demand", "Ongoing brain drain of the creative and tech classes"],
+    "sectors": ["Agricultural Machinery", "Potash & Fertilizers", "Oil Refining", "Defense Industry Logistics"]
+  },
+  "sources": [
+    { "name": "National Statistical Committee of the Republic of Belarus", "url": "https://www.belstat.gov.by", "type": "economic" },
+    { "name": "Ministry of Foreign Affairs - Belarus", "url": "https://mfa.gov.by", "type": "government" },
+    { "name": "EBRD Belarus Assessment", "url": "https://www.ebrd.com/belarus.html", "type": "economic" }
+  ]
+}

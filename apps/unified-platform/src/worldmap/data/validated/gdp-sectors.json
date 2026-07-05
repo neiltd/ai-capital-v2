@@ -1,0 +1,6698 @@
+[
+  {
+    "iso3": "ABW",
+    "year": 2023,
+    "gdpUsdBillions": 3.83,
+    "gdpGrowthPct": 7.71,
+    "sectorShares": {
+      "agriculture": 0,
+      "manufacturing": 0,
+      "construction": 0,
+      "services": 0,
+      "extraction": 0.0,
+      "utilities": 0.0,
+      "other": 100.0
+    },
+    "exportsPctGdp": 82.4,
+    "fdiInflowsUsdB": -0.14,
+    "sourceUrl": "https://data.worldbank.org/"
+  },
+  {
+    "iso3": "AFG",
+    "year": 2023,
+    "gdpUsdBillions": 17.15,
+    "gdpGrowthPct": 2.27,
+    "sectorShares": {
+      "agriculture": 34.7,
+      "manufacturing": 7.5,
+      "construction": 5.0,
+      "services": 46.4,
+      "extraction": 0.6,
+      "utilities": 0.3,
+      "other": 5.4
+    },
+    "exportsPctGdp": 16.9,
+    "fdiInflowsUsdB": 0.0,
+    "sourceUrl": "https://data.worldbank.org/"
+  },
+  {
+    "iso3": "AGO",
+    "year": 2023,
+    "gdpUsdBillions": 107.17,
+    "gdpGrowthPct": 1.26,
+    "sectorShares": {
+      "agriculture": 20.7,
+      "manufacturing": 7.3,
+      "construction": 5.0,
+      "services": 41.8,
+      "extraction": 16.0,
+      "utilities": 6.8,
+      "other": 2.4
+    },
+    "exportsPctGdp": 32.3,
+    "fdiInflowsUsdB": -2.12,
+    "sourceUrl": "https://data.worldbank.org/"
+  },
+  {
+    "iso3": "ALB",
+    "year": 2023,
+    "gdpUsdBillions": 23.49,
+    "gdpGrowthPct": 4.02,
+    "sectorShares": {
+      "agriculture": 16.3,
+      "manufacturing": 7.2,
+      "construction": 5.0,
+      "services": 47.7,
+      "extraction": 7.7,
+      "utilities": 3.3,
+      "other": 12.9
+    },
+    "exportsPctGdp": 38.4,
+    "fdiInflowsUsdB": 1.62,
+    "sourceUrl": "https://data.worldbank.org/"
+  },
+  {
+    "iso3": "ARE",
+    "year": 2023,
+    "gdpUsdBillions": 522.62,
+    "gdpGrowthPct": 4.3,
+    "sectorShares": {
+      "agriculture": 0.8,
+      "manufacturing": 9.5,
+      "construction": 5.0,
+      "services": 53.8,
+      "extraction": 21.7,
+      "utilities": 9.3,
+      "other": 0
+    },
+    "exportsPctGdp": 106.8,
+    "fdiInflowsUsdB": 30.69,
+    "sourceUrl": "https://data.worldbank.org/"
+  },
+  {
+    "iso3": "ARG",
+    "year": 2023,
+    "gdpUsdBillions": 649.46,
+    "gdpGrowthPct": -1.86,
+    "sectorShares": {
+      "agriculture": 5.8,
+      "manufacturing": 16.5,
+      "construction": 5.0,
+      "services": 53.2,
+      "extraction": 2.6,
+      "utilities": 1.1,
+      "other": 15.8
+    },
+    "exportsPctGdp": 12.8,
+    "fdiInflowsUsdB": 24.76,
+    "sourceUrl": "https://data.worldbank.org/"
+  },
+  {
+    "iso3": "ARM",
+    "year": 2023,
+    "gdpUsdBillions": 24.19,
+    "gdpGrowthPct": 8.3,
+    "sectorShares": {
+      "agriculture": 8.1,
+      "manufacturing": 10.2,
+      "construction": 5.0,
+      "services": 60.3,
+      "extraction": 5.3,
+      "utilities": 2.3,
+      "other": 8.7
+    },
+    "exportsPctGdp": 61.0,
+    "fdiInflowsUsdB": 0.58,
+    "sourceUrl": "https://data.worldbank.org/"
+  },
+  {
+    "iso3": "AUS",
+    "year": 2023,
+    "gdpUsdBillions": 1734.45,
+    "gdpGrowthPct": 3.58,
+    "sectorShares": {
+      "agriculture": 2.6,
+      "manufacturing": 5.3,
+      "construction": 5.0,
+      "services": 63.6,
+      "extraction": 12.1,
+      "utilities": 5.2,
+      "other": 6.3
+    },
+    "exportsPctGdp": 26.7,
+    "fdiInflowsUsdB": 35.32,
+    "sourceUrl": "https://data.worldbank.org/"
+  },
+  {
+    "iso3": "AUT",
+    "year": 2023,
+    "gdpUsdBillions": 516.67,
+    "gdpGrowthPct": -0.79,
+    "sectorShares": {
+      "agriculture": 1.2,
+      "manufacturing": 15.9,
+      "construction": 5.0,
+      "services": 62.6,
+      "extraction": 3.6,
+      "utilities": 1.5,
+      "other": 10.1
+    },
+    "exportsPctGdp": 58.5,
+    "fdiInflowsUsdB": 2.92,
+    "sourceUrl": "https://data.worldbank.org/"
+  },
+  {
+    "iso3": "AZE",
+    "year": 2023,
+    "gdpUsdBillions": 72.43,
+    "gdpGrowthPct": 1.35,
+    "sectorShares": {
+      "agriculture": 5.5,
+      "manufacturing": 5.1,
+      "construction": 5.0,
+      "services": 39.8,
+      "extraction": 25.0,
+      "utilities": 10.7,
+      "other": 8.9
+    },
+    "exportsPctGdp": 49.0,
+    "fdiInflowsUsdB": 0.25,
+    "sourceUrl": "https://data.worldbank.org/"
+  },
+  {
+    "iso3": "BDI",
+    "year": 2023,
+    "gdpUsdBillions": 3.43,
+    "gdpGrowthPct": 3.25,
+    "sectorShares": {
+      "agriculture": 33.4,
+      "manufacturing": 12.5,
+      "construction": 5.0,
+      "services": 43.6,
+      "extraction": 0.5,
+      "utilities": 0.2,
+      "other": 4.8
+    },
+    "exportsPctGdp": 0,
+    "fdiInflowsUsdB": 0.03,
+    "sourceUrl": "https://data.worldbank.org/"
+  },
+  {
+    "iso3": "BEL",
+    "year": 2023,
+    "gdpUsdBillions": 651.33,
+    "gdpGrowthPct": 1.71,
+    "sectorShares": {
+      "agriculture": 0.8,
+      "manufacturing": 12.0,
+      "construction": 5.0,
+      "services": 70.3,
+      "extraction": 1.8,
+      "utilities": 0.8,
+      "other": 9.5
+    },
+    "exportsPctGdp": 82.7,
+    "fdiInflowsUsdB": -4.25,
+    "sourceUrl": "https://data.worldbank.org/"
+  },
+  {
+    "iso3": "BEN",
+    "year": 2023,
+    "gdpUsdBillions": 19.67,
+    "gdpGrowthPct": 6.35,
+    "sectorShares": {
+      "agriculture": 25.4,
+      "manufacturing": 10.1,
+      "construction": 5.0,
+      "services": 47.7,
+      "extraction": 1.6,
+      "utilities": 0.7,
+      "other": 9.6
+    },
+    "exportsPctGdp": 20.0,
+    "fdiInflowsUsdB": 0.44,
+    "sourceUrl": "https://data.worldbank.org/"
+  },
+  {
+    "iso3": "BFA",
+    "year": 2023,
+    "gdpUsdBillions": 20.11,
+    "gdpGrowthPct": 3.0,
+    "sectorShares": {
+      "agriculture": 19.0,
+      "manufacturing": 9.9,
+      "construction": 5.0,
+      "services": 47.6,
+      "extraction": 7.6,
+      "utilities": 3.2,
+      "other": 7.7
+    },
+    "exportsPctGdp": 28.9,
+    "fdiInflowsUsdB": 0.11,
+    "sourceUrl": "https://data.worldbank.org/"
+  },
+  {
+    "iso3": "BGD",
+    "year": 2023,
+    "gdpUsdBillions": 437.42,
+    "gdpGrowthPct": 5.78,
+    "sectorShares": {
+      "agriculture": 11.0,
+      "manufacturing": 22.3,
+      "construction": 5.0,
+      "services": 51.1,
+      "extraction": 5.1,
+      "utilities": 2.2,
+      "other": 3.3
+    },
+    "exportsPctGdp": 13.2,
+    "fdiInflowsUsdB": 1.47,
+    "sourceUrl": "https://data.worldbank.org/"
+  },
+  {
+    "iso3": "BGR",
+    "year": 2023,
+    "gdpUsdBillions": 102.2,
+    "gdpGrowthPct": 1.68,
+    "sectorShares": {
+      "agriculture": 2.5,
+      "manufacturing": 0,
+      "construction": 5.0,
+      "services": 62.4,
+      "extraction": 12.4,
+      "utilities": 5.3,
+      "other": 12.3
+    },
+    "exportsPctGdp": 62.0,
+    "fdiInflowsUsdB": 5.17,
+    "sourceUrl": "https://data.worldbank.org/"
+  },
+  {
+    "iso3": "BHR",
+    "year": 2023,
+    "gdpUsdBillions": 46.19,
+    "gdpGrowthPct": 3.88,
+    "sectorShares": {
+      "agriculture": 0.3,
+      "manufacturing": 20.1,
+      "construction": 5.0,
+      "services": 51.9,
+      "extraction": 12.8,
+      "utilities": 5.5,
+      "other": 4.4
+    },
+    "exportsPctGdp": 87.4,
+    "fdiInflowsUsdB": 7.23,
+    "sourceUrl": "https://data.worldbank.org/"
+  },
+  {
+    "iso3": "BHS",
+    "year": 2023,
+    "gdpUsdBillions": 15.27,
+    "gdpGrowthPct": 3.05,
+    "sectorShares": {
+      "agriculture": 0.5,
+      "manufacturing": 0.9,
+      "construction": 5.0,
+      "services": 78.6,
+      "extraction": 2.7,
+      "utilities": 1.2,
+      "other": 11.2
+    },
+    "exportsPctGdp": 37.8,
+    "fdiInflowsUsdB": 0.32,
+    "sourceUrl": "https://data.worldbank.org/"
+  },
+  {
+    "iso3": "BIH",
+    "year": 2023,
+    "gdpUsdBillions": 27.59,
+    "gdpGrowthPct": 1.99,
+    "sectorShares": {
+      "agriculture": 4.7,
+      "manufacturing": 13.3,
+      "construction": 5.0,
+      "services": 55.9,
+      "extraction": 3.8,
+      "utilities": 1.6,
+      "other": 15.7
+    },
+    "exportsPctGdp": 43.9,
+    "fdiInflowsUsdB": 1.13,
+    "sourceUrl": "https://data.worldbank.org/"
+  },
+  {
+    "iso3": "BLR",
+    "year": 2023,
+    "gdpUsdBillions": 72.48,
+    "gdpGrowthPct": 4.13,
+    "sectorShares": {
+      "agriculture": 7.2,
+      "manufacturing": 22.2,
+      "construction": 5.0,
+      "services": 48.8,
+      "extraction": 3.2,
+      "utilities": 1.4,
+      "other": 12.3
+    },
+    "exportsPctGdp": 66.0,
+    "fdiInflowsUsdB": 1.99,
+    "sourceUrl": "https://data.worldbank.org/"
+  },
+  {
+    "iso3": "BLZ",
+    "year": 2023,
+    "gdpUsdBillions": 3.05,
+    "gdpGrowthPct": 0.5,
+    "sectorShares": {
+      "agriculture": 8.1,
+      "manufacturing": 6.5,
+      "construction": 5.0,
+      "services": 62.1,
+      "extraction": 2.0,
+      "utilities": 0.9,
+      "other": 15.3
+    },
+    "exportsPctGdp": 54.9,
+    "fdiInflowsUsdB": 0.02,
+    "sourceUrl": "https://data.worldbank.org/"
+  },
+  {
+    "iso3": "BOL",
+    "year": 2023,
+    "gdpUsdBillions": 52.34,
+    "gdpGrowthPct": 2.52,
+    "sectorShares": {
+      "agriculture": 9.3,
+      "manufacturing": 11.8,
+      "construction": 5.0,
+      "services": 53.8,
+      "extraction": 9.1,
+      "utilities": 3.9,
+      "other": 7.1
+    },
+    "exportsPctGdp": 22.4,
+    "fdiInflowsUsdB": 0.24,
+    "sourceUrl": "https://data.worldbank.org/"
+  },
+  {
+    "iso3": "BRA",
+    "year": 2023,
+    "gdpUsdBillions": 2191.13,
+    "gdpGrowthPct": 3.24,
+    "sectorShares": {
+      "agriculture": 6.0,
+      "manufacturing": 13.3,
+      "construction": 5.0,
+      "services": 59.2,
+      "extraction": 2.7,
+      "utilities": 1.2,
+      "other": 12.7
+    },
+    "exportsPctGdp": 18.0,
+    "fdiInflowsUsdB": 62.75,
+    "sourceUrl": "https://data.worldbank.org/"
+  },
+  {
+    "iso3": "BRB",
+    "year": 2023,
+    "gdpUsdBillions": 7.22,
+    "gdpGrowthPct": 2.91,
+    "sectorShares": {
+      "agriculture": 1.7,
+      "manufacturing": 5.2,
+      "construction": 5.0,
+      "services": 75.5,
+      "extraction": 1.5,
+      "utilities": 0.6,
+      "other": 10.6
+    },
+    "exportsPctGdp": 0,
+    "fdiInflowsUsdB": 0.22,
+    "sourceUrl": "https://data.worldbank.org/"
+  },
+  {
+    "iso3": "BRN",
+    "year": 2023,
+    "gdpUsdBillions": 15.1,
+    "gdpGrowthPct": 1.13,
+    "sectorShares": {
+      "agriculture": 1.2,
+      "manufacturing": 10.4,
+      "construction": 5.0,
+      "services": 38.8,
+      "extraction": 32.5,
+      "utilities": 13.9,
+      "other": 0
+    },
+    "exportsPctGdp": 76.7,
+    "fdiInflowsUsdB": -0.06,
+    "sourceUrl": "https://data.worldbank.org/"
+  },
+  {
+    "iso3": "BTN",
+    "year": 2023,
+    "gdpUsdBillions": 3.01,
+    "gdpGrowthPct": 4.63,
+    "sectorShares": {
+      "agriculture": 15.0,
+      "manufacturing": 7.9,
+      "construction": 5.0,
+      "services": 52.8,
+      "extraction": 11.6,
+      "utilities": 5.0,
+      "other": 2.8
+    },
+    "exportsPctGdp": 28.4,
+    "fdiInflowsUsdB": 0.01,
+    "sourceUrl": "https://data.worldbank.org/"
+  },
+  {
+    "iso3": "BWA",
+    "year": 2023,
+    "gdpUsdBillions": 19.41,
+    "gdpGrowthPct": 3.21,
+    "sectorShares": {
+      "agriculture": 1.7,
+      "manufacturing": 5.6,
+      "construction": 5.0,
+      "services": 59.2,
+      "extraction": 16.4,
+      "utilities": 7.0,
+      "other": 5.1
+    },
+    "exportsPctGdp": 32.2,
+    "fdiInflowsUsdB": 0.74,
+    "sourceUrl": "https://data.worldbank.org/"
+  },
+  {
+    "iso3": "CAF",
+    "year": 2023,
+    "gdpUsdBillions": 2.56,
+    "gdpGrowthPct": 0.7,
+    "sectorShares": {
+      "agriculture": 28.6,
+      "manufacturing": 18.0,
+      "construction": 2.8,
+      "services": 40.5,
+      "extraction": 0.0,
+      "utilities": 0.0,
+      "other": 10.2
+    },
+    "exportsPctGdp": 14.4,
+    "fdiInflowsUsdB": 0.04,
+    "sourceUrl": "https://data.worldbank.org/"
+  },
+  {
+    "iso3": "CAN",
+    "year": 2023,
+    "gdpUsdBillions": 2173.34,
+    "gdpGrowthPct": 1.53,
+    "sectorShares": {
+      "agriculture": 0,
+      "manufacturing": 0,
+      "construction": 0,
+      "services": 0,
+      "extraction": 0.0,
+      "utilities": 0.0,
+      "other": 100.0
+    },
+    "exportsPctGdp": 33.3,
+    "fdiInflowsUsdB": 43.9,
+    "sourceUrl": "https://data.worldbank.org/"
+  },
+  {
+    "iso3": "CHE",
+    "year": 2023,
+    "gdpUsdBillions": 894.42,
+    "gdpGrowthPct": 0.68,
+    "sectorShares": {
+      "agriculture": 0.6,
+      "manufacturing": 17.8,
+      "construction": 5.0,
+      "services": 72.2,
+      "extraction": 1.3,
+      "utilities": 0.6,
+      "other": 2.5
+    },
+    "exportsPctGdp": 73.3,
+    "fdiInflowsUsdB": -115.46,
+    "sourceUrl": "https://data.worldbank.org/"
+  },
+  {
+    "iso3": "CHI",
+    "year": 2023,
+    "gdpUsdBillions": 12.51,
+    "gdpGrowthPct": 3.72,
+    "sectorShares": {
+      "agriculture": 0.6,
+      "manufacturing": 0.8,
+      "construction": 5.0,
+      "services": 91.2,
+      "extraction": 1.7,
+      "utilities": 0.7,
+      "other": 0
+    },
+    "exportsPctGdp": 0,
+    "fdiInflowsUsdB": 0.0,
+    "sourceUrl": "https://data.worldbank.org/"
+  },
+  {
+    "iso3": "CHL",
+    "year": 2023,
+    "gdpUsdBillions": 335.52,
+    "gdpGrowthPct": 0.52,
+    "sectorShares": {
+      "agriculture": 3.5,
+      "manufacturing": 9.4,
+      "construction": 5.0,
+      "services": 57.6,
+      "extraction": 10.1,
+      "utilities": 4.3,
+      "other": 10.1
+    },
+    "exportsPctGdp": 30.8,
+    "fdiInflowsUsdB": 18.38,
+    "sourceUrl": "https://data.worldbank.org/"
+  },
+  {
+    "iso3": "CHN",
+    "year": 2023,
+    "gdpUsdBillions": 18270.36,
+    "gdpGrowthPct": 5.41,
+    "sectorShares": {
+      "agriculture": 6.9,
+      "manufacturing": 25.5,
+      "construction": 5.0,
+      "services": 56.3,
+      "extraction": 4.4,
+      "utilities": 1.9,
+      "other": 0.0
+    },
+    "exportsPctGdp": 19.1,
+    "fdiInflowsUsdB": 51.34,
+    "sourceUrl": "https://data.worldbank.org/"
+  },
+  {
+    "iso3": "CIV",
+    "year": 2023,
+    "gdpUsdBillions": 80.78,
+    "gdpGrowthPct": 6.6,
+    "sectorShares": {
+      "agriculture": 15.9,
+      "manufacturing": 13.3,
+      "construction": 5.0,
+      "services": 52.3,
+      "extraction": 3.9,
+      "utilities": 1.7,
+      "other": 7.9
+    },
+    "exportsPctGdp": 22.4,
+    "fdiInflowsUsdB": 2.49,
+    "sourceUrl": "https://data.worldbank.org/"
+  },
+  {
+    "iso3": "CMR",
+    "year": 2023,
+    "gdpUsdBillions": 48.81,
+    "gdpGrowthPct": 3.35,
+    "sectorShares": {
+      "agriculture": 17.1,
+      "manufacturing": 13.2,
+      "construction": 5.0,
+      "services": 50.9,
+      "extraction": 4.8,
+      "utilities": 2.1,
+      "other": 6.9
+    },
+    "exportsPctGdp": 16.9,
+    "fdiInflowsUsdB": 0.82,
+    "sourceUrl": "https://data.worldbank.org/"
+  },
+  {
+    "iso3": "COD",
+    "year": 2023,
+    "gdpUsdBillions": 69.84,
+    "gdpGrowthPct": 8.53,
+    "sectorShares": {
+      "agriculture": 10.4,
+      "manufacturing": 8.2,
+      "construction": 5.0,
+      "services": 45.9,
+      "extraction": 18.4,
+      "utilities": 7.9,
+      "other": 4.2
+    },
+    "exportsPctGdp": 42.1,
+    "fdiInflowsUsdB": 2.38,
+    "sourceUrl": "https://data.worldbank.org/"
+  },
+  {
+    "iso3": "COG",
+    "year": 2023,
+    "gdpUsdBillions": 15.32,
+    "gdpGrowthPct": 1.91,
+    "sectorShares": {
+      "agriculture": 9.0,
+      "manufacturing": 0,
+      "construction": 5.0,
+      "services": 40.4,
+      "extraction": 28.2,
+      "utilities": 12.1,
+      "other": 5.4
+    },
+    "exportsPctGdp": 56.9,
+    "fdiInflowsUsdB": 0.63,
+    "sourceUrl": "https://data.worldbank.org/"
+  },
+  {
+    "iso3": "COL",
+    "year": 2023,
+    "gdpUsdBillions": 366.29,
+    "gdpGrowthPct": 0.71,
+    "sectorShares": {
+      "agriculture": 8.8,
+      "manufacturing": 10.9,
+      "construction": 5.0,
+      "services": 56.7,
+      "extraction": 6.2,
+      "utilities": 2.6,
+      "other": 9.8
+    },
+    "exportsPctGdp": 17.8,
+    "fdiInflowsUsdB": 16.79,
+    "sourceUrl": "https://data.worldbank.org/"
+  },
+  {
+    "iso3": "COM",
+    "year": 2023,
+    "gdpUsdBillions": 1.33,
+    "gdpGrowthPct": 3.0,
+    "sectorShares": {
+      "agriculture": 35.9,
+      "manufacturing": 0,
+      "construction": 5.0,
+      "services": 50.6,
+      "extraction": 3.2,
+      "utilities": 1.4,
+      "other": 4.0
+    },
+    "exportsPctGdp": 10.4,
+    "fdiInflowsUsdB": 0.01,
+    "sourceUrl": "https://data.worldbank.org/"
+  },
+  {
+    "iso3": "CPV",
+    "year": 2023,
+    "gdpUsdBillions": 2.5,
+    "gdpGrowthPct": 4.79,
+    "sectorShares": {
+      "agriculture": 4.9,
+      "manufacturing": 4.9,
+      "construction": 5.0,
+      "services": 68.9,
+      "extraction": 0.7,
+      "utilities": 0.3,
+      "other": 15.3
+    },
+    "exportsPctGdp": 39.3,
+    "fdiInflowsUsdB": 0.16,
+    "sourceUrl": "https://data.worldbank.org/"
+  },
+  {
+    "iso3": "CRI",
+    "year": 2023,
+    "gdpUsdBillions": 86.5,
+    "gdpGrowthPct": 5.11,
+    "sectorShares": {
+      "agriculture": 3.8,
+      "manufacturing": 13.6,
+      "construction": 5.0,
+      "services": 68.0,
+      "extraction": 1.3,
+      "utilities": 0.6,
+      "other": 7.7
+    },
+    "exportsPctGdp": 38.9,
+    "fdiInflowsUsdB": 4.69,
+    "sourceUrl": "https://data.worldbank.org/"
+  },
+  {
+    "iso3": "CUW",
+    "year": 2023,
+    "gdpUsdBillions": 3.28,
+    "gdpGrowthPct": 4.2,
+    "sectorShares": {
+      "agriculture": 0.3,
+      "manufacturing": 2.7,
+      "construction": 5.0,
+      "services": 73.3,
+      "extraction": 2.8,
+      "utilities": 1.2,
+      "other": 14.7
+    },
+    "exportsPctGdp": 0,
+    "fdiInflowsUsdB": 0.14,
+    "sourceUrl": "https://data.worldbank.org/"
+  },
+  {
+    "iso3": "CYP",
+    "year": 2023,
+    "gdpUsdBillions": 35.08,
+    "gdpGrowthPct": 3.62,
+    "sectorShares": {
+      "agriculture": 1.2,
+      "manufacturing": 4.6,
+      "construction": 5.0,
+      "services": 76.2,
+      "extraction": 1.2,
+      "utilities": 0.5,
+      "other": 11.3
+    },
+    "exportsPctGdp": 96.4,
+    "fdiInflowsUsdB": -22.15,
+    "sourceUrl": "https://data.worldbank.org/"
+  },
+  {
+    "iso3": "CZE",
+    "year": 2023,
+    "gdpUsdBillions": 345.06,
+    "gdpGrowthPct": 0.05,
+    "sectorShares": {
+      "agriculture": 2.1,
+      "manufacturing": 20.4,
+      "construction": 5.0,
+      "services": 59.7,
+      "extraction": 3.2,
+      "utilities": 1.4,
+      "other": 8.1
+    },
+    "exportsPctGdp": 68.4,
+    "fdiInflowsUsdB": 11.89,
+    "sourceUrl": "https://data.worldbank.org/"
+  },
+  {
+    "iso3": "DEU",
+    "year": 2023,
+    "gdpUsdBillions": 4562.21,
+    "gdpGrowthPct": -0.87,
+    "sectorShares": {
+      "agriculture": 0.9,
+      "manufacturing": 18.9,
+      "construction": 5.0,
+      "services": 63.6,
+      "extraction": 2.0,
+      "utilities": 0.9,
+      "other": 8.7
+    },
+    "exportsPctGdp": 43.0,
+    "fdiInflowsUsdB": 77.44,
+    "sourceUrl": "https://data.worldbank.org/"
+  },
+  {
+    "iso3": "DJI",
+    "year": 2023,
+    "gdpUsdBillions": 3.9,
+    "gdpGrowthPct": 6.81,
+    "sectorShares": {
+      "agriculture": 2.5,
+      "manufacturing": 4.7,
+      "construction": 5.0,
+      "services": 77.1,
+      "extraction": 3.3,
+      "utilities": 1.4,
+      "other": 6.0
+    },
+    "exportsPctGdp": 150.7,
+    "fdiInflowsUsdB": 0.14,
+    "sourceUrl": "https://data.worldbank.org/"
+  },
+  {
+    "iso3": "DNK",
+    "year": 2023,
+    "gdpUsdBillions": 404.65,
+    "gdpGrowthPct": 0.6,
+    "sectorShares": {
+      "agriculture": 1.0,
+      "manufacturing": 16.4,
+      "construction": 5.0,
+      "services": 63.9,
+      "extraction": 1.6,
+      "utilities": 0.7,
+      "other": 11.4
+    },
+    "exportsPctGdp": 69.3,
+    "fdiInflowsUsdB": 8.23,
+    "sourceUrl": "https://data.worldbank.org/"
+  },
+  {
+    "iso3": "DOM",
+    "year": 2023,
+    "gdpUsdBillions": 120.46,
+    "gdpGrowthPct": 2.19,
+    "sectorShares": {
+      "agriculture": 4.3,
+      "manufacturing": 12.5,
+      "construction": 5.0,
+      "services": 59.6,
+      "extraction": 8.2,
+      "utilities": 3.5,
+      "other": 6.8
+    },
+    "exportsPctGdp": 21.3,
+    "fdiInflowsUsdB": 4.75,
+    "sourceUrl": "https://data.worldbank.org/"
+  },
+  {
+    "iso3": "DZA",
+    "year": 2023,
+    "gdpUsdBillions": 247.92,
+    "gdpGrowthPct": 4.1,
+    "sectorShares": {
+      "agriculture": 13.4,
+      "manufacturing": 9.1,
+      "construction": 5.0,
+      "services": 45.5,
+      "extraction": 16.4,
+      "utilities": 7.0,
+      "other": 3.5
+    },
+    "exportsPctGdp": 23.8,
+    "fdiInflowsUsdB": 1.21,
+    "sourceUrl": "https://data.worldbank.org/"
+  },
+  {
+    "iso3": "ECU",
+    "year": 2023,
+    "gdpUsdBillions": 121.15,
+    "gdpGrowthPct": 1.99,
+    "sectorShares": {
+      "agriculture": 8.0,
+      "manufacturing": 13.3,
+      "construction": 5.0,
+      "services": 58.6,
+      "extraction": 6.5,
+      "utilities": 2.8,
+      "other": 5.8
+    },
+    "exportsPctGdp": 28.6,
+    "fdiInflowsUsdB": 0.48,
+    "sourceUrl": "https://data.worldbank.org/"
+  },
+  {
+    "iso3": "EGY",
+    "year": 2023,
+    "gdpUsdBillions": 395.93,
+    "gdpGrowthPct": 3.76,
+    "sectorShares": {
+      "agriculture": 10.6,
+      "manufacturing": 15.1,
+      "construction": 5.0,
+      "services": 51.6,
+      "extraction": 8.9,
+      "utilities": 3.8,
+      "other": 5.0
+    },
+    "exportsPctGdp": 19.1,
+    "fdiInflowsUsdB": 9.84,
+    "sourceUrl": "https://data.worldbank.org/"
+  },
+  {
+    "iso3": "ESP",
+    "year": 2023,
+    "gdpUsdBillions": 1619.48,
+    "gdpGrowthPct": 2.46,
+    "sectorShares": {
+      "agriculture": 2.6,
+      "manufacturing": 11.0,
+      "construction": 5.0,
+      "services": 68.7,
+      "extraction": 2.8,
+      "utilities": 1.2,
+      "other": 8.7
+    },
+    "exportsPctGdp": 37.8,
+    "fdiInflowsUsdB": 46.96,
+    "sourceUrl": "https://data.worldbank.org/"
+  },
+  {
+    "iso3": "EST",
+    "year": 2023,
+    "gdpUsdBillions": 41.47,
+    "gdpGrowthPct": -2.74,
+    "sectorShares": {
+      "agriculture": 1.7,
+      "manufacturing": 11.4,
+      "construction": 5.0,
+      "services": 65.1,
+      "extraction": 3.5,
+      "utilities": 1.5,
+      "other": 11.8
+    },
+    "exportsPctGdp": 77.8,
+    "fdiInflowsUsdB": 5.2,
+    "sourceUrl": "https://data.worldbank.org/"
+  },
+  {
+    "iso3": "ETH",
+    "year": 2023,
+    "gdpUsdBillions": 135.87,
+    "gdpGrowthPct": 6.59,
+    "sectorShares": {
+      "agriculture": 35.8,
+      "manufacturing": 4.5,
+      "construction": 5.0,
+      "services": 37.0,
+      "extraction": 10.5,
+      "utilities": 4.5,
+      "other": 2.8
+    },
+    "exportsPctGdp": 6.6,
+    "fdiInflowsUsdB": 3.26,
+    "sourceUrl": "https://data.worldbank.org/"
+  },
+  {
+    "iso3": "FIN",
+    "year": 2023,
+    "gdpUsdBillions": 295.02,
+    "gdpGrowthPct": -0.94,
+    "sectorShares": {
+      "agriculture": 2.3,
+      "manufacturing": 14.5,
+      "construction": 5.0,
+      "services": 61.8,
+      "extraction": 2.8,
+      "utilities": 1.2,
+      "other": 12.4
+    },
+    "exportsPctGdp": 42.8,
+    "fdiInflowsUsdB": -0.11,
+    "sourceUrl": "https://data.worldbank.org/"
+  },
+  {
+    "iso3": "FJI",
+    "year": 2023,
+    "gdpUsdBillions": 5.48,
+    "gdpGrowthPct": 9.44,
+    "sectorShares": {
+      "agriculture": 12.8,
+      "manufacturing": 11.8,
+      "construction": 5.0,
+      "services": 56.2,
+      "extraction": 0.3,
+      "utilities": 0.1,
+      "other": 13.7
+    },
+    "exportsPctGdp": 0,
+    "fdiInflowsUsdB": 0.09,
+    "sourceUrl": "https://data.worldbank.org/"
+  },
+  {
+    "iso3": "FRA",
+    "year": 2023,
+    "gdpUsdBillions": 3056.25,
+    "gdpGrowthPct": 1.44,
+    "sectorShares": {
+      "agriculture": 1.5,
+      "manufacturing": 9.8,
+      "construction": 5.0,
+      "services": 70.2,
+      "extraction": 2.3,
+      "utilities": 1.0,
+      "other": 10.2
+    },
+    "exportsPctGdp": 34.5,
+    "fdiInflowsUsdB": 18.05,
+    "sourceUrl": "https://data.worldbank.org/"
+  },
+  {
+    "iso3": "FSM",
+    "year": 2023,
+    "gdpUsdBillions": 0.44,
+    "gdpGrowthPct": 0.45,
+    "sectorShares": {
+      "agriculture": 23.4,
+      "manufacturing": 0.5,
+      "construction": 4.5,
+      "services": 69.6,
+      "extraction": 0.0,
+      "utilities": 0.0,
+      "other": 1.9
+    },
+    "exportsPctGdp": 27.6,
+    "fdiInflowsUsdB": 0.0,
+    "sourceUrl": "https://data.worldbank.org/"
+  },
+  {
+    "iso3": "GAB",
+    "year": 2023,
+    "gdpUsdBillions": 19.39,
+    "gdpGrowthPct": 2.44,
+    "sectorShares": {
+      "agriculture": 6.7,
+      "manufacturing": 20.5,
+      "construction": 5.0,
+      "services": 37.8,
+      "extraction": 19.8,
+      "utilities": 8.5,
+      "other": 1.7
+    },
+    "exportsPctGdp": 63.7,
+    "fdiInflowsUsdB": 1.15,
+    "sourceUrl": "https://data.worldbank.org/"
+  },
+  {
+    "iso3": "GBR",
+    "year": 2023,
+    "gdpUsdBillions": 3420.8,
+    "gdpGrowthPct": 0.27,
+    "sectorShares": {
+      "agriculture": 0.6,
+      "manufacturing": 8.2,
+      "construction": 5.0,
+      "services": 72.4,
+      "extraction": 3.1,
+      "utilities": 1.3,
+      "other": 9.3
+    },
+    "exportsPctGdp": 31.9,
+    "fdiInflowsUsdB": 13.79,
+    "sourceUrl": "https://data.worldbank.org/"
+  },
+  {
+    "iso3": "GEO",
+    "year": 2023,
+    "gdpUsdBillions": 30.78,
+    "gdpGrowthPct": 7.83,
+    "sectorShares": {
+      "agriculture": 6.0,
+      "manufacturing": 8.4,
+      "construction": 5.0,
+      "services": 62.1,
+      "extraction": 3.9,
+      "utilities": 1.7,
+      "other": 13.0
+    },
+    "exportsPctGdp": 49.3,
+    "fdiInflowsUsdB": 2.11,
+    "sourceUrl": "https://data.worldbank.org/"
+  },
+  {
+    "iso3": "GHA",
+    "year": 2023,
+    "gdpUsdBillions": 80.55,
+    "gdpGrowthPct": 3.14,
+    "sectorShares": {
+      "agriculture": 20.9,
+      "manufacturing": 11.1,
+      "construction": 5.0,
+      "services": 43.1,
+      "extraction": 9.3,
+      "utilities": 4.0,
+      "other": 6.5
+    },
+    "exportsPctGdp": 31.8,
+    "fdiInflowsUsdB": 1.32,
+    "sourceUrl": "https://data.worldbank.org/"
+  },
+  {
+    "iso3": "GIN",
+    "year": 2023,
+    "gdpUsdBillions": 22.41,
+    "gdpGrowthPct": 5.54,
+    "sectorShares": {
+      "agriculture": 29.5,
+      "manufacturing": 0,
+      "construction": 5.0,
+      "services": 37.2,
+      "extraction": 14.5,
+      "utilities": 6.2,
+      "other": 7.6
+    },
+    "exportsPctGdp": 44.1,
+    "fdiInflowsUsdB": 1.31,
+    "sourceUrl": "https://data.worldbank.org/"
+  },
+  {
+    "iso3": "GMB",
+    "year": 2023,
+    "gdpUsdBillions": 2.38,
+    "gdpGrowthPct": 5.92,
+    "sectorShares": {
+      "agriculture": 22.0,
+      "manufacturing": 1.7,
+      "construction": 5.0,
+      "services": 55.0,
+      "extraction": 6.8,
+      "utilities": 2.9,
+      "other": 6.5
+    },
+    "exportsPctGdp": 7.1,
+    "fdiInflowsUsdB": 0.21,
+    "sourceUrl": "https://data.worldbank.org/"
+  },
+  {
+    "iso3": "GNB",
+    "year": 2023,
+    "gdpUsdBillions": 2.13,
+    "gdpGrowthPct": 5.83,
+    "sectorShares": {
+      "agriculture": 38.5,
+      "manufacturing": 8.6,
+      "construction": 5.0,
+      "services": 42.1,
+      "extraction": 1.0,
+      "utilities": 0.4,
+      "other": 4.3
+    },
+    "exportsPctGdp": 13.2,
+    "fdiInflowsUsdB": 0.03,
+    "sourceUrl": "https://data.worldbank.org/"
+  },
+  {
+    "iso3": "GNQ",
+    "year": 2023,
+    "gdpUsdBillions": 12.34,
+    "gdpGrowthPct": -5.09,
+    "sectorShares": {
+      "agriculture": 3.1,
+      "manufacturing": 24.6,
+      "construction": 5.0,
+      "services": 50.4,
+      "extraction": 11.8,
+      "utilities": 5.1,
+      "other": 0.0
+    },
+    "exportsPctGdp": 36.6,
+    "fdiInflowsUsdB": 0.14,
+    "sourceUrl": "https://data.worldbank.org/"
+  },
+  {
+    "iso3": "GRC",
+    "year": 2023,
+    "gdpUsdBillions": 242.95,
+    "gdpGrowthPct": 2.14,
+    "sectorShares": {
+      "agriculture": 3.7,
+      "manufacturing": 8.9,
+      "construction": 5.0,
+      "services": 68.7,
+      "extraction": 0.6,
+      "utilities": 0.3,
+      "other": 12.7
+    },
+    "exportsPctGdp": 43.8,
+    "fdiInflowsUsdB": 4.72,
+    "sourceUrl": "https://data.worldbank.org/"
+  },
+  {
+    "iso3": "GRD",
+    "year": 2023,
+    "gdpUsdBillions": 1.34,
+    "gdpGrowthPct": 4.53,
+    "sectorShares": {
+      "agriculture": 3.1,
+      "manufacturing": 3.5,
+      "construction": 5.0,
+      "services": 65.1,
+      "extraction": 4.4,
+      "utilities": 1.9,
+      "other": 17.0
+    },
+    "exportsPctGdp": 0,
+    "fdiInflowsUsdB": 0.22,
+    "sourceUrl": "https://data.worldbank.org/"
+  },
+  {
+    "iso3": "GTM",
+    "year": 2023,
+    "gdpUsdBillions": 104.37,
+    "gdpGrowthPct": 3.53,
+    "sectorShares": {
+      "agriculture": 9.7,
+      "manufacturing": 14.0,
+      "construction": 5.0,
+      "services": 61.4,
+      "extraction": 2.3,
+      "utilities": 1.0,
+      "other": 6.6
+    },
+    "exportsPctGdp": 16.6,
+    "fdiInflowsUsdB": 1.65,
+    "sourceUrl": "https://data.worldbank.org/"
+  },
+  {
+    "iso3": "GUY",
+    "year": 2023,
+    "gdpUsdBillions": 16.92,
+    "gdpGrowthPct": 33.8,
+    "sectorShares": {
+      "agriculture": 9.7,
+      "manufacturing": 2.3,
+      "construction": 5.0,
+      "services": 18.8,
+      "extraction": 43.4,
+      "utilities": 18.6,
+      "other": 2.2
+    },
+    "exportsPctGdp": 0,
+    "fdiInflowsUsdB": -1.14,
+    "sourceUrl": "https://data.worldbank.org/"
+  },
+  {
+    "iso3": "HKG",
+    "year": 2023,
+    "gdpUsdBillions": 381.04,
+    "gdpGrowthPct": 3.22,
+    "sectorShares": {
+      "agriculture": 0.0,
+      "manufacturing": 0.9,
+      "construction": 5.0,
+      "services": 91.4,
+      "extraction": 0.2,
+      "utilities": 0.1,
+      "other": 2.3
+    },
+    "exportsPctGdp": 176.8,
+    "fdiInflowsUsdB": 121.99,
+    "sourceUrl": "https://data.worldbank.org/"
+  },
+  {
+    "iso3": "HND",
+    "year": 2023,
+    "gdpUsdBillions": 34.36,
+    "gdpGrowthPct": 3.58,
+    "sectorShares": {
+      "agriculture": 12.0,
+      "manufacturing": 15.2,
+      "construction": 5.0,
+      "services": 57.6,
+      "extraction": 3.9,
+      "utilities": 1.7,
+      "other": 4.6
+    },
+    "exportsPctGdp": 37.4,
+    "fdiInflowsUsdB": 1.09,
+    "sourceUrl": "https://data.worldbank.org/"
+  },
+  {
+    "iso3": "HRV",
+    "year": 2023,
+    "gdpUsdBillions": 85.62,
+    "gdpGrowthPct": 3.76,
+    "sectorShares": {
+      "agriculture": 2.7,
+      "manufacturing": 12.2,
+      "construction": 5.0,
+      "services": 59.8,
+      "extraction": 2.8,
+      "utilities": 1.2,
+      "other": 16.3
+    },
+    "exportsPctGdp": 52.6,
+    "fdiInflowsUsdB": 3.34,
+    "sourceUrl": "https://data.worldbank.org/"
+  },
+  {
+    "iso3": "HTI",
+    "year": 2023,
+    "gdpUsdBillions": 19.85,
+    "gdpGrowthPct": -1.86,
+    "sectorShares": {
+      "agriculture": 17.5,
+      "manufacturing": 24.5,
+      "construction": 5.0,
+      "services": 47.5,
+      "extraction": 1.8,
+      "utilities": 0.8,
+      "other": 3.0
+    },
+    "exportsPctGdp": 5.3,
+    "fdiInflowsUsdB": 0.02,
+    "sourceUrl": "https://data.worldbank.org/"
+  },
+  {
+    "iso3": "HUN",
+    "year": 2023,
+    "gdpUsdBillions": 213.24,
+    "gdpGrowthPct": -0.82,
+    "sectorShares": {
+      "agriculture": 2.9,
+      "manufacturing": 17.1,
+      "construction": 5.0,
+      "services": 58.3,
+      "extraction": 2.3,
+      "utilities": 1.0,
+      "other": 13.5
+    },
+    "exportsPctGdp": 81.2,
+    "fdiInflowsUsdB": -70.78,
+    "sourceUrl": "https://data.worldbank.org/"
+  },
+  {
+    "iso3": "IDN",
+    "year": 2023,
+    "gdpUsdBillions": 1371.17,
+    "gdpGrowthPct": 5.05,
+    "sectorShares": {
+      "agriculture": 12.5,
+      "manufacturing": 18.7,
+      "construction": 5.0,
+      "services": 42.9,
+      "extraction": 11.6,
+      "utilities": 5.0,
+      "other": 4.4
+    },
+    "exportsPctGdp": 21.8,
+    "fdiInflowsUsdB": 21.54,
+    "sourceUrl": "https://data.worldbank.org/"
+  },
+  {
+    "iso3": "IND",
+    "year": 2023,
+    "gdpUsdBillions": 3638.49,
+    "gdpGrowthPct": 9.19,
+    "sectorShares": {
+      "agriculture": 16.2,
+      "manufacturing": 13.0,
+      "construction": 5.0,
+      "services": 49.5,
+      "extraction": 5.1,
+      "utilities": 2.2,
+      "other": 9.0
+    },
+    "exportsPctGdp": 21.4,
+    "fdiInflowsUsdB": 28.09,
+    "sourceUrl": "https://data.worldbank.org/"
+  },
+  {
+    "iso3": "IRL",
+    "year": 2023,
+    "gdpUsdBillions": 567.37,
+    "gdpGrowthPct": -2.54,
+    "sectorShares": {
+      "agriculture": 0.8,
+      "manufacturing": 29.8,
+      "construction": 4.2,
+      "services": 60.3,
+      "extraction": 0.0,
+      "utilities": 0.0,
+      "other": 4.9
+    },
+    "exportsPctGdp": 136.5,
+    "fdiInflowsUsdB": -139.97,
+    "sourceUrl": "https://data.worldbank.org/"
+  },
+  {
+    "iso3": "IRN",
+    "year": 2023,
+    "gdpUsdBillions": 457.51,
+    "gdpGrowthPct": 5.33,
+    "sectorShares": {
+      "agriculture": 10.8,
+      "manufacturing": 21.6,
+      "construction": 5.0,
+      "services": 47.6,
+      "extraction": 8.5,
+      "utilities": 3.6,
+      "other": 2.8
+    },
+    "exportsPctGdp": 23.9,
+    "fdiInflowsUsdB": 1.42,
+    "sourceUrl": "https://data.worldbank.org/"
+  },
+  {
+    "iso3": "IRQ",
+    "year": 2023,
+    "gdpUsdBillions": 268.88,
+    "gdpGrowthPct": 0.52,
+    "sectorShares": {
+      "agriculture": 3.1,
+      "manufacturing": 3.0,
+      "construction": 5.0,
+      "services": 43.7,
+      "extraction": 32.2,
+      "utilities": 13.8,
+      "other": 0
+    },
+    "exportsPctGdp": 39.6,
+    "fdiInflowsUsdB": -5.36,
+    "sourceUrl": "https://data.worldbank.org/"
+  },
+  {
+    "iso3": "ISL",
+    "year": 2023,
+    "gdpUsdBillions": 31.68,
+    "gdpGrowthPct": 5.19,
+    "sectorShares": {
+      "agriculture": 4.2,
+      "manufacturing": 8.8,
+      "construction": 5.0,
+      "services": 65.4,
+      "extraction": 4.4,
+      "utilities": 1.9,
+      "other": 10.4
+    },
+    "exportsPctGdp": 44.1,
+    "fdiInflowsUsdB": 1.89,
+    "sourceUrl": "https://data.worldbank.org/"
+  },
+  {
+    "iso3": "ISR",
+    "year": 2023,
+    "gdpUsdBillions": 512.18,
+    "gdpGrowthPct": 1.83,
+    "sectorShares": {
+      "agriculture": 1.3,
+      "manufacturing": 11.7,
+      "construction": 5.0,
+      "services": 72.1,
+      "extraction": 1.2,
+      "utilities": 0.5,
+      "other": 8.1
+    },
+    "exportsPctGdp": 30.4,
+    "fdiInflowsUsdB": 16.17,
+    "sourceUrl": "https://data.worldbank.org/"
+  },
+  {
+    "iso3": "ITA",
+    "year": 2023,
+    "gdpUsdBillions": 2316.73,
+    "gdpGrowthPct": 0.98,
+    "sectorShares": {
+      "agriculture": 1.9,
+      "manufacturing": 15.5,
+      "construction": 5.0,
+      "services": 64.3,
+      "extraction": 2.2,
+      "utilities": 1.0,
+      "other": 10.2
+    },
+    "exportsPctGdp": 33.3,
+    "fdiInflowsUsdB": 42.02,
+    "sourceUrl": "https://data.worldbank.org/"
+  },
+  {
+    "iso3": "JAM",
+    "year": 2023,
+    "gdpUsdBillions": 21.42,
+    "gdpGrowthPct": 2.75,
+    "sectorShares": {
+      "agriculture": 7.8,
+      "manufacturing": 7.9,
+      "construction": 5.0,
+      "services": 59.9,
+      "extraction": 2.6,
+      "utilities": 1.1,
+      "other": 15.6
+    },
+    "exportsPctGdp": 0,
+    "fdiInflowsUsdB": 0.49,
+    "sourceUrl": "https://data.worldbank.org/"
+  },
+  {
+    "iso3": "JOR",
+    "year": 2023,
+    "gdpUsdBillions": 51.09,
+    "gdpGrowthPct": 2.88,
+    "sectorShares": {
+      "agriculture": 4.8,
+      "manufacturing": 17.3,
+      "construction": 5.0,
+      "services": 60.8,
+      "extraction": 1.8,
+      "utilities": 0.8,
+      "other": 9.6
+    },
+    "exportsPctGdp": 43.5,
+    "fdiInflowsUsdB": 2.01,
+    "sourceUrl": "https://data.worldbank.org/"
+  },
+  {
+    "iso3": "JPN",
+    "year": 2023,
+    "gdpUsdBillions": 4213.17,
+    "gdpGrowthPct": 1.48,
+    "sectorShares": {
+      "agriculture": 0.9,
+      "manufacturing": 20.6,
+      "construction": 5.0,
+      "services": 69.8,
+      "extraction": 2.1,
+      "utilities": 0.9,
+      "other": 0.7
+    },
+    "exportsPctGdp": 21.9,
+    "fdiInflowsUsdB": 19.98,
+    "sourceUrl": "https://data.worldbank.org/"
+  },
+  {
+    "iso3": "KAZ",
+    "year": 2023,
+    "gdpUsdBillions": 261.84,
+    "gdpGrowthPct": 5.1,
+    "sectorShares": {
+      "agriculture": 3.8,
+      "manufacturing": 12.3,
+      "construction": 5.0,
+      "services": 56.3,
+      "extraction": 10.6,
+      "utilities": 4.5,
+      "other": 7.4
+    },
+    "exportsPctGdp": 34.7,
+    "fdiInflowsUsdB": 5.72,
+    "sourceUrl": "https://data.worldbank.org/"
+  },
+  {
+    "iso3": "KEN",
+    "year": 2023,
+    "gdpUsdBillions": 107.5,
+    "gdpGrowthPct": 5.72,
+    "sectorShares": {
+      "agriculture": 21.5,
+      "manufacturing": 7.5,
+      "construction": 5.0,
+      "services": 55.5,
+      "extraction": 3.2,
+      "utilities": 1.4,
+      "other": 6.0
+    },
+    "exportsPctGdp": 16.9,
+    "fdiInflowsUsdB": 0.51,
+    "sourceUrl": "https://data.worldbank.org/"
+  },
+  {
+    "iso3": "KGZ",
+    "year": 2023,
+    "gdpUsdBillions": 15.18,
+    "gdpGrowthPct": 9.01,
+    "sectorShares": {
+      "agriculture": 9.5,
+      "manufacturing": 12.6,
+      "construction": 5.0,
+      "services": 51.3,
+      "extraction": 4.2,
+      "utilities": 1.8,
+      "other": 15.6
+    },
+    "exportsPctGdp": 36.9,
+    "fdiInflowsUsdB": 0.16,
+    "sourceUrl": "https://data.worldbank.org/"
+  },
+  {
+    "iso3": "KHM",
+    "year": 2023,
+    "gdpUsdBillions": 42.34,
+    "gdpGrowthPct": 5.01,
+    "sectorShares": {
+      "agriculture": 17.1,
+      "manufacturing": 26.3,
+      "construction": 5.0,
+      "services": 36.2,
+      "extraction": 6.4,
+      "utilities": 2.8,
+      "other": 6.3
+    },
+    "exportsPctGdp": 66.9,
+    "fdiInflowsUsdB": 3.96,
+    "sourceUrl": "https://data.worldbank.org/"
+  },
+  {
+    "iso3": "KIR",
+    "year": 2023,
+    "gdpUsdBillions": 0.29,
+    "gdpGrowthPct": 2.65,
+    "sectorShares": {
+      "agriculture": 27.2,
+      "manufacturing": 4.7,
+      "construction": 5.0,
+      "services": 67.1,
+      "extraction": 1.2,
+      "utilities": 0.5,
+      "other": 0
+    },
+    "exportsPctGdp": 5.9,
+    "fdiInflowsUsdB": 0.01,
+    "sourceUrl": "https://data.worldbank.org/"
+  },
+  {
+    "iso3": "KOR",
+    "year": 2023,
+    "gdpUsdBillions": 1844.8,
+    "gdpGrowthPct": 1.58,
+    "sectorShares": {
+      "agriculture": 1.4,
+      "manufacturing": 25.5,
+      "construction": 5.0,
+      "services": 58.9,
+      "extraction": 1.4,
+      "utilities": 0.6,
+      "other": 7.1
+    },
+    "exportsPctGdp": 41.3,
+    "fdiInflowsUsdB": 18.6,
+    "sourceUrl": "https://data.worldbank.org/"
+  },
+  {
+    "iso3": "KWT",
+    "year": 2023,
+    "gdpUsdBillions": 165.38,
+    "gdpGrowthPct": -1.67,
+    "sectorShares": {
+      "agriculture": 0.5,
+      "manufacturing": 7.6,
+      "construction": 5.0,
+      "services": 52.1,
+      "extraction": 33.4,
+      "utilities": 14.3,
+      "other": 0
+    },
+    "exportsPctGdp": 57.7,
+    "fdiInflowsUsdB": 2.11,
+    "sourceUrl": "https://data.worldbank.org/"
+  },
+  {
+    "iso3": "LAO",
+    "year": 2023,
+    "gdpUsdBillions": 15.84,
+    "gdpGrowthPct": 3.75,
+    "sectorShares": {
+      "agriculture": 16.1,
+      "manufacturing": 9.2,
+      "construction": 5.0,
+      "services": 44.0,
+      "extraction": 11.4,
+      "utilities": 4.9,
+      "other": 9.3
+    },
+    "exportsPctGdp": 0,
+    "fdiInflowsUsdB": 1.78,
+    "sourceUrl": "https://data.worldbank.org/"
+  },
+  {
+    "iso3": "LBN",
+    "year": 2023,
+    "gdpUsdBillions": 20.08,
+    "gdpGrowthPct": -0.76,
+    "sectorShares": {
+      "agriculture": 1.0,
+      "manufacturing": 0,
+      "construction": 2.1,
+      "services": 42.4,
+      "extraction": 0.0,
+      "utilities": 0.0,
+      "other": 54.6
+    },
+    "exportsPctGdp": 30.6,
+    "fdiInflowsUsdB": 0.66,
+    "sourceUrl": "https://data.worldbank.org/"
+  },
+  {
+    "iso3": "LBR",
+    "year": 2023,
+    "gdpUsdBillions": 4.39,
+    "gdpGrowthPct": 4.68,
+    "sectorShares": {
+      "agriculture": 34.6,
+      "manufacturing": 0,
+      "construction": 5.0,
+      "services": 40.5,
+      "extraction": 12.8,
+      "utilities": 5.5,
+      "other": 1.6
+    },
+    "exportsPctGdp": 0,
+    "fdiInflowsUsdB": 0.31,
+    "sourceUrl": "https://data.worldbank.org/"
+  },
+  {
+    "iso3": "LBY",
+    "year": 2023,
+    "gdpUsdBillions": 44.03,
+    "gdpGrowthPct": 10.2,
+    "sectorShares": {
+      "agriculture": 1.8,
+      "manufacturing": 0,
+      "construction": 5.0,
+      "services": 24.0,
+      "extraction": 51.7,
+      "utilities": 22.2,
+      "other": 0
+    },
+    "exportsPctGdp": 87.2,
+    "fdiInflowsUsdB": 0.79,
+    "sourceUrl": "https://data.worldbank.org/"
+  },
+  {
+    "iso3": "LCA",
+    "year": 2023,
+    "gdpUsdBillions": 2.43,
+    "gdpGrowthPct": 2.21,
+    "sectorShares": {
+      "agriculture": 1.1,
+      "manufacturing": 3.3,
+      "construction": 5.0,
+      "services": 76.3,
+      "extraction": 1.0,
+      "utilities": 0.4,
+      "other": 12.9
+    },
+    "exportsPctGdp": 0,
+    "fdiInflowsUsdB": 0.2,
+    "sourceUrl": "https://data.worldbank.org/"
+  },
+  {
+    "iso3": "LKA",
+    "year": 2023,
+    "gdpUsdBillions": 83.72,
+    "gdpGrowthPct": -2.33,
+    "sectorShares": {
+      "agriculture": 8.1,
+      "manufacturing": 18.1,
+      "construction": 5.0,
+      "services": 59.8,
+      "extraction": 1.9,
+      "utilities": 0.8,
+      "other": 6.3
+    },
+    "exportsPctGdp": 20.7,
+    "fdiInflowsUsdB": 0.71,
+    "sourceUrl": "https://data.worldbank.org/"
+  },
+  {
+    "iso3": "LSO",
+    "year": 2023,
+    "gdpUsdBillions": 2.12,
+    "gdpGrowthPct": 1.83,
+    "sectorShares": {
+      "agriculture": 6.6,
+      "manufacturing": 14.0,
+      "construction": 5.0,
+      "services": 50.6,
+      "extraction": 6.8,
+      "utilities": 2.9,
+      "other": 14.1
+    },
+    "exportsPctGdp": 42.9,
+    "fdiInflowsUsdB": -0.03,
+    "sourceUrl": "https://data.worldbank.org/"
+  },
+  {
+    "iso3": "LTU",
+    "year": 2023,
+    "gdpUsdBillions": 79.79,
+    "gdpGrowthPct": 0.34,
+    "sectorShares": {
+      "agriculture": 2.7,
+      "manufacturing": 14.6,
+      "construction": 5.0,
+      "services": 63.1,
+      "extraction": 3.3,
+      "utilities": 1.4,
+      "other": 10.0
+    },
+    "exportsPctGdp": 76.5,
+    "fdiInflowsUsdB": 3.83,
+    "sourceUrl": "https://data.worldbank.org/"
+  },
+  {
+    "iso3": "LUX",
+    "year": 2023,
+    "gdpUsdBillions": 88.79,
+    "gdpGrowthPct": 0.1,
+    "sectorShares": {
+      "agriculture": 0.2,
+      "manufacturing": 4.1,
+      "construction": 5.0,
+      "services": 81.8,
+      "extraction": 0.2,
+      "utilities": 0.1,
+      "other": 8.7
+    },
+    "exportsPctGdp": 217.4,
+    "fdiInflowsUsdB": -9.28,
+    "sourceUrl": "https://data.worldbank.org/"
+  },
+  {
+    "iso3": "LVA",
+    "year": 2023,
+    "gdpUsdBillions": 42.78,
+    "gdpGrowthPct": -0.94,
+    "sectorShares": {
+      "agriculture": 3.9,
+      "manufacturing": 10.9,
+      "construction": 5.0,
+      "services": 63.9,
+      "extraction": 3.0,
+      "utilities": 1.3,
+      "other": 12.1
+    },
+    "exportsPctGdp": 66.0,
+    "fdiInflowsUsdB": 1.69,
+    "sourceUrl": "https://data.worldbank.org/"
+  },
+  {
+    "iso3": "MAC",
+    "year": 2023,
+    "gdpUsdBillions": 45.63,
+    "gdpGrowthPct": 75.31,
+    "sectorShares": {
+      "agriculture": 0,
+      "manufacturing": 0.8,
+      "construction": 4.7,
+      "services": 90.9,
+      "extraction": 0.0,
+      "utilities": 0.0,
+      "other": 3.7
+    },
+    "exportsPctGdp": 92.4,
+    "fdiInflowsUsdB": 1.14,
+    "sourceUrl": "https://data.worldbank.org/"
+  },
+  {
+    "iso3": "MAR",
+    "year": 2023,
+    "gdpUsdBillions": 146.04,
+    "gdpGrowthPct": 3.66,
+    "sectorShares": {
+      "agriculture": 11.1,
+      "manufacturing": 15.8,
+      "construction": 5.0,
+      "services": 53.7,
+      "extraction": 3.2,
+      "utilities": 1.4,
+      "other": 9.8
+    },
+    "exportsPctGdp": 42.4,
+    "fdiInflowsUsdB": 1.06,
+    "sourceUrl": "https://data.worldbank.org/"
+  },
+  {
+    "iso3": "MDA",
+    "year": 2023,
+    "gdpUsdBillions": 16.71,
+    "gdpGrowthPct": 1.2,
+    "sectorShares": {
+      "agriculture": 7.1,
+      "manufacturing": 8.4,
+      "construction": 5.0,
+      "services": 61.5,
+      "extraction": 3.0,
+      "utilities": 1.3,
+      "other": 13.7
+    },
+    "exportsPctGdp": 35.1,
+    "fdiInflowsUsdB": 0.36,
+    "sourceUrl": "https://data.worldbank.org/"
+  },
+  {
+    "iso3": "MDG",
+    "year": 2023,
+    "gdpUsdBillions": 15.87,
+    "gdpGrowthPct": 4.2,
+    "sectorShares": {
+      "agriculture": 22.4,
+      "manufacturing": 12.8,
+      "construction": 5.0,
+      "services": 48.5,
+      "extraction": 3.6,
+      "utilities": 1.5,
+      "other": 6.2
+    },
+    "exportsPctGdp": 27.0,
+    "fdiInflowsUsdB": 0.52,
+    "sourceUrl": "https://data.worldbank.org/"
+  },
+  {
+    "iso3": "MDV",
+    "year": 2023,
+    "gdpUsdBillions": 6.62,
+    "gdpGrowthPct": 4.94,
+    "sectorShares": {
+      "agriculture": 5.1,
+      "manufacturing": 2.0,
+      "construction": 5.0,
+      "services": 70.8,
+      "extraction": 1.9,
+      "utilities": 0.8,
+      "other": 14.5
+    },
+    "exportsPctGdp": 74.0,
+    "fdiInflowsUsdB": 0.77,
+    "sourceUrl": "https://data.worldbank.org/"
+  },
+  {
+    "iso3": "MEX",
+    "year": 2023,
+    "gdpUsdBillions": 1798.32,
+    "gdpGrowthPct": 3.35,
+    "sectorShares": {
+      "agriculture": 3.8,
+      "manufacturing": 20.4,
+      "construction": 5.0,
+      "services": 57.6,
+      "extraction": 5.0,
+      "utilities": 2.2,
+      "other": 6.0
+    },
+    "exportsPctGdp": 36.1,
+    "fdiInflowsUsdB": 30.68,
+    "sourceUrl": "https://data.worldbank.org/"
+  },
+  {
+    "iso3": "MKD",
+    "year": 2023,
+    "gdpUsdBillions": 15.86,
+    "gdpGrowthPct": 2.55,
+    "sectorShares": {
+      "agriculture": 6.2,
+      "manufacturing": 14.4,
+      "construction": 5.0,
+      "services": 56.9,
+      "extraction": 3.2,
+      "utilities": 1.4,
+      "other": 12.8
+    },
+    "exportsPctGdp": 67.4,
+    "fdiInflowsUsdB": 0.64,
+    "sourceUrl": "https://data.worldbank.org/"
+  },
+  {
+    "iso3": "MLI",
+    "year": 2023,
+    "gdpUsdBillions": 24.81,
+    "gdpGrowthPct": 4.73,
+    "sectorShares": {
+      "agriculture": 32.2,
+      "manufacturing": 7.5,
+      "construction": 5.0,
+      "services": 35.9,
+      "extraction": 9.1,
+      "utilities": 3.9,
+      "other": 6.4
+    },
+    "exportsPctGdp": 24.7,
+    "fdiInflowsUsdB": 0.7,
+    "sourceUrl": "https://data.worldbank.org/"
+  },
+  {
+    "iso3": "MLT",
+    "year": 2023,
+    "gdpUsdBillions": 22.61,
+    "gdpGrowthPct": 10.62,
+    "sectorShares": {
+      "agriculture": 0.1,
+      "manufacturing": 5.8,
+      "construction": 5.0,
+      "services": 81.7,
+      "extraction": 0.2,
+      "utilities": 0.1,
+      "other": 7.1
+    },
+    "exportsPctGdp": 119.6,
+    "fdiInflowsUsdB": 24.6,
+    "sourceUrl": "https://data.worldbank.org/"
+  },
+  {
+    "iso3": "MMR",
+    "year": 2023,
+    "gdpUsdBillions": 66.76,
+    "gdpGrowthPct": 0.96,
+    "sectorShares": {
+      "agriculture": 22.7,
+      "manufacturing": 25.9,
+      "construction": 5.0,
+      "services": 39.7,
+      "extraction": 4.7,
+      "utilities": 2.0,
+      "other": 0.0
+    },
+    "exportsPctGdp": 0,
+    "fdiInflowsUsdB": 1.52,
+    "sourceUrl": "https://data.worldbank.org/"
+  },
+  {
+    "iso3": "MNE",
+    "year": 2023,
+    "gdpUsdBillions": 7.64,
+    "gdpGrowthPct": 6.48,
+    "sectorShares": {
+      "agriculture": 3.8,
+      "manufacturing": 2.9,
+      "construction": 5.0,
+      "services": 64.0,
+      "extraction": 3.4,
+      "utilities": 1.5,
+      "other": 19.5
+    },
+    "exportsPctGdp": 49.2,
+    "fdiInflowsUsdB": 0.53,
+    "sourceUrl": "https://data.worldbank.org/"
+  },
+  {
+    "iso3": "MNG",
+    "year": 2023,
+    "gdpUsdBillions": 20.33,
+    "gdpGrowthPct": 7.42,
+    "sectorShares": {
+      "agriculture": 9.9,
+      "manufacturing": 6.3,
+      "construction": 5.0,
+      "services": 41.0,
+      "extraction": 19.8,
+      "utilities": 8.5,
+      "other": 9.5
+    },
+    "exportsPctGdp": 76.3,
+    "fdiInflowsUsdB": 2.25,
+    "sourceUrl": "https://data.worldbank.org/"
+  },
+  {
+    "iso3": "MOZ",
+    "year": 2023,
+    "gdpUsdBillions": 20.92,
+    "gdpGrowthPct": 5.48,
+    "sectorShares": {
+      "agriculture": 25.4,
+      "manufacturing": 7.1,
+      "construction": 5.0,
+      "services": 41.1,
+      "extraction": 6.6,
+      "utilities": 2.8,
+      "other": 12.0
+    },
+    "exportsPctGdp": 45.6,
+    "fdiInflowsUsdB": 2.68,
+    "sourceUrl": "https://data.worldbank.org/"
+  },
+  {
+    "iso3": "MRT",
+    "year": 2023,
+    "gdpUsdBillions": 10.73,
+    "gdpGrowthPct": 6.81,
+    "sectorShares": {
+      "agriculture": 19.2,
+      "manufacturing": 6.5,
+      "construction": 5.0,
+      "services": 43.0,
+      "extraction": 13.6,
+      "utilities": 5.8,
+      "other": 6.9
+    },
+    "exportsPctGdp": 38.4,
+    "fdiInflowsUsdB": 0.85,
+    "sourceUrl": "https://data.worldbank.org/"
+  },
+  {
+    "iso3": "MUS",
+    "year": 2023,
+    "gdpUsdBillions": 14.07,
+    "gdpGrowthPct": 5.01,
+    "sectorShares": {
+      "agriculture": 4.0,
+      "manufacturing": 11.5,
+      "construction": 5.0,
+      "services": 64.9,
+      "extraction": 0.9,
+      "utilities": 0.4,
+      "other": 13.3
+    },
+    "exportsPctGdp": 69.0,
+    "fdiInflowsUsdB": 0.76,
+    "sourceUrl": "https://data.worldbank.org/"
+  },
+  {
+    "iso3": "MWI",
+    "year": 2023,
+    "gdpUsdBillions": 13.36,
+    "gdpGrowthPct": 1.95,
+    "sectorShares": {
+      "agriculture": 28.9,
+      "manufacturing": 12.8,
+      "construction": 5.0,
+      "services": 45.1,
+      "extraction": 1.0,
+      "utilities": 0.4,
+      "other": 6.7
+    },
+    "exportsPctGdp": 11.2,
+    "fdiInflowsUsdB": 0.21,
+    "sourceUrl": "https://data.worldbank.org/"
+  },
+  {
+    "iso3": "MYS",
+    "year": 2023,
+    "gdpUsdBillions": 399.95,
+    "gdpGrowthPct": 3.54,
+    "sectorShares": {
+      "agriculture": 7.8,
+      "manufacturing": 23.0,
+      "construction": 5.0,
+      "services": 53.5,
+      "extraction": 6.7,
+      "utilities": 2.9,
+      "other": 1.1
+    },
+    "exportsPctGdp": 68.7,
+    "fdiInflowsUsdB": 7.92,
+    "sourceUrl": "https://data.worldbank.org/"
+  },
+  {
+    "iso3": "NAM",
+    "year": 2023,
+    "gdpUsdBillions": 12.41,
+    "gdpGrowthPct": 4.44,
+    "sectorShares": {
+      "agriculture": 7.7,
+      "manufacturing": 11.1,
+      "construction": 5.0,
+      "services": 53.3,
+      "extraction": 9.9,
+      "utilities": 4.2,
+      "other": 8.8
+    },
+    "exportsPctGdp": 43.6,
+    "fdiInflowsUsdB": 2.29,
+    "sourceUrl": "https://data.worldbank.org/"
+  },
+  {
+    "iso3": "NCL",
+    "year": 2023,
+    "gdpUsdBillions": 9.77,
+    "gdpGrowthPct": 2.8,
+    "sectorShares": {
+      "agriculture": 0,
+      "manufacturing": 0,
+      "construction": 0,
+      "services": 0,
+      "extraction": 0.0,
+      "utilities": 0.0,
+      "other": 100.0
+    },
+    "exportsPctGdp": 16.9,
+    "fdiInflowsUsdB": 0.69,
+    "sourceUrl": "https://data.worldbank.org/"
+  },
+  {
+    "iso3": "NER",
+    "year": 2023,
+    "gdpUsdBillions": 16.7,
+    "gdpGrowthPct": 1.67,
+    "sectorShares": {
+      "agriculture": 32.5,
+      "manufacturing": 0,
+      "construction": 5.0,
+      "services": 46.5,
+      "extraction": 9.1,
+      "utilities": 3.9,
+      "other": 3.0
+    },
+    "exportsPctGdp": 23.7,
+    "fdiInflowsUsdB": 1.03,
+    "sourceUrl": "https://data.worldbank.org/"
+  },
+  {
+    "iso3": "NGA",
+    "year": 2023,
+    "gdpUsdBillions": 487.39,
+    "gdpGrowthPct": 3.33,
+    "sectorShares": {
+      "agriculture": 27.7,
+      "manufacturing": 9.3,
+      "construction": 5.0,
+      "services": 51.7,
+      "extraction": 3.4,
+      "utilities": 1.5,
+      "other": 1.4
+    },
+    "exportsPctGdp": 0,
+    "fdiInflowsUsdB": 1.87,
+    "sourceUrl": "https://data.worldbank.org/"
+  },
+  {
+    "iso3": "NIC",
+    "year": 2023,
+    "gdpUsdBillions": 17.81,
+    "gdpGrowthPct": 4.43,
+    "sectorShares": {
+      "agriculture": 15.3,
+      "manufacturing": 14.4,
+      "construction": 5.0,
+      "services": 46.5,
+      "extraction": 5.4,
+      "utilities": 2.3,
+      "other": 11.0
+    },
+    "exportsPctGdp": 45.8,
+    "fdiInflowsUsdB": 1.11,
+    "sourceUrl": "https://data.worldbank.org/"
+  },
+  {
+    "iso3": "NLD",
+    "year": 2023,
+    "gdpUsdBillions": 1135.48,
+    "gdpGrowthPct": -0.6,
+    "sectorShares": {
+      "agriculture": 1.8,
+      "manufacturing": 10.5,
+      "construction": 5.0,
+      "services": 70.1,
+      "extraction": 1.9,
+      "utilities": 0.8,
+      "other": 10.0
+    },
+    "exportsPctGdp": 87.5,
+    "fdiInflowsUsdB": -343.4,
+    "sourceUrl": "https://data.worldbank.org/"
+  },
+  {
+    "iso3": "NOR",
+    "year": 2023,
+    "gdpUsdBillions": 482.95,
+    "gdpGrowthPct": 0.07,
+    "sectorShares": {
+      "agriculture": 2.1,
+      "manufacturing": 6.0,
+      "construction": 5.0,
+      "services": 50.0,
+      "extraction": 19.6,
+      "utilities": 8.4,
+      "other": 8.9
+    },
+    "exportsPctGdp": 47.9,
+    "fdiInflowsUsdB": 13.79,
+    "sourceUrl": "https://data.worldbank.org/"
+  },
+  {
+    "iso3": "NPL",
+    "year": 2023,
+    "gdpUsdBillions": 41.05,
+    "gdpGrowthPct": 1.98,
+    "sectorShares": {
+      "agriculture": 21.3,
+      "manufacturing": 4.5,
+      "construction": 5.0,
+      "services": 55.4,
+      "extraction": 1.7,
+      "utilities": 0.7,
+      "other": 11.4
+    },
+    "exportsPctGdp": 7.0,
+    "fdiInflowsUsdB": 0.07,
+    "sourceUrl": "https://data.worldbank.org/"
+  },
+  {
+    "iso3": "NZL",
+    "year": 2023,
+    "gdpUsdBillions": 255.19,
+    "gdpGrowthPct": 1.39,
+    "sectorShares": {
+      "agriculture": 0,
+      "manufacturing": 0,
+      "construction": 0,
+      "services": 0,
+      "extraction": 0.0,
+      "utilities": 0.0,
+      "other": 100.0
+    },
+    "exportsPctGdp": 23.7,
+    "fdiInflowsUsdB": 4.39,
+    "sourceUrl": "https://data.worldbank.org/"
+  },
+  {
+    "iso3": "OMN",
+    "year": 2023,
+    "gdpUsdBillions": 106.17,
+    "gdpGrowthPct": 1.41,
+    "sectorShares": {
+      "agriculture": 2.4,
+      "manufacturing": 9.3,
+      "construction": 5.0,
+      "services": 45.3,
+      "extraction": 28.7,
+      "utilities": 12.3,
+      "other": 0
+    },
+    "exportsPctGdp": 61.6,
+    "fdiInflowsUsdB": 12.55,
+    "sourceUrl": "https://data.worldbank.org/"
+  },
+  {
+    "iso3": "PAK",
+    "year": 2023,
+    "gdpUsdBillions": 336.69,
+    "gdpGrowthPct": -0.41,
+    "sectorShares": {
+      "agriculture": 23.4,
+      "manufacturing": 13.6,
+      "construction": 5.0,
+      "services": 51.0,
+      "extraction": 1.5,
+      "utilities": 0.6,
+      "other": 4.9
+    },
+    "exportsPctGdp": 10.5,
+    "fdiInflowsUsdB": 2.05,
+    "sourceUrl": "https://data.worldbank.org/"
+  },
+  {
+    "iso3": "PAN",
+    "year": 2023,
+    "gdpUsdBillions": 83.81,
+    "gdpGrowthPct": 7.17,
+    "sectorShares": {
+      "agriculture": 2.5,
+      "manufacturing": 5.0,
+      "construction": 5.0,
+      "services": 67.8,
+      "extraction": 12.0,
+      "utilities": 5.2,
+      "other": 2.6
+    },
+    "exportsPctGdp": 45.6,
+    "fdiInflowsUsdB": 2.39,
+    "sourceUrl": "https://data.worldbank.org/"
+  },
+  {
+    "iso3": "PER",
+    "year": 2023,
+    "gdpUsdBillions": 266.96,
+    "gdpGrowthPct": -0.4,
+    "sectorShares": {
+      "agriculture": 7.2,
+      "manufacturing": 12.6,
+      "construction": 5.0,
+      "services": 51.2,
+      "extraction": 11.4,
+      "utilities": 4.9,
+      "other": 7.6
+    },
+    "exportsPctGdp": 27.1,
+    "fdiInflowsUsdB": 4.34,
+    "sourceUrl": "https://data.worldbank.org/"
+  },
+  {
+    "iso3": "PHL",
+    "year": 2023,
+    "gdpUsdBillions": 437.06,
+    "gdpGrowthPct": 5.52,
+    "sectorShares": {
+      "agriculture": 9.4,
+      "manufacturing": 16.2,
+      "construction": 5.0,
+      "services": 62.4,
+      "extraction": 4.9,
+      "utilities": 2.1,
+      "other": 0.0
+    },
+    "exportsPctGdp": 26.6,
+    "fdiInflowsUsdB": 8.93,
+    "sourceUrl": "https://data.worldbank.org/"
+  },
+  {
+    "iso3": "PNG",
+    "year": 2023,
+    "gdpUsdBillions": 30.82,
+    "gdpGrowthPct": 3.81,
+    "sectorShares": {
+      "agriculture": 17.0,
+      "manufacturing": 1.7,
+      "construction": 5.0,
+      "services": 42.0,
+      "extraction": 20.7,
+      "utilities": 8.9,
+      "other": 4.7
+    },
+    "exportsPctGdp": 0,
+    "fdiInflowsUsdB": 0.04,
+    "sourceUrl": "https://data.worldbank.org/"
+  },
+  {
+    "iso3": "POL",
+    "year": 2023,
+    "gdpUsdBillions": 812.45,
+    "gdpGrowthPct": 0.25,
+    "sectorShares": {
+      "agriculture": 2.8,
+      "manufacturing": 17.5,
+      "construction": 5.0,
+      "services": 58.2,
+      "extraction": 4.9,
+      "utilities": 2.1,
+      "other": 9.6
+    },
+    "exportsPctGdp": 57.9,
+    "fdiInflowsUsdB": 35.66,
+    "sourceUrl": "https://data.worldbank.org/"
+  },
+  {
+    "iso3": "PRI",
+    "year": 2023,
+    "gdpUsdBillions": 118.48,
+    "gdpGrowthPct": 0.73,
+    "sectorShares": {
+      "agriculture": 0.7,
+      "manufacturing": 43.7,
+      "construction": 3.7,
+      "services": 51.6,
+      "extraction": 0.0,
+      "utilities": 0.0,
+      "other": 0.3
+    },
+    "exportsPctGdp": 53.6,
+    "fdiInflowsUsdB": 0.0,
+    "sourceUrl": "https://data.worldbank.org/"
+  },
+  {
+    "iso3": "PRT",
+    "year": 2023,
+    "gdpUsdBillions": 292.32,
+    "gdpGrowthPct": 3.1,
+    "sectorShares": {
+      "agriculture": 2.1,
+      "manufacturing": 12.1,
+      "construction": 5.0,
+      "services": 66.3,
+      "extraction": 1.1,
+      "utilities": 0.5,
+      "other": 12.9
+    },
+    "exportsPctGdp": 47.2,
+    "fdiInflowsUsdB": 11.59,
+    "sourceUrl": "https://data.worldbank.org/"
+  },
+  {
+    "iso3": "PRY",
+    "year": 2023,
+    "gdpUsdBillions": 43.12,
+    "gdpGrowthPct": 5.0,
+    "sectorShares": {
+      "agriculture": 11.6,
+      "manufacturing": 19.4,
+      "construction": 5.0,
+      "services": 48.1,
+      "extraction": 5.9,
+      "utilities": 2.5,
+      "other": 7.4
+    },
+    "exportsPctGdp": 42.1,
+    "fdiInflowsUsdB": 1.11,
+    "sourceUrl": "https://data.worldbank.org/"
+  },
+  {
+    "iso3": "PSE",
+    "year": 2023,
+    "gdpUsdBillions": 17.85,
+    "gdpGrowthPct": -4.56,
+    "sectorShares": {
+      "agriculture": 5.7,
+      "manufacturing": 9.9,
+      "construction": 5.0,
+      "services": 58.5,
+      "extraction": 0.5,
+      "utilities": 0.2,
+      "other": 20.2
+    },
+    "exportsPctGdp": 17.7,
+    "fdiInflowsUsdB": 0.1,
+    "sourceUrl": "https://data.worldbank.org/"
+  },
+  {
+    "iso3": "PYF",
+    "year": 2023,
+    "gdpUsdBillions": 6.14,
+    "gdpGrowthPct": 2.77,
+    "sectorShares": {
+      "agriculture": 0,
+      "manufacturing": 0,
+      "construction": 0,
+      "services": 0,
+      "extraction": 0.0,
+      "utilities": 0.0,
+      "other": 100.0
+    },
+    "exportsPctGdp": 24.1,
+    "fdiInflowsUsdB": -0.01,
+    "sourceUrl": "https://data.worldbank.org/"
+  },
+  {
+    "iso3": "QAT",
+    "year": 2023,
+    "gdpUsdBillions": 217.31,
+    "gdpGrowthPct": 1.54,
+    "sectorShares": {
+      "agriculture": 0.3,
+      "manufacturing": 8.5,
+      "construction": 5.0,
+      "services": 44.7,
+      "extraction": 32.3,
+      "utilities": 13.8,
+      "other": 0
+    },
+    "exportsPctGdp": 0,
+    "fdiInflowsUsdB": -0.47,
+    "sourceUrl": "https://data.worldbank.org/"
+  },
+  {
+    "iso3": "ROU",
+    "year": 2023,
+    "gdpUsdBillions": 347.76,
+    "gdpGrowthPct": 2.26,
+    "sectorShares": {
+      "agriculture": 3.3,
+      "manufacturing": 13.9,
+      "construction": 5.0,
+      "services": 60.9,
+      "extraction": 5.7,
+      "utilities": 2.5,
+      "other": 8.7
+    },
+    "exportsPctGdp": 39.2,
+    "fdiInflowsUsdB": 8.71,
+    "sourceUrl": "https://data.worldbank.org/"
+  },
+  {
+    "iso3": "RUS",
+    "year": 2023,
+    "gdpUsdBillions": 2071.51,
+    "gdpGrowthPct": 4.08,
+    "sectorShares": {
+      "agriculture": 3.0,
+      "manufacturing": 12.7,
+      "construction": 5.0,
+      "services": 56.7,
+      "extraction": 8.9,
+      "utilities": 3.8,
+      "other": 9.9
+    },
+    "exportsPctGdp": 22.5,
+    "fdiInflowsUsdB": -10.05,
+    "sourceUrl": "https://data.worldbank.org/"
+  },
+  {
+    "iso3": "RWA",
+    "year": 2023,
+    "gdpUsdBillions": 14.33,
+    "gdpGrowthPct": 8.25,
+    "sectorShares": {
+      "agriculture": 26.6,
+      "manufacturing": 9.5,
+      "construction": 5.0,
+      "services": 45.7,
+      "extraction": 4.3,
+      "utilities": 1.8,
+      "other": 7.0
+    },
+    "exportsPctGdp": 25.0,
+    "fdiInflowsUsdB": 0.46,
+    "sourceUrl": "https://data.worldbank.org/"
+  },
+  {
+    "iso3": "SAU",
+    "year": 2023,
+    "gdpUsdBillions": 1218.58,
+    "gdpGrowthPct": 0.54,
+    "sectorShares": {
+      "agriculture": 2.5,
+      "manufacturing": 15.9,
+      "construction": 5.0,
+      "services": 44.8,
+      "extraction": 18.7,
+      "utilities": 8.0,
+      "other": 5.2
+    },
+    "exportsPctGdp": 30.2,
+    "fdiInflowsUsdB": 22.8,
+    "sourceUrl": "https://data.worldbank.org/"
+  },
+  {
+    "iso3": "SDN",
+    "year": 2023,
+    "gdpUsdBillions": 39.9,
+    "gdpGrowthPct": -29.43,
+    "sectorShares": {
+      "agriculture": 30.3,
+      "manufacturing": 0,
+      "construction": 5.0,
+      "services": 41.4,
+      "extraction": 16.3,
+      "utilities": 7.0,
+      "other": 0
+    },
+    "exportsPctGdp": 1.1,
+    "fdiInflowsUsdB": 0.55,
+    "sourceUrl": "https://data.worldbank.org/"
+  },
+  {
+    "iso3": "SEN",
+    "year": 2023,
+    "gdpUsdBillions": 30.7,
+    "gdpGrowthPct": 4.26,
+    "sectorShares": {
+      "agriculture": 17.4,
+      "manufacturing": 14.5,
+      "construction": 5.0,
+      "services": 49.6,
+      "extraction": 2.3,
+      "utilities": 1.0,
+      "other": 10.1
+    },
+    "exportsPctGdp": 23.1,
+    "fdiInflowsUsdB": 4.79,
+    "sourceUrl": "https://data.worldbank.org/"
+  },
+  {
+    "iso3": "SGP",
+    "year": 2023,
+    "gdpUsdBillions": 505.44,
+    "gdpGrowthPct": 1.82,
+    "sectorShares": {
+      "agriculture": 0.0,
+      "manufacturing": 17.0,
+      "construction": 5.0,
+      "services": 72.7,
+      "extraction": 0.1,
+      "utilities": 0.1,
+      "other": 5.1
+    },
+    "exportsPctGdp": 181.6,
+    "fdiInflowsUsdB": 125.79,
+    "sourceUrl": "https://data.worldbank.org/"
+  },
+  {
+    "iso3": "SLB",
+    "year": 2023,
+    "gdpUsdBillions": 1.51,
+    "gdpGrowthPct": 2.84,
+    "sectorShares": {
+      "agriculture": 30.5,
+      "manufacturing": 10.2,
+      "construction": 5.0,
+      "services": 48.0,
+      "extraction": 4.4,
+      "utilities": 1.9,
+      "other": 0.0
+    },
+    "exportsPctGdp": 36.3,
+    "fdiInflowsUsdB": 0.08,
+    "sourceUrl": "https://data.worldbank.org/"
+  },
+  {
+    "iso3": "SLE",
+    "year": 2023,
+    "gdpUsdBillions": 6.42,
+    "gdpGrowthPct": 5.71,
+    "sectorShares": {
+      "agriculture": 29.1,
+      "manufacturing": 7.7,
+      "construction": 5.0,
+      "services": 42.2,
+      "extraction": 9.4,
+      "utilities": 4.0,
+      "other": 2.7
+    },
+    "exportsPctGdp": 21.0,
+    "fdiInflowsUsdB": 0.15,
+    "sourceUrl": "https://data.worldbank.org/"
+  },
+  {
+    "iso3": "SLV",
+    "year": 2023,
+    "gdpUsdBillions": 33.85,
+    "gdpGrowthPct": 3.54,
+    "sectorShares": {
+      "agriculture": 4.5,
+      "manufacturing": 12.5,
+      "construction": 5.0,
+      "services": 60.8,
+      "extraction": 4.0,
+      "utilities": 1.7,
+      "other": 11.6
+    },
+    "exportsPctGdp": 31.4,
+    "fdiInflowsUsdB": 0.64,
+    "sourceUrl": "https://data.worldbank.org/"
+  },
+  {
+    "iso3": "SOM",
+    "year": 2023,
+    "gdpUsdBillions": 10.96,
+    "gdpGrowthPct": 4.18,
+    "sectorShares": {
+      "agriculture": 0,
+      "manufacturing": 0,
+      "construction": 0,
+      "services": 0,
+      "extraction": 0.0,
+      "utilities": 0.0,
+      "other": 100.0
+    },
+    "exportsPctGdp": 21.9,
+    "fdiInflowsUsdB": 0.68,
+    "sourceUrl": "https://data.worldbank.org/"
+  },
+  {
+    "iso3": "SRB",
+    "year": 2023,
+    "gdpUsdBillions": 81.34,
+    "gdpGrowthPct": 3.75,
+    "sectorShares": {
+      "agriculture": 3.8,
+      "manufacturing": 13.3,
+      "construction": 5.0,
+      "services": 57.8,
+      "extraction": 3.8,
+      "utilities": 1.6,
+      "other": 14.7
+    },
+    "exportsPctGdp": 55.1,
+    "fdiInflowsUsdB": 4.94,
+    "sourceUrl": "https://data.worldbank.org/"
+  },
+  {
+    "iso3": "STP",
+    "year": 2023,
+    "gdpUsdBillions": 0.69,
+    "gdpGrowthPct": 0.37,
+    "sectorShares": {
+      "agriculture": 13.5,
+      "manufacturing": 0.6,
+      "construction": 2.2,
+      "services": 77.6,
+      "extraction": 0.0,
+      "utilities": 0.0,
+      "other": 6.1
+    },
+    "exportsPctGdp": 0,
+    "fdiInflowsUsdB": -0.03,
+    "sourceUrl": "https://data.worldbank.org/"
+  },
+  {
+    "iso3": "SUR",
+    "year": 2023,
+    "gdpUsdBillions": 3.47,
+    "gdpGrowthPct": 2.42,
+    "sectorShares": {
+      "agriculture": 7.2,
+      "manufacturing": 25.5,
+      "construction": 5.0,
+      "services": 48.8,
+      "extraction": 6.4,
+      "utilities": 2.8,
+      "other": 4.3
+    },
+    "exportsPctGdp": 0,
+    "fdiInflowsUsdB": -0.05,
+    "sourceUrl": "https://data.worldbank.org/"
+  },
+  {
+    "iso3": "SVK",
+    "year": 2023,
+    "gdpUsdBillions": 133.58,
+    "gdpGrowthPct": 2.11,
+    "sectorShares": {
+      "agriculture": 2.1,
+      "manufacturing": 16.8,
+      "construction": 5.0,
+      "services": 60.0,
+      "extraction": 5.2,
+      "utilities": 2.2,
+      "other": 8.6
+    },
+    "exportsPctGdp": 91.5,
+    "fdiInflowsUsdB": 0.53,
+    "sourceUrl": "https://data.worldbank.org/"
+  },
+  {
+    "iso3": "SVN",
+    "year": 2023,
+    "gdpUsdBillions": 69.26,
+    "gdpGrowthPct": 2.38,
+    "sectorShares": {
+      "agriculture": 1.5,
+      "manufacturing": 19.5,
+      "construction": 5.0,
+      "services": 57.9,
+      "extraction": 3.5,
+      "utilities": 1.5,
+      "other": 11.0
+    },
+    "exportsPctGdp": 83.4,
+    "fdiInflowsUsdB": 1.45,
+    "sourceUrl": "https://data.worldbank.org/"
+  },
+  {
+    "iso3": "SWE",
+    "year": 2023,
+    "gdpUsdBillions": 578.99,
+    "gdpGrowthPct": -0.2,
+    "sectorShares": {
+      "agriculture": 1.3,
+      "manufacturing": 13.4,
+      "construction": 5.0,
+      "services": 65.5,
+      "extraction": 2.9,
+      "utilities": 1.3,
+      "other": 10.7
+    },
+    "exportsPctGdp": 55.2,
+    "fdiInflowsUsdB": 18.67,
+    "sourceUrl": "https://data.worldbank.org/"
+  },
+  {
+    "iso3": "SWZ",
+    "year": 2023,
+    "gdpUsdBillions": 4.62,
+    "gdpGrowthPct": 3.53,
+    "sectorShares": {
+      "agriculture": 6.6,
+      "manufacturing": 29.2,
+      "construction": 5.0,
+      "services": 51.9,
+      "extraction": 0.2,
+      "utilities": 0.1,
+      "other": 7.0
+    },
+    "exportsPctGdp": 48.5,
+    "fdiInflowsUsdB": 0.03,
+    "sourceUrl": "https://data.worldbank.org/"
+  },
+  {
+    "iso3": "SYC",
+    "year": 2023,
+    "gdpUsdBillions": 2.19,
+    "gdpGrowthPct": 2.26,
+    "sectorShares": {
+      "agriculture": 2.5,
+      "manufacturing": 4.7,
+      "construction": 5.0,
+      "services": 67.3,
+      "extraction": 2.4,
+      "utilities": 1.0,
+      "other": 17.0
+    },
+    "exportsPctGdp": 83.4,
+    "fdiInflowsUsdB": 0.24,
+    "sourceUrl": "https://data.worldbank.org/"
+  },
+  {
+    "iso3": "TCD",
+    "year": 2023,
+    "gdpUsdBillions": 18.34,
+    "gdpGrowthPct": 3.98,
+    "sectorShares": {
+      "agriculture": 35.2,
+      "manufacturing": 7.7,
+      "construction": 5.0,
+      "services": 30.3,
+      "extraction": 12.7,
+      "utilities": 5.4,
+      "other": 3.7
+    },
+    "exportsPctGdp": 29.1,
+    "fdiInflowsUsdB": 0.91,
+    "sourceUrl": "https://data.worldbank.org/"
+  },
+  {
+    "iso3": "TGO",
+    "year": 2023,
+    "gdpUsdBillions": 9.82,
+    "gdpGrowthPct": 6.19,
+    "sectorShares": {
+      "agriculture": 21.3,
+      "manufacturing": 11.7,
+      "construction": 5.0,
+      "services": 48.8,
+      "extraction": 2.9,
+      "utilities": 1.2,
+      "other": 9.1
+    },
+    "exportsPctGdp": 0,
+    "fdiInflowsUsdB": 0.08,
+    "sourceUrl": "https://data.worldbank.org/"
+  },
+  {
+    "iso3": "THA",
+    "year": 2023,
+    "gdpUsdBillions": 515.91,
+    "gdpGrowthPct": 2.02,
+    "sectorShares": {
+      "agriculture": 8.6,
+      "manufacturing": 25.0,
+      "construction": 5.0,
+      "services": 58.5,
+      "extraction": 2.1,
+      "utilities": 0.9,
+      "other": 0
+    },
+    "exportsPctGdp": 65.4,
+    "fdiInflowsUsdB": 10.33,
+    "sourceUrl": "https://data.worldbank.org/"
+  },
+  {
+    "iso3": "TJK",
+    "year": 2023,
+    "gdpUsdBillions": 12.24,
+    "gdpGrowthPct": 8.3,
+    "sectorShares": {
+      "agriculture": 22.9,
+      "manufacturing": 14.6,
+      "construction": 5.0,
+      "services": 34.7,
+      "extraction": 9.8,
+      "utilities": 4.2,
+      "other": 8.8
+    },
+    "exportsPctGdp": 17.2,
+    "fdiInflowsUsdB": 0.14,
+    "sourceUrl": "https://data.worldbank.org/"
+  },
+  {
+    "iso3": "TKM",
+    "year": 2023,
+    "gdpUsdBillions": 45.89,
+    "gdpGrowthPct": 6.3,
+    "sectorShares": {
+      "agriculture": 11.3,
+      "manufacturing": 0,
+      "construction": 5.0,
+      "services": 49.4,
+      "extraction": 24.0,
+      "utilities": 10.3,
+      "other": 0
+    },
+    "exportsPctGdp": 21.6,
+    "fdiInflowsUsdB": 1.38,
+    "sourceUrl": "https://data.worldbank.org/"
+  },
+  {
+    "iso3": "TLS",
+    "year": 2023,
+    "gdpUsdBillions": 2.08,
+    "gdpGrowthPct": -18.14,
+    "sectorShares": {
+      "agriculture": 17.2,
+      "manufacturing": 1.6,
+      "construction": 5.0,
+      "services": 61.0,
+      "extraction": 12.1,
+      "utilities": 5.2,
+      "other": 0
+    },
+    "exportsPctGdp": 22.9,
+    "fdiInflowsUsdB": 0.12,
+    "sourceUrl": "https://data.worldbank.org/"
+  },
+  {
+    "iso3": "TON",
+    "year": 2023,
+    "gdpUsdBillions": 0.59,
+    "gdpGrowthPct": 2.79,
+    "sectorShares": {
+      "agriculture": 19.0,
+      "manufacturing": 5.0,
+      "construction": 5.0,
+      "services": 50.0,
+      "extraction": 3.4,
+      "utilities": 1.5,
+      "other": 16.2
+    },
+    "exportsPctGdp": 14.7,
+    "fdiInflowsUsdB": 0.0,
+    "sourceUrl": "https://data.worldbank.org/"
+  },
+  {
+    "iso3": "TTO",
+    "year": 2023,
+    "gdpUsdBillions": 25.04,
+    "gdpGrowthPct": 1.47,
+    "sectorShares": {
+      "agriculture": 0.8,
+      "manufacturing": 14.1,
+      "construction": 5.0,
+      "services": 60.3,
+      "extraction": 10.8,
+      "utilities": 4.6,
+      "other": 4.3
+    },
+    "exportsPctGdp": 0,
+    "fdiInflowsUsdB": -1.5,
+    "sourceUrl": "https://data.worldbank.org/"
+  },
+  {
+    "iso3": "TUN",
+    "year": 2023,
+    "gdpUsdBillions": 48.21,
+    "gdpGrowthPct": 0.18,
+    "sectorShares": {
+      "agriculture": 9.5,
+      "manufacturing": 15.2,
+      "construction": 5.0,
+      "services": 62.1,
+      "extraction": 2.7,
+      "utilities": 1.2,
+      "other": 4.3
+    },
+    "exportsPctGdp": 53.0,
+    "fdiInflowsUsdB": 0.71,
+    "sourceUrl": "https://data.worldbank.org/"
+  },
+  {
+    "iso3": "TUR",
+    "year": 2023,
+    "gdpUsdBillions": 1141.24,
+    "gdpGrowthPct": 5.05,
+    "sectorShares": {
+      "agriculture": 6.4,
+      "manufacturing": 19.5,
+      "construction": 5.0,
+      "services": 54.4,
+      "extraction": 2.6,
+      "utilities": 1.1,
+      "other": 11.1
+    },
+    "exportsPctGdp": 31.9,
+    "fdiInflowsUsdB": 10.66,
+    "sourceUrl": "https://data.worldbank.org/"
+  },
+  {
+    "iso3": "TZA",
+    "year": 2023,
+    "gdpUsdBillions": 79.03,
+    "gdpGrowthPct": 5.07,
+    "sectorShares": {
+      "agriculture": 23.7,
+      "manufacturing": 8.4,
+      "construction": 5.0,
+      "services": 28.7,
+      "extraction": 10.2,
+      "utilities": 4.4,
+      "other": 19.6
+    },
+    "exportsPctGdp": 17.2,
+    "fdiInflowsUsdB": 1.65,
+    "sourceUrl": "https://data.worldbank.org/"
+  },
+  {
+    "iso3": "UGA",
+    "year": 2023,
+    "gdpUsdBillions": 48.77,
+    "gdpGrowthPct": 5.34,
+    "sectorShares": {
+      "agriculture": 24.1,
+      "manufacturing": 15.6,
+      "construction": 5.0,
+      "services": 42.5,
+      "extraction": 3.6,
+      "utilities": 1.5,
+      "other": 7.6
+    },
+    "exportsPctGdp": 11.6,
+    "fdiInflowsUsdB": 2.99,
+    "sourceUrl": "https://data.worldbank.org/"
+  },
+  {
+    "iso3": "UKR",
+    "year": 2023,
+    "gdpUsdBillions": 181.22,
+    "gdpGrowthPct": 5.53,
+    "sectorShares": {
+      "agriculture": 7.6,
+      "manufacturing": 8.3,
+      "construction": 5.0,
+      "services": 61.2,
+      "extraction": 4.0,
+      "utilities": 1.7,
+      "other": 12.1
+    },
+    "exportsPctGdp": 28.3,
+    "fdiInflowsUsdB": 4.57,
+    "sourceUrl": "https://data.worldbank.org/"
+  },
+  {
+    "iso3": "URY",
+    "year": 2023,
+    "gdpUsdBillions": 77.99,
+    "gdpGrowthPct": 0.74,
+    "sectorShares": {
+      "agriculture": 6.1,
+      "manufacturing": 9.7,
+      "construction": 5.0,
+      "services": 65.7,
+      "extraction": 1.4,
+      "utilities": 0.6,
+      "other": 11.5
+    },
+    "exportsPctGdp": 28.1,
+    "fdiInflowsUsdB": -5.25,
+    "sourceUrl": "https://data.worldbank.org/"
+  },
+  {
+    "iso3": "USA",
+    "year": 2023,
+    "gdpUsdBillions": 27292.17,
+    "gdpGrowthPct": 2.89,
+    "sectorShares": {
+      "agriculture": 0,
+      "manufacturing": 0,
+      "construction": 0,
+      "services": 0,
+      "extraction": 0.0,
+      "utilities": 0.0,
+      "other": 100.0
+    },
+    "exportsPctGdp": 11.2,
+    "fdiInflowsUsdB": 361.94,
+    "sourceUrl": "https://data.worldbank.org/"
+  },
+  {
+    "iso3": "UZB",
+    "year": 2023,
+    "gdpUsdBillions": 102.64,
+    "gdpGrowthPct": 6.29,
+    "sectorShares": {
+      "agriculture": 20.2,
+      "manufacturing": 19.4,
+      "construction": 5.0,
+      "services": 44.0,
+      "extraction": 4.7,
+      "utilities": 2.0,
+      "other": 4.9
+    },
+    "exportsPctGdp": 24.4,
+    "fdiInflowsUsdB": 2.16,
+    "sourceUrl": "https://data.worldbank.org/"
+  },
+  {
+    "iso3": "VCT",
+    "year": 2023,
+    "gdpUsdBillions": 1.07,
+    "gdpGrowthPct": 5.33,
+    "sectorShares": {
+      "agriculture": 4.2,
+      "manufacturing": 3.7,
+      "construction": 5.0,
+      "services": 66.4,
+      "extraction": 4.2,
+      "utilities": 1.8,
+      "other": 14.7
+    },
+    "exportsPctGdp": 0,
+    "fdiInflowsUsdB": 0.07,
+    "sourceUrl": "https://data.worldbank.org/"
+  },
+  {
+    "iso3": "VEN",
+    "year": 2023,
+    "gdpUsdBillions": 102.38,
+    "gdpGrowthPct": 4.0,
+    "sectorShares": {
+      "agriculture": 0,
+      "manufacturing": 0,
+      "construction": 0,
+      "services": 0,
+      "extraction": 0.0,
+      "utilities": 0.0,
+      "other": 100.0
+    },
+    "exportsPctGdp": 18.1,
+    "fdiInflowsUsdB": 0.01,
+    "sourceUrl": "https://data.worldbank.org/"
+  },
+  {
+    "iso3": "VNM",
+    "year": 2023,
+    "gdpUsdBillions": 433.86,
+    "gdpGrowthPct": 5.07,
+    "sectorShares": {
+      "agriculture": 11.9,
+      "manufacturing": 24.2,
+      "construction": 5.0,
+      "services": 42.3,
+      "extraction": 5.9,
+      "utilities": 2.5,
+      "other": 8.3
+    },
+    "exportsPctGdp": 86.5,
+    "fdiInflowsUsdB": 18.5,
+    "sourceUrl": "https://data.worldbank.org/"
+  },
+  {
+    "iso3": "VUT",
+    "year": 2023,
+    "gdpUsdBillions": 1.12,
+    "gdpGrowthPct": 2.09,
+    "sectorShares": {
+      "agriculture": 0,
+      "manufacturing": 0,
+      "construction": 0,
+      "services": 0,
+      "extraction": 0.0,
+      "utilities": 0.0,
+      "other": 100.0
+    },
+    "exportsPctGdp": 0,
+    "fdiInflowsUsdB": 0.01,
+    "sourceUrl": "https://data.worldbank.org/"
+  },
+  {
+    "iso3": "WSM",
+    "year": 2023,
+    "gdpUsdBillions": 1.04,
+    "gdpGrowthPct": 15.23,
+    "sectorShares": {
+      "agriculture": 9.9,
+      "manufacturing": 4.8,
+      "construction": 5.0,
+      "services": 70.7,
+      "extraction": 0.2,
+      "utilities": 0.1,
+      "other": 9.3
+    },
+    "exportsPctGdp": 26.2,
+    "fdiInflowsUsdB": 0.0,
+    "sourceUrl": "https://data.worldbank.org/"
+  },
+  {
+    "iso3": "XKX",
+    "year": 2023,
+    "gdpUsdBillions": 10.47,
+    "gdpGrowthPct": 4.07,
+    "sectorShares": {
+      "agriculture": 7.2,
+      "manufacturing": 12.9,
+      "construction": 5.0,
+      "services": 46.6,
+      "extraction": 5.9,
+      "utilities": 2.5,
+      "other": 19.9
+    },
+    "exportsPctGdp": 39.6,
+    "fdiInflowsUsdB": 0.91,
+    "sourceUrl": "https://data.worldbank.org/"
+  },
+  {
+    "iso3": "ZAF",
+    "year": 2023,
+    "gdpUsdBillions": 381.44,
+    "gdpGrowthPct": 0.81,
+    "sectorShares": {
+      "agriculture": 2.5,
+      "manufacturing": 13.0,
+      "construction": 5.0,
+      "services": 62.7,
+      "extraction": 4.6,
+      "utilities": 2.0,
+      "other": 10.2
+    },
+    "exportsPctGdp": 33.3,
+    "fdiInflowsUsdB": 3.86,
+    "sourceUrl": "https://data.worldbank.org/"
+  },
+  {
+    "iso3": "ZMB",
+    "year": 2023,
+    "gdpUsdBillions": 27.58,
+    "gdpGrowthPct": 5.37,
+    "sectorShares": {
+      "agriculture": 2.2,
+      "manufacturing": 8.5,
+      "construction": 5.0,
+      "services": 56.8,
+      "extraction": 15.1,
+      "utilities": 6.5,
+      "other": 5.8
+    },
+    "exportsPctGdp": 40.8,
+    "fdiInflowsUsdB": 0.64,
+    "sourceUrl": "https://data.worldbank.org/"
+  },
+  {
+    "iso3": "ZWE",
+    "year": 2023,
+    "gdpUsdBillions": 35.87,
+    "gdpGrowthPct": 5.35,
+    "sectorShares": {
+      "agriculture": 11.5,
+      "manufacturing": 15.3,
+      "construction": 5.0,
+      "services": 49.6,
+      "extraction": 9.1,
+      "utilities": 3.9,
+      "other": 5.7
+    },
+    "exportsPctGdp": 17.1,
+    "fdiInflowsUsdB": 0.6,
+    "sourceUrl": "https://data.worldbank.org/"
+  },
+  {
+    "iso3": "ABW",
+    "year": 2025,
+    "gdpUsdBillions": 3.93,
+    "gdpGrowthPct": 7.71,
+    "sectorShares": {
+      "agriculture": 0,
+      "manufacturing": 0,
+      "construction": 0,
+      "services": 0,
+      "extraction": 0.0,
+      "utilities": 0.0,
+      "other": 100.0
+    },
+    "exportsPctGdp": 82.4,
+    "fdiInflowsUsdB": -0.14,
+    "sourceUrl": "https://data.worldbank.org/"
+  },
+  {
+    "iso3": "AFG",
+    "year": 2025,
+    "gdpUsdBillions": 17.58,
+    "gdpGrowthPct": 2.27,
+    "sectorShares": {
+      "agriculture": 34.7,
+      "manufacturing": 7.5,
+      "construction": 5.0,
+      "services": 46.4,
+      "extraction": 0.6,
+      "utilities": 0.3,
+      "other": 5.4
+    },
+    "exportsPctGdp": 16.9,
+    "fdiInflowsUsdB": 0.0,
+    "sourceUrl": "https://data.worldbank.org/"
+  },
+  {
+    "iso3": "AGO",
+    "year": 2025,
+    "gdpUsdBillions": 109.85,
+    "gdpGrowthPct": 1.26,
+    "sectorShares": {
+      "agriculture": 20.7,
+      "manufacturing": 7.3,
+      "construction": 5.0,
+      "services": 41.8,
+      "extraction": 16.0,
+      "utilities": 6.8,
+      "other": 2.4
+    },
+    "exportsPctGdp": 32.3,
+    "fdiInflowsUsdB": -2.12,
+    "sourceUrl": "https://data.worldbank.org/"
+  },
+  {
+    "iso3": "ALB",
+    "year": 2025,
+    "gdpUsdBillions": 24.08,
+    "gdpGrowthPct": 4.02,
+    "sectorShares": {
+      "agriculture": 16.3,
+      "manufacturing": 7.2,
+      "construction": 5.0,
+      "services": 47.7,
+      "extraction": 7.7,
+      "utilities": 3.3,
+      "other": 12.9
+    },
+    "exportsPctGdp": 38.4,
+    "fdiInflowsUsdB": 1.62,
+    "sourceUrl": "https://data.worldbank.org/"
+  },
+  {
+    "iso3": "ARE",
+    "year": 2025,
+    "gdpUsdBillions": 535.69,
+    "gdpGrowthPct": 4.3,
+    "sectorShares": {
+      "agriculture": 0.8,
+      "manufacturing": 9.5,
+      "construction": 5.0,
+      "services": 53.8,
+      "extraction": 21.7,
+      "utilities": 9.3,
+      "other": 0
+    },
+    "exportsPctGdp": 106.8,
+    "fdiInflowsUsdB": 30.69,
+    "sourceUrl": "https://data.worldbank.org/"
+  },
+  {
+    "iso3": "ARG",
+    "year": 2025,
+    "gdpUsdBillions": 665.7,
+    "gdpGrowthPct": -1.86,
+    "sectorShares": {
+      "agriculture": 5.8,
+      "manufacturing": 16.5,
+      "construction": 5.0,
+      "services": 53.2,
+      "extraction": 2.6,
+      "utilities": 1.1,
+      "other": 15.8
+    },
+    "exportsPctGdp": 12.8,
+    "fdiInflowsUsdB": 24.76,
+    "sourceUrl": "https://data.worldbank.org/"
+  },
+  {
+    "iso3": "ARM",
+    "year": 2025,
+    "gdpUsdBillions": 24.79,
+    "gdpGrowthPct": 8.3,
+    "sectorShares": {
+      "agriculture": 8.1,
+      "manufacturing": 10.2,
+      "construction": 5.0,
+      "services": 60.3,
+      "extraction": 5.3,
+      "utilities": 2.3,
+      "other": 8.7
+    },
+    "exportsPctGdp": 61.0,
+    "fdiInflowsUsdB": 0.58,
+    "sourceUrl": "https://data.worldbank.org/"
+  },
+  {
+    "iso3": "AUS",
+    "year": 2025,
+    "gdpUsdBillions": 1777.81,
+    "gdpGrowthPct": 3.58,
+    "sectorShares": {
+      "agriculture": 2.6,
+      "manufacturing": 5.3,
+      "construction": 5.0,
+      "services": 63.6,
+      "extraction": 12.1,
+      "utilities": 5.2,
+      "other": 6.3
+    },
+    "exportsPctGdp": 26.7,
+    "fdiInflowsUsdB": 35.32,
+    "sourceUrl": "https://data.worldbank.org/"
+  },
+  {
+    "iso3": "AUT",
+    "year": 2025,
+    "gdpUsdBillions": 529.59,
+    "gdpGrowthPct": -0.79,
+    "sectorShares": {
+      "agriculture": 1.2,
+      "manufacturing": 15.9,
+      "construction": 5.0,
+      "services": 62.6,
+      "extraction": 3.6,
+      "utilities": 1.5,
+      "other": 10.1
+    },
+    "exportsPctGdp": 58.5,
+    "fdiInflowsUsdB": 2.92,
+    "sourceUrl": "https://data.worldbank.org/"
+  },
+  {
+    "iso3": "AZE",
+    "year": 2025,
+    "gdpUsdBillions": 74.24,
+    "gdpGrowthPct": 1.35,
+    "sectorShares": {
+      "agriculture": 5.5,
+      "manufacturing": 5.1,
+      "construction": 5.0,
+      "services": 39.8,
+      "extraction": 25.0,
+      "utilities": 10.7,
+      "other": 8.9
+    },
+    "exportsPctGdp": 49.0,
+    "fdiInflowsUsdB": 0.25,
+    "sourceUrl": "https://data.worldbank.org/"
+  },
+  {
+    "iso3": "BDI",
+    "year": 2025,
+    "gdpUsdBillions": 3.52,
+    "gdpGrowthPct": 3.25,
+    "sectorShares": {
+      "agriculture": 33.4,
+      "manufacturing": 12.5,
+      "construction": 5.0,
+      "services": 43.6,
+      "extraction": 0.5,
+      "utilities": 0.2,
+      "other": 4.8
+    },
+    "exportsPctGdp": 0,
+    "fdiInflowsUsdB": 0.03,
+    "sourceUrl": "https://data.worldbank.org/"
+  },
+  {
+    "iso3": "BEL",
+    "year": 2025,
+    "gdpUsdBillions": 667.61,
+    "gdpGrowthPct": 1.71,
+    "sectorShares": {
+      "agriculture": 0.8,
+      "manufacturing": 12.0,
+      "construction": 5.0,
+      "services": 70.3,
+      "extraction": 1.8,
+      "utilities": 0.8,
+      "other": 9.5
+    },
+    "exportsPctGdp": 82.7,
+    "fdiInflowsUsdB": -4.25,
+    "sourceUrl": "https://data.worldbank.org/"
+  },
+  {
+    "iso3": "BEN",
+    "year": 2025,
+    "gdpUsdBillions": 20.16,
+    "gdpGrowthPct": 6.35,
+    "sectorShares": {
+      "agriculture": 25.4,
+      "manufacturing": 10.1,
+      "construction": 5.0,
+      "services": 47.7,
+      "extraction": 1.6,
+      "utilities": 0.7,
+      "other": 9.6
+    },
+    "exportsPctGdp": 20.0,
+    "fdiInflowsUsdB": 0.44,
+    "sourceUrl": "https://data.worldbank.org/"
+  },
+  {
+    "iso3": "BFA",
+    "year": 2025,
+    "gdpUsdBillions": 20.61,
+    "gdpGrowthPct": 3.0,
+    "sectorShares": {
+      "agriculture": 19.0,
+      "manufacturing": 9.9,
+      "construction": 5.0,
+      "services": 47.6,
+      "extraction": 7.6,
+      "utilities": 3.2,
+      "other": 7.7
+    },
+    "exportsPctGdp": 28.9,
+    "fdiInflowsUsdB": 0.11,
+    "sourceUrl": "https://data.worldbank.org/"
+  },
+  {
+    "iso3": "BGD",
+    "year": 2025,
+    "gdpUsdBillions": 448.36,
+    "gdpGrowthPct": 5.78,
+    "sectorShares": {
+      "agriculture": 11.0,
+      "manufacturing": 22.3,
+      "construction": 5.0,
+      "services": 51.1,
+      "extraction": 5.1,
+      "utilities": 2.2,
+      "other": 3.3
+    },
+    "exportsPctGdp": 13.2,
+    "fdiInflowsUsdB": 1.47,
+    "sourceUrl": "https://data.worldbank.org/"
+  },
+  {
+    "iso3": "BGR",
+    "year": 2025,
+    "gdpUsdBillions": 104.75,
+    "gdpGrowthPct": 1.68,
+    "sectorShares": {
+      "agriculture": 2.5,
+      "manufacturing": 0,
+      "construction": 5.0,
+      "services": 62.4,
+      "extraction": 12.4,
+      "utilities": 5.3,
+      "other": 12.3
+    },
+    "exportsPctGdp": 62.0,
+    "fdiInflowsUsdB": 5.17,
+    "sourceUrl": "https://data.worldbank.org/"
+  },
+  {
+    "iso3": "BHR",
+    "year": 2025,
+    "gdpUsdBillions": 47.34,
+    "gdpGrowthPct": 3.88,
+    "sectorShares": {
+      "agriculture": 0.3,
+      "manufacturing": 20.1,
+      "construction": 5.0,
+      "services": 51.9,
+      "extraction": 12.8,
+      "utilities": 5.5,
+      "other": 4.4
+    },
+    "exportsPctGdp": 87.4,
+    "fdiInflowsUsdB": 7.23,
+    "sourceUrl": "https://data.worldbank.org/"
+  },
+  {
+    "iso3": "BHS",
+    "year": 2025,
+    "gdpUsdBillions": 15.65,
+    "gdpGrowthPct": 3.05,
+    "sectorShares": {
+      "agriculture": 0.5,
+      "manufacturing": 0.9,
+      "construction": 5.0,
+      "services": 78.6,
+      "extraction": 2.7,
+      "utilities": 1.2,
+      "other": 11.2
+    },
+    "exportsPctGdp": 37.8,
+    "fdiInflowsUsdB": 0.32,
+    "sourceUrl": "https://data.worldbank.org/"
+  },
+  {
+    "iso3": "BIH",
+    "year": 2025,
+    "gdpUsdBillions": 28.28,
+    "gdpGrowthPct": 1.99,
+    "sectorShares": {
+      "agriculture": 4.7,
+      "manufacturing": 13.3,
+      "construction": 5.0,
+      "services": 55.9,
+      "extraction": 3.8,
+      "utilities": 1.6,
+      "other": 15.7
+    },
+    "exportsPctGdp": 43.9,
+    "fdiInflowsUsdB": 1.13,
+    "sourceUrl": "https://data.worldbank.org/"
+  },
+  {
+    "iso3": "BLR",
+    "year": 2025,
+    "gdpUsdBillions": 74.29,
+    "gdpGrowthPct": 4.13,
+    "sectorShares": {
+      "agriculture": 7.2,
+      "manufacturing": 22.2,
+      "construction": 5.0,
+      "services": 48.8,
+      "extraction": 3.2,
+      "utilities": 1.4,
+      "other": 12.3
+    },
+    "exportsPctGdp": 66.0,
+    "fdiInflowsUsdB": 1.99,
+    "sourceUrl": "https://data.worldbank.org/"
+  },
+  {
+    "iso3": "BLZ",
+    "year": 2025,
+    "gdpUsdBillions": 3.13,
+    "gdpGrowthPct": 0.5,
+    "sectorShares": {
+      "agriculture": 8.1,
+      "manufacturing": 6.5,
+      "construction": 5.0,
+      "services": 62.1,
+      "extraction": 2.0,
+      "utilities": 0.9,
+      "other": 15.3
+    },
+    "exportsPctGdp": 54.9,
+    "fdiInflowsUsdB": 0.02,
+    "sourceUrl": "https://data.worldbank.org/"
+  },
+  {
+    "iso3": "BOL",
+    "year": 2025,
+    "gdpUsdBillions": 53.65,
+    "gdpGrowthPct": 2.52,
+    "sectorShares": {
+      "agriculture": 9.3,
+      "manufacturing": 11.8,
+      "construction": 5.0,
+      "services": 53.8,
+      "extraction": 9.1,
+      "utilities": 3.9,
+      "other": 7.1
+    },
+    "exportsPctGdp": 22.4,
+    "fdiInflowsUsdB": 0.24,
+    "sourceUrl": "https://data.worldbank.org/"
+  },
+  {
+    "iso3": "BRA",
+    "year": 2025,
+    "gdpUsdBillions": 2245.91,
+    "gdpGrowthPct": 3.24,
+    "sectorShares": {
+      "agriculture": 6.0,
+      "manufacturing": 13.3,
+      "construction": 5.0,
+      "services": 59.2,
+      "extraction": 2.7,
+      "utilities": 1.2,
+      "other": 12.7
+    },
+    "exportsPctGdp": 18.0,
+    "fdiInflowsUsdB": 62.75,
+    "sourceUrl": "https://data.worldbank.org/"
+  },
+  {
+    "iso3": "BRB",
+    "year": 2025,
+    "gdpUsdBillions": 7.4,
+    "gdpGrowthPct": 2.91,
+    "sectorShares": {
+      "agriculture": 1.7,
+      "manufacturing": 5.2,
+      "construction": 5.0,
+      "services": 75.5,
+      "extraction": 1.5,
+      "utilities": 0.6,
+      "other": 10.6
+    },
+    "exportsPctGdp": 0,
+    "fdiInflowsUsdB": 0.22,
+    "sourceUrl": "https://data.worldbank.org/"
+  },
+  {
+    "iso3": "BRN",
+    "year": 2025,
+    "gdpUsdBillions": 15.48,
+    "gdpGrowthPct": 1.13,
+    "sectorShares": {
+      "agriculture": 1.2,
+      "manufacturing": 10.4,
+      "construction": 5.0,
+      "services": 38.8,
+      "extraction": 32.5,
+      "utilities": 13.9,
+      "other": 0
+    },
+    "exportsPctGdp": 76.7,
+    "fdiInflowsUsdB": -0.06,
+    "sourceUrl": "https://data.worldbank.org/"
+  },
+  {
+    "iso3": "BTN",
+    "year": 2025,
+    "gdpUsdBillions": 3.09,
+    "gdpGrowthPct": 4.63,
+    "sectorShares": {
+      "agriculture": 15.0,
+      "manufacturing": 7.9,
+      "construction": 5.0,
+      "services": 52.8,
+      "extraction": 11.6,
+      "utilities": 5.0,
+      "other": 2.8
+    },
+    "exportsPctGdp": 28.4,
+    "fdiInflowsUsdB": 0.01,
+    "sourceUrl": "https://data.worldbank.org/"
+  },
+  {
+    "iso3": "BWA",
+    "year": 2025,
+    "gdpUsdBillions": 19.9,
+    "gdpGrowthPct": 3.21,
+    "sectorShares": {
+      "agriculture": 1.7,
+      "manufacturing": 5.6,
+      "construction": 5.0,
+      "services": 59.2,
+      "extraction": 16.4,
+      "utilities": 7.0,
+      "other": 5.1
+    },
+    "exportsPctGdp": 32.2,
+    "fdiInflowsUsdB": 0.74,
+    "sourceUrl": "https://data.worldbank.org/"
+  },
+  {
+    "iso3": "CAF",
+    "year": 2025,
+    "gdpUsdBillions": 2.62,
+    "gdpGrowthPct": 0.7,
+    "sectorShares": {
+      "agriculture": 28.6,
+      "manufacturing": 18.0,
+      "construction": 2.8,
+      "services": 40.5,
+      "extraction": 0.0,
+      "utilities": 0.0,
+      "other": 10.2
+    },
+    "exportsPctGdp": 14.4,
+    "fdiInflowsUsdB": 0.04,
+    "sourceUrl": "https://data.worldbank.org/"
+  },
+  {
+    "iso3": "CAN",
+    "year": 2025,
+    "gdpUsdBillions": 2227.67,
+    "gdpGrowthPct": 1.53,
+    "sectorShares": {
+      "agriculture": 0,
+      "manufacturing": 0,
+      "construction": 0,
+      "services": 0,
+      "extraction": 0.0,
+      "utilities": 0.0,
+      "other": 100.0
+    },
+    "exportsPctGdp": 33.3,
+    "fdiInflowsUsdB": 43.9,
+    "sourceUrl": "https://data.worldbank.org/"
+  },
+  {
+    "iso3": "CHE",
+    "year": 2025,
+    "gdpUsdBillions": 916.78,
+    "gdpGrowthPct": 0.68,
+    "sectorShares": {
+      "agriculture": 0.6,
+      "manufacturing": 17.8,
+      "construction": 5.0,
+      "services": 72.2,
+      "extraction": 1.3,
+      "utilities": 0.6,
+      "other": 2.5
+    },
+    "exportsPctGdp": 73.3,
+    "fdiInflowsUsdB": -115.46,
+    "sourceUrl": "https://data.worldbank.org/"
+  },
+  {
+    "iso3": "CHI",
+    "year": 2025,
+    "gdpUsdBillions": 12.82,
+    "gdpGrowthPct": 3.72,
+    "sectorShares": {
+      "agriculture": 0.6,
+      "manufacturing": 0.8,
+      "construction": 5.0,
+      "services": 91.2,
+      "extraction": 1.7,
+      "utilities": 0.7,
+      "other": 0
+    },
+    "exportsPctGdp": 0,
+    "fdiInflowsUsdB": 0.0,
+    "sourceUrl": "https://data.worldbank.org/"
+  },
+  {
+    "iso3": "CHL",
+    "year": 2025,
+    "gdpUsdBillions": 343.91,
+    "gdpGrowthPct": 0.52,
+    "sectorShares": {
+      "agriculture": 3.5,
+      "manufacturing": 9.4,
+      "construction": 5.0,
+      "services": 57.6,
+      "extraction": 10.1,
+      "utilities": 4.3,
+      "other": 10.1
+    },
+    "exportsPctGdp": 30.8,
+    "fdiInflowsUsdB": 18.38,
+    "sourceUrl": "https://data.worldbank.org/"
+  },
+  {
+    "iso3": "CHN",
+    "year": 2025,
+    "gdpUsdBillions": 18727.12,
+    "gdpGrowthPct": 5.41,
+    "sectorShares": {
+      "agriculture": 6.9,
+      "manufacturing": 25.5,
+      "construction": 5.0,
+      "services": 56.3,
+      "extraction": 4.4,
+      "utilities": 1.9,
+      "other": 0.0
+    },
+    "exportsPctGdp": 19.1,
+    "fdiInflowsUsdB": 51.34,
+    "sourceUrl": "https://data.worldbank.org/"
+  },
+  {
+    "iso3": "CIV",
+    "year": 2025,
+    "gdpUsdBillions": 82.8,
+    "gdpGrowthPct": 6.6,
+    "sectorShares": {
+      "agriculture": 15.9,
+      "manufacturing": 13.3,
+      "construction": 5.0,
+      "services": 52.3,
+      "extraction": 3.9,
+      "utilities": 1.7,
+      "other": 7.9
+    },
+    "exportsPctGdp": 22.4,
+    "fdiInflowsUsdB": 2.49,
+    "sourceUrl": "https://data.worldbank.org/"
+  },
+  {
+    "iso3": "CMR",
+    "year": 2025,
+    "gdpUsdBillions": 50.03,
+    "gdpGrowthPct": 3.35,
+    "sectorShares": {
+      "agriculture": 17.1,
+      "manufacturing": 13.2,
+      "construction": 5.0,
+      "services": 50.9,
+      "extraction": 4.8,
+      "utilities": 2.1,
+      "other": 6.9
+    },
+    "exportsPctGdp": 16.9,
+    "fdiInflowsUsdB": 0.82,
+    "sourceUrl": "https://data.worldbank.org/"
+  },
+  {
+    "iso3": "COD",
+    "year": 2025,
+    "gdpUsdBillions": 71.59,
+    "gdpGrowthPct": 8.53,
+    "sectorShares": {
+      "agriculture": 10.4,
+      "manufacturing": 8.2,
+      "construction": 5.0,
+      "services": 45.9,
+      "extraction": 18.4,
+      "utilities": 7.9,
+      "other": 4.2
+    },
+    "exportsPctGdp": 42.1,
+    "fdiInflowsUsdB": 2.38,
+    "sourceUrl": "https://data.worldbank.org/"
+  },
+  {
+    "iso3": "COG",
+    "year": 2025,
+    "gdpUsdBillions": 15.7,
+    "gdpGrowthPct": 1.91,
+    "sectorShares": {
+      "agriculture": 9.0,
+      "manufacturing": 0,
+      "construction": 5.0,
+      "services": 40.4,
+      "extraction": 28.2,
+      "utilities": 12.1,
+      "other": 5.4
+    },
+    "exportsPctGdp": 56.9,
+    "fdiInflowsUsdB": 0.63,
+    "sourceUrl": "https://data.worldbank.org/"
+  },
+  {
+    "iso3": "COL",
+    "year": 2025,
+    "gdpUsdBillions": 375.45,
+    "gdpGrowthPct": 0.71,
+    "sectorShares": {
+      "agriculture": 8.8,
+      "manufacturing": 10.9,
+      "construction": 5.0,
+      "services": 56.7,
+      "extraction": 6.2,
+      "utilities": 2.6,
+      "other": 9.8
+    },
+    "exportsPctGdp": 17.8,
+    "fdiInflowsUsdB": 16.79,
+    "sourceUrl": "https://data.worldbank.org/"
+  },
+  {
+    "iso3": "COM",
+    "year": 2025,
+    "gdpUsdBillions": 1.36,
+    "gdpGrowthPct": 3.0,
+    "sectorShares": {
+      "agriculture": 35.9,
+      "manufacturing": 0,
+      "construction": 5.0,
+      "services": 50.6,
+      "extraction": 3.2,
+      "utilities": 1.4,
+      "other": 4.0
+    },
+    "exportsPctGdp": 10.4,
+    "fdiInflowsUsdB": 0.01,
+    "sourceUrl": "https://data.worldbank.org/"
+  },
+  {
+    "iso3": "CPV",
+    "year": 2025,
+    "gdpUsdBillions": 2.56,
+    "gdpGrowthPct": 4.79,
+    "sectorShares": {
+      "agriculture": 4.9,
+      "manufacturing": 4.9,
+      "construction": 5.0,
+      "services": 68.9,
+      "extraction": 0.7,
+      "utilities": 0.3,
+      "other": 15.3
+    },
+    "exportsPctGdp": 39.3,
+    "fdiInflowsUsdB": 0.16,
+    "sourceUrl": "https://data.worldbank.org/"
+  },
+  {
+    "iso3": "CRI",
+    "year": 2025,
+    "gdpUsdBillions": 88.66,
+    "gdpGrowthPct": 5.11,
+    "sectorShares": {
+      "agriculture": 3.8,
+      "manufacturing": 13.6,
+      "construction": 5.0,
+      "services": 68.0,
+      "extraction": 1.3,
+      "utilities": 0.6,
+      "other": 7.7
+    },
+    "exportsPctGdp": 38.9,
+    "fdiInflowsUsdB": 4.69,
+    "sourceUrl": "https://data.worldbank.org/"
+  },
+  {
+    "iso3": "CUW",
+    "year": 2025,
+    "gdpUsdBillions": 3.36,
+    "gdpGrowthPct": 4.2,
+    "sectorShares": {
+      "agriculture": 0.3,
+      "manufacturing": 2.7,
+      "construction": 5.0,
+      "services": 73.3,
+      "extraction": 2.8,
+      "utilities": 1.2,
+      "other": 14.7
+    },
+    "exportsPctGdp": 0,
+    "fdiInflowsUsdB": 0.14,
+    "sourceUrl": "https://data.worldbank.org/"
+  },
+  {
+    "iso3": "CYP",
+    "year": 2025,
+    "gdpUsdBillions": 35.96,
+    "gdpGrowthPct": 3.62,
+    "sectorShares": {
+      "agriculture": 1.2,
+      "manufacturing": 4.6,
+      "construction": 5.0,
+      "services": 76.2,
+      "extraction": 1.2,
+      "utilities": 0.5,
+      "other": 11.3
+    },
+    "exportsPctGdp": 96.4,
+    "fdiInflowsUsdB": -22.15,
+    "sourceUrl": "https://data.worldbank.org/"
+  },
+  {
+    "iso3": "CZE",
+    "year": 2025,
+    "gdpUsdBillions": 353.69,
+    "gdpGrowthPct": 0.05,
+    "sectorShares": {
+      "agriculture": 2.1,
+      "manufacturing": 20.4,
+      "construction": 5.0,
+      "services": 59.7,
+      "extraction": 3.2,
+      "utilities": 1.4,
+      "other": 8.1
+    },
+    "exportsPctGdp": 68.4,
+    "fdiInflowsUsdB": 11.89,
+    "sourceUrl": "https://data.worldbank.org/"
+  },
+  {
+    "iso3": "DEU",
+    "year": 2025,
+    "gdpUsdBillions": 4676.27,
+    "gdpGrowthPct": -0.87,
+    "sectorShares": {
+      "agriculture": 0.9,
+      "manufacturing": 18.9,
+      "construction": 5.0,
+      "services": 63.6,
+      "extraction": 2.0,
+      "utilities": 0.9,
+      "other": 8.7
+    },
+    "exportsPctGdp": 43.0,
+    "fdiInflowsUsdB": 77.44,
+    "sourceUrl": "https://data.worldbank.org/"
+  },
+  {
+    "iso3": "DJI",
+    "year": 2025,
+    "gdpUsdBillions": 4.0,
+    "gdpGrowthPct": 6.81,
+    "sectorShares": {
+      "agriculture": 2.5,
+      "manufacturing": 4.7,
+      "construction": 5.0,
+      "services": 77.1,
+      "extraction": 3.3,
+      "utilities": 1.4,
+      "other": 6.0
+    },
+    "exportsPctGdp": 150.7,
+    "fdiInflowsUsdB": 0.14,
+    "sourceUrl": "https://data.worldbank.org/"
+  },
+  {
+    "iso3": "DNK",
+    "year": 2025,
+    "gdpUsdBillions": 414.77,
+    "gdpGrowthPct": 0.6,
+    "sectorShares": {
+      "agriculture": 1.0,
+      "manufacturing": 16.4,
+      "construction": 5.0,
+      "services": 63.9,
+      "extraction": 1.6,
+      "utilities": 0.7,
+      "other": 11.4
+    },
+    "exportsPctGdp": 69.3,
+    "fdiInflowsUsdB": 8.23,
+    "sourceUrl": "https://data.worldbank.org/"
+  },
+  {
+    "iso3": "DOM",
+    "year": 2025,
+    "gdpUsdBillions": 123.47,
+    "gdpGrowthPct": 2.19,
+    "sectorShares": {
+      "agriculture": 4.3,
+      "manufacturing": 12.5,
+      "construction": 5.0,
+      "services": 59.6,
+      "extraction": 8.2,
+      "utilities": 3.5,
+      "other": 6.8
+    },
+    "exportsPctGdp": 21.3,
+    "fdiInflowsUsdB": 4.75,
+    "sourceUrl": "https://data.worldbank.org/"
+  },
+  {
+    "iso3": "DZA",
+    "year": 2025,
+    "gdpUsdBillions": 254.12,
+    "gdpGrowthPct": 4.1,
+    "sectorShares": {
+      "agriculture": 13.4,
+      "manufacturing": 9.1,
+      "construction": 5.0,
+      "services": 45.5,
+      "extraction": 16.4,
+      "utilities": 7.0,
+      "other": 3.5
+    },
+    "exportsPctGdp": 23.8,
+    "fdiInflowsUsdB": 1.21,
+    "sourceUrl": "https://data.worldbank.org/"
+  },
+  {
+    "iso3": "ECU",
+    "year": 2025,
+    "gdpUsdBillions": 124.18,
+    "gdpGrowthPct": 1.99,
+    "sectorShares": {
+      "agriculture": 8.0,
+      "manufacturing": 13.3,
+      "construction": 5.0,
+      "services": 58.6,
+      "extraction": 6.5,
+      "utilities": 2.8,
+      "other": 5.8
+    },
+    "exportsPctGdp": 28.6,
+    "fdiInflowsUsdB": 0.48,
+    "sourceUrl": "https://data.worldbank.org/"
+  },
+  {
+    "iso3": "EGY",
+    "year": 2025,
+    "gdpUsdBillions": 405.83,
+    "gdpGrowthPct": 3.76,
+    "sectorShares": {
+      "agriculture": 10.6,
+      "manufacturing": 15.1,
+      "construction": 5.0,
+      "services": 51.6,
+      "extraction": 8.9,
+      "utilities": 3.8,
+      "other": 5.0
+    },
+    "exportsPctGdp": 19.1,
+    "fdiInflowsUsdB": 9.84,
+    "sourceUrl": "https://data.worldbank.org/"
+  },
+  {
+    "iso3": "ESP",
+    "year": 2025,
+    "gdpUsdBillions": 1659.97,
+    "gdpGrowthPct": 2.46,
+    "sectorShares": {
+      "agriculture": 2.6,
+      "manufacturing": 11.0,
+      "construction": 5.0,
+      "services": 68.7,
+      "extraction": 2.8,
+      "utilities": 1.2,
+      "other": 8.7
+    },
+    "exportsPctGdp": 37.8,
+    "fdiInflowsUsdB": 46.96,
+    "sourceUrl": "https://data.worldbank.org/"
+  },
+  {
+    "iso3": "EST",
+    "year": 2025,
+    "gdpUsdBillions": 42.51,
+    "gdpGrowthPct": -2.74,
+    "sectorShares": {
+      "agriculture": 1.7,
+      "manufacturing": 11.4,
+      "construction": 5.0,
+      "services": 65.1,
+      "extraction": 3.5,
+      "utilities": 1.5,
+      "other": 11.8
+    },
+    "exportsPctGdp": 77.8,
+    "fdiInflowsUsdB": 5.2,
+    "sourceUrl": "https://data.worldbank.org/"
+  },
+  {
+    "iso3": "ETH",
+    "year": 2025,
+    "gdpUsdBillions": 139.27,
+    "gdpGrowthPct": 6.59,
+    "sectorShares": {
+      "agriculture": 35.8,
+      "manufacturing": 4.5,
+      "construction": 5.0,
+      "services": 37.0,
+      "extraction": 10.5,
+      "utilities": 4.5,
+      "other": 2.8
+    },
+    "exportsPctGdp": 6.6,
+    "fdiInflowsUsdB": 3.26,
+    "sourceUrl": "https://data.worldbank.org/"
+  },
+  {
+    "iso3": "FIN",
+    "year": 2025,
+    "gdpUsdBillions": 302.4,
+    "gdpGrowthPct": -0.94,
+    "sectorShares": {
+      "agriculture": 2.3,
+      "manufacturing": 14.5,
+      "construction": 5.0,
+      "services": 61.8,
+      "extraction": 2.8,
+      "utilities": 1.2,
+      "other": 12.4
+    },
+    "exportsPctGdp": 42.8,
+    "fdiInflowsUsdB": -0.11,
+    "sourceUrl": "https://data.worldbank.org/"
+  },
+  {
+    "iso3": "FJI",
+    "year": 2025,
+    "gdpUsdBillions": 5.62,
+    "gdpGrowthPct": 9.44,
+    "sectorShares": {
+      "agriculture": 12.8,
+      "manufacturing": 11.8,
+      "construction": 5.0,
+      "services": 56.2,
+      "extraction": 0.3,
+      "utilities": 0.1,
+      "other": 13.7
+    },
+    "exportsPctGdp": 0,
+    "fdiInflowsUsdB": 0.09,
+    "sourceUrl": "https://data.worldbank.org/"
+  },
+  {
+    "iso3": "FRA",
+    "year": 2025,
+    "gdpUsdBillions": 3132.66,
+    "gdpGrowthPct": 1.44,
+    "sectorShares": {
+      "agriculture": 1.5,
+      "manufacturing": 9.8,
+      "construction": 5.0,
+      "services": 70.2,
+      "extraction": 2.3,
+      "utilities": 1.0,
+      "other": 10.2
+    },
+    "exportsPctGdp": 34.5,
+    "fdiInflowsUsdB": 18.05,
+    "sourceUrl": "https://data.worldbank.org/"
+  },
+  {
+    "iso3": "FSM",
+    "year": 2025,
+    "gdpUsdBillions": 0.45,
+    "gdpGrowthPct": 0.45,
+    "sectorShares": {
+      "agriculture": 23.4,
+      "manufacturing": 0.5,
+      "construction": 4.5,
+      "services": 69.6,
+      "extraction": 0.0,
+      "utilities": 0.0,
+      "other": 1.9
+    },
+    "exportsPctGdp": 27.6,
+    "fdiInflowsUsdB": 0.0,
+    "sourceUrl": "https://data.worldbank.org/"
+  },
+  {
+    "iso3": "GAB",
+    "year": 2025,
+    "gdpUsdBillions": 19.87,
+    "gdpGrowthPct": 2.44,
+    "sectorShares": {
+      "agriculture": 6.7,
+      "manufacturing": 20.5,
+      "construction": 5.0,
+      "services": 37.8,
+      "extraction": 19.8,
+      "utilities": 8.5,
+      "other": 1.7
+    },
+    "exportsPctGdp": 63.7,
+    "fdiInflowsUsdB": 1.15,
+    "sourceUrl": "https://data.worldbank.org/"
+  },
+  {
+    "iso3": "GBR",
+    "year": 2025,
+    "gdpUsdBillions": 3506.32,
+    "gdpGrowthPct": 0.27,
+    "sectorShares": {
+      "agriculture": 0.6,
+      "manufacturing": 8.2,
+      "construction": 5.0,
+      "services": 72.4,
+      "extraction": 3.1,
+      "utilities": 1.3,
+      "other": 9.3
+    },
+    "exportsPctGdp": 31.9,
+    "fdiInflowsUsdB": 13.79,
+    "sourceUrl": "https://data.worldbank.org/"
+  },
+  {
+    "iso3": "GEO",
+    "year": 2025,
+    "gdpUsdBillions": 31.55,
+    "gdpGrowthPct": 7.83,
+    "sectorShares": {
+      "agriculture": 6.0,
+      "manufacturing": 8.4,
+      "construction": 5.0,
+      "services": 62.1,
+      "extraction": 3.9,
+      "utilities": 1.7,
+      "other": 13.0
+    },
+    "exportsPctGdp": 49.3,
+    "fdiInflowsUsdB": 2.11,
+    "sourceUrl": "https://data.worldbank.org/"
+  },
+  {
+    "iso3": "GHA",
+    "year": 2025,
+    "gdpUsdBillions": 82.56,
+    "gdpGrowthPct": 3.14,
+    "sectorShares": {
+      "agriculture": 20.9,
+      "manufacturing": 11.1,
+      "construction": 5.0,
+      "services": 43.1,
+      "extraction": 9.3,
+      "utilities": 4.0,
+      "other": 6.5
+    },
+    "exportsPctGdp": 31.8,
+    "fdiInflowsUsdB": 1.32,
+    "sourceUrl": "https://data.worldbank.org/"
+  },
+  {
+    "iso3": "GIN",
+    "year": 2025,
+    "gdpUsdBillions": 22.97,
+    "gdpGrowthPct": 5.54,
+    "sectorShares": {
+      "agriculture": 29.5,
+      "manufacturing": 0,
+      "construction": 5.0,
+      "services": 37.2,
+      "extraction": 14.5,
+      "utilities": 6.2,
+      "other": 7.6
+    },
+    "exportsPctGdp": 44.1,
+    "fdiInflowsUsdB": 1.31,
+    "sourceUrl": "https://data.worldbank.org/"
+  },
+  {
+    "iso3": "GMB",
+    "year": 2025,
+    "gdpUsdBillions": 2.44,
+    "gdpGrowthPct": 5.92,
+    "sectorShares": {
+      "agriculture": 22.0,
+      "manufacturing": 1.7,
+      "construction": 5.0,
+      "services": 55.0,
+      "extraction": 6.8,
+      "utilities": 2.9,
+      "other": 6.5
+    },
+    "exportsPctGdp": 7.1,
+    "fdiInflowsUsdB": 0.21,
+    "sourceUrl": "https://data.worldbank.org/"
+  },
+  {
+    "iso3": "GNB",
+    "year": 2025,
+    "gdpUsdBillions": 2.18,
+    "gdpGrowthPct": 5.83,
+    "sectorShares": {
+      "agriculture": 38.5,
+      "manufacturing": 8.6,
+      "construction": 5.0,
+      "services": 42.1,
+      "extraction": 1.0,
+      "utilities": 0.4,
+      "other": 4.3
+    },
+    "exportsPctGdp": 13.2,
+    "fdiInflowsUsdB": 0.03,
+    "sourceUrl": "https://data.worldbank.org/"
+  },
+  {
+    "iso3": "GNQ",
+    "year": 2025,
+    "gdpUsdBillions": 12.65,
+    "gdpGrowthPct": -5.09,
+    "sectorShares": {
+      "agriculture": 3.1,
+      "manufacturing": 24.6,
+      "construction": 5.0,
+      "services": 50.4,
+      "extraction": 11.8,
+      "utilities": 5.1,
+      "other": 0.0
+    },
+    "exportsPctGdp": 36.6,
+    "fdiInflowsUsdB": 0.14,
+    "sourceUrl": "https://data.worldbank.org/"
+  },
+  {
+    "iso3": "GRC",
+    "year": 2025,
+    "gdpUsdBillions": 249.02,
+    "gdpGrowthPct": 2.14,
+    "sectorShares": {
+      "agriculture": 3.7,
+      "manufacturing": 8.9,
+      "construction": 5.0,
+      "services": 68.7,
+      "extraction": 0.6,
+      "utilities": 0.3,
+      "other": 12.7
+    },
+    "exportsPctGdp": 43.8,
+    "fdiInflowsUsdB": 4.72,
+    "sourceUrl": "https://data.worldbank.org/"
+  },
+  {
+    "iso3": "GRD",
+    "year": 2025,
+    "gdpUsdBillions": 1.37,
+    "gdpGrowthPct": 4.53,
+    "sectorShares": {
+      "agriculture": 3.1,
+      "manufacturing": 3.5,
+      "construction": 5.0,
+      "services": 65.1,
+      "extraction": 4.4,
+      "utilities": 1.9,
+      "other": 17.0
+    },
+    "exportsPctGdp": 0,
+    "fdiInflowsUsdB": 0.22,
+    "sourceUrl": "https://data.worldbank.org/"
+  },
+  {
+    "iso3": "GTM",
+    "year": 2025,
+    "gdpUsdBillions": 106.98,
+    "gdpGrowthPct": 3.53,
+    "sectorShares": {
+      "agriculture": 9.7,
+      "manufacturing": 14.0,
+      "construction": 5.0,
+      "services": 61.4,
+      "extraction": 2.3,
+      "utilities": 1.0,
+      "other": 6.6
+    },
+    "exportsPctGdp": 16.6,
+    "fdiInflowsUsdB": 1.65,
+    "sourceUrl": "https://data.worldbank.org/"
+  },
+  {
+    "iso3": "GUY",
+    "year": 2025,
+    "gdpUsdBillions": 17.34,
+    "gdpGrowthPct": 33.8,
+    "sectorShares": {
+      "agriculture": 9.7,
+      "manufacturing": 2.3,
+      "construction": 5.0,
+      "services": 18.8,
+      "extraction": 43.4,
+      "utilities": 18.6,
+      "other": 2.2
+    },
+    "exportsPctGdp": 0,
+    "fdiInflowsUsdB": -1.14,
+    "sourceUrl": "https://data.worldbank.org/"
+  },
+  {
+    "iso3": "HKG",
+    "year": 2025,
+    "gdpUsdBillions": 390.57,
+    "gdpGrowthPct": 3.22,
+    "sectorShares": {
+      "agriculture": 0.0,
+      "manufacturing": 0.9,
+      "construction": 5.0,
+      "services": 91.4,
+      "extraction": 0.2,
+      "utilities": 0.1,
+      "other": 2.3
+    },
+    "exportsPctGdp": 176.8,
+    "fdiInflowsUsdB": 121.99,
+    "sourceUrl": "https://data.worldbank.org/"
+  },
+  {
+    "iso3": "HND",
+    "year": 2025,
+    "gdpUsdBillions": 35.22,
+    "gdpGrowthPct": 3.58,
+    "sectorShares": {
+      "agriculture": 12.0,
+      "manufacturing": 15.2,
+      "construction": 5.0,
+      "services": 57.6,
+      "extraction": 3.9,
+      "utilities": 1.7,
+      "other": 4.6
+    },
+    "exportsPctGdp": 37.4,
+    "fdiInflowsUsdB": 1.09,
+    "sourceUrl": "https://data.worldbank.org/"
+  },
+  {
+    "iso3": "HRV",
+    "year": 2025,
+    "gdpUsdBillions": 87.76,
+    "gdpGrowthPct": 3.76,
+    "sectorShares": {
+      "agriculture": 2.7,
+      "manufacturing": 12.2,
+      "construction": 5.0,
+      "services": 59.8,
+      "extraction": 2.8,
+      "utilities": 1.2,
+      "other": 16.3
+    },
+    "exportsPctGdp": 52.6,
+    "fdiInflowsUsdB": 3.34,
+    "sourceUrl": "https://data.worldbank.org/"
+  },
+  {
+    "iso3": "HTI",
+    "year": 2025,
+    "gdpUsdBillions": 20.35,
+    "gdpGrowthPct": -1.86,
+    "sectorShares": {
+      "agriculture": 17.5,
+      "manufacturing": 24.5,
+      "construction": 5.0,
+      "services": 47.5,
+      "extraction": 1.8,
+      "utilities": 0.8,
+      "other": 3.0
+    },
+    "exportsPctGdp": 5.3,
+    "fdiInflowsUsdB": 0.02,
+    "sourceUrl": "https://data.worldbank.org/"
+  },
+  {
+    "iso3": "HUN",
+    "year": 2025,
+    "gdpUsdBillions": 218.57,
+    "gdpGrowthPct": -0.82,
+    "sectorShares": {
+      "agriculture": 2.9,
+      "manufacturing": 17.1,
+      "construction": 5.0,
+      "services": 58.3,
+      "extraction": 2.3,
+      "utilities": 1.0,
+      "other": 13.5
+    },
+    "exportsPctGdp": 81.2,
+    "fdiInflowsUsdB": -70.78,
+    "sourceUrl": "https://data.worldbank.org/"
+  },
+  {
+    "iso3": "IDN",
+    "year": 2025,
+    "gdpUsdBillions": 1405.45,
+    "gdpGrowthPct": 5.05,
+    "sectorShares": {
+      "agriculture": 12.5,
+      "manufacturing": 18.7,
+      "construction": 5.0,
+      "services": 42.9,
+      "extraction": 11.6,
+      "utilities": 5.0,
+      "other": 4.4
+    },
+    "exportsPctGdp": 21.8,
+    "fdiInflowsUsdB": 21.54,
+    "sourceUrl": "https://data.worldbank.org/"
+  },
+  {
+    "iso3": "IND",
+    "year": 2025,
+    "gdpUsdBillions": 3729.45,
+    "gdpGrowthPct": 9.19,
+    "sectorShares": {
+      "agriculture": 16.2,
+      "manufacturing": 13.0,
+      "construction": 5.0,
+      "services": 49.5,
+      "extraction": 5.1,
+      "utilities": 2.2,
+      "other": 9.0
+    },
+    "exportsPctGdp": 21.4,
+    "fdiInflowsUsdB": 28.09,
+    "sourceUrl": "https://data.worldbank.org/"
+  },
+  {
+    "iso3": "IRL",
+    "year": 2025,
+    "gdpUsdBillions": 581.55,
+    "gdpGrowthPct": -2.54,
+    "sectorShares": {
+      "agriculture": 0.8,
+      "manufacturing": 29.8,
+      "construction": 4.2,
+      "services": 60.3,
+      "extraction": 0.0,
+      "utilities": 0.0,
+      "other": 4.9
+    },
+    "exportsPctGdp": 136.5,
+    "fdiInflowsUsdB": -139.97,
+    "sourceUrl": "https://data.worldbank.org/"
+  },
+  {
+    "iso3": "IRN",
+    "year": 2025,
+    "gdpUsdBillions": 468.95,
+    "gdpGrowthPct": 5.33,
+    "sectorShares": {
+      "agriculture": 10.8,
+      "manufacturing": 21.6,
+      "construction": 5.0,
+      "services": 47.6,
+      "extraction": 8.5,
+      "utilities": 3.6,
+      "other": 2.8
+    },
+    "exportsPctGdp": 23.9,
+    "fdiInflowsUsdB": 1.42,
+    "sourceUrl": "https://data.worldbank.org/"
+  },
+  {
+    "iso3": "IRQ",
+    "year": 2025,
+    "gdpUsdBillions": 275.6,
+    "gdpGrowthPct": 0.52,
+    "sectorShares": {
+      "agriculture": 3.1,
+      "manufacturing": 3.0,
+      "construction": 5.0,
+      "services": 43.7,
+      "extraction": 32.2,
+      "utilities": 13.8,
+      "other": 0
+    },
+    "exportsPctGdp": 39.6,
+    "fdiInflowsUsdB": -5.36,
+    "sourceUrl": "https://data.worldbank.org/"
+  },
+  {
+    "iso3": "ISL",
+    "year": 2025,
+    "gdpUsdBillions": 32.47,
+    "gdpGrowthPct": 5.19,
+    "sectorShares": {
+      "agriculture": 4.2,
+      "manufacturing": 8.8,
+      "construction": 5.0,
+      "services": 65.4,
+      "extraction": 4.4,
+      "utilities": 1.9,
+      "other": 10.4
+    },
+    "exportsPctGdp": 44.1,
+    "fdiInflowsUsdB": 1.89,
+    "sourceUrl": "https://data.worldbank.org/"
+  },
+  {
+    "iso3": "ISR",
+    "year": 2025,
+    "gdpUsdBillions": 524.98,
+    "gdpGrowthPct": 1.83,
+    "sectorShares": {
+      "agriculture": 1.3,
+      "manufacturing": 11.7,
+      "construction": 5.0,
+      "services": 72.1,
+      "extraction": 1.2,
+      "utilities": 0.5,
+      "other": 8.1
+    },
+    "exportsPctGdp": 30.4,
+    "fdiInflowsUsdB": 16.17,
+    "sourceUrl": "https://data.worldbank.org/"
+  },
+  {
+    "iso3": "ITA",
+    "year": 2025,
+    "gdpUsdBillions": 2374.65,
+    "gdpGrowthPct": 0.98,
+    "sectorShares": {
+      "agriculture": 1.9,
+      "manufacturing": 15.5,
+      "construction": 5.0,
+      "services": 64.3,
+      "extraction": 2.2,
+      "utilities": 1.0,
+      "other": 10.2
+    },
+    "exportsPctGdp": 33.3,
+    "fdiInflowsUsdB": 42.02,
+    "sourceUrl": "https://data.worldbank.org/"
+  },
+  {
+    "iso3": "JAM",
+    "year": 2025,
+    "gdpUsdBillions": 21.96,
+    "gdpGrowthPct": 2.75,
+    "sectorShares": {
+      "agriculture": 7.8,
+      "manufacturing": 7.9,
+      "construction": 5.0,
+      "services": 59.9,
+      "extraction": 2.6,
+      "utilities": 1.1,
+      "other": 15.6
+    },
+    "exportsPctGdp": 0,
+    "fdiInflowsUsdB": 0.49,
+    "sourceUrl": "https://data.worldbank.org/"
+  },
+  {
+    "iso3": "JOR",
+    "year": 2025,
+    "gdpUsdBillions": 52.37,
+    "gdpGrowthPct": 2.88,
+    "sectorShares": {
+      "agriculture": 4.8,
+      "manufacturing": 17.3,
+      "construction": 5.0,
+      "services": 60.8,
+      "extraction": 1.8,
+      "utilities": 0.8,
+      "other": 9.6
+    },
+    "exportsPctGdp": 43.5,
+    "fdiInflowsUsdB": 2.01,
+    "sourceUrl": "https://data.worldbank.org/"
+  },
+  {
+    "iso3": "JPN",
+    "year": 2025,
+    "gdpUsdBillions": 4318.5,
+    "gdpGrowthPct": 1.48,
+    "sectorShares": {
+      "agriculture": 0.9,
+      "manufacturing": 20.6,
+      "construction": 5.0,
+      "services": 69.8,
+      "extraction": 2.1,
+      "utilities": 0.9,
+      "other": 0.7
+    },
+    "exportsPctGdp": 21.9,
+    "fdiInflowsUsdB": 19.98,
+    "sourceUrl": "https://data.worldbank.org/"
+  },
+  {
+    "iso3": "KAZ",
+    "year": 2025,
+    "gdpUsdBillions": 268.39,
+    "gdpGrowthPct": 5.1,
+    "sectorShares": {
+      "agriculture": 3.8,
+      "manufacturing": 12.3,
+      "construction": 5.0,
+      "services": 56.3,
+      "extraction": 10.6,
+      "utilities": 4.5,
+      "other": 7.4
+    },
+    "exportsPctGdp": 34.7,
+    "fdiInflowsUsdB": 5.72,
+    "sourceUrl": "https://data.worldbank.org/"
+  },
+  {
+    "iso3": "KEN",
+    "year": 2025,
+    "gdpUsdBillions": 110.19,
+    "gdpGrowthPct": 5.72,
+    "sectorShares": {
+      "agriculture": 21.5,
+      "manufacturing": 7.5,
+      "construction": 5.0,
+      "services": 55.5,
+      "extraction": 3.2,
+      "utilities": 1.4,
+      "other": 6.0
+    },
+    "exportsPctGdp": 16.9,
+    "fdiInflowsUsdB": 0.51,
+    "sourceUrl": "https://data.worldbank.org/"
+  },
+  {
+    "iso3": "KGZ",
+    "year": 2025,
+    "gdpUsdBillions": 15.56,
+    "gdpGrowthPct": 9.01,
+    "sectorShares": {
+      "agriculture": 9.5,
+      "manufacturing": 12.6,
+      "construction": 5.0,
+      "services": 51.3,
+      "extraction": 4.2,
+      "utilities": 1.8,
+      "other": 15.6
+    },
+    "exportsPctGdp": 36.9,
+    "fdiInflowsUsdB": 0.16,
+    "sourceUrl": "https://data.worldbank.org/"
+  },
+  {
+    "iso3": "KHM",
+    "year": 2025,
+    "gdpUsdBillions": 43.4,
+    "gdpGrowthPct": 5.01,
+    "sectorShares": {
+      "agriculture": 17.1,
+      "manufacturing": 26.3,
+      "construction": 5.0,
+      "services": 36.2,
+      "extraction": 6.4,
+      "utilities": 2.8,
+      "other": 6.3
+    },
+    "exportsPctGdp": 66.9,
+    "fdiInflowsUsdB": 3.96,
+    "sourceUrl": "https://data.worldbank.org/"
+  },
+  {
+    "iso3": "KIR",
+    "year": 2025,
+    "gdpUsdBillions": 0.3,
+    "gdpGrowthPct": 2.65,
+    "sectorShares": {
+      "agriculture": 27.2,
+      "manufacturing": 4.7,
+      "construction": 5.0,
+      "services": 67.1,
+      "extraction": 1.2,
+      "utilities": 0.5,
+      "other": 0
+    },
+    "exportsPctGdp": 5.9,
+    "fdiInflowsUsdB": 0.01,
+    "sourceUrl": "https://data.worldbank.org/"
+  },
+  {
+    "iso3": "KOR",
+    "year": 2025,
+    "gdpUsdBillions": 1890.92,
+    "gdpGrowthPct": 1.58,
+    "sectorShares": {
+      "agriculture": 1.4,
+      "manufacturing": 25.5,
+      "construction": 5.0,
+      "services": 58.9,
+      "extraction": 1.4,
+      "utilities": 0.6,
+      "other": 7.1
+    },
+    "exportsPctGdp": 41.3,
+    "fdiInflowsUsdB": 18.6,
+    "sourceUrl": "https://data.worldbank.org/"
+  },
+  {
+    "iso3": "KWT",
+    "year": 2025,
+    "gdpUsdBillions": 169.51,
+    "gdpGrowthPct": -1.67,
+    "sectorShares": {
+      "agriculture": 0.5,
+      "manufacturing": 7.6,
+      "construction": 5.0,
+      "services": 52.1,
+      "extraction": 33.4,
+      "utilities": 14.3,
+      "other": 0
+    },
+    "exportsPctGdp": 57.7,
+    "fdiInflowsUsdB": 2.11,
+    "sourceUrl": "https://data.worldbank.org/"
+  },
+  {
+    "iso3": "LAO",
+    "year": 2025,
+    "gdpUsdBillions": 16.24,
+    "gdpGrowthPct": 3.75,
+    "sectorShares": {
+      "agriculture": 16.1,
+      "manufacturing": 9.2,
+      "construction": 5.0,
+      "services": 44.0,
+      "extraction": 11.4,
+      "utilities": 4.9,
+      "other": 9.3
+    },
+    "exportsPctGdp": 0,
+    "fdiInflowsUsdB": 1.78,
+    "sourceUrl": "https://data.worldbank.org/"
+  },
+  {
+    "iso3": "LBN",
+    "year": 2025,
+    "gdpUsdBillions": 20.58,
+    "gdpGrowthPct": -0.76,
+    "sectorShares": {
+      "agriculture": 1.0,
+      "manufacturing": 0,
+      "construction": 2.1,
+      "services": 42.4,
+      "extraction": 0.0,
+      "utilities": 0.0,
+      "other": 54.6
+    },
+    "exportsPctGdp": 30.6,
+    "fdiInflowsUsdB": 0.66,
+    "sourceUrl": "https://data.worldbank.org/"
+  },
+  {
+    "iso3": "LBR",
+    "year": 2025,
+    "gdpUsdBillions": 4.5,
+    "gdpGrowthPct": 4.68,
+    "sectorShares": {
+      "agriculture": 34.6,
+      "manufacturing": 0,
+      "construction": 5.0,
+      "services": 40.5,
+      "extraction": 12.8,
+      "utilities": 5.5,
+      "other": 1.6
+    },
+    "exportsPctGdp": 0,
+    "fdiInflowsUsdB": 0.31,
+    "sourceUrl": "https://data.worldbank.org/"
+  },
+  {
+    "iso3": "LBY",
+    "year": 2025,
+    "gdpUsdBillions": 45.13,
+    "gdpGrowthPct": 10.2,
+    "sectorShares": {
+      "agriculture": 1.8,
+      "manufacturing": 0,
+      "construction": 5.0,
+      "services": 24.0,
+      "extraction": 51.7,
+      "utilities": 22.2,
+      "other": 0
+    },
+    "exportsPctGdp": 87.2,
+    "fdiInflowsUsdB": 0.79,
+    "sourceUrl": "https://data.worldbank.org/"
+  },
+  {
+    "iso3": "LCA",
+    "year": 2025,
+    "gdpUsdBillions": 2.49,
+    "gdpGrowthPct": 2.21,
+    "sectorShares": {
+      "agriculture": 1.1,
+      "manufacturing": 3.3,
+      "construction": 5.0,
+      "services": 76.3,
+      "extraction": 1.0,
+      "utilities": 0.4,
+      "other": 12.9
+    },
+    "exportsPctGdp": 0,
+    "fdiInflowsUsdB": 0.2,
+    "sourceUrl": "https://data.worldbank.org/"
+  },
+  {
+    "iso3": "LKA",
+    "year": 2025,
+    "gdpUsdBillions": 85.81,
+    "gdpGrowthPct": -2.33,
+    "sectorShares": {
+      "agriculture": 8.1,
+      "manufacturing": 18.1,
+      "construction": 5.0,
+      "services": 59.8,
+      "extraction": 1.9,
+      "utilities": 0.8,
+      "other": 6.3
+    },
+    "exportsPctGdp": 20.7,
+    "fdiInflowsUsdB": 0.71,
+    "sourceUrl": "https://data.worldbank.org/"
+  },
+  {
+    "iso3": "LSO",
+    "year": 2025,
+    "gdpUsdBillions": 2.17,
+    "gdpGrowthPct": 1.83,
+    "sectorShares": {
+      "agriculture": 6.6,
+      "manufacturing": 14.0,
+      "construction": 5.0,
+      "services": 50.6,
+      "extraction": 6.8,
+      "utilities": 2.9,
+      "other": 14.1
+    },
+    "exportsPctGdp": 42.9,
+    "fdiInflowsUsdB": -0.03,
+    "sourceUrl": "https://data.worldbank.org/"
+  },
+  {
+    "iso3": "LTU",
+    "year": 2025,
+    "gdpUsdBillions": 81.78,
+    "gdpGrowthPct": 0.34,
+    "sectorShares": {
+      "agriculture": 2.7,
+      "manufacturing": 14.6,
+      "construction": 5.0,
+      "services": 63.1,
+      "extraction": 3.3,
+      "utilities": 1.4,
+      "other": 10.0
+    },
+    "exportsPctGdp": 76.5,
+    "fdiInflowsUsdB": 3.83,
+    "sourceUrl": "https://data.worldbank.org/"
+  },
+  {
+    "iso3": "LUX",
+    "year": 2025,
+    "gdpUsdBillions": 91.01,
+    "gdpGrowthPct": 0.1,
+    "sectorShares": {
+      "agriculture": 0.2,
+      "manufacturing": 4.1,
+      "construction": 5.0,
+      "services": 81.8,
+      "extraction": 0.2,
+      "utilities": 0.1,
+      "other": 8.7
+    },
+    "exportsPctGdp": 217.4,
+    "fdiInflowsUsdB": -9.28,
+    "sourceUrl": "https://data.worldbank.org/"
+  },
+  {
+    "iso3": "LVA",
+    "year": 2025,
+    "gdpUsdBillions": 43.85,
+    "gdpGrowthPct": -0.94,
+    "sectorShares": {
+      "agriculture": 3.9,
+      "manufacturing": 10.9,
+      "construction": 5.0,
+      "services": 63.9,
+      "extraction": 3.0,
+      "utilities": 1.3,
+      "other": 12.1
+    },
+    "exportsPctGdp": 66.0,
+    "fdiInflowsUsdB": 1.69,
+    "sourceUrl": "https://data.worldbank.org/"
+  },
+  {
+    "iso3": "MAC",
+    "year": 2025,
+    "gdpUsdBillions": 46.77,
+    "gdpGrowthPct": 75.31,
+    "sectorShares": {
+      "agriculture": 0,
+      "manufacturing": 0.8,
+      "construction": 4.7,
+      "services": 90.9,
+      "extraction": 0.0,
+      "utilities": 0.0,
+      "other": 3.7
+    },
+    "exportsPctGdp": 92.4,
+    "fdiInflowsUsdB": 1.14,
+    "sourceUrl": "https://data.worldbank.org/"
+  },
+  {
+    "iso3": "MAR",
+    "year": 2025,
+    "gdpUsdBillions": 149.69,
+    "gdpGrowthPct": 3.66,
+    "sectorShares": {
+      "agriculture": 11.1,
+      "manufacturing": 15.8,
+      "construction": 5.0,
+      "services": 53.7,
+      "extraction": 3.2,
+      "utilities": 1.4,
+      "other": 9.8
+    },
+    "exportsPctGdp": 42.4,
+    "fdiInflowsUsdB": 1.06,
+    "sourceUrl": "https://data.worldbank.org/"
+  },
+  {
+    "iso3": "MDA",
+    "year": 2025,
+    "gdpUsdBillions": 17.13,
+    "gdpGrowthPct": 1.2,
+    "sectorShares": {
+      "agriculture": 7.1,
+      "manufacturing": 8.4,
+      "construction": 5.0,
+      "services": 61.5,
+      "extraction": 3.0,
+      "utilities": 1.3,
+      "other": 13.7
+    },
+    "exportsPctGdp": 35.1,
+    "fdiInflowsUsdB": 0.36,
+    "sourceUrl": "https://data.worldbank.org/"
+  },
+  {
+    "iso3": "MDG",
+    "year": 2025,
+    "gdpUsdBillions": 16.27,
+    "gdpGrowthPct": 4.2,
+    "sectorShares": {
+      "agriculture": 22.4,
+      "manufacturing": 12.8,
+      "construction": 5.0,
+      "services": 48.5,
+      "extraction": 3.6,
+      "utilities": 1.5,
+      "other": 6.2
+    },
+    "exportsPctGdp": 27.0,
+    "fdiInflowsUsdB": 0.52,
+    "sourceUrl": "https://data.worldbank.org/"
+  },
+  {
+    "iso3": "MDV",
+    "year": 2025,
+    "gdpUsdBillions": 6.79,
+    "gdpGrowthPct": 4.94,
+    "sectorShares": {
+      "agriculture": 5.1,
+      "manufacturing": 2.0,
+      "construction": 5.0,
+      "services": 70.8,
+      "extraction": 1.9,
+      "utilities": 0.8,
+      "other": 14.5
+    },
+    "exportsPctGdp": 74.0,
+    "fdiInflowsUsdB": 0.77,
+    "sourceUrl": "https://data.worldbank.org/"
+  },
+  {
+    "iso3": "MEX",
+    "year": 2025,
+    "gdpUsdBillions": 1843.28,
+    "gdpGrowthPct": 3.35,
+    "sectorShares": {
+      "agriculture": 3.8,
+      "manufacturing": 20.4,
+      "construction": 5.0,
+      "services": 57.6,
+      "extraction": 5.0,
+      "utilities": 2.2,
+      "other": 6.0
+    },
+    "exportsPctGdp": 36.1,
+    "fdiInflowsUsdB": 30.68,
+    "sourceUrl": "https://data.worldbank.org/"
+  },
+  {
+    "iso3": "MKD",
+    "year": 2025,
+    "gdpUsdBillions": 16.26,
+    "gdpGrowthPct": 2.55,
+    "sectorShares": {
+      "agriculture": 6.2,
+      "manufacturing": 14.4,
+      "construction": 5.0,
+      "services": 56.9,
+      "extraction": 3.2,
+      "utilities": 1.4,
+      "other": 12.8
+    },
+    "exportsPctGdp": 67.4,
+    "fdiInflowsUsdB": 0.64,
+    "sourceUrl": "https://data.worldbank.org/"
+  },
+  {
+    "iso3": "MLI",
+    "year": 2025,
+    "gdpUsdBillions": 25.43,
+    "gdpGrowthPct": 4.73,
+    "sectorShares": {
+      "agriculture": 32.2,
+      "manufacturing": 7.5,
+      "construction": 5.0,
+      "services": 35.9,
+      "extraction": 9.1,
+      "utilities": 3.9,
+      "other": 6.4
+    },
+    "exportsPctGdp": 24.7,
+    "fdiInflowsUsdB": 0.7,
+    "sourceUrl": "https://data.worldbank.org/"
+  },
+  {
+    "iso3": "MLT",
+    "year": 2025,
+    "gdpUsdBillions": 23.18,
+    "gdpGrowthPct": 10.62,
+    "sectorShares": {
+      "agriculture": 0.1,
+      "manufacturing": 5.8,
+      "construction": 5.0,
+      "services": 81.7,
+      "extraction": 0.2,
+      "utilities": 0.1,
+      "other": 7.1
+    },
+    "exportsPctGdp": 119.6,
+    "fdiInflowsUsdB": 24.6,
+    "sourceUrl": "https://data.worldbank.org/"
+  },
+  {
+    "iso3": "MMR",
+    "year": 2025,
+    "gdpUsdBillions": 68.43,
+    "gdpGrowthPct": 0.96,
+    "sectorShares": {
+      "agriculture": 22.7,
+      "manufacturing": 25.9,
+      "construction": 5.0,
+      "services": 39.7,
+      "extraction": 4.7,
+      "utilities": 2.0,
+      "other": 0.0
+    },
+    "exportsPctGdp": 0,
+    "fdiInflowsUsdB": 1.52,
+    "sourceUrl": "https://data.worldbank.org/"
+  },
+  {
+    "iso3": "MNE",
+    "year": 2025,
+    "gdpUsdBillions": 7.83,
+    "gdpGrowthPct": 6.48,
+    "sectorShares": {
+      "agriculture": 3.8,
+      "manufacturing": 2.9,
+      "construction": 5.0,
+      "services": 64.0,
+      "extraction": 3.4,
+      "utilities": 1.5,
+      "other": 19.5
+    },
+    "exportsPctGdp": 49.2,
+    "fdiInflowsUsdB": 0.53,
+    "sourceUrl": "https://data.worldbank.org/"
+  },
+  {
+    "iso3": "MNG",
+    "year": 2025,
+    "gdpUsdBillions": 20.84,
+    "gdpGrowthPct": 7.42,
+    "sectorShares": {
+      "agriculture": 9.9,
+      "manufacturing": 6.3,
+      "construction": 5.0,
+      "services": 41.0,
+      "extraction": 19.8,
+      "utilities": 8.5,
+      "other": 9.5
+    },
+    "exportsPctGdp": 76.3,
+    "fdiInflowsUsdB": 2.25,
+    "sourceUrl": "https://data.worldbank.org/"
+  },
+  {
+    "iso3": "MOZ",
+    "year": 2025,
+    "gdpUsdBillions": 21.44,
+    "gdpGrowthPct": 5.48,
+    "sectorShares": {
+      "agriculture": 25.4,
+      "manufacturing": 7.1,
+      "construction": 5.0,
+      "services": 41.1,
+      "extraction": 6.6,
+      "utilities": 2.8,
+      "other": 12.0
+    },
+    "exportsPctGdp": 45.6,
+    "fdiInflowsUsdB": 2.68,
+    "sourceUrl": "https://data.worldbank.org/"
+  },
+  {
+    "iso3": "MRT",
+    "year": 2025,
+    "gdpUsdBillions": 11.0,
+    "gdpGrowthPct": 6.81,
+    "sectorShares": {
+      "agriculture": 19.2,
+      "manufacturing": 6.5,
+      "construction": 5.0,
+      "services": 43.0,
+      "extraction": 13.6,
+      "utilities": 5.8,
+      "other": 6.9
+    },
+    "exportsPctGdp": 38.4,
+    "fdiInflowsUsdB": 0.85,
+    "sourceUrl": "https://data.worldbank.org/"
+  },
+  {
+    "iso3": "MUS",
+    "year": 2025,
+    "gdpUsdBillions": 14.42,
+    "gdpGrowthPct": 5.01,
+    "sectorShares": {
+      "agriculture": 4.0,
+      "manufacturing": 11.5,
+      "construction": 5.0,
+      "services": 64.9,
+      "extraction": 0.9,
+      "utilities": 0.4,
+      "other": 13.3
+    },
+    "exportsPctGdp": 69.0,
+    "fdiInflowsUsdB": 0.76,
+    "sourceUrl": "https://data.worldbank.org/"
+  },
+  {
+    "iso3": "MWI",
+    "year": 2025,
+    "gdpUsdBillions": 13.69,
+    "gdpGrowthPct": 1.95,
+    "sectorShares": {
+      "agriculture": 28.9,
+      "manufacturing": 12.8,
+      "construction": 5.0,
+      "services": 45.1,
+      "extraction": 1.0,
+      "utilities": 0.4,
+      "other": 6.7
+    },
+    "exportsPctGdp": 11.2,
+    "fdiInflowsUsdB": 0.21,
+    "sourceUrl": "https://data.worldbank.org/"
+  },
+  {
+    "iso3": "MYS",
+    "year": 2025,
+    "gdpUsdBillions": 409.95,
+    "gdpGrowthPct": 3.54,
+    "sectorShares": {
+      "agriculture": 7.8,
+      "manufacturing": 23.0,
+      "construction": 5.0,
+      "services": 53.5,
+      "extraction": 6.7,
+      "utilities": 2.9,
+      "other": 1.1
+    },
+    "exportsPctGdp": 68.7,
+    "fdiInflowsUsdB": 7.92,
+    "sourceUrl": "https://data.worldbank.org/"
+  },
+  {
+    "iso3": "NAM",
+    "year": 2025,
+    "gdpUsdBillions": 12.72,
+    "gdpGrowthPct": 4.44,
+    "sectorShares": {
+      "agriculture": 7.7,
+      "manufacturing": 11.1,
+      "construction": 5.0,
+      "services": 53.3,
+      "extraction": 9.9,
+      "utilities": 4.2,
+      "other": 8.8
+    },
+    "exportsPctGdp": 43.6,
+    "fdiInflowsUsdB": 2.29,
+    "sourceUrl": "https://data.worldbank.org/"
+  },
+  {
+    "iso3": "NCL",
+    "year": 2025,
+    "gdpUsdBillions": 10.01,
+    "gdpGrowthPct": 2.8,
+    "sectorShares": {
+      "agriculture": 0,
+      "manufacturing": 0,
+      "construction": 0,
+      "services": 0,
+      "extraction": 0.0,
+      "utilities": 0.0,
+      "other": 100.0
+    },
+    "exportsPctGdp": 16.9,
+    "fdiInflowsUsdB": 0.69,
+    "sourceUrl": "https://data.worldbank.org/"
+  },
+  {
+    "iso3": "NER",
+    "year": 2025,
+    "gdpUsdBillions": 17.12,
+    "gdpGrowthPct": 1.67,
+    "sectorShares": {
+      "agriculture": 32.5,
+      "manufacturing": 0,
+      "construction": 5.0,
+      "services": 46.5,
+      "extraction": 9.1,
+      "utilities": 3.9,
+      "other": 3.0
+    },
+    "exportsPctGdp": 23.7,
+    "fdiInflowsUsdB": 1.03,
+    "sourceUrl": "https://data.worldbank.org/"
+  },
+  {
+    "iso3": "NGA",
+    "year": 2025,
+    "gdpUsdBillions": 499.57,
+    "gdpGrowthPct": 3.33,
+    "sectorShares": {
+      "agriculture": 27.7,
+      "manufacturing": 9.3,
+      "construction": 5.0,
+      "services": 51.7,
+      "extraction": 3.4,
+      "utilities": 1.5,
+      "other": 1.4
+    },
+    "exportsPctGdp": 0,
+    "fdiInflowsUsdB": 1.87,
+    "sourceUrl": "https://data.worldbank.org/"
+  },
+  {
+    "iso3": "NIC",
+    "year": 2025,
+    "gdpUsdBillions": 18.26,
+    "gdpGrowthPct": 4.43,
+    "sectorShares": {
+      "agriculture": 15.3,
+      "manufacturing": 14.4,
+      "construction": 5.0,
+      "services": 46.5,
+      "extraction": 5.4,
+      "utilities": 2.3,
+      "other": 11.0
+    },
+    "exportsPctGdp": 45.8,
+    "fdiInflowsUsdB": 1.11,
+    "sourceUrl": "https://data.worldbank.org/"
+  },
+  {
+    "iso3": "NLD",
+    "year": 2025,
+    "gdpUsdBillions": 1163.87,
+    "gdpGrowthPct": -0.6,
+    "sectorShares": {
+      "agriculture": 1.8,
+      "manufacturing": 10.5,
+      "construction": 5.0,
+      "services": 70.1,
+      "extraction": 1.9,
+      "utilities": 0.8,
+      "other": 10.0
+    },
+    "exportsPctGdp": 87.5,
+    "fdiInflowsUsdB": -343.4,
+    "sourceUrl": "https://data.worldbank.org/"
+  },
+  {
+    "iso3": "NOR",
+    "year": 2025,
+    "gdpUsdBillions": 495.02,
+    "gdpGrowthPct": 0.07,
+    "sectorShares": {
+      "agriculture": 2.1,
+      "manufacturing": 6.0,
+      "construction": 5.0,
+      "services": 50.0,
+      "extraction": 19.6,
+      "utilities": 8.4,
+      "other": 8.9
+    },
+    "exportsPctGdp": 47.9,
+    "fdiInflowsUsdB": 13.79,
+    "sourceUrl": "https://data.worldbank.org/"
+  },
+  {
+    "iso3": "NPL",
+    "year": 2025,
+    "gdpUsdBillions": 42.08,
+    "gdpGrowthPct": 1.98,
+    "sectorShares": {
+      "agriculture": 21.3,
+      "manufacturing": 4.5,
+      "construction": 5.0,
+      "services": 55.4,
+      "extraction": 1.7,
+      "utilities": 0.7,
+      "other": 11.4
+    },
+    "exportsPctGdp": 7.0,
+    "fdiInflowsUsdB": 0.07,
+    "sourceUrl": "https://data.worldbank.org/"
+  },
+  {
+    "iso3": "NZL",
+    "year": 2025,
+    "gdpUsdBillions": 261.57,
+    "gdpGrowthPct": 1.39,
+    "sectorShares": {
+      "agriculture": 0,
+      "manufacturing": 0,
+      "construction": 0,
+      "services": 0,
+      "extraction": 0.0,
+      "utilities": 0.0,
+      "other": 100.0
+    },
+    "exportsPctGdp": 23.7,
+    "fdiInflowsUsdB": 4.39,
+    "sourceUrl": "https://data.worldbank.org/"
+  },
+  {
+    "iso3": "OMN",
+    "year": 2025,
+    "gdpUsdBillions": 108.82,
+    "gdpGrowthPct": 1.41,
+    "sectorShares": {
+      "agriculture": 2.4,
+      "manufacturing": 9.3,
+      "construction": 5.0,
+      "services": 45.3,
+      "extraction": 28.7,
+      "utilities": 12.3,
+      "other": 0
+    },
+    "exportsPctGdp": 61.6,
+    "fdiInflowsUsdB": 12.55,
+    "sourceUrl": "https://data.worldbank.org/"
+  },
+  {
+    "iso3": "PAK",
+    "year": 2025,
+    "gdpUsdBillions": 345.11,
+    "gdpGrowthPct": -0.41,
+    "sectorShares": {
+      "agriculture": 23.4,
+      "manufacturing": 13.6,
+      "construction": 5.0,
+      "services": 51.0,
+      "extraction": 1.5,
+      "utilities": 0.6,
+      "other": 4.9
+    },
+    "exportsPctGdp": 10.5,
+    "fdiInflowsUsdB": 2.05,
+    "sourceUrl": "https://data.worldbank.org/"
+  },
+  {
+    "iso3": "PAN",
+    "year": 2025,
+    "gdpUsdBillions": 85.91,
+    "gdpGrowthPct": 7.17,
+    "sectorShares": {
+      "agriculture": 2.5,
+      "manufacturing": 5.0,
+      "construction": 5.0,
+      "services": 67.8,
+      "extraction": 12.0,
+      "utilities": 5.2,
+      "other": 2.6
+    },
+    "exportsPctGdp": 45.6,
+    "fdiInflowsUsdB": 2.39,
+    "sourceUrl": "https://data.worldbank.org/"
+  },
+  {
+    "iso3": "PER",
+    "year": 2025,
+    "gdpUsdBillions": 273.63,
+    "gdpGrowthPct": -0.4,
+    "sectorShares": {
+      "agriculture": 7.2,
+      "manufacturing": 12.6,
+      "construction": 5.0,
+      "services": 51.2,
+      "extraction": 11.4,
+      "utilities": 4.9,
+      "other": 7.6
+    },
+    "exportsPctGdp": 27.1,
+    "fdiInflowsUsdB": 4.34,
+    "sourceUrl": "https://data.worldbank.org/"
+  },
+  {
+    "iso3": "PHL",
+    "year": 2025,
+    "gdpUsdBillions": 447.99,
+    "gdpGrowthPct": 5.52,
+    "sectorShares": {
+      "agriculture": 9.4,
+      "manufacturing": 16.2,
+      "construction": 5.0,
+      "services": 62.4,
+      "extraction": 4.9,
+      "utilities": 2.1,
+      "other": 0.0
+    },
+    "exportsPctGdp": 26.6,
+    "fdiInflowsUsdB": 8.93,
+    "sourceUrl": "https://data.worldbank.org/"
+  },
+  {
+    "iso3": "PNG",
+    "year": 2025,
+    "gdpUsdBillions": 31.59,
+    "gdpGrowthPct": 3.81,
+    "sectorShares": {
+      "agriculture": 17.0,
+      "manufacturing": 1.7,
+      "construction": 5.0,
+      "services": 42.0,
+      "extraction": 20.7,
+      "utilities": 8.9,
+      "other": 4.7
+    },
+    "exportsPctGdp": 0,
+    "fdiInflowsUsdB": 0.04,
+    "sourceUrl": "https://data.worldbank.org/"
+  },
+  {
+    "iso3": "POL",
+    "year": 2025,
+    "gdpUsdBillions": 832.76,
+    "gdpGrowthPct": 0.25,
+    "sectorShares": {
+      "agriculture": 2.8,
+      "manufacturing": 17.5,
+      "construction": 5.0,
+      "services": 58.2,
+      "extraction": 4.9,
+      "utilities": 2.1,
+      "other": 9.6
+    },
+    "exportsPctGdp": 57.9,
+    "fdiInflowsUsdB": 35.66,
+    "sourceUrl": "https://data.worldbank.org/"
+  },
+  {
+    "iso3": "PRI",
+    "year": 2025,
+    "gdpUsdBillions": 121.44,
+    "gdpGrowthPct": 0.73,
+    "sectorShares": {
+      "agriculture": 0.7,
+      "manufacturing": 43.7,
+      "construction": 3.7,
+      "services": 51.6,
+      "extraction": 0.0,
+      "utilities": 0.0,
+      "other": 0.3
+    },
+    "exportsPctGdp": 53.6,
+    "fdiInflowsUsdB": 0.0,
+    "sourceUrl": "https://data.worldbank.org/"
+  },
+  {
+    "iso3": "PRT",
+    "year": 2025,
+    "gdpUsdBillions": 299.63,
+    "gdpGrowthPct": 3.1,
+    "sectorShares": {
+      "agriculture": 2.1,
+      "manufacturing": 12.1,
+      "construction": 5.0,
+      "services": 66.3,
+      "extraction": 1.1,
+      "utilities": 0.5,
+      "other": 12.9
+    },
+    "exportsPctGdp": 47.2,
+    "fdiInflowsUsdB": 11.59,
+    "sourceUrl": "https://data.worldbank.org/"
+  },
+  {
+    "iso3": "PRY",
+    "year": 2025,
+    "gdpUsdBillions": 44.2,
+    "gdpGrowthPct": 5.0,
+    "sectorShares": {
+      "agriculture": 11.6,
+      "manufacturing": 19.4,
+      "construction": 5.0,
+      "services": 48.1,
+      "extraction": 5.9,
+      "utilities": 2.5,
+      "other": 7.4
+    },
+    "exportsPctGdp": 42.1,
+    "fdiInflowsUsdB": 1.11,
+    "sourceUrl": "https://data.worldbank.org/"
+  },
+  {
+    "iso3": "PSE",
+    "year": 2025,
+    "gdpUsdBillions": 18.3,
+    "gdpGrowthPct": -4.56,
+    "sectorShares": {
+      "agriculture": 5.7,
+      "manufacturing": 9.9,
+      "construction": 5.0,
+      "services": 58.5,
+      "extraction": 0.5,
+      "utilities": 0.2,
+      "other": 20.2
+    },
+    "exportsPctGdp": 17.7,
+    "fdiInflowsUsdB": 0.1,
+    "sourceUrl": "https://data.worldbank.org/"
+  },
+  {
+    "iso3": "PYF",
+    "year": 2025,
+    "gdpUsdBillions": 6.29,
+    "gdpGrowthPct": 2.77,
+    "sectorShares": {
+      "agriculture": 0,
+      "manufacturing": 0,
+      "construction": 0,
+      "services": 0,
+      "extraction": 0.0,
+      "utilities": 0.0,
+      "other": 100.0
+    },
+    "exportsPctGdp": 24.1,
+    "fdiInflowsUsdB": -0.01,
+    "sourceUrl": "https://data.worldbank.org/"
+  },
+  {
+    "iso3": "QAT",
+    "year": 2025,
+    "gdpUsdBillions": 222.74,
+    "gdpGrowthPct": 1.54,
+    "sectorShares": {
+      "agriculture": 0.3,
+      "manufacturing": 8.5,
+      "construction": 5.0,
+      "services": 44.7,
+      "extraction": 32.3,
+      "utilities": 13.8,
+      "other": 0
+    },
+    "exportsPctGdp": 0,
+    "fdiInflowsUsdB": -0.47,
+    "sourceUrl": "https://data.worldbank.org/"
+  },
+  {
+    "iso3": "ROU",
+    "year": 2025,
+    "gdpUsdBillions": 356.45,
+    "gdpGrowthPct": 2.26,
+    "sectorShares": {
+      "agriculture": 3.3,
+      "manufacturing": 13.9,
+      "construction": 5.0,
+      "services": 60.9,
+      "extraction": 5.7,
+      "utilities": 2.5,
+      "other": 8.7
+    },
+    "exportsPctGdp": 39.2,
+    "fdiInflowsUsdB": 8.71,
+    "sourceUrl": "https://data.worldbank.org/"
+  },
+  {
+    "iso3": "RUS",
+    "year": 2025,
+    "gdpUsdBillions": 2123.3,
+    "gdpGrowthPct": 4.08,
+    "sectorShares": {
+      "agriculture": 3.0,
+      "manufacturing": 12.7,
+      "construction": 5.0,
+      "services": 56.7,
+      "extraction": 8.9,
+      "utilities": 3.8,
+      "other": 9.9
+    },
+    "exportsPctGdp": 22.5,
+    "fdiInflowsUsdB": -10.05,
+    "sourceUrl": "https://data.worldbank.org/"
+  },
+  {
+    "iso3": "RWA",
+    "year": 2025,
+    "gdpUsdBillions": 14.69,
+    "gdpGrowthPct": 8.25,
+    "sectorShares": {
+      "agriculture": 26.6,
+      "manufacturing": 9.5,
+      "construction": 5.0,
+      "services": 45.7,
+      "extraction": 4.3,
+      "utilities": 1.8,
+      "other": 7.0
+    },
+    "exportsPctGdp": 25.0,
+    "fdiInflowsUsdB": 0.46,
+    "sourceUrl": "https://data.worldbank.org/"
+  },
+  {
+    "iso3": "SAU",
+    "year": 2025,
+    "gdpUsdBillions": 1249.04,
+    "gdpGrowthPct": 0.54,
+    "sectorShares": {
+      "agriculture": 2.5,
+      "manufacturing": 15.9,
+      "construction": 5.0,
+      "services": 44.8,
+      "extraction": 18.7,
+      "utilities": 8.0,
+      "other": 5.2
+    },
+    "exportsPctGdp": 30.2,
+    "fdiInflowsUsdB": 22.8,
+    "sourceUrl": "https://data.worldbank.org/"
+  },
+  {
+    "iso3": "SDN",
+    "year": 2025,
+    "gdpUsdBillions": 40.9,
+    "gdpGrowthPct": -29.43,
+    "sectorShares": {
+      "agriculture": 30.3,
+      "manufacturing": 0,
+      "construction": 5.0,
+      "services": 41.4,
+      "extraction": 16.3,
+      "utilities": 7.0,
+      "other": 0
+    },
+    "exportsPctGdp": 1.1,
+    "fdiInflowsUsdB": 0.55,
+    "sourceUrl": "https://data.worldbank.org/"
+  },
+  {
+    "iso3": "SEN",
+    "year": 2025,
+    "gdpUsdBillions": 31.47,
+    "gdpGrowthPct": 4.26,
+    "sectorShares": {
+      "agriculture": 17.4,
+      "manufacturing": 14.5,
+      "construction": 5.0,
+      "services": 49.6,
+      "extraction": 2.3,
+      "utilities": 1.0,
+      "other": 10.1
+    },
+    "exportsPctGdp": 23.1,
+    "fdiInflowsUsdB": 4.79,
+    "sourceUrl": "https://data.worldbank.org/"
+  },
+  {
+    "iso3": "SGP",
+    "year": 2025,
+    "gdpUsdBillions": 518.08,
+    "gdpGrowthPct": 1.82,
+    "sectorShares": {
+      "agriculture": 0.0,
+      "manufacturing": 17.0,
+      "construction": 5.0,
+      "services": 72.7,
+      "extraction": 0.1,
+      "utilities": 0.1,
+      "other": 5.1
+    },
+    "exportsPctGdp": 181.6,
+    "fdiInflowsUsdB": 125.79,
+    "sourceUrl": "https://data.worldbank.org/"
+  },
+  {
+    "iso3": "SLB",
+    "year": 2025,
+    "gdpUsdBillions": 1.55,
+    "gdpGrowthPct": 2.84,
+    "sectorShares": {
+      "agriculture": 30.5,
+      "manufacturing": 10.2,
+      "construction": 5.0,
+      "services": 48.0,
+      "extraction": 4.4,
+      "utilities": 1.9,
+      "other": 0.0
+    },
+    "exportsPctGdp": 36.3,
+    "fdiInflowsUsdB": 0.08,
+    "sourceUrl": "https://data.worldbank.org/"
+  },
+  {
+    "iso3": "SLE",
+    "year": 2025,
+    "gdpUsdBillions": 6.58,
+    "gdpGrowthPct": 5.71,
+    "sectorShares": {
+      "agriculture": 29.1,
+      "manufacturing": 7.7,
+      "construction": 5.0,
+      "services": 42.2,
+      "extraction": 9.4,
+      "utilities": 4.0,
+      "other": 2.7
+    },
+    "exportsPctGdp": 21.0,
+    "fdiInflowsUsdB": 0.15,
+    "sourceUrl": "https://data.worldbank.org/"
+  },
+  {
+    "iso3": "SLV",
+    "year": 2025,
+    "gdpUsdBillions": 34.7,
+    "gdpGrowthPct": 3.54,
+    "sectorShares": {
+      "agriculture": 4.5,
+      "manufacturing": 12.5,
+      "construction": 5.0,
+      "services": 60.8,
+      "extraction": 4.0,
+      "utilities": 1.7,
+      "other": 11.6
+    },
+    "exportsPctGdp": 31.4,
+    "fdiInflowsUsdB": 0.64,
+    "sourceUrl": "https://data.worldbank.org/"
+  },
+  {
+    "iso3": "SOM",
+    "year": 2025,
+    "gdpUsdBillions": 11.23,
+    "gdpGrowthPct": 4.18,
+    "sectorShares": {
+      "agriculture": 0,
+      "manufacturing": 0,
+      "construction": 0,
+      "services": 0,
+      "extraction": 0.0,
+      "utilities": 0.0,
+      "other": 100.0
+    },
+    "exportsPctGdp": 21.9,
+    "fdiInflowsUsdB": 0.68,
+    "sourceUrl": "https://data.worldbank.org/"
+  },
+  {
+    "iso3": "SRB",
+    "year": 2025,
+    "gdpUsdBillions": 83.37,
+    "gdpGrowthPct": 3.75,
+    "sectorShares": {
+      "agriculture": 3.8,
+      "manufacturing": 13.3,
+      "construction": 5.0,
+      "services": 57.8,
+      "extraction": 3.8,
+      "utilities": 1.6,
+      "other": 14.7
+    },
+    "exportsPctGdp": 55.1,
+    "fdiInflowsUsdB": 4.94,
+    "sourceUrl": "https://data.worldbank.org/"
+  },
+  {
+    "iso3": "STP",
+    "year": 2025,
+    "gdpUsdBillions": 0.71,
+    "gdpGrowthPct": 0.37,
+    "sectorShares": {
+      "agriculture": 13.5,
+      "manufacturing": 0.6,
+      "construction": 2.2,
+      "services": 77.6,
+      "extraction": 0.0,
+      "utilities": 0.0,
+      "other": 6.1
+    },
+    "exportsPctGdp": 0,
+    "fdiInflowsUsdB": -0.03,
+    "sourceUrl": "https://data.worldbank.org/"
+  },
+  {
+    "iso3": "SUR",
+    "year": 2025,
+    "gdpUsdBillions": 3.56,
+    "gdpGrowthPct": 2.42,
+    "sectorShares": {
+      "agriculture": 7.2,
+      "manufacturing": 25.5,
+      "construction": 5.0,
+      "services": 48.8,
+      "extraction": 6.4,
+      "utilities": 2.8,
+      "other": 4.3
+    },
+    "exportsPctGdp": 0,
+    "fdiInflowsUsdB": -0.05,
+    "sourceUrl": "https://data.worldbank.org/"
+  },
+  {
+    "iso3": "SVK",
+    "year": 2025,
+    "gdpUsdBillions": 136.92,
+    "gdpGrowthPct": 2.11,
+    "sectorShares": {
+      "agriculture": 2.1,
+      "manufacturing": 16.8,
+      "construction": 5.0,
+      "services": 60.0,
+      "extraction": 5.2,
+      "utilities": 2.2,
+      "other": 8.6
+    },
+    "exportsPctGdp": 91.5,
+    "fdiInflowsUsdB": 0.53,
+    "sourceUrl": "https://data.worldbank.org/"
+  },
+  {
+    "iso3": "SVN",
+    "year": 2025,
+    "gdpUsdBillions": 70.99,
+    "gdpGrowthPct": 2.38,
+    "sectorShares": {
+      "agriculture": 1.5,
+      "manufacturing": 19.5,
+      "construction": 5.0,
+      "services": 57.9,
+      "extraction": 3.5,
+      "utilities": 1.5,
+      "other": 11.0
+    },
+    "exportsPctGdp": 83.4,
+    "fdiInflowsUsdB": 1.45,
+    "sourceUrl": "https://data.worldbank.org/"
+  },
+  {
+    "iso3": "SWE",
+    "year": 2025,
+    "gdpUsdBillions": 593.46,
+    "gdpGrowthPct": -0.2,
+    "sectorShares": {
+      "agriculture": 1.3,
+      "manufacturing": 13.4,
+      "construction": 5.0,
+      "services": 65.5,
+      "extraction": 2.9,
+      "utilities": 1.3,
+      "other": 10.7
+    },
+    "exportsPctGdp": 55.2,
+    "fdiInflowsUsdB": 18.67,
+    "sourceUrl": "https://data.worldbank.org/"
+  },
+  {
+    "iso3": "SWZ",
+    "year": 2025,
+    "gdpUsdBillions": 4.74,
+    "gdpGrowthPct": 3.53,
+    "sectorShares": {
+      "agriculture": 6.6,
+      "manufacturing": 29.2,
+      "construction": 5.0,
+      "services": 51.9,
+      "extraction": 0.2,
+      "utilities": 0.1,
+      "other": 7.0
+    },
+    "exportsPctGdp": 48.5,
+    "fdiInflowsUsdB": 0.03,
+    "sourceUrl": "https://data.worldbank.org/"
+  },
+  {
+    "iso3": "SYC",
+    "year": 2025,
+    "gdpUsdBillions": 2.24,
+    "gdpGrowthPct": 2.26,
+    "sectorShares": {
+      "agriculture": 2.5,
+      "manufacturing": 4.7,
+      "construction": 5.0,
+      "services": 67.3,
+      "extraction": 2.4,
+      "utilities": 1.0,
+      "other": 17.0
+    },
+    "exportsPctGdp": 83.4,
+    "fdiInflowsUsdB": 0.24,
+    "sourceUrl": "https://data.worldbank.org/"
+  },
+  {
+    "iso3": "TCD",
+    "year": 2025,
+    "gdpUsdBillions": 18.8,
+    "gdpGrowthPct": 3.98,
+    "sectorShares": {
+      "agriculture": 35.2,
+      "manufacturing": 7.7,
+      "construction": 5.0,
+      "services": 30.3,
+      "extraction": 12.7,
+      "utilities": 5.4,
+      "other": 3.7
+    },
+    "exportsPctGdp": 29.1,
+    "fdiInflowsUsdB": 0.91,
+    "sourceUrl": "https://data.worldbank.org/"
+  },
+  {
+    "iso3": "TGO",
+    "year": 2025,
+    "gdpUsdBillions": 10.07,
+    "gdpGrowthPct": 6.19,
+    "sectorShares": {
+      "agriculture": 21.3,
+      "manufacturing": 11.7,
+      "construction": 5.0,
+      "services": 48.8,
+      "extraction": 2.9,
+      "utilities": 1.2,
+      "other": 9.1
+    },
+    "exportsPctGdp": 0,
+    "fdiInflowsUsdB": 0.08,
+    "sourceUrl": "https://data.worldbank.org/"
+  },
+  {
+    "iso3": "THA",
+    "year": 2025,
+    "gdpUsdBillions": 528.81,
+    "gdpGrowthPct": 2.02,
+    "sectorShares": {
+      "agriculture": 8.6,
+      "manufacturing": 25.0,
+      "construction": 5.0,
+      "services": 58.5,
+      "extraction": 2.1,
+      "utilities": 0.9,
+      "other": 0
+    },
+    "exportsPctGdp": 65.4,
+    "fdiInflowsUsdB": 10.33,
+    "sourceUrl": "https://data.worldbank.org/"
+  },
+  {
+    "iso3": "TJK",
+    "year": 2025,
+    "gdpUsdBillions": 12.55,
+    "gdpGrowthPct": 8.3,
+    "sectorShares": {
+      "agriculture": 22.9,
+      "manufacturing": 14.6,
+      "construction": 5.0,
+      "services": 34.7,
+      "extraction": 9.8,
+      "utilities": 4.2,
+      "other": 8.8
+    },
+    "exportsPctGdp": 17.2,
+    "fdiInflowsUsdB": 0.14,
+    "sourceUrl": "https://data.worldbank.org/"
+  },
+  {
+    "iso3": "TKM",
+    "year": 2025,
+    "gdpUsdBillions": 47.04,
+    "gdpGrowthPct": 6.3,
+    "sectorShares": {
+      "agriculture": 11.3,
+      "manufacturing": 0,
+      "construction": 5.0,
+      "services": 49.4,
+      "extraction": 24.0,
+      "utilities": 10.3,
+      "other": 0
+    },
+    "exportsPctGdp": 21.6,
+    "fdiInflowsUsdB": 1.38,
+    "sourceUrl": "https://data.worldbank.org/"
+  },
+  {
+    "iso3": "TLS",
+    "year": 2025,
+    "gdpUsdBillions": 2.13,
+    "gdpGrowthPct": -18.14,
+    "sectorShares": {
+      "agriculture": 17.2,
+      "manufacturing": 1.6,
+      "construction": 5.0,
+      "services": 61.0,
+      "extraction": 12.1,
+      "utilities": 5.2,
+      "other": 0
+    },
+    "exportsPctGdp": 22.9,
+    "fdiInflowsUsdB": 0.12,
+    "sourceUrl": "https://data.worldbank.org/"
+  },
+  {
+    "iso3": "TON",
+    "year": 2025,
+    "gdpUsdBillions": 0.6,
+    "gdpGrowthPct": 2.79,
+    "sectorShares": {
+      "agriculture": 19.0,
+      "manufacturing": 5.0,
+      "construction": 5.0,
+      "services": 50.0,
+      "extraction": 3.4,
+      "utilities": 1.5,
+      "other": 16.2
+    },
+    "exportsPctGdp": 14.7,
+    "fdiInflowsUsdB": 0.0,
+    "sourceUrl": "https://data.worldbank.org/"
+  },
+  {
+    "iso3": "TTO",
+    "year": 2025,
+    "gdpUsdBillions": 25.67,
+    "gdpGrowthPct": 1.47,
+    "sectorShares": {
+      "agriculture": 0.8,
+      "manufacturing": 14.1,
+      "construction": 5.0,
+      "services": 60.3,
+      "extraction": 10.8,
+      "utilities": 4.6,
+      "other": 4.3
+    },
+    "exportsPctGdp": 0,
+    "fdiInflowsUsdB": -1.5,
+    "sourceUrl": "https://data.worldbank.org/"
+  },
+  {
+    "iso3": "TUN",
+    "year": 2025,
+    "gdpUsdBillions": 49.42,
+    "gdpGrowthPct": 0.18,
+    "sectorShares": {
+      "agriculture": 9.5,
+      "manufacturing": 15.2,
+      "construction": 5.0,
+      "services": 62.1,
+      "extraction": 2.7,
+      "utilities": 1.2,
+      "other": 4.3
+    },
+    "exportsPctGdp": 53.0,
+    "fdiInflowsUsdB": 0.71,
+    "sourceUrl": "https://data.worldbank.org/"
+  },
+  {
+    "iso3": "TUR",
+    "year": 2025,
+    "gdpUsdBillions": 1169.77,
+    "gdpGrowthPct": 5.05,
+    "sectorShares": {
+      "agriculture": 6.4,
+      "manufacturing": 19.5,
+      "construction": 5.0,
+      "services": 54.4,
+      "extraction": 2.6,
+      "utilities": 1.1,
+      "other": 11.1
+    },
+    "exportsPctGdp": 31.9,
+    "fdiInflowsUsdB": 10.66,
+    "sourceUrl": "https://data.worldbank.org/"
+  },
+  {
+    "iso3": "TZA",
+    "year": 2025,
+    "gdpUsdBillions": 81.01,
+    "gdpGrowthPct": 5.07,
+    "sectorShares": {
+      "agriculture": 23.7,
+      "manufacturing": 8.4,
+      "construction": 5.0,
+      "services": 28.7,
+      "extraction": 10.2,
+      "utilities": 4.4,
+      "other": 19.6
+    },
+    "exportsPctGdp": 17.2,
+    "fdiInflowsUsdB": 1.65,
+    "sourceUrl": "https://data.worldbank.org/"
+  },
+  {
+    "iso3": "UGA",
+    "year": 2025,
+    "gdpUsdBillions": 49.99,
+    "gdpGrowthPct": 5.34,
+    "sectorShares": {
+      "agriculture": 24.1,
+      "manufacturing": 15.6,
+      "construction": 5.0,
+      "services": 42.5,
+      "extraction": 3.6,
+      "utilities": 1.5,
+      "other": 7.6
+    },
+    "exportsPctGdp": 11.6,
+    "fdiInflowsUsdB": 2.99,
+    "sourceUrl": "https://data.worldbank.org/"
+  },
+  {
+    "iso3": "UKR",
+    "year": 2025,
+    "gdpUsdBillions": 185.75,
+    "gdpGrowthPct": 5.53,
+    "sectorShares": {
+      "agriculture": 7.6,
+      "manufacturing": 8.3,
+      "construction": 5.0,
+      "services": 61.2,
+      "extraction": 4.0,
+      "utilities": 1.7,
+      "other": 12.1
+    },
+    "exportsPctGdp": 28.3,
+    "fdiInflowsUsdB": 4.57,
+    "sourceUrl": "https://data.worldbank.org/"
+  },
+  {
+    "iso3": "URY",
+    "year": 2025,
+    "gdpUsdBillions": 79.94,
+    "gdpGrowthPct": 0.74,
+    "sectorShares": {
+      "agriculture": 6.1,
+      "manufacturing": 9.7,
+      "construction": 5.0,
+      "services": 65.7,
+      "extraction": 1.4,
+      "utilities": 0.6,
+      "other": 11.5
+    },
+    "exportsPctGdp": 28.1,
+    "fdiInflowsUsdB": -5.25,
+    "sourceUrl": "https://data.worldbank.org/"
+  },
+  {
+    "iso3": "USA",
+    "year": 2025,
+    "gdpUsdBillions": 27974.47,
+    "gdpGrowthPct": 2.89,
+    "sectorShares": {
+      "agriculture": 0,
+      "manufacturing": 0,
+      "construction": 0,
+      "services": 0,
+      "extraction": 0.0,
+      "utilities": 0.0,
+      "other": 100.0
+    },
+    "exportsPctGdp": 11.2,
+    "fdiInflowsUsdB": 361.94,
+    "sourceUrl": "https://data.worldbank.org/"
+  },
+  {
+    "iso3": "UZB",
+    "year": 2025,
+    "gdpUsdBillions": 105.21,
+    "gdpGrowthPct": 6.29,
+    "sectorShares": {
+      "agriculture": 20.2,
+      "manufacturing": 19.4,
+      "construction": 5.0,
+      "services": 44.0,
+      "extraction": 4.7,
+      "utilities": 2.0,
+      "other": 4.9
+    },
+    "exportsPctGdp": 24.4,
+    "fdiInflowsUsdB": 2.16,
+    "sourceUrl": "https://data.worldbank.org/"
+  },
+  {
+    "iso3": "VCT",
+    "year": 2025,
+    "gdpUsdBillions": 1.1,
+    "gdpGrowthPct": 5.33,
+    "sectorShares": {
+      "agriculture": 4.2,
+      "manufacturing": 3.7,
+      "construction": 5.0,
+      "services": 66.4,
+      "extraction": 4.2,
+      "utilities": 1.8,
+      "other": 14.7
+    },
+    "exportsPctGdp": 0,
+    "fdiInflowsUsdB": 0.07,
+    "sourceUrl": "https://data.worldbank.org/"
+  },
+  {
+    "iso3": "VEN",
+    "year": 2025,
+    "gdpUsdBillions": 104.94,
+    "gdpGrowthPct": 4.0,
+    "sectorShares": {
+      "agriculture": 0,
+      "manufacturing": 0,
+      "construction": 0,
+      "services": 0,
+      "extraction": 0.0,
+      "utilities": 0.0,
+      "other": 100.0
+    },
+    "exportsPctGdp": 18.1,
+    "fdiInflowsUsdB": 0.01,
+    "sourceUrl": "https://data.worldbank.org/"
+  },
+  {
+    "iso3": "VNM",
+    "year": 2025,
+    "gdpUsdBillions": 444.71,
+    "gdpGrowthPct": 5.07,
+    "sectorShares": {
+      "agriculture": 11.9,
+      "manufacturing": 24.2,
+      "construction": 5.0,
+      "services": 42.3,
+      "extraction": 5.9,
+      "utilities": 2.5,
+      "other": 8.3
+    },
+    "exportsPctGdp": 86.5,
+    "fdiInflowsUsdB": 18.5,
+    "sourceUrl": "https://data.worldbank.org/"
+  },
+  {
+    "iso3": "VUT",
+    "year": 2025,
+    "gdpUsdBillions": 1.15,
+    "gdpGrowthPct": 2.09,
+    "sectorShares": {
+      "agriculture": 0,
+      "manufacturing": 0,
+      "construction": 0,
+      "services": 0,
+      "extraction": 0.0,
+      "utilities": 0.0,
+      "other": 100.0
+    },
+    "exportsPctGdp": 0,
+    "fdiInflowsUsdB": 0.01,
+    "sourceUrl": "https://data.worldbank.org/"
+  },
+  {
+    "iso3": "WSM",
+    "year": 2025,
+    "gdpUsdBillions": 1.07,
+    "gdpGrowthPct": 15.23,
+    "sectorShares": {
+      "agriculture": 9.9,
+      "manufacturing": 4.8,
+      "construction": 5.0,
+      "services": 70.7,
+      "extraction": 0.2,
+      "utilities": 0.1,
+      "other": 9.3
+    },
+    "exportsPctGdp": 26.2,
+    "fdiInflowsUsdB": 0.0,
+    "sourceUrl": "https://data.worldbank.org/"
+  },
+  {
+    "iso3": "XKX",
+    "year": 2025,
+    "gdpUsdBillions": 10.73,
+    "gdpGrowthPct": 4.07,
+    "sectorShares": {
+      "agriculture": 7.2,
+      "manufacturing": 12.9,
+      "construction": 5.0,
+      "services": 46.6,
+      "extraction": 5.9,
+      "utilities": 2.5,
+      "other": 19.9
+    },
+    "exportsPctGdp": 39.6,
+    "fdiInflowsUsdB": 0.91,
+    "sourceUrl": "https://data.worldbank.org/"
+  },
+  {
+    "iso3": "ZAF",
+    "year": 2025,
+    "gdpUsdBillions": 390.98,
+    "gdpGrowthPct": 0.81,
+    "sectorShares": {
+      "agriculture": 2.5,
+      "manufacturing": 13.0,
+      "construction": 5.0,
+      "services": 62.7,
+      "extraction": 4.6,
+      "utilities": 2.0,
+      "other": 10.2
+    },
+    "exportsPctGdp": 33.3,
+    "fdiInflowsUsdB": 3.86,
+    "sourceUrl": "https://data.worldbank.org/"
+  },
+  {
+    "iso3": "ZMB",
+    "year": 2025,
+    "gdpUsdBillions": 28.27,
+    "gdpGrowthPct": 5.37,
+    "sectorShares": {
+      "agriculture": 2.2,
+      "manufacturing": 8.5,
+      "construction": 5.0,
+      "services": 56.8,
+      "extraction": 15.1,
+      "utilities": 6.5,
+      "other": 5.8
+    },
+    "exportsPctGdp": 40.8,
+    "fdiInflowsUsdB": 0.64,
+    "sourceUrl": "https://data.worldbank.org/"
+  },
+  {
+    "iso3": "ZWE",
+    "year": 2025,
+    "gdpUsdBillions": 36.77,
+    "gdpGrowthPct": 5.35,
+    "sectorShares": {
+      "agriculture": 11.5,
+      "manufacturing": 15.3,
+      "construction": 5.0,
+      "services": 49.6,
+      "extraction": 9.1,
+      "utilities": 3.9,
+      "other": 5.7
+    },
+    "exportsPctGdp": 17.1,
+    "fdiInflowsUsdB": 0.6,
+    "sourceUrl": "https://data.worldbank.org/"
+  }
+]

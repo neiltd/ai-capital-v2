@@ -1,0 +1,272 @@
+[
+  {
+    "id": "AMS",
+    "name": "Amsterdam Airport Schiphol",
+    "countryId": "NLD",
+    "city": "Amsterdam",
+    "iata": "AMS",
+    "icao": "EHAM",
+    "coordinates": [4.765, 52.3],
+    "passengerVolume": 61889286,
+    "cargoVolume": 1377049,
+    "runwayCount": 6,
+    "elevationM": -3,
+    "strategicImportance": "critical",
+    "geopoliticalNotes": "A global 'Mainport' hub and one of the world's best-connected airports, contributing significantly to Dutch GDP.",
+    "notes": "Primary diplomatic and economic gateway for the Netherlands.",
+    "attribution": {
+      "sources": [
+        { "name": "Schiphol Group", "url": "https://www.schiphol.nl", "accessedAt": "2026-05-10" },
+        { "name": "ACI World", "url": "https://aci.aero", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 2,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  },
+  {
+    "id": "EIN",
+    "name": "Eindhoven Airport",
+    "countryId": "NLD",
+    "city": "Eindhoven",
+    "iata": "EIN",
+    "icao": "EHEH",
+    "coordinates": [5.3744, 51.4506],
+    "passengerVolume": 6800000,
+    "cargoVolume": null,
+    "runwayCount": 1,
+    "elevationM": 23,
+    "strategicImportance": "critical",
+    "geopoliticalNotes": "Heart of European military logistics; hosts the European Air Transport Command (EATC) and Movement Coordination Centre Europe (MCCE).",
+    "notes": "Joint-use facility serving as the primary hub for Dutch military air mobility.",
+    "attribution": {
+      "sources": [
+        { "name": "Eindhoven Airport", "url": "https://www.eindhovenairport.nl", "accessedAt": "2026-05-10" },
+        { "name": "European Air Transport Command", "url": "https://eatc-mil.com", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 2,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  },
+  {
+    "id": "MST",
+    "name": "Maastricht Aachen Airport",
+    "countryId": "NLD",
+    "city": "Maastricht",
+    "iata": "MST",
+    "icao": "EHKP",
+    "coordinates": [5.7769, 50.9158],
+    "passengerVolume": 228660,
+    "cargoVolume": 32275,
+    "runwayCount": 1,
+    "elevationM": 114,
+    "strategicImportance": "high",
+    "geopoliticalNotes": "Secondary Dutch cargo hub specializing in perishables, dangerous goods, and e-commerce overflow for Schiphol.",
+    "notes": "Strategic gateway for the global flower trade and high-tech logistics.",
+    "attribution": {
+      "sources": [
+        { "name": "Maastricht Aachen Airport", "url": "https://www.maa.nl", "accessedAt": "2026-05-10" },
+        { "name": "OurAirports", "url": "https://ourairports.com", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 2,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  },
+  {
+    "id": "RTM",
+    "name": "Rotterdam The Hague Airport",
+    "countryId": "NLD",
+    "city": "Rotterdam/The Hague",
+    "iata": "RTM",
+    "icao": "EHRD",
+    "coordinates": [4.4372, 51.9569],
+    "passengerVolume": 2220000,
+    "cargoVolume": 0,
+    "runwayCount": 1,
+    "elevationM": -5,
+    "strategicImportance": "medium",
+    "geopoliticalNotes": "Strategic link for the maritime industry (Port of Rotterdam) and the Dutch administrative capital in The Hague.",
+    "notes": "Primary airport for diplomatic and government flights in the Randstad.",
+    "attribution": {
+      "sources": [
+        { "name": "Rotterdam The Hague Airport", "url": "https://www.rotterdamthehagueairport.nl", "accessedAt": "2026-05-10" },
+        { "name": "IATA", "url": "https://www.iata.org", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 2,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  },
+  {
+    "id": "CUR",
+    "name": "Hato International Airport",
+    "countryId": "NLD",
+    "city": "Willemstad, Curaçao",
+    "iata": "CUR",
+    "icao": "TNCC",
+    "coordinates": [-68.9597, 12.1889],
+    "passengerVolume": 1710000,
+    "cargoVolume": null,
+    "runwayCount": 1,
+    "elevationM": 9,
+    "strategicImportance": "critical",
+    "geopoliticalNotes": "Most strategic geopolitical asset in the Dutch Caribbean; operational hub for regional stability and counter-narcotics.",
+    "notes": "Functions as a Cooperative Security Location (CSL) for US and Dutch military forces.",
+    "attribution": {
+      "sources": [
+        { "name": "Curaçao Airport Partners", "url": "https://www.curacao-airport.com", "accessedAt": "2026-05-10" },
+        { "name": "Global Military", "url": "https://globalmilitary.net", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 2,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  },
+  {
+    "id": "EHVK",
+    "name": "Volkel Air Base",
+    "countryId": "NLD",
+    "city": "Uden",
+    "iata": null,
+    "icao": "EHVK",
+    "coordinates": [5.6908, 51.6572],
+    "passengerVolume": null,
+    "cargoVolume": null,
+    "runwayCount": 2,
+    "elevationM": 22,
+    "strategicImportance": "critical",
+    "geopoliticalNotes": "Primary F-35A operational base and historically significant for NATO nuclear sharing missions.",
+    "notes": "Core node for Dutch and NATO air defense (Quick Reaction Alert).",
+    "attribution": {
+      "sources": [
+        { "name": "Royal Netherlands Air Force", "url": "https://www.defensie.nl/organisatie/luchtmacht", "accessedAt": "2026-05-10" },
+        { "name": "SkyVector", "url": "https://skyvector.com", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 2,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  },
+  {
+    "id": "EHLW",
+    "name": "Leeuwarden Air Base",
+    "countryId": "NLD",
+    "city": "Leeuwarden",
+    "iata": null,
+    "icao": "EHLW",
+    "coordinates": [5.7606, 53.2286],
+    "passengerVolume": null,
+    "cargoVolume": null,
+    "runwayCount": 2,
+    "elevationM": 1,
+    "strategicImportance": "high",
+    "geopoliticalNotes": "Strategic base for F-35A fighters and MQ-9 Reaper UAVs, essential for Dutch ISR and air superiority.",
+    "notes": "Key hub for Northern European air defense and surveillance.",
+    "attribution": {
+      "sources": [
+        { "name": "Royal Netherlands Air Force", "url": "https://www.defensie.nl/organisatie/luchtmacht", "accessedAt": "2026-05-10" },
+        { "name": "SkyVector", "url": "https://skyvector.com", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 2,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  },
+  {
+    "id": "GRQ",
+    "name": "Groningen Airport Eelde",
+    "countryId": "NLD",
+    "city": "Groningen",
+    "iata": "GRQ",
+    "icao": "EHGG",
+    "coordinates": [6.5833, 53.125],
+    "passengerVolume": 108535,
+    "cargoVolume": 0,
+    "runwayCount": 1,
+    "elevationM": 5,
+    "strategicImportance": "medium",
+    "geopoliticalNotes": "Primary regional airport for the Northern Netherlands, providing essential connectivity and backup capacity.",
+    "notes": "Host to the KLM Flight Academy; strategic regional logistics link.",
+    "attribution": {
+      "sources": [
+        { "name": "Groningen Airport Eelde", "url": "https://www.groningenairport.nl", "accessedAt": "2026-05-10" },
+        { "name": "OurAirports", "url": "https://ourairports.com", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 2,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  },
+  {
+    "id": "EHWO",
+    "name": "Woensdrecht Air Base",
+    "countryId": "NLD",
+    "city": "Woensdrecht",
+    "iata": null,
+    "icao": "EHWO",
+    "coordinates": [4.3417, 51.4489],
+    "passengerVolume": null,
+    "cargoVolume": null,
+    "runwayCount": 1,
+    "elevationM": 19,
+    "strategicImportance": "high",
+    "geopoliticalNotes": "Strategic maintenance and logistics center for the Royal Netherlands Air Force and the regional F-35 program.",
+    "notes": "Houses the Logistics Center Woensdrecht (LCW).",
+    "attribution": {
+      "sources": [
+        { "name": "Royal Netherlands Air Force", "url": "https://www.defensie.nl/organisatie/luchtmacht", "accessedAt": "2026-05-10" },
+        { "name": "SkyVector", "url": "https://skyvector.com", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 2,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  },
+  {
+    "id": "LEY",
+    "name": "Lelystad Airport",
+    "countryId": "NLD",
+    "city": "Lelystad",
+    "iata": "LEY",
+    "icao": "EHLE",
+    "coordinates": [5.5272, 52.4603],
+    "passengerVolume": null,
+    "cargoVolume": null,
+    "runwayCount": 1,
+    "elevationM": -4,
+    "strategicImportance": "low",
+    "geopoliticalNotes": "Designed as an overflow airport for Schiphol; primarily serves general aviation and flight training currently.",
+    "notes": "Future role as a commercial overflow hub remains subject to political debate.",
+    "attribution": {
+      "sources": [
+        { "name": "Lelystad Airport", "url": "https://www.lelystadairport.nl", "accessedAt": "2026-05-10" },
+        { "name": "OurAirports", "url": "https://ourairports.com", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 2,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  }
+]

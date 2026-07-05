@@ -1,0 +1,66 @@
+{
+  "id": "NLD",
+  "iso2": "NL",
+  "name": "Netherlands",
+  "region": "Europe",
+  "subregion": "Western Europe",
+  "capital": "Amsterdam",
+  "lastUpdated": "2026-05-09",
+  "summary": "The Netherlands is currently defined by a pivot toward 'security-and-growth liberalism' under the minority government of Prime Minister Rob Jetten. As of mid-2026, the country is navigating a complex transition from its traditional consensus-based model to a more assertive geopolitical and fiscal stance. Economically, the Netherlands remains a powerhouse of European trade and logistics, though it faces structural pressures from labor shortages and a severe housing crisis. The government's significant increase in defense spending to 3.5% of GDP and its commitment to the green transition are central to its current policy agenda, despite the challenges of governing with a fragmented parliament.",
+  "indicators": {
+    "politicalStability":       { "score": 6, "score_description": "Stable but fragmented under a minority coalition.", "trend": "stable", "confidence": "high", "note": "The Jetten cabinet has managed to pass key budgets by building ad-hoc majorities, though long-term legislative predictability remains moderate." },
+    "economicDirection":        { "score": 6, "score_description": "Moderate growth driven by domestic demand and services.", "trend": "stable", "confidence": "high", "note": "Real wage growth has bolstered purchasing power, but export-oriented sectors are sensitive to global trade tensions and potential U.S. tariffs." },
+    "investmentAttractiveness": { "score": 8, "score_description": "Very high, supported by world-class infrastructure and a business-friendly legal framework.", "trend": "stable", "confidence": "high", "note": "The Netherlands continues to be a top destination for FDI, particularly in data centers, logistics, and high-tech manufacturing." },
+    "geopoliticalRisk":         { "score": 4, "score_description": "Moderate risk focused on trade vulnerability and energy security.", "trend": "stable", "confidence": "high", "note": "As a major global trading hub, the country is highly exposed to shifts in international trade regimes and maritime security." },
+    "educationQuality":         { "score": 9, "score_description": "Top-tier education system with high levels of digital literacy.", "trend": "stable", "confidence": "high", "note": "Dutch universities consistently rank among the world's best, and the vocational system is highly aligned with market needs." },
+    "healthcareQuality":        { "score": 9, "score_description": "Efficient and high-quality system with a strong focus on primary care.", "trend": "stable", "confidence": "high", "note": "The mandatory private insurance model remains resilient, though rising costs and staff shortages are persistent concerns." },
+    "technologyInvestment":     { "score": 9, "score_description": "Global leader in semiconductor equipment, agri-tech, and water management.", "trend": "rising", "confidence": "high", "note": "Massive public-private investments are flowing into AI, quantum computing, and the energy transition (offshore wind and hydrogen)." }
+  },
+  "demographics": {
+    "population": 18100000,
+    "medianAge": 42.4,
+    "urbanizationRate": 93,
+    "majorEthnicGroups": ["Dutch", "EU-Nationals", "Turkish", "Moroccan", "Surinamese", "Indonesian"],
+    "religions": [
+      { "name": "None/Unaffiliated", "percent": 58 },
+      { "name": "Roman Catholic", "percent": 16 },
+      { "name": "Protestant", "percent": 12 },
+      { "name": "Muslim", "percent": 6 },
+      { "name": "Other", "percent": 8 }
+    ]
+  },
+  "alliances": ["EU", "NATO", "OECD", "Benelux", "G20 (Guest/Permanent Invitee)"],
+  "relationships": [
+    { "countryId": "DEU", "countryName": "Germany", "type": "ally", "sentiment": "positive", "summary": "Primary economic partner; deep integration in logistics (Rotterdam-Ruhr) and defense (army integration)." },
+    { "countryId": "BEL", "countryName": "Belgium", "type": "ally", "sentiment": "positive", "summary": "Close Benelux partner with shared interests in North Sea energy and EU internal market policies." },
+    { "countryId": "USA", "countryName": "United States", "type": "treaty_ally", "sentiment": "positive", "summary": "Key security and intelligence partner; critical relationship for semiconductor trade (ASML) and transatlantic defense." },
+    { "countryId": "FRA", "countryName": "France", "type": "ally", "sentiment": "positive", "summary": "Strong cooperation on EU strategic autonomy and maritime security, despite occasional differences on fiscal rules." },
+    { "countryId": "CHN", "countryName": "China", "type": "partner", "sentiment": "neutral", "summary": "Major trading partner, but relationship is increasingly strained by export controls on advanced technology." }
+  ],
+  "perspectives": [
+    { "source": "Liberal Coalition Strategist", "bias": "Pro-Reform", "view": "The minority government model allows for flexible, issue-based majorities that can drive through necessary security and green investments." },
+    { "source": "Security Hawk", "bias": "Atlanticist", "view": "The shift to 3.5% defense spending is a vital and overdue recognition of the threats on Europe's eastern and northern flanks." },
+    { "source": "Labor Market Analyst", "bias": "Technocratic", "view": "Severe labor shortages and housing costs are the true bottlenecks to growth, requiring structural reforms that go beyond simple fiscal stimulus." }
+  ],
+  "historicalContext": {
+    "summary": "The Netherlands emerged as a global maritime power in the 17th century (the 'Golden Age'). Its modern history is defined by a commitment to international law, liberal trade, and a consensus-driven political model known as the 'Polder Model.' In the 21st century, it has transitioned from a traditionally neutral outlook to a core actor in European security and environmental leadership.",
+    "keyEvents": [
+      { "year": 1648, "event": "Peace of Münster; independence from the Spanish Empire." },
+      { "year": 1945, "event": "Liberation from Nazi occupation; abandonment of traditional neutrality." },
+      { "year": 1951, "event": "Founding member of the ECSC, leading to the creation of the EU." },
+      { "year": 2002, "event": "Adoption of the Euro; political shift following the assassination of Pim Fortuyn." },
+      { "year": 2014, "event": "MH17 tragedy; major shift in Dutch-Russian relations." },
+      { "year": 2024, "event": "Formation of a right-leaning coalition followed by the 2025 minority government pivot." }
+    ]
+  },
+  "investmentNotes": {
+    "strengths": ["Strategic location and the Port of Rotterdam", "Highly skilled and multilingual workforce", "Leadership in high-tech (semiconductors) and agri-food", "Stable legal environment"],
+    "risks": ["Housing market bubble and acute shortage", "Nitrogen deposition regulations impacting agriculture/construction", "Labor shortages in technical sectors", "Vulnerability to rising sea levels"],
+    "sectors": ["High-Tech Systems", "Life Sciences & Health", "Renewable Energy (Wind/Hydrogen)", "Logistics & Maritime", "Agri-Food Tech"]
+  },
+  "sources": [
+    { "name": "Statistics Netherlands (CBS)", "url": "https://www.cbs.nl/en-gb", "type": "economic" },
+    { "name": "De Nederlandsche Bank (DNB)", "url": "https://www.dnb.nl/en/", "type": "economic" },
+    { "name": "Ministry of Foreign Affairs", "url": "https://www.government.nl/ministries/ministry-of-foreign-affairs", "type": "political" }
+  ]
+}

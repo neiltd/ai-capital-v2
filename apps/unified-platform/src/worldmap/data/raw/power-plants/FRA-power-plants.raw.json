@@ -1,0 +1,408 @@
+[
+  {
+    "id": "PLANT-FRA-GRAVELINES",
+    "name": "Gravelines Nuclear Power Station",
+    "countryId": "FRA",
+    "city": "Gravelines",
+    "coordinates": [2.136, 51.015],
+    "type": "nuclear",
+    "status": "operating",
+    "capacityMW": 5460,
+    "annualOutputGWh": 32000,
+    "yearCommissioned": 1980,
+    "yearRetirement": null,
+    "operator": "EDF",
+    "owner": "EDF",
+    "strategicNote": "One of the largest nuclear power plants in Europe, critical for Northern France and exports to the UK and Benelux.",
+    "notes": "Six units of 910 MW each.",
+    "attribution": {
+      "sources": [
+        { "name": "Global Energy Monitor", "url": "https://www.gem.wiki/Gravelines_Nuclear_Power_Station", "accessedAt": "2025-05-10" },
+        { "name": "IAEA PRIS", "url": "https://pris.iaea.org/PRIS/CountryStatistics/CountryDetails.aspx?current=FR", "accessedAt": "2025-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 2,
+        "lastVerified": "2025-05-10"
+      }
+    }
+  },
+  {
+    "id": "PLANT-FRA-PALUEL",
+    "name": "Paluel Nuclear Power Plant",
+    "countryId": "FRA",
+    "city": "Paluel",
+    "coordinates": [0.635, 49.858],
+    "type": "nuclear",
+    "status": "operating",
+    "capacityMW": 5320,
+    "annualOutputGWh": 32000,
+    "yearCommissioned": 1985,
+    "yearRetirement": null,
+    "operator": "EDF",
+    "owner": "EDF",
+    "strategicNote": "High-capacity plant located on the English Channel, key for Normandy and Paris regions.",
+    "notes": "Four units of 1330 MW each.",
+    "attribution": {
+      "sources": [
+        { "name": "Global Energy Monitor", "url": "https://www.gem.wiki/Paluel_Nuclear_Power_Plant", "accessedAt": "2025-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 2,
+        "lastVerified": "2025-05-10"
+      }
+    }
+  },
+  {
+    "id": "PLANT-FRA-CATTENOM",
+    "name": "Cattenom Nuclear Power Plant",
+    "countryId": "FRA",
+    "city": "Cattenom",
+    "coordinates": [6.218, 49.416],
+    "type": "nuclear",
+    "status": "operating",
+    "capacityMW": 5200,
+    "annualOutputGWh": 30000,
+    "yearCommissioned": 1987,
+    "yearRetirement": null,
+    "operator": "EDF",
+    "owner": "EDF",
+    "strategicNote": "Located near the borders of Luxembourg and Germany, highly significant for regional power balance and cross-border relations.",
+    "notes": "Four units of 1300 MW each.",
+    "attribution": {
+      "sources": [
+        { "name": "Global Energy Monitor", "url": "https://www.gem.wiki/Cattenom_Nuclear_Power_Plant", "accessedAt": "2025-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 2,
+        "lastVerified": "2025-05-10"
+      }
+    }
+  },
+  {
+    "id": "PLANT-FRA-FLAMANVILLE",
+    "name": "Flamanville Nuclear Power Plant",
+    "countryId": "FRA",
+    "city": "Flamanville",
+    "coordinates": [-1.882, 49.536],
+    "type": "nuclear",
+    "status": "operating",
+    "capacityMW": 4200,
+    "annualOutputGWh": null,
+    "yearCommissioned": 1986,
+    "yearRetirement": null,
+    "operator": "EDF",
+    "owner": "EDF",
+    "strategicNote": "Site of the first French EPR reactor (Unit 3), symbolizing the future of French nuclear technology despite delays.",
+    "notes": "Includes two 1300 MW units and one 1600 MW EPR unit (commissioning 2024).",
+    "attribution": {
+      "sources": [
+        { "name": "Global Energy Monitor", "url": "https://www.gem.wiki/Flamanville_Nuclear_Power_Plant", "accessedAt": "2025-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 2,
+        "lastVerified": "2025-05-10"
+      }
+    }
+  },
+  {
+    "id": "PLANT-FRA-CHINON",
+    "name": "Chinon Nuclear Power Plant",
+    "countryId": "FRA",
+    "city": "Avoine",
+    "coordinates": [0.17, 47.232],
+    "type": "nuclear",
+    "status": "operating",
+    "capacityMW": 3816,
+    "annualOutputGWh": 24000,
+    "yearCommissioned": 1982,
+    "yearRetirement": null,
+    "operator": "EDF",
+    "owner": "EDF",
+    "strategicNote": "A major hub in central France, essential for the Loire valley and Western France.",
+    "notes": "Four units of 900 MW class.",
+    "attribution": {
+      "sources": [
+        { "name": "Global Energy Monitor", "url": "https://www.gem.wiki/Chinon_Nuclear_Power_Plant", "accessedAt": "2025-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 2,
+        "lastVerified": "2025-05-10"
+      }
+    }
+  },
+  {
+    "id": "PLANT-FRA-CRUAS",
+    "name": "Cruas Nuclear Power Plant",
+    "countryId": "FRA",
+    "city": "Cruas",
+    "coordinates": [4.757, 44.633],
+    "type": "nuclear",
+    "status": "operating",
+    "capacityMW": 3660,
+    "annualOutputGWh": 23000,
+    "yearCommissioned": 1983,
+    "yearRetirement": null,
+    "operator": "EDF",
+    "owner": "EDF",
+    "strategicNote": "Key facility in the Rhone valley, providing power to the industrial South-East.",
+    "notes": "Four units of 900 MW class.",
+    "attribution": {
+      "sources": [
+        { "name": "Global Energy Monitor", "url": "https://www.gem.wiki/Cruas_Nuclear_Power_Plant", "accessedAt": "2025-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 2,
+        "lastVerified": "2025-05-10"
+      }
+    }
+  },
+  {
+    "id": "PLANT-FRA-TRICASTIN",
+    "name": "Tricastin Nuclear Power Plant",
+    "countryId": "FRA",
+    "city": "Saint-Paul-Trois-Châteaux",
+    "coordinates": [4.732, 44.33],
+    "type": "nuclear",
+    "status": "operating",
+    "capacityMW": 3660,
+    "annualOutputGWh": 25000,
+    "yearCommissioned": 1980,
+    "yearRetirement": null,
+    "operator": "EDF",
+    "owner": "EDF",
+    "strategicNote": "Part of a major nuclear industrial complex including uranium enrichment facilities.",
+    "notes": "Four units of 900 MW class.",
+    "attribution": {
+      "sources": [
+        { "name": "Global Energy Monitor", "url": "https://www.gem.wiki/Tricastin_Nuclear_Power_Plant", "accessedAt": "2025-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 2,
+        "lastVerified": "2025-05-10"
+      }
+    }
+  },
+  {
+    "id": "PLANT-FRA-BLAYAIS",
+    "name": "Blayais Nuclear Power Plant",
+    "countryId": "FRA",
+    "city": "Braud-et-Saint-Louis",
+    "coordinates": [-0.693, 45.256],
+    "type": "nuclear",
+    "status": "operating",
+    "capacityMW": 3640,
+    "annualOutputGWh": 25000,
+    "yearCommissioned": 1981,
+    "yearRetirement": null,
+    "operator": "EDF",
+    "owner": "EDF",
+    "strategicNote": "Vital for the power supply of the Bordeaux region and South-West France.",
+    "notes": "Four units of 900 MW class.",
+    "attribution": {
+      "sources": [
+        { "name": "Global Energy Monitor", "url": "https://www.gem.wiki/Blayais_Nuclear_Power_Plant", "accessedAt": "2025-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 2,
+        "lastVerified": "2025-05-10"
+      }
+    }
+  },
+  {
+    "id": "PLANT-FRA-BUGEY",
+    "name": "Bugey Nuclear Power Plant",
+    "countryId": "FRA",
+    "city": "Saint-Vulbas",
+    "coordinates": [5.271, 45.798],
+    "type": "nuclear",
+    "status": "operating",
+    "capacityMW": 3580,
+    "annualOutputGWh": 24000,
+    "yearCommissioned": 1978,
+    "yearRetirement": null,
+    "operator": "EDF",
+    "owner": "EDF",
+    "strategicNote": "Critical for the Lyon metropolitan area and industrial centers in the Rhone-Alpes.",
+    "notes": "Four units of 900 MW class operating.",
+    "attribution": {
+      "sources": [
+        { "name": "Global Energy Monitor", "url": "https://www.gem.wiki/Bugey_Nuclear_Power_Plant", "accessedAt": "2025-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 2,
+        "lastVerified": "2025-05-10"
+      }
+    }
+  },
+  {
+    "id": "PLANT-FRA-DAMPIERRE",
+    "name": "Dampierre Nuclear Power Plant",
+    "countryId": "FRA",
+    "city": "Dampierre-en-Burly",
+    "coordinates": [2.517, 47.733],
+    "type": "nuclear",
+    "status": "operating",
+    "capacityMW": 3560,
+    "annualOutputGWh": 24000,
+    "yearCommissioned": 1980,
+    "yearRetirement": null,
+    "operator": "EDF",
+    "owner": "EDF",
+    "strategicNote": "Centrally located plant feeding the national grid and supporting the Paris region.",
+    "notes": "Four units of 900 MW class.",
+    "attribution": {
+      "sources": [
+        { "name": "Global Energy Monitor", "url": "https://www.gem.wiki/Dampierre_Nuclear_Power_Plant", "accessedAt": "2025-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 2,
+        "lastVerified": "2025-05-10"
+      }
+    }
+  },
+  {
+    "id": "PLANT-FRA-CHOOZ",
+    "name": "Chooz Nuclear Power Plant",
+    "countryId": "FRA",
+    "city": "Chooz",
+    "coordinates": [4.79, 50.09],
+    "type": "nuclear",
+    "status": "operating",
+    "capacityMW": 3000,
+    "annualOutputGWh": 20000,
+    "yearCommissioned": 1996,
+    "yearRetirement": null,
+    "operator": "EDF",
+    "owner": "EDF",
+    "strategicNote": "Located in a protrusion into Belgium, essential for northern grid stability and exports.",
+    "notes": "Two units of 1500 MW each.",
+    "attribution": {
+      "sources": [
+        { "name": "Global Energy Monitor", "url": "https://www.gem.wiki/Chooz_Nuclear_Power_Plant", "accessedAt": "2025-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 2,
+        "lastVerified": "2025-05-10"
+      }
+    }
+  },
+  {
+    "id": "PLANT-FRA-CIVAUX",
+    "name": "Civaux Nuclear Power Plant",
+    "countryId": "FRA",
+    "city": "Civaux",
+    "coordinates": [0.654, 46.457],
+    "type": "nuclear",
+    "status": "operating",
+    "capacityMW": 2900,
+    "annualOutputGWh": 20000,
+    "yearCommissioned": 1997,
+    "yearRetirement": null,
+    "operator": "EDF",
+    "owner": "EDF",
+    "strategicNote": "Features some of the most modern reactors in the French fleet.",
+    "notes": "Two units of 1450 MW each.",
+    "attribution": {
+      "sources": [
+        { "name": "Global Energy Monitor", "url": "https://www.gem.wiki/Civaux_Nuclear_Power_Plant", "accessedAt": "2025-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 2,
+        "lastVerified": "2025-05-10"
+      }
+    }
+  },
+  {
+    "id": "PLANT-FRA-SAINT-ALBAN",
+    "name": "Saint-Alban Nuclear Power Plant",
+    "countryId": "FRA",
+    "city": "Saint-Maurice-l'Exil",
+    "coordinates": [4.755, 45.404],
+    "type": "nuclear",
+    "status": "operating",
+    "capacityMW": 2670,
+    "annualOutputGWh": 18000,
+    "yearCommissioned": 1985,
+    "yearRetirement": null,
+    "operator": "EDF",
+    "owner": "EDF",
+    "strategicNote": "Strategically located in the Rhone valley near Lyon.",
+    "notes": "Two units of 1300 MW class.",
+    "attribution": {
+      "sources": [
+        { "name": "Global Energy Monitor", "url": "https://www.gem.wiki/Saint-Alban_Nuclear_Power_Plant", "accessedAt": "2025-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 2,
+        "lastVerified": "2025-05-10"
+      }
+    }
+  },
+  {
+    "id": "PLANT-FRA-PENLY",
+    "name": "Penly Nuclear Power Plant",
+    "countryId": "FRA",
+    "city": "Penly",
+    "coordinates": [1.212, 49.977],
+    "type": "nuclear",
+    "status": "operating",
+    "capacityMW": 2660,
+    "annualOutputGWh": 18000,
+    "yearCommissioned": 1990,
+    "yearRetirement": null,
+    "operator": "EDF",
+    "owner": "EDF",
+    "strategicNote": "Important coastal plant in Normandy, designated as a site for future EPR2 reactors.",
+    "notes": "Two units of 1300 MW class.",
+    "attribution": {
+      "sources": [
+        { "name": "Global Energy Monitor", "url": "https://www.gem.wiki/Penly_Nuclear_Power_Plant", "accessedAt": "2025-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 2,
+        "lastVerified": "2025-05-10"
+      }
+    }
+  },
+  {
+    "id": "PLANT-FRA-BELLEVILLE",
+    "name": "Belleville Nuclear Power Plant",
+    "countryId": "FRA",
+    "city": "Belleville-sur-Loire",
+    "coordinates": [2.875, 47.51],
+    "type": "nuclear",
+    "status": "operating",
+    "capacityMW": 2620,
+    "annualOutputGWh": 18000,
+    "yearCommissioned": 1987,
+    "yearRetirement": null,
+    "operator": "EDF",
+    "owner": "EDF",
+    "strategicNote": "Critical for central France and the Loire valley power supply.",
+    "notes": "Two units of 1300 MW class.",
+    "attribution": {
+      "sources": [
+        { "name": "Global Energy Monitor", "url": "https://www.gem.wiki/Belleville_Nuclear_Power_Plant", "accessedAt": "2025-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 2,
+        "lastVerified": "2025-05-10"
+      }
+    }
+  }
+]

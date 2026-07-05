@@ -1,0 +1,63 @@
+{
+  "id": "TCA",
+  "iso2": "TC",
+  "name": "Turks and Caicos Islands",
+  "region": "Americas",
+  "subregion": "Caribbean",
+  "capital": "Cockburn Town",
+  "lastUpdated": "2026-05-09",
+  "summary": "The Turks and Caicos Islands (TCI) is a British Overseas Territory in the Lucayan Archipelago, famed for its world-class beaches and luxury tourism. In 2026, the territory is seeing a sustained boom in high-end real estate development and a growing international reputation as a boutique financial services center. The economy is predominantly driven by tourism, which accounts for the vast majority of GDP. TCI is currently focused on balancing this rapid growth with environmental conservation, particularly the protection of its extensive coral reefs. Politically, the territory is stable, though it continues to manage the legacy of past governance challenges through strengthened institutional frameworks and close cooperation with the UK. Future goals include increasing local ownership in the economy and enhancing climate resilience across the archipelago.",
+  "indicators": {
+    "politicalStability":       { "score": 7, "score_description": "Stable parliamentary democracy with UK oversight.", "trend": "stable", "confidence": "high", "note": "Institutions have been significantly strengthened following the 2009-2012 period of direct rule." },
+    "economicDirection":        { "score": 8, "score_description": "Strong growth driven by a booming luxury tourism sector.", "trend": "rising", "confidence": "high", "note": "TCI remains one of the fastest-growing economies in the Caribbean." },
+    "investmentAttractiveness": { "score": 8, "score_description": "Highly attractive for luxury real estate and hospitality.", "trend": "stable", "confidence": "high", "note": "Pro-business environment with no direct personal or corporate taxes." },
+    "geopoliticalRisk":         { "score": 3, "score_description": "Low risk; protected by the UK and part of a stable region.", "trend": "stable", "confidence": "high", "note": "Primary risks are environmental (hurricanes) and related to irregular migration." },
+    "educationQuality":         { "score": 6, "score_description": "Adequate primary/secondary; tertiary education is expanding.", "trend": "rising", "confidence": "medium", "note": "TCI Community College is playing a larger role in skills development for the tourism sector." },
+    "healthcareQuality":        { "score": 7, "score_description": "Good standard of care with modern public-private facilities.", "trend": "stable", "confidence": "high", "note": "The TCI Hospital system (InterHealth Canada) provides high-quality services on Providenciales and Grand Turk." },
+    "technologyInvestment":     { "score": 6, "score_description": "Focus on digital government and sustainable infrastructure.", "trend": "rising", "confidence": "medium", "note": "Investments are being made in solar energy and improved digital connectivity." }
+  },
+  "demographics": {
+    "population": 47200,
+    "medianAge": 34.8,
+    "urbanizationRate": 94,
+    "majorEthnicGroups": ["African descent", "Mixed", "European"],
+    "religions": [
+      { "name": "Protestant", "percent": 72 },
+      { "name": "Roman Catholic", "percent": 11 },
+      { "name": "Other/None", "percent": 17 }
+    ]
+  },
+  "alliances": ["CARICOM (Associate)", "United Kingdom Overseas Territories"],
+  "relationships": [
+    { "countryId": "USA", "countryName": "United States", "type": "strategic_partner", "sentiment": "positive", "summary": "Primary source of tourism and trade; uses the US Dollar as its official currency." },
+    { "countryId": "GBR", "countryName": "United Kingdom", "type": "sovereign", "sentiment": "positive", "summary": "The UK provides defense, international representation, and ultimate judicial oversight." },
+    { "countryId": "BHS", "countryName": "Bahamas", "type": "partner", "sentiment": "positive", "summary": "Close cultural and historical ties; shared geography in the Lucayan Archipelago." },
+    { "countryId": "HTI", "countryName": "Haiti", "type": "partner", "sentiment": "neutral", "summary": "Important relationship focused on managing migration and regional stability." }
+  ],
+  "perspectives": [
+    { "source": "Tourism Minister", "bias": "Pro-Development", "view": "TCI is the luxury capital of the Caribbean; our goal is to ensure this growth benefits every citizen through better jobs and education." },
+    { "source": "Environmental NGO", "bias": "Ecological", "view": "The pace of development on Providenciales is putting immense pressure on our marine environment; we need stricter enforcement of conservation laws." },
+    { "source": "Local Business Owner", "bias": "Economic", "view": "Business is good, but the cost of living is a major challenge for many TCI families." }
+  ],
+  "historicalContext": {
+    "summary": "Originally inhabited by the Taíno and Lucayan people, the islands were later a site for salt raking by Bermudians. TCI was variously governed as part of the Bahamas and later Jamaica. Following Jamaica's independence, TCI became a separate British Crown Colony. Its modern era is defined by the rapid rise of Providenciales as a global tourism hotspot.",
+    "keyEvents": [
+      { "year": 1681, "event": "Bermudian salt rakers establish a permanent presence on the islands." },
+      { "year": 1848, "event": "Turks and Caicos Islands are separated from the Bahamas." },
+      { "year": 1962, "event": "TCI becomes a separate British colony following Jamaica's independence." },
+      { "year": 1976, "event": "First constitution granting internal self-government is adopted." },
+      { "year": 2009, "event": "UK imposes direct rule for three years following a commission of inquiry into corruption." },
+      { "year": 2017, "event": "Hurricanes Irma and Maria cause significant damage, testing the territory's resilience." }
+    ]
+  },
+  "investmentNotes": {
+    "strengths": ["Premier luxury tourism brand and world-class beaches", "Tax-neutral status and use of the US Dollar", "Strong legal system based on English Common Law", "Stable political environment with UK backing"],
+    "risks": ["Heavy economic concentration in the tourism sector", "Vulnerability to climate change and hurricanes", "High cost of living and reliance on imports", "Infrastructural bottlenecks on the most developed islands"],
+    "sectors": ["Luxury Hospitality & Tourism", "Real Estate Development", "Niche Financial Services", "Sustainable Fishing", "Green Energy (Solar)"]
+  },
+  "sources": [
+    { "name": "TCI Department of Statistics", "url": "https://www.stats.gov.tc/", "type": "economic" },
+    { "name": "Experience Turks and Caicos", "url": "https://www.experiencetci.com/", "type": "general" },
+    { "name": "Government of the Turks and Caicos Islands", "url": "https://www.gov.tc/", "type": "political" }
+  ]
+}

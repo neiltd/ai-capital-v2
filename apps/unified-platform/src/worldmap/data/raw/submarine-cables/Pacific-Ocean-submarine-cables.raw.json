@@ -1,0 +1,119 @@
+[
+  {
+    "id": "hawaiki-nui",
+    "name": "Hawaiki Nui",
+    "route": [
+      [151.2, -33.8],
+      [174.7, -36.8],
+      [-170.7, -14.3],
+      [-157.8, 21.3],
+      [-124.0, 45.0]
+    ],
+    "landingPoints": [
+      {
+        "name": "Coogee",
+        "countryId": "AUS",
+        "coordinates": [151.25, -33.92],
+        "city": "Sydney"
+      },
+      {
+        "name": "Mangawhai",
+        "countryId": "NZL",
+        "coordinates": [174.59, -36.12],
+        "city": "Mangawhai"
+      },
+      {
+        "name": "Ili'ili",
+        "countryId": "ASM",
+        "coordinates": [-170.73, -14.34],
+        "city": "Pago Pago"
+      },
+      {
+        "name": "Kapolei",
+        "countryId": "USA",
+        "coordinates": [-158.08, 21.33],
+        "city": "Honolulu"
+      },
+      {
+        "name": "Pacific City",
+        "countryId": "USA",
+        "coordinates": [-124.03, 45.16],
+        "city": "Pacific City"
+      }
+    ],
+    "status": "active",
+    "lengthKm": 15000,
+    "capacityTbps": 67,
+    "yearLaid": 2018,
+    "yearRepaired": null,
+    "owners": ["BW Digital", "Hawaiki Submarine Cable"],
+    "vulnerabilities": "Extremely long trans-oceanic spans with limited repair facilities in the mid-Pacific.",
+    "geopoliticalNotes": "Provides critical redundancy for Australia and New Zealand, bypassing the more congested Southern Cross routes.",
+    "notes": null,
+    "attribution": {
+      "sources": [
+        { "name": "TeleGeography SubmarineCableMap", "url": "https://www.submarinecablemap.com/submarine-cable/hawaiki", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 1,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  },
+  {
+    "id": "echo",
+    "name": "Echo",
+    "route": [
+      [103.9, 1.3],
+      [106.8, -6.2],
+      [144.7, 13.4],
+      [-122.4, 37.7]
+    ],
+    "landingPoints": [
+      {
+        "name": "Changi",
+        "countryId": "SGP",
+        "coordinates": [103.98, 1.35],
+        "city": "Singapore"
+      },
+      {
+        "name": "Tanjung Pakis",
+        "countryId": "IDN",
+        "coordinates": [107.2, -5.9],
+        "city": "Karawang"
+      },
+      {
+        "name": "Agat",
+        "countryId": "GUM",
+        "coordinates": [144.65, 13.38],
+        "city": "Agat"
+      },
+      {
+        "name": "Eureka",
+        "countryId": "USA",
+        "coordinates": [-124.16, 40.80],
+        "city": "Eureka"
+      }
+    ],
+    "status": "construction",
+    "lengthKm": 16200,
+    "capacityTbps": 120,
+    "yearLaid": 2024,
+    "yearRepaired": null,
+    "owners": ["Google", "Meta", "XL Axiata"],
+    "vulnerabilities": "Bypasses traditional hubs like Hong Kong to avoid geopolitical tensions with China.",
+    "geopoliticalNotes": "First cable to directly connect the US to Singapore and Indonesia, reflecting a strategic shift in trans-Pacific connectivity.",
+    "notes": "Part of a broader effort by US tech giants to build infrastructure independent of Chinese influence.",
+    "attribution": {
+      "sources": [
+        { "name": "TeleGeography SubmarineCableMap", "url": "https://www.submarinecablemap.com/submarine-cable/echo", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 1,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  }
+]

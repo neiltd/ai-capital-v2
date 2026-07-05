@@ -1,0 +1,66 @@
+{
+  "id": "SWE",
+  "iso2": "SE",
+  "name": "Sweden",
+  "region": "Europe",
+  "subregion": "Northern Europe",
+  "capital": "Stockholm",
+  "lastUpdated": "2026-05-09",
+  "summary": "Sweden is currently in a state of high political anticipation as it prepares for the September 2026 general elections. The country has successfully integrated into NATO, marking a historic end to its long-standing policy of military non-alignment. Economically, Sweden is leading the European recovery with strong GDP growth driven by household consumption and a world-leading green industrial transition in the north. However, domestic politics are dominated by concerns over gang violence and the integration of immigrant communities. The government has prioritized law and order, alongside significant increases in defense spending, as it navigates a more contested Baltic Sea security environment.",
+  "indicators": {
+    "politicalStability":       { "score": 7, "score_description": "High stability despite an intense election year.", "trend": "stable", "confidence": "high", "note": "The Swedish political system is robust, though the 2026 election is expected to be closely contested between the incumbent center-right bloc and the Social Democrat-led opposition." },
+    "economicDirection":        { "score": 8, "score_description": "Strong recovery with robust growth and falling inflation.", "trend": "improving", "confidence": "high", "note": "Sweden is projected to see GDP growth of 2.5% in 2026, outperforming many of its EU peers through strong domestic demand and innovation." },
+    "investmentAttractiveness": { "score": 9, "score_description": "Global leader in tech startups and green industrialization.", "trend": "stable", "confidence": "high", "note": "Sweden's 'Green Steel' initiatives and battery gigafactories continue to attract multi-billion dollar international investments." },
+    "geopoliticalRisk":         { "score": 5, "score_description": "Moderate risk centered on Baltic security and Russian threats.", "trend": "rising", "confidence": "high", "note": "While NATO membership has enhanced security, Sweden remains a primary target for Russian hybrid threats and maritime provocations." },
+    "educationQuality":         { "score": 8, "score_description": "High quality with a focus on innovation and lifelong learning.", "trend": "stable", "confidence": "high", "note": "The education system is highly digitalized and integrated with the needs of the tech sector, though K-12 outcomes are a point of political debate." },
+    "healthcareQuality":        { "score": 8, "score_description": "High standards with advanced medical research.", "trend": "stable", "confidence": "high", "note": "Sweden offers world-class healthcare, though it faces logistical challenges and waiting times in certain regional jurisdictions." },
+    "technologyInvestment":     { "score": 9, "score_description": "World-class tech hub with high R&D intensity.", "trend": "rising", "confidence": "high", "note": "Sweden is a global leader in IT, telecom (Ericsson), and sustainable technologies, with a thriving venture capital ecosystem." }
+  },
+  "demographics": {
+    "population": 10650000,
+    "medianAge": 41.2,
+    "urbanizationRate": 88,
+    "majorEthnicGroups": ["Swedish", "Syrian", "Iraqi", "Finnish", "Eritrean"],
+    "religions": [
+      { "name": "Church of Sweden (Lutheran)", "percent": 50.7 },
+      { "name": "None/Unaffiliated", "percent": 37.9 },
+      { "name": "Muslim", "percent": 4.6 },
+      { "name": "Other Christian", "percent": 4 },
+      { "name": "Other", "percent": 2.8 }
+    ]
+  },
+  "alliances": ["EU", "NATO", "Nordic Council", "OECD"],
+  "relationships": [
+    { "countryId": "FIN", "countryName": "Finland", "type": "ally", "sentiment": "positive", "summary": "Closest security and cultural partner; deep military integration within NATO and shared Baltic interests." },
+    { "countryId": "USA", "countryName": "United States", "type": "treaty_ally", "sentiment": "positive", "summary": "Critical security guarantor; strengthened defense cooperation through NATO and bilateral agreements." },
+    { "countryId": "DEU", "countryName": "Germany", "type": "ally", "sentiment": "positive", "summary": "Major trading partner and key ally in the EU; cooperation on energy transition and industrial innovation." },
+    { "countryId": "NOR", "countryName": "Norway", "type": "ally", "sentiment": "positive", "summary": "Close economic and security partner; deep integration in the Nordic energy market and transport." },
+    { "countryId": "RUS", "countryName": "Russia", "type": "adversary", "sentiment": "negative", "summary": "Relations are at a historic low; Sweden is a leading voice in European defense against Russian aggression." }
+  ],
+  "perspectives": [
+    { "source": "Moderate Gov Supporter", "bias": "Center-Right", "view": "The government's focus on law and order, combined with a pro-growth economic agenda, is successfully modernizing Sweden for the NATO era." },
+    { "source": "Social Democrat Critic", "bias": "Center-Left", "view": "The current administration has neglected social welfare and integration; a more holistic approach to public services is needed to ensure long-term stability." },
+    { "source": "Security Analyst", "bias": "Pro-NATO", "view": "Sweden's integration into NATO is a strategic masterstroke that fundamentally changes the security architecture of Northern Europe and the Arctic." }
+  ],
+  "historicalContext": {
+    "summary": "Sweden's modern history is defined by its peaceful transition from a 17th-century regional power to a 20th-century model of social democracy and neutrality. It avoided direct participation in both World Wars and maintained a policy of non-alignment for over two centuries. The 2024 accession to NATO represents the most significant shift in Swedish foreign policy in modern history.",
+    "keyEvents": [
+      { "year": 1523, "event": "Gustav Vasa becomes King; independence from the Kalmar Union." },
+      { "year": 1814, "event": "Treaty of Kiel; Sweden enters a personal union with Norway (until 1905)." },
+      { "year": 1901, "event": "First Nobel Prizes are awarded in Stockholm and Oslo." },
+      { "year": 1995, "event": "Sweden joins the European Union." },
+      { "year": 2024, "event": "Sweden officially joins NATO, ending 200 years of military non-alignment." },
+      { "year": 2026, "event": "General elections held amid a stronger-than-expected economic recovery." }
+    ]
+  },
+  "investmentNotes": {
+    "strengths": ["World-class innovation ecosystem and tech hubs", "Global leadership in green steel and sustainable industry", "Stable and transparent legal environment", "Highly skilled and digitally literate workforce"],
+    "risks": ["High household debt and sensitivity to interest rates", "Social integration challenges and rising crime rates", "Energy security vulnerability in the southern regions", "Exposure to global supply chain disruptions"],
+    "sectors": ["Information Technology", "Clean Energy & Green Steel", "Defense Technology", "Life Sciences", "Fintech"]
+  },
+  "sources": [
+    { "name": "Statistics Sweden (SCB)", "url": "https://www.scb.se/en/", "type": "economic" },
+    { "name": "Sveriges Riksbank", "url": "https://www.riksbank.se/en-gb/", "type": "economic" },
+    { "name": "Ministry for Foreign Affairs", "url": "https://www.government.se/government-of-sweden/ministry-for-foreign-affairs/", "type": "political" }
+  ]
+}

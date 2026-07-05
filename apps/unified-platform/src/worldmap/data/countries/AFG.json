@@ -1,0 +1,65 @@
+{
+  "id": "AFG",
+  "iso2": "AF",
+  "name": "Afghanistan",
+  "region": "Asia",
+  "subregion": "Southern Asia",
+  "capital": "Kabul",
+  "lastUpdated": "2026-05-09",
+  "summary": "Afghanistan is a landlocked nation at the crossroads of Central and South Asia, currently under the de facto rule of the Taliban following the withdrawal of international forces in 2021. The country has transitioned from a state of active conflict to one of 'fragile stagnation,' characterized by extreme poverty, international isolation, and a near-total exclusion of women from public life. While the security situation has improved in terms of reduced combat, the economy is severely hampered by sanctions, frozen assets, and the absence of a formal banking system. Geopolitically, Afghanistan is increasingly looking toward regional powers like China, Russia, and neighboring states for economic survival.",
+  "indicators": {
+    "politicalStability":       { "score": 3, "trend": "stable", "confidence": "high", "note": "Taliban maintains firm control through a centralized authoritarian system; no viable internal opposition, but legitimacy remains unrecognized globally." },
+    "economicDirection":        { "score": 2, "trend": "stable", "confidence": "high", "note": "Economy has stabilized at a very low level; hampered by lack of foreign investment, sanctions, and extreme humanitarian need." },
+    "investmentAttractiveness": { "score": 1, "trend": "stable", "confidence": "high", "note": "Traditional FDI is virtually non-existent due to legal uncertainty and sanctions; limited engagement in extractives by regional actors." },
+    "geopoliticalRisk":         { "score": 8, "trend": "stable", "confidence": "high", "note": "Risk of becoming a haven for extremist groups; potential for regional instability and ongoing humanitarian crises." },
+    "educationQuality":         { "score": 1, "trend": "declining", "confidence": "high", "note": "Severe decline as girls and women are banned from secondary and higher education; lack of qualified teachers and resources." },
+    "healthcareQuality":        { "score": 2, "trend": "declining", "confidence": "high", "note": "Heavily reliant on international aid which is decreasing; critical shortages of specialized care and female medical staff." },
+    "technologyInvestment":     { "score": 2, "trend": "stable", "confidence": "medium", "note": "Limited to maintaining existing mobile networks; some regional interest in fiber optic transit but constrained by political risk." }
+  },
+  "demographics": {
+    "population": 42600000,
+    "medianAge": 18.4,
+    "urbanizationRate": 26,
+    "majorEthnicGroups": ["Pashtun", "Tajik", "Hazara", "Uzbek"],
+    "religions": [
+      { "name": "Sunni Muslim", "percent": 85.0 },
+      { "name": "Shia Muslim", "percent": 15.0 }
+    ]
+  },
+  "alliances": ["SCO (Observer)", "SAARC (Suspended participation)"],
+  "relationships": [
+    { "countryId": "CHN", "countryName": "China", "type": "economic_partner", "sentiment": "positive", "summary": "Main regional economic partner; China is investing in oil and mining while providing diplomatic engagement without formal recognition." },
+    { "countryId": "PAK", "countryName": "Pakistan", "type": "neighbor", "sentiment": "neutral", "summary": "Complex and often tense relationship focused on border security (Durand Line), trade, and managing cross-border militant groups." },
+    { "countryId": "RUS", "countryName": "Russia", "type": "strategic_partner", "sentiment": "positive", "summary": "Maintains a pragmatic relationship focused on regional security and preventing the spread of extremism into Central Asia." },
+    { "countryId": "USA", "countryName": "United States", "type": "adversary", "sentiment": "negative", "summary": "No formal relations; USA maintains sanctions and has frozen central bank assets while remaining the largest provider of humanitarian aid." }
+  ],
+  "perspectives": [
+    { "source": "Taliban Official", "bias": "Authoritarian", "view": "We have brought peace and an Islamic system to Afghanistan; the world must recognize our sovereignty and end the unjust sanctions." },
+    { "source": "Afghan Woman", "bias": "Victim", "view": "Our lives have been erased; we are prisoners in our own homes with no future for our daughters." },
+    { "source": "Regional Trader", "bias": "Pragmatic", "view": "Security is better for moving goods, but the lack of a banking system and fluctuating border policies make business very difficult." },
+    { "source": "Humanitarian Worker", "bias": "Critical", "view": "The world is forgetting Afghanistan; the humanitarian funding gap is growing while the needs remain catastrophic." }
+  ],
+  "historicalContext": {
+    "summary": "Afghanistan's modern history is defined by decades of conflict. Following the Soviet invasion (1979-1989) and a subsequent civil war, the Taliban first took power in 1996. After the 2001 U.S.-led invasion ousts the Taliban, a two-decade-long insurgency followed, culminating in the Taliban's return to power in August 2021.",
+    "keyEvents": [
+      { "year": 1919, "event": "Independence from British influence." },
+      { "year": 1973, "event": "Abolition of the monarchy; establishment of the Republic." },
+      { "year": 1979, "event": "Soviet Union invades Afghanistan to support the communist government." },
+      { "year": 1992, "event": "Fall of the communist regime; beginning of the civil war among mujahideen groups." },
+      { "year": 1996, "event": "Taliban capture Kabul for the first time." },
+      { "year": 2001, "event": "U.S.-led invasion ousts the Taliban following the 9/11 attacks." },
+      { "year": 2021, "event": "Taliban return to power as international forces withdraw; fall of the Republic." },
+      { "year": 2024, "event": "Intensification of regional economic engagement alongside continued global isolation." }
+    ]
+  },
+  "investmentNotes": {
+    "strengths": ["Vast untapped mineral wealth (estimated $1 trillion in Lithium, Copper, Iron)", "Strategic location at the heart of the 'Silk Road' transit corridor", "Significantly improved internal security compared to previous decades", "Resilient and entrepreneurial local population"],
+    "risks": ["International sanctions and lack of correspondent banking", "Absence of a formal, transparent, and internationally recognized legal system", "Severe restrictions on female labor and human rights", "High vulnerability to climate-induced drought and food insecurity"],
+    "sectors": ["Extractive Industries (Mining/Energy)", "Cross-border Trade & Transit", "Agriculture & Horticulture", "Telecommunications (Maintenance)"]
+  },
+  "sources": [
+    { "name": "World Bank - Afghanistan Overview", "url": "https://www.worldbank.org/en/country/afghanistan", "type": "economic" },
+    { "name": "SIGAR (Special Inspector General for Afghanistan Reconstruction)", "url": "https://www.sigar.mil/", "type": "oversight" },
+    { "name": "United Nations Assistance Mission in Afghanistan (UNAMA)", "url": "https://unama.unmissions.org/", "type": "humanitarian" }
+  ]
+}

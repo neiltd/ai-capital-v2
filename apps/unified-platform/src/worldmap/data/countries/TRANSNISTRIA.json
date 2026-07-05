@@ -1,0 +1,63 @@
+{
+  "id": "TRANSNISTRIA",
+  "iso2": "MD-SN",
+  "name": "Transnistria (Pridnestrovian Moldavian Republic)",
+  "region": "Europe",
+  "subregion": "Eastern Europe",
+  "capital": "Tiraspol",
+  "lastUpdated": "2025-05-15",
+  "summary": "Transnistria is currently navigating a period of forced economic and energy integration with Moldova following the January 2025 cutoff of Russian gas transit through Ukraine. This 'energy shock' has significantly weakened the long-standing Russian subsidy model and shifted the local power balance toward the pragmatic Sheriff conglomerate, which now favors survival through alignment with Moldova's legal and tax framework. While the region remains de facto independent and hosts a small contingent of Russian troops, its economic survival is increasingly tied to the European Union, which now accounts for over 70% of its exports.",
+  "indicators": {
+    "politicalStability":       { "score": 4, "trend": "falling", "confidence": "high", "note": "Traditional pro-Moscow elite is weakening; Sheriff conglomerate is the primary arbiter of stability." },
+    "economicDirection":        { "score": 3, "trend": "stagnant", "confidence": "high", "note": "Collapse of the gas subsidy model is forcing a painful transition to a market-based economy integrated with Moldova." },
+    "investmentAttractiveness": { "score": 2, "trend": "rising", "confidence": "medium", "note": "Highly risky, but some interest from Moldovan and Romanian businesses as the region integrates into the EU trade zone." },
+    "geopoliticalRisk":         { "score": 8, "trend": "stable", "confidence": "high", "note": "Persistent risk due to the presence of Russian troops and the potential for spillover from the war in Ukraine." },
+    "educationQuality":         { "score": 5, "trend": "stable", "confidence": "medium", "note": "Standardized Russian-style curriculum; technical schools are relatively well-linked to local industry needs." },
+    "healthcareQuality":        { "score": 4, "trend": "stable", "confidence": "medium", "note": "Basic services available; facing significant shortages of specialized personnel and modern equipment." },
+    "technologyInvestment":     { "score": 4, "trend": "stable", "confidence": "medium", "note": "Solid basic infrastructure (fiber/4G) controlled by the IDC monopoly; limited innovation beyond basic services." }
+  },
+  "demographics": {
+    "population": 465000,
+    "medianAge": 42.5,
+    "urbanizationRate": 70.0,
+    "majorEthnicGroups": ["Russian", "Moldovan", "Ukrainian"],
+    "religions": [
+      { "name": "Orthodox (Metropolis of Moldova)", "percent": 90 },
+      { "name": "Other", "percent": 10 }
+    ]
+  },
+  "alliances": ["Community for Democracy and Rights of Nations"],
+  "relationships": [
+    { "countryId": "RUS", "countryName": "Russia", "type": "security_guarantor", "sentiment": "positive", "summary": "Historically the primary patron and security guarantor; influence is waning due to logistics and energy cutoff." },
+    { "countryId": "MDA", "countryName": "Moldova", "type": "neighbor", "sentiment": "neutral", "summary": "Relations are becoming increasingly transactional and integrated; focus is on pragmatism and economic survival." },
+    { "countryId": "UKR", "countryName": "Ukraine", "type": "adversary", "sentiment": "negative", "summary": "The border remains closed; Kyiv views Transnistria as a security threat and potential Russian launchpad." },
+    { "countryId": "ROU", "countryName": "Romania", "type": "economic_partner", "sentiment": "neutral", "summary": "A growing destination for Transnistrian exports as the region aligns with the EU trade framework." }
+  ],
+  "perspectives": [
+    { "source": "Sheriff Executive", "bias": "Pragmatic", "view": "Our business is export-oriented. We need clear rules and access to European markets, regardless of the political flag in Tiraspol." },
+    { "source": "Pro-Moscow Politician", "bias": "Critical", "view": "The energy cutoff is a Western plot to force us into Moldova. We must remain loyal to Russia, our only true protector." },
+    { "source": "Resident of Tiraspol", "bias": "Pragmatic", "view": "I don't care about the high politics; I just want to know if the heat will stay on and if my salary will buy as much as last year." },
+    { "source": "Moldovan Negotiator", "bias": "Optimistic", "view": "Economic reality is doing what decades of diplomacy couldn't. Transnistria is reintegrating because it has no other choice." }
+  ],
+  "historicalContext": {
+    "summary": "Transnistria declared independence from Moldova in 1990, fearing a potential union between Moldova and Romania. A brief civil war in 1992 ended with a ceasefire and the deployment of Russian peacekeepers. Since then, the region has functioned as a de facto state with its own government, military, and currency (the Transnistrian ruble). Its economy was historically built on heavy industry (steel and textiles) and subsidized Russian gas, but the 2022 invasion of Ukraine and the 2025 energy crisis have forced a fundamental shift.",
+    "keyEvents": [
+      { "year": 1990, "event": "Declaration of independence from the Moldavian SSR." },
+      { "year": 1992, "event": "War of Transnistria ends with a ceasefire and Russian military presence." },
+      { "year": 1993, "event": "Formation of the Sheriff conglomerate, which becomes the dominant economic and political force." },
+      { "year": 2006, "event": "Referendum on independence and future integration with Russia; 97% support (unrecognized)." },
+      { "year": 2024, "event": "Moldova implements a new customs code, effectively ending Transnistria's duty-free status." },
+      { "year": 2025, "event": "Russian gas transit through Ukraine halts, triggering a major energy and social crisis in the region." }
+    ]
+  },
+  "investmentNotes": {
+    "strengths": ["Strong industrial base in metallurgy (MMZ) and textiles (Tirotex)", "Highly disciplined workforce with technical expertise", "Established export links to the EU market", "Relatively low operating costs and developed energy infrastructure"],
+    "risks": ["Lack of international recognition and legal uncertainty", "Extreme vulnerability to regional energy transit disruptions", "Dependence on the Sheriff monopoly for political and economic access", "Proximity to the front lines of the war in Ukraine"],
+    "sectors": ["Heavy Metallurgy", "Light Industry & Textiles", "Electricity Generation (Cuciurgan Power Plant)", "Agribusiness & Spirits (Kvint)"]
+  },
+  "sources": [
+    { "name": "Ministry of Economic Development of Transnistria", "url": "http://mer.gospmr.org", "type": "government" },
+    { "name": "Chamber of Commerce and Industry of Transnistria", "url": "https://tiraspol.ru", "type": "economic" },
+    { "name": "OSCE Mission to Moldova", "url": "https://www.osce.org/mission-to-moldova", "type": "government" }
+  ]
+}

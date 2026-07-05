@@ -1,0 +1,272 @@
+[
+  {
+    "id": "BKK",
+    "name": "Suvarnabhumi Airport",
+    "countryId": "THA",
+    "city": "Bangkok",
+    "iata": "BKK",
+    "icao": "VTBS",
+    "coordinates": [100.7472, 13.6811],
+    "passengerVolume": 59990000,
+    "cargoVolume": 1200000,
+    "runwayCount": 3,
+    "elevationM": 2,
+    "strategicImportance": "critical",
+    "geopoliticalNotes": "Thailand's primary global gateway and a top-tier Southeast Asian hub; critical for international trade and connectivity with over 100 airlines.",
+    "notes": "Third runway and SAT-1 terminal recently opened to increase capacity.",
+    "attribution": {
+      "sources": [
+        { "name": "Airports of Thailand (AOT)", "url": "https://www.airportthai.co.th/en/", "accessedAt": "2026-05-10" },
+        { "name": "IATA", "url": "https://www.iata.org", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 2,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  },
+  {
+    "id": "DMK",
+    "name": "Don Mueang International Airport",
+    "countryId": "THA",
+    "city": "Bangkok",
+    "iata": "DMK",
+    "icao": "VTBD",
+    "coordinates": [100.6067, 13.9125],
+    "passengerVolume": 30490000,
+    "cargoVolume": null,
+    "runwayCount": 2,
+    "elevationM": 3,
+    "strategicImportance": "high",
+    "geopoliticalNotes": "The world's leading hub for Low-Cost Carriers (LCCs); serves as the primary domestic and regional point-to-point terminal for Southeast Asia.",
+    "notes": "Phase 3 expansion underway to handle 50 million passengers.",
+    "attribution": {
+      "sources": [
+        { "name": "Airports of Thailand (AOT)", "url": "https://www.airportthai.co.th/en/", "accessedAt": "2026-05-10" },
+        { "name": "OurAirports", "url": "https://ourairports.com/airports/VTBD/", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 2,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  },
+  {
+    "id": "HKT",
+    "name": "Phuket International Airport",
+    "countryId": "THA",
+    "city": "Phuket",
+    "iata": "HKT",
+    "icao": "VTSP",
+    "coordinates": [98.3069, 8.1133],
+    "passengerVolume": 17200000,
+    "cargoVolume": null,
+    "runwayCount": 1,
+    "elevationM": 25,
+    "strategicImportance": "high",
+    "geopoliticalNotes": "Primary gateway to the Andaman Sea and a critical hub for international tourism; handles high-volume long-haul flights from Europe and Asia.",
+    "notes": "Busiest airport in Thailand outside of the Bangkok metropolitan area.",
+    "attribution": {
+      "sources": [
+        { "name": "Airports of Thailand (AOT)", "url": "https://www.airportthai.co.th/en/", "accessedAt": "2026-05-10" },
+        { "name": "ACI World", "url": "https://aci.aero", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 2,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  },
+  {
+    "id": "CNX",
+    "name": "Chiang Mai International Airport",
+    "countryId": "THA",
+    "city": "Chiang Mai",
+    "iata": "CNX",
+    "icao": "VTCC",
+    "coordinates": [98.9625, 18.7758],
+    "passengerVolume": 10000000,
+    "cargoVolume": null,
+    "runwayCount": 1,
+    "elevationM": 316,
+    "strategicImportance": "high",
+    "geopoliticalNotes": "The main hub for Northern Thailand and a strategic gateway for Chinese and East Asian connectivity; vital for regional tourism and trade.",
+    "notes": "Plans for a second Chiang Mai airport (Lanna International) are under development.",
+    "attribution": {
+      "sources": [
+        { "name": "Airports of Thailand (AOT)", "url": "https://www.airportthai.co.th/en/", "accessedAt": "2026-05-10" },
+        { "name": "OurAirports", "url": "https://ourairports.com/airports/VTCC/", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 2,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  },
+  {
+    "id": "UTP",
+    "name": "U-Tapao Rayong-Pattaya International Airport",
+    "countryId": "THA",
+    "city": "Rayong",
+    "iata": "UTP",
+    "icao": "VTBU",
+    "coordinates": [101.005, 12.6797],
+    "passengerVolume": 370000,
+    "cargoVolume": null,
+    "runwayCount": 1,
+    "elevationM": 13,
+    "strategicImportance": "high",
+    "geopoliticalNotes": "Strategically critical hub for the Eastern Economic Corridor (EEC); dual-use military-civilian facility being developed as Bangkok's third airport.",
+    "notes": "Linked by high-speed rail to BKK and DMK as part of national infrastructure plans.",
+    "attribution": {
+      "sources": [
+        { "name": "U-Tapao Airport Authority", "url": "https://www.utapao.com/", "accessedAt": "2026-05-10" },
+        { "name": "ICAO", "url": "https://www.icao.int", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 2,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  },
+  {
+    "id": "HDY",
+    "name": "Hat Yai International Airport",
+    "countryId": "THA",
+    "city": "Songkhla",
+    "iata": "HDY",
+    "icao": "VTSS",
+    "coordinates": [100.3958, 6.9328],
+    "passengerVolume": 3000000,
+    "cargoVolume": null,
+    "runwayCount": 1,
+    "elevationM": 28,
+    "strategicImportance": "high",
+    "geopoliticalNotes": "The primary logistics and commercial hub for Southern Thailand; critical for cross-border travel from Malaysia and Singapore.",
+    "notes": "Serves as the main gateway to the deep south of Thailand.",
+    "attribution": {
+      "sources": [
+        { "name": "Airports of Thailand (AOT)", "url": "https://www.airportthai.co.th/en/", "accessedAt": "2026-05-10" },
+        { "name": "OurAirports", "url": "https://ourairports.com/airports/VTSS/", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 2,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  },
+  {
+    "id": "KBV",
+    "name": "Krabi International Airport",
+    "countryId": "THA",
+    "city": "Krabi",
+    "iata": "KBV",
+    "icao": "VTSG",
+    "coordinates": [98.9858, 8.0997],
+    "passengerVolume": 4000000,
+    "cargoVolume": null,
+    "runwayCount": 1,
+    "elevationM": 25,
+    "strategicImportance": "medium",
+    "geopoliticalNotes": "Essential secondary gateway for the Andaman coast; acts as a relief hub for Phuket during peak tourism seasons.",
+    "notes": "Recently expanded terminal capacity to handle 8 million passengers annually.",
+    "attribution": {
+      "sources": [
+        { "name": "Department of Airports (DOA)", "url": "https://minisite.airports.go.th/krabi/", "accessedAt": "2026-05-10" },
+        { "name": "IATA", "url": "https://www.iata.org", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 2,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  },
+  {
+    "id": "CEI",
+    "name": "Mae Fah Luang - Chiang Rai International Airport",
+    "countryId": "THA",
+    "city": "Chiang Rai",
+    "iata": "CEI",
+    "icao": "VTCT",
+    "coordinates": [99.8867, 19.9569],
+    "passengerVolume": 2000000,
+    "cargoVolume": null,
+    "runwayCount": 1,
+    "elevationM": 390,
+    "strategicImportance": "medium",
+    "geopoliticalNotes": "Strategic northern gateway for the 'Golden Triangle'; supports cross-border trade and tourism with Myanmar and Laos.",
+    "notes": "Key node in the Greater Mekong Subregion (GMS) connectivity network.",
+    "attribution": {
+      "sources": [
+        { "name": "Airports of Thailand (AOT)", "url": "https://www.airportthai.co.th/en/", "accessedAt": "2026-05-10" },
+        { "name": "OurAirports", "url": "https://ourairports.com/airports/VTCT/", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 2,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  },
+  {
+    "id": "UTH",
+    "name": "Udon Thani International Airport",
+    "countryId": "THA",
+    "city": "Udon Thani",
+    "iata": "UTH",
+    "icao": "VTUD",
+    "coordinates": [102.7883, 17.3864],
+    "passengerVolume": 2200000,
+    "cargoVolume": null,
+    "runwayCount": 1,
+    "elevationM": 176,
+    "strategicImportance": "medium",
+    "geopoliticalNotes": "The busiest airport in the Isan region; serves as a strategic transit point for travelers heading to Vientiane, Laos.",
+    "notes": "Historically a major base for regional logistics and domestic LCC operations.",
+    "attribution": {
+      "sources": [
+        { "name": "Department of Airports (DOA)", "url": "https://minisite.airports.go.th/udonthani/", "accessedAt": "2026-05-10" },
+        { "name": "ICAO", "url": "https://www.icao.int", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 2,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  },
+  {
+    "id": "URT",
+    "name": "Surat Thani International Airport",
+    "countryId": "THA",
+    "city": "Surat Thani",
+    "iata": "URT",
+    "icao": "VTSB",
+    "coordinates": [99.1356, 9.1325],
+    "passengerVolume": 2200000,
+    "cargoVolume": null,
+    "runwayCount": 1,
+    "elevationM": 6,
+    "strategicImportance": "medium",
+    "geopoliticalNotes": "Critical tourism gateway for the Gulf of Thailand islands; provides a high-capacity, lower-cost alternative to Samui Airport.",
+    "notes": "Expanding terminal capacity to handle increased international demand.",
+    "attribution": {
+      "sources": [
+        { "name": "Department of Airports (DOA)", "url": "https://minisite.airports.go.th/suratthani/", "accessedAt": "2026-05-10" },
+        { "name": "OurAirports", "url": "https://ourairports.com/airports/VTSB/", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 2,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  }
+]

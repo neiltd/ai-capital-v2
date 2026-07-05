@@ -1,0 +1,30 @@
+[
+  {
+    "countryId": "USA",
+    "year": 2024,
+    "aiReadinessScore": 87.03,
+    "aiAdoptionScore": 83.8,
+    "aiTalentScore": 83.8,
+    "aiInvestmentUsdM": 109100,
+    "aiStartupCount": 10170,
+    "aiUnicornCount": 150,
+    "hasNationalAiStrategy": true,
+    "aiStrategyYear": 2023,
+    "aiPolicyScore": 90.9,
+    "cloudReadinessPct": null,
+    "broadbandPenetrationPct": 97.1,
+    "topAiSectors": ["Finance", "Healthcare", "Manufacturing", "Defense", "Technology"],
+    "attribution": {
+      "sources": [
+        { "name": "Oxford Insights Government AI Readiness Index 2024", "url": "https://oxfordinsights.com/ai-readiness/ai-readiness-index/", "accessedAt": "2025-05-14" },
+        { "name": "Stanford HAI AI Index 2024/2025", "url": "https://aiindex.stanford.edu/report/", "accessedAt": "2025-05-14" },
+        { "name": "FCC Broadband Data 2024", "url": "https://www.fcc.gov/reports-research/reports/broadband-progress-reports/", "accessedAt": "2025-05-14" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 3,
+        "lastVerified": "2025-05-14"
+      }
+    }
+  }
+]

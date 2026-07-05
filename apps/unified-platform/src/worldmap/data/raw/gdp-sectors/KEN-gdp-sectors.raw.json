@@ -1,0 +1,25 @@
+[
+  {
+    "countryId": "KEN",
+    "year": 2023,
+    "gdpUsdBn": 107.44,
+    "gdpPerCapita": 1950,
+    "sectors": [
+      { "sector": "Services", "percentOfGDP": 55.4, "notes": "Largest contributor, includes Real Estate (10.3%), Transport (9.6%), Financial services (9.5%)" },
+      { "sector": "Agriculture, Forestry & Fishing", "percentOfGDP": 21.8, "notes": "Significant rebound in 2023 due to improved weather" },
+      { "sector": "Industry", "percentOfGDP": 16.8, "notes": "Includes Manufacturing (8.2%) and Construction (5.7%)" },
+      { "sector": "Taxes on Products", "percentOfGDP": 6.0, "notes": "Net of subsidies" }
+    ],
+    "attribution": {
+      "sources": [
+        { "name": "KNBS Economic Survey 2024", "url": "https://www.knbs.or.ke/", "accessedAt": "2025-03-03" },
+        { "name": "World Bank DataBank", "url": "https://databank.worldbank.org/", "accessedAt": "2025-03-03" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 2,
+        "lastVerified": "2025-03-03"
+      }
+    }
+  }
+]

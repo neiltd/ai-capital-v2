@@ -1,0 +1,65 @@
+{
+  "id": "ZMB",
+  "iso2": "ZM",
+  "name": "Zambia",
+  "region": "Africa",
+  "subregion": "Southern Africa",
+  "capital": "Lusaka",
+  "lastUpdated": "2025-05-15",
+  "summary": "Zambia is a landlocked Southern African nation currently undergoing a significant economic turnaround following a successful but protracted debt restructuring process under the G20 Common Framework. Under the leadership of President Hakainde Hichilema, the country has prioritized fiscal discipline, anti-corruption measures, and a revitalized copper mining sector. As the world transitions to green energy, Zambia's vast copper and cobalt reserves place it in a strategic position globally. However, the country remains vulnerable to climate-induced shocks, particularly droughts affecting its hydroelectric power generation, and faces the challenge of translating macroeconomic reforms into tangible improvements for its youthful population.",
+  "indicators": {
+    "politicalStability":       { "score": 7, "trend": "rising", "confidence": "high", "note": "Strong democratic institutions and a peaceful transition of power in 2021; focus on rule of law." },
+    "economicDirection":        { "score": 6, "trend": "rising", "confidence": "high", "note": "Post-debt restructuring recovery; significant new investments in the mining sector." },
+    "investmentAttractiveness": { "score": 7, "trend": "rising", "confidence": "high", "note": "Mining-friendly reforms and improved transparency are attracting major international players." },
+    "geopoliticalRisk":         { "score": 3, "trend": "stable", "confidence": "medium", "note": "Low risk of external conflict; active participant in regional peace initiatives." },
+    "educationQuality":         { "score": 4, "trend": "rising", "confidence": "high", "note": "Free primary and secondary education introduced, though infrastructure and teacher quality remain challenges." },
+    "healthcareQuality":        { "score": 4, "trend": "stable", "confidence": "medium", "note": "Improving access in urban areas; rural healthcare depends heavily on international support." },
+    "technologyInvestment":     { "score": 5, "trend": "rising", "confidence": "medium", "note": "Growing fintech sector and initiatives to expand digital connectivity across the country." }
+  },
+  "demographics": {
+    "population": 21100000,
+    "medianAge": 16.9,
+    "urbanizationRate": 46.2,
+    "majorEthnicGroups": ["Bemba", "Tonga", "Chewa", "Lozi"],
+    "religions": [
+      { "name": "Christian", "percent": 95.5 },
+      { "name": "Muslim", "percent": 0.5 },
+      { "name": "Other/Traditional", "percent": 2.0 },
+      { "name": "None", "percent": 2.0 }
+    ]
+  },
+  "alliances": ["African Union", "SADC", "COMESA", "Commonwealth"],
+  "relationships": [
+    { "countryId": "CHN", "countryName": "China", "type": "economic_partner", "sentiment": "neutral", "summary": "Major creditor and infrastructure partner; significant player in the mining sector." },
+    { "countryId": "USA", "countryName": "United States", "type": "strategic_partner", "sentiment": "positive", "summary": "Strong supporter of debt restructuring and democratic reforms; increasing interest in the Lobito Corridor." },
+    { "countryId": "ZAF", "countryName": "South Africa", "type": "strategic_partner", "sentiment": "positive", "summary": "Zambia's largest regional trading partner; shared interests in SADC stability." },
+    { "countryId": "COD", "countryName": "DR Congo", "type": "regional_partner", "sentiment": "neutral", "summary": "Key partner in the Copperbelt region; cooperation on cross-border infrastructure and trade." }
+  ],
+  "perspectives": [
+    { "source": "Copperbelt Miner", "bias": "Economic", "view": "New investment is coming back to the mines, but we need to see it translate into better wages and local development." },
+    { "source": "Lusaka Entrepreneur", "bias": "Optimistic", "view": "The government's focus on stability and digitalization is creating a much better environment for start-ups." },
+    { "source": "Opposition Politician", "bias": "Critical", "view": "While the debt deal is good, the cost of living remains too high for the average Zambian." },
+    { "source": "Civil Society Leader", "bias": "Reformist", "view": "The fight against corruption is essential, but it must be applied consistently and transparently." }
+  ],
+  "historicalContext": {
+    "summary": "Since gaining independence from Britain in 1964, Zambia has been one of Africa's most stable democracies. Historically dependent on copper, it went through a period of state-led industrialization followed by liberalization. Recent history has been dominated by a debt crisis and the subsequent reform-minded presidency of Hakainde Hichilema.",
+    "keyEvents": [
+      { "year": 1964, "event": "Independence from the United Kingdom." },
+      { "year": 1991, "event": "Transition to multi-party democracy; Frederick Chiluba elected president." },
+      { "year": 2020, "event": "Zambia becomes the first African country to default on its sovereign debt during the COVID-19 pandemic." },
+      { "year": 2021, "event": "Hakainde Hichilema wins the presidency in a landslide victory." },
+      { "year": 2024, "event": "Finalization of the landmark debt restructuring deal with bilateral and private creditors." },
+      { "year": 2024, "event": "Severe drought declared a national disaster, severely impacting food security and hydroelectric power." }
+    ]
+  },
+  "investmentNotes": {
+    "strengths": ["Abundant copper and cobalt reserves (critical minerals)", "Stable democratic environment and commitment to reform", "Large arable land and water resources for agriculture", "Strategic location as a regional transport hub"],
+    "risks": ["Vulnerability to climate change and droughts", "Heavy dependence on copper price fluctuations", "Logistics and energy infrastructure bottlenecks", "High levels of poverty and income inequality"],
+    "sectors": ["Mining (Copper & Cobalt)", "Agriculture & Agro-processing", "Renewable Energy (Solar & Hydro)", "Tourism"]
+  },
+  "sources": [
+    { "name": "Bank of Zambia", "url": "https://www.boz.zm/", "type": "economic" },
+    { "name": "Zambia Statistics Agency", "url": "https://www.zamstats.gov.zm/", "type": "demographic" },
+    { "name": "Zambia Development Agency", "url": "https://www.zda.org.zm/", "type": "investment" }
+  ]
+}

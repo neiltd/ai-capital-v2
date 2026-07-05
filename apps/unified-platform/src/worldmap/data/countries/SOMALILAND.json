@@ -1,0 +1,63 @@
+{
+  "id": "SOMALILAND",
+  "iso2": "SO-SL",
+  "name": "Somaliland",
+  "region": "Africa",
+  "subregion": "Eastern Africa",
+  "capital": "Hargeisa",
+  "lastUpdated": "2025-05-15",
+  "summary": "Somaliland continues to function as a de facto independent state, distinct from the Federal Government of Somalia, and has significantly bolstered its democratic credentials following a peaceful transfer of power in the November 2024 presidential elections. The landslide victory of Abdirahman Mohamed Abdullahi (Irro) has initiated a period of domestic reconciliation and institutional reform. Geopolitically, the 2024 Memorandum of Understanding with Ethiopia—granting sea access in exchange for potential recognition—remains the defining and most contentious issue, positioning Somaliland at the center of a major regional rift while attracting significant port-led investment from the UAE and Ethiopia.",
+  "indicators": {
+    "politicalStability":       { "score": 8, "trend": "rising", "confidence": "high", "note": "Strong democratic stability following the peaceful 2024 elections and the successful transfer of power." },
+    "economicDirection":        { "score": 6, "trend": "rising", "confidence": "high", "note": "Growth driven by Berbera Port expansion and Ethiopia's strategic pivot; remains vulnerable to livestock climate shocks." },
+    "investmentAttractiveness": { "score": 5, "trend": "rising", "confidence": "medium", "note": "Increasing interest in logistics and energy, though lack of formal recognition limits access to international finance." },
+    "geopoliticalRisk":         { "score": 7, "trend": "stable", "confidence": "high", "note": "High risk of diplomatic and localized military tension with the Federal Government of Somalia over the Ethiopia MoU." },
+    "educationQuality":         { "score": 4, "trend": "stable", "confidence": "medium", "note": "Proliferation of private universities in Hargeisa, but quality is inconsistent and access in rural areas is limited." },
+    "healthcareQuality":        { "score": 3, "trend": "stable", "confidence": "medium", "note": "Primary health coverage is limited; heavily dependent on international NGOs and private clinics in urban centers." },
+    "technologyInvestment":     { "score": 6, "trend": "rising", "confidence": "high", "note": "Highly advanced mobile money ecosystem (Zaad) and expanding fiber-optic connectivity in major cities." }
+  },
+  "demographics": {
+    "population": 5700000,
+    "medianAge": 18.5,
+    "urbanizationRate": 55.0,
+    "majorEthnicGroups": ["Somali (Isaaq, Dir, Darod)"],
+    "religions": [
+      { "name": "Sunni Muslim", "percent": 99 },
+      { "name": "Other", "percent": 1 }
+    ]
+  },
+  "alliances": ["UNPO", "Commonwealth (Seeking status)", "AU (Seeking status)"],
+  "relationships": [
+    { "countryId": "ETH", "countryName": "Ethiopia", "type": "strategic_partner", "sentiment": "positive", "summary": "The primary strategic partner; following the 2024 MoU, Ethiopia is the first major state to signal potential recognition." },
+    { "countryId": "ARE", "countryName": "United Arab Emirates", "type": "economic_partner", "sentiment": "positive", "summary": "Major investor in the Berbera Port and Economic Zone via DP World; providing critical infrastructure support." },
+    { "countryId": "SOM", "countryName": "Somalia", "type": "adversary", "sentiment": "negative", "summary": "Hostile relations; Mogadishu views Somaliland as a breakaway province and fiercely opposes its international engagement." },
+    { "countryId": "TWN", "countryName": "Taiwan", "type": "strategic_partner", "sentiment": "positive", "summary": "A unique diplomatic partner; both entities share representative offices and cooperate on tech, health, and agriculture." },
+    { "countryId": "GBR", "countryName": "United Kingdom", "type": "partner", "sentiment": "positive", "summary": "Maintains historical ties and provides significant development aid; Hargeisa remains a top priority for UK regional policy." }
+  ],
+  "perspectives": [
+    { "source": "Somaliland Diplomat", "bias": "Optimistic", "view": "Our 34 years of peace and democracy have earned us the right to recognition. The MoU with Ethiopia is the key to our future." },
+    { "source": "Federal Somalia Official", "bias": "Critical", "view": "Somaliland is an integral part of Somalia. Any deal with a foreign power that bypasses Mogadishu is a violation of our sovereignty." },
+    { "source": "Merchant in Hargeisa", "bias": "Optimistic", "view": "The port is bringing jobs and goods. We don't care about the politics in Mogadishu; we just want to trade with the world." },
+    { "source": "Regional Security Analyst", "bias": "Cautious", "view": "Somaliland is the most stable entity in the Horn, but the Ethiopia deal risks triggering a broader conflict that could destabilize the entire region." }
+  ],
+  "historicalContext": {
+    "summary": "Somaliland was a British protectorate that gained independence in 1960 before immediately joining with Italian Somalia to form the Somali Republic. Following a decade of brutal civil war and the collapse of the Siad Barre regime, Somaliland declared its independence in 1991. Unlike Somalia, it has successfully established a stable, democratic system with multiple peaceful transfers of power. It has its own currency, passport, and military, though it lacks formal international recognition.",
+    "keyEvents": [
+      { "year": 1960, "event": "Independence from the UK; voluntary union with Somalia." },
+      { "year": 1991, "event": "Declaration of independence following the collapse of the Somali state." },
+      { "year": 2001, "event": "Constitutional referendum reaffirms independence with 97% support." },
+      { "year": 2021, "event": "Landmark parliamentary and local elections see opposition victory." },
+      { "year": 2024, "event": "Signing of the MoU with Ethiopia; Peaceful presidential election won by Abdirahman Irro." }
+    ]
+  },
+  "investmentNotes": {
+    "strengths": ["Strategic maritime location on the Gulf of Aden", "Proven democratic stability and peaceful leadership transitions", "World-class port infrastructure and emerging free trade zone", "Highly entrepreneurial diaspora and advanced mobile fintech ecosystem"],
+    "risks": ["Lack of formal international recognition and limited access to IFI credit", "Territorial disputes in the Sool and Sanaag regions", "Diplomatic and economic pressure from the Federal Government of Somalia", "Vulnerability to recurring droughts affecting the livestock sector"],
+    "sectors": ["Port Logistics & Shipping", "Livestock Export & Processing", "Mineral & Hydrocarbon Exploration", "Fisheries & Blue Economy"]
+  },
+  "sources": [
+    { "name": "Somaliland Ministry of Planning and National Development", "url": "https://slministryofplanning.org", "type": "government" },
+    { "name": "World Bank Somaliland Data", "url": "https://data.worldbank.org/country/somaliland", "type": "economic" },
+    { "name": "Berbera Economic Zone", "url": "https://berberaeconomiczone.com", "type": "economic" }
+  ]
+}

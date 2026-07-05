@@ -1,0 +1,66 @@
+{
+  "id": "GEO",
+  "iso2": "GE",
+  "name": "Georgia",
+  "region": "Europe",
+  "subregion": "Western Asia",
+  "capital": "Tbilisi",
+  "lastUpdated": "2025-05-15",
+  "summary": "Georgia is a resilient Black Sea nation that serves as a critical strategic link in the Middle Corridor, connecting European markets with Central Asia and beyond. Despite navigating intense domestic political polarization and the ongoing challenge of occupied territories, Georgia has maintained a clear European and Euro-Atlantic orientation. Its economy is characterized by a high degree of openness, a business-friendly environment, and its emerging role as a hub for regional trade, energy transit, and tourism. The nation is currently focused on large-scale infrastructure projects, such as the Anaklia Deep Sea Port and Black Sea undersea cables, to solidify its status as a vital Eurasian gateway.",
+  "indicators": {
+    "politicalStability":       { "score": 5, "trend": "stable", "confidence": "high", "note": "Normalization phase following high-stakes 2024 elections, though domestic polarization remains a structural factor." },
+    "economicDirection":        { "score": 7, "trend": "rising", "confidence": "high", "note": "Resilient growth driven by logistics, transit, and tourism; successful navigation of regional economic shocks." },
+    "investmentAttractiveness": { "score": 8, "trend": "rising", "confidence": "high", "note": "Consistently ranked as one of the easiest places to do business globally, with a focus on Black Sea connectivity." },
+    "geopoliticalRisk":         { "score": 6, "trend": "stable", "confidence": "high", "note": "Occupied territories (Abkhazia/South Ossetia) and proximity to Russia necessitate a delicate and pragmatic foreign policy." },
+    "educationQuality":         { "score": 6, "trend": "stable", "confidence": "high", "note": "Ongoing reforms to align higher education with European standards and labor market needs." },
+    "healthcareQuality":        { "score": 6, "trend": "rising", "confidence": "high", "note": "Increasing investment in specialized care and the expansion of universal healthcare coverage." },
+    "technologyInvestment":     { "score": 6, "trend": "rising", "confidence": "medium", "note": "Growing focus on digital infrastructure, fintech, and becoming a regional hub for IT services." }
+  },
+  "demographics": {
+    "population": 3750000,
+    "medianAge": 38.5,
+    "urbanizationRate": 60.0,
+    "majorEthnicGroups": ["Georgian", "Azerbaijani", "Armenian", "Russian"],
+    "religions": [
+      { "name": "Orthodox Christian (Georgian Orthodox)", "percent": 83 },
+      { "name": "Muslim", "percent": 11 },
+      { "name": "Other Christian", "percent": 3 },
+      { "name": "Other", "percent": 3 }
+    ]
+  },
+  "alliances": ["UN", "CoE", "OSCE", "BSEC", "UfM"],
+  "relationships": [
+    { "countryId": "USA", "countryName": "United States", "type": "strategic_partner", "sentiment": "positive", "summary": "Georgia's primary security and democratic partner; strong support for Euro-Atlantic integration." },
+    { "countryId": "TUR", "countryName": "Turkey", "type": "strategic_partner", "sentiment": "positive", "summary": "Georgia's largest trade partner and a key ally in regional energy and transit projects." },
+    { "countryId": "AZE", "countryName": "Azerbaijan", "type": "strategic_partner", "sentiment": "positive", "summary": "Critical partner in the Middle Corridor; cooperation on major pipelines and rail links." },
+    { "countryId": "UKR", "countryName": "Ukraine", "type": "partner", "sentiment": "positive", "summary": "Shares similar Euro-Atlantic aspirations and challenges regarding territorial integrity." },
+    { "countryId": "RUS", "countryName": "Russia", "type": "neighbor", "sentiment": "negative", "summary": "Strained relations due to occupied territories; maintains pragmatic but limited trade and humanitarian ties." }
+  ],
+  "perspectives": [
+    { "source": "Georgian Diplomat", "bias": "Optimistic", "view": "Our future is in the European Union; we are the Black Sea's window to the world and an essential link for global trade." },
+    { "source": "Tbilisi Entrepreneur", "bias": "Optimistic", "view": "Georgia is a startup for startups; our low taxes and lack of bureaucracy make us the ideal place for regional digital nomads." },
+    { "source": "Political Analyst", "bias": "Pragmatic", "view": "The economic success is real, but the deep political divide between urban liberals and rural conservatives is a challenge we must bridge." },
+    { "source": "IDP from Abkhazia", "bias": "Critical", "view": "While the country modernizes, we must never forget the 20% of our land that remains occupied; peace is only real when justice is served." }
+  ],
+  "historicalContext": {
+    "summary": "Georgia has a rich history as one of the oldest Christian nations. It was part of the Russian Empire and later the Soviet Union. It regained independence in 1991. The 2003 'Rose Revolution' initiated a period of rapid modernization and reform. A brief war with Russia in 2008 led to the occupation of Abkhazia and South Ossetia, which has since defined its security-focused and pro-Western foreign policy.",
+    "keyEvents": [
+      { "year": 1991, "event": "Independence from the Soviet Union." },
+      { "year": 2003, "event": "Rose Revolution; Mikheil Saakashvili leads a period of radical reform." },
+      { "year": 2008, "event": "Five-Day War with Russia; occupation of Abkhazia and South Ossetia." },
+      { "year": 2012, "event": "First democratic transfer of power to the Georgian Dream coalition." },
+      { "year": 2023, "event": "Georgia officially granted EU Candidate Status." },
+      { "year": 2024, "event": "High-stakes parliamentary elections; start of the Black Sea Undersea Cable project." }
+    ]
+  },
+  "investmentNotes": {
+    "strengths": ["Leading ease-of-doing-business and low-tax environment", "Strategic location as the 'middle' of the Middle Corridor", "Deep Sea Port and Black Sea connectivity potential", "Strong and growing tourism and hospitality sector"],
+    "risks": ["Domestic political polarization and electoral cycles", "Geopolitical risks associated with occupied territories", "High degree of dollarization and external debt", "Limited domestic market and reliance on transit"],
+    "sectors": ["Logistics & Maritime Transport", "Renewable Energy (Hydro/Wind)", "FinTech & IT Services", "Agri-Business & Wine Exports"]
+  },
+  "sources": [
+    { "name": "National Statistics Office of Georgia (Geostat)", "url": "https://www.geostat.ge", "type": "economic" },
+    { "name": "Enterprise Georgia", "url": "https://www.enterprisegeorgia.gov.ge", "type": "economic" },
+    { "name": "National Bank of Georgia", "url": "https://www.nbg.gov.ge", "type": "economic" }
+  ]
+}

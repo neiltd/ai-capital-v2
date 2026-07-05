@@ -1,0 +1,58 @@
+{
+  "name": "world-intelligence-data-hub",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "engines": {
+    "node": ">=20.0.0"
+  },
+  "scripts": {
+    "pipeline": "tsx run.ts",
+    "schedule": "tsx ingestion/scheduler.ts",
+    "backfill": "tsx scripts/backfill.ts",
+    "compress": "tsx scripts/compress-old-raw.ts",
+    "dry-run": "tsx scripts/dry-run.ts",
+    "validate": "tsx scripts/validate-credentials.ts",
+    "check-sources": "tsx scripts/check-sources.ts",
+    "collect": "tsx scripts/collect-articles.ts",
+    "score": "tsx scripts/score-articles.ts",
+    "report": "tsx scripts/run-reporter.ts",
+    "review": "tsx scripts/review-events.ts",
+    "dedup": "tsx scripts/dedup-events.ts",
+    "link": "tsx scripts/link-storylines.ts",
+    "memory": "tsx scripts/run-memory-agent.ts",
+    "export": "tsx scripts/export-intelligence.ts",
+    "fetch-prices": "tsx scripts/fetch-prices.ts",
+    "cross-domain": "tsx scripts/cross-domain-report.ts",
+    "metrics": "tsx scripts/show-metrics.ts",
+    "observe": "npm run collect && npm run score && npm run report && npm run dedup && npm run link && npm run export && npm run metrics && npm run cross-domain",
+    "human-intel": "tsx scripts/human-intel.ts",
+    "admin:api": "tsx admin/server.ts",
+    "admin:build": "vite build --config admin/vite.config.ts",
+    "admin:client": "vite --config admin/vite.config.ts",
+    "admin": "npm run admin:build && npm run admin:api",
+    "typecheck": "tsc --noEmit"
+  },
+  "dependencies": {
+    "@anthropic-ai/sdk": "^0.95.2",
+    "dotenv": "^16.4.5",
+    "express": "^5.2.1",
+    "fast-xml-parser": "^5.8.0",
+    "node-cron": "^3.0.3",
+    "react": "^19.2.6",
+    "react-dom": "^19.2.6",
+    "undici": "^8.2.0",
+    "zod": "^3.23.8"
+  },
+  "devDependencies": {
+    "@types/express": "^5.0.6",
+    "@types/node": "^22.0.0",
+    "@types/node-cron": "^3.0.11",
+    "@types/react": "^19.2.15",
+    "@types/react-dom": "^19.2.3",
+    "@vitejs/plugin-react": "^6.0.2",
+    "tsx": "^4.16.0",
+    "typescript": "^5.5.0",
+    "vite": "^8.0.14"
+  }
+}

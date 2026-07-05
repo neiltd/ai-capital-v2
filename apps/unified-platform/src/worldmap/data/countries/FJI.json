@@ -1,0 +1,67 @@
+{
+  "id": "FJI",
+  "iso2": "FJ",
+  "name": "Fiji",
+  "region": "Oceania",
+  "subregion": "Melanesia",
+  "capital": "Suva",
+  "lastUpdated": "2026-05-15",
+  "summary": "Fiji is a central hub in the South Pacific, boasting one of the most developed economies in the region. It is characterized by its strategic position as a regional transportation and telecommunications node. Politically, Fiji has transitioned from a period of military-backed rule to a multi-party democracy, though ethnic tensions and the military's role in politics remain underlying themes. The economy is heavily dependent on tourism, sugar exports, and remittances, making it vulnerable to external shocks and climate change.",
+  "indicators": {
+    "politicalStability":       { "score": 6, "trend": "stable", "confidence": "high", "note": "Successful democratic elections in 2022 led to a peaceful transition of power, though the military retains a constitutionally mandated role." },
+    "economicDirection":        { "score": 5, "trend": "rising", "confidence": "medium", "note": "Strong recovery in tourism post-pandemic, but high debt levels and brain drain are significant challenges." },
+    "investmentAttractiveness": { "score": 6, "trend": "stable", "confidence": "medium", "note": "Relatively well-developed infrastructure and legal framework, but bureaucratic hurdles and land lease issues can be complex." },
+    "geopoliticalRisk":         { "score": 4, "trend": "rising", "confidence": "high", "note": "Fiji is at the center of US-China competition in the Pacific, attempting to maintain a 'friend to all' policy while deepening traditional ties." },
+    "educationQuality":         { "score": 6, "trend": "stable", "confidence": "medium", "note": "Host to the University of the South Pacific; generally higher standards than regional neighbors but faces skilled labor migration." },
+    "healthcareQuality":        { "score": 5, "trend": "stable", "confidence": "medium", "note": "Better facilities than most Pacific islands, but rural access and specialized care remain limited." },
+    "technologyInvestment":     { "score": 5, "trend": "rising", "confidence": "medium", "note": "Investments in submarine cables and digital government initiatives are positioning Fiji as a regional tech hub." }
+  },
+  "demographics": {
+    "population": 930000,
+    "medianAge": 28.9,
+    "urbanizationRate": 58,
+    "majorEthnicGroups": ["iTaukei (Melanesian/Polynesian)", "Indo-Fijian"],
+    "religions": [
+      { "name": "Christian", "percent": 64.4 },
+      { "name": "Hindu", "percent": 27.9 },
+      { "name": "Muslim", "percent": 6.3 },
+      { "name": "Other", "percent": 1.4 }
+    ]
+  },
+  "alliances": ["Pacific Islands Forum", "Commonwealth", "United Nations", "WTO", "MSG"],
+  "relationships": [
+    { "countryId": "AUS", "countryName": "Australia", "type": "strategic_partner", "sentiment": "positive", "summary": "Largest aid donor and trade partner; deep security and people-to-people ties." },
+    { "countryId": "NZL", "countryName": "New Zealand", "type": "strategic_partner", "sentiment": "positive", "summary": "Key regional partner with strong cultural and economic links." },
+    { "countryId": "CHN", "countryName": "China", "type": "economic_partner", "sentiment": "neutral", "summary": "Significant source of infrastructure investment and loans; relationship is pragmatic." },
+    { "countryId": "USA", "countryName": "United States", "type": "security_partner", "sentiment": "positive", "summary": "Increasing engagement as part of the US 'Pacific Pledge' to counter regional competitors." }
+  ],
+  "perspectives": [
+    { "source": "Tourism Operator", "bias": "Pragmatic", "view": "Stability and global connectivity are essential; we need visitors from all markets to sustain the economy." },
+    { "source": "iTaukei Leader", "bias": "Traditionalist", "view": "Development must respect indigenous land rights and cultural traditions as enshrined in the constitution." },
+    { "source": "Indo-Fijian Professional", "bias": "Reformist", "view": "Equal opportunity and meritocracy are key to stopping the brain drain and ensuring long-term prosperity." },
+    { "source": "Regional Diplomat", "bias": "Multilateralist", "view": "Fiji's leadership in the Pacific Islands Forum is crucial for regional unity against climate change and external pressures." }
+  ],
+  "historicalContext": {
+    "summary": "Ceded to the UK in 1874, Fiji gained independence in 1970. Its post-independence history has been marked by four coups (1987, 2000, 2006) largely driven by ethnic tensions between the indigenous iTaukei and Indo-Fijian populations. The 2013 Constitution and subsequent elections have moved the country toward a more stable democratic path.",
+    "keyEvents": [
+      { "year": 1874, "event": "Fiji becomes a British Crown Colony." },
+      { "year": 1970, "event": "Independence from the United Kingdom." },
+      { "year": 1987, "event": "Two military coups led by Sitiveni Rabuka follow the election of an Indo-Fijian dominated government." },
+      { "year": 2000, "event": "Civilian coup and subsequent military intervention led by Frank Bainimarama." },
+      { "year": 2006, "event": "Frank Bainimarama leads a military coup ousting the Qarase government." },
+      { "year": 2013, "event": "A new constitution is promulgated, ending ethnic-based voting." },
+      { "year": 2014, "event": "First democratic elections since the 2006 coup; Bainimarama's FijiFirst party wins." },
+      { "year": 2022, "event": "General election leads to a coalition government headed by Sitiveni Rabuka, marking a peaceful transition." }
+    ]
+  },
+  "investmentNotes": {
+    "strengths": ["Strategic regional hub", "Established tourism infrastructure", "Relatively skilled workforce", "Liberalized trade environment"],
+    "risks": ["Vulnerability to natural disasters (cyclones)", "High public debt", "Brain drain of skilled professionals", "Political history of interventions"],
+    "sectors": ["Sustainable Tourism", "Business Process Outsourcing (BPO)", "Renewable Energy", "Commercial Agriculture (Ginger, Kava)"]
+  },
+  "sources": [
+    { "name": "Reserve Bank of Fiji", "url": "https://www.rbf.gov.fj/", "type": "economic" },
+    { "name": "Investment Fiji", "url": "https://www.investmentfiji.org.fj/", "type": "investment" },
+    { "name": "Fiji Bureau of Statistics", "url": "https://www.statsfiji.gov.fj/", "type": "demographic" }
+  ]
+}

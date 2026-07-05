@@ -1,0 +1,69 @@
+{
+  "id": "BRA",
+  "iso2": "BR",
+  "name": "Brazil",
+  "region": "Americas",
+  "subregion": "South America",
+  "capital": "Brasília",
+  "lastUpdated": "2026-05-09",
+  "summary": "Brazil is the preeminent economic and political power in Latin America and a leading voice for the Global South in multilateral forums. Under the presidency of Luiz Inácio Lula da Silva, the country has returned to an active foreign policy characterized by non-alignment, seeking to balance its deep trade ties with China, its historic security relationship with the United States, and its leadership role within BRICS+. Economically, Brazil is a global powerhouse in agribusiness and renewable energy, with a growing emphasis on neo-industrialization and environmental preservation. While it faces persistent structural challenges—including high inequality, fiscal volatility, and infrastructure gaps—its vast natural resources and democratic resilience position it as a critical player in the global energy transition and food security.",
+  "indicators": {
+    "politicalStability":       { "score": 6, "score_description": "Stable democracy facing high social and political polarization.", "trend": "stable", "confidence": "high", "note": "Institutional resilience has been tested but remains strong; legislative fragmentation requires constant coalition-building." },
+    "economicDirection":        { "score": 6, "score_description": "Steady growth driven by commodities and expanding domestic market.", "trend": "stable", "confidence": "high", "note": "New fiscal frameworks are being implemented to manage debt while funding social programs and infrastructure." },
+    "investmentAttractiveness": { "score": 7, "score_description": "Attractive for green energy and agribusiness; tax reform is a tailwind.", "trend": "improving", "confidence": "high", "note": "Significant FDI is flowing into the Amazon preservation efforts and the transition to a low-carbon economy." },
+    "geopoliticalRisk":         { "score": 3, "score_description": "Low domestic conflict risk; foreign policy of non-alignment.", "trend": "stable", "confidence": "high", "note": "Brazil faces minimal direct security threats but is exposed to global commodity price fluctuations." },
+    "educationQuality":         { "score": 5, "score_description": "Progress in access but significant quality gaps in public schooling.", "trend": "stable", "confidence": "high", "note": "A large and improving higher education sector is offset by underperformance in basic literacy and numeracy compared to OECD peers." },
+    "healthcareQuality":        { "score": 6, "score_description": "Universal system (SUS) with high reach but regional disparities.", "trend": "stable", "confidence": "high", "note": "Brazil is a leader in public vaccination and HIV programs, though public hospitals in remote areas remain underfunded." },
+    "technologyInvestment":     { "score": 6, "score_description": "Emerging hub for fintech and agritech; state support for 'green' industry.", "trend": "rising", "confidence": "high", "note": "The 'Nova Indústria Brasil' plan aims to boost domestic R&D in biotechnology, decarbonization, and digital infrastructure." }
+  },
+  "demographics": {
+    "population": 215300000,
+    "medianAge": 34.3,
+    "urbanizationRate": 87,
+    "majorEthnicGroups": ["White", "Mixed (Pardo)", "Black", "Asian", "Indigenous"],
+    "religions": [
+      { "name": "Roman Catholic", "percent": 50 },
+      { "name": "Evangelical Protestant", "percent": 31 },
+      { "name": "None/Unaffiliated", "percent": 10 },
+      { "name": "Other", "percent": 9 }
+    ]
+  },
+  "alliances": ["BRICS+", "G20", "Mercosur", "CELAC", "Major Non-NATO Ally (MNNA)"],
+  "relationships": [
+    { "countryId": "CHN", "countryName": "China", "type": "strategic_partner", "sentiment": "positive", "summary": "Largest trading partner; primary destination for Brazilian iron ore, soy, and oil." },
+    { "countryId": "USA", "countryName": "United States", "type": "partner", "sentiment": "positive", "summary": "Key security and environmental partner; aligned on climate goals but divergent on global security issues like the Ukraine war." },
+    { "countryId": "ARG", "countryName": "Argentina", "type": "ally", "sentiment": "neutral", "summary": "Most important regional partner in Mercosur; relationship is currently pragmatically managed despite ideological differences between leaderships." },
+    { "countryId": "FRA", "countryName": "France", "type": "partner", "sentiment": "positive", "summary": "Strategic partner in defense (submarines) and a key ally in Amazon preservation initiatives." },
+    { "countryId": "RUS", "countryName": "Russia", "type": "partner", "sentiment": "neutral", "summary": "Fellow BRICS member; critical source of fertilizers for Brazil's agribusiness sector." }
+  ],
+  "perspectives": [
+    { "source": "Brazilian Diplomat", "bias": "Multi-vector/Pragmatist", "view": "Brazil must maintain autonomy and speak for the Global South, avoiding alignment with any single bloc to maximize our developmental opportunities." },
+    { "source": "Agribusiness Leader", "bias": "Pro-Market", "view": "Environmental regulations must not stifle the productivity of our most successful export sector; Brazil is essential for global food security." },
+    { "source": "Environmental Activist", "bias": "Ecologist", "view": "Brazil's survival and global standing depend on reaching zero deforestation in the Amazon and leading the world in the bioeconomy." }
+  ],
+  "historicalContext": {
+    "summary": "Brazil's history transitioned from Portuguese colonial rule to an independent Empire and then to a Republic in 1889. The 20th century was marked by periods of populism (Vargas) and a long military dictatorship (1964-1985). Since the return to democracy, Brazil has successfully managed hyperinflation and implemented major social programs, becoming one of the world's top ten economies.",
+    "keyEvents": [
+      { "year": 1822, "event": "Independence from Portugal declared by Dom Pedro I." },
+      { "year": 1888, "event": "Abolition of slavery (Golden Law)." },
+      { "year": 1889, "event": "Proclamation of the Republic." },
+      { "year": 1930, "event": "Getúlio Vargas takes power, initiating the 'Estado Novo'." },
+      { "year": 1960, "event": "Inauguration of Brasília as the new national capital." },
+      { "year": 1964, "event": "Military coup establishes a 21-year dictatorship." },
+      { "year": 1985, "event": "Return to civilian rule (Redemocratization)." },
+      { "year": 1994, "event": "Real Plan successfully ends hyperinflation." },
+      { "year": 2003, "event": "Election of Lula; start of significant poverty reduction programs." },
+      { "year": 2023, "event": "January 8 attack on government buildings in Brasília." }
+    ]
+  },
+  "investmentNotes": {
+    "strengths": ["Abundant natural resources and renewable energy potential", "Large and growing domestic consumer market", "Sophisticated financial and banking sector", "Global leadership in agribusiness and biofuels"],
+    "risks": ["Complex and high tax burden", "Bureaucratic and regulatory 'Custo Brasil'", "Fiscal sustainability concerns", "Political and social polarization"],
+    "sectors": ["Renewable Energy (Wind/Solar)", "Agribusiness", "Fintech", "Mining (Iron/Lithium)", "Oil & Gas (Pre-salt)"]
+  },
+  "sources": [
+    { "name": "IBGE (Brazilian Institute of Geography and Statistics)", "url": "https://www.ibge.gov.br/en/home-eng.html", "type": "economic" },
+    { "name": "Central Bank of Brazil", "url": "https://www.bcb.gov.br/en", "type": "economic" },
+    { "name": "Ministry of Foreign Affairs (Itamaraty)", "url": "https://www.gov.pl/web/diplomacy", "type": "political" }
+  ]
+}

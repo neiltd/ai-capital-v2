@@ -1,0 +1,218 @@
+[
+  {
+    "id": "PORT-BRA-SANTOS",
+    "name": "Port of Santos",
+    "countryId": "BRA",
+    "city": "Santos",
+    "coordinates": [-46.3333, -23.9667],
+    "type": "container",
+    "annualThroughputTEU": 5500000,
+    "annualThroughputTonnes": 142800000,
+    "berthCount": 55,
+    "maxDraftM": 15.0,
+    "strategicImportance": "critical",
+    "riskLevel": "low",
+    "geopoliticalNotes": "Largest port in Latin America, handling 30% of Brazil's trade. Primary gateway for the industrial heartland of São Paulo.",
+    "notes": "Global hub for coffee, sugar, and soybeans.",
+    "attribution": {
+      "sources": [
+        { "name": "Santos Port Authority", "url": "https://www.portodesantos.com.br", "accessedAt": "2026-05-10" },
+        { "name": "UNCTAD Maritime Transport Report", "url": "https://unctad.org/topic/transport-and-trade-logistics/maritime-transport", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 2,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  },
+  {
+    "id": "PORT-BRA-PONTA-DA-MADEIRA",
+    "name": "Ponta da Madeira Maritime Terminal",
+    "countryId": "BRA",
+    "city": "São Luís",
+    "coordinates": [-44.3667, -2.55],
+    "type": "bulk",
+    "annualThroughputTEU": null,
+    "annualThroughputTonnes": 176000000,
+    "berthCount": 5,
+    "maxDraftM": 25.0,
+    "strategicImportance": "critical",
+    "riskLevel": "low",
+    "geopoliticalNotes": "Highest-tonnage port in Brazil. Critical exit point for the Carajás Mine iron ore, the world's largest.",
+    "notes": "Operated by Vale; accommodates Valemax vessels.",
+    "attribution": {
+      "sources": [
+        { "name": "Vale Official Site", "url": "https://www.vale.com", "accessedAt": "2026-05-10" },
+        { "name": "Brazil P&I", "url": "https://brazilpandi.com.br", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 2,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  },
+  {
+    "id": "PORT-BRA-TUBARAO",
+    "name": "Port of Tubarão",
+    "countryId": "BRA",
+    "city": "Vitória",
+    "coordinates": [-40.2411, -20.2831],
+    "type": "bulk",
+    "annualThroughputTEU": null,
+    "annualThroughputTonnes": 100000000,
+    "berthCount": 8,
+    "maxDraftM": 22.5,
+    "strategicImportance": "high",
+    "riskLevel": "low",
+    "geopoliticalNotes": "Major iron ore export hub serving the Iron Quadrangle in Minas Gerais.",
+    "notes": "One of the most efficient mineral ports globally.",
+    "attribution": {
+      "sources": [
+        { "name": "Vale Official Site", "url": "https://www.vale.com", "accessedAt": "2026-05-10" },
+        { "name": "Wikipedia", "url": "https://en.wikipedia.org/wiki/Port_of_Tubar%C3%A3o", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 2,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  },
+  {
+    "id": "PORT-BRA-PARANAGUA",
+    "name": "Port of Paranaguá",
+    "countryId": "BRA",
+    "city": "Paranaguá",
+    "coordinates": [-48.5, -25.5],
+    "type": "mixed",
+    "annualThroughputTEU": 1500000,
+    "annualThroughputTonnes": 73500000,
+    "berthCount": 20,
+    "maxDraftM": 14.5,
+    "strategicImportance": "high",
+    "riskLevel": "low",
+    "geopoliticalNotes": "Largest bulk port in Latin America; critical 'Grain Gateway' for Brazil.",
+    "notes": "Leads in soybean, corn, and vegetable oil exports.",
+    "attribution": {
+      "sources": [
+        { "name": "Portos do Paraná", "url": "https://www.portosdoparana.pr.gov.br", "accessedAt": "2026-05-10" },
+        { "name": "Bansar China", "url": "https://www.bansarchina.com/ports-in-brazil/", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 2,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  },
+  {
+    "id": "PORT-BRA-ITAQUI",
+    "name": "Port of Itaqui",
+    "countryId": "BRA",
+    "city": "São Luís",
+    "coordinates": [-44.35, -2.57],
+    "type": "mixed",
+    "annualThroughputTEU": null,
+    "annualThroughputTonnes": 36000000,
+    "berthCount": 9,
+    "maxDraftM": 19.0,
+    "strategicImportance": "high",
+    "riskLevel": "low",
+    "geopoliticalNotes": "Cornerstone of the Arco Norte logistics corridor, providing efficient export routes for Midwest agricultural products.",
+    "notes": "Major hub for liquid bulk (fuel) and minerals.",
+    "attribution": {
+      "sources": [
+        { "name": "EMAP - Empresa Maranhense de Administração Portuária", "url": "http://www.portodoitaqui.ma.gov.br", "accessedAt": "2026-05-10" },
+        { "name": "Digital Freight Alliance", "url": "https://www.df-alliance.com", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 2,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  },
+  {
+    "id": "PORT-BRA-RIO-GRANDE",
+    "name": "Port of Rio Grande",
+    "countryId": "BRA",
+    "city": "Rio Grande",
+    "coordinates": [-52.0833, -32.0333],
+    "type": "mixed",
+    "annualThroughputTEU": 600000,
+    "annualThroughputTonnes": 26300000,
+    "berthCount": 15,
+    "maxDraftM": 15.0,
+    "strategicImportance": "medium",
+    "riskLevel": "low",
+    "geopoliticalNotes": "Southernmost major port, vital for Mercosur trade (Argentina, Uruguay, Paraguay).",
+    "notes": "Specialized in agricultural commodities and fertilizers.",
+    "attribution": {
+      "sources": [
+        { "name": "Portos RS", "url": "https://www.portosrs.com.br", "accessedAt": "2026-05-10" },
+        { "name": "Pangea Network", "url": "https://pangea-network.com", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 2,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  },
+  {
+    "id": "PORT-BRA-RIO-DE-JANEIRO",
+    "name": "Port of Rio de Janeiro",
+    "countryId": "BRA",
+    "city": "Rio de Janeiro",
+    "coordinates": [-43.1833, -22.8833],
+    "type": "mixed",
+    "annualThroughputTEU": 1200000,
+    "annualThroughputTonnes": null,
+    "berthCount": 18,
+    "maxDraftM": 13.0,
+    "strategicImportance": "medium",
+    "riskLevel": "low",
+    "geopoliticalNotes": "Logistics hub for the Southeast region and critical support for the offshore oil and gas industry.",
+    "notes": "Primary entry point for high-value manufactured imports.",
+    "attribution": {
+      "sources": [
+        { "name": "Companhia Docas do Rio de Janeiro", "url": "https://www.portosrio.gov.br", "accessedAt": "2026-05-10" },
+        { "name": "Lloyd's List", "url": "https://lloydslist.maritimeintelligence.informa.com", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 2,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  },
+  {
+    "id": "PORT-BRA-SUAPE",
+    "name": "Port of Suape",
+    "countryId": "BRA",
+    "city": "Ipojuca",
+    "coordinates": [-34.95, -8.3833],
+    "type": "mixed",
+    "annualThroughputTEU": 646000,
+    "annualThroughputTonnes": 24000000,
+    "berthCount": 10,
+    "maxDraftM": 15.5,
+    "strategicImportance": "medium",
+    "riskLevel": "low",
+    "geopoliticalNotes": "Most important industrial port in the Northeast. Hub-and-spoke center for coastal shipping.",
+    "notes": "Home to massive industrial complex including refineries and shipyards.",
+    "attribution": {
+      "sources": [
+        { "name": "Suape Port", "url": "https://www.suape.pe.gov.br", "accessedAt": "2026-05-10" },
+        { "name": "World Shipping Council", "url": "https://www.worldshipping.org", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 2,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  }
+]

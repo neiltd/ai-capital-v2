@@ -1,0 +1,27 @@
+[
+  {
+    "countryId": "THA",
+    "year": 2023,
+    "overallScore": 60.1,
+    "availability": 52.9,
+    "access": 83.7,
+    "utilization": 45.3,
+    "stability": 51.6,
+    "undernourishedPct": 5.8,
+    "foodImportDependencyPct": -11.0,
+    "cerealYieldKgHa": 3072,
+    "climateVulnerability": "medium",
+    "conflictExposure": "low",
+    "attribution": {
+      "sources": [
+        { "name": "GFSI 2022 — Thailand", "url": "https://impact.economist.com/sustainability/project/food-security-index/", "accessedAt": "2025-05-15" },
+        { "name": "FAO FAOSTAT — Thailand", "url": "https://www.fao.org/faostat/en/", "accessedAt": "2025-05-15" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 2,
+        "lastVerified": "2025-05-15"
+      }
+    }
+  }
+]

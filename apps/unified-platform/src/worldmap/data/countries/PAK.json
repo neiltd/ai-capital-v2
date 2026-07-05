@@ -1,0 +1,70 @@
+{
+  "id": "PAK",
+  "iso2": "PK",
+  "name": "Pakistan",
+  "region": "Asia",
+  "subregion": "Southern Asia",
+  "capital": "Islamabad",
+  "lastUpdated": "2026-05-09",
+  "summary": "Pakistan occupies a strategic crossroads between South Asia, Central Asia, and the Middle East. It faces chronic economic instability, high inflation, and significant political volatility characterized by a powerful military establishment's influence on civilian governance. While it is a key node in China's Belt and Road Initiative through CPEC, it struggles with internal security threats from various militant groups and a strained relationship with its neighbors, particularly India and Afghanistan.",
+  "indicators": {
+    "politicalStability":       { "score": 3, "trend": "declining", "confidence": "high", "note": "Persistent friction between civilian government, the military, and opposition movements." },
+    "economicDirection":        { "score": 3, "trend": "declining", "confidence": "high", "note": "Severe balance-of-payments crises, high external debt, and dependence on IMF bailouts." },
+    "investmentAttractiveness": { "score": 4, "trend": "stable", "confidence": "medium", "note": "Strategic location and large population offset by security risks and macroeconomic instability." },
+    "geopoliticalRisk":         { "score": 8, "trend": "rising", "confidence": "high", "note": "High risk from regional conflicts, domestic militancy, and nuclear-armed rivalry with India." },
+    "educationQuality":         { "score": 3, "trend": "stable", "confidence": "medium", "note": "High illiteracy rates and significant gender gaps, despite a growing urban middle class." },
+    "healthcareQuality":        { "score": 3, "trend": "stable", "confidence": "medium", "note": "Struggling public health system with high infant mortality and limited access in rural areas." },
+    "technologyInvestment":     { "score": 4, "trend": "rising", "confidence": "medium", "note": "Growing freelance tech sector and mobile connectivity, but limited by infrastructure and capital." }
+  },
+  "demographics": {
+    "population": 240500000,
+    "medianAge": 20.4,
+    "urbanizationRate": 38,
+    "majorEthnicGroups": ["Punjabi", "Pashtun", "Sindhi", "Saraiki", "Muhajir", "Baloch"],
+    "religions": [
+      { "name": "Muslim", "percent": 96.5 },
+      { "name": "Hindu", "percent": 1.9 },
+      { "name": "Christian", "percent": 1.6 },
+      { "name": "Ahmadi", "percent": 0.2 }
+    ]
+  },
+  "alliances": ["CPEC", "SCO", "OIC", "SAARC"],
+  "relationships": [
+    { "countryId": "CHN", "countryName": "China", "type": "strategic_partner", "sentiment": "positive", "summary": "The 'All-Weather' friendship; China is Pakistan's primary economic and military benefactor." },
+    { "countryId": "USA", "countryName": "United States", "type": "partner", "sentiment": "neutral", "summary": "Transactional relationship focused on counter-terrorism and regional stability, often strained." },
+    { "countryId": "IND", "countryName": "India", "type": "enemy", "sentiment": "negative", "summary": "Hostile relationship centered on the Kashmir dispute and history of multiple wars." },
+    { "countryId": "AFG", "countryName": "Afghanistan", "type": "neighbor", "sentiment": "negative", "summary": "Tense relations over border management (Durand Line) and cross-border militancy." },
+    { "countryId": "SAU", "countryName": "Saudi Arabia", "type": "ally", "sentiment": "positive", "summary": "Close religious, economic, and military ties; Saudi Arabia often provides financial support." }
+  ],
+  "perspectives": [
+    { "source": "Military Establishment", "bias": "Security-centric", "view": "The military is the ultimate guarantor of national integrity and must guide foreign and security policy to counter the 'existential threat' from India." },
+    { "source": "Democratic Reformer", "bias": "Liberal", "view": "True stability can only be achieved through genuine civilian supremacy, the rule of law, and a pivot from a security state to a developmental state." },
+    { "source": "Religious Conservative", "bias": "Islamic", "view": "Pakistan's laws and identity must strictly adhere to Islamic principles, resisting Western cultural and political influence." },
+    { "source": "International Creditor", "bias": "Fiscalist", "view": "Pakistan needs deep structural reforms, including broadening the tax base and reducing energy subsidies, to avoid perpetual default." }
+  ],
+  "historicalContext": {
+    "summary": "Pakistan was created in 1947 as a homeland for Muslims of the Indian subcontinent. Its history has been marked by three successful military coups, the loss of its eastern wing (now Bangladesh) in 1971, and its role as a frontline state in the Cold War and the War on Terror.",
+    "keyEvents": [
+      { "year": 1947, "event": "Partition of British India; creation of the Dominion of Pakistan." },
+      { "year": 1956, "event": "Adoption of the first constitution, becoming the world's first Islamic republic." },
+      { "year": 1958, "event": "First military coup led by Ayub Khan." },
+      { "year": 1971, "event": "Bangladesh Liberation War; East Pakistan secedes to become Bangladesh." },
+      { "year": 1977, "event": "General Zia-ul-Haq seizes power, initiating a period of Islamization." },
+      { "year": 1998, "event": "Pakistan conducts nuclear tests in response to India's tests (Chagai-I)." },
+      { "year": 1999, "event": "Kargil Conflict with India, followed by General Musharraf's coup." },
+      { "year": 2008, "event": "Return to civilian rule; Benazir Bhutto assassinated in late 2007." },
+      { "year": 2013, "event": "First-ever successful democratic transition between civilian governments." },
+      { "year": 2022, "event": "Ousting of PM Imran Khan via a no-confidence motion, triggering political unrest." }
+    ]
+  },
+  "investmentNotes": {
+    "strengths": ["Strategic geographical location", "Large, young population", "Substantial agricultural base", "Infrastructure growth via CPEC"],
+    "risks": ["Extreme macroeconomic instability", "High security risk/terrorism", "Political uncertainty", "Vulnerability to climate change (floods)"],
+    "sectors": ["Textiles & Garments", "Agriculture & Food Processing", "Energy Infrastructure", "Information Technology Services"]
+  },
+  "sources": [
+    { "name": "State Bank of Pakistan", "url": "https://www.sbp.org.pk/", "type": "economic" },
+    { "name": "Pakistan Bureau of Statistics", "url": "https://www.pbs.gov.pk/", "type": "demographic" },
+    { "name": "Ministry of Foreign Affairs", "url": "https://mofa.gov.pk/", "type": "political" }
+  ]
+}

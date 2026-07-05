@@ -1,0 +1,216 @@
+[
+  {
+    "id": "PORT-IDN-TANJUNG-PRIOK",
+    "name": "Port of Tanjung Priok",
+    "countryId": "IDN",
+    "city": "Jakarta",
+    "coordinates": [106.8833, -6.1033],
+    "type": "container",
+    "annualThroughputTEU": 7827000,
+    "annualThroughputTonnes": null,
+    "berthCount": 72,
+    "maxDraftM": 14.0,
+    "strategicImportance": "critical",
+    "riskLevel": "low",
+    "geopoliticalNotes": "Indonesia's primary international gateway, handling over 50% of the nation's transshipment cargo. Key to the Global Maritime Fulcrum strategy.",
+    "notes": "Ongoing Kalibaru expansion (New Priok) aims to increase capacity to 12 million TEUs.",
+    "attribution": {
+      "sources": [
+        { "name": "Pelabuhan Indonesia (Pelindo)", "url": "https://www.pelindo.co.id", "accessedAt": "2025-05-10" },
+        { "name": "World Shipping Council", "url": "https://www.worldshipping.org", "accessedAt": "2025-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 2,
+        "lastVerified": "2025-05-10"
+      }
+    }
+  },
+  {
+    "id": "PORT-IDN-TANJUNG-PERAK",
+    "name": "Port of Tanjung Perak",
+    "countryId": "IDN",
+    "city": "Surabaya",
+    "coordinates": [112.7333, -7.2],
+    "type": "container",
+    "annualThroughputTEU": 4100000,
+    "annualThroughputTonnes": null,
+    "berthCount": 50,
+    "maxDraftM": 12.0,
+    "strategicImportance": "high",
+    "riskLevel": "low",
+    "geopoliticalNotes": "The main logistics hub for Eastern Indonesia, connecting Java with Sulawesi, Maluku, and Papua.",
+    "notes": "Includes the automated Teluk Lamong Terminal.",
+    "attribution": {
+      "sources": [
+        { "name": "Pelindo Regional 3", "url": "https://www.pelindo.co.id", "accessedAt": "2025-05-10" },
+        { "name": "Lloyd's List", "url": "https://lloydslist.maritimeintelligence.informa.com", "accessedAt": "2025-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 2,
+        "lastVerified": "2025-05-10"
+      }
+    }
+  },
+  {
+    "id": "PORT-IDN-BELAWAN",
+    "name": "Port of Belawan",
+    "countryId": "IDN",
+    "city": "Medan",
+    "coordinates": [98.6833, 3.7833],
+    "type": "container",
+    "annualThroughputTEU": 1240000,
+    "annualThroughputTonnes": null,
+    "berthCount": 20,
+    "maxDraftM": 11.5,
+    "strategicImportance": "high",
+    "riskLevel": "low",
+    "geopoliticalNotes": "Strategically located at the mouth of the Malacca Strait, serving as Sumatra's primary export hub for palm oil and rubber.",
+    "notes": "Recently expanded with the Belawan New Container Terminal (BNCT).",
+    "attribution": {
+      "sources": [
+        { "name": "Pelindo", "url": "https://www.pelindo.co.id", "accessedAt": "2025-05-10" },
+        { "name": "UNCTAD", "url": "https://unctad.org", "accessedAt": "2025-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 2,
+        "lastVerified": "2025-05-10"
+      }
+    }
+  },
+  {
+    "id": "PORT-IDN-MAKASSAR",
+    "name": "Makassar New Port",
+    "countryId": "IDN",
+    "city": "Makassar",
+    "coordinates": [119.4167, -5.1333],
+    "type": "container",
+    "annualThroughputTEU": 750000,
+    "annualThroughputTonnes": null,
+    "berthCount": 10,
+    "maxDraftM": 16.0,
+    "strategicImportance": "high",
+    "riskLevel": "low",
+    "geopoliticalNotes": "Gateway to Eastern Indonesia and a critical node in the trans-Pacific shipping routes. Designed to bypass Java for direct exports.",
+    "notes": "Phase 1 was inaugurated in 2024; it is the deepest port in Eastern Indonesia.",
+    "attribution": {
+      "sources": [
+        { "name": "Pelindo", "url": "https://www.pelindo.co.id", "accessedAt": "2025-05-10" },
+        { "name": "Antara News", "url": "https://www.antaranews.com", "accessedAt": "2025-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 2,
+        "lastVerified": "2025-05-10"
+      }
+    }
+  },
+  {
+    "id": "PORT-IDN-BATAM",
+    "name": "Batu Ampar Port",
+    "countryId": "IDN",
+    "city": "Batam",
+    "coordinates": [104.0, 1.15],
+    "type": "mixed",
+    "annualThroughputTEU": 673343,
+    "annualThroughputTonnes": null,
+    "berthCount": 6,
+    "maxDraftM": 12.0,
+    "strategicImportance": "high",
+    "riskLevel": "low",
+    "geopoliticalNotes": "Located in the Batam Free Trade Zone directly across from Singapore, serving as a competitive transshipment and industrial hub in the Malacca Strait.",
+    "notes": "Strategic focus on competing with Singapore for regional transshipment.",
+    "attribution": {
+      "sources": [
+        { "name": "BP Batam", "url": "https://bpbatam.go.id", "accessedAt": "2025-05-10" },
+        { "name": "Ministry of Transportation Indonesia", "url": "https://dephub.go.id", "accessedAt": "2025-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 2,
+        "lastVerified": "2025-05-10"
+      }
+    }
+  },
+  {
+    "id": "PORT-IDN-PATIMBAN",
+    "name": "Patimban International Port",
+    "countryId": "IDN",
+    "city": "Subang",
+    "coordinates": [107.9, -6.25],
+    "type": "mixed",
+    "annualThroughputTEU": 250000,
+    "annualThroughputTonnes": null,
+    "berthCount": 5,
+    "maxDraftM": 14.0,
+    "strategicImportance": "medium",
+    "riskLevel": "low",
+    "geopoliticalNotes": "Developed with Japanese investment to decongest Tanjung Priok and support the Rebana industrial estate, particularly for automotive exports.",
+    "notes": "Strategic focus on the automotive industry supply chain.",
+    "attribution": {
+      "sources": [
+        { "name": "JICA", "url": "https://www.jica.go.jp", "accessedAt": "2025-05-10" },
+        { "name": "Patimban Port Authority", "url": "https://dephub.go.id", "accessedAt": "2025-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 2,
+        "lastVerified": "2025-05-10"
+      }
+    }
+  },
+  {
+    "id": "PORT-IDN-KUALA-TANJUNG",
+    "name": "Kuala Tanjung Port",
+    "countryId": "IDN",
+    "city": "Batubara",
+    "coordinates": [99.46, 3.38],
+    "type": "mixed",
+    "annualThroughputTEU": 760000,
+    "annualThroughputTonnes": null,
+    "berthCount": 4,
+    "maxDraftM": 17.0,
+    "strategicImportance": "medium",
+    "riskLevel": "low",
+    "geopoliticalNotes": "Integrated with the Sei Mangkei SEZ, intended to be a major international hub in Western Indonesia to rival regional ports in Malaysia and Singapore.",
+    "notes": "Strategic location on the Malacca Strait with deep-water capabilities.",
+    "attribution": {
+      "sources": [
+        { "name": "Pelindo", "url": "https://www.pelindo.co.id", "accessedAt": "2025-05-10" }
+      ],
+      "confidence": {
+        "confidence": "medium",
+        "sourceCount": 1,
+        "lastVerified": "2025-05-10"
+      }
+    }
+  },
+  {
+    "id": "PORT-IDN-TANJUNG-EMAS",
+    "name": "Port of Tanjung Emas",
+    "countryId": "IDN",
+    "city": "Semarang",
+    "coordinates": [110.4167, -6.95],
+    "type": "container",
+    "annualThroughputTEU": 895904,
+    "annualThroughputTonnes": null,
+    "berthCount": 12,
+    "maxDraftM": 10.0,
+    "strategicImportance": "medium",
+    "riskLevel": "medium",
+    "geopoliticalNotes": "The primary logistics hub for Central Java's export-oriented manufacturing (furniture, textiles). Highly vulnerable to land subsidence and tidal flooding.",
+    "notes": "Critical for Central Java's industrial zones.",
+    "attribution": {
+      "sources": [
+        { "name": "Pelindo", "url": "https://www.pelindo.co.id", "accessedAt": "2025-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 1,
+        "lastVerified": "2025-05-10"
+      }
+    }
+  }
+]

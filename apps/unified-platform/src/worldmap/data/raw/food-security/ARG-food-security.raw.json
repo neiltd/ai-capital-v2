@@ -1,0 +1,27 @@
+[
+  {
+    "countryId": "ARG",
+    "year": 2022,
+    "overallScore": 64.8,
+    "availability": 63.4,
+    "access": 62.0,
+    "utilization": 85.5,
+    "stability": 49.4,
+    "undernourishedPct": 3.2,
+    "foodImportDependencyPct": 4.5,
+    "cerealYieldKgHa": 5070,
+    "climateVulnerability": "medium",
+    "conflictExposure": "low",
+    "attribution": {
+      "sources": [
+        { "name": "GFSI 2022 — Argentina", "url": "https://impact.economist.com/sustainability/project/food-security-index/", "accessedAt": "2024-05-15" },
+        { "name": "FAO FAOSTAT", "url": "https://www.fao.org/faostat/en/", "accessedAt": "2024-05-15" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 2,
+        "lastVerified": "2024-05-15"
+      }
+    }
+  }
+]

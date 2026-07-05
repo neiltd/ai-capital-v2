@@ -1,0 +1,218 @@
+[
+  {
+    "id": "PORT-JPN-TOKYO",
+    "name": "Port of Tokyo",
+    "countryId": "JPN",
+    "city": "Tokyo",
+    "coordinates": [139.792, 35.615],
+    "type": "container",
+    "annualThroughputTEU": 4700000,
+    "annualThroughputTonnes": 90000000,
+    "berthCount": 15,
+    "maxDraftM": 16.0,
+    "strategicImportance": "critical",
+    "riskLevel": "low",
+    "geopoliticalNotes": "Primary maritime gateway for the Greater Tokyo Area and Japan's consumer hub.",
+    "notes": "Key node for domestic and international distribution; resilient infrastructure.",
+    "attribution": {
+      "sources": [
+        { "name": "Bureau of Port and Harbor, Tokyo Metropolitan Government", "url": "https://www.kouwan.metro.tokyo.lg.jp/en/", "accessedAt": "2024-05-10" },
+        { "name": "World Shipping Council", "url": "https://www.worldshipping.org", "accessedAt": "2024-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 2,
+        "lastVerified": "2024-05-10"
+      }
+    }
+  },
+  {
+    "id": "PORT-JPN-NAGOYA",
+    "name": "Port of Nagoya",
+    "countryId": "JPN",
+    "city": "Nagoya",
+    "coordinates": [136.852, 35.048],
+    "type": "mixed",
+    "annualThroughputTEU": 2700000,
+    "annualThroughputTonnes": 157800000,
+    "berthCount": 290,
+    "maxDraftM": 16.0,
+    "strategicImportance": "critical",
+    "riskLevel": "low",
+    "geopoliticalNotes": "Japan's largest port by cargo tonnage; global export heart for the automotive industry (Toyota).",
+    "notes": "Vital for the Chūbu industrial region and national economic health.",
+    "attribution": {
+      "sources": [
+        { "name": "Nagoya Port Authority", "url": "https://www.port-of-nagoya.jp/english/index.html", "accessedAt": "2024-05-10" },
+        { "name": "UNCTAD Maritime Transport Report", "url": "https://unctad.org/topic/transport-and-trade-logistics/maritime-transport-report", "accessedAt": "2024-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 2,
+        "lastVerified": "2024-05-10"
+      }
+    }
+  },
+  {
+    "id": "PORT-JPN-YOKOHAMA",
+    "name": "Port of Yokohama",
+    "countryId": "JPN",
+    "city": "Yokohama",
+    "coordinates": [139.673, 35.452],
+    "type": "container",
+    "annualThroughputTEU": 3000000,
+    "annualThroughputTonnes": 70000000,
+    "berthCount": 102,
+    "maxDraftM": 20.0,
+    "strategicImportance": "critical",
+    "riskLevel": "low",
+    "geopoliticalNotes": "Deepest port in Japan, capable of handling 24,000 TEU mega-vessels.",
+    "notes": "Ranked as the world's most efficient port; critical for Keihin industrial zone.",
+    "attribution": {
+      "sources": [
+        { "name": "City of Yokohama Port and Harbor Bureau", "url": "https://www.city.yokohama.lg.jp/lang/en/port/", "accessedAt": "2024-05-10" },
+        { "name": "Lloyd's List", "url": "https://lloydslist.com/", "accessedAt": "2024-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 2,
+        "lastVerified": "2024-05-10"
+      }
+    }
+  },
+  {
+    "id": "PORT-JPN-KOBE",
+    "name": "Port of Kobe",
+    "countryId": "JPN",
+    "city": "Kobe",
+    "coordinates": [135.218, 34.665],
+    "type": "container",
+    "annualThroughputTEU": 2800000,
+    "annualThroughputTonnes": 50000000,
+    "berthCount": 34,
+    "maxDraftM": 18.0,
+    "strategicImportance": "high",
+    "riskLevel": "low",
+    "geopoliticalNotes": "Premier deep-water natural harbor; resilient transshipment hub for Western Japan.",
+    "notes": "Part of the Hanshin International Strategic Port cluster.",
+    "attribution": {
+      "sources": [
+        { "name": "Port of Kobe official", "url": "https://www.city.kobe.lg.jp/a31530/sangyo/shokuroudou/port/index.html", "accessedAt": "2024-05-10" },
+        { "name": "UNCTAD", "url": "https://unctad.org", "accessedAt": "2024-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 2,
+        "lastVerified": "2024-05-10"
+      }
+    }
+  },
+  {
+    "id": "PORT-JPN-OSAKA",
+    "name": "Port of Osaka",
+    "countryId": "JPN",
+    "city": "Osaka",
+    "coordinates": [135.418, 34.643],
+    "type": "mixed",
+    "annualThroughputTEU": 1980000,
+    "annualThroughputTonnes": 60000000,
+    "berthCount": 9,
+    "maxDraftM": 16.0,
+    "strategicImportance": "high",
+    "riskLevel": "low",
+    "geopoliticalNotes": "Primary gateway for trade with China and Southeast Asia.",
+    "notes": "A major commercial hub for the Kansai region.",
+    "attribution": {
+      "sources": [
+        { "name": "Osaka Port Authority", "url": "https://www.city.osaka.lg.jp/contents/wdu020/port/english/", "accessedAt": "2024-05-10" },
+        { "name": "World Shipping Council", "url": "https://www.worldshipping.org", "accessedAt": "2024-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 2,
+        "lastVerified": "2024-05-10"
+      }
+    }
+  },
+  {
+    "id": "PORT-JPN-CHIBA",
+    "name": "Port of Chiba",
+    "countryId": "JPN",
+    "city": "Chiba",
+    "coordinates": [140.083, 35.583],
+    "type": "mixed",
+    "annualThroughputTEU": 42000,
+    "annualThroughputTonnes": 167000000,
+    "berthCount": 94,
+    "maxDraftM": 19.2,
+    "strategicImportance": "critical",
+    "riskLevel": "low",
+    "geopoliticalNotes": "Japan's energy lifeline; handles the highest volume of raw materials including LNG and crude oil.",
+    "notes": "Vital for the Keiyō Industrial Zone's energy security.",
+    "attribution": {
+      "sources": [
+        { "name": "Chiba Prefectural Government", "url": "https://www.pref.chiba.lg.jp/kouwan/port-of-chiba/", "accessedAt": "2024-05-10" },
+        { "name": "UNCTAD", "url": "https://unctad.org", "accessedAt": "2024-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 2,
+        "lastVerified": "2024-05-10"
+      }
+    }
+  },
+  {
+    "id": "PORT-JPN-KITAKYUSHU",
+    "name": "Port of Kitakyushu",
+    "countryId": "JPN",
+    "city": "Kitakyushu",
+    "coordinates": [130.858, 33.918],
+    "type": "multipurpose",
+    "annualThroughputTEU": 500000,
+    "annualThroughputTonnes": 95000000,
+    "berthCount": 15,
+    "maxDraftM": 15.0,
+    "strategicImportance": "medium",
+    "riskLevel": "low",
+    "geopoliticalNotes": "Strategic 'Gateway to Asia' due to its proximity to South Korea and China.",
+    "notes": "Vital link between Kyushu and Honshu; heavy industrial support.",
+    "attribution": {
+      "sources": [
+        { "name": "Kitakyushu City Port and Harbor Bureau", "url": "https://www.city.kitakyushu.lg.jp/port/", "accessedAt": "2024-05-10" },
+        { "name": "World Shipping Council", "url": "https://www.worldshipping.org", "accessedAt": "2024-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 2,
+        "lastVerified": "2024-05-10"
+      }
+    }
+  },
+  {
+    "id": "PORT-JPN-KAWASAKI",
+    "name": "Port of Kawasaki",
+    "countryId": "JPN",
+    "city": "Kawasaki",
+    "coordinates": [139.75, 35.517],
+    "type": "mixed",
+    "annualThroughputTEU": 700000,
+    "annualThroughputTonnes": 80000000,
+    "berthCount": 15,
+    "maxDraftM": 14.0,
+    "strategicImportance": "high",
+    "riskLevel": "low",
+    "geopoliticalNotes": "Core industrial hub in the Keihin zone; home to Japan's largest refrigerated warehouse complex.",
+    "notes": "Critical for food security and energy supply in the Kanto region.",
+    "attribution": {
+      "sources": [
+        { "name": "Kawasaki City Port Authority", "url": "https://www.city.kawasaki.jp/port/", "accessedAt": "2024-05-10" },
+        { "name": "UNCTAD", "url": "https://unctad.org", "accessedAt": "2024-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 2,
+        "lastVerified": "2024-05-10"
+      }
+    }
+  }
+]

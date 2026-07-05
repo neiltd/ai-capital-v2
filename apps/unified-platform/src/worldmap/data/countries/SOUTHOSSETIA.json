@@ -1,0 +1,63 @@
+{
+  "id": "SOUTHOSSETIA",
+  "iso2": "GE-SO",
+  "name": "South Ossetia (Republic of South Ossetia–the State of Alania)",
+  "region": "Asia",
+  "subregion": "Western Asia",
+  "capital": "Tskhinvali",
+  "lastUpdated": "2025-05-15",
+  "summary": "South Ossetia remains one of the most isolated and dependent de facto states in the post-Soviet space, characterized by total strategic and economic reliance on the Russian Federation. Following the June 2024 parliamentary elections, the ruling Nykhas party has maintained a firm grip on power, presiding over a population that largely favors eventual integration into Russia. While the region faces chronic economic stagnation and demographic decline, the 2024-2025 period has seen unusual diplomatic signals from Georgia's ruling 'Georgian Dream' party regarding historical reconciliation, though Tskhinvali remains highly wary of any move toward reintegration with Tbilisi.",
+  "indicators": {
+    "politicalStability":       { "score": 6, "trend": "stable", "confidence": "high", "note": "Stable but stagnant; ruling party consolidated power in the 2024 elections with minimal organized opposition." },
+    "economicDirection":        { "score": 2, "trend": "stagnant", "confidence": "high", "note": "Extreme dependency on Russian subsidies, which account for 80-90% of the budget; local production is minimal." },
+    "investmentAttractiveness": { "score": 1, "trend": "neutral", "confidence": "high", "note": "Non-existent for non-Russian entities; limited even for Russian business due to lack of local market and legal isolation." },
+    "geopoliticalRisk":         { "score": 6, "trend": "stable", "confidence": "high", "note": "High militarization; host to significant Russian military presence (4th Guards Military Base)." },
+    "educationQuality":         { "score": 3, "trend": "stable", "confidence": "medium", "note": "Isolated educational system; heavy reliance on Russian standards and scholarships for higher education in North Ossetia." },
+    "healthcareQuality":        { "score": 2, "trend": "falling", "confidence": "medium", "note": "Severe shortages of personnel and equipment; rare public strikes in late 2024 highlight deteriorating conditions." },
+    "technologyInvestment":     { "score": 2, "trend": "stable", "confidence": "medium", "note": "Basic digital services provided via Russian infrastructure; limited local capacity for technological innovation." }
+  },
+  "demographics": {
+    "population": 54000,
+    "medianAge": 39.5,
+    "urbanizationRate": 60.0,
+    "majorEthnicGroups": ["Ossetian", "Georgian", "Russian"],
+    "religions": [
+      { "name": "Orthodox Christian", "percent": 90 },
+      { "name": "Other/None", "percent": 10 }
+    ]
+  },
+  "alliances": ["Community for Democracy and Rights of Nations"],
+  "relationships": [
+    { "countryId": "RUS", "countryName": "Russia", "type": "security_guarantor", "sentiment": "positive", "summary": "The absolute patron; provides the entire security umbrella and the vast majority of the annual state budget." },
+    { "countryId": "GEO", "countryName": "Georgia", "type": "adversary", "sentiment": "negative", "summary": "Tensions remain high over sovereignty; however, recent 'reconciliation' rhetoric from Tbilisi has introduced a new, albeit uncertain, diplomatic variable." },
+    { "countryId": "NIC", "countryName": "Nicaragua", "type": "partner", "sentiment": "positive", "summary": "One of the few states to grant formal recognition; relationship is primarily symbolic and based on shared anti-Western alignment." },
+    { "countryId": "VEN", "countryName": "Venezuela", "type": "partner", "sentiment": "positive", "summary": "Maintains formal diplomatic ties; engagement is limited but significant for Tskhinvali's international legitimacy claims." }
+  ],
+  "perspectives": [
+    { "source": "South Ossetian Nationalist", "bias": "Pro-Russian", "view": "Our future is with our brothers in North Ossetia and the Russian Federation. We have no interest in 'reconciliation' with a Georgia that still claims our land." },
+    { "source": "Russian Military Commander", "bias": "Strategic", "view": "Tskhinvali is a vital strategic outpost; our presence ensures that Georgia will never again use force to change the borders." },
+    { "source": "Resident of Tskhinvali", "bias": "Pragmatic", "view": "The subsidies keep the heat on and the shops open, but there are no jobs for the young. Everyone who can leave goes to Vladikavkaz or Moscow." },
+    { "source": "Georgian Diplomat", "bias": "Cautious", "view": "We are looking for a peaceful path to restore our territorial integrity, but the path forward requires direct dialogue and the removal of the occupation forces." }
+  ],
+  "historicalContext": {
+    "summary": "South Ossetia's modern history is defined by its resistance to Georgian nationalism and its desire for union with North Ossetia within Russia. Following the collapse of the Soviet Union, the region fought a war for independence from Georgia in 1991-1992. The status quo was shattered by the 2008 Russo-Georgian War, after which Russia formally recognized the region's independence. Since 2008, South Ossetia has become increasingly integrated into Russian military and economic structures, effectively serving as a forward operating base in the South Caucasus.",
+    "keyEvents": [
+      { "year": 1991, "event": "Declaration of independence and outbreak of war with Georgia." },
+      { "year": 1992, "event": "Sochi Agreement establishes a ceasefire and joint peacekeeping force." },
+      { "year": 2008, "event": "Russo-Georgian War; Russia formally recognizes South Ossetian independence." },
+      { "year": 2015, "event": "Signing of the Treaty on Alliance and Integration with Russia, merging military and customs structures." },
+      { "year": 2022, "event": "Referendum on joining Russia is proposed by then-president Bibilov but later suspended." },
+      { "year": 2024, "event": "Parliamentary elections solidify the Nykhas party's control; Georgian Dream party proposes 'historical reconciliation'." }
+    ]
+  },
+  "investmentNotes": {
+    "strengths": ["Strategic location on the Trans-Caucasus highway (Roki Tunnel)", "Potential for small-scale alpine agriculture and livestock", "Mineral spring water resources (Bagiaty)", "Guaranteed market access to the Russian Federation via the customs union"],
+    "risks": ["Total lack of international recognition and extreme legal isolation", "Extremely small domestic market and declining population", "Total dependency on the Russian federal budget and political priorities", "High levels of militarization and proximity to potential conflict zones"],
+    "sectors": ["Subsistence & Small-scale Agriculture", "Mining & Quarrying", "Bottled Water Production", "Russian Military Support Services"]
+  },
+  "sources": [
+    { "name": "Department of State Statistics of South Ossetia", "url": "https://ugstat.republicso.org", "type": "economic" },
+    { "name": "Ministry of Foreign Affairs - Republic of South Ossetia", "url": "http://mfa-rso.org", "type": "government" },
+    { "name": "Civil.ge South Ossetia News", "url": "https://civil.ge/archives/category/south-ossetia", "type": "government" }
+  ]
+}

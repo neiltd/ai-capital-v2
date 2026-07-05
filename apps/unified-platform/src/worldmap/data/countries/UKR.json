@@ -1,0 +1,68 @@
+{
+  "id": "UKR",
+  "iso2": "UA",
+  "name": "Ukraine",
+  "region": "Europe",
+  "subregion": "Eastern Europe",
+  "capital": "Kyiv",
+  "lastUpdated": "2026-05-09",
+  "summary": "Ukraine is currently defined by its ongoing existential struggle against Russian aggression and its fundamental transformation into a frontline European security state. Since the 2022 invasion, the country has undergone an unprecedented military, social, and political mobilization. While large portions of its territory remain occupied and its infrastructure faces constant threat, Ukraine has successfully integrated into Western security architectures and achieved EU candidate status. The nation is focused on a dual strategy of military victory/containment and massive institutional reform to meet European standards. Its future is tied to the successful execution of high-tech defense production, demining, and a monumental reconstruction effort that aims to build a modern, green, and digital-first economy.",
+  "indicators": {
+    "politicalStability":       { "score": 6, "score_description": "Resilient under martial law; high degree of national unity.", "trend": "stable", "confidence": "medium", "note": "National unity remains high, though questions regarding future elections and governance under protracted conflict create long-term uncertainty." },
+    "economicDirection":        { "score": 3, "score_description": "War-damaged economy dependent on external financial support.", "trend": "improving", "confidence": "medium", "note": "Showing signs of stabilization and modest growth through agricultural exports and internal displacement-driven demand, but structural damage is profound." },
+    "investmentAttractiveness": { "score": 4, "score_description": "High risk but high potential for reconstruction-related capital.", "trend": "rising", "confidence": "medium", "note": "Limited largely to defense and energy sectors currently; future attractiveness depends on security guarantees and anti-corruption reforms." },
+    "geopoliticalRisk":         { "score": 10, "score_description": "Extreme risk due to active full-scale conventional warfare.", "trend": "stable", "confidence": "high", "note": "The primary theater of global geopolitical confrontation; risk is inherent to the state's current existence." },
+    "educationQuality":         { "score": 6, "score_description": "Strong human capital despite severe wartime disruptions.", "trend": "declining", "confidence": "high", "note": "Historically high literacy and technical skills, but the education system is struggling with displacement and infrastructure damage." },
+    "healthcareQuality":        { "score": 5, "score_description": "Overstretched system focused on trauma and wartime needs.", "trend": "stable", "confidence": "medium", "note": "Significant international support has prevented collapse, but chronic conditions and mental health represent a growing crisis." },
+    "technologyInvestment":     { "score": 8, "score_description": "Rapidly becoming a global leader in 'BattleTech' and drone systems.", "trend": "rising", "confidence": "high", "note": "Ukraine has become a living laboratory for AI-driven warfare, electronic warfare, and decentralized digital governance (Diia)." }
+  },
+  "demographics": {
+    "population": 33500000,
+    "medianAge": 41.2,
+    "urbanizationRate": 70,
+    "majorEthnicGroups": ["Ukrainian", "Russian", "Belarusian", "Moldovan"],
+    "religions": [
+      { "name": "Orthodox (OCU/UOC)", "percent": 72 },
+      { "name": "Greek Catholic", "percent": 9 },
+      { "name": "None/Unaffiliated", "percent": 11 },
+      { "name": "Protestant", "percent": 2 }
+    ]
+  },
+  "alliances": ["EU (Candidate)", "NATO (Aspirant)", "Lublin Triangle", "GUAM"],
+  "relationships": [
+    { "countryId": "USA", "countryName": "United States", "type": "ally", "sentiment": "positive", "summary": "Indispensable military and financial sponsor; primary provider of advanced weaponry and intelligence." },
+    { "countryId": "POL", "countryName": "Poland", "type": "ally", "sentiment": "positive", "summary": "Strategic 'rear area' and closest regional partner; critical for logistics and refugee support." },
+    { "countryId": "GBR", "countryName": "United Kingdom", "type": "ally", "sentiment": "positive", "summary": "Leading security partner; providing long-range capabilities and training for the Ukrainian military." },
+    { "countryId": "RUS", "countryName": "Russia", "type": "enemy", "sentiment": "negative", "summary": "Direct existential adversary engaged in a full-scale invasion of Ukrainian territory." },
+    { "countryId": "DEU", "countryName": "Germany", "type": "ally", "sentiment": "positive", "summary": "Key financial and military supporter; relationship has evolved from cautious to being a primary source of air defense and armor." }
+  ],
+  "perspectives": [
+    { "source": "Ukrainian Government Official", "bias": "Existential Nationalist", "view": "Ukraine is the shield of Europe; its total victory and integration into NATO are the only ways to ensure lasting peace on the continent." },
+    { "source": "Civil Society Activist", "bias": "Reformist", "view": "Wartime necessity must not be an excuse to delay anti-corruption reforms; the 'New Ukraine' must be built on transparency and the rule of law." },
+    { "source": "Western 'Realist' Analyst", "bias": "Pragmatic/Cynical", "view": "While Ukraine's bravery is unquestioned, a long-term frozen conflict or negotiated settlement may be inevitable given the disparity in resources." }
+  ],
+  "historicalContext": {
+    "summary": "Ukraine's history is a centuries-long struggle for sovereignty against imperial powers, primarily Russia and Poland. After a brief period of independence in 1917, it became a constituent republic of the Soviet Union, suffering through the Holodomor (man-made famine). Since regaining independence in 1991, Ukraine has navigated a turbulent path toward democracy, punctuated by the Orange Revolution (2004) and the Euromaidan (2014).",
+    "keyEvents": [
+      { "year": 1917, "event": "Proclamation of the Ukrainian People's Republic." },
+      { "year": 1932, "event": "Holodomor; millions of Ukrainians die in a state-engineered famine." },
+      { "year": 1986, "event": "Chernobyl nuclear disaster; a catalyst for the Ukrainian independence movement." },
+      { "year": 1991, "event": "Ukraine declares independence following the collapse of the USSR." },
+      { "year": 1994, "event": "Budapest Memorandum; Ukraine surrenders nuclear weapons for security assurances." },
+      { "year": 2004, "event": "Orange Revolution protests against election fraud." },
+      { "year": 2014, "event": "Revolution of Dignity (Euromaidan); Russia annexes Crimea and begins war in Donbas." },
+      { "year": 2022, "event": "Full-scale invasion by the Russian Federation." },
+      { "year": 2024, "event": "Ukraine formally begins EU accession negotiations." }
+    ]
+  },
+  "investmentNotes": {
+    "strengths": ["Highly skilled and battle-hardened tech workforce", "Vast agricultural potential ('Breadbasket of Europe')", "Critical mineral reserves (Lithium, Titanium)", "Massive reconstruction needs providing long-term opportunities"],
+    "risks": ["Ongoing conventional warfare and physical destruction", "Demographic crisis due to displacement and casualties", "Deep-seated institutional corruption", "Extreme dependency on foreign political will"],
+    "sectors": ["Defense Technology", "Agribusiness", "Green Energy", "IT Services", "Construction & Infrastructure"]
+  },
+  "sources": [
+    { "name": "Ministry of Economy of Ukraine", "url": "https://www.me.gov.ua/?lang=en-GB", "type": "economic" },
+    { "name": "National Bank of Ukraine", "url": "https://bank.gov.pl/en/", "type": "economic" },
+    { "name": "United 24", "url": "https://u24.gov.ua/", "type": "general" }
+  ]
+}

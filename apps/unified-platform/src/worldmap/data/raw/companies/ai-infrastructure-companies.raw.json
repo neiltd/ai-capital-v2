@@ -1,0 +1,1827 @@
+[
+  {
+    "id": "COMPANY-MSFT",
+    "ticker": "MSFT",
+    "name": "Microsoft Corporation",
+    "exchange": "NASDAQ",
+    "gicsSector": "Information Technology",
+    "gicsIndustryGroup": "Software & Services",
+    "gicsIndustry": "Software",
+    "countryOfIncorporation": "USA",
+    "countryOfHQ": "USA",
+    "marketCapUsdBn": 3300.0,
+    "revenueUsdBn": 245.1,
+    "fiscalYear": 2024,
+    "description": "Microsoft is a global technology leader providing software, services, devices, and solutions. Its business is centered on the Cloud, AI, and productivity tools, primarily through the Azure cloud platform and the Microsoft 365 suite.",
+    "businessModel": "Microsoft generates revenue through Azure cloud services, software licensing (Windows, Office), hardware (Surface, Xbox), and increasingly through AI-integrated services via its partnership with OpenAI.",
+    "geopoliticalSummary": "Microsoft faces significant risks from trade disputes, particularly with China, and varying international regulatory environments such as the GDPR and DMA in Europe. Its global footprint exposes it to cybersecurity threats from state-sponsored actors.",
+    "revenueByGeography": [
+      {
+        "region": "United States",
+        "countryIds": ["USA"],
+        "percentOfRevenue": 51,
+        "revenueUsdBn": 125.0,
+        "year": 2024,
+        "note": "Exact segment: United States"
+      },
+      {
+        "region": "Other Countries",
+        "countryIds": [],
+        "percentOfRevenue": 49,
+        "revenueUsdBn": 120.1,
+        "year": 2024,
+        "note": "Exact segment: Other Countries"
+      }
+    ],
+    "keySuppliers": [
+      {
+        "role": "hardware",
+        "name": "NVIDIA",
+        "countryId": "USA",
+        "percentOfSupply": null,
+        "isConcentrationRisk": true,
+        "strategicNote": "Primary supplier of GPUs for Azure AI infrastructure."
+      }
+    ],
+    "keyCustomers": [
+      {
+        "role": "enterprise",
+        "name": "General Electric",
+        "countryId": "USA",
+        "percentOfRevenue": null,
+        "isConcentrationRisk": false,
+        "strategicNote": "Major enterprise customer for Azure and AI services."
+      }
+    ],
+    "manufacturingLocations": [
+      {
+        "countryId": "CHN",
+        "city": "Suzhou",
+        "percentOfCapacity": null,
+        "note": "Significant R&D and manufacturing presence in China for hardware."
+      }
+    ],
+    "commodityDependencies": [
+      {
+        "commodity": "Electricity",
+        "role": "utility",
+        "primarySupplyCountries": ["USA", "IRL", "NLD"],
+        "isHedged": true,
+        "geopoliticalRisk": "medium",
+        "note": "Massive energy requirements for global datacenter operations."
+      }
+    ],
+    "regionalExposures": [
+      {
+        "region": "European Union",
+        "countryIds": ["FRA", "DEU", "IRL"],
+        "exposureType": "regulatory",
+        "magnitude": "high",
+        "note": "Strict compliance with GDPR and Digital Markets Act required.",
+        "filingRefs": ["Item 1A"]
+      },
+      {
+        "region": "China",
+        "countryIds": ["CHN"],
+        "exposureType": "revenue/supply-chain",
+        "magnitude": "medium",
+        "note": "Revenue from China is less than 5% but supply chain and R&D exposure is significant.",
+        "filingRefs": ["Item 1A"]
+      }
+    ],
+    "infrastructureDependencies": [
+      {
+        "type": "trade-route",
+        "entityId": "ROUTE-TRANSPAC-NORTH",
+        "name": "Trans-Pacific (North) Shipping Route",
+        "importance": "medium",
+        "note": "Used for hardware shipments from Asian suppliers."
+      }
+    ],
+    "flags": {
+      "chinaRevenuePct": 5,
+      "chinaManufacturingDependent": true,
+      "russiaExposed": false,
+      "middleEastEnergyDependent": false,
+      "taiwanSemiconductorDependent": true,
+      "redSeaTradeRouteDependent": false,
+      "straitOfHormuzDependent": false,
+      "sanctionsSensitive": true,
+      "exportControlSensitive": true
+    },
+    "aiMarketPosition": {
+      "primaryAIRole": "systems",
+      "aiRevenueEstimateUsdBn": 25.0,
+      "aiRevenueShareOfTotal": 10,
+      "trainingMarketSharePct": null,
+      "inferenceMarketSharePct": null,
+      "customASICMarketSharePct": null,
+      "aiComputeStack": {
+        "layer": "Platform/Cloud",
+        "what": "Azure AI services and OpenAI partnership",
+        "replaceabilityRisk": "low",
+        "note": "Deep integration with enterprise workflows via Office 365."
+      },
+      "hbmRelationship": {
+        "role": "consumer",
+        "note": "Azure datacenters utilize high-bandwidth memory via GPU clusters."
+      },
+      "customASICPartnerships": [
+        {
+          "customer": "Microsoft",
+          "chipName": "Maia 100",
+          "node": "5nm",
+          "confirmed": true,
+          "source": "Microsoft Ignite 2023",
+          "note": "First custom AI accelerator designed for Azure."
+        }
+      ],
+      "keyAICustomers": [
+        {
+          "name": "OpenAI",
+          "relationship": "strategic-partner",
+          "estimatedSpendUsdBn": null,
+          "note": "Microsoft is the exclusive cloud provider for OpenAI."
+        }
+      ],
+      "vsNVIDIA": {
+        "relationship": "partner/customer",
+        "note": "Microsoft is NVIDIA's largest customer while also developing competing custom silicon."
+      },
+      "competitiveMoat": [
+        "First-mover advantage in generative AI via OpenAI",
+        "Massive installed base of enterprise software",
+        "Global scale of Azure infrastructure"
+      ],
+      "keyAIRisks": [
+        "Dependency on NVIDIA for compute",
+        "High capital expenditure for AI infrastructure",
+        "Regulatory scrutiny of AI safety and competition"
+      ],
+      "aiMarketShareSources": [
+        {
+          "metric": "Cloud AI Services",
+          "value": "Top 3 globally",
+          "source": "Gartner 2024",
+          "url": null,
+          "note": "Rapidly gaining share against AWS."
+        }
+      ]
+    },
+    "latestFilingId": "FILING-MSFT-10K-2024",
+    "secCik": "0000789019",
+    "secEdgarUrl": "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0000789019&type=10-K",
+    "attribution": {
+      "sources": [
+        {
+          "name": "Microsoft 10-K FY2024 — Item 1A Risk Factors",
+          "url": "https://www.sec.gov/Archives/edgar/data/789019/000078901924000070/msft-20240630.htm",
+          "type": "filing",
+          "accessedAt": "2026-05-11",
+          "verbatimQuote": "Our international operations are subject to many of the same risks as our domestic operations, as well as additional risks."
+        }
+      ],
+      "confidence": "high",
+      "lastVerified": "2026-05-11",
+      "generatedBy": "ai-assisted"
+    }
+  },
+  {
+    "id": "COMPANY-NVDA",
+    "ticker": "NVDA",
+    "name": "NVIDIA Corporation",
+    "exchange": "NASDAQ",
+    "gicsSector": "Information Technology",
+    "gicsIndustryGroup": "Semiconductors & Semiconductor Equipment",
+    "gicsIndustry": "Semiconductors",
+    "countryOfIncorporation": "USA",
+    "countryOfHQ": "USA",
+    "marketCapUsdBn": 2200.0,
+    "revenueUsdBn": 60.9,
+    "fiscalYear": 2024,
+    "description": "NVIDIA is the leading designer of graphics processing units (GPUs) and AI computing systems. Its products power the majority of the world's AI training and inference workloads.",
+    "businessModel": "Revenue is primarily from the sale of GPUs, networking components (Mellanox), and software for AI and graphics applications.",
+    "geopoliticalSummary": "NVIDIA faces critical risks from US-China export controls and its near-total reliance on TSMC in Taiwan for manufacturing.",
+    "revenueByGeography": [
+      {
+        "region": "United States",
+        "countryIds": ["USA"],
+        "percentOfRevenue": 47,
+        "revenueUsdBn": 28.6,
+        "year": 2024,
+        "note": "Direct sales to US customers"
+      },
+      {
+        "region": "Taiwan",
+        "countryIds": ["TWN"],
+        "percentOfRevenue": 16,
+        "revenueUsdBn": 9.7,
+        "year": 2024,
+        "note": "Shipments to Taiwan-based ODMs"
+      },
+      {
+        "region": "China (including Hong Kong)",
+        "countryIds": ["CHN"],
+        "percentOfRevenue": 17,
+        "revenueUsdBn": 10.4,
+        "year": 2024,
+        "note": "Significantly impacted by export controls"
+      }
+    ],
+    "keySuppliers": [
+      {
+        "role": "foundry",
+        "name": "TSMC",
+        "countryId": "TWN",
+        "percentOfSupply": 90,
+        "isConcentrationRisk": true,
+        "strategicNote": "Sole source for advanced AI GPUs."
+      }
+    ],
+    "keyCustomers": [
+      {
+        "role": "hyperscaler",
+        "name": "Microsoft",
+        "countryId": "USA",
+        "percentOfRevenue": 15,
+        "isConcentrationRisk": true,
+        "strategicNote": "Largest buyer of H100 GPUs."
+      }
+    ],
+    "manufacturingLocations": [
+      {
+        "countryId": "TWN",
+        "city": "Hsinchu",
+        "percentOfCapacity": 90,
+        "note": "Advanced node fabrication at TSMC."
+      }
+    ],
+    "commodityDependencies": [
+      {
+        "commodity": "Advanced Semiconductors",
+        "role": "input",
+        "primarySupplyCountries": ["TWN"],
+        "isHedged": false,
+        "geopoliticalRisk": "critical",
+        "note": "Dependent on Taiwan for all high-end production."
+      }
+    ],
+    "regionalExposures": [
+      {
+        "region": "China",
+        "countryIds": ["CHN"],
+        "exposureType": "revenue/regulatory",
+        "magnitude": "high",
+        "note": "US government restrictions on high-end GPU exports to China.",
+        "filingRefs": ["Item 1A"]
+      },
+      {
+        "region": "Taiwan",
+        "countryIds": ["TWN"],
+        "exposureType": "supply-chain",
+        "magnitude": "critical",
+        "note": "Manufacturing concentration in Taiwan is an existential risk.",
+        "filingRefs": ["Item 1A"]
+      }
+    ],
+    "infrastructureDependencies": [
+      {
+        "type": "trade-route",
+        "entityId": "ROUTE-TRANSPAC-NORTH",
+        "name": "Trans-Pacific (North) Shipping Route",
+        "importance": "high",
+        "note": "Critical for shipping GPUs from Taiwan to US datacenters."
+      }
+    ],
+    "flags": {
+      "chinaRevenuePct": 17,
+      "chinaManufacturingDependent": false,
+      "russiaExposed": false,
+      "middleEastEnergyDependent": false,
+      "taiwanSemiconductorDependent": true,
+      "redSeaTradeRouteDependent": false,
+      "straitOfHormuzDependent": false,
+      "sanctionsSensitive": true,
+      "exportControlSensitive": true
+    },
+    "aiMarketPosition": {
+      "primaryAIRole": "training-gpu",
+      "aiRevenueEstimateUsdBn": 47.5,
+      "aiRevenueShareOfTotal": 78,
+      "trainingMarketSharePct": 90,
+      "inferenceMarketSharePct": 70,
+      "customASICMarketSharePct": null,
+      "aiComputeStack": {
+        "layer": "Hardware/Accelerators",
+        "what": "H100, B100 GPUs and CUDA software platform",
+        "replaceabilityRisk": "low",
+        "note": "CUDA ecosystem creates massive software lock-in."
+      },
+      "hbmRelationship": {
+        "role": "consumer",
+        "note": "Major buyer of HBM3/HBM3E from SK Hynix and Micron."
+      },
+      "customASICPartnerships": [],
+      "keyAICustomers": [
+        {
+          "name": "Meta Platforms",
+          "relationship": "customer",
+          "estimatedSpendUsdBn": 10,
+          "note": "Purchasing hundreds of thousands of H100s."
+        }
+      ],
+      "vsNVIDIA": {
+        "relationship": "self",
+        "note": "Market leader setting the pace for the industry."
+      },
+      "competitiveMoat": [
+        "CUDA software stack",
+        "Interconnect technology (NVLink/InfiniBand)",
+        "Rapid release cycle (Blackwell architecture)"
+      ],
+      "keyAIRisks": [
+        "Supply chain concentration in Taiwan",
+        "Export controls restricting China market",
+        "Hyperscalers developing in-house silicon"
+      ],
+      "aiMarketShareSources": [
+        {
+          "metric": "AI Accelerator Market Share",
+          "value": ">80%",
+          "source": "Mizuho Securities 2024",
+          "url": null,
+          "note": "Dominant position in training."
+        }
+      ]
+    },
+    "latestFilingId": "FILING-NVDA-10K-2024",
+    "secCik": "0001045810",
+    "secEdgarUrl": "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0001045810&type=10-K",
+    "attribution": {
+      "sources": [
+        {
+          "name": "NVIDIA 10-K FY2024 — Item 1A Risk Factors",
+          "url": "https://www.sec.gov/Archives/edgar/data/1045810/000104581024000029/nvda-20240128.htm",
+          "type": "filing",
+          "accessedAt": "2026-05-11",
+          "verbatimQuote": "We are subject to risks associated with our international operations."
+        }
+      ],
+      "confidence": "high",
+      "lastVerified": "2026-05-11",
+      "generatedBy": "ai-assisted"
+    }
+  },
+  {
+    "id": "COMPANY-GOOGL",
+    "ticker": "GOOGL",
+    "name": "Alphabet Inc.",
+    "exchange": "NASDAQ",
+    "gicsSector": "Communication Services",
+    "gicsIndustryGroup": "Interactive Media & Services",
+    "gicsIndustry": "Interactive Media & Services",
+    "countryOfIncorporation": "USA",
+    "countryOfHQ": "USA",
+    "marketCapUsdBn": 2000.0,
+    "revenueUsdBn": 307.4,
+    "fiscalYear": 2024,
+    "description": "Alphabet is the parent company of Google, specialized in internet-related services and products, including search, advertising, cloud computing, and AI (DeepMind).",
+    "businessModel": "Primary revenue comes from Google Search advertising, YouTube ads, and Google Cloud services. AI is integrated throughout all products.",
+    "geopoliticalSummary": "Alphabet faces significant regulatory headwinds globally, including antitrust lawsuits in the US and EU, and complex data sovereignty laws in various regions.",
+    "revenueByGeography": [
+      {
+        "region": "United States",
+        "countryIds": ["USA"],
+        "percentOfRevenue": 48,
+        "revenueUsdBn": 147.6,
+        "year": 2024,
+        "note": "Exact segment: United States"
+      },
+      {
+        "region": "EMEA",
+        "countryIds": [],
+        "percentOfRevenue": 30,
+        "revenueUsdBn": 92.2,
+        "year": 2024,
+        "note": "Exact segment: EMEA"
+      },
+      {
+        "region": "Asia-Pacific",
+        "countryIds": [],
+        "percentOfRevenue": 16,
+        "revenueUsdBn": 49.2,
+        "year": 2024,
+        "note": "Exact segment: Asia-Pacific"
+      }
+    ],
+    "keySuppliers": [
+      {
+        "role": "hardware",
+        "name": "Broadcom",
+        "countryId": "USA",
+        "percentOfSupply": null,
+        "isConcentrationRisk": true,
+        "strategicNote": "Partner in designing TPU (Tensor Processing Unit) AI chips."
+      }
+    ],
+    "keyCustomers": [
+      {
+        "role": "advertiser",
+        "name": "General Public",
+        "countryId": "USA",
+        "percentOfRevenue": null,
+        "isConcentrationRisk": false,
+        "strategicNote": "Billions of users worldwide."
+      }
+    ],
+    "manufacturingLocations": [
+      {
+        "countryId": "VNM",
+        "city": "Ho Chi Minh City",
+        "percentOfCapacity": null,
+        "note": "Manufacturing of Pixel hardware and some server components."
+      }
+    ],
+    "commodityDependencies": [
+      {
+        "commodity": "Electricity",
+        "role": "utility",
+        "primarySupplyCountries": ["USA", "IRL", "FIN"],
+        "isHedged": true,
+        "geopoliticalRisk": "medium",
+        "note": "Large-scale energy consumption for global datacenters."
+      }
+    ],
+    "regionalExposures": [
+      {
+        "region": "European Union",
+        "countryIds": ["DEU", "FRA", "IRL"],
+        "exposureType": "regulatory",
+        "magnitude": "high",
+        "note": "Ongoing antitrust and privacy compliance challenges.",
+        "filingRefs": ["Item 1A"]
+      }
+    ],
+    "infrastructureDependencies": [
+      {
+        "type": "submarine-cable",
+        "entityId": "CABLE-DUNANT",
+        "name": "Dunant Submarine Cable",
+        "importance": "high",
+        "note": "Google-owned cable connecting US and France."
+      }
+    ],
+    "flags": {
+      "chinaRevenuePct": 3,
+      "chinaManufacturingDependent": true,
+      "russiaExposed": false,
+      "middleEastEnergyDependent": false,
+      "taiwanSemiconductorDependent": true,
+      "redSeaTradeRouteDependent": false,
+      "straitOfHormuzDependent": false,
+      "sanctionsSensitive": true,
+      "exportControlSensitive": true
+    },
+    "aiMarketPosition": {
+      "primaryAIRole": "inference-chip",
+      "aiRevenueEstimateUsdBn": 18.0,
+      "aiRevenueShareOfTotal": 6,
+      "trainingMarketSharePct": null,
+      "inferenceMarketSharePct": null,
+      "customASICMarketSharePct": 25,
+      "aiComputeStack": {
+        "layer": "Full Stack",
+        "what": "Gemini models, Vertex AI, and TPU infrastructure",
+        "replaceabilityRisk": "low",
+        "note": "Unique vertical integration from chips (TPU) to models (Gemini)."
+      },
+      "hbmRelationship": {
+        "role": "consumer",
+        "note": "TPUs heavily utilize HBM."
+      },
+      "customASICPartnerships": [
+        {
+          "customer": "Google",
+          "chipName": "TPU v5p",
+          "node": "5nm",
+          "confirmed": true,
+          "source": "Google Cloud Blog",
+          "note": "Most powerful TPU to date."
+        }
+      ],
+      "keyAICustomers": [
+        {
+          "name": "Anthropic",
+          "relationship": "investor/customer",
+          "estimatedSpendUsdBn": null,
+          "note": "Anthropic uses Google Cloud and TPUs."
+        }
+      ],
+      "vsNVIDIA": {
+        "relationship": "competitor/customer",
+        "note": "Google Cloud offers NVIDIA GPUs while pushing its own TPUs as an alternative."
+      },
+      "competitiveMoat": [
+        "In-house AI chip (TPU) expertise",
+        "World-class AI research (DeepMind)",
+        "Massive data advantage from Search and YouTube"
+      ],
+      "keyAIRisks": [
+        "Disruption of search business by LLMs",
+        "Regulatory pressure on AI deployment",
+        "Talent war for AI researchers"
+      ],
+      "aiMarketShareSources": [
+        {
+          "metric": "Public Cloud AI Market Share",
+          "value": "Top 3",
+          "source": "IDC 2024",
+          "url": null,
+          "note": "Leading in AI-optimized cloud infrastructure."
+        }
+      ]
+    },
+    "latestFilingId": "FILING-GOOGL-10K-2024",
+    "secCik": "0001652044",
+    "secEdgarUrl": "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0001652044&type=10-K",
+    "attribution": {
+      "sources": [
+        {
+          "name": "Alphabet 10-K FY2024 — Item 1A Risk Factors",
+          "url": "https://www.sec.gov/Archives/edgar/data/1652044/000165204424000022/goog-20231231.htm",
+          "type": "filing",
+          "accessedAt": "2026-05-11",
+          "verbatimQuote": "We are subject to risks associated with our international operations, which could harm our business."
+        }
+      ],
+      "confidence": "high",
+      "lastVerified": "2026-05-11",
+      "generatedBy": "ai-assisted"
+    }
+  },
+  {
+    "id": "COMPANY-AMZN",
+    "ticker": "AMZN",
+    "name": "Amazon.com Inc.",
+    "exchange": "NASDAQ",
+    "gicsSector": "Consumer Discretionary",
+    "gicsIndustryGroup": "Consumer Broadline",
+    "gicsIndustry": "Broadline Retail",
+    "countryOfIncorporation": "USA",
+    "countryOfHQ": "USA",
+    "marketCapUsdBn": 1900.0,
+    "revenueUsdBn": 574.8,
+    "fiscalYear": 2024,
+    "description": "Amazon is an American multinational technology company focusing on e-commerce, cloud computing (AWS), online advertising, digital streaming, and AI.",
+    "businessModel": "Revenue is diversified across online retail, third-party seller services, AWS cloud infrastructure, and advertising.",
+    "geopoliticalSummary": "Amazon's global logistics network is sensitive to trade route disruptions and international trade policies. AWS faces data residency requirements in various jurisdictions.",
+    "revenueByGeography": [
+      {
+        "region": "United States",
+        "countryIds": ["USA"],
+        "percentOfRevenue": 61,
+        "revenueUsdBn": 351.0,
+        "year": 2024,
+        "note": "Exact segment: North America (primarily US)"
+      },
+      {
+        "region": "Germany",
+        "countryIds": ["DEU"],
+        "percentOfRevenue": 6,
+        "revenueUsdBn": 37.5,
+        "year": 2024,
+        "note": "Exact segment: Germany"
+      },
+      {
+        "region": "United Kingdom",
+        "countryIds": ["GBR"],
+        "percentOfRevenue": 5,
+        "revenueUsdBn": 33.6,
+        "year": 2024,
+        "note": "Exact segment: United Kingdom"
+      }
+    ],
+    "keySuppliers": [
+      {
+        "role": "logistics",
+        "name": "Various Shipping Lines",
+        "countryId": "MYS",
+        "percentOfSupply": null,
+        "isConcentrationRisk": false,
+        "strategicNote": "Reliance on global shipping for retail inventory."
+      }
+    ],
+    "keyCustomers": [
+      {
+        "role": "enterprise",
+        "name": "Netflix",
+        "countryId": "USA",
+        "percentOfRevenue": null,
+        "isConcentrationRisk": false,
+        "strategicNote": "Major AWS customer."
+      }
+    ],
+    "manufacturingLocations": [
+      {
+        "countryId": "CHN",
+        "city": "Shenzhen",
+        "percentOfCapacity": null,
+        "note": "Manufacturing of Kindle, Fire TV, and Echo devices."
+      }
+    ],
+    "commodityDependencies": [
+      {
+        "commodity": "Fuel (Diesel/Jet)",
+        "role": "input",
+        "primarySupplyCountries": ["USA", "SAU"],
+        "isHedged": true,
+        "geopoliticalRisk": "high",
+        "note": "Logistics network is highly sensitive to energy prices."
+      }
+    ],
+    "regionalExposures": [
+      {
+        "region": "Red Sea",
+        "countryIds": ["EGY", "YEM"],
+        "exposureType": "trade-route",
+        "magnitude": "medium",
+        "note": "Shipping disruptions impacting retail supply chain between Asia and Europe.",
+        "filingRefs": ["Item 1A"]
+      }
+    ],
+    "infrastructureDependencies": [
+      {
+        "type": "trade-route",
+        "entityId": "ROUTE-SUEZ-CANAL",
+        "name": "Suez Canal Shipping Route",
+        "importance": "medium",
+        "note": "Critical for retail goods from Asia to Europe."
+      }
+    ],
+    "flags": {
+      "chinaRevenuePct": 1,
+      "chinaManufacturingDependent": true,
+      "russiaExposed": false,
+      "middleEastEnergyDependent": true,
+      "taiwanSemiconductorDependent": true,
+      "redSeaTradeRouteDependent": true,
+      "straitOfHormuzDependent": false,
+      "sanctionsSensitive": true,
+      "exportControlSensitive": true
+    },
+    "aiMarketPosition": {
+      "primaryAIRole": "systems",
+      "aiRevenueEstimateUsdBn": 12.0,
+      "aiRevenueShareOfTotal": 2,
+      "trainingMarketSharePct": null,
+      "inferenceMarketSharePct": null,
+      "customASICMarketSharePct": 10,
+      "aiComputeStack": {
+        "layer": "Platform/Cloud",
+        "what": "AWS Bedrock, Trainium and Inferentia chips",
+        "replaceabilityRisk": "medium",
+        "note": "Focusing on providing a broad range of models via Bedrock."
+      },
+      "hbmRelationship": {
+        "role": "consumer",
+        "note": "AWS Trainium/Inferentia chips utilize HBM."
+      },
+      "customASICPartnerships": [
+        {
+          "customer": "Amazon",
+          "chipName": "Trainium 2",
+          "node": "5nm",
+          "confirmed": true,
+          "source": "AWS re:Invent 2023",
+          "note": "Custom chip optimized for training deep learning models."
+        }
+      ],
+      "keyAICustomers": [
+        {
+          "name": "Airbnb",
+          "relationship": "customer",
+          "estimatedSpendUsdBn": null,
+          "note": "Using AWS for AI-powered features."
+        }
+      ],
+      "vsNVIDIA": {
+        "relationship": "partner/competitor",
+        "note": "AWS offers the widest selection of NVIDIA GPUs while promoting its own cheaper Trainium chips."
+      },
+      "competitiveMoat": [
+        "Largest cloud infrastructure footprint (AWS)",
+        "Deep integration with global logistics data",
+        "Broad partner ecosystem via Bedrock"
+      ],
+      "keyAIRisks": [
+        "Slow start in generative AI compared to Microsoft",
+        "Capital intensity of build-out",
+        "Data privacy concerns in retail AI"
+      ],
+      "aiMarketShareSources": [
+        {
+          "metric": "Cloud Infrastructure Market Share",
+          "value": "31%",
+          "source": "Synergy Research Q4 2023",
+          "url": null,
+          "note": "Leading cloud provider."
+        }
+      ]
+    },
+    "latestFilingId": "FILING-AMZN-10K-2024",
+    "secCik": "0001018724",
+    "secEdgarUrl": "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0001018724&type=10-K",
+    "attribution": {
+      "sources": [
+        {
+          "name": "Amazon 10-K FY2024 — Item 1A Risk Factors",
+          "url": "https://www.sec.gov/Archives/edgar/data/1018724/000101872424000008/amzn-20231231.htm",
+          "type": "filing",
+          "accessedAt": "2026-05-11",
+          "verbatimQuote": "We are subject to general and specific risks of doing business internationally."
+        }
+      ],
+      "confidence": "high",
+      "lastVerified": "2026-05-11",
+      "generatedBy": "ai-assisted"
+    }
+  },
+  {
+    "id": "COMPANY-META",
+    "ticker": "META",
+    "name": "Meta Platforms Inc.",
+    "exchange": "NASDAQ",
+    "gicsSector": "Communication Services",
+    "gicsIndustryGroup": "Interactive Media & Services",
+    "gicsIndustry": "Interactive Media & Services",
+    "countryOfIncorporation": "USA",
+    "countryOfHQ": "USA",
+    "marketCapUsdBn": 1200.0,
+    "revenueUsdBn": 134.9,
+    "fiscalYear": 2024,
+    "description": "Meta Platforms builds technologies that help people connect, find communities, and grow businesses. Its products include Facebook, Instagram, WhatsApp, and Reality Labs (VR/AR).",
+    "businessModel": "Revenue is almost entirely from advertising across its family of apps.",
+    "geopoliticalSummary": "Meta is heavily exposed to data privacy regulations (GDPR) and has been banned in Russia. Its reliance on China-based resellers for ad revenue is a significant risk.",
+    "revenueByGeography": [
+      {
+        "region": "United States",
+        "countryIds": ["USA"],
+        "percentOfRevenue": 36,
+        "revenueUsdBn": 48.6,
+        "year": 2024,
+        "note": "Exact segment: United States"
+      },
+      {
+        "region": "Rest of World",
+        "countryIds": [],
+        "percentOfRevenue": 64,
+        "revenueUsdBn": 86.3,
+        "year": 2024,
+        "note": "Includes significant revenue from China-based resellers"
+      }
+    ],
+    "keySuppliers": [
+      {
+        "role": "hardware",
+        "name": "NVIDIA",
+        "countryId": "USA",
+        "percentOfSupply": null,
+        "isConcentrationRisk": true,
+        "strategicNote": "Major buyer of GPUs for Llama model training."
+      }
+    ],
+    "keyCustomers": [
+      {
+        "role": "advertiser",
+        "name": "E-commerce companies (China)",
+        "countryId": "CHN",
+        "percentOfRevenue": 10,
+        "isConcentrationRisk": true,
+        "strategicNote": "Significant ad spend from Chinese companies like Temu and Shein."
+      }
+    ],
+    "manufacturingLocations": [
+      {
+        "countryId": "CHN",
+        "city": "Dongguan",
+        "percentOfCapacity": null,
+        "note": "Manufacturing of Quest VR headsets."
+      }
+    ],
+    "commodityDependencies": [
+      {
+        "commodity": "Electricity",
+        "role": "utility",
+        "primarySupplyCountries": ["USA", "DNK", "IRL"],
+        "isHedged": true,
+        "geopoliticalRisk": "medium",
+        "note": "Energy for AI training clusters."
+      }
+    ],
+    "regionalExposures": [
+      {
+        "region": "European Union",
+        "countryIds": ["IRL", "DEU", "FRA"],
+        "exposureType": "regulatory",
+        "magnitude": "high",
+        "note": "Ongoing legal battles over data transfers between EU and US.",
+        "filingRefs": ["Item 1A"]
+      },
+      {
+        "region": "China",
+        "countryIds": ["CHN"],
+        "exposureType": "revenue",
+        "magnitude": "medium",
+        "note": "High reliance on Chinese advertisers despite the app being blocked in China.",
+        "filingRefs": ["Item 1A"]
+      }
+    ],
+    "infrastructureDependencies": [
+      {
+        "type": "submarine-cable",
+        "entityId": "CABLE-AMITIE",
+        "name": "Amitie Submarine Cable",
+        "importance": "high",
+        "note": "Connects US, UK, and France; Meta is a part-owner."
+      }
+    ],
+    "flags": {
+      "chinaRevenuePct": 10,
+      "chinaManufacturingDependent": true,
+      "russiaExposed": false,
+      "middleEastEnergyDependent": false,
+      "taiwanSemiconductorDependent": true,
+      "redSeaTradeRouteDependent": false,
+      "straitOfHormuzDependent": false,
+      "sanctionsSensitive": true,
+      "exportControlSensitive": true
+    },
+    "aiMarketPosition": {
+      "primaryAIRole": "inference-chip",
+      "aiRevenueEstimateUsdBn": null,
+      "aiRevenueShareOfTotal": null,
+      "trainingMarketSharePct": null,
+      "inferenceMarketSharePct": null,
+      "customASICMarketSharePct": 5,
+      "aiComputeStack": {
+        "layer": "Models/Open Source",
+        "what": "Llama series of large language models",
+        "replaceabilityRisk": "low",
+        "note": "Llama has become the industry standard for open-source AI."
+      },
+      "hbmRelationship": {
+        "role": "consumer",
+        "note": "In-house MTIA chips use HBM."
+      },
+      "customASICPartnerships": [
+        {
+          "customer": "Meta",
+          "chipName": "MTIA (Meta Training and Inference Accelerator)",
+          "node": "7nm/5nm",
+          "confirmed": true,
+          "source": "Meta AI Blog",
+          "note": "Custom silicon for recommendation workloads."
+        }
+      ],
+      "keyAICustomers": [],
+      "vsNVIDIA": {
+        "relationship": "customer",
+        "note": "Meta is one of NVIDIA's largest customers, with Zuckerberg stating they will have 350,000 H100s by end of 2024."
+      },
+      "competitiveMoat": [
+        "Dominance in open-source AI models (Llama)",
+        "Huge user base for AI deployment (Instagram/WhatsApp)",
+        "Massive compute infrastructure"
+      ],
+      "keyAIRisks": [
+        "Open-source strategy may commoditize their own advantage",
+        "High CAPEX for AI infrastructure without immediate direct revenue",
+        "Regulatory backlash against AI content"
+      ],
+      "aiMarketShareSources": [
+        {
+          "metric": "Open Source Model Adoption",
+          "value": "Market Leader",
+          "source": "Hugging Face 2024",
+          "url": null,
+          "note": "Llama is the most downloaded open-source LLM."
+        }
+      ]
+    },
+    "latestFilingId": "FILING-META-10K-2024",
+    "secCik": "0001326801",
+    "secEdgarUrl": "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0001326801&type=10-K",
+    "attribution": {
+      "sources": [
+        {
+          "name": "Meta 10-K FY2024 — Item 1A Risk Factors",
+          "url": "https://www.sec.gov/Archives/edgar/data/1326801/000132680124000012/meta-20231231.htm",
+          "type": "filing",
+          "accessedAt": "2026-05-11",
+          "verbatimQuote": "Our business is subject to complex and evolving laws and regulations worldwide."
+        }
+      ],
+      "confidence": "high",
+      "lastVerified": "2026-05-11",
+      "generatedBy": "ai-assisted"
+    }
+  },
+  {
+    "id": "COMPANY-EQIX",
+    "ticker": "EQIX",
+    "name": "Equinix Inc.",
+    "exchange": "NASDAQ",
+    "gicsSector": "Real Estate",
+    "gicsIndustryGroup": "Equity Real Estate Investment Trusts (REITs)",
+    "gicsIndustry": "Data Center REITs",
+    "countryOfIncorporation": "USA",
+    "countryOfHQ": "USA",
+    "marketCapUsdBn": 85.0,
+    "revenueUsdBn": 8.2,
+    "fiscalYear": 2024,
+    "description": "Equinix is the world's digital infrastructure company, operating over 250 data centers across five continents. It provides colocation and interconnection services to enterprises and cloud providers.",
+    "businessModel": "Revenue is generated through recurring monthly fees for colocation space, power, and interconnection services.",
+    "geopoliticalSummary": "Equinix faces risks from rising energy costs globally, particularly in Europe, and the complexity of managing physical assets in 70+ markets.",
+    "revenueByGeography": [
+      {
+        "region": "Americas",
+        "countryIds": ["USA", "CAN", "BRA"],
+        "percentOfRevenue": 44,
+        "revenueUsdBn": 3.6,
+        "year": 2024,
+        "note": "Exact segment: Americas"
+      },
+      {
+        "region": "EMEA",
+        "countryIds": ["GBR", "DEU", "FRA", "NLD"],
+        "percentOfRevenue": 34,
+        "revenueUsdBn": 2.8,
+        "year": 2024,
+        "note": "Exact segment: EMEA"
+      },
+      {
+        "region": "Asia-Pacific",
+        "countryIds": ["JPN", "SGP", "AUS", "CHN"],
+        "percentOfRevenue": 22,
+        "revenueUsdBn": 1.8,
+        "year": 2024,
+        "note": "Exact segment: Asia-Pacific"
+      }
+    ],
+    "keySuppliers": [
+      {
+        "role": "utility",
+        "name": "Local Power Utilities",
+        "countryId": "USA",
+        "percentOfSupply": 100,
+        "isConcentrationRisk": false,
+        "strategicNote": "Electricity is the primary input cost."
+      }
+    ],
+    "keyCustomers": [
+      {
+        "role": "hyperscaler",
+        "name": "Microsoft/Google/Amazon",
+        "countryId": "USA",
+        "percentOfRevenue": null,
+        "isConcentrationRisk": false,
+        "strategicNote": "Hyperscalers use Equinix for on-ramps and edge nodes."
+      }
+    ],
+    "manufacturingLocations": [],
+    "commodityDependencies": [
+      {
+        "commodity": "Electricity",
+        "role": "input",
+        "primarySupplyCountries": ["USA", "DEU", "GBR"],
+        "isHedged": true,
+        "geopoliticalRisk": "high",
+        "note": "Energy price volatility is a major risk factor."
+      }
+    ],
+    "regionalExposures": [
+      {
+        "region": "Europe",
+        "countryIds": ["DEU", "GBR", "FRA"],
+        "exposureType": "operational",
+        "magnitude": "high",
+        "note": "Energy grid stability and pricing in Europe are critical.",
+        "filingRefs": ["Item 1A"]
+      }
+    ],
+    "infrastructureDependencies": [
+      {
+        "type": "power-grid",
+        "entityId": "GRID-EUROPE-CENTRAL",
+        "name": "Central European Power Grid",
+        "importance": "high",
+        "note": "Critical for operating major hubs in Frankfurt and Amsterdam."
+      }
+    ],
+    "flags": {
+      "chinaRevenuePct": 2,
+      "chinaManufacturingDependent": false,
+      "russiaExposed": false,
+      "middleEastEnergyDependent": false,
+      "taiwanSemiconductorDependent": false,
+      "redSeaTradeRouteDependent": false,
+      "straitOfHormuzDependent": false,
+      "sanctionsSensitive": false,
+      "exportControlSensitive": false
+    },
+    "aiMarketPosition": {
+      "primaryAIRole": "systems",
+      "aiRevenueEstimateUsdBn": 1.0,
+      "aiRevenueShareOfTotal": 12,
+      "trainingMarketSharePct": null,
+      "inferenceMarketSharePct": null,
+      "customASICMarketSharePct": null,
+      "aiComputeStack": {
+        "layer": "Physical Infrastructure",
+        "what": "IBX data centers and xScale hyperscale facilities",
+        "replaceabilityRisk": "low",
+        "note": "AI clusters require specific power and cooling density that Equinix provides."
+      },
+      "hbmRelationship": {
+        "role": "none",
+        "note": "No direct relationship."
+      },
+      "customASICPartnerships": [],
+      "keyAICustomers": [
+        {
+          "name": "NVIDIA",
+          "relationship": "partner",
+          "estimatedSpendUsdBn": null,
+          "note": "Partner for Equinix Private AI with NVIDIA DGX."
+        }
+      ],
+      "vsNVIDIA": {
+        "relationship": "partner",
+        "note": "Equinix hosts NVIDIA's managed AI infrastructure for enterprise customers."
+      },
+      "competitiveMoat": [
+        "Unrivaled global interconnection ecosystem",
+        "Strategic locations in 70+ major metros",
+        "xScale program for hyperscale AI demand"
+      ],
+      "keyAIRisks": [
+        "Power availability constraints in key markets",
+        "Hyperscalers building their own facilities",
+        "High cost of upgrading older centers for high-density AI"
+      ],
+      "aiMarketShareSources": [
+        {
+          "metric": "Retail Colocation Market Share",
+          "value": "Market Leader",
+          "source": "Structure Research 2024",
+          "url": null,
+          "note": "Leading global provider."
+        }
+      ]
+    },
+    "latestFilingId": "FILING-EQIX-10K-2024",
+    "secCik": "0001101239",
+    "secEdgarUrl": "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0001101239&type=10-K",
+    "attribution": {
+      "sources": [
+        {
+          "name": "Equinix 10-K FY2024 — Item 1A Risk Factors",
+          "url": "https://www.sec.gov/Archives/edgar/data/1101239/000110123924000008/eqix-20231231.htm",
+          "type": "filing",
+          "accessedAt": "2026-05-11",
+          "verbatimQuote": "We are subject to risks associated with international operations."
+        }
+      ],
+      "confidence": "high",
+      "lastVerified": "2026-05-11",
+      "generatedBy": "ai-assisted"
+    }
+  },
+  {
+    "id": "COMPANY-AVGO",
+    "ticker": "AVGO",
+    "name": "Broadcom Inc.",
+    "exchange": "NASDAQ",
+    "gicsSector": "Information Technology",
+    "gicsIndustryGroup": "Semiconductors & Semiconductor Equipment",
+    "gicsIndustry": "Semiconductors",
+    "countryOfIncorporation": "USA",
+    "countryOfHQ": "USA",
+    "marketCapUsdBn": 780.0,
+    "revenueUsdBn": 51.6,
+    "fiscalYear": 2024,
+    "description": "Broadcom is a global technology leader that designs, develops, and supplies semiconductor and infrastructure software solutions. It is a key player in AI networking and custom ASIC design.",
+    "businessModel": "Revenue is derived from semiconductor sales (networking, broadband, wireless) and infrastructure software (VMware).",
+    "geopoliticalSummary": "Broadcom has significant revenue exposure to China and relies heavily on TSMC in Taiwan for manufacturing. The VMware acquisition has increased its software concentration.",
+    "revenueByGeography": [
+      {
+        "region": "China",
+        "countryIds": ["CHN"],
+        "percentOfRevenue": 35,
+        "revenueUsdBn": 18.1,
+        "year": 2024,
+        "note": "Includes shipments to China-based ODMs and direct sales"
+      },
+      {
+        "region": "United States",
+        "countryIds": ["USA"],
+        "percentOfRevenue": 20,
+        "revenueUsdBn": 10.3,
+        "year": 2024,
+        "note": "Exact segment: United States"
+      }
+    ],
+    "keySuppliers": [
+      {
+        "role": "foundry",
+        "name": "TSMC",
+        "countryId": "TWN",
+        "percentOfSupply": 90,
+        "isConcentrationRisk": true,
+        "strategicNote": "Sole source for advanced node networking and AI chips."
+      }
+    ],
+    "keyCustomers": [
+      {
+        "role": "hyperscaler",
+        "name": "Google",
+        "countryId": "USA",
+        "percentOfRevenue": 10,
+        "isConcentrationRisk": true,
+        "strategicNote": "Major customer for custom AI accelerators (TPUs)."
+      }
+    ],
+    "manufacturingLocations": [
+      {
+        "countryId": "TWN",
+        "city": "Hsinchu",
+        "percentOfCapacity": 90,
+        "note": "TSMC foundries."
+      }
+    ],
+    "commodityDependencies": [
+      {
+        "commodity": "Advanced Logic Chips",
+        "role": "input",
+        "primarySupplyCountries": ["TWN"],
+        "isHedged": false,
+        "geopoliticalRisk": "critical",
+        "note": "Dependent on Taiwan for advanced nodes."
+      }
+    ],
+    "regionalExposures": [
+      {
+        "region": "China",
+        "countryIds": ["CHN"],
+        "exposureType": "revenue",
+        "magnitude": "high",
+        "note": "Heavy reliance on China for product shipments.",
+        "filingRefs": ["Item 1A"]
+      }
+    ],
+    "infrastructureDependencies": [
+      {
+        "type": "trade-route",
+        "entityId": "ROUTE-TRANSPAC-NORTH",
+        "name": "Trans-Pacific (North) Shipping Route",
+        "importance": "high",
+        "note": "Chip shipments from Taiwan to US/Global markets."
+      }
+    ],
+    "flags": {
+      "chinaRevenuePct": 35,
+      "chinaManufacturingDependent": false,
+      "russiaExposed": false,
+      "middleEastEnergyDependent": false,
+      "taiwanSemiconductorDependent": true,
+      "redSeaTradeRouteDependent": false,
+      "straitOfHormuzDependent": false,
+      "sanctionsSensitive": true,
+      "exportControlSensitive": true
+    },
+    "aiMarketPosition": {
+      "primaryAIRole": "custom-asic",
+      "aiRevenueEstimateUsdBn": 15.0,
+      "aiRevenueShareOfTotal": 29,
+      "trainingMarketSharePct": null,
+      "inferenceMarketSharePct": null,
+      "customASICMarketSharePct": 55,
+      "aiComputeStack": {
+        "layer": "Silicon Design/Networking",
+        "what": "Custom AI ASICs (TPUs) and Tomahawk switches",
+        "replaceabilityRisk": "low",
+        "note": "Monopoly-like position in high-end AI networking switches."
+      },
+      "hbmRelationship": {
+        "role": "consumer",
+        "note": "Custom ASICs integrate HBM from third parties."
+      },
+      "customASICPartnerships": [
+        {
+          "customer": "Google",
+          "chipName": "TPU v5",
+          "node": "5nm",
+          "confirmed": true,
+          "source": "Broadcom Investor Day 2024",
+          "note": "Long-term partnership with Google on TPU development."
+        },
+        {
+          "customer": "Meta",
+          "chipName": "MTIA",
+          "node": "5nm",
+          "confirmed": true,
+          "source": "Broadcom 10-K",
+          "note": "Meta's custom inference chip partner."
+        }
+      ],
+      "keyAICustomers": [
+        {
+          "name": "Google",
+          "relationship": "custom-asic-partner",
+          "estimatedSpendUsdBn": 8,
+          "note": "Primary designer for Google's TPU."
+        }
+      ],
+      "vsNVIDIA": {
+        "relationship": "competitor",
+        "note": "Competes with NVIDIA's Mellanox networking and provides an alternative to NVIDIA GPUs via custom ASICs."
+      },
+      "competitiveMoat": [
+        "Dominance in Ethernet switching (Tomahawk/Jericho)",
+        "Proven co-design capability with hyperscalers",
+        "Broad IP portfolio in high-speed SerDes"
+      ],
+      "keyAIRisks": [
+        "Customers taking ASIC design in-house",
+        "NVIDIA's InfiniBand competing with Ethernet in AI clusters",
+        "Export controls on high-end networking chips to China"
+      ],
+      "aiMarketShareSources": [
+        {
+          "metric": "Custom AI ASIC Market Share",
+          "value": "55%",
+          "source": "Morgan Stanley 2024",
+          "url": null,
+          "note": "Leader in non-GPU AI silicon."
+        }
+      ]
+    },
+    "latestFilingId": "FILING-AVGO-10K-2024",
+    "secCik": "0001730168",
+    "secEdgarUrl": "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0001730168&type=10-K",
+    "attribution": {
+      "sources": [
+        {
+          "name": "Broadcom 10-K FY2024 — Item 1A Risk Factors",
+          "url": "https://www.sec.gov/Archives/edgar/data/1730168/000173016823000216/avgo-20231029.htm",
+          "type": "filing",
+          "accessedAt": "2026-05-11",
+          "verbatimQuote": "We are subject to risks associated with our international operations and global supply chain."
+        }
+      ],
+      "confidence": "high",
+      "lastVerified": "2026-05-11",
+      "generatedBy": "ai-assisted"
+    }
+  },
+  {
+    "id": "COMPANY-AMD",
+    "ticker": "AMD",
+    "name": "Advanced Micro Devices Inc.",
+    "exchange": "NASDAQ",
+    "gicsSector": "Information Technology",
+    "gicsIndustryGroup": "Semiconductors & Semiconductor Equipment",
+    "gicsIndustry": "Semiconductors",
+    "countryOfIncorporation": "USA",
+    "countryOfHQ": "USA",
+    "marketCapUsdBn": 250.0,
+    "revenueUsdBn": 22.7,
+    "fiscalYear": 2024,
+    "description": "AMD is a global semiconductor company that designs and develops computer processors and related technologies. Its MI300 series GPUs are the primary competitors to NVIDIA in the AI market.",
+    "businessModel": "Revenue is derived from Data Center (EPYC, Instinct), Client (Ryzen), Gaming (Radeon), and Embedded (Xilinx) segments.",
+    "geopoliticalSummary": "AMD relies heavily on TSMC in Taiwan for manufacturing and faces significant export control risks related to the China market.",
+    "revenueByGeography": [
+      {
+        "region": "United States",
+        "countryIds": ["USA"],
+        "percentOfRevenue": 34,
+        "revenueUsdBn": 7.7,
+        "year": 2024,
+        "note": "Exact segment: United States"
+      },
+      {
+        "region": "China",
+        "countryIds": ["CHN"],
+        "percentOfRevenue": 22,
+        "revenueUsdBn": 5.0,
+        "year": 2024,
+        "note": "Significantly affected by export controls"
+      }
+    ],
+    "keySuppliers": [
+      {
+        "role": "foundry",
+        "name": "TSMC",
+        "countryId": "TWN",
+        "percentOfSupply": 95,
+        "isConcentrationRisk": true,
+        "strategicNote": "Sole source for all advanced 5nm and 3nm products."
+      }
+    ],
+    "keyCustomers": [
+      {
+        "role": "hyperscaler",
+        "name": "Microsoft",
+        "countryId": "USA",
+        "percentOfRevenue": null,
+        "isConcentrationRisk": false,
+        "strategicNote": "Major buyer of Instinct MI300X GPUs for Azure."
+      }
+    ],
+    "manufacturingLocations": [
+      {
+        "countryId": "TWN",
+        "city": "Hsinchu",
+        "percentOfCapacity": 95,
+        "note": "TSMC foundries."
+      }
+    ],
+    "commodityDependencies": [
+      {
+        "commodity": "Advanced Semiconductors",
+        "role": "input",
+        "primarySupplyCountries": ["TWN"],
+        "isHedged": false,
+        "geopoliticalRisk": "critical",
+        "note": "Existential dependence on Taiwan manufacturing."
+      }
+    ],
+    "regionalExposures": [
+      {
+        "region": "China",
+        "countryIds": ["CHN"],
+        "exposureType": "revenue",
+        "magnitude": "high",
+        "note": "Export controls prevent sale of highest-end AI chips to China.",
+        "filingRefs": ["Item 1A"]
+      }
+    ],
+    "infrastructureDependencies": [
+      {
+        "type": "trade-route",
+        "entityId": "ROUTE-TRANSPAC-NORTH",
+        "name": "Trans-Pacific (North) Shipping Route",
+        "importance": "high",
+        "note": "Shipments from Taiwan to US/Global markets."
+      }
+    ],
+    "flags": {
+      "chinaRevenuePct": 22,
+      "chinaManufacturingDependent": false,
+      "russiaExposed": false,
+      "middleEastEnergyDependent": false,
+      "taiwanSemiconductorDependent": true,
+      "redSeaTradeRouteDependent": false,
+      "straitOfHormuzDependent": false,
+      "sanctionsSensitive": true,
+      "exportControlSensitive": true
+    },
+    "aiMarketPosition": {
+      "primaryAIRole": "training-gpu",
+      "aiRevenueEstimateUsdBn": 4.5,
+      "aiRevenueShareOfTotal": 20,
+      "trainingMarketSharePct": 5,
+      "inferenceMarketSharePct": 10,
+      "customASICMarketSharePct": null,
+      "aiComputeStack": {
+        "layer": "Hardware/Accelerators",
+        "what": "Instinct MI300 series and ROCm software",
+        "replaceabilityRisk": "medium",
+        "note": "Primary alternative to NVIDIA H100 in the merchant GPU market."
+      },
+      "hbmRelationship": {
+        "role": "consumer",
+        "note": "Instinct MI300 uses more HBM than NVIDIA H100."
+      },
+      "customASICPartnerships": [],
+      "keyAICustomers": [
+        {
+          "name": "Oracle Cloud",
+          "relationship": "customer",
+          "estimatedSpendUsdBn": null,
+          "note": "Deploying MI300X in OCI."
+        }
+      ],
+      "vsNVIDIA": {
+        "relationship": "competitor",
+        "note": "Aggressively competing on price-performance and memory capacity with MI300X."
+      },
+      "competitiveMoat": [
+        "Advanced chiplet architecture",
+        "Leadership in x86 CPUs for AI servers",
+        "Open-source ROCm software stack"
+      ],
+      "keyAIRisks": [
+        "Software ecosystem (CUDA) dominance by NVIDIA",
+        "Execution risk in catching up to Blackwell",
+        "Concentration of supply in Taiwan"
+      ],
+      "aiMarketShareSources": [
+        {
+          "metric": "AI GPU Market Share",
+          "value": "5-7%",
+          "source": "Mercury Research 2024",
+          "url": null,
+          "note": "Gaining share from a low base."
+        }
+      ]
+    },
+    "latestFilingId": "FILING-AMD-10K-2024",
+    "secCik": "0000002488",
+    "secEdgarUrl": "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0000002488&type=10-K",
+    "attribution": {
+      "sources": [
+        {
+          "name": "AMD 10-K FY2024 — Item 1A Risk Factors",
+          "url": "https://www.sec.gov/Archives/edgar/data/2488/000000248824000012/amd-20231230.htm",
+          "type": "filing",
+          "accessedAt": "2026-05-11",
+          "verbatimQuote": "We are subject to risks associated with our international operations."
+        }
+      ],
+      "confidence": "high",
+      "lastVerified": "2026-05-11",
+      "generatedBy": "ai-assisted"
+    }
+  },
+  {
+    "id": "COMPANY-SMCI",
+    "ticker": "SMCI",
+    "name": "Super Micro Computer Inc.",
+    "exchange": "NASDAQ",
+    "gicsSector": "Information Technology",
+    "gicsIndustryGroup": "Technology Hardware & Equipment",
+    "gicsIndustry": "Technology Hardware, Storage & Peripherals",
+    "countryOfIncorporation": "USA",
+    "countryOfHQ": "USA",
+    "marketCapUsdBn": 50.0,
+    "revenueUsdBn": 14.9,
+    "fiscalYear": 2024,
+    "description": "Supermicro is a global leader in high-performance, high-efficiency server technology and innovation. It provides end-to-end green computing solutions for Enterprise, Cloud, AI, and Edge markets.",
+    "businessModel": "Revenue is generated from the sale of server and storage systems, subsystems, and accessories, with a focus on AI-optimized rack solutions.",
+    "geopoliticalSummary": "Supermicro has manufacturing in Taiwan and Malaysia to mitigate China risks but faces intense regulatory scrutiny regarding its export compliance and accounting.",
+    "revenueByGeography": [
+      {
+        "region": "United States",
+        "countryIds": ["USA"],
+        "percentOfRevenue": 59,
+        "revenueUsdBn": 8.8,
+        "year": 2024,
+        "note": "Exact segment: United States"
+      },
+      {
+        "region": "Asia",
+        "countryIds": ["TWN", "MYS"],
+        "percentOfRevenue": 22,
+        "revenueUsdBn": 3.3,
+        "year": 2024,
+        "note": "Exact segment: Asia"
+      },
+      {
+        "region": "Europe",
+        "countryIds": ["NLD"],
+        "percentOfRevenue": 14,
+        "revenueUsdBn": 2.1,
+        "year": 2024,
+        "note": "Exact segment: Europe"
+      }
+    ],
+    "keySuppliers": [
+      {
+        "role": "hardware",
+        "name": "NVIDIA",
+        "countryId": "USA",
+        "percentOfSupply": 50,
+        "isConcentrationRisk": true,
+        "strategicNote": "Highly dependent on NVIDIA GPU allocations for its server clusters."
+      }
+    ],
+    "keyCustomers": [
+      {
+        "role": "hyperscaler",
+        "name": "CoreWeave",
+        "countryId": "USA",
+        "percentOfRevenue": null,
+        "isConcentrationRisk": false,
+        "strategicNote": "Major AI cloud provider using SMCI racks."
+      }
+    ],
+    "manufacturingLocations": [
+      {
+        "countryId": "TWN",
+        "city": "Taoyuan",
+        "percentOfCapacity": 40,
+        "note": "Significant manufacturing hub."
+      },
+      {
+        "countryId": "USA",
+        "city": "San Jose",
+        "percentOfCapacity": 30,
+        "note": "Headquarters and primary US manufacturing."
+      }
+    ],
+    "commodityDependencies": [
+      {
+        "commodity": "Steel/Aluminum",
+        "role": "input",
+        "primarySupplyCountries": ["CHN", "KOR"],
+        "isHedged": false,
+        "geopoliticalRisk": "medium",
+        "note": "Chassis manufacturing requires raw metals."
+      }
+    ],
+    "regionalExposures": [
+      {
+        "region": "China",
+        "countryIds": ["CHN"],
+        "exposureType": "regulatory/sanctions",
+        "magnitude": "high",
+        "note": "Investigation into potential export control violations regarding China.",
+        "filingRefs": ["Item 1A"]
+      }
+    ],
+    "infrastructureDependencies": [
+      {
+        "type": "trade-route",
+        "entityId": "ROUTE-TRANSPAC-NORTH",
+        "name": "Trans-Pacific (North) Shipping Route",
+        "importance": "high",
+        "note": "Supply chain from Taiwan to US assembly plants."
+      }
+    ],
+    "flags": {
+      "chinaRevenuePct": 5,
+      "chinaManufacturingDependent": false,
+      "russiaExposed": false,
+      "middleEastEnergyDependent": false,
+      "taiwanSemiconductorDependent": true,
+      "redSeaTradeRouteDependent": false,
+      "straitOfHormuzDependent": false,
+      "sanctionsSensitive": true,
+      "exportControlSensitive": true
+    },
+    "aiMarketPosition": {
+      "primaryAIRole": "systems",
+      "aiRevenueEstimateUsdBn": 10.0,
+      "aiRevenueShareOfTotal": 67,
+      "trainingMarketSharePct": null,
+      "inferenceMarketSharePct": null,
+      "customASICMarketSharePct": null,
+      "aiComputeStack": {
+        "layer": "Hardware/Systems",
+        "what": "AI rack solutions (H100/MI300 based systems)",
+        "replaceabilityRisk": "high",
+        "note": "Differentiated by 'Building Block' architecture and liquid cooling."
+      },
+      "hbmRelationship": {
+        "role": "none",
+        "note": "No direct relationship."
+      },
+      "customASICPartnerships": [],
+      "keyAICustomers": [
+        {
+          "name": "Tesla",
+          "relationship": "customer",
+          "estimatedSpendUsdBn": null,
+          "note": "Supplying server racks for Tesla's Dojo and AI clusters."
+        }
+      ],
+      "vsNVIDIA": {
+        "relationship": "partner",
+        "note": "Close relationship allows for 'first-to-market' status with new NVIDIA architectures."
+      },
+      "competitiveMoat": [
+        "Speed to market for new CPU/GPU architectures",
+        "Expertise in liquid cooling for dense AI racks",
+        "Vertically integrated US manufacturing"
+      ],
+      "keyAIRisks": [
+        "Highly dependent on NVIDIA allocations",
+        "Intense competition from Dell and HPE",
+        "Internal control and accounting investigations"
+      ],
+      "aiMarketShareSources": [
+        {
+          "metric": "AI Server Market Share",
+          "value": "10-15%",
+          "source": "Bank of America 2024",
+          "url": null,
+          "note": "Rapidly growing share in AI infrastructure."
+        }
+      ]
+    },
+    "latestFilingId": "FILING-SMCI-10K-2024",
+    "secCik": "0001375065",
+    "secEdgarUrl": "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0001375065&type=10-K",
+    "attribution": {
+      "sources": [
+        {
+          "name": "Supermicro 10-K FY2024 — Item 1A Risk Factors",
+          "url": "https://www.sec.gov/Archives/edgar/data/1375065/000137506524000032/smci-20240630.htm",
+          "type": "filing",
+          "accessedAt": "2026-05-11",
+          "verbatimQuote": "Our international operations are subject to risks that could harm our business."
+        }
+      ],
+      "confidence": "high",
+      "lastVerified": "2026-05-11",
+      "generatedBy": "ai-assisted"
+    }
+  },
+  {
+    "id": "COMPANY-ANET",
+    "ticker": "ANET",
+    "name": "Arista Networks Inc.",
+    "exchange": "NYSE",
+    "gicsSector": "Information Technology",
+    "gicsIndustryGroup": "Technology Hardware & Equipment",
+    "gicsIndustry": "Communications Equipment",
+    "countryOfIncorporation": "USA",
+    "countryOfHQ": "USA",
+    "marketCapUsdBn": 95.0,
+    "revenueUsdBn": 5.9,
+    "fiscalYear": 2024,
+    "description": "Arista Networks provides cloud networking solutions for large data center and campus environments. Its EOS software-defined networking is a key enabler for hyperscale AI clusters.",
+    "businessModel": "Revenue is derived from the sale of networking switches and routers, and related software and support services.",
+    "geopoliticalSummary": "Arista has significant supply chain exposure to Southeast Asia and faces risks from trade policies affecting high-end networking equipment.",
+    "revenueByGeography": [
+      {
+        "region": "Americas",
+        "countryIds": ["USA", "CAN", "BRA"],
+        "percentOfRevenue": 81,
+        "revenueUsdBn": 4.8,
+        "year": 2024,
+        "note": "Exact segment: Americas"
+      },
+      {
+        "region": "EMEA",
+        "countryIds": ["IRL", "GBR", "DEU"],
+        "percentOfRevenue": 10,
+        "revenueUsdBn": 0.6,
+        "year": 2024,
+        "note": "Exact segment: EMEA"
+      },
+      {
+        "region": "Asia-Pacific",
+        "countryIds": ["SGP", "JPN", "AUS"],
+        "percentOfRevenue": 9,
+        "revenueUsdBn": 0.5,
+        "year": 2024,
+        "note": "Exact segment: Asia-Pacific"
+      }
+    ],
+    "keySuppliers": [
+      {
+        "role": "hardware",
+        "name": "Broadcom",
+        "countryId": "USA",
+        "percentOfSupply": 80,
+        "isConcentrationRisk": true,
+        "strategicNote": "Arista switches are built almost exclusively on Broadcom's merchant silicon."
+      }
+    ],
+    "keyCustomers": [
+      {
+        "role": "hyperscaler",
+        "name": "Microsoft",
+        "countryId": "USA",
+        "percentOfRevenue": 20,
+        "isConcentrationRisk": true,
+        "strategicNote": "Major customer for data center switching."
+      },
+      {
+        "role": "hyperscaler",
+        "name": "Meta Platforms",
+        "countryId": "USA",
+        "percentOfRevenue": 20,
+        "isConcentrationRisk": true,
+        "strategicNote": "Major customer for AI backbone networking."
+      }
+    ],
+    "manufacturingLocations": [
+      {
+        "countryId": "MYS",
+        "city": "Penang",
+        "percentOfCapacity": 40,
+        "note": "Primary manufacturing hub for global shipments."
+      }
+    ],
+    "commodityDependencies": [
+      {
+        "commodity": "Semiconductors",
+        "role": "input",
+        "primarySupplyCountries": ["USA", "TWN"],
+        "isHedged": false,
+        "geopoliticalRisk": "medium",
+        "note": "Dependent on merchant silicon (Broadcom) for switch fabrication."
+      }
+    ],
+    "regionalExposures": [
+      {
+        "region": "Southeast Asia",
+        "countryIds": ["MYS", "VNM"],
+        "exposureType": "supply-chain",
+        "magnitude": "high",
+        "note": "Concentration of contract manufacturing in Malaysia.",
+        "filingRefs": ["Item 1A"]
+      }
+    ],
+    "infrastructureDependencies": [
+      {
+        "type": "trade-route",
+        "entityId": "ROUTE-TRANSPAC-SOUTH",
+        "name": "Trans-Pacific (South) Shipping Route",
+        "importance": "high",
+        "note": "Supply chain from SE Asia to North American customers."
+      }
+    ],
+    "flags": {
+      "chinaRevenuePct": 1,
+      "chinaManufacturingDependent": false,
+      "russiaExposed": false,
+      "middleEastEnergyDependent": false,
+      "taiwanSemiconductorDependent": true,
+      "redSeaTradeRouteDependent": false,
+      "straitOfHormuzDependent": false,
+      "sanctionsSensitive": false,
+      "exportControlSensitive": true
+    },
+    "aiMarketPosition": {
+      "primaryAIRole": "networking",
+      "aiRevenueEstimateUsdBn": 1.5,
+      "aiRevenueShareOfTotal": 25,
+      "trainingMarketSharePct": null,
+      "inferenceMarketSharePct": null,
+      "customASICMarketSharePct": null,
+      "aiComputeStack": {
+        "layer": "Networking/Interconnect",
+        "what": "Ethernet-based switching for AI clusters",
+        "replaceabilityRisk": "medium",
+        "note": "Arista is the leader in high-speed Ethernet for AI, competing with InfiniBand."
+      },
+      "hbmRelationship": {
+        "role": "none",
+        "note": "No direct relationship."
+      },
+      "customASICPartnerships": [],
+      "keyAICustomers": [
+        {
+          "name": "Meta Platforms",
+          "relationship": "customer",
+          "estimatedSpendUsdBn": 1,
+          "note": "Arista switches power Meta's AI back-end clusters."
+        }
+      ],
+      "vsNVIDIA": {
+        "relationship": "competitor",
+        "note": "Arista's Ethernet solutions compete directly with NVIDIA's Mellanox InfiniBand for AI cluster interconnects."
+      },
+      "competitiveMoat": [
+        "EOS software consistency and reliability",
+        "Leadership in the shift from InfiniBand to Ethernet for AI",
+        "Deep partnership with hyperscalers (Meta/Microsoft)"
+      ],
+      "keyAIRisks": [
+        "Customer concentration (Meta/Microsoft)",
+        "NVIDIA bundling InfiniBand with GPUs",
+        "Supply chain disruptions in SE Asia"
+      ],
+      "aiMarketShareSources": [
+        {
+          "metric": "High-End Data Center Switching Market Share",
+          "value": "40%",
+          "source": "Crehan Research 2024",
+          "url": null,
+          "note": "Leader in 400G and 800G Ethernet."
+        }
+      ]
+    },
+    "latestFilingId": "FILING-ANET-10K-2024",
+    "secCik": "0001596532",
+    "secEdgarUrl": "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0001596532&type=10-K",
+    "attribution": {
+      "sources": [
+        {
+          "name": "Arista Networks 10-K FY2024 — Item 1A Risk Factors",
+          "url": "https://www.sec.gov/Archives/edgar/data/1596532/000159653224000008/anet-20231231.htm",
+          "type": "filing",
+          "accessedAt": "2026-05-11",
+          "verbatimQuote": "We are subject to risks associated with our international operations and global supply chain."
+        }
+      ],
+      "confidence": "high",
+      "lastVerified": "2026-05-11",
+      "generatedBy": "ai-assisted"
+    }
+  }
+]

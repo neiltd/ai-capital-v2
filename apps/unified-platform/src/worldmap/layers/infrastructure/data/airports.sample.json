@@ -1,0 +1,80 @@
+[
+  {
+    "id": "DXB",
+    "name": "Dubai International Airport",
+    "countryId": "ARE",
+    "city": "Dubai",
+    "iata": "DXB",
+    "icao": "OMDB",
+    "coordinates": [55.3644, 25.2532],
+    "passengerVolume": 86900000,
+    "cargoVolume": 2600000,
+    "strategicImportance": "high",
+    "notes": "World's busiest international airport by passenger numbers. Critical Gulf logistics hub connecting Asia, Europe, and Africa."
+  },
+  {
+    "id": "SIN",
+    "name": "Singapore Changi Airport",
+    "countryId": "SGP",
+    "city": "Singapore",
+    "iata": "SIN",
+    "icao": "WSSS",
+    "coordinates": [103.9915, 1.3644],
+    "passengerVolume": 68300000,
+    "cargoVolume": 2000000,
+    "strategicImportance": "high",
+    "notes": "ASEAN aviation hub. Critical for regional supply chain logistics and Southeast Asian connectivity."
+  },
+  {
+    "id": "IST",
+    "name": "Istanbul Airport",
+    "countryId": "TUR",
+    "city": "Istanbul",
+    "iata": "IST",
+    "icao": "LTFM",
+    "coordinates": [28.7418, 41.2753],
+    "passengerVolume": 76000000,
+    "cargoVolume": 1200000,
+    "strategicImportance": "high",
+    "notes": "Eurasian crossroads. Turkey's leverage point connecting Europe, Middle East, Central Asia, and Africa."
+  },
+  {
+    "id": "PEK",
+    "name": "Beijing Capital International Airport",
+    "countryId": "CHN",
+    "city": "Beijing",
+    "iata": "PEK",
+    "icao": "ZBAA",
+    "coordinates": [116.5977, 40.0799],
+    "passengerVolume": 40000000,
+    "cargoVolume": 620000,
+    "strategicImportance": "high",
+    "notes": "Primary gateway to China's capital. BRI logistics anchor for Central Asian routes."
+  },
+  {
+    "id": "LHR",
+    "name": "London Heathrow Airport",
+    "countryId": "GBR",
+    "city": "London",
+    "iata": "LHR",
+    "icao": "EGLL",
+    "coordinates": [-0.4543, 51.4775],
+    "passengerVolume": 79200000,
+    "cargoVolume": 1700000,
+    "strategicImportance": "high",
+    "notes": "Western Europe's primary hub. UK post-Brexit trade gateway and Atlantic financial connection."
+  },
+  {
+    "id": "NRT",
+    "name": "Tokyo Narita International Airport",
+    "countryId": "JPN",
+    "city": "Tokyo",
+    "iata": "NRT",
+    "icao": "RJAA",
+    "coordinates": [140.3864, 35.7647],
+    "passengerVolume": 39500000,
+    "cargoVolume": 2000000,
+    "strategicImportance": "high",
+    "notes": "Northeast Asian logistics hub. Critical for Japan's export-oriented economy and US military alliance logistics."
+  }
+]

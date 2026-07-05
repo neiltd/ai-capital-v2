@@ -1,0 +1,24 @@
+[
+  {
+    "countryId": "MEX",
+    "year": 2023,
+    "gdpUsdBn": 1790.0,
+    "gdpPerCapita": 13826,
+    "sectors": [
+      { "sector": "Tertiary (Services)", "percentOfGDP": 64.5, "notes": "Commerce, Tourism, Finance, Transport, Real Estate." },
+      { "sector": "Secondary (Industry)", "percentOfGDP": 32.0, "notes": "Manufacturing (20%), Construction, Mining, Utilities." },
+      { "sector": "Primary (Agriculture)", "percentOfGDP": 3.5, "notes": "Agriculture, livestock, forestry, fishing." }
+    ],
+    "attribution": {
+      "sources": [
+        { "name": "INEGI (Mexico) 2023", "url": "https://www.inegi.org.mx/", "accessedAt": "2025-02-13" },
+        { "name": "World Bank DataBank 2023", "url": "https://databank.worldbank.org/", "accessedAt": "2025-02-13" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 2,
+        "lastVerified": "2025-02-13"
+      }
+    }
+  }
+]

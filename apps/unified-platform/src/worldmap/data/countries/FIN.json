@@ -1,0 +1,65 @@
+{
+  "id": "FIN",
+  "iso2": "FI",
+  "name": "Finland",
+  "region": "Europe",
+  "subregion": "Northern Europe",
+  "capital": "Helsinki",
+  "lastUpdated": "2026-05-09",
+  "summary": "Finland is currently focused on consolidating its position as NATO's newest eastern anchor, with significant investments in border security and Arctic defense. The economy is showing signs of a slow recovery from a recent recession, though the government maintains a strict fiscal consolidation path to address rising public debt. Security remains the unifying national priority, transcending political divides as the nation adjusts to its new role as a primary NATO frontline state.",
+  "indicators": {
+    "politicalStability":       { "score": 9, "score_description": "High stability with broad consensus on security and foreign policy.", "trend": "stable", "confidence": "high", "note": "Despite domestic debates over austerity measures, there is near-total political unity on NATO integration and border defense." },
+    "economicDirection":        { "score": 5, "score_description": "Slow recovery following a challenging recessionary period.", "trend": "improving", "confidence": "high", "note": "GDP growth is returning to positive territory, though high defense costs and debt service are straining the national budget." },
+    "investmentAttractiveness": { "score": 8, "score_description": "Strong reputation for innovation and a stable legal environment.", "trend": "stable", "confidence": "high", "note": "Finland remains a key destination for high-tech R&D, particularly in telecommunications, forestry, and clean energy." },
+    "geopoliticalRisk":         { "score": 7, "score_description": "Heightened risk due to 1,340 km border with Russia and hybrid threats.", "trend": "rising", "confidence": "high", "note": "The closure of the eastern border and ongoing Russian maritime provocations in the Baltic Sea are the primary security concerns." },
+    "educationQuality":         { "score": 9, "score_description": "World-leading education system with a focus on high-tech skills.", "trend": "stable", "confidence": "high", "note": "Finland continues to rank at the top of global education indices, providing a highly skilled workforce for the tech sector." },
+    "healthcareQuality":        { "score": 8, "score_description": "High standards with advanced medical research and universal access.", "trend": "stable", "confidence": "high", "note": "The healthcare system is robust, though it faces logistical and funding challenges as the population ages." },
+    "technologyInvestment":     { "score": 8, "score_description": "Robust investment in 5G/6G, quantum computing, and green tech.", "trend": "rising", "confidence": "high", "note": "Finland is a global leader in mobile network technology and is rapidly expanding its quantum computing ecosystem." }
+  },
+  "demographics": {
+    "population": 5560000,
+    "medianAge": 43.1,
+    "urbanizationRate": 86,
+    "majorEthnicGroups": ["Finnish", "Swedish", "Russian", "Estonian", "Ukrainian"],
+    "religions": [
+      { "name": "Evangelical Lutheran Church", "percent": 65.0 },
+      { "name": "None/Unaffiliated", "percent": 30.0 },
+      { "name": "Orthodox", "percent": 1.0 },
+      { "name": "Other", "percent": 4.0 }
+    ]
+  },
+  "alliances": ["EU", "NATO", "Nordic Council", "OECD", "Schengen Area"],
+  "relationships": [
+    { "countryId": "SWE", "countryName": "Sweden", "type": "ally", "sentiment": "positive", "summary": "Closest strategic partner; deep military and economic integration within NATO and the Nordic framework." },
+    { "countryId": "USA", "countryName": "United States", "type": "treaty_ally", "sentiment": "positive", "summary": "Critical security guarantor; rapidly expanding defense cooperation and technology sharing." },
+    { "countryId": "RUS", "countryName": "Russia", "type": "adversary", "sentiment": "negative", "summary": "Relations are at a historic low; the border remains closed due to instrumentalized migration and hybrid threats." },
+    { "countryId": "EST", "countryName": "Estonia", "type": "ally", "sentiment": "positive", "summary": "Close cultural and security partner; shared interests in Baltic Sea defense and digital governance." },
+    { "countryId": "NOR", "countryName": "Norway", "type": "ally", "sentiment": "positive", "summary": "Increasing cooperation on Arctic security and military mobility across the Nordic region." }
+  ],
+  "perspectives": [
+    { "source": "Petteri Orpo Administration", "bias": "Center-Right", "view": "Our priority is to secure Finland's future through NATO integration and fiscal responsibility; the era of debt-driven spending is over." },
+    { "source": "Security Policy Expert", "bias": "Pro-NATO", "view": "Finland's withdrawal from the Ottawa Treaty and the construction of the border barrier are necessary steps to deter Russian aggression." },
+    { "source": "Social Democrat Critic", "bias": "Center-Left", "view": "While we support NATO, the government's austerity measures are disproportionately affecting the most vulnerable and threatening social cohesion." }
+  ],
+  "historicalContext": {
+    "summary": "Finland gained independence from Russia in 1917 and successfully defended its sovereignty during World War II. During the Cold War, it maintained a delicate policy of neutrality while building a highly developed welfare state. The 2023 accession to NATO marks the end of its non-alignment policy and a fundamental shift in its security architecture.",
+    "keyEvents": [
+      { "year": 1917, "event": "Finland declares independence from the Russian Empire." },
+      { "year": 1939, "event": "The Winter War begins following a Soviet invasion." },
+      { "year": 1995, "event": "Finland joins the European Union." },
+      { "year": 2023, "event": "Finland officially joins NATO, ending decades of military non-alignment." },
+      { "year": 2025, "event": "Finland withdraws from the Ottawa Treaty to bolster land-based border defenses." },
+      { "year": 2026, "event": "The new F-35 fighter jet fleet begins deliveries, enhancing Arctic air defense." }
+    ]
+  },
+  "investmentNotes": {
+    "strengths": ["Global leadership in telecommunications and mobile tech", "Highly stable and transparent institutional framework", "Robust defense industry and security infrastructure", "World-class education and innovation ecosystem"],
+    "risks": ["Direct proximity to an assertive and unpredictable Russia", "Significant demographic challenges from an aging population", "High levels of public debt requiring fiscal consolidation"],
+    "sectors": ["Telecommunications (6G/Quantum)", "Bioeconomy & Forestry", "Defense Technology", "Clean Energy & Battery Tech", "Information Technology"]
+  },
+  "sources": [
+    { "name": "Statistics Finland", "url": "https://www.stat.fi/index_en.html", "type": "economic" },
+    { "name": "Bank of Finland", "url": "https://www.suomenpankki.fi/en/", "type": "economic" },
+    { "name": "Ministry for Foreign Affairs of Finland", "url": "https://um.fi/frontpage", "type": "political" }
+  ]
+}

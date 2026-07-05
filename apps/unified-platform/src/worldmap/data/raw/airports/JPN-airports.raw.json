@@ -1,0 +1,272 @@
+[
+  {
+    "id": "HND",
+    "name": "Tokyo Haneda Airport",
+    "countryId": "JPN",
+    "city": "Tokyo",
+    "iata": "HND",
+    "icao": "RJTT",
+    "coordinates": [139.7811, 35.5533],
+    "passengerVolume": 85000000,
+    "cargoVolume": 1060000,
+    "runwayCount": 4,
+    "elevationM": 6,
+    "strategicImportance": "critical",
+    "geopoliticalNotes": "Japan's busiest airport and a primary site for government and diplomatic transport, central to national administration.",
+    "notes": "Primary domestic hub and major international gateway with significant belly-hold cargo capacity.",
+    "attribution": {
+      "sources": [
+        { "name": "Tokyo International Air Terminal Corporation", "url": "https://tokyo-haneda.com", "accessedAt": "2026-05-10" },
+        { "name": "Ministry of Land, Infrastructure, Transport and Tourism (MLIT)", "url": "https://www.mlit.go.jp", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 2,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  },
+  {
+    "id": "NRT",
+    "name": "Narita International Airport",
+    "countryId": "JPN",
+    "city": "Tokyo/Narita",
+    "iata": "NRT",
+    "icao": "RJAA",
+    "coordinates": [140.3863, 35.7647],
+    "passengerVolume": 32700000,
+    "cargoVolume": 1870000,
+    "runwayCount": 2,
+    "elevationM": 43,
+    "strategicImportance": "critical",
+    "geopoliticalNotes": "Japan's top cargo hub and primary international gateway, essential for economic security and supply chain resilience.",
+    "notes": "Major hub for international logistics, including FedEx, DHL, and ANA Cargo.",
+    "attribution": {
+      "sources": [
+        { "name": "Narita International Airport Corporation", "url": "https://www.narita-airport.jp", "accessedAt": "2026-05-10" },
+        { "name": "ACI World", "url": "https://aci.aero", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 2,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  },
+  {
+    "id": "KIX",
+    "name": "Kansai International Airport",
+    "countryId": "JPN",
+    "city": "Osaka",
+    "iata": "KIX",
+    "icao": "RJBB",
+    "coordinates": [135.2441, 34.4347],
+    "passengerVolume": 23300000,
+    "cargoVolume": 732630,
+    "runwayCount": 2,
+    "elevationM": 5,
+    "strategicImportance": "high",
+    "geopoliticalNotes": "Critical 24-hour operation hub serving the industrial heartland of Western Japan.",
+    "notes": "Built on an artificial island; serves as a strategic secondary backup to Tokyo.",
+    "attribution": {
+      "sources": [
+        { "name": "Kansai Airports", "url": "https://www.kansai-airports.co.jp", "accessedAt": "2026-05-10" },
+        { "name": "OurAirports", "url": "https://ourairports.com", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 2,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  },
+  {
+    "id": "OKA",
+    "name": "Naha Airport",
+    "countryId": "JPN",
+    "city": "Okinawa",
+    "iata": "OKA",
+    "icao": "ROAH",
+    "coordinates": [127.6458, 26.1958],
+    "passengerVolume": 19100000,
+    "cargoVolume": 184024,
+    "runwayCount": 2,
+    "elevationM": 3,
+    "strategicImportance": "critical",
+    "geopoliticalNotes": "The primary hub for Okinawa and a critical frontline defense node in the East China Sea.",
+    "notes": "Designated for upgrades to handle larger military transport as part of Japan's Southwest Shift.",
+    "attribution": {
+      "sources": [
+        { "name": "Naha Airport", "url": "https://www.naha-airport.co.jp", "accessedAt": "2026-05-10" },
+        { "name": "Ministry of Defense, Japan", "url": "https://www.mod.go.jp", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 2,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  },
+  {
+    "id": "DNA",
+    "name": "Kadena Air Base",
+    "countryId": "JPN",
+    "city": "Okinawa",
+    "iata": "DNA",
+    "icao": "RODN",
+    "coordinates": [127.7675, 26.3556],
+    "passengerVolume": 144000,
+    "cargoVolume": 36000,
+    "runwayCount": 2,
+    "elevationM": 44,
+    "strategicImportance": "critical",
+    "geopoliticalNotes": "The most important 'power projection' platform in the Pacific, essential for US-Japan regional defense.",
+    "notes": "Linchpin of US strategic reach into the Taiwan Strait and East China Sea.",
+    "attribution": {
+      "sources": [
+        { "name": "US Air Force - Kadena Air Base", "url": "https://www.kadena.af.mil", "accessedAt": "2026-05-10" },
+        { "name": "SkyVector", "url": "https://skyvector.com", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 2,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  },
+  {
+    "id": "NGO",
+    "name": "Chubu Centrair International Airport",
+    "countryId": "JPN",
+    "city": "Nagoya",
+    "iata": "NGO",
+    "icao": "RJGG",
+    "coordinates": [136.8054, 34.8584],
+    "passengerVolume": 8480000,
+    "cargoVolume": 127555,
+    "runwayCount": 1,
+    "elevationM": 5,
+    "strategicImportance": "high",
+    "geopoliticalNotes": "Major industrial hub serving Nagoya and the surrounding manufacturing region, including Toyota.",
+    "notes": "Key logistics node for Japan's automotive and aerospace industries.",
+    "attribution": {
+      "sources": [
+        { "name": "Central Japan International Airport Co., Ltd.", "url": "https://www.centrair.jp", "accessedAt": "2026-05-10" },
+        { "name": "IATA", "url": "https://www.iata.org", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 2,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  },
+  {
+    "id": "OKO",
+    "name": "Yokota Air Base",
+    "countryId": "JPN",
+    "city": "Fussa/Tokyo",
+    "iata": "OKO",
+    "icao": "RJTY",
+    "coordinates": [139.3486, 35.7486],
+    "passengerVolume": null,
+    "cargoVolume": null,
+    "runwayCount": 1,
+    "elevationM": 141,
+    "strategicImportance": "critical",
+    "geopoliticalNotes": "Headquarters of U.S. Forces Japan (USFJ) and a primary logistics and airlift hub for the Western Pacific.",
+    "notes": "Coordinates military cargo and personnel movements across the Indo-Pacific region.",
+    "attribution": {
+      "sources": [
+        { "name": "US Air Force - Yokota Air Base", "url": "https://www.yokota.af.mil", "accessedAt": "2026-05-10" },
+        { "name": "SkyVector", "url": "https://skyvector.com", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 2,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  },
+  {
+    "id": "CTS",
+    "name": "New Chitose Airport",
+    "countryId": "JPN",
+    "city": "Sapporo",
+    "iata": "CTS",
+    "icao": "RJCC",
+    "coordinates": [141.6869, 42.7934],
+    "passengerVolume": 22300000,
+    "cargoVolume": 132995,
+    "runwayCount": 2,
+    "elevationM": 25,
+    "strategicImportance": "high",
+    "geopoliticalNotes": "Primary strategic hub for Hokkaido, essential for northern territorial defense and large-scale logistics.",
+    "notes": "Critical for monitoring Russia and Arctic sea lanes.",
+    "attribution": {
+      "sources": [
+        { "name": "New Chitose Airport Terminal", "url": "https://www.new-chitose-airport.jp", "accessedAt": "2026-05-10" },
+        { "name": "Ministry of Land, Infrastructure, Transport and Tourism (MLIT)", "url": "https://www.mlit.go.jp", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 2,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  },
+  {
+    "id": "FUK",
+    "name": "Fukuoka Airport",
+    "countryId": "JPN",
+    "city": "Fukuoka",
+    "iata": "FUK",
+    "icao": "RJFF",
+    "coordinates": [130.4517, 33.5844],
+    "passengerVolume": 24100000,
+    "cargoVolume": 145840,
+    "runwayCount": 2,
+    "elevationM": 9,
+    "strategicImportance": "high",
+    "geopoliticalNotes": "Strategically vital due to its proximity to the Korean Peninsula and as a gateway to mainland Asia.",
+    "notes": "Opened a second runway in 2025 to increase capacity for regional logistics.",
+    "attribution": {
+      "sources": [
+        { "name": "Fukuoka International Airport Co., Ltd.", "url": "https://www.fukuoka-airport.jp", "accessedAt": "2026-05-10" },
+        { "name": "OurAirports", "url": "https://ourairports.com", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 2,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  },
+  {
+    "id": "MSJ",
+    "name": "Misawa Air Base / Airport",
+    "countryId": "JPN",
+    "city": "Misawa",
+    "iata": "MSJ",
+    "icao": "RJSM",
+    "coordinates": [141.368, 40.7032],
+    "passengerVolume": 336000,
+    "cargoVolume": 280,
+    "runwayCount": 1,
+    "elevationM": 36,
+    "strategicImportance": "high",
+    "geopoliticalNotes": "Joint-use facility shared by U.S. and Japanese forces; strategically positioned for northern defense monitoring Russia.",
+    "notes": "Key site for intelligence gathering and air superiority in Northern Japan.",
+    "attribution": {
+      "sources": [
+        { "name": "Misawa Airport", "url": "https://www.misawa-airport.co.jp", "accessedAt": "2026-05-10" },
+        { "name": "US Air Force - Misawa Air Base", "url": "https://www.misawa.af.mil", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 2,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  }
+]

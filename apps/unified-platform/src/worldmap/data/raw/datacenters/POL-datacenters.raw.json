@@ -1,0 +1,302 @@
+[
+  {
+    "id": "DC-POL-WAW-ATMAN-WAW1",
+    "name": "Atman WAW-1 Campus",
+    "countryId": "POL",
+    "city": "Warsaw",
+    "coordinates": [21.1167, 52.2365],
+    "type": "colocation",
+    "status": "operational",
+    "tierLevel": "3",
+    "capacityMW": 57,
+    "floorSpaceM2": null,
+    "pue": null,
+    "operator": "Atman",
+    "owner": "Atman (Global Connect)",
+    "yearOpened": 2001,
+    "yearPlanned": null,
+    "cloudRegion": null,
+    "geopoliticalNotes": "Largest domestic data center campus in Poland; primary hub for local internet traffic and a key node in the 'Cloud Valley' of Central Europe.",
+    "notes": "Carrier-neutral; located in Praga district.",
+    "attribution": {
+      "sources": [
+        { "name": "Atman Data Center Warsaw-1", "url": "https://www.atman.eu/data-centers/warsaw-1/", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 2,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  },
+  {
+    "id": "DC-POL-WAW-ATMAN-WAW3",
+    "name": "Atman WAW-3 Campus",
+    "countryId": "POL",
+    "city": "Duchnice",
+    "coordinates": [20.8152, 52.2081],
+    "type": "hyperscale",
+    "status": "operational",
+    "tierLevel": "3",
+    "capacityMW": 43,
+    "floorSpaceM2": null,
+    "pue": 1.2,
+    "operator": "Atman",
+    "owner": "Atman",
+    "yearOpened": 2024,
+    "yearPlanned": null,
+    "cloudRegion": null,
+    "geopoliticalNotes": "New AI-ready hyperscale campus designed to meet the growing demand from global cloud providers in the CEE region.",
+    "notes": "Located just outside Warsaw in Ożarów Mazowiecki.",
+    "attribution": {
+      "sources": [
+        { "name": "Atman WAW-3 Construction", "url": "https://www.atman.eu/atman-is-building-the-waw-3-data-center-campus/", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 1,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  },
+  {
+    "id": "DC-POL-WAW-EQUINIX-WA4X",
+    "name": "Equinix WA4x (xScale)",
+    "countryId": "POL",
+    "city": "Warsaw",
+    "coordinates": [20.9452, 52.1885],
+    "type": "hyperscale",
+    "status": "operational",
+    "tierLevel": "3",
+    "capacityMW": 12,
+    "floorSpaceM2": null,
+    "pue": null,
+    "operator": "Equinix",
+    "owner": "Equinix",
+    "yearOpened": 2024,
+    "yearPlanned": null,
+    "cloudRegion": null,
+    "geopoliticalNotes": "Poland's first xScale facility, catering to hyperscale cloud providers; solidifies Warsaw's role as a strategic cloud bridge between West and East.",
+    "notes": "Powered by 100% renewable energy.",
+    "attribution": {
+      "sources": [
+        { "name": "Equinix xScale Poland", "url": "https://www.equinix.com/newsroom/press-releases/2022/03/equinix-to-open-its-first-xscale-data-center-in-poland", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 2,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  },
+  {
+    "id": "DC-POL-WAW-VANTAGE-WAW1",
+    "name": "Vantage WAW1 Campus",
+    "countryId": "POL",
+    "city": "Warsaw",
+    "coordinates": [20.9315, 52.2942],
+    "type": "hyperscale",
+    "status": "operational",
+    "tierLevel": "3",
+    "capacityMW": 48,
+    "floorSpaceM2": null,
+    "pue": null,
+    "operator": "Vantage Data Centers",
+    "owner": "Vantage Data Centers",
+    "yearOpened": 2022,
+    "yearPlanned": null,
+    "cloudRegion": null,
+    "geopoliticalNotes": "Major investment by a US-based hyperscale specialist, supporting Poland's rapid digital transformation and cloud adoption.",
+    "notes": "Located in the Bielany district.",
+    "attribution": {
+      "sources": [
+        { "name": "Vantage Warsaw Campus", "url": "https://vantage-dc.com/data-center-locations/warsaw-poland/", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 1,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  },
+  {
+    "id": "DC-POL-WAW-DATA4-WARSAW",
+    "name": "Data4 Warsaw Campus",
+    "countryId": "POL",
+    "city": "Jawczyce",
+    "coordinates": [20.8654, 52.2085],
+    "type": "hyperscale",
+    "status": "operational",
+    "tierLevel": "3",
+    "capacityMW": 60,
+    "floorSpaceM2": null,
+    "pue": null,
+    "operator": "Data4",
+    "owner": "Data4 Group",
+    "yearOpened": 2023,
+    "yearPlanned": null,
+    "cloudRegion": null,
+    "geopoliticalNotes": "Part of a major European expansion by Data4; provides resilient infrastructure for international cloud and enterprise clients in Poland.",
+    "notes": "Target capacity of 60MW across multiple buildings.",
+    "attribution": {
+      "sources": [
+        { "name": "Data4 Warsaw Data Center", "url": "https://www.data4group.com/en/campuses/warsaw-data-center/", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 1,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  },
+  {
+    "id": "DC-POL-WAW-EQUINIX-WA1",
+    "name": "Equinix WA1 (LIM Building)",
+    "countryId": "POL",
+    "city": "Warsaw",
+    "coordinates": [21.0042, 52.2281],
+    "type": "colocation",
+    "status": "operational",
+    "tierLevel": "3",
+    "capacityMW": null,
+    "floorSpaceM2": null,
+    "pue": null,
+    "operator": "Equinix",
+    "owner": "Equinix",
+    "yearOpened": 1999,
+    "yearPlanned": null,
+    "cloudRegion": null,
+    "geopoliticalNotes": "The most connected building in Poland; home to the Equinix Internet Exchange and a critical hub for regional connectivity.",
+    "notes": "Located in the Marriott (LIM) building in central Warsaw.",
+    "attribution": {
+      "sources": [
+        { "name": "Equinix WA1 Data Center", "url": "https://www.equinix.com/data-centers/europe-colocation/poland-colocation/warsaw-data-centers/wa1", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 2,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  },
+  {
+    "id": "DC-POL-WAW-MICROSOFT-POLANDCENTRAL",
+    "name": "Microsoft Poland Central (Region Hub)",
+    "countryId": "POL",
+    "city": "Jawczyce",
+    "coordinates": [20.9251, 52.2015],
+    "type": "hyperscale",
+    "status": "operational",
+    "tierLevel": "3",
+    "capacityMW": null,
+    "floorSpaceM2": null,
+    "pue": null,
+    "operator": "Microsoft",
+    "owner": "Microsoft",
+    "yearOpened": 2023,
+    "yearPlanned": null,
+    "cloudRegion": "polandcentral",
+    "geopoliticalNotes": "Microsoft's first cloud region in CEE; represents a $1B investment in Poland's digital infrastructure and national security.",
+    "notes": "Consists of 3 Availability Zones across Warsaw area.",
+    "attribution": {
+      "sources": [
+        { "name": "Microsoft Azure Regions", "url": "https://azure.microsoft.com/en-us/explore/global-infrastructure/geographies/#geographies", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 2,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  },
+  {
+    "id": "DC-POL-WAW-GOOGLE-EUROPECENTRAL2",
+    "name": "Google europe-central2 (Region Hub)",
+    "countryId": "POL",
+    "city": "Warsaw",
+    "coordinates": [20.9845, 52.2322],
+    "type": "hyperscale",
+    "status": "operational",
+    "tierLevel": "3",
+    "capacityMW": null,
+    "floorSpaceM2": null,
+    "pue": null,
+    "operator": "Google",
+    "owner": "Google",
+    "yearOpened": 2021,
+    "yearPlanned": null,
+    "cloudRegion": "europe-central2",
+    "geopoliticalNotes": "First Google Cloud region in CEE; a critical safe haven for Ukrainian data during the ongoing conflict.",
+    "notes": "Consists of 3 Availability Zones.",
+    "attribution": {
+      "sources": [
+        { "name": "Google Cloud Locations", "url": "https://cloud.google.com/about/locations/warsaw", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 2,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  },
+  {
+    "id": "DC-POL-WAW-ATMAN-WAW2",
+    "name": "Atman WAW-2 (Konstruktorska)",
+    "countryId": "POL",
+    "city": "Warsaw",
+    "coordinates": [21.0014, 52.1882],
+    "type": "colocation",
+    "status": "operational",
+    "tierLevel": "3",
+    "capacityMW": null,
+    "floorSpaceM2": null,
+    "pue": null,
+    "operator": "Atman",
+    "owner": "Atman",
+    "yearOpened": null,
+    "yearPlanned": null,
+    "cloudRegion": null,
+    "geopoliticalNotes": "Key connectivity node in Warsaw's business district; hosts the Thinx Internet Exchange.",
+    "notes": "Located in the Mokotów business hub.",
+    "attribution": {
+      "sources": [
+        { "name": "Atman WAW-2", "url": "https://www.atman.eu/data-centers/warsaw-2/", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 1,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  },
+  {
+    "id": "DC-POL-WAW-EQUINIX-WA3",
+    "name": "Equinix WA3",
+    "countryId": "POL",
+    "city": "Warsaw",
+    "coordinates": [20.9255, 52.2012],
+    "type": "colocation",
+    "status": "operational",
+    "tierLevel": "3",
+    "capacityMW": null,
+    "floorSpaceM2": null,
+    "pue": null,
+    "operator": "Equinix",
+    "owner": "Equinix",
+    "yearOpened": 2016,
+    "yearPlanned": null,
+    "cloudRegion": null,
+    "geopoliticalNotes": "Supports international businesses and the growing demand for digital ecosystems in the CEE region.",
+    "notes": "Located in the Salomea district.",
+    "attribution": {
+      "sources": [
+        { "name": "Equinix WA3 Data Center", "url": "https://www.equinix.com/data-centers/europe-colocation/poland-colocation/warsaw-data-centers/wa3", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 1,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  }
+]

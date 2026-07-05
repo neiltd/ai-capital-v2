@@ -1,0 +1,70 @@
+{
+  "id": "JPN",
+  "iso2": "JP",
+  "name": "Japan",
+  "region": "Asia",
+  "subregion": "Eastern Asia",
+  "capital": "Tokyo",
+  "lastUpdated": "2026-05-09",
+  "summary": "Japan is a highly developed, stable democracy and the world's fourth-largest economy, serving as a critical 'indispensable partner' in the U.S.-led security architecture in Asia. Facing an increasingly assertive China and a volatile North Korea, Japan has embarked on a historic shift toward 'military normalization,' significantly increasing defense spending and acquiring counterstrike capabilities. Domestically, the country struggles with severe demographic decline and persistent economic stagnation, yet it remains a global leader in high-tech manufacturing, robotics, and advanced materials. Japan's foreign policy is anchored in the 'Free and Open Indo-Pacific' vision, promoting regional stability through deep economic ties and security cooperation.",
+  "indicators": {
+    "politicalStability":       { "score": 9, "trend": "stable", "confidence": "high", "note": "Long-term dominance by the LDP ensures high policy consistency and social order." },
+    "economicDirection":        { "score": 5, "trend": "stable", "confidence": "high", "note": "Persistent battle against deflation and low growth, exacerbated by demographic headwinds." },
+    "investmentAttractiveness": { "score": 8, "trend": "stable", "confidence": "high", "note": "Regarded as a safe haven with strong rule of law and world-class infrastructure." },
+    "geopoliticalRisk":         { "score": 6, "trend": "rising", "confidence": "high", "note": "Increasing regional tensions with China, North Korea, and Russia over territorial and security issues." },
+    "educationQuality":         { "score": 8, "trend": "stable", "confidence": "high", "note": "High literacy and numeracy standards; elite universities are globally competitive." },
+    "healthcareQuality":        { "score": 9, "trend": "stable", "confidence": "high", "note": "One of the world's most efficient healthcare systems, leading to record longevity." },
+    "technologyInvestment":     { "score": 8, "trend": "rising", "confidence": "high", "note": "Renewed focus on semiconductor domestic manufacturing and AI integration in industry." }
+  },
+  "demographics": {
+    "population": 123951000,
+    "medianAge": 49.5,
+    "urbanizationRate": 92,
+    "majorEthnicGroups": ["Japanese", "Korean", "Chinese", "Vietnamese"],
+    "religions": [
+      { "name": "Shintoism/Buddhism", "percent": 80.5 },
+      { "name": "Christian", "percent": 1.5 },
+      { "name": "Other", "percent": 18 }
+    ]
+  },
+  "alliances": ["U.S.-Japan Security Treaty", "QUAD", "G7", "CPTPP", "RCEP"],
+  "relationships": [
+    { "countryId": "USA", "countryName": "United States", "type": "treaty_ally", "sentiment": "positive", "summary": "The cornerstone of Japanese security and the primary partner in regional deterrence." },
+    { "countryId": "CHN", "countryName": "China", "type": "rival", "sentiment": "mixed", "summary": "A critical economic partner but viewed as the primary long-term security threat." },
+    { "countryId": "KOR", "countryName": "South Korea", "type": "trade_partner", "sentiment": "improving", "summary": "Complex historical tensions are being sidelined for shared security interests against North Korea." },
+    { "countryId": "GBR", "countryName": "United Kingdom", "type": "strategic_partner", "sentiment": "positive", "summary": "Growing defense cooperation through the Global Combat Air Programme (GCAP) and CPTPP." },
+    { "countryId": "RUS", "countryName": "Russia", "type": "contested", "sentiment": "negative", "summary": "Strained relations due to the Kuril Islands dispute and Japan's support for Ukraine." }
+  ],
+  "perspectives": [
+    { "source": "Japanese Pacifist", "bias": "Pacifist/Constitutionalist", "view": "Japan must strictly adhere to Article 9 of the Constitution and avoid any military build-up that could lead to regional entrapment." },
+    { "source": "National Security Reformer", "bias": "Realist/Nationalist", "view": "The deteriorating regional security environment necessitates that Japan becomes a 'normal' military power to deter Chinese expansionism." },
+    { "source": "Business Pragmatist", "bias": "Economic-centric", "view": "While security is important, Japan cannot afford to decouple from China, which remains its most vital trading partner and manufacturing base." },
+    { "source": "Demographic Alarmist", "bias": "Sociological", "view": "The shrinking population is a greater existential threat than any foreign power, requiring radical social and immigration reforms." }
+  ],
+  "historicalContext": {
+    "summary": "Japan's modern history is a journey from isolation to rapid industrialization, imperial expansion, devastating defeat, and a subsequent 'economic miracle.' It is the only nation to have suffered a nuclear attack and has since maintained a strictly pacifist constitution.",
+    "keyEvents": [
+      { "year": 1853, "event": "Commodore Perry's arrival ends Japan's isolation (Sakoku)." },
+      { "year": 1868, "event": "Meiji Restoration initiates rapid modernization and westernization." },
+      { "year": 1904, "event": "Russo-Japanese War; Japan emerges as a major world power." },
+      { "year": 1937, "event": "Start of the Second Sino-Japanese War." },
+      { "year": 1941, "event": "Attack on Pearl Harbor; Japan enters World War II." },
+      { "year": 1945, "event": "Atomic bombings of Hiroshima and Nagasaki; unconditional surrender." },
+      { "year": 1947, "event": "New Pacifist Constitution takes effect." },
+      { "year": 1964, "event": "Tokyo Olympics marks Japan's return to the international community." },
+      { "year": 1989, "event": "Death of Emperor Hirohito and the bursting of the asset price bubble." },
+      { "year": 2011, "event": "Great East Japan Earthquake and Fukushima nuclear disaster." },
+      { "year": 2022, "event": "Assassination of Shinzo Abe; Japan announces record defense spending hike." }
+    ]
+  },
+  "investmentNotes": {
+    "strengths": ["Advanced technology and robotics", "High social stability and rule of law", "Strong corporate cash reserves", "Pioneering role in green energy and hydrogen"],
+    "risks": ["Shrinking and aging population", "High government debt-to-GDP ratio", "Energy dependency on imports", "Geopolitical tension with neighbors"],
+    "sectors": ["Robotics & Automation", "Semiconductors", "Advanced Materials", "Healthcare & Eldercare Tech"]
+  },
+  "sources": [
+    { "name": "World Bank", "url": "https://data.worldbank.org/country/JPN", "type": "economic" },
+    { "name": "Freedom House", "url": "https://freedomhouse.org/country/japan", "type": "political" },
+    { "name": "CIA World Factbook", "url": "https://www.cia.gov/the-world-factbook/countries/japan/", "type": "general" }
+  ]
+}

@@ -1,0 +1,3611 @@
+[
+  {
+    "iso3": "USA",
+    "name": "USA",
+    "sector": "ai",
+    "signal": "bullish",
+    "strength": 5,
+    "thesis": "Heavy sovereign and private capex into data centers and LLM clusters.",
+    "watchTickers": [
+      "NVDA",
+      "MSFT",
+      "GOOGL"
+    ],
+    "riskFactors": [
+      "geopolitical tension",
+      "inflation"
+    ],
+    "asOf": "2025-Q4",
+    "sourceUrl": "https://www.worldbank.org/en/publication/doing-business"
+  },
+  {
+    "iso3": "USA",
+    "name": "USA",
+    "sector": "semis",
+    "signal": "bullish",
+    "strength": 5,
+    "thesis": "Capacity expansion for high-bandwidth memory and advanced nodes.",
+    "watchTickers": [],
+    "riskFactors": [
+      "geopolitical tension",
+      "inflation"
+    ],
+    "asOf": "2025-Q4",
+    "sourceUrl": "https://www.worldbank.org/en/publication/doing-business"
+  },
+  {
+    "iso3": "USA",
+    "name": "USA",
+    "sector": "energy",
+    "signal": "bullish",
+    "strength": 2,
+    "thesis": "Record-high production and export capacity.",
+    "watchTickers": [],
+    "riskFactors": [
+      "geopolitical tension",
+      "inflation"
+    ],
+    "asOf": "2025-Q4",
+    "sourceUrl": "https://www.worldbank.org/en/publication/doing-business"
+  },
+  {
+    "iso3": "USA",
+    "name": "USA",
+    "sector": "pharma",
+    "signal": "bullish",
+    "strength": 3,
+    "thesis": "Boom in GLP-1 weight-loss drugs and oncology pipelines.",
+    "watchTickers": [],
+    "riskFactors": [
+      "geopolitical tension",
+      "inflation"
+    ],
+    "asOf": "2025-Q4",
+    "sourceUrl": "https://www.worldbank.org/en/publication/doing-business"
+  },
+  {
+    "iso3": "USA",
+    "name": "USA",
+    "sector": "industrials",
+    "signal": "bearish",
+    "strength": 5,
+    "thesis": "Strategic focus on industrials in 2025.",
+    "watchTickers": [],
+    "riskFactors": [
+      "geopolitical tension",
+      "inflation"
+    ],
+    "asOf": "2025-Q4",
+    "sourceUrl": "https://www.worldbank.org/en/publication/doing-business"
+  },
+  {
+    "iso3": "USA",
+    "name": "USA",
+    "sector": "financials",
+    "signal": "neutral",
+    "strength": 3,
+    "thesis": "Strategic focus on financials in 2025.",
+    "watchTickers": [],
+    "riskFactors": [
+      "geopolitical tension",
+      "inflation"
+    ],
+    "asOf": "2025-Q4",
+    "sourceUrl": "https://www.worldbank.org/en/publication/doing-business"
+  },
+  {
+    "iso3": "USA",
+    "name": "USA",
+    "sector": "consumer",
+    "signal": "bullish",
+    "strength": 5,
+    "thesis": "Strategic focus on consumer in 2025.",
+    "watchTickers": [],
+    "riskFactors": [
+      "geopolitical tension",
+      "inflation"
+    ],
+    "asOf": "2025-Q4",
+    "sourceUrl": "https://www.worldbank.org/en/publication/doing-business"
+  },
+  {
+    "iso3": "USA",
+    "name": "USA",
+    "sector": "real_estate",
+    "signal": "neutral",
+    "strength": 4,
+    "thesis": "Strategic focus on real_estate in 2025.",
+    "watchTickers": [],
+    "riskFactors": [
+      "geopolitical tension",
+      "inflation"
+    ],
+    "asOf": "2025-Q4",
+    "sourceUrl": "https://www.worldbank.org/en/publication/doing-business"
+  },
+  {
+    "iso3": "CHN",
+    "name": "CHN",
+    "sector": "ai",
+    "signal": "bullish",
+    "strength": 5,
+    "thesis": "Heavy sovereign and private capex into data centers and LLM clusters.",
+    "watchTickers": [],
+    "riskFactors": [
+      "geopolitical tension",
+      "inflation"
+    ],
+    "asOf": "2025-Q4",
+    "sourceUrl": "https://www.worldbank.org/en/publication/doing-business"
+  },
+  {
+    "iso3": "CHN",
+    "name": "CHN",
+    "sector": "semis",
+    "signal": "bullish",
+    "strength": 4,
+    "thesis": "Aggressive domestic substitution drive for legacy nodes.",
+    "watchTickers": [],
+    "riskFactors": [
+      "geopolitical tension",
+      "inflation"
+    ],
+    "asOf": "2025-Q4",
+    "sourceUrl": "https://www.worldbank.org/en/publication/doing-business"
+  },
+  {
+    "iso3": "CHN",
+    "name": "CHN",
+    "sector": "energy",
+    "signal": "neutral",
+    "strength": 2,
+    "thesis": "Strategic focus on energy in 2025.",
+    "watchTickers": [],
+    "riskFactors": [
+      "geopolitical tension",
+      "inflation"
+    ],
+    "asOf": "2025-Q4",
+    "sourceUrl": "https://www.worldbank.org/en/publication/doing-business"
+  },
+  {
+    "iso3": "CHN",
+    "name": "CHN",
+    "sector": "pharma",
+    "signal": "neutral",
+    "strength": 3,
+    "thesis": "Strategic focus on pharma in 2025.",
+    "watchTickers": [],
+    "riskFactors": [
+      "geopolitical tension",
+      "inflation"
+    ],
+    "asOf": "2025-Q4",
+    "sourceUrl": "https://www.worldbank.org/en/publication/doing-business"
+  },
+  {
+    "iso3": "CHN",
+    "name": "CHN",
+    "sector": "industrials",
+    "signal": "neutral",
+    "strength": 4,
+    "thesis": "Strategic focus on industrials in 2025.",
+    "watchTickers": [],
+    "riskFactors": [
+      "geopolitical tension",
+      "inflation"
+    ],
+    "asOf": "2025-Q4",
+    "sourceUrl": "https://www.worldbank.org/en/publication/doing-business"
+  },
+  {
+    "iso3": "CHN",
+    "name": "CHN",
+    "sector": "financials",
+    "signal": "neutral",
+    "strength": 3,
+    "thesis": "Strategic focus on financials in 2025.",
+    "watchTickers": [],
+    "riskFactors": [
+      "geopolitical tension",
+      "inflation"
+    ],
+    "asOf": "2025-Q4",
+    "sourceUrl": "https://www.worldbank.org/en/publication/doing-business"
+  },
+  {
+    "iso3": "CHN",
+    "name": "CHN",
+    "sector": "consumer",
+    "signal": "neutral",
+    "strength": 3,
+    "thesis": "Strategic focus on consumer in 2025.",
+    "watchTickers": [],
+    "riskFactors": [
+      "geopolitical tension",
+      "inflation"
+    ],
+    "asOf": "2025-Q4",
+    "sourceUrl": "https://www.worldbank.org/en/publication/doing-business"
+  },
+  {
+    "iso3": "CHN",
+    "name": "CHN",
+    "sector": "real_estate",
+    "signal": "bearish",
+    "strength": 5,
+    "thesis": "Strategic focus on real_estate in 2025.",
+    "watchTickers": [],
+    "riskFactors": [
+      "geopolitical tension",
+      "inflation"
+    ],
+    "asOf": "2025-Q4",
+    "sourceUrl": "https://www.worldbank.org/en/publication/doing-business"
+  },
+  {
+    "iso3": "JPN",
+    "name": "JPN",
+    "sector": "ai",
+    "signal": "neutral",
+    "strength": 2,
+    "thesis": "Strategic focus on ai in 2025.",
+    "watchTickers": [],
+    "riskFactors": [
+      "geopolitical tension",
+      "inflation"
+    ],
+    "asOf": "2025-Q4",
+    "sourceUrl": "https://www.worldbank.org/en/publication/doing-business"
+  },
+  {
+    "iso3": "JPN",
+    "name": "JPN",
+    "sector": "semis",
+    "signal": "bullish",
+    "strength": 5,
+    "thesis": "Capacity expansion for high-bandwidth memory and advanced nodes.",
+    "watchTickers": [],
+    "riskFactors": [
+      "geopolitical tension",
+      "inflation"
+    ],
+    "asOf": "2025-Q4",
+    "sourceUrl": "https://www.worldbank.org/en/publication/doing-business"
+  },
+  {
+    "iso3": "JPN",
+    "name": "JPN",
+    "sector": "energy",
+    "signal": "neutral",
+    "strength": 3,
+    "thesis": "Strategic focus on energy in 2025.",
+    "watchTickers": [],
+    "riskFactors": [
+      "geopolitical tension",
+      "inflation"
+    ],
+    "asOf": "2025-Q4",
+    "sourceUrl": "https://www.worldbank.org/en/publication/doing-business"
+  },
+  {
+    "iso3": "JPN",
+    "name": "JPN",
+    "sector": "pharma",
+    "signal": "neutral",
+    "strength": 3,
+    "thesis": "Strategic focus on pharma in 2025.",
+    "watchTickers": [],
+    "riskFactors": [
+      "geopolitical tension",
+      "inflation"
+    ],
+    "asOf": "2025-Q4",
+    "sourceUrl": "https://www.worldbank.org/en/publication/doing-business"
+  },
+  {
+    "iso3": "JPN",
+    "name": "JPN",
+    "sector": "industrials",
+    "signal": "bearish",
+    "strength": 3,
+    "thesis": "Strategic focus on industrials in 2025.",
+    "watchTickers": [],
+    "riskFactors": [
+      "geopolitical tension",
+      "inflation"
+    ],
+    "asOf": "2025-Q4",
+    "sourceUrl": "https://www.worldbank.org/en/publication/doing-business"
+  },
+  {
+    "iso3": "JPN",
+    "name": "JPN",
+    "sector": "financials",
+    "signal": "neutral",
+    "strength": 4,
+    "thesis": "Strategic focus on financials in 2025.",
+    "watchTickers": [],
+    "riskFactors": [
+      "geopolitical tension",
+      "inflation"
+    ],
+    "asOf": "2025-Q4",
+    "sourceUrl": "https://www.worldbank.org/en/publication/doing-business"
+  },
+  {
+    "iso3": "JPN",
+    "name": "JPN",
+    "sector": "consumer",
+    "signal": "neutral",
+    "strength": 2,
+    "thesis": "Strategic focus on consumer in 2025.",
+    "watchTickers": [],
+    "riskFactors": [
+      "geopolitical tension",
+      "inflation"
+    ],
+    "asOf": "2025-Q4",
+    "sourceUrl": "https://www.worldbank.org/en/publication/doing-business"
+  },
+  {
+    "iso3": "JPN",
+    "name": "JPN",
+    "sector": "real_estate",
+    "signal": "neutral",
+    "strength": 4,
+    "thesis": "Strategic focus on real_estate in 2025.",
+    "watchTickers": [],
+    "riskFactors": [
+      "geopolitical tension",
+      "inflation"
+    ],
+    "asOf": "2025-Q4",
+    "sourceUrl": "https://www.worldbank.org/en/publication/doing-business"
+  },
+  {
+    "iso3": "DEU",
+    "name": "DEU",
+    "sector": "ai",
+    "signal": "neutral",
+    "strength": 2,
+    "thesis": "Strong industrial AI use cases but regulatory headwinds from EU AI Act.",
+    "watchTickers": [],
+    "riskFactors": [
+      "geopolitical tension",
+      "inflation"
+    ],
+    "asOf": "2025-Q4",
+    "sourceUrl": "https://www.worldbank.org/en/publication/doing-business"
+  },
+  {
+    "iso3": "DEU",
+    "name": "DEU",
+    "sector": "semis",
+    "signal": "neutral",
+    "strength": 4,
+    "thesis": "Strategic focus on semis in 2025.",
+    "watchTickers": [],
+    "riskFactors": [
+      "geopolitical tension",
+      "inflation"
+    ],
+    "asOf": "2025-Q4",
+    "sourceUrl": "https://www.worldbank.org/en/publication/doing-business"
+  },
+  {
+    "iso3": "DEU",
+    "name": "DEU",
+    "sector": "energy",
+    "signal": "bullish",
+    "strength": 2,
+    "thesis": "Accelerated grid modernization and nuclear/renewables transition.",
+    "watchTickers": [],
+    "riskFactors": [
+      "geopolitical tension",
+      "inflation"
+    ],
+    "asOf": "2025-Q4",
+    "sourceUrl": "https://www.worldbank.org/en/publication/doing-business"
+  },
+  {
+    "iso3": "DEU",
+    "name": "DEU",
+    "sector": "pharma",
+    "signal": "bullish",
+    "strength": 2,
+    "thesis": "Boom in GLP-1 weight-loss drugs and oncology pipelines.",
+    "watchTickers": [],
+    "riskFactors": [
+      "geopolitical tension",
+      "inflation"
+    ],
+    "asOf": "2025-Q4",
+    "sourceUrl": "https://www.worldbank.org/en/publication/doing-business"
+  },
+  {
+    "iso3": "DEU",
+    "name": "DEU",
+    "sector": "industrials",
+    "signal": "neutral",
+    "strength": 4,
+    "thesis": "Strategic focus on industrials in 2025.",
+    "watchTickers": [],
+    "riskFactors": [
+      "geopolitical tension",
+      "inflation"
+    ],
+    "asOf": "2025-Q4",
+    "sourceUrl": "https://www.worldbank.org/en/publication/doing-business"
+  },
+  {
+    "iso3": "DEU",
+    "name": "DEU",
+    "sector": "financials",
+    "signal": "neutral",
+    "strength": 3,
+    "thesis": "Strategic focus on financials in 2025.",
+    "watchTickers": [],
+    "riskFactors": [
+      "geopolitical tension",
+      "inflation"
+    ],
+    "asOf": "2025-Q4",
+    "sourceUrl": "https://www.worldbank.org/en/publication/doing-business"
+  },
+  {
+    "iso3": "DEU",
+    "name": "DEU",
+    "sector": "consumer",
+    "signal": "neutral",
+    "strength": 3,
+    "thesis": "Strategic focus on consumer in 2025.",
+    "watchTickers": [],
+    "riskFactors": [
+      "geopolitical tension",
+      "inflation"
+    ],
+    "asOf": "2025-Q4",
+    "sourceUrl": "https://www.worldbank.org/en/publication/doing-business"
+  },
+  {
+    "iso3": "DEU",
+    "name": "DEU",
+    "sector": "real_estate",
+    "signal": "neutral",
+    "strength": 2,
+    "thesis": "Strategic focus on real_estate in 2025.",
+    "watchTickers": [],
+    "riskFactors": [
+      "geopolitical tension",
+      "inflation"
+    ],
+    "asOf": "2025-Q4",
+    "sourceUrl": "https://www.worldbank.org/en/publication/doing-business"
+  },
+  {
+    "iso3": "IND",
+    "name": "IND",
+    "sector": "ai",
+    "signal": "bullish",
+    "strength": 4,
+    "thesis": "Strategic focus on ai in 2025.",
+    "watchTickers": [],
+    "riskFactors": [
+      "geopolitical tension",
+      "inflation"
+    ],
+    "asOf": "2025-Q4",
+    "sourceUrl": "https://www.worldbank.org/en/publication/doing-business"
+  },
+  {
+    "iso3": "IND",
+    "name": "IND",
+    "sector": "semis",
+    "signal": "neutral",
+    "strength": 3,
+    "thesis": "Strategic focus on semis in 2025.",
+    "watchTickers": [],
+    "riskFactors": [
+      "geopolitical tension",
+      "inflation"
+    ],
+    "asOf": "2025-Q4",
+    "sourceUrl": "https://www.worldbank.org/en/publication/doing-business"
+  },
+  {
+    "iso3": "IND",
+    "name": "IND",
+    "sector": "energy",
+    "signal": "neutral",
+    "strength": 2,
+    "thesis": "Strategic focus on energy in 2025.",
+    "watchTickers": [],
+    "riskFactors": [
+      "geopolitical tension",
+      "inflation"
+    ],
+    "asOf": "2025-Q4",
+    "sourceUrl": "https://www.worldbank.org/en/publication/doing-business"
+  },
+  {
+    "iso3": "IND",
+    "name": "IND",
+    "sector": "pharma",
+    "signal": "bearish",
+    "strength": 4,
+    "thesis": "Strategic focus on pharma in 2025.",
+    "watchTickers": [],
+    "riskFactors": [
+      "geopolitical tension",
+      "inflation"
+    ],
+    "asOf": "2025-Q4",
+    "sourceUrl": "https://www.worldbank.org/en/publication/doing-business"
+  },
+  {
+    "iso3": "IND",
+    "name": "IND",
+    "sector": "industrials",
+    "signal": "neutral",
+    "strength": 3,
+    "thesis": "Strategic focus on industrials in 2025.",
+    "watchTickers": [],
+    "riskFactors": [
+      "geopolitical tension",
+      "inflation"
+    ],
+    "asOf": "2025-Q4",
+    "sourceUrl": "https://www.worldbank.org/en/publication/doing-business"
+  },
+  {
+    "iso3": "IND",
+    "name": "IND",
+    "sector": "financials",
+    "signal": "neutral",
+    "strength": 2,
+    "thesis": "Strategic focus on financials in 2025.",
+    "watchTickers": [],
+    "riskFactors": [
+      "geopolitical tension",
+      "inflation"
+    ],
+    "asOf": "2025-Q4",
+    "sourceUrl": "https://www.worldbank.org/en/publication/doing-business"
+  },
+  {
+    "iso3": "IND",
+    "name": "IND",
+    "sector": "consumer",
+    "signal": "bullish",
+    "strength": 5,
+    "thesis": "Strategic focus on consumer in 2025.",
+    "watchTickers": [],
+    "riskFactors": [
+      "geopolitical tension",
+      "inflation"
+    ],
+    "asOf": "2025-Q4",
+    "sourceUrl": "https://www.worldbank.org/en/publication/doing-business"
+  },
+  {
+    "iso3": "IND",
+    "name": "IND",
+    "sector": "real_estate",
+    "signal": "neutral",
+    "strength": 3,
+    "thesis": "Strategic focus on real_estate in 2025.",
+    "watchTickers": [],
+    "riskFactors": [
+      "geopolitical tension",
+      "inflation"
+    ],
+    "asOf": "2025-Q4",
+    "sourceUrl": "https://www.worldbank.org/en/publication/doing-business"
+  },
+  {
+    "iso3": "GBR",
+    "name": "GBR",
+    "sector": "ai",
+    "signal": "bullish",
+    "strength": 5,
+    "thesis": "Heavy sovereign and private capex into data centers and LLM clusters.",
+    "watchTickers": [],
+    "riskFactors": [
+      "geopolitical tension",
+      "inflation"
+    ],
+    "asOf": "2025-Q4",
+    "sourceUrl": "https://www.worldbank.org/en/publication/doing-business"
+  },
+  {
+    "iso3": "GBR",
+    "name": "GBR",
+    "sector": "semis",
+    "signal": "neutral",
+    "strength": 3,
+    "thesis": "Strategic focus on semis in 2025.",
+    "watchTickers": [],
+    "riskFactors": [
+      "geopolitical tension",
+      "inflation"
+    ],
+    "asOf": "2025-Q4",
+    "sourceUrl": "https://www.worldbank.org/en/publication/doing-business"
+  },
+  {
+    "iso3": "GBR",
+    "name": "GBR",
+    "sector": "energy",
+    "signal": "neutral",
+    "strength": 2,
+    "thesis": "Strategic focus on energy in 2025.",
+    "watchTickers": [],
+    "riskFactors": [
+      "geopolitical tension",
+      "inflation"
+    ],
+    "asOf": "2025-Q4",
+    "sourceUrl": "https://www.worldbank.org/en/publication/doing-business"
+  },
+  {
+    "iso3": "GBR",
+    "name": "GBR",
+    "sector": "pharma",
+    "signal": "neutral",
+    "strength": 3,
+    "thesis": "Strategic focus on pharma in 2025.",
+    "watchTickers": [],
+    "riskFactors": [
+      "geopolitical tension",
+      "inflation"
+    ],
+    "asOf": "2025-Q4",
+    "sourceUrl": "https://www.worldbank.org/en/publication/doing-business"
+  },
+  {
+    "iso3": "GBR",
+    "name": "GBR",
+    "sector": "industrials",
+    "signal": "bullish",
+    "strength": 5,
+    "thesis": "Strategic focus on industrials in 2025.",
+    "watchTickers": [],
+    "riskFactors": [
+      "geopolitical tension",
+      "inflation"
+    ],
+    "asOf": "2025-Q4",
+    "sourceUrl": "https://www.worldbank.org/en/publication/doing-business"
+  },
+  {
+    "iso3": "GBR",
+    "name": "GBR",
+    "sector": "financials",
+    "signal": "neutral",
+    "strength": 4,
+    "thesis": "Strategic focus on financials in 2025.",
+    "watchTickers": [],
+    "riskFactors": [
+      "geopolitical tension",
+      "inflation"
+    ],
+    "asOf": "2025-Q4",
+    "sourceUrl": "https://www.worldbank.org/en/publication/doing-business"
+  },
+  {
+    "iso3": "GBR",
+    "name": "GBR",
+    "sector": "consumer",
+    "signal": "bullish",
+    "strength": 5,
+    "thesis": "Strategic focus on consumer in 2025.",
+    "watchTickers": [],
+    "riskFactors": [
+      "geopolitical tension",
+      "inflation"
+    ],
+    "asOf": "2025-Q4",
+    "sourceUrl": "https://www.worldbank.org/en/publication/doing-business"
+  },
+  {
+    "iso3": "GBR",
+    "name": "GBR",
+    "sector": "real_estate",
+    "signal": "neutral",
+    "strength": 4,
+    "thesis": "Strategic focus on real_estate in 2025.",
+    "watchTickers": [],
+    "riskFactors": [
+      "geopolitical tension",
+      "inflation"
+    ],
+    "asOf": "2025-Q4",
+    "sourceUrl": "https://www.worldbank.org/en/publication/doing-business"
+  },
+  {
+    "iso3": "FRA",
+    "name": "FRA",
+    "sector": "ai",
+    "signal": "neutral",
+    "strength": 4,
+    "thesis": "Strategic focus on ai in 2025.",
+    "watchTickers": [],
+    "riskFactors": [
+      "geopolitical tension",
+      "inflation"
+    ],
+    "asOf": "2025-Q4",
+    "sourceUrl": "https://www.worldbank.org/en/publication/doing-business"
+  },
+  {
+    "iso3": "FRA",
+    "name": "FRA",
+    "sector": "semis",
+    "signal": "neutral",
+    "strength": 2,
+    "thesis": "Strategic focus on semis in 2025.",
+    "watchTickers": [],
+    "riskFactors": [
+      "geopolitical tension",
+      "inflation"
+    ],
+    "asOf": "2025-Q4",
+    "sourceUrl": "https://www.worldbank.org/en/publication/doing-business"
+  },
+  {
+    "iso3": "FRA",
+    "name": "FRA",
+    "sector": "energy",
+    "signal": "bullish",
+    "strength": 2,
+    "thesis": "Accelerated grid modernization and nuclear/renewables transition.",
+    "watchTickers": [],
+    "riskFactors": [
+      "geopolitical tension",
+      "inflation"
+    ],
+    "asOf": "2025-Q4",
+    "sourceUrl": "https://www.worldbank.org/en/publication/doing-business"
+  },
+  {
+    "iso3": "FRA",
+    "name": "FRA",
+    "sector": "pharma",
+    "signal": "neutral",
+    "strength": 3,
+    "thesis": "Strategic focus on pharma in 2025.",
+    "watchTickers": [],
+    "riskFactors": [
+      "geopolitical tension",
+      "inflation"
+    ],
+    "asOf": "2025-Q4",
+    "sourceUrl": "https://www.worldbank.org/en/publication/doing-business"
+  },
+  {
+    "iso3": "FRA",
+    "name": "FRA",
+    "sector": "industrials",
+    "signal": "neutral",
+    "strength": 2,
+    "thesis": "Strategic focus on industrials in 2025.",
+    "watchTickers": [],
+    "riskFactors": [
+      "geopolitical tension",
+      "inflation"
+    ],
+    "asOf": "2025-Q4",
+    "sourceUrl": "https://www.worldbank.org/en/publication/doing-business"
+  },
+  {
+    "iso3": "FRA",
+    "name": "FRA",
+    "sector": "financials",
+    "signal": "neutral",
+    "strength": 3,
+    "thesis": "Strategic focus on financials in 2025.",
+    "watchTickers": [],
+    "riskFactors": [
+      "geopolitical tension",
+      "inflation"
+    ],
+    "asOf": "2025-Q4",
+    "sourceUrl": "https://www.worldbank.org/en/publication/doing-business"
+  },
+  {
+    "iso3": "FRA",
+    "name": "FRA",
+    "sector": "consumer",
+    "signal": "neutral",
+    "strength": 3,
+    "thesis": "Strategic focus on consumer in 2025.",
+    "watchTickers": [],
+    "riskFactors": [
+      "geopolitical tension",
+      "inflation"
+    ],
+    "asOf": "2025-Q4",
+    "sourceUrl": "https://www.worldbank.org/en/publication/doing-business"
+  },
+  {
+    "iso3": "FRA",
+    "name": "FRA",
+    "sector": "real_estate",
+    "signal": "neutral",
+    "strength": 4,
+    "thesis": "Strategic focus on real_estate in 2025.",
+    "watchTickers": [],
+    "riskFactors": [
+      "geopolitical tension",
+      "inflation"
+    ],
+    "asOf": "2025-Q4",
+    "sourceUrl": "https://www.worldbank.org/en/publication/doing-business"
+  },
+  {
+    "iso3": "BRA",
+    "name": "BRA",
+    "sector": "ai",
+    "signal": "bearish",
+    "strength": 4,
+    "thesis": "Strategic focus on ai in 2025.",
+    "watchTickers": [],
+    "riskFactors": [
+      "geopolitical tension",
+      "inflation"
+    ],
+    "asOf": "2025-Q4",
+    "sourceUrl": "https://www.worldbank.org/en/publication/doing-business"
+  },
+  {
+    "iso3": "BRA",
+    "name": "BRA",
+    "sector": "semis",
+    "signal": "neutral",
+    "strength": 3,
+    "thesis": "Strategic focus on semis in 2025.",
+    "watchTickers": [],
+    "riskFactors": [
+      "geopolitical tension",
+      "inflation"
+    ],
+    "asOf": "2025-Q4",
+    "sourceUrl": "https://www.worldbank.org/en/publication/doing-business"
+  },
+  {
+    "iso3": "BRA",
+    "name": "BRA",
+    "sector": "energy",
+    "signal": "bullish",
+    "strength": 3,
+    "thesis": "Strategic focus on energy in 2025.",
+    "watchTickers": [],
+    "riskFactors": [
+      "geopolitical tension",
+      "inflation"
+    ],
+    "asOf": "2025-Q4",
+    "sourceUrl": "https://www.worldbank.org/en/publication/doing-business"
+  },
+  {
+    "iso3": "BRA",
+    "name": "BRA",
+    "sector": "pharma",
+    "signal": "neutral",
+    "strength": 2,
+    "thesis": "Strategic focus on pharma in 2025.",
+    "watchTickers": [],
+    "riskFactors": [
+      "geopolitical tension",
+      "inflation"
+    ],
+    "asOf": "2025-Q4",
+    "sourceUrl": "https://www.worldbank.org/en/publication/doing-business"
+  },
+  {
+    "iso3": "BRA",
+    "name": "BRA",
+    "sector": "industrials",
+    "signal": "bearish",
+    "strength": 3,
+    "thesis": "Strategic focus on industrials in 2025.",
+    "watchTickers": [],
+    "riskFactors": [
+      "geopolitical tension",
+      "inflation"
+    ],
+    "asOf": "2025-Q4",
+    "sourceUrl": "https://www.worldbank.org/en/publication/doing-business"
+  },
+  {
+    "iso3": "BRA",
+    "name": "BRA",
+    "sector": "financials",
+    "signal": "bullish",
+    "strength": 5,
+    "thesis": "Strategic focus on financials in 2025.",
+    "watchTickers": [],
+    "riskFactors": [
+      "geopolitical tension",
+      "inflation"
+    ],
+    "asOf": "2025-Q4",
+    "sourceUrl": "https://www.worldbank.org/en/publication/doing-business"
+  },
+  {
+    "iso3": "BRA",
+    "name": "BRA",
+    "sector": "consumer",
+    "signal": "neutral",
+    "strength": 3,
+    "thesis": "Strategic focus on consumer in 2025.",
+    "watchTickers": [],
+    "riskFactors": [
+      "geopolitical tension",
+      "inflation"
+    ],
+    "asOf": "2025-Q4",
+    "sourceUrl": "https://www.worldbank.org/en/publication/doing-business"
+  },
+  {
+    "iso3": "BRA",
+    "name": "BRA",
+    "sector": "real_estate",
+    "signal": "bearish",
+    "strength": 4,
+    "thesis": "Strategic focus on real_estate in 2025.",
+    "watchTickers": [],
+    "riskFactors": [
+      "geopolitical tension",
+      "inflation"
+    ],
+    "asOf": "2025-Q4",
+    "sourceUrl": "https://www.worldbank.org/en/publication/doing-business"
+  },
+  {
+    "iso3": "ITA",
+    "name": "ITA",
+    "sector": "ai",
+    "signal": "bullish",
+    "strength": 4,
+    "thesis": "Strategic focus on ai in 2025.",
+    "watchTickers": [],
+    "riskFactors": [
+      "geopolitical tension",
+      "inflation"
+    ],
+    "asOf": "2025-Q4",
+    "sourceUrl": "https://www.worldbank.org/en/publication/doing-business"
+  },
+  {
+    "iso3": "ITA",
+    "name": "ITA",
+    "sector": "semis",
+    "signal": "bullish",
+    "strength": 3,
+    "thesis": "Strategic focus on semis in 2025.",
+    "watchTickers": [],
+    "riskFactors": [
+      "geopolitical tension",
+      "inflation"
+    ],
+    "asOf": "2025-Q4",
+    "sourceUrl": "https://www.worldbank.org/en/publication/doing-business"
+  },
+  {
+    "iso3": "ITA",
+    "name": "ITA",
+    "sector": "energy",
+    "signal": "neutral",
+    "strength": 2,
+    "thesis": "Strategic focus on energy in 2025.",
+    "watchTickers": [],
+    "riskFactors": [
+      "geopolitical tension",
+      "inflation"
+    ],
+    "asOf": "2025-Q4",
+    "sourceUrl": "https://www.worldbank.org/en/publication/doing-business"
+  },
+  {
+    "iso3": "ITA",
+    "name": "ITA",
+    "sector": "pharma",
+    "signal": "bearish",
+    "strength": 4,
+    "thesis": "Strategic focus on pharma in 2025.",
+    "watchTickers": [],
+    "riskFactors": [
+      "geopolitical tension",
+      "inflation"
+    ],
+    "asOf": "2025-Q4",
+    "sourceUrl": "https://www.worldbank.org/en/publication/doing-business"
+  },
+  {
+    "iso3": "ITA",
+    "name": "ITA",
+    "sector": "industrials",
+    "signal": "bullish",
+    "strength": 5,
+    "thesis": "Strategic focus on industrials in 2025.",
+    "watchTickers": [],
+    "riskFactors": [
+      "geopolitical tension",
+      "inflation"
+    ],
+    "asOf": "2025-Q4",
+    "sourceUrl": "https://www.worldbank.org/en/publication/doing-business"
+  },
+  {
+    "iso3": "ITA",
+    "name": "ITA",
+    "sector": "financials",
+    "signal": "bullish",
+    "strength": 4,
+    "thesis": "Strategic focus on financials in 2025.",
+    "watchTickers": [],
+    "riskFactors": [
+      "geopolitical tension",
+      "inflation"
+    ],
+    "asOf": "2025-Q4",
+    "sourceUrl": "https://www.worldbank.org/en/publication/doing-business"
+  },
+  {
+    "iso3": "ITA",
+    "name": "ITA",
+    "sector": "consumer",
+    "signal": "neutral",
+    "strength": 2,
+    "thesis": "Strategic focus on consumer in 2025.",
+    "watchTickers": [],
+    "riskFactors": [
+      "geopolitical tension",
+      "inflation"
+    ],
+    "asOf": "2025-Q4",
+    "sourceUrl": "https://www.worldbank.org/en/publication/doing-business"
+  },
+  {
+    "iso3": "ITA",
+    "name": "ITA",
+    "sector": "real_estate",
+    "signal": "neutral",
+    "strength": 4,
+    "thesis": "Strategic focus on real_estate in 2025.",
+    "watchTickers": [],
+    "riskFactors": [
+      "geopolitical tension",
+      "inflation"
+    ],
+    "asOf": "2025-Q4",
+    "sourceUrl": "https://www.worldbank.org/en/publication/doing-business"
+  },
+  {
+    "iso3": "CAN",
+    "name": "CAN",
+    "sector": "ai",
+    "signal": "neutral",
+    "strength": 4,
+    "thesis": "Strategic focus on ai in 2025.",
+    "watchTickers": [],
+    "riskFactors": [
+      "geopolitical tension",
+      "inflation"
+    ],
+    "asOf": "2025-Q4",
+    "sourceUrl": "https://www.worldbank.org/en/publication/doing-business"
+  },
+  {
+    "iso3": "CAN",
+    "name": "CAN",
+    "sector": "semis",
+    "signal": "bearish",
+    "strength": 3,
+    "thesis": "Strategic focus on semis in 2025.",
+    "watchTickers": [],
+    "riskFactors": [
+      "geopolitical tension",
+      "inflation"
+    ],
+    "asOf": "2025-Q4",
+    "sourceUrl": "https://www.worldbank.org/en/publication/doing-business"
+  },
+  {
+    "iso3": "CAN",
+    "name": "CAN",
+    "sector": "energy",
+    "signal": "neutral",
+    "strength": 4,
+    "thesis": "Strategic focus on energy in 2025.",
+    "watchTickers": [],
+    "riskFactors": [
+      "geopolitical tension",
+      "inflation"
+    ],
+    "asOf": "2025-Q4",
+    "sourceUrl": "https://www.worldbank.org/en/publication/doing-business"
+  },
+  {
+    "iso3": "CAN",
+    "name": "CAN",
+    "sector": "pharma",
+    "signal": "neutral",
+    "strength": 4,
+    "thesis": "Strategic focus on pharma in 2025.",
+    "watchTickers": [],
+    "riskFactors": [
+      "geopolitical tension",
+      "inflation"
+    ],
+    "asOf": "2025-Q4",
+    "sourceUrl": "https://www.worldbank.org/en/publication/doing-business"
+  },
+  {
+    "iso3": "CAN",
+    "name": "CAN",
+    "sector": "industrials",
+    "signal": "neutral",
+    "strength": 2,
+    "thesis": "Strategic focus on industrials in 2025.",
+    "watchTickers": [],
+    "riskFactors": [
+      "geopolitical tension",
+      "inflation"
+    ],
+    "asOf": "2025-Q4",
+    "sourceUrl": "https://www.worldbank.org/en/publication/doing-business"
+  },
+  {
+    "iso3": "CAN",
+    "name": "CAN",
+    "sector": "financials",
+    "signal": "neutral",
+    "strength": 2,
+    "thesis": "Strategic focus on financials in 2025.",
+    "watchTickers": [],
+    "riskFactors": [
+      "geopolitical tension",
+      "inflation"
+    ],
+    "asOf": "2025-Q4",
+    "sourceUrl": "https://www.worldbank.org/en/publication/doing-business"
+  },
+  {
+    "iso3": "CAN",
+    "name": "CAN",
+    "sector": "consumer",
+    "signal": "neutral",
+    "strength": 4,
+    "thesis": "Strategic focus on consumer in 2025.",
+    "watchTickers": [],
+    "riskFactors": [
+      "geopolitical tension",
+      "inflation"
+    ],
+    "asOf": "2025-Q4",
+    "sourceUrl": "https://www.worldbank.org/en/publication/doing-business"
+  },
+  {
+    "iso3": "CAN",
+    "name": "CAN",
+    "sector": "real_estate",
+    "signal": "neutral",
+    "strength": 4,
+    "thesis": "Strategic focus on real_estate in 2025.",
+    "watchTickers": [],
+    "riskFactors": [
+      "geopolitical tension",
+      "inflation"
+    ],
+    "asOf": "2025-Q4",
+    "sourceUrl": "https://www.worldbank.org/en/publication/doing-business"
+  },
+  {
+    "iso3": "KOR",
+    "name": "KOR",
+    "sector": "ai",
+    "signal": "neutral",
+    "strength": 2,
+    "thesis": "Strategic focus on ai in 2025.",
+    "watchTickers": [],
+    "riskFactors": [
+      "geopolitical tension",
+      "inflation"
+    ],
+    "asOf": "2025-Q4",
+    "sourceUrl": "https://www.worldbank.org/en/publication/doing-business"
+  },
+  {
+    "iso3": "KOR",
+    "name": "KOR",
+    "sector": "semis",
+    "signal": "bullish",
+    "strength": 5,
+    "thesis": "Capacity expansion for high-bandwidth memory and advanced nodes.",
+    "watchTickers": [
+      "005930.KS",
+      "000660.KS"
+    ],
+    "riskFactors": [
+      "geopolitical tension",
+      "inflation"
+    ],
+    "asOf": "2025-Q4",
+    "sourceUrl": "https://www.worldbank.org/en/publication/doing-business"
+  },
+  {
+    "iso3": "KOR",
+    "name": "KOR",
+    "sector": "energy",
+    "signal": "neutral",
+    "strength": 4,
+    "thesis": "Strategic focus on energy in 2025.",
+    "watchTickers": [],
+    "riskFactors": [
+      "geopolitical tension",
+      "inflation"
+    ],
+    "asOf": "2025-Q4",
+    "sourceUrl": "https://www.worldbank.org/en/publication/doing-business"
+  },
+  {
+    "iso3": "KOR",
+    "name": "KOR",
+    "sector": "pharma",
+    "signal": "bearish",
+    "strength": 3,
+    "thesis": "Strategic focus on pharma in 2025.",
+    "watchTickers": [],
+    "riskFactors": [
+      "geopolitical tension",
+      "inflation"
+    ],
+    "asOf": "2025-Q4",
+    "sourceUrl": "https://www.worldbank.org/en/publication/doing-business"
+  },
+  {
+    "iso3": "KOR",
+    "name": "KOR",
+    "sector": "industrials",
+    "signal": "neutral",
+    "strength": 3,
+    "thesis": "Strategic focus on industrials in 2025.",
+    "watchTickers": [],
+    "riskFactors": [
+      "geopolitical tension",
+      "inflation"
+    ],
+    "asOf": "2025-Q4",
+    "sourceUrl": "https://www.worldbank.org/en/publication/doing-business"
+  },
+  {
+    "iso3": "KOR",
+    "name": "KOR",
+    "sector": "financials",
+    "signal": "neutral",
+    "strength": 2,
+    "thesis": "Strategic focus on financials in 2025.",
+    "watchTickers": [],
+    "riskFactors": [
+      "geopolitical tension",
+      "inflation"
+    ],
+    "asOf": "2025-Q4",
+    "sourceUrl": "https://www.worldbank.org/en/publication/doing-business"
+  },
+  {
+    "iso3": "KOR",
+    "name": "KOR",
+    "sector": "consumer",
+    "signal": "neutral",
+    "strength": 2,
+    "thesis": "Strategic focus on consumer in 2025.",
+    "watchTickers": [],
+    "riskFactors": [
+      "geopolitical tension",
+      "inflation"
+    ],
+    "asOf": "2025-Q4",
+    "sourceUrl": "https://www.worldbank.org/en/publication/doing-business"
+  },
+  {
+    "iso3": "KOR",
+    "name": "KOR",
+    "sector": "real_estate",
+    "signal": "neutral",
+    "strength": 2,
+    "thesis": "Strategic focus on real_estate in 2025.",
+    "watchTickers": [],
+    "riskFactors": [
+      "geopolitical tension",
+      "inflation"
+    ],
+    "asOf": "2025-Q4",
+    "sourceUrl": "https://www.worldbank.org/en/publication/doing-business"
+  },
+  {
+    "iso3": "AUS",
+    "name": "AUS",
+    "sector": "ai",
+    "signal": "neutral",
+    "strength": 3,
+    "thesis": "Strategic focus on ai in 2025.",
+    "watchTickers": [],
+    "riskFactors": [
+      "geopolitical tension",
+      "inflation"
+    ],
+    "asOf": "2025-Q4",
+    "sourceUrl": "https://www.worldbank.org/en/publication/doing-business"
+  },
+  {
+    "iso3": "AUS",
+    "name": "AUS",
+    "sector": "semis",
+    "signal": "neutral",
+    "strength": 2,
+    "thesis": "Strategic focus on semis in 2025.",
+    "watchTickers": [],
+    "riskFactors": [
+      "geopolitical tension",
+      "inflation"
+    ],
+    "asOf": "2025-Q4",
+    "sourceUrl": "https://www.worldbank.org/en/publication/doing-business"
+  },
+  {
+    "iso3": "AUS",
+    "name": "AUS",
+    "sector": "energy",
+    "signal": "neutral",
+    "strength": 2,
+    "thesis": "Strategic focus on energy in 2025.",
+    "watchTickers": [],
+    "riskFactors": [
+      "geopolitical tension",
+      "inflation"
+    ],
+    "asOf": "2025-Q4",
+    "sourceUrl": "https://www.worldbank.org/en/publication/doing-business"
+  },
+  {
+    "iso3": "AUS",
+    "name": "AUS",
+    "sector": "pharma",
+    "signal": "neutral",
+    "strength": 3,
+    "thesis": "Strategic focus on pharma in 2025.",
+    "watchTickers": [],
+    "riskFactors": [
+      "geopolitical tension",
+      "inflation"
+    ],
+    "asOf": "2025-Q4",
+    "sourceUrl": "https://www.worldbank.org/en/publication/doing-business"
+  },
+  {
+    "iso3": "AUS",
+    "name": "AUS",
+    "sector": "industrials",
+    "signal": "neutral",
+    "strength": 2,
+    "thesis": "Strategic focus on industrials in 2025.",
+    "watchTickers": [],
+    "riskFactors": [
+      "geopolitical tension",
+      "inflation"
+    ],
+    "asOf": "2025-Q4",
+    "sourceUrl": "https://www.worldbank.org/en/publication/doing-business"
+  },
+  {
+    "iso3": "AUS",
+    "name": "AUS",
+    "sector": "financials",
+    "signal": "neutral",
+    "strength": 3,
+    "thesis": "Strategic focus on financials in 2025.",
+    "watchTickers": [],
+    "riskFactors": [
+      "geopolitical tension",
+      "inflation"
+    ],
+    "asOf": "2025-Q4",
+    "sourceUrl": "https://www.worldbank.org/en/publication/doing-business"
+  },
+  {
+    "iso3": "AUS",
+    "name": "AUS",
+    "sector": "consumer",
+    "signal": "neutral",
+    "strength": 2,
+    "thesis": "Strategic focus on consumer in 2025.",
+    "watchTickers": [],
+    "riskFactors": [
+      "geopolitical tension",
+      "inflation"
+    ],
+    "asOf": "2025-Q4",
+    "sourceUrl": "https://www.worldbank.org/en/publication/doing-business"
+  },
+  {
+    "iso3": "AUS",
+    "name": "AUS",
+    "sector": "real_estate",
+    "signal": "neutral",
+    "strength": 4,
+    "thesis": "Strategic focus on real_estate in 2025.",
+    "watchTickers": [],
+    "riskFactors": [
+      "geopolitical tension",
+      "inflation"
+    ],
+    "asOf": "2025-Q4",
+    "sourceUrl": "https://www.worldbank.org/en/publication/doing-business"
+  },
+  {
+    "iso3": "ESP",
+    "name": "ESP",
+    "sector": "ai",
+    "signal": "neutral",
+    "strength": 3,
+    "thesis": "Strategic focus on ai in 2025.",
+    "watchTickers": [],
+    "riskFactors": [
+      "geopolitical tension",
+      "inflation"
+    ],
+    "asOf": "2025-Q4",
+    "sourceUrl": "https://www.worldbank.org/en/publication/doing-business"
+  },
+  {
+    "iso3": "ESP",
+    "name": "ESP",
+    "sector": "semis",
+    "signal": "neutral",
+    "strength": 3,
+    "thesis": "Strategic focus on semis in 2025.",
+    "watchTickers": [],
+    "riskFactors": [
+      "geopolitical tension",
+      "inflation"
+    ],
+    "asOf": "2025-Q4",
+    "sourceUrl": "https://www.worldbank.org/en/publication/doing-business"
+  },
+  {
+    "iso3": "ESP",
+    "name": "ESP",
+    "sector": "energy",
+    "signal": "neutral",
+    "strength": 2,
+    "thesis": "Strategic focus on energy in 2025.",
+    "watchTickers": [],
+    "riskFactors": [
+      "geopolitical tension",
+      "inflation"
+    ],
+    "asOf": "2025-Q4",
+    "sourceUrl": "https://www.worldbank.org/en/publication/doing-business"
+  },
+  {
+    "iso3": "ESP",
+    "name": "ESP",
+    "sector": "pharma",
+    "signal": "neutral",
+    "strength": 2,
+    "thesis": "Strategic focus on pharma in 2025.",
+    "watchTickers": [],
+    "riskFactors": [
+      "geopolitical tension",
+      "inflation"
+    ],
+    "asOf": "2025-Q4",
+    "sourceUrl": "https://www.worldbank.org/en/publication/doing-business"
+  },
+  {
+    "iso3": "ESP",
+    "name": "ESP",
+    "sector": "industrials",
+    "signal": "neutral",
+    "strength": 2,
+    "thesis": "Strategic focus on industrials in 2025.",
+    "watchTickers": [],
+    "riskFactors": [
+      "geopolitical tension",
+      "inflation"
+    ],
+    "asOf": "2025-Q4",
+    "sourceUrl": "https://www.worldbank.org/en/publication/doing-business"
+  },
+  {
+    "iso3": "ESP",
+    "name": "ESP",
+    "sector": "financials",
+    "signal": "neutral",
+    "strength": 2,
+    "thesis": "Strategic focus on financials in 2025.",
+    "watchTickers": [],
+    "riskFactors": [
+      "geopolitical tension",
+      "inflation"
+    ],
+    "asOf": "2025-Q4",
+    "sourceUrl": "https://www.worldbank.org/en/publication/doing-business"
+  },
+  {
+    "iso3": "ESP",
+    "name": "ESP",
+    "sector": "consumer",
+    "signal": "bearish",
+    "strength": 5,
+    "thesis": "Strategic focus on consumer in 2025.",
+    "watchTickers": [],
+    "riskFactors": [
+      "geopolitical tension",
+      "inflation"
+    ],
+    "asOf": "2025-Q4",
+    "sourceUrl": "https://www.worldbank.org/en/publication/doing-business"
+  },
+  {
+    "iso3": "ESP",
+    "name": "ESP",
+    "sector": "real_estate",
+    "signal": "neutral",
+    "strength": 2,
+    "thesis": "Strategic focus on real_estate in 2025.",
+    "watchTickers": [],
+    "riskFactors": [
+      "geopolitical tension",
+      "inflation"
+    ],
+    "asOf": "2025-Q4",
+    "sourceUrl": "https://www.worldbank.org/en/publication/doing-business"
+  },
+  {
+    "iso3": "MEX",
+    "name": "MEX",
+    "sector": "ai",
+    "signal": "neutral",
+    "strength": 3,
+    "thesis": "Strategic focus on ai in 2025.",
+    "watchTickers": [],
+    "riskFactors": [
+      "geopolitical tension",
+      "inflation"
+    ],
+    "asOf": "2025-Q4",
+    "sourceUrl": "https://www.worldbank.org/en/publication/doing-business"
+  },
+  {
+    "iso3": "MEX",
+    "name": "MEX",
+    "sector": "semis",
+    "signal": "neutral",
+    "strength": 2,
+    "thesis": "Strategic focus on semis in 2025.",
+    "watchTickers": [],
+    "riskFactors": [
+      "geopolitical tension",
+      "inflation"
+    ],
+    "asOf": "2025-Q4",
+    "sourceUrl": "https://www.worldbank.org/en/publication/doing-business"
+  },
+  {
+    "iso3": "MEX",
+    "name": "MEX",
+    "sector": "energy",
+    "signal": "neutral",
+    "strength": 4,
+    "thesis": "Strategic focus on energy in 2025.",
+    "watchTickers": [],
+    "riskFactors": [
+      "geopolitical tension",
+      "inflation"
+    ],
+    "asOf": "2025-Q4",
+    "sourceUrl": "https://www.worldbank.org/en/publication/doing-business"
+  },
+  {
+    "iso3": "MEX",
+    "name": "MEX",
+    "sector": "pharma",
+    "signal": "neutral",
+    "strength": 4,
+    "thesis": "Strategic focus on pharma in 2025.",
+    "watchTickers": [],
+    "riskFactors": [
+      "geopolitical tension",
+      "inflation"
+    ],
+    "asOf": "2025-Q4",
+    "sourceUrl": "https://www.worldbank.org/en/publication/doing-business"
+  },
+  {
+    "iso3": "MEX",
+    "name": "MEX",
+    "sector": "industrials",
+    "signal": "neutral",
+    "strength": 4,
+    "thesis": "Strategic focus on industrials in 2025.",
+    "watchTickers": [],
+    "riskFactors": [
+      "geopolitical tension",
+      "inflation"
+    ],
+    "asOf": "2025-Q4",
+    "sourceUrl": "https://www.worldbank.org/en/publication/doing-business"
+  },
+  {
+    "iso3": "MEX",
+    "name": "MEX",
+    "sector": "financials",
+    "signal": "neutral",
+    "strength": 3,
+    "thesis": "Strategic focus on financials in 2025.",
+    "watchTickers": [],
+    "riskFactors": [
+      "geopolitical tension",
+      "inflation"
+    ],
+    "asOf": "2025-Q4",
+    "sourceUrl": "https://www.worldbank.org/en/publication/doing-business"
+  },
+  {
+    "iso3": "MEX",
+    "name": "MEX",
+    "sector": "consumer",
+    "signal": "neutral",
+    "strength": 4,
+    "thesis": "Strategic focus on consumer in 2025.",
+    "watchTickers": [],
+    "riskFactors": [
+      "geopolitical tension",
+      "inflation"
+    ],
+    "asOf": "2025-Q4",
+    "sourceUrl": "https://www.worldbank.org/en/publication/doing-business"
+  },
+  {
+    "iso3": "MEX",
+    "name": "MEX",
+    "sector": "real_estate",
+    "signal": "neutral",
+    "strength": 4,
+    "thesis": "Strategic focus on real_estate in 2025.",
+    "watchTickers": [],
+    "riskFactors": [
+      "geopolitical tension",
+      "inflation"
+    ],
+    "asOf": "2025-Q4",
+    "sourceUrl": "https://www.worldbank.org/en/publication/doing-business"
+  },
+  {
+    "iso3": "IDN",
+    "name": "IDN",
+    "sector": "ai",
+    "signal": "neutral",
+    "strength": 3,
+    "thesis": "Strategic focus on ai in 2025.",
+    "watchTickers": [],
+    "riskFactors": [
+      "geopolitical tension",
+      "inflation"
+    ],
+    "asOf": "2025-Q4",
+    "sourceUrl": "https://www.worldbank.org/en/publication/doing-business"
+  },
+  {
+    "iso3": "IDN",
+    "name": "IDN",
+    "sector": "semis",
+    "signal": "neutral",
+    "strength": 4,
+    "thesis": "Strategic focus on semis in 2025.",
+    "watchTickers": [],
+    "riskFactors": [
+      "geopolitical tension",
+      "inflation"
+    ],
+    "asOf": "2025-Q4",
+    "sourceUrl": "https://www.worldbank.org/en/publication/doing-business"
+  },
+  {
+    "iso3": "IDN",
+    "name": "IDN",
+    "sector": "energy",
+    "signal": "neutral",
+    "strength": 4,
+    "thesis": "Strategic focus on energy in 2025.",
+    "watchTickers": [],
+    "riskFactors": [
+      "geopolitical tension",
+      "inflation"
+    ],
+    "asOf": "2025-Q4",
+    "sourceUrl": "https://www.worldbank.org/en/publication/doing-business"
+  },
+  {
+    "iso3": "IDN",
+    "name": "IDN",
+    "sector": "pharma",
+    "signal": "bearish",
+    "strength": 4,
+    "thesis": "Strategic focus on pharma in 2025.",
+    "watchTickers": [],
+    "riskFactors": [
+      "geopolitical tension",
+      "inflation"
+    ],
+    "asOf": "2025-Q4",
+    "sourceUrl": "https://www.worldbank.org/en/publication/doing-business"
+  },
+  {
+    "iso3": "IDN",
+    "name": "IDN",
+    "sector": "industrials",
+    "signal": "neutral",
+    "strength": 4,
+    "thesis": "Strategic focus on industrials in 2025.",
+    "watchTickers": [],
+    "riskFactors": [
+      "geopolitical tension",
+      "inflation"
+    ],
+    "asOf": "2025-Q4",
+    "sourceUrl": "https://www.worldbank.org/en/publication/doing-business"
+  },
+  {
+    "iso3": "IDN",
+    "name": "IDN",
+    "sector": "financials",
+    "signal": "neutral",
+    "strength": 2,
+    "thesis": "Strategic focus on financials in 2025.",
+    "watchTickers": [],
+    "riskFactors": [
+      "geopolitical tension",
+      "inflation"
+    ],
+    "asOf": "2025-Q4",
+    "sourceUrl": "https://www.worldbank.org/en/publication/doing-business"
+  },
+  {
+    "iso3": "IDN",
+    "name": "IDN",
+    "sector": "consumer",
+    "signal": "bearish",
+    "strength": 3,
+    "thesis": "Strategic focus on consumer in 2025.",
+    "watchTickers": [],
+    "riskFactors": [
+      "geopolitical tension",
+      "inflation"
+    ],
+    "asOf": "2025-Q4",
+    "sourceUrl": "https://www.worldbank.org/en/publication/doing-business"
+  },
+  {
+    "iso3": "IDN",
+    "name": "IDN",
+    "sector": "real_estate",
+    "signal": "neutral",
+    "strength": 2,
+    "thesis": "Strategic focus on real_estate in 2025.",
+    "watchTickers": [],
+    "riskFactors": [
+      "geopolitical tension",
+      "inflation"
+    ],
+    "asOf": "2025-Q4",
+    "sourceUrl": "https://www.worldbank.org/en/publication/doing-business"
+  },
+  {
+    "iso3": "SAU",
+    "name": "SAU",
+    "sector": "ai",
+    "signal": "neutral",
+    "strength": 3,
+    "thesis": "Strategic focus on ai in 2025.",
+    "watchTickers": [],
+    "riskFactors": [
+      "geopolitical tension",
+      "inflation"
+    ],
+    "asOf": "2025-Q4",
+    "sourceUrl": "https://www.worldbank.org/en/publication/doing-business"
+  },
+  {
+    "iso3": "SAU",
+    "name": "SAU",
+    "sector": "semis",
+    "signal": "neutral",
+    "strength": 2,
+    "thesis": "Strategic focus on semis in 2025.",
+    "watchTickers": [],
+    "riskFactors": [
+      "geopolitical tension",
+      "inflation"
+    ],
+    "asOf": "2025-Q4",
+    "sourceUrl": "https://www.worldbank.org/en/publication/doing-business"
+  },
+  {
+    "iso3": "SAU",
+    "name": "SAU",
+    "sector": "energy",
+    "signal": "bullish",
+    "strength": 4,
+    "thesis": "Record-high production and export capacity.",
+    "watchTickers": [],
+    "riskFactors": [
+      "geopolitical tension",
+      "inflation"
+    ],
+    "asOf": "2025-Q4",
+    "sourceUrl": "https://www.worldbank.org/en/publication/doing-business"
+  },
+  {
+    "iso3": "SAU",
+    "name": "SAU",
+    "sector": "pharma",
+    "signal": "neutral",
+    "strength": 4,
+    "thesis": "Strategic focus on pharma in 2025.",
+    "watchTickers": [],
+    "riskFactors": [
+      "geopolitical tension",
+      "inflation"
+    ],
+    "asOf": "2025-Q4",
+    "sourceUrl": "https://www.worldbank.org/en/publication/doing-business"
+  },
+  {
+    "iso3": "SAU",
+    "name": "SAU",
+    "sector": "industrials",
+    "signal": "neutral",
+    "strength": 3,
+    "thesis": "Strategic focus on industrials in 2025.",
+    "watchTickers": [],
+    "riskFactors": [
+      "geopolitical tension",
+      "inflation"
+    ],
+    "asOf": "2025-Q4",
+    "sourceUrl": "https://www.worldbank.org/en/publication/doing-business"
+  },
+  {
+    "iso3": "SAU",
+    "name": "SAU",
+    "sector": "financials",
+    "signal": "neutral",
+    "strength": 3,
+    "thesis": "Strategic focus on financials in 2025.",
+    "watchTickers": [],
+    "riskFactors": [
+      "geopolitical tension",
+      "inflation"
+    ],
+    "asOf": "2025-Q4",
+    "sourceUrl": "https://www.worldbank.org/en/publication/doing-business"
+  },
+  {
+    "iso3": "SAU",
+    "name": "SAU",
+    "sector": "consumer",
+    "signal": "neutral",
+    "strength": 2,
+    "thesis": "Strategic focus on consumer in 2025.",
+    "watchTickers": [],
+    "riskFactors": [
+      "geopolitical tension",
+      "inflation"
+    ],
+    "asOf": "2025-Q4",
+    "sourceUrl": "https://www.worldbank.org/en/publication/doing-business"
+  },
+  {
+    "iso3": "SAU",
+    "name": "SAU",
+    "sector": "real_estate",
+    "signal": "bearish",
+    "strength": 4,
+    "thesis": "Strategic focus on real_estate in 2025.",
+    "watchTickers": [],
+    "riskFactors": [
+      "geopolitical tension",
+      "inflation"
+    ],
+    "asOf": "2025-Q4",
+    "sourceUrl": "https://www.worldbank.org/en/publication/doing-business"
+  },
+  {
+    "iso3": "NLD",
+    "name": "NLD",
+    "sector": "ai",
+    "signal": "bearish",
+    "strength": 3,
+    "thesis": "Strategic focus on ai in 2025.",
+    "watchTickers": [],
+    "riskFactors": [
+      "geopolitical tension",
+      "inflation"
+    ],
+    "asOf": "2025-Q4",
+    "sourceUrl": "https://www.worldbank.org/en/publication/doing-business"
+  },
+  {
+    "iso3": "NLD",
+    "name": "NLD",
+    "sector": "semis",
+    "signal": "bearish",
+    "strength": 5,
+    "thesis": "Strategic focus on semis in 2025.",
+    "watchTickers": [],
+    "riskFactors": [
+      "geopolitical tension",
+      "inflation"
+    ],
+    "asOf": "2025-Q4",
+    "sourceUrl": "https://www.worldbank.org/en/publication/doing-business"
+  },
+  {
+    "iso3": "NLD",
+    "name": "NLD",
+    "sector": "energy",
+    "signal": "neutral",
+    "strength": 4,
+    "thesis": "Strategic focus on energy in 2025.",
+    "watchTickers": [],
+    "riskFactors": [
+      "geopolitical tension",
+      "inflation"
+    ],
+    "asOf": "2025-Q4",
+    "sourceUrl": "https://www.worldbank.org/en/publication/doing-business"
+  },
+  {
+    "iso3": "NLD",
+    "name": "NLD",
+    "sector": "pharma",
+    "signal": "neutral",
+    "strength": 3,
+    "thesis": "Strategic focus on pharma in 2025.",
+    "watchTickers": [],
+    "riskFactors": [
+      "geopolitical tension",
+      "inflation"
+    ],
+    "asOf": "2025-Q4",
+    "sourceUrl": "https://www.worldbank.org/en/publication/doing-business"
+  },
+  {
+    "iso3": "NLD",
+    "name": "NLD",
+    "sector": "industrials",
+    "signal": "bearish",
+    "strength": 3,
+    "thesis": "Strategic focus on industrials in 2025.",
+    "watchTickers": [],
+    "riskFactors": [
+      "geopolitical tension",
+      "inflation"
+    ],
+    "asOf": "2025-Q4",
+    "sourceUrl": "https://www.worldbank.org/en/publication/doing-business"
+  },
+  {
+    "iso3": "NLD",
+    "name": "NLD",
+    "sector": "financials",
+    "signal": "bearish",
+    "strength": 5,
+    "thesis": "Strategic focus on financials in 2025.",
+    "watchTickers": [],
+    "riskFactors": [
+      "geopolitical tension",
+      "inflation"
+    ],
+    "asOf": "2025-Q4",
+    "sourceUrl": "https://www.worldbank.org/en/publication/doing-business"
+  },
+  {
+    "iso3": "NLD",
+    "name": "NLD",
+    "sector": "consumer",
+    "signal": "neutral",
+    "strength": 3,
+    "thesis": "Strategic focus on consumer in 2025.",
+    "watchTickers": [],
+    "riskFactors": [
+      "geopolitical tension",
+      "inflation"
+    ],
+    "asOf": "2025-Q4",
+    "sourceUrl": "https://www.worldbank.org/en/publication/doing-business"
+  },
+  {
+    "iso3": "NLD",
+    "name": "NLD",
+    "sector": "real_estate",
+    "signal": "neutral",
+    "strength": 2,
+    "thesis": "Strategic focus on real_estate in 2025.",
+    "watchTickers": [],
+    "riskFactors": [
+      "geopolitical tension",
+      "inflation"
+    ],
+    "asOf": "2025-Q4",
+    "sourceUrl": "https://www.worldbank.org/en/publication/doing-business"
+  },
+  {
+    "iso3": "TUR",
+    "name": "TUR",
+    "sector": "ai",
+    "signal": "bearish",
+    "strength": 5,
+    "thesis": "Strategic focus on ai in 2025.",
+    "watchTickers": [],
+    "riskFactors": [
+      "geopolitical tension",
+      "inflation"
+    ],
+    "asOf": "2025-Q4",
+    "sourceUrl": "https://www.worldbank.org/en/publication/doing-business"
+  },
+  {
+    "iso3": "TUR",
+    "name": "TUR",
+    "sector": "semis",
+    "signal": "bearish",
+    "strength": 5,
+    "thesis": "Strategic focus on semis in 2025.",
+    "watchTickers": [],
+    "riskFactors": [
+      "geopolitical tension",
+      "inflation"
+    ],
+    "asOf": "2025-Q4",
+    "sourceUrl": "https://www.worldbank.org/en/publication/doing-business"
+  },
+  {
+    "iso3": "TUR",
+    "name": "TUR",
+    "sector": "energy",
+    "signal": "bullish",
+    "strength": 3,
+    "thesis": "Strategic focus on energy in 2025.",
+    "watchTickers": [],
+    "riskFactors": [
+      "geopolitical tension",
+      "inflation"
+    ],
+    "asOf": "2025-Q4",
+    "sourceUrl": "https://www.worldbank.org/en/publication/doing-business"
+  },
+  {
+    "iso3": "TUR",
+    "name": "TUR",
+    "sector": "pharma",
+    "signal": "neutral",
+    "strength": 4,
+    "thesis": "Strategic focus on pharma in 2025.",
+    "watchTickers": [],
+    "riskFactors": [
+      "geopolitical tension",
+      "inflation"
+    ],
+    "asOf": "2025-Q4",
+    "sourceUrl": "https://www.worldbank.org/en/publication/doing-business"
+  },
+  {
+    "iso3": "TUR",
+    "name": "TUR",
+    "sector": "industrials",
+    "signal": "neutral",
+    "strength": 4,
+    "thesis": "Strategic focus on industrials in 2025.",
+    "watchTickers": [],
+    "riskFactors": [
+      "geopolitical tension",
+      "inflation"
+    ],
+    "asOf": "2025-Q4",
+    "sourceUrl": "https://www.worldbank.org/en/publication/doing-business"
+  },
+  {
+    "iso3": "TUR",
+    "name": "TUR",
+    "sector": "financials",
+    "signal": "neutral",
+    "strength": 3,
+    "thesis": "Strategic focus on financials in 2025.",
+    "watchTickers": [],
+    "riskFactors": [
+      "geopolitical tension",
+      "inflation"
+    ],
+    "asOf": "2025-Q4",
+    "sourceUrl": "https://www.worldbank.org/en/publication/doing-business"
+  },
+  {
+    "iso3": "TUR",
+    "name": "TUR",
+    "sector": "consumer",
+    "signal": "bearish",
+    "strength": 3,
+    "thesis": "Strategic focus on consumer in 2025.",
+    "watchTickers": [],
+    "riskFactors": [
+      "geopolitical tension",
+      "inflation"
+    ],
+    "asOf": "2025-Q4",
+    "sourceUrl": "https://www.worldbank.org/en/publication/doing-business"
+  },
+  {
+    "iso3": "TUR",
+    "name": "TUR",
+    "sector": "real_estate",
+    "signal": "neutral",
+    "strength": 3,
+    "thesis": "Strategic focus on real_estate in 2025.",
+    "watchTickers": [],
+    "riskFactors": [
+      "geopolitical tension",
+      "inflation"
+    ],
+    "asOf": "2025-Q4",
+    "sourceUrl": "https://www.worldbank.org/en/publication/doing-business"
+  },
+  {
+    "iso3": "TWN",
+    "name": "TWN",
+    "sector": "ai",
+    "signal": "neutral",
+    "strength": 3,
+    "thesis": "Strategic focus on ai in 2025.",
+    "watchTickers": [],
+    "riskFactors": [
+      "geopolitical tension",
+      "inflation"
+    ],
+    "asOf": "2025-Q4",
+    "sourceUrl": "https://www.worldbank.org/en/publication/doing-business"
+  },
+  {
+    "iso3": "TWN",
+    "name": "TWN",
+    "sector": "semis",
+    "signal": "bullish",
+    "strength": 5,
+    "thesis": "Capacity expansion for high-bandwidth memory and advanced nodes.",
+    "watchTickers": [
+      "TSM"
+    ],
+    "riskFactors": [
+      "geopolitical tension",
+      "inflation"
+    ],
+    "asOf": "2025-Q4",
+    "sourceUrl": "https://www.worldbank.org/en/publication/doing-business"
+  },
+  {
+    "iso3": "TWN",
+    "name": "TWN",
+    "sector": "energy",
+    "signal": "neutral",
+    "strength": 4,
+    "thesis": "Strategic focus on energy in 2025.",
+    "watchTickers": [],
+    "riskFactors": [
+      "geopolitical tension",
+      "inflation"
+    ],
+    "asOf": "2025-Q4",
+    "sourceUrl": "https://www.worldbank.org/en/publication/doing-business"
+  },
+  {
+    "iso3": "TWN",
+    "name": "TWN",
+    "sector": "pharma",
+    "signal": "neutral",
+    "strength": 2,
+    "thesis": "Strategic focus on pharma in 2025.",
+    "watchTickers": [],
+    "riskFactors": [
+      "geopolitical tension",
+      "inflation"
+    ],
+    "asOf": "2025-Q4",
+    "sourceUrl": "https://www.worldbank.org/en/publication/doing-business"
+  },
+  {
+    "iso3": "TWN",
+    "name": "TWN",
+    "sector": "industrials",
+    "signal": "bullish",
+    "strength": 4,
+    "thesis": "Strategic focus on industrials in 2025.",
+    "watchTickers": [],
+    "riskFactors": [
+      "geopolitical tension",
+      "inflation"
+    ],
+    "asOf": "2025-Q4",
+    "sourceUrl": "https://www.worldbank.org/en/publication/doing-business"
+  },
+  {
+    "iso3": "TWN",
+    "name": "TWN",
+    "sector": "financials",
+    "signal": "neutral",
+    "strength": 4,
+    "thesis": "Strategic focus on financials in 2025.",
+    "watchTickers": [],
+    "riskFactors": [
+      "geopolitical tension",
+      "inflation"
+    ],
+    "asOf": "2025-Q4",
+    "sourceUrl": "https://www.worldbank.org/en/publication/doing-business"
+  },
+  {
+    "iso3": "TWN",
+    "name": "TWN",
+    "sector": "consumer",
+    "signal": "bullish",
+    "strength": 5,
+    "thesis": "Strategic focus on consumer in 2025.",
+    "watchTickers": [],
+    "riskFactors": [
+      "geopolitical tension",
+      "inflation"
+    ],
+    "asOf": "2025-Q4",
+    "sourceUrl": "https://www.worldbank.org/en/publication/doing-business"
+  },
+  {
+    "iso3": "TWN",
+    "name": "TWN",
+    "sector": "real_estate",
+    "signal": "neutral",
+    "strength": 4,
+    "thesis": "Strategic focus on real_estate in 2025.",
+    "watchTickers": [],
+    "riskFactors": [
+      "geopolitical tension",
+      "inflation"
+    ],
+    "asOf": "2025-Q4",
+    "sourceUrl": "https://www.worldbank.org/en/publication/doing-business"
+  },
+  {
+    "iso3": "POL",
+    "name": "POL",
+    "sector": "ai",
+    "signal": "neutral",
+    "strength": 4,
+    "thesis": "Strategic focus on ai in 2025.",
+    "watchTickers": [],
+    "riskFactors": [
+      "geopolitical tension",
+      "inflation"
+    ],
+    "asOf": "2025-Q4",
+    "sourceUrl": "https://www.worldbank.org/en/publication/doing-business"
+  },
+  {
+    "iso3": "POL",
+    "name": "POL",
+    "sector": "semis",
+    "signal": "neutral",
+    "strength": 4,
+    "thesis": "Strategic focus on semis in 2025.",
+    "watchTickers": [],
+    "riskFactors": [
+      "geopolitical tension",
+      "inflation"
+    ],
+    "asOf": "2025-Q4",
+    "sourceUrl": "https://www.worldbank.org/en/publication/doing-business"
+  },
+  {
+    "iso3": "POL",
+    "name": "POL",
+    "sector": "energy",
+    "signal": "neutral",
+    "strength": 4,
+    "thesis": "Strategic focus on energy in 2025.",
+    "watchTickers": [],
+    "riskFactors": [
+      "geopolitical tension",
+      "inflation"
+    ],
+    "asOf": "2025-Q4",
+    "sourceUrl": "https://www.worldbank.org/en/publication/doing-business"
+  },
+  {
+    "iso3": "POL",
+    "name": "POL",
+    "sector": "pharma",
+    "signal": "neutral",
+    "strength": 4,
+    "thesis": "Strategic focus on pharma in 2025.",
+    "watchTickers": [],
+    "riskFactors": [
+      "geopolitical tension",
+      "inflation"
+    ],
+    "asOf": "2025-Q4",
+    "sourceUrl": "https://www.worldbank.org/en/publication/doing-business"
+  },
+  {
+    "iso3": "POL",
+    "name": "POL",
+    "sector": "industrials",
+    "signal": "neutral",
+    "strength": 4,
+    "thesis": "Strategic focus on industrials in 2025.",
+    "watchTickers": [],
+    "riskFactors": [
+      "geopolitical tension",
+      "inflation"
+    ],
+    "asOf": "2025-Q4",
+    "sourceUrl": "https://www.worldbank.org/en/publication/doing-business"
+  },
+  {
+    "iso3": "POL",
+    "name": "POL",
+    "sector": "financials",
+    "signal": "neutral",
+    "strength": 3,
+    "thesis": "Strategic focus on financials in 2025.",
+    "watchTickers": [],
+    "riskFactors": [
+      "geopolitical tension",
+      "inflation"
+    ],
+    "asOf": "2025-Q4",
+    "sourceUrl": "https://www.worldbank.org/en/publication/doing-business"
+  },
+  {
+    "iso3": "POL",
+    "name": "POL",
+    "sector": "consumer",
+    "signal": "neutral",
+    "strength": 2,
+    "thesis": "Strategic focus on consumer in 2025.",
+    "watchTickers": [],
+    "riskFactors": [
+      "geopolitical tension",
+      "inflation"
+    ],
+    "asOf": "2025-Q4",
+    "sourceUrl": "https://www.worldbank.org/en/publication/doing-business"
+  },
+  {
+    "iso3": "POL",
+    "name": "POL",
+    "sector": "real_estate",
+    "signal": "neutral",
+    "strength": 3,
+    "thesis": "Strategic focus on real_estate in 2025.",
+    "watchTickers": [],
+    "riskFactors": [
+      "geopolitical tension",
+      "inflation"
+    ],
+    "asOf": "2025-Q4",
+    "sourceUrl": "https://www.worldbank.org/en/publication/doing-business"
+  },
+  {
+    "iso3": "VNM",
+    "name": "VNM",
+    "sector": "ai",
+    "signal": "bullish",
+    "strength": 5,
+    "thesis": "Strategic focus on ai in 2025.",
+    "watchTickers": [],
+    "riskFactors": [
+      "geopolitical tension",
+      "inflation"
+    ],
+    "asOf": "2025-Q4",
+    "sourceUrl": "https://www.worldbank.org/en/publication/doing-business"
+  },
+  {
+    "iso3": "VNM",
+    "name": "VNM",
+    "sector": "semis",
+    "signal": "bullish",
+    "strength": 5,
+    "thesis": "Capacity expansion for high-bandwidth memory and advanced nodes.",
+    "watchTickers": [],
+    "riskFactors": [
+      "geopolitical tension",
+      "inflation"
+    ],
+    "asOf": "2025-Q4",
+    "sourceUrl": "https://www.worldbank.org/en/publication/doing-business"
+  },
+  {
+    "iso3": "VNM",
+    "name": "VNM",
+    "sector": "energy",
+    "signal": "bullish",
+    "strength": 3,
+    "thesis": "Strategic focus on energy in 2025.",
+    "watchTickers": [],
+    "riskFactors": [
+      "geopolitical tension",
+      "inflation"
+    ],
+    "asOf": "2025-Q4",
+    "sourceUrl": "https://www.worldbank.org/en/publication/doing-business"
+  },
+  {
+    "iso3": "VNM",
+    "name": "VNM",
+    "sector": "pharma",
+    "signal": "neutral",
+    "strength": 3,
+    "thesis": "Strategic focus on pharma in 2025.",
+    "watchTickers": [],
+    "riskFactors": [
+      "geopolitical tension",
+      "inflation"
+    ],
+    "asOf": "2025-Q4",
+    "sourceUrl": "https://www.worldbank.org/en/publication/doing-business"
+  },
+  {
+    "iso3": "VNM",
+    "name": "VNM",
+    "sector": "industrials",
+    "signal": "bearish",
+    "strength": 3,
+    "thesis": "Strategic focus on industrials in 2025.",
+    "watchTickers": [],
+    "riskFactors": [
+      "geopolitical tension",
+      "inflation"
+    ],
+    "asOf": "2025-Q4",
+    "sourceUrl": "https://www.worldbank.org/en/publication/doing-business"
+  },
+  {
+    "iso3": "VNM",
+    "name": "VNM",
+    "sector": "financials",
+    "signal": "neutral",
+    "strength": 2,
+    "thesis": "Strategic focus on financials in 2025.",
+    "watchTickers": [],
+    "riskFactors": [
+      "geopolitical tension",
+      "inflation"
+    ],
+    "asOf": "2025-Q4",
+    "sourceUrl": "https://www.worldbank.org/en/publication/doing-business"
+  },
+  {
+    "iso3": "VNM",
+    "name": "VNM",
+    "sector": "consumer",
+    "signal": "neutral",
+    "strength": 4,
+    "thesis": "Strategic focus on consumer in 2025.",
+    "watchTickers": [],
+    "riskFactors": [
+      "geopolitical tension",
+      "inflation"
+    ],
+    "asOf": "2025-Q4",
+    "sourceUrl": "https://www.worldbank.org/en/publication/doing-business"
+  },
+  {
+    "iso3": "VNM",
+    "name": "VNM",
+    "sector": "real_estate",
+    "signal": "neutral",
+    "strength": 2,
+    "thesis": "Strategic focus on real_estate in 2025.",
+    "watchTickers": [],
+    "riskFactors": [
+      "geopolitical tension",
+      "inflation"
+    ],
+    "asOf": "2025-Q4",
+    "sourceUrl": "https://www.worldbank.org/en/publication/doing-business"
+  },
+  {
+    "iso3": "SGP",
+    "name": "SGP",
+    "sector": "ai",
+    "signal": "bullish",
+    "strength": 5,
+    "thesis": "Heavy sovereign and private capex into data centers and LLM clusters.",
+    "watchTickers": [],
+    "riskFactors": [
+      "geopolitical tension",
+      "inflation"
+    ],
+    "asOf": "2025-Q4",
+    "sourceUrl": "https://www.worldbank.org/en/publication/doing-business"
+  },
+  {
+    "iso3": "SGP",
+    "name": "SGP",
+    "sector": "semis",
+    "signal": "neutral",
+    "strength": 3,
+    "thesis": "Strategic focus on semis in 2025.",
+    "watchTickers": [],
+    "riskFactors": [
+      "geopolitical tension",
+      "inflation"
+    ],
+    "asOf": "2025-Q4",
+    "sourceUrl": "https://www.worldbank.org/en/publication/doing-business"
+  },
+  {
+    "iso3": "SGP",
+    "name": "SGP",
+    "sector": "energy",
+    "signal": "neutral",
+    "strength": 3,
+    "thesis": "Strategic focus on energy in 2025.",
+    "watchTickers": [],
+    "riskFactors": [
+      "geopolitical tension",
+      "inflation"
+    ],
+    "asOf": "2025-Q4",
+    "sourceUrl": "https://www.worldbank.org/en/publication/doing-business"
+  },
+  {
+    "iso3": "SGP",
+    "name": "SGP",
+    "sector": "pharma",
+    "signal": "bullish",
+    "strength": 3,
+    "thesis": "Strategic focus on pharma in 2025.",
+    "watchTickers": [],
+    "riskFactors": [
+      "geopolitical tension",
+      "inflation"
+    ],
+    "asOf": "2025-Q4",
+    "sourceUrl": "https://www.worldbank.org/en/publication/doing-business"
+  },
+  {
+    "iso3": "SGP",
+    "name": "SGP",
+    "sector": "industrials",
+    "signal": "bullish",
+    "strength": 5,
+    "thesis": "Strategic focus on industrials in 2025.",
+    "watchTickers": [],
+    "riskFactors": [
+      "geopolitical tension",
+      "inflation"
+    ],
+    "asOf": "2025-Q4",
+    "sourceUrl": "https://www.worldbank.org/en/publication/doing-business"
+  },
+  {
+    "iso3": "SGP",
+    "name": "SGP",
+    "sector": "financials",
+    "signal": "neutral",
+    "strength": 2,
+    "thesis": "Strategic focus on financials in 2025.",
+    "watchTickers": [],
+    "riskFactors": [
+      "geopolitical tension",
+      "inflation"
+    ],
+    "asOf": "2025-Q4",
+    "sourceUrl": "https://www.worldbank.org/en/publication/doing-business"
+  },
+  {
+    "iso3": "SGP",
+    "name": "SGP",
+    "sector": "consumer",
+    "signal": "bullish",
+    "strength": 3,
+    "thesis": "Strategic focus on consumer in 2025.",
+    "watchTickers": [],
+    "riskFactors": [
+      "geopolitical tension",
+      "inflation"
+    ],
+    "asOf": "2025-Q4",
+    "sourceUrl": "https://www.worldbank.org/en/publication/doing-business"
+  },
+  {
+    "iso3": "SGP",
+    "name": "SGP",
+    "sector": "real_estate",
+    "signal": "bearish",
+    "strength": 4,
+    "thesis": "Strategic focus on real_estate in 2025.",
+    "watchTickers": [],
+    "riskFactors": [
+      "geopolitical tension",
+      "inflation"
+    ],
+    "asOf": "2025-Q4",
+    "sourceUrl": "https://www.worldbank.org/en/publication/doing-business"
+  },
+  {
+    "iso3": "ARE",
+    "name": "ARE",
+    "sector": "ai",
+    "signal": "bullish",
+    "strength": 5,
+    "thesis": "Heavy sovereign and private capex into data centers and LLM clusters.",
+    "watchTickers": [],
+    "riskFactors": [
+      "geopolitical tension",
+      "inflation"
+    ],
+    "asOf": "2025-Q4",
+    "sourceUrl": "https://www.worldbank.org/en/publication/doing-business"
+  },
+  {
+    "iso3": "ARE",
+    "name": "ARE",
+    "sector": "semis",
+    "signal": "neutral",
+    "strength": 3,
+    "thesis": "Strategic focus on semis in 2025.",
+    "watchTickers": [],
+    "riskFactors": [
+      "geopolitical tension",
+      "inflation"
+    ],
+    "asOf": "2025-Q4",
+    "sourceUrl": "https://www.worldbank.org/en/publication/doing-business"
+  },
+  {
+    "iso3": "ARE",
+    "name": "ARE",
+    "sector": "energy",
+    "signal": "bullish",
+    "strength": 2,
+    "thesis": "Record-high production and export capacity.",
+    "watchTickers": [],
+    "riskFactors": [
+      "geopolitical tension",
+      "inflation"
+    ],
+    "asOf": "2025-Q4",
+    "sourceUrl": "https://www.worldbank.org/en/publication/doing-business"
+  },
+  {
+    "iso3": "ARE",
+    "name": "ARE",
+    "sector": "pharma",
+    "signal": "neutral",
+    "strength": 3,
+    "thesis": "Strategic focus on pharma in 2025.",
+    "watchTickers": [],
+    "riskFactors": [
+      "geopolitical tension",
+      "inflation"
+    ],
+    "asOf": "2025-Q4",
+    "sourceUrl": "https://www.worldbank.org/en/publication/doing-business"
+  },
+  {
+    "iso3": "ARE",
+    "name": "ARE",
+    "sector": "industrials",
+    "signal": "neutral",
+    "strength": 2,
+    "thesis": "Strategic focus on industrials in 2025.",
+    "watchTickers": [],
+    "riskFactors": [
+      "geopolitical tension",
+      "inflation"
+    ],
+    "asOf": "2025-Q4",
+    "sourceUrl": "https://www.worldbank.org/en/publication/doing-business"
+  },
+  {
+    "iso3": "ARE",
+    "name": "ARE",
+    "sector": "financials",
+    "signal": "bearish",
+    "strength": 4,
+    "thesis": "Strategic focus on financials in 2025.",
+    "watchTickers": [],
+    "riskFactors": [
+      "geopolitical tension",
+      "inflation"
+    ],
+    "asOf": "2025-Q4",
+    "sourceUrl": "https://www.worldbank.org/en/publication/doing-business"
+  },
+  {
+    "iso3": "ARE",
+    "name": "ARE",
+    "sector": "consumer",
+    "signal": "neutral",
+    "strength": 2,
+    "thesis": "Strategic focus on consumer in 2025.",
+    "watchTickers": [],
+    "riskFactors": [
+      "geopolitical tension",
+      "inflation"
+    ],
+    "asOf": "2025-Q4",
+    "sourceUrl": "https://www.worldbank.org/en/publication/doing-business"
+  },
+  {
+    "iso3": "ARE",
+    "name": "ARE",
+    "sector": "real_estate",
+    "signal": "neutral",
+    "strength": 4,
+    "thesis": "Strategic focus on real_estate in 2025.",
+    "watchTickers": [],
+    "riskFactors": [
+      "geopolitical tension",
+      "inflation"
+    ],
+    "asOf": "2025-Q4",
+    "sourceUrl": "https://www.worldbank.org/en/publication/doing-business"
+  },
+  {
+    "iso3": "ISR",
+    "name": "ISR",
+    "sector": "ai",
+    "signal": "neutral",
+    "strength": 4,
+    "thesis": "Strategic focus on ai in 2025.",
+    "watchTickers": [],
+    "riskFactors": [
+      "geopolitical tension",
+      "inflation"
+    ],
+    "asOf": "2025-Q4",
+    "sourceUrl": "https://www.worldbank.org/en/publication/doing-business"
+  },
+  {
+    "iso3": "ISR",
+    "name": "ISR",
+    "sector": "semis",
+    "signal": "neutral",
+    "strength": 4,
+    "thesis": "Strategic focus on semis in 2025.",
+    "watchTickers": [],
+    "riskFactors": [
+      "geopolitical tension",
+      "inflation"
+    ],
+    "asOf": "2025-Q4",
+    "sourceUrl": "https://www.worldbank.org/en/publication/doing-business"
+  },
+  {
+    "iso3": "ISR",
+    "name": "ISR",
+    "sector": "energy",
+    "signal": "neutral",
+    "strength": 3,
+    "thesis": "Strategic focus on energy in 2025.",
+    "watchTickers": [],
+    "riskFactors": [
+      "geopolitical tension",
+      "inflation"
+    ],
+    "asOf": "2025-Q4",
+    "sourceUrl": "https://www.worldbank.org/en/publication/doing-business"
+  },
+  {
+    "iso3": "ISR",
+    "name": "ISR",
+    "sector": "pharma",
+    "signal": "neutral",
+    "strength": 4,
+    "thesis": "Strategic focus on pharma in 2025.",
+    "watchTickers": [],
+    "riskFactors": [
+      "geopolitical tension",
+      "inflation"
+    ],
+    "asOf": "2025-Q4",
+    "sourceUrl": "https://www.worldbank.org/en/publication/doing-business"
+  },
+  {
+    "iso3": "ISR",
+    "name": "ISR",
+    "sector": "industrials",
+    "signal": "neutral",
+    "strength": 2,
+    "thesis": "Strategic focus on industrials in 2025.",
+    "watchTickers": [],
+    "riskFactors": [
+      "geopolitical tension",
+      "inflation"
+    ],
+    "asOf": "2025-Q4",
+    "sourceUrl": "https://www.worldbank.org/en/publication/doing-business"
+  },
+  {
+    "iso3": "ISR",
+    "name": "ISR",
+    "sector": "financials",
+    "signal": "neutral",
+    "strength": 4,
+    "thesis": "Strategic focus on financials in 2025.",
+    "watchTickers": [],
+    "riskFactors": [
+      "geopolitical tension",
+      "inflation"
+    ],
+    "asOf": "2025-Q4",
+    "sourceUrl": "https://www.worldbank.org/en/publication/doing-business"
+  },
+  {
+    "iso3": "ISR",
+    "name": "ISR",
+    "sector": "consumer",
+    "signal": "bullish",
+    "strength": 4,
+    "thesis": "Strategic focus on consumer in 2025.",
+    "watchTickers": [],
+    "riskFactors": [
+      "geopolitical tension",
+      "inflation"
+    ],
+    "asOf": "2025-Q4",
+    "sourceUrl": "https://www.worldbank.org/en/publication/doing-business"
+  },
+  {
+    "iso3": "ISR",
+    "name": "ISR",
+    "sector": "real_estate",
+    "signal": "neutral",
+    "strength": 4,
+    "thesis": "Strategic focus on real_estate in 2025.",
+    "watchTickers": [],
+    "riskFactors": [
+      "geopolitical tension",
+      "inflation"
+    ],
+    "asOf": "2025-Q4",
+    "sourceUrl": "https://www.worldbank.org/en/publication/doing-business"
+  },
+  {
+    "iso3": "CHE",
+    "name": "CHE",
+    "sector": "ai",
+    "signal": "neutral",
+    "strength": 4,
+    "thesis": "Strategic focus on ai in 2025.",
+    "watchTickers": [],
+    "riskFactors": [
+      "geopolitical tension",
+      "inflation"
+    ],
+    "asOf": "2025-Q4",
+    "sourceUrl": "https://www.worldbank.org/en/publication/doing-business"
+  },
+  {
+    "iso3": "CHE",
+    "name": "CHE",
+    "sector": "semis",
+    "signal": "bullish",
+    "strength": 4,
+    "thesis": "Strategic focus on semis in 2025.",
+    "watchTickers": [],
+    "riskFactors": [
+      "geopolitical tension",
+      "inflation"
+    ],
+    "asOf": "2025-Q4",
+    "sourceUrl": "https://www.worldbank.org/en/publication/doing-business"
+  },
+  {
+    "iso3": "CHE",
+    "name": "CHE",
+    "sector": "energy",
+    "signal": "neutral",
+    "strength": 2,
+    "thesis": "Strategic focus on energy in 2025.",
+    "watchTickers": [],
+    "riskFactors": [
+      "geopolitical tension",
+      "inflation"
+    ],
+    "asOf": "2025-Q4",
+    "sourceUrl": "https://www.worldbank.org/en/publication/doing-business"
+  },
+  {
+    "iso3": "CHE",
+    "name": "CHE",
+    "sector": "pharma",
+    "signal": "bullish",
+    "strength": 4,
+    "thesis": "Boom in GLP-1 weight-loss drugs and oncology pipelines.",
+    "watchTickers": [],
+    "riskFactors": [
+      "geopolitical tension",
+      "inflation"
+    ],
+    "asOf": "2025-Q4",
+    "sourceUrl": "https://www.worldbank.org/en/publication/doing-business"
+  },
+  {
+    "iso3": "CHE",
+    "name": "CHE",
+    "sector": "industrials",
+    "signal": "neutral",
+    "strength": 2,
+    "thesis": "Strategic focus on industrials in 2025.",
+    "watchTickers": [],
+    "riskFactors": [
+      "geopolitical tension",
+      "inflation"
+    ],
+    "asOf": "2025-Q4",
+    "sourceUrl": "https://www.worldbank.org/en/publication/doing-business"
+  },
+  {
+    "iso3": "CHE",
+    "name": "CHE",
+    "sector": "financials",
+    "signal": "neutral",
+    "strength": 4,
+    "thesis": "Strategic focus on financials in 2025.",
+    "watchTickers": [],
+    "riskFactors": [
+      "geopolitical tension",
+      "inflation"
+    ],
+    "asOf": "2025-Q4",
+    "sourceUrl": "https://www.worldbank.org/en/publication/doing-business"
+  },
+  {
+    "iso3": "CHE",
+    "name": "CHE",
+    "sector": "consumer",
+    "signal": "neutral",
+    "strength": 4,
+    "thesis": "Strategic focus on consumer in 2025.",
+    "watchTickers": [],
+    "riskFactors": [
+      "geopolitical tension",
+      "inflation"
+    ],
+    "asOf": "2025-Q4",
+    "sourceUrl": "https://www.worldbank.org/en/publication/doing-business"
+  },
+  {
+    "iso3": "CHE",
+    "name": "CHE",
+    "sector": "real_estate",
+    "signal": "neutral",
+    "strength": 2,
+    "thesis": "Strategic focus on real_estate in 2025.",
+    "watchTickers": [],
+    "riskFactors": [
+      "geopolitical tension",
+      "inflation"
+    ],
+    "asOf": "2025-Q4",
+    "sourceUrl": "https://www.worldbank.org/en/publication/doing-business"
+  },
+  {
+    "iso3": "HKG",
+    "name": "HKG",
+    "sector": "ai",
+    "signal": "neutral",
+    "strength": 2,
+    "thesis": "Strategic focus on ai in 2025.",
+    "watchTickers": [],
+    "riskFactors": [
+      "geopolitical tension",
+      "inflation"
+    ],
+    "asOf": "2025-Q4",
+    "sourceUrl": "https://www.worldbank.org/en/publication/doing-business"
+  },
+  {
+    "iso3": "HKG",
+    "name": "HKG",
+    "sector": "semis",
+    "signal": "neutral",
+    "strength": 3,
+    "thesis": "Strategic focus on semis in 2025.",
+    "watchTickers": [],
+    "riskFactors": [
+      "geopolitical tension",
+      "inflation"
+    ],
+    "asOf": "2025-Q4",
+    "sourceUrl": "https://www.worldbank.org/en/publication/doing-business"
+  },
+  {
+    "iso3": "HKG",
+    "name": "HKG",
+    "sector": "energy",
+    "signal": "neutral",
+    "strength": 4,
+    "thesis": "Strategic focus on energy in 2025.",
+    "watchTickers": [],
+    "riskFactors": [
+      "geopolitical tension",
+      "inflation"
+    ],
+    "asOf": "2025-Q4",
+    "sourceUrl": "https://www.worldbank.org/en/publication/doing-business"
+  },
+  {
+    "iso3": "HKG",
+    "name": "HKG",
+    "sector": "pharma",
+    "signal": "neutral",
+    "strength": 2,
+    "thesis": "Strategic focus on pharma in 2025.",
+    "watchTickers": [],
+    "riskFactors": [
+      "geopolitical tension",
+      "inflation"
+    ],
+    "asOf": "2025-Q4",
+    "sourceUrl": "https://www.worldbank.org/en/publication/doing-business"
+  },
+  {
+    "iso3": "HKG",
+    "name": "HKG",
+    "sector": "industrials",
+    "signal": "neutral",
+    "strength": 4,
+    "thesis": "Strategic focus on industrials in 2025.",
+    "watchTickers": [],
+    "riskFactors": [
+      "geopolitical tension",
+      "inflation"
+    ],
+    "asOf": "2025-Q4",
+    "sourceUrl": "https://www.worldbank.org/en/publication/doing-business"
+  },
+  {
+    "iso3": "HKG",
+    "name": "HKG",
+    "sector": "financials",
+    "signal": "bullish",
+    "strength": 5,
+    "thesis": "Strategic focus on financials in 2025.",
+    "watchTickers": [],
+    "riskFactors": [
+      "geopolitical tension",
+      "inflation"
+    ],
+    "asOf": "2025-Q4",
+    "sourceUrl": "https://www.worldbank.org/en/publication/doing-business"
+  },
+  {
+    "iso3": "HKG",
+    "name": "HKG",
+    "sector": "consumer",
+    "signal": "bullish",
+    "strength": 4,
+    "thesis": "Strategic focus on consumer in 2025.",
+    "watchTickers": [],
+    "riskFactors": [
+      "geopolitical tension",
+      "inflation"
+    ],
+    "asOf": "2025-Q4",
+    "sourceUrl": "https://www.worldbank.org/en/publication/doing-business"
+  },
+  {
+    "iso3": "HKG",
+    "name": "HKG",
+    "sector": "real_estate",
+    "signal": "neutral",
+    "strength": 2,
+    "thesis": "Strategic focus on real_estate in 2025.",
+    "watchTickers": [],
+    "riskFactors": [
+      "geopolitical tension",
+      "inflation"
+    ],
+    "asOf": "2025-Q4",
+    "sourceUrl": "https://www.worldbank.org/en/publication/doing-business"
+  },
+  {
+    "iso3": "MYS",
+    "name": "MYS",
+    "sector": "ai",
+    "signal": "neutral",
+    "strength": 4,
+    "thesis": "Strategic focus on ai in 2025.",
+    "watchTickers": [],
+    "riskFactors": [
+      "geopolitical tension",
+      "inflation"
+    ],
+    "asOf": "2025-Q4",
+    "sourceUrl": "https://www.worldbank.org/en/publication/doing-business"
+  },
+  {
+    "iso3": "MYS",
+    "name": "MYS",
+    "sector": "semis",
+    "signal": "bullish",
+    "strength": 4,
+    "thesis": "Strategic focus on semis in 2025.",
+    "watchTickers": [],
+    "riskFactors": [
+      "geopolitical tension",
+      "inflation"
+    ],
+    "asOf": "2025-Q4",
+    "sourceUrl": "https://www.worldbank.org/en/publication/doing-business"
+  },
+  {
+    "iso3": "MYS",
+    "name": "MYS",
+    "sector": "energy",
+    "signal": "neutral",
+    "strength": 2,
+    "thesis": "Strategic focus on energy in 2025.",
+    "watchTickers": [],
+    "riskFactors": [
+      "geopolitical tension",
+      "inflation"
+    ],
+    "asOf": "2025-Q4",
+    "sourceUrl": "https://www.worldbank.org/en/publication/doing-business"
+  },
+  {
+    "iso3": "MYS",
+    "name": "MYS",
+    "sector": "pharma",
+    "signal": "neutral",
+    "strength": 3,
+    "thesis": "Strategic focus on pharma in 2025.",
+    "watchTickers": [],
+    "riskFactors": [
+      "geopolitical tension",
+      "inflation"
+    ],
+    "asOf": "2025-Q4",
+    "sourceUrl": "https://www.worldbank.org/en/publication/doing-business"
+  },
+  {
+    "iso3": "MYS",
+    "name": "MYS",
+    "sector": "industrials",
+    "signal": "neutral",
+    "strength": 4,
+    "thesis": "Strategic focus on industrials in 2025.",
+    "watchTickers": [],
+    "riskFactors": [
+      "geopolitical tension",
+      "inflation"
+    ],
+    "asOf": "2025-Q4",
+    "sourceUrl": "https://www.worldbank.org/en/publication/doing-business"
+  },
+  {
+    "iso3": "MYS",
+    "name": "MYS",
+    "sector": "financials",
+    "signal": "bearish",
+    "strength": 5,
+    "thesis": "Strategic focus on financials in 2025.",
+    "watchTickers": [],
+    "riskFactors": [
+      "geopolitical tension",
+      "inflation"
+    ],
+    "asOf": "2025-Q4",
+    "sourceUrl": "https://www.worldbank.org/en/publication/doing-business"
+  },
+  {
+    "iso3": "MYS",
+    "name": "MYS",
+    "sector": "consumer",
+    "signal": "neutral",
+    "strength": 2,
+    "thesis": "Strategic focus on consumer in 2025.",
+    "watchTickers": [],
+    "riskFactors": [
+      "geopolitical tension",
+      "inflation"
+    ],
+    "asOf": "2025-Q4",
+    "sourceUrl": "https://www.worldbank.org/en/publication/doing-business"
+  },
+  {
+    "iso3": "MYS",
+    "name": "MYS",
+    "sector": "real_estate",
+    "signal": "bullish",
+    "strength": 4,
+    "thesis": "Strategic focus on real_estate in 2025.",
+    "watchTickers": [],
+    "riskFactors": [
+      "geopolitical tension",
+      "inflation"
+    ],
+    "asOf": "2025-Q4",
+    "sourceUrl": "https://www.worldbank.org/en/publication/doing-business"
+  },
+  {
+    "iso3": "THA",
+    "name": "THA",
+    "sector": "ai",
+    "signal": "neutral",
+    "strength": 4,
+    "thesis": "Strategic focus on ai in 2025.",
+    "watchTickers": [],
+    "riskFactors": [
+      "geopolitical tension",
+      "inflation"
+    ],
+    "asOf": "2025-Q4",
+    "sourceUrl": "https://www.worldbank.org/en/publication/doing-business"
+  },
+  {
+    "iso3": "THA",
+    "name": "THA",
+    "sector": "semis",
+    "signal": "bullish",
+    "strength": 3,
+    "thesis": "Strategic focus on semis in 2025.",
+    "watchTickers": [],
+    "riskFactors": [
+      "geopolitical tension",
+      "inflation"
+    ],
+    "asOf": "2025-Q4",
+    "sourceUrl": "https://www.worldbank.org/en/publication/doing-business"
+  },
+  {
+    "iso3": "THA",
+    "name": "THA",
+    "sector": "energy",
+    "signal": "bullish",
+    "strength": 3,
+    "thesis": "Strategic focus on energy in 2025.",
+    "watchTickers": [],
+    "riskFactors": [
+      "geopolitical tension",
+      "inflation"
+    ],
+    "asOf": "2025-Q4",
+    "sourceUrl": "https://www.worldbank.org/en/publication/doing-business"
+  },
+  {
+    "iso3": "THA",
+    "name": "THA",
+    "sector": "pharma",
+    "signal": "bullish",
+    "strength": 5,
+    "thesis": "Strategic focus on pharma in 2025.",
+    "watchTickers": [],
+    "riskFactors": [
+      "geopolitical tension",
+      "inflation"
+    ],
+    "asOf": "2025-Q4",
+    "sourceUrl": "https://www.worldbank.org/en/publication/doing-business"
+  },
+  {
+    "iso3": "THA",
+    "name": "THA",
+    "sector": "industrials",
+    "signal": "neutral",
+    "strength": 2,
+    "thesis": "Strategic focus on industrials in 2025.",
+    "watchTickers": [],
+    "riskFactors": [
+      "geopolitical tension",
+      "inflation"
+    ],
+    "asOf": "2025-Q4",
+    "sourceUrl": "https://www.worldbank.org/en/publication/doing-business"
+  },
+  {
+    "iso3": "THA",
+    "name": "THA",
+    "sector": "financials",
+    "signal": "bullish",
+    "strength": 3,
+    "thesis": "Strategic focus on financials in 2025.",
+    "watchTickers": [],
+    "riskFactors": [
+      "geopolitical tension",
+      "inflation"
+    ],
+    "asOf": "2025-Q4",
+    "sourceUrl": "https://www.worldbank.org/en/publication/doing-business"
+  },
+  {
+    "iso3": "THA",
+    "name": "THA",
+    "sector": "consumer",
+    "signal": "neutral",
+    "strength": 2,
+    "thesis": "Strategic focus on consumer in 2025.",
+    "watchTickers": [],
+    "riskFactors": [
+      "geopolitical tension",
+      "inflation"
+    ],
+    "asOf": "2025-Q4",
+    "sourceUrl": "https://www.worldbank.org/en/publication/doing-business"
+  },
+  {
+    "iso3": "THA",
+    "name": "THA",
+    "sector": "real_estate",
+    "signal": "bearish",
+    "strength": 5,
+    "thesis": "Strategic focus on real_estate in 2025.",
+    "watchTickers": [],
+    "riskFactors": [
+      "geopolitical tension",
+      "inflation"
+    ],
+    "asOf": "2025-Q4",
+    "sourceUrl": "https://www.worldbank.org/en/publication/doing-business"
+  },
+  {
+    "iso3": "ZAF",
+    "name": "ZAF",
+    "sector": "ai",
+    "signal": "bullish",
+    "strength": 4,
+    "thesis": "Strategic focus on ai in 2025.",
+    "watchTickers": [],
+    "riskFactors": [
+      "geopolitical tension",
+      "inflation"
+    ],
+    "asOf": "2025-Q4",
+    "sourceUrl": "https://www.worldbank.org/en/publication/doing-business"
+  },
+  {
+    "iso3": "ZAF",
+    "name": "ZAF",
+    "sector": "semis",
+    "signal": "bullish",
+    "strength": 3,
+    "thesis": "Strategic focus on semis in 2025.",
+    "watchTickers": [],
+    "riskFactors": [
+      "geopolitical tension",
+      "inflation"
+    ],
+    "asOf": "2025-Q4",
+    "sourceUrl": "https://www.worldbank.org/en/publication/doing-business"
+  },
+  {
+    "iso3": "ZAF",
+    "name": "ZAF",
+    "sector": "energy",
+    "signal": "neutral",
+    "strength": 4,
+    "thesis": "Strategic focus on energy in 2025.",
+    "watchTickers": [],
+    "riskFactors": [
+      "geopolitical tension",
+      "inflation"
+    ],
+    "asOf": "2025-Q4",
+    "sourceUrl": "https://www.worldbank.org/en/publication/doing-business"
+  },
+  {
+    "iso3": "ZAF",
+    "name": "ZAF",
+    "sector": "pharma",
+    "signal": "neutral",
+    "strength": 2,
+    "thesis": "Strategic focus on pharma in 2025.",
+    "watchTickers": [],
+    "riskFactors": [
+      "geopolitical tension",
+      "inflation"
+    ],
+    "asOf": "2025-Q4",
+    "sourceUrl": "https://www.worldbank.org/en/publication/doing-business"
+  },
+  {
+    "iso3": "ZAF",
+    "name": "ZAF",
+    "sector": "industrials",
+    "signal": "neutral",
+    "strength": 4,
+    "thesis": "Strategic focus on industrials in 2025.",
+    "watchTickers": [],
+    "riskFactors": [
+      "geopolitical tension",
+      "inflation"
+    ],
+    "asOf": "2025-Q4",
+    "sourceUrl": "https://www.worldbank.org/en/publication/doing-business"
+  },
+  {
+    "iso3": "ZAF",
+    "name": "ZAF",
+    "sector": "financials",
+    "signal": "bearish",
+    "strength": 3,
+    "thesis": "Strategic focus on financials in 2025.",
+    "watchTickers": [],
+    "riskFactors": [
+      "geopolitical tension",
+      "inflation"
+    ],
+    "asOf": "2025-Q4",
+    "sourceUrl": "https://www.worldbank.org/en/publication/doing-business"
+  },
+  {
+    "iso3": "ZAF",
+    "name": "ZAF",
+    "sector": "consumer",
+    "signal": "bullish",
+    "strength": 4,
+    "thesis": "Strategic focus on consumer in 2025.",
+    "watchTickers": [],
+    "riskFactors": [
+      "geopolitical tension",
+      "inflation"
+    ],
+    "asOf": "2025-Q4",
+    "sourceUrl": "https://www.worldbank.org/en/publication/doing-business"
+  },
+  {
+    "iso3": "ZAF",
+    "name": "ZAF",
+    "sector": "real_estate",
+    "signal": "bearish",
+    "strength": 4,
+    "thesis": "Strategic focus on real_estate in 2025.",
+    "watchTickers": [],
+    "riskFactors": [
+      "geopolitical tension",
+      "inflation"
+    ],
+    "asOf": "2025-Q4",
+    "sourceUrl": "https://www.worldbank.org/en/publication/doing-business"
+  },
+  {
+    "iso3": "PHL",
+    "name": "PHL",
+    "sector": "ai",
+    "signal": "neutral",
+    "strength": 4,
+    "thesis": "Strategic focus on ai in 2025.",
+    "watchTickers": [],
+    "riskFactors": [
+      "geopolitical tension",
+      "inflation"
+    ],
+    "asOf": "2025-Q4",
+    "sourceUrl": "https://www.worldbank.org/en/publication/doing-business"
+  },
+  {
+    "iso3": "PHL",
+    "name": "PHL",
+    "sector": "semis",
+    "signal": "bearish",
+    "strength": 4,
+    "thesis": "Strategic focus on semis in 2025.",
+    "watchTickers": [],
+    "riskFactors": [
+      "geopolitical tension",
+      "inflation"
+    ],
+    "asOf": "2025-Q4",
+    "sourceUrl": "https://www.worldbank.org/en/publication/doing-business"
+  },
+  {
+    "iso3": "PHL",
+    "name": "PHL",
+    "sector": "energy",
+    "signal": "neutral",
+    "strength": 4,
+    "thesis": "Strategic focus on energy in 2025.",
+    "watchTickers": [],
+    "riskFactors": [
+      "geopolitical tension",
+      "inflation"
+    ],
+    "asOf": "2025-Q4",
+    "sourceUrl": "https://www.worldbank.org/en/publication/doing-business"
+  },
+  {
+    "iso3": "PHL",
+    "name": "PHL",
+    "sector": "pharma",
+    "signal": "neutral",
+    "strength": 4,
+    "thesis": "Strategic focus on pharma in 2025.",
+    "watchTickers": [],
+    "riskFactors": [
+      "geopolitical tension",
+      "inflation"
+    ],
+    "asOf": "2025-Q4",
+    "sourceUrl": "https://www.worldbank.org/en/publication/doing-business"
+  },
+  {
+    "iso3": "PHL",
+    "name": "PHL",
+    "sector": "industrials",
+    "signal": "neutral",
+    "strength": 4,
+    "thesis": "Strategic focus on industrials in 2025.",
+    "watchTickers": [],
+    "riskFactors": [
+      "geopolitical tension",
+      "inflation"
+    ],
+    "asOf": "2025-Q4",
+    "sourceUrl": "https://www.worldbank.org/en/publication/doing-business"
+  },
+  {
+    "iso3": "PHL",
+    "name": "PHL",
+    "sector": "financials",
+    "signal": "bullish",
+    "strength": 5,
+    "thesis": "Strategic focus on financials in 2025.",
+    "watchTickers": [],
+    "riskFactors": [
+      "geopolitical tension",
+      "inflation"
+    ],
+    "asOf": "2025-Q4",
+    "sourceUrl": "https://www.worldbank.org/en/publication/doing-business"
+  },
+  {
+    "iso3": "PHL",
+    "name": "PHL",
+    "sector": "consumer",
+    "signal": "neutral",
+    "strength": 4,
+    "thesis": "Strategic focus on consumer in 2025.",
+    "watchTickers": [],
+    "riskFactors": [
+      "geopolitical tension",
+      "inflation"
+    ],
+    "asOf": "2025-Q4",
+    "sourceUrl": "https://www.worldbank.org/en/publication/doing-business"
+  },
+  {
+    "iso3": "PHL",
+    "name": "PHL",
+    "sector": "real_estate",
+    "signal": "neutral",
+    "strength": 2,
+    "thesis": "Strategic focus on real_estate in 2025.",
+    "watchTickers": [],
+    "riskFactors": [
+      "geopolitical tension",
+      "inflation"
+    ],
+    "asOf": "2025-Q4",
+    "sourceUrl": "https://www.worldbank.org/en/publication/doing-business"
+  }
+]

@@ -1,0 +1,22 @@
+e02b0ba 2026-06-06 12:02:32 -0700 chore(ts): enable noUnusedLocals + noUnusedParameters + noFallthroughCasesInSwitch
+1a78cbe 2026-05-31 21:14:55 -0700 perf(update): skip thesis update when no new docs ingested in last 24h
+e76d2d1 2026-05-31 21:10:39 -0700 feat(brainstorm): add interactive thesis brainstorm CLI
+76a4d11 2026-05-31 21:00:28 -0700 perf(analyzer): switch thesis update model to Haiku for cost reduction
+64fb293 2026-05-29 01:12:11 -0700 feat(thesis-memory): respect thesisUpdateDays frequency from ingestion DB
+30e1eae 2026-05-22 01:38:47 -0700 docs: README with setup and usage
+985f3bc 2026-05-22 01:37:51 -0700 feat: CLI review — interactive proposal approval
+eea55c0 2026-05-22 01:37:46 -0700 feat: CLI update — generate Claude proposals for all theses
+7572f97 2026-05-22 01:37:39 -0700 feat: CLI thesis — create, show, list, history commands
+d494c6b 2026-05-22 01:37:33 -0700 feat: thesis creator — AI-draft or manual creation
+b827ea1 2026-05-22 01:31:26 -0700 feat: theme rollup — weighted conviction score from member theses
+ccd5104 2026-05-22 01:04:10 -0700 feat: thesis updater — applies approved proposal changes
+e0261b4 2026-05-22 01:01:52 -0700 feat: analyzer — Claude API tool use for structured proposal generation
+0373ef7 2026-05-22 00:57:01 -0700 feat: thesis SQLite store — all 6 tables with full CRUD
+b3897a7 2026-05-22 00:56:37 -0700 feat: prompter — builds structured Claude prompt from thesis and evidence
+59137d6 2026-05-22 00:53:45 -0700 feat: retriever — hybrid search against ingestion LanceDB
+7563cc7 2026-05-22 00:51:40 -0700 feat: shared types
+13e8945 2026-05-22 00:46:52 -0700 feat: project setup
+3e20e5e 2026-05-22 00:28:38 -0700 Add thesis memory implementation plan
+cf5dc7b 2026-05-22 00:18:08 -0700 Fix: clarify position_size is user-set at creation
+8190f43 2026-05-22 00:17:46 -0700 Add thesis memory system design spec
+4f8ade1 2026-05-22 00:03:23 -0700 init

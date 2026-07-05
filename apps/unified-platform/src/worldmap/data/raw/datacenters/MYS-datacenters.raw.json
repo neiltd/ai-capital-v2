@@ -1,0 +1,302 @@
+[
+  {
+    "id": "DC-MYS-JHB-YTL-GREEN-PARK",
+    "name": "YTL Green DC Park",
+    "countryId": "MYS",
+    "city": "Kulai",
+    "coordinates": [103.5234, 1.6345],
+    "type": "hyperscale",
+    "status": "operational",
+    "tierLevel": "3",
+    "capacityMW": 500,
+    "floorSpaceM2": null,
+    "pue": null,
+    "operator": "YTL Power",
+    "owner": "YTL Power International",
+    "yearOpened": 2024,
+    "yearPlanned": null,
+    "cloudRegion": null,
+    "geopoliticalNotes": "Major AI-ready data center campus hosting NVIDIA AI infrastructure; central to Malaysia's 'Sovereign AI' strategy and energy transition.",
+    "notes": "First solar-powered data center park in Malaysia.",
+    "attribution": {
+      "sources": [
+        { "name": "YTL Power NVIDIA Partnership", "url": "https://www.ytlpowerintl.com/ytl-power-partners-nvidia-to-build-ai-infrastructure-in-malaysia/", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 2,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  },
+  {
+    "id": "DC-MYS-KUL-AWS-REGION",
+    "name": "AWS Malaysia Region (ap-southeast-5)",
+    "countryId": "MYS",
+    "city": "Kuala Lumpur",
+    "coordinates": [101.6512, 2.9213],
+    "type": "hyperscale",
+    "status": "operational",
+    "tierLevel": "3",
+    "capacityMW": null,
+    "floorSpaceM2": null,
+    "pue": null,
+    "operator": "Amazon Web Services",
+    "owner": "Amazon",
+    "yearOpened": 2024,
+    "yearPlanned": null,
+    "cloudRegion": "ap-southeast-5",
+    "geopoliticalNotes": "AWS's first infrastructure region in Malaysia; part of a $6B long-term investment supporting the nation's Madani Economy vision.",
+    "notes": "Consists of 3 Availability Zones.",
+    "attribution": {
+      "sources": [
+        { "name": "AWS Malaysia Region Launch", "url": "https://aws.amazon.com/about-aws/global-infrastructure/regions_az/malaysia/", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 2,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  },
+  {
+    "id": "DC-MYS-SEL-GOOGLE-ELMINA",
+    "name": "Google Elmina Data Center",
+    "countryId": "MYS",
+    "city": "Shah Alam",
+    "coordinates": [101.5182, 3.1984],
+    "type": "hyperscale",
+    "status": "operational",
+    "tierLevel": "3",
+    "capacityMW": null,
+    "floorSpaceM2": null,
+    "pue": null,
+    "operator": "Google",
+    "owner": "Google",
+    "yearOpened": 2024,
+    "yearPlanned": null,
+    "cloudRegion": "ap-southeast-2",
+    "geopoliticalNotes": "Google's first data center and cloud region in Malaysia; $2B investment reinforcing Malaysia's position as a regional tech hub.",
+    "notes": "Located in Elmina Business Park.",
+    "attribution": {
+      "sources": [
+        { "name": "Google Malaysia Investment", "url": "https://blog.google/around-the-globe/google-asia/malaysia-investment-data-center-cloud/", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 2,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  },
+  {
+    "id": "DC-MYS-KUL-MICROSOFT-AZURE",
+    "name": "Microsoft Malaysia West (Region Hub)",
+    "countryId": "MYS",
+    "city": "Kuala Lumpur",
+    "coordinates": [101.6845, 3.1472],
+    "type": "hyperscale",
+    "status": "operational",
+    "tierLevel": "3",
+    "capacityMW": null,
+    "floorSpaceM2": null,
+    "pue": null,
+    "operator": "Microsoft",
+    "owner": "Microsoft",
+    "yearOpened": 2024,
+    "yearPlanned": null,
+    "cloudRegion": "malaysiacentral",
+    "geopoliticalNotes": "Microsoft's Bersama Malaysia initiative; critical for government and enterprise digital transformation and data residency.",
+    "notes": "Consists of 3 Availability Zones.",
+    "attribution": {
+      "sources": [
+        { "name": "Microsoft Azure Regions", "url": "https://azure.microsoft.com/en-us/explore/global-infrastructure/geographies/#geographies", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 2,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  },
+  {
+    "id": "DC-MYS-CYB-NTT-CBJ6",
+    "name": "NTT Cyberjaya 6 (CBJ6)",
+    "countryId": "MYS",
+    "city": "Cyberjaya",
+    "coordinates": [101.6523, 2.9245],
+    "type": "colocation",
+    "status": "operational",
+    "tierLevel": "3",
+    "capacityMW": 7,
+    "floorSpaceM2": null,
+    "pue": null,
+    "operator": "NTT Data",
+    "owner": "NTT Data",
+    "yearOpened": 2023,
+    "yearPlanned": null,
+    "cloudRegion": null,
+    "geopoliticalNotes": "Sixth facility in NTT's Cyberjaya campus; a cornerstone of Malaysia's established digital hub for international enterprises.",
+    "notes": "Supports high-density computing workloads.",
+    "attribution": {
+      "sources": [
+        { "name": "NTT CBJ6 Launch", "url": "https://services.global.ntt/en-us/newsroom/ntt-launches-its-sixth-data-center-in-cyberjaya-malaysia", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 2,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  },
+  {
+    "id": "DC-MYS-JHB-EQUINIX-JH1",
+    "name": "Equinix JH1",
+    "countryId": "MYS",
+    "city": "Iskandar Puteri",
+    "coordinates": [103.6152, 1.4294],
+    "type": "colocation",
+    "status": "operational",
+    "tierLevel": "3",
+    "capacityMW": null,
+    "floorSpaceM2": null,
+    "pue": null,
+    "operator": "Equinix",
+    "owner": "Equinix",
+    "yearOpened": 2024,
+    "yearPlanned": null,
+    "cloudRegion": null,
+    "geopoliticalNotes": "Strategically located in Johor to capture spillover from Singapore's data center market; key node for cross-border digital services.",
+    "notes": "Located in Nusajaya Tech Park.",
+    "attribution": {
+      "sources": [
+        { "name": "Equinix Expansion in Malaysia", "url": "https://www.equinix.com/newsroom/press-releases/2022/11/equinix-to-expand-into-malaysia-with-new-data-center-in-johor", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 2,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  },
+  {
+    "id": "DC-MYS-JHB-BRIDGE-MY03",
+    "name": "Bridge DC MY03 (Johor)",
+    "countryId": "MYS",
+    "city": "Kulai",
+    "coordinates": [103.5412, 1.6215],
+    "type": "hyperscale",
+    "status": "operational",
+    "tierLevel": "3",
+    "capacityMW": 100,
+    "floorSpaceM2": null,
+    "pue": null,
+    "operator": "Bridge Data Centres",
+    "owner": "Chindata Group",
+    "yearOpened": 2022,
+    "yearPlanned": null,
+    "cloudRegion": null,
+    "geopoliticalNotes": "Major hyperscale campus in Johor, serving global cloud and content providers; highlights Johor's emergence as a top-tier global DC hub.",
+    "notes": "Located in Sedenak Tech Park.",
+    "attribution": {
+      "sources": [
+        { "name": "Bridge Data Centres Johor", "url": "https://www.bridgedatacentres.com/locations/malaysia-johor-my03/", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 1,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  },
+  {
+    "id": "DC-MYS-JHB-GDS-NUSAJAYA",
+    "name": "GDS Nusajaya Campus",
+    "countryId": "MYS",
+    "city": "Iskandar Puteri",
+    "coordinates": [103.6212, 1.4345],
+    "type": "hyperscale",
+    "status": "operational",
+    "tierLevel": "3",
+    "capacityMW": 70,
+    "floorSpaceM2": null,
+    "pue": null,
+    "operator": "GDS Services",
+    "owner": "GDS Holdings",
+    "yearOpened": 2023,
+    "yearPlanned": null,
+    "cloudRegion": null,
+    "geopoliticalNotes": "Investment by a major Chinese data center operator; illustrates Malaysia's neutral role attracting both Western and Chinese tech capital.",
+    "notes": "First phase of a multi-building campus.",
+    "attribution": {
+      "sources": [
+        { "name": "GDS Malaysia Data Center", "url": "https://www.gds-services.com/en/news/gds-launches-its-first-data-center-in-southeast-asia-in-johor-malaysia", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 2,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  },
+  {
+    "id": "DC-MYS-JHB-AIRTRUNK-JHB1",
+    "name": "AirTrunk JHB1",
+    "countryId": "MYS",
+    "city": "Johor Bahru",
+    "coordinates": [103.6512, 1.4812],
+    "type": "hyperscale",
+    "status": "operational",
+    "tierLevel": "3",
+    "capacityMW": 150,
+    "floorSpaceM2": null,
+    "pue": null,
+    "operator": "AirTrunk",
+    "owner": "AirTrunk",
+    "yearOpened": 2024,
+    "yearPlanned": null,
+    "cloudRegion": null,
+    "geopoliticalNotes": "Massive hyperscale campus designed to serve the scale requirements of major cloud providers in the region.",
+    "notes": "Aims for high energy efficiency and sustainability.",
+    "attribution": {
+      "sources": [
+        { "name": "AirTrunk JHB1 Campus", "url": "https://airtrunk.com/location/jhb1-johor-bahru/", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 1,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  },
+  {
+    "id": "DC-MYS-KUL-TMONE-KVDC",
+    "name": "TM One KVDC (Klang Valley Data Centre)",
+    "countryId": "MYS",
+    "city": "Cyberjaya",
+    "coordinates": [101.6515, 2.9215],
+    "type": "enterprise",
+    "status": "operational",
+    "tierLevel": "3",
+    "capacityMW": null,
+    "floorSpaceM2": null,
+    "pue": null,
+    "operator": "TM One",
+    "owner": "Telekom Malaysia",
+    "yearOpened": 2019,
+    "yearPlanned": null,
+    "cloudRegion": null,
+    "geopoliticalNotes": "National infrastructure provided by the state-linked telecom; critical for sovereign government data and digital services.",
+    "notes": "Certified Tier III by Uptime Institute.",
+    "attribution": {
+      "sources": [
+        { "name": "TM One Data Centre", "url": "https://www.tmone.com.my/solutions/cloud-services/data-centre/", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 2,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  }
+]

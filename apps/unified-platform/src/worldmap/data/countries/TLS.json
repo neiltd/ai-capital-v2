@@ -1,0 +1,65 @@
+{
+  "id": "TLS",
+  "iso2": "TL",
+  "name": "Timor-Leste",
+  "region": "Asia",
+  "subregion": "South-Eastern Asia",
+  "capital": "Dili",
+  "lastUpdated": "2026-05-15",
+  "summary": "Timor-Leste is a young and vibrant democracy in Southeast Asia, currently navigating a critical economic transition. The nation is heavily dependent on its Petroleum Fund, which is facing depletion as existing oil fields dry up, making the development of the 'Greater Sunrise' gas project an urgent national priority. Under the leadership of Prime Minister Xanana Gusmão, Timor-Leste is aggressively pursuing full membership in ASEAN, which it hopes to achieve by 2025. Despite significant progress in building democratic institutions, the country continues to struggle with high rates of poverty, malnutrition, and a need for diversified private sector growth.",
+  "indicators": {
+    "politicalStability":       { "score": 7, "trend": "stable", "confidence": "high", "note": "Stable representative democracy; return of Xanana Gusmão as PM in 2023 has provided a period of policy focus and continuity." },
+    "economicDirection":        { "score": 4, "trend": "stable", "confidence": "high", "note": "Moderate growth driven by public spending; urgent need to diversify away from petroleum wealth before the Fund is depleted." },
+    "investmentAttractiveness": { "score": 4, "trend": "rising", "confidence": "high", "note": "Entry into the WTO in 2024 and pending ASEAN membership are improving the outlook; limited by infrastructure and legal gaps." },
+    "geopoliticalRisk":         { "score": 3, "trend": "stable", "confidence": "high", "note": "Low risk of conflict; primary focus is on regional integration and maritime boundary management with Australia and Indonesia." },
+    "educationQuality":         { "score": 4, "trend": "stable", "confidence": "medium", "note": "Universal primary enrollment achieved, but challenges with secondary quality and alignment with labor market needs." },
+    "healthcareQuality":        { "score": 4, "trend": "rising", "confidence": "medium", "note": "Gradual improvements in maternal and child health; still faces high rates of stunting and limited specialized care." },
+    "technologyInvestment":     { "score": 3, "trend": "rising", "confidence": "medium", "note": "Expanding mobile connectivity; new submarine cable projects (2025) are expected to significantly reduce internet costs." }
+  },
+  "demographics": {
+    "population": 1350000,
+    "medianAge": 19.6,
+    "urbanizationRate": 32,
+    "majorEthnicGroups": ["Austronesian (Tetum, Mambai, Tokodede)", "Papuan (Bunak, Fataluku, Bakasai)", "Small Chinese minority"],
+    "religions": [
+      { "name": "Roman Catholic", "percent": 97.6 },
+      { "name": "Protestant/Evangelical", "percent": 2.0 },
+      { "name": "Muslim", "percent": 0.2 },
+      { "name": "Other", "percent": 0.2 }
+    ]
+  },
+  "alliances": ["CPLP", "Pacific Islands Forum (Observer)", "ASEAN (Observer/Pending Member)", "WTO", "g7+", "United Nations"],
+  "relationships": [
+    { "countryId": "AUS", "countryName": "Australia", "type": "strategic_partner", "sentiment": "neutral", "summary": "Critical partner for security and development; complex relationship focused on the shared maritime boundary and gas development." },
+    { "countryId": "IDN", "countryName": "Indonesia", "type": "neighbor", "sentiment": "positive", "summary": "Strong and stable relationship focused on reconciliation and trade; Indonesia is a key supporter of Timor-Leste's ASEAN bid." },
+    { "countryId": "PRT", "countryName": "Portugal", "type": "strategic_partner", "sentiment": "positive", "summary": "Deep historical and cultural ties; main partner for education (Portuguese language) and legal system development." },
+    { "countryId": "CHN", "countryName": "China", "type": "economic_partner", "sentiment": "positive", "summary": "Major partner for infrastructure projects and increasing agricultural cooperation; elevated to a 'Comprehensive Strategic Partnership' in 2023." }
+  ],
+  "perspectives": [
+    { "source": "Government Minister", "bias": "Ambitious", "view": "Our accession to the WTO and soon ASEAN will unlock our economic potential and integrate us with the world's most dynamic region." },
+    { "source": "Veteran Leader", "bias": "Nationalist", "view": "We fought for our independence, and now we must fight for our economic sovereignty by developing the Greater Sunrise project on our terms." },
+    { "source": "Youth Activist", "bias": "Critical", "view": "The oil money is running out, and the jobs are not there. We need an education system that prepares us for more than just government work." },
+    { "source": "Rural Farmer", "bias": "Pragmatic", "view": "Roads are better, but we need help getting our coffee and vanilla to international markets to improve our lives." }
+  ],
+  "historicalContext": {
+    "summary": "Timor-Leste was a Portuguese colony for over 400 years before declaring independence in 1975, only to be immediately occupied by Indonesia. After a brutal 24-year resistance and a 1999 UN-sponsored referendum, it restored its independence in 2002. Since then, it has successfully built a stable democratic system and managed its oil wealth through a sovereign Petroleum Fund.",
+    "keyEvents": [
+      { "year": 1975, "event": "Declaration of independence from Portugal; followed by Indonesian invasion." },
+      { "year": 1999, "event": "UN-sponsored referendum results in an overwhelming vote for independence." },
+      { "year": 2002, "event": "Restoration of independence; Xanana Gusmão becomes the first President." },
+      { "year": 2017, "event": "Signing of a historic maritime boundary treaty with Australia in the Timor Sea." },
+      { "year": 2023, "event": "Parliamentary elections return Xanana Gusmão to power as Prime Minister." },
+      { "year": 2024, "event": "Timor-Leste officially joins the World Trade Organization (WTO)." }
+    ]
+  },
+  "investmentNotes": {
+    "strengths": ["Stable, democratic political environment and high press freedom", "Vast sovereign wealth fund (Petroleum Fund) providing a fiscal buffer", "Duty-free and quota-free access to major markets through WTO and EBA", "Young, resilient, and increasingly educated workforce"],
+    "risks": ["Extreme economic dependence on dwindling petroleum revenues", "Inadequate infrastructure (power/water/ICT) outside the capital", "Legal and bureaucratic complexity regarding land tenure and contracts", "High vulnerability to climate change impacting the agricultural sector"],
+    "sectors": ["Oil & Gas (Greater Sunrise Development)", "Specialty Agriculture (Coffee/Cacao/Vanilla)", "Fisheries & Marine Resources", "Eco-Tourism & Hospitality"]
+  },
+  "sources": [
+    { "name": "Banco Central de Timor-Leste", "url": "https://www.bancocentral.tl/", "type": "economic" },
+    { "name": "Ministry of Finance - Timor-Leste", "url": "https://www.mof.gov.tl/", "type": "official" },
+    { "name": "World Bank - Timor-Leste Country Profile", "url": "https://www.worldbank.org/en/country/timor-leste", "type": "economic" }
+  ]
+}

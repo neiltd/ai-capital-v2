@@ -1,0 +1,414 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id":     "intelligence-event.schema.json",
+  "title":   "IntelligenceEvent",
+  "description": "A structured geopolitical or economic intelligence event extracted by the reporter-agent from one or more ArticleRecords. Fields are grouped by determinism: identity/sources/lifecycle are deterministic; event/geography/actors/market_impact/scores/tags are AI-generated interpretations.",
+
+  "type": "object",
+  "required": [
+    "event_id", "schema_version",
+    "identity", "event", "geography", "actors",
+    "market_impact", "geopolitical_scores", "tags",
+    "sources", "graph", "lifecycle"
+  ],
+  "additionalProperties": false,
+
+  "$defs": {
+
+    "Severity": {
+      "type": "integer",
+      "minimum": 1,
+      "maximum": 5,
+      "description": "1=monitoring, 2=noteworthy, 3=significant, 4=critical, 5=emergency"
+    },
+
+    "ConfidenceScore": {
+      "type": "number",
+      "minimum": 0,
+      "maximum": 1,
+      "description": "0.0–1.0 — AI confidence in its own extraction. <0.4=low, 0.4–0.7=medium, >0.7=high"
+    },
+
+    "RelevanceScore": {
+      "type": "number",
+      "minimum": 0,
+      "maximum": 1,
+      "description": "0.0–1.0 relevance to a domain (market, geopolitical, strategic)"
+    },
+
+    "IsoDate":     { "type": "string", "pattern": "^\\d{4}-\\d{2}-\\d{2}$" },
+    "IsoDatetime": { "type": "string", "format": "date-time" },
+    "Iso3Country": { "type": "string", "pattern": "^[A-Z]{2,3}$", "description": "ISO 3166-1 alpha-3 or 'GLOBAL' or 'UNK'" },
+
+    "EventType": {
+      "type": "string",
+      "enum": [
+        "armed_conflict",
+        "airstrike",
+        "missile_attack",
+        "military_operation",
+        "military_exercise",
+        "nuclear_incident",
+        "assassination",
+        "terrorist_attack",
+        "coup",
+        "election",
+        "protest",
+        "regime_change",
+        "diplomatic_incident",
+        "sanctions",
+        "treaty",
+        "peace_negotiation",
+        "referendum",
+        "supply_disruption",
+        "trade_dispute",
+        "market_crash",
+        "central_bank_action",
+        "debt_crisis",
+        "commodity_price_move",
+        "opec_decision",
+        "energy_infrastructure",
+        "humanitarian_crisis",
+        "refugee_movement",
+        "natural_disaster",
+        "epidemic",
+        "other"
+      ]
+    },
+
+    "EventStatus": {
+      "type": "string",
+      "enum": ["developing", "ongoing", "concluded", "disputed", "unverified"]
+    },
+
+    "TimePrecision": {
+      "type": "string",
+      "enum": ["exact", "hour", "day", "week", "approximate"],
+      "description": "How precisely event_time is known"
+    },
+
+    "ActorType": {
+      "type": "string",
+      "enum": [
+        "government_official", "military_commander", "rebel_leader",
+        "diplomat", "intelligence_official", "corporate_executive",
+        "journalist", "international_official", "civilian", "unknown"
+      ]
+    },
+
+    "OrgType": {
+      "type": "string",
+      "enum": [
+        "government", "military", "militia", "terrorist_group",
+        "international_body", "regional_body", "ngo",
+        "corporation", "media_outlet", "political_party",
+        "financial_institution", "unknown"
+      ]
+    },
+
+    "Actor": {
+      "type": "object",
+      "required": ["name", "actor_type"],
+      "additionalProperties": false,
+      "properties": {
+        "name":       { "type": "string", "minLength": 1 },
+        "role":       { "type": "string", "description": "e.g. 'President', 'Defense Minister'" },
+        "country":    { "$ref": "#/$defs/Iso3Country" },
+        "actor_type": { "$ref": "#/$defs/ActorType" },
+        "aliases":    { "type": "array", "items": { "type": "string" } }
+      }
+    },
+
+    "Organization": {
+      "type": "object",
+      "required": ["name", "org_type"],
+      "additionalProperties": false,
+      "properties": {
+        "name":     { "type": "string", "minLength": 1 },
+        "org_type": { "$ref": "#/$defs/OrgType" },
+        "country":  { "$ref": "#/$defs/Iso3Country" },
+        "aliases":  { "type": "array", "items": { "type": "string" } }
+      }
+    },
+
+    "Coordinates": {
+      "type": "object",
+      "required": ["lat", "lng", "precision"],
+      "additionalProperties": false,
+      "properties": {
+        "lat":       { "type": "number", "minimum": -90,  "maximum": 90  },
+        "lng":       { "type": "number", "minimum": -180, "maximum": 180 },
+        "precision": {
+          "type": "string",
+          "enum": ["exact", "city", "region", "country", "approximate"]
+        }
+      }
+    },
+
+    "MarketImpact": {
+      "type": "object",
+      "required": ["relevance", "direction"],
+      "additionalProperties": false,
+      "properties": {
+        "relevance":  { "$ref": "#/$defs/RelevanceScore" },
+        "direction": {
+          "type": "string",
+          "enum": ["bullish", "bearish", "neutral", "uncertain"],
+          "description": "Overall market direction impact"
+        },
+        "commodities":        { "type": "array", "items": { "type": "string" }, "description": "Affected commodities" },
+        "sectors":            { "type": "array", "items": { "type": "string" }, "description": "Affected economic sectors" },
+        "companies":          { "type": "array", "items": { "type": "string" }, "description": "Named companies affected" },
+        "related_tickers":    { "type": "array", "items": { "type": "string" }, "description": "Stock tickers if identifiable" },
+        "oil_price_signal":   { "type": "string", "enum": ["up", "down", "neutral", "uncertain"], "description": "Expected direction for crude oil" },
+        "notes":              { "type": "string", "description": "Free-text market impact analysis" }
+      }
+    },
+
+    "GeopoliticalScores": {
+      "type": "object",
+      "required": ["relevance", "strategic_importance", "escalation_potential"],
+      "additionalProperties": false,
+      "properties": {
+        "relevance":            { "$ref": "#/$defs/RelevanceScore", "description": "How geopolitically significant this event is" },
+        "strategic_importance": { "$ref": "#/$defs/RelevanceScore", "description": "Long-term strategic weight" },
+        "escalation_potential": { "$ref": "#/$defs/RelevanceScore", "description": "Likelihood of this escalating further" },
+        "stability_impact":     { "$ref": "#/$defs/RelevanceScore", "description": "0 = strongly destabilizing, 1 = stabilizing" }
+      }
+    },
+
+    "NarrativePerspective": {
+      "type": "object",
+      "required": ["source_id", "source_name", "reliability_tier", "perspective"],
+      "additionalProperties": false,
+      "properties": {
+        "source_id":               { "type": "string" },
+        "source_name":             { "type": "string" },
+        "reliability_tier":        { "type": "integer", "minimum": 1, "maximum": 3 },
+        "perspective":             { "type": "string", "description": "AI summary of how this source frames the event" },
+        "sentiment": {
+          "type": "string",
+          "enum": ["neutral", "positive", "negative", "mixed"],
+          "description": "Sentiment toward the primary subject of the event"
+        },
+        "diverges_from_consensus": { "type": "boolean", "description": "True if this source's framing significantly differs from others" },
+        "potential_bias_signal":   { "type": "string", "description": "Free-text note if state or institutional bias is detectable" }
+      }
+    },
+
+    "ArticleRef": {
+      "type": "object",
+      "required": ["article_id", "source_id", "source_name", "reliability_tier", "title", "url", "published_at"],
+      "additionalProperties": false,
+      "properties": {
+        "article_id":       { "type": "string", "description": "ArticleRecord.id" },
+        "source_id":        { "type": "string" },
+        "source_name":      { "type": "string" },
+        "reliability_tier": { "type": "integer", "minimum": 1, "maximum": 3 },
+        "title":            { "type": "string" },
+        "url":              { "type": "string", "format": "uri" },
+        "published_at":     { "$ref": "#/$defs/IsoDatetime" },
+        "relevance_score":  { "type": "number", "minimum": 0, "maximum": 100, "description": "Article scorer score (0–100)" }
+      }
+    },
+
+    "EventGraph": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "related_event_ids":   { "type": "array", "items": { "type": "string" }, "description": "Other IntelligenceEvent IDs that share context or actors" },
+        "predecessor_ids":     { "type": "array", "items": { "type": "string" }, "description": "Events that causally preceded this one" },
+        "successor_ids":       { "type": "array", "items": { "type": "string" }, "description": "Events known to have followed from this one" },
+        "thread_id":           { "type": "string", "description": "Groups a sequence of events in a continuing story" },
+        "relation_notes":      { "type": "string", "description": "Free-text summary of relationships to other events" },
+        "graph_version":       { "type": "integer", "description": "Increments each time memory-agent updates the graph links" }
+      }
+    },
+
+    "ProcessingStatus": {
+      "type": "string",
+      "enum": ["extracted", "scored", "linked", "analyzed", "archived", "retraction"],
+      "description": "extracted=AI ran; scored=relevance computed; linked=memory-agent ran; analyzed=narrative complete; archived=no longer active; retraction=event was false/retracted"
+    }
+  },
+
+  "properties": {
+
+    "event_id": {
+      "type": "string",
+      "description": "Deterministic. sha256(normalized_title + event_date + primary_country)[:24]. Two extractions of the same event should yield the same ID."
+    },
+
+    "schema_version": {
+      "type": "string",
+      "const": "1.0",
+      "description": "Deterministic. Schema format version. Increment minor for additive changes, major for breaking changes."
+    },
+
+    "identity": {
+      "type": "object",
+      "required": ["extraction_model", "extraction_version", "extracted_at", "first_seen_at", "updated_at"],
+      "additionalProperties": false,
+      "description": "Deterministic provenance metadata — never AI-generated.",
+      "properties": {
+        "extraction_model":   { "type": "string", "description": "Model ID used for extraction, e.g. 'claude-sonnet-4-6'" },
+        "extraction_version": { "type": "string", "description": "Prompt/logic version, e.g. 'reporter-v1.0'. Lets us know when to re-extract." },
+        "extracted_at":       { "$ref": "#/$defs/IsoDatetime", "description": "When this record was created by reporter-agent" },
+        "first_seen_at":      { "$ref": "#/$defs/IsoDatetime", "description": "Earliest article.published_at among source articles" },
+        "updated_at":         { "$ref": "#/$defs/IsoDatetime", "description": "Last time any field was modified (new source added, graph linked, etc.)" }
+      }
+    },
+
+    "event": {
+      "type": "object",
+      "required": ["title", "summary", "event_type", "severity", "confidence_score", "status"],
+      "additionalProperties": false,
+      "description": "AI-generated core event description.",
+      "properties": {
+        "title":            { "type": "string", "minLength": 5, "maxLength": 200, "description": "Concise, factual headline" },
+        "summary":          { "type": "string", "minLength": 20, "maxLength": 1000, "description": "2–4 sentence objective summary. State facts, not speculation." },
+        "event_type":       { "$ref": "#/$defs/EventType" },
+        "severity":         { "$ref": "#/$defs/Severity" },
+        "confidence_score": { "$ref": "#/$defs/ConfidenceScore" },
+        "status":           { "$ref": "#/$defs/EventStatus" },
+        "event_time":       { "$ref": "#/$defs/IsoDatetime", "description": "AI-estimated time the event occurred. May differ from article publication time." },
+        "event_time_precision": { "$ref": "#/$defs/TimePrecision" },
+        "ongoing_since":    { "$ref": "#/$defs/IsoDate", "description": "For ongoing events (conflicts, crises): when it began" },
+        "key_facts":        {
+          "type": "array",
+          "maxItems": 8,
+          "items": { "type": "string", "maxLength": 200 },
+          "description": "Bullet-point list of key verifiable facts extracted from sources"
+        }
+      }
+    },
+
+    "geography": {
+      "type": "object",
+      "required": ["countries"],
+      "additionalProperties": false,
+      "description": "AI-generated geographic scope.",
+      "properties": {
+        "countries": {
+          "type": "array",
+          "minItems": 1,
+          "items": { "$ref": "#/$defs/Iso3Country" },
+          "description": "Countries directly involved. First entry is the primary/most-affected country."
+        },
+        "regions": {
+          "type": "array",
+          "items": { "type": "string" },
+          "description": "Named geographic regions (e.g. 'Middle East', 'Persian Gulf', 'South China Sea')"
+        },
+        "location_description": { "type": "string", "description": "Free text describing specific location within a country" },
+        "coordinates":          { "$ref": "#/$defs/Coordinates" }
+      }
+    },
+
+    "actors": {
+      "type": "object",
+      "additionalProperties": false,
+      "description": "AI-generated named actors and organizations extracted from sources.",
+      "properties": {
+        "individuals":   { "type": "array", "items": { "$ref": "#/$defs/Actor" } },
+        "organizations": { "type": "array", "items": { "$ref": "#/$defs/Organization" } }
+      }
+    },
+
+    "market_impact": {
+      "$ref": "#/$defs/MarketImpact",
+      "description": "AI-generated market and commodity impact assessment. null if purely geopolitical with no market signal."
+    },
+
+    "geopolitical_scores": {
+      "$ref": "#/$defs/GeopoliticalScores",
+      "description": "AI-generated numerical geopolitical assessment."
+    },
+
+    "tags": {
+      "type": "object",
+      "additionalProperties": false,
+      "description": "AI-generated classification tags for filtering, memory graph, and narrative analysis.",
+      "properties": {
+        "geopolitical": {
+          "type": "array",
+          "items": { "type": "string" },
+          "description": "e.g. ['US-Iran tension', 'nuclear diplomacy', 'oil sanctions']"
+        },
+        "economic": {
+          "type": "array",
+          "items": { "type": "string" },
+          "description": "e.g. ['oil supply shock', 'Fed rate hike', 'supply chain']"
+        },
+        "narrative": {
+          "type": "array",
+          "items": { "type": "string" },
+          "description": "e.g. ['information warfare', 'state media framing', 'censorship signal']"
+        },
+        "event": {
+          "type": "array",
+          "items": { "type": "string" },
+          "description": "General event classification tags for indexing and search"
+        }
+      }
+    },
+
+    "sources": {
+      "type": "object",
+      "required": ["source_ids", "source_count", "extracted_from"],
+      "additionalProperties": false,
+      "description": "Deterministic provenance — which articles this event was extracted from. Narrative perspectives are AI-generated.",
+      "properties": {
+        "source_ids": {
+          "type": "array",
+          "minItems": 1,
+          "items": { "type": "string" },
+          "description": "Deterministic. ArticleRecord.id values from which this event was extracted."
+        },
+        "source_count": {
+          "type": "integer",
+          "minimum": 1,
+          "description": "Deterministic. Number of distinct articles this event was extracted from."
+        },
+        "extracted_from": {
+          "type": "array",
+          "minItems": 1,
+          "items": { "$ref": "#/$defs/ArticleRef" },
+          "description": "Deterministic. Full reference details for each source article."
+        },
+        "narrative_perspectives": {
+          "type": "array",
+          "items": { "$ref": "#/$defs/NarrativePerspective" },
+          "description": "AI-generated. How each source frames the event. Populated when 2+ sources cover the same event."
+        },
+        "consensus_exists": {
+          "type": "boolean",
+          "description": "AI-generated. True if the main sources agree on core facts. False flags possible narrative conflict."
+        },
+        "censorship_signal": {
+          "type": "boolean",
+          "description": "AI-generated. True if a source that would normally cover this event is conspicuously absent."
+        }
+      }
+    },
+
+    "graph": {
+      "$ref": "#/$defs/EventGraph",
+      "description": "Memory graph connections. Initially all arrays empty. Populated by memory-agent after extraction."
+    },
+
+    "lifecycle": {
+      "type": "object",
+      "required": ["processing_status"],
+      "additionalProperties": false,
+      "description": "Deterministic processing state. Tracks where this event sits in the pipeline.",
+      "properties": {
+        "processing_status":   { "$ref": "#/$defs/ProcessingStatus" },
+        "requires_reextract":  { "type": "boolean", "description": "True if new source articles were added after first extraction — schedule re-run." },
+        "retraction_reason":   { "type": "string",  "description": "Only set when processing_status = 'retraction'" },
+        "linked_at":           { "$ref": "#/$defs/IsoDatetime", "description": "When memory-agent last ran on this event" },
+        "analyzed_at":         { "$ref": "#/$defs/IsoDatetime", "description": "When narrative analysis was last completed" }
+      }
+    }
+  }
+}

@@ -1,0 +1,68 @@
+{
+  "id": "TUN",
+  "iso2": "TN",
+  "name": "Tunisia",
+  "region": "Africa",
+  "subregion": "Northern Africa",
+  "capital": "Tunis",
+  "lastUpdated": "2026-05-09",
+  "summary": "Tunisia is currently undergoing a significant political transition under President Kais Saied, who has consolidated executive power and introduced a new constitution, effectively ending the country's decade-long democratic experiment following the 2011 Jasmine Revolution. The nation faces severe economic headwinds, including high public debt, persistent inflation, and a critical need for structural reforms. While historically oriented toward Europe, Tunisia is increasingly exploring alternative partnerships with Gulf Arab states and China, while navigating a delicate relationship with the IMF. Social stability remains fragile due to high youth unemployment and rising living costs.",
+  "indicators": {
+    "politicalStability":       { "score": 4, "trend": "stable", "confidence": "high", "note": "Executive consolidation has provided short-term stability, but suppressed opposition and centralization of power create long-term risks." },
+    "economicDirection":        { "score": 3, "trend": "rising", "confidence": "medium", "note": "Slow recovery led by tourism and agriculture, but hampered by structural inefficiencies and lack of a definitive IMF deal." },
+    "investmentAttractiveness": { "score": 4, "trend": "stable", "confidence": "medium", "note": "Strategic location and skilled workforce remain attractive for light manufacturing and tech, but regulatory uncertainty is a deterrent." },
+    "geopoliticalRisk":         { "score": 5, "trend": "rising", "confidence": "medium", "note": "Vulnerability to regional migration pressures and increasing dependency on bilateral aid from regional neighbors." },
+    "educationQuality":         { "score": 6, "trend": "stable", "confidence": "high", "note": "Historically high education standards, though the system struggles with modernization and brain drain of high-skilled workers." },
+    "healthcareQuality":        { "score": 5, "trend": "stable", "confidence": "high", "note": "Relatively well-developed healthcare infrastructure compared to the region, but facing funding shortages and medical personnel emigration." },
+    "technologyInvestment":     { "score": 5, "trend": "rising", "confidence": "medium", "note": "Vibrant startup ecosystem and growing focus on digital transformation, despite limited fiscal space for large-scale projects." }
+  },
+  "demographics": {
+    "population": 12600000,
+    "medianAge": 32.8,
+    "urbanizationRate": 70,
+    "majorEthnicGroups": ["Arab-Berber"],
+    "religions": [
+      { "name": "Muslim (mostly Sunni)", "percent": 99 },
+      { "name": "Other (Christian, Jewish, Baha'i)", "percent": 1 }
+    ]
+  },
+  "alliances": ["Arab League", "African Union", "Major Non-NATO Ally (USA)", "OIC", "Francophonie"],
+  "relationships": [
+    { "countryId": "FRA", "countryName": "France", "type": "strategic_partner", "sentiment": "neutral", "summary": "Primary economic partner and largest foreign investor; relationship is complicated by French criticism of Tunisia's democratic backsliding." },
+    { "countryId": "DZA", "countryName": "Algeria", "type": "ally", "sentiment": "positive", "summary": "Critical security and economic partner; Algiers provides essential financial support and energy to ensure Tunisian stability." },
+    { "countryId": "ITA", "countryName": "Italy", "type": "strategic_partner", "sentiment": "positive", "summary": "Increasingly close cooperation focused on managing Mediterranean migration and energy connectivity (ELMED project)." },
+    { "countryId": "SAU", "countryName": "Saudi Arabia", "type": "strategic_partner", "sentiment": "positive", "summary": "Key financial backer providing 'no-strings-attached' loans to help Tunisia manage its fiscal crisis without an IMF deal." },
+    { "countryId": "USA", "countryName": "United States", "type": "diplomatic_partner", "sentiment": "neutral", "summary": "Security cooperation remains steady, but diplomatic relations are strained over the erosion of democratic institutions." }
+  ],
+  "perspectives": [
+    { "source": "Saied Supporter", "bias": "Pro-government", "view": "The President is restoring the dignity and sovereignty of the state, dismantling a corrupt system that failed for a decade." },
+    { "source": "Civil Society Activist", "bias": "Pro-democracy", "view": "The hard-won freedoms of the 2011 revolution are being systematically dismantled, leading the country back to autocracy." },
+    { "source": "Economist", "bias": "Technocratic", "view": "Without deep structural reforms and an international financing agreement, Tunisia risks a sovereign default that would be catastrophic for the middle class." },
+    { "source": "Youth Entrepreneur", "bias": "Pragmatic", "view": "Tunisia has incredible human potential, but the bureaucracy and lack of economic opportunity are forcing the best and brightest to emigrate." }
+  ],
+  "historicalContext": {
+    "summary": "Tunisia has a long history as a center of Mediterranean civilization, from Carthage to the Ottoman era. It was a French protectorate from 1881 until 1956. Modern Tunisia was shaped by the long-term secular autocracies of Bourguiba and Ben Ali before becoming the birthplace of the Arab Spring in 2011.",
+    "keyEvents": [
+      { "year": 1881, "event": "Treaty of Bardo establishes French protectorate over Tunisia." },
+      { "year": 1956, "event": "Tunisia gains independence; Habib Bourguiba becomes the first president." },
+      { "year": 1987, "event": "Zine El Abidine Ben Ali takes power in a 'bloodless coup'." },
+      { "year": 2010, "event": "Self-immolation of Mohamed Bouazizi in Sidi Bouzid triggers mass protests." },
+      { "year": 2011, "event": "Ben Ali flees to Saudi Arabia; the Jasmine Revolution sparks the Arab Spring." },
+      { "year": 2014, "event": "Adoption of a new democratic constitution, hailed as a model for the region." },
+      { "year": 2019, "event": "Kais Saied, a political outsider and constitutional law professor, is elected president." },
+      { "year": 2021, "event": "July 25: Saied suspends parliament and seizes emergency powers, citing national crisis." },
+      { "year": 2022, "event": "Approval of a new constitution that greatly expands presidential powers." },
+      { "year": 2024, "event": "Presidential elections consolidate Saied's 'New Republic' amid opposition boycotts and arrests." }
+    ]
+  },
+  "investmentNotes": {
+    "strengths": ["Highly skilled and cost-competitive labor force", "Strategic proximity to European markets", "Diverse economy (Tourism, Textiles, Olive Oil, Tech)", "Established manufacturing base for automotive and electronic components"],
+    "risks": ["High sovereign debt and fiscal uncertainty", "Bureaucratic inertia and slow pace of digitalization", "Social unrest due to inflation and youth unemployment", "Political centralization and lack of institutional checks"],
+    "sectors": ["Renewable Energy (Solar & Wind)", "Information Technology & Software Development", "Agribusiness (Olive Oil exports)", "Pharma & Life Sciences", "Tourism (Sustainable & Cultural)"]
+  },
+  "sources": [
+    { "name": "Institut National de la Statistique (INS)", "url": "http://www.ins.tn/", "type": "economic" },
+    { "name": "Central Bank of Tunisia", "url": "https://www.bct.gov.tn/bct/siteprod/index.jsp", "type": "economic" },
+    { "name": "FIPA-Tunisia (Foreign Investment Promotion Agency)", "url": "http://www.investintunisia.tn/", "type": "investment" }
+  ]
+}

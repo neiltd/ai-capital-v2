@@ -1,0 +1,66 @@
+{
+  "id": "EST",
+  "iso2": "EE",
+  "name": "Estonia",
+  "region": "Europe",
+  "subregion": "Northern Europe",
+  "capital": "Tallinn",
+  "lastUpdated": "2026-05-09",
+  "summary": "Estonia is a Baltic nation in Northern Europe, renowned for its advanced digital society and innovative 'e-Estonia' initiatives. Since regaining independence from the Soviet Union in 1991, it has undergone a rapid transformation into a high-income, tech-driven economy. A member of the EU and NATO, Estonia is a staunch advocate for digital rights and cybersecurity. Geopolitically, it is defined by its strategic location and its firm stance on regional security, particularly in the context of its relationship with Russia.",
+  "indicators": {
+    "politicalStability":       { "score": 9, "trend": "stable", "confidence": "high", "note": "Robust parliamentary democracy with strong institutions and high levels of transparency." },
+    "economicDirection":        { "score": 8, "trend": "improving", "confidence": "high", "note": "Stable high-income economy with a focus on high-tech services, digitalization, and innovation." },
+    "investmentAttractiveness": { "score": 9, "trend": "stable", "confidence": "high", "note": "One of the world's most business-friendly environments; renowned for its simple tax system and advanced digital infrastructure." },
+    "geopoliticalRisk":         { "score": 6, "trend": "stable", "confidence": "high", "note": "Maintains a high level of security through NATO and EU membership, but faces persistent hybrid threats and regional tensions." },
+    "educationQuality":         { "score": 9, "trend": "stable", "confidence": "high", "note": "Consistently ranks among the top in PISA scores; strong focus on STEM and digital literacy from an early age." },
+    "healthcareQuality":        { "score": 8, "trend": "stable", "confidence": "high", "note": "High-quality, digitally integrated healthcare system with universal coverage and high patient satisfaction." },
+    "technologyInvestment":     { "score": 10, "trend": "stable", "confidence": "high", "note": "A global leader in digital innovation; home to numerous unicorns and a pioneer in e-governance and blockchain applications." }
+  },
+  "demographics": {
+    "population": 1370000,
+    "medianAge": 42.4,
+    "urbanizationRate": 69,
+    "majorEthnicGroups": ["Estonian", "Russian"],
+    "religions": [
+      { "name": "Orthodox Christian", "percent": 16.0 },
+      { "name": "Lutheran Christian", "percent": 10.0 },
+      { "name": "Unaffiliated/Other", "percent": 74.0 }
+    ]
+  },
+  "alliances": ["EU", "NATO", "OECD", "Eurozone", "Schengen"],
+  "relationships": [
+    { "countryId": "FIN", "countryName": "Finland", "type": "strategic_partner", "sentiment": "positive", "summary": "Very close linguistic, cultural, and economic ties; Finland is Estonia's largest trade partner and a key security ally." },
+    { "countryId": "USA", "countryName": "United States", "type": "strategic_partner", "sentiment": "positive", "summary": "Crucial security partner; strong cooperation on defense, cybersecurity, and promoting democratic values." },
+    { "countryId": "LVA", "countryName": "Latvia", "type": "neighbor", "sentiment": "positive", "summary": "Close Baltic cooperation on regional infrastructure (e.g., Rail Baltica), energy security, and defense." },
+    { "countryId": "RUS", "countryName": "Russia", "type": "neighbor", "sentiment": "negative", "summary": "Highly strained relationship defined by historical grievances, border issues, and persistent security concerns." }
+  ],
+  "perspectives": [
+    { "source": "Tech Entrepreneur", "bias": "Optimistic", "view": "Estonia is the perfect launchpad for global startups; our digital ecosystem is unmatched in its efficiency and support." },
+    { "source": "Government Official", "bias": "Strategic", "view": "Our digital sovereignty and collective defense through NATO are the twin pillars of our national security." },
+    { "source": "Russian-Speaking Minority Member", "bias": "Pragmatic", "view": "Integration has made progress, but we still face challenges in language and full inclusion in the national narrative." },
+    { "source": "Rural Resident", "bias": "Concerned", "view": "The digital boom is great, but we must ensure that our rural communities are not left behind in terms of services and infrastructure." }
+  ],
+  "historicalContext": {
+    "summary": "Estonia was an independent republic from 1918 to 1940 before being occupied by the Soviet Union. It regained its independence in 1991 during the collapse of the USSR. Since then, it has aggressively pursued integration with Western institutions and transitioned into a world-leading digital society.",
+    "keyEvents": [
+      { "year": 1918, "event": "Proclamation of the Republic of Estonia." },
+      { "year": 1940, "event": "Soviet occupation and subsequent annexation." },
+      { "year": 1991, "event": "Restoration of independence; 'Singing Revolution' culminates in freedom." },
+      { "year": 2004, "event": "Estonia joins the European Union and NATO." },
+      { "year": 2007, "event": "Cyberattacks on Estonian infrastructure; leads to the establishment of the NATO CCDCOE in Tallinn." },
+      { "year": 2011, "event": "Estonia adopts the Euro." },
+      { "year": 2014, "event": "Launch of the E-Residency program." },
+      { "year": 2024, "event": "Continued focus on cybersecurity and supporting regional stability amidst geopolitical shifts." }
+    ]
+  },
+  "investmentNotes": {
+    "strengths": ["World-class digital infrastructure and e-governance", "Highly skilled and multilingual workforce with a strong tech focus", "Stable and transparent political and legal environment", "Strategically located as a gateway between the Nordics and the Baltics"],
+    "risks": ["Small domestic market size", "Vulnerability to regional geopolitical tensions and hybrid threats", "Aging population and potential labor shortages in specific high-tech sectors", "Energy transition challenges in moving away from oil shale"],
+    "sectors": ["ICT and Software Development", "Cybersecurity", "FinTech", "Green Energy and Cleantech"]
+  },
+  "sources": [
+    { "name": "Invest in Estonia", "url": "https://investinestonia.com/", "type": "economic" },
+    { "name": "Statistics Estonia", "url": "https://www.stat.ee/en", "type": "statistical" },
+    { "name": "E-Estonia Guide", "url": "https://e-estonia.com/", "type": "digital" }
+  ]
+}

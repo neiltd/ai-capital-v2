@@ -1,0 +1,218 @@
+[
+  {
+    "id": "PORT-NGA-LEKKI",
+    "name": "Lekki Deep Sea Port",
+    "countryId": "NGA",
+    "city": "Lagos",
+    "coordinates": [4.0069, 6.4281],
+    "type": "container",
+    "annualThroughputTEU": 1500000,
+    "annualThroughputTonnes": 52500000,
+    "berthCount": 3,
+    "maxDraftM": 16.5,
+    "strategicImportance": "critical",
+    "riskLevel": "low",
+    "geopoliticalNotes": "Nigeria's most advanced and deepest port. Capable of handling mega-ships up to 14,500 TEUs. Regional hub for West Africa.",
+    "notes": "Integrated with Lagos Free Zone and Dangote Refinery complex.",
+    "attribution": {
+      "sources": [
+        { "name": "Nigerian Ports Authority", "url": "https://nigerianports.gov.ng", "accessedAt": "2026-05-10" },
+        { "name": "Wikipedia", "url": "https://en.wikipedia.org/wiki/Lekki_Deep_Sea_Port", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 2,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  },
+  {
+    "id": "PORT-NGA-ONNE",
+    "name": "Onne Port Complex",
+    "countryId": "NGA",
+    "city": "Onne",
+    "coordinates": [7.1578, 4.6519],
+    "type": "mixed",
+    "annualThroughputTEU": null,
+    "annualThroughputTonnes": 24700000,
+    "berthCount": 12,
+    "maxDraftM": 12.0,
+    "strategicImportance": "high",
+    "riskLevel": "low",
+    "geopoliticalNotes": "Primary hub for Nigeria's oil and gas sector. Houses the world's largest Oil and Gas Free Zone.",
+    "notes": "Handles over 65% of Nigeria's export cargo excluding crude oil.",
+    "attribution": {
+      "sources": [
+        { "name": "Nigerian Ports Authority", "url": "https://nigerianports.gov.ng", "accessedAt": "2026-05-10" },
+        { "name": "Economic Confidential", "url": "https://economicconfidential.com", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 2,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  },
+  {
+    "id": "PORT-NGA-APAPA",
+    "name": "Lagos Port Complex (Apapa)",
+    "countryId": "NGA",
+    "city": "Lagos",
+    "coordinates": [3.3667, 6.45],
+    "type": "mixed",
+    "annualThroughputTEU": 1000000,
+    "annualThroughputTonnes": 21600000,
+    "berthCount": 20,
+    "maxDraftM": 10.5,
+    "strategicImportance": "high",
+    "riskLevel": "low",
+    "geopoliticalNotes": "Nigeria's 'Premiere Port' and most critical gateway for the commercial capital. Best rail connectivity in the country.",
+    "notes": "Handles the highest value of non-oil trade.",
+    "attribution": {
+      "sources": [
+        { "name": "Nigerian Ports Authority", "url": "https://nigerianports.gov.ng", "accessedAt": "2026-05-10" },
+        { "name": "Wikipedia", "url": "https://en.wikipedia.org/wiki/Lagos_Port_Complex", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 2,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  },
+  {
+    "id": "PORT-NGA-TINCAN",
+    "name": "Tin Can Island Port",
+    "countryId": "NGA",
+    "city": "Lagos",
+    "coordinates": [3.35, 6.4333],
+    "type": "container",
+    "annualThroughputTEU": 1300000,
+    "annualThroughputTonnes": null,
+    "berthCount": 15,
+    "maxDraftM": 10.0,
+    "strategicImportance": "high",
+    "riskLevel": "low",
+    "geopoliticalNotes": "Nigeria's second busiest port, specialized in RORO (Roll-on/Roll-off) cargo.",
+    "notes": "Primary entry point for imported vehicles and general merchandise.",
+    "attribution": {
+      "sources": [
+        { "name": "Nigerian Ports Authority", "url": "https://nigerianports.gov.ng", "accessedAt": "2026-05-10" },
+        { "name": "Seabay Cargo", "url": "http://www.seabaycargo.com", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 2,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  },
+  {
+    "id": "PORT-NGA-RIVERS",
+    "name": "Rivers Port Complex",
+    "countryId": "NGA",
+    "city": "Port Harcourt",
+    "coordinates": [7.0, 4.7667],
+    "type": "multipurpose",
+    "annualThroughputTEU": null,
+    "annualThroughputTonnes": null,
+    "berthCount": 8,
+    "maxDraftM": 7.1,
+    "strategicImportance": "medium",
+    "riskLevel": "low",
+    "geopoliticalNotes": "Strategic for coal export and refined petroleum product import. Logistics base for Eastern industrial heartlands.",
+    "notes": "One of the oldest ports in Nigeria.",
+    "attribution": {
+      "sources": [
+        { "name": "Nigerian Ports Authority", "url": "https://nigerianports.gov.ng", "accessedAt": "2026-05-10" },
+        { "name": "Port News", "url": "https://portnews.ru", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 2,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  },
+  {
+    "id": "PORT-NGA-DELTA",
+    "name": "Delta Port",
+    "countryId": "NGA",
+    "city": "Warri",
+    "coordinates": [5.7333, 5.5167],
+    "type": "mixed",
+    "annualThroughputTEU": null,
+    "annualThroughputTonnes": null,
+    "berthCount": 6,
+    "maxDraftM": 6.4,
+    "strategicImportance": "medium",
+    "riskLevel": "low",
+    "geopoliticalNotes": "Critical hub for Escravos Gas-to-Liquids (EGTL) projects and regional oil refineries.",
+    "notes": "Declared a Free Trade Zone in 2011 to stimulate industrial growth.",
+    "attribution": {
+      "sources": [
+        { "name": "Nigerian Ports Authority", "url": "https://nigerianports.gov.ng", "accessedAt": "2026-05-10" },
+        { "name": "ISM-ISPS", "url": "https://ism-isps.com", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 2,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  },
+  {
+    "id": "PORT-NGA-CALABAR",
+    "name": "Calabar Port Complex",
+    "countryId": "NGA",
+    "city": "Calabar",
+    "coordinates": [8.3167, 4.9667],
+    "type": "mixed",
+    "annualThroughputTEU": null,
+    "annualThroughputTonnes": null,
+    "berthCount": 4,
+    "maxDraftM": 6.4,
+    "strategicImportance": "low",
+    "riskLevel": "low",
+    "geopoliticalNotes": "Closest maritime gateway to 16 Northern states and landlocked neighbors Chad and Niger.",
+    "notes": "Draft limitations restrict its throughput compared to Lagos ports.",
+    "attribution": {
+      "sources": [
+        { "name": "Nigerian Ports Authority", "url": "https://nigerianports.gov.ng", "accessedAt": "2026-05-10" },
+        { "name": "Guardian Nigeria", "url": "https://guardian.ng", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 2,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  },
+  {
+    "id": "PORT-NGA-IBOM",
+    "name": "Ibom Deep Sea Port",
+    "countryId": "NGA",
+    "city": "Uruan",
+    "coordinates": [8.235, 4.543],
+    "type": "container",
+    "annualThroughputTEU": null,
+    "annualThroughputTonnes": null,
+    "berthCount": 0,
+    "maxDraftM": 18.0,
+    "strategicImportance": "high",
+    "riskLevel": "low",
+    "geopoliticalNotes": "Under development; poised to be a game-changer for the Gulf of Guinea. Features a natural draft of 18m.",
+    "notes": "Designed as a transshipment hub to serve West and Central Africa.",
+    "attribution": {
+      "sources": [
+        { "name": "Akwa Ibom State Government", "url": "https://ak.gov.ng", "accessedAt": "2026-05-10" },
+        { "name": "Ship Technology", "url": "https://www.ship-technology.com", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 2,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  }
+]

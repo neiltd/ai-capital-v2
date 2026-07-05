@@ -1,0 +1,69 @@
+{
+  "id": "MMR",
+  "iso2": "MM",
+  "name": "Myanmar",
+  "region": "Asia",
+  "subregion": "South-Eastern Asia",
+  "capital": "Naypyidaw",
+  "lastUpdated": "2026-05-09",
+  "summary": "Myanmar is currently in a state of severe internal conflict and economic fragmentation following the 2021 military coup. The nation faces a polycrisis characterized by a nationwide civil war, hyperinflation, and a massive humanitarian emergency. While the military junta retains control of major cities and the administrative capital, ethnic armed organizations and People's Defense Forces have made significant territorial gains, particularly in border regions. Geopolitically, Myanmar is increasingly isolated from the West and heavily dependent on China and Russia for diplomatic cover and military hardware.",
+  "indicators": {
+    "politicalStability":       { "score": 1, "trend": "declining", "confidence": "high", "note": "Nationwide civil war and contested legitimacy of the ruling military junta; governance has broken down in many regions." },
+    "economicDirection":        { "score": 2, "trend": "declining", "confidence": "high", "note": "Economy is significantly smaller than pre-2021 levels; severe kyat depreciation and infrastructure destruction." },
+    "investmentAttractiveness": { "score": 1, "trend": "declining", "confidence": "high", "note": "Extremely high risk; widespread international sanctions and ethical concerns have driven out most Western investors." },
+    "geopoliticalRisk":         { "score": 9, "trend": "rising", "confidence": "high", "note": "High risk of regional spillover, refugee crises, and becoming a theater for proxy competition between major powers." },
+    "educationQuality":         { "score": 2, "trend": "declining", "confidence": "medium", "note": "Public education system has largely collapsed due to teacher strikes (CDM) and safety concerns for students." },
+    "healthcareQuality":        { "score": 2, "trend": "declining", "confidence": "medium", "note": "Critical shortages of supplies and personnel; healthcare delivery is increasingly reliant on informal networks and NGOs." },
+    "technologyInvestment":     { "score": 2, "trend": "declining", "confidence": "medium", "note": "Limited to critical infrastructure and surveillance; internet freedom is severely restricted and outages are common." }
+  },
+  "demographics": {
+    "population": 54500000,
+    "medianAge": 29.2,
+    "urbanizationRate": 31,
+    "majorEthnicGroups": ["Bamar", "Shan", "Karen", "Rakhine", "Mon", "Kachin", "Chin"],
+    "religions": [
+      { "name": "Buddhist", "percent": 87.9 },
+      { "name": "Christian", "percent": 6.2 },
+      { "name": "Muslim", "percent": 4.3 },
+      { "name": "Other", "percent": 1.6 }
+    ]
+  },
+  "alliances": ["ASEAN (Suspended from high-level meetings)", "BIMSTEC"],
+  "relationships": [
+    { "countryId": "CHN", "countryName": "China", "type": "strategic_partner", "sentiment": "neutral", "summary": "Main diplomatic and economic lifeline; China balances support for the junta with ties to ethnic armed groups along its border." },
+    { "countryId": "RUS", "countryName": "Russia", "type": "security_partner", "sentiment": "positive", "summary": "Primary supplier of advanced military equipment and technical training to the Myanmar military." },
+    { "countryId": "THA", "countryName": "Thailand", "type": "neighbor", "sentiment": "neutral", "summary": "Pragmatic engagement focused on border security, energy imports, and managing the massive flow of refugees." },
+    { "countryId": "IND", "countryName": "India", "type": "neighbor", "sentiment": "neutral", "summary": "Maintains a dual-track policy to counter Chinese influence and manage security in its own northeast border regions." },
+    { "countryId": "USA", "countryName": "United States", "type": "adversary", "sentiment": "negative", "summary": "Leads international sanctions and supports democratic opposition; no formal recognition of the junta." }
+  ],
+  "perspectives": [
+    { "source": "SAC Military Junta", "bias": "Authoritarian", "view": "We are the only institution capable of preventing the state's disintegration and are fighting 'terrorists' supported by foreign powers." },
+    { "source": "National Unity Government (NUG)", "bias": "Pro-Democracy", "view": "The junta is an illegitimate criminal organization; we seek to establish a federal democracy through a multi-ethnic revolution." },
+    { "source": "Ethnic Armed Organization Leader", "bias": "Regionalist", "view": "Our priority is self-determination and the protection of our people; we will cooperate with anyone who supports a truly federal system." },
+    { "source": "Displaced Civilian", "bias": "Victim", "view": "We just want to return home and live in peace without fear of air strikes or forced conscription." }
+  ],
+  "historicalContext": {
+    "summary": "Since independence from Britain in 1948, Myanmar has seen one of the world's longest-running civil wars. Decades of military rule were briefly interrupted by a decade of democratic opening (2011-2021) before the military seized power again in February 2021, sparking the current nationwide resistance.",
+    "keyEvents": [
+      { "year": 1948, "event": "Independence from the United Kingdom." },
+      { "year": 1962, "event": "General Ne Win leads a coup, initiating decades of isolationist military rule." },
+      { "year": 1988, "event": "8888 Uprising for democracy is violently suppressed by the military." },
+      { "year": 1990, "event": "NLD wins general elections, but the military refuses to hand over power." },
+      { "year": 2011, "event": "Transition to a quasi-civilian government begins under President Thein Sein." },
+      { "year": 2015, "event": "Aung San Suu Kyi's NLD wins a landslide victory in historic general elections." },
+      { "year": 2017, "event": "Military operations in Rakhine State lead to the exodus of 700,000+ Rohingya to Bangladesh." },
+      { "year": 2021, "event": "Military coup ousts the NLD government, sparking nationwide protests and civil war." },
+      { "year": 2023, "event": "Operation 1027 shifts the momentum of the civil war in favor of resistance forces." }
+    ]
+  },
+  "investmentNotes": {
+    "strengths": ["Vast natural resources (Gas, Gems, Timber)", "Strategic location between India and China", "Young and resilient workforce"],
+    "risks": ["Active civil war and total breakdown of law and order", "Pervasive international sanctions and banking isolation", "Extreme exchange rate volatility", "Severe ethical and reputational risks"],
+    "sectors": ["Illicit trade (Drug trafficking, Cyber-scam centers)", "Natural gas (Critical for Thailand/China)", "Subsistence agriculture"]
+  },
+  "sources": [
+    { "name": "World Bank - Myanmar Monitor", "url": "https://www.worldbank.org/en/country/myanmar", "type": "economic" },
+    { "name": "Justice for Myanmar", "url": "https://www.justiceformyanmar.org/", "type": "investigative" },
+    { "name": "International Crisis Group", "url": "https://www.crisisgroup.org/asia/south-east-asia/myanmar", "type": "geopolitical" }
+  ]
+}

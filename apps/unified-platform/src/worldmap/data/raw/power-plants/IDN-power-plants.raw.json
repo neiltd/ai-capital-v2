@@ -1,0 +1,272 @@
+[
+  {
+    "id": "PLANT-IDN-PAITON",
+    "name": "Paiton Power Station",
+    "countryId": "IDN",
+    "city": "Probolinggo",
+    "coordinates": [113.5825, -7.7142],
+    "type": "coal",
+    "status": "operating",
+    "capacityMW": 4710,
+    "annualOutputGWh": null,
+    "yearCommissioned": 1994,
+    "yearRetirement": null,
+    "operator": "PT PJB (Pembangkitan Jawa Bali)",
+    "owner": "PLN / Various IPPs",
+    "strategicNote": "One of the largest coal-fired power complexes in Southeast Asia, critical for the Java-Bali grid.",
+    "notes": "Includes multiple units owned by different entities including Mitsui and Nebras Power.",
+    "attribution": {
+      "sources": [
+        { "name": "Global Energy Monitor", "url": "https://www.gem.wiki/Paiton_power_station", "accessedAt": "2025-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 2,
+        "lastVerified": "2025-05-10"
+      }
+    }
+  },
+  {
+    "id": "PLANT-IDN-TANJUNG-JATI-B",
+    "name": "Tanjung Jati B Power Station",
+    "countryId": "IDN",
+    "city": "Jepara",
+    "coordinates": [110.7431, -6.4456],
+    "type": "coal",
+    "status": "operating",
+    "capacityMW": 4640,
+    "annualOutputGWh": null,
+    "yearCommissioned": 2006,
+    "yearRetirement": null,
+    "operator": "PT PLN (Persero)",
+    "owner": "Sumitomo Corporation / PT PLN",
+    "strategicNote": "A major baseload provider for the Central Java region.",
+    "notes": "Units 5 & 6 (Java 4) recently added significant capacity.",
+    "attribution": {
+      "sources": [
+        { "name": "Global Energy Monitor", "url": "https://www.gem.wiki/Tanjung_Jati_B_power_station", "accessedAt": "2025-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 2,
+        "lastVerified": "2025-05-10"
+      }
+    }
+  },
+  {
+    "id": "PLANT-IDN-SURALAYA",
+    "name": "Suralaya Power Station",
+    "countryId": "IDN",
+    "city": "Cilegon",
+    "coordinates": [106.0303, -5.8922],
+    "type": "coal",
+    "status": "operating",
+    "capacityMW": 4025,
+    "annualOutputGWh": null,
+    "yearCommissioned": 1984,
+    "yearRetirement": null,
+    "operator": "PT Indonesia Power",
+    "owner": "PT PLN (Persero)",
+    "strategicNote": "The largest power plant in Indonesia, vital for supplying electricity to the Jakarta metropolitan area.",
+    "notes": "Located at the western tip of Java.",
+    "attribution": {
+      "sources": [
+        { "name": "Global Energy Monitor", "url": "https://www.gem.wiki/Suralaya_power_station", "accessedAt": "2025-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 2,
+        "lastVerified": "2025-05-10"
+      }
+    }
+  },
+  {
+    "id": "PLANT-IDN-CIRATA",
+    "name": "Cirata Hydroelectric Power Plant",
+    "countryId": "IDN",
+    "city": "Purwakarta",
+    "coordinates": [107.2883, -6.7025],
+    "type": "hydro",
+    "status": "operating",
+    "capacityMW": 1008,
+    "annualOutputGWh": 1428,
+    "yearCommissioned": 1988,
+    "yearRetirement": null,
+    "operator": "PT PJB",
+    "owner": "PT PLN (Persero)",
+    "strategicNote": "The largest hydroelectric plant in Southeast Asia, also hosts a major floating solar farm.",
+    "notes": null,
+    "attribution": {
+      "sources": [
+        { "name": "Global Energy Monitor", "url": "https://www.gem.wiki/Cirata_Dam", "accessedAt": "2025-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 2,
+        "lastVerified": "2025-05-10"
+      }
+    }
+  },
+  {
+    "id": "PLANT-IDN-JAVA-7",
+    "name": "Java 7 (Banten) Power Station",
+    "countryId": "IDN",
+    "city": "Serang",
+    "coordinates": [106.1033, -5.9867],
+    "type": "coal",
+    "status": "operating",
+    "capacityMW": 2000,
+    "annualOutputGWh": null,
+    "yearCommissioned": 2019,
+    "yearRetirement": null,
+    "operator": "PT Shenhua Guohua Pembangkitan Jawa Bali",
+    "owner": "China Shenhua Energy / PT PJB",
+    "strategicNote": "Uses ultra-supercritical technology, representing modern large-scale coal infrastructure in Indonesia.",
+    "notes": null,
+    "attribution": {
+      "sources": [
+        { "name": "Global Energy Monitor", "url": "https://www.gem.wiki/Java-7_power_station", "accessedAt": "2025-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 1,
+        "lastVerified": "2025-05-10"
+      }
+    }
+  },
+  {
+    "id": "PLANT-IDN-BATANG",
+    "name": "Batang Power Station (Central Java Power Plant)",
+    "countryId": "IDN",
+    "city": "Batang",
+    "coordinates": [109.8333, -6.8922],
+    "type": "coal",
+    "status": "operating",
+    "capacityMW": 2000,
+    "annualOutputGWh": null,
+    "yearCommissioned": 2022,
+    "yearRetirement": null,
+    "operator": "PT Bhimasena Power Indonesia",
+    "owner": "Electric Power Development (J-Power) / Itochu / Adaro Power",
+    "strategicNote": "A major Independent Power Producer (IPP) project significantly boosting Central Java's capacity.",
+    "notes": null,
+    "attribution": {
+      "sources": [
+        { "name": "Global Energy Monitor", "url": "https://www.gem.wiki/Batang_power_station", "accessedAt": "2025-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 1,
+        "lastVerified": "2025-05-10"
+      }
+    }
+  },
+  {
+    "id": "PLANT-IDN-WAYANG-WINDU",
+    "name": "Wayang Windu Geothermal Power Station",
+    "countryId": "IDN",
+    "city": "Pangalengan",
+    "coordinates": [107.625, -7.201],
+    "type": "geothermal",
+    "status": "operating",
+    "capacityMW": 227,
+    "annualOutputGWh": null,
+    "yearCommissioned": 1999,
+    "yearRetirement": null,
+    "operator": "Star Energy Geothermal",
+    "owner": "Star Energy / Marubeni",
+    "strategicNote": "One of the most efficient geothermal plants in the world, showcasing Indonesia's massive geothermal potential.",
+    "notes": null,
+    "attribution": {
+      "sources": [
+        { "name": "Global Energy Monitor", "url": "https://www.gem.wiki/Wayang_Windu_Geothermal_Power_Station", "accessedAt": "2025-05-10" }
+      ],
+      "confidence": {
+        "confidence": "medium",
+        "sourceCount": 1,
+        "lastVerified": "2025-05-10"
+      }
+    }
+  },
+  {
+    "id": "PLANT-IDN-SARULLA",
+    "name": "Sarulla Geothermal Power Station",
+    "countryId": "IDN",
+    "city": "Pahae Jae",
+    "coordinates": [99.115, 2.031],
+    "type": "geothermal",
+    "status": "operating",
+    "capacityMW": 330,
+    "annualOutputGWh": null,
+    "yearCommissioned": 2017,
+    "yearRetirement": null,
+    "operator": "Sarulla Operations Ltd",
+    "owner": "Medco Power / Itochu / Kyushu Electric / Inpex",
+    "strategicNote": "The world's largest single-contract geothermal power project.",
+    "notes": null,
+    "attribution": {
+      "sources": [
+        { "name": "Global Energy Monitor", "url": "https://www.gem.wiki/Sarulla_geothermal_power_station", "accessedAt": "2025-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 1,
+        "lastVerified": "2025-05-10"
+      }
+    }
+  },
+  {
+    "id": "PLANT-IDN-MUARA-KARANG",
+    "name": "Muara Karang Power Station",
+    "countryId": "IDN",
+    "city": "Jakarta",
+    "coordinates": [106.7917, -6.1083],
+    "type": "gas",
+    "status": "operating",
+    "capacityMW": 1600,
+    "annualOutputGWh": null,
+    "yearCommissioned": 1979,
+    "yearRetirement": null,
+    "operator": "PT PJB",
+    "owner": "PT PLN (Persero)",
+    "strategicNote": "Critical gas-fired plant supplying the heart of Jakarta.",
+    "notes": "Includes modern combined-cycle units.",
+    "attribution": {
+      "sources": [
+        { "name": "Global Energy Monitor", "url": "https://www.gem.wiki/Muara_Karang_power_station", "accessedAt": "2025-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 1,
+        "lastVerified": "2025-05-10"
+      }
+    }
+  },
+  {
+    "id": "PLANT-IDN-IMIP-COAL",
+    "name": "Indonesia Morowali Industrial Park (IMIP) Captive Power",
+    "countryId": "IDN",
+    "city": "Morowali",
+    "coordinates": [122.15, -2.85],
+    "type": "coal",
+    "status": "operating",
+    "capacityMW": 3360,
+    "annualOutputGWh": null,
+    "yearCommissioned": 2015,
+    "yearRetirement": null,
+    "operator": "IMIP",
+    "owner": "Tsingshan Holding Group / BintangDelapan Group",
+    "strategicNote": "Massive captive coal power complex driving the world's largest nickel processing hub.",
+    "notes": "Strategically critical for the global EV battery supply chain.",
+    "attribution": {
+      "sources": [
+        { "name": "Global Energy Monitor", "url": "https://www.gem.wiki/Indonesia_Morowali_Industrial_Park_(IMIP)_power_station", "accessedAt": "2025-05-10" }
+      ],
+      "confidence": {
+        "confidence": "medium",
+        "sourceCount": 1,
+        "lastVerified": "2025-05-10"
+      }
+    }
+  }
+]

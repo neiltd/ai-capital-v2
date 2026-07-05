@@ -1,0 +1,95 @@
+{
+  "generatedAt": "2026-07-03",
+  "predictionsAnalyzed": 41,
+  "scoredCalls": 490,
+  "windows": [
+    7,
+    30
+  ],
+  "byAction": {
+    "hold": {
+      "7d": {
+        "calls": 284,
+        "accuracy": 0.5140845070422535,
+        "avgReturn": -0.14161663367356955
+      },
+      "30d": {
+        "calls": 167,
+        "accuracy": 0.2754491017964072,
+        "avgReturn": -2.7304450961799276
+      }
+    },
+    "trim": {
+      "7d": {
+        "calls": 17,
+        "accuracy": 0.7647058823529411,
+        "avgReturn": -2.6266438396068286
+      },
+      "30d": {
+        "calls": 15,
+        "accuracy": 0.26666666666666666,
+        "avgReturn": -1.1787598530357557
+      }
+    },
+    "buy": {
+      "7d": {
+        "calls": 5,
+        "accuracy": 0.6,
+        "avgReturn": -1.4745645443483664
+      },
+      "30d": {
+        "calls": 2,
+        "accuracy": 1,
+        "avgReturn": 4.396718830155609
+      }
+    }
+  },
+  "byConviction": {
+    "high": {
+      "7d": {
+        "calls": 54,
+        "accuracy": 0.37037037037037035,
+        "avgReturn": -2.848696723829489
+      },
+      "30d": {
+        "calls": 43,
+        "accuracy": 0.3023255813953488,
+        "avgReturn": -3.955318593096452
+      }
+    },
+    "medium": {
+      "7d": {
+        "calls": 224,
+        "accuracy": 0.5625,
+        "avgReturn": -0.2067927594019768
+      },
+      "30d": {
+        "calls": 119,
+        "accuracy": 0.3025210084033613,
+        "avgReturn": -2.4746681559272794
+      }
+    },
+    "low": {
+      "7d": {
+        "calls": 28,
+        "accuracy": 0.5714285714285714,
+        "avgReturn": 3.853796758374435
+      },
+      "30d": {
+        "calls": 22,
+        "accuracy": 0.13636363636363635,
+        "avgReturn": -0.014003688126328451
+      }
+    }
+  },
+  "calibrationInverted": true,
+  "highConvictionPenalty": 0.19212962962962965,
+  "bestEdge": {
+    "signal": "trim (7d)",
+    "accuracy": 0.7647058823529411
+  },
+  "worstSignal": {
+    "signal": "trim (30d)",
+    "accuracy": 0.26666666666666666
+  }
+}

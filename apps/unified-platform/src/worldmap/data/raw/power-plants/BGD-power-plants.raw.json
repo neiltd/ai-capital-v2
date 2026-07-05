@@ -1,0 +1,273 @@
+[
+  {
+    "id": "PLANT-BGD-ROOPPUR-NUCLEAR",
+    "name": "Rooppur Nuclear Power Plant",
+    "countryId": "BGD",
+    "city": "Ishwardi",
+    "coordinates": [89.040, 24.060],
+    "type": "nuclear",
+    "status": "construction",
+    "capacityMW": 2400,
+    "annualOutputGWh": null,
+    "yearCommissioned": null,
+    "yearRetirement": null,
+    "operator": "Bangladesh Atomic Energy Commission (BAEC)",
+    "owner": "Government of Bangladesh",
+    "strategicNote": "Bangladesh's first nuclear power plant, built with Russian assistance; a cornerstone of the country's energy diversification strategy.",
+    "notes": "Consists of two VVER-1200 reactors.",
+    "attribution": {
+      "sources": [
+        { "name": "Global Energy Monitor", "url": "https://www.gem.wiki/Rooppur_nuclear_power_station", "accessedAt": "2026-05-10" },
+        { "name": "IAEA PRIS", "url": "https://pris.iaea.org/PRIS/CountryStatistics/CountryDetails.aspx?current=BD", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 2,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  },
+  {
+    "id": "PLANT-BGD-ASHUGANJ-COMPLEX",
+    "name": "Ashuganj Power Station",
+    "countryId": "BGD",
+    "city": "Ashuganj",
+    "coordinates": [91.010, 24.040],
+    "type": "gas",
+    "status": "operating",
+    "capacityMW": 1627,
+    "annualOutputGWh": null,
+    "yearCommissioned": 1970,
+    "yearRetirement": null,
+    "operator": "Ashuganj Power Station Company Ltd (APSCL)",
+    "owner": "APSCL / Government of Bangladesh",
+    "strategicNote": "One of the largest gas-fired hubs in Bangladesh, strategically located near the Titas gas field.",
+    "notes": "Total capacity of various units at the Ashuganj hub.",
+    "attribution": {
+      "sources": [
+        { "name": "Global Energy Monitor", "url": "https://www.gem.wiki/Ashuganj_power_station", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 1,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  },
+  {
+    "id": "PLANT-BGD-PAYRA",
+    "name": "Payra Thermal Power Plant",
+    "countryId": "BGD",
+    "city": "Kalapara",
+    "coordinates": [90.300, 22.000],
+    "type": "coal",
+    "status": "operating",
+    "capacityMW": 1320,
+    "annualOutputGWh": null,
+    "yearCommissioned": 2020,
+    "yearRetirement": null,
+    "operator": "North-West Power Generation Company Limited (NWPGCL)",
+    "owner": "Bangladesh-China Power Company Limited (BCPCL)",
+    "strategicNote": "Bangladesh's first ultra-supercritical coal plant, vital for southern grid stability.",
+    "notes": "Joint venture between NWPGCL and China National Machinery Import and Export Corporation.",
+    "attribution": {
+      "sources": [
+        { "name": "Global Energy Monitor", "url": "https://www.gem.wiki/Payra_power_station", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 1,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  },
+  {
+    "id": "PLANT-BGD-RAMPAL",
+    "name": "Rampal Power Station (Maitree Super Thermal)",
+    "countryId": "BGD",
+    "city": "Rampal",
+    "coordinates": [89.560, 22.610],
+    "type": "coal",
+    "status": "operating",
+    "capacityMW": 1320,
+    "annualOutputGWh": null,
+    "yearCommissioned": 2022,
+    "yearRetirement": null,
+    "operator": "Bangladesh India Friendship Power Company (BIFPCL)",
+    "owner": "BIFPCL (Joint venture BPDB and NTPC)",
+    "strategicNote": "A joint venture between Bangladesh and India, controversial due to its proximity to the Sundarbans mangrove forest.",
+    "notes": null,
+    "attribution": {
+      "sources": [
+        { "name": "Global Energy Monitor", "url": "https://www.gem.wiki/Rampal_power_station", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 1,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  },
+  {
+    "id": "PLANT-BGD-MATARBARI",
+    "name": "Matarbari Power Station",
+    "countryId": "BGD",
+    "city": "Maheshkhali",
+    "coordinates": [91.880, 21.700],
+    "type": "coal",
+    "status": "operating",
+    "capacityMW": 1200,
+    "annualOutputGWh": null,
+    "yearCommissioned": 2023,
+    "yearRetirement": null,
+    "operator": "Coal Power Generation Company Bangladesh (CPGCBL)",
+    "owner": "Government of Bangladesh",
+    "strategicNote": "Key project in the Maheshkhali energy hub, supported by Japanese financing (JICA); includes a deep-sea port for coal imports.",
+    "notes": null,
+    "attribution": {
+      "sources": [
+        { "name": "Global Energy Monitor", "url": "https://www.gem.wiki/Matarbari_power_station", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 1,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  },
+  {
+    "id": "PLANT-BGD-GHORASAL",
+    "name": "Ghorasal Power Plant",
+    "countryId": "BGD",
+    "city": "Palash",
+    "coordinates": [90.640, 23.980],
+    "type": "gas",
+    "status": "operating",
+    "capacityMW": 1045,
+    "annualOutputGWh": null,
+    "yearCommissioned": 1974,
+    "yearRetirement": null,
+    "operator": "Bangladesh Power Development Board (BPDB)",
+    "owner": "Government of Bangladesh",
+    "strategicNote": "Major gas-fired facility serving the Dhaka industrial area; recently upgraded for higher efficiency.",
+    "notes": null,
+    "attribution": {
+      "sources": [
+        { "name": "Global Energy Monitor", "url": "https://www.gem.wiki/Ghorasal_power_station", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 1,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  },
+  {
+    "id": "PLANT-BGD-SIRAJGANJ-COMPLEX",
+    "name": "Sirajganj Power Station",
+    "countryId": "BGD",
+    "city": "Sirajganj",
+    "coordinates": [89.740, 24.380],
+    "type": "gas",
+    "status": "operating",
+    "capacityMW": 650,
+    "annualOutputGWh": null,
+    "yearCommissioned": 2012,
+    "yearRetirement": null,
+    "operator": "NWPGCL / Sembcorp",
+    "owner": "Government of Bangladesh / Sembcorp",
+    "strategicNote": "Important gas-fired hub in western Bangladesh.",
+    "notes": "Includes several combined cycle units.",
+    "attribution": {
+      "sources": [
+        { "name": "Global Energy Monitor", "url": "https://www.gem.wiki/Sirajganj_power_station", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 1,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  },
+  {
+    "id": "PLANT-BGD-BARAPUKURIA",
+    "name": "Barapukuria Power Station",
+    "countryId": "BGD",
+    "city": "Dinajpur",
+    "coordinates": [88.950, 25.550],
+    "type": "coal",
+    "status": "operating",
+    "capacityMW": 525,
+    "annualOutputGWh": null,
+    "yearCommissioned": 2006,
+    "yearRetirement": null,
+    "operator": "BPDB",
+    "owner": "Government of Bangladesh",
+    "strategicNote": "The only coal-fired power plant in Bangladesh using domestic coal from the adjacent Barapukuria mine.",
+    "notes": null,
+    "attribution": {
+      "sources": [
+        { "name": "Global Energy Monitor", "url": "https://www.gem.wiki/Barapukuria_power_station", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 1,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  },
+  {
+    "id": "PLANT-BGD-KARNAFULI",
+    "name": "Karnafuli Hydroelectric Power Station",
+    "countryId": "BGD",
+    "city": "Kaptai",
+    "coordinates": [92.220, 22.490],
+    "type": "hydro",
+    "status": "operating",
+    "capacityMW": 230,
+    "annualOutputGWh": null,
+    "yearCommissioned": 1962,
+    "yearRetirement": null,
+    "operator": "BPDB",
+    "owner": "Government of Bangladesh",
+    "strategicNote": "Bangladesh's only major hydroelectric facility; critical for the Chittagong Hill Tracts region.",
+    "notes": null,
+    "attribution": {
+      "sources": [
+        { "name": "Global Energy Monitor", "url": "https://www.gem.wiki/Kaptai_Dam", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 1,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  },
+  {
+    "id": "PLANT-BGD-RUPSHA",
+    "name": "Rupsha Power Station",
+    "countryId": "BGD",
+    "city": "Khulna",
+    "coordinates": [89.580, 22.810],
+    "type": "gas",
+    "status": "construction",
+    "capacityMW": 800,
+    "annualOutputGWh": null,
+    "yearCommissioned": null,
+    "yearRetirement": null,
+    "operator": "NWPGCL",
+    "owner": "Government of Bangladesh",
+    "strategicNote": "Large LNG-based power plant under construction to meet growing demand in southwestern Bangladesh.",
+    "notes": null,
+    "attribution": {
+      "sources": [
+        { "name": "Global Energy Monitor", "url": "https://www.gem.wiki/Rupsha_power_station", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "medium",
+        "sourceCount": 1,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  }
+]

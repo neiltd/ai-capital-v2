@@ -1,0 +1,272 @@
+[
+  {
+    "id": "LOS",
+    "name": "Murtala Muhammed International Airport",
+    "countryId": "NGA",
+    "city": "Lagos",
+    "iata": "LOS",
+    "icao": "DNMM",
+    "coordinates": [3.321, 6.577],
+    "passengerVolume": 16800000,
+    "cargoVolume": 150000,
+    "runwayCount": 2,
+    "elevationM": 41,
+    "strategicImportance": "critical",
+    "geopoliticalNotes": "Nigeria's primary gateway and West Africa's leading commercial hub; handles over 80% of national air cargo value.",
+    "notes": "Major node for international trade and corporate logistics in the region.",
+    "attribution": {
+      "sources": [
+        { "name": "Federal Airports Authority of Nigeria (FAAN)", "url": "https://faan.gov.ng/", "accessedAt": "2026-05-10" },
+        { "name": "IATA", "url": "https://www.iata.org/", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 2,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  },
+  {
+    "id": "ABV",
+    "name": "Nnamdi Azikiwe International Airport",
+    "countryId": "NGA",
+    "city": "Abuja",
+    "iata": "ABV",
+    "icao": "DNAA",
+    "coordinates": [7.263, 9.007],
+    "passengerVolume": 5480000,
+    "cargoVolume": 9130,
+    "runwayCount": 1,
+    "elevationM": 342,
+    "strategicImportance": "critical",
+    "geopoliticalNotes": "Political gateway serving the national capital; critical for diplomatic, government, and corporate logistics coordination.",
+    "notes": "Key coordination point for national security operations.",
+    "attribution": {
+      "sources": [
+        { "name": "FAAN", "url": "https://faan.gov.ng/", "accessedAt": "2026-05-10" },
+        { "name": "SkyVector", "url": "https://skyvector.com/airport/DNAA/Abuja-Nnamdi-Azikiwe-International-Airport", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 2,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  },
+  {
+    "id": "KAN",
+    "name": "Mallam Aminu Kano International Airport",
+    "countryId": "NGA",
+    "city": "Kano",
+    "iata": "KAN",
+    "icao": "DNKN",
+    "coordinates": [8.522, 12.049],
+    "passengerVolume": 1200000,
+    "cargoVolume": 19500,
+    "runwayCount": 2,
+    "elevationM": 476,
+    "strategicImportance": "high",
+    "geopoliticalNotes": "Primary gateway to Northern Nigeria and historic hub for trans-Saharan trade; hosts a major Nigerian Air Force base.",
+    "notes": "Dual-purpose airfield critical for regional trade and security in the Sahel.",
+    "attribution": {
+      "sources": [
+        { "name": "FAAN", "url": "https://faan.gov.ng/", "accessedAt": "2026-05-10" },
+        { "name": "IATA", "url": "https://www.iata.org/", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 2,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  },
+  {
+    "id": "PHC",
+    "name": "Port Harcourt International Airport",
+    "countryId": "NGA",
+    "city": "Port Harcourt",
+    "iata": "PHC",
+    "icao": "DNPO",
+    "coordinates": [6.950, 5.015],
+    "passengerVolume": 1190000,
+    "cargoVolume": 4050,
+    "runwayCount": 1,
+    "elevationM": 28,
+    "strategicImportance": "high",
+    "geopoliticalNotes": "Logistics backbone for Nigeria's oil and gas industry; vital for regional energy sector supply chains.",
+    "notes": "Undergoing upgrades to expand cargo handling capacity for oil sector logistics.",
+    "attribution": {
+      "sources": [
+        { "name": "FAAN", "url": "https://faan.gov.ng/", "accessedAt": "2026-05-10" },
+        { "name": "SkyVector", "url": "https://skyvector.com/airport/DNPO/Port-Harcourt-International-Airport", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 2,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  },
+  {
+    "id": "KAD",
+    "name": "Kaduna International Airport",
+    "countryId": "NGA",
+    "city": "Kaduna",
+    "iata": "KAD",
+    "icao": "DNKA",
+    "coordinates": [7.320, 10.696],
+    "passengerVolume": 400000,
+    "cargoVolume": 100,
+    "runwayCount": 1,
+    "elevationM": 642,
+    "strategicImportance": "high",
+    "geopoliticalNotes": "Major military base and strategic hub for Northern Nigeria; alternative to Abuja for regional logistics.",
+    "notes": "Critical for military transport and regional security coordination.",
+    "attribution": {
+      "sources": [
+        { "name": "FAAN", "url": "https://faan.gov.ng/", "accessedAt": "2026-05-10" },
+        { "name": "OurAirports", "url": "https://ourairports.com/airports/DNKA/", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 2,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  },
+  {
+    "id": "ENU",
+    "name": "Akanu Ibiam International Airport",
+    "countryId": "NGA",
+    "city": "Enugu",
+    "iata": "ENU",
+    "icao": "DNEN",
+    "coordinates": [7.561, 6.474],
+    "passengerVolume": 500000,
+    "cargoVolume": 5000,
+    "runwayCount": 1,
+    "elevationM": 142,
+    "strategicImportance": "high",
+    "geopoliticalNotes": "Primary international gateway for Southeastern Nigeria; critical for regional commerce and industrial logistics.",
+    "notes": "Underwent significant runway reconstruction to handle international flights.",
+    "attribution": {
+      "sources": [
+        { "name": "FAAN", "url": "https://faan.gov.ng/", "accessedAt": "2026-05-10" },
+        { "name": "IATA", "url": "https://www.iata.org/", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 2,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  },
+  {
+    "id": "MDI",
+    "name": "Makurdi Airport",
+    "countryId": "NGA",
+    "city": "Makurdi",
+    "iata": "MDI",
+    "icao": "DNMK",
+    "coordinates": [8.614, 7.704],
+    "passengerVolume": null,
+    "cargoVolume": null,
+    "runwayCount": 1,
+    "elevationM": 113,
+    "strategicImportance": "high",
+    "geopoliticalNotes": "Houses a major Nigerian Air Force tactical air command; highly strategic for national defense and internal security.",
+    "notes": "Primarily a military facility with limited commercial operations.",
+    "attribution": {
+      "sources": [
+        { "name": "Nigerian Air Force", "url": "https://airforce.mil.ng/", "accessedAt": "2026-05-10" },
+        { "name": "SkyVector", "url": "https://skyvector.com/airport/DNMK/Makurdi-Airport", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 2,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  },
+  {
+    "id": "BNI",
+    "name": "Benin City Airport",
+    "countryId": "NGA",
+    "city": "Benin City",
+    "iata": "BNI",
+    "icao": "DNBE",
+    "coordinates": [5.599, 6.317],
+    "passengerVolume": 350000,
+    "cargoVolume": null,
+    "runwayCount": 1,
+    "elevationM": 79,
+    "strategicImportance": "medium",
+    "geopoliticalNotes": "Important regional hub for Edo State; supports domestic commerce and administrative connectivity.",
+    "notes": "One of the busiest domestic airports in the Niger Delta region.",
+    "attribution": {
+      "sources": [
+        { "name": "FAAN", "url": "https://faan.gov.ng/", "accessedAt": "2026-05-10" },
+        { "name": "SkyVector", "url": "https://skyvector.com/airport/DNBE/Benin-Airport", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 2,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  },
+  {
+    "id": "CBQ",
+    "name": "Margaret Ekpo International Airport",
+    "countryId": "NGA",
+    "city": "Calabar",
+    "iata": "CBQ",
+    "icao": "DNCA",
+    "coordinates": [8.347, 4.976],
+    "passengerVolume": 190000,
+    "cargoVolume": null,
+    "runwayCount": 1,
+    "elevationM": 64,
+    "strategicImportance": "medium",
+    "geopoliticalNotes": "Gateway to the Calabar Free Trade Zone and tourism sites in Cross River State.",
+    "notes": "Strategic for maritime-linked industrial logistics.",
+    "attribution": {
+      "sources": [
+        { "name": "FAAN", "url": "https://faan.gov.ng/", "accessedAt": "2026-05-10" },
+        { "name": "IATA", "url": "https://www.iata.org/", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 2,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  },
+  {
+    "id": "ILR",
+    "name": "Ilorin International Airport",
+    "countryId": "NGA",
+    "city": "Ilorin",
+    "iata": "ILR",
+    "icao": "DNIL",
+    "coordinates": [4.494, 8.440],
+    "passengerVolume": 120000,
+    "cargoVolume": null,
+    "runwayCount": 1,
+    "elevationM": 343,
+    "strategicImportance": "medium",
+    "geopoliticalNotes": "Serves as an alternate to Lagos and Abuja; features specialized cargo and aviation training facilities.",
+    "notes": "Critical for regional agricultural logistics and pilot training.",
+    "attribution": {
+      "sources": [
+        { "name": "FAAN", "url": "https://faan.gov.ng/", "accessedAt": "2026-05-10" },
+        { "name": "SkyVector", "url": "https://skyvector.com/airport/DNIL/Ilorin-International-Airport", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 2,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  }
+]

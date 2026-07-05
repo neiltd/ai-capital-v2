@@ -1,0 +1,38 @@
+[
+  {
+    "countryId": "PAK",
+    "year": 2023,
+    "electricityConsumptionTWh": 145.36,
+    "electricityProductionTWh": 150.98,
+    "electricityMix": {
+      "gas": 27.7,
+      "hydro": 26.8,
+      "nuclear": 17.3,
+      "coal": 12.8,
+      "oil": 11.4,
+      "wind": 2.7,
+      "solar": 0.7,
+      "otherRenewables": 0.6
+    },
+    "renewableSharePct": 30.8,
+    "waterStressScore": 3.79,
+    "waterWithdrawalPct": 80,
+    "foodSecurityScore": 52.2,
+    "aiAdoptionScore": 42.2,
+    "internetPenetration": 36.7,
+    "mobilePenetration": 80.5,
+    "attribution": {
+      "sources": [
+        { "name": "IEA World Energy Balances 2023", "url": "https://www.iea.org/data-and-statistics/data-product/world-energy-balances", "accessedAt": "2025-05-15" },
+        { "name": "WRI Aqueduct 4.0 (2023)", "url": "https://www.wri.org/aqueduct", "accessedAt": "2025-05-15" },
+        { "name": "Economist Impact Global Food Security Index 2022", "url": "https://impact.economist.com/sustainability/project/food-security-index", "accessedAt": "2025-05-15" },
+        { "name": "Oxford Insights Government AI Readiness Index 2023", "url": "https://oxfordinsights.com/government-ai-readiness-index-2023/", "accessedAt": "2025-05-15" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 4,
+        "lastVerified": "2025-05-15"
+      }
+    }
+  }
+]

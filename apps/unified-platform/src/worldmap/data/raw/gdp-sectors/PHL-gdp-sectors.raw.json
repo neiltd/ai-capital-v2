@@ -1,0 +1,44 @@
+[
+  {
+    "countryId": "PHL",
+    "year": 2023,
+    "gdpUsdBn": 437.06,
+    "gdpPerCapita": 3804,
+    "sectors": [
+      {
+        "sector": "Services",
+        "percentOfGDP": 62.3,
+        "notes": "Main drivers include Wholesale and retail trade, Financial and insurance activities, and BPO."
+      },
+      {
+        "sector": "Industry",
+        "percentOfGDP": 29.1,
+        "notes": "Strong performance in Construction (8.8% growth); Manufacturing moderated due to electronics exports."
+      },
+      {
+        "sector": "Agriculture",
+        "percentOfGDP": 8.6,
+        "notes": "Includes forestry and fishing; sector growth impacted by climate-related disruptions."
+      }
+    ],
+    "attribution": {
+      "sources": [
+        {
+          "name": "Philippine Statistics Authority (PSA) 2023 National Accounts",
+          "url": "https://psa.gov.ph/",
+          "accessedAt": "2025-02-11"
+        },
+        {
+          "name": "World Bank Philippines Economic Update 2023",
+          "url": "https://www.worldbank.org/en/country/philippines",
+          "accessedAt": "2025-02-11"
+        }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 2,
+        "lastVerified": "2025-02-11"
+      }
+    }
+  }
+]

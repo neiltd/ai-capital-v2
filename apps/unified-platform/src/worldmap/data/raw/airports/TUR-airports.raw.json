@@ -1,0 +1,272 @@
+[
+  {
+    "id": "IST",
+    "name": "Istanbul Airport",
+    "countryId": "TUR",
+    "city": "Istanbul",
+    "iata": "IST",
+    "icao": "LTFM",
+    "coordinates": [28.7278, 41.2622],
+    "passengerVolume": 76000000,
+    "cargoVolume": 1410000,
+    "runwayCount": 5,
+    "elevationM": 99,
+    "strategicImportance": "critical",
+    "geopoliticalNotes": "A global transit bridge connecting Europe, Asia, and Africa; Europe's busiest cargo airport as of 2024.",
+    "notes": "Features 'Cargo City', a massive complex designed to handle up to 5.5 million tons annually.",
+    "attribution": {
+      "sources": [
+        { "name": "IGA Istanbul Airport", "url": "https://www.istairport.com", "accessedAt": "2026-05-10" },
+        { "name": "General Directorate of State Airports Authority (DHMİ)", "url": "https://www.dhmi.gov.tr", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 2,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  },
+  {
+    "id": "SAW",
+    "name": "Istanbul Sabiha Gökçen International Airport",
+    "countryId": "TUR",
+    "city": "Istanbul",
+    "iata": "SAW",
+    "icao": "LTFJ",
+    "coordinates": [29.3092, 40.8983],
+    "passengerVolume": 37000000,
+    "cargoVolume": 406000,
+    "runwayCount": 2,
+    "elevationM": 95,
+    "strategicImportance": "high",
+    "geopoliticalNotes": "Secondary hub for Istanbul, providing critical redundancy and connectivity for the Asian side of the city.",
+    "notes": "Opened its second runway in late 2023, significantly increasing operational capacity.",
+    "attribution": {
+      "sources": [
+        { "name": "Sabiha Gökçen Airport", "url": "https://www.sabihagokcen.aero", "accessedAt": "2026-05-10" },
+        { "name": "DHMİ", "url": "https://www.dhmi.gov.tr", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 2,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  },
+  {
+    "id": "AYT",
+    "name": "Antalya Airport",
+    "countryId": "TUR",
+    "city": "Antalya",
+    "iata": "AYT",
+    "icao": "LTAI",
+    "coordinates": [30.7928, 36.9003],
+    "passengerVolume": 35500000,
+    "cargoVolume": 440000,
+    "runwayCount": 3,
+    "elevationM": 54,
+    "strategicImportance": "high",
+    "geopoliticalNotes": "Major regional hub and a primary gateway for international tourism and Mediterranean connectivity.",
+    "notes": "Handles high volumes of seasonal international traffic; essential for Turkey's tourism economy.",
+    "attribution": {
+      "sources": [
+        { "name": "Antalya Airport", "url": "https://www.antalya-airport.aero", "accessedAt": "2026-05-10" },
+        { "name": "IATA", "url": "https://www.iata.org", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 2,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  },
+  {
+    "id": "ESB",
+    "name": "Ankara Esenboğa Airport",
+    "countryId": "TUR",
+    "city": "Ankara",
+    "iata": "ESB",
+    "icao": "LTAC",
+    "coordinates": [32.995, 40.1281],
+    "passengerVolume": 11900000,
+    "cargoVolume": 100000,
+    "runwayCount": 2,
+    "elevationM": 953,
+    "strategicImportance": "critical",
+    "geopoliticalNotes": "The political and administrative gateway to Turkey; primary entry point for foreign heads of state.",
+    "notes": "Located in the capital where 50% of Turkey's defense industry turnover is generated.",
+    "attribution": {
+      "sources": [
+        { "name": "Esenboğa Airport", "url": "https://www.esenbogaairport.com", "accessedAt": "2026-05-10" },
+        { "name": "DHMİ", "url": "https://www.dhmi.gov.tr", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 2,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  },
+  {
+    "id": "ADB",
+    "name": "Izmir Adnan Menderes Airport",
+    "countryId": "TUR",
+    "city": "Izmir",
+    "iata": "ADB",
+    "icao": "LTBJ",
+    "coordinates": [27.1553, 38.2906],
+    "passengerVolume": 10700000,
+    "cargoVolume": 28000,
+    "runwayCount": 2,
+    "elevationM": 126,
+    "strategicImportance": "high",
+    "geopoliticalNotes": "Strategic gateway for the Aegean region; monitors Turkey's western maritime borders.",
+    "notes": "Proximity to NATO's Allied Land Command (LANDCOM) in Izmir adds to its strategic value.",
+    "attribution": {
+      "sources": [
+        { "name": "Adnan Menderes Airport", "url": "https://www.adnanmenderesairport.com", "accessedAt": "2026-05-10" },
+        { "name": "OurAirports", "url": "https://ourairports.com", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 2,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  },
+  {
+    "id": "KYA",
+    "name": "Konya Air Base / Airport",
+    "countryId": "TUR",
+    "city": "Konya",
+    "iata": "KYA",
+    "icao": "LTAN",
+    "coordinates": [32.5619, 37.9789],
+    "passengerVolume": 899000,
+    "cargoVolume": 6500,
+    "runwayCount": 2,
+    "elevationM": 1031,
+    "strategicImportance": "critical",
+    "geopoliticalNotes": "Home to the Anatolian Eagle Training Center and a host for NATO AWACS aircraft.",
+    "notes": "Multinational training ground for allied air forces to practice complex combat scenarios.",
+    "attribution": {
+      "sources": [
+        { "name": "Turkish Air Force", "url": "https://www.hvkk.tsk.tr", "accessedAt": "2026-05-10" },
+        { "name": "DHMİ", "url": "https://www.dhmi.gov.tr", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 2,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  },
+  {
+    "id": "DIY",
+    "name": "Diyarbakır Air Base / Airport",
+    "countryId": "TUR",
+    "city": "Diyarbakır",
+    "iata": "DIY",
+    "icao": "LTCC",
+    "coordinates": [40.2008, 37.8939],
+    "passengerVolume": 2100000,
+    "cargoVolume": 12000,
+    "runwayCount": 1,
+    "elevationM": 686,
+    "strategicImportance": "critical",
+    "geopoliticalNotes": "The 'Frontier Post' for the Middle East; primary base for monitoring the Syrian and Iraqi borders.",
+    "notes": "Major hub for Turkish UAV/UCAV (drone) operations and regional security missions.",
+    "attribution": {
+      "sources": [
+        { "name": "DHMİ", "url": "https://www.dhmi.gov.tr", "accessedAt": "2026-05-10" },
+        { "name": "Daily Sabah", "url": "https://www.dailysabah.com", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 2,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  },
+  {
+    "id": "MLX",
+    "name": "Malatya Erhaç Air Base / Airport",
+    "countryId": "TUR",
+    "city": "Malatya",
+    "iata": "MLX",
+    "icao": "LTAT",
+    "coordinates": [38.0908, 38.4353],
+    "passengerVolume": 350000,
+    "cargoVolume": 6200,
+    "runwayCount": 1,
+    "elevationM": 862,
+    "strategicImportance": "high",
+    "geopoliticalNotes": "Strategically linked to the Kürecik Radar Station, a key component of NATO's ballistic missile defense system.",
+    "notes": "Primary air defense hub for Eastern Turkey.",
+    "attribution": {
+      "sources": [
+        { "name": "DHMİ", "url": "https://www.dhmi.gov.tr", "accessedAt": "2026-05-10" },
+        { "name": "Turkish Air Force", "url": "https://www.hvkk.tsk.tr", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 2,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  },
+  {
+    "id": "MZH",
+    "name": "Amasya Merzifon Air Base / Airport",
+    "countryId": "TUR",
+    "city": "Amasya/Merzifon",
+    "iata": "MZH",
+    "icao": "LTAP",
+    "coordinates": [35.5219, 40.8292],
+    "passengerVolume": 130000,
+    "cargoVolume": 1000,
+    "runwayCount": 2,
+    "elevationM": 536,
+    "strategicImportance": "high",
+    "geopoliticalNotes": "Primary air defense hub for the Black Sea region; importance surged following the Russia-Ukraine conflict.",
+    "notes": "Monitors northern maritime and aerial approaches to Turkey.",
+    "attribution": {
+      "sources": [
+        { "name": "DHMİ", "url": "https://www.dhmi.gov.tr", "accessedAt": "2026-05-10" },
+        { "name": "SkyVector", "url": "https://skyvector.com", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 2,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  },
+  {
+    "id": "UAB",
+    "name": "Incirlik Air Base",
+    "countryId": "TUR",
+    "city": "Adana",
+    "iata": "UAB",
+    "icao": "LTAG",
+    "coordinates": [35.4258, 37.0019],
+    "passengerVolume": null,
+    "cargoVolume": null,
+    "runwayCount": 1,
+    "elevationM": 73,
+    "strategicImportance": "critical",
+    "geopoliticalNotes": "One of the most important NATO/US airbases globally; staging point for operations in the Middle East.",
+    "notes": "Pillar of strategic deterrence; reported to host tactical nuclear weapons under NATO nuclear sharing.",
+    "attribution": {
+      "sources": [
+        { "name": "US Air Force - Incirlik Air Base", "url": "https://www.incirlik.af.mil", "accessedAt": "2026-05-10" },
+        { "name": "Turkish Air Force", "url": "https://www.hvkk.tsk.tr", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 2,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  }
+]

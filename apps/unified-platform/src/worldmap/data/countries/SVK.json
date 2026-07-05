@@ -1,0 +1,68 @@
+{
+  "id": "SVK",
+  "iso2": "SK",
+  "name": "Slovakia",
+  "region": "Europe",
+  "subregion": "Central Europe",
+  "capital": "Bratislava",
+  "lastUpdated": "2026-05-09",
+  "summary": "In 2026, Slovakia remains a key industrial heartland of Central Europe, maintaining its position as the world's leading car producer per capita while aggressively pivoting toward electric vehicle (EV) manufacturing. The political environment is characterized by a complex balance between social-populist domestic policies and a pragmatic commitment to EU and NATO obligations. While Bratislava continues to thrive as a hub for shared service centers and growing tech startups, regional inequalities between the affluent West and the economically lagging East remain a significant socio-political friction point. The country has made substantial strides in energy diversification, significantly reducing its historical dependence on Eastern energy imports and investing in nuclear and renewable sources to power its heavy industrial base.",
+  "indicators": {
+    "politicalStability":       { "score": 6, "score_description": "Stable but polarized political landscape.", "trend": "stable", "confidence": "high", "note": "Governance is functional but marked by sharp rhetorical divisions between populist and liberal-reformist camps." },
+    "economicDirection":        { "score": 6, "score_description": "Growth driven by automotive exports and recovering domestic demand.", "trend": "improving", "confidence": "high", "note": "GDP growth is steady at 2.3%, though inflation and fiscal consolidation remain key monitoring points." },
+    "investmentAttractiveness": { "score": 7, "score_description": "Strong manufacturing hub with competitive labor costs.", "trend": "stable", "confidence": "high", "note": "New investments in EV battery plants and Volvo's upcoming EV facility in the East are significant positives." },
+    "geopoliticalRisk":         { "score": 5, "score_description": "Moderate risk due to proximity to Ukraine and energy transitions.", "trend": "stable", "confidence": "high", "note": "NATO membership remains the bedrock of security, with a focus on modernization of the armed forces." },
+    "educationQuality":         { "score": 6, "score_description": "Good technical education but facing a 'brain drain' of young talent.", "trend": "stable", "confidence": "medium", "note": "The government is implementing reforms to improve the quality of higher education and retain skilled graduates." },
+    "healthcareQuality":        { "score": 6, "score_description": "Universal system requiring modernization and better funding.", "trend": "improving", "confidence": "medium", "note": "Substantial EU Recovery and Resilience funds are being directed toward building new hospitals and upgrading equipment." },
+    "technologyInvestment":     { "score": 6, "score_description": "Growing focus on green energy and digital industrialization.", "trend": "rising", "confidence": "high", "note": "Significant state support for R&D in the hydrogen and battery sectors to future-proof the industrial base." }
+  },
+  "demographics": {
+    "population": 5440000,
+    "medianAge": 41.8,
+    "urbanizationRate": 54,
+    "majorEthnicGroups": ["Slovak", "Hungarian", "Roma", "Czech", "Ukrainian"],
+    "religions": [
+      { "name": "Roman Catholic", "percent": 55.8 },
+      { "name": "None/Unaffiliated", "percent": 23.8 },
+      { "name": "Evangelical", "percent": 5.3 },
+      { "name": "Greek Catholic", "percent": 4.0 },
+      { "name": "Other", "percent": 11.1 }
+    ]
+  },
+  "alliances": ["EU", "NATO", "Visegrád Group", "OECD", "OSCE", "Eurozone"],
+  "relationships": [
+    { "countryId": "CZE", "countryName": "Czech Republic", "type": "ally", "sentiment": "positive", "summary": "Special relationship based on shared history; deep cultural and economic integration remains the highest priority." },
+    { "countryId": "HUN", "countryName": "Hungary", "type": "partner", "sentiment": "neutral", "summary": "Pragmatic cooperation within the V4 framework, though sensitive historical and minority issues occasionally resurface." },
+    { "countryId": "POL", "countryName": "Poland", "type": "ally", "sentiment": "positive", "summary": "Strong cooperation on regional security and energy infrastructure, particularly the North-South gas corridor." },
+    { "countryId": "UKR", "countryName": "Ukraine", "type": "partner", "sentiment": "positive", "summary": "Significant supporter of Ukrainian reconstruction; Slovakia serves as a key transit point for humanitarian and energy aid." },
+    { "countryId": "AUT", "countryName": "Austria", "type": "partner", "sentiment": "positive", "summary": "Close economic ties; the Bratislava-Vienna region is one of the most dynamic cross-border economic zones in Europe." }
+  ],
+  "perspectives": [
+    { "source": "Bratislava Economist", "bias": "Pro-Market", "view": "The shift to EVs is non-negotiable for our survival; we must ensure our labor force is ready for the high-tech requirements of the next industrial era." },
+    { "source": "Trade Union Leader", "bias": "Labor-focused", "view": "Industrial modernization must not come at the cost of workers' rights or the neglect of the eastern regions." },
+    { "source": "Foreign Policy Strategist", "bias": "Pragmatist", "view": "Slovakia's strength lies in being a reliable and constructive member of the EU and NATO while maintaining stable relations with our immediate neighbors." }
+  ],
+  "historicalContext": {
+    "summary": "Slovakia achieved independence in 1993 following the peaceful dissolution of Czechoslovakia. Its history includes centuries within the Kingdom of Hungary and the Habsburg Empire, followed by the 20th-century experience of a shared state with the Czechs. After the fall of communism in 1989 and a period of political transition in the 1990s, Slovakia rapidly caught up with its neighbors, joining the EU and NATO in 2004 and the Eurozone in 2009.",
+    "keyEvents": [
+      { "year": 1848, "event": "Slovak National Uprising against Hungarian rule." },
+      { "year": 1918, "event": "Slovakia joins the Czech lands to form Czechoslovakia." },
+      { "year": 1944, "event": "Slovak National Uprising against Nazi-aligned regime." },
+      { "year": 1968, "event": "Constitutional Act of Federation establishes the Slovak Socialist Republic." },
+      { "year": 1989, "event": "Velvet Revolution ends communist rule." },
+      { "year": 1993, "event": "Establishment of the independent Slovak Republic." },
+      { "year": 2004, "event": "Slovakia joins NATO and the European Union." },
+      { "year": 2009, "event": "Adoption of the Euro as the national currency." }
+    ]
+  },
+  "investmentNotes": {
+    "strengths": ["World-class expertise in automotive manufacturing", "Strategic location as a North-South and East-West crossroads", "Eurozone membership providing monetary stability", "Competitive labor costs compared to Western Europe"],
+    "risks": ["High economic concentration in the automotive sector", "Regional economic disparities (West vs. East)", "Demographic aging and skilled labor shortages", "Political polarization impacting long-term reform consistency"],
+    "sectors": ["Automotive & E-Mobility", "Mechanical Engineering", "Shared Service Centers (SSC)", "Electronics", "Green Energy (Nuclear & Hydrogen)"]
+  },
+  "sources": [
+    { "name": "Statistical Office of the Slovak Republic", "url": "https://slovak.statistics.sk/", "type": "economic" },
+    { "name": "National Bank of Slovakia (NBS)", "url": "https://nbs.sk/en/home/", "type": "economic" },
+    { "name": "SARIO (Slovak Investment and Trade Development Agency)", "url": "https://www.sario.sk/en", "type": "economic" }
+  ]
+}

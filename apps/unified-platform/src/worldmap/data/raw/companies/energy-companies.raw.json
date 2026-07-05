@@ -1,0 +1,695 @@
+[
+  {
+    "id": "COMPANY-XOM",
+    "ticker": "XOM",
+    "name": "Exxon Mobil Corporation",
+    "exchange": "NYSE",
+    "gicsSector": "Energy",
+    "gicsIndustryGroup": "Energy",
+    "gicsIndustry": "Oil, Gas & Consumable Fuels",
+    "countryOfIncorporation": "USA",
+    "countryOfHQ": "USA",
+    "marketCapUsdBn": 485.0,
+    "revenueUsdBn": 339.25,
+    "fiscalYear": 2024,
+    "description": "Exxon Mobil Corporation is one of the world's largest publicly traded international energy and petrochemical companies. It operates through Upstream, Product Solutions, and Low Carbon Solutions segments, engaging in the exploration, production, and sale of crude oil, natural gas, and petroleum products.",
+    "businessModel": "ExxonMobil generates revenue primarily through the production and sale of crude oil and natural gas (Upstream) and the manufacturing and sale of refined petroleum products and chemicals (Product Solutions). It is increasingly investing in Low Carbon Solutions like carbon capture and lithium.",
+    "geopoliticalSummary": "ExxonMobil faces significant geopolitical exposure through its global upstream operations, particularly in Guyana and the Permian Basin, and its extensive international refining footprint. Risks include commodity price volatility driven by OPEC+ and regional conflicts, and exposure to evolving global carbon regulations.",
+    "revenueByGeography": [
+      {
+        "region": "United States",
+        "countryIds": ["USA"],
+        "percentOfRevenue": 40.9,
+        "revenueUsdBn": 138.66,
+        "year": 2024,
+        "note": "Exact segment name from filing: 'United States'"
+      },
+      {
+        "region": "Non-U.S. (International)",
+        "countryIds": [],
+        "percentOfRevenue": 59.1,
+        "revenueUsdBn": 200.59,
+        "year": 2024,
+        "note": "Includes major operations in Guyana, Asia, and Europe"
+      }
+    ],
+    "keySuppliers": [
+      {
+        "role": "oilfield services",
+        "name": "SLB",
+        "countryId": "USA",
+        "city": "Houston",
+        "percentOfSupply": null,
+        "isConcentrationRisk": false,
+        "strategicNote": "Major provider of drilling and evaluation services globally."
+      },
+      {
+        "role": "oilfield services",
+        "name": "Halliburton",
+        "countryId": "USA",
+        "city": "Houston",
+        "percentOfSupply": null,
+        "isConcentrationRisk": false,
+        "strategicNote": "Key provider of completion and production services."
+      }
+    ],
+    "keyCustomers": [
+      {
+        "role": "customer",
+        "name": "SK On",
+        "countryId": "KOR",
+        "percentOfRevenue": null,
+        "isConcentrationRisk": false,
+        "strategicNote": "Strategic lithium supply agreement signed in 2024 for EV battery manufacturing."
+      }
+    ],
+    "manufacturingLocations": [
+      {
+        "countryId": "USA",
+        "city": "Baytown",
+        "percentOfCapacity": null,
+        "note": "Major refining and petrochemical complex in Texas."
+      },
+      {
+        "countryId": "GUY",
+        "city": "Stabroek",
+        "percentOfCapacity": null,
+        "note": "Critical offshore production hub in Guyana."
+      }
+    ],
+    "commodityDependencies": [
+      {
+        "commodity": "Crude Oil",
+        "role": "input",
+        "percentOfCOGS": null,
+        "primarySupplyCountries": ["USA", "GUY", "ARE"],
+        "isHedged": false,
+        "geopoliticalRisk": "high",
+        "note": "Exposure to global benchmark price volatility (Brent/WTI)."
+      }
+    ],
+    "regionalExposures": [
+      {
+        "region": "Guyana",
+        "countryIds": ["GUY"],
+        "exposureType": "production",
+        "magnitude": "high",
+        "note": "The Stabroek Block is a cornerstone of future production growth. Verbatim from 10-K: 'Future results of operations could be affected by developments in Guyana.'",
+        "filingRefs": ["Item 1A, Risk Factors"]
+      },
+      {
+        "region": "Middle East",
+        "countryIds": ["ARE", "IRQ"],
+        "exposureType": "production",
+        "magnitude": "medium",
+        "note": "Significant joint ventures and production sharing agreements in the region.",
+        "filingRefs": ["Item 1, Business"]
+      }
+    ],
+    "infrastructureDependencies": [
+      {
+        "type": "trade-route",
+        "entityId": "ROUTE-STRAIT-HORMUZ",
+        "name": "Strait of Hormuz",
+        "importance": "high",
+        "note": "Critical for global oil shipments from Middle East operations."
+      }
+    ],
+    "flags": {
+      "chinaRevenuePct": 0,
+      "chinaManufacturingDependent": false,
+      "russiaExposed": false,
+      "middleEastEnergyDependent": true,
+      "taiwanSemiconductorDependent": false,
+      "redSeaTradeRouteDependent": true,
+      "straitOfHormuzDependent": true,
+      "sanctionsSensitive": true,
+      "exportControlSensitive": false
+    },
+    "latestFilingId": "FILING-XOM-10K-2024",
+    "secCik": "0000034088",
+    "secEdgarUrl": "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0000034088&type=10-K",
+    "attribution": {
+      "sources": [
+        {
+          "name": "Exxon Mobil 10-K FY2024",
+          "url": "https://www.sec.gov/ix?doc=/Archives/edgar/data/34088/000003408825000012/xom-20241231.htm",
+          "type": "filing",
+          "accessedAt": "2026-05-11",
+          "verbatimQuote": "The Corporation’s operations are subject to a variety of risks, including political, social, and economic instability."
+        }
+      ],
+      "confidence": "high",
+      "lastVerified": "2026-05-11",
+      "generatedBy": "ai-assisted"
+    }
+  },
+  {
+    "id": "COMPANY-CVX",
+    "ticker": "CVX",
+    "name": "Chevron Corporation",
+    "exchange": "NYSE",
+    "gicsSector": "Energy",
+    "gicsIndustryGroup": "Energy",
+    "gicsIndustry": "Oil, Gas & Consumable Fuels",
+    "countryOfIncorporation": "USA",
+    "countryOfHQ": "USA",
+    "marketCapUsdBn": 280.0,
+    "revenueUsdBn": 193.4,
+    "fiscalYear": 2024,
+    "description": "Chevron Corporation is a major American multinational energy corporation. One of the successor companies of Standard Oil, it is active in more than 180 countries and is involved in every aspect of the oil, natural gas, and geothermal energy industries.",
+    "businessModel": "Chevron operates through two main segments: Upstream (exploration and production) and Downstream (refining, marketing, and transport). It also has significant interests in chemicals through joint ventures.",
+    "geopoliticalSummary": "Chevron has significant geopolitical exposure through its operations in Kazakhstan, the Middle East, and Venezuela. Its reliance on the Caspian Pipeline Consortium (CPC) creates specific exposure to Russian infrastructure risks.",
+    "revenueByGeography": [
+      {
+        "region": "International",
+        "countryIds": ["KAZ", "AUS", "NGA", "AGO"],
+        "percentOfRevenue": 55.8,
+        "revenueUsdBn": 108.0,
+        "year": 2024,
+        "note": "Includes major production assets in Kazakhstan and Australia."
+      },
+      {
+        "region": "United States",
+        "countryIds": ["USA"],
+        "percentOfRevenue": 44.1,
+        "revenueUsdBn": 85.3,
+        "year": 2024,
+        "note": "Significant presence in the Permian Basin and Gulf of Mexico."
+      }
+    ],
+    "keySuppliers": [
+      {
+        "role": "oilfield services",
+        "name": "Baker Hughes",
+        "countryId": "USA",
+        "city": "Houston",
+        "percentOfSupply": null,
+        "isConcentrationRisk": false,
+        "strategicNote": "Major provider of turbomachinery and subsea equipment."
+      }
+    ],
+    "keyCustomers": [
+      {
+        "role": "partner",
+        "name": "Tengizchevroil",
+        "countryId": "KAZ",
+        "percentOfRevenue": null,
+        "isConcentrationRisk": true,
+        "strategicNote": "Critical 50%-owned affiliate in Kazakhstan."
+      }
+    ],
+    "manufacturingLocations": [
+      {
+        "countryId": "USA",
+        "city": "Pascagoula",
+        "percentOfCapacity": null,
+        "note": "Largest refinery in the Chevron network."
+      }
+    ],
+    "commodityDependencies": [
+      {
+        "commodity": "Natural Gas",
+        "role": "input",
+        "percentOfCOGS": null,
+        "primarySupplyCountries": ["USA", "AUS"],
+        "isHedged": false,
+        "geopoliticalRisk": "medium",
+        "note": "Exposure to regional gas price fluctuations."
+      }
+    ],
+    "regionalExposures": [
+      {
+        "region": "Kazakhstan",
+        "countryIds": ["KAZ"],
+        "exposureType": "production",
+        "magnitude": "high",
+        "note": "Reliance on the CPC pipeline which transits Russia. Verbatim from 10-K: 'Political and economic instability in Kazakhstan or Russia could adversely affect our operations.'",
+        "filingRefs": ["Item 1A, Risk Factors"]
+      }
+    ],
+    "infrastructureDependencies": [
+      {
+        "type": "pipeline",
+        "entityId": "PIPE-CPC",
+        "name": "Caspian Pipeline Consortium",
+        "importance": "critical",
+        "note": "Primary export route for Kazakhstan production, transiting Russia."
+      }
+    ],
+    "flags": {
+      "chinaRevenuePct": 0,
+      "chinaManufacturingDependent": false,
+      "russiaExposed": true,
+      "middleEastEnergyDependent": true,
+      "taiwanSemiconductorDependent": false,
+      "redSeaTradeRouteDependent": true,
+      "straitOfHormuzDependent": true,
+      "sanctionsSensitive": true,
+      "exportControlSensitive": false
+    },
+    "latestFilingId": "FILING-CVX-10K-2024",
+    "secCik": "0000009341",
+    "secEdgarUrl": "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0000009341&type=10-K",
+    "attribution": {
+      "sources": [
+        {
+          "name": "Chevron 10-K FY2024",
+          "url": "https://www.sec.gov/ix?doc=/Archives/edgar/data/9341/000000934125000010/cvx-20241231.htm",
+          "type": "filing",
+          "accessedAt": "2026-05-11",
+          "verbatimQuote": "Our business is subject to geopolitical risks, including potential disruptions to supply and infrastructure."
+        }
+      ],
+      "confidence": "high",
+      "lastVerified": "2026-05-11",
+      "generatedBy": "ai-assisted"
+    }
+  },
+  {
+    "id": "COMPANY-SLB",
+    "ticker": "SLB",
+    "name": "SLB",
+    "exchange": "NYSE",
+    "gicsSector": "Energy",
+    "gicsIndustryGroup": "Energy",
+    "gicsIndustry": "Energy Equipment & Services",
+    "countryOfIncorporation": "CUW",
+    "countryOfHQ": "USA",
+    "marketCapUsdBn": 65.0,
+    "revenueUsdBn": 36.29,
+    "fiscalYear": 2024,
+    "description": "SLB (formerly Schlumberger) is the world's leading provider of technology for reservoir characterization, drilling, production, and processing to the oil and gas industry. It operates in more than 120 countries.",
+    "businessModel": "SLB provides a wide range of oilfield services and technology solutions, earning revenue through service contracts, equipment sales, and digital platform subscriptions (Delfi).",
+    "geopoliticalSummary": "SLB has very high international exposure, with over 80% of revenue coming from outside North America. Key exposures include the Middle East (36% of revenue) and the ongoing transition risks in Europe.",
+    "revenueByGeography": [
+      {
+        "region": "Middle East & Asia",
+        "countryIds": ["SAU", "ARE", "QAT", "CHN"],
+        "percentOfRevenue": 36.0,
+        "revenueUsdBn": 13.03,
+        "year": 2024,
+        "note": "Record revenue driven by high activity in Saudi Arabia and UAE."
+      },
+      {
+        "region": "Europe / CIS / Africa",
+        "countryIds": ["NOR", "GBR", "AGO"],
+        "percentOfRevenue": 27.0,
+        "revenueUsdBn": 9.67,
+        "year": 2024,
+        "note": "Includes significant offshore activity in the North Sea and Africa."
+      },
+      {
+        "region": "North America",
+        "countryIds": ["USA", "CAN"],
+        "percentOfRevenue": 18.0,
+        "revenueUsdBn": 6.68,
+        "year": 2024,
+        "note": "Primarily U.S. land and Gulf of Mexico operations."
+      },
+      {
+        "region": "Latin America",
+        "countryIds": ["BRA", "MEX", "GUY"],
+        "percentOfRevenue": 19.0,
+        "revenueUsdBn": 6.72,
+        "year": 2024,
+        "note": "Strong growth in Guyana and Brazil."
+      }
+    ],
+    "keySuppliers": [
+      {
+        "role": "manufacturer",
+        "name": "Diversified Global Network",
+        "countryId": "USA",
+        "city": "Houston",
+        "percentOfSupply": null,
+        "isConcentrationRisk": false,
+        "strategicNote": "SLB maintains a diversified supply chain for steel, chemicals, and electronics."
+      }
+    ],
+    "keyCustomers": [
+      {
+        "role": "customer",
+        "name": "Saudi Aramco",
+        "countryId": "SAU",
+        "percentOfRevenue": null,
+        "isConcentrationRisk": true,
+        "strategicNote": "Major international customer for integrated drilling and production services."
+      }
+    ],
+    "manufacturingLocations": [
+      {
+        "countryId": "USA",
+        "city": "Houston",
+        "percentOfCapacity": null,
+        "note": "Major technology and manufacturing center."
+      },
+      {
+        "countryId": "FRA",
+        "city": "Clamart",
+        "percentOfCapacity": null,
+        "note": "Key research and engineering hub."
+      }
+    ],
+    "commodityDependencies": [
+      {
+        "commodity": "Steel",
+        "role": "input",
+        "percentOfCOGS": null,
+        "primarySupplyCountries": ["USA", "CHN"],
+        "isHedged": false,
+        "geopoliticalRisk": "medium",
+        "note": "Subject to tariff risks and global price volatility."
+      }
+    ],
+    "regionalExposures": [
+      {
+        "region": "Middle East",
+        "countryIds": ["SAU", "ARE"],
+        "exposureType": "revenue",
+        "magnitude": "high",
+        "note": "Critical reliance on national oil companies (NOCs) for revenue growth. Verbatim from 10-K: 'Our business is affected by the level of upstream investment in the Middle East.'",
+        "filingRefs": ["Item 1A, Risk Factors"]
+      }
+    ],
+    "infrastructureDependencies": [
+      {
+        "type": "digital",
+        "entityId": "CLOUD-AZURE",
+        "name": "Microsoft Azure",
+        "importance": "high",
+        "note": "Primary cloud provider for the Delfi digital platform."
+      }
+    ],
+    "flags": {
+      "chinaRevenuePct": 5,
+      "chinaManufacturingDependent": false,
+      "russiaExposed": false,
+      "middleEastEnergyDependent": true,
+      "taiwanSemiconductorDependent": false,
+      "redSeaTradeRouteDependent": true,
+      "straitOfHormuzDependent": true,
+      "sanctionsSensitive": true,
+      "exportControlSensitive": true
+    },
+    "latestFilingId": "FILING-SLB-10K-2024",
+    "secCik": "0000087347",
+    "secEdgarUrl": "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0000087347&type=10-K",
+    "attribution": {
+      "sources": [
+        {
+          "name": "SLB 10-K FY2024",
+          "url": "https://www.sec.gov/ix?doc=/Archives/edgar/data/87347/000008734725000005/slb-20241231.htm",
+          "type": "filing",
+          "accessedAt": "2026-05-11",
+          "verbatimQuote": "We are subject to risks associated with our international operations, including geopolitical instability and changes in laws."
+        }
+      ],
+      "confidence": "high",
+      "lastVerified": "2026-05-11",
+      "generatedBy": "ai-assisted"
+    }
+  },
+  {
+    "id": "COMPANY-COP",
+    "ticker": "COP",
+    "name": "ConocoPhillips",
+    "exchange": "NYSE",
+    "gicsSector": "Energy",
+    "gicsIndustryGroup": "Energy",
+    "gicsIndustry": "Oil, Gas & Consumable Fuels",
+    "countryOfIncorporation": "USA",
+    "countryOfHQ": "USA",
+    "marketCapUsdBn": 130.0,
+    "revenueUsdBn": 54.7,
+    "fiscalYear": 2024,
+    "description": "ConocoPhillips is one of the world's largest independent exploration and production (E&P) companies based on production and proved reserves. It is focused on exploring for, producing, transporting and marketing crude oil, bitumen, natural gas, LNG and natural gas liquids.",
+    "businessModel": "ConocoPhillips generates revenue by exploring for and producing oil and natural gas globally, with a heavy focus on the United States unconventional plays and international LNG projects.",
+    "geopoliticalSummary": "ConocoPhillips is primarily U.S.-focused (80% revenue) but has critical geopolitical exposure through its LNG projects in Qatar and Australia, and production in Norway and Libya.",
+    "revenueByGeography": [
+      {
+        "region": "United States",
+        "countryIds": ["USA"],
+        "percentOfRevenue": 79.6,
+        "revenueUsdBn": 43.48,
+        "year": 2024,
+        "note": "Primarily Lower 48 and Alaska operations."
+      },
+      {
+        "region": "Canada",
+        "countryIds": ["CAN"],
+        "percentOfRevenue": 6.2,
+        "revenueUsdBn": 3.41,
+        "year": 2024,
+        "note": "Focus on oil sands and unconventional gas."
+      },
+      {
+        "region": "Norway",
+        "countryIds": ["NOR"],
+        "percentOfRevenue": 4.4,
+        "revenueUsdBn": 2.41,
+        "year": 2024,
+        "note": "Significant North Sea production."
+      },
+      {
+        "region": "Other International",
+        "countryIds": ["GBR", "LBY", "CHN", "MYS", "QAT", "AUS"],
+        "percentOfRevenue": 9.8,
+        "revenueUsdBn": 5.4,
+        "year": 2024,
+        "note": "Includes critical LNG interests in Qatar and Australia."
+      }
+    ],
+    "keySuppliers": [
+      {
+        "role": "oilfield services",
+        "name": "Halliburton",
+        "countryId": "USA",
+        "city": "Houston",
+        "percentOfSupply": null,
+        "isConcentrationRisk": false,
+        "strategicNote": "Primary service provider for Permian Basin stimulation."
+      }
+    ],
+    "keyCustomers": [
+      {
+        "role": "partner",
+        "name": "QatarEnergy",
+        "countryId": "QAT",
+        "percentOfRevenue": null,
+        "isConcentrationRisk": false,
+        "strategicNote": "Strategic partner for North Field East and South LNG projects."
+      }
+    ],
+    "manufacturingLocations": [
+      {
+        "countryId": "USA",
+        "city": "Houston",
+        "percentOfCapacity": null,
+        "note": "Global headquarters and operational center."
+      }
+    ],
+    "commodityDependencies": [
+      {
+        "commodity": "Crude Oil",
+        "role": "input",
+        "percentOfCOGS": null,
+        "primarySupplyCountries": ["USA", "NOR", "LBY"],
+        "isHedged": false,
+        "geopoliticalRisk": "high",
+        "note": "Highly sensitive to WTI and Brent price volatility."
+      }
+    ],
+    "regionalExposures": [
+      {
+        "region": "Middle East",
+        "countryIds": ["QAT", "LBY"],
+        "exposureType": "production",
+        "magnitude": "medium",
+        "note": "Libya production is subject to frequent disruptions due to civil unrest. Verbatim from 10-K: 'Our operations in Libya are subject to risks of political instability and security threats.'",
+        "filingRefs": ["Item 1A, Risk Factors"]
+      }
+    ],
+    "infrastructureDependencies": [
+      {
+        "type": "trade-route",
+        "entityId": "ROUTE-STRAIT-HORMUZ",
+        "name": "Strait of Hormuz",
+        "importance": "high",
+        "note": "Critical for LNG exports from Qatar joint ventures."
+      }
+    ],
+    "flags": {
+      "chinaRevenuePct": 1.7,
+      "chinaManufacturingDependent": false,
+      "russiaExposed": false,
+      "middleEastEnergyDependent": true,
+      "taiwanSemiconductorDependent": false,
+      "redSeaTradeRouteDependent": true,
+      "straitOfHormuzDependent": true,
+      "sanctionsSensitive": true,
+      "exportControlSensitive": false
+    },
+    "latestFilingId": "FILING-COP-10K-2024",
+    "secCik": "0001163165",
+    "secEdgarUrl": "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0001163165&type=10-K",
+    "attribution": {
+      "sources": [
+        {
+          "name": "ConocoPhillips 10-K FY2024",
+          "url": "https://www.sec.gov/ix?doc=/Archives/edgar/data/1163165/000116316525000008/cop-20241231.htm",
+          "type": "filing",
+          "accessedAt": "2026-05-11",
+          "verbatimQuote": "The market prices of crude oil, bitumen, natural gas, LNG and natural gas liquids are volatile and may affect our financial results."
+        }
+      ],
+      "confidence": "high",
+      "lastVerified": "2026-05-11",
+      "generatedBy": "ai-assisted"
+    }
+  },
+  {
+    "id": "COMPANY-HAL",
+    "ticker": "HAL",
+    "name": "Halliburton Company",
+    "exchange": "NYSE",
+    "gicsSector": "Energy",
+    "gicsIndustryGroup": "Energy",
+    "gicsIndustry": "Energy Equipment & Services",
+    "countryOfIncorporation": "USA",
+    "countryOfHQ": "USA",
+    "marketCapUsdBn": 32.0,
+    "revenueUsdBn": 22.94,
+    "fiscalYear": 2024,
+    "description": "Halliburton Company is one of the world's largest providers of products and services to the energy industry. It helps its customers maximize value throughout the lifecycle of the reservoir.",
+    "businessModel": "Halliburton operates in two segments: Completion and Production, and Drilling and Evaluation. Revenue is generated from providing services and products to oil and gas exploration and production companies.",
+    "geopoliticalSummary": "Halliburton has balanced exposure between North America (42%) and international markets. Significant risks include currency devaluations in Argentina and Egypt, and cybersecurity threats following a major 2024 incident.",
+    "revenueByGeography": [
+      {
+        "region": "North America",
+        "countryIds": ["USA", "CAN"],
+        "percentOfRevenue": 42.0,
+        "revenueUsdBn": 9.63,
+        "year": 2024,
+        "note": "Decline in 2024 due to lower U.S. land stimulation activity."
+      },
+      {
+        "region": "Middle East / Asia",
+        "countryIds": ["SAU", "ARE", "KWT", "IRQ", "CHN"],
+        "percentOfRevenue": 27.0,
+        "revenueUsdBn": 6.1,
+        "year": 2024,
+        "note": "Strong growth in the Middle East, particularly Saudi Arabia."
+      },
+      {
+        "region": "Latin America",
+        "countryIds": ["BRA", "ARG", "MEX", "GUY"],
+        "percentOfRevenue": 18.0,
+        "revenueUsdBn": 4.21,
+        "year": 2024,
+        "note": "Exposed to currency volatility in Argentina."
+      },
+      {
+        "region": "Europe / Africa / CIS",
+        "countryIds": ["NOR", "AGO", "NGA", "EGY"],
+        "percentOfRevenue": 13.0,
+        "revenueUsdBn": 3.0,
+        "year": 2024,
+        "note": "Exposed to currency volatility in Egypt."
+      }
+    ],
+    "keySuppliers": [
+      {
+        "role": "supplier",
+        "name": "U.S. Silica",
+        "countryId": "USA",
+        "city": "Katy",
+        "percentOfSupply": null,
+        "isConcentrationRisk": false,
+        "strategicNote": "Major provider of proppant (sand) for hydraulic fracturing."
+      }
+    ],
+    "keyCustomers": [
+      {
+        "role": "customer",
+        "name": "ExxonMobil",
+        "countryId": "USA",
+        "percentOfRevenue": null,
+        "isConcentrationRisk": false,
+        "strategicNote": "Key customer for global completion and production services."
+      }
+    ],
+    "manufacturingLocations": [
+      {
+        "countryId": "USA",
+        "city": "Duncan",
+        "percentOfCapacity": null,
+        "note": "Major manufacturing facility for oilfield equipment."
+      },
+      {
+        "countryId": "SGP",
+        "city": "Singapore",
+        "percentOfCapacity": null,
+        "note": "Key manufacturing and distribution hub for the Eastern Hemisphere."
+      }
+    ],
+    "commodityDependencies": [
+      {
+        "commodity": "Proppant (Sand)",
+        "role": "input",
+        "percentOfCOGS": null,
+        "primarySupplyCountries": ["USA"],
+        "isHedged": false,
+        "geopoliticalRisk": "low",
+        "note": "Critical for stimulation services; subject to logistics and supply availability."
+      }
+    ],
+    "regionalExposures": [
+      {
+        "region": "Latin America",
+        "countryIds": ["ARG"],
+        "exposureType": "currency",
+        "magnitude": "medium",
+        "note": "Subject to significant impacts from Argentine peso devaluation. Verbatim from 10-K: 'Currency devaluations in Argentina had an adverse impact on our financial results.'",
+        "filingRefs": ["Item 1A, Risk Factors"]
+      }
+    ],
+    "infrastructureDependencies": [
+      {
+        "type": "digital",
+        "entityId": "IT-INFRASTRUCTURE",
+        "name": "Internal Global IT Network",
+        "importance": "critical",
+        "note": "Subject to cybersecurity risks following the 2024 incident."
+      }
+    ],
+    "flags": {
+      "chinaRevenuePct": 5,
+      "chinaManufacturingDependent": false,
+      "russiaExposed": false,
+      "middleEastEnergyDependent": true,
+      "taiwanSemiconductorDependent": false,
+      "redSeaTradeRouteDependent": true,
+      "straitOfHormuzDependent": true,
+      "sanctionsSensitive": true,
+      "exportControlSensitive": false
+    },
+    "latestFilingId": "FILING-HAL-10K-2024",
+    "secCik": "0000044910",
+    "secEdgarUrl": "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0000044910&type=10-K",
+    "attribution": {
+      "sources": [
+        {
+          "name": "Halliburton 10-K FY2024",
+          "url": "https://www.sec.gov/ix?doc=/Archives/edgar/data/44910/000004491025000007/hal-20241231.htm",
+          "type": "filing",
+          "accessedAt": "2026-05-11",
+          "verbatimQuote": "Geopolitical instability, including war, civil unrest, and trade tensions, can disrupt our operations."
+        }
+      ],
+      "confidence": "high",
+      "lastVerified": "2026-05-11",
+      "generatedBy": "ai-assisted"
+    }
+  }
+]

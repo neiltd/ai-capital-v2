@@ -1,0 +1,65 @@
+{
+  "id": "MUS",
+  "iso2": "MU",
+  "name": "Mauritius",
+  "region": "Africa",
+  "subregion": "Eastern Africa",
+  "capital": "Port Louis",
+  "lastUpdated": "2025-05-15",
+  "summary": "Mauritius is a premier upper-middle-income island nation in the Indian Ocean, widely recognized for its robust democratic institutions, economic freedom, and high human development. Historically dependent on sugar, the country has successfully diversified into textiles, luxury tourism, financial services, and Information and Communication Technology (ICT). Mauritius serves as a strategic financial hub and a gateway for investment between Africa, Asia, and the West. Under the leadership of Prime Minister Pravind Jugnauth, the government is focused on further digital transformation, renewable energy, and consolidating its position as a world-class jurisdiction for international business. Despite its success, Mauritius faces challenges from climate change, rising labor costs, and the need to maintain its competitive edge in a rapidly evolving global regulatory environment.",
+  "indicators": {
+    "politicalStability":       { "score": 9, "trend": "stable", "confidence": "high", "note": "Consolidated democracy with a long history of peaceful transitions and strong rule of law." },
+    "economicDirection":        { "score": 7, "trend": "stable", "confidence": "high", "note": "High-performing economy; successful diversification and resilience following the pandemic." },
+    "investmentAttractiveness": { "score": 9, "trend": "stable", "confidence": "high", "note": "Top-ranked in Africa for ease of doing business; favorable tax regime and strong legal protections." },
+    "geopoliticalRisk":         { "score": 2, "trend": "stable", "confidence": "high", "note": "Low risk; strategic position managed through proactive diplomacy and regional leadership." },
+    "educationQuality":         { "score": 7, "trend": "stable", "confidence": "high", "note": "High quality of education; focus on high-tech and specialized skills to support the service economy." },
+    "healthcareQuality":        { "score": 7, "trend": "stable", "confidence": "high", "note": "Well-developed public and private healthcare systems; high life expectancy." },
+    "technologyInvestment":     { "score": 8, "trend": "rising", "confidence": "high", "note": "Advanced digital infrastructure; positioning as a regional hub for fintech and AI." }
+  },
+  "demographics": {
+    "population": 1300000,
+    "medianAge": 35.3,
+    "urbanizationRate": 40.8,
+    "majorEthnicGroups": ["Indo-Mauritian", "Creole", "Sino-Mauritian", "Franco-Mauritian"],
+    "religions": [
+      { "name": "Hindu", "percent": 48.5 },
+      { "name": "Christian (Catholic/Other)", "percent": 32.7 },
+      { "name": "Muslim", "percent": 17.3 },
+      { "name": "Other", "percent": 1.5 }
+    ]
+  },
+  "alliances": ["African Union", "SADC", "COMESA", "Indian Ocean Commission", "Commonwealth", "OIF"],
+  "relationships": [
+    { "countryId": "IND", "countryName": "India", "type": "strategic_partner", "sentiment": "positive", "summary": "Deepest cultural, economic, and security partner; India provides significant infrastructure and defense support." },
+    { "countryId": "FRA", "countryName": "France", "type": "strategic_partner", "sentiment": "positive", "summary": "Key trade partner and source of tourists; strong ties via Reunion Island and the OIF." },
+    { "countryId": "CHN", "countryName": "China", "type": "economic_partner", "sentiment": "positive", "summary": "Significant partner in infrastructure and first African nation to sign a Free Trade Agreement (FTA) with China." },
+    { "countryId": "GBR", "countryName": "United Kingdom", "type": "historical_partner", "sentiment": "neutral", "summary": "Strong historical and economic ties; relationship complicated by the Chagos Archipelago sovereignty dispute." }
+  ],
+  "perspectives": [
+    { "source": "Port Louis Fintech Founder", "bias": "Optimistic", "view": "Mauritius is the perfect laboratory for African innovation; we have the talent, the regulation, and the connectivity." },
+    { "source": "Tourism Executive", "bias": "Pragmatic", "view": "We are a high-end destination, but we must adapt to the new digital nomad trends and prioritize sustainability." },
+    { "source": "Sugar Industry Representative", "bias": "Vulnerable", "view": "Sugar is still part of our DNA, but we need to pivot toward high-value bio-products to remain viable." },
+    { "source": "Civil Society Leader", "bias": "Reformist", "view": "Our economic success must be matched by a commitment to environmental protection and social equity." }
+  ],
+  "historicalContext": {
+    "summary": "Uninhabited until the 16th century, Mauritius was colonized by the Dutch, French, and finally the British. It gained independence in 1968. Unlike many post-colonial nations, it successfully transitioned from a mono-crop economy to a diverse, sophisticated service-oriented economy while maintaining a vibrant multi-party democracy.",
+    "keyEvents": [
+      { "year": 1968, "event": "Independence from the United Kingdom; Sir Seewoosagur Ramgoolam becomes first PM." },
+      { "year": 1992, "event": "Mauritius becomes a Republic within the Commonwealth." },
+      { "year": 2000, "event": "Expansion of the 'Cyber City' marks the push into the ICT sector." },
+      { "year": 2020, "event": "Wakashio oil spill causes an environmental emergency, testing national resilience." },
+      { "year": 2021, "event": "Free Trade Agreement with China enters into force, a first for Africa." },
+      { "year": 2024, "event": "Historic agreement reached between the UK and Mauritius regarding the sovereignty of the Chagos Archipelago." }
+    ]
+  },
+  "investmentNotes": {
+    "strengths": ["Top-tier international financial center and business-friendly environment", "Highly educated, multilingual, and skilled workforce", "Stable political climate and strong protection of property rights", "Strategic trade hub with multiple FTAs (India, China, EU, Africa)"],
+    "risks": ["Vulnerability to climate change and rising sea levels", "High labor costs compared to regional peers", "Exposure to global financial regulatory changes", "Dependence on external markets for tourism and exports"],
+    "sectors": ["Financial Services & Fintech", "ICT & Business Process Outsourcing", "Luxury Tourism & Real Estate", "Blue Economy & Renewable Energy"]
+  },
+  "sources": [
+    { "name": "Bank of Mauritius", "url": "https://www.bom.mu/", "type": "economic" },
+    { "name": "Statistics Mauritius", "url": "https://statsmauritius.govmu.org/", "type": "demographic" },
+    { "name": "Economic Development Board Mauritius", "url": "https://www.edbmauritius.org/", "type": "investment" }
+  ]
+}

@@ -1,0 +1,30 @@
+[
+  {
+    "countryId": "RUS",
+    "year": 2023,
+    "aiReadinessScore": 62.92,
+    "aiAdoptionScore": 21.99,
+    "aiTalentScore": 12.46,
+    "aiInvestmentUsdM": 3400,
+    "aiStartupCount": 137,
+    "aiUnicornCount": 0,
+    "hasNationalAiStrategy": true,
+    "aiStrategyYear": 2019,
+    "aiPolicyScore": 90.40,
+    "cloudReadinessPct": null,
+    "broadbandPenetrationPct": 25.8,
+    "topAiSectors": ["Finance", "Defense", "Energy", "Agriculture", "Public Services"],
+    "attribution": {
+      "sources": [
+        { "name": "Oxford Insights Government AI Readiness Index 2023", "url": "https://oxfordinsights.com/ai-readiness/ai-readiness-index/", "accessedAt": "2025-05-14" },
+        { "name": "Tortoise Media Global AI Index 2023", "url": "https://www.tortoisemedia.com/intelligence/global-ai/", "accessedAt": "2025-05-14" },
+        { "name": "Russia AI Market Report 2023", "url": "https://interfax.com", "accessedAt": "2025-05-14" }
+      ],
+      "confidence": {
+        "confidence": "medium",
+        "sourceCount": 3,
+        "lastVerified": "2025-05-14"
+      }
+    }
+  }
+]

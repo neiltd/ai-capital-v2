@@ -1,0 +1,219 @@
+[
+  {
+    "id": "RAIL-THA-BANGKOK-APHIWAT",
+    "name": "Krung Thep Aphiwat Central Terminal",
+    "countryId": "THA",
+    "city": "Bangkok",
+    "coordinates": [100.54, 13.80],
+    "type": "high_speed",
+    "dailyPassengers": 200000,
+    "annualFreightTonnes": null,
+    "connectedCountries": ["LAO", "MYS"],
+    "gaugeType": "mixed",
+    "lineCount": 26,
+    "strategicImportance": "high",
+    "isPartOfBRI": true,
+    "geopoliticalNotes": "Southeast Asia's largest railway station. The primary terminus for the China-Thailand High-Speed Railway, connecting Bangkok to Kunming via Vientiane.",
+    "notes": "Replaced Hua Lamphong as the national rail hub; central to the Pan-Asian Railway network.",
+    "attribution": {
+      "sources": [
+        { "name": "State Railway of Thailand (SRT)", "url": "https://www.railway.co.th/", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 2,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  },
+  {
+    "id": "RAIL-THA-NONG-KHAI-BORDER",
+    "name": "Nong Khai Railway Station",
+    "countryId": "THA",
+    "city": "Nong Khai",
+    "coordinates": [102.73, 17.86],
+    "type": "border_crossing",
+    "dailyPassengers": 3000,
+    "annualFreightTonnes": 3000000,
+    "connectedCountries": ["LAO"],
+    "gaugeType": "mixed",
+    "lineCount": 6,
+    "strategicImportance": "high",
+    "isPartOfBRI": true,
+    "geopoliticalNotes": "The 'Golden Link' of the BRI in Thailand. Direct connection to the China-Laos Railway, facilitating rapid land trade between ASEAN and China.",
+    "notes": "Handles significant transshipment from standard gauge (Lao/China) to meter gauge (Thai).",
+    "attribution": {
+      "sources": [
+        { "name": "Global Times - China-Thailand Railway News", "url": "https://www.globaltimes.cn/", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 2,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  },
+  {
+    "id": "RAIL-THA-LAEM-CHABANG-PORT",
+    "name": "Laem Chabang Port Rail Terminal",
+    "countryId": "THA",
+    "city": "Chonburi",
+    "coordinates": [100.89, 13.07],
+    "type": "port_interface",
+    "dailyPassengers": null,
+    "annualFreightTonnes": 10000000,
+    "connectedCountries": [],
+    "gaugeType": "narrow",
+    "lineCount": 10,
+    "strategicImportance": "high",
+    "isPartOfBRI": true,
+    "geopoliticalNotes": "Thailand's main deep-sea port and a key component of the Eastern Economic Corridor (EEC). Integrates with the BRI's 21st Century Maritime Silk Road.",
+    "notes": "Includes the Single Rail Transfer Operator (SRTO) facility for efficient container logistics.",
+    "attribution": {
+      "sources": [
+        { "name": "Laem Chabang Port Authority", "url": "https://www.laemchabangport.com/", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 1,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  },
+  {
+    "id": "RAIL-THA-HAT-YAI-JUNCTION",
+    "name": "Hat Yai Junction",
+    "countryId": "THA",
+    "city": "Hat Yai",
+    "coordinates": [100.47, 7.00],
+    "type": "mixed",
+    "dailyPassengers": 12000,
+    "annualFreightTonnes": 500000,
+    "connectedCountries": ["MYS"],
+    "gaugeType": "narrow",
+    "lineCount": 8,
+    "strategicImportance": "high",
+    "isPartOfBRI": true,
+    "geopoliticalNotes": "Southern Thailand's most important hub. Critical node in the Singapore-Kunming Rail Link (SKRL) and terminus for the ASEAN Express cargo service.",
+    "notes": "Connects the Thai network to the Malaysian (KTMB) system at Padang Besar.",
+    "attribution": {
+      "sources": [
+        { "name": "State Railway of Thailand Southern Division", "url": "https://www.railway.co.th/", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 1,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  },
+  {
+    "id": "RAIL-THA-NAKHON-RATCHASIMA-HUB",
+    "name": "Nakhon Ratchasima (Khorat) Station",
+    "countryId": "THA",
+    "city": "Nakhon Ratchasima",
+    "coordinates": [102.08, 14.97],
+    "type": "mixed",
+    "dailyPassengers": 3500,
+    "annualFreightTonnes": 1200000,
+    "connectedCountries": [],
+    "gaugeType": "narrow",
+    "lineCount": 6,
+    "strategicImportance": "high",
+    "isPartOfBRI": true,
+    "geopoliticalNotes": "The 'Gateway to the Northeast'. Terminus for Phase 1 of the China-Thailand High-Speed Railway. Major junction for lines to Nong Khai and Ubon Ratchathani.",
+    "notes": "Undergoing massive redevelopment to accommodate high-speed rail operations.",
+    "attribution": {
+      "sources": [
+        { "name": "Bangkok Post - EEC and Rail Updates", "url": "https://www.bangkokpost.com/", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 2,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  },
+  {
+    "id": "RAIL-THA-KAENG-KHOI-JUNCTION",
+    "name": "Kaeng Khoi Junction",
+    "countryId": "THA",
+    "city": "Saraburi",
+    "coordinates": [100.99, 14.59],
+    "type": "mixed",
+    "dailyPassengers": 1500,
+    "annualFreightTonnes": 4000000,
+    "connectedCountries": [],
+    "gaugeType": "narrow",
+    "lineCount": 6,
+    "strategicImportance": "medium",
+    "isPartOfBRI": true,
+    "geopoliticalNotes": "Strategic junction where the Northern, Northeastern, and Eastern Seaboard lines converge. Critical for bypass freight routing.",
+    "notes": "Heavy industrial rail traffic due to nearby cement and manufacturing plants.",
+    "attribution": {
+      "sources": [
+        { "name": "SRT Freight Department", "url": "https://www.railway.co.th/", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "medium",
+        "sourceCount": 1,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  },
+  {
+    "id": "RAIL-THA-CHACHOENGSAO-JUNCTION",
+    "name": "Chachoengsao Junction",
+    "countryId": "THA",
+    "city": "Chachoengsao",
+    "coordinates": [101.07, 13.69],
+    "type": "mixed",
+    "dailyPassengers": 8000,
+    "annualFreightTonnes": 5000000,
+    "connectedCountries": ["KHM"],
+    "gaugeType": "narrow",
+    "lineCount": 5,
+    "strategicImportance": "medium",
+    "isPartOfBRI": true,
+    "geopoliticalNotes": "Major junction for the Eastern Seaboard and the line to Aranyaprathet (Cambodia border). Key node in the EEC logistics network.",
+    "notes": "Vital for commuters and freight moving between Bangkok and the industrial east.",
+    "attribution": {
+      "sources": [
+        { "name": "EEC Development Board", "url": "https://www.eeco.or.th/", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "medium",
+        "sourceCount": 1,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  },
+  {
+    "id": "RAIL-THA-PADANG-BESAR-BORDER",
+    "name": "Padang Besar Railway Station",
+    "countryId": "THA",
+    "city": "Padang Besar",
+    "coordinates": [100.32, 6.66],
+    "type": "border_crossing",
+    "dailyPassengers": 2000,
+    "annualFreightTonnes": 1000000,
+    "connectedCountries": ["MYS"],
+    "gaugeType": "narrow",
+    "lineCount": 4,
+    "strategicImportance": "high",
+    "isPartOfBRI": true,
+    "geopoliticalNotes": "The primary rail border crossing between Thailand and Malaysia. Facilitates the ASEAN Express cargo service from Chongqing to Kuala Lumpur.",
+    "notes": "Co-located customs and immigration for both countries within the station complex.",
+    "attribution": {
+      "sources": [
+        { "name": "State Railway of Thailand (SRT)", "url": "https://www.railway.co.th/", "accessedAt": "2026-05-10" },
+        { "name": "KTMB (Malaysian Railways)", "url": "https://www.ktmb.com.my/", "accessedAt": "2026-05-10" }
+      ],
+      "confidence": {
+        "confidence": "high",
+        "sourceCount": 2,
+        "lastVerified": "2026-05-10"
+      }
+    }
+  }
+]

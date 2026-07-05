@@ -1,0 +1,62 @@
+{
+  "id": "LTU",
+  "iso2": "LT",
+  "name": "Lithuania",
+  "region": "Europe",
+  "subregion": "Northern Europe",
+  "capital": "Vilnius",
+  "lastUpdated": "2025-05-20",
+  "summary": "Lithuania is a proactive member of NATO and the EU, positioned on the critical Suwalki Gap between Belarus and Russia's Kaliningrad. In 2024-2025, the country has transitioned to a 'Total Defence' model, aiming for significant increases in defense spending and hosting a permanent German brigade. Security concerns are dominated by Russian sabotage, Chinese espionage, and the threat of large-scale conflict, leading to a focus on national resilience and energy independence.",
+  "indicators": {
+    "politicalStability":       { "score": 8, "trend": "stable", "confidence": "high", "note": "High political consensus on defense and foreign policy; resilient democratic institutions." },
+    "economicDirection":        { "score": 7, "trend": "improving", "confidence": "high", "note": "Resilient economy with strong growth in high-tech sectors; energy independence from Russia fully achieved." },
+    "investmentAttractiveness": { "score": 8, "trend": "stable", "confidence": "high", "note": "Leader in fintech and laser technology; attractive business climate despite geopolitical concerns." },
+    "geopoliticalRisk":         { "score": 8, "trend": "increasing", "confidence": "high", "note": "Frontline state vulnerable to the Suwalki Gap scenario; target of intense Russian/Belarusian hybrid operations." },
+    "educationQuality":         { "score": 7, "trend": "stable", "confidence": "high", "note": "High tertiary education rate; strong focus on STEM and vocational training for the tech sector." },
+    "healthcareQuality":        { "score": 6, "trend": "stable", "confidence": "medium", "note": "Comprehensive system undergoing modernization; facing challenges with rural access and medical staff retention." },
+    "technologyInvestment":     { "score": 9, "trend": "improving", "confidence": "high", "note": "Global leader in laser tech and a top European fintech hub; aggressive investment in cyber defense." }
+  },
+  "demographics": {
+    "population": 2692798,
+    "medianAge": 42.3,
+    "urbanizationRate": 68.5,
+    "majorEthnicGroups": ["Lithuanian", "Polish", "Russian"],
+    "religions": [
+      { "name": "Roman Catholic", "percent": 77.0 },
+      { "name": "Orthodox", "percent": 4.0 }
+    ]
+  },
+  "alliances": ["NATO", "European Union", "OECD", "Three Seas Initiative"],
+  "relationships": [
+    { "countryId": "DEU", "countryName": "Germany", "type": "strategic_partner", "sentiment": "positive", "summary": "Crucial security partner; hosting a permanent German brigade starting in 2024/2025 to bolster NATO's eastern flank." },
+    { "countryId": "POL", "countryName": "Poland", "type": "strategic_partner", "sentiment": "positive", "summary": "Key regional ally; joint focus on defending the Suwalki Gap and infrastructure connectivity." },
+    { "countryId": "TWN", "countryName": "Taiwan", "type": "economic_partner", "sentiment": "positive", "summary": "Unusually strong relationship for an EU state; focus on semiconductor cooperation despite retaliation from China." },
+    { "countryId": "CHN", "countryName": "China", "type": "adversary", "sentiment": "negative", "summary": "Hostile relations following Lithuania's engagement with Taiwan; target of Chinese economic coercion and espionage." }
+  ],
+  "perspectives": [
+    { "source": "Lithuanian Defense Analyst", "bias": "Hawkish", "view": "Russia is an existential threat that understands only strength; the permanent German presence is the ultimate deterrent." },
+    { "source": "Fintech Founder", "bias": "Optimistic", "view": "Lithuania is the best place in Europe to scale a financial tech company; our regulatory environment is second to none." },
+    { "source": "Border Security Officer", "bias": "Vigilant", "view": "The border with Belarus is a constant flashpoint for hybrid provocations; we must be ready for anything from migration surges to sabotage." }
+  ],
+  "historicalContext": {
+    "summary": "Lithuania was a major European power in the middle ages, was later part of the Russian Empire, and declared independence in 1918. It was the first Soviet republic to declare independence in 1990, leading the way for the USSR's dissolution.",
+    "keyEvents": [
+      { "year": 1918, "event": "Declaration of Independence from the Russian Empire." },
+      { "year": 1940, "event": "Soviet occupation followed by Nazi occupation in 1941." },
+      { "year": 1990, "event": "First Soviet republic to declare restoration of independence." },
+      { "year": 2004, "event": "Joined the European Union and NATO." },
+      { "year": 2015, "event": "Adoption of the Euro." },
+      { "year": 2024, "event": "Transition to a 'Total Defence' model and deployment of the German Brigade." }
+    ]
+  },
+  "investmentNotes": {
+    "strengths": ["Global hub for Fintech and Laser technologies", "High-speed internet and advanced digital infrastructure", "Stable and transparent legal system (EU standards)", "Strong commitment to energy and cyber security"],
+    "risks": ["Proximity to the Suwalki Gap and Kaliningrad creates high geopolitical risk", "Shrinking population and labor shortages in certain sectors", "Vulnerability to economic coercion from non-Western powers (e.g., China)"],
+    "sectors": ["Financial Technology (Fintech)", "Laser & Biotechnology", "Cybersecurity Services", "Renewable Energy (Offshore Wind)"]
+  },
+  "sources": [
+    { "name": "Lithuanian State Security Department (VSD)", "url": "https://www.vsd.lt/en/", "type": "security" },
+    { "name": "Invest Lithuania", "url": "https://investlithuania.com/", "type": "economic" },
+    { "name": "Ministry of National Defence of Lithuania", "url": "https://kam.lt/en/", "type": "government" }
+  ]
+}
