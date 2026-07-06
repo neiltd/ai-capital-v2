@@ -4,6 +4,8 @@
 //   npm run pipeline -- newsapi       → single source by name
 //   npm run pipeline -- newsapi acled → multiple specific sources
 
+import { existsSync, readFileSync, writeFileSync, mkdirSync } from 'fs';
+import { join, dirname } from 'path';
 import { QuotaTracker } from './quota/quota-tracker.ts';
 import type { SourceClient } from './ingestion/clients/base.client.ts';
 import { SOURCE_NAMES, createClient } from './lib/sources-config.ts';
@@ -11,6 +13,53 @@ import { runPipeline, buildSourceVersions } from './ingestion/pipelines/pipeline
 import { runAllExports } from './exports/exporter.ts';
 import { writeRunManifest, writeExportManifest } from './lib/manifest.ts';
 import { logger } from './lib/logger.ts';
+
+// A source can be individually "failed" this run yet still look like a clean
+// pipeline overall (anyOk gates the exit code, deliberately — see below).
+// That's how ACLED being 403-broken for 9 days went unnoticed: it never
+// showed up anywhere the briefing/user actually looks. This sends one LINE
+// ping per day (not per run) when any source has gone stale beyond its
+// configured maxStalenessHours, so a dead source stays visible without
+// making one flaky feed take down the whole pipeline.
+async function alertOnStaleSourcesOnce(quota: QuotaTracker): Promise<void> {
+  const staleSources = SOURCE_NAMES.filter(name => quota.isStale(name));
+  if (staleSources.length === 0) return;
+
+  const marker = join(process.cwd(), 'quota', `stale-alerted-${new Date().toISOString().slice(0, 10)}.json`);
+  if (existsSync(marker)) return;
+
+  const lineEnvPath = join(process.cwd(), '..', 'scenario-simulator', '.env');
+  if (!existsSync(lineEnvPath)) {
+    logger.warn('run', `Stale sources: ${staleSources.join(', ')} — no LINE env found to alert`);
+    return;
+  }
+  const env: Record<string, string> = {};
+  for (const line of readFileSync(lineEnvPath, 'utf-8').split('\n')) {
+    const m = line.match(/^([A-Z_]+)=(.*)$/);
+    if (m) env[m[1]] = m[2];
+  }
+  const token = env.LINE_CHANNEL_ACCESS_TOKEN;
+  const userId = env.LINE_USER_ID;
+  if (!token || !userId) {
+    logger.warn('run', `Stale sources: ${staleSources.join(', ')} — LINE creds missing`);
+    return;
+  }
+
+  const text = `⚠️ World-intel: ${staleSources.join(', ')} ${staleSources.length === 1 ? 'has' : 'have'} had no successful fetch in longer than expected. Geopolitical coverage may be silently degraded.`;
+  try {
+    const res = await fetch('https://api.line.me/v2/bot/message/push', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${token}` },
+      body: JSON.stringify({ to: userId, messages: [{ type: 'text', text }] }),
+    });
+    if (!res.ok) logger.warn('run', `Stale-source LINE alert failed: ${res.status} ${await res.text()}`);
+  } catch (err) {
+    logger.warn('run', `Stale-source LINE alert error: ${(err as Error).message}`);
+  }
+
+  mkdirSync(dirname(marker), { recursive: true });
+  writeFileSync(marker, JSON.stringify({ staleSources, alertedAt: new Date().toISOString() }, null, 2));
+}
 
 // NewsAPI removed — GDELT covers the same geopolitical queries (free, unlimited).
 // NewsAPI quota is reserved exclusively for capital-intelligence-ingestion (company news).
@@ -66,6 +115,8 @@ async function main(): Promise<void> {
 
   // Write run record
   writeRunManifest(manifest);
+
+  await alertOnStaleSourcesOnce(quota);
 
   // Exit summary
   const { sources } = manifest;

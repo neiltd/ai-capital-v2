@@ -7,9 +7,20 @@
 
 import 'dotenv/config'
 import { join } from 'path'
-import { writeFileSync, mkdirSync, existsSync } from 'fs'
+import { writeFileSync, renameSync, mkdirSync, existsSync } from 'fs'
 import Database from 'better-sqlite3'
 import { formatReport } from './risk-report.js'
+
+// Writes to a temp file then renames into place. A same-filesystem rename is
+// atomic and doesn't require the destination inode to already be in a good
+// state — this sidesteps the EDEADLK errors direct writeFileSync hit against
+// risk.json/report.md (leftover iCloud dataless-file state from before the
+// repo moved to Projects.nosync).
+function writeFileAtomic(path: string, data: string): void {
+  const tmpPath = `${path}.tmp.${process.pid}`
+  writeFileSync(tmpPath, data, 'utf-8')
+  renameSync(tmpPath, path)
+}
 
 interface Position {
   ticker:       string
@@ -229,8 +240,8 @@ async function run() {
   }
 
   mkdirSync(join(process.cwd(), 'risk'), { recursive: true })
-  writeFileSync(JSON_PATH, JSON.stringify(payload, null, 2), 'utf-8')
-  writeFileSync(REPORT_PATH, formatReport(payload), 'utf-8')
+  writeFileAtomic(JSON_PATH, JSON.stringify(payload, null, 2))
+  writeFileAtomic(REPORT_PATH, formatReport(payload))
 
   console.log(`\nReport: ${REPORT_PATH}`)
   console.log(`JSON:   ${JSON_PATH}`)

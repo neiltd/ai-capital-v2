@@ -10,6 +10,8 @@ import { readSimulation } from '@/lib/data'
 import { PageHeader, MetaDot, SectionTitle } from '@/components/capital/ui/PageHeader'
 import { StatCard } from '@/components/capital/ui/StatCard'
 import { EmptyState } from '@/components/capital/ui/EmptyState'
+import { RefreshPricesButton } from '@/components/capital/RefreshPricesButton'
+import { isMarketOpen } from '@/lib/market-hours'
 
 /** Convert a position's value/cost/pnl into USD using the supplied THB→USD rate. */
 function inUsd(value: number, currency: PortfolioPosition['currency'], usdThb: number | null): number {
@@ -104,6 +106,7 @@ export default async function PortfolioPage() {
             )}
           </>
         }
+        actions={<RefreshPricesButton marketOpen={isMarketOpen()} />}
       />
 
       {positions.length > 0 && (

@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<!--
+  LaunchAgent for the hot-ticker alerter (scenario-simulator's cli-alerts.ts).
+  This feature had no scheduler at all from ~2026-06-06 until this file —
+  the ROADMAP/SYSTEM-STATE docs described a "cron every 30 min" that was
+  never actually added to the crontab.
+
+  Runs every 30 min across the same three market windows (PT local) that
+  scripts/refresh-prices.sh used: US 9:30-4pm ET, Thai SET morning + afternoon.
+  Uses launchd (not cron) so it inherits the logged-in user's TCC grants
+  instead of hitting "Operation not permitted" on files under ~/Desktop.
+
+  Install (one-time):
+    cp daily-alerts.plist ~/Library/LaunchAgents/com.thanapol.ai-capital.alerts.plist
+    launchctl bootstrap gui/$(id -u) ~/Library/LaunchAgents/com.thanapol.ai-capital.alerts.plist
+
+  Stop / uninstall:
+    launchctl bootout gui/$(id -u)/com.thanapol.ai-capital.alerts
+
+  Manual restart (after editing this file):
+    launchctl bootout gui/$(id -u)/com.thanapol.ai-capital.alerts
+    launchctl bootstrap gui/$(id -u) ~/Library/LaunchAgents/com.thanapol.ai-capital.alerts.plist
+-->
+<plist version="1.0">
+<dict>
+	<key>Label</key>
+	<string>com.thanapol.ai-capital.alerts</string>
+
+	<key>ProgramArguments</key>
+	<array>
+		<string>/bin/bash</string>
+		<string>/Users/thanapold/Desktop/Projects.nosync/scripts/run-alerts.sh</string>
+	</array>
+
+	<key>StartCalendarInterval</key>
+	<array>
+		<!-- US session 9:30am-4pm ET = 6:00-13:00 PT, Mon-Fri -->
+		<dict>
+			<key>Weekday</key>
+			<array><integer>1</integer><integer>2</integer><integer>3</integer><integer>4</integer><integer>5</integer></array>
+			<key>Hour</key>
+			<array><integer>6</integer><integer>7</integer><integer>8</integer><integer>9</integer><integer>10</integer><integer>11</integer><integer>12</integer><integer>13</integer></array>
+			<key>Minute</key>
+			<array><integer>0</integer><integer>30</integer></array>
+		</dict>
+		<!-- Thai SET morning 10:00-12:30 ICT = 19:00-22:30 PT prior evening, Sun-Thu -->
+		<dict>
+			<key>Weekday</key>
+			<array><integer>0</integer><integer>1</integer><integer>2</integer><integer>3</integer><integer>4</integer></array>
+			<key>Hour</key>
+			<array><integer>19</integer><integer>20</integer><integer>21</integer><integer>22</integer></array>
+			<key>Minute</key>
+			<array><integer>0</integer><integer>30</integer></array>
+		</dict>
+		<!-- Thai SET afternoon 14:30-16:30 ICT = 0:30-3:30 PT same night, Mon-Fri -->
+		<dict>
+			<key>Weekday</key>
+			<array><integer>1</integer><integer>2</integer><integer>3</integer><integer>4</integer><integer>5</integer></array>
+			<key>Hour</key>
+			<array><integer>0</integer><integer>1</integer><integer>2</integer><integer>3</integer></array>
+			<key>Minute</key>
+			<array><integer>0</integer><integer>30</integer></array>
+		</dict>
+	</array>
+
+	<key>StandardOutPath</key>
+	<string>/Users/thanapold/Desktop/Projects.nosync/logs/alerts.log</string>
+	<key>StandardErrorPath</key>
+	<string>/Users/thanapold/Desktop/Projects.nosync/logs/alerts.log</string>
+</dict>
+</plist>

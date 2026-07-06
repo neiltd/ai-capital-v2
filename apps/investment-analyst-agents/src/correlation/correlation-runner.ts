@@ -9,9 +9,17 @@
 
 import 'dotenv/config'
 import { join } from 'path'
-import { writeFileSync, mkdirSync, existsSync } from 'fs'
+import { writeFileSync, renameSync, mkdirSync, existsSync } from 'fs'
 import Database from 'better-sqlite3'
 import { formatReport } from './correlation-report.js'
+
+// See risk-runner.ts for why this is atomic (rename, not direct write) —
+// same class of EDEADLK failure hit this file's writes too.
+function writeFileAtomic(path: string, data: string): void {
+  const tmpPath = `${path}.tmp.${process.pid}`
+  writeFileSync(tmpPath, data, 'utf-8')
+  renameSync(tmpPath, path)
+}
 
 interface Position {
   ticker:       string
@@ -216,7 +224,7 @@ async function run() {
   })
 
   mkdirSync(join(process.cwd(), 'correlation'), { recursive: true })
-  writeFileSync(REPORT_PATH, report, 'utf-8')
+  writeFileAtomic(REPORT_PATH, report)
   console.log(`\nReport: ${REPORT_PATH}`)
 }
 

@@ -33,6 +33,28 @@ function loadEventsFromFile(file: string): IntelligenceEvent[] {
   }
 }
 
+/** Loads the raw file content (envelope object, or a bare array for legacy
+ * fixtures) so writes can preserve non-`events` fields (date, generated_at,
+ * stats, …) that export-intelligence.ts requires. Writing back only the
+ * array here is what silently broke world-intel-export previously. */
+function loadEnvelope(file: string): unknown {
+  if (!existsSync(file)) return null;
+  try {
+    return JSON.parse(readFileSync(file, 'utf-8'));
+  } catch (err) {
+    console.error(`[memory] failed to load ${file}: ${(err as Error).message}`);
+    return null;
+  }
+}
+
+function eventsOfEnvelope(raw: unknown): IntelligenceEvent[] {
+  if (Array.isArray(raw)) return raw;
+  if (raw && typeof raw === 'object' && Array.isArray((raw as { events?: unknown }).events)) {
+    return (raw as { events: IntelligenceEvent[] }).events;
+  }
+  return [];
+}
+
 function listEventFilesInRange(targetDate: string, days: number): string[] {
   if (!existsSync(EVENTS_DIR)) return [];
   return readdirSync(EVENTS_DIR)
@@ -63,7 +85,8 @@ async function main() {
     process.exit(1);
   }
 
-  const targets = loadEventsFromFile(targetFile);
+  const targetEnvelope = loadEnvelope(targetFile);
+  const targets = eventsOfEnvelope(targetEnvelope);
   if (targets.length === 0) {
     console.log(`[memory] ${targetDate}.json has 0 events — nothing to enrich.`);
     return;
@@ -124,7 +147,15 @@ async function main() {
   }
 
   if (enrichedCount > 0) {
-    writeFileSync(targetFile, JSON.stringify(targets, null, 2));
+    // targets is the same array reference as targetEnvelope.events (or *is*
+    // targetEnvelope, for legacy bare-array files) — the mutations to each
+    // event's `.graph` above already landed in it. Writing back the envelope
+    // (rather than the bare `targets` array) is what preserves date/
+    // generated_at/stats for export-intelligence.ts's reader.
+    const output = Array.isArray(targetEnvelope)
+      ? targets
+      : { ...(targetEnvelope as Record<string, unknown>), events: targets };
+    writeFileSync(targetFile, JSON.stringify(output, null, 2));
     console.log(`[memory] wrote enriched ${targetFile} — ${enrichedCount} event(s), ${totalLinks} link(s), ${totalCons} consequence(s)`);
   }
 
