@@ -1,0 +1,20 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(launchctl list *)",
+      "Bash(npx tsc --noEmit)",
+      "Bash(crontab -l*)",
+      "Bash(gh search *)",
+      "Bash(brctl status *)",
+      "Bash(nc -zv *)",
+      "Bash(defaults read *)",
+      "Bash(pnpm -r --no-bail run --if-present typecheck)",
+      "Bash(pnpm -r --no-bail run --if-present build)",
+      "Bash(pnpm -r --no-bail run typecheck)",
+      "Bash(pnpm -r --no-bail exec tsc --noEmit)",
+      "mcp__claude-in-chrome__read_console_messages",
+      "mcp__claude-in-chrome__get_page_text",
+      "mcp__claude-in-chrome__tabs_context_mcp"
+    ]
+  }
+}
