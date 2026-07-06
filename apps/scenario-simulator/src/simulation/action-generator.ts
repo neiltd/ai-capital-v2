@@ -40,16 +40,24 @@ function formatScenarios(scenarios: Scenario[]): string {
   ).join('\n\n')
 }
 
-function formatPositions(positions: Position[]): string {
-  return positions.map(p =>
-    `  ${p.ticker}: ${p.shares} shares @ avg $${p.avgCost.toFixed(2)} | current $${p.currentPrice.toFixed(2)} | value $${p.currentValue.toFixed(2)} | P&L ${p.unrealizedPnl >= 0 ? '+' : ''}$${p.unrealizedPnl.toFixed(2)}`
-  ).join('\n')
+// Values are in each position's native currency (currentValue is shares *
+// current_price, never FX-converted — see scenario-simulator's portfolio-store).
+// Mislabeling THB amounts with "$" made AOT.BK-style positions look ~33x
+// larger than they are to the model. Label with the real currency and add a
+// USD-equivalent for THB positions so cross-position size comparisons are sane.
+function formatPositions(positions: Position[], usdThb: number | null): string {
+  return positions.map(p => {
+    const usdNote = p.currency === 'THB' && usdThb
+      ? ` (~$${(p.currentValue / usdThb).toFixed(2)} USD)`
+      : ''
+    return `  ${p.ticker}: ${p.shares} shares @ avg ${p.currency} ${p.avgCost.toFixed(2)} | current ${p.currency} ${p.currentPrice.toFixed(2)} | value ${p.currency} ${p.currentValue.toFixed(2)}${usdNote} | P&L ${p.unrealizedPnl >= 0 ? '+' : ''}${p.currency} ${p.unrealizedPnl.toFixed(2)}`
+  }).join('\n')
 }
 
 export async function generateActions(
   scenarios: Scenario[],
   positions: Position[],
-  options: { runId: string; client?: Anthropic },
+  options: { runId: string; client?: Anthropic; usdThb?: number | null },
 ): Promise<PortfolioAction[]> {
   const client = options.client ?? new Anthropic()
   const now    = new Date().toISOString()
@@ -62,7 +70,7 @@ export async function generateActions(
     tool_choice: { type: 'tool', name: 'generate_portfolio_actions' },
     messages: [{
       role:    'user',
-      content: [{ type: 'text', text: `Scenarios:\n${formatScenarios(scenarios)}\n\nCurrent Portfolio:\n${formatPositions(positions)}`, cache_control: { type: 'ephemeral' } }],
+      content: [{ type: 'text', text: `Scenarios:\n${formatScenarios(scenarios)}\n\nCurrent Portfolio:\n${formatPositions(positions, options.usdThb ?? null)}`, cache_control: { type: 'ephemeral' } }],
     }],
   })
 

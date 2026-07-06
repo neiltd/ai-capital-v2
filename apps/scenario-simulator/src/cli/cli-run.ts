@@ -4,7 +4,7 @@ import { mkdirSync, readFileSync, writeFileSync } from 'fs'
 import { randomUUID } from 'crypto'
 import { createSimulationStore } from '../store/sqlite.js'
 import { createPortfolioStore } from '../portfolio/portfolio-store.js'
-import { fetchPrices } from '../portfolio/price-fetcher.js'
+import { fetchPricesAndFx } from '../portfolio/price-fetcher.js'
 import { generateScenarios } from '../simulation/scenario-generator.js'
 import { generateActions } from '../simulation/action-generator.js'
 import { exportSimulation } from '../export/exporter.js'
@@ -28,13 +28,16 @@ async function run() {
   const portfolioStore = createPortfolioStore(join(DATA_DIR, 'portfolio.db'))
   const simStore       = createSimulationStore(join(DATA_DIR, 'simulation.db'))
 
+  let usdThb: number | null = null
   try {
     const positions = await portfolioStore.getPositions()
     if (positions.length > 0) {
       const symbols = positions
         .filter(p => p.assetClass !== 'cash' && p.priceSymbol)
         .map(p => p.priceSymbol)
-      const prices = await fetchPrices(symbols)
+      const priceFx = await fetchPricesAndFx(symbols, { includeFx: true })
+      usdThb = priceFx.usdThb
+      const prices = priceFx.prices
       // Cash positions self-price at 1.
       for (const p of positions) if (p.assetClass === 'cash') prices[p.ticker] = 1
       if (Object.keys(prices).length > 0) await portfolioStore.updatePrices(prices)
@@ -53,7 +56,7 @@ async function run() {
 
     if (freshPositions.length > 0) {
       console.log(`[${new Date().toISOString()}] Stage 2: generating portfolio actions...`)
-      actions = await generateActions(scenarios, freshPositions, { runId })
+      actions = await generateActions(scenarios, freshPositions, { runId, usdThb })
       for (const a of actions) simStore.insertAction(a)
       console.log(`  ${actions.length} action(s) generated`)
     } else {
@@ -77,7 +80,7 @@ async function run() {
     )
 
     const reportPath = join(REPORTS_DIR, `${today}.md`)
-    generateReport(today, scenarios, actions, freshPositions, reportPath)
+    generateReport(today, scenarios, actions, freshPositions, reportPath, usdThb)
 
     // Notify actionable trade signals (skip hold — only trim/exit/buy)
     const tradeMsg = formatTradeSignals({ date: today, actions })

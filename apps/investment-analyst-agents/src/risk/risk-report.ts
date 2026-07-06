@@ -12,6 +12,7 @@ export function formatReport(d: RiskMetricsJSON): string {
   out.push(`**Window:** ${d.windowDays} trading days`)
   out.push(`**Benchmark:** ${d.benchmark}`)
   out.push(`**Portfolio value (analyzed):** $${d.portfolioValueUSD.toFixed(0)}`)
+  out.push(`**FX (USD/THB):** ${d.fxRateUsdThb?.toFixed(2) ?? 'unknown — THB positions not converted'}`)
   out.push('')
   out.push('---')
   out.push('')

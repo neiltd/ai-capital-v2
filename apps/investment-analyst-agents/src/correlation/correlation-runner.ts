@@ -26,6 +26,25 @@ interface Position {
   assetClass:   string
   priceSymbol:  string
   currentValue: number
+  currency:     string
+}
+
+// current_value is stored in the position's native currency (see
+// scenario-simulator's portfolio-store — current_value = shares * current_price,
+// no FX applied). Same fix as risk-runner.ts / tax-harvest-runner.ts.
+async function fetchUsdThb(): Promise<number | null> {
+  try {
+    const res = await fetch('https://query1.finance.yahoo.com/v8/finance/chart/THB=X?interval=1d&range=5d', {
+      headers: { 'User-Agent': 'Mozilla/5.0' },
+    })
+    if (!res.ok) return null
+    const data = await res.json() as { chart: { result?: Array<{ meta: { regularMarketPrice?: number } }> } }
+    return data.chart.result?.[0]?.meta.regularMarketPrice ?? null
+  } catch { return null }
+}
+
+function valueInUSD(p: Position, fx: number | null): number {
+  return p.currency === 'THB' && fx ? p.currentValue / fx : p.currentValue
 }
 
 export interface PriceSeries {
@@ -63,7 +82,7 @@ function loadPositions(): Position[] {
   }
   const db = new Database(PORTFOLIO_DB, { readonly: true })
   const rows = db.prepare(`
-    SELECT ticker, asset_class AS assetClass, price_symbol AS priceSymbol, current_value AS currentValue
+    SELECT ticker, asset_class AS assetClass, price_symbol AS priceSymbol, current_value AS currentValue, currency
     FROM positions
     WHERE asset_class != 'cash' AND price_symbol != '' AND current_value > 0
     ORDER BY current_value DESC
@@ -158,7 +177,8 @@ function buildClusters(
 
 async function run() {
   const positions = loadPositions()
-  console.log(`[correlation] ${positions.length} positions with price symbols`)
+  const fx = await fetchUsdThb()
+  console.log(`[correlation] ${positions.length} positions with price symbols (FX=${fx ?? 'unknown'})`)
 
   // Fetch series in parallel (Yahoo Finance handles modest concurrency fine)
   const series: PriceSeries[] = []
@@ -195,10 +215,13 @@ async function run() {
   // Cluster detection
   const clusterGroups = buildClusters(tickers, pairs, CORRELATION_THRESHOLD)
   const positionsByTicker = Object.fromEntries(positions.map(p => [p.ticker, p]))
-  const totalPortfolioValue = positions.reduce((s, p) => s + p.currentValue, 0)
+  const totalPortfolioValue = positions.reduce((s, p) => s + valueInUSD(p, fx), 0)
 
   const clusters: Cluster[] = clusterGroups.map(members => {
-    const totalValueUSD = members.reduce((s, t) => s + (positionsByTicker[t]?.currentValue ?? 0), 0)
+    const totalValueUSD = members.reduce((s, t) => {
+      const p = positionsByTicker[t]
+      return s + (p ? valueInUSD(p, fx) : 0)
+    }, 0)
     // Average correlation of all pairs within the cluster
     const inClusterPairs = pairs.filter(p => members.includes(p.a) && members.includes(p.b))
     const avgCorrelation = inClusterPairs.length

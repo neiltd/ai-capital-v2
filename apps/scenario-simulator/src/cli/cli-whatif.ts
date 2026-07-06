@@ -4,7 +4,7 @@ import { mkdirSync, readFileSync } from 'fs'
 import { randomUUID } from 'crypto'
 import { createSimulationStore } from '../store/sqlite.js'
 import { createPortfolioStore } from '../portfolio/portfolio-store.js'
-import { fetchPrices } from '../portfolio/price-fetcher.js'
+import { fetchPricesAndFx } from '../portfolio/price-fetcher.js'
 import { generateScenarios } from '../simulation/scenario-generator.js'
 import { generateActions } from '../simulation/action-generator.js'
 import { exportSimulation } from '../export/exporter.js'
@@ -38,13 +38,16 @@ async function run() {
   const portfolioStore = createPortfolioStore(join(DATA_DIR, 'portfolio.db'))
   const simStore       = createSimulationStore(join(DATA_DIR, 'simulation.db'))
 
+  let usdThb: number | null = null
   try {
     const positions = await portfolioStore.getPositions()
     if (positions.length > 0) {
       const symbols = positions
         .filter(p => p.assetClass !== 'cash' && p.priceSymbol)
         .map(p => p.priceSymbol)
-      const prices = await fetchPrices(symbols)
+      const priceFx = await fetchPricesAndFx(symbols, { includeFx: true })
+      usdThb = priceFx.usdThb
+      const prices = priceFx.prices
       for (const p of positions) if (p.assetClass === 'cash') prices[p.ticker] = 1
       if (Object.keys(prices).length > 0) await portfolioStore.updatePrices(prices)
     }
@@ -60,7 +63,7 @@ async function run() {
     let actions: Awaited<ReturnType<typeof generateActions>> = []
 
     if (freshPositions.length > 0) {
-      actions = await generateActions(scenarios, freshPositions, { runId })
+      actions = await generateActions(scenarios, freshPositions, { runId, usdThb })
       for (const a of actions) simStore.insertAction(a)
     }
 
@@ -72,7 +75,7 @@ async function run() {
 
     await exportSimulation(simStore, portfolioStore, join(DATA_DIR, 'simulation.json'))
     const reportPath = join(REPORTS_DIR, `${today}-whatif.md`)
-    generateReport(today, scenarios, actions, freshPositions, reportPath)
+    generateReport(today, scenarios, actions, freshPositions, reportPath, usdThb)
 
     console.log(`\nDone in ${((Date.now() - startTime) / 1000).toFixed(1)}s`)
     console.log(`Report: ${reportPath}`)

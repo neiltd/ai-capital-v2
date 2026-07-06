@@ -34,6 +34,7 @@ export interface RiskMetricsJSON {
   generatedAt:          string
   windowDays:           number
   benchmark:            string
+  fxRateUsdThb:         number | null
   portfolioValueUSD:    number
   portfolioVolatility:  number  // annualized stdev of daily returns
   portfolioReturn:      number  // total return over window
@@ -143,6 +144,24 @@ function var95(returns: number[], portfolioValue: number): number {
   return Math.abs(tail) * portfolioValue  // dollar loss
 }
 
+// current_value is stored in the position's native currency (see
+// scenario-simulator's portfolio-store — current_value = shares * current_price,
+// no FX applied). Mirrors tax-harvest-runner.ts's fetchUsdThb/conversion pattern.
+async function fetchUsdThb(): Promise<number | null> {
+  try {
+    const res = await fetch('https://query1.finance.yahoo.com/v8/finance/chart/THB=X?interval=1d&range=5d', {
+      headers: { 'User-Agent': 'Mozilla/5.0' },
+    })
+    if (!res.ok) return null
+    const data = await res.json() as { chart: { result?: Array<{ meta: { regularMarketPrice?: number } }> } }
+    return data.chart.result?.[0]?.meta.regularMarketPrice ?? null
+  } catch { return null }
+}
+
+function valueInUSD(p: Position, fx: number | null): number {
+  return p.currency === 'THB' && fx ? p.currentValue / fx : p.currentValue
+}
+
 // ── Main ─────────────────────────────────────────────────────────────────────
 
 async function run() {
@@ -158,7 +177,8 @@ async function run() {
   `).all() as Position[]
   db.close()
 
-  console.log(`[risk] ${positions.length} positions with price symbols (window: ${WINDOW_DAYS}d, benchmark: ${BENCHMARK})`)
+  const fx = await fetchUsdThb()
+  console.log(`[risk] ${positions.length} positions with price symbols (window: ${WINDOW_DAYS}d, benchmark: ${BENCHMARK}, FX=${fx ?? 'unknown'})`)
 
   // Fetch price series in parallel
   const benchClosesPromise = fetchCloses(BENCHMARK)
@@ -174,7 +194,7 @@ async function run() {
     process.exit(1)
   }
 
-  const totalValueUSD = positions.reduce((s, p) => s + p.currentValue, 0)
+  const totalValueUSD = positions.reduce((s, p) => s + valueInUSD(p, fx), 0)
 
   const perTicker: RiskMetricsJSON['perTicker'] = []
   const portfolioReturnsByDay: Map<number, number> = new Map()
@@ -182,7 +202,7 @@ async function run() {
   for (const { position, closes } of seriesEntries) {
     if (closes.length < 10) continue
     const rets = dailyReturns(closes)
-    const weight = position.currentValue / totalValueUSD
+    const weight = valueInUSD(position, fx) / totalValueUSD
     perTicker.push({
       ticker:        position.ticker,
       weight,
@@ -228,6 +248,7 @@ async function run() {
     generatedAt:         new Date().toISOString().slice(0, 10),
     windowDays:          WINDOW_DAYS,
     benchmark:           BENCHMARK,
+    fxRateUsdThb:        fx,
     portfolioValueUSD:   totalValueUSD,
     portfolioVolatility: portVol,
     portfolioReturn:     portTotalReturn,

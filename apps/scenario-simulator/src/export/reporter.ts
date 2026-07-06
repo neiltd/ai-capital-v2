@@ -1,16 +1,19 @@
 import { writeFileSync } from 'fs'
 import type { Position, Scenario, PortfolioAction } from '../types.js'
 
-function fmtPnl(n: number): string {
-  return n >= 0 ? `+$${n.toFixed(2)}` : `-$${Math.abs(n).toFixed(2)}`
+function fmtPnl(n: number, currency: string): string {
+  return n >= 0 ? `+${currency} ${n.toFixed(2)}` : `-${currency} ${Math.abs(n).toFixed(2)}`
 }
 
-function portfolioTable(positions: Position[]): string {
+// Values are in each position's native currency — see the note in
+// action-generator.ts's formatPositions for why "$" for everything was wrong.
+function portfolioTable(positions: Position[], usdThb: number | null): string {
   if (positions.length === 0) return '_No positions recorded._\n'
   const header = '| Ticker | Shares | Avg Cost | Price | Value | Unrealized P&L |\n|--------|--------|----------|-------|-------|----------------|\n'
-  const rows   = positions.map(p =>
-    `| ${p.ticker} | ${p.shares} | $${p.avgCost.toFixed(2)} | $${p.currentPrice.toFixed(2)} | $${p.currentValue.toFixed(2)} | ${fmtPnl(p.unrealizedPnl)} |`
-  ).join('\n')
+  const rows   = positions.map(p => {
+    const usdNote = p.currency === 'THB' && usdThb ? ` (~$${(p.currentValue / usdThb).toFixed(2)})` : ''
+    return `| ${p.ticker} | ${p.shares} | ${p.currency} ${p.avgCost.toFixed(2)} | ${p.currency} ${p.currentPrice.toFixed(2)} | ${p.currency} ${p.currentValue.toFixed(2)}${usdNote} | ${fmtPnl(p.unrealizedPnl, p.currency)} |`
+  }).join('\n')
   return header + rows + '\n'
 }
 
@@ -48,6 +51,7 @@ export function generateReport(
   actions: PortfolioAction[],
   positions: Position[],
   outputPath: string,
+  usdThb: number | null = null,
 ): void {
   const actionsByScenario = new Map<string, PortfolioAction[]>()
   for (const a of actions) {
@@ -60,7 +64,7 @@ export function generateReport(
     `# Scenario Simulation — ${date}`,
     '',
     '## Current Portfolio',
-    portfolioTable(positions),
+    portfolioTable(positions, usdThb),
   ]
 
   for (const s of scenarios) {
