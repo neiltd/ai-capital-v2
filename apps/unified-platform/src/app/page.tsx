@@ -99,10 +99,16 @@ function loadWorldCard(): { data: WorldCardData | null; error: string | null } {
     const stockIntel = readStockIntel()
     const worldIntel = readWorldIntel()
 
-    const tagged: TopEvent[] = [
-      ...(worldIntel.events ?? []).map(e => ({ key: e.eventId, title: e.title, severity: e.severity })),
-      ...(stockIntel.marketEvents ?? []).map(e => ({ key: e.eventId, title: e.title, severity: e.severity })),
-    ].sort((a, b) => b.severity - a.severity)
+    // Some events are cross-tagged into both the world and stock/market exports
+    // (a single geopolitical event relevant to both domains) — dedupe by
+    // eventId so it doesn't count/render twice here.
+    const byEventId = new Map<string, TopEvent>()
+    for (const e of [...(worldIntel.events ?? []), ...(stockIntel.marketEvents ?? [])]) {
+      if (!byEventId.has(e.eventId)) {
+        byEventId.set(e.eventId, { key: e.eventId, title: e.title, severity: e.severity })
+      }
+    }
+    const tagged: TopEvent[] = Array.from(byEventId.values()).sort((a, b) => b.severity - a.severity)
 
     // Bands match /world/intel/page.tsx: Critical = 5, Elevated/"High" = 4.
     // "High severity" here is the combined top band (severity >= 4).

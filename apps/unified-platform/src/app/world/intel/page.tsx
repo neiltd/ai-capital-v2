@@ -105,10 +105,20 @@ export default function WorldIntelPage() {
     )
   }
 
+  // Some events are cross-tagged into both the world and stock/market feeds
+  // (a single geopolitical event relevant to both domains) — dedupe by
+  // eventId so the same story doesn't render twice in the severity groups
+  // below. The "N world / N market" header counts above intentionally still
+  // reflect each feed's raw size.
+  const seenEventIds = new Set<string>()
   const tagged: TaggedEvent[] = [
     ...worldEvents.map((e): TaggedEvent => ({ kind: 'world', key: e.eventId, severity: e.severity, event: e })),
     ...stockEvents.map((e): TaggedEvent => ({ kind: 'stock', key: e.eventId, severity: e.severity, event: e })),
-  ]
+  ].filter(t => {
+    if (seenEventIds.has(t.key)) return false
+    seenEventIds.add(t.key)
+    return true
+  })
 
   // Bands follow lib/severity's severityLabel thresholds (1-5 scale):
   // Critical = 5, Elevated = 4 (severityLabel "High"), Monitoring = 1-3.
