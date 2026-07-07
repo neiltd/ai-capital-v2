@@ -17,6 +17,7 @@
   },
   "dependencies": {
     "@common/db":        "workspace:*",
+    "@common/types":     "workspace:*",
     "@anthropic-ai/sdk": "^0.39.0",
     "better-sqlite3":    "^12.10.0",
     "dotenv":            "^16.0.0"

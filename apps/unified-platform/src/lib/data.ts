@@ -2,6 +2,7 @@ import fs from 'fs'
 import path from 'path'
 import type { AnalysisJSON, SimulationJSON, GraphJSON, StockIntelJSON, WorldIntelJSON, DiscoveryJSON, MacroJSON, WavesJSON, WaveActionsJSON, WavePortfolioJSON, GovFlowJSON } from '@/types'
 import type { RiskJSON, HarvestJSON } from '@/lib/next/types'
+import type { BriefingJSON } from '@common/types'
 
 function dataRoot(): string {
   const root = process.env.DATA_ROOT
@@ -62,6 +63,13 @@ export function readBriefing(date: string): string | null {
   const p = path.join(dataRoot(), `investment-analyst-agents/briefings/${date}.md`)
   if (!fs.existsSync(p)) return null
   return fs.readFileSync(p, 'utf-8')
+}
+
+export function readBriefingJson(date: string): BriefingJSON | null {
+  const p = path.join(dataRoot(), `investment-analyst-agents/briefings/${date}.json`)
+  try {
+    return readJSON<BriefingJSON>(p)
+  } catch { return null }
 }
 
 export function readProfile(): string {

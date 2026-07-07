@@ -286,6 +286,9 @@ importers:
       '@common/db':
         specifier: workspace:*
         version: link:../../packages/db
+      '@common/types':
+        specifier: workspace:*
+        version: link:../../packages/common-types
       better-sqlite3:
         specifier: ^12.10.0
         version: 12.10.0

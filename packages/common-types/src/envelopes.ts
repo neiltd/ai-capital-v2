@@ -126,6 +126,62 @@ export interface DiscoveryJSON {
   actions:   unknown[]
 }
 
+// Produced by: investment-analyst-agents (daily briefing agent)
+//
+// The markdown briefing (briefings/YYYY-MM-DD.md) remains the primary
+// human-readable artifact. This envelope is extracted FROM the finished
+// markdown (a second, tool-forced Claude call reading the already-written
+// "Today's Recommended Actions" section) rather than generated in parallel
+// with it — guarantees the JSON can never say something different from the
+// prose, at the cost of one extra cheap model call. regime/scenarios are
+// plain passthroughs of already-structured data (analysis.json/
+// simulation.json), not LLM output. harvestableUsd/washSaleNote are
+// mechanically joined from tax/harvest.json by ticker, not LLM-extracted —
+// financial figures should never depend on the model reading its own prose
+// back correctly.
+export interface BriefingJSON {
+  schemaVersion?: string
+  exportedAt:     string
+  date:           string
+  regime: {
+    regime:        string
+    confidence:    string
+    rationale:     string
+    keyIndicators: string[]
+  }
+  /** One-line self-calibration verdict; null until backtest/calibration.json exists. */
+  calibrationNote: string | null
+  recommendedActions: Array<{
+    id:                   string
+    ticker:               string
+    action:               'buy' | 'hold' | 'trim' | 'exit'
+    conviction:           'high' | 'medium' | 'low'
+    allocationChangePct:  number
+    rationale:            string
+    /** True when the self-calibration rule forced a uniform downgrade (calibrationInverted). */
+    convictionDowngraded: boolean
+    /** Harvestable USD loss on this ticker today, joined from tax/harvest.json; null if not harvestable. */
+    harvestableUsd:       number | null
+    /** Active wash-sale window note, joined from tax/harvest.json; null if none active. */
+    washSaleNote:         string | null
+  }>
+  scenarios: Array<{
+    id:           string
+    scenarioType: 'best' | 'base' | 'disruption'
+    title:        string
+    probability:  number // 0-100, matches simulation.json's raw scale
+    timeHorizon:  string
+    narrative:    string
+  }>
+  /** Extracted from the "## Things to Watch" section, same tool call as recommendedActions. */
+  watchItems: Array<{
+    kind:    'bull' | 'bear' | 'neutral'
+    trigger: string
+    tickers: string[]
+    why:     string
+  }>
+}
+
 // Produced by: world-intelligence-data-hub-
 export interface IntelligenceJSON {
   schemaVersion?: string

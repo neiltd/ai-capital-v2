@@ -316,13 +316,27 @@ export async function generateBriefing(
 
   const message = await client.messages.create({
     model:      'claude-sonnet-4-6',
-    max_tokens: 4096,
+    // 4096 was too small: with a full 9-item "Today's Recommended Actions"
+    // section (rotation suggestions included), real responses hit the limit
+    // before reaching "Things to Watch" — the model silently dropped a
+    // required section and cut off mid-table (found in 2026-07-07's
+    // briefing). 8192 gives real-observed output (~3.5K tokens) 2x headroom.
+    max_tokens: 8192,
     system:     [{ type: 'text', text: SYSTEM_PROMPT, cache_control: { type: 'ephemeral' } }],
     messages:   [{
       role:    'user',
       content: [{ type: 'text', text: `Write today's investment briefing for ${ctx.date}.\n\n${await formatContext(ctx)}` }],
     }],
   })
+
+  // Fail loud rather than silently archive a truncated briefing as if it
+  // were complete — this exact failure mode (missing "Things to Watch",
+  // a table cut off mid-header) shipped undetected until this check existed.
+  if (message.stop_reason === 'max_tokens') {
+    throw new Error(
+      `Briefing generation hit max_tokens (${message.usage.output_tokens} output tokens) — response was truncated. Raise max_tokens or shorten the context.`,
+    )
+  }
 
   const block = message.content.find(b => b.type === 'text')
   if (!block || block.type !== 'text') throw new Error('Expected text response from Claude')

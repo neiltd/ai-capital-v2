@@ -6,4 +6,5 @@ archive/*.jsonl
 data/*.jsonl
 data/*.db
 briefings/*.md
+briefings/*.json
 !briefings/.gitkeep
