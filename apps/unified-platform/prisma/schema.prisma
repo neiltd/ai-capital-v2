@@ -1,5 +1,10 @@
 generator client {
   provider = "prisma-client-js"
+  // Distinct output path — creator-studio uses Prisma too, and without
+  // per-app outputs both apps share one generated client in the pnpm store:
+  // whichever ran `prisma generate` last wins and the other's types/models
+  // silently go stale.
+  output   = "../src/generated/prisma"
 }
 
 datasource db {

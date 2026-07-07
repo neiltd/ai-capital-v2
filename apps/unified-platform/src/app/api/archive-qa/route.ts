@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server'
 import fs from 'fs'
 import path from 'path'
-import { qaArchivePath } from '@/lib/data'
+import { qaArchivePath, todayLocal } from '@/lib/data'
 
 export async function POST(req: NextRequest) {
   let body: { question?: string; answer?: string }
@@ -18,7 +18,7 @@ export async function POST(req: NextRequest) {
   fs.mkdirSync(path.dirname(archivePath), { recursive: true })
 
   const entry = {
-    date: new Date().toISOString().split('T')[0],
+    date: todayLocal(),
     timestamp: new Date().toISOString(),
     question: body.question,
     answer: body.answer,

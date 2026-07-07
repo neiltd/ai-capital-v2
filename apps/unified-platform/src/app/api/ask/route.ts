@@ -1,6 +1,6 @@
 import { NextRequest } from 'next/server'
 import Anthropic from '@anthropic-ai/sdk'
-import { readAnalysis, readBriefing, readSimulation, readProfile, readWaves, readWaveActions, readMacro } from '@/lib/data'
+import { readAnalysis, readBriefing, readSimulation, readProfile, readWaves, readWaveActions, readMacro, todayLocal } from '@/lib/data'
 import { readTheses } from '@/lib/thesis-db'
 
 // Simple in-memory fixed-window rate limiter — single-user local app, no
@@ -21,7 +21,7 @@ export async function POST(req: NextRequest) {
     )
   }
 
-  const today = new Date().toISOString().split('T')[0]
+  const today = todayLocal()
 
   const briefing = readBriefing(today)
   if (!briefing) {

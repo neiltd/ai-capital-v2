@@ -94,7 +94,7 @@ export function Sidebar() {
     const tick = () => {
       const now = new Date()
       setStamp({
-        date: now.toISOString().split('T')[0],
+        date: now.toLocaleDateString('en-CA'),  // local date — toISOString showed tomorrow's (UTC) date after 5pm PT
         time: now.toLocaleTimeString('en-US', {
           hour: '2-digit', minute: '2-digit', hour12: false,
         }),

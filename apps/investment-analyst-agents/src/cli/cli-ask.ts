@@ -12,7 +12,8 @@ const GRAPH_PATH      = join(process.cwd(), '../dependency-graph-engine/data/gra
 const PROFILE_PATH    = join(process.cwd(), 'knowledge/profile.md')
 const QA_ARCHIVE_PATH = join(process.cwd(), 'archive', 'qa.jsonl')
 
-const today        = new Date().toISOString().slice(0, 10)
+// Local calendar date — must match cli-brief.ts's briefing filename scheme.
+const today        = new Date().toLocaleDateString('en-CA')
 const briefingPath = join(BRIEFINGS_DIR, `${today}.md`)
 
 if (!existsSync(briefingPath)) {

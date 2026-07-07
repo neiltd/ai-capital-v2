@@ -50,3 +50,6 @@ dev.db-journal
 *.rvf.lock
 ruvector.db
 agentdb.rvf
+
+# prisma generated client (see prisma/schema.prisma `output`)
+/lib/generated/prisma/

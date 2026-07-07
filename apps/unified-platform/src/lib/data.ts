@@ -8,6 +8,16 @@ function dataRoot(): string {
   return root
 }
 
+/**
+ * Today's date (YYYY-MM-DD) in the server's local timezone (en-CA formats as
+ * ISO). Briefing files are named with the local calendar date; computing
+ * "today" via toISOString() (UTC) rolled over at 5pm PT, making every evening
+ * lookup ask for tomorrow's briefing and silently report it missing/stale.
+ */
+export function todayLocal(): string {
+  return new Date().toLocaleDateString('en-CA')
+}
+
 function readJSON<T>(filePath: string): T {
   const raw = fs.readFileSync(filePath, 'utf-8')
   try {

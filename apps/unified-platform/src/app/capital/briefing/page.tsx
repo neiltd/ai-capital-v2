@@ -5,12 +5,12 @@ import remarkGfm from 'remark-gfm'
 import { RegimeBadge } from '@/components/capital/RegimeBadge'
 import { ScenarioSummaryPills } from '@/components/capital/ScenarioSummaryPills'
 import type { BriefingResponse } from '@/types'
-import { readAnalysis, readBriefing, readSimulation } from '@/lib/data'
+import { readAnalysis, readBriefing, readSimulation, todayLocal } from '@/lib/data'
 import { PageHeader, MetaDot } from '@/components/capital/ui/PageHeader'
 import { EmptyState } from '@/components/capital/ui/EmptyState'
 
 function getBriefingData(): BriefingResponse {
-  const today = new Date().toISOString().split('T')[0]
+  const today = todayLocal()
   try {
     const analysis = readAnalysis()
     const simulation = readSimulation()

@@ -30,6 +30,13 @@ export async function POST() {
         ...process.env,
         PATH:      `/opt/homebrew/bin:/usr/local/bin:/usr/bin:/bin:${process.env.PATH ?? ''}`,
         DATA_ROOT: path.join(workspaceRoot, 'apps'),
+        // This app's own DATABASE_URL is the Prisma sqlite URL
+        // (file:...creator-studio/prisma/dev.db). Forwarding it makes
+        // @common/db's usePostgres() pick the pg backend and hand pg a file:
+        // connection string. Give the child the pipeline's Postgres URL
+        // instead (same one daily-queue.worker.plist sets).
+        DATABASE_URL: process.env.PIPELINE_DATABASE_URL
+          ?? 'postgres://thanapold@localhost:5432/ai_capital',
       },
       timeout: 30_000,
     })

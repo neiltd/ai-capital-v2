@@ -3,8 +3,10 @@
 //
 // Reads from:
 //   - data/pipeline-runs.db (Phase 3.2)             → stage success/fail tally + per-stage durations + orphans
-//   - apps/investment-analyst-agents/briefings/$DATE.md → today's brief (UTC date — that's what the writer uses)
-//   - apps/scenario-simulator/data/portfolio.db        → portfolio snapshot
+//   - apps/investment-analyst-agents/briefings/$DATE.md → today's brief (local date, same as the writer)
+//   - apps/scenario-simulator/data/simulation.json     → portfolio snapshot (exported from the live store each run;
+//     the SQLite portfolio.db is the legacy fallback copy and goes stale when DATABASE_URL/Postgres is in use)
+//   - apps/scenario-simulator/data/portfolio.db        → recent trades (trade_log)
 //
 // Writes:
 //   - /tmp/morning-status.md   (latest; overwritten daily)
@@ -20,13 +22,16 @@ import { fileURLToPath } from 'url'
 const __dirname = dirname(fileURLToPath(import.meta.url))
 const ROOT = join(__dirname, '..')
 
-const TODAY_UTC = new Date().toISOString().slice(0, 10)
+// Local calendar date (en-CA = YYYY-MM-DD). The old UTC date rolled over at
+// 5pm PT, so evening runs looked for tomorrow's brief and reported it missing.
+const TODAY     = new Date().toLocaleDateString('en-CA')
 const NOW_LOCAL = new Date().toLocaleString('en-US', { timeZone: 'America/Los_Angeles' })
 
 const PIPELINE_DB_PATH = process.env.PIPELINE_RUNS_DB
   ?? join(ROOT, 'data', 'pipeline-runs.db')
-const BRIEF_PATH       = join(ROOT, 'apps/investment-analyst-agents/briefings', `${TODAY_UTC}.md`)
+const BRIEF_PATH       = join(ROOT, 'apps/investment-analyst-agents/briefings', `${TODAY}.md`)
 const PORTFOLIO_DB     = join(ROOT, 'apps/scenario-simulator/data/portfolio.db')
+const SIMULATION_JSON  = join(ROOT, 'apps/scenario-simulator/data/simulation.json')
 
 const sections: string[] = []
 const indicators: string[] = []   // green/red bullets for the header
@@ -139,10 +144,10 @@ function pipelineSection(): string {
 
 function briefSection(): string {
   if (!existsSync(BRIEF_PATH)) {
-    indicators.push(`⚠️ today's brief missing (${TODAY_UTC}.md)`)
+    indicators.push(`⚠️ today's brief missing (${TODAY}.md)`)
     return `## Today's brief\n\n_No brief at \`${BRIEF_PATH}\`._\n`
   }
-  indicators.push(`🟢 brief ready (${TODAY_UTC}.md)`)
+  indicators.push(`🟢 brief ready (${TODAY}.md)`)
   try {
     const md = readFileSync(BRIEF_PATH, 'utf-8')
 
@@ -172,32 +177,51 @@ function briefSection(): string {
 // ── Portfolio snapshot ───────────────────────────────────────────────────────
 
 function portfolioSection(): string {
-  if (!existsSync(PORTFOLIO_DB)) {
-    return '## Portfolio snapshot\n\n_portfolio.db not found_\n'
+  // Positions come from simulation.json — exported from the live portfolio
+  // store (Postgres when DATABASE_URL is set) by the scenario-simulate stage.
+  // Reading data/portfolio.db directly here silently served the stale SQLite
+  // fallback copy once the pipeline moved to Postgres.
+  if (!existsSync(SIMULATION_JSON)) {
+    return '## Portfolio snapshot\n\n_simulation.json not found_\n'
   }
   try {
-    const db = new Database(PORTFOLIO_DB, { readonly: true })
-
-    interface PosRow {
-      ticker: string; shares: number; avg_cost: number; current_price: number
-      current_value: number; unrealized_pnl: number; currency: string
+    interface SimPosition {
+      ticker: string; shares: number; avgCost: number; currentPrice: number
+      currentValue: number; unrealizedPnl: number; currency?: string
     }
-    const positions = db.prepare(
-      'SELECT ticker, shares, avg_cost, current_price, current_value, unrealized_pnl, currency FROM positions ORDER BY ABS(unrealized_pnl) DESC',
-    ).all() as PosRow[]
+    const sim = JSON.parse(readFileSync(SIMULATION_JSON, 'utf-8')) as {
+      exportedAt?: string
+      usdThb?: number | null
+      portfolio?: SimPosition[]
+    }
+    const positions = [...(sim.portfolio ?? [])].sort(
+      (a, b) => Math.abs(b.unrealizedPnl || 0) - Math.abs(a.unrealizedPnl || 0),
+    )
+    const usdThb = sim.usdThb ?? null
+    const inUsd = (v: number, currency?: string): number =>
+      currency === 'THB' && usdThb ? v / usdThb : v
 
-    const totalValue = positions.reduce((s, p) => s + (p.current_value || 0), 0)
-    const totalPnl   = positions.reduce((s, p) => s + (p.unrealized_pnl || 0), 0)
+    const totalValueUsd = positions.reduce((s, p) => s + inUsd(p.currentValue || 0, p.currency), 0)
+    const totalPnlUsd   = positions.reduce((s, p) => s + inUsd(p.unrealizedPnl || 0, p.currency), 0)
+    const totalNote = usdThb
+      ? `$${totalValueUsd.toFixed(2)} total value (USD @ ${usdThb.toFixed(2)} THB)`
+      : `${totalValueUsd.toFixed(2)} total value (mixed currencies — no FX rate in simulation.json)`
 
     interface TradeRow {
       ticker: string; action: string; shares: number; price: number; reason: string; date: string
     }
-    const recentTrades = db.prepare(
-      `SELECT ticker, action, shares, price, reason, date FROM trade_log ORDER BY id DESC LIMIT 5`,
-    ).all() as TradeRow[]
+    let recentTrades: TradeRow[] = []
+    if (existsSync(PORTFOLIO_DB)) {
+      const db = new Database(PORTFOLIO_DB, { readonly: true })
+      recentTrades = db.prepare(
+        `SELECT ticker, action, shares, price, reason, date FROM trade_log ORDER BY id DESC LIMIT 5`,
+      ).all() as TradeRow[]
+      db.close()
+    }
 
     const lines = ['## Portfolio snapshot', '']
-    lines.push(`**${positions.length} positions** · **${totalValue.toFixed(2)} total value (mixed currencies)** · **${totalPnl >= 0 ? '+' : ''}${totalPnl.toFixed(2)} unrealized P&L**`)
+    lines.push(`**${positions.length} positions** · **${totalNote}** · **${totalPnlUsd >= 0 ? '+' : ''}$${totalPnlUsd.toFixed(2)} unrealized P&L**`)
+    if (sim.exportedAt) lines.push(`_As of ${sim.exportedAt}_`)
     lines.push('')
 
     if (positions.length > 0) {
@@ -206,8 +230,9 @@ function portfolioSection(): string {
       lines.push('| Ticker | Shares | Avg | Price | P&L |')
       lines.push('|---|---|---|---|---|')
       for (const p of positions.slice(0, 5)) {
-        const pnlStr = p.unrealized_pnl >= 0 ? `+${p.unrealized_pnl.toFixed(2)}` : p.unrealized_pnl.toFixed(2)
-        lines.push(`| ${p.ticker} | ${p.shares} | ${p.avg_cost.toFixed(2)} ${p.currency} | ${p.current_price.toFixed(2)} | ${pnlStr} |`)
+        const cur = p.currency ?? 'USD'
+        const pnlStr = p.unrealizedPnl >= 0 ? `+${p.unrealizedPnl.toFixed(2)}` : p.unrealizedPnl.toFixed(2)
+        lines.push(`| ${p.ticker} | ${p.shares} | ${p.avgCost.toFixed(2)} ${cur} | ${p.currentPrice.toFixed(2)} | ${pnlStr} ${cur} |`)
       }
     }
 
@@ -220,7 +245,6 @@ function portfolioSection(): string {
       }
     }
 
-    db.close()
     return lines.join('\n') + '\n'
   } catch (err) {
     return `## Portfolio snapshot\n\n_Error: ${(err as Error).message}_\n`
@@ -235,7 +259,7 @@ const brief      = briefSection()
 const portfolio  = portfolioSection()
 
 const header = [
-  `# Morning status — ${TODAY_UTC}`,
+  `# Morning status — ${TODAY}`,
   '',
   `_Generated at ${NOW_LOCAL}_`,
   '',
@@ -249,6 +273,6 @@ const body = [header, pipeline, brief, portfolio].join('\n')
 
 writeFileSync('/tmp/morning-status.md', body, 'utf-8')
 mkdirSync(join(ROOT, 'logs'), { recursive: true })
-writeFileSync(join(ROOT, 'logs', `morning-status-${TODAY_UTC}.log`), body, 'utf-8')
+writeFileSync(join(ROOT, 'logs', `morning-status-${TODAY}.log`), body, 'utf-8')
 
 console.log(`[morning-status] written to /tmp/morning-status.md (${body.length} bytes)`)

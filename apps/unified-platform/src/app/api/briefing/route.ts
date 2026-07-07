@@ -1,10 +1,10 @@
 export const dynamic = 'force-dynamic'
 
 import { NextResponse } from 'next/server'
-import { readAnalysis, readBriefing, readSimulation } from '@/lib/data'
+import { readAnalysis, readBriefing, readSimulation, todayLocal } from '@/lib/data'
 
 export async function GET() {
-  const today = new Date().toISOString().split('T')[0]
+  const today = todayLocal()
 
   try {
     const analysis = readAnalysis()

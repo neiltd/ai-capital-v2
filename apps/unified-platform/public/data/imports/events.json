@@ -1,420 +1,196 @@
 {
   "schemaVersion": "1.0.0",
-  "generatedAt": "2026-05-28T17:08:30.745Z",
+  "generatedAt": "2026-07-07T14:24:29.679Z",
   "source": "world-intelligence-hub",
-  "eventCount": 20,
+  "eventCount": 9,
   "dateRange": {
-    "from": "2026-05-27",
-    "to": "2026-05-28"
+    "from": "2026-07-07",
+    "to": "2026-07-07"
   },
   "events": [
     {
-      "id": "c65a1c316aaf142cc7ef60a4",
+      "id": "8d27c71869e4cae1950ae787",
       "source": "rss_intelligence",
-      "eventDate": "2026-05-28",
+      "eventDate": "2026-07-07",
       "iso3": [
-        "USA",
         "IRN"
-      ],
-      "eventType": "energy.disruption",
-      "headline": "Oil Prices Spike and Global Stocks Fall as US-Iran Strikes Rattle Markets and Raise Inflation Fears",
-      "summary": "Oil prices spiked and global equities fell on May 27–28, 2026 following renewed US strikes in the Persian Gulf and escalating US-Iran hostilities. Bond yields also climbed, with US Treasuries declining for the first time in six sessions amid concerns over faster inflation driven by higher oil prices. Markets reflected growing doubt that the US-Iran war would end imminently.",
-      "confidenceScore": 0.9,
-      "confidenceLabel": "high",
-      "tier": 2,
-      "tags": [
-        "bloomberg-markets",
-        "bbc-world",
-        "storyline:8c23a00f"
-      ],
-      "geopoliticalScore": 7,
-      "economicImpactScore": 8.8
-    },
-    {
-      "id": "7550d5d9979c58d27c9a877a",
-      "source": "rss_intelligence",
-      "eventDate": "2026-05-28",
-      "iso3": [
-        "PHL"
-      ],
-      "eventType": "other",
-      "headline": "ICC Trial of Former Philippine President Rodrigo Duterte Set to Begin 30 November on Drug War Charges",
-      "summary": "The International Criminal Court has scheduled the trial of former Philippine President Rodrigo Duterte to begin on 30 November. Duterte faces charges relating to the Philippines' war on drugs, in which thousands of people were killed.",
-      "confidenceScore": 0.82,
-      "confidenceLabel": "high",
-      "tier": 2,
-      "tags": [
-        "bbc-world",
-        "storyline:2eb5f92d"
-      ],
-      "geopoliticalScore": 5.5,
-      "economicImpactScore": 0.5
-    },
-    {
-      "id": "26da738d03b8971bc6ab0d4a",
-      "source": "rss_intelligence",
-      "eventDate": "2026-05-28",
-      "iso3": [
-        "USA",
-        "IRN"
-      ],
-      "eventType": "diplomatic.dispute",
-      "headline": "Trump Says High Oil Prices Will Not Force His Hand on Iran Deal",
-      "summary": "US President Donald Trump stated he feels no political pressure to reach a peace agreement with Iran, and that high oil prices would not force his hand. Trump nonetheless expressed hope that a deal could ultimately be reached. His remarks come amid ongoing US-Iran military exchanges and active but fragile peace negotiations.",
-      "confidenceScore": 0.82,
-      "confidenceLabel": "high",
-      "tier": 2,
-      "tags": [
-        "nytimes-world",
-        "france24-english",
-        "storyline:8c23a00f"
-      ],
-      "geopoliticalScore": 7.5,
-      "economicImpactScore": 6
-    },
-    {
-      "id": "e768b290956fa1a34cf7c9aa",
-      "source": "rss_intelligence",
-      "eventDate": "2026-05-28",
-      "iso3": [
-        "USA",
-        "IRN"
-      ],
-      "eventType": "energy.disruption",
-      "headline": "Gold Falls to Two-Month Low as US-Iran Clashes Derail Peace Talk Hopes and Strengthen Dollar",
-      "summary": "Gold slumped to a two-month low as US-Iran military exchanges raised risks of derailing peace talks and kept inflation risks elevated. A stronger US dollar also weighed on the precious metal. The move reflects market sensitivity to the evolving Middle East conflict.",
-      "confidenceScore": 0.8,
-      "confidenceLabel": "high",
-      "tier": 3,
-      "tags": [
-        "bloomberg-markets",
-        "storyline:8c23a00f"
-      ],
-      "geopoliticalScore": 5,
-      "economicImpactScore": 7
-    },
-    {
-      "id": "d2e97311c56c1e940a3530f8",
-      "source": "rss_intelligence",
-      "eventDate": "2026-05-28",
-      "iso3": [
-        "USA"
       ],
       "eventType": "economic.trade",
-      "headline": "IEA: Global Oil Investment Set to Fall for Third Consecutive Year Due to Middle East War Shock",
-      "summary": "The International Energy Agency reported that global investment in oil projects is on track to decline for the third consecutive year, driven by the supply shock resulting from the Middle East conflict. The war has shifted priorities toward new trade routes and alternative energy sources. The IEA finding signals a structural shift in global energy investment patterns.",
+      "headline": "IEA: Global Gas Demand Set for First Annual Drop Since 2022 Due to Iran War",
+      "summary": "The International Energy Agency has forecast that global gas demand will post its first annual decline since the 2022 energy crisis, attributing the drop to higher prices caused by the ongoing Iran war. The IEA's assessment links the conflict's disruption of energy markets to a structural demand contraction.",
       "confidenceScore": 0.78,
       "confidenceLabel": "high",
+      "coordinateQuality": "missing",
       "tier": 2,
       "tags": [
         "bloomberg-markets",
-        "storyline:8c23a00f"
+        "storyline:33400b9c"
+      ],
+      "geopoliticalScore": 7.2,
+      "economicImpactScore": 8.2
+    },
+    {
+      "id": "ba6be156583e6fe1e5a22ad8",
+      "source": "rss_intelligence",
+      "eventDate": "2026-07-07",
+      "iso3": [
+        "GBR",
+        "IRN"
+      ],
+      "eventType": "energy.disruption",
+      "headline": "BP Boosted European Jet Fuel Output 30% During Iran Conflict to Avert Shortages",
+      "summary": "BP Plc increased jet fuel production at its European refineries by approximately 30% during the Iran conflict, helping the region avoid major fuel shortages. Millions of barrels of oil were locked up in the Persian Gulf during the period, necessitating the production increase.",
+      "confidenceScore": 0.8,
+      "confidenceLabel": "high",
+      "coordinateQuality": "missing",
+      "tier": 2,
+      "tags": [
+        "bloomberg-markets",
+        "storyline:33400b9c"
+      ],
+      "geopoliticalScore": 6.5,
+      "economicImpactScore": 7.5
+    },
+    {
+      "id": "7bee85d22f570dfe15479d55",
+      "source": "rss_intelligence",
+      "eventDate": "2026-07-07",
+      "iso3": [
+        "RUS",
+        "IRN",
+        "USA",
+        "ISR"
+      ],
+      "eventType": "energy.disruption",
+      "headline": "Russian Oil Export Volumes Hit New High But Revenue Crushed by Falling Prices",
+      "summary": "Russia's oil export flows have reached a new record high, but tumbling crude prices are severely compressing income from those exports. Urals crude prices have fallen back to levels seen before the US and Israel launched their military campaign against Iran.",
+      "confidenceScore": 0.78,
+      "confidenceLabel": "high",
+      "coordinateQuality": "missing",
+      "tier": 2,
+      "tags": [
+        "bloomberg-markets",
+        "storyline:33400b9c"
       ],
       "geopoliticalScore": 7,
       "economicImpactScore": 8
     },
     {
-      "id": "821e7e6f85466b3ea6980eaf",
+      "id": "41fbdeb08b391684be47d198",
       "source": "rss_intelligence",
-      "eventDate": "2026-05-28",
+      "eventDate": "2026-07-07",
       "iso3": [
-        "LBN",
-        "ISR",
-        "IRN"
+        "ARE",
+        "SAU"
       ],
-      "eventType": "conflict.armed",
-      "headline": "Israel Intensifies Military Campaign Against Hezbollah Across Lebanon",
-      "summary": "Israel has intensified its military campaign against Hezbollah, the Iran-backed militant group, striking targets across Lebanon. Israeli warplanes were observed circling over southern Lebanon. The escalation represents a continuation and intensification of ongoing hostilities between Israel and Hezbollah.",
-      "confidenceScore": 0.72,
-      "confidenceLabel": "medium",
-      "tier": 1,
-      "tags": [
-        "nytimes-world",
-        "storyline:2bb67e28"
-      ],
-      "geopoliticalScore": 8,
-      "economicImpactScore": 5
-    },
-    {
-      "id": "3479ad9a5942e43fc913d984",
-      "source": "rss_intelligence",
-      "eventDate": "2026-05-28",
-      "iso3": [
-        "IRN",
-        "USA"
-      ],
-      "eventType": "conflict.armed",
-      "headline": "US Strikes Iranian Military Site Near Bandar Abbas Despite Active Ceasefire",
-      "summary": "The United States launched new strikes on an Iranian military site near Bandar Abbas on day 90 of an ongoing US-Iran war, despite a fragile ceasefire and active peace negotiations between the two countries. Iran reported no casualties or damage but claimed it had targeted an American base in response. The hostilities are occurring against the backdrop of protracted negotiations to end the three-month conflict.",
+      "eventType": "other",
+      "headline": "Abu Dhabi Royal Family Firm to Invest $1.13 Billion in Aramco-Backed LNG Company MidOcean",
+      "summary": "An investment firm owned by members of Abu Dhabi's ruling family has committed $1.13 billion to liquefied natural gas company MidOcean Energy LLC, which is backed by Saudi Aramco. The deal represents a significant cross-Gulf energy investment amid ongoing regional conflict.",
       "confidenceScore": 0.82,
       "confidenceLabel": "high",
-      "tier": 1,
-      "tags": [
-        "aljazeera-english",
-        "bbc-world",
-        "bloomberg-markets",
-        "storyline:2bb67e28"
-      ],
-      "geopoliticalScore": 9,
-      "economicImpactScore": 8.5
-    },
-    {
-      "id": "79b506f1f5156d4505d29149",
-      "source": "rss_intelligence",
-      "eventDate": "2026-05-28",
-      "iso3": [
-        "CHN",
-        "KAZ",
-        "UZB",
-        "TKM",
-        "KGZ",
-        "TJK"
-      ],
-      "eventType": "diplomatic.dispute",
-      "headline": "Central Asian States Tilt Toward China for Water Security Amid Iran War Uncertainty",
-      "summary": "Central Asian former Soviet states are shifting their strategic orientation toward China as geopolitical uncertainty deepens due to the Iran war. Beijing's expanding influence is recasting the region's alignment, with vulnerabilities exposed by the Iran conflict prompting interest in China for water security solutions.",
-      "confidenceScore": 0.52,
-      "confidenceLabel": "low",
-      "tier": 3,
-      "tags": [
-        "scmp-china",
-        "storyline:8c23a00f"
-      ],
-      "geopoliticalScore": 6.5,
-      "economicImpactScore": 2
-    },
-    {
-      "id": "849aa81e7ecb41f63340029b",
-      "source": "rss_intelligence",
-      "eventDate": "2026-05-28",
-      "iso3": [
-        "USA"
-      ],
-      "eventType": "energy.disruption",
-      "headline": "IEA: Global Oil Investment to Fall for Third Consecutive Year Due to Middle East War Shock",
-      "summary": "The International Energy Agency reported that global investment in oil projects is set to decline for a third straight year, driven by the supply shock stemming from the ongoing Middle East conflict. The war has shifted energy priorities toward new trade routes and alternative energy sources. No specific investment figures were cited in the available text.",
-      "confidenceScore": 0.7,
-      "confidenceLabel": "medium",
-      "tier": 2,
-      "tags": [
-        "bloomberg-markets",
-        "storyline:8c23a00f"
-      ],
-      "geopoliticalScore": 7,
-      "economicImpactScore": 7.5
-    },
-    {
-      "id": "85089c5e8ea1fa6e9a0450a0",
-      "source": "rss_intelligence",
-      "eventDate": "2026-05-28",
-      "iso3": [
-        "BRA",
-        "IRN"
-      ],
-      "eventType": "energy.disruption",
-      "headline": "Petrobras Raises Domestic Gasoline Prices After Brazil Approves Consumer Subsidies Amid Iran War Price Shock",
-      "summary": "Brazil's state oil producer Petrobras increased gasoline prices for distributors following government approval of new subsidies designed to protect consumers from surging crude prices linked to the Iran war. The move reflects downstream pressure on fuel markets outside the conflict zone. No specific price figures were provided in the available text.",
-      "confidenceScore": 0.75,
-      "confidenceLabel": "high",
+      "coordinateQuality": "missing",
       "tier": 3,
       "tags": [
         "bloomberg-markets",
-        "storyline:8c23a00f"
+        "storyline:3bac099c"
       ],
-      "geopoliticalScore": 4,
+      "geopoliticalScore": 5,
       "economicImpactScore": 6
     },
     {
-      "id": "fbcc53b73dfb3594756f1b76",
+      "id": "db8c1c3cbed0e0901076ca73",
       "source": "rss_intelligence",
-      "eventDate": "2026-05-28",
+      "eventDate": "2026-07-07",
       "iso3": [
-        "USA",
-        "IRN"
-      ],
-      "eventType": "economic.trade",
-      "headline": "Fed's Williams Says Monetary Policy Well-Positioned Amid US-Iran War Economic Fallout",
-      "summary": "Federal Reserve Bank of New York President John Williams stated that US monetary policy is well-positioned to respond to the economic effects of the US war in Iran. Fed Vice Chair Philip Jefferson separately warned that inflation risks remain tilted to the upside, citing tariffs and higher energy costs.",
-      "confidenceScore": 0.82,
-      "confidenceLabel": "high",
-      "tier": 3,
-      "tags": [
-        "bloomberg-markets",
-        "storyline:8c23a00f"
-      ],
-      "geopoliticalScore": 5,
-      "economicImpactScore": 7
-    },
-    {
-      "id": "ea6776be812ff40b85efa91f",
-      "source": "rss_intelligence",
-      "eventDate": "2026-05-28",
-      "iso3": [
-        "LBN",
-        "ISR"
+        "UKR",
+        "MCO"
       ],
       "eventType": "conflict.armed",
-      "headline": "Israel Strikes Beirut Southern Suburb, First Near Capital in Weeks, Ahead of Washington Talks",
-      "summary": "Israel's air force conducted a strike on an apartment building in the southern suburbs of Beirut on Thursday, the first strike near the Lebanese capital in weeks. The strike occurred a day ahead of crucial negotiations in Washington and further strained a fragile ceasefire under which fighting between Israeli troops and Hezbollah in south Lebanon has continued.",
-      "confidenceScore": 0.82,
+      "headline": "Monaco Bombing Suspect Anastasiia Berezovska Found Shot Dead Near Kyiv, Ukrainian Military Intelligence Employee Detained",
+      "summary": "The body of Anastasiia Berezovska, the Ukrainian woman suspected of planting a parcel bomb in Monaco last week targeting businessman Vadym Yermolaiev, was found shot dead near Kyiv. Ukrainian prosecutors confirmed the discovery, and authorities detained an employee of Ukraine's military intelligence service who admitted to killing her. Two additional individuals were also detained in connection with her murder.",
+      "confidenceScore": 0.88,
       "confidenceLabel": "high",
+      "coordinateQuality": "missing",
       "tier": 1,
       "tags": [
+        "dw-world",
         "france24-english",
-        "storyline:2bb67e28"
+        "nytimes-world",
+        "storyline:67ec2570"
+      ],
+      "geopoliticalScore": 7,
+      "economicImpactScore": 0.5
+    },
+    {
+      "id": "afae3704d02e91b3213c8fd5",
+      "source": "rss_intelligence",
+      "eventDate": "2026-07-07",
+      "iso3": [
+        "OMN",
+        "GBR",
+        "IRN",
+        "USA"
+      ],
+      "eventType": "energy.disruption",
+      "headline": "Tanker Struck and Set Ablaze in Strait of Hormuz Near Oman, British Military Reports",
+      "summary": "A tanker was struck by a projectile and caught fire in the Strait of Hormuz near Oman, according to a British maritime monitor. No casualties were reported. Neither Iran nor the United States immediately commented on the incident.",
+      "confidenceScore": 0.75,
+      "confidenceLabel": "high",
+      "coordinateQuality": "missing",
+      "tier": 1,
+      "tags": [
+        "washingtonpost-world",
+        "storyline:3bac099c"
+      ],
+      "geopoliticalScore": 8.5,
+      "economicImpactScore": 9
+    },
+    {
+      "id": "41864573dfb94f306cc77bde",
+      "source": "rss_intelligence",
+      "eventDate": "2026-07-07",
+      "iso3": [
+        "BLR",
+        "RUS",
+        "UKR"
+      ],
+      "eventType": "diplomatic.dispute",
+      "headline": "Belarus Faces Dual Pressure as Russia Demands War Support and Ukraine Threatens Cross-Border Strikes",
+      "summary": "Belarus is under simultaneous pressure from Russia, which is seeking military assistance for its war in Ukraine, and from Ukraine, which is threatening strikes against Belarusian territory. Belarus, which served as a staging ground for Russia's 2022 invasion of Ukraine, appears to be resisting deeper involvement in the conflict. The situation highlights Belarus's precarious geopolitical position.",
+      "confidenceScore": 0.7,
+      "confidenceLabel": "medium",
+      "coordinateQuality": "missing",
+      "tier": 2,
+      "tags": [
+        "washingtonpost-world",
+        "storyline:ee3fcabe"
       ],
       "geopoliticalScore": 7.5,
       "economicImpactScore": 3
     },
     {
-      "id": "73cdc6b45643d42a53d844ae",
+      "id": "5af38b9f1781936207e1d5c7",
       "source": "rss_intelligence",
-      "eventDate": "2026-05-28",
-      "iso3": [
-        "UKR",
-        "USA",
-        "RUS"
-      ],
-      "eventType": "diplomatic.dispute",
-      "headline": "Zelensky Requests Patriot PAC-3 Missiles and Air Defence Ammunition from Trump and US Congress",
-      "summary": "Ukrainian President Volodymyr Zelensky wrote to US President Donald Trump and Congress requesting Patriot PAC-3 missiles and additional air defence systems, warning that deliveries are falling dangerously short as Russia escalates its ballistic missile campaign. The letter was obtained by the Associated Press and comes amid a recent escalation in aerial attacks by both sides in the over four-year conflict.",
-      "confidenceScore": 0.85,
-      "confidenceLabel": "high",
-      "tier": 2,
-      "tags": [
-        "france24-english",
-        "storyline:8c23a00f"
-      ],
-      "geopoliticalScore": 7,
-      "economicImpactScore": 2
-    },
-    {
-      "id": "cab06e53250d3def614f35b4",
-      "source": "rss_intelligence",
-      "eventDate": "2026-05-28",
-      "iso3": [
-        "USA",
-        "IRN",
-        "ISR"
-      ],
-      "eventType": "diplomatic.cooperation",
-      "headline": "Trump Signals No Political Pressure to Conclude Iran Nuclear Deal Despite High Oil Prices",
-      "summary": "President Trump stated he feels no political pressure to conclude a peace agreement with Iran and that high oil prices would not force his hand. Trump also called for more countries to recognize Israel as a condition of any deal to end the war with Iran, a demand analysts describe as having near-zero probability of success.",
-      "confidenceScore": 0.82,
-      "confidenceLabel": "high",
-      "tier": 2,
-      "tags": [
-        "nytimes-world",
-        "storyline:8c23a00f"
-      ],
-      "geopoliticalScore": 8.5,
-      "economicImpactScore": 6
-    },
-    {
-      "id": "4312e8c8e65266712a3d967d",
-      "source": "rss_intelligence",
-      "eventDate": "2026-05-28",
-      "iso3": [
-        "CUB",
-        "RUS",
-        "USA"
-      ],
-      "eventType": "energy.disruption",
-      "headline": "Russian Tanker Diverts Away from Cuba, Deepening Fuel Crisis Under US Oil Blockade",
-      "summary": "A Russian tanker apparently en route to Cuba with fuel supplies changed course, depriving the island of a critical energy lifeline. Cuba is currently suffering under a U.S. oil blockade, making the diversion a severe blow to the country's fuel situation.",
-      "confidenceScore": 0.75,
-      "confidenceLabel": "high",
-      "tier": 2,
-      "tags": [
-        "nytimes-world",
-        "storyline:8c23a00f"
-      ],
-      "geopoliticalScore": 6.5,
-      "economicImpactScore": 3.5
-    },
-    {
-      "id": "ebcc4c6d75d6e01576e03cb1",
-      "source": "rss_intelligence",
-      "eventDate": "2026-05-28",
-      "iso3": [
-        "USA"
-      ],
-      "eventType": "other",
-      "headline": "IEA: Global Oil Investment Set to Fall for Third Consecutive Year Due to Middle East War Shock",
-      "summary": "The International Energy Agency reported that global investment in oil projects is expected to decline for a third consecutive year, driven by the supply shock from the Middle East conflict. The IEA noted the disruption is shifting priorities toward new trade routes and alternative energy sources.",
-      "confidenceScore": 0.75,
-      "confidenceLabel": "high",
-      "tier": 2,
-      "tags": [
-        "bloomberg-markets",
-        "storyline:8c23a00f"
-      ],
-      "geopoliticalScore": 7,
-      "economicImpactScore": 7.5
-    },
-    {
-      "id": "bd7d057c72ac91e21d14d23a",
-      "source": "rss_intelligence",
-      "eventDate": "2026-05-28",
-      "iso3": [
-        "BRA"
-      ],
-      "eventType": "energy.disruption",
-      "headline": "Petrobras Raises Domestic Gasoline Prices After Brazil Approves Subsidies to Offset Iran War-Driven Crude Surge",
-      "summary": "Brazilian state oil company Petrobras increased domestic gasoline prices for distributors following government approval of new subsidies designed to shield consumers from crude price increases driven by the Iran war. The move reflects the downstream economic impact of Middle East conflict on Latin American energy markets.",
-      "confidenceScore": 0.78,
-      "confidenceLabel": "high",
-      "tier": 3,
-      "tags": [
-        "bloomberg-markets",
-        "storyline:8c23a00f"
-      ],
-      "geopoliticalScore": 3.5,
-      "economicImpactScore": 5.5
-    },
-    {
-      "id": "cbf3222d31c1e4149ca9d11b",
-      "source": "rss_intelligence",
-      "eventDate": "2026-05-28",
+      "eventDate": "2026-07-07",
       "iso3": [
         "CHN",
         "USA"
       ],
-      "eventType": "other",
-      "headline": "Former Fed President Evans Urges China to Deepen Financial Markets to Internationalise Yuan",
-      "summary": "Charles Evans, former president of the Federal Reserve Bank of Chicago, stated that China has a unique window to internationalise the yuan by deepening its domestic financial markets. Evans cited the evolution of the US dollar and the euro as instructive models for Beijing's currency strategy.",
-      "confidenceScore": 0.7,
-      "confidenceLabel": "medium",
-      "tier": 3,
-      "tags": [
-        "scmp-china",
-        "storyline:8c23a00f"
-      ],
-      "geopoliticalScore": 3.5,
-      "economicImpactScore": 3.5
-    },
-    {
-      "id": "bbcff44c0cdbff3149850119",
-      "source": "rss_intelligence",
-      "eventDate": "2026-05-28",
-      "iso3": [
-        "LBN",
-        "ISR",
-        "IRN"
-      ],
-      "eventType": "conflict.armed",
-      "headline": "Israel Declares New 'Combat Zone' in Southern Lebanon, Orders Mass Evacuations South of Zahrani River",
-      "summary": "Israel expanded its military campaign in southern Lebanon, ordering residents to evacuate areas south of the Zahrani River as airstrikes intensified. The escalation occurs despite an April ceasefire, with Israeli officials said to be seeking to pressure Hezbollah while avoiding actions in Beirut that could complicate US-led diplomacy with Iran. The Israeli military issued sweeping evacuation warnings for two southern cities, signaling further imminent strikes.",
-      "confidenceScore": 0.82,
+      "eventType": "diplomatic.cooperation",
+      "headline": "China Conducts Rare Intercontinental Ballistic Missile Test Over Pacific, Drawing Condemnation from US Allies",
+      "summary": "China conducted what Beijing described as a 'routine' intercontinental ballistic missile test, firing a long-range missile into the Pacific Ocean — a departure from its previous practice of testing only within its own borders. US allies in the Pacific condemned the launch. The test is seen as a demonstration of China's growing military and nuclear deterrence capabilities aimed at narrowing the gap with the United States.",
+      "confidenceScore": 0.85,
       "confidenceLabel": "high",
+      "coordinateQuality": "missing",
       "tier": 1,
       "tags": [
-        "france24-english",
+        "dw-world",
         "nytimes-world",
-        "storyline:2bb67e28"
+        "washingtonpost-world",
+        "storyline:67ec2570"
       ],
-      "geopoliticalScore": 8,
-      "economicImpactScore": 4
+      "geopoliticalScore": 9,
+      "economicImpactScore": 5
     },
     {
       "id": "human-a15ae89f",

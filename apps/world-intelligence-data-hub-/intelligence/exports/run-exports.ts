@@ -360,8 +360,13 @@ export function runExports(date: string): ExportRunResult {
     briefs,
   };
 
+  // worldmaphistory_v2 was merged into unified-platform (src/worldmap fetches
+  // these files from public/data/imports at runtime). The old standalone-app
+  // path now exists only under _archive/, so the existsSync guard below
+  // silently skipped the write and the embedded map served weeks-old events
+  // as "live".
   const V2_IMPORT_PATHS = [
-    join(PATHS.root, '..', 'worldmaphistory_v2', 'public', 'data', 'imports'),
+    join(PATHS.root, '..', 'unified-platform', 'public', 'data', 'imports'),
   ];
   for (const dir of V2_IMPORT_PATHS) {
     if (!existsSync(join(dir, '..'))) continue;

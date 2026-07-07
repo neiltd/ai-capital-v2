@@ -1,4 +1,7 @@
-import { PrismaClient } from '@prisma/client'
+// App-local generated client (see prisma/schema.prisma `output`) — do not
+// import from '@prisma/client': that resolves to the pnpm-store copy shared
+// with unified-platform, where the last `prisma generate` to run wins.
+import { PrismaClient } from './generated/prisma'
 
 const globalForPrisma = globalThis as unknown as { prisma: PrismaClient }
 

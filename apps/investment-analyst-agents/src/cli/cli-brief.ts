@@ -11,7 +11,10 @@ const BRIEFINGS_DIR  = join(process.cwd(), 'briefings')
 const ARCHIVE_PATH   = join(process.cwd(), 'archive', 'predictions.jsonl')
 
 async function run() {
-  const today    = new Date().toISOString().slice(0, 10)
+  // Local calendar date (en-CA formats as YYYY-MM-DD). The UTC date rolls to
+  // tomorrow at 5pm PT, so an evening catch-up/--force run would write the
+  // briefing under tomorrow's filename and every "today" reader would miss it.
+  const today    = new Date().toLocaleDateString('en-CA')
   const force    = process.argv.includes('--force')
   const cached   = join(BRIEFINGS_DIR, `${today}.md`)
 

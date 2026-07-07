@@ -1,5 +1,10 @@
 generator client {
   provider = "prisma-client-js"
+  // Distinct output path — unified-platform uses Prisma too, and without
+  // per-app outputs both apps share one generated client in the pnpm store:
+  // whichever ran `prisma generate` last wins and the other's types/models
+  // (StyleProfile, Session.chatHistory here) silently go stale.
+  output   = "../lib/generated/prisma"
 }
 
 datasource db {

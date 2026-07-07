@@ -105,9 +105,14 @@ carry a `schemaVersion`; loaders warn (not fail) on mismatch.
 set) and `getPool()`. When `DATABASE_URL` is unset, callers fall back to local
 SQLite (`better-sqlite3`) and LanceDB for vectors — this is the migration
 fallback path, not the intended steady state. The launchd worker plist sets
-`DATABASE_URL=postgres://thanapold@localhost:5432/ai_capital`; **local ad-hoc
-CLI runs outside that plist won't have it set** unless you export it yourself,
-which silently sends embeddings to on-disk LanceDB instead of Postgres.
+`DATABASE_URL=postgres://thanapold@localhost:5432/ai_capital`; the root `.env`
+now also sets it for the queue bins (worker/submit/smoke, incl. the
+daily-queue.sh fallback worker), and `scripts/run-alerts.sh` /
+`scripts/refresh-prices.sh` export it themselves. **Per-app ad-hoc CLI runs
+(e.g. `npm run portfolio` inside an app dir) still won't have it set** unless
+you export it yourself — without it they silently read/write the stale SQLite
+fallback stores instead of Postgres (this is exactly how the CRWD 4:1 split
+adjustment got lost on 2026-07-05).
 
 `packages/pipeline-runs` (`@common/pipeline-runs`) is the structured
 observability layer: every stage calls `recordStart`/`recordEnd` around its
@@ -118,14 +123,15 @@ read this table. If a pipeline stage errors mysteriously, check
 `pipeline_runs` for the failing stage's `error_message`/`error_stack` before
 re-deriving from logs.
 
-### Known cross-app landmine: shared Prisma client
+### Cross-app Prisma clients (defused 2026-07-06)
 
-`unified-platform` and `creator-studio` both use Prisma with no custom `output`
-path in `schema.prisma`, so they share one generated `@prisma/client` in the
-pnpm store — whichever ran `npx prisma generate` most recently wins, and the
-other app's types go stale silently. Before working on `creator-studio`, run
-`cd apps/creator-studio && npx prisma generate` (and regenerate for
-`unified-platform` again before returning to it).
+`unified-platform` and `creator-studio` each generate their Prisma client to an
+app-local `output` path (`src/generated/prisma` and `lib/generated/prisma`
+respectively — both gitignored), so the old shared-client landmine (last
+`prisma generate` wins, other app's types silently stale) is gone. Import
+`PrismaClient` from the generated path (see each app's `lib/**/db.ts`), never
+from `@prisma/client`. After editing a `schema.prisma`, run `npx prisma
+generate` in that app's directory.
 
 ### Apps at a glance
 
