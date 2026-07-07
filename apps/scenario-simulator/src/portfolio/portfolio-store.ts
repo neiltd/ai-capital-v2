@@ -12,7 +12,7 @@ export type { PortfolioStore, Strategy, TradeEntry, UpsertPositionOptions } from
  * - DATABASE_URL set  → Postgres (portfolio.* schema, see packages/db/migrations)
  * - Otherwise         → SQLite (legacy; the path is honoured for backward-compat)
  */
-export function createPortfolioStore(sqliteFallbackPath: string) {
+export function createPortfolioStore(sqliteFallbackPath: string, options?: { fileMustExist?: boolean }) {
   if (usePostgres()) return createPgPortfolioStore()
-  return createSqlitePortfolioStore(sqliteFallbackPath)
+  return createSqlitePortfolioStore(sqliteFallbackPath, options)
 }

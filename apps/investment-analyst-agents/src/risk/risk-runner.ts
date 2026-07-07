@@ -9,6 +9,7 @@ import 'dotenv/config'
 import { join } from 'path'
 import { writeFileSync, renameSync, mkdirSync, existsSync } from 'fs'
 import Database from 'better-sqlite3'
+import { usePostgres, getPool, closePool } from '@common/db'
 import { formatReport } from './risk-report.js'
 
 // Writes to a temp file then renames into place. A same-filesystem rename is
@@ -162,9 +163,26 @@ function valueInUSD(p: Position, fx: number | null): number {
   return p.currency === 'THB' && fx ? p.currentValue / fx : p.currentValue
 }
 
-// ── Main ─────────────────────────────────────────────────────────────────────
-
-async function run() {
+// Positions live in Postgres once DATABASE_URL is set (the launchd worker's
+// steady state); the local portfolio.db is a stale migration-era fallback
+// that stopped being the source of truth once trades started landing in
+// Postgres (see the 2026-07-06 CRWD-split incident — this file previously
+// always read the SQLite copy regardless of usePostgres()).
+async function loadPositions(): Promise<Position[]> {
+  if (usePostgres()) {
+    const pool = getPool()
+    const { rows } = await pool.query<{ ticker: string; price_symbol: string; current_value: string; currency: string }>(
+      `SELECT ticker, price_symbol, current_value, currency
+         FROM portfolio.positions
+        WHERE asset_class != 'cash' AND price_symbol != '' AND current_value > 0`,
+    )
+    return rows.map(r => ({
+      ticker:       r.ticker,
+      priceSymbol:  r.price_symbol,
+      currentValue: Number(r.current_value),
+      currency:     r.currency,
+    }))
+  }
   if (!existsSync(PORTFOLIO_DB)) {
     console.error(`Portfolio DB not found at ${PORTFOLIO_DB}`)
     process.exit(1)
@@ -176,6 +194,13 @@ async function run() {
     WHERE asset_class != 'cash' AND price_symbol != '' AND current_value > 0
   `).all() as Position[]
   db.close()
+  return positions
+}
+
+// ── Main ─────────────────────────────────────────────────────────────────────
+
+async function run() {
+  const positions = await loadPositions()
 
   const fx = await fetchUsdThb()
   console.log(`[risk] ${positions.length} positions with price symbols (window: ${WINDOW_DAYS}d, benchmark: ${BENCHMARK}, FX=${fx ?? 'unknown'})`)
@@ -269,4 +294,6 @@ async function run() {
   console.log(`Summary: ${summary}`)
 }
 
-run().catch(err => { console.error(err); process.exit(1) })
+run()
+  .catch(err => { console.error(err); process.exit(1) })
+  .finally(() => { if (usePostgres()) return closePool() })

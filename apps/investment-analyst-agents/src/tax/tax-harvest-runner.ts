@@ -20,6 +20,7 @@ import 'dotenv/config'
 import { join } from 'path'
 import { writeFileSync, mkdirSync } from 'fs'
 import Database from 'better-sqlite3'
+import { usePostgres, getPool, closePool } from '@common/db'
 import { formatReport } from './tax-harvest-report.js'
 
 interface Position {
@@ -110,9 +111,47 @@ async function fetchUsdThb(): Promise<number | null> {
   } catch { return null }
 }
 
-// ── Main ─────────────────────────────────────────────────────────────────────
+// Positions/trades live in Postgres once DATABASE_URL is set — see
+// risk-runner.ts's loadPositions for why this file must not always fall
+// back to the stale local portfolio.db.
+async function loadPositionsAndTrades(): Promise<{ positions: Position[]; trades: TradeEntry[] }> {
+  if (usePostgres()) {
+    const pool = getPool()
+    const posResult = await pool.query<{
+      ticker: string; asset_class: string; currency: string; strategy: string
+      shares: string; avg_cost: string; current_price: string; unrealized_pnl: string
+    }>(
+      `SELECT ticker, asset_class, currency, strategy, shares, avg_cost, current_price, unrealized_pnl
+         FROM portfolio.positions
+        WHERE shares > 0`,
+    )
+    const positions: Position[] = posResult.rows.map(r => ({
+      ticker:        r.ticker,
+      assetClass:    r.asset_class,
+      currency:      r.currency,
+      strategy:      r.strategy,
+      shares:        Number(r.shares),
+      avgCost:       Number(r.avg_cost),
+      currentPrice:  Number(r.current_price),
+      unrealizedPnl: Number(r.unrealized_pnl),
+    }))
 
-async function run() {
+    const tradeResult = await pool.query<{ trade_date: Date; ticker: string; action: 'buy' | 'sell'; shares: string; price: string; reason: string }>(
+      `SELECT trade_date, ticker, action, shares, price, reason
+         FROM portfolio.trade_log
+        ORDER BY trade_date DESC, id DESC`,
+    )
+    const trades: TradeEntry[] = tradeResult.rows.map(r => ({
+      date:   r.trade_date instanceof Date ? r.trade_date.toISOString().slice(0, 10) : String(r.trade_date),
+      ticker: r.ticker,
+      action: r.action,
+      shares: Number(r.shares),
+      price:  Number(r.price),
+      reason: r.reason,
+    }))
+    return { positions, trades }
+  }
+
   const db = new Database(PORTFOLIO_DB, { readonly: true })
   const positions = db.prepare(`
     SELECT ticker, asset_class AS assetClass, currency, strategy,
@@ -128,6 +167,13 @@ async function run() {
     ORDER BY date DESC, id DESC
   `).all() as TradeEntry[]
   db.close()
+  return { positions, trades }
+}
+
+// ── Main ─────────────────────────────────────────────────────────────────────
+
+async function run() {
+  const { positions, trades } = await loadPositionsAndTrades()
 
   const fx = await fetchUsdThb()
   console.log(`[tax] ${positions.length} positions, ${trades.length} trades in log, FX=${fx ?? 'unknown'}`)
@@ -262,4 +308,6 @@ function daysAgo(dateStr: string): number {
   return Math.floor((Date.now() - new Date(dateStr).getTime()) / 86_400_000)
 }
 
-run().catch(err => { console.error(err); process.exit(1) })
+run()
+  .catch(err => { console.error(err); process.exit(1) })
+  .finally(() => { if (usePostgres()) return closePool() })

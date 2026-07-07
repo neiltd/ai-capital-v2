@@ -14,6 +14,7 @@ import 'dotenv/config'
 import { join } from 'path'
 import { readFileSync, writeFileSync, existsSync, mkdirSync } from 'fs'
 import Database from 'better-sqlite3'
+import { usePostgres, getPool, closePool } from '@common/db'
 import { createPortfolioStore } from '../portfolio/portfolio-store.js'
 import { sendLine } from '../notify/line.js'
 
@@ -34,6 +35,7 @@ interface AlertState {
 interface TickerAlert {
   ticker:          string
   company:         string
+  currency:        string    // position's native currency — .BK prices are THB, not USD
   currentPrice:    number
   priorClose:      number
   intradayPctChange: number
@@ -89,23 +91,38 @@ function articleCountSince(ingestionDb: Database.Database, ticker: string, since
   return row?.n ?? 0
 }
 
+// When DATABASE_URL is set, ingestion writes documents to Postgres
+// (capital.documents) and the local sqlite.db goes stale — counting from the
+// file would silently report 0 articles forever. Mirror the store selection.
+async function articleCountSincePg(ticker: string, sinceIso: string): Promise<number> {
+  const { rows } = await getPool().query(
+    'SELECT COUNT(*)::int AS n FROM capital.documents WHERE ticker = $1 AND fetched_at > $2',
+    [ticker, sinceIso],
+  )
+  return (rows[0] as { n: number } | undefined)?.n ?? 0
+}
+
 // ── Main ─────────────────────────────────────────────────────────────────────
 
 async function run() {
-  if (!existsSync(PORTFOLIO_DB)) {
+  if (!usePostgres() && !existsSync(PORTFOLIO_DB)) {
     console.error(`Portfolio DB not found at ${PORTFOLIO_DB}`)
     process.exit(1)
   }
   mkdirSync(DATA_DIR, { recursive: true })
-  const portfolioStore = createPortfolioStore(PORTFOLIO_DB)
+  const portfolioStore = createPortfolioStore(PORTFOLIO_DB, { fileMustExist: true })
   const positions = (await portfolioStore.getPositions())
     .filter(p => p.assetClass !== 'cash' && p.priceSymbol && p.shares > 0)
   await portfolioStore.close()
 
   const state = loadState()
   const sinceIso = new Date(Date.now() - NEWS_WINDOW_HOURS * 3_600_000).toISOString()
-  const ingestionAvailable = existsSync(INGESTION_DB)
+  const ingestionAvailable = !usePostgres() && existsSync(INGESTION_DB)
   const ingestionDb = ingestionAvailable ? new Database(INGESTION_DB, { readonly: true }) : null
+  const countArticles = async (ticker: string): Promise<number> => {
+    if (usePostgres()) return articleCountSincePg(ticker, sinceIso)
+    return ingestionDb ? articleCountSince(ingestionDb, ticker, sinceIso) : 0
+  }
 
   const alerts: TickerAlert[] = []
   for (const p of positions) {
@@ -114,7 +131,7 @@ async function run() {
     if (last && minutesSince(last.lastAlertedAt) < REPEAT_ALERT_MIN_MINUTES) continue
 
     const { current, priorClose } = await fetchIntradayPrice(p.priceSymbol)
-    const articleCount = ingestionDb ? articleCountSince(ingestionDb, p.ticker, sinceIso) : 0
+    const articleCount = await countArticles(p.ticker)
 
     const reasons: string[] = []
     let intradayChange = 0
@@ -132,6 +149,7 @@ async function run() {
       alerts.push({
         ticker:           p.ticker,
         company:          p.company,
+        currency:         p.currency,
         currentPrice:     current,
         priorClose:       priorClose ?? 0,
         intradayPctChange: intradayChange,
@@ -153,9 +171,11 @@ async function run() {
   ]
   for (const a of alerts) {
     const changeSign = a.intradayPctChange >= 0 ? '+' : ''
+    // .BK/Thai positions quote in THB — labeling them "$" reads ~33x wrong.
+    const sym = a.currency === 'THB' ? '฿' : '$'
     lines.push(
       `${a.ticker} (${a.company})`,
-      `  Price: $${a.currentPrice.toFixed(2)} (${changeSign}${(a.intradayPctChange * 100).toFixed(2)}% vs prev close ${a.priorClose.toFixed(2)})`,
+      `  Price: ${sym}${a.currentPrice.toFixed(2)} (${changeSign}${(a.intradayPctChange * 100).toFixed(2)}% vs prev close ${a.priorClose.toFixed(2)})`,
       `  Reasons: ${a.reasons.join(' · ')}`,
       ``,
     )
@@ -167,4 +187,6 @@ async function run() {
   console.log(`[alerts] LINE message sent (${alerts.length} alerts) and state updated`)
 }
 
-run().catch(err => { console.error(err); process.exit(1) })
+run()
+  .catch(err => { console.error(err); process.exit(1) })
+  .finally(() => { void closePool() })

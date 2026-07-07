@@ -18,7 +18,7 @@ mkdirSync(DATA_DIR, { recursive: true })
 
 const args    = process.argv.slice(2)
 const command = args[0]
-const store   = createPortfolioStore(join(DATA_DIR, 'portfolio.db'))
+const store   = createPortfolioStore(join(DATA_DIR, 'portfolio.db'), { fileMustExist: true })
 
 const VALID_CLASSES: AssetClass[]    = ['us_equity', 'th_equity', 'th_fund', 'gold', 'cash']
 const VALID_CURRENCIES: Currency[]   = ['USD', 'THB']

@@ -7,7 +7,7 @@ import { fetchPrices, fetchPricesAndFx } from '../portfolio/price-fetcher.js'
 import { fetchThaiNavs } from '../portfolio/thai-nav-fetcher.js'
 
 const __dirname = dirname(fileURLToPath(import.meta.url))
-const store = createPortfolioStore(join(__dirname, '../../data/portfolio.db'))
+const store = createPortfolioStore(join(__dirname, '../../data/portfolio.db'), { fileMustExist: true })
 
 function exportPortfolioTickers(tickers: string[]): void {
   const dataRoot = process.env.DATA_ROOT

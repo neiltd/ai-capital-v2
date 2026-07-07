@@ -23,7 +23,7 @@ async function runAnalysis() {
   const analysis: AnalysisJSON = JSON.parse(readFileSync(ANALYSIS_PATH, 'utf-8'))
   const graph: GraphJSON       = JSON.parse(readFileSync(GRAPH_PATH, 'utf-8'))
 
-  const portfolioStore = createPortfolioStore(join(DATA_DIR, 'portfolio.db'))
+  const portfolioStore = createPortfolioStore(join(DATA_DIR, 'portfolio.db'), { fileMustExist: true })
   const simStore       = createSimulationStore(join(DATA_DIR, 'simulation.db'))
 
   try {

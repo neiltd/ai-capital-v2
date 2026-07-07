@@ -11,6 +11,7 @@ import 'dotenv/config'
 import { join } from 'path'
 import { writeFileSync, renameSync, mkdirSync, existsSync } from 'fs'
 import Database from 'better-sqlite3'
+import { usePostgres, getPool, closePool } from '@common/db'
 import { formatReport } from './correlation-report.js'
 
 // See risk-runner.ts for why this is atomic (rename, not direct write) —
@@ -75,7 +76,26 @@ const CONCENTRATION_WARN_PCT = 30   // Clusters > 30% of portfolio trigger flag
 
 // ── Fetch positions ──────────────────────────────────────────────────────────
 
-function loadPositions(): Position[] {
+// See risk-runner.ts's loadPositions for why this checks usePostgres() first —
+// this file previously always read the stale SQLite portfolio.db regardless
+// of which store was actually authoritative.
+async function loadPositions(): Promise<Position[]> {
+  if (usePostgres()) {
+    const pool = getPool()
+    const { rows } = await pool.query<{ ticker: string; asset_class: string; price_symbol: string; current_value: string; currency: string }>(
+      `SELECT ticker, asset_class, price_symbol, current_value, currency
+         FROM portfolio.positions
+        WHERE asset_class != 'cash' AND price_symbol != '' AND current_value > 0
+        ORDER BY current_value DESC`,
+    )
+    return rows.map(r => ({
+      ticker:       r.ticker,
+      assetClass:   r.asset_class,
+      priceSymbol:  r.price_symbol,
+      currentValue: Number(r.current_value),
+      currency:     r.currency,
+    }))
+  }
   if (!existsSync(PORTFOLIO_DB)) {
     console.error(`Portfolio DB not found at ${PORTFOLIO_DB}`)
     process.exit(1)
@@ -176,7 +196,7 @@ function buildClusters(
 // ── Main ─────────────────────────────────────────────────────────────────────
 
 async function run() {
-  const positions = loadPositions()
+  const positions = await loadPositions()
   const fx = await fetchUsdThb()
   console.log(`[correlation] ${positions.length} positions with price symbols (FX=${fx ?? 'unknown'})`)
 
@@ -251,4 +271,6 @@ async function run() {
   console.log(`\nReport: ${REPORT_PATH}`)
 }
 
-run().catch(err => { console.error(err); process.exit(1) })
+run()
+  .catch(err => { console.error(err); process.exit(1) })
+  .finally(() => { if (usePostgres()) return closePool() })

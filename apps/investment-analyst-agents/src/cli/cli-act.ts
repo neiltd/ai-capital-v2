@@ -2,8 +2,11 @@ import 'dotenv/config'
 import { join } from 'path'
 import { readFileSync, writeFileSync, existsSync, appendFileSync } from 'fs'
 import Database from 'better-sqlite3'
+import { usePostgres, getPool, closePool } from '@common/db'
 
 const ROOT             = join(process.cwd(), '..')
+// SQLite fallback only — see the note on loadDb() below. Production (Postgres)
+// never touches this path.
 const PORTFOLIO_DB     = join(ROOT, 'scenario-simulator/data/portfolio.db')
 const SIMULATION_JSON  = join(ROOT, 'scenario-simulator/data/simulation.json')
 const TRADE_LOG        = join(process.cwd(), 'data/trade-log.jsonl')
@@ -58,6 +61,147 @@ async function fetchPrices(tickers: string[]): Promise<Record<string, number>> {
   const result: Record<string, number> = {}
   for (const { t, p } of pairs) { if (p !== null) result[t] = p }
   return result
+}
+
+// ── Portfolio data access ────────────────────────────────────────────────────
+// Same usePostgres()-gated pattern as risk-runner.ts/correlation-runner.ts/
+// tax-harvest-runner.ts — this file executes real trades, so it must never
+// silently fall back to the stale local portfolio.db when Postgres (the live
+// store) is the intended target.
+
+interface ActStore {
+  getPosition(ticker: string): Promise<DbRow | undefined>
+  insertNewPosition(ticker: string, shares: number, price: number): Promise<void>
+  trimPosition(ticker: string, sharesAfter: number, price: number): Promise<void>
+  deletePosition(ticker: string): Promise<void>
+  buyMorePosition(ticker: string, sharesAfter: number, newAvgCost: number, price: number): Promise<void>
+  getAllPositions(): Promise<PositionRow[]>
+  close(): Promise<void>
+}
+
+type PositionRow = {
+  ticker: string; company: string; shares: number; avgCost: number
+  currentPrice: number; currentValue: number; unrealizedPnl: number; updatedAt: string
+}
+
+function num(v: unknown): number {
+  if (v === null || v === undefined) return 0
+  return typeof v === 'number' ? v : Number(v)
+}
+
+function createPgActStore(): ActStore {
+  const pool = getPool()
+  return {
+    async getPosition(ticker) {
+      const { rows } = await pool.query<{
+        ticker: string; company: string; shares: string; avg_cost: string
+        current_price: string; current_value: string; unrealized_pnl: string; updated_at: Date
+      }>('SELECT ticker, company, shares, avg_cost, current_price, current_value, unrealized_pnl, updated_at FROM portfolio.positions WHERE ticker = $1', [ticker])
+      const r = rows[0]
+      if (!r) return undefined
+      return {
+        ticker: r.ticker, company: r.company, shares: num(r.shares), avg_cost: num(r.avg_cost),
+        current_price: num(r.current_price), current_value: num(r.current_value),
+        unrealized_pnl: num(r.unrealized_pnl), updated_at: r.updated_at.toISOString(),
+      }
+    },
+    async insertNewPosition(ticker, shares, price) {
+      await pool.query(
+        `INSERT INTO portfolio.positions (ticker, company, shares, avg_cost, current_price, current_value, unrealized_pnl, updated_at)
+         VALUES ($1, $1, $2, $3, $3, $2 * $3, 0, now())`,
+        [ticker, shares, price],
+      )
+    },
+    async trimPosition(ticker, sharesAfter, price) {
+      await pool.query(
+        `UPDATE portfolio.positions SET
+           shares = $1, current_price = $2, current_value = $1 * $2,
+           unrealized_pnl = ($1 * $2) - ($1 * avg_cost), updated_at = now()
+         WHERE ticker = $3`,
+        [sharesAfter, price, ticker],
+      )
+    },
+    async deletePosition(ticker) {
+      await pool.query('DELETE FROM portfolio.positions WHERE ticker = $1', [ticker])
+    },
+    async buyMorePosition(ticker, sharesAfter, newAvgCost, price) {
+      await pool.query(
+        `UPDATE portfolio.positions SET
+           shares = $1, avg_cost = $2, current_price = $3, current_value = $1 * $3,
+           unrealized_pnl = ($1 * $3) - ($1 * $2), updated_at = now()
+         WHERE ticker = $4`,
+        [sharesAfter, newAvgCost, price, ticker],
+      )
+    },
+    async getAllPositions() {
+      const { rows } = await pool.query<{
+        ticker: string; company: string; shares: string; avg_cost: string
+        current_price: string; current_value: string; unrealized_pnl: string; updated_at: Date
+      }>('SELECT ticker, company, shares, avg_cost, current_price, current_value, unrealized_pnl, updated_at FROM portfolio.positions ORDER BY ticker')
+      return rows.map(r => ({
+        ticker: r.ticker, company: r.company, shares: num(r.shares), avgCost: num(r.avg_cost),
+        currentPrice: num(r.current_price), currentValue: num(r.current_value),
+        unrealizedPnl: num(r.unrealized_pnl), updatedAt: r.updated_at.toISOString(),
+      }))
+    },
+    async close() {
+      // Shared pool — closed centrally in run()'s finally block via closePool().
+    },
+  }
+}
+
+function createSqliteActStore(): ActStore {
+  // fileMustExist: true — see portfolio-store-sqlite.ts. This file executes
+  // real trades; if the expected data/portfolio.db is missing (e.g. renamed
+  // away as stale) it must error, not silently start writing into a fresh
+  // empty database.
+  const db = new Database(PORTFOLIO_DB, { fileMustExist: true })
+  db.pragma('journal_mode = WAL')
+  return {
+    async getPosition(ticker) {
+      return db.prepare('SELECT * FROM positions WHERE ticker = ?').get(ticker) as DbRow | undefined
+    },
+    async insertNewPosition(ticker, shares, price) {
+      db.prepare(`
+        INSERT INTO positions (ticker, company, shares, avg_cost, current_price, current_value, unrealized_pnl, updated_at)
+        VALUES (?, ?, ?, ?, ?, ?, ?, ?)
+      `).run(ticker, ticker, shares, price, price, shares * price, 0, new Date().toISOString())
+    },
+    async trimPosition(ticker, sharesAfter, price) {
+      db.prepare(`
+        UPDATE positions SET
+          shares = ?, current_price = ?, current_value = ? * ?,
+          unrealized_pnl = (? * ?) - (? * avg_cost), updated_at = ?
+        WHERE ticker = ?
+      `).run(sharesAfter, price, sharesAfter, price, sharesAfter, price, sharesAfter, new Date().toISOString(), ticker)
+    },
+    async deletePosition(ticker) {
+      db.prepare('DELETE FROM positions WHERE ticker = ?').run(ticker)
+    },
+    async buyMorePosition(ticker, sharesAfter, newAvgCost, price) {
+      db.prepare(`
+        UPDATE positions SET
+          shares = ?, avg_cost = ?, current_price = ?, current_value = ? * ?,
+          unrealized_pnl = (? * ?) - (? * ?), updated_at = ?
+        WHERE ticker = ?
+      `).run(sharesAfter, newAvgCost, price, sharesAfter, price, sharesAfter, price, sharesAfter, newAvgCost, new Date().toISOString(), ticker)
+    },
+    async getAllPositions() {
+      const rows = db.prepare('SELECT * FROM positions ORDER BY ticker').all() as PositionRowSqlite[]
+      return rows.map(r => ({
+        ticker: r.ticker, company: r.company, shares: r.shares, avgCost: r.avg_cost,
+        currentPrice: r.current_price, currentValue: r.current_value,
+        unrealizedPnl: r.unrealized_pnl, updatedAt: r.updated_at,
+      }))
+    },
+    async close() { db.close() },
+  }
+}
+
+type PositionRowSqlite = { ticker: string; company: string; shares: number; avg_cost: number; current_price: number; current_value: number; unrealized_pnl: number; updated_at: string }
+
+function createActStore(): ActStore {
+  return usePostgres() ? createPgActStore() : createSqliteActStore()
 }
 
 function hasActedToday(date: string): boolean {
@@ -118,14 +262,13 @@ async function run() {
   console.log(`[act] Fetching prices for: ${tickers.join(', ')}`)
   const prices = await fetchPrices(tickers)
 
-  const db = new Database(PORTFOLIO_DB)
-  db.pragma('journal_mode = WAL')
+  const store = createActStore()
 
   try {
     const trades: object[] = []
 
     for (const act of activeActions) {
-      const row = db.prepare('SELECT * FROM positions WHERE ticker = ?').get(act.ticker) as DbRow | undefined
+      const row = await store.getPosition(act.ticker)
 
       if (!row) {
         // buy into a new position
@@ -138,10 +281,7 @@ async function run() {
           // Default allocation: $1000 for new positions
           const allocation = 1000
           const shares = parseFloat((allocation / price).toFixed(4))
-          db.prepare(`
-            INSERT INTO positions (ticker, company, shares, avg_cost, current_price, current_value, unrealized_pnl, updated_at)
-            VALUES (?, ?, ?, ?, ?, ?, ?, ?)
-          `).run(act.ticker, act.ticker, shares, price, price, shares * price, 0, new Date().toISOString())
+          await store.insertNewPosition(act.ticker, shares, price)
           console.log(`[act] BUY new: ${act.ticker} ${shares} shares @ $${price}`)
           trades.push({ date: today, ticker: act.ticker, action: 'buy', type: 'new', sharesBefore: 0, sharesAfter: shares, avgCostAfter: price, price, value: shares * price, conviction: act.conviction })
         } else {
@@ -151,33 +291,24 @@ async function run() {
       }
 
       const price = prices[act.ticker] ?? row.current_price
-      const now = new Date().toISOString()
 
       if (act.action === 'trim') {
         const trimFraction = Math.abs(act.allocationChangePct) / 100
         const sharesRemoved = row.shares * trimFraction
         const sharesAfter = parseFloat((row.shares - sharesRemoved).toFixed(6))
         if (sharesAfter < 0.0001) {
-          db.prepare('DELETE FROM positions WHERE ticker = ?').run(act.ticker)
+          await store.deletePosition(act.ticker)
           console.log(`[act] TRIM→EXIT: ${act.ticker} trimmed to near-zero, removed`)
           trades.push({ date: today, ticker: act.ticker, action: 'exit', type: 'trim-full', sharesBefore: row.shares, sharesAfter: 0, price, value: 0, conviction: act.conviction })
         } else {
-          db.prepare(`
-            UPDATE positions SET
-              shares         = ?,
-              current_price  = ?,
-              current_value  = ? * ?,
-              unrealized_pnl = (? * ?) - (? * avg_cost),
-              updated_at     = ?
-            WHERE ticker = ?
-          `).run(sharesAfter, price, sharesAfter, price, sharesAfter, price, sharesAfter, now, act.ticker)
+          await store.trimPosition(act.ticker, sharesAfter, price)
           const value = parseFloat((sharesAfter * price).toFixed(2))
           console.log(`[act] TRIM ${act.allocationChangePct}%: ${act.ticker} ${row.shares.toFixed(4)} → ${sharesAfter.toFixed(4)} shares, value $${value}`)
           trades.push({ date: today, ticker: act.ticker, action: 'trim', pct: act.allocationChangePct, sharesBefore: row.shares, sharesAfter, avgCost: row.avg_cost, price, value, conviction: act.conviction, rationale: act.rationale.slice(0, 120) })
         }
 
       } else if (act.action === 'exit') {
-        db.prepare('DELETE FROM positions WHERE ticker = ?').run(act.ticker)
+        await store.deletePosition(act.ticker)
         const exitValue = parseFloat((row.shares * price).toFixed(2))
         console.log(`[act] EXIT: ${act.ticker} ${row.shares.toFixed(4)} shares @ $${price} = $${exitValue}`)
         trades.push({ date: today, ticker: act.ticker, action: 'exit', sharesBefore: row.shares, sharesAfter: 0, price, value: exitValue, conviction: act.conviction, rationale: act.rationale.slice(0, 120) })
@@ -192,16 +323,7 @@ async function run() {
         const addShares = parseFloat((addValue / price).toFixed(6))
         const sharesAfter = parseFloat((row.shares + addShares).toFixed(6))
         const newAvgCost = parseFloat(((row.shares * row.avg_cost + addShares * price) / sharesAfter).toFixed(4))
-        db.prepare(`
-          UPDATE positions SET
-            shares         = ?,
-            avg_cost       = ?,
-            current_price  = ?,
-            current_value  = ? * ?,
-            unrealized_pnl = (? * ?) - (? * ?),
-            updated_at     = ?
-          WHERE ticker = ?
-        `).run(sharesAfter, newAvgCost, price, sharesAfter, price, sharesAfter, price, sharesAfter, newAvgCost, now, act.ticker)
+        await store.buyMorePosition(act.ticker, sharesAfter, newAvgCost, price)
         const value = parseFloat((sharesAfter * price).toFixed(2))
         console.log(`[act] BUY +${act.allocationChangePct}%: ${act.ticker} ${row.shares.toFixed(4)} → ${sharesAfter.toFixed(4)} shares @ avg $${newAvgCost}`)
         trades.push({ date: today, ticker: act.ticker, action: 'buy', pct: act.allocationChangePct, sharesBefore: row.shares, sharesAfter, avgCostAfter: newAvgCost, price, value, conviction: act.conviction, rationale: act.rationale.slice(0, 120) })
@@ -209,17 +331,7 @@ async function run() {
     }
 
     // Re-export simulation.json with updated portfolio
-    type PositionRow = { ticker: string; company: string; shares: number; avg_cost: number; current_price: number; current_value: number; unrealized_pnl: number; updated_at: string }
-    const updatedPositions = (db.prepare('SELECT * FROM positions ORDER BY ticker').all() as PositionRow[]).map(r => ({
-      ticker:        r.ticker,
-      company:       r.company,
-      shares:        r.shares,
-      avgCost:       r.avg_cost,
-      currentPrice:  r.current_price,
-      currentValue:  r.current_value,
-      unrealizedPnl: r.unrealized_pnl,
-      updatedAt:     r.updated_at,
-    }))
+    const updatedPositions = await store.getAllPositions()
 
     const updatedSim = { ...sim, exportedAt: new Date().toISOString(), portfolio: updatedPositions }
     writeFileSync(SIMULATION_JSON, JSON.stringify(updatedSim, null, 2), 'utf-8')
@@ -232,7 +344,7 @@ async function run() {
 
     console.log(`[act] Done — ${trades.length} trade(s) executed, logged to ${TRADE_LOG}`)
   } finally {
-    db.close()
+    await store.close()
   }
 }
 
@@ -240,4 +352,6 @@ function appendTradeLog(path: string, entry: object) {
   appendFileSync(path, JSON.stringify(entry) + '\n', 'utf-8')
 }
 
-run().catch(err => { console.error('[act] Fatal:', err); process.exit(1) })
+run()
+  .catch(err => { console.error('[act] Fatal:', err); process.exit(1) })
+  .finally(() => { if (usePostgres()) return closePool() })

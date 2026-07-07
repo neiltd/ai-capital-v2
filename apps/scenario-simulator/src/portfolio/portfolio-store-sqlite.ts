@@ -16,8 +16,17 @@ function inferDefaults(ticker: string): { assetClass: AssetClass; currency: Curr
   return { assetClass: 'us_equity', currency: 'USD', priceSymbol: ticker }
 }
 
-export function createSqlitePortfolioStore(dbPath: string): PortfolioStore {
-  const db = new Database(dbPath)
+export function createSqlitePortfolioStore(
+  dbPath: string,
+  options?: { fileMustExist?: boolean },
+): PortfolioStore {
+  // fileMustExist defaults to false (better-sqlite3's own default) so tests
+  // and genuine first-time local setups can still create a fresh file.
+  // Production callers pointing at the known data/portfolio.db path pass
+  // fileMustExist: true so a renamed-away/missing file errors loudly instead
+  // of silently starting from an empty portfolio (see CLAUDE.md — this is
+  // how the CRWD split adjustment previously went unnoticed).
+  const db = new Database(dbPath, { fileMustExist: options?.fileMustExist ?? false })
   db.pragma('journal_mode = WAL')
 
   db.exec(`
