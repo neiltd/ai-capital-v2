@@ -1,6 +1,7 @@
 import fs from 'fs'
 import path from 'path'
 import type { AnalysisJSON, SimulationJSON, GraphJSON, StockIntelJSON, WorldIntelJSON, DiscoveryJSON, MacroJSON, WavesJSON, WaveActionsJSON, WavePortfolioJSON, GovFlowJSON } from '@/types'
+import type { RiskJSON, HarvestJSON } from '@/lib/next/types'
 
 function dataRoot(): string {
   const root = process.env.DATA_ROOT
@@ -115,5 +116,19 @@ export function readGovFlow(): GovFlowJSON | null {
   try {
     const filePath = path.join(dataRoot(), 'government-flow-monitor/data/govflow.json')
     return readJSON<GovFlowJSON>(filePath)
+  } catch { return null }
+}
+
+export function readRisk(): RiskJSON | null {
+  try {
+    const filePath = path.join(dataRoot(), 'investment-analyst-agents/risk/risk.json')
+    return readJSON<RiskJSON>(filePath)
+  } catch { return null }
+}
+
+export function readHarvest(): HarvestJSON | null {
+  try {
+    const filePath = path.join(dataRoot(), 'investment-analyst-agents/tax/harvest.json')
+    return readJSON<HarvestJSON>(filePath)
   } catch { return null }
 }
