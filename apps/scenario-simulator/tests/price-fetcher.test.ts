@@ -5,10 +5,14 @@ beforeEach(() => { vi.resetAllMocks() })
 
 describe('fetchPrices', () => {
   it('returns a price map from a successful API response', async () => {
-    global.fetch = vi.fn().mockResolvedValue({
-      ok:   true,
-      json: async () => ({ data: [{ ticker: 'NVDA', price: 92.00 }, { ticker: 'MSFT', price: 415.00 }] }),
-    } as any)
+    // Real shape from Yahoo's chart endpoint (see fetchPrice in price-fetcher.ts) —
+    // this test predates the FinancialData.net → Yahoo Finance migration.
+    const chartResponse = (price: number) => ({
+      chart: { result: [{ meta: { regularMarketPrice: price }, timestamp: [], indicators: { quote: [{ close: [] }] } }] },
+    })
+    global.fetch = vi.fn()
+      .mockResolvedValueOnce({ ok: true, json: async () => chartResponse(92.00) } as any)
+      .mockResolvedValueOnce({ ok: true, json: async () => chartResponse(415.00) } as any)
 
     const prices = await fetchPrices(['NVDA', 'MSFT'])
 

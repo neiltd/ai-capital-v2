@@ -3,7 +3,14 @@ import type { DiscoveryCandidate, ScoredCandidate } from './types.js'
 
 const client = new Anthropic()
 
-const SYSTEM_PROMPT = `You are a technology investment analyst screening stocks for portfolio fit. The investor focuses on AI infrastructure, semiconductors, and emerging tech. Score each ticker 0–100 based on: recent news signal strength, sector fit, momentum, and data availability. Be conservative — only score ≥ 70 if there is a clear, specific reason to investigate further.`
+// No sector bias here on purpose — a prompt that names favored themes directly
+// produces a one-theme paper book (verified: 15 of 16 positions in the
+// 2026-06 cohort were "AI infrastructure" under the old wording, and that
+// concentration was the proposal's own root-cause finding for why the cohort
+// measured sector beta instead of stock-picking skill). Diversification is
+// scored explicitly via the theme-weight context below, not baked into the
+// system prompt's framing of what's interesting.
+const SYSTEM_PROMPT = `You are an investment analyst screening stocks across all sectors for portfolio fit. Score each ticker 0–100 based on: recent news signal strength, momentum, data availability, and — critically — marginal diversification value given the theme-weight context you're given. A candidate in an already-crowded theme should score lower than an equally strong candidate in an underrepresented one, all else equal. Be conservative — only score ≥ 70 if there is a clear, specific reason to investigate further.`
 
 interface ScoreEntry {
   ticker: string
@@ -15,7 +22,9 @@ export async function scoreCandidates(
   candidates: DiscoveryCandidate[],
   macroRegime: string,
   realPortfolioTickers: string[],
-  openDiscoveryTickers: string[]
+  openDiscoveryTickers: string[],
+  themeContext: string = '',
+  calibrationContext: string = '',
 ): Promise<ScoredCandidate[]> {
   if (candidates.length === 0) return []
 
@@ -65,8 +74,10 @@ export async function scoreCandidates(
           `Current macro regime: ${macroRegime}`,
           `Real portfolio tickers (already held, avoid scoring up close substitutes): ${realPortfolioTickers.join(', ') || 'none'}`,
           `Already-open discovery positions (skip re-scoring): ${openDiscoveryTickers.join(', ') || 'none'}`,
+          themeContext || 'Theme-weight context: unavailable this run — score on fundamentals alone.',
+          calibrationContext,
           `Candidates to score:\n${candidateList}`,
-        ].join('\n\n'),
+        ].filter(Boolean).join('\n\n'),
       },
     ],
   })
@@ -81,7 +92,10 @@ export async function scoreCandidates(
   const candidateMap = new Map(candidates.map(c => [c.ticker, c]))
 
   return input.scores
-    .filter(s => s.ticker && typeof s.score === 'number')
+    // Drop any ticker Claude returns that wasn't in the candidate set instead
+    // of fabricating a fallback candidate for it — a hallucinated ticker that
+    // happens to resolve on Yahoo could otherwise get bought.
+    .filter(s => s.ticker && typeof s.score === 'number' && candidateMap.has(s.ticker))
     .map(s => {
       const candidate = candidateMap.get(s.ticker)
       return {

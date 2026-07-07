@@ -31,7 +31,9 @@ export async function analyzeCandidate(
   candidate: ScoredCandidate,
   currentPrice: number,
   macroRegime: string,
-  macroSignals: string
+  macroSignals: string,
+  themeContext: string = '',
+  calibrationContext: string = '',
 ): Promise<AnalysisResult | null> {
   const today = new Date().toISOString().slice(0, 10)
   const now = new Date().toISOString()
@@ -95,7 +97,9 @@ export async function analyzeCandidate(
           `Current price: $${currentPrice.toFixed(2)}`,
           `Current macro regime: ${macroRegime}`,
           `Key macro signals:\n${macroSignals}`,
-        ].join('\n'),
+          themeContext,
+          calibrationContext,
+        ].filter(Boolean).join('\n'),
       },
     ],
   })

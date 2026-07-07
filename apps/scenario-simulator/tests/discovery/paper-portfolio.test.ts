@@ -97,6 +97,48 @@ describe('PaperPortfolio', () => {
     })
   })
 
+  describe('closePosition', () => {
+    it('moves the position to closed with correct realized P&L', () => {
+      portfolio.openPosition('SMCI', 'Super Micro', 5, 200.00, 80, 'news_mention', 'test')
+      const closed = portfolio.closePosition('SMCI', 220.00, 'thesis played out')
+      expect(closed.realizedPnl).toBeCloseTo(100.00) // (220 - 200) * 5
+      expect(closed.exitPrice).toBeCloseTo(220.00)
+      expect(closed.exitReason).toBe('thesis played out')
+
+      // No longer open
+      expect(portfolio.getOpenTickers().has('SMCI')).toBe(false)
+      expect(portfolio.getPositions()).toHaveLength(0)
+    })
+
+    it('handles a realized loss correctly', () => {
+      portfolio.openPosition('CRUS', 'Cirrus Logic', 10, 100.00, 74, 'companies_table', 'test')
+      const closed = portfolio.closePosition('CRUS', 85.00, 'stop hit')
+      expect(closed.realizedPnl).toBeCloseTo(-150.00) // (85 - 100) * 10
+    })
+
+    it('appears in getClosedPositions after closing', () => {
+      portfolio.openPosition('SMCI', 'Super Micro', 5, 200.00, 80, 'news_mention', 'test')
+      portfolio.closePosition('SMCI', 220.00, 'thesis played out')
+      const closedList = portfolio.getClosedPositions()
+      expect(closedList).toHaveLength(1)
+      expect(closedList[0].ticker).toBe('SMCI')
+      expect(closedList[0].avgCost).toBeCloseTo(200.00)
+    })
+
+    it('throws when closing a ticker that is not open', () => {
+      expect(() => portfolio.closePosition('NOPE', 100, 'n/a')).toThrow()
+    })
+
+    it('does not affect other open positions', () => {
+      portfolio.openPosition('SMCI', 'Super Micro', 5, 200.00, 80, 'news_mention', 'test')
+      portfolio.openPosition('CRUS', 'Cirrus Logic', 10, 100.00, 74, 'companies_table', 'test')
+      portfolio.closePosition('SMCI', 220.00, 'thesis played out')
+      const remaining = portfolio.getPositions()
+      expect(remaining).toHaveLength(1)
+      expect(remaining[0].ticker).toBe('CRUS')
+    })
+  })
+
   describe('insertRun', () => {
     it('inserts a discovery run record', () => {
       portfolio.insertRun(makeRun())

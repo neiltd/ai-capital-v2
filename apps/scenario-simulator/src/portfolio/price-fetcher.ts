@@ -22,12 +22,39 @@ async function fetchPrice(ticker: string): Promise<number | null> {
     }
     const result = data.chart.result?.[0]
     if (!result) return null
+    const previousClose = result.meta.previousClose
+
+    // Sanity check — Yahoo occasionally returns a garbage regularMarketPrice
+    // (bad upstream tick, stale cache, ticker collision). A >60% single-day
+    // move against the same response's previousClose is implausible for the
+    // kind of equities this system trades; reject rather than silently book
+    // it. This is exactly the class of bug that corrupted the KLAC discovery
+    // position on 2026-06-02 (avg_cost $2003 vs a real price near $230) —
+    // caught only a month later because nothing validated the fetch.
+    function plausible(price: number): boolean {
+      if (!previousClose || previousClose <= 0) return true // nothing to compare against
+      return Math.abs(price - previousClose) / previousClose <= 0.6
+    }
+
     // Prefer live market price, fall back to last close
     const live = result.meta.regularMarketPrice
-    if (live && live > 0) return live
+    if (live && live > 0) {
+      if (!plausible(live)) {
+        console.warn(`Price fetch rejected for ${ticker}: regularMarketPrice ${live} implausible vs previousClose ${previousClose}`)
+        return null
+      }
+      return live
+    }
     const closes = result.indicators.quote[0]?.close ?? []
     for (let i = closes.length - 1; i >= 0; i--) {
-      if (closes[i] != null) return closes[i] as number
+      if (closes[i] != null) {
+        const c = closes[i] as number
+        if (!plausible(c)) {
+          console.warn(`Price fetch rejected for ${ticker}: last close ${c} implausible vs previousClose ${previousClose}`)
+          return null
+        }
+        return c
+      }
     }
     return null
   } catch (error) {
