@@ -46,7 +46,9 @@ describe('generateBriefing', () => {
 
     await generateBriefing({ ...baseCtx, profile: '', profileMissing: true }, { client: mockClient })
     const userMsg = capturedMessages.find((m: any) => m.role === 'user')
-    expect(userMsg.content).toContain('No investor profile found')
+    // content is an array of Anthropic content blocks (see briefing-agent.ts),
+    // not a plain string — this predates that message-content change.
+    expect(userMsg.content[0].text).toContain('No investor profile found')
   })
 
   it('throws when Claude returns no text block', async () => {

@@ -58,7 +58,11 @@ describe('fetchYahooAsset', () => {
     expect(result).toBeNull()
   })
 
-  it('YAHOO_ASSETS has 11 entries', () => {
-    expect(YAHOO_ASSETS).toHaveLength(11)
+  it('YAHOO_ASSETS covers the core assets', () => {
+    expect(YAHOO_ASSETS.length).toBeGreaterThanOrEqual(11)
+    const tickers = YAHOO_ASSETS.map(a => a.ticker)
+    for (const core of ['SPY', '^TNX', '^VIX', 'HYG']) {
+      expect(tickers).toContain(core)
+    }
   })
 })

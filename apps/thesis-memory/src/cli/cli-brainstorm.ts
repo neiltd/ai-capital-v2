@@ -1,6 +1,7 @@
 // src/cli/cli-brainstorm.ts
 import 'dotenv/config'
 import { join } from 'path'
+import { fileURLToPath } from 'url'
 import * as readline from 'readline'
 import Anthropic from '@anthropic-ai/sdk'
 import { createThesisStore } from '../store/thesis-store.js'
@@ -165,4 +166,9 @@ Ground every leg in the company context above. Do not invent evidence.`
   await store.close()
 }
 
-main().catch(err => { console.error(err); process.exit(1) })
+// CLI entry point — only run when invoked directly (not imported, e.g. by tests)
+const isMain = process.argv[1] === fileURLToPath(import.meta.url)
+
+if (isMain) {
+  main().catch(err => { console.error(err); process.exit(1) })
+}

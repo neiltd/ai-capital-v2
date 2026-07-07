@@ -2,14 +2,14 @@ import { describe, it, expect } from 'vitest'
 import { computeSignal } from '../src/fetchers/liquidity-fetcher.js'
 
 describe('computeSignal — WALCL (Fed Balance Sheet)', () => {
-  it('returns draining when 4w change < -20B', () => {
-    expect(computeSignal('WALCL', -85, null)).toBe('draining')
+  it('returns draining when 4w change < -0.5%', () => {
+    expect(computeSignal('WALCL', -0.8, null)).toBe('draining')
   })
-  it('returns injecting when 4w change > +20B', () => {
-    expect(computeSignal('WALCL', 50, null)).toBe('injecting')
+  it('returns injecting when 4w change > +0.5%', () => {
+    expect(computeSignal('WALCL', 0.8, null)).toBe('injecting')
   })
-  it('returns neutral when 4w change is between -20 and +20', () => {
-    expect(computeSignal('WALCL', 10, null)).toBe('neutral')
+  it('returns neutral when 4w change is between -0.5% and +0.5%', () => {
+    expect(computeSignal('WALCL', 0.2, null)).toBe('neutral')
   })
   it('returns neutral when change4w is null', () => {
     expect(computeSignal('WALCL', null, null)).toBe('neutral')

@@ -1,7 +1,8 @@
 // tests/thesis/updater.test.ts
 import { describe, it, expect, beforeEach, afterEach } from 'vitest'
 import { applyApprovedChanges } from '../../src/thesis/updater.js'
-import { createThesisStore, ThesisStore } from '../../src/store/sqlite.js'
+import { createSqliteThesisStore } from '../../src/store/thesis-store-sqlite.js'
+import type { ThesisStore } from '../../src/store/thesis-store-types.js'
 import { mkdtempSync, rmSync } from 'fs'
 import { tmpdir } from 'os'
 import { join } from 'path'
@@ -10,95 +11,95 @@ import type { Thesis, Assumption, Narrative, Proposal, ProposalChange } from '..
 let tmpDir: string
 let store: ThesisStore
 
-beforeEach(() => {
+beforeEach(async () => {
   tmpDir = mkdtempSync(join(tmpdir(), 'updater-test-'))
-  store = createThesisStore(join(tmpDir, 'thesis.db'))
+  store = createSqliteThesisStore(join(tmpDir, 'thesis.db'))
 
   const thesis: Thesis = {
     id: 't1', ticker: 'NVDA', type: 'company', positionSize: 'core',
     createdAt: '2026-01-01T00:00:00Z', updatedAt: '2026-01-01T00:00:00Z',
   }
-  store.createThesis(thesis)
+  await store.createThesis(thesis)
 
   const assumption: Assumption = {
     id: 'a1', thesisId: 't1', label: 'CUDA moat remains dominant', status: 'stable',
     lastEvidenceSummary: null, createdAt: '2026-01-01T00:00:00Z', updatedAt: '2026-01-01T00:00:00Z',
   }
-  store.createAssumption(assumption)
+  await store.createAssumption(assumption)
 
   const narrative: Narrative = {
     id: 'n1', thesisId: 't1', content: 'Original narrative.', version: 1,
     createdAt: '2026-01-01T00:00:00Z',
   }
-  store.createNarrative(narrative)
+  await store.createNarrative(narrative)
 })
 
-afterEach(() => {
-  store.close()
+afterEach(async () => {
+  await store.close()
   rmSync(tmpDir, { recursive: true })
 })
 
 describe('applyApprovedChanges', () => {
-  it('updates assumption status when change is approved', () => {
+  it('updates assumption status when change is approved', async () => {
     const proposal: Proposal = {
       id: 'p1', thesisId: 't1', status: 'pending', chunkIdsUsed: [],
       claudeReasoning: '', createdAt: '2026-05-22T00:00:00Z', resolvedAt: null,
     }
-    store.createProposal(proposal)
+    await store.createProposal(proposal)
 
     const change: ProposalChange = {
       id: 'c1', proposalId: 'p1', changeType: 'assumption_status', assumptionId: 'a1',
       oldValue: 'stable', newValue: 'strengthening',
       reasoning: 'Strong revenue growth', evidenceQuotes: ['revenue up 85%'], approved: true,
     }
-    store.createProposalChange(change)
+    await store.createProposalChange(change)
 
-    applyApprovedChanges('p1', store)
+    await applyApprovedChanges('p1', store)
 
-    const updated = store.getAssumptions('t1')[0]
+    const updated = (await store.getAssumptions('t1'))[0]
     expect(updated.status).toBe('strengthening')
     expect(updated.lastEvidenceSummary).toBe('Strong revenue growth')
   })
 
-  it('creates a new narrative version when narrative change is approved', () => {
+  it('creates a new narrative version when narrative change is approved', async () => {
     const proposal: Proposal = {
       id: 'p1', thesisId: 't1', status: 'pending', chunkIdsUsed: [],
       claudeReasoning: '', createdAt: '2026-05-22T00:00:00Z', resolvedAt: null,
     }
-    store.createProposal(proposal)
+    await store.createProposal(proposal)
 
     const change: ProposalChange = {
       id: 'c2', proposalId: 'p1', changeType: 'narrative', assumptionId: null,
       oldValue: 'Original narrative.', newValue: 'Updated narrative reflecting new evidence.',
       reasoning: 'Evidence supports stronger thesis', evidenceQuotes: [], approved: true,
     }
-    store.createProposalChange(change)
+    await store.createProposalChange(change)
 
-    applyApprovedChanges('p1', store)
+    await applyApprovedChanges('p1', store)
 
-    const history = store.getNarrativeHistory('t1')
+    const history = await store.getNarrativeHistory('t1')
     expect(history).toHaveLength(2)
     expect(history[1].content).toBe('Updated narrative reflecting new evidence.')
     expect(history[1].version).toBe(2)
   })
 
-  it('does not apply rejected changes', () => {
+  it('does not apply rejected changes', async () => {
     const proposal: Proposal = {
       id: 'p1', thesisId: 't1', status: 'pending', chunkIdsUsed: [],
       claudeReasoning: '', createdAt: '2026-05-22T00:00:00Z', resolvedAt: null,
     }
-    store.createProposal(proposal)
+    await store.createProposal(proposal)
 
     const change: ProposalChange = {
       id: 'c1', proposalId: 'p1', changeType: 'assumption_status', assumptionId: 'a1',
       oldValue: 'stable', newValue: 'weakening',
       reasoning: 'Some concern', evidenceQuotes: [], approved: false,
     }
-    store.createProposalChange(change)
+    await store.createProposalChange(change)
 
-    applyApprovedChanges('p1', store)
+    await applyApprovedChanges('p1', store)
 
-    const assumption = store.getAssumptions('t1')[0]
+    const assumption = (await store.getAssumptions('t1'))[0]
     expect(assumption.status).toBe('stable')
   })
 })
