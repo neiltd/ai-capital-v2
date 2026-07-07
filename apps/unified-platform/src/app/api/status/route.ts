@@ -3,7 +3,7 @@ export const dynamic = 'force-dynamic'
 import { NextResponse } from 'next/server'
 import fs from 'fs'
 import path from 'path'
-import { todayLocal, readSimulation, readHarvest } from '@/lib/data'
+import { todayLocal, readSimulation, readHarvest, computeNetWorthUsd } from '@/lib/data'
 import { getRecentRuns } from '@common/pipeline-runs'
 
 // Wash-sale chips surface automatically once the do-not-rebuy window is
@@ -28,12 +28,7 @@ export async function GET() {
   try {
     const sim = readSimulation()
     usdThb = sim.usdThb ?? null
-    netWorthUsd = sim.portfolio.reduce((sum, p) => {
-      if (typeof p.currentValue !== 'number') return sum
-      const currency = p.currency ?? 'USD'
-      if (currency === 'THB' && usdThb) return sum + p.currentValue / usdThb
-      return sum + p.currentValue
-    }, 0)
+    netWorthUsd = computeNetWorthUsd(sim)
   } catch {
     // simulation.json missing/unparseable — leave both null, UI renders '—'
   }

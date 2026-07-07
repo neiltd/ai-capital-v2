@@ -132,3 +132,19 @@ export function readHarvest(): HarvestJSON | null {
     return readJSON<HarvestJSON>(filePath)
   } catch { return null }
 }
+
+/**
+ * Net worth in USD, converting THB-native positions at the pipeline's own
+ * FX rate. Positions carry their value in native currency (see the
+ * 2026-07-05/06 CRWD-split + THB-summed-as-USD incidents) — never sum
+ * `currentValue` directly across a mixed-currency portfolio.
+ */
+export function computeNetWorthUsd(sim: SimulationJSON): number {
+  const usdThb = sim.usdThb ?? null
+  return sim.portfolio.reduce((sum, p) => {
+    if (typeof p.currentValue !== 'number') return sum
+    const currency = p.currency ?? 'USD'
+    if (currency === 'THB' && usdThb) return sum + p.currentValue / usdThb
+    return sum + p.currentValue
+  }, 0)
+}
