@@ -1,5 +1,6 @@
 import type { Metadata } from 'next'
 import './globals.css'
+import './tokens.css'
 
 export const metadata: Metadata = { title: 'Intelligence Hub' }
 

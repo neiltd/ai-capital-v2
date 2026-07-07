@@ -42,7 +42,27 @@ const config: Config = {
         'red-signal':    '#f87171',
         'red-soft':      '#ef4444',
         'blue-signal':   '#60a5fa',
+
+        // Redesign tokens (design-redesign-2026-07/screens/_shared/tokens.css)
+        // — CSS custom properties, theme-aware via [data-theme]/prefers-color-scheme.
+        page:      'var(--page)',
+        surface:   { DEFAULT: 'var(--surface)', 2: 'var(--surface-2)' },
+        ink:       { DEFAULT: 'var(--ink)', 2: 'var(--ink-2)', 3: 'var(--ink-3)' },
+        hairline:  'var(--hairline)',
+        grid:      'var(--grid)',
+        accent:    'var(--accent)',
+        gain:      'var(--gain)',
+        loss:      'var(--loss)',
+        status: {
+          good: '#0ca30c', warning: '#fab219',
+          serious: '#ec835a', critical: '#d03b3b',
+        },
+        cat: {
+          1: 'var(--cat-1)', 2: 'var(--cat-2)',
+          3: 'var(--cat-3)', 4: 'var(--cat-4)', cash: '#898781',
+        },
       },
+      borderRadius: { card: '8px', chip: '6px' },
       boxShadow: {
         'glow-indigo': '0 0 0 1px rgba(94, 106, 210, 0.25), 0 4px 24px -8px rgba(94, 106, 210, 0.45)',
         'card':        '0 1px 0 0 rgba(255,255,255,0.03) inset, 0 1px 2px 0 rgba(0,0,0,0.4)',
