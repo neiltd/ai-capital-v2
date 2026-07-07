@@ -441,6 +441,9 @@ importers:
       '@common/pipeline-runs':
         specifier: workspace:*
         version: link:../../packages/pipeline-runs
+      '@common/types':
+        specifier: workspace:*
+        version: link:../../packages/common-types
       '@napi-rs/canvas':
         specifier: ^1.0.0
         version: 1.0.0
