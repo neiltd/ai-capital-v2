@@ -82,6 +82,7 @@ export interface GraphEdge {
 }
 
 export interface GraphJSON {
+  exportedAt?: string
   nodes: GraphNode[]
   edges: GraphEdge[]
 }
