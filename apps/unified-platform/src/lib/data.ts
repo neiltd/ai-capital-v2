@@ -1,6 +1,6 @@
 import fs from 'fs'
 import path from 'path'
-import type { AnalysisJSON, SimulationJSON, GraphJSON, StockIntelJSON, WorldIntelJSON, DiscoveryJSON, MacroJSON, WavesJSON, WaveActionsJSON, WavePortfolioJSON, GovFlowJSON } from '@/types'
+import type { AnalysisJSON, SimulationJSON, GraphJSON, StockIntelJSON, WorldIntelJSON, DiscoveryJSON, DiscoveryPosition, MacroJSON, WavesJSON, WaveActionsJSON, WavePortfolioJSON, GovFlowJSON } from '@/types'
 import type { RiskJSON, HarvestJSON } from '@/lib/next/types'
 import type { BriefingJSON } from '@common/types'
 
@@ -86,6 +86,31 @@ export function readDiscovery(): DiscoveryJSON | null {
   const filePath = path.join(dataRoot(), 'scenario-simulator', 'data', 'discovery.json')
   try {
     return readJSON<DiscoveryJSON>(filePath)
+  } catch {
+    return null
+  }
+}
+
+export interface DiscoveryCohortArchive {
+  archivedAt: string
+  reason: string
+  positions: DiscoveryPosition[]
+}
+
+export function readDiscoveryCohortArchive(cohort: number): DiscoveryCohortArchive | null {
+  const filePath = path.join(dataRoot(), 'scenario-simulator', 'data', `discovery-cohort-${cohort}-archive.json`)
+  try {
+    return readJSON<DiscoveryCohortArchive>(filePath)
+  } catch {
+    return null
+  }
+}
+
+/** Doesn't exist until the first Sunday discovery run after calibration.ts landed. */
+export function readDiscoveryCalibration(): unknown | null {
+  const filePath = path.join(dataRoot(), 'scenario-simulator', 'data', 'discovery-calibration.json')
+  try {
+    return readJSON<unknown>(filePath)
   } catch {
     return null
   }

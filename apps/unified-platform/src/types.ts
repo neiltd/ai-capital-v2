@@ -219,6 +219,33 @@ export interface DiscoveryPosition {
   rationale: string
   openedAt: string
   updatedAt: string
+  /** SPY price at open — null for positions opened before benchmark tracking existed. */
+  benchmarkPriceAtOpen?: number | null
+  /** Volatility-derived stop/target — null for positions opened before risk-based sizing existed. */
+  stopPrice?: number | null
+  targetPrice?: number | null
+  /** Conviction after the adversarial bear review — distinct from `score` (pre-analysis light-filter score). */
+  adjustedConviction?: 'high' | 'medium' | 'low' | null
+}
+
+export interface DiscoveryClosedPosition {
+  ticker: string
+  company: string
+  shares: number
+  avgCost: number
+  exitPrice: number
+  realizedPnl: number
+  score: number
+  source: DiscoverySource
+  rationale: string
+  exitReason: string
+  openedAt: string
+  closedAt: string
+  benchmarkPriceAtOpen?: number | null
+  benchmarkPriceAtClose?: number | null
+  stopPrice?: number | null
+  targetPrice?: number | null
+  adjustedConviction?: 'high' | 'medium' | 'low' | null
 }
 
 export interface DiscoveryScenario {
@@ -252,6 +279,7 @@ export interface DiscoveryJSON {
   }
   candidates: DiscoveryExportCandidate[]
   discoveryPortfolio: DiscoveryPosition[]
+  closedPositions?: DiscoveryClosedPosition[]
   scenarios: DiscoveryScenario[]
   actions: DiscoveryAction[]
 }
