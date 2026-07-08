@@ -124,6 +124,15 @@ export interface WorldEvent {
   date?: string
   firstSeenAt?: string
   eventType?: string
+  storylineId?: string | null
+  eventState?: string
+  confidence?: number       // 0.0 to 1.0; < 0.6 renders as single-source
+  lat?: number | null
+  lng?: number | null
+  coordinateQuality?: 'exact' | 'country_centroid'
+  marketRelevance?: number  // 0.0 to 1.0
+  latestSeenAt?: string
+  sourceCount?: number
 }
 
 export interface WorldCountrySignal {
@@ -136,10 +145,32 @@ export interface WorldCountrySignal {
   activeStorylines?: string[]
 }
 
+export interface WorldStoryline {
+  storylineId: string
+  title: string
+  storylineState: 'active' | 'escalating' | 'stable' | 'dormant' | string
+  countries: string[]
+  eventTypes: string[]
+  totalEvents: number
+  totalSources: number
+  avgConfidence: number
+  avgEscalation: number
+  maxSeverity: number
+  firstSeenAt: string
+  latestSeenAt: string
+  daysActive: number
+  eventIds: string[]
+}
+
 export interface WorldIntelJSON {
   date: string
+  generatedAt?: string
+  eventCount?: number
+  uniqueSourceCount?: number
+  reviewExcludedCount?: number
   events: WorldEvent[]
   countrySignals: WorldCountrySignal[]
+  storylines?: WorldStoryline[]
 }
 
 export interface BriefingResponse {
