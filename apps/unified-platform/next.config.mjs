@@ -4,6 +4,13 @@ const config = {
   // must be transpiled by Next.js for webpack to follow extension-rewriting.
   transpilePackages: ['@common/pipeline-runs', '@common/types', '@common/db'],
 
+  // Redesign cutover (2026-07-08): the new Briefing screen is the app's
+  // home route now, per design-system.md §1 ("Briefing is the home
+  // route"). The old homepage moved to /overview rather than being deleted.
+  async redirects() {
+    return [{ source: '/', destination: '/today', permanent: false }]
+  },
+
   // @common/db re-exports a LanceDB factory whose native .node binary webpack
   // can't bundle. Mark the lance bits external so they're loaded via require
   // at runtime on the server only. In Next 14.2 this lives under experimental;
