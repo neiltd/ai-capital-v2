@@ -2,7 +2,7 @@
 const config = {
   // Workspace packages authored as TS ESM (./foo.js imports resolving to ./foo.ts)
   // must be transpiled by Next.js for webpack to follow extension-rewriting.
-  transpilePackages: ['@common/pipeline-runs', '@common/types', '@common/db'],
+  transpilePackages: ['@common/pipeline-runs', '@common/types', '@common/db', '@common/queue'],
 
   // Redesign cutover (2026-07-08): the new Briefing screen is the app's
   // home route now, per design-system.md §1 ("Briefing is the home

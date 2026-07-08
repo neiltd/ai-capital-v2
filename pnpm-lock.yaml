@@ -444,6 +444,9 @@ importers:
       '@common/pipeline-runs':
         specifier: workspace:*
         version: link:../../packages/pipeline-runs
+      '@common/queue':
+        specifier: workspace:*
+        version: link:../../packages/queue
       '@common/types':
         specifier: workspace:*
         version: link:../../packages/common-types

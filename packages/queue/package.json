@@ -9,6 +9,10 @@
     ".": {
       "types": "./src/index.ts",
       "import": "./src/index.ts"
+    },
+    "./jobs": {
+      "types": "./src/jobs.ts",
+      "import": "./src/jobs.ts"
     }
   },
   "bin": {
