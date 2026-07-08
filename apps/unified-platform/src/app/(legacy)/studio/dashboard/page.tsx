@@ -42,7 +42,7 @@ export default async function DashboardPage() {
       <PageHeader
         title="Dashboard"
         actions={
-          <Link href="/studio" className="text-xs text-text-inactive hover:text-text-secondary transition-colors">
+          <Link href="/studio/chat" className="text-xs text-text-inactive hover:text-text-secondary transition-colors">
             ← Today
           </Link>
         }

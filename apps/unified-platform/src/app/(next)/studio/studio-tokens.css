@@ -1,0 +1,59 @@
+/*
+ * Creator Studio theme — deliberately DISTINCT from the investment dashboard
+ * (design-system.md §8). Shares only token *infrastructure* (4px spacing
+ * scale, type-scale ratios, radius names, shadcn primitives). Scope class
+ * `.studio-theme` on the /studio/* route-group layout so tokens can't leak
+ * into the dashboard, and vice versa.
+ *
+ * Light-first: warm paper, magenta/orange accent pair, larger base type,
+ * rounded-xl cards WITH soft shadows (the dashboard forbids shadows; the
+ * studio wants them). Dark is supported but secondary.
+ *
+ * tailwind wiring (inside the /studio route group only):
+ *   colors: {
+ *     paper: 'var(--st-paper)', card: 'var(--st-card)',
+ *     inkst: { DEFAULT: 'var(--st-ink)', 2: 'var(--st-ink-2)', 3: 'var(--st-ink-3)' },
+ *     magenta: 'var(--st-magenta)', tangerine: 'var(--st-orange)',
+ *     wash: { magenta: 'var(--st-magenta-wash)', orange: 'var(--st-orange-wash)' },
+ *   },
+ *   borderRadius: { stcard: '16px', stchip: '9999px' },
+ *   boxShadow: { st: '0 2px 8px rgba(60,40,20,.08), 0 1px 2px rgba(60,40,20,.06)' },
+ */
+
+.studio-theme {
+  color-scheme: light;
+  --st-paper: #faf7f2; /* warm paper — NOT the dashboard's graphite */
+  --st-card: #ffffff;
+  --st-card-2: #f4efe7; /* inset wells, column backgrounds */
+  --st-ink: #2b2622;
+  --st-ink-2: #6b6259;
+  --st-ink-3: #a39a8f;
+  --st-line: rgba(43, 38, 34, 0.1);
+  --st-magenta: #d55181; /* primary accent */
+  --st-orange: #eb6834; /* secondary accent — pair, never gradient-mixed */
+  --st-magenta-wash: #f9e7ee;
+  --st-orange-wash: #fdeade;
+  --st-good: #3d9a50; /* posted/success — studio's own green, warmer */
+  --st-shadow: 0 2px 8px rgba(60, 40, 20, 0.08), 0 1px 2px rgba(60, 40, 20, 0.06);
+}
+
+/* Dark supported, secondary (same scope, explicit toggle only — the studio
+ * does not follow prefers-color-scheme; a mood board changing at dusk is
+ * surprising, not helpful). */
+.studio-theme[data-theme='dark'],
+[data-theme='dark'] .studio-theme.follow-app-theme {
+  color-scheme: dark;
+  --st-paper: #201c18;
+  --st-card: #2a251f;
+  --st-card-2: #332d26;
+  --st-ink: #f4ede4;
+  --st-ink-2: #c9bfb2;
+  --st-ink-3: #8f867b;
+  --st-line: rgba(244, 237, 228, 0.12);
+  --st-magenta: #e57099;
+  --st-orange: #f08050;
+  --st-magenta-wash: #43293246;
+  --st-orange-wash: #46302343;
+  --st-good: #5cb46e;
+  --st-shadow: none;
+}

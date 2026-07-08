@@ -4,7 +4,7 @@ import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 
 const NAV = [
-  { href: '/studio',           icon: '✦',   label: 'Today'     },
+  { href: '/studio/chat',      icon: '✦',   label: 'Today'     },
   { href: '/studio/dashboard', icon: '📊',  label: 'Dashboard' },
   { href: '/studio/archive',   icon: '🗂',  label: 'Archive'   },
 ]
@@ -18,7 +18,7 @@ export function StudioSidebar() {
       </div>
       <nav className="flex-1 px-2 py-3 space-y-0.5">
         {NAV.map(({ href, icon, label }) => {
-          const active = pathname === href || (href !== '/studio' && pathname.startsWith(href + '/'))
+          const active = pathname === href || pathname.startsWith(href + '/')
           return (
             <Link key={href} href={href}
               className={`flex items-center gap-1.5 px-2.5 py-2 rounded-[8px] text-sm border transition-colors ${
