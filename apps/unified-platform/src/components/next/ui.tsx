@@ -260,6 +260,26 @@ export function FreshnessDot({ iso, staleAfterH = 24 }: { iso: string; staleAfte
   )
 }
 
+/* --------------------------------- empty state -------------------------------- */
+
+export function Empty({
+  title,
+  hint,
+  action,
+}: {
+  title: string
+  hint: ReactNode
+  action?: ReactNode
+}) {
+  return (
+    <div className="flex flex-col items-center gap-1.5 rounded-card border border-dashed border-hairline px-6 py-10 text-center">
+      <div className="text-[13px] font-medium text-ink-2">{title}</div>
+      <div className="max-w-[420px] text-[12px] leading-5 text-ink-3">{hint}</div>
+      {action && <div className="mt-2">{action}</div>}
+    </div>
+  )
+}
+
 /* --------------------------------- tables -------------------------------- */
 
 export function Th({
