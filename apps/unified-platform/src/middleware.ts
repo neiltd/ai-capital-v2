@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server'
 
 export const config = {
-  matcher: ['/admin/:path*', '/studio/:path*', '/api/studio/:path*', '/api/thesis-proposals'],
+  matcher: ['/admin/:path*', '/studio/:path*', '/api/studio/:path*', '/api/thesis-proposals', '/api/theses/proposals/:path*'],
 }
 
 // Logged once so repeated requests while misconfigured don't spam the console.
