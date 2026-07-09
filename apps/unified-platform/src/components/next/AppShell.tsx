@@ -24,7 +24,8 @@ const SECTIONS: NavSection[] = [
     items: [
       { href: '/portfolio', label: 'Holdings' },
       { href: '/portfolio/risk', label: 'Risk' },
-      { href: '/portfolio/tax', label: 'Tax' },
+      { href: '/portfolio/tax-planner', label: 'Tax Planner' },
+      { href: '/portfolio/tax', label: 'Harvesting' },
       { href: '/portfolio/theses', label: 'Theses' },
     ],
   },
