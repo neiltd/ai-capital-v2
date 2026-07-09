@@ -1,19 +1,61 @@
 {
   "meta": {
     "schemaVersion": "1.0",
-    "generatedAt": "2026-07-05T20:20:12.534Z",
+    "generatedAt": "2026-07-08T14:13:17.794Z",
     "sourceVersions": {
-      "gdelt": "2026-07-05T20:13:31.482Z",
+      "gdelt": "2026-07-08T14:05:43.427Z",
       "acled": "2026-06-26T00:00:00.000Z",
       "ucdp": "2026-07-02T07:41:33.230Z",
-      "eia": "2026-07-05T14:12:54.095Z",
+      "eia": "2026-07-08T14:12:33.350Z",
       "worldbank": "2026-07-05T14:12:57.009Z"
     },
-    "recordCount": 1,
+    "recordCount": 4,
     "breaking": false,
     "staleSourcesPresent": true
   },
   "data": [
+    {
+      "id": "b172ee8f9b1581b0cc49",
+      "source": "gdelt",
+      "type": "conflict",
+      "title": "Russia  MI6  explodes with WW3 threat - blames London  puppet master for huge attack | World | News",
+      "description": "",
+      "country": "RUS",
+      "lat": null,
+      "lng": null,
+      "severity": 3,
+      "date": "2026-07-06",
+      "fetchedAt": "2026-07-06T17:11:52.149Z",
+      "rawHash": "5a2f66426fb5f0aa"
+    },
+    {
+      "id": "d82fe94a2b3f815ce595",
+      "source": "gdelt",
+      "type": "conflict",
+      "title": "Israeli documents undermine claim Iran and Hezbollah helped plan 7 October attack",
+      "description": "",
+      "country": "IRN",
+      "lat": null,
+      "lng": null,
+      "severity": 3,
+      "date": "2026-07-06",
+      "fetchedAt": "2026-07-06T17:11:52.149Z",
+      "rawHash": "3a7ffd3680f40ce5"
+    },
+    {
+      "id": "de96a18742152fb6b8aa",
+      "source": "gdelt",
+      "type": "conflict",
+      "title": "Russia Blasts Kyiv Again , Killing At Least 8 After Zelenskyy Warns Of Impending Attack",
+      "description": "",
+      "country": "RUS",
+      "lat": null,
+      "lng": null,
+      "severity": 5,
+      "date": "2026-07-06",
+      "fetchedAt": "2026-07-06T17:11:52.149Z",
+      "rawHash": "7b0c000b3c17fbaf"
+    },
     {
       "id": "bfaa5ffed257423a1395",
       "source": "gdelt",

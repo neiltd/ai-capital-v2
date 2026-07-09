@@ -1,0 +1,1438 @@
+{
+  "date": "2026-07-07",
+  "generatedAt": "2026-07-07T14:24:29.675Z",
+  "observationWindowDays": 14,
+  "storylineBenchmarkLinks": [
+    {
+      "storylineId": "3bac099cf9a7a11e",
+      "storylineTitle": "Tanker Struck and Set Ablaze in Strait of Hormuz Near Oman, British Military Reports",
+      "storylineState": "active",
+      "daysActive": 4,
+      "avgEscalation": 0.598,
+      "maxSeverity": 5,
+      "countries": [
+        "IRN",
+        "ISR",
+        "USA",
+        "IND",
+        "ARE",
+        "LBN",
+        "PSE",
+        "CAN",
+        "HTI",
+        "VEN",
+        "SAU",
+        "CUB",
+        "OMN",
+        "GBR"
+      ],
+      "eventTypes": [
+        "assassination",
+        "other",
+        "humanitarian_crisis",
+        "energy_infrastructure",
+        "airstrike",
+        "armed_conflict"
+      ],
+      "linkedBenchmarks": [
+        "brent_crude",
+        "wti_crude",
+        "henry_hub"
+      ],
+      "linkStrength": 0.875,
+      "linkReasons": [
+        "energy_event_type:energy_infrastructure",
+        "geopolitical_event_in_energy_region:IRN,ARE,VEN,SAU,OMN,GBR",
+        "chokepoint:hormuz"
+      ]
+    },
+    {
+      "storylineId": "67ec25703c0b5e29",
+      "storylineTitle": "China Conducts Rare Intercontinental Ballistic Missile Test Over Pacific, Drawing Condemnation from US Allies",
+      "storylineState": "active",
+      "daysActive": 4,
+      "avgEscalation": 0.613,
+      "maxSeverity": 4,
+      "countries": [
+        "UKR",
+        "RUS",
+        "MCO",
+        "EUR",
+        "CHN",
+        "YEM",
+        "USA"
+      ],
+      "eventTypes": [
+        "military_operation",
+        "assassination",
+        "terrorist_attack",
+        "missile_attack",
+        "airstrike",
+        "armed_conflict",
+        "military_exercise"
+      ],
+      "linkedBenchmarks": [
+        "brent_crude",
+        "wti_crude"
+      ],
+      "linkStrength": 0.75,
+      "linkReasons": [
+        "geopolitical_event_in_energy_region:RUS,YEM",
+        "high_escalation_energy_country"
+      ]
+    },
+    {
+      "storylineId": "33400b9c3e99f3c3",
+      "storylineTitle": "BP Boosted European Jet Fuel Output 30% During Iran Conflict to Avert Shortages",
+      "storylineState": "escalating",
+      "daysActive": 5,
+      "avgEscalation": 0.381,
+      "maxSeverity": 4,
+      "countries": [
+        "ARE",
+        "SAU",
+        "IRN",
+        "USA",
+        "RUS",
+        "CAN",
+        "GBR",
+        "ISR"
+      ],
+      "eventTypes": [
+        "commodity_price_move",
+        "supply_disruption",
+        "opec_decision",
+        "economic_data_release"
+      ],
+      "linkedBenchmarks": [
+        "brent_crude",
+        "wti_crude"
+      ],
+      "linkStrength": 0.75,
+      "linkReasons": [
+        "energy_event_type:commodity_price_move,supply_disruption,opec_decision"
+      ]
+    },
+    {
+      "storylineId": "643e1e7c13d46c42",
+      "storylineTitle": "ECB's Schnabel Warns Middle East Peace Deal Has Not Restored Pre-War Energy Market Conditions",
+      "storylineState": "escalating",
+      "daysActive": 3,
+      "avgEscalation": 0.342,
+      "maxSeverity": 4,
+      "countries": [
+        "DEU",
+        "FRA",
+        "EUR",
+        "UKR",
+        "RUS",
+        "CHN",
+        "EU",
+        "IND"
+      ],
+      "eventTypes": [
+        "central_bank_action",
+        "energy_infrastructure",
+        "trade_dispute",
+        "other"
+      ],
+      "linkedBenchmarks": [
+        "brent_crude",
+        "wti_crude",
+        "henry_hub"
+      ],
+      "linkStrength": 0.25,
+      "linkReasons": [
+        "energy_event_type:energy_infrastructure"
+      ]
+    },
+    {
+      "storylineId": "a7de307cb8397409",
+      "storylineTitle": "Trump-Backed Lebanon Truce Faces Collapse as Hezbollah Threatens to Block Deal Critical to Iran Peace",
+      "storylineState": "escalating",
+      "daysActive": 3,
+      "avgEscalation": 0.775,
+      "maxSeverity": 4,
+      "countries": [
+        "LBN",
+        "IRN",
+        "ISR",
+        "USA",
+        "QAT"
+      ],
+      "eventTypes": [
+        "peace_negotiation"
+      ],
+      "linkedBenchmarks": [
+        "brent_crude",
+        "wti_crude"
+      ],
+      "linkStrength": 0.25,
+      "linkReasons": [
+        "high_escalation_energy_country"
+      ]
+    },
+    {
+      "storylineId": "ee3fcabea3577b8f",
+      "storylineTitle": "French President Macron Visits Damascus, Pledges Support for Syria's Reconstruction",
+      "storylineState": "active",
+      "daysActive": 5,
+      "avgEscalation": 0.57,
+      "maxSeverity": 4,
+      "countries": [
+        "UKR",
+        "RUS",
+        "DEU",
+        "GBR",
+        "FRA",
+        "TUR",
+        "USA",
+        "IRN",
+        "QAT",
+        "SYR",
+        "BLR"
+      ],
+      "eventTypes": [
+        "diplomatic_incident"
+      ],
+      "linkedBenchmarks": [],
+      "linkStrength": 0.125,
+      "linkReasons": [
+        "geopolitical_event_in_energy_region:RUS,GBR,IRN,QAT"
+      ]
+    }
+  ],
+  "disruptionPriceWindows": [
+    {
+      "eventId": "aefebd7a40868acae783ff98",
+      "eventDate": "2026-07-03",
+      "eventType": "supply_disruption",
+      "eventTitle": "Strait of Hormuz Closure During Iran War Disrupts Global Fertilizer and Natural Gas Shipments",
+      "countries": [
+        "IRN",
+        "USA"
+      ],
+      "escalationPotential": 0.1,
+      "isSupplyDisruption": true,
+      "isHormuzRelated": true,
+      "benchmarkWindows": [
+        {
+          "benchmarkId": "brent_crude",
+          "priceOnDate": null,
+          "priceOnDateDate": null,
+          "price7dBefore": null,
+          "price7dBeforeDate": null,
+          "delta7dPct": null,
+          "price3dAfter": null,
+          "price3dAfterDate": null,
+          "delta3dForwardPct": null
+        },
+        {
+          "benchmarkId": "wti_crude",
+          "priceOnDate": null,
+          "priceOnDateDate": null,
+          "price7dBefore": null,
+          "price7dBeforeDate": null,
+          "delta7dPct": null,
+          "price3dAfter": null,
+          "price3dAfterDate": null,
+          "delta3dForwardPct": null
+        },
+        {
+          "benchmarkId": "henry_hub",
+          "priceOnDate": null,
+          "priceOnDateDate": null,
+          "price7dBefore": null,
+          "price7dBeforeDate": null,
+          "delta7dPct": null,
+          "price3dAfter": null,
+          "price3dAfterDate": null,
+          "delta3dForwardPct": null
+        }
+      ]
+    },
+    {
+      "eventId": "f52e45791bea6cc213d94a9a",
+      "eventDate": "2026-07-03",
+      "eventType": "energy_infrastructure",
+      "eventTitle": "Canada's Carney Unveils Multibillion-Dollar Alberta-to-Pacific Oil Pipeline to Diversify Trade Away from US",
+      "countries": [
+        "CAN"
+      ],
+      "escalationPotential": 0.2,
+      "isSupplyDisruption": false,
+      "isHormuzRelated": false,
+      "benchmarkWindows": [
+        {
+          "benchmarkId": "brent_crude",
+          "priceOnDate": null,
+          "priceOnDateDate": null,
+          "price7dBefore": null,
+          "price7dBeforeDate": null,
+          "delta7dPct": null,
+          "price3dAfter": null,
+          "price3dAfterDate": null,
+          "delta3dForwardPct": null
+        },
+        {
+          "benchmarkId": "wti_crude",
+          "priceOnDate": null,
+          "priceOnDateDate": null,
+          "price7dBefore": null,
+          "price7dBeforeDate": null,
+          "delta7dPct": null,
+          "price3dAfter": null,
+          "price3dAfterDate": null,
+          "delta3dForwardPct": null
+        },
+        {
+          "benchmarkId": "henry_hub",
+          "priceOnDate": null,
+          "priceOnDateDate": null,
+          "price7dBefore": null,
+          "price7dBeforeDate": null,
+          "delta7dPct": null,
+          "price3dAfter": null,
+          "price3dAfterDate": null,
+          "delta3dForwardPct": null
+        }
+      ]
+    },
+    {
+      "eventId": "45692865e5e2ac272653b93e",
+      "eventDate": "2026-07-03",
+      "eventType": "energy_infrastructure",
+      "eventTitle": "Ukrainian National Charged With Sabotaging Russia-Germany Gas Pipelines in 2022 Undersea Bombing",
+      "countries": [
+        "UKR",
+        "RUS",
+        "DEU"
+      ],
+      "escalationPotential": 0.35,
+      "isSupplyDisruption": false,
+      "isHormuzRelated": false,
+      "benchmarkWindows": [
+        {
+          "benchmarkId": "brent_crude",
+          "priceOnDate": null,
+          "priceOnDateDate": null,
+          "price7dBefore": null,
+          "price7dBeforeDate": null,
+          "delta7dPct": null,
+          "price3dAfter": null,
+          "price3dAfterDate": null,
+          "delta3dForwardPct": null
+        },
+        {
+          "benchmarkId": "wti_crude",
+          "priceOnDate": null,
+          "priceOnDateDate": null,
+          "price7dBefore": null,
+          "price7dBeforeDate": null,
+          "delta7dPct": null,
+          "price3dAfter": null,
+          "price3dAfterDate": null,
+          "delta3dForwardPct": null
+        },
+        {
+          "benchmarkId": "henry_hub",
+          "priceOnDate": null,
+          "priceOnDateDate": null,
+          "price7dBefore": null,
+          "price7dBeforeDate": null,
+          "delta7dPct": null,
+          "price3dAfter": null,
+          "price3dAfterDate": null,
+          "delta3dForwardPct": null
+        }
+      ]
+    },
+    {
+      "eventId": "10bf49e2924b2e33b5e86591",
+      "eventDate": "2026-07-05",
+      "eventType": "energy_infrastructure",
+      "eventTitle": "India Expands Domestic Oil Exploration After Strait of Hormuz Disruptions During Middle East War",
+      "countries": [
+        "IND",
+        "IRN"
+      ],
+      "escalationPotential": 0.3,
+      "isSupplyDisruption": false,
+      "isHormuzRelated": true,
+      "benchmarkWindows": [
+        {
+          "benchmarkId": "brent_crude",
+          "priceOnDate": null,
+          "priceOnDateDate": null,
+          "price7dBefore": null,
+          "price7dBeforeDate": null,
+          "delta7dPct": null,
+          "price3dAfter": null,
+          "price3dAfterDate": null,
+          "delta3dForwardPct": null
+        },
+        {
+          "benchmarkId": "wti_crude",
+          "priceOnDate": null,
+          "priceOnDateDate": null,
+          "price7dBefore": null,
+          "price7dBeforeDate": null,
+          "delta7dPct": null,
+          "price3dAfter": null,
+          "price3dAfterDate": null,
+          "delta3dForwardPct": null
+        },
+        {
+          "benchmarkId": "henry_hub",
+          "priceOnDate": null,
+          "priceOnDateDate": null,
+          "price7dBefore": null,
+          "price7dBeforeDate": null,
+          "delta7dPct": null,
+          "price3dAfter": null,
+          "price3dAfterDate": null,
+          "delta3dForwardPct": null
+        }
+      ]
+    },
+    {
+      "eventId": "2ef8abccc1f89c80a0cea8a0",
+      "eventDate": "2026-07-05",
+      "eventType": "energy_infrastructure",
+      "eventTitle": "UAE Secretly Resumed Pre-War Crude Oil Flows Through Strait of Hormuz During US-Iran Conflict",
+      "countries": [
+        "ARE",
+        "IRN",
+        "USA"
+      ],
+      "escalationPotential": 0.15,
+      "isSupplyDisruption": false,
+      "isHormuzRelated": true,
+      "benchmarkWindows": [
+        {
+          "benchmarkId": "brent_crude",
+          "priceOnDate": null,
+          "priceOnDateDate": null,
+          "price7dBefore": null,
+          "price7dBeforeDate": null,
+          "delta7dPct": null,
+          "price3dAfter": null,
+          "price3dAfterDate": null,
+          "delta3dForwardPct": null
+        },
+        {
+          "benchmarkId": "wti_crude",
+          "priceOnDate": null,
+          "priceOnDateDate": null,
+          "price7dBefore": null,
+          "price7dBeforeDate": null,
+          "delta7dPct": null,
+          "price3dAfter": null,
+          "price3dAfterDate": null,
+          "delta3dForwardPct": null
+        },
+        {
+          "benchmarkId": "henry_hub",
+          "priceOnDate": null,
+          "priceOnDateDate": null,
+          "price7dBefore": null,
+          "price7dBeforeDate": null,
+          "delta7dPct": null,
+          "price3dAfter": null,
+          "price3dAfterDate": null,
+          "delta3dForwardPct": null
+        }
+      ]
+    },
+    {
+      "eventId": "329f8cfd0ccaeadce313c432",
+      "eventDate": "2026-07-05",
+      "eventType": "energy_infrastructure",
+      "eventTitle": "Ukraine Strikes Oil Terminals Near St. Petersburg in Long-Range Attack on Russian Energy Infrastructure",
+      "countries": [
+        "RUS",
+        "UKR"
+      ],
+      "escalationPotential": 0.75,
+      "isSupplyDisruption": false,
+      "isHormuzRelated": false,
+      "benchmarkWindows": [
+        {
+          "benchmarkId": "brent_crude",
+          "priceOnDate": null,
+          "priceOnDateDate": null,
+          "price7dBefore": null,
+          "price7dBeforeDate": null,
+          "delta7dPct": null,
+          "price3dAfter": null,
+          "price3dAfterDate": null,
+          "delta3dForwardPct": null
+        },
+        {
+          "benchmarkId": "wti_crude",
+          "priceOnDate": null,
+          "priceOnDateDate": null,
+          "price7dBefore": null,
+          "price7dBeforeDate": null,
+          "delta7dPct": null,
+          "price3dAfter": null,
+          "price3dAfterDate": null,
+          "delta3dForwardPct": null
+        },
+        {
+          "benchmarkId": "henry_hub",
+          "priceOnDate": null,
+          "priceOnDateDate": null,
+          "price7dBefore": null,
+          "price7dBeforeDate": null,
+          "delta7dPct": null,
+          "price3dAfter": null,
+          "price3dAfterDate": null,
+          "delta3dForwardPct": null
+        }
+      ]
+    },
+    {
+      "eventId": "7e4415173b3f437cd3373b3a",
+      "eventDate": "2026-07-06",
+      "eventType": "energy_infrastructure",
+      "eventTitle": "Ontario and Alberta Propose Cross-Canada Oil Pipeline to Reduce US Energy Dependence",
+      "countries": [
+        "CAN",
+        "USA"
+      ],
+      "escalationPotential": 0.2,
+      "isSupplyDisruption": false,
+      "isHormuzRelated": true,
+      "benchmarkWindows": [
+        {
+          "benchmarkId": "brent_crude",
+          "priceOnDate": null,
+          "priceOnDateDate": null,
+          "price7dBefore": null,
+          "price7dBeforeDate": null,
+          "delta7dPct": null,
+          "price3dAfter": null,
+          "price3dAfterDate": null,
+          "delta3dForwardPct": null
+        },
+        {
+          "benchmarkId": "wti_crude",
+          "priceOnDate": null,
+          "priceOnDateDate": null,
+          "price7dBefore": null,
+          "price7dBeforeDate": null,
+          "delta7dPct": null,
+          "price3dAfter": null,
+          "price3dAfterDate": null,
+          "delta3dForwardPct": null
+        },
+        {
+          "benchmarkId": "henry_hub",
+          "priceOnDate": null,
+          "priceOnDateDate": null,
+          "price7dBefore": null,
+          "price7dBeforeDate": null,
+          "delta7dPct": null,
+          "price3dAfter": null,
+          "price3dAfterDate": null,
+          "delta3dForwardPct": null
+        }
+      ]
+    },
+    {
+      "eventId": "6c93cc6f399e5966a167dfcf",
+      "eventDate": "2026-07-06",
+      "eventType": "energy_infrastructure",
+      "eventTitle": "Iran Weighs Risk of Repeated Strait of Hormuz Closure as Post-War Leverage Erodes",
+      "countries": [
+        "IRN",
+        "USA",
+        "ISR"
+      ],
+      "escalationPotential": 0.5,
+      "isSupplyDisruption": false,
+      "isHormuzRelated": true,
+      "benchmarkWindows": [
+        {
+          "benchmarkId": "brent_crude",
+          "priceOnDate": null,
+          "priceOnDateDate": null,
+          "price7dBefore": null,
+          "price7dBeforeDate": null,
+          "delta7dPct": null,
+          "price3dAfter": null,
+          "price3dAfterDate": null,
+          "delta3dForwardPct": null
+        },
+        {
+          "benchmarkId": "wti_crude",
+          "priceOnDate": null,
+          "priceOnDateDate": null,
+          "price7dBefore": null,
+          "price7dBeforeDate": null,
+          "delta7dPct": null,
+          "price3dAfter": null,
+          "price3dAfterDate": null,
+          "delta3dForwardPct": null
+        },
+        {
+          "benchmarkId": "henry_hub",
+          "priceOnDate": null,
+          "priceOnDateDate": null,
+          "price7dBefore": null,
+          "price7dBeforeDate": null,
+          "delta7dPct": null,
+          "price3dAfter": null,
+          "price3dAfterDate": null,
+          "delta3dForwardPct": null
+        }
+      ]
+    },
+    {
+      "eventId": "7b0ee07c4dce08d910e48dcd",
+      "eventDate": "2026-07-07",
+      "eventType": "supply_disruption",
+      "eventTitle": "Fresh Ship Attacks in Strait of Hormuz Drive Oil Prices Higher, Complicate Peace Talks",
+      "countries": [
+        "IRN",
+        "ARE",
+        "USA"
+      ],
+      "escalationPotential": 0.75,
+      "isSupplyDisruption": true,
+      "isHormuzRelated": true,
+      "benchmarkWindows": [
+        {
+          "benchmarkId": "brent_crude",
+          "priceOnDate": null,
+          "priceOnDateDate": null,
+          "price7dBefore": null,
+          "price7dBeforeDate": null,
+          "delta7dPct": null,
+          "price3dAfter": null,
+          "price3dAfterDate": null,
+          "delta3dForwardPct": null
+        },
+        {
+          "benchmarkId": "wti_crude",
+          "priceOnDate": null,
+          "priceOnDateDate": null,
+          "price7dBefore": null,
+          "price7dBeforeDate": null,
+          "delta7dPct": null,
+          "price3dAfter": null,
+          "price3dAfterDate": null,
+          "delta3dForwardPct": null
+        },
+        {
+          "benchmarkId": "henry_hub",
+          "priceOnDate": null,
+          "priceOnDateDate": null,
+          "price7dBefore": null,
+          "price7dBeforeDate": null,
+          "delta7dPct": null,
+          "price3dAfter": null,
+          "price3dAfterDate": null,
+          "delta3dForwardPct": null
+        }
+      ]
+    },
+    {
+      "eventId": "ba6be156583e6fe1e5a22ad8",
+      "eventDate": "2026-07-07",
+      "eventType": "supply_disruption",
+      "eventTitle": "BP Boosted European Jet Fuel Output 30% During Iran Conflict to Avert Shortages",
+      "countries": [
+        "GBR",
+        "IRN"
+      ],
+      "escalationPotential": 0.5,
+      "isSupplyDisruption": true,
+      "isHormuzRelated": true,
+      "benchmarkWindows": [
+        {
+          "benchmarkId": "brent_crude",
+          "priceOnDate": null,
+          "priceOnDateDate": null,
+          "price7dBefore": null,
+          "price7dBeforeDate": null,
+          "delta7dPct": null,
+          "price3dAfter": null,
+          "price3dAfterDate": null,
+          "delta3dForwardPct": null
+        },
+        {
+          "benchmarkId": "wti_crude",
+          "priceOnDate": null,
+          "priceOnDateDate": null,
+          "price7dBefore": null,
+          "price7dBeforeDate": null,
+          "delta7dPct": null,
+          "price3dAfter": null,
+          "price3dAfterDate": null,
+          "delta3dForwardPct": null
+        },
+        {
+          "benchmarkId": "henry_hub",
+          "priceOnDate": null,
+          "priceOnDateDate": null,
+          "price7dBefore": null,
+          "price7dBeforeDate": null,
+          "delta7dPct": null,
+          "price3dAfter": null,
+          "price3dAfterDate": null,
+          "delta3dForwardPct": null
+        }
+      ]
+    },
+    {
+      "eventId": "afae3704d02e91b3213c8fd5",
+      "eventDate": "2026-07-07",
+      "eventType": "energy_infrastructure",
+      "eventTitle": "Tanker Struck and Set Ablaze in Strait of Hormuz Near Oman, British Military Reports",
+      "countries": [
+        "OMN",
+        "GBR",
+        "IRN",
+        "USA"
+      ],
+      "escalationPotential": 0.75,
+      "isSupplyDisruption": false,
+      "isHormuzRelated": true,
+      "benchmarkWindows": [
+        {
+          "benchmarkId": "brent_crude",
+          "priceOnDate": null,
+          "priceOnDateDate": null,
+          "price7dBefore": null,
+          "price7dBeforeDate": null,
+          "delta7dPct": null,
+          "price3dAfter": null,
+          "price3dAfterDate": null,
+          "delta3dForwardPct": null
+        },
+        {
+          "benchmarkId": "wti_crude",
+          "priceOnDate": null,
+          "priceOnDateDate": null,
+          "price7dBefore": null,
+          "price7dBeforeDate": null,
+          "delta7dPct": null,
+          "price3dAfter": null,
+          "price3dAfterDate": null,
+          "delta3dForwardPct": null
+        },
+        {
+          "benchmarkId": "henry_hub",
+          "priceOnDate": null,
+          "priceOnDateDate": null,
+          "price7dBefore": null,
+          "price7dBeforeDate": null,
+          "delta7dPct": null,
+          "price3dAfter": null,
+          "price3dAfterDate": null,
+          "delta3dForwardPct": null
+        }
+      ]
+    }
+  ],
+  "escalationVolatilityLog": [
+    {
+      "date": "2026-07-03",
+      "maxEscalation": 0.9,
+      "avgEscalation": 0.482,
+      "eventCount": 20,
+      "supplyDisruptionCount": 1,
+      "energyEventCount": 4,
+      "hormuzEventCount": 2,
+      "benchmarkDailyChange": [
+        {
+          "benchmarkId": "brent_crude",
+          "price": null,
+          "priorPrice": null,
+          "changePct": null
+        },
+        {
+          "benchmarkId": "wti_crude",
+          "price": null,
+          "priorPrice": null,
+          "changePct": null
+        },
+        {
+          "benchmarkId": "henry_hub",
+          "price": null,
+          "priorPrice": null,
+          "changePct": null
+        }
+      ]
+    },
+    {
+      "date": "2026-07-05",
+      "maxEscalation": 0.9,
+      "avgEscalation": 0.589,
+      "eventCount": 22,
+      "supplyDisruptionCount": 0,
+      "energyEventCount": 4,
+      "hormuzEventCount": 5,
+      "benchmarkDailyChange": [
+        {
+          "benchmarkId": "brent_crude",
+          "price": null,
+          "priorPrice": null,
+          "changePct": null
+        },
+        {
+          "benchmarkId": "wti_crude",
+          "price": null,
+          "priorPrice": null,
+          "changePct": null
+        },
+        {
+          "benchmarkId": "henry_hub",
+          "price": null,
+          "priorPrice": null,
+          "changePct": null
+        }
+      ]
+    },
+    {
+      "date": "2026-07-06",
+      "maxEscalation": 0.9,
+      "avgEscalation": 0.542,
+      "eventCount": 13,
+      "supplyDisruptionCount": 0,
+      "energyEventCount": 2,
+      "hormuzEventCount": 3,
+      "benchmarkDailyChange": [
+        {
+          "benchmarkId": "brent_crude",
+          "price": null,
+          "priorPrice": null,
+          "changePct": null
+        },
+        {
+          "benchmarkId": "wti_crude",
+          "price": null,
+          "priorPrice": null,
+          "changePct": null
+        },
+        {
+          "benchmarkId": "henry_hub",
+          "price": null,
+          "priorPrice": null,
+          "changePct": null
+        }
+      ]
+    },
+    {
+      "date": "2026-07-07",
+      "maxEscalation": 0.95,
+      "avgEscalation": 0.557,
+      "eventCount": 14,
+      "supplyDisruptionCount": 2,
+      "energyEventCount": 4,
+      "hormuzEventCount": 4,
+      "benchmarkDailyChange": [
+        {
+          "benchmarkId": "brent_crude",
+          "price": null,
+          "priorPrice": null,
+          "changePct": null
+        },
+        {
+          "benchmarkId": "wti_crude",
+          "price": null,
+          "priorPrice": null,
+          "changePct": null
+        },
+        {
+          "benchmarkId": "henry_hub",
+          "price": null,
+          "priorPrice": null,
+          "changePct": null
+        }
+      ]
+    }
+  ],
+  "chokepointPriceObservations": [
+    {
+      "eventId": "aefebd7a40868acae783ff98",
+      "eventDate": "2026-07-03",
+      "eventType": "supply_disruption",
+      "eventTitle": "Strait of Hormuz Closure During Iran War Disrupts Global Fertilizer and Natural Gas Shipments",
+      "countries": [
+        "IRN",
+        "USA"
+      ],
+      "escalationPotential": 0.1,
+      "chokepointLabel": "hormuz",
+      "benchmarkResponses": [
+        {
+          "benchmarkId": "brent_crude",
+          "priceAtEvent": null,
+          "price3dBefore": null,
+          "price3dAfter": null,
+          "deltaBefore": null,
+          "deltaAfter": null
+        },
+        {
+          "benchmarkId": "wti_crude",
+          "priceAtEvent": null,
+          "price3dBefore": null,
+          "price3dAfter": null,
+          "deltaBefore": null,
+          "deltaAfter": null
+        },
+        {
+          "benchmarkId": "henry_hub",
+          "priceAtEvent": null,
+          "price3dBefore": null,
+          "price3dAfter": null,
+          "deltaBefore": null,
+          "deltaAfter": null
+        }
+      ]
+    },
+    {
+      "eventId": "ce284f01e2b8d507987120cf",
+      "eventDate": "2026-07-03",
+      "eventType": "peace_negotiation",
+      "eventTitle": "Trump-Backed Lebanon Truce Faces Collapse as Hezbollah Threatens to Block Deal Critical to Iran Peace",
+      "countries": [
+        "LBN",
+        "IRN",
+        "ISR",
+        "USA"
+      ],
+      "escalationPotential": 0.8,
+      "chokepointLabel": "hormuz",
+      "benchmarkResponses": [
+        {
+          "benchmarkId": "brent_crude",
+          "priceAtEvent": null,
+          "price3dBefore": null,
+          "price3dAfter": null,
+          "deltaBefore": null,
+          "deltaAfter": null
+        },
+        {
+          "benchmarkId": "wti_crude",
+          "priceAtEvent": null,
+          "price3dBefore": null,
+          "price3dAfter": null,
+          "deltaBefore": null,
+          "deltaAfter": null
+        },
+        {
+          "benchmarkId": "henry_hub",
+          "priceAtEvent": null,
+          "price3dBefore": null,
+          "price3dAfter": null,
+          "deltaBefore": null,
+          "deltaAfter": null
+        }
+      ]
+    },
+    {
+      "eventId": "10bf49e2924b2e33b5e86591",
+      "eventDate": "2026-07-05",
+      "eventType": "energy_infrastructure",
+      "eventTitle": "India Expands Domestic Oil Exploration After Strait of Hormuz Disruptions During Middle East War",
+      "countries": [
+        "IND",
+        "IRN"
+      ],
+      "escalationPotential": 0.3,
+      "chokepointLabel": "hormuz",
+      "benchmarkResponses": [
+        {
+          "benchmarkId": "brent_crude",
+          "priceAtEvent": null,
+          "price3dBefore": null,
+          "price3dAfter": null,
+          "deltaBefore": null,
+          "deltaAfter": null
+        },
+        {
+          "benchmarkId": "wti_crude",
+          "priceAtEvent": null,
+          "price3dBefore": null,
+          "price3dAfter": null,
+          "deltaBefore": null,
+          "deltaAfter": null
+        },
+        {
+          "benchmarkId": "henry_hub",
+          "priceAtEvent": null,
+          "price3dBefore": null,
+          "price3dAfter": null,
+          "deltaBefore": null,
+          "deltaAfter": null
+        }
+      ]
+    },
+    {
+      "eventId": "db4254ad62be74241ebfc88b",
+      "eventDate": "2026-07-05",
+      "eventType": "peace_negotiation",
+      "eventTitle": "Strait of Hormuz Remains in Strategic Limbo as Iran-US Doha Talks Fail and Demining Stalls",
+      "countries": [
+        "IRN",
+        "USA",
+        "QAT"
+      ],
+      "escalationPotential": 0.75,
+      "chokepointLabel": "hormuz",
+      "benchmarkResponses": [
+        {
+          "benchmarkId": "brent_crude",
+          "priceAtEvent": null,
+          "price3dBefore": null,
+          "price3dAfter": null,
+          "deltaBefore": null,
+          "deltaAfter": null
+        },
+        {
+          "benchmarkId": "wti_crude",
+          "priceAtEvent": null,
+          "price3dBefore": null,
+          "price3dAfter": null,
+          "deltaBefore": null,
+          "deltaAfter": null
+        },
+        {
+          "benchmarkId": "henry_hub",
+          "priceAtEvent": null,
+          "price3dBefore": null,
+          "price3dAfter": null,
+          "deltaBefore": null,
+          "deltaAfter": null
+        }
+      ]
+    },
+    {
+      "eventId": "2ef8abccc1f89c80a0cea8a0",
+      "eventDate": "2026-07-05",
+      "eventType": "energy_infrastructure",
+      "eventTitle": "UAE Secretly Resumed Pre-War Crude Oil Flows Through Strait of Hormuz During US-Iran Conflict",
+      "countries": [
+        "ARE",
+        "IRN",
+        "USA"
+      ],
+      "escalationPotential": 0.15,
+      "chokepointLabel": "hormuz",
+      "benchmarkResponses": [
+        {
+          "benchmarkId": "brent_crude",
+          "priceAtEvent": null,
+          "price3dBefore": null,
+          "price3dAfter": null,
+          "deltaBefore": null,
+          "deltaAfter": null
+        },
+        {
+          "benchmarkId": "wti_crude",
+          "priceAtEvent": null,
+          "price3dBefore": null,
+          "price3dAfter": null,
+          "deltaBefore": null,
+          "deltaAfter": null
+        },
+        {
+          "benchmarkId": "henry_hub",
+          "priceAtEvent": null,
+          "price3dBefore": null,
+          "price3dAfter": null,
+          "deltaBefore": null,
+          "deltaAfter": null
+        }
+      ]
+    },
+    {
+      "eventId": "f3076710a3991ab404eddbc3",
+      "eventDate": "2026-07-05",
+      "eventType": "diplomatic_incident",
+      "eventTitle": "Iran-US Doha Talks Collapse; Strait of Hormuz Remains Mined Amid Shipping Threats",
+      "countries": [
+        "IRN",
+        "USA",
+        "QAT"
+      ],
+      "escalationPotential": 0.75,
+      "chokepointLabel": "hormuz",
+      "benchmarkResponses": [
+        {
+          "benchmarkId": "brent_crude",
+          "priceAtEvent": null,
+          "price3dBefore": null,
+          "price3dAfter": null,
+          "deltaBefore": null,
+          "deltaAfter": null
+        },
+        {
+          "benchmarkId": "wti_crude",
+          "priceAtEvent": null,
+          "price3dBefore": null,
+          "price3dAfter": null,
+          "deltaBefore": null,
+          "deltaAfter": null
+        },
+        {
+          "benchmarkId": "henry_hub",
+          "priceAtEvent": null,
+          "price3dBefore": null,
+          "price3dAfter": null,
+          "deltaBefore": null,
+          "deltaAfter": null
+        }
+      ]
+    },
+    {
+      "eventId": "6a39223147fd020ee1a25cbe",
+      "eventDate": "2026-07-05",
+      "eventType": "airstrike",
+      "eventTitle": "Bombing of Iranian School Kills Children Amid US-Israel War with Iran",
+      "countries": [
+        "IRN",
+        "ISR",
+        "USA"
+      ],
+      "escalationPotential": 0.7,
+      "chokepointLabel": "hormuz",
+      "benchmarkResponses": [
+        {
+          "benchmarkId": "brent_crude",
+          "priceAtEvent": null,
+          "price3dBefore": null,
+          "price3dAfter": null,
+          "deltaBefore": null,
+          "deltaAfter": null
+        },
+        {
+          "benchmarkId": "wti_crude",
+          "priceAtEvent": null,
+          "price3dBefore": null,
+          "price3dAfter": null,
+          "deltaBefore": null,
+          "deltaAfter": null
+        },
+        {
+          "benchmarkId": "henry_hub",
+          "priceAtEvent": null,
+          "price3dBefore": null,
+          "price3dAfter": null,
+          "deltaBefore": null,
+          "deltaAfter": null
+        }
+      ]
+    },
+    {
+      "eventId": "7e4415173b3f437cd3373b3a",
+      "eventDate": "2026-07-06",
+      "eventType": "energy_infrastructure",
+      "eventTitle": "Ontario and Alberta Propose Cross-Canada Oil Pipeline to Reduce US Energy Dependence",
+      "countries": [
+        "CAN",
+        "USA"
+      ],
+      "escalationPotential": 0.2,
+      "chokepointLabel": "hormuz",
+      "benchmarkResponses": [
+        {
+          "benchmarkId": "brent_crude",
+          "priceAtEvent": null,
+          "price3dBefore": null,
+          "price3dAfter": null,
+          "deltaBefore": null,
+          "deltaAfter": null
+        },
+        {
+          "benchmarkId": "wti_crude",
+          "priceAtEvent": null,
+          "price3dBefore": null,
+          "price3dAfter": null,
+          "deltaBefore": null,
+          "deltaAfter": null
+        },
+        {
+          "benchmarkId": "henry_hub",
+          "priceAtEvent": null,
+          "price3dBefore": null,
+          "price3dAfter": null,
+          "deltaBefore": null,
+          "deltaAfter": null
+        }
+      ]
+    },
+    {
+      "eventId": "6c93cc6f399e5966a167dfcf",
+      "eventDate": "2026-07-06",
+      "eventType": "energy_infrastructure",
+      "eventTitle": "Iran Weighs Risk of Repeated Strait of Hormuz Closure as Post-War Leverage Erodes",
+      "countries": [
+        "IRN",
+        "USA",
+        "ISR"
+      ],
+      "escalationPotential": 0.5,
+      "chokepointLabel": "hormuz",
+      "benchmarkResponses": [
+        {
+          "benchmarkId": "brent_crude",
+          "priceAtEvent": null,
+          "price3dBefore": null,
+          "price3dAfter": null,
+          "deltaBefore": null,
+          "deltaAfter": null
+        },
+        {
+          "benchmarkId": "wti_crude",
+          "priceAtEvent": null,
+          "price3dBefore": null,
+          "price3dAfter": null,
+          "deltaBefore": null,
+          "deltaAfter": null
+        },
+        {
+          "benchmarkId": "henry_hub",
+          "priceAtEvent": null,
+          "price3dBefore": null,
+          "price3dAfter": null,
+          "deltaBefore": null,
+          "deltaAfter": null
+        }
+      ]
+    },
+    {
+      "eventId": "ac3e28af7896e6bc898a4df2",
+      "eventDate": "2026-07-06",
+      "eventType": "airstrike",
+      "eventTitle": "Children Killed in Strike on Iranian School as Families Join Leader's Funeral in Tehran",
+      "countries": [
+        "IRN",
+        "ISR",
+        "USA"
+      ],
+      "escalationPotential": 0.75,
+      "chokepointLabel": "hormuz",
+      "benchmarkResponses": [
+        {
+          "benchmarkId": "brent_crude",
+          "priceAtEvent": null,
+          "price3dBefore": null,
+          "price3dAfter": null,
+          "deltaBefore": null,
+          "deltaAfter": null
+        },
+        {
+          "benchmarkId": "wti_crude",
+          "priceAtEvent": null,
+          "price3dBefore": null,
+          "price3dAfter": null,
+          "deltaBefore": null,
+          "deltaAfter": null
+        },
+        {
+          "benchmarkId": "henry_hub",
+          "priceAtEvent": null,
+          "price3dBefore": null,
+          "price3dAfter": null,
+          "deltaBefore": null,
+          "deltaAfter": null
+        }
+      ]
+    },
+    {
+      "eventId": "7b0ee07c4dce08d910e48dcd",
+      "eventDate": "2026-07-07",
+      "eventType": "supply_disruption",
+      "eventTitle": "Fresh Ship Attacks in Strait of Hormuz Drive Oil Prices Higher, Complicate Peace Talks",
+      "countries": [
+        "IRN",
+        "ARE",
+        "USA"
+      ],
+      "escalationPotential": 0.75,
+      "chokepointLabel": "hormuz",
+      "benchmarkResponses": [
+        {
+          "benchmarkId": "brent_crude",
+          "priceAtEvent": null,
+          "price3dBefore": null,
+          "price3dAfter": null,
+          "deltaBefore": null,
+          "deltaAfter": null
+        },
+        {
+          "benchmarkId": "wti_crude",
+          "priceAtEvent": null,
+          "price3dBefore": null,
+          "price3dAfter": null,
+          "deltaBefore": null,
+          "deltaAfter": null
+        },
+        {
+          "benchmarkId": "henry_hub",
+          "priceAtEvent": null,
+          "price3dBefore": null,
+          "price3dAfter": null,
+          "deltaBefore": null,
+          "deltaAfter": null
+        }
+      ]
+    },
+    {
+      "eventId": "ba6be156583e6fe1e5a22ad8",
+      "eventDate": "2026-07-07",
+      "eventType": "supply_disruption",
+      "eventTitle": "BP Boosted European Jet Fuel Output 30% During Iran Conflict to Avert Shortages",
+      "countries": [
+        "GBR",
+        "IRN"
+      ],
+      "escalationPotential": 0.5,
+      "chokepointLabel": "hormuz",
+      "benchmarkResponses": [
+        {
+          "benchmarkId": "brent_crude",
+          "priceAtEvent": null,
+          "price3dBefore": null,
+          "price3dAfter": null,
+          "deltaBefore": null,
+          "deltaAfter": null
+        },
+        {
+          "benchmarkId": "wti_crude",
+          "priceAtEvent": null,
+          "price3dBefore": null,
+          "price3dAfter": null,
+          "deltaBefore": null,
+          "deltaAfter": null
+        },
+        {
+          "benchmarkId": "henry_hub",
+          "priceAtEvent": null,
+          "price3dBefore": null,
+          "price3dAfter": null,
+          "deltaBefore": null,
+          "deltaAfter": null
+        }
+      ]
+    },
+    {
+      "eventId": "60ffecc9c84da860864809c9",
+      "eventDate": "2026-07-07",
+      "eventType": "armed_conflict",
+      "eventTitle": "Ayatollah Ali Khamenei Killed in War with US and Israel; Millions Mourn in Iran",
+      "countries": [
+        "IRN",
+        "USA",
+        "ISR"
+      ],
+      "escalationPotential": 0.95,
+      "chokepointLabel": "hormuz",
+      "benchmarkResponses": [
+        {
+          "benchmarkId": "brent_crude",
+          "priceAtEvent": null,
+          "price3dBefore": null,
+          "price3dAfter": null,
+          "deltaBefore": null,
+          "deltaAfter": null
+        },
+        {
+          "benchmarkId": "wti_crude",
+          "priceAtEvent": null,
+          "price3dBefore": null,
+          "price3dAfter": null,
+          "deltaBefore": null,
+          "deltaAfter": null
+        },
+        {
+          "benchmarkId": "henry_hub",
+          "priceAtEvent": null,
+          "price3dBefore": null,
+          "price3dAfter": null,
+          "deltaBefore": null,
+          "deltaAfter": null
+        }
+      ]
+    },
+    {
+      "eventId": "afae3704d02e91b3213c8fd5",
+      "eventDate": "2026-07-07",
+      "eventType": "energy_infrastructure",
+      "eventTitle": "Tanker Struck and Set Ablaze in Strait of Hormuz Near Oman, British Military Reports",
+      "countries": [
+        "OMN",
+        "GBR",
+        "IRN",
+        "USA"
+      ],
+      "escalationPotential": 0.75,
+      "chokepointLabel": "hormuz",
+      "benchmarkResponses": [
+        {
+          "benchmarkId": "brent_crude",
+          "priceAtEvent": null,
+          "price3dBefore": null,
+          "price3dAfter": null,
+          "deltaBefore": null,
+          "deltaAfter": null
+        },
+        {
+          "benchmarkId": "wti_crude",
+          "priceAtEvent": null,
+          "price3dBefore": null,
+          "price3dAfter": null,
+          "deltaBefore": null,
+          "deltaAfter": null
+        },
+        {
+          "benchmarkId": "henry_hub",
+          "priceAtEvent": null,
+          "price3dBefore": null,
+          "price3dAfter": null,
+          "deltaBefore": null,
+          "deltaAfter": null
+        }
+      ]
+    }
+  ],
+  "summary": {
+    "totalActiveStorylines": 6,
+    "energyLinkedStorylines": 5,
+    "escalatingLinked": 3,
+    "avgEscalationLinked": 0.542,
+    "supplyDisruptionsRecent": 3,
+    "energyEventsRecent": 11,
+    "hormuzEventsRecent": 8,
+    "observationWindowDays": 14,
+    "benchmarkCoverage": [
+      {
+        "benchmarkId": "brent_crude",
+        "mostRecentDate": null,
+        "mostRecentPrice": null,
+        "daysWithPairedData": 0
+      },
+      {
+        "benchmarkId": "wti_crude",
+        "mostRecentDate": null,
+        "mostRecentPrice": null,
+        "daysWithPairedData": 0
+      },
+      {
+        "benchmarkId": "henry_hub",
+        "mostRecentDate": null,
+        "mostRecentPrice": null,
+        "daysWithPairedData": 0
+      }
+    ],
+    "pairedObservationDays": 4,
+    "avgMaxEscalation": 0.913,
+    "maxSingleDayEscalation": 0.95,
+    "maxSingleDayPriceChangePct": null
+  }
+}
