@@ -27,6 +27,7 @@ import { Source, Layer } from 'react-map-gl/maplibre'
 import { isValidCoord } from '../../utils/geoUtils'
 import airportsData from '../../data/validated/airports.json'
 import type { LayerProps } from '../_core/types'
+import { densityFilter, densityScale, type Density } from '../_core/density'
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 const airports = airportsData as any[]
@@ -71,7 +72,11 @@ function formatVolume(n: number | null | undefined): string {
   return String(n)
 }
 
-export default function AirportLayer({ visible, labelLayerId, iconsReady }: LayerProps) {
+interface Props extends LayerProps {
+  density: Density
+}
+
+export default function AirportLayer({ visible, labelLayerId, iconsReady, density }: Props) {
   const geoJSON = useMemo(() => ({
     type: 'FeatureCollection' as const,
     features: airports
@@ -88,6 +93,10 @@ export default function AirportLayer({ visible, labelLayerId, iconsReady }: Laye
           ...(ap.cargoVolume ? { tag_Cargo: `${formatVolume(ap.cargoVolume)} t/yr` } : {}),
           // Paint inputs
           color: IMPORTANCE_COLOR[ap.strategicImportance] ?? '#64748b',
+          // Density tier — "key" = the readable morning picture (critical + high,
+          // 243 of 320 airports); "all" also shows medium/low, shrunk at world
+          // zoom via density.ts's zoom-growth expression.
+          isKey: ap.strategicImportance === 'critical' || ap.strategicImportance === 'high',
         },
       })),
   }), [])
@@ -116,10 +125,11 @@ export default function AirportLayer({ visible, labelLayerId, iconsReady }: Laye
         id="airport-circles"
         type="circle"
         beforeId={labelLayerId}
+        filter={densityFilter(density)}
         paint={{
-          'circle-radius':         RADIUS_EXPR as unknown as number,
+          'circle-radius':         densityScale(density, RADIUS_EXPR) as unknown as number,
           'circle-color':          ['get', 'color'] as unknown as string,
-          'circle-opacity':        OPACITY_EXPR as unknown as number,
+          'circle-opacity':        densityScale(density, OPACITY_EXPR) as unknown as number,
           'circle-stroke-width':   1,
           'circle-stroke-color':   '#0A0F1E',
           'circle-stroke-opacity': 0.4,

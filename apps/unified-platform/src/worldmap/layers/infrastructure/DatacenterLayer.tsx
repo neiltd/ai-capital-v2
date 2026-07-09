@@ -18,6 +18,7 @@ import { Source, Layer } from 'react-map-gl/maplibre'
 import { isValidCoord } from '../../utils/geoUtils'
 import dcData from '../../data/validated/datacenters.json'
 import type { LayerProps } from '../_core/types'
+import { densityFilter, densityScale, type Density } from '../_core/density'
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 const datacenters = dcData as any[]
@@ -83,7 +84,11 @@ function brandLabel(operator?: string | null): string {
   return operator.split(' ')[0]
 }
 
-export default function DatacenterLayer({ visible, labelLayerId, iconsReady }: LayerProps) {
+interface Props extends LayerProps {
+  density: Density
+}
+
+export default function DatacenterLayer({ visible, labelLayerId, iconsReady, density }: Props) {
   const geoJSON = useMemo(() => ({
     type: 'FeatureCollection' as const,
     features: datacenters
@@ -106,6 +111,9 @@ export default function DatacenterLayer({ visible, labelLayerId, iconsReady }: L
           color:  TYPE_COLOR[d.type] ?? '#64748b',
           dcType: d.type,
           status: d.status,
+          // strategicImportance is sparse here — reuse the icon-gating judgment
+          // call already in this file: hyperscale/government OR critical importance.
+          isKey: d.strategicImportance === 'critical' || d.type === 'hyperscale' || d.type === 'government',
         },
       })),
   }), [])
@@ -132,10 +140,11 @@ export default function DatacenterLayer({ visible, labelLayerId, iconsReady }: L
         id="datacenter-circles"
         type="circle"
         beforeId={labelLayerId}
+        filter={densityFilter(density)}
         paint={{
-          'circle-radius':         RADIUS_EXPR as unknown as number,
+          'circle-radius':         densityScale(density, RADIUS_EXPR) as unknown as number,
           'circle-color':          ['get', 'color'] as unknown as string,
-          'circle-opacity':        OPACITY_EXPR as unknown as number,
+          'circle-opacity':        densityScale(density, OPACITY_EXPR) as unknown as number,
           'circle-stroke-width':   1,
           'circle-stroke-color':   '#0A0F1E',
           'circle-stroke-opacity': 0.4,

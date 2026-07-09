@@ -12,7 +12,7 @@
  * All interaction handling is delegated to hooks.
  */
 
-import { useEffect, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import Map, { Source, Layer, NavigationControl } from 'react-map-gl/maplibre'
 import type { MapEvent } from 'react-map-gl/maplibre'
 import 'maplibre-gl/dist/maplibre-gl.css'
@@ -37,6 +37,11 @@ import MineLayer            from '../../layers/utilities/MineLayer'
 import WaterLayer           from '../../layers/utilities/WaterLayer'
 import MciLayer             from '../../layers/utilities/MciLayer'
 import EventsLayer          from '../../layers/intelligence/EventsLayer'
+// world-map-v2 round-3 additions — 4 previously-dead registered layers, built for real.
+import InvestmentSignalLayer from '../../layers/investment/InvestmentSignalLayer'
+import EnergyMixLayer        from '../../layers/utilities/EnergyMixLayer'
+import WaterStressLayer      from '../../layers/environment/WaterStressLayer'
+import FoodSecurityLayer     from '../../layers/environment/FoodSecurityLayer'
 
 const MAP_STYLE = 'https://basemaps.cartocdn.com/gl/dark-matter-gl-style/style.json'
 
@@ -56,7 +61,7 @@ const COORD_QUALITY_COLOR: Record<string, string> = {
 }
 
 export default function WorldMap() {
-  const { heatmapIndicator, isLayerVisible } = useMapStore()
+  const { heatmapIndicator, isLayerVisible, facilityDensity } = useMapStore()
 
   // ── Data hooks ────────────────────────────────────────────────────────────
   const { geoJSON, isReady } = useGeoData()
@@ -75,6 +80,14 @@ export default function WorldMap() {
   // readiness flag back up via this state setter, so we can pass it to all
   // layers as iconsReady.
   const [iconsReady, setIconsReady] = useState(false)
+
+  // Portal target for PortfolioTradeLayer / TradeRouteLayer's floating panels
+  // (chokepoint tooltip, portfolio summary, trade-disrupting events banner) —
+  // scoped to the map canvas instead of document.body so nothing floats over
+  // the rest of the dashboard when the Map tab is embedded in it.
+  const overlayRef = useRef<HTMLDivElement | null>(null)
+  const [overlayEl, setOverlayEl] = useState<HTMLDivElement | null>(null)
+  useEffect(() => { setOverlayEl(overlayRef.current) }, [])
 
   function handleMapLoad(e: MapEvent) {
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -119,6 +132,21 @@ export default function WorldMap() {
                 'fill-opacity': 0.82,
               }}
             />
+            {/* Persistent country borders (world-map-v2 round 3, human's core ask):
+                a thin hairline stroke on every country, visible AT ALL TIMES,
+                independent of heatmap/selection/relationship fill state — so the
+                map teaches world geography even with every layer switched off.
+                Rendered on the same source, above the fill, below labels. */}
+            <Layer
+              id="countries-border"
+              type="line"
+              beforeId={labelLayerId}
+              paint={{
+                'line-color': '#3a4a63',
+                'line-width': ['interpolate', ['linear'], ['zoom'], 1, 0.5, 4, 0.8, 8, 1.2],
+                'line-opacity': 0.55,
+              }}
+            />
           </Source>
         )}
 
@@ -128,27 +156,39 @@ export default function WorldMap() {
 
         {/* Intelligence layers — controlled by layer registry visibility */}
         {/* ConflictZoneLayer renders both conflict markers AND zone polygons.
-            Both are gated by 'conflicts', not 'conflict-zones' — they are ganged.
-            See registry.ts COUPLING NOTE for decoupling instructions. */}
-        <ConflictZoneLayer    visible={isLayerVisible('conflicts')}        labelLayerId={labelLayerId} iconsReady={iconsReady} />
-        <TradeRouteLayer      visible={isLayerVisible('trade-routes')}     showChokepoints={isLayerVisible('chokepoints')} labelLayerId={labelLayerId} />
-        <PortfolioTradeLayer  visible={isLayerVisible('portfolio-trade')}  labelLayerId={labelLayerId} />
-        <AirportLayer         visible={isLayerVisible('airports')}         labelLayerId={labelLayerId} iconsReady={iconsReady} />
-        <PortLayer            visible={isLayerVisible('seaports')}         labelLayerId={labelLayerId} iconsReady={iconsReady} />
-        <PowerLayer           visible={isLayerVisible('power-plants')}     labelLayerId={labelLayerId} iconsReady={iconsReady} />
-        <RailHubLayer         visible={isLayerVisible('rail-hubs')}        labelLayerId={labelLayerId} iconsReady={iconsReady} />
+            Zones now read their own 'conflict-zones' visibility independently
+            (world-map-v2 round-3 human decision to de-gang, on top of the
+            still-ganged conflict markers which stay under 'conflicts'). */}
+        <ConflictZoneLayer    visible={isLayerVisible('conflicts')}        zonesVisible={isLayerVisible('conflict-zones')} labelLayerId={labelLayerId} iconsReady={iconsReady} />
+        <TradeRouteLayer      visible={isLayerVisible('trade-routes')}     showChokepoints={isLayerVisible('chokepoints')} labelLayerId={labelLayerId} portalContainer={overlayEl} />
+        <PortfolioTradeLayer  visible={isLayerVisible('portfolio-trade')}  labelLayerId={labelLayerId} portalContainer={overlayEl} />
+        <AirportLayer         visible={isLayerVisible('airports')}         labelLayerId={labelLayerId} iconsReady={iconsReady} density={facilityDensity} />
+        <PortLayer            visible={isLayerVisible('seaports')}         labelLayerId={labelLayerId} iconsReady={iconsReady} density={facilityDensity} />
+        <PowerLayer           visible={isLayerVisible('power-plants')}     labelLayerId={labelLayerId} iconsReady={iconsReady} density={facilityDensity} />
+        <RailHubLayer         visible={isLayerVisible('rail-hubs')}        labelLayerId={labelLayerId} iconsReady={iconsReady} density={facilityDensity} />
         <SubmarineCableLayer  visible={isLayerVisible('submarine-cables')} labelLayerId={labelLayerId} />
-        <DatacenterLayer      visible={isLayerVisible('datacenters')}      labelLayerId={labelLayerId} iconsReady={iconsReady} />
-        <HospitalLayer        visible={isLayerVisible('hospitals')}        labelLayerId={labelLayerId} />
-        <RefineryLayer        visible={isLayerVisible('refineries')}       labelLayerId={labelLayerId} />
-        <MineLayer            visible={isLayerVisible('critical-minerals')} labelLayerId={labelLayerId} />
-        <WaterLayer           visible={isLayerVisible('water-infra')}      labelLayerId={labelLayerId} />
+        <DatacenterLayer      visible={isLayerVisible('datacenters')}      labelLayerId={labelLayerId} iconsReady={iconsReady} density={facilityDensity} />
+        <HospitalLayer        visible={isLayerVisible('hospitals')}        labelLayerId={labelLayerId} density={facilityDensity} />
+        <RefineryLayer        visible={isLayerVisible('refineries')}       labelLayerId={labelLayerId} density={facilityDensity} />
+        <MineLayer            visible={isLayerVisible('critical-minerals')} labelLayerId={labelLayerId} density={facilityDensity} />
+        <WaterLayer           visible={isLayerVisible('water-infra')}      labelLayerId={labelLayerId} density={facilityDensity} />
         <MciLayer             visible={isLayerVisible('mci')}              labelLayerId={labelLayerId} />
         {/* Intelligence events — hub-imported, read-only display */}
         <EventsLayer          visible={isLayerVisible('intelligence-events')} labelLayerId={labelLayerId} iconsReady={iconsReady} />
 
+        {/* world-map-v2 round-3 — 4 previously dead-registered layers */}
+        <InvestmentSignalLayer visible={isLayerVisible('investment-signals')} labelLayerId={labelLayerId} density={facilityDensity} />
+        <EnergyMixLayer         visible={isLayerVisible('energy-mix')}        labelLayerId={labelLayerId} />
+        <WaterStressLayer       visible={isLayerVisible('water-stress')}      labelLayerId={labelLayerId} countriesGeoJSON={geoJSON} />
+        <FoodSecurityLayer      visible={isLayerVisible('food-security')}     labelLayerId={labelLayerId} countriesGeoJSON={geoJSON} />
+
         <NavigationControl position="top-right" showCompass={false} />
       </Map>
+
+      {/* Overlay container — PortfolioTradeLayer / TradeRouteLayer portal their
+          floating panels (chokepoint tooltip, portfolio summary, events banner)
+          into this instead of document.body, so they stay within the canvas. */}
+      <div ref={overlayRef} className="pointer-events-none absolute inset-0 z-20" />
 
       {/* ── Map overlays ───────────────────────────────────────────────────── */}
 

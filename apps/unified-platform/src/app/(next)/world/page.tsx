@@ -18,14 +18,14 @@ export default function WorldPage() {
 
   if (!w) {
     return (
-      <main className="mx-auto max-w-[1520px] p-6">
+      <main className="mx-auto max-w-[1520px] p-page-pad">
         <AlertBanner level="warning" title="World intelligence unavailable" detail="world-map/intelligence.json not found." />
       </main>
     )
   }
 
   return (
-    <main className="mx-auto max-w-[1520px] space-y-4 p-6">
+    <main className="mx-auto max-w-[1520px] space-y-sec-gap p-page-pad">
       <header className="flex items-end justify-between">
         <div>
           <h1 className="text-[20px] font-semibold text-ink">World intelligence</h1>

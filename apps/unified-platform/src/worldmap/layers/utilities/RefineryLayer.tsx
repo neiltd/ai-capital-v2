@@ -5,6 +5,7 @@ import { useMemo } from 'react'
 import { Source, Layer } from 'react-map-gl/maplibre'
 import data from '../../data/validated/refineries.json'
 import type { LayerProps } from '../_core/types'
+import { densityFilter, densityScale, type Density } from '../_core/density'
 
 interface RefineryEntry {
   id:                     string
@@ -32,7 +33,28 @@ const TYPE_COLOR: Record<string, string> = {
   lng_import:     '#3b82f6',  // blue — importers
 }
 
-export default function RefineryLayer({ visible, labelLayerId }: LayerProps) {
+const REFINERY_RADIUS_EXPR = [
+  'case',
+  ['>=', ['get', 'capacity'], 1000000], 8,
+  ['>=', ['get', 'capacity'],  500000], 6,
+  ['>=', ['get', 'capacity'],  250000], 4,
+  3,
+] as const
+
+const REFINERY_OPACITY_EXPR = [
+  'case',
+  ['==', ['get', 'status'], 'operating'],    0.80,
+  ['==', ['get', 'status'], 'operational'],  0.80,
+  ['==', ['get', 'status'], 'maintenance'],  0.45,
+  ['==', ['get', 'status'], 'planned'],      0.30,
+  0.50,
+] as const
+
+interface Props extends LayerProps {
+  density: Density
+}
+
+export default function RefineryLayer({ visible, labelLayerId, density }: Props) {
   const geoJSON = useMemo(() => ({
     type: 'FeatureCollection' as const,
     features: refineries
@@ -50,6 +72,9 @@ export default function RefineryLayer({ visible, labelLayerId }: LayerProps) {
           ...(r.complexity       ? { tag_Complexity:   r.complexity.toFixed(2) } : {}),
           ...(r.yearCommissioned ? { tag_Commissioned: String(r.yearCommissioned) } : {}),
           tag_Capacity:    `${(r.capacityBarrelsPerDay/1000).toFixed(0)}k bpd`,
+          // No importance field — key tier = >=500k bpd (the two largest
+          // capacity buckets already defined by this file's radius scale).
+          isKey: (r.capacityBarrelsPerDay ?? 0) >= 500000,
         },
       })),
   }), [])
@@ -62,24 +87,11 @@ export default function RefineryLayer({ visible, labelLayerId }: LayerProps) {
         id="refinery-circles"
         type="circle"
         beforeId={labelLayerId}
+        filter={densityFilter(density)}
         paint={{
-          // Capacity scale: <250k=3, 250-500k=4, 500k-1M=6, >1M=8.
-          'circle-radius': [
-            'case',
-            ['>=', ['get', 'capacity'], 1000000], 8,
-            ['>=', ['get', 'capacity'],  500000], 6,
-            ['>=', ['get', 'capacity'],  250000], 4,
-            3,
-          ] as unknown as number,
+          'circle-radius': densityScale(density, REFINERY_RADIUS_EXPR) as unknown as number,
           'circle-color': ['get', 'color'] as unknown as string,
-          'circle-opacity': [
-            'case',
-            ['==', ['get', 'status'], 'operating'],    0.80,
-            ['==', ['get', 'status'], 'operational'],  0.80,
-            ['==', ['get', 'status'], 'maintenance'],  0.45,
-            ['==', ['get', 'status'], 'planned'],      0.30,
-            0.50,
-          ] as unknown as number,
+          'circle-opacity': densityScale(density, REFINERY_OPACITY_EXPR) as unknown as number,
           'circle-stroke-width':   1,
           'circle-stroke-color':   '#0A0F1E',
           'circle-stroke-opacity': 0.4,

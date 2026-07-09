@@ -28,6 +28,7 @@ import { Source, Layer } from 'react-map-gl/maplibre'
 import { isValidCoord } from '../../utils/geoUtils'
 import railData from '../../data/validated/rail-hubs.json'
 import type { LayerProps } from '../_core/types'
+import { densityFilter, densityScale, type Density } from '../_core/density'
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 const hubs = railData as any[]
@@ -96,7 +97,11 @@ const STROKE_COLOR_EXPR = [
   '#0A0F1E',
 ] as const
 
-export default function RailHubLayer({ visible, labelLayerId, iconsReady }: LayerProps) {
+interface Props extends LayerProps {
+  density: Density
+}
+
+export default function RailHubLayer({ visible, labelLayerId, iconsReady, density }: Props) {
   const geoJSON = useMemo(() => ({
     type: 'FeatureCollection' as const,
     features: hubs
@@ -120,6 +125,7 @@ export default function RailHubLayer({ visible, labelLayerId, iconsReady }: Laye
           // Paint inputs
           color: TYPE_COLOR[h.type] ?? '#64748b',
           isBRI: h.isPartOfBRI === true,
+          isKey: h.strategicImportance === 'critical' || h.strategicImportance === 'high',
         },
       })),
   }), [])
@@ -146,10 +152,11 @@ export default function RailHubLayer({ visible, labelLayerId, iconsReady }: Laye
         id="rail-hub-circles"
         type="circle"
         beforeId={labelLayerId}
+        filter={densityFilter(density)}
         paint={{
-          'circle-radius':         RADIUS_EXPR as unknown as number,
+          'circle-radius':         densityScale(density, RADIUS_EXPR) as unknown as number,
           'circle-color':          ['get', 'color'] as unknown as string,
-          'circle-opacity':        OPACITY_EXPR as unknown as number,
+          'circle-opacity':        densityScale(density, OPACITY_EXPR) as unknown as number,
           // BRI hubs: red stroke ring. Non-BRI: standard dark stroke.
           'circle-stroke-width':   2,
           'circle-stroke-color':   STROKE_COLOR_EXPR as unknown as string,

@@ -17,7 +17,13 @@ const INTENSITY_COLOR: Record<string, string> = {
   low:      '#84cc16',
 }
 
-export default function ConflictZoneLayer({ visible, labelLayerId, iconsReady }: LayerProps) {
+interface Props extends LayerProps {
+  /** world-map-v2 round-3: 'conflict-zones' now has its own toggle,
+   *  independent of the conflict-marker 'conflicts' toggle (visible). */
+  zonesVisible?: boolean
+}
+
+export default function ConflictZoneLayer({ visible, zonesVisible, labelLayerId, iconsReady }: Props) {
   const { selectConflict, selectedConflict } = useMapStore()
 
   // GeoJSON of conflict points for the optional symbol overlay. Kept
@@ -36,42 +42,44 @@ export default function ConflictZoneLayer({ visible, labelLayerId, iconsReady }:
       })),
   }), [])
 
-  if (!visible) return null
+  if (!visible && !zonesVisible) return null
 
   return (
     <>
-      <Source id="conflict-zones" type="geojson" data={safeZones}>
-        <Layer
-          id="conflict-zones-fill"
-          type="fill"
-          beforeId={labelLayerId}
-          paint={{
-            'fill-color': ['match', ['get', 'intensity'],
-              'critical', '#ef4444', 'high', '#f97316',
-              'medium', '#eab308', 'low', '#84cc16', '#ef4444',
-            ],
-            'fill-opacity': 0.15,
-          }}
-        />
-        <Layer
-          id="conflict-zones-line"
-          type="line"
-          beforeId={labelLayerId}
-          paint={{
-            'line-color': ['match', ['get', 'intensity'],
-              'critical', '#ef4444', 'high', '#f97316',
-              'medium', '#eab308', 'low', '#84cc16', '#ef4444',
-            ],
-            'line-width': 1,
-            'line-opacity': 0.5,
-          }}
-        />
-      </Source>
+      {zonesVisible && (
+        <Source id="conflict-zones" type="geojson" data={safeZones}>
+          <Layer
+            id="conflict-zones-fill"
+            type="fill"
+            beforeId={labelLayerId}
+            paint={{
+              'fill-color': ['match', ['get', 'intensity'],
+                'critical', '#ef4444', 'high', '#f97316',
+                'medium', '#eab308', 'low', '#84cc16', '#ef4444',
+              ],
+              'fill-opacity': 0.15,
+            }}
+          />
+          <Layer
+            id="conflict-zones-line"
+            type="line"
+            beforeId={labelLayerId}
+            paint={{
+              'line-color': ['match', ['get', 'intensity'],
+                'critical', '#ef4444', 'high', '#f97316',
+                'medium', '#eab308', 'low', '#84cc16', '#ef4444',
+              ],
+              'line-width': 1,
+              'line-opacity': 0.5,
+            }}
+          />
+        </Source>
+      )}
 
       {/* Crossed-swords glyph at low zoom — augments the React Marker pulse
           with a layer-distinguishing icon. The Markers below remain because
           they own the click/select interaction and the pulse animation. */}
-      {iconsReady && (
+      {visible && iconsReady && (
         <Source id="conflict-points" type="geojson" data={conflictPointsGeo}>
           <Layer
             id="conflict-icons"
@@ -96,7 +104,7 @@ export default function ConflictZoneLayer({ visible, labelLayerId, iconsReady }:
         </Source>
       )}
 
-      {conflicts.filter(c => isValidCoord(c.coordinates)).map(c => {
+      {visible && conflicts.filter(c => isValidCoord(c.coordinates)).map(c => {
         const color = INTENSITY_COLOR[c.intensity] ?? '#ef4444'
         const isSelected = selectedConflict?.id === c.id
         return (

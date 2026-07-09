@@ -12,6 +12,7 @@ import { useEffect, useMemo, useState } from 'react'
 import { createPortal } from 'react-dom'
 import { Source, Layer, Marker } from 'react-map-gl/maplibre'
 import type { LayerProps } from '../_core/types'
+import { useMapStore } from '../../store/useMapStore'
 import CausalTreePanel from './CausalTreePanel'
 
 // ── Wire types — keep in sync with src/app/api/trade-graph/route.ts ─────────
@@ -77,6 +78,14 @@ const COMMODITY_COLOR: Record<string, string> = {
 interface Props extends LayerProps {
   /** Optional — narrow the view to a single ticker's exposure. */
   ticker?: string | null
+  /**
+   * DOM node to portal the panels into instead of document.body — WorldMap
+   * passes a ref scoped to the map canvas so nothing floats over the rest of
+   * the dashboard (world-map-v2: "nothing floats over the map [tab]"; the
+   * summary panel, hover tooltip, and events banner all live inside the
+   * canvas bounds via this container instead of viewport-fixed positioning).
+   */
+  portalContainer?: Element | null
 }
 
 interface ChokepointHover {
@@ -86,12 +95,13 @@ interface ChokepointHover {
   y: number
 }
 
-export default function PortfolioTradeLayer({ visible, labelLayerId, ticker }: Props) {
+export default function PortfolioTradeLayer({ visible, labelLayerId, ticker, portalContainer }: Props) {
   const [data, setData] = useState<TradeGraphResponse | null>(null)
   const [events, setEvents] = useState<TaggedEventDto[]>([])
   const [error, setError] = useState<string | null>(null)
-  const [selectedChokepoint, setSelectedChokepoint] = useState<string | null>(null)
+  const { selectedChokepoint: storeSelection, selectChokepoint, clearChokepoint } = useMapStore()
   const [cpHover, setCpHover] = useState<ChokepointHover | null>(null)
+  const portalTarget = portalContainer ?? (typeof document !== 'undefined' ? document.body : null)
   // Pulse phase oscillates 0..1; affected lanes' opacity = lerp(0.35, 1.0, phase).
   const [pulsePhase, setPulsePhase] = useState(0)
   // Which event the user has expanded into a causal tree (null = panel closed).
@@ -213,6 +223,34 @@ export default function PortfolioTradeLayer({ visible, labelLayerId, ticker }: P
     return { lanesExposed, tickerCount: uniqueTickers.size, chokepointStats }
   }, [data, exposedTickersByChokepoint])
 
+  // Human-readable lane list per chokepoint — feeds the Inspector's
+  // "Lanes through" row (ChokepointSelection.lanesThrough).
+  const lanesThroughByChokepoint = useMemo(() => {
+    const m = new Map<string, string[]>()
+    if (!data) return m
+    for (const cp of data.chokepoints) {
+      const lanes = data.chokepointRoutes
+        .filter(r => r.chokepointId === cp.id)
+        .map(r => `${r.originIso3} → ${r.destIso3}`)
+      m.set(cp.id, Array.from(new Set(lanes)).sort())
+    }
+    return m
+  }, [data])
+
+  function toggleChokepointSelection(cp: ChokepointDto) {
+    if (storeSelection?.id === cp.id) {
+      clearChokepoint()
+      return
+    }
+    selectChokepoint({
+      id: cp.id,
+      name: cp.name,
+      description: cp.description,
+      lanesThrough: lanesThroughByChokepoint.get(cp.id) ?? [],
+      exposedTickers: exposedTickersByChokepoint.get(cp.id) ?? [],
+    })
+  }
+
   if (!visible) return null
   if (error)  return null  // surfaced via dev console; map stays usable
   if (!data)  return null
@@ -224,14 +262,14 @@ export default function PortfolioTradeLayer({ visible, labelLayerId, ticker }: P
           The data still drives ticker-exposure indices for the click panel. */}
 
       {data.chokepoints.map(cp => {
-        const isSelected = selectedChokepoint === cp.id
+        const isSelected = storeSelection?.id === cp.id
         const exposedTickers = exposedTickersByChokepoint.get(cp.id) ?? []
         return (
           <Marker key={cp.id} longitude={cp.lon} latitude={cp.lat} anchor="center">
             <button
               onClick={(e) => {
                 e.stopPropagation()
-                setSelectedChokepoint(prev => prev === cp.id ? null : cp.id)
+                toggleChokepointSelection(cp)
               }}
               onMouseEnter={(e) => setCpHover({ cp, exposedTickers, x: e.clientX, y: e.clientY })}
               onMouseMove={(e)  => setCpHover(h => h ? { ...h, x: e.clientX, y: e.clientY } : null)}
@@ -241,7 +279,7 @@ export default function PortfolioTradeLayer({ visible, labelLayerId, ticker }: P
                 height: isSelected ? 16 : 12,
                 background: isSelected ? '#fef3c7' : '#fbbf24',
                 transform: 'rotate(45deg)',
-                border: '1.5px solid #070B14',
+                border: '1.5px solid var(--surface)',
                 cursor: 'pointer',
                 padding: 0,
               }}
@@ -252,76 +290,73 @@ export default function PortfolioTradeLayer({ visible, labelLayerId, ticker }: P
         )
       })}
 
-      {/* Chokepoint tooltip */}
-      {cpHover && createPortal(
-        <div className="fixed z-[9999] pointer-events-none"
+      {/* Chokepoint hover tooltip — supplements the click-to-inspect contract;
+          full detail (lanes + exposed tickers) lives in the Inspector once clicked. */}
+      {cpHover && portalTarget && createPortal(
+        <div className="pointer-events-none absolute z-50"
           style={{ left: cpHover.x + 14, top: cpHover.y - 10 }}>
-          <div className="rounded-xl shadow-2xl overflow-hidden"
-            style={{ background: '#0A0F1E', border: '1px solid #1E2D4A', minWidth: 240, maxWidth: 320 }}>
-            <div className="px-3.5 pt-3 pb-2 border-b" style={{ borderColor: '#1E2D4A' }}>
-              <p className="text-[10px] uppercase tracking-widest font-semibold text-text-muted mb-1">Chokepoint</p>
-              <p className="text-[13px] font-bold text-white leading-snug">{cpHover.cp.name}</p>
+          <div className="overflow-hidden rounded-card border shadow-card-hover"
+            style={{ background: 'var(--surface)', borderColor: 'var(--hairline)', minWidth: 240, maxWidth: 320 }}>
+            <div className="px-3.5 pt-3 pb-2 border-b" style={{ borderColor: 'var(--hairline)' }}>
+              <p className="text-[10px] uppercase tracking-widest font-semibold text-ink-3 mb-1">Chokepoint</p>
+              <p className="text-[13px] font-bold text-ink leading-snug">{cpHover.cp.name}</p>
             </div>
             <div className="px-3.5 py-2.5 flex flex-col gap-1.5">
               {cpHover.cp.description && (
-                <p className="text-[11px] text-text-muted leading-snug">{cpHover.cp.description}</p>
+                <p className="text-[11px] text-ink-3 leading-snug">{cpHover.cp.description}</p>
               )}
-              <div className="flex justify-between items-center pt-1 border-t" style={{ borderColor: '#1E2D4A' }}>
-                <span className="text-[11px] text-text-muted">Exposed tickers</span>
-                <span className="text-[12px] font-semibold text-text-primary tabular-nums">{cpHover.exposedTickers.length}</span>
+              <div className="flex justify-between items-center pt-1 border-t" style={{ borderColor: 'var(--hairline)' }}>
+                <span className="text-[11px] text-ink-3">Exposed tickers</span>
+                <span className="tnum text-[12px] font-semibold text-ink">{cpHover.exposedTickers.length}</span>
               </div>
-              {cpHover.exposedTickers.length > 0 && (
-                <p className="text-[11px] text-text-secondary leading-snug">
-                  {cpHover.exposedTickers.slice(0, 8).join(', ')}
-                  {cpHover.exposedTickers.length > 8 ? `, +${cpHover.exposedTickers.length - 8} more` : ''}
-                </p>
-              )}
-              <p className="text-[10px] text-text-muted italic pt-1">Click to filter map</p>
+              <p className="text-[10px] text-ink-3 italic pt-1">Click for full detail</p>
             </div>
           </div>
         </div>,
-        document.body,
+        portalTarget,
       )}
 
       {/* Always-on summary panel — replaces the unreadable line spaghetti.
-          Shows portfolio exposure ranked by chokepoint, clickable to drill in. */}
-      {summary && createPortal(
-        <div className="fixed z-[9970] bottom-4 right-4 w-72 rounded-xl shadow-2xl overflow-hidden"
-          style={{ background: '#0A0F1E', border: '1px solid #1E2D4A' }}>
-          <div className="px-4 pt-3 pb-2 border-b" style={{ borderColor: '#1E2D4A' }}>
-            <p className="text-[10px] uppercase tracking-widest font-semibold text-text-muted mb-1">
+          Shows portfolio exposure ranked by chokepoint, clickable to drill into
+          the Inspector. Contained within the map canvas (portalTarget), not the
+          full viewport, per the "nothing floats over the map [tab]" principle. */}
+      {summary && portalTarget && createPortal(
+        <div className="pointer-events-auto absolute z-20 bottom-3 right-3 w-72 overflow-hidden rounded-card border shadow-card-hover"
+          style={{ background: 'var(--surface)', borderColor: 'var(--hairline)' }}>
+          <div className="px-4 pt-3 pb-2 border-b" style={{ borderColor: 'var(--hairline)' }}>
+            <p className="text-[10px] uppercase tracking-widest font-semibold text-ink-3 mb-1">
               Portfolio trade exposure
             </p>
             <div className="flex justify-between items-baseline">
               <div>
-                <p className="text-[12px] text-text-muted">{summary.lanesExposed} lanes</p>
-                <p className="text-[20px] font-bold text-white tabular-nums">{summary.tickerCount}</p>
-                <p className="text-[10px] text-text-muted -mt-0.5">unique tickers exposed</p>
+                <p className="text-[12px] text-ink-3">{summary.lanesExposed} lanes</p>
+                <p className="tnum text-[20px] font-bold text-ink">{summary.tickerCount}</p>
+                <p className="text-[10px] text-ink-3 -mt-0.5">unique tickers exposed</p>
               </div>
             </div>
           </div>
           <div className="px-4 py-3 max-h-72 overflow-y-auto">
-            <p className="text-[10px] uppercase tracking-wider text-text-muted mb-2">Top chokepoints by exposure</p>
+            <p className="text-[10px] uppercase tracking-wider text-ink-3 mb-2">Top chokepoints by exposure</p>
             <div className="flex flex-col gap-1.5">
               {summary.chokepointStats.slice(0, 8).map(({ cp, tickerCount }) => (
                 <button key={cp.id}
-                  onClick={() => setSelectedChokepoint(prev => prev === cp.id ? null : cp.id)}
-                  className={`text-left rounded-lg px-3 py-2 transition flex justify-between items-center ${
-                    selectedChokepoint === cp.id ? 'bg-amber-950/40' : 'hover:bg-bg-card-hover'
+                  onClick={() => toggleChokepointSelection(cp)}
+                  className={`text-left rounded-chip px-3 py-2 transition flex justify-between items-center border ${
+                    storeSelection?.id === cp.id ? '' : 'hover:bg-surface-2'
                   }`}
-                  style={{ border: selectedChokepoint === cp.id ? '1px solid #f59e0b' : '1px solid #1E2D4A' }}>
-                  <span className="text-[12px] text-text-primary">{cp.name}</span>
-                  <span className="text-[12px] font-bold tabular-nums"
-                    style={{ color: tickerCount > 50 ? '#fbbf24' : '#94a3b8' }}>
+                  style={{ borderColor: storeSelection?.id === cp.id ? '#f59e0b' : 'var(--hairline)' }}>
+                  <span className="text-[12px] text-ink">{cp.name}</span>
+                  <span className="tnum text-[12px] font-bold"
+                    style={{ color: tickerCount > 50 ? '#fbbf24' : 'var(--ink-3)' }}>
                     {tickerCount}
                   </span>
                 </button>
               ))}
             </div>
-            <p className="text-[10px] text-text-muted italic pt-2">Click a chokepoint to highlight + see exposed tickers</p>
+            <p className="text-[10px] text-ink-3 italic pt-2">Click a chokepoint to highlight + see exposed tickers</p>
           </div>
         </div>,
-        document.body,
+        portalTarget,
       )}
 
       {/* Affected-facilities overlay — bright red markers wherever an event's
@@ -371,35 +406,36 @@ export default function PortfolioTradeLayer({ visible, labelLayerId, ticker }: P
         </Source>
       )}
 
-      {/* Live events banner — fixed top of map, shows trade-disrupting events */}
-      {events.length > 0 && createPortal(
-        <div className="fixed z-[9980] top-4 left-1/2 -translate-x-1/2 max-w-2xl w-[90%]">
-          <div className="rounded-xl shadow-2xl overflow-hidden"
-            style={{ background: '#1A0F0F', border: '1px solid #7c2d12' }}>
+      {/* Live events banner — contained within the map canvas (portalTarget),
+          shows trade-disrupting events. */}
+      {events.length > 0 && portalTarget && createPortal(
+        <div className="pointer-events-auto absolute z-30 top-3 left-1/2 -translate-x-1/2 max-w-2xl w-[90%]">
+          <div className="overflow-hidden rounded-card border shadow-card-hover"
+            style={{ background: 'var(--surface)', borderColor: 'var(--loss)' }}>
             <div className="px-4 py-2 border-b flex items-center gap-2"
-              style={{ borderColor: '#7c2d12' }}>
+              style={{ borderColor: 'var(--loss)' }}>
               <span className="inline-block w-2 h-2 rounded-full"
-                style={{ background: '#dc2626', boxShadow: '0 0 8px #dc2626' }} />
-              <span className="text-[11px] uppercase tracking-widest font-semibold text-red-300">
+                style={{ background: 'var(--loss)', boxShadow: '0 0 8px var(--loss)' }} />
+              <span className="text-[11px] uppercase tracking-widest font-semibold" style={{ color: 'var(--loss)' }}>
                 {events.length} trade-disrupting event{events.length === 1 ? '' : 's'} (24h)
               </span>
-              <span className="text-[11px] text-text-muted ml-auto">affected lanes pulse</span>
+              <span className="text-[11px] text-ink-3 ml-auto">affected lanes pulse</span>
             </div>
             <div className="px-4 py-2 flex flex-col gap-1.5 max-h-32 overflow-y-auto">
               {events.slice(0, 4).map(e => (
                 <button key={e.eventId}
                   onClick={() => setExpandedEventId(e.eventId)}
-                  className="text-left text-[12px] hover:bg-red-950/40 rounded px-1 py-0.5 transition">
-                  <span className="text-text-muted mr-2">[{e.eventType}/sev{e.severity}]</span>
-                  <span className="text-text-primary underline decoration-dotted underline-offset-2">{e.title}</span>
+                  className="text-left text-[12px] hover:bg-surface-2 rounded px-1 py-0.5 transition">
+                  <span className="text-ink-3 mr-2">[{e.eventType}/sev{e.severity}]</span>
+                  <span className="text-ink underline decoration-dotted underline-offset-2">{e.title}</span>
                   {e.affectedChokepoints.length > 0 && (
-                    <span className="ml-2 text-amber-300">
+                    <span className="ml-2" style={{ color: '#fbbf24' }}>
                       → {e.affectedChokepoints.join(', ')}
                     </span>
                   )}
                   {e.affectedFacilities.length > 0 && (
-                    <span className="ml-2 text-red-300">
-                      📍 {e.affectedFacilities.length} {e.affectedFacilities.length === 1 ? 'facility' : 'facilities'}
+                    <span className="ml-2" style={{ color: 'var(--loss)' }}>
+                      {e.affectedFacilities.length} {e.affectedFacilities.length === 1 ? 'facility' : 'facilities'}
                     </span>
                   )}
                 </button>
@@ -407,7 +443,7 @@ export default function PortfolioTradeLayer({ visible, labelLayerId, ticker }: P
             </div>
           </div>
         </div>,
-        document.body,
+        portalTarget,
       )}
 
       {/* Causal tree panel (opens when user clicks an event title in the banner) */}
@@ -418,47 +454,6 @@ export default function PortfolioTradeLayer({ visible, labelLayerId, ticker }: P
           onSelectEvent={(id) => setExpandedEventId(id)}
         />
       )}
-
-      {/* Selected-chokepoint side panel */}
-      {selectedChokepoint && data && (() => {
-        const cp = data.chokepoints.find(c => c.id === selectedChokepoint)
-        if (!cp) return null
-        const tickers = exposedTickersByChokepoint.get(cp.id) ?? []
-        return createPortal(
-          <div className="fixed z-[9990] top-20 right-4 w-80 rounded-xl shadow-2xl overflow-hidden"
-            style={{ background: '#0A0F1E', border: '1px solid #1E2D4A' }}>
-            <div className="px-4 pt-3 pb-2 border-b flex justify-between items-start"
-              style={{ borderColor: '#1E2D4A' }}>
-              <div>
-                <p className="text-[10px] uppercase tracking-widest font-semibold text-amber-400 mb-1">
-                  Filtered by chokepoint
-                </p>
-                <p className="text-[14px] font-bold text-white">{cp.name}</p>
-              </div>
-              <button onClick={() => setSelectedChokepoint(null)}
-                className="text-text-muted hover:text-text-secondary text-lg leading-none">×</button>
-            </div>
-            <div className="px-4 py-3 flex flex-col gap-2 max-h-[60vh] overflow-y-auto">
-              {cp.description && (
-                <p className="text-[12px] text-text-muted leading-snug">{cp.description}</p>
-              )}
-              <p className="text-[11px] uppercase tracking-wider text-text-muted mt-2">
-                {tickers.length} portfolio tickers exposed
-              </p>
-              <div className="grid grid-cols-3 gap-1.5">
-                {tickers.map(t => (
-                  <span key={t}
-                    className="text-[11px] font-medium text-text-secondary px-2 py-1 rounded text-center tabular-nums"
-                    style={{ background: '#0F1729', border: '1px solid #1E2D4A' }}>
-                    {t}
-                  </span>
-                ))}
-              </div>
-            </div>
-          </div>,
-          document.body,
-        )
-      })()}
     </>
   )
 }

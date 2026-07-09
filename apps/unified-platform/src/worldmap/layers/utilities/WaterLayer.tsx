@@ -6,6 +6,7 @@ import { useMemo } from 'react'
 import { Source, Layer } from 'react-map-gl/maplibre'
 import data from '../../data/validated/water-infrastructure.json'
 import type { LayerProps } from '../_core/types'
+import { densityFilter, densityScale, type Density } from '../_core/density'
 
 interface WaterEntry {
   id:                string
@@ -43,7 +44,11 @@ function radiusFor(w: WaterEntry): number {
   return 3
 }
 
-export default function WaterLayer({ visible, labelLayerId }: LayerProps) {
+interface Props extends LayerProps {
+  density: Density
+}
+
+export default function WaterLayer({ visible, labelLayerId, density }: Props) {
   const geoJSON = useMemo(() => ({
     type: 'FeatureCollection' as const,
     features: water
@@ -55,17 +60,20 @@ export default function WaterLayer({ visible, labelLayerId }: LayerProps) {
           : w.capacityGWh
             ? `${w.capacityGWh.toLocaleString()} GWh/yr`
             : null
+        const radius = radiusFor(w)
         return {
           type: 'Feature' as const,
           geometry: { type: 'Point' as const, coordinates: [w.lng, w.lat] as [number, number] },
           properties: {
             name:     w.name,
             subtitle: `${w.type.replace('_', ' ')} · ${w.country}${capacityTag ? ` · ${capacityTag}` : ''}`,
-            radius:   radiusFor(w),
+            radius,
             color:    TYPE_COLOR[w.type] ?? '#64748b',
             ...(capacityTag        ? { tag_Capacity:     capacityTag } : {}),
             ...(w.operator         ? { tag_Operator:     w.operator } : {}),
             ...(w.yearCommissioned ? { tag_Commissioned: String(w.yearCommissioned) } : {}),
+            // No importance field — key tier = top two capacity buckets (radius>=6).
+            isKey: radius >= 6,
           },
         }
       }),
@@ -79,10 +87,11 @@ export default function WaterLayer({ visible, labelLayerId }: LayerProps) {
         id="water-circles"
         type="circle"
         beforeId={labelLayerId}
+        filter={densityFilter(density)}
         paint={{
-          'circle-radius':         ['get', 'radius'] as unknown as number,
+          'circle-radius':         densityScale(density, ['get', 'radius']) as unknown as number,
           'circle-color':          ['get', 'color'] as unknown as string,
-          'circle-opacity':        0.75,
+          'circle-opacity':        densityScale(density, 0.75) as unknown as number,
           'circle-stroke-width':   1,
           'circle-stroke-color':   '#0A0F1E',
           'circle-stroke-opacity': 0.4,

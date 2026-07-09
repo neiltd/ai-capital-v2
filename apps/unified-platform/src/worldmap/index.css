@@ -1,24 +1,18 @@
-/* Tailwind is already loaded via app globals.css — no re-import needed */
+/* Tailwind is already loaded via app globals.css — no re-import needed.
+ *
+ * world-map-v2 fix: this file used to set `body { background: #070B14;
+ * overflow: hidden; ... }` and `#root { width: 100vw; height: 100vh; ... }`
+ * — global, unscoped selectors left over from when worldmap/ was a
+ * standalone Vite app. Importing this file (world-tabs.tsx and the legacy
+ * WorldMapClient.tsx both do) hijacked the WHOLE dashboard's <body> — navy
+ * background, hidden overflow — not just the Map tab. Removed; the app
+ * shell now supplies its own background via the real design tokens
+ * (bg-page in App.tsx) and sizes itself via its container, not 100vw/100vh. */
 
 *, *::before, *::after {
   box-sizing: border-box;
   margin: 0;
   padding: 0;
-}
-
-body {
-  background: #070B14;
-  color: #CBD5E1;
-  font-family: 'Inter', system-ui, -apple-system, sans-serif;
-  overflow: hidden;
-  -webkit-font-smoothing: antialiased;
-}
-
-#root {
-  width: 100vw;
-  height: 100vh;
-  display: flex;
-  flex-direction: column;
 }
 
 /* Scrollbar */

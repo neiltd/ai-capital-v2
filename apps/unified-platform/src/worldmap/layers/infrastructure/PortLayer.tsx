@@ -25,6 +25,7 @@ import { Source, Layer } from 'react-map-gl/maplibre'
 import { isValidCoord } from '../../utils/geoUtils'
 import portsData from '../../data/validated/seaports.json'
 import type { LayerProps } from '../_core/types'
+import { densityFilter, densityScale, type Density } from '../_core/density'
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 const ports = portsData as any[]
@@ -85,7 +86,11 @@ const HALO_RADIUS_EXPR = [
   14,
 ] as const
 
-export default function PortLayer({ visible, labelLayerId, iconsReady }: LayerProps) {
+interface Props extends LayerProps {
+  density: Density
+}
+
+export default function PortLayer({ visible, labelLayerId, iconsReady, density }: Props) {
   const geoJSON = useMemo(() => ({
     type: 'FeatureCollection' as const,
     features: ports
@@ -106,6 +111,8 @@ export default function PortLayer({ visible, labelLayerId, iconsReady }: LayerPr
             : {}),
           // Paint inputs
           color: TYPE_COLOR[p.type] ?? '#3b82f6',
+          // Key tier = critical+high (197 of 264 ports) — same cutoff as airports.
+          isKey: p.strategicImportance === 'critical' || p.strategicImportance === 'high',
         },
       })),
   }), [])
@@ -132,10 +139,11 @@ export default function PortLayer({ visible, labelLayerId, iconsReady }: LayerPr
         id="port-circles"
         type="circle"
         beforeId={labelLayerId}
+        filter={densityFilter(density)}
         paint={{
-          'circle-radius':         RADIUS_EXPR as unknown as number,
+          'circle-radius':         densityScale(density, RADIUS_EXPR) as unknown as number,
           'circle-color':          ['get', 'color'] as unknown as string,
-          'circle-opacity':        OPACITY_EXPR as unknown as number,
+          'circle-opacity':        densityScale(density, OPACITY_EXPR) as unknown as number,
           'circle-stroke-width':   1,
           'circle-stroke-color':   '#0A0F1E',
           'circle-stroke-opacity': 0.4,

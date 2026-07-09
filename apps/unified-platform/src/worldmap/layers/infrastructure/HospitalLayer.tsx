@@ -5,6 +5,7 @@ import { useMemo } from 'react'
 import { Source, Layer } from 'react-map-gl/maplibre'
 import data from '../../data/validated/hospitals.json'
 import type { LayerProps } from '../_core/types'
+import { densityFilter, densityScale, type Density } from '../_core/density'
 
 interface HospitalEntry {
   id:              string
@@ -39,7 +40,20 @@ function colorFor(h: HospitalEntry): string {
   return COLOR_BY_FUNDING[h.fundingSource] ?? '#64748b'
 }
 
-export default function HospitalLayer({ visible, labelLayerId }: LayerProps) {
+const BEDS_RADIUS_EXPR = [
+  'case',
+  ['>=', ['get', 'beds'], 2500], 8,
+  ['>=', ['get', 'beds'], 1500], 6,
+  ['>=', ['get', 'beds'], 1000], 5,
+  ['>=', ['get', 'beds'],  500], 4,
+  3,
+] as const
+
+interface Props extends LayerProps {
+  density: Density
+}
+
+export default function HospitalLayer({ visible, labelLayerId, density }: Props) {
   const geoJSON = useMemo(() => ({
     type: 'FeatureCollection' as const,
     features: hospitals
@@ -60,6 +74,9 @@ export default function HospitalLayer({ visible, labelLayerId }: LayerProps) {
           ...(h.specialties && h.specialties.length > 0
             ? { tag_Specialties: h.specialties.slice(0, 3).join(', ') } : {}),
           color: colorFor(h),
+          // No importance/tier field on this dataset — key tier is globally-ranked
+          // (12) widened to >=1500 beds (major hospitals) so Key isn't too sparse.
+          isKey: h.globalRank != null || (h.beds ?? 0) >= 1500,
         },
       })),
   }), [])
@@ -86,18 +103,11 @@ export default function HospitalLayer({ visible, labelLayerId }: LayerProps) {
         id="hospital-circles"
         type="circle"
         beforeId={labelLayerId}
+        filter={densityFilter(density)}
         paint={{
-          // Beds scale: <500=3, 500-1000=4, 1000-1500=5, 1500-2500=6, >2500=8.
-          'circle-radius': [
-            'case',
-            ['>=', ['get', 'beds'], 2500], 8,
-            ['>=', ['get', 'beds'], 1500], 6,
-            ['>=', ['get', 'beds'], 1000], 5,
-            ['>=', ['get', 'beds'],  500], 4,
-            3,
-          ] as unknown as number,
+          'circle-radius':         densityScale(density, BEDS_RADIUS_EXPR) as unknown as number,
           'circle-color':          ['get', 'color'] as unknown as string,
-          'circle-opacity':        0.75,
+          'circle-opacity':        densityScale(density, 0.75) as unknown as number,
           'circle-stroke-width':   1,
           'circle-stroke-color':   '#0A0F1E',
           'circle-stroke-opacity': 0.5,

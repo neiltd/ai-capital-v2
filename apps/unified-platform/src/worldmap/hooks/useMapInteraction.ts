@@ -84,25 +84,34 @@ export interface MapInteractionResult {
 // MUST register its circle-layer ID here, or its dots will render on the map
 // but never respond to hover/click.
 export const INTERACTIVE_LAYER_IDS: Record<string, string> = {
-  'power-plants':      'power-plants-circles',
-  'airports':          'airport-circles',
-  'datacenters':       'datacenter-circles',
-  'seaports':          'port-circles',
-  'rail-hubs':         'rail-hub-circles',
-  'submarine-cables':  'cable-landing-circles',
-  'hospitals':         'hospital-circles',
-  'critical-minerals': 'mine-circles',
-  'refineries':        'refinery-circles',
-  'water-infra':       'water-circles',
-  'mci':               'mci-circles',
+  'power-plants':        'power-plants-circles',
+  'airports':            'airport-circles',
+  'datacenters':         'datacenter-circles',
+  'seaports':            'port-circles',
+  'rail-hubs':           'rail-hub-circles',
+  'submarine-cables':    'cable-landing-circles',
+  'hospitals':           'hospital-circles',
+  'critical-minerals':   'mine-circles',
+  'refineries':          'refinery-circles',
+  'water-infra':         'water-circles',
+  'mci':                 'mci-circles',
+  'investment-signals':  'investment-signal-circles',
+  'energy-mix':          'energy-mix-circles',
 }
 
 // Reverse-lookup set for the generic infrastructure tooltip in handleMouseMove —
 // any circle-layer ID registered above renders through that one tooltip variant.
 const INFRASTRUCTURE_CIRCLE_IDS = new Set(Object.values(INTERACTIVE_LAYER_IDS))
 
+// circle-layer ID → registry layer ID, used by handleClick to populate
+// FacilitySelection.layerId (so the Inspector can show the layer's label/
+// description as context for the click-to-select facility panel).
+const CIRCLE_ID_TO_LAYER_ID: Record<string, string> = Object.fromEntries(
+  Object.entries(INTERACTIVE_LAYER_IDS).map(([layerId, circleId]) => [circleId, layerId]),
+)
+
 export function useMapInteraction(): MapInteractionResult {
-  const { selectCountry, heatmapIndicator, layerVisibility, isLayerVisible } = useMapStore()
+  const { selectCountry, selectEvent, selectFacility, heatmapIndicator, layerVisibility, isLayerVisible } = useMapStore()
   const [tooltip, setTooltip] = useState<TooltipState | null>(null)
 
   // Only include layers that are both interactive and currently enabled.
@@ -201,8 +210,28 @@ export function useMapInteraction(): MapInteractionResult {
     if (f.layer.id === 'countries-fill') {
       const iso3: string | undefined = f.properties?.iso3
       if (iso3) selectCountry(iso3)
+    } else if (f.layer.id === 'intelligence-events-points') {
+      // Click-to-pin (new capability) — hover tooltip behavior is unchanged.
+      const id: string | undefined = f.properties?.id
+      if (id) selectEvent(id)
+    } else if (INFRASTRUCTURE_CIRCLE_IDS.has(f.layer.id)) {
+      // Generic facility selection — every infrastructure point layer becomes
+      // clickable into the Inspector, not just hover-tooltip (production gap
+      // flagged in the world-map-v2 spec: "current app gives these tooltip-only detail").
+      const props = f.properties ?? {}
+      const tags = Object.entries(props)
+        .filter(([k]) => k.startsWith('tag_'))
+        .map(([k, v]) => ({ label: k.replace('tag_', ''), value: String(v) }))
+      selectFacility({
+        layerId:    CIRCLE_ID_TO_LAYER_ID[f.layer.id] ?? f.layer.id,
+        name:       String(props.name       ?? ''),
+        subtitle:   String(props.subtitle   ?? ''),
+        importance: String(props.importance ?? ''),
+        note:       String(props.note       ?? ''),
+        tags,
+      })
     }
-  }, [selectCountry])
+  }, [selectCountry, selectEvent, selectFacility])
 
   return { tooltip, interactiveIds, handleMouseMove, handleMouseLeave, handleClick }
 }

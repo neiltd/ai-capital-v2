@@ -31,6 +31,7 @@ import { Source, Layer } from 'react-map-gl/maplibre'
 import { isValidCoord } from '../../utils/geoUtils'
 import plantsData from '../../data/validated/power-plants.json'
 import type { LayerProps } from '../_core/types'
+import { densityFilter, densityScale, type Density } from '../_core/density'
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 const plants = plantsData as any[]
@@ -90,7 +91,11 @@ const HALO_RADIUS_EXPR = [
   12,
 ] as const
 
-export default function PowerLayer({ visible, labelLayerId, iconsReady }: LayerProps) {
+interface Props extends LayerProps {
+  density: Density
+}
+
+export default function PowerLayer({ visible, labelLayerId, iconsReady, density }: Props) {
   const geoJSON = useMemo(() => ({
     type: 'FeatureCollection' as const,
     features: plants
@@ -116,6 +121,9 @@ export default function PowerLayer({ visible, labelLayerId, iconsReady }: LayerP
           color:      TYPE_COLOR[p.type] ?? '#64748b',
           capacityMW: p.capacityMW ?? 0,
           status:     p.status,
+          // strategicImportance is sparse — reuse the icon-gating judgment call
+          // already in this file: critical importance OR >=2000MW capacity.
+          isKey: p.strategicImportance === 'critical' || (p.capacityMW ?? 0) >= 2000,
         },
       })),
   }), [])
@@ -144,10 +152,11 @@ export default function PowerLayer({ visible, labelLayerId, iconsReady }: LayerP
         id="power-plants-circles"
         type="circle"
         beforeId={labelLayerId}
+        filter={densityFilter(density)}
         paint={{
-          'circle-radius':        RADIUS_EXPR as unknown as number,
+          'circle-radius':        densityScale(density, RADIUS_EXPR) as unknown as number,
           'circle-color':         ['get', 'color'] as unknown as string,
-          'circle-opacity':       OPACITY_EXPR as unknown as number,
+          'circle-opacity':       densityScale(density, OPACITY_EXPR) as unknown as number,
           'circle-stroke-width':  1,
           'circle-stroke-color':  '#0A0F1E',
           'circle-stroke-opacity': 0.4,

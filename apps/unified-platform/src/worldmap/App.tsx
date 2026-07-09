@@ -1,137 +1,57 @@
+// App — world-map-v2 shell. Native 3-panel layout (layer rail · map canvas ·
+// inspector) using the host dashboard's real design tokens, replacing the old
+// sub-app chrome verbatim: the branded "🌍 World Intelligence v2" header with
+// GitHub link, the ImportStatus chip, the LayerToggle dropdown-that-covers-
+// the-map, the HeatmapSelector dropdown, and the floating bottom-left
+// ConflictCard (which the old h-[80vh]-in-h-screen wrapper clipped).
+//
+// The real MapLibre rendering engine (WorldMap.tsx) is unchanged underneath —
+// only the chrome around it changed. See shell/LayerRail.tsx and
+// shell/Inspector.tsx for the two new panels.
+
 import { useEffect } from 'react'
-import { AnimatePresence, motion } from 'framer-motion'
 import { useMapStore } from './store/useMapStore'
 import { useIntelligenceStore } from './store/useIntelligenceStore'
 import WorldMap from './components/Map/WorldMap'
-import CountryPanel from './components/Panel/CountryPanel'
-import ConflictCard from './components/Panel/ConflictCard'
-import SearchBar from './components/UI/SearchBar'
-import LayerToggle from './components/UI/LayerToggle'
-import HeatmapSelector from './components/UI/HeatmapSelector'
-import ImportStatus from './components/UI/ImportStatus'
+import { LayerRail } from './shell/LayerRail'
+import { Inspector } from './shell/Inspector'
 import { ErrorBoundary } from './components/UI/ErrorBoundary'
 
 export default function App() {
-  const { selectedCountryId, selectedConflict, clearSelection, clearConflict } = useMapStore()
+  const hasSelection = useMapStore(s => s.hasSelection)
+  const clearAllSelection = useMapStore(s => s.clearAllSelection)
+  const selectedCountryId = useMapStore(s => s.selectedCountryId)
+  const selectedConflict = useMapStore(s => s.selectedConflict)
+  const selectedEventId = useMapStore(s => s.selectedEventId)
+  const selectedChokepoint = useMapStore(s => s.selectedChokepoint)
+  const selectedFacility = useMapStore(s => s.selectedFacility)
   const loadImports = useIntelligenceStore(s => s.loadImports)
-  const showPanel = !!selectedCountryId
 
   // Load hub imports once on startup — non-blocking, fails gracefully
   useEffect(() => { loadImports() }, [loadImports])
 
-  // Escape closes panel or conflict card
+  // Escape closes whichever selection kind is active — preserved from the
+  // original App.tsx, now covers all five selection kinds via the store.
   useEffect(() => {
     function onKey(e: KeyboardEvent) {
       if (e.key !== 'Escape') return
-      if (selectedCountryId) clearSelection()
-      else if (selectedConflict) clearConflict()
+      if (hasSelection()) clearAllSelection()
     }
     window.addEventListener('keydown', onKey)
     return () => window.removeEventListener('keydown', onKey)
-  }, [selectedCountryId, selectedConflict, clearSelection, clearConflict])
+  }, [hasSelection, clearAllSelection, selectedCountryId, selectedConflict, selectedEventId, selectedChokepoint, selectedFacility])
 
   return (
-    <div className="flex flex-col h-screen" style={{ background: '#070B14' }}>
+    <div className="relative flex h-full w-full flex-col bg-page lg:flex-row">
+      <LayerRail />
 
-      {/* Header */}
-      <header className="flex items-center gap-3 px-4 py-2 border-b flex-shrink-0 z-[100]"
-        style={{ background: '#0A0F1E', borderColor: '#1E2D4A' }}>
-
-        {/* Brand */}
-        <div className="flex items-center gap-2.5 flex-shrink-0">
-          <span className="text-lg">🌍</span>
-          <div className="hidden sm:block">
-            <p className="text-xs font-bold text-white leading-none">World Intelligence</p>
-            <p className="text-xs leading-none mt-0.5" style={{ color: '#334155' }}>v2</p>
-          </div>
-        </div>
-
-        <div className="w-px h-5 mx-1 hidden sm:block" style={{ background: '#1E2D4A' }} />
-
-        {/* Search */}
-        <SearchBar />
-
-        <div className="w-px h-5 mx-1 hidden md:block" style={{ background: '#1E2D4A' }} />
-
-        {/* Layer toggles */}
-        <div className="hidden md:flex">
-          <LayerToggle />
-        </div>
-
-        <div className="w-px h-5 mx-1 hidden lg:block" style={{ background: '#1E2D4A' }} />
-
-        {/* Heatmap */}
-        <div className="hidden lg:flex">
-          <HeatmapSelector />
-        </div>
-
-        <div className="flex-1" />
-
-        {/* Hub import status — read-only, no ingestion in this project */}
-        <ImportStatus />
-
-        <div className="w-px h-5 mx-1 hidden sm:block" style={{ background: '#1E2D4A' }} />
-
-        <a href="https://github.com/neiltd/worldmaphistory_v2" target="_blank" rel="noopener noreferrer"
-          className="text-xs hover:text-text-secondary transition-colors hidden sm:block" style={{ color: '#334155' }}>
-          GitHub ↗
-        </a>
-      </header>
-
-      {/* Map + Panel */}
-      <div className="flex flex-1 overflow-hidden relative">
-
-        {/* Map fills available space */}
-        <div className="flex-1 relative">
-          <ErrorBoundary label="WorldMap">
-            <WorldMap />
-          </ErrorBoundary>
-
-          {/* Conflict card — bottom left over map */}
-          <AnimatePresence>
-            {selectedConflict && (
-              <motion.div
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                exit={{ opacity: 0, y: 20 }}
-                transition={{ duration: 0.2 }}
-                className="absolute bottom-0 left-0 w-full pointer-events-none"
-              >
-                <div className="pointer-events-auto">
-                  <ConflictCard />
-                </div>
-              </motion.div>
-            )}
-          </AnimatePresence>
-
-          {/* Empty state hint */}
-          {!selectedCountryId && !selectedConflict && (
-            <div className="absolute bottom-5 left-1/2 -translate-x-1/2 pointer-events-none text-center">
-              <p className="text-xs px-3 py-1.5 rounded-full" style={{ background: '#0E1525CC', color: '#475569', border: '1px solid #1E2D4A' }}>
-                Click any country · Toggle layers above · Scroll to zoom
-              </p>
-            </div>
-          )}
-        </div>
-
-        {/* Side panel — slides in */}
-        <AnimatePresence>
-          {showPanel && (
-            <motion.div
-              initial={{ x: '100%', opacity: 0 }}
-              animate={{ x: 0, opacity: 1 }}
-              exit={{ x: '100%', opacity: 0 }}
-              transition={{ type: 'spring', stiffness: 300, damping: 30 }}
-              className="w-[400px] xl:w-[460px] min-w-[360px] flex-shrink-0 flex flex-col overflow-hidden border-l"
-              style={{ background: '#0A0F1E', borderColor: '#1E2D4A' }}
-            >
-              <ErrorBoundary label="CountryPanel">
-                <CountryPanel />
-              </ErrorBoundary>
-            </motion.div>
-          )}
-        </AnimatePresence>
+      <div className="relative min-h-[320px] flex-1">
+        <ErrorBoundary label="WorldMap">
+          <WorldMap />
+        </ErrorBoundary>
       </div>
+
+      <Inspector />
     </div>
   )
 }

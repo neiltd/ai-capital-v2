@@ -9,14 +9,12 @@ export const LAYER_REGISTRY: LayerMeta[] = [
 
   // ── Geopolitical ────────────────────────────────────────────────────────────
 
-  // COUPLING NOTE — 'conflicts' and 'conflict-zones' are intentionally ganged:
-  // Both are rendered by ConflictZoneLayer, which receives a single `visible` prop
-  // driven by isLayerVisible('conflicts'). The 'conflict-zones' key exists in the
-  // registry so the toggle UI can list it as a separate named layer, but WorldMap
-  // does NOT independently read isLayerVisible('conflict-zones') — the zones always
-  // follow the conflict markers. If you want to decouple them in the future, change
-  // WorldMap.tsx line: <ConflictZoneLayer visible={isLayerVisible('conflicts')} ...>
-  // to pass isLayerVisible('conflict-zones') for zone visibility independently.
+  // COUPLING NOTE (updated world-map-v2 round 3) — 'conflicts' and
+  // 'conflict-zones' are rendered by ONE component (ConflictZoneLayer) but
+  // are now INDEPENDENTLY toggleable, per the human's explicit round-3 review
+  // decision. ConflictZoneLayer takes two props: `visible` (conflict markers,
+  // driven by isLayerVisible('conflicts')) and `zonesVisible` (zone polygons,
+  // driven by isLayerVisible('conflict-zones')) — see WorldMap.tsx.
   {
     id: 'conflicts',
     label: 'Active Conflicts',
@@ -36,7 +34,7 @@ export const LAYER_REGISTRY: LayerMeta[] = [
     description: 'Geographic footprint of active conflict areas — indicates territorial control and displacement risk.',
     group: 'geopolitical',
     defaultEnabled: true,
-    // Visibility is controlled by the 'conflicts' key, not this one — see COUPLING NOTE above.
+    // Independently toggleable — see COUPLING NOTE above.
   },
 
   // ── Economic ─────────────────────────────────────────────────────────────────
@@ -249,6 +247,12 @@ export const LAYER_REGISTRY: LayerMeta[] = [
     description: 'Electricity generation by source — reveals fossil fuel dependency, renewables transition, and energy independence risk.',
     group: 'utilities',
     defaultEnabled: false,
+    themes: ['energy-security'],
+    legend: [
+      { color: '#34d399', label: 'Renewable-led', shape: 'circle' },
+      { color: '#a78bfa', label: 'Nuclear-led',    shape: 'circle' },
+      { color: '#78716c', label: 'Fossil-led',     shape: 'circle' },
+    ],
   },
 
   // ── Intelligence ─────────────────────────────────────────────────────────────
@@ -281,6 +285,10 @@ export const LAYER_REGISTRY: LayerMeta[] = [
     description: 'Water scarcity risk — a growing driver of migration, food insecurity, and regional conflict.',
     group: 'environment',
     defaultEnabled: false,
+    legend: [
+      { color: '#0a1a26', label: 'Low stress', shape: 'square' },
+      { color: '#6edcec', label: 'Extreme',    shape: 'square' },
+    ],
   },
   {
     id: 'food-security',
@@ -288,6 +296,10 @@ export const LAYER_REGISTRY: LayerMeta[] = [
     description: 'Food supply vulnerability — countries with high food insecurity face compounded geopolitical instability.',
     group: 'environment',
     defaultEnabled: false,
+    legend: [
+      { color: '#14100c', label: 'Secure',   shape: 'square' },
+      { color: '#f5b43c', label: 'Alarming', shape: 'square' },
+    ],
   },
 
   // ── Investment ───────────────────────────────────────────────────────────────
@@ -297,6 +309,11 @@ export const LAYER_REGISTRY: LayerMeta[] = [
     description: 'Country-level risk/opportunity signals by sector, backed by source-attributed intelligence.',
     group: 'investment',
     defaultEnabled: false,
+    legend: [
+      { color: '#0ca30c', label: 'Bullish', shape: 'circle' },
+      { color: '#898781', label: 'Neutral', shape: 'circle' },
+      { color: '#d03b3b', label: 'Bearish', shape: 'circle' },
+    ],
   },
 ]
 

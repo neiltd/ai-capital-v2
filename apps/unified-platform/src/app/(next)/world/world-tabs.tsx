@@ -77,7 +77,7 @@ export function WorldTabs({ events, storylines }: { events: WorldEvent[]; storyl
       )}
 
       {tab === 'map' && (
-        <div className="mt-4 h-[80vh] overflow-hidden rounded-card border border-hairline">
+        <div className="relative mt-4 h-[80vh] min-h-[560px] overflow-hidden rounded-card border border-hairline">
           <App />
         </div>
       )}
