@@ -42,7 +42,7 @@ export default function PortfolioPage() {
   })).filter((s) => s.value > 0)
 
   return (
-    <main className="mx-auto max-w-[1520px] space-y-6 p-6">
+    <main className="mx-auto max-w-[1520px] space-y-sec-gap p-page-pad">
       <header className="flex items-end justify-between">
         <h1 className="text-[20px] font-semibold text-ink">Portfolio</h1>
         <RefreshPricesButton lastPricedAt={exportedAt} marketOpen={isMarketOpen()} />
@@ -61,7 +61,7 @@ export default function PortfolioPage() {
         <StatTile label="USD / THB" value={usdThb.toFixed(2)} footnote="rate used for all conversions on this page" />
       </div>
 
-      <div className="grid grid-cols-12 gap-6">
+      <div className="grid grid-cols-12 gap-sec-gap">
         {/* ----------------------------- allocation ---------------------------- */}
         <SectionCard title="Allocation" asOf={exportedAt} className="col-span-12 xl:col-span-4">
           <AllocationDonut
@@ -114,7 +114,7 @@ export default function PortfolioPage() {
         asOf={exportedAt}
         actions={<a href="/capital/briefing" className="text-[12px] text-accent">Briefing →</a>}
       >
-        <div className="grid grid-cols-12 gap-6">
+        <div className="grid grid-cols-12 gap-sec-gap">
           <div className="col-span-12 xl:col-span-5">
             <Label>Base case — {agentView.baseCase ? agentView.baseCase.title : 'no scenario data'}</Label>
             {agentView.baseCase && agentView.baseCase.plannedActions.length === 0 && (

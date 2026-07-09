@@ -37,14 +37,14 @@ export default function BriefingPage() {
 
   if (!b) {
     return (
-      <main className="mx-auto max-w-[1520px] p-6">
+      <main className="mx-auto max-w-[1520px] p-page-pad">
         <AlertBanner level="warning" title="Briefing unavailable" detail="No structured briefing.json for today — has today's pipeline run?" />
       </main>
     )
   }
 
   return (
-    <main className="mx-auto max-w-[1520px] space-y-6 p-6">
+    <main className="mx-auto max-w-[1520px] space-y-sec-gap p-page-pad">
       {/* ------------------------------- header ------------------------------ */}
       <header className="flex flex-wrap items-end justify-between gap-4">
         <div>
@@ -68,7 +68,7 @@ export default function BriefingPage() {
       {/* Calibration honesty — always visible above the recommendations. */}
       {b.calibrationNote && <AlertBanner level="info" title="Calibration" detail={b.calibrationNote} />}
 
-      <div className="grid grid-cols-12 gap-6">
+      <div className="grid grid-cols-12 gap-sec-gap">
         {/* --------------------------- left: actions --------------------------- */}
         <div className="col-span-12 space-y-6 xl:col-span-8">
           {b.actionGroups.map((g) => (

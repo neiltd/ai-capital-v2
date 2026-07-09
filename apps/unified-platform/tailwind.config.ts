@@ -63,6 +63,13 @@ const config: Config = {
         },
       },
       borderRadius: { card: '8px', chip: '6px' },
+      spacing: {
+        'page-pad': 'var(--page-pad)',
+        'sec-gap': 'var(--sec-gap)',
+        'card-px': 'var(--card-px)',
+        'card-py': 'var(--card-py)',
+        'cell-py': 'var(--cell-py)',
+      },
       boxShadow: {
         'glow-indigo': '0 0 0 1px rgba(94, 106, 210, 0.25), 0 4px 24px -8px rgba(94, 106, 210, 0.45)',
         'card':        '0 1px 0 0 rgba(255,255,255,0.03) inset, 0 1px 2px 0 rgba(0,0,0,0.4)',
@@ -76,6 +83,8 @@ const config: Config = {
       },
       fontSize: {
         '2xs': ['10px', '14px'],
+        'stat-hero': ['var(--stat-hero)', 'var(--stat-hero-lh)'],
+        'stat-value': ['var(--stat-value)', 'var(--stat-value-lh)'],
       },
     },
   },

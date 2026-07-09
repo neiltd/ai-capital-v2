@@ -19,14 +19,14 @@ export default function DependencyGraphPage() {
 
   if (!graph) {
     return (
-      <main className="mx-auto max-w-[1520px] p-6">
+      <main className="mx-auto max-w-[1520px] p-page-pad">
         <AlertBanner level="warning" title="Graph data unavailable" detail="dependency-graph-engine/data/graph.json not found." />
       </main>
     )
   }
 
   return (
-    <main className="mx-auto flex h-[calc(100vh-40px)] max-w-[1520px] flex-col gap-4 p-6">
+    <main className="mx-auto flex h-[calc(100vh-40px)] max-w-[1520px] flex-col gap-4 p-page-pad">
       <header className="flex items-end justify-between">
         <div>
           <h1 className="text-[20px] font-semibold text-ink">Dependency graph</h1>

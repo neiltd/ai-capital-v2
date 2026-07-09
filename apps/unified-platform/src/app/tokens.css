@@ -100,3 +100,32 @@
 .tnum {
   font-variant-numeric: tabular-nums;
 }
+
+/* Vertical density — comfortable by default, compact on short viewports.
+ * max-height responds to browser zoom too (zoom shrinks the CSS viewport),
+ * so zooming in automatically tightens the layout. Body/label text sizes
+ * are never part of this — legibility floor. */
+:root {
+  --page-pad: 24px;
+  --sec-gap: 24px;
+  --card-px: 16px;
+  --card-py: 16px;
+  --cell-py: 8px;
+  --stat-hero: 28px;
+  --stat-hero-lh: 34px;
+  --stat-value: 22px;
+  --stat-value-lh: 28px;
+}
+@media (max-height: 940px) {
+  :root {
+    --page-pad: 16px;
+    --sec-gap: 16px;
+    --card-px: 14px;
+    --card-py: 12px;
+    --cell-py: 5px;
+    --stat-hero: 24px;
+    --stat-hero-lh: 30px;
+    --stat-value: 18px;
+    --stat-value-lh: 24px;
+  }
+}

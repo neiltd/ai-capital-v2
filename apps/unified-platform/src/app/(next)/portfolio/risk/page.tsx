@@ -30,7 +30,7 @@ export default function RiskPage() {
 
   if (!r) {
     return (
-      <main className="mx-auto max-w-[1520px] p-6">
+      <main className="mx-auto max-w-[1520px] p-page-pad">
         <AlertBanner level="warning" title="Risk data unavailable" detail="risk.json not found — has today's pipeline run?" />
       </main>
     )
@@ -39,7 +39,7 @@ export default function RiskPage() {
   const breaches = r.perTicker.filter((t) => t.weight > CONCENTRATION_LIMIT)
 
   return (
-    <main className="mx-auto max-w-[1520px] space-y-6 p-6">
+    <main className="mx-auto max-w-[1520px] space-y-sec-gap p-page-pad">
       <header className="flex items-end justify-between">
         <h1 className="text-[20px] font-semibold text-ink">Risk</h1>
         <span className="tnum text-[12px] text-ink-3">
@@ -76,7 +76,7 @@ export default function RiskPage() {
         />
       ))}
 
-      <div className="grid grid-cols-12 gap-6">
+      <div className="grid grid-cols-12 gap-sec-gap">
         {/* --------------------------- concentration --------------------------- */}
         <SectionCard title="Position weights" asOf={r.generatedAt} className="col-span-12 xl:col-span-5">
           {[...r.perTicker]

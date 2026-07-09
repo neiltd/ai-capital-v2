@@ -24,7 +24,7 @@ export default function ThesesPage() {
 
   if (!t) {
     return (
-      <main className="mx-auto max-w-[1520px] p-6">
+      <main className="mx-auto max-w-[1520px] p-page-pad">
         <AlertBanner level="warning" title="Thesis data unavailable" detail="thesis-memory/data/thesis.db not found." />
       </main>
     )
@@ -33,7 +33,7 @@ export default function ThesesPage() {
   const weakening = t.held.filter((r) => r.status === 'weakening' || r.status === 'broken').length
 
   return (
-    <main className="mx-auto max-w-[1520px] space-y-6 p-6">
+    <main className="mx-auto max-w-[1520px] space-y-sec-gap p-page-pad">
       <header className="flex items-end justify-between">
         <div>
           <h1 className="text-[20px] font-semibold text-ink">Theses</h1>

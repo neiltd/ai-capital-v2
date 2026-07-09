@@ -21,14 +21,14 @@ export default function GovPage() {
 
   if (!g) {
     return (
-      <main className="mx-auto max-w-[1520px] p-6">
+      <main className="mx-auto max-w-[1520px] p-page-pad">
         <AlertBanner level="warning" title="Gov flow data unavailable" detail="govflow.json not found — has today's pipeline run?" />
       </main>
     )
   }
 
   return (
-    <main className="mx-auto max-w-[1520px] space-y-6 p-6">
+    <main className="mx-auto max-w-[1520px] space-y-sec-gap p-page-pad">
       <header className="flex items-end justify-between">
         <div>
           <h1 className="text-[20px] font-semibold text-ink">Government flow</h1>
@@ -50,7 +50,7 @@ export default function GovPage() {
         />
       </div>
 
-      <div className="grid grid-cols-12 gap-6">
+      <div className="grid grid-cols-12 gap-sec-gap">
         {/* ------------------------------ awards table ----------------------------- */}
         <SectionCard title="Awards by vendor — 30d" asOf={g.exportedAt} className="col-span-12 xl:col-span-8">
           <div className="overflow-x-auto">

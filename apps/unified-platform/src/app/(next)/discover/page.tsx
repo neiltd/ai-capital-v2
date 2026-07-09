@@ -23,7 +23,7 @@ export default function DiscoveryPage() {
 
   if (!d) {
     return (
-      <main className="mx-auto max-w-[1520px] p-6">
+      <main className="mx-auto max-w-[1520px] p-page-pad">
         <AlertBanner level="warning" title="Discovery data unavailable" detail="scenario-simulator/data/discovery.json not found." />
       </main>
     )
@@ -35,7 +35,7 @@ export default function DiscoveryPage() {
   const maxDeployable = d.config.paperBudget * (1 - d.config.cashReservePct)
 
   return (
-    <main className="mx-auto max-w-[1520px] space-y-6 p-6">
+    <main className="mx-auto max-w-[1520px] space-y-sec-gap p-page-pad">
       <header className="flex items-end justify-between">
         <div>
           <h1 className="text-[20px] font-semibold text-ink">Discovery agent</h1>

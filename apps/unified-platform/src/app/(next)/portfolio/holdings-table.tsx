@@ -15,18 +15,18 @@ export function HoldingsTable({ positions, usdThb }: { positions: Position[]; us
   const totalUsd = positions.reduce((s, p) => s + toUsd(p, usdThb), 0)
 
   return (
-    <div className="overflow-x-auto">
+    <div className="overflow-x-auto xl:overflow-visible">
       <table className="w-full border-collapse">
         <thead>
           <tr>
-            <Th className="w-6" />
-            <Th>Ticker</Th>
-            <Th align="right">Shares</Th>
-            <Th align="right">Avg cost</Th>
-            <Th align="right">Price</Th>
-            <Th align="right">Value (USD)</Th>
-            <Th align="right">Weight</Th>
-            <Th align="right">Unrealized P&L</Th>
+            <Th className="w-6" sticky />
+            <Th sticky>Ticker</Th>
+            <Th align="right" sticky>Shares</Th>
+            <Th align="right" sticky>Avg cost</Th>
+            <Th align="right" sticky>Price</Th>
+            <Th align="right" sticky>Value (USD)</Th>
+            <Th align="right" sticky>Weight</Th>
+            <Th align="right" sticky>Unrealized P&L</Th>
           </tr>
         </thead>
         {CLASS_ORDER.map((cls) => {
@@ -38,14 +38,14 @@ export function HoldingsTable({ positions, usdThb }: { positions: Position[]; us
             <tbody key={cls}>
               {/* group header row */}
               <tr className="bg-surface-2/60">
-                <td className="px-3 py-1.5" colSpan={5}>
+                <td className="px-3 py-1" colSpan={5}>
                   <span className="inline-flex items-center gap-2 text-[11px] font-medium uppercase tracking-[0.08em] text-ink-3">
                     <span className="h-2.5 w-2.5 rounded-[3px]" style={{ backgroundColor: meta.color }} />
                     {meta.label}
                   </span>
                 </td>
-                <td className="tnum px-3 py-1.5 text-right text-[12px] font-semibold text-ink">{fmtUsd(clsUsd)}</td>
-                <td className="tnum px-3 py-1.5 text-right text-[12px] text-ink-3">
+                <td className="tnum px-3 py-1 text-right text-[12px] font-semibold text-ink">{fmtUsd(clsUsd)}</td>
+                <td className="tnum px-3 py-1 text-right text-[12px] text-ink-3">
                   {((clsUsd / totalUsd) * 100).toFixed(1)}%
                 </td>
                 <td />
@@ -123,10 +123,10 @@ export function HoldingsTable({ positions, usdThb }: { positions: Position[]; us
         })}
         <tfoot>
           <tr>
-            <td colSpan={5} className="px-3 py-2.5 text-[13px] font-semibold text-ink">Total</td>
-            <td className="tnum px-3 py-2.5 text-right text-[14px] font-semibold text-ink">{fmtUsd(totalUsd)}</td>
-            <td className="tnum px-3 py-2.5 text-right text-[12px] text-ink-3">100%</td>
-            <td className="tnum px-3 py-2.5 text-right">
+            <td colSpan={5} className="px-3 py-2 text-[13px] font-semibold text-ink">Total</td>
+            <td className="tnum px-3 py-2 text-right text-[14px] font-semibold text-ink">{fmtUsd(totalUsd)}</td>
+            <td className="tnum px-3 py-2 text-right text-[12px] text-ink-3">100%</td>
+            <td className="tnum px-3 py-2 text-right">
               <Delta usd={positions.reduce((s, p) => s + pnlUsd(p, usdThb), 0)} />
             </td>
           </tr>

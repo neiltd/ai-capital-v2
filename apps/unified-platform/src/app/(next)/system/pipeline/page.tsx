@@ -91,7 +91,7 @@ export default function PipelinePage() {
   const failedToday = p.stages.filter((s) => !s.skippedToday && s.latestRun?.status === 'failed')
 
   return (
-    <main className="mx-auto max-w-[1520px] space-y-6 p-6">
+    <main className="mx-auto max-w-[1520px] space-y-sec-gap p-page-pad">
       <header className="flex items-end justify-between">
         <div>
           <h1 className="text-[20px] font-semibold text-ink">Pipeline</h1>

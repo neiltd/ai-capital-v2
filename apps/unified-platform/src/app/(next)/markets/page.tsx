@@ -29,7 +29,7 @@ export default function MacroPage() {
   const crossed = m.indicators.filter((i) => i.crossed)
 
   return (
-    <main className="mx-auto max-w-[1520px] space-y-6 p-6">
+    <main className="mx-auto max-w-[1520px] space-y-sec-gap p-page-pad">
       <header className="flex flex-wrap items-end justify-between gap-3">
         <div>
           <h1 className="text-[20px] font-semibold text-ink">Macro &amp; prices</h1>

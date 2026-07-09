@@ -43,7 +43,7 @@ export function SectionCard({
   return (
     <section className={cx('rounded-card border border-hairline bg-surface', className)}>
       {(title || asOf || actions) && (
-        <header className="flex items-center justify-between gap-3 px-4 pt-3.5 pb-2">
+        <header className="flex items-center justify-between gap-3 px-card-px pt-3 pb-2">
           <h2 className="text-[15px] font-semibold leading-[22px] text-ink">{title}</h2>
           <div className="flex items-center gap-3">
             {asOf && <AsOf iso={asOf} />}
@@ -51,7 +51,7 @@ export function SectionCard({
           </div>
         </header>
       )}
-      <div className="px-4 pb-4">{children}</div>
+      <div className="px-card-px pb-card-py">{children}</div>
     </section>
   )
 }
@@ -74,13 +74,13 @@ export function StatTile({
   children?: ReactNode // e.g. a sparkline
 }) {
   return (
-    <div className="rounded-card border border-hairline bg-surface px-4 py-3">
+    <div className="rounded-card border border-hairline bg-surface px-card-px py-2.5">
       <Label>{label}</Label>
       <div className="mt-1 flex items-baseline gap-2">
         <span
           className={cx(
             'tnum font-semibold text-ink',
-            hero ? 'text-[28px] leading-[34px]' : 'text-[22px] leading-[28px]',
+            hero ? 'text-stat-hero' : 'text-stat-value',
           )}
         >
           {value}
@@ -285,17 +285,20 @@ export function Empty({
 export function Th({
   children,
   align = 'left',
+  sticky = false,
   className,
 }: {
   children?: ReactNode
   align?: 'left' | 'right'
+  sticky?: boolean
   className?: string
 }) {
   return (
     <th
       className={cx(
-        'whitespace-nowrap border-b border-hairline px-3 py-2 text-[11px] font-medium uppercase tracking-[0.08em] text-ink-3',
+        'whitespace-nowrap border-b border-hairline px-3 py-cell-py text-[11px] font-medium uppercase tracking-[0.08em] text-ink-3',
         align === 'right' ? 'text-right' : 'text-left',
+        sticky && 'sticky top-0 z-10 bg-surface',
         className,
       )}
     >
@@ -316,7 +319,7 @@ export function Td({
   return (
     <td
       className={cx(
-        'tnum whitespace-nowrap px-3 py-2 text-[13px] leading-5 text-ink-2',
+        'tnum whitespace-nowrap px-3 py-cell-py text-[13px] leading-5 text-ink-2',
         align === 'right' ? 'text-right' : 'text-left',
         className,
       )}

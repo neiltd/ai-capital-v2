@@ -19,7 +19,7 @@ export default function TradePage() {
 
   if (!t) {
     return (
-      <main className="mx-auto max-w-[1520px] p-6">
+      <main className="mx-auto max-w-[1520px] p-page-pad">
         <AlertBanner level="warning" title="Trade data unavailable" detail="wave-analyzer/data/trades.db not found." />
       </main>
     )
@@ -29,7 +29,7 @@ export default function TradePage() {
   const hits = t.closed.filter((p) => (p.pnl ?? 0) > 0).length
 
   return (
-    <main className="mx-auto max-w-[1520px] space-y-6 p-6">
+    <main className="mx-auto max-w-[1520px] space-y-sec-gap p-page-pad">
       <header className="flex items-end justify-between">
         <div>
           <h1 className="text-[20px] font-semibold text-ink">Trade agent</h1>

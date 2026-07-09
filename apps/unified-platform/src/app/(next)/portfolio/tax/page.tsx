@@ -33,7 +33,7 @@ export default function TaxPage() {
 
   if (!h) {
     return (
-      <main className="mx-auto max-w-[1520px] p-6">
+      <main className="mx-auto max-w-[1520px] p-page-pad">
         <AlertBanner level="warning" title="Tax data unavailable" detail="harvest.json not found — has today's pipeline run?" />
       </main>
     )
@@ -46,7 +46,7 @@ export default function TaxPage() {
   })
 
   return (
-    <main className="mx-auto max-w-[1520px] space-y-6 p-6">
+    <main className="mx-auto max-w-[1520px] space-y-sec-gap p-page-pad">
       <header className="flex items-end justify-between">
         <h1 className="text-[20px] font-semibold text-ink">Tax &amp; Harvesting</h1>
         <span className="tnum text-[12px] text-ink-3">FX {h.fxRateUsdThb}</span>
@@ -81,7 +81,7 @@ export default function TaxPage() {
         </div>
       )}
 
-      <div className="grid grid-cols-12 gap-6">
+      <div className="grid grid-cols-12 gap-sec-gap">
         {/* ------------------------- harvest opportunities ----------------------- */}
         <SectionCard title="Harvest opportunities" asOf={h.generatedAt} className="col-span-12 xl:col-span-8">
           <div className="overflow-x-auto">
