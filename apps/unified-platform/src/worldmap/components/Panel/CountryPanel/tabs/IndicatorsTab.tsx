@@ -1,5 +1,5 @@
 import {
-  RadarChart, Radar, PolarGrid, PolarAngleAxis,
+  RadarChart, Radar, PolarGrid, PolarAngleAxis, PolarRadiusAxis,
   ResponsiveContainer, Tooltip as ChartTooltip,
 } from 'recharts'
 import type { Country } from '../../../../types/country'
@@ -41,11 +41,16 @@ export default function IndicatorsTab({ country: c, compare: cc }: Props) {
           <RadarChart data={radarData} margin={{ top: 10, right: 35, bottom: 10, left: 35 }}>
             <PolarGrid stroke="#23252a" />
             <PolarAngleAxis dataKey="subject" tick={{ fill: '#4a4d52', fontSize: 10 }} />
+            {/* Explicit radius axis: recharts v3 renders a degenerate (center-collapsed)
+                polygon without one, and scores are a fixed 1–10 scale anyway. */}
+            <PolarRadiusAxis domain={[0, 10]} tick={false} axisLine={false} />
+            {/* isAnimationActive=false: the entrance animation freezes on its first
+                frame here (polygon stuck collapsed at center), so render statically. */}
             <Radar name={c.name} dataKey="A" stroke="#3b82f6" fill="#3b82f6" fillOpacity={0.18}
-              dot={{ fill: '#3b82f6', r: 2.5 }} />
+              dot={{ fill: '#3b82f6', r: 2.5 }} isAnimationActive={false} />
             {cc && (
               <Radar name={cc.name} dataKey="B" stroke="#a78bfa" fill="#a78bfa" fillOpacity={0.12}
-                dot={{ fill: '#a78bfa', r: 2.5 }} />
+                dot={{ fill: '#a78bfa', r: 2.5 }} isAnimationActive={false} />
             )}
             <ChartTooltip
               contentStyle={{ background: '#0f1011', border: '1px solid #23252a', borderRadius: 6, fontSize: 11 }}

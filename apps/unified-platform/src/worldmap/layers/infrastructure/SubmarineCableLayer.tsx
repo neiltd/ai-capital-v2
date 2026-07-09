@@ -146,7 +146,13 @@ export default function SubmarineCableLayer({ visible, labelLayerId }: LayerProp
               'active', '#06b6d4', 'construction', '#f59e0b', 'damaged', '#ef4444', '#475569',
             ],
             'line-width': 6,
-            'line-opacity': 0.08,
+            // Fade glow at world zoom: 300 real cables drawn as straight chords
+            // stack into a uniform wash over the Atlantic when every glow overlaps.
+            'line-opacity': [
+              'interpolate', ['linear'], ['zoom'],
+              2, 0.02,
+              4, 0.08,
+            ] as unknown as number,
           }}
         />
         <Layer
@@ -159,7 +165,13 @@ export default function SubmarineCableLayer({ visible, labelLayerId }: LayerProp
               'planned', '#64748b', 'damaged', '#ef4444', '#475569',
             ],
             'line-width': 2,
-            'line-opacity': 0.75,
+            // Derived point-to-point chords (no real route geometry in data) read
+            // as a hairball at world zoom — keep them subtle until zoomed in.
+            'line-opacity': [
+              'interpolate', ['linear'], ['zoom'],
+              2, 0.3,
+              4, 0.75,
+            ] as unknown as number,
             'line-dasharray': ['match', ['get', 'status'],
               'construction', ['literal', [4, 3]],
               'planned',      ['literal', [2, 4]],
