@@ -1,8 +1,46 @@
+// Thai mutual/RMF/ThaiESG fund NAVs (e.g. K-VIETNAM, K-ESGSI-ThaiESG) aren't
+// on Yahoo Finance at all — they're not exchange-listed, so every Yahoo
+// lookup 404s. Finnomena's public (no-auth) API serves real daily NAV for
+// these; short_code -> fund_id comes from a lookup table the user pulled
+// from Finnomena's own fund master list (see data/finnomena-fund-ids.json —
+// ~7150 funds, load-bearing but not exhaustive: employer-specific provident
+// funds like PFM009 aren't public retail funds and won't be in it or on
+// Finnomena at all, so they correctly fail this lookup and fall through to
+// returning null, same as any other unpriceable ticker).
+import finnomenaFundIds from './finnomena-fund-ids.json' with { type: 'json' }
+
+const FUND_ID_BY_TICKER = finnomenaFundIds as Record<string, string>
+
+async function fetchFinnomenaPrice(ticker: string): Promise<number | null> {
+  const fundId = FUND_ID_BY_TICKER[ticker]
+  if (!fundId) return null
+  const url = `https://www.finnomena.com/fn3/api/fund/v2/public/funds/${encodeURIComponent(fundId)}/latest`
+  try {
+    const res = await fetch(url, { headers: { 'User-Agent': 'Mozilla/5.0', accept: 'application/json' } })
+    if (!res.ok) {
+      console.warn(`Finnomena price fetch failed for ${ticker} (fund_id ${fundId}): HTTP ${res.status}`)
+      return null
+    }
+    const data = await res.json() as { status: boolean; data?: { value?: number } }
+    const nav = data.status ? data.data?.value : undefined
+    if (typeof nav === 'number' && nav > 0) return nav
+    console.warn(`Finnomena price fetch returned no usable NAV for ${ticker} (fund_id ${fundId})`)
+    return null
+  } catch (error) {
+    console.warn(`Finnomena price fetch error for ${ticker}:`, error)
+    return null
+  }
+}
+
 async function fetchPrice(ticker: string): Promise<number | null> {
   const url = `https://query1.finance.yahoo.com/v8/finance/chart/${encodeURIComponent(ticker)}?interval=1d&range=5d`
   try {
     const res = await fetch(url, { headers: { 'User-Agent': 'Mozilla/5.0' } })
     if (!res.ok) {
+      // Yahoo has no listing for Thai mutual/RMF/ThaiESG fund codes — try
+      // Finnomena's NAV feed before giving up.
+      const finnomenaPrice = await fetchFinnomenaPrice(ticker)
+      if (finnomenaPrice !== null) return finnomenaPrice
       console.warn(`Price fetch failed for ${ticker}: HTTP ${res.status}`)
       return null
     }
