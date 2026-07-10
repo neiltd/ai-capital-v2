@@ -55,6 +55,10 @@ if [ -f "$DB" ] && command -v sqlite3 > /dev/null 2>&1; then
   ALERT_MARKER="$ROOT/data/daily-catchup-alerted-$(date +%Y-%m-%d)"
   if [ "${FAILED_COUNT:-0}" -gt 0 ] && [ ! -f "$ALERT_MARKER" ]; then
     touch "$ALERT_MARKER"
+    if [ -f "$ROOT/data/line-notifications-muted" ]; then
+      log "today's daily-pipeline already failed ${FAILED_COUNT}x — LINE alert suppressed (line-notifications-muted)"
+      exit 0
+    fi
     log "today's daily-pipeline already failed ${FAILED_COUNT}x — sending LINE alert instead of auto-retrying"
     LINE_ENV="$ROOT/apps/scenario-simulator/.env"
     if [ -f "$LINE_ENV" ]; then

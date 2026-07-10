@@ -1,12 +1,25 @@
 // LINE Messaging API — push message to the configured user.
 // Requires LINE_CHANNEL_ACCESS_TOKEN and LINE_USER_ID in environment.
 
+import { existsSync } from 'fs'
+import { join } from 'path'
+
 const LINE_PUSH_URL = 'https://api.line.me/v2/bot/message/push'
 
 function token(): string | undefined  { return process.env.LINE_CHANNEL_ACCESS_TOKEN }
 function userId(): string | undefined { return process.env.LINE_USER_ID }
 
+// Repo-wide kill switch — see data/line-notifications-muted (ask Claude to toggle).
+function isMuted(): boolean {
+  return existsSync(join(process.cwd(), '..', '..', 'data', 'line-notifications-muted'))
+}
+
 export async function sendLine(text: string): Promise<void> {
+  if (isMuted()) {
+    console.warn('[LINE] Notifications muted (data/line-notifications-muted) — skipping')
+    return
+  }
+
   const tok = token()
   const uid = userId()
   if (!tok || !uid) {

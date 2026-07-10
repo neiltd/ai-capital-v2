@@ -25,6 +25,11 @@ async function alertOnStaleSourcesOnce(quota: QuotaTracker): Promise<void> {
   const staleSources = SOURCE_NAMES.filter(name => quota.isStale(name));
   if (staleSources.length === 0) return;
 
+  if (existsSync(join(process.cwd(), '..', '..', 'data', 'line-notifications-muted'))) {
+    logger.warn('run', `Stale sources: ${staleSources.join(', ')} — LINE alert suppressed (line-notifications-muted)`);
+    return;
+  }
+
   const marker = join(process.cwd(), 'quota', `stale-alerted-${new Date().toISOString().slice(0, 10)}.json`);
   if (existsSync(marker)) return;
 
