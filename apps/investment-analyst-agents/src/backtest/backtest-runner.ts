@@ -252,4 +252,6 @@ function computeCalibration(rows: BacktestRow[], totalPredictions: number): Cali
   }
 }
 
-run().catch(err => { console.error(err); process.exit(1) })
+if (import.meta.url === `file://${process.argv[1]}`) {
+  run().catch(err => { console.error(err); process.exit(1) })
+}
