@@ -166,12 +166,13 @@ async function run() {
 
   console.log(`[backtest] Scored ${rows.length} call(s), skipped ${skipped}`)
 
-  const report = formatReport(rows, predictions.length)
+  // Structured calibration computed first so its decay findings can be
+  // rendered into the markdown report below.
+  const calibration = computeCalibration(rows, predictions.length)
+
+  const report = formatReport(rows, predictions.length, calibration.decaying, calibration.decayWindowPredictions)
   mkdirSync(join(process.cwd(), 'backtest'), { recursive: true })
   writeFileSync(REPORT_PATH, report, 'utf-8')
-
-  // Structured calibration for the briefing prompt to ingest.
-  const calibration = computeCalibration(rows, predictions.length)
   writeFileSync(CALIB_PATH, JSON.stringify(calibration, null, 2), 'utf-8')
 
   console.log(`\nReport: ${REPORT_PATH}`)

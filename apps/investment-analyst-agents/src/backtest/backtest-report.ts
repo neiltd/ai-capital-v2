@@ -1,7 +1,7 @@
 // Format backtest rows into a markdown report aggregating accuracy by
 // signal type, conviction, time horizon, and action.
 
-import type { BacktestRow } from './backtest-runner.js'
+import type { BacktestRow, DecayEntry } from './backtest-runner.js'
 
 interface Bucket {
   total:       number  // rows where correct is non-null (excluded informational)
@@ -32,7 +32,12 @@ function avgRet(b: Bucket): string {
   return `${b.avgReturn >= 0 ? '+' : ''}${b.avgReturn.toFixed(2)}%`
 }
 
-export function formatReport(rows: BacktestRow[], totalPredictions: number): string {
+export function formatReport(
+  rows: BacktestRow[],
+  totalPredictions: number,
+  decaying: DecayEntry[] = [],
+  decayWindowPredictions = 0,
+): string {
   const today = new Date().toISOString().slice(0, 10)
 
   // ── Aggregate by various dimensions ─────────────────────────────────────
@@ -134,6 +139,17 @@ export function formatReport(rows: BacktestRow[], totalPredictions: number): str
     out.push(`| ${r.date} | ${r.ticker} | ${r.action} | ${r.conviction} | ${avgRet({ total: 1, correct: 0, avgReturn: r.return, totalReturn: r.return })} | ${r.correct ? '✅' : '❌'} |`)
   }
   out.push('')
+
+  // ── Signal decay ─────────────────────────────────────────────────────────
+  if (decaying.length > 0) {
+    out.push(`## ⚠️ Signal Decay (recent ${decayWindowPredictions} predictions vs. all-time)\n`)
+    out.push('| Signal | All-time Accuracy | Recent Accuracy | All-time Calls | Recent Calls |')
+    out.push('|---|---|---|---|---|')
+    for (const d of decaying) {
+      out.push(`| ${d.signal} | ${(d.allTimeAccuracy * 100).toFixed(1)}% | ${(d.recentAccuracy * 100).toFixed(1)}% | ${d.allTimeCalls} | ${d.recentCalls} |`)
+    }
+    out.push('')
+  }
 
   // ── Recommendation ──────────────────────────────────────────────────────
   out.push('## Interpretation hints\n')
