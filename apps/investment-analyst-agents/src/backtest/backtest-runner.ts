@@ -50,7 +50,7 @@ const WINDOWS      = [7, 30, 90] as const
 
 // ── Yahoo Finance historical price fetch ─────────────────────────────────────
 
-async function fetchHistoricalClose(ticker: string, date: string): Promise<number | null> {
+export async function fetchHistoricalClose(ticker: string, date: string): Promise<number | null> {
   const day = new Date(date)
   if (isNaN(day.getTime())) return null
   // Fetch a 7-day window centered on the target date so we always land on a trading day
@@ -61,11 +61,23 @@ async function fetchHistoricalClose(ticker: string, date: string): Promise<numbe
     const res = await fetch(url, { headers: { 'User-Agent': 'Mozilla/5.0' } })
     if (!res.ok) return null
     const data = await res.json() as {
-      chart: { result?: Array<{ timestamp: number[]; indicators: { quote: Array<{ close: (number | null)[] }> } }>; error?: { code: string } }
+      chart: {
+        result?: Array<{
+          timestamp: number[]
+          indicators: {
+            quote:    Array<{ close: (number | null)[] }>
+            adjclose: Array<{ adjclose: (number | null)[] }>
+          }
+        }>
+        error?: { code: string }
+      }
     }
     if (data.chart.error || !data.chart.result?.length) return null
     const result = data.chart.result[0]
-    const closes  = result.indicators.quote[0]?.close ?? []
+    // adjclose (split/dividend-adjusted), not raw close — a corporate action
+    // inside the scored window would otherwise show up as a fake price cliff.
+    // See docs/superpowers/specs/2026-07-15-backtest-signal-decay-design.md
+    const closes  = result.indicators.adjclose[0]?.adjclose ?? []
     const targetTs = day.getTime() / 1000
     // Find the trading day at or just before the target date
     let bestIdx = -1
