@@ -178,8 +178,15 @@ async function run() {
   console.log(`Calibration JSON: ${CALIB_PATH}`)
 }
 
-interface CalibStats { accuracy: number; calls: number; avgReturn: number }
-interface CalibrationJSON {
+export interface CalibStats { accuracy: number; calls: number; avgReturn: number }
+export interface DecayEntry {
+  signal:          string
+  allTimeAccuracy: number
+  recentAccuracy:  number
+  allTimeCalls:    number
+  recentCalls:     number
+}
+export interface CalibrationJSON {
   generatedAt:          string
   predictionsAnalyzed:  number
   scoredCalls:          number
@@ -190,9 +197,11 @@ interface CalibrationJSON {
   highConvictionPenalty:number        // medium accuracy - high accuracy (positive = problem)
   bestEdge:             { signal: string; accuracy: number } | null
   worstSignal:          { signal: string; accuracy: number } | null
+  decayWindowPredictions: number
+  decaying:               DecayEntry[]
 }
 
-function computeCalibration(rows: BacktestRow[], totalPredictions: number): CalibrationJSON {
+export function computeCalibration(rows: BacktestRow[], totalPredictions: number): CalibrationJSON {
   const scoredRows = rows.filter(r => r.correct !== null)
   const windows = Array.from(new Set(rows.map(r => r.windowDays))).sort((a, b) => a - b)
 
@@ -230,6 +239,59 @@ function computeCalibration(rows: BacktestRow[], totalPredictions: number): Cali
   const calibrationInverted   = high < med && (byConviction.high?.[shortest]?.calls ?? 0) > 0 && (byConviction.medium?.[shortest]?.calls ?? 0) > 0
   const highConvictionPenalty = med - high
 
+  // Signal decay: compare each bucket's all-time accuracy against just the
+  // most recent RECENT_PREDICTIONS_WINDOW prediction dates. Flags only when
+  // both slices have enough calls to be meaningful — with 44 predictions and
+  // heavily skewed action counts (buy/trim: 5-17 calls total), a fixed
+  // calendar window would produce noise on the thin buckets.
+  const RECENT_PREDICTIONS_WINDOW = 15
+  const MIN_CALLS_FOR_DECAY       = 3
+  const DECAY_THRESHOLD_PP        = 15
+
+  const recentDates = new Set(
+    Array.from(new Set(scoredRows.map(r => r.date))).sort().slice(-RECENT_PREDICTIONS_WINDOW)
+  )
+
+  function bucketRecent(filter: (r: BacktestRow) => boolean): CalibStats {
+    return bucket(r => filter(r) && recentDates.has(r.date))
+  }
+
+  function toDecayEntry(signal: string, allTime: CalibStats, recent: CalibStats): DecayEntry | null {
+    if (allTime.calls < MIN_CALLS_FOR_DECAY || recent.calls < MIN_CALLS_FOR_DECAY) return null
+    const dropPP = (allTime.accuracy - recent.accuracy) * 100
+    if (dropPP < DECAY_THRESHOLD_PP) return null
+    return {
+      signal,
+      allTimeAccuracy: allTime.accuracy,
+      recentAccuracy:  recent.accuracy,
+      allTimeCalls:    allTime.calls,
+      recentCalls:     recent.calls,
+    }
+  }
+
+  const decaying: DecayEntry[] = []
+  for (const a of actions) {
+    for (const w of windows) {
+      const entry = toDecayEntry(
+        `${a} (${w}d)`,
+        byAction[a][`${w}d`],
+        bucketRecent(r => r.action === a && r.windowDays === w),
+      )
+      if (entry) decaying.push(entry)
+    }
+  }
+  for (const c of ['high', 'medium', 'low']) {
+    for (const w of windows) {
+      const entry = toDecayEntry(
+        `${c} (${w}d)`,
+        byConviction[c][`${w}d`],
+        bucketRecent(r => r.conviction === c && r.windowDays === w),
+      )
+      if (entry) decaying.push(entry)
+    }
+  }
+  decaying.sort((x, y) => (y.allTimeAccuracy - y.recentAccuracy) - (x.allTimeAccuracy - x.recentAccuracy))
+
   // Best edge = action with highest accuracy and >= 3 calls
   const allActionStats = Object.entries(byAction)
     .flatMap(([a, byW]) => Object.entries(byW).map(([w, s]) => ({ signal: `${a} (${w})`, ...s })))
@@ -249,6 +311,8 @@ function computeCalibration(rows: BacktestRow[], totalPredictions: number): Cali
     highConvictionPenalty,
     bestEdge,
     worstSignal,
+    decayWindowPredictions: RECENT_PREDICTIONS_WINDOW,
+    decaying,
   }
 }
 
