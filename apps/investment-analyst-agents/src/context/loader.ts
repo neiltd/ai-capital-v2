@@ -47,6 +47,14 @@ interface CalibrationJSON {
   highConvictionPenalty:number
   bestEdge:             { signal: string; accuracy: number } | null
   worstSignal:          { signal: string; accuracy: number } | null
+  decayWindowPredictions?: number
+  decaying?: Array<{
+    signal:          string
+    allTimeAccuracy: number
+    recentAccuracy:  number
+    allTimeCalls:    number
+    recentCalls:     number
+  }>
 }
 
 function loadCalibration(path: string): CalibrationJSON | null {
