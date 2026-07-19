@@ -21,6 +21,17 @@ for (const [key, value] of Object.entries(FUND_ID_BY_TICKER)) {
   FUND_ID_BY_TICKER_UPPER[key.toUpperCase()] = value
 }
 
+// A >60% single-fetch move is implausible for the kind of assets this
+// system prices (equities, Thai mutual funds) — reject rather than
+// silently book it. See the KLAC discovery-position incident, 2026-06-02
+// (avg_cost $2003 vs a real price near $230, caught a month later because
+// nothing validated the fetch). Shared by both the Yahoo and Finnomena
+// price paths below.
+function isPlausiblePriceMove(price: number, previous: number | undefined | null): boolean {
+  if (!previous || previous <= 0) return true // nothing to compare against
+  return Math.abs(price - previous) / previous <= 0.6
+}
+
 async function fetchFinnomenaPrice(ticker: string): Promise<number | null> {
   const fundId = FUND_ID_BY_TICKER_UPPER[ticker.toUpperCase()]
   if (!fundId) return null
@@ -31,11 +42,19 @@ async function fetchFinnomenaPrice(ticker: string): Promise<number | null> {
       console.warn(`Finnomena price fetch failed for ${ticker} (fund_id ${fundId}): HTTP ${res.status}`)
       return null
     }
-    const data = await res.json() as { status: boolean; data?: { value?: number } }
+    const data = await res.json() as { status: boolean; data?: { value?: number; d_change?: number } }
     const nav = data.status ? data.data?.value : undefined
-    if (typeof nav === 'number' && nav > 0) return nav
-    console.warn(`Finnomena price fetch returned no usable NAV for ${ticker} (fund_id ${fundId})`)
-    return null
+    if (typeof nav !== 'number' || nav <= 0) {
+      console.warn(`Finnomena price fetch returned no usable NAV for ${ticker} (fund_id ${fundId})`)
+      return null
+    }
+    const dChange = data.data?.d_change
+    const previousNav = typeof dChange === 'number' ? nav - dChange : undefined
+    if (!isPlausiblePriceMove(nav, previousNav)) {
+      console.warn(`Finnomena price fetch rejected for ${ticker}: NAV ${nav} implausible vs previous ${previousNav}`)
+      return null
+    }
+    return nav
   } catch (error) {
     console.warn(`Finnomena price fetch error for ${ticker}:`, error)
     return null
@@ -72,22 +91,10 @@ async function fetchPrice(ticker: string): Promise<number | null> {
     if (!result) return null
     const previousClose = result.meta.previousClose
 
-    // Sanity check — Yahoo occasionally returns a garbage regularMarketPrice
-    // (bad upstream tick, stale cache, ticker collision). A >60% single-day
-    // move against the same response's previousClose is implausible for the
-    // kind of equities this system trades; reject rather than silently book
-    // it. This is exactly the class of bug that corrupted the KLAC discovery
-    // position on 2026-06-02 (avg_cost $2003 vs a real price near $230) —
-    // caught only a month later because nothing validated the fetch.
-    function plausible(price: number): boolean {
-      if (!previousClose || previousClose <= 0) return true // nothing to compare against
-      return Math.abs(price - previousClose) / previousClose <= 0.6
-    }
-
     // Prefer live market price, fall back to last close
     const live = result.meta.regularMarketPrice
     if (live && live > 0) {
-      if (!plausible(live)) {
+      if (!isPlausiblePriceMove(live, previousClose)) {
         console.warn(`Price fetch rejected for ${ticker}: regularMarketPrice ${live} implausible vs previousClose ${previousClose}`)
         return null
       }
@@ -97,7 +104,7 @@ async function fetchPrice(ticker: string): Promise<number | null> {
     for (let i = closes.length - 1; i >= 0; i--) {
       if (closes[i] != null) {
         const c = closes[i] as number
-        if (!plausible(c)) {
+        if (!isPlausiblePriceMove(c, previousClose)) {
           console.warn(`Price fetch rejected for ${ticker}: last close ${c} implausible vs previousClose ${previousClose}`)
           return null
         }

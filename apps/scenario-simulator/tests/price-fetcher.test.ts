@@ -58,4 +58,39 @@ describe('fetchPrices', () => {
     const finnomenaUrl = (global.fetch as any).mock.calls[1][0] as string
     expect(finnomenaUrl).toContain('F00001M4QH')
   })
+
+  it('rejects an implausible Finnomena NAV move (>60% vs previous)', async () => {
+    // d_change: 90 on a value of 100 implies a previous NAV of 10 — a 900%
+    // jump, the same class of bad-fetch bug that corrupted the KLAC
+    // discovery position on 2026-06-02.
+    global.fetch = vi.fn()
+      .mockResolvedValueOnce({ ok: false, status: 404 } as any)
+      .mockResolvedValueOnce({ ok: true, json: async () => ({ status: true, data: { value: 100, d_change: 90 } }) } as any)
+
+    const prices = await fetchPrices(['K-ESGSI-THAIESG'])
+
+    expect(prices).toEqual({})
+  })
+
+  it('accepts a plausible Finnomena NAV move', async () => {
+    // d_change: 0.05 on a value of 10.85 implies a previous NAV of 10.80 —
+    // a small, ordinary daily move.
+    global.fetch = vi.fn()
+      .mockResolvedValueOnce({ ok: false, status: 404 } as any)
+      .mockResolvedValueOnce({ ok: true, json: async () => ({ status: true, data: { value: 10.85, d_change: 0.05 } }) } as any)
+
+    const prices = await fetchPrices(['K-ESGSI-THAIESG'])
+
+    expect(prices).toEqual({ 'K-ESGSI-THAIESG': 10.85 })
+  })
+
+  it('accepts a Finnomena NAV when d_change is missing (nothing to compare against)', async () => {
+    global.fetch = vi.fn()
+      .mockResolvedValueOnce({ ok: false, status: 404 } as any)
+      .mockResolvedValueOnce({ ok: true, json: async () => ({ status: true, data: { value: 10.85 } }) } as any)
+
+    const prices = await fetchPrices(['K-ESGSI-THAIESG'])
+
+    expect(prices).toEqual({ 'K-ESGSI-THAIESG': 10.85 })
+  })
 })
