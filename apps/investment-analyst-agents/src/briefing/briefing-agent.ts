@@ -145,6 +145,9 @@ async function formatContext(ctx: ContextBundle): Promise<string> {
     const verdict = calibration.calibrationInverted
       ? `🔴 CALIBRATION INVERTED — high-conviction calls are ${(calibration.highConvictionPenalty * 100).toFixed(1)} pp WORSE than medium. Downgrade today's high-conviction labels unless concretely justified.`
       : `✅ Conviction labels are correctly calibrated (high outperforms medium).`
+    const decayLines = (calibration.decaying ?? [])
+      .map(d => `  - ${d.signal}: was ${fmtPct(d.allTimeAccuracy)} accurate all-time (${d.allTimeCalls} calls), only ${fmtPct(d.recentAccuracy)} over the last ${calibration.decayWindowPredictions ?? '?'} predictions (${d.recentCalls} calls) — treat with caution, don't lean on this signal right now.`)
+      .join('\n')
     return [
       `\n## Briefing Self-Calibration (from your prior recommendations)`,
       `Predictions analyzed: ${calibration.predictionsAnalyzed} | Scored calls: ${calibration.scoredCalls}`,
@@ -159,6 +162,7 @@ async function formatContext(ctx: ContextBundle): Promise<string> {
       verdict,
       calibration.bestEdge ? `Best edge: ${calibration.bestEdge.signal} = ${fmtPct(calibration.bestEdge.accuracy)} accurate — lean on this signal.` : '',
       calibration.worstSignal && calibration.worstSignal.accuracy < 0.5 ? `Worst signal: ${calibration.worstSignal.signal} = ${fmtPct(calibration.worstSignal.accuracy)} — treat as coin flip.` : '',
+      decayLines ? `\n### ⚠️ Decaying signals\n${decayLines}` : '',
     ].filter(Boolean).join('\n')
   })()
 
