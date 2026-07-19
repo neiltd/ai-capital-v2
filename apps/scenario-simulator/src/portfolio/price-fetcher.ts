@@ -11,8 +11,18 @@ import finnomenaFundIds from './finnomena-fund-ids.json' with { type: 'json' }
 
 const FUND_ID_BY_TICKER = finnomenaFundIds as Record<string, string>
 
+// Finnomena's official fund codes use inconsistent casing (e.g.
+// "K-ESGSI-ThaiESG"), while this app's tickers are stored all-caps
+// ("K-ESGSI-THAIESG") — a case-sensitive lookup silently misses for any
+// fund whose real code isn't already all-caps. Build a case-insensitive
+// index once at module load so ticker casing never matters here.
+const FUND_ID_BY_TICKER_UPPER: Record<string, string> = {}
+for (const [key, value] of Object.entries(FUND_ID_BY_TICKER)) {
+  FUND_ID_BY_TICKER_UPPER[key.toUpperCase()] = value
+}
+
 async function fetchFinnomenaPrice(ticker: string): Promise<number | null> {
-  const fundId = FUND_ID_BY_TICKER[ticker]
+  const fundId = FUND_ID_BY_TICKER_UPPER[ticker.toUpperCase()]
   if (!fundId) return null
   const url = `https://www.finnomena.com/fn3/api/fund/v2/public/funds/${encodeURIComponent(fundId)}/latest`
   try {

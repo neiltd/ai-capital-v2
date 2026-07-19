@@ -43,4 +43,19 @@ describe('fetchPrices', () => {
     expect(prices).toEqual({})
     expect(global.fetch).not.toHaveBeenCalled()
   })
+
+  it('resolves a Finnomena fund via case-insensitive ticker matching', async () => {
+    // K-ESGSI-ThaiESG -> F00001M4QH is a real entry in finnomena-fund-ids.json.
+    // This system stores the ticker upper-cased as K-ESGSI-THAIESG, which
+    // must still resolve to the same fund_id despite the casing mismatch.
+    global.fetch = vi.fn()
+      .mockResolvedValueOnce({ ok: false, status: 404 } as any) // Yahoo — not exchange-listed
+      .mockResolvedValueOnce({ ok: true, json: async () => ({ status: true, data: { value: 10.8548, d_change: 0 } }) } as any)
+
+    const prices = await fetchPrices(['K-ESGSI-THAIESG'])
+
+    expect(prices).toEqual({ 'K-ESGSI-THAIESG': 10.8548 })
+    const finnomenaUrl = (global.fetch as any).mock.calls[1][0] as string
+    expect(finnomenaUrl).toContain('F00001M4QH')
+  })
 })
