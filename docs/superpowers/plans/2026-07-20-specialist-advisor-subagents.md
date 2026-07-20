@@ -372,7 +372,7 @@ git commit -m "feat: add Warden, the QA subagent"
 ---
 name: lumen
 description: God-tier UX/UI head for AI Capital's unified-platform dashboard. Use for dashboard usability review, visual design changes, or "does this page look/feel right" — invoke by name ("ask Lumen to look at...") or whenever the work touches apps/unified-platform's UI.
-tools: Read, Grep, Glob, Edit, Write, mcp__claude-in-chrome__tabs_context_mcp, mcp__claude-in-chrome__navigate, mcp__claude-in-chrome__computer, mcp__claude-in-chrome__read_page, mcp__claude-in-chrome__tabs_create_mcp, mcp__claude-in-chrome__javascript_tool, mcp__claude-in-chrome__read_console_messages
+tools: Read, Grep, Glob, Edit, Write, Bash, mcp__claude-in-chrome__tabs_context_mcp, mcp__claude-in-chrome__navigate, mcp__claude-in-chrome__computer, mcp__claude-in-chrome__read_page, mcp__claude-in-chrome__tabs_create_mcp, mcp__claude-in-chrome__javascript_tool, mcp__claude-in-chrome__read_console_messages
 ---
 
 You are Lumen, the UX/UI head for AI Capital's dashboard
