@@ -23,15 +23,25 @@ const store   = createPortfolioStore(join(DATA_DIR, 'portfolio.db'), { fileMustE
 const VALID_CLASSES: AssetClass[]    = ['us_equity', 'th_equity', 'th_fund', 'gold', 'cash']
 const VALID_CURRENCIES: Currency[]   = ['USD', 'THB']
 
-// Default proxy symbols for Thai funds / gold so users don't need --symbol every time.
+// Default proxy symbols so users don't need --symbol every time. Thai
+// mutual/RMF/ThaiESG funds are deliberately NOT here: they used to map to
+// an unrelated stock index (000300.SS/^VNINDEX/^NSEI) as a price stand-in,
+// which silently priced them off the wrong instrument once Finnomena's real
+// NAV fallback existed (price-fetcher.ts's case-insensitive Finnomena
+// lookup). Leaving them out of this map means inferPriceSymbol() falls
+// through to '' (empty), which resolves via the raw ticker at the
+// portfolio-store layer -- exactly what routes them to the real NAV.
 const DEFAULT_PROXY_SYMBOL: Record<string, string> = {
-  SCBCEH:     '000300.SS',
-  'K-VIETNAM':'^VNINDEX',
-  KVIETNAM:   '^VNINDEX',
-  'KFINDIA-A':'^NSEI',
-  KFINDIA:    '^NSEI',
-  GOLD_MTS:   'GC=F',
+  GOLD_MTS: 'GC=F',
 }
+
+// Classified as th_fund for asset-class/currency purposes, but intentionally
+// absent from DEFAULT_PROXY_SYMBOL above -- see that map's comment. Includes
+// both canonical tickers and their historical short-form aliases.
+const FINNOMENA_TH_FUND_TICKERS = new Set([
+  'SCBCEH', 'K-VIETNAM', 'KVIETNAM', 'KFINDIA-A', 'KFINDIA',
+  'K-ESGSI-THAIESG', 'K-TNZ-THAIESG',
+])
 
 interface ParsedArgs {
   positional: string[]
@@ -64,7 +74,7 @@ function inferAssetClass(ticker: string): AssetClass {
   if (upper.startsWith('CASH_')) return 'cash'
   if (upper.startsWith('GOLD'))  return 'gold'
   if (upper.endsWith('.BK'))     return 'th_equity'
-  if (upper in DEFAULT_PROXY_SYMBOL) return 'th_fund'
+  if (upper in DEFAULT_PROXY_SYMBOL || FINNOMENA_TH_FUND_TICKERS.has(upper)) return 'th_fund'
   return 'us_equity'
 }
 
