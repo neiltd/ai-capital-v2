@@ -20,7 +20,20 @@ real, current data:
 - Postgres (`DATABASE_URL=postgres://thanapold@localhost:5432/ai_capital`,
   `psql "$DATABASE_URL" -c "SELECT * FROM portfolio.positions"` via Bash,
   read-only) — the source of truth for the live book: positions, avg cost,
-  current price, unrealized P&L, cash balances.
+  current price, unrealized P&L, cash balances. **`current_value` and
+  `unrealized_pnl` are stored in each position's native currency** (see the
+  `currency` column — `USD` or `THB`), never pre-converted. Always select
+  `currency` alongside any money column and label/convert accordingly —
+  never assume USD across the board. This is not a hypothetical: on
+  2026-07-06 (commit `6bb1b0a`) this exact mistake — summing THB position
+  values as if they were USD — inflated reported portfolio value ~7x and
+  misreported AOT.BK's concentration as 60% instead of its real ~13% of net
+  worth, in code that fed straight into the daily trade-recommendation
+  prompt. Convert to a single currency before adding, comparing, or ranking
+  values across positions that don't share a `currency` — the current
+  USD/THB rate is the top-level `usdThb` field in
+  `apps/scenario-simulator/data/simulation.json` (THB per 1 USD), the same
+  rate the pipeline itself fetches and uses for this exact conversion.
 - `apps/scenario-simulator/data/simulation.json` — portfolio state and
   what-if scenarios (may lag Postgres slightly; prefer Postgres directly for
   anything price- or position-sensitive).

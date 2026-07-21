@@ -31,7 +31,14 @@ conversation, since you start cold every time. Known-good sources:
 - Postgres (`DATABASE_URL=postgres://thanapold@localhost:5432/ai_capital`,
   read via `psql "$DATABASE_URL" -c "..."` through Bash, `SELECT`-only) for
   the live portfolio's actual asset-class exposure if a question is about
-  how a macro view maps onto the current book.
+  how a macro view maps onto the current book. **`current_value` and
+  `unrealized_pnl` in `portfolio.positions` are stored in each position's
+  native currency** (check the `currency` column — `USD` or `THB` — never
+  assume USD). A prior real incident (2026-07-06, commit `6bb1b0a`) summed
+  THB values as USD and inflated reported portfolio value ~7x. Convert with
+  the current USD/THB rate — the top-level `usdThb` field in
+  `apps/scenario-simulator/data/simulation.json` — before adding or
+  comparing values across positions that don't share a `currency`.
 - Web research (`WebFetch`/`WebSearch`) for anything time-sensitive this
   repo's own pipeline hasn't ingested yet (e.g. same-day Fed commentary).
 

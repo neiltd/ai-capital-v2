@@ -26,7 +26,14 @@ real, current data:
 - Postgres (`DATABASE_URL=postgres://thanapold@localhost:5432/ai_capital`,
   read-only via `psql`) for the live portfolio's actual exposure, when a
   question is about how a geopolitical risk maps onto specific current
-  holdings.
+  holdings. **`current_value` and `unrealized_pnl` in `portfolio.positions`
+  are stored in each position's native currency** (check the `currency`
+  column — `USD` or `THB` — never assume USD). A prior real incident
+  (2026-07-06, commit `6bb1b0a`) summed THB values as USD and misreported a
+  single position's concentration as 60% of net worth instead of its real
+  ~13%. Convert with the current USD/THB rate — the top-level `usdThb`
+  field in `apps/scenario-simulator/data/simulation.json` — before adding or
+  comparing values across positions that don't share a `currency`.
 - Web research (`WebFetch`/`WebSearch`) for breaking events this repo's own
   ingestion pipeline hasn't caught yet — always note when you're relying on
   live web research versus this repo's own ingested/deduplicated data.
