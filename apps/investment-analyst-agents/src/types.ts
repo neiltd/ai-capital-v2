@@ -209,6 +209,17 @@ export interface RiskContext {
   summary:             string
 }
 
+export interface MacroSnapshot {
+  asOf:         string
+  marketAssets: Array<{
+    ticker:       string
+    label:        string
+    close:        number
+    changePct1d:  number
+    changePct30d: number
+  }>
+}
+
 export interface ContextBundle {
   date:           string
   analysis:       AnalysisJSON
@@ -223,6 +234,7 @@ export interface ContextBundle {
   calibration?:      CalibrationContext | null  // accuracy stats from prior briefings; null until backtest has run
   taxHarvest?:       TaxHarvestContext | null   // YTD realized + harvest opportunities + wash sale alerts
   risk?:             RiskContext | null         // VAR, Sharpe, beta, max drawdown, per-ticker risk
+  macro?:            MacroSnapshot | null        // live commodity/rate/index prices, for grounding the briefing's own price claims
   correlationReport?: string | null            // weekly pairwise correlation + concentration clusters
 }
 

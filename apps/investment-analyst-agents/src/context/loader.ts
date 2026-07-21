@@ -3,7 +3,7 @@ import { join } from 'path'
 import Database from 'better-sqlite3'
 import type {
   ContextBundle, AnalysisJSON, SimulationJSON, GraphJSON, StockIntelJSON, WorldIntelJSON,
-  PeopleEvent, PeopleEventsJSON,
+  PeopleEvent, PeopleEventsJSON, MacroSnapshot,
 } from '../types.js'
 
 interface LoaderPaths {
@@ -18,6 +18,7 @@ interface LoaderPaths {
   calibrationPath?:      string
   taxHarvestPath?:       string
   riskPath?:             string
+  macroPath?:            string
   correlationReportPath?: string
 }
 
@@ -33,6 +34,7 @@ const defaults = () => ({
   calibrationPath:       join(process.cwd(), 'backtest/calibration.json'),
   taxHarvestPath:        join(process.cwd(), 'tax/harvest.json'),
   riskPath:              join(process.cwd(), 'risk/risk.json'),
+  macroPath:             join(process.cwd(), '../macro-asset-monitor/data/macro.json'),
   correlationReportPath: join(process.cwd(), 'correlation/report.md'),
 })
 
@@ -102,6 +104,12 @@ interface RiskSnapshot {
 function loadRisk(path: string): RiskSnapshot | null {
   if (!existsSync(path)) return null
   try { return JSON.parse(readFileSync(path, 'utf-8')) as RiskSnapshot }
+  catch { return null }
+}
+
+function loadMacro(path: string): MacroSnapshot | null {
+  if (!existsSync(path)) return null
+  try { return JSON.parse(readFileSync(path, 'utf-8')) as MacroSnapshot }
   catch { return null }
 }
 
@@ -177,7 +185,8 @@ export function loadContext(date: string, paths: LoaderPaths = {}): ContextBundl
   const calibration        = loadCalibration(p.calibrationPath)
   const taxHarvest         = loadTaxHarvest(p.taxHarvestPath)
   const risk               = loadRisk(p.riskPath)
+  const macro               = loadMacro(p.macroPath)
   const correlationReport  = loadCorrelationReport(p.correlationReportPath)
 
-  return { date, analysis, simulation, graph, stockIntel, worldIntel, profile, profileMissing, thesisSummary, peopleEvents, calibration, taxHarvest, risk, correlationReport }
+  return { date, analysis, simulation, graph, stockIntel, worldIntel, profile, profileMissing, thesisSummary, peopleEvents, calibration, taxHarvest, risk, macro, correlationReport }
 }
