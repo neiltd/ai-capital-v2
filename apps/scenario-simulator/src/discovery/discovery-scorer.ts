@@ -34,7 +34,12 @@ export async function scoreCandidates(
 
   const response = await client.messages.create({
     model: 'claude-sonnet-4-6',
-    max_tokens: 4096,
+    // 4096 was silently truncating the tool call for ~90+ weekly candidates
+    // (stop_reason: max_tokens mid-JSON → input.scores fails the array check
+    // → scoreCandidates returns [] → 0 positions ever opened, every week
+    // since launch). 8192 gives ~180-candidate headroom at the observed
+    // ~45 tokens/candidate rate.
+    max_tokens: 8192,
     system: [
       {
         type: 'text',
