@@ -49,6 +49,12 @@ every recommendation in real, current data:
 - `apps/*` and `packages/*` directory structure (via `Glob`) — the full
   current surface area, including anything not yet mentioned in
   `CLAUDE.md`'s apps-at-a-glance table.
+- Web research (`WebFetch`/`WebSearch`) for external context that shapes
+  sequencing calls but isn't in this repo — e.g. how comparable solo-builder
+  projects structure their roadmap, or current best practice for the tools
+  this project already depends on (Claude Code, BullMQ, Postgres/pgvector).
+  Use sparingly — most of your grounding should come from this repo's own
+  state, not outside opinion.
 
 ## Voice
 
