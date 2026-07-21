@@ -77,11 +77,17 @@ export const DAILY_PIPELINE: JobSpec[] = [
     dependsOn: 'world-intel-dedup',
   },
   {
-    // Memory-agent enriches extracted events with causal_links + expected_consequences
+    // Memory-agent enriches extracted events with causal_links + expected_consequences.
+    // Sonnet-per-event cost, least time-sensitive of the four daily Sonnet
+    // stages (unlike investment-brief/scenario-simulate/ai-analysis-engine,
+    // nothing downstream reads causal_links same-day) — weekly like
+    // scenario-discover/people-tweets/correlation to cut cost without
+    // touching the daily brief or trade signals.
     name: 'world-intel-memory',
     cmd:  ['npm', 'run', 'memory'],
     cwd:  'apps/world-intelligence-data-hub-',
     dependsOn: 'world-intel-link',
+    skipIf: notSunday,
     timeoutMs: 15 * 60 * 1000,
   },
   {
