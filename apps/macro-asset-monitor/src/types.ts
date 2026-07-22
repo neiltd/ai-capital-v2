@@ -1,4 +1,4 @@
-export type AssetCategory = 'rates' | 'dollar' | 'commodities' | 'volatility' | 'global-equity' | 'credit' | 'us-equity'
+export type AssetCategory = 'rates' | 'dollar' | 'commodities' | 'volatility' | 'global-equity' | 'credit' | 'us-equity' | 'sector'
 export type IndicatorCategory = 'inflation' | 'labour' | 'consumer' | 'credit'
 export type Trend = 'rising' | 'falling' | 'stable'
 

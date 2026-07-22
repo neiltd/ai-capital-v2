@@ -4,6 +4,7 @@
   "type": "module",
   "scripts": {
     "fetch": "tsx src/cli/cli-fetch.ts",
+    "watchlist": "tsx src/cli/cli-watchlist.ts",
     "test": "vitest run",
     "test:watch": "vitest",
     "typecheck": "tsc --noEmit"
