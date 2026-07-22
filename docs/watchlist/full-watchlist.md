@@ -1,7 +1,7 @@
 # Global Investment Watchlist
-*Generated on June 6, 2026*
+*Generated on June 6, 2026 — synced to `themes.config.ts` on July 22, 2026*
 
-This document contains the full list of 116 active companies tracked by the Capital Intelligence system.
+This document contains the full list of 121 active companies tracked by the Capital Intelligence system.
 
 | Ticker | Company | Themes |
 | :--- | :--- | :--- |
@@ -61,6 +61,7 @@ This document contains the full list of 116 active companies tracked by the Capi
 | **JPM** | JPMorgan Chase | financials |
 | **KBANK.BK** | Kasikorn Bank | thai-set |
 | **KLAC** | KLA Corporation | semiconductors |
+| **KO** | The Coca-Cola Company | defensive-value |
 | **KTB.BK** | Krungthai Bank | thai-set |
 | **KTOS** | Kratos Defense | defense-tech |
 | **LAC** | Lithium Americas | critical-minerals |
@@ -74,6 +75,7 @@ This document contains the full list of 116 active companies tracked by the Capi
 | **MARKET** | Global Market Intelligence | macro |
 | **META** | Meta Platforms | cloud-hyperscalers |
 | **MINT.BK** | Minor International | thai-set |
+| **MO** | Altria Group Inc | defensive-value |
 | **MP** | MP Materials | critical-minerals |
 | **MPWR** | Monolithic Power Systems | ai-infrastructure |
 | **MRNA** | Moderna | healthcare |
@@ -91,8 +93,11 @@ This document contains the full list of 116 active companies tracked by the Capi
 | **OKLO** | Oklo Inc | nuclear-smr |
 | **OPENAI** | OpenAI | private |
 | **ORCL** | Oracle Corporation | cloud-hyperscalers |
+| **PEP** | PepsiCo Inc | defensive-value |
+| **PG** | Procter & Gamble Co | defensive-value |
 | **PLL** | Piedmont Lithium | critical-minerals |
 | **PLTR** | Palantir Technologies | ai-infrastructure |
+| **PM** | Philip Morris International | defensive-value |
 | **POWL** | Powell Industries | power-grid-transmission |
 | **PTT.BK** | PTT Public Company | thai-set |
 | **PTTEP.BK** | PTT Exploration and Production | thai-set |
