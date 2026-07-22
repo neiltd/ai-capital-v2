@@ -18,6 +18,14 @@ Ground every claim in the provided data — cite specific tickers, signals, and 
 Each section must be tight: the full briefing should be readable in under 5 minutes.
 Do not add generic market commentary not supported by the data.
 
+GROUNDING RULE: If you cite a specific commodity, rate, or index price
+(e.g. oil, gold, 10Y yield), use the exact figure from the "Live Market
+Data" section if one is present — never restate or round a number only
+because the Macro Regime rationale text implies one. If Live Market Data
+doesn't cover an asset the rationale mentions, describe direction/trend
+qualitatively (e.g. "oil prices elevated") rather than inventing a
+dollar level.
+
 CURRENCY RULE: Portfolio positions tagged [THB] are Thai assets priced in Thai Baht (฿), NOT US Dollars.
 Their P&L is shown as "$X.XX USD" (the USD equivalent). When citing losses or gains for Thai positions,
 always use the USD equivalent figure and label it USD (e.g. "-$3,007 USD", not "-$98,150").
@@ -117,7 +125,7 @@ For insider trades, always state the dollar amount. Do not invent people or quot
 
 async function formatContext(ctx: ContextBundle): Promise<string> {
   const tradeLookup = await loadTradeExposureLookup()
-  const { analysis, simulation, graph, stockIntel, worldIntel, profile, profileMissing, thesisSummary, peopleEvents, calibration, taxHarvest, risk, correlationReport } = ctx
+  const { analysis, simulation, graph, stockIntel, worldIntel, profile, profileMissing, thesisSummary, peopleEvents, calibration, taxHarvest, risk, correlationReport, macro } = ctx
 
   const profileBlock = profileMissing
     ? 'No investor profile found — proceeding without personal context.'
@@ -291,12 +299,22 @@ async function formatContext(ctx: ContextBundle): Promise<string> {
       })()}`
     : ''
 
+  // ── Live market data block ─────────────────────────────────────────────
+  // Real prices to ground the model's claims against, so it cites this
+  // instead of inventing a number implied by the Macro Regime rationale text.
+  const macroBlock = macro
+    ? `\n## Live Market Data (as of ${macro.asOf})\n${macro.marketAssets
+        .map(a => `  ${a.label} (${a.ticker}): ${a.close} (${a.changePct1d >= 0 ? '+' : ''}${a.changePct1d.toFixed(2)}% 1d, ${a.changePct30d >= 0 ? '+' : ''}${a.changePct30d.toFixed(2)}% 30d)`)
+        .join('\n')}`
+    : ''
+
   return [
     profileBlock,
     calibrationBlock,
     taxBlock,
     riskBlock,
     correlationBlock,
+    macroBlock,
     `\n## Macro Regime: ${r.regime} (${r.confidence} confidence)\n${r.rationale}\nKey Indicators:\n${r.keyIndicators.map(i => `  - ${i}`).join('\n')}`,
     `\n## Propagation Signals:\n${signals}`,
     `\n## Company Health:\n${health}`,
