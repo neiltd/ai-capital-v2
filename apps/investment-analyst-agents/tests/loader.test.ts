@@ -58,4 +58,23 @@ describe('loadContext', () => {
     // analysis.json intentionally not written
     expect(() => loadContext('2026-05-26', paths(TMP))).toThrow()
   })
+
+  it('loads macro data when macro.json is present', () => {
+    writeMockFiles(TMP, true)
+    writeFileSync(join(TMP, 'macro.json'), JSON.stringify({
+      asOf: '2026-07-21',
+      marketAssets: [
+        { ticker: 'CL=F', label: 'WTI Crude Oil', category: 'commodities', close: 84.66, change1d: 1.43, changePct1d: 1.72, changePct5d: 6.71, changePct30d: -6.49, trend: 'rising' },
+      ],
+    }))
+    const ctx = loadContext('2026-07-21', { ...paths(TMP), macroPath: join(TMP, 'macro.json') })
+    expect(ctx.macro?.asOf).toBe('2026-07-21')
+    expect(ctx.macro?.marketAssets[0]).toMatchObject({ ticker: 'CL=F', close: 84.66 })
+  })
+
+  it('returns macro: null when macro.json is absent', () => {
+    writeMockFiles(TMP, true)
+    const ctx = loadContext('2026-07-21', { ...paths(TMP), macroPath: join(TMP, 'does-not-exist.json') })
+    expect(ctx.macro).toBeNull()
+  })
 })

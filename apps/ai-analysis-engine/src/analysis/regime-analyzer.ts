@@ -80,7 +80,17 @@ Regime taxonomy examples (you may coin a new label when none fit):
 - Cloud Consolidation: hyperscalers slowing new commitments, renegotiating contracts
 - Energy Bottleneck: data center buildout constrained by power availability
 - AI Commoditization: model costs falling, compute demand shifting to inference
-- Stagflationary Pressure: rate risk rising, macro headwinds compressing multiples`
+- Stagflationary Pressure: rate risk rising, macro headwinds compressing multiples
+
+GROUNDING RULE: Only state a specific numeric price, dollar threshold, or
+count (e.g. a commodity price, a casualty figure, a specific dollar
+level) if that exact figure appears in the Macro Asset Prices, Economic
+Indicators, World Intelligence, Liquidity, or Government Flow data
+supplied above. If a data source describes an event qualitatively (e.g.
+"war escalating," "gasoline prices rising") without giving you a number,
+describe it qualitatively in your rationale too — do not invent a
+specific-sounding number to make it read as more precise than the source
+data supports.`
 
 const CLASSIFY_TOOL: Anthropic.Tool = {
   name: 'classify_macro_regime',

@@ -163,4 +163,52 @@ describe('generateBriefing', () => {
     expect(text).toContain('75.0%')
     expect(text).toContain('20.0%')
   })
+
+  it('includes real live market prices in the prompt when macro data is present', async () => {
+    let capturedMessages: any[] = []
+    const mockClient = {
+      messages: {
+        create: vi.fn().mockImplementation(async (params: any) => {
+          capturedMessages = params.messages
+          return { content: [{ type: 'text', text: 'Briefing.' }] }
+        }),
+      },
+    } as unknown as Anthropic
+
+    await generateBriefing({
+      ...baseCtx,
+      macro: {
+        asOf: '2026-07-21',
+        marketAssets: [
+          { ticker: 'CL=F', label: 'WTI Crude Oil', close: 84.66, changePct1d: 1.72, changePct30d: -6.49 },
+        ],
+      },
+    }, { client: mockClient })
+
+    // content is an array of Anthropic content blocks (see briefing-agent.ts),
+    // not a plain string — same content-array shape as the
+    // "No investor profile found" test above, so flatten to block text
+    // before asserting rather than stringifying the block objects.
+    const userText = capturedMessages
+      .map((m: any) => (Array.isArray(m.content) ? m.content.map((b: any) => b.text).join('\n') : m.content))
+      .join('\n')
+    expect(userText).toContain('84.66')
+    expect(userText).toContain('WTI Crude Oil')
+  })
+
+  it('system prompt tells the model to cite Live Market Data over regime rationale', async () => {
+    let capturedSystem = ''
+    const mockClient = {
+      messages: {
+        create: vi.fn().mockImplementation(async (params: any) => {
+          capturedSystem = Array.isArray(params.system) ? params.system[0].text : params.system
+          return { content: [{ type: 'text', text: 'Briefing.' }] }
+        }),
+      },
+    } as unknown as Anthropic
+
+    await generateBriefing(baseCtx, { client: mockClient })
+
+    expect(capturedSystem).toContain('Live Market Data')
+  })
 })

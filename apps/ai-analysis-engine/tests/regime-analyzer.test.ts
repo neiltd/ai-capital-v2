@@ -55,6 +55,33 @@ describe('analyzeRegime', () => {
     await expect(analyzeRegime(mockHealth, { client: mockClient as any }))
       .rejects.toThrow('Expected tool_use response')
   })
+
+  it('system prompt instructs the model not to fabricate numeric figures', async () => {
+    let capturedSystem = ''
+    const mockClient = {
+      messages: {
+        create: vi.fn().mockImplementation(async (params: any) => {
+          capturedSystem = Array.isArray(params.system) ? params.system[0].text : params.system
+          return {
+            content: [{
+              type: 'tool_use',
+              name: 'classify_macro_regime',
+              input: {
+                regime: 'AI Acceleration', confidence: 'high',
+                rationale: 'GPU demand is strong.', keyIndicators: ['NVDA up'],
+                affectedTickers: ['NVDA'],
+              },
+            }],
+          }
+        }),
+      },
+    }
+
+    await analyzeRegime(mockHealth, { client: mockClient as any })
+
+    expect(capturedSystem).toContain('GROUNDING RULE')
+    expect(capturedSystem.toLowerCase()).toContain('do not invent')
+  })
 })
 
 const mockLiquidity: LiquidityContext = {
