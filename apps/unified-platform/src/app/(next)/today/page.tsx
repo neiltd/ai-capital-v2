@@ -21,6 +21,8 @@ export const dynamic = 'force-dynamic'
 import ReactMarkdown from 'react-markdown'
 import remarkGfm from 'remark-gfm'
 import { loadBriefing } from './data'
+import { DatePicker } from './date-picker'
+import { listBriefingDates, todayLocal } from '@/lib/data'
 import { SectionCard, Label, AsOf, ActionBadge, ConvictionBadge, AlertBanner } from '@/components/next/ui'
 import { ProbBar } from '@/components/next/charts'
 import { fmtUsd, fmtSignedUsd } from '@/lib/next/format'
@@ -32,13 +34,28 @@ const CONFIDENCE_TONE: Record<string, string> = {
   low: 'text-status-serious',
 }
 
-export default function BriefingPage() {
-  const b = loadBriefing()
+export default function BriefingPage({ searchParams }: { searchParams?: { date?: string } }) {
+  const today = todayLocal()
+  const dates = listBriefingDates()
+  const selectedDate = searchParams?.date || today
+  const b = loadBriefing(selectedDate)
 
   if (!b) {
     return (
-      <main className="mx-auto max-w-[1520px] p-page-pad">
-        <AlertBanner level="warning" title="Briefing unavailable" detail="No structured briefing.json for today — has today's pipeline run?" />
+      <main className="mx-auto max-w-[1520px] space-y-sec-gap p-page-pad">
+        <div className="flex flex-wrap items-center justify-between gap-3">
+          <Label>Daily briefing</Label>
+          {dates.length > 0 && <DatePicker dates={dates} selected={selectedDate} today={today} />}
+        </div>
+        <AlertBanner
+          level="warning"
+          title="Briefing unavailable"
+          detail={
+            selectedDate === today
+              ? "No structured briefing.json for today — has today's pipeline run?"
+              : `No archived briefing.json for ${selectedDate}.`
+          }
+        />
       </main>
     )
   }
@@ -48,7 +65,10 @@ export default function BriefingPage() {
       {/* ------------------------------- header ------------------------------ */}
       <header className="flex flex-wrap items-end justify-between gap-4">
         <div>
-          <Label>Daily briefing · {b.date}</Label>
+          <div className="flex flex-wrap items-center gap-3">
+            <Label>Daily briefing · {b.date}</Label>
+            <DatePicker dates={dates} selected={selectedDate} today={today} />
+          </div>
           <h1 className="mt-1 text-[20px] font-semibold leading-7 text-ink">
             {b.regime.regime}
             <span className={`ml-3 text-[13px] font-medium uppercase ${CONFIDENCE_TONE[b.regime.confidence] ?? 'text-ink-3'}`}>
@@ -64,6 +84,19 @@ export default function BriefingPage() {
         </div>
         <AsOf iso={b.generatedAt} />
       </header>
+
+      {/* Point-in-time vs. live disclosure — the right-rail panels below
+          (pulse/risk, wash-sale, world events) always read today's live
+          state, never the viewed date's, since none of those have a
+          per-date archive yet. Say so plainly rather than let a past-date
+          view imply they're historical too. */}
+      {!b.isToday && (
+        <AlertBanner
+          level="serious"
+          title={`Viewing ${b.date}`}
+          detail="Narrative and recommended actions are archived from that date. Portfolio pulse, wash-sale windows, and world events on the right are today's live state, not this date's — there's no historical snapshot of those yet."
+        />
+      )}
 
       {/* Calibration honesty — always visible above the recommendations. */}
       {b.calibrationNote && <AlertBanner level="info" title="Calibration" detail={b.calibrationNote} />}
@@ -121,11 +154,11 @@ export default function BriefingPage() {
               <ProbBar key={s.id} title={s.title} probability={s.probability / 100} horizon={s.timeHorizon} icon={SCENARIO_ICON[s.scenarioType]} />
             ))}
             <p className="mt-2 text-[11px] leading-4 text-ink-3">
-              Probabilities from today&apos;s scenario-simulator run. Icons denote best / base / disruption — identity is never bar color.
+              Probabilities from {b.isToday ? "today's" : "that date's"} scenario-simulator run, archived with the briefing. Icons denote best / base / disruption — identity is never bar color.
             </p>
           </SectionCard>
 
-          <SectionCard title="Portfolio pulse" actions={<a href="/portfolio/risk" className="text-[12px] text-accent">Risk →</a>}>
+          <SectionCard title="Portfolio pulse (today)" actions={<a href="/portfolio/risk" className="text-[12px] text-accent">Risk →</a>}>
             <dl className="grid grid-cols-2 gap-x-4 gap-y-2.5">
               {(
                 [
@@ -145,7 +178,7 @@ export default function BriefingPage() {
           </SectionCard>
 
           {b.washSale.length > 0 && (
-            <SectionCard title="Wash-sale windows">
+            <SectionCard title="Wash-sale windows (today)">
               <ul className="space-y-2">
                 {b.washSale.map((w) => (
                   <li key={w.ticker + w.doNotRebuyBefore}>
@@ -162,7 +195,7 @@ export default function BriefingPage() {
           )}
 
           {b.worldTop.length > 0 && (
-            <SectionCard title="World — top events" actions={<a href="/world/intel" className="text-[12px] text-accent">More →</a>}>
+            <SectionCard title="World — top events (today)" actions={<a href="/world/intel" className="text-[12px] text-accent">More →</a>}>
               <ul className="divide-y divide-hairline">
                 {b.worldTop.map((e) => (
                   <li key={e.eventId} className="py-2 first:pt-0 last:pb-0">

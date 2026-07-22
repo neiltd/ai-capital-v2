@@ -72,6 +72,27 @@ export function readBriefingJson(date: string): BriefingJSON | null {
   } catch { return null }
 }
 
+/**
+ * Dates (YYYY-MM-DD, newest first) that have an archived structured
+ * briefing JSON — i.e. dates /today's date-picker may legitimately offer.
+ * Deliberately checks for the `.json` sibling, not just the `.md`, since
+ * the page needs the structured envelope (recommendedActions/regime/etc),
+ * not just prose.
+ */
+export function listBriefingDates(): string[] {
+  const dir = path.join(dataRoot(), 'investment-analyst-agents/briefings')
+  try {
+    return fs.readdirSync(dir)
+      .filter((f) => f.endsWith('.json'))
+      .map((f) => f.slice(0, -'.json'.length))
+      .filter((d) => /^\d{4}-\d{2}-\d{2}$/.test(d))
+      .sort()
+      .reverse()
+  } catch {
+    return []
+  }
+}
+
 export function readProfile(): string {
   const p = path.join(dataRoot(), 'investment-analyst-agents/knowledge/profile.md')
   if (!fs.existsSync(p)) return ''

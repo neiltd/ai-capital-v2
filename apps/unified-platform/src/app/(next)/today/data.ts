@@ -11,10 +11,12 @@ import { readBriefingJson, readSimulation, readRisk, readHarvest, readWorldIntel
 import type { BriefingJSON } from '@common/types'
 import type { WorldEvent } from '@/types'
 
-export type ActionGroupKey = 'act' | 'hold' | 'dca' | 'locked'
+export type ActionGroupKey = 'act' | 'hold' | 'dca' | 'locked' | 'flat'
 
 export interface BriefingViewModel {
   date: string
+  /** True iff `date` is the server's local "today" — gates the strategy-bucket join. */
+  isToday: boolean
   generatedAt: string
   regime: BriefingJSON['regime']
   calibrationNote: string | null
@@ -27,7 +29,7 @@ export interface BriefingViewModel {
   narrativeMd: string | null
 }
 
-const GROUP_TITLES: Record<ActionGroupKey, string> = {
+const GROUP_TITLES: Record<Exclude<ActionGroupKey, 'flat'>, string> = {
   act: 'Act now',
   hold: 'Hold — with active monitoring',
   dca: 'DCA — continue as scheduled',
@@ -38,27 +40,38 @@ export function loadBriefing(date: string = todayLocal()): BriefingViewModel | n
   const b = readBriefingJson(date)
   if (!b) return null
 
-  // Strategy tag per ticker (tactical/dca/tax_locked) determines which
-  // bucket a "hold" action lands in — the briefing JSON itself doesn't
-  // carry strategy, so this is a mechanical join, not a guess.
-  const strategyByTicker = new Map<string, string>()
-  try {
-    for (const p of readSimulation().portfolio) {
-      strategyByTicker.set(p.ticker, (p as { strategy?: string }).strategy ?? 'tactical')
-    }
-  } catch { /* simulation.json missing — every action falls back to 'hold' bucket */ }
+  const isToday = date === todayLocal()
 
-  const buckets: Record<ActionGroupKey, BriefingJSON['recommendedActions']> = { act: [], hold: [], dca: [], locked: [] }
-  for (const a of b.recommendedActions) {
-    if (a.action !== 'hold') { buckets.act.push(a); continue }
-    const strategy = strategyByTicker.get(a.ticker) ?? 'tactical'
-    if (strategy === 'tax_locked') buckets.locked.push(a)
-    else if (strategy === 'dca') buckets.dca.push(a)
-    else buckets.hold.push(a)
+  // Strategy tag per ticker (tactical/dca/tax_locked) decides which bucket a
+  // "hold" action lands in — but that tag comes from *today's* live
+  // simulation.json, which has no per-date archive. On a past date a ticker
+  // could be tax-locked today without having been tax-locked on the date
+  // actually being viewed, so bucketing anything but today's briefing would
+  // silently misrepresent history. For any non-today date we skip the join
+  // entirely and render the briefing's own flat recommendedActions list.
+  let actionGroups: Array<{ group: ActionGroupKey; title: string; actions: BriefingJSON['recommendedActions'] }>
+  if (isToday) {
+    const strategyByTicker = new Map<string, string>()
+    try {
+      for (const p of readSimulation().portfolio) {
+        strategyByTicker.set(p.ticker, (p as { strategy?: string }).strategy ?? 'tactical')
+      }
+    } catch { /* simulation.json missing — every action falls back to 'hold' bucket */ }
+
+    const buckets: Record<Exclude<ActionGroupKey, 'flat'>, BriefingJSON['recommendedActions']> = { act: [], hold: [], dca: [], locked: [] }
+    for (const a of b.recommendedActions) {
+      if (a.action !== 'hold') { buckets.act.push(a); continue }
+      const strategy = strategyByTicker.get(a.ticker) ?? 'tactical'
+      if (strategy === 'tax_locked') buckets.locked.push(a)
+      else if (strategy === 'dca') buckets.dca.push(a)
+      else buckets.hold.push(a)
+    }
+    actionGroups = (['act', 'hold', 'dca', 'locked'] as const)
+      .map((group) => ({ group, title: GROUP_TITLES[group], actions: buckets[group] }))
+      .filter((g) => g.actions.length > 0)
+  } else {
+    actionGroups = [{ group: 'flat', title: 'Recommended actions', actions: b.recommendedActions }]
   }
-  const actionGroups = (['act', 'hold', 'dca', 'locked'] as const)
-    .map((group) => ({ group, title: GROUP_TITLES[group], actions: buckets[group] }))
-    .filter((g) => g.actions.length > 0)
 
   const harvest = readHarvest()
   const washSale = (harvest?.washSaleAlerts ?? []).map((w) => ({
@@ -85,6 +98,7 @@ export function loadBriefing(date: string = todayLocal()): BriefingViewModel | n
 
   return {
     date: b.date,
+    isToday,
     generatedAt: b.exportedAt,
     regime: b.regime,
     calibrationNote: b.calibrationNote,
