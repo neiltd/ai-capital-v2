@@ -16,6 +16,7 @@ export const YAHOO_ASSETS: YahooAssetConfig[] = [
   { ticker: '^FVX',      label: 'US 5Y Yield',   category: 'rates'         },
   // Dollar
   { ticker: 'DX-Y.NYB',  label: 'Dollar Index',  category: 'dollar'        },
+  { ticker: 'THB=X',     label: 'USD/THB',       category: 'dollar'        },
   // Commodities
   { ticker: 'CL=F',      label: 'WTI Crude Oil', category: 'commodities'   },
   { ticker: 'GC=F',      label: 'Gold',          category: 'commodities'   },
@@ -26,6 +27,7 @@ export const YAHOO_ASSETS: YahooAssetConfig[] = [
   { ticker: '^N225',     label: 'Nikkei 225',    category: 'global-equity' },
   { ticker: '^GDAXI',    label: 'DAX',           category: 'global-equity' },
   { ticker: '^HSI',      label: 'Hang Seng',     category: 'global-equity' },
+  { ticker: '^SET.BK',   label: 'SET Index',     category: 'global-equity' },
   // Credit
   { ticker: 'HYG',       label: 'HYG',           category: 'credit'        },
 ]
