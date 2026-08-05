@@ -14,22 +14,38 @@ export interface DcaTarget {
   target:      number
   direction:   'below' | 'above'
   currency:    string
-  sizeUsd:     number
+  buyNow:      string   // tranche to buy when the alert first fires (e.g. "$1,750", "฿30,000", "convert", "watch")
+  buyDeeper:   string   // second tranche on a further dip, or "—"
   note:        string
+}
+
+export interface DcaBudget {
+  usdCap: string
+  thbCap: string
+  note:   string
 }
 
 interface DcaTargetsConfig {
   generatedAt?: string
+  budget?:      DcaBudget
   targets:      DcaTarget[]
 }
 
-export function loadDcaTargets(path: string): DcaTarget[] {
-  if (!existsSync(path)) return []
+export interface DcaLadder {
+  budget:  DcaBudget | null
+  targets: DcaTarget[]
+}
+
+export function loadDcaTargets(path: string): DcaLadder {
+  if (!existsSync(path)) return { budget: null, targets: [] }
   try {
     const cfg = JSON.parse(readFileSync(path, 'utf-8')) as DcaTargetsConfig
-    return Array.isArray(cfg.targets) ? cfg.targets : []
+    return {
+      budget:  cfg.budget ?? null,
+      targets: Array.isArray(cfg.targets) ? cfg.targets : [],
+    }
   } catch {
-    return []
+    return { budget: null, targets: [] }
   }
 }
 
@@ -50,7 +66,8 @@ async function fetchQuote(yahooSymbol: string): Promise<number | null> {
  * Render the DCA target ladder as a markdown section, enriched best-effort with
  * live prices and distance-to-trigger. Returns '' if there are no targets.
  */
-export async function renderDcaTargetsSection(targets: DcaTarget[]): Promise<string> {
+export async function renderDcaTargetsSection(ladder: DcaLadder): Promise<string> {
+  const { budget, targets } = ladder
   if (targets.length === 0) return ''
 
   const prices = await Promise.all(targets.map(t => fetchQuote(t.yahooSymbol)))
@@ -74,9 +91,15 @@ export async function renderDcaTargetsSection(targets: DcaTarget[]): Promise<str
         distStr = `${distPct.toFixed(1)}% away`
       }
     }
-    const size = t.sizeUsd > 0 ? `~$${t.sizeUsd.toLocaleString()}` : '—'
-    return `| ${t.label} | ${priceStr} | ${targetStr} | ${distStr} | ${size} | ${t.note}${status ? ' ' + status : ''} |`
+    return `| ${t.label} | ${priceStr} | ${targetStr} | ${distStr} | ${t.buyNow} | ${t.buyDeeper} | ${t.note}${status ? ' ' + status : ''} |`
   })
+
+  const budgetLines = budget
+    ? [
+        '',
+        `**Round budget:** deploy up to **${budget.usdCap}** (USD bucket) + **${budget.thbCap}** (THB bucket). ${budget.note}`,
+      ]
+    : []
 
   return [
     '',
@@ -84,11 +107,12 @@ export async function renderDcaTargetsSection(targets: DcaTarget[]): Promise<str
     '',
     '## 🎯 DCA Targets',
     '',
-    '*Dip-buy ladder — synced with your TradingView alerts. "Distance" = how far the current price is above the buy trigger. 🟢 TRIGGERED = at/through your level.*',
+    '*Dip-buy ladder — synced with your TradingView alerts. "Distance" = how far current price is above the trigger. When an alert fires, buy the "Buy now" tranche; add the "Deeper dip" tranche on a further ~3-4% drop. 🟢 TRIGGERED = at/through your level.*',
     '',
-    '| Instrument | Current | Buy ≤ | Distance | Size | Note |',
-    '|---|---|---|---|---|---|',
+    '| Instrument | Current | Buy ≤ | Distance | Buy now | Deeper dip | Note |',
+    '|---|---|---|---|---|---|---|',
     ...rows,
+    ...budgetLines,
     '',
   ].join('\n')
 }

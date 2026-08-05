@@ -1,18 +1,131 @@
 {
-  "_comment": "DCA dip-buy target ladder. Kept in sync with TradingView alerts set 2026-08-05. direction 'below' = trigger when price <= target. yahooSymbol is used to fetch the live price for the daily distance-to-trigger readout. Edit levels here and they update in the next briefing.",
+  "_comment": "DCA dip-buy target ladder + per-alert tranche sizing. Kept in sync with TradingView alerts. direction 'below' = trigger when price <= target. buyNow = tranche to buy when the alert first fires; buyDeeper = second tranche on a further ~3-4% dip (averaging-in). yahooSymbol fetches the live price for the daily distance-to-trigger readout. Edit levels/sizes here → they update in the next briefing. Sizing per Ledger 2026-08-05 against live cash (CASH_USD $19,517 + CASH_THB ~$17,264).",
   "generatedAt": "2026-08-05",
+  "budget": {
+    "usdCap": "$9,500",
+    "thbCap": "฿250,000",
+    "note": "Deploy caps this round (~half of liquid cash; buffer covers living costs, tuition scholarship-covered). Keep a running tally as alerts fill. If the USD cap exhausts before all fire, priority order: VOO > VEA > SMH > LLY > UBER > GLDM (core diversification first; UBER tactical + gold near-cap cut first)."
+  },
   "targets": [
-    { "label": "VOO — S&P 500",            "yahooSymbol": "VOO",    "target": 705,   "direction": "below", "currency": "USD", "sizeUsd": 3500, "note": "Broad US — your biggest gap. Fund from CASH_USD." },
-    { "label": "VEA — Developed ex-US",     "yahooSymbol": "VEA",    "target": 71.8,  "direction": "below", "currency": "USD", "sizeUsd": 1700, "note": "You own zero developed-ex-US. Fund from CASH_USD." },
-    { "label": "SMH — Semis / AI basket",   "yahooSymbol": "SMH",    "target": 560,   "direction": "below", "currency": "USD", "sizeUsd": 1250, "note": "AI recovery without single-name concentration." },
-    { "label": "LLY — Eli Lilly",           "yahooSymbol": "LLY",    "target": 1080,  "direction": "below", "currency": "USD", "sizeUsd": 2000, "note": "Quality non-tech diversifier. Confirm after earnings." },
-    { "label": "UBER — Uber Technologies",   "yahooSymbol": "UBER",   "target": 65,    "direction": "below", "currency": "USD", "sizeUsd": 1000, "note": "TACTICAL want, not core. The one non-chasing name off the 2026-08-05 watchlist (RSI ~33, near 60d low). Still US-tech though — small size, doesn't fix the diversification gap." },
-    { "label": "SCB.BK — Siam Commercial",  "yahooSymbol": "SCB.BK", "target": 150,   "direction": "below", "currency": "THB", "sizeUsd": 1500, "note": "Thai bank dip. Small — you are THB-heavy. Fund from CASH_THB." },
-    { "label": "GLDM — Gold",               "yahooSymbol": "GLDM",   "target": 79,    "direction": "below", "currency": "USD", "sizeUsd": 1000, "note": "Deep-dip ONLY. Do not chase — near 10% gold cap." },
-    { "label": "USD/THB — FX convert trigger","yahooSymbol": "THB=X","target": 32.5,  "direction": "below", "currency": "USD", "sizeUsd": 0,    "note": "Baht strengthens to here → convert a chunk of CASH_THB to USD at a good rate (de-THB)." },
-    { "label": "VNM — K-VIETNAM DCA proxy", "yahooSymbol": "VNM",    "target": 17.0,  "direction": "below", "currency": "USD", "sizeUsd": 0,    "note": "Vietnam ETF proxy. Dip here = DCA into K-VIETNAM (uses parked CASH_THB, no FX conversion)." },
-    { "label": "INDA — KFINDIA-A DCA proxy","yahooSymbol": "INDA",   "target": 47,    "direction": "below", "currency": "USD", "sizeUsd": 0,    "note": "India ETF proxy. India near highs — wait for this pullback before DCA into KFINDIA-A." },
-    { "label": "MCHI — SCBCEH DCA proxy",   "yahooSymbol": "MCHI",   "target": 53,    "direction": "below", "currency": "USD", "sizeUsd": 0,    "note": "China ETF proxy. Pullback here = DCA into SCBCEH." },
-    { "label": "KBANK.BK — watch only",     "yahooSymbol": "KBANK.BK","target": 232,  "direction": "below", "currency": "THB", "sizeUsd": 0,    "note": "Overbought now (RSI ~74). Watch only — not this round." }
+    {
+      "label": "VOO — S&P 500",
+      "yahooSymbol": "VOO",
+      "target": 705,
+      "direction": "below",
+      "currency": "USD",
+      "buyNow": "$1,750",
+      "buyDeeper": "$1,750",
+      "note": "Broad US — your biggest gap. Fund from CASH_USD."
+    },
+    {
+      "label": "VEA — Developed ex-US",
+      "yahooSymbol": "VEA",
+      "target": 71.8,
+      "direction": "below",
+      "currency": "USD",
+      "buyNow": "$850",
+      "buyDeeper": "$850",
+      "note": "You own zero developed-ex-US. Fund from CASH_USD."
+    },
+    {
+      "label": "SMH — Semis / AI basket",
+      "yahooSymbol": "SMH",
+      "target": 560,
+      "direction": "below",
+      "currency": "USD",
+      "buyNow": "$625",
+      "buyDeeper": "$625",
+      "note": "AI recovery without single-name concentration."
+    },
+    {
+      "label": "LLY — Eli Lilly",
+      "yahooSymbol": "LLY",
+      "target": 1080,
+      "direction": "below",
+      "currency": "USD",
+      "buyNow": "$1,000",
+      "buyDeeper": "$1,000",
+      "note": "Quality non-tech diversifier."
+    },
+    {
+      "label": "UBER — Uber Technologies",
+      "yahooSymbol": "UBER",
+      "target": 65,
+      "direction": "below",
+      "currency": "USD",
+      "buyNow": "$500",
+      "buyDeeper": "$500",
+      "note": "TACTICAL want, not core (RSI low, near 60d low). Still US-tech — doesn't fix the diversification gap."
+    },
+    {
+      "label": "GLDM — Gold",
+      "yahooSymbol": "GLDM",
+      "target": 79,
+      "direction": "below",
+      "currency": "USD",
+      "buyNow": "$1,000",
+      "buyDeeper": "—",
+      "note": "One-shot, deep-dip ONLY. Do not chase — near 10% gold cap."
+    },
+    {
+      "label": "SCB.BK — Siam Commercial",
+      "yahooSymbol": "SCB.BK",
+      "target": 150,
+      "direction": "below",
+      "currency": "THB",
+      "buyNow": "฿24,800",
+      "buyDeeper": "฿24,800",
+      "note": "Thai bank dip. Small — you're THB-heavy. Fund from CASH_THB."
+    },
+    {
+      "label": "USD/THB — FX convert trigger",
+      "yahooSymbol": "THB=X",
+      "target": 32.5,
+      "direction": "below",
+      "currency": "USD",
+      "buyNow": "convert",
+      "buyDeeper": "—",
+      "note": "Not a buy — baht strengthens to here → convert a chunk of CASH_THB to USD at a good rate (de-THB)."
+    },
+    {
+      "label": "VNM — K-VIETNAM DCA proxy",
+      "yahooSymbol": "VNM",
+      "target": 17.0,
+      "direction": "below",
+      "currency": "USD",
+      "buyNow": "฿30,000",
+      "buyDeeper": "—",
+      "note": "One-shot ฿30k → K-VIETNAM fund (uses parked CASH_THB, no FX conversion)."
+    },
+    {
+      "label": "INDA — KFINDIA-A DCA proxy",
+      "yahooSymbol": "INDA",
+      "target": 47,
+      "direction": "below",
+      "currency": "USD",
+      "buyNow": "฿30,000",
+      "buyDeeper": "—",
+      "note": "One-shot ฿30k → KFINDIA-A. India near highs — wait for this pullback."
+    },
+    {
+      "label": "MCHI — SCBCEH DCA proxy",
+      "yahooSymbol": "MCHI",
+      "target": 53,
+      "direction": "below",
+      "currency": "USD",
+      "buyNow": "฿30,000",
+      "buyDeeper": "—",
+      "note": "One-shot ฿30k → SCBCEH fund."
+    },
+    {
+      "label": "KBANK.BK — watch only",
+      "yahooSymbol": "KBANK.BK",
+      "target": 232,
+      "direction": "below",
+      "currency": "THB",
+      "buyNow": "watch",
+      "buyDeeper": "—",
+      "note": "Overbought now (RSI ~74). Watch only — not this round."
+    }
   ]
 }
