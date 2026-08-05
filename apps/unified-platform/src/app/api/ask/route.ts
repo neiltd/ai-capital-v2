@@ -99,7 +99,7 @@ Be concise and direct. Cite specific data. Use Markdown formatting.`
   const client = new Anthropic({ apiKey: process.env.ANTHROPIC_API_KEY })
 
   const stream = client.messages.stream({
-    model: 'claude-sonnet-4-6',
+    model: 'claude-sonnet-5',
     max_tokens: 2048,
     system: systemPrompt,
     messages: [{ role: 'user', content: body.question }],

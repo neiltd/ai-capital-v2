@@ -85,7 +85,7 @@ export async function analyzePropagation(
   const now    = new Date().toISOString()
 
   const message = await client.messages.create({
-    model: 'claude-sonnet-4-6',
+    model: 'claude-sonnet-5',
     max_tokens: 4096,
     system: [{ type: 'text', text: SYSTEM_PROMPT, cache_control: { type: 'ephemeral' } }],
     tools: [PROPAGATE_TOOL],

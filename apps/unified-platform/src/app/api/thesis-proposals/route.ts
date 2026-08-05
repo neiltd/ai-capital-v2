@@ -44,7 +44,7 @@ export async function POST() {
   const client = new Anthropic({ apiKey: process.env.ANTHROPIC_API_KEY })
 
   const message = await client.messages.create({
-    model: 'claude-sonnet-4-6',
+    model: 'claude-sonnet-5',
     max_tokens: 1024,
     system: `You are an investment thesis analyst. Review the current investment theses and today's market data, then suggest specific updates.
 For each thesis that has meaningful new evidence, propose: (1) which assumption status should change, (2) why, citing specific data.

@@ -67,7 +67,7 @@ export async function generateScenarios(
     : `Generate three scenarios (best, base, disruption) from this current state:\n\n${context}`
 
   const message = await client.messages.create({
-    model:      'claude-sonnet-4-6',
+    model:      'claude-sonnet-5',
     max_tokens: 4096,
     system:     [{ type: 'text', text: SYSTEM_PROMPT, cache_control: { type: 'ephemeral' } }],
     tools:      [GENERATE_SCENARIOS_TOOL],

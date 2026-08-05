@@ -337,7 +337,7 @@ export async function generateBriefing(
   const client = options.client ?? new Anthropic()
 
   const message = await client.messages.create({
-    model:      'claude-sonnet-4-6',
+    model:      'claude-sonnet-5',
     // 4096 was too small: with a full 9-item "Today's Recommended Actions"
     // section (rotation suggestions included), real responses hit the limit
     // before reaching "Things to Watch" — the model silently dropped a

@@ -33,7 +33,7 @@ export async function scoreCandidates(
     .join('\n')
 
   const response = await client.messages.create({
-    model: 'claude-sonnet-4-6',
+    model: 'claude-sonnet-5',
     // 4096 was silently truncating the tool call for ~90+ weekly candidates
     // (stop_reason: max_tokens mid-JSON → input.scores fails the array check
     // → scoreCandidates returns [] → 0 positions ever opened, every week

@@ -27,7 +27,7 @@ export async function loadStudioChat(): Promise<StudioChatVM> {
   }
 
   const res = await anthropic.messages.create({
-    model: 'claude-sonnet-4-6',
+    model: 'claude-sonnet-5',
     max_tokens: 512,
     system: [{ type: 'text', text: buildSystemPrompt(topic), cache_control: { type: 'ephemeral' } }],
     messages: [{ role: 'user', content: 'morning' }],

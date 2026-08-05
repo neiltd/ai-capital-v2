@@ -93,7 +93,7 @@ Leg N: [Short title]
 Ground every leg in the company context above. Do not invent evidence.`
 
   const response = await client.messages.create({
-    model: 'claude-sonnet-4-6',
+    model: 'claude-sonnet-5',
     max_tokens: 2048,
     system: systemPrompt,
     messages: [{

@@ -76,7 +76,7 @@ export async function reviewCandidate(
     .join('\n\n')
 
   const response = await client.messages.create({
-    model: 'claude-sonnet-4-6',
+    model: 'claude-sonnet-5',
     max_tokens: 4096,
     system: [{ type: 'text', text: BEAR_SYSTEM_PROMPT, cache_control: { type: 'ephemeral' } }],
     tools: [{
