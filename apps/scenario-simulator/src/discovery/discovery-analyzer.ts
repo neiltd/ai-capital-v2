@@ -4,7 +4,9 @@ import type { DiscoveryScenario, DiscoveryAction, ScoredCandidate } from './type
 
 const client = new Anthropic()
 
-const SYSTEM_PROMPT = `You are a forward-looking technology investment strategist. Your role is to generate scenario analysis for potential portfolio additions. Ground your analysis in the current macro regime and the specific signals around the ticker. Be precise about probabilities (best + base + disruption should sum to roughly 100%). Generate exactly 3 scenarios: best, base, and disruption.`
+const SYSTEM_PROMPT = `You are a forward-looking technology investment strategist. Your role is to generate scenario analysis for potential portfolio additions. Ground your analysis in the current macro regime and the specific signals around the ticker. Be precise about probabilities (best + base + disruption should sum to roughly 100%). Generate exactly 3 scenarios: best, base, and disruption.
+
+Assess and reference the company's SUSTAINABLE VISION where relevant — does its strategy compound its own advantages (a self-reinforcing flywheel: each move — new users/drivers/products — strengthens the next, ecosystem lock-in, positive-sum), fund growth from durable unit economics rather than debt/dilution, and ride structural, environmentally/socially sustainable trends? A strong flywheel raises the best-case ceiling and the base-case durability; its absence (one-product story, cash-burn reliant on cheap capital, governance risk) raises disruption-case fragility. Fold this into the scenarios, don't treat it as a separate section.`
 
 interface RawScenario {
   scenarioType: 'best' | 'base' | 'disruption'

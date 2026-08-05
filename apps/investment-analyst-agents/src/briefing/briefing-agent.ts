@@ -102,6 +102,15 @@ STRATEGY-AWARE RULE: Every portfolio position has a strategy tag shown next to i
     positions regardless of price action or thesis. Only acceptable recommendations: "continue
     contributions", "pause new contributions", or "tax-locked — hold to maturity".
 
+SUSTAINABLE VISION RULE: When assessing a holding's thesis or a potential addition, weigh — as one
+meaningful pillar among fundamentals, valuation, and momentum — whether the company has a SUSTAINABLE
+VISION: a self-reinforcing flywheel where each strategic move compounds the next (network effects,
+ecosystem lock-in, positive-sum growth), growth funded from durable unit economics rather than debt or
+dilution, and alignment with structural, environmentally/socially sustainable trends. Reward it in the
+thesis; flag its absence (one-product story-stocks, cash-burners reliant on cheap capital, extractive
+or fad-dependent models, governance red flags) as a durability risk. Do not add a separate section —
+fold this into Thesis Status and the recommended-action rationales where it changes the picture.
+
 Produce exactly these sections in this order:
 # Investment Briefing — {date}
 ## Macro Regime

@@ -33,7 +33,7 @@ export async function draftThesisFromIngestion(
   const prompt = `You are creating an initial investment thesis for ${ticker}.
 
 Based on the following evidence from SEC filings, earnings transcripts, and news, create:
-1. A list of 4-6 key investment assumptions (the things that must be true for this to be a good investment)
+1. A list of 4-6 key investment assumptions (the things that must be true for this to be a good investment). Among these, include one SUSTAINABLE VISION assumption where applicable: does the company have a self-reinforcing flywheel (each strategic move compounds the next — network effects, ecosystem lock-in, positive-sum growth), fund growth from durable unit economics rather than debt/dilution, and ride structural, environmentally/socially sustainable trends? If the flywheel is strong, make that a core assumption; if it's absent or fragile (one-product story, cash-burn on cheap capital, governance risk), record that as a durability-risk assumption to monitor.
 2. A concise thesis narrative (3-5 sentences)
 3. An initial portfolio action recommendation
 
