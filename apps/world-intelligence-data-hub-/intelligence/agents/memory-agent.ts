@@ -12,7 +12,7 @@
 import Anthropic from '@anthropic-ai/sdk';
 import type { IntelligenceEvent, CausalLink } from '../schema/intelligence-event.js';
 
-const MODEL_DEFAULT = 'claude-sonnet-4-6';
+const MODEL_DEFAULT = 'claude-sonnet-5';
 const MAX_TOKENS    = 2048;
 
 // How many candidate predecessors we hand to Claude. Trade-off: more = better

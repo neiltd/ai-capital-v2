@@ -9,7 +9,7 @@
 // Bump EXTRACTION_VERSION when the output schema or field mapping changes.
 // Neither change should require modifying reporter-agent.ts.
 
-export const MODEL              = 'claude-sonnet-4-6';
+export const MODEL              = 'claude-sonnet-5';
 export const EXTRACTION_VERSION = 'reporter-v1.1';
 export const PROMPT_VERSION     = 'extractor-v2';
 export const MAX_TOKENS         = 4096;

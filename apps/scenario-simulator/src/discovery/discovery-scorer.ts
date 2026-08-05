@@ -87,6 +87,19 @@ export async function scoreCandidates(
     ],
   })
 
+  // Fail LOUDLY on truncation instead of the silent return [] below. Raising
+  // max_tokens to 8192 (2026-07-16) stopped the known bug, but a bigger
+  // candidate set — or Sonnet 5's more verbose rationales (the model swap on
+  // 2026-08-05 empirically increased briefing output past its old cap) — can
+  // still overrun it. Without this guard, a truncated tool call fails the
+  // input.scores array check and returns [] → "0 positions opened" silently,
+  // exactly the money bug that went unnoticed for weeks. Surface it.
+  if (response.stop_reason === 'max_tokens') {
+    throw new Error(
+      `discovery-scorer hit max_tokens (${response.usage.output_tokens} output tokens) scoring ${candidates.length} candidates — tool-call JSON truncated; scores would be silently dropped. Raise max_tokens.`,
+    )
+  }
+
   const toolUse = response.content.find(b => b.type === 'tool_use')
   if (!toolUse || toolUse.type !== 'tool_use') return []
 

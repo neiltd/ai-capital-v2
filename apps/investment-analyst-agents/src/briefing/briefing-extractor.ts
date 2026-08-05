@@ -50,7 +50,10 @@ async function extractStructuredSections(
 ): Promise<ExtractionResult> {
   const response = await client.messages.create({
     model: 'claude-sonnet-5',
-    max_tokens: 4096,
+    // 8192 (raised from 4096 on the Sonnet 5 swap): the prose briefing this
+    // extracts from is now longer/more verbose, so it can carry more actions +
+    // watch items. Paired with the loud stop_reason guard below.
+    max_tokens: 8192,
     system: [{ type: 'text', text: SYSTEM_PROMPT, cache_control: { type: 'ephemeral' } }],
     tools: [
       {
@@ -97,6 +100,16 @@ async function extractStructuredSections(
     tool_choice: { type: 'tool', name: 'extract_briefing_sections' },
     messages: [{ role: 'user', content: briefingMarkdown }],
   })
+
+  // Fail loudly on truncation rather than silently returning empty actions —
+  // this JSON feeds the dashboard and trade alerts, so a silent truncation
+  // would let the structured actions diverge from the prose briefing unnoticed
+  // (the prose side is already guarded in briefing-agent.ts).
+  if (response.stop_reason === 'max_tokens') {
+    throw new Error(
+      `briefing-extractor hit max_tokens (${response.usage.output_tokens} output tokens) — extracted actions/watchItems truncated; would silently diverge from the prose briefing. Raise max_tokens.`,
+    )
+  }
 
   const toolUse = response.content.find((b) => b.type === 'tool_use')
   if (!toolUse || toolUse.type !== 'tool_use') return { actions: [], watchItems: [] }

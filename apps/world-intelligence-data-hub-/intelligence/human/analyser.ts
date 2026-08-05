@@ -114,7 +114,7 @@ export async function analyseEvent(record: HumanIntelRecord): Promise<EventAnaly
   ].filter((l): l is string => l !== null).join('\n');
 
   const response = await client.messages.create({
-    model:      'claude-sonnet-4-6',
+    model:      'claude-sonnet-5',
     max_tokens: 4000,
     system:     SYSTEM_PROMPT,
     messages:   [{ role: 'user', content: userMessage }],

@@ -88,7 +88,7 @@ export async function extractHumanIntel(opts: {
   ].filter(l => l !== null).join('\n');
 
   const response = await client.messages.create({
-    model:      'claude-sonnet-4-6',
+    model:      'claude-sonnet-5',
     max_tokens: 2000,
     system:     SYSTEM_PROMPT,
     messages:   [{ role: 'user', content: userMessage }],

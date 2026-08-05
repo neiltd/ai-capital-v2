@@ -9,7 +9,7 @@ export async function POST(req: NextRequest) {
   const windowed = messages.slice(-30)
 
   const stream = await anthropic.messages.stream({
-    model: 'claude-sonnet-4-6',
+    model: 'claude-sonnet-5',
     max_tokens: 1024,
     system: [
       {

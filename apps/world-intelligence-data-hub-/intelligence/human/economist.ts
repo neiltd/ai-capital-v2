@@ -36,7 +36,7 @@ export async function generateQuickAnalysis(record: HumanIntelRecord): Promise<s
   const ctx = loadEconomicContext();
 
   const response = await client.messages.create({
-    model:      'claude-sonnet-4-6',
+    model:      'claude-sonnet-5',
     max_tokens: 400,
     system:     `You are an economist specializing in geopolitical risk and second-order effects.
 Given an intelligence event, write a 3–5 step consequence chain.
@@ -82,7 +82,7 @@ export async function analyzeScenario(scenario: string): Promise<ScenarioAnalysi
   }
 
   const response = await client.messages.create({
-    model:      'claude-sonnet-4-6',
+    model:      'claude-sonnet-5',
     max_tokens: 2000,
     system:     `You are a senior economist specializing in geopolitical risk.
 Analyze scenarios across multiple outcome paths.
