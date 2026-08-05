@@ -342,8 +342,11 @@ export async function generateBriefing(
     // section (rotation suggestions included), real responses hit the limit
     // before reaching "Things to Watch" — the model silently dropped a
     // required section and cut off mid-table (found in 2026-07-07's
-    // briefing). 8192 gives real-observed output (~3.5K tokens) 2x headroom.
-    max_tokens: 8192,
+    // briefing). 8192 held for Sonnet 4.6, but the Sonnet 5 upgrade
+    // (eb3945c) produces a more verbose briefing that hit 8192 on
+    // 2026-08-05 (caught loudly by the stop_reason guard below, not
+    // silently). Raised to 16384 to give the newer model real headroom.
+    max_tokens: 16384,
     system:     [{ type: 'text', text: SYSTEM_PROMPT, cache_control: { type: 'ephemeral' } }],
     messages:   [{
       role:    'user',
