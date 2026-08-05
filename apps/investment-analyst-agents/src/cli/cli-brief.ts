@@ -6,10 +6,12 @@ import { generateBriefing }   from '../briefing/briefing-agent.js'
 import { buildBriefingJson }  from '../briefing/briefing-extractor.js'
 import { writeBriefing, writeBriefingJson } from '../briefing/briefing-writer.js'
 import { archivePrediction }  from '../archive/prediction-archiver.js'
+import { loadDcaTargets, renderDcaTargetsSection } from '../briefing/dca-targets.js'
 import type { PredictionEntry } from '../types.js'
 
 const BRIEFINGS_DIR  = join(process.cwd(), 'briefings')
 const ARCHIVE_PATH   = join(process.cwd(), 'archive', 'predictions.jsonl')
+const DCA_TARGETS_PATH = join(process.cwd(), 'config', 'dca-targets.json')
 
 async function run() {
   // Local calendar date (en-CA formats as YYYY-MM-DD). The UTC date rolls to
@@ -35,6 +37,11 @@ async function run() {
   } else {
     console.log(`[${new Date().toISOString()}] Generating briefing...`)
     briefing = await generateBriefing(ctx)
+    // Append the DCA dip-buy target ladder — rendered deterministically (not by
+    // the LLM) so the exact price levels are always accurate, enriched
+    // best-effort with live prices for distance-to-trigger.
+    const dcaSection = await renderDcaTargetsSection(loadDcaTargets(DCA_TARGETS_PATH))
+    if (dcaSection) briefing += dcaSection
     const outputPath = writeBriefing(today, briefing, BRIEFINGS_DIR)
     console.log(`\nBriefing written to: ${outputPath}\n`)
     console.log(briefing)
