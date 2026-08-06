@@ -2,6 +2,7 @@ import Anthropic from '@anthropic-ai/sdk'
 import { randomUUID } from 'crypto'
 import type { CalibrationContext, TaxHarvestContext } from '../types.js'
 import type { BriefingJSON } from '@common/types'
+import { coerceToolArray } from '../util/sanitize.js'
 
 const SYSTEM_PROMPT = `You extract structured data from a finished daily investment briefing.
 
@@ -113,8 +114,12 @@ async function extractStructuredSections(
 
   const toolUse = response.content.find((b) => b.type === 'tool_use')
   if (!toolUse || toolUse.type !== 'tool_use') return { actions: [], watchItems: [] }
-  const input = toolUse.input as Partial<ExtractionResult>
-  return { actions: input.actions ?? [], watchItems: input.watchItems ?? [] }
+  const raw = toolUse.input as { actions?: unknown; watchItems?: unknown }
+  // Sonnet 5 may return these array fields as JSON strings — coerce (see the
+  // 2026-08-06 scenario-generator fix).
+  const actions    = (coerceToolArray(raw.actions, 'actions') ?? []) as ExtractionResult['actions']
+  const watchItems = (coerceToolArray(raw.watchItems, 'watchItems') ?? []) as ExtractionResult['watchItems']
+  return { actions, watchItems }
 }
 
 export async function buildBriefingJson(params: {

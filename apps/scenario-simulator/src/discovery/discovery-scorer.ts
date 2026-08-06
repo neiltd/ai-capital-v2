@@ -1,5 +1,6 @@
 import Anthropic from '@anthropic-ai/sdk'
 import type { DiscoveryCandidate, ScoredCandidate } from './types.js'
+import { coerceToolArray } from '../util/sanitize.js'
 
 const client = new Anthropic()
 
@@ -107,8 +108,13 @@ export async function scoreCandidates(
   const toolUse = response.content.find(b => b.type === 'tool_use')
   if (!toolUse || toolUse.type !== 'tool_use') return []
 
-  const input = toolUse.input as { scores: ScoreEntry[] }
-  if (!input.scores || !Array.isArray(input.scores)) return []
+  // Sonnet 5 sometimes returns the scores field as a JSON string of the whole
+  // wrapper object rather than a real array — coerce it (see scenario-generator
+  // 2026-08-06). Returns null → [] if unrecoverable (guard above already
+  // catches the truncation case loudly).
+  const scoresArr = coerceToolArray((toolUse.input as { scores?: unknown }).scores, 'scores')
+  if (!scoresArr) return []
+  const input = { scores: scoresArr as ScoreEntry[] }
 
   // Build lookup for source/company
   const candidateMap = new Map(candidates.map(c => [c.ticker, c]))
