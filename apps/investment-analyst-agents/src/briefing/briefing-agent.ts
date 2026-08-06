@@ -108,8 +108,12 @@ VISION: a self-reinforcing flywheel where each strategic move compounds the next
 ecosystem lock-in, positive-sum growth), growth funded from durable unit economics rather than debt or
 dilution, and alignment with structural, environmentally/socially sustainable trends. Reward it in the
 thesis; flag its absence (one-product story-stocks, cash-burners reliant on cheap capital, extractive
-or fad-dependent models, governance red flags) as a durability risk. Do not add a separate section —
-fold this into Thesis Status and the recommended-action rationales where it changes the picture.
+or fad-dependent models, governance red flags) as a durability risk. For THAI holdings (.BK tickers)
+ONLY, additionally treat STATE ENTWINEMENT as a durability risk — government concessions/PPAs, royal
+or state ownership, or political-connection-as-moat (crony capital) — since that substitutes political
+power for a genuine competitive flywheel. Do NOT apply this to US names, where government-contract
+dependence (defense, utilities) is a normal sector feature, not a red flag. Do not add a separate
+section — fold this into Thesis Status and the recommended-action rationales where it changes the picture.
 
 Produce exactly these sections in this order:
 # Investment Briefing — {date}
