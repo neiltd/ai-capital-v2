@@ -1,4 +1,5 @@
 import Anthropic from '@anthropic-ai/sdk'
+import { stripLoneSurrogates, coerceToolArray } from '../util/sanitize.js'
 import { randomUUID } from 'crypto'
 import type { Scenario, AnalysisJSON, GraphJSON } from '../types.js'
 
@@ -68,26 +69,39 @@ export async function generateScenarios(
 
   const message = await client.messages.create({
     model:      'claude-sonnet-5',
-    max_tokens: 4096,
+    // 8192 (raised from 4096 on the Sonnet 5 upgrade): three scenarios with
+    // 2-3 paragraph narratives + triggers overran 4096 under Sonnet 5's more
+    // verbose output on 2026-08-06, truncating the tool JSON → input.scenarios
+    // came back non-array → "input.scenarios.map is not a function". Paired
+    // with the loud stop_reason guard below.
+    max_tokens: 8192,
     system:     [{ type: 'text', text: SYSTEM_PROMPT, cache_control: { type: 'ephemeral' } }],
     tools:      [GENERATE_SCENARIOS_TOOL],
     tool_choice: { type: 'tool', name: 'generate_scenarios' },
-    messages:   [{ role: 'user', content: [{ type: 'text', text: userContent, cache_control: { type: 'ephemeral' } }] }],
+    messages:   [{ role: 'user', content: [{ type: 'text', text: stripLoneSurrogates(userContent), cache_control: { type: 'ephemeral' } }] }],
   })
+
+  if (message.stop_reason === 'max_tokens') {
+    throw new Error(
+      `scenario-generator hit max_tokens (${message.usage.output_tokens} output tokens) — scenario tool JSON truncated. Raise max_tokens.`,
+    )
+  }
 
   const toolUse = message.content.find(b => b.type === 'tool_use')
   if (!toolUse || toolUse.type !== 'tool_use') {
     throw new Error('Expected tool_use response from Claude')
   }
 
-  const input = toolUse.input as {
-    scenarios: Array<{
-      scenarioType: string; title: string; narrative: string; timeHorizon: string
-      probability: number; regimeTransition: string | null; triggers: string[]
-    }>
+  const input = toolUse.input as { scenarios: unknown }
+  const scenarios = coerceToolArray(input.scenarios, 'scenarios')
+  if (!scenarios) {
+    throw new Error(`scenario-generator: could not recover scenarios array (got ${typeof input.scenarios}, stop_reason: ${message.stop_reason})`)
   }
 
-  return input.scenarios.map(s => ({
+  return (scenarios as Array<{
+    scenarioType: string; title: string; narrative: string; timeHorizon: string
+    probability: number; regimeTransition: string | null; triggers: string[]
+  }>).map(s => ({
     id:               randomUUID(),
     runId:            options.runId,
     date:             today,

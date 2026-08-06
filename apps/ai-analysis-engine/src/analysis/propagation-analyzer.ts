@@ -1,6 +1,7 @@
 import Anthropic from '@anthropic-ai/sdk'
 import { randomUUID } from 'crypto'
 import type { CompanyHealth, MacroRegime, PropagationSignal, GraphJSON } from '../types.js'
+import { stripLoneSurrogates } from '../util/sanitize.js'
 
 const SYSTEM_PROMPT = `You are a technology supply chain analyst.
 Identify which dependency relationships between companies are currently transmitting signals,
@@ -92,7 +93,7 @@ export async function analyzePropagation(
     tool_choice: { type: 'tool', name: 'propose_propagation_signals' },
     messages: [{
       role: 'user',
-      content: [{ type: 'text', text: formatContext(regime, graph, health), cache_control: { type: 'ephemeral' } }],
+      content: [{ type: 'text', text: stripLoneSurrogates(formatContext(regime, graph, health)), cache_control: { type: 'ephemeral' } }],
     }],
   })
 

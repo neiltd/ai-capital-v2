@@ -1,6 +1,7 @@
 import Anthropic from '@anthropic-ai/sdk'
 import { randomUUID } from 'crypto'
 import type { CompanyHealth, MacroRegime, RegimeConfidence } from '../types.js'
+import { stripLoneSurrogates } from '../util/sanitize.js'
 
 export interface WorldIntelContext {
   marketEvents: Array<{
@@ -263,7 +264,7 @@ export async function analyzeRegime(
     tool_choice: { type: 'tool', name: 'classify_macro_regime' },
     messages: [{
       role: 'user',
-      content: [{ type: 'text', text: `Classify the current macro regime.\n\n## Company Health Signals (${health.length} companies)\n${formatHealth(health)}${macroSection}${liquiditySection}${govFlowSection}${worldSection}`, cache_control: { type: 'ephemeral' } }],
+      content: [{ type: 'text', text: stripLoneSurrogates(`Classify the current macro regime.\n\n## Company Health Signals (${health.length} companies)\n${formatHealth(health)}${macroSection}${liquiditySection}${govFlowSection}${worldSection}`), cache_control: { type: 'ephemeral' } }],
     }],
   })
 

@@ -1,4 +1,5 @@
 import Anthropic from '@anthropic-ai/sdk'
+import { stripLoneSurrogates, coerceToolArray } from '../util/sanitize.js'
 import { randomUUID } from 'crypto'
 import type { Scenario, Position, PortfolioAction } from '../types.js'
 
@@ -70,7 +71,7 @@ export async function generateActions(
     tool_choice: { type: 'tool', name: 'generate_portfolio_actions' },
     messages: [{
       role:    'user',
-      content: [{ type: 'text', text: `Scenarios:\n${formatScenarios(scenarios)}\n\nCurrent Portfolio:\n${formatPositions(positions, options.usdThb ?? null)}`, cache_control: { type: 'ephemeral' } }],
+      content: [{ type: 'text', text: stripLoneSurrogates(`Scenarios:\n${formatScenarios(scenarios)}\n\nCurrent Portfolio:\n${formatPositions(positions, options.usdThb ?? null)}`), cache_control: { type: 'ephemeral' } }],
     }],
   })
 
@@ -79,23 +80,22 @@ export async function generateActions(
     throw new Error('Expected tool_use response from Claude')
   }
 
-  const input = toolUse.input as {
-    actions?: Array<{
-      scenarioType: string; ticker: string; action: string; conviction: string
-      allocationChangePct: number; rationale: string
-    }>
+  const input = toolUse.input as { actions?: unknown }
+  const actionsArr = coerceToolArray(input.actions, 'actions')
+  if (!actionsArr) {
+    throw new Error(`action-generator: could not recover actions array (got ${typeof input.actions}, stop_reason: ${message.stop_reason}).`)
   }
-
-  if (!input.actions) {
-    throw new Error(`Claude tool response missing 'actions' field. stop_reason: ${message.stop_reason}. Input keys: ${Object.keys(input).join(', ')}`)
-  }
+  const actions = actionsArr as Array<{
+    scenarioType: string; ticker: string; action: string; conviction: string
+    allocationChangePct: number; rationale: string
+  }>
 
   const validActions    = new Set(['buy', 'hold', 'trim', 'exit'])
   const validConvictions = new Set(['high', 'medium', 'low'])
 
   const scenarioMap = new Map<string, string>(scenarios.map(s => [s.scenarioType, s.id]))
 
-  return input.actions.map(a => ({
+  return actions.map(a => ({
     id:                  randomUUID(),
     runId:               options.runId,
     scenarioId:          (() => {
