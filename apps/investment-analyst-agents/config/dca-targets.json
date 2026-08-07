@@ -118,24 +118,24 @@
       "note": "EXPENSIVE at ฿191/~20x for ~3% growth. Premium medical-tourism brand, best margins. Research flags BCH (฿11.3) as the sharper theme trade (int'l +17%, CLMV +19%, cheaper). Wait for ฿165-175, or prefer BCH."
     },
     {
-      "label": "GULF.BK — HOLD, exit-on-weakness",
+      "label": "GULF.BK — stable state-backed (add dip)",
       "yahooSymbol": "GULF.BK",
       "target": 63,
       "direction": "below",
       "currency": "THB",
-      "buyNow": "EXIT signal",
-      "buyDeeper": "—",
-      "note": "HOLDING (+51% winner). NOT a buy. Values concern (state-entwined PPA/spectrum moat) → exit if it breaks ฿63 (downside confirmation). Ride while rising."
+      "buyNow": "฿30,000 ≤฿63",
+      "buyDeeper": "add ฿20k ≤฿60",
+      "note": "HOLD + ADD ON DIP (+51% winner). State-backed stability (EGAT PPAs, GULF-Intouch/AIS) = a POSITIVE for you (implicit support, low failure risk). Stable ballast, not a growth engine. Add on pullbacks. Fund from Streaming THB."
     },
     {
-      "label": "SCB.BK — HOLD, exit-on-weakness",
+      "label": "SCB.BK — stable royal-backed (add dip)",
       "yahooSymbol": "SCB.BK",
       "target": 148,
       "direction": "below",
       "currency": "THB",
-      "buyNow": "EXIT signal",
-      "buyDeeper": "—",
-      "note": "HOLDING (+17% winner). NOT a buy (values: monarchy is largest shareholder). Exit if it breaks ฿148 (downside confirmation). Ride while rising."
+      "buyNow": "฿30,000 ≤฿148",
+      "buyDeeper": "add ฿20k ≤฿144",
+      "note": "HOLD + ADD ON DIP (+17% winner). Royal/state backing (monarchy largest shareholder) = STABILITY POSITIVE for you — reliable dividend, low failure risk. Stable ballast. Add on pullbacks. Fund from Streaming THB."
     },
     {
       "label": "USD/THB — FX convert trigger",
@@ -183,9 +183,9 @@
       "target": 232,
       "direction": "below",
       "currency": "THB",
-      "buyNow": "watch",
+      "buyNow": "add ฿25k ≤฿232",
       "buyDeeper": "—",
-      "note": "Overbought now (RSI ~74). Watch only — not this round."
+      "note": "Bank blue-chip. State/political-anchored stability = OK for you now. Overbought at ฿252 (RSI ~74) — add on a pullback to ฿232."
     }
   ]
 }
