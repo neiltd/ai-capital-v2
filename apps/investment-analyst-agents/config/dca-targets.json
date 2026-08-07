@@ -70,12 +70,12 @@
     {
       "label": "CBG — Carabao (values-clean)",
       "yahooSymbol": "CBG.BK",
-      "target": 51,
+      "target": 48,
       "direction": "below",
       "currency": "THB",
-      "buyNow": "฿55,000 now",
-      "buyDeeper": "add ฿20k ≤฿48",
-      "note": "BUY NOW — branded energy-drink exporter, own-distribution flywheel, fair ~14.5x, RSI ~47. Values-clean (private, no state moat). Fund from Streaming THB."
+      "buyNow": "฿25k starter only",
+      "buyDeeper": "add only if exports turn",
+      "note": "DOWNGRADED to WAIT — growth wall: 1Q26 net -20%, export leg -40% (Cambodia/CLMV). Buyback (฿2B) floors it. Values-clean, but do not add until the export line heals."
     },
     {
       "label": "HMPRO — HomePro (values-clean)",
@@ -93,19 +93,29 @@
       "target": 22,
       "direction": "below",
       "currency": "THB",
-      "buyNow": "฿30,000 starter now",
-      "buyDeeper": "add ฿25k ≤฿22",
-      "note": "STARTER NOW, add on dip — global hospitality (Anantara/NH), tourism + USD-earnings. Values-clean. RSI ~40 (weak momentum). Fund from Streaming THB."
+      "buyNow": "฿60,000 now (LEAD)",
+      "buyDeeper": "add ฿20k ≤฿22",
+      "note": "LEAD BUY — earnings accelerating (1Q26 core net +189%), asset-light + $1.5B Singapore REIT catalyst H2-26, deleveraging flywheel. Founder Heinecke. Strongest/cleanest name. Fund from Streaming THB."
     },
     {
       "label": "COM7 — values-clean (wait for dip)",
       "yahooSymbol": "COM7.BK",
-      "target": 28,
+      "target": 23,
       "direction": "below",
       "currency": "THB",
-      "buyNow": "฿45,000 ≤฿28",
+      "buyNow": "฿40,000 ≤฿23",
       "buyDeeper": "—",
-      "note": "WAIT — dominant Apple-ecosystem reseller, quality but at 52wk highs (฿30). Values-clean. Buy the dip to ฿28. Fund from Streaming THB."
+      "note": "WAIT for ฿22-23 — growth REAL & accelerating (2025 net +22%, 1Q26 +25%), diversifying beyond Apple. But near 52wk high now (฿30, hot RSI). Values-clean. Better entry ฿22-23."
+    },
+    {
+      "label": "BH — Bumrungrad (wait / vs BCH)",
+      "yahooSymbol": "BH.BK",
+      "target": 170,
+      "direction": "below",
+      "currency": "THB",
+      "buyNow": "wait ≤฿170",
+      "buyDeeper": "—",
+      "note": "EXPENSIVE at ฿191/~20x for ~3% growth. Premium medical-tourism brand, best margins. Research flags BCH (฿11.3) as the sharper theme trade (int'l +17%, CLMV +19%, cheaper). Wait for ฿165-175, or prefer BCH."
     },
     {
       "label": "GULF.BK — HOLD, exit-on-weakness",
