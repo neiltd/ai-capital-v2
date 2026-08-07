@@ -68,14 +68,64 @@
       "note": "One-shot, deep-dip ONLY. Do not chase — near 10% gold cap."
     },
     {
-      "label": "SCB.BK — Siam Commercial",
-      "yahooSymbol": "SCB.BK",
-      "target": 150,
+      "label": "CBG — Carabao (values-clean)",
+      "yahooSymbol": "CBG.BK",
+      "target": 51,
       "direction": "below",
       "currency": "THB",
-      "buyNow": "฿24,800",
-      "buyDeeper": "฿24,800",
-      "note": "Thai bank dip. Small — you're THB-heavy. Fund from CASH_THB."
+      "buyNow": "฿55,000 now",
+      "buyDeeper": "add ฿20k ≤฿48",
+      "note": "BUY NOW — branded energy-drink exporter, own-distribution flywheel, fair ~14.5x, RSI ~47. Values-clean (private, no state moat). Fund from Streaming THB."
+    },
+    {
+      "label": "HMPRO — HomePro (values-clean)",
+      "yahooSymbol": "HMPRO.BK",
+      "target": 6.7,
+      "direction": "below",
+      "currency": "THB",
+      "buyNow": "฿55,000 now",
+      "buyDeeper": "add ฿20k ≤฿6.40",
+      "note": "BUY NOW — category-killer big-box retail, ~6% yield, quality income anchor. Values-clean. Fund from Streaming THB."
+    },
+    {
+      "label": "MINT — Minor Intl (values-clean)",
+      "yahooSymbol": "MINT.BK",
+      "target": 22,
+      "direction": "below",
+      "currency": "THB",
+      "buyNow": "฿30,000 starter now",
+      "buyDeeper": "add ฿25k ≤฿22",
+      "note": "STARTER NOW, add on dip — global hospitality (Anantara/NH), tourism + USD-earnings. Values-clean. RSI ~40 (weak momentum). Fund from Streaming THB."
+    },
+    {
+      "label": "COM7 — values-clean (wait for dip)",
+      "yahooSymbol": "COM7.BK",
+      "target": 28,
+      "direction": "below",
+      "currency": "THB",
+      "buyNow": "฿45,000 ≤฿28",
+      "buyDeeper": "—",
+      "note": "WAIT — dominant Apple-ecosystem reseller, quality but at 52wk highs (฿30). Values-clean. Buy the dip to ฿28. Fund from Streaming THB."
+    },
+    {
+      "label": "GULF.BK — HOLD, exit-on-weakness",
+      "yahooSymbol": "GULF.BK",
+      "target": 63,
+      "direction": "below",
+      "currency": "THB",
+      "buyNow": "EXIT signal",
+      "buyDeeper": "—",
+      "note": "HOLDING (+51% winner). NOT a buy. Values concern (state-entwined PPA/spectrum moat) → exit if it breaks ฿63 (downside confirmation). Ride while rising."
+    },
+    {
+      "label": "SCB.BK — HOLD, exit-on-weakness",
+      "yahooSymbol": "SCB.BK",
+      "target": 148,
+      "direction": "below",
+      "currency": "THB",
+      "buyNow": "EXIT signal",
+      "buyDeeper": "—",
+      "note": "HOLDING (+17% winner). NOT a buy (values: monarchy is largest shareholder). Exit if it breaks ฿148 (downside confirmation). Ride while rising."
     },
     {
       "label": "USD/THB — FX convert trigger",
