@@ -4,7 +4,7 @@
   "budget": {
     "usdCap": "$9,500",
     "thbCap": "฿250,000",
-    "note": "Deploy caps this round (~half of liquid cash; buffer covers living costs, tuition scholarship-covered). Keep a running tally as alerts fill. If the USD cap exhausts before all fire, priority order: VOO > VEA > SMH > LLY > UBER > GLDM (core diversification first; UBER tactical + gold near-cap cut first)."
+    "note": "Deploy caps this round (~half of liquid cash; buffer covers living costs, tuition scholarship-covered). Keep a running tally as alerts fill. If the USD cap exhausts before all fire, priority order: VOO > VEA > SMH > LLY > UBER > GLDM (core diversification first; UBER tactical + gold near-cap cut first). ⚠ THB CASH RECONCILIATION (2026-08-10): DB shows CASH_THB ฿571k but Streaming account holds ฿313k (฿258k gap). The staged ฿65k MINT+HMPRO buy is covered either way; RECONCILE against the broker statement before deploying the rest of the Thai basket."
   },
   "targets": [
     {
@@ -83,9 +83,9 @@
       "target": 6.7,
       "direction": "below",
       "currency": "THB",
-      "buyNow": "฿55,000 now",
-      "buyDeeper": "add ฿20k ≤฿6.40",
-      "note": "BUY NOW — category-killer big-box retail, ~6% yield, quality income anchor. Values-clean. Fund from Streaming THB."
+      "buyNow": "฿35,000 now (stage 1 of 2)",
+      "buyDeeper": "฿20,000 ≤฿6.40 (stage 2 / pullback)",
+      "note": "STAGED BUY (Ledger, 2026-08-10) — lead upfront, it has the catalyst. 2Q26 net +14% YoY, margin-led (GM 27.7% vs 25.8%), first profit growth in 5 quarters, beat consensus 3-4%. SSSG ~flat, so watch next Q confirms it's structural. ~5.7% yield, quality income anchor. ฿35k now + ฿20k on pullback to ฿6.40. Fund from Streaming THB."
     },
     {
       "label": "MINT — Minor Intl (values-clean)",
@@ -93,9 +93,9 @@
       "target": 22,
       "direction": "below",
       "currency": "THB",
-      "buyNow": "฿60,000 now (LEAD)",
-      "buyDeeper": "add ฿20k ≤฿22",
-      "note": "LEAD BUY — earnings accelerating (1Q26 core net +189%), asset-light + $1.5B Singapore REIT catalyst H2-26, deleveraging flywheel. Founder Heinecke. Strongest/cleanest name. Fund from Streaming THB."
+      "buyNow": "฿30,000 now (stage 1 of 2)",
+      "buyDeeper": "฿30,000 ≤฿22 (stage 2 / dip)",
+      "note": "STAGED BUY (Ledger, 2026-08-10). 1H26 net +13% YoY, hotels +32%, feared Middle-East soft Q did NOT happen — offset by +18% room rates. Asset-light + ~$1.0B Singapore REIT (downsized from $1.5B, H2-26). Founder Heinecke. No near-term catalyst pending, so stage ฿30k now + ฿30k on a dip to ฿22. Fund from Streaming THB."
     },
     {
       "label": "COM7 — values-clean (wait for dip)",
