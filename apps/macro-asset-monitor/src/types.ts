@@ -1,5 +1,5 @@
 export type AssetCategory = 'rates' | 'dollar' | 'commodities' | 'volatility' | 'global-equity' | 'credit' | 'us-equity' | 'sector'
-export type IndicatorCategory = 'inflation' | 'labour' | 'consumer' | 'credit'
+export type IndicatorCategory = 'inflation' | 'labour' | 'consumer' | 'credit' | 'fx'
 export type Trend = 'rising' | 'falling' | 'stable'
 
 export interface MarketAsset {
@@ -18,6 +18,7 @@ export interface EconomicIndicator {
   seriesId:    string
   label:       string
   category:    IndicatorCategory
+  region:      'US' | 'TH'   // which economy this indicator describes (default US)
   value:       number
   releaseDate: string
   unit:        string
