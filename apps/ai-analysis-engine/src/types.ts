@@ -36,6 +36,7 @@ export interface MacroRegime {
   rationale:       string
   keyIndicators:   string[]
   affectedTickers: string[]
+  thailandRead:    string
   createdAt:       string
 }
 

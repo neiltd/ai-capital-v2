@@ -10,6 +10,7 @@ export interface AnalysisJSON {
     rationale:       string
     keyIndicators:   string[]
     affectedTickers: string[]
+    thailandRead?:   string   // Phase 2: grounded Thai-macro read (optional for back-compat)
     createdAt:       string
   }
   latestSignals: Array<{

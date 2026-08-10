@@ -24,6 +24,7 @@ export function createAnalysisStore(dbPath: string): AnalysisStore {
       rationale        TEXT NOT NULL,
       key_indicators   TEXT NOT NULL,
       affected_tickers TEXT NOT NULL,
+      thailand_read    TEXT,
       created_at       TEXT NOT NULL
     );
     CREATE TABLE IF NOT EXISTS propagation_signals (
@@ -50,6 +51,10 @@ export function createAnalysisStore(dbPath: string): AnalysisStore {
     );
   `)
 
+  // Phase 2: thailand_read added to macro_regimes — migrate pre-existing DBs
+  // (CREATE TABLE IF NOT EXISTS won't alter an existing table).
+  try { db.exec('ALTER TABLE macro_regimes ADD COLUMN thailand_read TEXT') } catch { /* already present */ }
+
   function rowToRegime(row: Record<string, unknown>): MacroRegime {
     return {
       id:              row.id as string,
@@ -59,6 +64,7 @@ export function createAnalysisStore(dbPath: string): AnalysisStore {
       rationale:       row.rationale as string,
       keyIndicators:   JSON.parse(row.key_indicators as string),
       affectedTickers: JSON.parse(row.affected_tickers as string),
+      thailandRead:    (row.thailand_read as string | null) ?? 'No Thai data available this run.',
       createdAt:       row.created_at as string,
     }
   }
@@ -83,10 +89,10 @@ export function createAnalysisStore(dbPath: string): AnalysisStore {
     insertRegime(r) {
       db.prepare(`
         INSERT INTO macro_regimes
-          (id, date, regime, confidence, rationale, key_indicators, affected_tickers, created_at)
-        VALUES (?, ?, ?, ?, ?, ?, ?, ?)
+          (id, date, regime, confidence, rationale, key_indicators, affected_tickers, thailand_read, created_at)
+        VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)
       `).run(r.id, r.date, r.regime, r.confidence, r.rationale,
-             JSON.stringify(r.keyIndicators), JSON.stringify(r.affectedTickers), r.createdAt)
+             JSON.stringify(r.keyIndicators), JSON.stringify(r.affectedTickers), r.thailandRead, r.createdAt)
     },
     getLatestRegime() {
       const row = db.prepare(

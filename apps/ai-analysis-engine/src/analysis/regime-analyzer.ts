@@ -23,7 +23,7 @@ export interface MacroContext {
     trend: string
   }>
   economicIndicators: Array<{
-    seriesId: string; label: string; category: string
+    seriesId: string; label: string; category: string; region?: string
     value: number; releaseDate: string; unit: string; trend: string
   }>
 }
@@ -83,6 +83,13 @@ Regime taxonomy examples (you may coin a new label when none fit):
 - AI Commoditization: model costs falling, compute demand shifting to inference
 - Stagflationary Pressure: rate risk rising, macro headwinds compressing multiples
 
+THAILAND READ: The investor's real portfolio is heavily THB-denominated (and their
+human capital is 100% THB), so in addition to the US/global regime you MUST also produce
+a thailandRead — a 2-3 sentence read of Thai macro/market conditions relevant to a
+THB-heavy book: the household-debt trajectory, the baht's direction, SET tone, and any
+Thai signals present. Base it ONLY on the Thailand Snapshot data supplied. If no Thailand
+Snapshot is present, set thailandRead to exactly "No Thai data available this run."
+
 GROUNDING RULE: Only state a specific numeric price, dollar threshold, or
 count (e.g. a commodity price, a casualty figure, a specific dollar
 level) if that exact figure appears in the Macro Asset Prices, Economic
@@ -104,8 +111,9 @@ const CLASSIFY_TOOL: Anthropic.Tool = {
       rationale:       { type: 'string', description: '2-3 sentence explanation' },
       keyIndicators:   { type: 'array', items: { type: 'string' }, description: '3-5 specific evidence points from the health data' },
       affectedTickers: { type: 'array', items: { type: 'string' } },
+      thailandRead:    { type: 'string', description: '2-3 sentence Thai-macro read for the THB-heavy book, grounded only in the Thailand Snapshot data' },
     },
-    required: ['regime', 'confidence', 'rationale', 'keyIndicators', 'affectedTickers'],
+    required: ['regime', 'confidence', 'rationale', 'keyIndicators', 'affectedTickers', 'thailandRead'],
   },
 }
 
@@ -182,6 +190,26 @@ function formatMacroAssets(macro: MacroContext): string {
   return lines.join('\n')
 }
 
+// The real portfolio is heavily THB-denominated, so surface the Thai signals
+// (household debt, real-effective baht from Phase 1; SET Index + USD/THB market
+// assets) in their own clean section rather than buried among US indicators.
+export function formatThailand(macro: MacroContext): string {
+  const TREND = (t: string) => t === 'rising' ? '↑' : t === 'falling' ? '↓' : '→'
+  const PCT   = (n: number) => `${n >= 0 ? '+' : ''}${n.toFixed(2)}%`
+  const thIndicators = macro.economicIndicators.filter(i => i.region === 'TH')
+  const setIdx = macro.marketAssets.find(a => a.ticker === '^SET.BK')
+  const thb    = macro.marketAssets.find(a => a.ticker === 'THB=X')
+  if (thIndicators.length === 0 && !setIdx && !thb) return ''
+
+  const lines = ['## Thailand Snapshot (the book is THB-heavy — use for the Thai read)']
+  if (setIdx) lines.push(`SET Index  : ${setIdx.close} (${PCT(setIdx.changePct1d)} 1d, ${PCT(setIdx.changePct30d)} 30d ${TREND(setIdx.trend)})`)
+  if (thb)    lines.push(`USD/THB    : ${thb.close} (${PCT(thb.changePct30d)} 30d ${TREND(thb.trend)}) — lower = stronger baht`)
+  for (const i of thIndicators) {
+    lines.push(`${i.label.padEnd(24)}: ${i.value} ${i.unit} [${i.releaseDate} ${TREND(i.trend)}]`)
+  }
+  return lines.join('\n')
+}
+
 export function formatGovFlow(gov: GovFlowContext): string {
   const USD = (n: number) => n >= 1e9 ? `$${(n / 1e9).toFixed(1)}B` : `$${(n / 1e6).toFixed(0)}M`
   const TREND = (t: string) => t === 'rising' ? '↑' : t === 'falling' ? '↓' : '→'
@@ -244,6 +272,9 @@ export async function analyzeRegime(
     ? `\n\n${formatMacroAssets(options.macroAssets)}`
     : ''
 
+  const thailandText    = options.macroAssets ? formatThailand(options.macroAssets) : ''
+  const thailandSection = thailandText ? `\n\n${thailandText}` : ''
+
   const worldSection = options.worldIntel
     ? `\n\n## World Intelligence (live macro events)\n${formatWorldIntel(options.worldIntel)}`
     : ''
@@ -264,7 +295,7 @@ export async function analyzeRegime(
     tool_choice: { type: 'tool', name: 'classify_macro_regime' },
     messages: [{
       role: 'user',
-      content: [{ type: 'text', text: stripLoneSurrogates(`Classify the current macro regime.\n\n## Company Health Signals (${health.length} companies)\n${formatHealth(health)}${macroSection}${liquiditySection}${govFlowSection}${worldSection}`), cache_control: { type: 'ephemeral' } }],
+      content: [{ type: 'text', text: stripLoneSurrogates(`Classify the current macro regime.\n\n## Company Health Signals (${health.length} companies)\n${formatHealth(health)}${macroSection}${thailandSection}${liquiditySection}${govFlowSection}${worldSection}`), cache_control: { type: 'ephemeral' } }],
     }],
   })
 
@@ -275,7 +306,7 @@ export async function analyzeRegime(
 
   const input = toolUse.input as {
     regime: string; confidence: string; rationale: string
-    keyIndicators: string[]; affectedTickers: string[]
+    keyIndicators: string[]; affectedTickers: string[]; thailandRead?: string
   }
 
   return {
@@ -286,6 +317,7 @@ export async function analyzeRegime(
     rationale:       input.rationale,
     keyIndicators:   input.keyIndicators,
     affectedTickers: input.affectedTickers,
+    thailandRead:    input.thailandRead ?? 'No Thai data available this run.',
     createdAt:       now,
   }
 }

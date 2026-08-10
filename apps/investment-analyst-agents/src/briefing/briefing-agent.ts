@@ -332,6 +332,9 @@ async function formatContext(ctx: ContextBundle): Promise<string> {
     correlationBlock,
     macroBlock,
     `\n## Macro Regime: ${r.regime} (${r.confidence} confidence)\n${r.rationale}\nKey Indicators:\n${r.keyIndicators.map(i => `  - ${i}`).join('\n')}`,
+    r.thailandRead && r.thailandRead !== 'No Thai data available this run.'
+      ? `\n## Thailand Read (the book is THB-heavy):\n${r.thailandRead}`
+      : '',
     `\n## Propagation Signals:\n${signals}`,
     `\n## Company Health:\n${health}`,
     `\n## Portfolio:\n${portfolio}`,
