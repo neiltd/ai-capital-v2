@@ -35,6 +35,15 @@ export interface GDELTResponse {
 //   - diplomatic incident (summits, treaty breakdowns)
 //   - election / regime change
 //   - alliance / treaty activity (NATO/BRICS/G7 news)
+//   - Thailand/Cambodia (added 2026-08-10): the global-thematic queries above
+//     never rank Thai events into their top-50, so the pipeline had ZERO
+//     Thailand/Cambodia coverage despite the real portfolio being ~59% THB.
+//     The Thailand-Cambodia border conflict directly moves held/watched names
+//     (CBG's CLMV exports fell ~40%, BH's Cambodian patient flow), and Thai
+//     political/economic risk drives the banks (SCB/KBANK) and consumer names.
+//     Region-anchored keyword queries surface that content into the existing
+//     dedup→score→link→export funnel. (ACLED, which would normally tag this
+//     region, is still 403-blocked — see sources-config.ts.)
 const QUERIES = [
   'conflict attack military battle war',
   'oil pipeline energy supply disruption refinery',
@@ -46,6 +55,8 @@ const QUERIES = [
   'diplomatic incident summit treaty breakdown negotiation',
   'election coup regime change opposition crackdown',
   'NATO alliance BRICS G7 G20 treaty defense pact',
+  'Thailand Cambodia border',
+  'Thailand government protest political crisis',
 ];
 
 const INTER_QUERY_DELAY_MS = 6_000;
