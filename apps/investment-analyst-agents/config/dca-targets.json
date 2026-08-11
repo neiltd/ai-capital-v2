@@ -4,7 +4,7 @@
   "budget": {
     "usdCap": "$9,500",
     "thbCap": "฿250,000",
-    "note": "Deploy caps this round (~half of liquid cash; buffer covers living costs, tuition scholarship-covered). Keep a running tally as alerts fill. If the USD cap exhausts before all fire, priority order: VOO > VEA > SMH > LLY > UBER > GLDM (core diversification first; UBER tactical + gold near-cap cut first). THB CASH RECONCILED 2026-08-11: the old CASH_THB ฿571k was stale/wrong. True figures — Streaming brokerage (deployable) ฿247,686; Plus Saving buffer ฿500,000 (net of a ฿100k earmark) now tracked as SAVINGS_THB. MINT (1300sh @฿23.24) + HMPRO (5300sh @฿6.66) logged to portfolio.positions. Remaining deployable THB for the rest of the basket = ฿247,686 (plus savings if chosen)."
+    "note": "Deploy caps this round (~half of liquid cash; buffer covers living costs, tuition scholarship-covered). Keep a running tally as alerts fill. If the USD cap exhausts before all fire, priority order: VOO > VEA > SMH > LLY > UBER > GLDM (core diversification first; UBER tactical + gold near-cap cut first). THB CASH RECONCILED 2026-08-11: the old CASH_THB ฿571k was stale/wrong. True figures — Streaming brokerage (deployable) ฿247,686; Plus Saving buffer ฿500,000 (net of a ฿100k earmark) now tracked as SAVINGS_THB. MINT (1300sh @฿23.24) + HMPRO (5300sh @฿6.66) logged to portfolio.positions. Remaining deployable THB for the rest of the basket = ฿247,686 (plus savings if chosen). | GLOBAL DE-THB DEPLOYMENT (2026-08-11, Ledger-tuned): deploy ฿400k of SAVINGS_THB (keep ฿100k emergency) into UNHEDGED global via THB feeders — 50% K-US500XUH ฿200k / 40% K-JPX+K-EUX ex-US ฿160k (hedged, product gap) / 10% K-USXNDQUH ฿40k / 0% gold (at cap+ATH — if GLDM taps $79 buy from USD bucket). DCA ~monthly 4-6mo. DE-CONFLICT: the THB feeders and the USD ETF ladder (VOO/VEA/SMH from CASH_USD) hit the SAME exposures — never fire both on one dip. Measure de-risk on TRUE exposure (Thai-home 54%→40.6%), NOT denomination (62%→62%)."
   },
   "targets": [
     {
@@ -66,6 +66,36 @@
       "buyNow": "$1,000",
       "buyDeeper": "—",
       "note": "One-shot, deep-dip ONLY. Do not chase — near 10% gold cap."
+    },
+    {
+      "label": "K-US500XUH — S&P500 feeder (de-THB core)",
+      "yahooSymbol": "VOO",
+      "target": 705,
+      "direction": "below",
+      "currency": "THB",
+      "buyNow": "฿40k/mo DCA (฿200k total)",
+      "buyDeeper": "manual extra on VOO ≤705 — do NOT auto-fire (would double the USD VOO ladder)",
+      "note": "GLOBAL DE-THB (Ledger 50% leg). Buy K-US500XUH-A(A) — UNHEDGED S&P500 feeder (iShares Core S&P500), 0.596% fee, KAsset/KBank, accumulating, ฿500 min, K-Saving-Plan auto-DCA. Unhedged = you become economically long USD+S&P, which is what actually de-THBs the book. Fund from SAVINGS_THB."
+    },
+    {
+      "label": "K-JPX + K-EUX — developed ex-US (Japan+Europe)",
+      "yahooSymbol": "VEA",
+      "target": 71.8,
+      "direction": "below",
+      "currency": "THB",
+      "buyNow": "฿32k/mo DCA (฿160k: ~฿80k K-JPX Japan + ~฿80k K-EUX Europe)",
+      "buyDeeper": "manual extra on VEA ≤71.8",
+      "note": "GLOBAL DE-THB (Ledger 40% leg — your single biggest TRUE diversification hole; you own ZERO developed ex-US). PRODUCT GAP: no clean unhedged ex-US index feeder at KAsset/SCB — K-JPX (TOPIX) + K-EUX (EuroStoxx50) are ~93% THB-HEDGED, so this sleeve diversifies your equity MARKET/economy away from Thailand but NOT the currency (the 60% US unhedged carries the currency de-risk). DECISION PENDING: accept the hedge here, or use an active unhedged global fund (higher fee) for ex-US currency exposure. Fund from SAVINGS_THB."
+    },
+    {
+      "label": "K-USXNDQUH — Nasdaq-100 feeder (AI/tech)",
+      "yahooSymbol": "QQQ",
+      "target": 690,
+      "direction": "below",
+      "currency": "THB",
+      "buyNow": "฿8k/mo DCA (฿40k total)",
+      "buyDeeper": "— DCA only; do NOT accelerate (Nasdaq/semis already bought via the S&P leg + ASML/SKHY + the USD SMH ladder)",
+      "note": "GLOBAL DE-THB (Ledger 10% leg — HALVED from 20% to avoid buying tech-beta 3x). Buy K-USXNDQUH-A(A) — UNHEDGED Nasdaq-100 feeder (Invesco QQQ), 0.596%, KAsset, accumulating. Fund from SAVINGS_THB."
     },
     {
       "label": "CBG — Carabao (values-clean)",
