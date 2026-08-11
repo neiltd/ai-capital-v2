@@ -4,7 +4,7 @@
   "budget": {
     "usdCap": "$9,500",
     "thbCap": "฿250,000",
-    "note": "Deploy caps this round (~half of liquid cash; buffer covers living costs, tuition scholarship-covered). Keep a running tally as alerts fill. If the USD cap exhausts before all fire, priority order: VOO > VEA > SMH > LLY > UBER > GLDM (core diversification first; UBER tactical + gold near-cap cut first). ⚠ THB CASH RECONCILIATION (2026-08-10): DB shows CASH_THB ฿571k but Streaming account holds ฿313k (฿258k gap). The staged ฿65k MINT+HMPRO buy is covered either way; RECONCILE against the broker statement before deploying the rest of the Thai basket."
+    "note": "Deploy caps this round (~half of liquid cash; buffer covers living costs, tuition scholarship-covered). Keep a running tally as alerts fill. If the USD cap exhausts before all fire, priority order: VOO > VEA > SMH > LLY > UBER > GLDM (core diversification first; UBER tactical + gold near-cap cut first). THB CASH RECONCILED 2026-08-11: the old CASH_THB ฿571k was stale/wrong. True figures — Streaming brokerage (deployable) ฿247,686; Plus Saving buffer ฿500,000 (net of a ฿100k earmark) now tracked as SAVINGS_THB. MINT (1300sh @฿23.24) + HMPRO (5300sh @฿6.66) logged to portfolio.positions. Remaining deployable THB for the rest of the basket = ฿247,686 (plus savings if chosen)."
   },
   "targets": [
     {
