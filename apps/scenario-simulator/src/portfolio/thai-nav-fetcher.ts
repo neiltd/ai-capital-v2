@@ -19,50 +19,77 @@ const THAI_FUND_MAPPINGS: Record<string, ThaiNavMapping> = {
   // Example: 'KFINDIA-A': { projId: 'M????_????', classFilter: 'KFINDIA-A' },
 }
 
-const SEC_NAV_BASE = 'https://api.sec.or.th/FundDailyInfo'
+// Migrated 2026-08-11 to the new SEC Open Data API. The old
+// api.sec.or.th/FundDailyInfo/{projId}/dailynav/{date} path was RETIRED (it now
+// returns HTTP 503 "migrate to secopendata.sec.or.th"). The new v2 endpoint
+// takes proj_id + a date RANGE and returns the series in one call, so we fetch
+// each fund with a single request instead of looping day-by-day (up to 10x).
+// Spec: https://github.com/Sitthinut/sec-open-data-api-spec (fund product group).
+// Base host + Ocp-Apim-Subscription-Key header are unchanged; only path + shape.
+const SEC_API_BASE = process.env.SEC_NAV_BASE ?? 'https://api.sec.or.th'
+const NAV_ENDPOINT = '/v2/fund/daily-info/nav'
+const LOOKBACK_DAYS = 14
 
-interface NavEntry {
+interface NavItem {
   nav_date:        string
-  class_abbr_name: string
+  fund_class_name: string
   last_val:        number
 }
+interface NavResponse { message?: string; items?: NavItem[] }
 
 function apiKey(): string {
-  return process.env.SEC_FUND_API_KEY ?? 'cbb0bd1c5cef4e138336c8914bd08f56'
+  return process.env.SEC_FUND_API_KEY ?? ''
 }
 
-async function fetchNavForDate(projId: string, date: string): Promise<NavEntry[] | null> {
-  const url = `${SEC_NAV_BASE}/${projId}/dailynav/${date}`
-  try {
-    const res = await fetch(url, {
-      headers: { 'Ocp-Apim-Subscription-Key': apiKey() },
-    })
-    if (res.status === 204) return null
-    if (!res.ok) {
-      console.warn(`[ThaiNAV] ${projId} @ ${date}: HTTP ${res.status}`)
-      return null
-    }
-    return await res.json() as NavEntry[]
-  } catch (err) {
-    console.warn(`[ThaiNAV] Fetch error for ${projId}: ${(err as Error).message}`)
-    return null
-  }
+function delay(ms: number): Promise<void> {
+  return new Promise(r => setTimeout(r, ms))
 }
 
-async function fetchLatestNav(projId: string, classFilter: string | null): Promise<{ nav: number; date: string } | null> {
+// Returns the latest NAV plus a hardFail flag (auth/5xx/rate/network) that the
+// caller's circuit-breaker uses to stop hammering a dead endpoint.
+async function fetchLatestNav(
+  projId: string,
+  classFilter: string | null,
+): Promise<{ result: { nav: number; date: string } | null; hardFail: boolean }> {
   const today = new Date()
-  for (let daysBack = 1; daysBack <= 10; daysBack++) {
-    const d = new Date(today)
-    d.setDate(today.getDate() - daysBack)
-    const dateStr = d.toISOString().slice(0, 10)
-    const entries = await fetchNavForDate(projId, dateStr)
-    if (!entries || entries.length === 0) continue
-    const entry = classFilter
-      ? (entries.find(e => e.class_abbr_name === classFilter) ?? entries[0])
-      : entries[0]
-    if (entry?.last_val > 0) return { nav: entry.last_val, date: dateStr }
+  const end   = today.toISOString().slice(0, 10)
+  const start = new Date(today.getTime() - LOOKBACK_DAYS * 86_400_000).toISOString().slice(0, 10)
+  const url = `${SEC_API_BASE}${NAV_ENDPOINT}?proj_id=${encodeURIComponent(projId)}`
+            + `&start_nav_date=${start}&end_nav_date=${end}&page_size=100`
+
+  for (let attempt = 0; attempt < 2; attempt++) {
+    try {
+      const res = await fetch(url, {
+        headers: { 'Ocp-Apim-Subscription-Key': apiKey() },
+        signal:  AbortSignal.timeout(8_000),
+      })
+      // 421 = gateway rate-limit — honour Retry-After once (per SEC guidance).
+      if (res.status === 421 && attempt === 0) {
+        const wait = Number(res.headers.get('Retry-After') ?? '1') * 1000
+        await delay(Math.min(Number.isFinite(wait) ? wait : 1000, 5_000))
+        continue
+      }
+      if (!res.ok) {
+        console.warn(`[ThaiNAV] ${projId}: HTTP ${res.status}`)
+        return { result: null, hardFail: res.status >= 500 || res.status === 429 || res.status === 401 }
+      }
+      const body  = await res.json() as NavResponse
+      const items = (body.items ?? []).filter(i => i.last_val > 0)
+      if (items.length === 0) return { result: null, hardFail: false }
+      // Prefer the requested share class; fall back to all classes. Then take
+      // the most recent nav_date in the window.
+      const matched = classFilter
+        ? items.filter(i => i.fund_class_name?.toLowerCase() === classFilter.toLowerCase())
+        : []
+      const pool   = matched.length ? matched : items
+      const latest = pool.reduce((a, b) => (b.nav_date > a.nav_date ? b : a))
+      return { result: { nav: latest.last_val, date: latest.nav_date }, hardFail: false }
+    } catch (err) {
+      console.warn(`[ThaiNAV] Fetch error for ${projId}: ${(err as Error).message}`)
+      return { result: null, hardFail: true }
+    }
   }
-  return null
+  return { result: null, hardFail: false }
 }
 
 /**
@@ -78,15 +105,31 @@ export async function fetchThaiNavs(
     : Object.keys(THAI_FUND_MAPPINGS)
 
   const results: Record<string, number> = {}
+  if (!apiKey()) {
+    console.warn('[ThaiNAV] SEC_FUND_API_KEY not set — skipping Thai fund NAVs')
+    return results
+  }
+
+  let consecutiveHardFails = 0
   for (const ticker of toFetch) {
+    // Circuit-breaker: if the API is clearly down (auth/5xx/rate/network),
+    // stop hammering it so the refresh degrades gracefully instead of blowing
+    // the caller's timeout on a dead endpoint (the 2026-08 "Command failed" bug).
+    if (consecutiveHardFails >= 3) {
+      console.warn('[ThaiNAV] SEC API unavailable — skipping remaining fund NAVs this run')
+      break
+    }
     const mapping = THAI_FUND_MAPPINGS[ticker]
-    const result  = await fetchLatestNav(mapping.projId, mapping.classFilter)
+    const { result, hardFail } = await fetchLatestNav(mapping.projId, mapping.classFilter)
     if (result) {
       results[ticker] = result.nav
+      consecutiveHardFails = 0
       console.log(`[ThaiNAV] ${ticker}: ฿${result.nav.toFixed(4)} (${result.date})`)
     } else {
+      if (hardFail) consecutiveHardFails++
       console.warn(`[ThaiNAV] Could not fetch NAV for ${ticker} (proj_id=${mapping.projId})`)
     }
+    await delay(60)  // throttle between requests (SEC guidance: ≥16ms)
   }
   return results
 }
