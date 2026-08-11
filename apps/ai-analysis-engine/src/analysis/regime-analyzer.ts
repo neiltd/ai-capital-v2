@@ -26,6 +26,13 @@ export interface MacroContext {
     seriesId: string; label: string; category: string; region?: string
     value: number; releaseDate: string; unit: string; trend: string
   }>
+  carryUnwindWatch?: {
+    status:      string
+    reasons:     string[]
+    usdJpy:      number | null
+    vix:         number | null
+    nikkeiPct1d: number | null
+  }
 }
 
 export interface LiquidityContext {
@@ -275,6 +282,13 @@ export async function analyzeRegime(
   const thailandText    = options.macroAssets ? formatThailand(options.macroAssets) : ''
   const thailandSection = thailandText ? `\n\n${thailandText}` : ''
 
+  // Only surface the yen carry-unwind watch when it's actually firing — on calm
+  // days it stays out of the prompt to avoid desensitizing the model.
+  const carry = options.macroAssets?.carryUnwindWatch
+  const carrySection = carry && carry.status !== 'calm'
+    ? `\n\n## ⚠ Yen Carry-Unwind Watch: ${carry.status.toUpperCase()}\n${carry.reasons.map(r => `  - ${r}`).join('\n')}\nA disorderly yen unwind transmits to global risk (equities down, VIX up); weigh this in the regime and rationale.`
+    : ''
+
   const worldSection = options.worldIntel
     ? `\n\n## World Intelligence (live macro events)\n${formatWorldIntel(options.worldIntel)}`
     : ''
@@ -295,7 +309,7 @@ export async function analyzeRegime(
     tool_choice: { type: 'tool', name: 'classify_macro_regime' },
     messages: [{
       role: 'user',
-      content: [{ type: 'text', text: stripLoneSurrogates(`Classify the current macro regime.\n\n## Company Health Signals (${health.length} companies)\n${formatHealth(health)}${macroSection}${thailandSection}${liquiditySection}${govFlowSection}${worldSection}`), cache_control: { type: 'ephemeral' } }],
+      content: [{ type: 'text', text: stripLoneSurrogates(`Classify the current macro regime.\n\n## Company Health Signals (${health.length} companies)\n${formatHealth(health)}${macroSection}${thailandSection}${carrySection}${liquiditySection}${govFlowSection}${worldSection}`), cache_control: { type: 'ephemeral' } }],
     }],
   })
 

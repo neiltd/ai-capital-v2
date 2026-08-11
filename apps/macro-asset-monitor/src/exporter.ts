@@ -1,6 +1,7 @@
 import { writeFileSync, readFileSync, mkdirSync, existsSync } from 'fs'
 import { dirname } from 'path'
 import type { MarketAsset, EconomicIndicator, LiquidityIndicator, MacroJSON } from './types.js'
+import { computeCarryUnwindSignal } from './signals/carry-unwind.js'
 
 export function buildMacro(
   marketAssets: MarketAsset[],
@@ -13,6 +14,7 @@ export function buildMacro(
     marketAssets,
     economicIndicators,
     liquidityIndicators,
+    carryUnwindWatch:    computeCarryUnwindSignal(marketAssets),
   }
 }
 
@@ -34,6 +36,11 @@ export function exportMacro(
   }
 
   const macro = buildMacro(assets, economicIndicators, liquidityIndicators)
+  if (macro.carryUnwindWatch.status !== 'calm') {
+    console.warn(
+      `[macro] ⚠ YEN CARRY-UNWIND ${macro.carryUnwindWatch.status.toUpperCase()} — ${macro.carryUnwindWatch.reasons.join('; ')}`,
+    )
+  }
   mkdirSync(dirname(outputPath), { recursive: true })
   writeFileSync(outputPath, JSON.stringify(macro, null, 2), 'utf-8')
   return macro
