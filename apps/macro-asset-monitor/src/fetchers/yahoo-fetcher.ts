@@ -17,6 +17,8 @@ export const YAHOO_ASSETS: YahooAssetConfig[] = [
   // Dollar
   { ticker: 'DX-Y.NYB',  label: 'Dollar Index',  category: 'dollar'        },
   { ticker: 'THB=X',     label: 'USD/THB',       category: 'dollar'        },
+  { ticker: 'JPY=X',     label: 'USD/JPY',       category: 'dollar'        },  // carry-trade unwind gauge — the yen is the global-liquidity fault line
+
   // Commodities
   { ticker: 'CL=F',      label: 'WTI Crude Oil', category: 'commodities'   },
   { ticker: 'GC=F',      label: 'Gold',          category: 'commodities'   },
