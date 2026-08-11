@@ -14,9 +14,10 @@ const THAI_FUND_MAPPINGS: Record<string, ThaiNavMapping> = {
   'K-ESGSI-THAIESG': { projId: 'M0095_2567', classFilter: 'K-ESGSI-ThaiESG' },
   'K-TNZ-THAIESG':   { projId: 'M0799_2566', classFilter: 'K-TNZ-ThaiESG' },
   'SCBCEH':          { projId: 'M0155_2556', classFilter: 'SCBCEH' },
-  // KFINDIA-A (Krungsri India Equity Fund-A) — proj_id not yet found in SEC API.
-  // Add here once you find the proj_id (check your fund statement or Krungsri app).
-  // Example: 'KFINDIA-A': { projId: 'M????_????', classFilter: 'KFINDIA-A' },
+  // Krungsri India Equity Fund — 3 classes (A/D/I) at different NAVs, so the
+  // classFilter must pin the accumulating -A class. proj_id found 2026-08-11 via
+  // GET /v2/fund/general-info/profiles?project_info=KFINDIA.
+  'KFINDIA-A':       { projId: 'M0418_2560', classFilter: 'KFINDIA-A' },
 }
 
 // Migrated 2026-08-11 to the new SEC Open Data API. The old
