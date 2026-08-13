@@ -5,7 +5,8 @@
   "scripts": {
     "fetch": "tsx src/cli/cli-fetch.ts",
     "test": "vitest run",
-    "typecheck": "tsc --noEmit"
+    "typecheck": "tsc --noEmit",
+    "fetch-thai": "tsx src/cli/cli-fetch-thai.ts"
   },
   "dependencies": {
     "@anthropic-ai/sdk": "^0.39.0",
