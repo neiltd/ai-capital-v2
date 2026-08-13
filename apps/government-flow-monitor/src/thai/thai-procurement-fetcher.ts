@@ -1,6 +1,10 @@
 import type { ThaiContractorFlow } from '../types.js'
 import { THAI_GOV_WATCHLIST } from './watchlist.js'
 
+// The fetcher returns all-time totals; the run-over-run deltas (newProjects /
+// newContractTHB) are computed against the previous snapshot in the exporter.
+export type RawContractorFlow = Omit<ThaiContractorFlow, 'newProjects' | 'newContractTHB'>
+
 // ACT Ai's open procurement API (the backend behind procurement.actai.co).
 // No auth. Querying `company/search?keyword=<regId>` by registration number
 // returns an exact match with all-time totals; querying by name is fuzzy.
@@ -18,7 +22,7 @@ function delay(ms: number): Promise<void> {
   return new Promise(r => setTimeout(r, ms))
 }
 
-async function fetchContractor(entry: { ticker: string; regId: string }): Promise<ThaiContractorFlow | null> {
+async function fetchContractor(entry: { ticker: string; regId: string }): Promise<RawContractorFlow | null> {
   const url = `${ACT_AI_BASE}/company/search?keyword=${encodeURIComponent(entry.regId)}`
   try {
     const res = await fetch(url, { signal: AbortSignal.timeout(15_000) })
@@ -54,8 +58,8 @@ async function fetchContractor(entry: { ticker: string; regId: string }): Promis
  * recipient first). Individual failures are skipped; the run only surfaces
  * the contractors that resolved.
  */
-export async function fetchThaiGovFlow(): Promise<ThaiContractorFlow[]> {
-  const out: ThaiContractorFlow[] = []
+export async function fetchThaiGovFlow(): Promise<RawContractorFlow[]> {
+  const out: RawContractorFlow[] = []
   for (const entry of THAI_GOV_WATCHLIST) {
     const r = await fetchContractor(entry)
     if (r) {

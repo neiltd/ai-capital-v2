@@ -26,9 +26,10 @@ export const DAILY_PIPELINE: JobSpec[] = [
     cwd:  'apps/macro-asset-monitor',
   },
   {
-    // Independent — fetches from USASpending.gov.
+    // Independent — fetches US federal awards from USASpending.gov, then Thai
+    // procurement (ACT Ai / e-GP) for the SET-listed construction watchlist.
     name: 'government-flow-monitor',
-    cmd:  ['npm', 'run', 'fetch'],
+    cmd:  ['npm', 'run', 'fetch-all'],
     cwd:  'apps/government-flow-monitor',
   },
   {

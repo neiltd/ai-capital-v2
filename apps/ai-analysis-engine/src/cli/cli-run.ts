@@ -5,7 +5,7 @@ import { randomUUID } from 'crypto'
 import { createAnalysisStore } from '../store/sqlite.js'
 import { collectHealth } from '../collector/health-collector.js'
 import { analyzeRegime } from '../analysis/regime-analyzer.js'
-import type { WorldIntelContext, LiquidityContext, GovFlowContext } from '../analysis/regime-analyzer.js'
+import type { WorldIntelContext, LiquidityContext, GovFlowContext, ThaiGovFlowContext } from '../analysis/regime-analyzer.js'
 import { analyzePropagation } from '../analysis/propagation-analyzer.js'
 import { analyzePeople } from '../analysis/people-analyzer.js'
 import { exportAnalysis } from '../export/exporter.js'
@@ -20,6 +20,7 @@ const STOCK_INTEL_PATH      = join(process.cwd(), '../world-intelligence-data-hu
 const WORLD_INTEL_PATH      = join(process.cwd(), '../world-intelligence-data-hub-/exports/world-map/intelligence.json')
 const MACRO_PATH            = join(process.cwd(), '../macro-asset-monitor/data/macro.json')
 const GOV_FLOW_PATH         = join(process.cwd(), '../government-flow-monitor/data/govflow.json')
+const THAI_GOV_FLOW_PATH    = join(process.cwd(), '../government-flow-monitor/data/thai-govflow.json')
 const PORTFOLIO_TICKERS_PATH = join(process.cwd(), '../scenario-simulator/data/portfolio-tickers.json')
 const PEOPLE_WINDOW_DAYS    = 7
 
@@ -60,6 +61,13 @@ function loadGovFlow(): GovFlowContext | undefined {
   try {
     if (!existsSync(GOV_FLOW_PATH)) return undefined
     return JSON.parse(readFileSync(GOV_FLOW_PATH, 'utf-8'))
+  } catch { return undefined }
+}
+
+function loadThaiGovFlow(): ThaiGovFlowContext | undefined {
+  try {
+    if (!existsSync(THAI_GOV_FLOW_PATH)) return undefined
+    return JSON.parse(readFileSync(THAI_GOV_FLOW_PATH, 'utf-8'))
   } catch { return undefined }
 }
 
@@ -139,10 +147,16 @@ async function run() {
   const govFlowContext = loadGovFlow()
   if (govFlowContext) {
     console.log(`  Gov flow: ${govFlowContext.watchlistAwards.length} companies, ${govFlowContext.budgetSignals.length} budget signals (as of ${govFlowContext.asOf})`)
+  }
+
+  const thaiGovFlow = loadThaiGovFlow()
+  if (thaiGovFlow) {
+    const newAwards = thaiGovFlow.contractors.filter(c => c.newProjects > 0 || c.newContractTHB > 0).length
+    console.log(`  Thai gov flow: ${thaiGovFlow.contractors.length} contractors, ${newAwards} with new awards (as of ${thaiGovFlow.asOf})`)
   } else {
     console.log('  Gov flow: not available')
   }
-  const regime = await analyzeRegime(health, { worldIntel, macroAssets, liquidityContext, govFlowContext })
+  const regime = await analyzeRegime(health, { worldIntel, macroAssets, liquidityContext, govFlowContext, thaiGovFlow })
   store.insertRegime(regime)
   console.log(`  Regime: ${regime.regime} (${regime.confidence})`)
 

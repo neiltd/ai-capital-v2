@@ -62,6 +62,14 @@ export interface GovFlowContext {
   }>
 }
 
+export interface ThaiGovFlowContext {
+  asOf: string
+  contractors: Array<{
+    ticker: string; companyName: string; totalContractTHB: number
+    totalProjects: number; newProjects: number; newContractTHB: number; hasCorruptionRisk: boolean
+  }>
+}
+
 const SYSTEM_PROMPT = `You are a macro technology investment analyst.
 Classify the current investment regime using the classify_macro_regime tool.
 
@@ -217,6 +225,22 @@ export function formatThailand(macro: MacroContext): string {
   return lines.join('\n')
 }
 
+// Thai state-money flow to SET-listed construction contractors (e-GP via ACT Ai).
+// Fits the investor's "state backing = stability" thesis; the ⚑ NEW markers are
+// the actual signal (a watchlist name winning fresh government work since last run).
+export function formatThaiGovFlow(gov: ThaiGovFlowContext): string {
+  if (!gov.contractors.length) return ''
+  const BN = (n: number) => `฿${(n / 1e9).toFixed(1)}bn`
+  const lines = gov.contractors.slice(0, 8).map(c => {
+    const flow = (c.newProjects > 0 || c.newContractTHB > 0)
+      ? `  ⚑ NEW: +${c.newProjects} proj, +${BN(c.newContractTHB)}`
+      : ''
+    const risk = c.hasCorruptionRisk ? ' [risk-flag]' : ''
+    return `  ${c.ticker.padEnd(6)} ${BN(c.totalContractTHB)} all-time, ${c.totalProjects} proj${risk}${flow}`
+  })
+  return `## Thai Govt Procurement Flow (SET-listed contractors, e-GP via ACT Ai, as of ${gov.asOf})\n${lines.join('\n')}`
+}
+
 export function formatGovFlow(gov: GovFlowContext): string {
   const USD = (n: number) => n >= 1e9 ? `$${(n / 1e9).toFixed(1)}B` : `$${(n / 1e6).toFixed(0)}M`
   const TREND = (t: string) => t === 'rising' ? '↑' : t === 'falling' ? '↓' : '→'
@@ -269,6 +293,7 @@ export async function analyzeRegime(
     macroAssets?: MacroContext
     liquidityContext?: LiquidityContext
     govFlowContext?: GovFlowContext
+    thaiGovFlow?: ThaiGovFlowContext
   } = {},
 ): Promise<MacroRegime> {
   const client = options.client ?? new Anthropic()
@@ -281,6 +306,9 @@ export async function analyzeRegime(
 
   const thailandText    = options.macroAssets ? formatThailand(options.macroAssets) : ''
   const thailandSection = thailandText ? `\n\n${thailandText}` : ''
+
+  const thaiGovText     = options.thaiGovFlow ? formatThaiGovFlow(options.thaiGovFlow) : ''
+  const thaiGovSection  = thaiGovText ? `\n\n${thaiGovText}` : ''
 
   // Only surface the yen carry-unwind watch when it's actually firing — on calm
   // days it stays out of the prompt to avoid desensitizing the model.
@@ -309,7 +337,7 @@ export async function analyzeRegime(
     tool_choice: { type: 'tool', name: 'classify_macro_regime' },
     messages: [{
       role: 'user',
-      content: [{ type: 'text', text: stripLoneSurrogates(`Classify the current macro regime.\n\n## Company Health Signals (${health.length} companies)\n${formatHealth(health)}${macroSection}${thailandSection}${carrySection}${liquiditySection}${govFlowSection}${worldSection}`), cache_control: { type: 'ephemeral' } }],
+      content: [{ type: 'text', text: stripLoneSurrogates(`Classify the current macro regime.\n\n## Company Health Signals (${health.length} companies)\n${formatHealth(health)}${macroSection}${thailandSection}${thaiGovSection}${carrySection}${liquiditySection}${govFlowSection}${worldSection}`), cache_control: { type: 'ephemeral' } }],
     }],
   })
 

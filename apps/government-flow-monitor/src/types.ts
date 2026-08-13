@@ -46,11 +46,14 @@ export interface ThaiContractorFlow {
   totalProjects:     number
   totalContractTHB:  number   // all-time contract value won, THB
   hasCorruptionRisk: boolean  // ACT Ai's corruption-risk flag on the entity
+  newProjects:       number   // projects won since the previous run (0 if first run) — the "flow" signal
+  newContractTHB:    number   // contract value won since the previous run, THB
 }
 
 export interface ThaiGovFlowJSON {
-  exportedAt:  string
-  asOf:        string
-  source:      string
-  contractors: ThaiContractorFlow[]
+  exportedAt:   string
+  asOf:         string
+  source:       string
+  previousAsOf: string | null   // the run these deltas are measured against
+  contractors:  ThaiContractorFlow[]
 }
