@@ -4,7 +4,7 @@
   "budget": {
     "usdCap": "$9,500",
     "thbCap": "฿250,000",
-    "note": "Deploy caps this round (~half of liquid cash; buffer covers living costs, tuition scholarship-covered). Keep a running tally as alerts fill. If the USD cap exhausts before all fire, priority order: VOO > VEA > SMH > LLY > UBER > GLDM (core diversification first; UBER tactical + gold near-cap cut first). THB CASH RECONCILED 2026-08-11: the old CASH_THB ฿571k was stale/wrong. True figures — Streaming brokerage (deployable) ฿247,686; Plus Saving buffer ฿500,000 (net of a ฿100k earmark) now tracked as SAVINGS_THB. MINT (1300sh @฿23.24) + HMPRO (5300sh @฿6.66) logged to portfolio.positions. Remaining deployable THB for the rest of the basket = ฿247,686 (plus savings if chosen). | GLOBAL DE-THB DEPLOYMENT (2026-08-11, Ledger-tuned): deploy ฿400k of SAVINGS_THB (keep ฿100k emergency) into UNHEDGED global via THB feeders — 50% K-US500XUH ฿200k / 40% K-JPX+K-EUX ex-US ฿160k (hedged, product gap) / 10% K-USXNDQUH ฿40k / 0% gold (at cap+ATH — if GLDM taps $79 buy from USD bucket). DCA ~monthly 4-6mo. DE-CONFLICT: the THB feeders and the USD ETF ladder (VOO/VEA/SMH from CASH_USD) hit the SAME exposures — never fire both on one dip. Measure de-risk on TRUE exposure (Thai-home 54%→40.6%), NOT denomination (62%→62%). | THAI STRATEGY UPDATE (2026-08-14, post BLS→DIME broker switch): liquidated the individual-name basket at BLS (sold MINT/HMPRO/SCB; SCB +฿18.3k gain, MINT/HMPRO ~flat) — those individual entries below are now SUPERSEDED/under-review. New Thai plan for the ~฿516k DIME pool: a diversified SET50 CORE (K-SET50, see entry above) + KBANK/GULF conviction TILTS on their entry triggers (KBANK ฿232 pullback or ฿255 breakout; GULF ฿56 test or post-Aug-20), rather than concentrating in 2 names. Healthcare slot (BDMS vs BH) still pending a deep-dive. Gas/PPA-reform overhang argues patience on GULF."
+    "note": "FINALIZED 2026-08-14 (Thai-citizen; NO US W-2/401k framing — SET cap gains tax-free). Book rebuilt after BLS→DIME switch. THREE cash pots: CASH_THB ฿516,383 (DIME Thai pool, incl. GULF sale proceeds), SAVINGS_THB ฿500k (deploy ฿400k global, keep ฿100k buffer), CASH_USD $19,517 (US ETF ladder). THE SPLIT on the ฿516k DIME pool: ฿200k SET50 (Thai slice) + up to ฿40k optional GULF (≤฿56) + ฿276k REDIRECTED to global. So of ฿916k deployable baht → ~฿676k GLOBAL / ~฿240k THAI (decisive de-THB, per desk consensus + Neil's own 'Thai large-caps are dead money' realization). WHY: single-name Thai picking dropped — SET50 index covers the Thai slice; growth/capital-appreciation money goes global where it actually compounds. TOTAL GLOBAL ฿676k allocated: K-US500XUH (unhedged S&P) ฿400k / K-JPX+K-EUX (ex-US, hedged product-gap) ฿180k / K-USXNDQUH (Nasdaq) ฿96k. DCA ~monthly over 4-5mo. DROPPED SCBWORLD (hedged + triple-counts US). DE-CONFLICT: THB feeders vs USD ETF ladder hit SAME exposures — never fire both on one dip. Measure de-risk on TRUE Thai-home exposure (target ~40%), not THB denomination. RETIRED single-name entries (MINT/HMPRO/SCB sold; CBG/COM7/BH/KBANK folded into SET50)."
   },
   "targets": [
     {
@@ -73,9 +73,9 @@
       "target": 705,
       "direction": "below",
       "currency": "THB",
-      "buyNow": "฿40k/mo DCA (฿200k total)",
+      "buyNow": "฿80k/mo DCA (฿400k total — de-THB + GROWTH core)",
       "buyDeeper": "manual extra on VOO ≤705 — do NOT auto-fire (would double the USD VOO ladder)",
-      "note": "GLOBAL DE-THB (Ledger 50% leg). Buy K-US500XUH-A(A) — UNHEDGED S&P500 feeder (iShares Core S&P500), 0.596% fee, KAsset/KBank, accumulating, ฿500 min, K-Saving-Plan auto-DCA. Unhedged = you become economically long USD+S&P, which is what actually de-THBs the book. Fund from SAVINGS_THB."
+      "note": "GLOBAL DE-THB (de-THB core, scaled up 2026-08-14). Buy K-US500XUH-A(A) — UNHEDGED S&P500 feeder (iShares Core S&P500), 0.596% fee, KAsset/KBank, accumulating, ฿500 min, K-Saving-Plan auto-DCA. Unhedged = you become economically long USD+S&P, which is what actually de-THBs the book. Fund from SAVINGS_THB."
     },
     {
       "label": "K-JPX + K-EUX — developed ex-US (Japan+Europe)",
@@ -83,7 +83,7 @@
       "target": 71.8,
       "direction": "below",
       "currency": "THB",
-      "buyNow": "฿32k/mo DCA (฿160k: ~฿80k K-JPX Japan + ~฿80k K-EUX Europe)",
+      "buyNow": "฿36k/mo DCA (฿180k: ~฿90k K-JPX Japan + ~฿90k K-EUX Europe)",
       "buyDeeper": "manual extra on VEA ≤71.8",
       "note": "GLOBAL DE-THB (Ledger 40% leg — your single biggest TRUE diversification hole; you own ZERO developed ex-US). PRODUCT GAP: no clean unhedged ex-US index feeder at KAsset/SCB — K-JPX (TOPIX) + K-EUX (EuroStoxx50) are ~93% THB-HEDGED, so this sleeve diversifies your equity MARKET/economy away from Thailand but NOT the currency (the 60% US unhedged carries the currency de-risk). DECISION PENDING: accept the hedge here, or use an active unhedged global fund (higher fee) for ex-US currency exposure. Fund from SAVINGS_THB."
     },
@@ -93,7 +93,7 @@
       "target": 690,
       "direction": "below",
       "currency": "THB",
-      "buyNow": "฿8k/mo DCA (฿40k total)",
+      "buyNow": "฿19k/mo DCA (฿96k total)",
       "buyDeeper": "— DCA only; do NOT accelerate (Nasdaq/semis already bought via the S&P leg + ASML/SKHY + the USD SMH ladder)",
       "note": "GLOBAL DE-THB (Ledger 10% leg — HALVED from 20% to avoid buying tech-beta 3x). Buy K-USXNDQUH-A(A) — UNHEDGED Nasdaq-100 feeder (Invesco QQQ), 0.596%, KAsset, accumulating. Fund from SAVINGS_THB."
     },
@@ -103,79 +103,19 @@
       "target": 1580,
       "direction": "below",
       "currency": "THB",
-      "buyNow": "DCA monthly (the diversified Thai core)",
+      "buyNow": "฿40k/mo DCA (฿200k total — the WHOLE Thai equity slice)",
       "buyDeeper": "add extra on a SET dip ≤ ~1580",
-      "note": "THAI DIVERSIFIED CORE — the 'own Thailand's pillars' thesis without single-name risk (owns KBANK+GULF+AOT+PTT+CPALL+45 more). Buy K-SET50 (KAsset, since 2005, ฿6.3bn AUM, 0.64%) — chosen over the cheaper Principal SET50-E (฿324m, too small) for size/track-record per 2026-08-13 fund due-diligence. Alternatives: SCBSET50 (SCBAM, since 2011, ฿5.15bn) or TDEX ETF on DIME (One AM, since 2007, ฿4.2bn, ~0.51% — mind the on-exchange spread). KBANK/GULF below are conviction TILTS on top of this core, entered only on their triggers. yahooSymbol ^SET.BK is a rough index proxy for the readout."
+      "note": "THE ONLY THAI EQUITY HOLDING. Single-name Thai stock-picking DROPPED 2026-08-14: Thai large-caps (BDMS, BH, the banks) have been range-bound/dead-money for ~8yr (SET topped ~1,800 in early 2018, below it for 6+yr) — no edge in picking one, and it stacks risk. SET50 index holds KBANK+GULF+BDMS+BH+AOT+PTT+CPALL+43 more passively, so it covers the healthcare slot (BDMS/BH) and the bank/energy exposure without single-name risk. Buy K-SET50 (KAsset, since 2005, ฿6.3bn AUM, 0.64%) — chosen over cheaper Principal SET50-E (฿324m, too small) per fund due-diligence. Alt: SCBSET50 (SCBAM, ฿5.15bn) or TDEX ETF on DIME (One AM, since 2007, ฿4.2bn, ~0.51% — mind spread). yahooSymbol ^SET.BK is a rough index proxy for the readout."
     },
     {
-      "label": "CBG — Carabao (values-clean)",
-      "yahooSymbol": "CBG.BK",
-      "target": 48,
-      "direction": "below",
-      "currency": "THB",
-      "buyNow": "฿25k starter only",
-      "buyDeeper": "add only if exports turn",
-      "note": "DOWNGRADED to WAIT — growth wall: 1Q26 net -20%, export leg -40% (Cambodia/CLMV). Buyback (฿2B) floors it. Values-clean, but do not add until the export line heals."
-    },
-    {
-      "label": "HMPRO — HomePro (values-clean)",
-      "yahooSymbol": "HMPRO.BK",
-      "target": 6.7,
-      "direction": "below",
-      "currency": "THB",
-      "buyNow": "฿35,000 now (stage 1 of 2)",
-      "buyDeeper": "฿20,000 ≤฿6.40 (stage 2 / pullback)",
-      "note": "STAGED BUY (Ledger, 2026-08-10) — lead upfront, it has the catalyst. 2Q26 net +14% YoY, margin-led (GM 27.7% vs 25.8%), first profit growth in 5 quarters, beat consensus 3-4%. SSSG ~flat, so watch next Q confirms it's structural. ~5.7% yield, quality income anchor. ฿35k now + ฿20k on pullback to ฿6.40. Fund from Streaming THB."
-    },
-    {
-      "label": "MINT — Minor Intl (values-clean)",
-      "yahooSymbol": "MINT.BK",
-      "target": 22,
-      "direction": "below",
-      "currency": "THB",
-      "buyNow": "฿30,000 now (stage 1 of 2)",
-      "buyDeeper": "฿30,000 ≤฿22 (stage 2 / dip)",
-      "note": "STAGED BUY (Ledger, 2026-08-10). 1H26 net +13% YoY, hotels +32%, feared Middle-East soft Q did NOT happen — offset by +18% room rates. Asset-light + ~$1.0B Singapore REIT (downsized from $1.5B, H2-26). Founder Heinecke. No near-term catalyst pending, so stage ฿30k now + ฿30k on a dip to ฿22. Fund from Streaming THB."
-    },
-    {
-      "label": "COM7 — values-clean (wait for dip)",
-      "yahooSymbol": "COM7.BK",
-      "target": 23,
-      "direction": "below",
-      "currency": "THB",
-      "buyNow": "฿40,000 ≤฿23",
-      "buyDeeper": "—",
-      "note": "WAIT for ฿22-23 — growth REAL & accelerating (2025 net +22%, 1Q26 +25%), diversifying beyond Apple. But near 52wk high now (฿30, hot RSI). Values-clean. Better entry ฿22-23."
-    },
-    {
-      "label": "BH — Bumrungrad (wait / vs BCH)",
-      "yahooSymbol": "BH.BK",
-      "target": 170,
-      "direction": "below",
-      "currency": "THB",
-      "buyNow": "wait ≤฿170",
-      "buyDeeper": "—",
-      "note": "EXPENSIVE at ฿191/~20x for ~3% growth. Premium medical-tourism brand, best margins. Research flags BCH (฿11.3) as the sharper theme trade (int'l +17%, CLMV +19%, cheaper). Wait for ฿165-175, or prefer BCH."
-    },
-    {
-      "label": "GULF.BK — stable state-backed (add dip)",
+      "label": "GULF.BK — optional re-entry (SOLD 08-14)",
       "yahooSymbol": "GULF.BK",
-      "target": 63,
+      "target": 56,
       "direction": "below",
       "currency": "THB",
-      "buyNow": "฿30,000 ≤฿63",
-      "buyDeeper": "add ฿20k ≤฿60",
-      "note": "HOLD + ADD ON DIP (+51% winner). State-backed stability (EGAT PPAs, GULF-Intouch/AIS) = a POSITIVE for you (implicit support, low failure risk). Stable ballast, not a growth engine. Add on pullbacks. Fund from Streaming THB."
-    },
-    {
-      "label": "SCB.BK — stable royal-backed (add dip)",
-      "yahooSymbol": "SCB.BK",
-      "target": 148,
-      "direction": "below",
-      "currency": "THB",
-      "buyNow": "฿30,000 ≤฿148",
-      "buyDeeper": "add ฿20k ≤฿144",
-      "note": "HOLD + ADD ON DIP (+17% winner). Royal/state backing (monarchy largest shareholder) = STABILITY POSITIVE for you — reliable dividend, low failure risk. Stable ballast. Add on pullbacks. Fund from Streaming THB."
+      "buyNow": "optional ฿40k ONLY if ≤฿56",
+      "buyDeeper": "—",
+      "note": "SOLD 1,030 @ ฿65.25 on 2026-08-14 (+฿21,125 realized, tax-free). Your ONE optional Thai single-name exception — re-enter small (฿40k max) only on a dip to ฿56; otherwise let SET50 hold it passively. KBANK deliberately NOT a separate tilt: your salary + KBank sponsorship bond + future provident fund (กองทุนสำรองเลี้ยงชีพ) + PFM009 are already 100% KBank/Thai-banking — SET50's ~10% passive KBANK weight is plenty. (Desk unanimous 2026-08-14.)"
     },
     {
       "label": "USD/THB — FX convert trigger",
@@ -216,16 +156,6 @@
       "buyNow": "฿30,000",
       "buyDeeper": "—",
       "note": "One-shot ฿30k → SCBCEH fund."
-    },
-    {
-      "label": "KBANK.BK — watch only",
-      "yahooSymbol": "KBANK.BK",
-      "target": 232,
-      "direction": "below",
-      "currency": "THB",
-      "buyNow": "add ฿25k ≤฿232",
-      "buyDeeper": "—",
-      "note": "Bank blue-chip. State/political-anchored stability = OK for you now. Overbought at ฿252 (RSI ~74) — add on a pullback to ฿232."
     }
   ]
 }
