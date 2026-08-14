@@ -4,7 +4,7 @@
   "budget": {
     "usdCap": "$9,500",
     "thbCap": "฿250,000",
-    "note": "Deploy caps this round (~half of liquid cash; buffer covers living costs, tuition scholarship-covered). Keep a running tally as alerts fill. If the USD cap exhausts before all fire, priority order: VOO > VEA > SMH > LLY > UBER > GLDM (core diversification first; UBER tactical + gold near-cap cut first). THB CASH RECONCILED 2026-08-11: the old CASH_THB ฿571k was stale/wrong. True figures — Streaming brokerage (deployable) ฿247,686; Plus Saving buffer ฿500,000 (net of a ฿100k earmark) now tracked as SAVINGS_THB. MINT (1300sh @฿23.24) + HMPRO (5300sh @฿6.66) logged to portfolio.positions. Remaining deployable THB for the rest of the basket = ฿247,686 (plus savings if chosen). | GLOBAL DE-THB DEPLOYMENT (2026-08-11, Ledger-tuned): deploy ฿400k of SAVINGS_THB (keep ฿100k emergency) into UNHEDGED global via THB feeders — 50% K-US500XUH ฿200k / 40% K-JPX+K-EUX ex-US ฿160k (hedged, product gap) / 10% K-USXNDQUH ฿40k / 0% gold (at cap+ATH — if GLDM taps $79 buy from USD bucket). DCA ~monthly 4-6mo. DE-CONFLICT: the THB feeders and the USD ETF ladder (VOO/VEA/SMH from CASH_USD) hit the SAME exposures — never fire both on one dip. Measure de-risk on TRUE exposure (Thai-home 54%→40.6%), NOT denomination (62%→62%)."
+    "note": "Deploy caps this round (~half of liquid cash; buffer covers living costs, tuition scholarship-covered). Keep a running tally as alerts fill. If the USD cap exhausts before all fire, priority order: VOO > VEA > SMH > LLY > UBER > GLDM (core diversification first; UBER tactical + gold near-cap cut first). THB CASH RECONCILED 2026-08-11: the old CASH_THB ฿571k was stale/wrong. True figures — Streaming brokerage (deployable) ฿247,686; Plus Saving buffer ฿500,000 (net of a ฿100k earmark) now tracked as SAVINGS_THB. MINT (1300sh @฿23.24) + HMPRO (5300sh @฿6.66) logged to portfolio.positions. Remaining deployable THB for the rest of the basket = ฿247,686 (plus savings if chosen). | GLOBAL DE-THB DEPLOYMENT (2026-08-11, Ledger-tuned): deploy ฿400k of SAVINGS_THB (keep ฿100k emergency) into UNHEDGED global via THB feeders — 50% K-US500XUH ฿200k / 40% K-JPX+K-EUX ex-US ฿160k (hedged, product gap) / 10% K-USXNDQUH ฿40k / 0% gold (at cap+ATH — if GLDM taps $79 buy from USD bucket). DCA ~monthly 4-6mo. DE-CONFLICT: the THB feeders and the USD ETF ladder (VOO/VEA/SMH from CASH_USD) hit the SAME exposures — never fire both on one dip. Measure de-risk on TRUE exposure (Thai-home 54%→40.6%), NOT denomination (62%→62%). | THAI STRATEGY UPDATE (2026-08-14, post BLS→DIME broker switch): liquidated the individual-name basket at BLS (sold MINT/HMPRO/SCB; SCB +฿18.3k gain, MINT/HMPRO ~flat) — those individual entries below are now SUPERSEDED/under-review. New Thai plan for the ~฿516k DIME pool: a diversified SET50 CORE (K-SET50, see entry above) + KBANK/GULF conviction TILTS on their entry triggers (KBANK ฿232 pullback or ฿255 breakout; GULF ฿56 test or post-Aug-20), rather than concentrating in 2 names. Healthcare slot (BDMS vs BH) still pending a deep-dive. Gas/PPA-reform overhang argues patience on GULF."
   },
   "targets": [
     {
@@ -96,6 +96,16 @@
       "buyNow": "฿8k/mo DCA (฿40k total)",
       "buyDeeper": "— DCA only; do NOT accelerate (Nasdaq/semis already bought via the S&P leg + ASML/SKHY + the USD SMH ladder)",
       "note": "GLOBAL DE-THB (Ledger 10% leg — HALVED from 20% to avoid buying tech-beta 3x). Buy K-USXNDQUH-A(A) — UNHEDGED Nasdaq-100 feeder (Invesco QQQ), 0.596%, KAsset, accumulating. Fund from SAVINGS_THB."
+    },
+    {
+      "label": "SET50 core — K-SET50 (diversified Thai)",
+      "yahooSymbol": "^SET.BK",
+      "target": 1580,
+      "direction": "below",
+      "currency": "THB",
+      "buyNow": "DCA monthly (the diversified Thai core)",
+      "buyDeeper": "add extra on a SET dip ≤ ~1580",
+      "note": "THAI DIVERSIFIED CORE — the 'own Thailand's pillars' thesis without single-name risk (owns KBANK+GULF+AOT+PTT+CPALL+45 more). Buy K-SET50 (KAsset, since 2005, ฿6.3bn AUM, 0.64%) — chosen over the cheaper Principal SET50-E (฿324m, too small) for size/track-record per 2026-08-13 fund due-diligence. Alternatives: SCBSET50 (SCBAM, since 2011, ฿5.15bn) or TDEX ETF on DIME (One AM, since 2007, ฿4.2bn, ~0.51% — mind the on-exchange spread). KBANK/GULF below are conviction TILTS on top of this core, entered only on their triggers. yahooSymbol ^SET.BK is a rough index proxy for the readout."
     },
     {
       "label": "CBG — Carabao (values-clean)",
