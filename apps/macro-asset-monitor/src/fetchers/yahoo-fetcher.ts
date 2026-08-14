@@ -30,6 +30,7 @@ export const YAHOO_ASSETS: YahooAssetConfig[] = [
   { ticker: '^GDAXI',    label: 'DAX',           category: 'global-equity' },
   { ticker: '^HSI',      label: 'Hang Seng',     category: 'global-equity' },
   { ticker: '^SET.BK',   label: 'SET Index',     category: 'global-equity' },
+  { ticker: 'TDEX.BK',   label: 'SET50 (TDEX)',  category: 'global-equity' },  // SET50 proxy — the ETF has a full daily series (the ^SET50.BK index symbol returns only 1 close on Yahoo). This is the Thai large-cap slice the book DCAs into.
   // Credit
   { ticker: 'HYG',       label: 'HYG',           category: 'credit'        },
 ]

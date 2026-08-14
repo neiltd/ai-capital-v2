@@ -213,11 +213,13 @@ export function formatThailand(macro: MacroContext): string {
   const PCT   = (n: number) => `${n >= 0 ? '+' : ''}${n.toFixed(2)}%`
   const thIndicators = macro.economicIndicators.filter(i => i.region === 'TH')
   const setIdx = macro.marketAssets.find(a => a.ticker === '^SET.BK')
+  const set50  = macro.marketAssets.find(a => a.ticker === 'TDEX.BK')  // SET50 proxy (ETF; the index symbol has no Yahoo history)
   const thb    = macro.marketAssets.find(a => a.ticker === 'THB=X')
-  if (thIndicators.length === 0 && !setIdx && !thb) return ''
+  if (thIndicators.length === 0 && !setIdx && !set50 && !thb) return ''
 
   const lines = ['## Thailand Snapshot (the book is THB-heavy — use for the Thai read)']
   if (setIdx) lines.push(`SET Index  : ${setIdx.close} (${PCT(setIdx.changePct1d)} 1d, ${PCT(setIdx.changePct30d)} 30d ${TREND(setIdx.trend)})`)
+  if (set50)  lines.push(`SET50 (TDEX): ${PCT(set50.changePct1d)} 1d, ${PCT(set50.changePct30d)} 30d ${TREND(set50.trend)} — the Thai large-cap slice the book DCAs into (ETF proxy; use the % moves, not the ฿NAV level)`)
   if (thb)    lines.push(`USD/THB    : ${thb.close} (${PCT(thb.changePct30d)} 30d ${TREND(thb.trend)}) — lower = stronger baht`)
   for (const i of thIndicators) {
     lines.push(`${i.label.padEnd(24)}: ${i.value} ${i.unit} [${i.releaseDate} ${TREND(i.trend)}]`)

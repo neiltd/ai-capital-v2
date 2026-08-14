@@ -99,13 +99,13 @@
     },
     {
       "label": "SET50 core — K-SET50 (diversified Thai)",
-      "yahooSymbol": "^SET.BK",
-      "target": 1580,
+      "yahooSymbol": "^SET50.BK",
+      "target": 1040,
       "direction": "below",
       "currency": "THB",
       "buyNow": "฿40k/mo DCA (฿200k total — the WHOLE Thai equity slice)",
-      "buyDeeper": "add extra on a SET dip ≤ ~1580",
-      "note": "THE ONLY THAI EQUITY HOLDING. Single-name Thai stock-picking DROPPED 2026-08-14: Thai large-caps (BDMS, BH, the banks) have been range-bound/dead-money for ~8yr (SET topped ~1,800 in early 2018, below it for 6+yr) — no edge in picking one, and it stacks risk. SET50 index holds KBANK+GULF+BDMS+BH+AOT+PTT+CPALL+43 more passively, so it covers the healthcare slot (BDMS/BH) and the bank/energy exposure without single-name risk. Buy K-SET50 (KAsset, since 2005, ฿6.3bn AUM, 0.64%) — chosen over cheaper Principal SET50-E (฿324m, too small) per fund due-diligence. Alt: SCBSET50 (SCBAM, ฿5.15bn) or TDEX ETF on DIME (One AM, since 2007, ฿4.2bn, ~0.51% — mind spread). yahooSymbol ^SET.BK is a rough index proxy for the readout."
+      "buyDeeper": "add extra on a SET50 dip ≤ ~1040",
+      "note": "THE ONLY THAI EQUITY HOLDING. Single-name Thai stock-picking DROPPED 2026-08-14: Thai large-caps (BDMS, BH, the banks) have been range-bound/dead-money for ~8yr (SET topped ~1,800 in early 2018, below it for 6+yr) — no edge in picking one, and it stacks risk. SET50 index holds KBANK+GULF+BDMS+BH+AOT+PTT+CPALL+43 more passively, so it covers the healthcare slot (BDMS/BH) and the bank/energy exposure without single-name risk. Buy K-SET50 (KAsset, since 2005, ฿6.3bn AUM, 0.64%) — chosen over cheaper Principal SET50-E (฿324m, too small) per fund due-diligence. Alt: SCBSET50 (SCBAM, ฿5.15bn) or TDEX ETF on DIME (One AM, since 2007, ฿4.2bn, ~0.51% — mind spread). yahooSymbol ^SET50.BK is the live SET50 index (now tracked in macro-asset-monitor too)."
     },
     {
       "label": "GULF.BK — optional re-entry (SOLD 08-14)",
