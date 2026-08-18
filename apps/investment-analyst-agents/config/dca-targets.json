@@ -4,7 +4,7 @@
   "budget": {
     "usdCap": "$9,500",
     "thbCap": "฿250,000",
-    "note": "FINALIZED 2026-08-14 (Thai-citizen; NO US W-2/401k framing — SET cap gains tax-free). Book rebuilt after BLS→DIME switch. THREE cash pots: CASH_THB ฿516,383 (DIME Thai pool, incl. GULF sale proceeds), SAVINGS_THB ฿500k (deploy ฿400k global, keep ฿100k buffer), CASH_USD $19,517 (US ETF ladder). THE SPLIT on the ฿516k DIME pool: ฿200k SET50 (Thai slice) + up to ฿40k optional GULF (≤฿56) + ฿276k REDIRECTED to global. So of ฿916k deployable baht → ~฿676k GLOBAL / ~฿240k THAI (decisive de-THB, per desk consensus + Neil's own 'Thai large-caps are dead money' realization). WHY: single-name Thai picking dropped — SET50 index covers the Thai slice; growth/capital-appreciation money goes global where it actually compounds. TOTAL GLOBAL ฿676k allocated: K-US500XUH (unhedged S&P) ฿400k / K-JPX+K-EUX (ex-US, hedged product-gap) ฿180k / K-USXNDQUH (Nasdaq) ฿96k. DCA ~monthly over 4-5mo. DROPPED SCBWORLD (hedged + triple-counts US). DE-CONFLICT: THB feeders vs USD ETF ladder hit SAME exposures — never fire both on one dip. Measure de-risk on TRUE Thai-home exposure (target ~40%), not THB denomination. RETIRED single-name entries (MINT/HMPRO/SCB sold; CBG/COM7/BH/KBANK folded into SET50)."
+    "note": "FINALIZED 2026-08-14 (Thai-citizen; NO US W-2/401k framing — SET cap gains tax-free). Book rebuilt after BLS→DIME switch. THREE cash pots: CASH_THB ฿516,383 (DIME Thai pool, incl. GULF sale proceeds), SAVINGS_THB ฿500k (deploy ฿400k global, keep ฿100k buffer), CASH_USD $19,517 (US ETF ladder). THE SPLIT on the ฿516k DIME pool: ฿200k SET50 (Thai slice) + up to ฿40k optional GULF (≤฿56) + ฿276k REDIRECTED to global. So of ฿916k deployable baht → ~฿676k GLOBAL / ~฿240k THAI (decisive de-THB, per desk consensus + Neil's own 'Thai large-caps are dead money' realization). WHY: single-name Thai picking dropped — SET50 index covers the Thai slice; growth/capital-appreciation money goes global where it actually compounds. FINALIZED all-on-DIME (2026-08-17): consolidate everything on DIME (KKP Dime) for one-place monitoring; distribute at ฿10M. TOTAL GLOBAL ฿676k via DIME: KKP US500-UH-E (unhedged S&P, 0% mgmt fee) ฿400k / VEA ETF (unhedged developed ex-US, added per Neil 08-17) ฿180k / KKP NDQ100-UH-E (unhedged Nasdaq, 0% mgmt) ฿96k. SET50 core via TDEX ฿200k on DIME. Auto-DCA ~฿175k/mo × 5mo, debits from Dime Save. NOTE: 'Dime Silver Club' was a misremember — it's Dime! Club L1/2/3, existing holdings count; qualify by holding a fund+token gold+live DCA; benefit is modest trade-fee waivers, do NOT distort the plan for it. Dime Save pays ~1% above ฿10k so the ฿100k buffer stays in KBank. DCA ~monthly over 4-5mo. DROPPED SCBWORLD (hedged + triple-counts US). DE-CONFLICT: THB feeders vs USD ETF ladder hit SAME exposures — never fire both on one dip. Measure de-risk on TRUE Thai-home exposure (target ~40%), not THB denomination. RETIRED single-name entries (MINT/HMPRO/SCB sold; CBG/COM7/BH/KBANK folded into SET50)."
   },
   "targets": [
     {
@@ -68,34 +68,34 @@
       "note": "One-shot, deep-dip ONLY. Do not chase — near 10% gold cap."
     },
     {
-      "label": "K-US500XUH — S&P500 feeder (de-THB core)",
+      "label": "KKP US500-UH-E — unhedged S&P (DIME)",
       "yahooSymbol": "VOO",
       "target": 705,
       "direction": "below",
       "currency": "THB",
-      "buyNow": "฿80k/mo DCA (฿400k total — de-THB + GROWTH core)",
+      "buyNow": "฿80k/mo DCA (฿400k total)",
       "buyDeeper": "manual extra on VOO ≤705 — do NOT auto-fire (would double the USD VOO ladder)",
-      "note": "GLOBAL DE-THB (de-THB core, scaled up 2026-08-14). Buy K-US500XUH-A(A) — UNHEDGED S&P500 feeder (iShares Core S&P500), 0.596% fee, KAsset/KBank, accumulating, ฿500 min, K-Saving-Plan auto-DCA. Unhedged = you become economically long USD+S&P, which is what actually de-THBs the book. Fund from SAVINGS_THB."
+      "note": "GLOBAL DE-THB CORE. Buy on DIME: KKP US500-UH-E — unhedged S&P500 feeder (→ iShares IVV), 0% MANAGEMENT FEE (E-class) + ~0.27% in/out load, min ฿1,000, max ฿1M/person. Auto-DCA debits from Dime Save. Unhedged = economically long USD+S&P (real de-THB). yahooSymbol VOO for the readout only."
     },
     {
-      "label": "K-JPX + K-EUX — developed ex-US (Japan+Europe)",
+      "label": "VEA — developed ex-US (DCA sleeve, DIME)",
       "yahooSymbol": "VEA",
       "target": 71.8,
       "direction": "below",
       "currency": "THB",
-      "buyNow": "฿36k/mo DCA (฿180k: ~฿90k K-JPX Japan + ~฿90k K-EUX Europe)",
-      "buyDeeper": "manual extra on VEA ≤71.8",
-      "note": "GLOBAL DE-THB (Ledger 40% leg — your single biggest TRUE diversification hole; you own ZERO developed ex-US). PRODUCT GAP: no clean unhedged ex-US index feeder at KAsset/SCB — K-JPX (TOPIX) + K-EUX (EuroStoxx50) are ~93% THB-HEDGED, so this sleeve diversifies your equity MARKET/economy away from Thailand but NOT the currency (the 60% US unhedged carries the currency de-risk). DECISION PENDING: accept the hedge here, or use an active unhedged global fund (higher fee) for ex-US currency exposure. Fund from SAVINGS_THB."
+      "buyNow": "฿36k/mo DCA (฿180k total, ~$1,090/mo)",
+      "buyDeeper": "— DCA only",
+      "note": "GLOBAL DE-THB — developed ex-US (Japan/Europe/UK/etc.), your biggest true diversification hole. Buy VEA as a US ETF on DIME with monthly auto-DCA (UNHEDGED → adds euro/yen/pound currency diversification, better than the old hedged K-JPX/K-EUX). Counts in DIME's US-ETF bucket. DE-CONFLICT: the USD-ladder VEA (≤$71.8 from CASH_USD) is a SEPARATE dip-add — don't double-buy VEA on one dip."
     },
     {
-      "label": "K-USXNDQUH — Nasdaq-100 feeder (AI/tech)",
+      "label": "KKP NDQ100-UH-E — unhedged Nasdaq (DIME)",
       "yahooSymbol": "QQQ",
       "target": 690,
       "direction": "below",
       "currency": "THB",
       "buyNow": "฿19k/mo DCA (฿96k total)",
       "buyDeeper": "— DCA only; do NOT accelerate (Nasdaq/semis already bought via the S&P leg + ASML/SKHY + the USD SMH ladder)",
-      "note": "GLOBAL DE-THB (Ledger 10% leg — HALVED from 20% to avoid buying tech-beta 3x). Buy K-USXNDQUH-A(A) — UNHEDGED Nasdaq-100 feeder (Invesco QQQ), 0.596%, KAsset, accumulating. Fund from SAVINGS_THB."
+      "note": "GLOBAL DE-THB — small tech tilt. Buy on DIME: KKP NDQ100-UH-E — unhedged Nasdaq-100 feeder (→ Invesco QQQM), 0% MANAGEMENT FEE + ~0.16% in/out load. Kept small to avoid tripling tech beta on top of the S&P. yahooSymbol QQQ for readout."
     },
     {
       "label": "SET50 core — K-SET50 (diversified Thai)",
