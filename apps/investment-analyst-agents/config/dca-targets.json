@@ -4,7 +4,7 @@
   "budget": {
     "usdCap": "$9,500",
     "thbCap": "฿250,000",
-    "note": "FINALIZED 2026-08-14 (Thai-citizen; NO US W-2/401k framing — SET cap gains tax-free). Book rebuilt after BLS→DIME switch. THREE cash pots: CASH_THB ฿516,383 (DIME Thai pool, incl. GULF sale proceeds), SAVINGS_THB ฿500k (deploy ฿400k global, keep ฿100k buffer), CASH_USD $19,517 (US ETF ladder). THE SPLIT on the ฿516k DIME pool: ฿200k SET50 (Thai slice) + up to ฿40k optional GULF (≤฿56) + ฿276k REDIRECTED to global. So of ฿916k deployable baht → ~฿676k GLOBAL / ~฿240k THAI (decisive de-THB, per desk consensus + Neil's own 'Thai large-caps are dead money' realization). WHY: single-name Thai picking dropped — SET50 index covers the Thai slice; growth/capital-appreciation money goes global where it actually compounds. FINALIZED all-on-DIME (2026-08-17): consolidate everything on DIME (KKP Dime) for one-place monitoring; distribute at ฿10M. TOTAL GLOBAL ฿676k via DIME: KKP US500-UH-E (unhedged S&P, 0% mgmt fee) ฿400k / VEA ETF (unhedged developed ex-US, added per Neil 08-17) ฿180k / KKP NDQ100-UH-E (unhedged Nasdaq, 0% mgmt) ฿96k. SET50 core via TDEX ฿200k on DIME. Auto-DCA ~฿175k/mo × 5mo, debits from Dime Save. NOTE: 'Dime Silver Club' was a misremember — it's Dime! Club L1/2/3, existing holdings count; qualify by holding a fund+token gold+live DCA; benefit is modest trade-fee waivers, do NOT distort the plan for it. Dime Save pays ~1% above ฿10k so the ฿100k buffer stays in KBank. DCA ~monthly over 4-5mo. DROPPED SCBWORLD (hedged + triple-counts US). DE-CONFLICT: THB feeders vs USD ETF ladder hit SAME exposures — never fire both on one dip. Measure de-risk on TRUE Thai-home exposure (target ~40%), not THB denomination. RETIRED single-name entries (MINT/HMPRO/SCB sold; CBG/COM7/BH/KBANK folded into SET50)."
+    "note": "GOLDEN DE-CONFLICT RULE (Fable-validated 2026-08-18): the USD dip-ladder and the baht monthly DCA buy DISJOINT tickers. The baht DCA (SET50/US500/VEA/NDQ100) is the de-THB engine — runs on monthly cadence NO MATTER WHAT, never accelerates on a dip. The USD ladder (VOO/LLY/UBER/GLDM + one-shot SMH) only drains idle CASH_USD, once per dip. S&P: a VOO≤705 dip fires the USD VOO tranche ONLY — do NOT also add baht US500 on the same dip. VEA lives on the baht sleeve ONLY (USD-ladder VEA retired) because it only de-THBs when baht-funded. GULF FROZEN at ฿52,200 (bought 800@฿65.50 08-18, over the ฿40k cap and above the dead ฿56 trigger — a chase; accept as final, NO adds, ฿56 trigger deleted). Failure mode to police: reacting to the tape and double-committing to the same exposure. | FINALIZED 2026-08-14 (Thai-citizen; NO US W-2/401k framing — SET cap gains tax-free). Book rebuilt after BLS→DIME switch. THREE cash pots: CASH_THB ฿516,383 (DIME Thai pool, incl. GULF sale proceeds), SAVINGS_THB ฿500k (deploy ฿400k global, keep ฿100k buffer), CASH_USD $19,517 (US ETF ladder). THE SPLIT on the ฿516k DIME pool: ฿200k SET50 (Thai slice) + up to ฿40k optional GULF (≤฿56) + ฿276k REDIRECTED to global. So of ฿916k deployable baht → ~฿676k GLOBAL / ~฿240k THAI (decisive de-THB, per desk consensus + Neil's own 'Thai large-caps are dead money' realization). WHY: single-name Thai picking dropped — SET50 index covers the Thai slice; growth/capital-appreciation money goes global where it actually compounds. FINALIZED all-on-DIME (2026-08-17): consolidate everything on DIME (KKP Dime) for one-place monitoring; distribute at ฿10M. TOTAL GLOBAL ฿676k via DIME: KKP US500-UH-E (unhedged S&P, 0% mgmt fee) ฿400k / VEA ETF (unhedged developed ex-US, added per Neil 08-17) ฿180k / KKP NDQ100-UH-E (unhedged Nasdaq, 0% mgmt) ฿96k. SET50 core via TDEX ฿200k on DIME. Auto-DCA ~฿175k/mo × 5mo, debits from Dime Save. NOTE: 'Dime Silver Club' was a misremember — it's Dime! Club L1/2/3, existing holdings count; qualify by holding a fund+token gold+live DCA; benefit is modest trade-fee waivers, do NOT distort the plan for it. Dime Save pays ~1% above ฿10k so the ฿100k buffer stays in KBank. DCA ~monthly over 4-5mo. DROPPED SCBWORLD (hedged + triple-counts US). DE-CONFLICT: THB feeders vs USD ETF ladder hit SAME exposures — never fire both on one dip. Measure de-risk on TRUE Thai-home exposure (target ~40%), not THB denomination. RETIRED single-name entries (MINT/HMPRO/SCB sold; CBG/COM7/BH/KBANK folded into SET50)."
   },
   "targets": [
     {
@@ -18,24 +18,14 @@
       "note": "Broad US — your biggest gap. Fund from CASH_USD."
     },
     {
-      "label": "VEA — Developed ex-US",
-      "yahooSymbol": "VEA",
-      "target": 71.8,
-      "direction": "below",
-      "currency": "USD",
-      "buyNow": "$850",
-      "buyDeeper": "$850",
-      "note": "You own zero developed-ex-US. Fund from CASH_USD."
-    },
-    {
       "label": "SMH — Semis / AI basket",
       "yahooSymbol": "SMH",
       "target": 560,
       "direction": "below",
       "currency": "USD",
       "buyNow": "$625",
-      "buyDeeper": "$625",
-      "note": "AI recovery without single-name concentration."
+      "buyDeeper": "— ONE tranche only, do NOT run a 2nd",
+      "note": "AI recovery without single-name concentration. CAP: single $625 tranche on a genuine ≤$560 dip, then STOP — you already hold semis via the S&P/Nasdaq funds + ASML/SKHY (~3.6% with this add). Redundant beyond one tranche."
     },
     {
       "label": "LLY — Eli Lilly",
@@ -106,16 +96,6 @@
       "buyNow": "฿40k/mo DCA (฿200k total — the WHOLE Thai equity slice)",
       "buyDeeper": "add extra on a SET50 dip ≤ ~1040",
       "note": "THE ONLY THAI EQUITY HOLDING. Single-name Thai stock-picking DROPPED 2026-08-14: Thai large-caps (BDMS, BH, the banks) have been range-bound/dead-money for ~8yr (SET topped ~1,800 in early 2018, below it for 6+yr) — no edge in picking one, and it stacks risk. SET50 index holds KBANK+GULF+BDMS+BH+AOT+PTT+CPALL+43 more passively, so it covers the healthcare slot (BDMS/BH) and the bank/energy exposure without single-name risk. Buy K-SET50 (KAsset, since 2005, ฿6.3bn AUM, 0.64%) — chosen over cheaper Principal SET50-E (฿324m, too small) per fund due-diligence. Alt: SCBSET50 (SCBAM, ฿5.15bn) or TDEX ETF on DIME (One AM, since 2007, ฿4.2bn, ~0.51% — mind spread). yahooSymbol ^SET50.BK is the live SET50 index (now tracked in macro-asset-monitor too)."
-    },
-    {
-      "label": "GULF.BK — optional re-entry (SOLD 08-14)",
-      "yahooSymbol": "GULF.BK",
-      "target": 56,
-      "direction": "below",
-      "currency": "THB",
-      "buyNow": "optional ฿40k ONLY if ≤฿56",
-      "buyDeeper": "—",
-      "note": "SOLD 1,030 @ ฿65.25 on 2026-08-14 (+฿21,125 realized, tax-free). Your ONE optional Thai single-name exception — re-enter small (฿40k max) only on a dip to ฿56; otherwise let SET50 hold it passively. KBANK deliberately NOT a separate tilt: your salary + KBank sponsorship bond + future provident fund (กองทุนสำรองเลี้ยงชีพ) + PFM009 are already 100% KBank/Thai-banking — SET50's ~10% passive KBANK weight is plenty. (Desk unanimous 2026-08-14.)"
     },
     {
       "label": "USD/THB — FX convert trigger",
