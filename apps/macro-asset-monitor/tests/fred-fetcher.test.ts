@@ -53,7 +53,13 @@ describe('fetchFredSeries', () => {
     expect(result).toBeNull()
   })
 
-  it('FRED_SERIES has 6 entries', () => {
-    expect(FRED_SERIES).toHaveLength(6)
+  // Was a bare toHaveLength(6) and went stale the moment the Thai structural
+  // indicators landed (8d64efb, 2026-08-10). Assert the composition instead, so
+  // the failure message says which region regressed rather than just a count.
+  it('covers both the US and Thailand macro blocks', () => {
+    const byRegion = (r: string) => FRED_SERIES.filter(s => s.region === r).map(s => s.seriesId)
+    expect(byRegion('US')).toEqual(['CPIAUCSL', 'JTSJOL', 'UNRATE', 'UMCSENT', 'DRCCLACBS', 'DRSFRMACBS'])
+    expect(byRegion('TH')).toEqual(['QTHHAM770A', 'RBTHBIS'])
+    expect(FRED_SERIES).toHaveLength(byRegion('US').length + byRegion('TH').length)
   })
 })

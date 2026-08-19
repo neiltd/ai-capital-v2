@@ -199,14 +199,20 @@ export interface RiskContext {
   generatedAt:         string
   windowDays:          number
   benchmark:           string
-  portfolioValueUSD:   number
+  portfolioValueUSD:   number   // priced/analyzed subset only — NOT net worth
+  netWorthUSD?:        number | null   // whole book incl. cash + unpriced holdings
+  analyzedValueUSD?:   number | null   // explicit alias of the priced subset
+  coverageOfNetWorth?: number | null   // analyzedValueUSD / netWorthUSD
+  cashUSD?:            number | null
+  unpricedUSD?:        number | null
+  unpricedTickers?:    string[]
   portfolioVolatility: number
   portfolioReturn:     number
   sharpeRatio:         number
   maxDrawdown:         number
   oneDayVAR95:         number
   portfolioBeta:       number
-  perTicker:           Array<{ ticker: string; weight: number; volatility: number; totalReturn: number; beta: number; correlation: number }>
+  perTicker:           Array<{ ticker: string; weight: number; weightOfNetWorth?: number | null; volatility: number; totalReturn: number; beta: number; correlation: number }>
   summary:             string
 }
 

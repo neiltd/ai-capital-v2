@@ -30,13 +30,68 @@ interface Position {
   currency:     string
 }
 
+// A row of the whole book — including cash and holdings with no Yahoo symbol,
+// which the risk math cannot cover but which are still real net worth.
+export interface BookPosition extends Position {
+  assetClass: string
+}
+
+export interface BookTotals {
+  netWorthUSD:        number   // every position, FX-converted
+  analyzedValueUSD:   number   // only positions with a price series
+  cashUSD:            number
+  unpricedUSD:        number   // held securities with no price_symbol
+  unpricedTickers:    string[]
+  coverageOfNetWorth: number   // analyzedValueUSD / netWorthUSD
+  fxApplied:          boolean
+}
+
+// Splits the book into what the risk model can actually measure vs. what it
+// cannot, so the gap gets DISCLOSED instead of silently becoming the
+// denominator. Without this, `portfolioValueUSD` (the priced subset) reads as
+// "the portfolio" downstream — on 2026-08-19 that made LLY look like 27.5% of
+// the book when it was 4.3% of net worth, a 6.4x overstatement pointing
+// straight at a trim of a position that was well inside its sleeve cap.
+export function computeBookTotals(positions: BookPosition[], fx: number | null): BookTotals {
+  let netWorthUSD = 0, analyzedValueUSD = 0, cashUSD = 0, unpricedUSD = 0
+  const unpricedTickers: string[] = []
+
+  for (const p of positions) {
+    if (!(p.currentValue > 0)) continue
+    const usd = valueInUSD(p, fx)
+    netWorthUSD += usd
+    if (p.assetClass === 'cash') { cashUSD += usd; continue }
+    if (p.priceSymbol === '') { unpricedUSD += usd; unpricedTickers.push(p.ticker); continue }
+    analyzedValueUSD += usd
+  }
+
+  return {
+    netWorthUSD,
+    analyzedValueUSD,
+    cashUSD,
+    unpricedUSD,
+    unpricedTickers,
+    coverageOfNetWorth: netWorthUSD > 0 ? analyzedValueUSD / netWorthUSD : 0,
+    fxApplied:          fx != null,
+  }
+}
+
 export interface RiskMetricsJSON {
-  schemaVersion:        '1.0'
+  schemaVersion:        '1.1'
   generatedAt:          string
   windowDays:           number
   benchmark:            string
   fxRateUsdThb:         number | null
+  // The priced/analyzed subset — the only positions with a return series, and
+  // therefore the denominator of every weight below. It is NOT net worth; the
+  // fields that follow exist so consumers cannot mistake it for net worth.
   portfolioValueUSD:    number
+  netWorthUSD:          number | null
+  analyzedValueUSD:     number
+  coverageOfNetWorth:   number | null
+  cashUSD:              number
+  unpricedUSD:          number
+  unpricedTickers:      string[]
   portfolioVolatility:  number  // annualized stdev of daily returns
   portfolioReturn:      number  // total return over window
   sharpeRatio:          number  // annualized; risk-free assumed 4.5% (10Y proxy)
@@ -44,8 +99,9 @@ export interface RiskMetricsJSON {
   oneDayVAR95:          number  // 95% confidence one-day Value-at-Risk (USD)
   portfolioBeta:        number  // beta vs benchmark
   perTicker: Array<{
-    ticker:        string
-    weight:        number      // % of portfolio value
+    ticker:           string
+    weight:           number             // share of the PRICED SLEEVE, not of net worth
+    weightOfNetWorth: number | null      // share of total net worth — use this for concentration
     volatility:    number
     totalReturn:   number
     beta:          number
@@ -168,19 +224,24 @@ function valueInUSD(p: Position, fx: number | null): number {
 // that stopped being the source of truth once trades started landing in
 // Postgres (see the 2026-07-06 CRWD-split incident — this file previously
 // always read the SQLite copy regardless of usePostgres()).
-async function loadPositions(): Promise<Position[]> {
+// Loads the WHOLE book — cash and unpriced holdings included. The filtering to
+// "what can actually be risk-modelled" now happens in computeBookTotals, so the
+// excluded remainder stays visible and can be disclosed rather than vanishing
+// into the denominator.
+async function loadAllPositions(): Promise<BookPosition[]> {
   if (usePostgres()) {
     const pool = getPool()
-    const { rows } = await pool.query<{ ticker: string; price_symbol: string; current_value: string; currency: string }>(
-      `SELECT ticker, price_symbol, current_value, currency
+    const { rows } = await pool.query<{ ticker: string; price_symbol: string; current_value: string; currency: string; asset_class: string }>(
+      `SELECT ticker, price_symbol, current_value, currency, asset_class
          FROM portfolio.positions
-        WHERE asset_class != 'cash' AND price_symbol != '' AND current_value > 0`,
+        WHERE current_value > 0`,
     )
     return rows.map(r => ({
       ticker:       r.ticker,
-      priceSymbol:  r.price_symbol,
+      priceSymbol:  r.price_symbol ?? '',
       currentValue: Number(r.current_value),
       currency:     r.currency,
+      assetClass:   r.asset_class,
     }))
   }
   if (!existsSync(PORTFOLIO_DB)) {
@@ -189,21 +250,27 @@ async function loadPositions(): Promise<Position[]> {
   }
   const db = new Database(PORTFOLIO_DB, { readonly: true })
   const positions = db.prepare(`
-    SELECT ticker, price_symbol AS priceSymbol, current_value AS currentValue, currency
+    SELECT ticker, price_symbol AS priceSymbol, current_value AS currentValue, currency, asset_class AS assetClass
     FROM positions
-    WHERE asset_class != 'cash' AND price_symbol != '' AND current_value > 0
-  `).all() as Position[]
+    WHERE current_value > 0
+  `).all() as BookPosition[]
   db.close()
-  return positions
+  return positions.map(p => ({ ...p, priceSymbol: p.priceSymbol ?? '' }))
 }
 
 // ── Main ─────────────────────────────────────────────────────────────────────
 
 async function run() {
-  const positions = await loadPositions()
-
+  const book = await loadAllPositions()
   const fx = await fetchUsdThb()
-  console.log(`[risk] ${positions.length} positions with price symbols (window: ${WINDOW_DAYS}d, benchmark: ${BENCHMARK}, FX=${fx ?? 'unknown'})`)
+  const totals = computeBookTotals(book, fx)
+  const positions = book.filter(p => p.assetClass !== 'cash' && p.priceSymbol !== '' && p.currentValue > 0)
+
+  console.log(`[risk] ${positions.length}/${book.length} positions are priced (window: ${WINDOW_DAYS}d, benchmark: ${BENCHMARK}, FX=${fx ?? 'unknown'})`)
+  console.log(`[risk] priced sleeve $${totals.analyzedValueUSD.toFixed(0)} = ${(totals.coverageOfNetWorth * 100).toFixed(1)}% of net worth $${totals.netWorthUSD.toFixed(0)}`)
+  if (totals.unpricedTickers.length) {
+    console.log(`[risk] NOT risk-modelled (no price symbol): ${totals.unpricedTickers.join(', ')} — $${totals.unpricedUSD.toFixed(0)}`)
+  }
 
   // Fetch price series in parallel
   const benchClosesPromise = fetchCloses(BENCHMARK)
@@ -219,7 +286,7 @@ async function run() {
     process.exit(1)
   }
 
-  const totalValueUSD = positions.reduce((s, p) => s + valueInUSD(p, fx), 0)
+  const totalValueUSD = totals.analyzedValueUSD
 
   const perTicker: RiskMetricsJSON['perTicker'] = []
   const portfolioReturnsByDay: Map<number, number> = new Map()
@@ -227,10 +294,12 @@ async function run() {
   for (const { position, closes } of seriesEntries) {
     if (closes.length < 10) continue
     const rets = dailyReturns(closes)
-    const weight = valueInUSD(position, fx) / totalValueUSD
+    const valueUSD = valueInUSD(position, fx)
+    const weight = valueUSD / totalValueUSD
     perTicker.push({
       ticker:        position.ticker,
       weight,
+      weightOfNetWorth: totals.netWorthUSD > 0 ? valueUSD / totals.netWorthUSD : null,
       volatility:    stdev(rets) * Math.sqrt(252),  // annualized
       totalReturn:   (closes[closes.length - 1] - closes[0]) / closes[0],
       beta:          beta(rets, benchReturns),
@@ -260,7 +329,7 @@ async function run() {
   const portBeta = beta(portfolioReturns, benchReturns)
 
   const summary = [
-    `Portfolio value ~$${totalValueUSD.toFixed(0)} (analyzed)`,
+    `Priced sleeve ~$${totalValueUSD.toFixed(0)} (${(totals.coverageOfNetWorth * 100).toFixed(1)}% of net worth ~$${totals.netWorthUSD.toFixed(0)})`,
     `Vol (ann) ${(portVol * 100).toFixed(1)}%`,
     `Sharpe ${sharpe.toFixed(2)}`,
     `Max DD ${(maxDD * 100).toFixed(1)}%`,
@@ -269,12 +338,18 @@ async function run() {
   ].join(' | ')
 
   const payload: RiskMetricsJSON = {
-    schemaVersion:       '1.0',
+    schemaVersion:       '1.1',
     generatedAt:         new Date().toISOString().slice(0, 10),
     windowDays:          WINDOW_DAYS,
     benchmark:           BENCHMARK,
     fxRateUsdThb:        fx,
     portfolioValueUSD:   totalValueUSD,
+    netWorthUSD:         totals.netWorthUSD,
+    analyzedValueUSD:    totals.analyzedValueUSD,
+    coverageOfNetWorth:  totals.coverageOfNetWorth,
+    cashUSD:             totals.cashUSD,
+    unpricedUSD:         totals.unpricedUSD,
+    unpricedTickers:     totals.unpricedTickers,
     portfolioVolatility: portVol,
     portfolioReturn:     portTotalReturn,
     sharpeRatio:         sharpe,
@@ -294,6 +369,10 @@ async function run() {
   console.log(`Summary: ${summary}`)
 }
 
-run()
-  .catch(err => { console.error(err); process.exit(1) })
-  .finally(() => { if (usePostgres()) return closePool() })
+// Guarded so the module can be imported by tests without executing the whole
+// run (matches backtest-runner.ts's entry-point convention).
+if (import.meta.url === `file://${process.argv[1]}`) {
+  run()
+    .catch(err => { console.error(err); process.exit(1) })
+    .finally(() => { if (usePostgres()) return closePool() })
+}

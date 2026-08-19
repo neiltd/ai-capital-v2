@@ -48,6 +48,15 @@ numbers to shape position sizing:
     be cautious about adding to the same factor exposure.
   - High per-ticker volatility (>40% annualized) is a position sizing flag —
     if such a position is also a large weight, mention concentration risk.
+  - DENOMINATOR RULE (do not violate): the risk metrics cover only the priced
+    securities sleeve, not the whole book. NEVER restate a sleeve weight or
+    subset weight as a share of "the portfolio" or of net worth — they are
+    different denominators and conflating them overstates concentration
+    several-fold. When the block gives an "of net worth" figure, that is the
+    ONLY one you may use for concentration, position sizing, or "largest
+    holding" claims; the sleeve figure is risk-model context only. Likewise the
+    sleeve beta describes the priced sleeve, not the whole book — do not say
+    "the portfolio is uncorrelated to the market" on the strength of it.
 
 TAX-AWARE RULE: If a "Tax Harvest Snapshot" section is present, use it to
 shape SELL/TRIM recommendations:
@@ -216,17 +225,65 @@ async function formatContext(ctx: ContextBundle): Promise<string> {
   })()
 
   // ── Risk metrics block ─────────────────────────────────────────────────
+  // These metrics are computed over the PRICED subset of the book only (the
+  // positions carrying a Yahoo symbol) — cash and NAV-only Thai funds have no
+  // return series, so they cannot be in a vol/beta/Sharpe calculation. That is
+  // legitimate, but it means every per-ticker `weight` is a share of that
+  // subset, NOT of net worth. Rendering those weights bare is what produced
+  // "LLY is 27.49% of the portfolio" on 2026-08-19 when LLY was 4.31% of the
+  // book — so the denominator is now stated, and every weight is shown both
+  // ways. risk-report.ts and the dashboard already labelled this correctly;
+  // this prompt path was the one place that dropped the qualifier.
   const riskBlock = (() => {
     if (!risk) return ''
-    const fmtPct = (n: number) => `${(n * 100).toFixed(2)}%`
+    const fmtPct  = (n: number) => `${(n * 100).toFixed(2)}%`
+    const fmtUsd  = (n: number) => `$${Math.round(n).toLocaleString('en-US')}`
+    const sleeve  = risk.analyzedValueUSD ?? risk.portfolioValueUSD
+    const netWorth = risk.netWorthUSD ?? null
+
+    // Concentration must be judged against net worth. Judging it against the
+    // sleeve flags positions that are trivial in the real book.
+    const weightForFlagging = (t: { weight: number; weightOfNetWorth?: number | null }) =>
+      t.weightOfNetWorth ?? (netWorth ? null : t.weight)
+
     const topRisk = risk.perTicker
-      .filter(t => t.volatility > 0.4 || Math.abs(t.beta) > 1.5 || t.weight > 0.2)
+      .filter(t => {
+        const w = weightForFlagging(t)
+        return t.volatility > 0.4 || Math.abs(t.beta) > 1.5 || (w != null && w > 0.2)
+      })
       .slice(0, 10)
-      .map(t => `  - ${t.ticker}: weight ${fmtPct(t.weight)}, vol ${fmtPct(t.volatility)}, β ${t.beta.toFixed(2)}, ρ ${t.correlation.toFixed(2)}`)
+      .map(t => {
+        const w = t.weightOfNetWorth
+        const weightText = w != null
+          ? `${fmtPct(w)} of net worth (${fmtPct(t.weight)} of priced sleeve)`
+          : `weight ${fmtPct(t.weight)} of priced sleeve`
+        return `  - ${t.ticker}: ${weightText}, vol ${fmtPct(t.volatility)}, β ${t.beta.toFixed(2)}, ρ ${t.correlation.toFixed(2)}`
+      })
       .join('\n')
+
+    const excluded: string[] = []
+    if (risk.cashUSD)     excluded.push(`cash ${fmtUsd(risk.cashUSD)}`)
+    if (risk.unpricedUSD) {
+      const names = risk.unpricedTickers?.length ? ` (${risk.unpricedTickers.join(', ')})` : ''
+      excluded.push(`NAV-only / unpriced holdings ${fmtUsd(risk.unpricedUSD)}${names}`)
+    }
+
+    const denominatorLines = netWorth
+      ? [
+          `DENOMINATOR — READ BEFORE CITING ANY NUMBER BELOW: these metrics cover only the`,
+          `priced-securities sleeve of ${fmtUsd(sleeve)}, which is ${((sleeve / netWorth) * 100).toFixed(1)}% of true net worth ${fmtUsd(netWorth)}.`,
+          excluded.length ? `NOT included: ${excluded.join('; ')}.` : '',
+          `Every per-ticker weight below is a share of that sleeve. Never restate a sleeve weight`,
+          `as a share of "the portfolio" or of net worth — cite the "of net worth" figure for`,
+          `position sizing and concentration, and the sleeve figure only for risk-model context.`,
+        ].filter(Boolean)
+      : [`NOTE: metrics cover the priced-securities sleeve of ${fmtUsd(sleeve)} only, not total net worth.`]
+
     return [
       `\n## Portfolio Risk Metrics (${risk.windowDays}d window, benchmark ${risk.benchmark})`,
-      `Annualized vol: ${fmtPct(risk.portfolioVolatility)} | Sharpe: ${risk.sharpeRatio.toFixed(2)} | Max DD: ${fmtPct(risk.maxDrawdown)} | 1d-95% VAR: $${risk.oneDayVAR95.toFixed(0)} | Portfolio β vs ${risk.benchmark}: ${risk.portfolioBeta.toFixed(2)}`,
+      ...denominatorLines,
+      ``,
+      `Annualized vol: ${fmtPct(risk.portfolioVolatility)} | Sharpe: ${risk.sharpeRatio.toFixed(2)} | Max DD: ${fmtPct(risk.maxDrawdown)} | 1d-95% VAR: $${risk.oneDayVAR95.toFixed(0)} | Sleeve β vs ${risk.benchmark}: ${risk.portfolioBeta.toFixed(2)}`,
       ``,
       `### High-risk / high-weight positions to monitor`,
       topRisk || '  None — risk concentrations are within normal bounds',

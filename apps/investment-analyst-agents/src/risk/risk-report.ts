@@ -4,6 +4,10 @@ function fmtPct(n: number): string {
   return `${(n * 100).toFixed(2)}%`
 }
 
+function fmtUsd(n: number): string {
+  return `$${Math.round(n).toLocaleString('en-US')}`
+}
+
 export function formatReport(d: RiskMetricsJSON): string {
   const out: string[] = []
 
@@ -11,7 +15,21 @@ export function formatReport(d: RiskMetricsJSON): string {
   out.push(`**Generated:** ${d.generatedAt}`)
   out.push(`**Window:** ${d.windowDays} trading days`)
   out.push(`**Benchmark:** ${d.benchmark}`)
-  out.push(`**Portfolio value (analyzed):** $${d.portfolioValueUSD.toFixed(0)}`)
+  // The analyzed sleeve is only the priced securities. Stating it next to true
+  // net worth (and the coverage fraction) is what stops a sleeve weight being
+  // read as a share of the whole book downstream.
+  out.push(`**Priced sleeve (what these metrics cover):** ${fmtUsd(d.analyzedValueUSD ?? d.portfolioValueUSD)}`)
+  if (d.netWorthUSD) {
+    const cov = d.coverageOfNetWorth ?? (d.analyzedValueUSD ?? d.portfolioValueUSD) / d.netWorthUSD
+    out.push(`**Total net worth:** ${fmtUsd(d.netWorthUSD)} — the sleeve is **${(cov * 100).toFixed(1)}%** of it`)
+    const excluded: string[] = []
+    if (d.cashUSD) excluded.push(`cash ${fmtUsd(d.cashUSD)}`)
+    if (d.unpricedUSD) {
+      const names = d.unpricedTickers?.length ? ` (${d.unpricedTickers.join(', ')})` : ''
+      excluded.push(`NAV-only / unpriced holdings ${fmtUsd(d.unpricedUSD)}${names}`)
+    }
+    if (excluded.length) out.push(`**Not covered:** ${excluded.join('; ')}`)
+  }
   out.push(`**FX (USD/THB):** ${d.fxRateUsdThb?.toFixed(2) ?? 'unknown — THB positions not converted'}`)
   out.push('')
   out.push('---')
@@ -33,16 +51,18 @@ export function formatReport(d: RiskMetricsJSON): string {
   // ── Per-ticker breakdown ────────────────────────────────────────────────
   out.push('## Per-ticker contribution')
   out.push('')
-  out.push('| Ticker | Weight | Vol (ann) | Return (90d) | Beta | Corr to ' + d.benchmark + ' |')
-  out.push('|---|---|---|---|---|---|')
+  out.push('| Ticker | % of net worth | % of priced sleeve | Vol (ann) | Return (90d) | Beta | Corr to ' + d.benchmark + ' |')
+  out.push('|---|---|---|---|---|---|---|')
   for (const t of d.perTicker) {
-    out.push(`| ${t.ticker} | ${fmtPct(t.weight)} | ${fmtPct(t.volatility)} | ${fmtPct(t.totalReturn)} | ${t.beta.toFixed(2)} | ${t.correlation.toFixed(2)} |`)
+    const nw = t.weightOfNetWorth != null ? fmtPct(t.weightOfNetWorth) : 'n/a'
+    out.push(`| ${t.ticker} | ${nw} | ${fmtPct(t.weight)} | ${fmtPct(t.volatility)} | ${fmtPct(t.totalReturn)} | ${t.beta.toFixed(2)} | ${t.correlation.toFixed(2)} |`)
   }
   out.push('')
 
   // ── Interpretation ──────────────────────────────────────────────────────
   out.push('## How to read this')
   out.push('')
+  out.push('- **Two denominators** — "% of net worth" is the real position size; "% of priced sleeve" is only the share of the securities these risk stats could be computed on. Never quote the sleeve figure as portfolio concentration.')
   out.push('- **High beta + high weight** = single position can swing the portfolio significantly')
   out.push('- **Negative beta** = natural hedge — when the market falls, this position rises')
   out.push('- **Correlation ≠ beta** — correlation measures direction, beta measures magnitude')
