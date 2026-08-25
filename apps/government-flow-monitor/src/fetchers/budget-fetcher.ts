@@ -1,3 +1,5 @@
+import { fetchWithDeadline } from './http.js'
+
 const CONGRESS_BASE = 'https://api.congress.gov/v3'
 
 const RELEVANT_KEYWORDS = [
@@ -32,7 +34,7 @@ export async function fetchRecentBills(): Promise<RawBill[]> {
   async function fetchBillType(billType: 'hr' | 's'): Promise<void> {
     try {
       const url = `${CONGRESS_BASE}/bill?congress=119&billType=${billType}&sort=updateDate+desc&limit=50&api_key=${apiKey}`
-      const res = await fetch(url)
+      const res = await fetchWithDeadline(url)
       if (!res.ok) return
       const data = await res.json() as any
       const bills = (data.bills ?? []) as Array<{

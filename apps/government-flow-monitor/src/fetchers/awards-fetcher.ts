@@ -1,4 +1,5 @@
 import type { WatchlistAward, AgencyFlow } from '../types.js'
+import { fetchWithDeadline } from './http.js'
 
 const USA_SPENDING = 'https://api.usaspending.gov/api/v2'
 
@@ -79,7 +80,7 @@ async function searchAwardDetail(
     subawards: false,
   }
   try {
-    const res = await fetch(`${USA_SPENDING}/search/spending_by_award/`, {
+    const res = await fetchWithDeadline(`${USA_SPENDING}/search/spending_by_award/`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(body),
@@ -132,7 +133,7 @@ export async function fetchAgencyFlows(): Promise<AgencyFlow[]> {
         limit: 10,
         page: 1,
       }
-      const res = await fetch(`${USA_SPENDING}/search/spending_by_category/awarding_agency/`, {
+      const res = await fetchWithDeadline(`${USA_SPENDING}/search/spending_by_category/awarding_agency/`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(body),

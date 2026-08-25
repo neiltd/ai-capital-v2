@@ -1,6 +1,6 @@
 import { requireKey, env } from '../../lib/env.ts';
 import { logger } from '../../lib/logger.ts';
-import { fetchWithTimeout, SourceFetchError, type SourceClient } from './base.client.ts';
+import { fetchWithTimeout, isDeadlineError, SourceFetchError, type SourceClient } from './base.client.ts';
 
 // ── Raw shapes returned by ACLED API ─────────────────────────────────────────
 
@@ -95,7 +95,10 @@ export async function acquireToken(): Promise<string> {
   let data: Record<string, unknown>;
   try {
     data = (await res.json()) as Record<string, unknown>;
-  } catch {
+  } catch (err) {
+    if (isDeadlineError(err)) {
+      throw new SourceFetchError('acled', 'Token response body stalled past the request deadline');
+    }
     throw new SourceFetchError('acled', 'Token response was not valid JSON');
   }
 
