@@ -33,8 +33,39 @@ describe('the guard refuses a test process a live connection', () => {
     expect(() => assertNotLiveDatabase('postgres://localhost/AI_CAPITAL')).toThrow(/live database/)
   })
 
+  it('refuses percent-encoded spellings of the live name — the proven bypass', () => {
+    // pg-connection-string decodes the pathname; a naive URL().pathname compare
+    // does not. `ai%5Fcapital` reached the real book past the first version of
+    // this guard.
+    expect(() => assertNotLiveDatabase('postgres://x@localhost:5432/ai%5Fcapital')).toThrow(/live database/)
+    expect(() => assertNotLiveDatabase('postgres://x@localhost:5432/AI%5FCAPITAL')).toThrow(/live database/)
+    expect(() => assertNotLiveDatabase('postgres://x@localhost:5432/%61i_capital')).toThrow(/live database/)   // 'a'
+    expect(() => assertNotLiveDatabase('postgres://x@localhost:5432/ai%255Fcapital')).toThrow(/live database/) // double-encoded
+  })
+
+  it('refuses a trailing slash or padding that disguises the name', () => {
+    expect(() => assertNotLiveDatabase('postgres://x@localhost:5432/ai_capital/')).toThrow(/live database/)
+    expect(() => assertNotLiveDatabase('postgres://x@localhost:5432/ai_capital%20')).toThrow(/live database/)
+  })
+
+  it('refuses the libpq keyword/value form', () => {
+    expect(() => assertNotLiveDatabase("host=localhost port=5432 dbname=ai_capital user=x")).toThrow(/keyword\/value/)
+    expect(() => assertNotLiveDatabase("host=localhost dbname='ai_capital'")).toThrow(/keyword\/value/)
+  })
+
+  it('FAILS CLOSED when the connection string cannot be canonicalised', () => {
+    // Cannot prove safe must never mean allowed — the downside is a real book.
+    expect(() => assertNotLiveDatabase('not a url at all')).toThrow(/unparseable connection string/)
+    expect(() => assertNotLiveDatabase('')).toThrow(/unparseable connection string/)
+  })
+
   it('allows a throwaway test database', () => {
     expect(() => assertNotLiveDatabase('postgres://thanapold@localhost:5432/ai_capital_test')).not.toThrow()
+  })
+
+  it('allows an unrelated database', () => {
+    expect(() => assertNotLiveDatabase('postgres://x@localhost:5432/some_other_app')).not.toThrow()
+    expect(() => assertNotLiveDatabase('postgres://x@localhost:5432/ai_capital_scratch')).not.toThrow()
   })
 
   it('honours LIVE_DATABASE_NAMES when a second live database is added', () => {

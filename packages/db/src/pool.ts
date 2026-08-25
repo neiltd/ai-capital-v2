@@ -37,10 +37,32 @@ function liveDatabaseNames(): string[] {
     .filter(Boolean)
 }
 
+/**
+ * The database name a driver would actually connect to, canonicalised.
+ *
+ * `pg-connection-string` percent-DECODES the pathname; a naive
+ * `URL().pathname` comparison does not. That gap was a proven bypass:
+ * `postgres://…/ai%5Fcapital` sailed past the guard and connected straight to
+ * `ai_capital`. Decode before comparing, and keep decoding while the string
+ * still changes so a double-encoded form cannot hide either.
+ *
+ * Returns `null` only when the input is not a parseable URL — and callers must
+ * treat that as UNSAFE, not as permission. See assertNotLiveDatabase.
+ */
 function databaseNameOf(connectionString: string): string | null {
   try {
-    // pathname is '/ai_capital'
-    return new URL(connectionString).pathname.replace(/^\//, '').toLowerCase() || null
+    let name = new URL(connectionString).pathname
+    // Iteratively decode (bounded) so %5F and %255F both resolve.
+    for (let i = 0; i < 4; i++) {
+      const decoded = decodeURIComponent(name)
+      if (decoded === name) break
+      name = decoded
+    }
+    return name
+      .replace(/^\/+/, '')      // leading slash(es)
+      .replace(/\/+$/, '')      // a trailing slash must not disguise the name
+      .trim()
+      .toLowerCase() || null
   } catch {
     return null
   }
@@ -57,8 +79,30 @@ export function inTestRuntime(): boolean {
  */
 export function assertNotLiveDatabase(connectionString: string): void {
   if (!inTestRuntime()) return
+
+  // libpq keyword/value form ("host=… dbname=ai_capital") is not a URL, so the
+  // parser below cannot see it. Check it explicitly rather than falling through.
+  const kv = /(?:^|\s)dbname\s*=\s*'?([^'\s]+)'?/i.exec(connectionString)
+  if (kv && liveDatabaseNames().includes(kv[1].trim().toLowerCase())) {
+    throw new Error(
+      `@common/db: refusing to connect a TEST process to the live database "${kv[1]}" (keyword/value form).`,
+    )
+  }
+
   const db = databaseNameOf(connectionString)
-  if (db && liveDatabaseNames().includes(db)) {
+
+  // FAIL CLOSED. If the connection string cannot be canonicalised we cannot
+  // prove it is safe, and "cannot prove safe" must not mean "allowed" when the
+  // downside is writing to a real-money book.
+  if (db === null) {
+    throw new Error(
+      '@common/db: refusing to connect a TEST process to an unparseable connection string. ' +
+      'Canonicalisation failed, so the target database cannot be shown to be non-live. ' +
+      'Point TEST_DATABASE_URL at a throwaway database.',
+    )
+  }
+
+  if (liveDatabaseNames().includes(db)) {
     throw new Error(
       `@common/db: refusing to connect a TEST process to the live database "${db}". ` +
       'This guard exists because a test run once wrote fixture rows into the real ' +
