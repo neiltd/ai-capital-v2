@@ -96,3 +96,47 @@ Two consequences already observed:
 
 Worth a separate look at which ingestion path strips whitespace and whether
 retrieval quality is affected.
+
+---
+
+## F4 — `news_search_terms` is dead data on the production read path
+
+**Severity: medium. Found by Warden while verifying the JPM repair.**
+
+Nothing in production reads `newsSearchTerms`. Monorepo-wide the identifier
+appears only in `src/types.ts`, the two writers (`watchlist-manager.ts`,
+`cli-watchlist.ts`), the two stores, and tests. The actual news query is built
+from other fields entirely:
+
+`apps/capital-intelligence-ingestion/src/clients/google-news.ts:48-49`
+```ts
+const ticker = company.ticker.replace(/\.BK$/, '')
+return `"${company.company}" OR ${ticker} stock`
+```
+`yahoo-news.ts:79` uses `company.ticker` only.
+
+**Consequences:**
+1. Every curated `extraSearchTerms` entry in `themes.config.ts` is silently
+   unused. Someone wrote those deliberately and they do nothing.
+2. It lowers the *urgency* of the JPM repair in hindsight — a contaminated
+   search-term field could not have degraded ingestion, because the field is not
+   consulted. JPM ingestion was healthy throughout (1,975 documents, latest
+   fetch 2026-08-24, in line with BAC 2,044 and GS 2,088). Repairing a corrupted
+   column to its correct value remains right regardless.
+
+Worth deciding whether the read path should use the curated terms, or whether
+the column and its config entries should be removed. Carrying a field that looks
+authoritative and is ignored is its own hazard.
+
+---
+
+## F5 — Stale SQLite fallback diverges from the live watchlist
+
+**Severity: low. Pre-existing.**
+
+`apps/capital-intelligence-ingestion/data/sqlite.db` was last written
+2026-07-17 and holds 106 rows against the live 121 — missing 15 tickers
+including JPM. Any ad-hoc CLI run **without** `DATABASE_URL` operates on that
+stale copy. It is not a contamination risk (it cannot reintroduce the fixture
+value, and it has no JPM row at all), but it is a silent-wrong-data path of the
+same family as the 2026-07-05 CRWD split incident.
