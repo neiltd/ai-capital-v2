@@ -53,6 +53,12 @@ describe('the guard refuses a test process a live connection', () => {
     expect(() => assertNotLiveDatabase("host=localhost dbname='ai_capital'")).toThrow(/keyword\/value/)
   })
 
+  it('refuses control characters rather than letting the wire protocol be the only defence', () => {
+    // %00 previously reached pg and was stopped only by "invalid startup packet".
+    expect(() => assertNotLiveDatabase('postgres://x@localhost:5432/ai_capital%00')).toThrow(/unparseable connection string/)
+    expect(() => assertNotLiveDatabase('postgres://x@localhost:5432/ai_capital%00zzz')).toThrow(/unparseable connection string/)
+  })
+
   it('FAILS CLOSED when the connection string cannot be canonicalised', () => {
     // Cannot prove safe must never mean allowed — the downside is a real book.
     expect(() => assertNotLiveDatabase('not a url at all')).toThrow(/unparseable connection string/)

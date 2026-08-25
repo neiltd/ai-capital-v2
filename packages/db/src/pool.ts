@@ -49,7 +49,7 @@ function liveDatabaseNames(): string[] {
  * Returns `null` only when the input is not a parseable URL — and callers must
  * treat that as UNSAFE, not as permission. See assertNotLiveDatabase.
  */
-function databaseNameOf(connectionString: string): string | null {
+export function databaseNameOf(connectionString: string): string | null {
   try {
     let name = new URL(connectionString).pathname
     // Iteratively decode (bounded) so %5F and %255F both resolve.
@@ -58,11 +58,16 @@ function databaseNameOf(connectionString: string): string | null {
       if (decoded === name) break
       name = decoded
     }
-    return name
+    const canonical = name
       .replace(/^\/+/, '')      // leading slash(es)
       .replace(/\/+$/, '')      // a trailing slash must not disguise the name
       .trim()
-      .toLowerCase() || null
+      .toLowerCase()
+    // A NUL or other control character must not be a way to smuggle a live name
+    // past the comparison and let the wire protocol be the only thing that
+    // stops it. Treat it as uncanonicalisable, which the caller fails closed on.
+    if (/[\u0000-\u001f\u007f]/.test(canonical)) return null
+    return canonical || null
   } catch {
     return null
   }
