@@ -16,25 +16,27 @@
     }
   },
   "bin": {
-    "db-migrate":      "./bin/migrate.ts",
+    "db-migrate": "./bin/migrate.ts",
     "db-migrate-data": "./bin/migrate-from-sqlite.ts"
   },
   "scripts": {
-    "typecheck":        "tsc --noEmit",
-    "migrate":          "tsx bin/migrate.ts",
-    "migrate-data":     "tsx bin/migrate-from-sqlite.ts",
-    "migrate-vectors":  "tsx bin/migrate-from-lance.ts"
+    "typecheck": "tsc --noEmit",
+    "migrate": "tsx bin/migrate.ts",
+    "migrate-data": "tsx bin/migrate-from-sqlite.ts",
+    "migrate-vectors": "tsx bin/migrate-from-lance.ts",
+    "test": "vitest run"
   },
   "dependencies": {
     "@lancedb/lancedb": "^0.29.0",
-    "better-sqlite3":   "^12.0.0",
-    "pg":               "^8.13.0"
+    "better-sqlite3": "^12.0.0",
+    "pg": "^8.13.0"
   },
   "devDependencies": {
     "@types/better-sqlite3": "^7.6.11",
-    "@types/node":           "^22.0.0",
-    "@types/pg":             "^8.11.10",
-    "tsx":                   "^4.16.0",
-    "typescript":            "^5.5.0"
+    "@types/node": "^22.0.0",
+    "@types/pg": "^8.11.10",
+    "tsx": "^4.16.0",
+    "typescript": "^5.5.0",
+    "vitest": "^3.0.0"
   }
 }
