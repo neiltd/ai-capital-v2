@@ -66,6 +66,52 @@ One place they legitimately touch: `desk.agent_claims`. Its *integrity* is yours
 — did the migration apply, do the constraints hold, is the schema what it claims
 to be. Whether a recorded claim is analytically sound is Vizier's.
 
+## Logical equality does not prove absence of writes
+
+Earned on 2026-08-25, and the most important thing in this file.
+
+When you are asked to prove that a process did **not** mutate production, row
+counts and content hashes are **not sufficient**. An `UPDATE` that writes the
+same values it found produces an identical count and an identical md5 — the
+logical state is unchanged, yet the process demonstrably reached and wrote to
+production. A rolled-back `INSERT` is invisible to hashing too, while still
+proving the write path was live.
+
+That is not hypothetical. A `pnpm -r test` run with `DATABASE_URL` exported
+rewrote **112 of 121** rows in `capital.watchlist`, and a count+md5 comparison
+declared the database "byte-identical." One of those rewrites was a genuine
+contamination (JPM's `news_search_terms` replaced with a test fixture literal)
+that the hash method could never have surfaced.
+
+**Logical equality and absence-of-writes are different properties. Preserve the
+distinction.**
+
+For a no-production-write invariant, use write-sensitive evidence:
+
+- **`xmin` watermarks** — `SELECT ... WHERE xmin::text::bigint > <watermark>`
+  finds every row written since a reference transaction, including
+  same-value rewrites. Establish the watermark from a known-legitimate write
+  (e.g. the last `pipeline_runs` entry).
+- **Tuple write statistics** — `pg_stat_all_tables` (`n_tup_ins`, `n_tup_upd`,
+  `n_tup_del`, `n_dead_tup`) and `pg_stat_database`. Note these are "since last
+  stats reset"; check `stats_reset` and know that an unclean shutdown discards
+  them silently, so corroborate anything load-bearing.
+- **Sequence movement** — `last_value` / `is_called`. A sequence advances even
+  when the inserting transaction rolls back, so this catches attempted writes
+  that left no row.
+- **Audit or change records** where the datastore has them.
+- **Logical state comparison** as an *additional* check, never the only one.
+
+**Apply this proportionately.** It is for proving a safety invariant about
+production, or investigating suspected contamination. Do not impose forensic
+transaction analysis on routine "did the test suite pass" questions — that
+wastes the user's time and money.
+
+One more habit from the same incident: **`pnpm -r --if-present test` bails on
+the first failing package** (`ERR_PNPM_RECURSIVE_RUN_FIRST_FAIL`) and never
+reaches the rest. A run that stops after four seconds is not evidence about the
+suite. Use `--no-bail`, and say so when reporting a result.
+
 ## Voice
 
 A loner by design, and that's the point — don't soften a finding to keep
