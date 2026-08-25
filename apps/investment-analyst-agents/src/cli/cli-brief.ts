@@ -6,6 +6,7 @@ import { generateBriefing }   from '../briefing/briefing-agent.js'
 import { buildBriefingJson }  from '../briefing/briefing-extractor.js'
 import { writeBriefing, writeBriefingJson } from '../briefing/briefing-writer.js'
 import { archivePrediction }  from '../archive/prediction-archiver.js'
+import { usePostgres }         from '@common/db'
 import { loadDcaTargets, renderDcaTargetsSection } from '../briefing/dca-targets.js'
 import type { PredictionEntry } from '../types.js'
 
@@ -109,7 +110,10 @@ async function run() {
     }),
   }
   await archivePrediction(entry, ARCHIVE_PATH)
-  console.log(`Prediction archived to: ${ARCHIVE_PATH}`)
+  // archivePrediction routes to Postgres whenever DATABASE_URL is set and only
+  // falls back to the JSONL otherwise — say which one actually took the write,
+  // instead of always naming the legacy file.
+  console.log(`Prediction archived to: ${usePostgres() ? 'Postgres briefing.predictions' : ARCHIVE_PATH}`)
 }
 
 run().catch(err => { console.error(err); process.exit(1) })

@@ -12,6 +12,7 @@ import { join } from 'path'
 import { writeFileSync, renameSync, mkdirSync, existsSync } from 'fs'
 import Database from 'better-sqlite3'
 import { usePostgres, getPool, closePool } from '@common/db'
+import { computeBookTotals, type BookPosition, type BookTotals } from '../risk/risk-runner.js'
 import { formatReport } from './correlation-report.js'
 
 // See risk-runner.ts for why this is atomic (rename, not direct write) —
@@ -63,7 +64,10 @@ export interface CorrelationCell {
 export interface Cluster {
   members:        string[]
   totalValueUSD:  number
-  pctOfPortfolio: number
+  /** Share of the CORRELATED SLEEVE (positions with a Yahoo symbol) — not of net worth. */
+  pctOfSleeve:    number
+  /** Share of total net worth — the only denominator concentration may be judged on. */
+  pctOfNetWorth:  number | null
   avgCorrelation: number
 }
 
@@ -72,26 +76,36 @@ const REPORT_PATH  = join(process.cwd(), 'correlation', 'report.md')
 
 const WINDOW_DAYS         = 90
 const CORRELATION_THRESHOLD = 0.7   // Pairs >= this are "highly correlated"
-const CONCENTRATION_WARN_PCT = 30   // Clusters > 30% of portfolio trigger flag
+// Concentration is judged on NET WORTH, aligned with the 15% satellite hard cap
+// from the 2026-08-19 core-satellite rules: a correlated cluster above 15% of
+// everything Neil owns is a single bet the size of the whole discretionary
+// sleeve. Judging on the sleeve denominator is the 2026-08-19 briefing bug
+// (`af691cd`) — this file was the second renderer carrying it.
+const CONCENTRATION_WARN_PCT_NET_WORTH = 15
 
 // ── Fetch positions ──────────────────────────────────────────────────────────
 
 // See risk-runner.ts's loadPositions for why this checks usePostgres() first —
 // this file previously always read the stale SQLite portfolio.db regardless
 // of which store was actually authoritative.
-async function loadPositions(): Promise<Position[]> {
+// Loads the WHOLE book, cash and NAV-only funds included. The old query
+// pre-filtered to `asset_class != 'cash' AND price_symbol != ''`, so the
+// remainder of net worth vanished before anything could measure it and the
+// correlated sleeve silently became the denominator of "% of portfolio".
+// Same fix as risk-runner.ts's loadAllPositions (2026-08-19).
+async function loadAllPositions(): Promise<Position[]> {
   if (usePostgres()) {
     const pool = getPool()
     const { rows } = await pool.query<{ ticker: string; asset_class: string; price_symbol: string; current_value: string; currency: string }>(
       `SELECT ticker, asset_class, price_symbol, current_value, currency
          FROM portfolio.positions
-        WHERE asset_class != 'cash' AND price_symbol != '' AND current_value > 0
+        WHERE current_value > 0
         ORDER BY current_value DESC`,
     )
     return rows.map(r => ({
       ticker:       r.ticker,
       assetClass:   r.asset_class,
-      priceSymbol:  r.price_symbol,
+      priceSymbol:  r.price_symbol ?? '',
       currentValue: Number(r.current_value),
       currency:     r.currency,
     }))
@@ -104,11 +118,16 @@ async function loadPositions(): Promise<Position[]> {
   const rows = db.prepare(`
     SELECT ticker, asset_class AS assetClass, price_symbol AS priceSymbol, current_value AS currentValue, currency
     FROM positions
-    WHERE asset_class != 'cash' AND price_symbol != '' AND current_value > 0
+    WHERE current_value > 0
     ORDER BY current_value DESC
   `).all() as Position[]
   db.close()
   return rows
+}
+
+/** The subset a correlation can actually be computed for. */
+export function correlatablePositions(all: Position[]): Position[] {
+  return all.filter(p => p.assetClass !== 'cash' && p.priceSymbol !== '' && p.currentValue > 0)
 }
 
 // ── Fetch price history ──────────────────────────────────────────────────────
@@ -195,10 +214,47 @@ function buildClusters(
 
 // ── Main ─────────────────────────────────────────────────────────────────────
 
+/**
+ * Turn raw cluster memberships into sized clusters. Pure, so the denominators
+ * are unit-testable without a DB or the network — which is the whole point:
+ * this function is where the 2026-08-19 bug family lives.
+ */
+export function buildClusterStats(
+  clusterGroups: string[][],
+  pairs: CorrelationCell[],
+  positions: Position[],
+  fx: number | null,
+  sleeveValueUSD: number,
+  netWorthUSD: number | null,
+): Cluster[] {
+  const positionsByTicker = Object.fromEntries(positions.map(p => [p.ticker, p]))
+  return clusterGroups.map(members => {
+    const totalValueUSD = members.reduce((s, t) => {
+      const p = positionsByTicker[t]
+      return s + (p ? valueInUSD(p, fx) : 0)
+    }, 0)
+    // Average correlation of all pairs within the cluster
+    const inClusterPairs = pairs.filter(p => members.includes(p.a) && members.includes(p.b))
+    const avgCorrelation = inClusterPairs.length
+      ? inClusterPairs.reduce((s, p) => s + p.correlation, 0) / inClusterPairs.length
+      : 0
+    return {
+      members,
+      totalValueUSD,
+      pctOfSleeve:   sleeveValueUSD > 0 ? (totalValueUSD / sleeveValueUSD) * 100 : 0,
+      pctOfNetWorth: netWorthUSD && netWorthUSD > 0 ? (totalValueUSD / netWorthUSD) * 100 : null,
+      avgCorrelation,
+    }
+  }).sort((a, b) => b.totalValueUSD - a.totalValueUSD)
+}
+
 async function run() {
-  const positions = await loadPositions()
+  const allPositions = await loadAllPositions()
+  const positions    = correlatablePositions(allPositions)
   const fx = await fetchUsdThb()
-  console.log(`[correlation] ${positions.length} positions with price symbols (FX=${fx ?? 'unknown'})`)
+  const totals: BookTotals = computeBookTotals(allPositions as BookPosition[], fx)
+  console.log(`[correlation] ${positions.length} of ${allPositions.length} positions are correlatable (FX=${fx ?? 'unknown'})`)
+  console.log(`[correlation] net worth $${totals.netWorthUSD.toFixed(0)}; correlated sleeve $${totals.analyzedValueUSD.toFixed(0)} (${(totals.coverageOfNetWorth * 100).toFixed(1)}% coverage)`)
 
   // Fetch series in parallel (Yahoo Finance handles modest concurrency fine)
   const series: PriceSeries[] = []
@@ -234,36 +290,19 @@ async function run() {
 
   // Cluster detection
   const clusterGroups = buildClusters(tickers, pairs, CORRELATION_THRESHOLD)
-  const positionsByTicker = Object.fromEntries(positions.map(p => [p.ticker, p]))
-  const totalPortfolioValue = positions.reduce((s, p) => s + valueInUSD(p, fx), 0)
-
-  const clusters: Cluster[] = clusterGroups.map(members => {
-    const totalValueUSD = members.reduce((s, t) => {
-      const p = positionsByTicker[t]
-      return s + (p ? valueInUSD(p, fx) : 0)
-    }, 0)
-    // Average correlation of all pairs within the cluster
-    const inClusterPairs = pairs.filter(p => members.includes(p.a) && members.includes(p.b))
-    const avgCorrelation = inClusterPairs.length
-      ? inClusterPairs.reduce((s, p) => s + p.correlation, 0) / inClusterPairs.length
-      : 0
-    return {
-      members,
-      totalValueUSD,
-      pctOfPortfolio: (totalValueUSD / totalPortfolioValue) * 100,
-      avgCorrelation,
-    }
-  }).sort((a, b) => b.pctOfPortfolio - a.pctOfPortfolio)
+  const sleeveValueUSD = positions.reduce((s, p) => s + valueInUSD(p, fx), 0)
+  const clusters = buildClusterStats(clusterGroups, pairs, positions, fx, sleeveValueUSD, totals.netWorthUSD)
 
   const report = formatReport({
     positions,
     series,
     pairs,
     clusters,
-    totalPortfolioValue,
+    totals,
+    sleeveValueUSD,
     windowDays: WINDOW_DAYS,
     correlationThreshold: CORRELATION_THRESHOLD,
-    concentrationWarnPct: CONCENTRATION_WARN_PCT,
+    concentrationWarnPctNetWorth: CONCENTRATION_WARN_PCT_NET_WORTH,
   })
 
   mkdirSync(join(process.cwd(), 'correlation'), { recursive: true })
@@ -271,6 +310,10 @@ async function run() {
   console.log(`\nReport: ${REPORT_PATH}`)
 }
 
-run()
-  .catch(err => { console.error(err); process.exit(1) })
-  .finally(() => { if (usePostgres()) return closePool() })
+// Guarded so the module can be imported by tests without executing the whole
+// run (matches risk-runner.ts / backtest-runner.ts's entry-point convention).
+if (import.meta.url === `file://${process.argv[1]}`) {
+  run()
+    .catch(err => { console.error(err); process.exit(1) })
+    .finally(() => { if (usePostgres()) return closePool() })
+}
