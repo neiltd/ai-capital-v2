@@ -84,6 +84,15 @@ describe('parseClaimBlocks', () => {
     expect(() => parseClaimBlocks(bad)).toThrow(/unknown confidence "certain"/)
   })
 
+  it('accepts type and confidence in any casing — a capitalised word must not discard the block', () => {
+    const shouty = '```claim\nagent: Atlas\ndomain: Liquidity\ntype: Forecast\nconfidence: MEDIUM\nclaim: c\n```'
+    const [c] = parseClaimBlocks(shouty)
+    expect(c.claimType).toBe('forecast')
+    expect(c.confidence).toBe('medium')
+    expect(c.agent).toBe('atlas')
+    expect(c.domain).toBe('liquidity')
+  })
+
   it('ignores unknown keys so the format can grow without breaking old agents', () => {
     const withExtra =
       '```claim\nagent: a\ndomain: d\ntype: forecast\nconfidence: low\nclaim: c\nfuture_field: whatever\n```'

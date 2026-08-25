@@ -84,7 +84,10 @@ export function parseClaimBlocks(text: string): ParsedClaim[] {
       return v
     }
 
-    const claimType = need('type') as ClaimType
+    // Lowercased like agent/domain/confidence. An LLM capitalising one word
+    // must not discard an entire claim block — that is the Finnomena fund-ID
+    // bug's exact shape (a case-sensitive lookup silently losing real data).
+    const claimType = need('type').toLowerCase() as ClaimType
     if (!CLAIM_TYPES.includes(claimType)) {
       throw new ClaimParseError(`unknown claim type "${claimType}" (expected one of ${CLAIM_TYPES.join(', ')})`, raw)
     }
