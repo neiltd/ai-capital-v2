@@ -161,6 +161,47 @@ async function fetchPriceSeries(symbol: string): Promise<PriceSeries | null> {
 
 // ── Math helpers ─────────────────────────────────────────────────────────────
 
+/**
+ * Pair two price series on their SHARED trading dates and return the aligned
+ * daily returns.
+ *
+ * The old path computed `dailyReturns(closes)` per ticker and then let
+ * `pearson` align the two arrays by POSITION via `slice(-n)`. Position is not
+ * date. Two instruments on different session calendars — a SET-listed ETF vs
+ * the S&P, or NYSE Arca vs a COMEX future — disagree on holidays, and a single
+ * extra session in one series shifts every earlier observation by one slot.
+ *
+ * Measured on 2026-08-25: GLDM vs GC=F, two instruments tracking the SAME
+ * metal, printed **0.1225** positionally against **0.8511** date-joined,
+ * purely because GC=F had 63 sessions to GLDM's 62. That fake 0.12 is what
+ * kept the gold sleeve — the largest correlated cluster in the book — from
+ * ever being detected as a cluster at all. The Thai-vs-US pairs were wrong the
+ * same way (TDEX.BK vs SPY: -0.074 positional, +0.226 date-joined).
+ *
+ * Returns empty arrays when the overlap is too small to be meaningful.
+ */
+export function alignedReturns(
+  a: PriceSeries,
+  b: PriceSeries,
+): { a: number[]; b: number[]; sharedDays: number } {
+  const closesByDate = (s: PriceSeries) => {
+    const m = new Map<string, number>()
+    s.dates.forEach((d, i) => {
+      const c = s.closes[i]
+      if (d && typeof c === 'number' && c > 0) m.set(d, c)
+    })
+    return m
+  }
+  const ma = closesByDate(a)
+  const mb = closesByDate(b)
+  const shared = [...ma.keys()].filter(d => mb.has(d)).sort()
+  return {
+    a: dailyReturns(shared.map(d => ma.get(d)!)),
+    b: dailyReturns(shared.map(d => mb.get(d)!)),
+    sharedDays: shared.length,
+  }
+}
+
 function dailyReturns(closes: number[]): number[] {
   const ret: number[] = []
   for (let i = 1; i < closes.length; i++) {
@@ -271,19 +312,23 @@ async function run() {
   }))
   console.log(`[correlation] Fetched ${series.length} price series (window: ${WINDOW_DAYS}d)`)
 
-  // Build return series
-  const returns: Record<string, number[]> = {}
-  for (const s of series) returns[s.ticker] = dailyReturns(s.closes)
-
-  // Pairwise correlation
+  // Pairwise correlation — each pair aligned on its OWN shared trading dates,
+  // because which sessions two instruments share depends on the pair.
   const tickers = series.map(s => s.ticker)
+  const seriesByTicker = Object.fromEntries(series.map(s => [s.ticker, s]))
   const pairs: CorrelationCell[] = []
+  let minShared = Infinity
   for (let i = 0; i < tickers.length; i++) {
     for (let j = i + 1; j < tickers.length; j++) {
       const a = tickers[i]
       const b = tickers[j]
-      pairs.push({ a, b, correlation: pearson(returns[a], returns[b]) })
+      const al = alignedReturns(seriesByTicker[a], seriesByTicker[b])
+      minShared = Math.min(minShared, al.sharedDays)
+      pairs.push({ a, b, correlation: pearson(al.a, al.b) })
     }
+  }
+  if (Number.isFinite(minShared)) {
+    console.log(`[correlation] narrowest pairwise overlap: ${minShared} shared sessions`)
   }
   pairs.sort((p, q) => Math.abs(q.correlation) - Math.abs(p.correlation))
   console.log(`[correlation] Computed ${pairs.length} pairwise correlations`)

@@ -1,95 +1,128 @@
 {
-  "generatedAt": "2026-07-08",
+  "generatedAt": "2026-08-25",
   "predictionsAnalyzed": 44,
-  "scoredCalls": 548,
+  "scoredCalls": 758,
   "windows": [
     7,
-    30
+    30,
+    90
   ],
   "byAction": {
     "hold": {
       "7d": {
-        "calls": 308,
-        "accuracy": 0.5162337662337663,
-        "avgReturn": 0.27423185486425505
+        "calls": 334,
+        "accuracy": 0.5389221556886228,
+        "avgReturn": 0.4308935658836076
       },
       "30d": {
-        "calls": 200,
-        "accuracy": 0.24,
-        "avgReturn": -1.967858822481119
+        "calls": 339,
+        "accuracy": 0.30383480825958703,
+        "avgReturn": 1.6859611501926373
+      },
+      "90d": {
+        "calls": 35,
+        "accuracy": 0.11428571428571428,
+        "avgReturn": -2.575670364890057
       }
     },
     "trim": {
       "7d": {
         "calls": 17,
         "accuracy": 0.7647058823529411,
-        "avgReturn": -2.6266438396068286
+        "avgReturn": -2.6266426601669908
       },
       "30d": {
         "calls": 16,
         "accuracy": 0.25,
-        "avgReturn": 0.14937696890632757
+        "avgReturn": 0.149375668090725
+      },
+      "90d": {
+        "calls": 3,
+        "accuracy": 0.6666666666666666,
+        "avgReturn": -20.61498967722646
       }
     },
     "buy": {
       "7d": {
-        "calls": 5,
-        "accuracy": 0.6,
-        "avgReturn": -1.4745645443483664
+        "calls": 7,
+        "accuracy": 0.42857142857142855,
+        "avgReturn": -2.1445543000564773
       },
       "30d": {
-        "calls": 2,
-        "accuracy": 1,
-        "avgReturn": 4.396718830155609
+        "calls": 7,
+        "accuracy": 0.8571428571428571,
+        "avgReturn": 9.81854059821267
+      },
+      "90d": {
+        "accuracy": 0,
+        "calls": 0,
+        "avgReturn": 0
       }
     }
   },
   "byConviction": {
     "high": {
       "7d": {
-        "calls": 54,
-        "accuracy": 0.37037037037037035,
-        "avgReturn": -2.848696723829489
+        "calls": 59,
+        "accuracy": 0.423728813559322,
+        "avgReturn": -2.6244835313960713
       },
       "30d": {
-        "calls": 52,
-        "accuracy": 0.28846153846153844,
-        "avgReturn": -3.3737183473234205
+        "calls": 57,
+        "accuracy": 0.2807017543859649,
+        "avgReturn": -3.066035519713406
+      },
+      "90d": {
+        "calls": 6,
+        "accuracy": 0,
+        "avgReturn": -8.509807451148655
       }
     },
     "medium": {
       "7d": {
-        "calls": 248,
-        "accuracy": 0.5604838709677419,
-        "avgReturn": 0.3159716014332319
+        "calls": 270,
+        "accuracy": 0.5703703703703704,
+        "avgReturn": 0.4873369228348975
       },
       "30d": {
-        "calls": 139,
-        "accuracy": 0.2589928057553957,
-        "avgReturn": -1.9245930823679371
+        "calls": 276,
+        "accuracy": 0.33695652173913043,
+        "avgReturn": 2.7044104837994607
+      },
+      "90d": {
+        "calls": 25,
+        "accuracy": 0.24,
+        "avgReturn": 0.6098077281588882
       }
     },
     "low": {
       "7d": {
-        "calls": 28,
-        "accuracy": 0.5714285714285714,
-        "avgReturn": 3.853796758374435
+        "calls": 29,
+        "accuracy": 0.5862068965517241,
+        "avgReturn": 3.7074898230633537
       },
       "30d": {
-        "calls": 27,
-        "accuracy": 0.1111111111111111,
-        "avgReturn": 2.243092488020368
+        "calls": 29,
+        "accuracy": 0.13793103448275862,
+        "avgReturn": 2.448529513353697
+      },
+      "90d": {
+        "calls": 7,
+        "accuracy": 0,
+        "avgReturn": -16.597111471415953
       }
     }
   },
   "calibrationInverted": true,
-  "highConvictionPenalty": 0.19011350059737153,
+  "highConvictionPenalty": 0.1466415568110484,
   "bestEdge": {
-    "signal": "trim (7d)",
-    "accuracy": 0.7647058823529411
+    "signal": "buy (30d)",
+    "accuracy": 0.8571428571428571
   },
   "worstSignal": {
-    "signal": "hold (30d)",
-    "accuracy": 0.24
-  }
+    "signal": "hold (90d)",
+    "accuracy": 0.11428571428571428
+  },
+  "decayWindowPredictions": 15,
+  "decaying": []
 }

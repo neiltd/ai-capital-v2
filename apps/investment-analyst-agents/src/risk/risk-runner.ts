@@ -120,19 +120,53 @@ const RISK_FREE_RATE_ANNUAL = 0.045  // ~10Y Treasury proxy
 
 // ── Helpers ──────────────────────────────────────────────────────────────────
 
-async function fetchCloses(symbol: string): Promise<number[]> {
+/** A price series that remembers WHICH DAY each close belongs to. */
+export type DatedCloses = Map<string, number>
+
+async function fetchCloses(symbol: string): Promise<DatedCloses> {
   const end   = Math.floor(Date.now() / 1000)
   const start = end - WINDOW_DAYS * 86_400
   const url = `https://query1.finance.yahoo.com/v8/finance/chart/${encodeURIComponent(symbol)}?period1=${start}&period2=${end}&interval=1d`
+  const out: DatedCloses = new Map()
   try {
     const res = await fetch(url, { headers: { 'User-Agent': 'Mozilla/5.0' } })
-    if (!res.ok) return []
+    if (!res.ok) return out
     const data = await res.json() as {
-      chart: { result?: Array<{ indicators: { quote: Array<{ close: (number | null)[] }> } }> }
+      chart: { result?: Array<{ timestamp?: number[]; indicators: { quote: Array<{ close: (number | null)[] }> } }> }
     }
-    const closes = data.chart.result?.[0]?.indicators.quote[0]?.close ?? []
-    return closes.filter((c): c is number => c != null)
-  } catch { return [] }
+    const r = data.chart.result?.[0]
+    const closes = r?.indicators.quote[0]?.close ?? []
+    const stamps = r?.timestamp ?? []
+    closes.forEach((c, i) => {
+      const t = stamps[i]
+      if (c != null && c > 0 && t != null) out.set(new Date(t * 1000).toISOString().slice(0, 10), c)
+    })
+    return out
+  } catch { return out }
+}
+
+/**
+ * Align a ticker against the benchmark on their SHARED trading dates.
+ *
+ * `pearson`/`beta` previously aligned by POSITION (`slice(-n)`), which is not
+ * the same as aligning by date. A SET-listed holding and the S&P disagree on
+ * holidays, so one extra session shifts every earlier observation by a slot and
+ * the resulting beta is noise. Measured 2026-08-25: TDEX.BK vs the benchmark
+ * read -0.074 positionally against +0.226 date-joined, and GULF.BK's beta came
+ * out as 0.0001 — a Thai utility with no relationship to the US market, which
+ * is an artifact, not a fact. Same defect and same fix as
+ * correlation-runner.ts's alignedReturns.
+ */
+export function alignOnSharedDates(
+  a: DatedCloses,
+  b: DatedCloses,
+): { a: number[]; b: number[]; sharedDays: number } {
+  const shared = [...a.keys()].filter(d => b.has(d)).sort()
+  return {
+    a: dailyReturns(shared.map(d => a.get(d)!)),
+    b: dailyReturns(shared.map(d => b.get(d)!)),
+    sharedDays: shared.length,
+  }
 }
 
 function dailyReturns(closes: number[]): number[] {
@@ -279,7 +313,7 @@ async function run() {
     return { position: p, closes }
   }))
   const benchClosesRaw = await benchClosesPromise
-  const benchReturns   = dailyReturns(benchClosesRaw)
+  const benchReturns   = dailyReturns([...benchClosesRaw.values()])
 
   if (benchReturns.length === 0) {
     console.error('[risk] Failed to fetch benchmark returns — aborting')
@@ -291,9 +325,15 @@ async function run() {
   const perTicker: RiskMetricsJSON['perTicker'] = []
   const portfolioReturnsByDay: Map<number, number> = new Map()
 
+  let minSharedWithBench = Infinity
   for (const { position, closes } of seriesEntries) {
-    if (closes.length < 10) continue
-    const rets = dailyReturns(closes)
+    if (closes.size < 10) continue
+    const ordered = [...closes.keys()].sort().map(d => closes.get(d)!)
+    const rets = dailyReturns(ordered)
+    // Beta and benchmark-correlation must be computed on the days the ticker
+    // and the benchmark BOTH traded — never on raw array position.
+    const vsBench = alignOnSharedDates(closes, benchClosesRaw)
+    minSharedWithBench = Math.min(minSharedWithBench, vsBench.sharedDays)
     const valueUSD = valueInUSD(position, fx)
     const weight = valueUSD / totalValueUSD
     perTicker.push({
@@ -301,9 +341,9 @@ async function run() {
       weight,
       weightOfNetWorth: totals.netWorthUSD > 0 ? valueUSD / totals.netWorthUSD : null,
       volatility:    stdev(rets) * Math.sqrt(252),  // annualized
-      totalReturn:   (closes[closes.length - 1] - closes[0]) / closes[0],
-      beta:          beta(rets, benchReturns),
-      correlation:   pearson(rets, benchReturns),
+      totalReturn:   (ordered[ordered.length - 1] - ordered[0]) / ordered[0],
+      beta:          beta(vsBench.a, vsBench.b),
+      correlation:   pearson(vsBench.a, vsBench.b),
     })
     // Aggregate weighted return per-day for portfolio metrics
     const n = Math.min(rets.length, benchReturns.length)
@@ -364,6 +404,9 @@ async function run() {
   writeFileAtomic(JSON_PATH, JSON.stringify(payload, null, 2))
   writeFileAtomic(REPORT_PATH, formatReport(payload))
 
+  if (Number.isFinite(minSharedWithBench)) {
+    console.log(`[risk] narrowest overlap with benchmark ${BENCHMARK}: ${minSharedWithBench} shared sessions`)
+  }
   console.log(`\nReport: ${REPORT_PATH}`)
   console.log(`JSON:   ${JSON_PATH}`)
   console.log(`Summary: ${summary}`)

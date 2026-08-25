@@ -1,6 +1,6 @@
 import { describe, it, expect } from 'vitest'
 import { computeBookTotals, type BookPosition } from '../src/risk/risk-runner.js'
-import { buildClusterStats, correlatablePositions, type CorrelationCell } from '../src/correlation/correlation-runner.js'
+import { alignedReturns, buildClusterStats, correlatablePositions, type CorrelationCell } from '../src/correlation/correlation-runner.js'
 import { formatReport } from '../src/correlation/correlation-report.js'
 
 // The 2026-08-19 bug (`af691cd`) fixed the briefing, which reported the priced
@@ -139,5 +139,58 @@ describe('formatReport — the denominator must be named, never bare', () => {
     })
     expect(r).toContain('🔴 OVER-CONCENTRATED')
     expect(r).toContain('of NET WORTH')
+  })
+})
+
+// The 2026-08-25 date-alignment bug. `pearson` aligned two return arrays by
+// POSITION (`slice(-n)`), not by date. Instruments on different session
+// calendars — NYSE Arca vs COMEX, or SET vs NYSE — disagree on holidays, so a
+// single extra session in one series shifts every earlier observation by one
+// slot. Live proof that day: GLDM vs GC=F, two instruments tracking the same
+// metal, printed 0.1225 positionally against 0.8511 date-joined.
+describe('alignedReturns — pairs must be joined on dates, never on position', () => {
+  // Same underlying moves, but B trades one extra session at the start.
+  const A = {
+    ticker: 'GLDM',
+    dates:  ['2026-08-03', '2026-08-04', '2026-08-05', '2026-08-06'],
+    closes: [100, 102, 101, 104],
+  }
+  const B = {
+    ticker: 'GOLD_OZ',
+    dates:  ['2026-08-02', '2026-08-03', '2026-08-04', '2026-08-05', '2026-08-06'],
+    closes: [55, 200, 204, 202, 208],   // 2026-08-03 onward is exactly 2x A
+  }
+
+  it('drops the unshared session and recovers the true relationship', () => {
+    const al = alignedReturns(A, B)
+    expect(al.sharedDays).toBe(4)
+    expect(al.a).toHaveLength(3)
+    expect(al.b).toHaveLength(3)
+    // B is a perfect 2x of A on the shared dates, so returns are identical
+    al.a.forEach((r, i) => expect(al.b[i]).toBeCloseTo(r, 12))
+  })
+
+  it('is symmetric', () => {
+    const ab = alignedReturns(A, B)
+    const ba = alignedReturns(B, A)
+    expect(ba.sharedDays).toBe(ab.sharedDays)
+    ab.a.forEach((r, i) => expect(ba.b[i]).toBeCloseTo(r, 12))
+  })
+
+  it('returns nothing usable when the two series never overlap', () => {
+    const far = { ticker: 'X', dates: ['2020-01-02', '2020-01-03'], closes: [1, 2] }
+    const al = alignedReturns(A, far)
+    expect(al.sharedDays).toBe(0)
+    expect(al.a).toHaveLength(0)
+  })
+
+  it('ignores gaps and null-priced days rather than shifting past them', () => {
+    const gappy = {
+      ticker: 'G',
+      dates:  ['2026-08-03', '2026-08-04', '2026-08-05', '2026-08-06'],
+      closes: [200, 204, 0, 208],   // 08-05 unpriced
+    }
+    const al = alignedReturns(A, gappy)
+    expect(al.sharedDays).toBe(3)   // 08-05 excluded from BOTH sides
   })
 })

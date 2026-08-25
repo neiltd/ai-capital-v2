@@ -112,7 +112,7 @@
       "yahooSymbol": "VNM",
       "target": 17.0,
       "direction": "below",
-      "currency": "USD",
+      "currency": "THB",
       "buyNow": "฿30,000",
       "buyDeeper": "—",
       "note": "One-shot ฿30k → K-VIETNAM fund (uses parked CASH_THB, no FX conversion)."
@@ -122,7 +122,7 @@
       "yahooSymbol": "INDA",
       "target": 47,
       "direction": "below",
-      "currency": "USD",
+      "currency": "THB",
       "buyNow": "฿30,000",
       "buyDeeper": "—",
       "note": "One-shot ฿30k → KFINDIA-A. India near highs — wait for this pullback."
@@ -132,7 +132,7 @@
       "yahooSymbol": "MCHI",
       "target": 53,
       "direction": "below",
-      "currency": "USD",
+      "currency": "THB",
       "buyNow": "฿30,000",
       "buyDeeper": "—",
       "note": "One-shot ฿30k → SCBCEH fund."
