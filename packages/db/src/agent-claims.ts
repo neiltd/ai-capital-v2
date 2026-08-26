@@ -241,7 +241,20 @@ function writer(): pg.Pool | ReturnType<typeof getPool> {
   // Under vitest, the writer is ALWAYS the ordinary test pool — which the
   // bootstrap has already pointed at the throwaway database, and which cannot
   // reach production because ai_capital_test_runtime has no CONNECT there.
-  if (inTestRuntime()) return getPool()
+  // W4-2. This early return used to come FIRST, and the comment below claimed
+  // there was "no exploitable consequence" because the factory refuses a
+  // protected destination under vitest. That reasoning was wrong: the factory
+  // refuses at CONSTRUCTION, and getPool() caches. A pool warmed before VITEST
+  // became truthy was handed back with zero checks, and Warden landed a row
+  // through it. VITEST is an ordinary environment variable anything can set.
+  //
+  // Isolation and authorization are stated in write-intent.ts to be independent
+  // layers; putting this return before the gate merged them. Authorize first.
+  if (inTestRuntime()) {
+    const pool = getPool()
+    assertPoolWriteAuthorized(pool, 'claim-persistence')
+    return pool
+  }
 
   // ── PRODUCTION-WRITE INTENT ───────────────────────────────────────────────
   // The above only distinguishes vitest from everything else, which Warden
@@ -280,6 +293,29 @@ function writer(): pg.Pool | ReturnType<typeof getPool> {
   if (!writerPool) writerPool = createPool(url, { max: 2 })
   assertPoolWriteAuthorized(writerPool, 'claim-persistence')
   return writerPool
+}
+
+
+/**
+ * Re-assert authorization at SQL-ISSUE time.
+ *
+ * W4-1. `writer()` resolves synchronously, before the first `await`. Inside
+ *   withProductionWrite(..., async () => { void recordClaims(...) })
+ * the authorization is captured while the scope is still open and the INSERT is
+ * issued after it has returned — so a claim landed on a protected database with
+ * `currentWriteIntent()` already undefined. The module header names that exact
+ * hazard and claimed the `open` flag closed it; the flag closes the READ, not
+ * the already-obtained pool.
+ *
+ * Worse, the failure was asymmetric: `recordAgentRun` runs after an await, so
+ * ITS check correctly refused — leaving a claim in the book with no run record
+ * and a caller that saw an exception and would plausibly retry. That is the
+ * silent-disappearance asymmetry this module exists to prevent, inverted.
+ *
+ * So the pool being authorized is not enough; the moment of writing must be.
+ */
+function assertStillAuthorized(db: pg.Pool | ReturnType<typeof getPool>): void {
+  assertPoolWriteAuthorized(db, 'claim-persistence')
 }
 
 export async function closeClaimWriter(): Promise<void> {
@@ -336,6 +372,10 @@ export async function recordClaims(
 
   const db = writer()
   const client = await (db as pg.Pool).connect()
+  // W4-1: `connect()` is the await that can outlive the authorizing scope.
+  // Re-check on the far side, before any SQL is issued, and release the client
+  // rather than holding a production connection open for an unauthorized call.
+  try { assertStillAuthorized(db) } catch (e) { client.release(); throw e }
   try {
     await client.query('BEGIN')
     for (const c of claims) {
@@ -386,6 +426,7 @@ export async function recordClaims(
 /** Apply a verification or resolution event emitted by Vizier. */
 export async function applyEvent(e: ParsedEvent): Promise<void> {
   const db = writer()
+  assertStillAuthorized(db)   // W4-1: authorization must hold at SQL-issue time
   const VERIFY: Partial<Record<ClaimEvent, VerificationStatus>> = {
     verify_supported: 'verified', verify_unsupported: 'unsupported', verify_unverifiable: 'unverifiable',
   }
@@ -417,7 +458,9 @@ export async function recordAgentRun(run: {
   persisted: number
   parseErrors?: string | null
 }): Promise<void> {
-  await writer().query(
+  const runDb = writer()
+  assertStillAuthorized(runDb)   // W4-1
+  await runDb.query(
     `INSERT INTO desk.agent_runs
        (agent, session_id, run_ref, task_summary, material,
         blocks_detected, blocks_parsed, claims_persisted, parse_errors)
