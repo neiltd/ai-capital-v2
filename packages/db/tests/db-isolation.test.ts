@@ -59,10 +59,34 @@ describe('the guard refuses a test process a live connection', () => {
     expect(() => assertNotLiveDatabase('postgres://x@localhost:5432/ai_capital%00zzz')).toThrow(/unparseable connection string/)
   })
 
-  it('FAILS CLOSED when the connection string cannot be canonicalised', () => {
-    // Cannot prove safe must never mean allowed — the downside is a real book.
-    expect(() => assertNotLiveDatabase('not a url at all')).toThrow(/unparseable connection string/)
+  it('FAILS CLOSED when no database can be determined', () => {
+    // "Cannot prove safe" must never mean "allowed" — the downside is a real book.
     expect(() => assertNotLiveDatabase('')).toThrow(/unparseable connection string/)
+    expect(() => assertNotLiveDatabase('postgres://')).toThrow(/unparseable connection string/)
+    expect(() => assertNotLiveDatabase('postgres://host:5432')).toThrow(/unparseable connection string/)
+  })
+
+  it('treats a bare word as a database name, because that is what the driver does', () => {
+    // pg-connection-string parses 'scratchpad' as database='scratchpad', and pg
+    // will genuinely attempt to connect to a database of that name. The guard
+    // mirrors the driver rather than second-guessing it — so a bare word that
+    // is NOT live is allowed, and one that IS live is refused.
+    expect(() => assertNotLiveDatabase('scratchpad')).not.toThrow()
+    expect(() => assertNotLiveDatabase('ai_capital')).toThrow(/live database/)
+  })
+
+  it('refuses the socket: form, where the driver reads ?db= and a pathname check does not', () => {
+    // Warden's proven bypass: pg-connection-string's socket: branch takes the
+    // database from ?db= while `new URL().pathname` says "tmp". A test process
+    // was handed a pool on the LIVE book through this.
+    expect(() => assertNotLiveDatabase('socket:/tmp?db=ai_capital')).toThrow(/live database/)
+    expect(() => assertNotLiveDatabase('socket://x/tmp?db=ai_capital')).toThrow(/live database/)
+    expect(() => assertNotLiveDatabase('socket:/tmp?db=ai%5Fcapital')).toThrow(/live database/)
+    expect(() => assertNotLiveDatabase('socket:/tmp?db=AI_CAPITAL')).toThrow(/live database/)
+  })
+
+  it('still allows a socket: URL naming a throwaway database', () => {
+    expect(() => assertNotLiveDatabase('socket:/tmp?db=ai_capital_test')).not.toThrow()
   })
 
   it('allows a throwaway test database', () => {
@@ -72,6 +96,21 @@ describe('the guard refuses a test process a live connection', () => {
   it('allows an unrelated database', () => {
     expect(() => assertNotLiveDatabase('postgres://x@localhost:5432/some_other_app')).not.toThrow()
     expect(() => assertNotLiveDatabase('postgres://x@localhost:5432/ai_capital_scratch')).not.toThrow()
+  })
+
+  it('treats a set-but-empty LIVE_DATABASE_NAMES as a config error, not as "nothing is protected"', () => {
+    // '   ' and ',' previously disabled EVERY layer at once, silently.
+    const prev = process.env.LIVE_DATABASE_NAMES
+    try {
+      for (const hostile of ['', '   ', ',', ' , , ']) {
+        process.env.LIVE_DATABASE_NAMES = hostile
+        expect(() => assertNotLiveDatabase('postgres://x@localhost:5432/ai_capital'))
+          .toThrow(/set but empty after parsing/)
+      }
+    } finally {
+      if (prev === undefined) delete process.env.LIVE_DATABASE_NAMES
+      else process.env.LIVE_DATABASE_NAMES = prev
+    }
   })
 
   it('honours LIVE_DATABASE_NAMES when a second live database is added', () => {

@@ -88,10 +88,16 @@ distinction.**
 
 For a no-production-write invariant, use write-sensitive evidence:
 
-- **`xmin` watermarks** — `SELECT ... WHERE xmin::text::bigint > <watermark>`
-  finds every row written since a reference transaction, including
-  same-value rewrites. Establish the watermark from a known-legitimate write
-  (e.g. the last `pipeline_runs` entry).
+- **`xmin` watermarks** — `SELECT ... WHERE xmin::text::bigint >= <watermark>`
+  finds every row written since a reference transaction, including same-value
+  rewrites. Establish the watermark from a known-legitimate write (e.g. the last
+  `pipeline_runs` entry).
+  **Use `>=`, not `>`.** Verified the hard way on 2026-08-26: a transaction is
+  assigned exactly the xid that `pg_snapshot_xmax()` reports, so `>` silently
+  misses the very first write after the watermark — including a same-value
+  UPDATE, which is the case this technique exists to catch. Validate the recipe
+  itself against a deliberate probe write on a throwaway database before
+  trusting a clean result.
 - **Tuple write statistics** — `pg_stat_all_tables` (`n_tup_ins`, `n_tup_upd`,
   `n_tup_del`, `n_dead_tup`) and `pg_stat_database`. Note these are "since last
   stats reset"; check `stats_reset` and know that an unclean shutdown discards

@@ -72,9 +72,14 @@ describe('assertSafeTestTarget — the bootstrap must never touch a live databas
     expect(() => assertSafeTestTarget('postgres://localhost:5432/AI_CAPITAL')).toThrow(/LIVE database/)
   })
 
-  it('refuses a URL it cannot canonicalise', () => {
-    expect(() => assertSafeTestTarget('nonsense')).toThrow(/could not be canonicalised/)
+  it('refuses a URL whose database cannot be determined', () => {
+    expect(() => assertSafeTestTarget('')).toThrow(/could not be canonicalised/)
+    expect(() => assertSafeTestTarget('postgres://localhost:5432')).toThrow(/could not be canonicalised/)
     expect(() => assertSafeTestTarget('postgres://localhost:5432/ai_capital%00')).toThrow(/could not be canonicalised/)
+  })
+
+  it('refuses the socket: form that bypassed an earlier version of the guard', () => {
+    expect(() => assertSafeTestTarget('socket:/tmp?db=ai_capital')).toThrow(/LIVE database/)
   })
 
   it('honours LIVE_DATABASE_NAMES', () => {

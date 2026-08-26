@@ -31,22 +31,19 @@ import { beforeAll, afterAll } from 'vitest'
 // ONE canonicaliser, shared with the pool guard. This file previously carried
 // its own `new URL().pathname` copy, which meant layer 1 was still defeatable by
 // the very percent-encoding bypass layer 2 had been hardened against.
-import { databaseNameOf } from '../src/pool.js'
+import { databaseNameOf, liveDatabaseNames } from '../src/pool.js'
 
 const LIVE_URL = process.env.DATABASE_URL
 const TEST_URL = process.env.TEST_DATABASE_URL
 
-function liveNames(): string[] {
-  return (process.env.LIVE_DATABASE_NAMES ?? 'ai_capital')
-    .split(',').map(n => n.trim().toLowerCase()).filter(Boolean)
-}
+
 
 // Runs at module load — BEFORE any test file body, and therefore before any
 // store is constructed. Using beforeAll would be too late for stores created at
 // import time.
 if (LIVE_URL) {
   const name = databaseNameOf(LIVE_URL)
-  if (name && liveNames().includes(name)) {
+  if (name && liveDatabaseNames().includes(name)) {
     // The dangerous case: the developer's shell points at the real book.
     delete process.env.DATABASE_URL
     console.warn(
@@ -65,7 +62,7 @@ beforeAll(() => {
   const current = process.env.DATABASE_URL
   if (!current) return
   const name = databaseNameOf(current)
-  if (name && liveNames().includes(name)) {
+  if (name && liveDatabaseNames().includes(name)) {
     throw new Error(
       `[test-isolation] a test set DATABASE_URL to the live database "${name}". ` +
       'Isolation cannot be established; refusing to continue.',

@@ -16,17 +16,14 @@
 
 import pg from 'pg'
 import { runMigrations } from '../src/migrate.js'
-import { databaseNameOf } from '../src/pool.js'
+import { databaseNameOf, liveDatabaseNames } from '../src/pool.js'
 
 const { Client } = pg
 
 /** Schema objects that must exist for the suite to be meaningfully migrated. */
 const REQUIRED_SCHEMAS = ['portfolio', 'capital', 'briefing', 'desk'] as const
 
-function liveNames(): string[] {
-  return (process.env.LIVE_DATABASE_NAMES ?? 'ai_capital')
-    .split(',').map(n => n.trim().toLowerCase()).filter(Boolean)
-}
+
 
 export function fail(message: string): never {
   throw new Error(
@@ -71,7 +68,7 @@ export function assertSafeTestTarget(testUrl: string): string {
   if (name === null) {
     fail('the test database URL could not be canonicalised, so it cannot be shown to be non-live.')
   }
-  if (liveNames().includes(name)) {
+  if (liveDatabaseNames().includes(name)) {
     fail(
       `TEST_DATABASE_URL points at the LIVE database "${name}". ` +
       'Refusing to create, migrate or test against it.',
@@ -158,7 +155,7 @@ export async function setup(): Promise<void> {
       fail(`"${name}" is missing expected schema(s) after migration: ${missing.join(', ')}.`)
     }
     const { rows: dbRows } = await verify.query<{ db: string }>('SELECT current_database() AS db')
-    if (liveNames().includes(dbRows[0].db.toLowerCase())) {
+    if (liveDatabaseNames().includes(dbRows[0].db.toLowerCase())) {
       fail(`verification connected to the LIVE database "${dbRows[0].db}".`)
     }
     console.log(`[test-db] ready: ${dbRows[0].db} (${REQUIRED_SCHEMAS.length} schemas verified)`)

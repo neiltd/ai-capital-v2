@@ -1,4 +1,5 @@
 import pg from 'pg'
+import { parse as parseConnectionString } from 'pg-connection-string'
 
 const { Pool } = pg
 export type { Pool as PgPool } from 'pg'
@@ -29,12 +30,31 @@ let _pool: pg.Pool | null = null
 // Tests that legitimately need Postgres set TEST_DATABASE_URL and point it at a
 // throwaway database (ai_capital_test).
 
-/** Databases that must never be touched from a test process. */
-function liveDatabaseNames(): string[] {
+/**
+ * Databases that must never be touched from a test process.
+ *
+ * THE single definition — the testing helpers import this rather than keeping
+ * their own copies. Three divergent copies previously existed and disagreed
+ * about the empty case, which meant `LIVE_DATABASE_NAMES=""` disabled some
+ * layers but not others.
+ *
+ * A set-but-empty value is a CONFIGURATION ERROR, not "nothing is protected".
+ * `LIVE_DATABASE_NAMES="   "` or `","` used to silently disable every guard at
+ * once — an env var that turns off a real-money safety check when blank is the
+ * same failure class as an empty-array fallback.
+ */
+export function liveDatabaseNames(): string[] {
   const configured = process.env.LIVE_DATABASE_NAMES
-  return (configured ? configured.split(',') : ['ai_capital'])
-    .map(n => n.trim().toLowerCase())
-    .filter(Boolean)
+  if (configured === undefined) return ['ai_capital']
+  const names = configured.split(',').map(n => n.trim().toLowerCase()).filter(Boolean)
+  if (names.length === 0) {
+    throw new Error(
+      '@common/db: LIVE_DATABASE_NAMES is set but empty after parsing ' +
+      `(${JSON.stringify(configured)}). Refusing to run with NO protected databases. ` +
+      'Unset it to use the default, or name at least one database.',
+    )
+  }
+  return names
 }
 
 /**
@@ -51,21 +71,25 @@ function liveDatabaseNames(): string[] {
  */
 export function databaseNameOf(connectionString: string): string | null {
   try {
-    let name = new URL(connectionString).pathname
-    // Iteratively decode (bounded) so %5F and %255F both resolve.
+    // Use the DRIVER'S OWN parser, not a hand-rolled one. Two bypasses came
+    // from reimplementing it: `%5F` (pg decodes the pathname, `new URL()` does
+    // not) and `socket:/tmp?db=ai_capital` (pg's socket: branch takes the
+    // database from ?db= while the pathname says "tmp"). Both were allowed by a
+    // guard that looked correct. Deriving from `parse()` makes the guard
+    // equivalent to the driver BY CONSTRUCTION rather than by a list of cases
+    // someone remembered.
+    const raw = parseConnectionString(connectionString).database
+    if (!raw) return null
+
+    let name = raw
     for (let i = 0; i < 4; i++) {
       const decoded = decodeURIComponent(name)
       if (decoded === name) break
       name = decoded
     }
-    const canonical = name
-      .replace(/^\/+/, '')      // leading slash(es)
-      .replace(/\/+$/, '')      // a trailing slash must not disguise the name
-      .trim()
-      .toLowerCase()
-    // A NUL or other control character must not be a way to smuggle a live name
-    // past the comparison and let the wire protocol be the only thing that
-    // stops it. Treat it as uncanonicalisable, which the caller fails closed on.
+    const canonical = name.replace(/^\/+/, '').replace(/\/+$/, '').trim().toLowerCase()
+    // A NUL or other control character must not smuggle a live name past the
+    // comparison and leave the wire protocol as the only defence.
     if (/[\u0000-\u001f\u007f]/.test(canonical)) return null
     return canonical || null
   } catch {
