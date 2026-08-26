@@ -176,7 +176,18 @@ source data the same way Atlas/Sentinel do —
 `apps/world-intelligence-data-hub-/exports/*`,
 `apps/ai-analysis-engine/data/analysis.json`, live Postgres portfolio
 data, etc. — never trust a single specialist's prose as if it were the
-source. When that Postgres data is `portfolio.positions`,
+source.
+
+**Query Postgres with `$AGENT_DATABASE_URL`** — `psql "$AGENT_DATABASE_URL" -c
+"..."`. That credential authenticates as the `ai_capital_agent` role, which is
+**read-only enforced by PostgreSQL** (added 2026-08-26): SELECT everywhere, no
+INSERT/UPDATE/DELETE/TRUNCATE/CREATE/ALTER/DROP anywhere, NOSUPERUSER,
+NOINHERIT, no role memberships, so no `SET ROLE` escalation exists. This matches
+what your file already says about having no Edit/Write — the database now
+enforces it rather than trusting the instruction. Do NOT use `$DATABASE_URL`;
+that is the privileged application credential and analysis never needs it.
+
+When that Postgres data is `portfolio.positions`,
 **`current_value` and `unrealized_pnl` are stored in each position's
 native currency** (check the `currency` column — `USD` or `THB` — never
 assume USD): a prior real incident (2026-07-06, commit `6bb1b0a`) summed
