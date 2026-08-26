@@ -140,3 +140,50 @@ including JPM. Any ad-hoc CLI run **without** `DATABASE_URL` operates on that
 stale copy. It is not a contamination risk (it cannot reintroduce the fixture
 value, and it has no JPM row at all), but it is a silent-wrong-data path of the
 same family as the 2026-07-05 CRWD split incident.
+
+---
+
+## F6 — Incident #1's blast radius was larger than recorded
+
+**Severity: record-keeping. Found by Warden 2026-08-26. Nothing survives.**
+
+`desk.agent_claims` was created by migration `008` at 2026-08-25 04:45:13-07.
+Its lifetime `pg_stat` counters show **79 insert events, 45 updates and 73
+deletes against the production table** — far more than the 16 rows attributed to
+the 2026-08-26 claim-writer incident.
+
+Migration `009` (20:57:15) added `recorded_by NOT NULL` plus
+`CHECK (capture_method <> 'self' OR lower(recorded_by) = lower(claimant))`. Any
+pre-existing row would have been backfilled `recorded_by='unknown'`,
+`capture_method='self'` and failed that CHECK. It applied cleanly — which
+**proves the table was empty at 20:57:15**.
+
+So roughly 63 insert events and most of the 45 updates hit
+`desk.agent_claims` **in production on 2026-08-25**, from the original
+`agent-claims.test.ts` running through `getPool()`/`DATABASE_URL` before test
+isolation existed. Warden's second audit did note "63 claim rows inserted into
+the live book, 57 deleted by the test's own cleanup, 6 rolled back" — but that
+never made it into the incident record, and an earlier draft comment in `009`
+asserted the opposite ("the table has never held a row").
+
+**Nothing survives** — the table is empty and verified so by exhaustive regex
+search across every text column in every production table. This is a correction
+to the historical account, not live contamination.
+
+**Method note worth keeping:** `n_tup_ins − n_tup_del` counts *tuples*, not
+surviving rows. A rolled-back `INSERT` still increments `n_tup_ins`, and
+`TRUNCATE` removes rows *without* incrementing `n_tup_del`. Warden validated
+both on a throwaway database rather than assuming. So `79 − 73 = 6` here means
+six tuples from transactions that rolled back, not six missing rows.
+
+## F7 — An unreconciled count in the 2026-08-26 incident narrative
+
+One execution of `claim-governance.test.ts` writes 11 successful claim inserts
+and 3 run records. Six run records were found, implying two executions and
+therefore ~22 claim rows — but 16 were deleted. Both runs failed partway
+(8 and 1 failing tests respectively), which plausibly accounts for the
+shortfall, but that is inference rather than evidence.
+
+It does not affect cleanliness: the table is empty, the arithmetic balances, and
+no fixture signature survives anywhere in production. Recorded because the
+narrative does not fully reconcile and should not be presented as if it does.
