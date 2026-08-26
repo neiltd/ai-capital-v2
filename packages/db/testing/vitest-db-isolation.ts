@@ -57,6 +57,40 @@ if (LIVE_URL) {
   }
 }
 
+// Every OTHER credential that could reach production must go too — and this
+// must NOT be a list of variable names.
+//
+// The first version named CLAIM_WRITER_DATABASE_URL and AGENT_DATABASE_URL
+// explicitly, because those are the two that exist today. That is the same
+// shape of mistake as the incident it was written after: the claim writer was
+// invisible to every guard precisely because every guard had been written
+// against the credentials that existed when it was written. A named allowlist
+// is always one new variable behind.
+//
+// So the rule is about the DESTINATION, not the name: any environment variable
+// that parses as a connection string aimed at a protected live database is
+// removed, whatever it is called. TEST_DATABASE_URL pointed at a throwaway
+// survives this untouched, because it is judged the same way and passes.
+for (const [key, value] of Object.entries(process.env)) {
+  if (!value || key === 'DATABASE_URL') continue          // handled above, with its own message
+  if (!/^postgres(ql)?:\/\/|^socket:/i.test(value)) continue
+  const target = databaseNameOf(value)
+  if (target && liveDatabaseNames().includes(target)) {
+    delete process.env[key]
+    console.warn(`[test-isolation] ${key} pointed at the live database "${target}" — cleared for this test run.`)
+  }
+}
+
+// PGDATABASE is not a connection string but pg resolves it as a destination, so
+// a discrete-config client would inherit it. Same rule, different spelling.
+{
+  const pgdb = process.env.PGDATABASE?.trim().toLowerCase()
+  if (pgdb && liveDatabaseNames().includes(pgdb)) {
+    delete process.env.PGDATABASE
+    console.warn(`[test-isolation] PGDATABASE named the live database "${pgdb}" — cleared for this test run.`)
+  }
+}
+
 // Fail loudly rather than silently if a test re-introduces a live URL mid-run.
 beforeAll(() => {
   const current = process.env.DATABASE_URL

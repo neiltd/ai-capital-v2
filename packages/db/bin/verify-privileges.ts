@@ -130,9 +130,45 @@ async function main(): Promise<void> {
        FROM pg_auth_members m
        JOIN pg_roles r ON r.oid = m.member
        JOIN pg_roles g ON g.oid = m.roleid
-      WHERE r.rolname IN ('ai_capital_agent','ai_capital_test_runtime')`)
+      WHERE r.rolname IN ('ai_capital_agent','ai_capital_test_runtime','ai_capital_claim_writer')`)
   check(mem.length === 0, 'restricted roles have no role memberships',
     mem.map(m => `${m.member}->${m.granted}`).join(', '))
+
+  // ── The claim writer ───────────────────────────────────────────────────
+  // Warden's finding: this verifier reported "Authority boundary intact" while
+  // never checking the credential that caused the 2026-08-26 contamination.
+  // Every has_table_privilege call above is the 2-arg form, implicitly bound to
+  // current_user — so the claim writer was entirely outside its scope.
+  console.log('\nchecking ai_capital_claim_writer is scoped to the claim lifecycle')
+  const WRITER = 'ai_capital_claim_writer'
+  const ALLOWED_WRITES = new Set(['desk.agent_claims:INSERT', 'desk.agent_claims:UPDATE', 'desk.agent_runs:INSERT'])
+  const writerWrites: string[] = []
+  for (const t of tables) {
+    const fq = `${t.schemaname}.${t.tablename}`
+    const { rows } = await c.query<Record<string, boolean>>(
+      'SELECT ' + WRITE_PRIVS.map(p => `has_table_privilege($1, $2, '${p}') AS "${p}"`).join(', '),
+      [WRITER, fq])
+    for (const p of WRITE_PRIVS) if (rows[0][p]) writerWrites.push(`${fq}:${p}`)
+  }
+  const unexpected = writerWrites.filter(w => !ALLOWED_WRITES.has(w))
+  check(unexpected.length === 0,
+    'claim writer has no write privilege beyond the claim lifecycle', unexpected.join(', '))
+  check(ALLOWED_WRITES.size === writerWrites.filter(w => ALLOWED_WRITES.has(w)).length,
+    'claim writer retains exactly the writes it needs',
+    `has: ${writerWrites.join(', ')}`)
+
+  const { rows: wSuper } = await c.query<{ s: boolean; d: boolean; r: boolean }>(
+    `SELECT rolsuper s, rolcreatedb d, rolcreaterole r FROM pg_roles WHERE rolname=$1`, [WRITER])
+  check(wSuper.length === 1 && !wSuper[0].s && !wSuper[0].d && !wSuper[0].r,
+    'claim writer holds no privileged role attribute')
+
+  const creatableW = (await Promise.all([])) as string[]
+  for (const sName of schemas.map(x => x.n)) {
+    const { rows } = await c.query<{ c: boolean }>(
+      `SELECT has_schema_privilege($1, $2, 'CREATE') AS c`, [WRITER, sName])
+    if (rows[0].c) creatableW.push(sName)
+  }
+  check(creatableW.length === 0, 'claim writer cannot CREATE in any schema', creatableW.join(', '))
 
   await c.end()
 

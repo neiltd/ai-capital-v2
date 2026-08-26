@@ -112,31 +112,88 @@ describe('DB isolation coverage across the workspace', () => {
   })
 })
 
-describe('nothing outside packages/db can open a Postgres connection', () => {
-  it('no direct driver import bypasses getPool()', () => {
-    // Every route to production must pass through getPool(), which carries the
-    // guard. Widened after Warden showed the first version missed
-    // `await import('pg')`, 'pg-pool', 'pg/lib/client.js', and every extension
-    // other than .ts.
-    const DRIVER = /(?:from|import|require)\s*\(?\s*['"`](pg|pg-pool|pg\/[^'"`]+|postgres|knex|slonik|drizzle-orm\/node-postgres)['"`]/
+describe('nothing outside the factory can open a Postgres connection', () => {
+  it('no connection is CONSTRUCTED outside pool.ts', () => {
+    // The invariant is about construction, not imports: `import type pg` is
+    // fine, and so is importing the driver to name its types. What must not
+    // exist anywhere else is a call that actually opens a connection.
+    //
+    // Exempts ONLY the factory file. An earlier version exempted all of
+    // packages/db/ — precisely where the offending `new pg.Pool` in
+    // agent-claims.ts lived — so it could never have caught the incident it was
+    // written to prevent.
+    const CONSTRUCT = /new\s+(pg\.)?(Pool|Client)\s*\(|createPool\s*\(|pgPool\s*\(/
+    const VALUE_IMPORT = /^(?!.*\bimport\s+type\b).*(?:from|require\s*\(|import\s*\()\s*['"`](pg-pool|pg\/[^'"`]+|postgres|knex|slonik|drizzle-orm\/node-postgres)['"`]/m
     const CODE = /\.(ts|tsx|mts|cts|js|jsx|mjs|cjs)$/
+    const ALLOWED = 'packages/db/src/pool.ts'
+    const SELF = 'packages/db/tests/isolation-coverage.test.ts'
+
     const offenders: string[] = []
     const walk = (dir: string) => {
       for (const e of readdirSync(dir, { withFileTypes: true })) {
-        // `generated` is gitignored Prisma output — scanning it makes the
-        // result depend on whether `prisma generate` has been run.
         if (['node_modules', '.git', 'dist', '.next', 'generated', 'coverage'].includes(e.name)) continue
         const p = join(dir, e.name)
         if (e.isDirectory()) { walk(p); continue }
         if (!CODE.test(e.name)) continue
-        if (DRIVER.test(readFileSync(p, 'utf-8'))) offenders.push(p.replace(`${REPO}/`, ''))
+        const rel = p.replace(`${REPO}/`, '')
+        if (rel === ALLOWED || rel === SELF) continue    // SELF contains these patterns as data
+        const src = readFileSync(p, 'utf-8')
+        // `createPool(` is legitimate: it IS the guarded factory. Only a raw
+        // driver construction or an alternate driver counts as an offence.
+        if (/new\s+(pg\.)?(Pool|Client)\s*\(/.test(src) || VALUE_IMPORT.test(src)) {
+          offenders.push(rel)
+        }
+        void CONSTRUCT
+      }
+    }
+    for (const group of [...workspaceGroups(), 'scripts']) {
+      const dir = join(REPO, group)
+      if (existsSync(dir)) walk(dir)
+    }
+    expect(offenders, `these construct a Postgres connection outside ${ALLOWED}: ${offenders.join(', ')}`).toEqual([])
+  })
+})
+
+describe('no test file is silently dead', () => {
+  it('every relative import in every test file resolves', () => {
+    // WHY THIS IS HERE. On 2026-08-26, three test files in
+    // dependency-graph-engine were found importing `../src/store/sqlite.js`,
+    // a module renamed on 2026-06-11. Vitest reported them as failed FILES
+    // while still printing "Tests 15 passed" — and `pnpm -r test` output is
+    // read for the passing line. Fourteen tests over the graph store had not
+    // executed in over two months, behind a green number.
+    //
+    // A test that cannot load is worse than a missing test: it is counted as
+    // coverage that does not exist.
+    const IMPORT = /from\s+['"](\.[^'"]+)['"]/g
+    const broken: string[] = []
+
+    const walk = (dir: string) => {
+      for (const e of readdirSync(dir, { withFileTypes: true })) {
+        if (['node_modules', '.git', 'dist', '.next', 'generated', 'coverage'].includes(e.name)) continue
+        const p = join(dir, e.name)
+        if (e.isDirectory()) { walk(p); continue }
+        if (!/\.(test|spec)\.(ts|tsx|mts|js)$/.test(e.name)) continue
+        const src = readFileSync(p, 'utf-8')
+        for (const m of src.matchAll(IMPORT)) {
+          const spec = m[1]
+          const base = resolve(dirname(p), spec)
+          // ESM specifiers name `.js`; the file on disk is `.ts`.
+          const candidates = [base, `${base}.ts`, `${base}.tsx`, join(base, 'index.ts')]
+          if (base.endsWith('.js')) {
+            const stem = base.slice(0, -3)
+            candidates.push(`${stem}.ts`, `${stem}.tsx`, `${stem}.mts`)
+          }
+          if (!candidates.some(c => existsSync(c))) {
+            broken.push(`${p.replace(`${REPO}/`, '')} -> ${spec}`)
+          }
+        }
       }
     }
     for (const group of workspaceGroups()) {
       const dir = join(REPO, group)
       if (existsSync(dir)) walk(dir)
     }
-    const outside = offenders.filter(f => !f.startsWith('packages/db/'))
-    expect(outside, `these reach Postgres without getPool(): ${outside.join(', ')}`).toEqual([])
+    expect(broken, `these test files cannot load, so their tests never run:\n  ${broken.join('\n  ')}`).toEqual([])
   })
 })

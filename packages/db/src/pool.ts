@@ -220,12 +220,46 @@ export function createClient(connectionString: string, opts: ConnectOptions = {}
   })
 }
 
-/** Construct a guarded client from discrete config (no connection string). */
+/**
+ * Construct a guarded client from discrete config.
+ *
+ * Warden proved TWO bypasses in the first version, both of which connected a
+ * VITEST process to the live book:
+ *   1. `{ connectionString }` — ClientConfig accepts one, and the guard only
+ *      read `cfg.database`, which was undefined.
+ *   2. `{ host, user }` with no `database` — `pg` falls back to PGDATABASE,
+ *      then PGUSER, then the OS user. The guard saw '' and allowed it.
+ *
+ * Both are the same shape as the bug this factory exists to prevent: a route
+ * that skips the destination check. So resolve the destination THE WAY pg
+ * WOULD, and fail closed in a test runtime when it cannot be determined.
+ */
 export function createClientFromConfig(cfg: pg.ClientConfig, opts: ConnectOptions = {}): pg.Client {
-  const db = (cfg.database ?? '').toLowerCase()
-  if (!opts.allowProtectedInTests && inTestRuntime() && liveDatabaseNames().includes(db)) {
-    throw new Error(
-      `@common/db: refusing to connect a TEST process to the live database "${db}" (discrete config).`)
+  if (!opts.allowProtectedInTests && inTestRuntime()) {
+    // A connection string in the config is a connection string: same guard.
+    if (cfg.connectionString) assertNotLiveDatabase(cfg.connectionString)
+
+    // pg's own resolution order when `database` is absent.
+    const effective = (
+      cfg.database
+      ?? process.env.PGDATABASE
+      ?? cfg.user
+      ?? process.env.PGUSER
+      ?? process.env.USER
+      ?? ''
+    ).toLowerCase()
+
+    if (!cfg.connectionString && !effective) {
+      // Cannot prove safe must never mean allowed.
+      throw new Error(
+        '@common/db: refusing a TEST-runtime connection whose target database cannot be ' +
+        'determined from the config or the environment. Name it explicitly.')
+    }
+    if (liveDatabaseNames().includes(effective)) {
+      throw new Error(
+        `@common/db: refusing to connect a TEST process to the live database "${effective}" ` +
+        '(resolved from discrete config / PGDATABASE / PGUSER).')
+    }
   }
   return new pg.Client({ connectionTimeoutMillis: 10_000, ...cfg })
 }

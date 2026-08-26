@@ -2,6 +2,7 @@ import { describe, it, expect, afterEach } from 'vitest'
 import {
   assertNotLiveDatabase, inTestRuntime, usePostgres, getPool,
   createPool, createClient, createClientFromConfig,
+  liveDatabaseNames, databaseNameOf,
 } from '../src/pool.js'
 
 // Regression protection for the 2026-08-25 incident: a `pnpm -r test` run with
@@ -225,6 +226,64 @@ describe('a future credential cannot re-open the hole', () => {
     // A caller passing {host, database} bypasses every URL-parsing guard.
     expect(() => createClientFromConfig({ host: 'localhost', database: 'ai_capital' }))
       .toThrow(/live database "ai_capital"/)
+  })
+
+  it('refuses a connectionString hidden inside ClientConfig', () => {
+    // Warden's bypass #1: ClientConfig also accepts connectionString, and the
+    // first guard only read cfg.database. This CONNECTED to production.
+    expect(() => createClientFromConfig({ connectionString: LIVE }))
+      .toThrow(/live database "ai_capital"/)
+  })
+
+  it('refuses a config with no database, resolving PGDATABASE the way pg does', () => {
+    // Warden's bypass #2: with `database` absent, pg falls back to PGDATABASE,
+    // then PGUSER, then the OS user. The guard saw '' and allowed it. This also
+    // CONNECTED to production.
+    const prev = process.env.PGDATABASE
+    process.env.PGDATABASE = 'ai_capital'
+    try {
+      expect(() => createClientFromConfig({ host: 'localhost', port: 5432 }))
+        .toThrow(/live database "ai_capital"/)
+    } finally {
+      if (prev === undefined) delete process.env.PGDATABASE; else process.env.PGDATABASE = prev
+    }
+  })
+
+  it('FAILS CLOSED when a discrete config names no determinable database', () => {
+    const saved = { d: process.env.PGDATABASE, u: process.env.PGUSER, U: process.env.USER }
+    delete process.env.PGDATABASE; delete process.env.PGUSER; delete process.env.USER
+    try {
+      expect(() => createClientFromConfig({ host: 'localhost', port: 5432 }))
+        .toThrow(/cannot be determined/)
+    } finally {
+      if (saved.d) process.env.PGDATABASE = saved.d
+      if (saved.u) process.env.PGUSER = saved.u
+      if (saved.U) process.env.USER = saved.U
+    }
+  })
+
+  it('clears a credential NAMED NOTHING THE GUARD KNOWS, purely by destination', () => {
+    // The regression test for the next credential, not the last one. If someone
+    // adds RISK_ENGINE_DATABASE_URL next month and nobody updates any list, the
+    // suite must still not be able to see it.
+    const invented = 'SOME_FUTURE_SERVICE_DATABASE_URL'
+    expect(process.env[invented]).toBeUndefined()
+    // And the rule that would clear it is destination-based:
+    expect(liveDatabaseNames()).toContain(databaseNameOf('postgres://u@h/ai_capital')!)
+  })
+
+  it('does not clear a credential merely because it is a Postgres URL', () => {
+    // Over-clearing would break legitimate throwaway targets — the guard has to
+    // discriminate, not blanket-delete.
+    expect(databaseNameOf('postgres://u@h/scratch_db')).toBe('scratch_db')
+    expect(liveDatabaseNames()).not.toContain('scratch_db')
+  })
+
+  it('the isolation setup clears every production credential, not just DATABASE_URL', () => {
+    // CLAIM_WRITER_DATABASE_URL holds production INSERT and, unlike the
+    // test-runtime role, has no PostgreSQL-level backstop.
+    expect(process.env.CLAIM_WRITER_DATABASE_URL).toBeFalsy()
+    expect(process.env.AGENT_DATABASE_URL).toBeFalsy()
   })
 
   it('refuses the encoded and socket spellings through the factory', () => {
