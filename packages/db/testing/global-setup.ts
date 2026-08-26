@@ -14,12 +14,10 @@
 // through to the live database, because the whole class of bug this incident
 // came from was a fallback quietly choosing production.
 
-import pg from 'pg'
+import type pg from 'pg'
 import { runMigrations } from '../src/migrate.js'
 import { parse as parseConnectionString } from 'pg-connection-string'
-import { databaseNameOf, liveDatabaseNames } from '../src/pool.js'
-
-const { Client } = pg
+import { databaseNameOf, liveDatabaseNames, createClient, createClientFromConfig } from '../src/pool.js'
 
 /** Schema objects that must exist for the suite to be meaningfully migrated. */
 const REQUIRED_SCHEMAS = ['portfolio', 'capital', 'briefing', 'desk'] as const
@@ -111,7 +109,7 @@ export async function setup(): Promise<void> {
 
   // ── 1. Create if absent ────────────────────────────────────────────────
   let existed = true
-  const admin = new Client(adminConfigFor(testUrl))
+  const admin = createClientFromConfig(adminConfigFor(testUrl))
   try {
     await admin.connect()
   } catch (err) {
@@ -162,7 +160,7 @@ export async function setup(): Promise<void> {
   // ── 3. Verify the resulting schema ─────────────────────────────────────
   // A migration runner that reports success but leaves the schema wrong is
   // exactly the silent-success shape this project has been bitten by.
-  const verify = new Client({ connectionString: testUrl, connectionTimeoutMillis: 10_000 })
+  const verify = createClient(testUrl)
   try {
     await verify.connect()
     const { rows } = await verify.query<{ nspname: string }>(
@@ -212,7 +210,7 @@ export async function setup(): Promise<void> {
   }
   // Prove the restricted credential actually works before handing it over, so a
   // wrong password fails here with a clear message rather than inside a test.
-  const probe = new Client({ connectionString: runtimeUrl, connectionTimeoutMillis: 10_000 })
+  const probe = createClient(runtimeUrl)
   try {
     await probe.connect()
     const { rows } = await probe.query<{ u: string }>('SELECT current_user AS u')

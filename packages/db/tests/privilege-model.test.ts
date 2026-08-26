@@ -1,5 +1,6 @@
 import { describe, it, expect, afterAll } from 'vitest'
-import pg from 'pg'
+import type pg from 'pg'
+import { createClient } from '../src/pool.js'
 
 // Privilege-drift regression check for the Phase 1 role separation.
 //
@@ -15,8 +16,6 @@ import pg from 'pg'
 // only cluster-wide catalogs (pg_roles, pg_auth_members) which are visible from
 // any database. It never needs production access to verify production is safe.
 
-const { Client } = pg
-
 const RESTRICTED = ['ai_capital_agent', 'ai_capital_test_runtime'] as const
 const PRIVILEGED = 'thanapold'
 const PRODUCTION = 'ai_capital'
@@ -29,7 +28,7 @@ function url(): string {
 
 let client: pg.Client | null = null
 async function db(): Promise<pg.Client> {
-  if (!client) { client = new Client({ connectionString: url() }); await client.connect() }
+  if (!client) { client = createClient(url()); await client.connect() }
   return client
 }
 afterAll(async () => { await client?.end().catch(() => {}); client = null })

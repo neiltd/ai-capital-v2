@@ -16,9 +16,7 @@
 //
 // Read-only. Exits non-zero on any violation.
 
-import pg from 'pg'
-
-const { Client } = pg
+import { createClient } from '../src/pool.js'
 
 const PRODUCTION = 'ai_capital'
 const WRITE_PRIVS = ['INSERT', 'UPDATE', 'DELETE', 'TRUNCATE', 'REFERENCES', 'TRIGGER'] as const
@@ -40,7 +38,9 @@ async function main(): Promise<void> {
     process.exit(2)
   }
 
-  const c = new Client({ connectionString: agentUrl, connectionTimeoutMillis: 10_000 })
+  // Not a test runtime, so the guard is inert here — but routed through the
+  // factory anyway so there is exactly one construction path in the repo.
+  const c = createClient(agentUrl)
   await c.connect()
 
   const { rows: who } = await c.query<{ u: string; d: string; su: boolean }>(

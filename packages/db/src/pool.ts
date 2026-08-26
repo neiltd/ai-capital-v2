@@ -155,6 +155,81 @@ export function assertNotLiveDatabase(connectionString: string): void {
   }
 }
 
+
+// ── The one place a Postgres connection is constructed ─────────────────────
+//
+// WHY THIS EXISTS. On 2026-08-26 a NEW credential (CLAIM_WRITER_DATABASE_URL)
+// with its OWN `new pg.Pool` wrote 16 test-fixture claims into the production
+// book. Every guard built during the contamination incident was bypassed — not
+// because any of them was wrong, but because they were all written against the
+// *previous* connection path. The vitest setup clears DATABASE_URL, not that
+// variable; getPool()'s refusal was never consulted; and the claim-writer role
+// legitimately holds production INSERT, so PostgreSQL correctly allowed it.
+//
+// THE INVARIANT, stated so it survives credentials nobody has invented yet:
+//
+//   No connection constructor in this repository may reach a protected live
+//   database from a test runtime, whatever credential asked for it.
+//
+// The protection keys on DESTINATION + RUNTIME, never on an environment
+// variable name. Adding a credential therefore requires no new special case;
+// forgetting to add one cannot re-open the hole.
+
+export interface ConnectOptions {
+  max?: number
+  connectionTimeoutMillis?: number
+  /**
+   * Explicitly designate a protected-database connection from a test runtime.
+   *
+   * Deliberately awkward: it demands a written reason, it is greppable, and it
+   * must be passed at the call site. Nothing in the repo uses it today. If you
+   * are reaching for it, the question to answer first is why a *test* needs to
+   * touch the real book at all.
+   */
+  allowProtectedInTests?: { reason: string }
+}
+
+function guard(connectionString: string, opts?: ConnectOptions): void {
+  if (opts?.allowProtectedInTests) {
+    if (inTestRuntime()) {
+      console.warn(
+        `[@common/db] DESIGNATED protected-database access from a test runtime: ${opts.allowProtectedInTests.reason}`)
+    }
+    return
+  }
+  assertNotLiveDatabase(connectionString)
+}
+
+/** Construct a guarded connection pool. Use this instead of `new pg.Pool`. */
+export function createPool(connectionString: string, opts: ConnectOptions = {}): pg.Pool {
+  guard(connectionString, opts)
+  return new Pool({
+    connectionString,
+    max: opts.max ?? Number(process.env.PG_POOL_MAX ?? '5'),
+    idleTimeoutMillis: 30_000,
+    connectionTimeoutMillis: opts.connectionTimeoutMillis ?? 10_000,
+  })
+}
+
+/** Construct a guarded single client. Use this instead of `new pg.Client`. */
+export function createClient(connectionString: string, opts: ConnectOptions = {}): pg.Client {
+  guard(connectionString, opts)
+  return new pg.Client({
+    connectionString,
+    connectionTimeoutMillis: opts.connectionTimeoutMillis ?? 10_000,
+  })
+}
+
+/** Construct a guarded client from discrete config (no connection string). */
+export function createClientFromConfig(cfg: pg.ClientConfig, opts: ConnectOptions = {}): pg.Client {
+  const db = (cfg.database ?? '').toLowerCase()
+  if (!opts.allowProtectedInTests && inTestRuntime() && liveDatabaseNames().includes(db)) {
+    throw new Error(
+      `@common/db: refusing to connect a TEST process to the live database "${db}" (discrete config).`)
+  }
+  return new pg.Client({ connectionTimeoutMillis: 10_000, ...cfg })
+}
+
 export function getPool(): pg.Pool {
   if (_pool) return _pool
 
@@ -168,15 +243,8 @@ export function getPool(): pg.Pool {
     )
   }
 
-  assertNotLiveDatabase(url)
-
-  _pool = new Pool({
-    connectionString:        url,
-    // Single connection for CLI use; for server processes a higher max is fine.
-    max:                     Number(process.env.PG_POOL_MAX ?? '5'),
-    idleTimeoutMillis:       30_000,
-    connectionTimeoutMillis: 10_000,
-  })
+  // Single construction site: createPool carries the destination+runtime guard.
+  _pool = createPool(url)
 
   _pool.on('error', err => {
     console.error('[@common/db] unexpected pool error:', err.message)

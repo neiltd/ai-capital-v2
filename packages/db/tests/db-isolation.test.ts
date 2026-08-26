@@ -1,5 +1,8 @@
 import { describe, it, expect, afterEach } from 'vitest'
-import { assertNotLiveDatabase, inTestRuntime, usePostgres, getPool } from '../src/pool.js'
+import {
+  assertNotLiveDatabase, inTestRuntime, usePostgres, getPool,
+  createPool, createClient, createClientFromConfig,
+} from '../src/pool.js'
 
 // Regression protection for the 2026-08-25 incident: a `pnpm -r test` run with
 // DATABASE_URL exported wrote fixture rows into the REAL portfolio — a
@@ -191,5 +194,54 @@ describe('a fixture write lands in the test database, not the live book', () => 
     )
     expect(rows[0].n).toBe(1)
     expect(rows[0].db).not.toBe('ai_capital')   // the whole point
+  })
+})
+
+// ── The generic connection boundary ────────────────────────────────────────
+//
+// Added after a NEW credential (CLAIM_WRITER_DATABASE_URL) with its OWN pg.Pool
+// wrote 16 test-fixture claims into the production book on 2026-08-26. Every
+// existing guard was bypassed — not because any was wrong, but because all of
+// them were written against the PREVIOUS connection path.
+//
+// These tests protect the INVARIANT, not today's variable names:
+//
+//   No connection constructor may reach a protected live database from a test
+//   runtime, whatever credential asked for it.
+describe('a future credential cannot re-open the hole', () => {
+  const LIVE = 'postgres://someone:pw@localhost:5432/ai_capital'
+
+  it('refuses a pool for a credential this test does not know the name of', () => {
+    // Simulates SOME_FUTURE_SERVICE_DATABASE_URL — a variable that does not
+    // exist yet and that no setup file will ever think to clear.
+    expect(() => createPool(LIVE)).toThrow(/live database "ai_capital"/)
+  })
+
+  it('refuses a single client the same way', () => {
+    expect(() => createClient(LIVE)).toThrow(/live database "ai_capital"/)
+  })
+
+  it('refuses discrete config too — not just connection strings', () => {
+    // A caller passing {host, database} bypasses every URL-parsing guard.
+    expect(() => createClientFromConfig({ host: 'localhost', database: 'ai_capital' }))
+      .toThrow(/live database "ai_capital"/)
+  })
+
+  it('refuses the encoded and socket spellings through the factory', () => {
+    expect(() => createPool('postgres://x@localhost:5432/ai%5Fcapital')).toThrow(/live database/)
+    expect(() => createPool('socket:/tmp?db=ai_capital')).toThrow(/live database/)
+  })
+
+  it('allows a throwaway destination for any credential', () => {
+    const p = createPool('postgres://x:pw@localhost:5432/ai_capital_test')
+    expect(p).toBeTruthy()
+    void p.end()
+  })
+
+  it('permits designated production access only with a written reason', () => {
+    // Deliberately awkward and greppable. Nothing in the repo uses it.
+    const p = createPool(LIVE, { allowProtectedInTests: { reason: 'unit test of the escape hatch' } })
+    expect(p).toBeTruthy()
+    void p.end()
   })
 })
