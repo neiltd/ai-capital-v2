@@ -1,0 +1,199 @@
+{
+  "date": "2026-07-12",
+  "last_updated": "2026-07-12T14:35:09.879Z",
+  "collection": {
+    "last_run": "2026-07-12T14:30:58.594Z",
+    "run_count": 1,
+    "total_articles": 106,
+    "by_source": {
+      "bbc-world": 16,
+      "dw-world": 3,
+      "aljazeera-english": 25,
+      "france24-english": 22,
+      "nytimes-world": 21,
+      "washingtonpost-world": 0,
+      "bloomberg-markets": 19
+    },
+    "failed_sources": [
+      "npr-news",
+      "scmp-china",
+      "globaltimes-china",
+      "bangkokpost-top",
+      "khaosod-english"
+    ],
+    "skipped_sources": [],
+    "stale_articles": 0,
+    "stale_feed_sources": [],
+    "avg_article_age_hours": 22.5,
+    "oldest_article_days": 3.3
+  },
+  "scoring": {
+    "last_run": "2026-07-12T14:33:55.298Z",
+    "run_count": 1,
+    "total_scored": 235,
+    "recommended": 21,
+    "filtered": 214,
+    "reduction_pct": 91,
+    "score_distribution": {
+      "urgent": 1,
+      "high": 2,
+      "relevant": 10,
+      "marginal": 31,
+      "noise": 191
+    },
+    "by_source": {
+      "aljazeera-english": {
+        "total": 25,
+        "recommended": 1,
+        "narrative": 0
+      },
+      "bbc-world": {
+        "total": 16,
+        "recommended": 0,
+        "narrative": 0
+      },
+      "bloomberg-markets": {
+        "total": 19,
+        "recommended": 5,
+        "narrative": 0
+      },
+      "dw-world": {
+        "total": 3,
+        "recommended": 1,
+        "narrative": 0
+      },
+      "france24-english": {
+        "total": 22,
+        "recommended": 3,
+        "narrative": 0
+      },
+      "nytimes-world": {
+        "total": 21,
+        "recommended": 4,
+        "narrative": 0
+      },
+      "twitter-BillyM2k": {
+        "total": 5,
+        "recommended": 0,
+        "narrative": 0
+      },
+      "twitter-ChuckRobbins": {
+        "total": 1,
+        "recommended": 0,
+        "narrative": 0
+      },
+      "twitter-CollinRugg": {
+        "total": 2,
+        "recommended": 0,
+        "narrative": 0
+      },
+      "twitter-MFA_China": {
+        "total": 5,
+        "recommended": 0,
+        "narrative": 0
+      },
+      "twitter-MichaelDell": {
+        "total": 2,
+        "recommended": 0,
+        "narrative": 0
+      },
+      "twitter-RALee85": {
+        "total": 5,
+        "recommended": 1,
+        "narrative": 0
+      },
+      "twitter-RapidResponse47": {
+        "total": 14,
+        "recommended": 0,
+        "narrative": 0
+      },
+      "twitter-TheFP": {
+        "total": 8,
+        "recommended": 0,
+        "narrative": 0
+      },
+      "twitter-Top_Disaster": {
+        "total": 1,
+        "recommended": 0,
+        "narrative": 0
+      },
+      "twitter-WhiteHouse": {
+        "total": 6,
+        "recommended": 0,
+        "narrative": 0
+      },
+      "twitter-borzou": {
+        "total": 19,
+        "recommended": 6,
+        "narrative": 0
+      },
+      "twitter-brian_armstrong": {
+        "total": 3,
+        "recommended": 0,
+        "narrative": 0
+      },
+      "twitter-elonmusk": {
+        "total": 5,
+        "recommended": 0,
+        "narrative": 0
+      },
+      "twitter-haydenzadams": {
+        "total": 2,
+        "recommended": 0,
+        "narrative": 0
+      },
+      "twitter-jiayuan_jy": {
+        "total": 3,
+        "recommended": 0,
+        "narrative": 0
+      },
+      "twitter-mert": {
+        "total": 3,
+        "recommended": 0,
+        "narrative": 0
+      },
+      "twitter-mfa_russia": {
+        "total": 1,
+        "recommended": 0,
+        "narrative": 0
+      },
+      "twitter-paulg": {
+        "total": 4,
+        "recommended": 0,
+        "narrative": 0
+      },
+      "twitter-pmarca": {
+        "total": 10,
+        "recommended": 0,
+        "narrative": 0
+      },
+      "twitter-politico": {
+        "total": 20,
+        "recommended": 0,
+        "narrative": 0
+      },
+      "twitter-toly": {
+        "total": 10,
+        "recommended": 0,
+        "narrative": 0
+      }
+    }
+  },
+  "extraction": {
+    "last_run": "2026-07-12T14:35:09.879Z",
+    "run_count": 1,
+    "articles_sent_to_ai": 21,
+    "batches_run": 3,
+    "events_extracted": 7,
+    "events_merged": 0,
+    "low_confidence": 0,
+    "human_review": 1,
+    "api_tokens": {
+      "input": 5348,
+      "output": 4672,
+      "cache_write": 3927,
+      "cache_read": 7854
+    },
+    "estimated_cost_usd": 0.10320644999999999
+  }
+}

@@ -158,7 +158,16 @@ produces the data, then that app's `src/cli/*.ts` entry point.
 
 `tsconfig.base.json` sets `strict: true`, `noUnusedLocals`,
 `noUnusedParameters`, `noFallthroughCasesInSwitch`, ESM (`module: ESNext`,
-`moduleResolution: Bundler`). Every app/package extends this — keep new code
+`moduleResolution: Bundler`).
+
+**Correction (2026-08-26): NOT every app/package extends this.** Only 4 of 18
+projects do; twelve set `target` explicitly instead, and `apps/unified-platform`
+set neither — so it defaulted to ES5, and a `[...new Set()]` in
+`packages/db/src/pool.ts` (pulled in via `transpilePackages`) broke the
+dashboard BUILD for three days without any test noticing. The believed-universal
+`extends` is why nobody looked. When touching shared `packages/*` code, run
+`pnpm -r --if-present typecheck` AND `pnpm --filter unified-platform build` —
+the test suite does not cover compilation. Keep new code
 clean under these flags rather than loosening them.
 
 ## Documentation

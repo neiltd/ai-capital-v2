@@ -1,196 +1,504 @@
 {
   "schemaVersion": "1.0.0",
-  "generatedAt": "2026-07-07T14:24:29.679Z",
+  "generatedAt": "2026-08-25T01:54:06.632Z",
   "source": "world-intelligence-hub",
-  "eventCount": 9,
+  "eventCount": 23,
   "dateRange": {
-    "from": "2026-07-07",
-    "to": "2026-07-07"
+    "from": "2026-08-22",
+    "to": "2026-08-25"
   },
   "events": [
     {
-      "id": "8d27c71869e4cae1950ae787",
+      "id": "164e837b6d8664dadc5c54f5",
       "source": "rss_intelligence",
-      "eventDate": "2026-07-07",
+      "eventDate": "2026-08-25",
       "iso3": [
-        "IRN"
+        "YEM",
+        "SAU"
       ],
-      "eventType": "economic.trade",
-      "headline": "IEA: Global Gas Demand Set for First Annual Drop Since 2022 Due to Iran War",
-      "summary": "The International Energy Agency has forecast that global gas demand will post its first annual decline since the 2022 energy crisis, attributing the drop to higher prices caused by the ongoing Iran war. The IEA's assessment links the conflict's disruption of energy markets to a structural demand contraction.",
-      "confidenceScore": 0.78,
-      "confidenceLabel": "high",
+      "eventType": "conflict.armed",
+      "headline": "Houthis claim attack on Saudi-flagged oil tanker in Red Sea",
+      "summary": "Yemen's Houthi movement reported an attack on a Saudi oil tanker in the Red Sea. Saudi shipping company Bahri confirmed its vessel was struck but said all crew members were safe.",
+      "confidenceScore": 0.65,
+      "confidenceLabel": "medium",
       "coordinateQuality": "missing",
       "tier": 2,
       "tags": [
-        "bloomberg-markets",
-        "storyline:33400b9c"
+        "aljazeera-english",
+        "storyline:cb89f44e"
       ],
-      "geopoliticalScore": 7.2,
-      "economicImpactScore": 8.2
+      "geopoliticalScore": 6,
+      "economicImpactScore": 7
     },
     {
-      "id": "ba6be156583e6fe1e5a22ad8",
+      "id": "720bf59d2f5aef497364422f",
       "source": "rss_intelligence",
-      "eventDate": "2026-07-07",
+      "eventDate": "2026-08-25",
       "iso3": [
-        "GBR",
-        "IRN"
+        "SYR",
+        "USA"
       ],
-      "eventType": "energy.disruption",
-      "headline": "BP Boosted European Jet Fuel Output 30% During Iran Conflict to Avert Shortages",
-      "summary": "BP Plc increased jet fuel production at its European refineries by approximately 30% during the Iran conflict, helping the region avoid major fuel shortages. Millions of barrels of oil were locked up in the Persian Gulf during the period, necessitating the production increase.",
+      "eventType": "diplomatic.dispute",
+      "headline": "US removes Syria from state sponsors of terrorism list, embraces al-Sharaa government",
+      "summary": "The Trump administration removed Syria from the US list of state sponsors of terrorism. The move signals US engagement with Syria's new president, former al-Qaeda linked militant Ahmed al-Sharaa.",
       "confidenceScore": 0.8,
       "confidenceLabel": "high",
       "coordinateQuality": "missing",
       "tier": 2,
       "tags": [
-        "bloomberg-markets",
-        "storyline:33400b9c"
-      ],
-      "geopoliticalScore": 6.5,
-      "economicImpactScore": 7.5
-    },
-    {
-      "id": "7bee85d22f570dfe15479d55",
-      "source": "rss_intelligence",
-      "eventDate": "2026-07-07",
-      "iso3": [
-        "RUS",
-        "IRN",
-        "USA",
-        "ISR"
-      ],
-      "eventType": "energy.disruption",
-      "headline": "Russian Oil Export Volumes Hit New High But Revenue Crushed by Falling Prices",
-      "summary": "Russia's oil export flows have reached a new record high, but tumbling crude prices are severely compressing income from those exports. Urals crude prices have fallen back to levels seen before the US and Israel launched their military campaign against Iran.",
-      "confidenceScore": 0.78,
-      "confidenceLabel": "high",
-      "coordinateQuality": "missing",
-      "tier": 2,
-      "tags": [
-        "bloomberg-markets",
-        "storyline:33400b9c"
+        "bbc-world",
+        "storyline:87972419"
       ],
       "geopoliticalScore": 7,
-      "economicImpactScore": 8
+      "economicImpactScore": 3
     },
     {
-      "id": "41fbdeb08b391684be47d198",
+      "id": "3782b3b2f643c8ba5d9ce69d",
       "source": "rss_intelligence",
-      "eventDate": "2026-07-07",
+      "eventDate": "2026-08-25",
       "iso3": [
-        "ARE",
-        "SAU"
+        "CAN",
+        "USA"
       ],
-      "eventType": "other",
-      "headline": "Abu Dhabi Royal Family Firm to Invest $1.13 Billion in Aramco-Backed LNG Company MidOcean",
-      "summary": "An investment firm owned by members of Abu Dhabi's ruling family has committed $1.13 billion to liquefied natural gas company MidOcean Energy LLC, which is backed by Saudi Aramco. The deal represents a significant cross-Gulf energy investment amid ongoing regional conflict.",
-      "confidenceScore": 0.82,
+      "eventType": "economic.trade",
+      "headline": "US-Canada trade war escalation threatens businesses on both sides of border",
+      "summary": "Business owners in Canada and the US report worry as tit-for-tat import tariffs escalate between the two countries. Some firms fear losing significant portions of their business as the trade war continues.",
+      "confidenceScore": 0.7,
+      "confidenceLabel": "medium",
+      "coordinateQuality": "missing",
+      "tier": 3,
+      "tags": [
+        "bbc-world",
+        "storyline:7bcf2c0f"
+      ],
+      "geopoliticalScore": 4,
+      "economicImpactScore": 6
+    },
+    {
+      "id": "39cbc331f7fa05d13a4c97e8",
+      "source": "rss_intelligence",
+      "eventDate": "2026-08-25",
+      "iso3": [
+        "CAN",
+        "USA"
+      ],
+      "eventType": "economic.trade",
+      "headline": "Ontario Premier Ford urges Canada to escalate trade war response against Trump tariffs",
+      "summary": "Ontario Premier Doug Ford said standing up to US President Donald Trump in the ongoing trade war will not be easy. Ford said Canada must be willing to escalate the trade war and that every option should be on the table.",
+      "confidenceScore": 0.75,
       "confidenceLabel": "high",
       "coordinateQuality": "missing",
       "tier": 3,
       "tags": [
         "bloomberg-markets",
-        "storyline:3bac099c"
+        "storyline:7bcf2c0f"
       ],
-      "geopoliticalScore": 5,
-      "economicImpactScore": 6
+      "geopoliticalScore": 4,
+      "economicImpactScore": 5
     },
     {
-      "id": "db8c1c3cbed0e0901076ca73",
+      "id": "70eeef7c753df2c620235836",
       "source": "rss_intelligence",
-      "eventDate": "2026-07-07",
+      "eventDate": "2026-08-25",
       "iso3": [
+        "GBR",
         "UKR",
-        "MCO"
+        "RUS"
       ],
       "eventType": "conflict.armed",
-      "headline": "Monaco Bombing Suspect Anastasiia Berezovska Found Shot Dead Near Kyiv, Ukrainian Military Intelligence Employee Detained",
-      "summary": "The body of Anastasiia Berezovska, the Ukrainian woman suspected of planting a parcel bomb in Monaco last week targeting businessman Vadym Yermolaiev, was found shot dead near Kyiv. Ukrainian prosecutors confirmed the discovery, and authorities detained an employee of Ukraine's military intelligence service who admitted to killing her. Two additional individuals were also detained in connection with her murder.",
-      "confidenceScore": 0.88,
-      "confidenceLabel": "high",
+      "headline": "UK Storm Shadow missiles assessed as potential game changer for Ukraine in war with Russia",
+      "summary": "A BBC report examines whether the UK's Storm Shadow missile technology could significantly impact Ukraine's ability to counter Russia in the ongoing war.",
+      "confidenceScore": 0.5,
+      "confidenceLabel": "low",
       "coordinateQuality": "missing",
-      "tier": 1,
+      "tier": 3,
       "tags": [
-        "dw-world",
-        "france24-english",
-        "nytimes-world",
-        "storyline:67ec2570"
+        "bbc-world",
+        "storyline:15e51a60"
       ],
-      "geopoliticalScore": 7,
-      "economicImpactScore": 0.5
+      "geopoliticalScore": 5,
+      "economicImpactScore": 1
     },
     {
-      "id": "afae3704d02e91b3213c8fd5",
+      "id": "e23f20d5f3468e89f41ff2c0",
       "source": "rss_intelligence",
-      "eventDate": "2026-07-07",
+      "eventDate": "2026-08-25",
       "iso3": [
-        "OMN",
-        "GBR",
         "IRN",
         "USA"
       ],
       "eventType": "energy.disruption",
-      "headline": "Tanker Struck and Set Ablaze in Strait of Hormuz Near Oman, British Military Reports",
-      "summary": "A tanker was struck by a projectile and caught fire in the Strait of Hormuz near Oman, according to a British maritime monitor. No casualties were reported. Neither Iran nor the United States immediately commented on the incident.",
-      "confidenceScore": 0.75,
-      "confidenceLabel": "high",
-      "coordinateQuality": "missing",
-      "tier": 1,
-      "tags": [
-        "washingtonpost-world",
-        "storyline:3bac099c"
-      ],
-      "geopoliticalScore": 8.5,
-      "economicImpactScore": 9
-    },
-    {
-      "id": "41864573dfb94f306cc77bde",
-      "source": "rss_intelligence",
-      "eventDate": "2026-07-07",
-      "iso3": [
-        "BLR",
-        "RUS",
-        "UKR"
-      ],
-      "eventType": "diplomatic.dispute",
-      "headline": "Belarus Faces Dual Pressure as Russia Demands War Support and Ukraine Threatens Cross-Border Strikes",
-      "summary": "Belarus is under simultaneous pressure from Russia, which is seeking military assistance for its war in Ukraine, and from Ukraine, which is threatening strikes against Belarusian territory. Belarus, which served as a staging ground for Russia's 2022 invasion of Ukraine, appears to be resisting deeper involvement in the conflict. The situation highlights Belarus's precarious geopolitical position.",
+      "headline": "Oil prices fall as US intensifies pressure on Iran over Strait of Hormuz flows",
+      "summary": "Oil held a decline as the United States ramped up economic pressure on Iran and its trading partners in an effort to force the resumption of energy flows through the Strait of Hormuz.",
       "confidenceScore": 0.7,
       "confidenceLabel": "medium",
       "coordinateQuality": "missing",
       "tier": 2,
       "tags": [
-        "washingtonpost-world",
-        "storyline:ee3fcabe"
+        "bloomberg-markets",
+        "storyline:7bcf2c0f"
       ],
-      "geopoliticalScore": 7.5,
+      "geopoliticalScore": 6,
+      "economicImpactScore": 8.5
+    },
+    {
+      "id": "6eaf33d01c8103914cec34e1",
+      "source": "rss_intelligence",
+      "eventDate": "2026-08-25",
+      "iso3": [
+        "IRN",
+        "USA"
+      ],
+      "eventType": "energy.disruption",
+      "headline": "Analyst Ed Morse discusses Brent crude decline amid Iran sanctions and Hormuz Strait uncertainty",
+      "summary": "Commodities analyst Ed Morse discussed the recent fall in Brent crude oil prices, attributing it to market attention on the potential impact of Iran sanctions affecting supply expectations and investor sentiment.",
+      "confidenceScore": 0.6,
+      "confidenceLabel": "medium",
+      "coordinateQuality": "missing",
+      "tier": 3,
+      "tags": [
+        "bloomberg-markets",
+        "storyline:7bcf2c0f"
+      ],
+      "geopoliticalScore": 5,
+      "economicImpactScore": 7.5
+    },
+    {
+      "id": "0e86c0d3bfd56e981d1684fa",
+      "source": "rss_intelligence",
+      "eventDate": "2026-08-25",
+      "iso3": [
+        "RUS",
+        "UKR"
+      ],
+      "eventType": "energy.disruption",
+      "headline": "Ukrainian strikes on Russian refineries deepen fuel crisis reaching Moscow",
+      "summary": "Ukrainian attacks on Russian oil refineries have worsened a fuel crisis in Russia, with shortages now reaching Moscow. The report examines whether resulting public anger could pressure President Putin over the war in Ukraine.",
+      "confidenceScore": 0.65,
+      "confidenceLabel": "medium",
+      "coordinateQuality": "missing",
+      "tier": 2,
+      "tags": [
+        "dw-world",
+        "storyline:d7b89a21"
+      ],
+      "geopoliticalScore": 6,
+      "economicImpactScore": 6
+    },
+    {
+      "id": "ea4dbc95c7b1a107c5e71c35",
+      "source": "rss_intelligence",
+      "eventDate": "2026-08-25",
+      "iso3": [
+        "UKR",
+        "RUS"
+      ],
+      "eventType": "diplomatic.dispute",
+      "headline": "Zelenskyy rejects wartime elections, warns of Russian mass mobilization after September polls",
+      "summary": "Ukrainian President Zelenskyy rejected calls by an ex-defense minister for wartime elections, saying they could 'split Ukraine.' He also said Russia was planning to mobilize hundreds of thousands of troops after its September elections.",
+      "confidenceScore": 0.65,
+      "confidenceLabel": "medium",
+      "coordinateQuality": "missing",
+      "tier": 2,
+      "tags": [
+        "dw-world",
+        "storyline:5d402f80"
+      ],
+      "geopoliticalScore": 6,
+      "economicImpactScore": 2
+    },
+    {
+      "id": "9cec1ebf119ca50ff623c134",
+      "source": "rss_intelligence",
+      "eventDate": "2026-08-25",
+      "iso3": [
+        "GBR",
+        "FRA",
+        "UKR"
+      ],
+      "eventType": "diplomatic.cooperation",
+      "headline": "UK and France re-announce anti-missile technology commitments for Ukraine",
+      "summary": "The UK and France re-announced anti-missile technology commitments to support Ukraine, but analysts say the systems will not be operational for years. A former military intelligence officer described the move as largely symbolic, warning it fails to address Ukraine's urgent air defence needs.",
+      "confidenceScore": 0.6,
+      "confidenceLabel": "medium",
+      "coordinateQuality": "missing",
+      "tier": 3,
+      "tags": [
+        "france24-english",
+        "storyline:15e51a60"
+      ],
+      "geopoliticalScore": 4,
+      "economicImpactScore": 1
+    },
+    {
+      "id": "96210ba231761dd7842d7ef0",
+      "source": "rss_intelligence",
+      "eventDate": "2026-08-25",
+      "iso3": [
+        "UKR",
+        "RUS"
+      ],
+      "eventType": "energy.disruption",
+      "headline": "Renewed Black Sea blockade slows Ukrainian grain exports, hurting farmers",
+      "summary": "Ukraine and Russia have escalated attacks on each other's Black Sea ports, drastically slowing grain shipments through the vital waterway. The renewed blockade is reported to be hitting Ukrainian farmers particularly hard.",
+      "confidenceScore": 0.65,
+      "confidenceLabel": "medium",
+      "coordinateQuality": "missing",
+      "tier": 2,
+      "tags": [
+        "france24-english",
+        "storyline:d7b89a21"
+      ],
+      "geopoliticalScore": 6,
+      "economicImpactScore": 7
+    },
+    {
+      "id": "c70830c7ab633107a570040c",
+      "source": "rss_intelligence",
+      "eventDate": "2026-08-25",
+      "iso3": [
+        "COD",
+        "RWA"
+      ],
+      "eventType": "diplomatic.cooperation",
+      "headline": "Ceasefire verification mission deploys to eastern DR Congo after Switzerland-mediated roadmap",
+      "summary": "A ceasefire verification mission including representatives of the DR Congo government, the Rwanda-backed AFC/M23 rebel group, and ICGLR observers arrived in South Kivu on Monday. The deployment follows a Switzerland-mediated roadmap agreed between the DRC and AFC/M23.",
+      "confidenceScore": 0.75,
+      "confidenceLabel": "high",
+      "coordinateQuality": "missing",
+      "tier": 2,
+      "tags": [
+        "france24-english",
+        "storyline:48672eec"
+      ],
+      "geopoliticalScore": 5,
+      "economicImpactScore": 1
+    },
+    {
+      "id": "ea9b4d335441af17789a5a6e",
+      "source": "rss_intelligence",
+      "eventDate": "2026-08-25",
+      "iso3": [
+        "IRN",
+        "USA"
+      ],
+      "eventType": "economic.sanctions",
+      "headline": "US prepares new round of sanctions on Iran amid existing naval blockade",
+      "summary": "The United States says it is preparing to announce new sanctions on Iran, described as an economic 'D-day,' intended to add further pressure on Iran's economy already weakened by prior sanctions and a US naval blockade.",
+      "confidenceScore": 0.6,
+      "confidenceLabel": "medium",
+      "coordinateQuality": "missing",
+      "tier": 2,
+      "tags": [
+        "france24-english",
+        "storyline:87972419"
+      ],
+      "geopoliticalScore": 6,
+      "economicImpactScore": 5
+    },
+    {
+      "id": "447ba740ca036bc5ba87f94d",
+      "source": "rss_intelligence",
+      "eventDate": "2026-08-25",
+      "iso3": [
+        "USA"
+      ],
+      "eventType": "energy.disruption",
+      "headline": "War, weather and trade disputes threaten global wheat harvests and food prices",
+      "summary": "Bad harvests, extreme weather, and attacks on trade passages are threatening to drive global food prices higher, according to reporting on the world's breadbasket regions. The article links conflict and trade disruptions to worsening wheat supply conditions.",
+      "confidenceScore": 0.6,
+      "confidenceLabel": "medium",
+      "coordinateQuality": "missing",
+      "tier": 3,
+      "tags": [
+        "nytimes-world",
+        "storyline:7bcf2c0f"
+      ],
+      "geopoliticalScore": 5,
+      "economicImpactScore": 7
+    },
+    {
+      "id": "9a4e385fb2159ae025622da1",
+      "source": "rss_intelligence",
+      "eventDate": "2026-08-25",
+      "iso3": [
+        "LBN",
+        "ISR"
+      ],
+      "eventType": "diplomatic.dispute",
+      "headline": "Lebanon's efforts to disarm Hezbollah stall as Israel conflict continues",
+      "summary": "Lebanese President Joseph Aoun, who took office with a mandate to reassert state control over Hezbollah, is finding his efforts stalled amid continuing war with Israel that the militant group had drawn the country into.",
+      "confidenceScore": 0.7,
+      "confidenceLabel": "medium",
+      "coordinateQuality": "missing",
+      "tier": 2,
+      "tags": [
+        "nytimes-world",
+        "storyline:0f696472"
+      ],
+      "geopoliticalScore": 6.5,
+      "economicImpactScore": 2
+    },
+    {
+      "id": "bbd311ce6910ada4595f873a",
+      "source": "rss_intelligence",
+      "eventDate": "2026-08-25",
+      "iso3": [
+        "SYR",
+        "USA"
+      ],
+      "eventType": "economic.sanctions",
+      "headline": "US removes Syria and HTS from state sponsor of terrorism lists",
+      "summary": "The United States delisted Syria as a state sponsor of terrorism on Monday, rescinding a decades-old designation that had severely impeded investment. The State Department also revoked its terrorist designation of al-Nusrah Front, also known as Hayat Tahrir al-Sham (HTS), leaving Cuba, Iran and North Korea as the remaining designated state sponsors of terrorism.",
+      "confidenceScore": 0.9,
+      "confidenceLabel": "high",
+      "coordinateQuality": "missing",
+      "tier": 2,
+      "tags": [
+        "scmp-china",
+        "storyline:87972419"
+      ],
+      "geopoliticalScore": 7,
+      "economicImpactScore": 4
+    },
+    {
+      "id": "c6504f01b6a90884708ed086",
+      "source": "rss_intelligence",
+      "eventDate": "2026-08-25",
+      "iso3": [
+        "USA",
+        "IRN",
+        "CHN",
+        "HKG"
+      ],
+      "eventType": "economic.sanctions",
+      "headline": "US sanctions 60 entities including Chinese firms, warns of 'Economic D-Day' against Iran",
+      "summary": "The United States announced fresh sanctions on Monday against 60 entities, individuals and vessels globally, including some in mainland China and Hong Kong, tied to Iran's economy. Washington also issued a warning demanding 'immediate action' from nations maintaining economic and commercial ties with Iran.",
+      "confidenceScore": 0.75,
+      "confidenceLabel": "high",
+      "coordinateQuality": "missing",
+      "tier": 2,
+      "tags": [
+        "scmp-china",
+        "storyline:87972419"
+      ],
+      "geopoliticalScore": 6.5,
+      "economicImpactScore": 6
+    },
+    {
+      "id": "d6d00954fa97221848ca5c7b",
+      "source": "rss_intelligence",
+      "eventDate": "2026-08-25",
+      "iso3": [
+        "USA"
+      ],
+      "eventType": "conflict.armed",
+      "headline": "US military strike kills 2 in eastern Pacific drug boat operation, first in over two months",
+      "summary": "The US military carried out a strike on a vessel in the eastern Pacific Ocean on Monday, killing two people accused of drug trafficking, after a pause of more than two months. This brings the overall death toll to 223 people killed in 67 strikes during the nearly year-long US campaign against alleged drug boats off Latin America.",
+      "confidenceScore": 0.8,
+      "confidenceLabel": "high",
+      "coordinateQuality": "missing",
+      "tier": 3,
+      "tags": [
+        "scmp-china",
+        "storyline:7882511a"
+      ],
+      "geopoliticalScore": 3,
+      "economicImpactScore": 1
+    },
+    {
+      "id": "65ad267d222bb1441657b57d",
+      "source": "rss_intelligence",
+      "eventDate": "2026-08-25",
+      "iso3": [
+        "CHN",
+        "JOR",
+        "IRN",
+        "USA"
+      ],
+      "eventType": "diplomatic.dispute",
+      "headline": "China and Jordan call for reopening of Strait of Hormuz and maintained US-Iran ceasefire",
+      "summary": "China and Jordan issued a joint statement during King Abdullah's visit to Beijing calling for the Strait of Hormuz to reopen to shipping and for the ceasefire between the United States and Iran to be maintained. Both nations also called for a comprehensive solution to underlying tensions through dialogue and negotiation.",
+      "confidenceScore": 0.75,
+      "confidenceLabel": "high",
+      "coordinateQuality": "missing",
+      "tier": 2,
+      "tags": [
+        "scmp-china",
+        "storyline:87972419"
+      ],
+      "geopoliticalScore": 6,
+      "economicImpactScore": 6
+    },
+    {
+      "id": "35c16fed1b63e4df52fc14ce",
+      "source": "rss_intelligence",
+      "eventDate": "2026-08-25",
+      "iso3": [
+        "KOR",
+        "USA",
+        "IRN"
+      ],
+      "eventType": "diplomatic.cooperation",
+      "headline": "US cancels joint Ssangyong marine exercise with South Korea due to Iran war strain on forces",
+      "summary": "South Korea said on Monday that the United States cancelled a large joint amphibious landing exercise, the biennial Ssangyong drills, scheduled for next month, citing constraints on force availability caused by the war with Iran. The drills typically involve marine forces from both South Korea and the US to strengthen combined operations.",
+      "confidenceScore": 0.8,
+      "confidenceLabel": "high",
+      "coordinateQuality": "missing",
+      "tier": 3,
+      "tags": [
+        "scmp-china",
+        "washingtonpost-world",
+        "storyline:7882511a"
+      ],
+      "geopoliticalScore": 5,
+      "economicImpactScore": 2
+    },
+    {
+      "id": "e39dcb118b85d85a9ea56121",
+      "source": "rss_intelligence",
+      "eventDate": "2026-08-25",
+      "iso3": [
+        "USA",
+        "CAN"
+      ],
+      "eventType": "economic.trade",
+      "headline": "Former VP Pence criticizes US-Canada trade fight, cites economic affordability concerns",
+      "summary": "Former Vice President Mike Pence told CNN that the US-Canada trade fight adds to affordability concerns as the US economy is recovering. Pence said a trade war with Canada is not needed at this time.",
+      "confidenceScore": 0.7,
+      "confidenceLabel": "medium",
+      "coordinateQuality": "missing",
+      "tier": 3,
+      "tags": [
+        "washingtonpost-world",
+        "storyline:7bcf2c0f"
+      ],
+      "geopoliticalScore": 3,
       "economicImpactScore": 3
     },
     {
-      "id": "5af38b9f1781936207e1d5c7",
+      "id": "ef5732689eca696e5c6a0b76",
       "source": "rss_intelligence",
-      "eventDate": "2026-07-07",
+      "eventDate": "2026-08-25",
       "iso3": [
-        "CHN",
+        "CAN",
         "USA"
       ],
-      "eventType": "diplomatic.cooperation",
-      "headline": "China Conducts Rare Intercontinental Ballistic Missile Test Over Pacific, Drawing Condemnation from US Allies",
-      "summary": "China conducted what Beijing described as a 'routine' intercontinental ballistic missile test, firing a long-range missile into the Pacific Ocean — a departure from its previous practice of testing only within its own borders. US allies in the Pacific condemned the launch. The test is seen as a demonstration of China's growing military and nuclear deterrence capabilities aimed at narrowing the gap with the United States.",
+      "eventType": "economic.trade",
+      "headline": "Canada-US trade war escalates as talks collapse and Trump imposes 50% tariffs",
+      "summary": "Canada suspended trade negotiations with the United States after last-minute demands ended talks in Washington, triggering President Trump's 50 percent tariffs on a range of Canadian goods. Canadian Prime Minister Mark Carney said Canada would retaliate 'dollar for dollar' with its own tariffs on US goods.",
       "confidenceScore": 0.85,
       "confidenceLabel": "high",
       "coordinateQuality": "missing",
-      "tier": 1,
+      "tier": 2,
       "tags": [
-        "dw-world",
+        "bloomberg-markets",
         "nytimes-world",
         "washingtonpost-world",
-        "storyline:67ec2570"
+        "storyline:7bcf2c0f"
       ],
-      "geopoliticalScore": 9,
-      "economicImpactScore": 5
+      "geopoliticalScore": 6,
+      "economicImpactScore": 7.5
     },
     {
       "id": "human-a15ae89f",

@@ -68,7 +68,13 @@ export function liveDatabaseNames(): string[] {
     )
   }
   // Union, never replacement.
-  return [...new Set([...ALWAYS_LIVE, ...extra])]
+  //
+  // Array.from, not [...new Set(...)]: apps/unified-platform compiles this file
+  // through transpilePackages with an ES5 target, where spreading a Set is a
+  // hard type error. The spread form silently broke the dashboard BUILD for
+  // three rounds of gates, because every gate counted tests and privileges and
+  // never ran `build` or `typecheck`.
+  return Array.from(new Set([...ALWAYS_LIVE, ...extra]))
 }
 
 /**
@@ -101,13 +107,15 @@ export function databaseNameOfRaw(connectionString: string): string | null {
     const raw = parseConnectionString(connectionString).database
     if (!raw) return null
 
-    let name = raw
-    for (let i = 0; i < 4; i++) {
-      const decoded = decodeURIComponent(name)
-      if (decoded === name) break
-      name = decoded
-    }
-    const canonical = name.replace(/^\/+/, '').replace(/\/+$/, '').trim()
+    // NO extra decoding. parseConnectionString has already decoded the path
+    // exactly once, exactly as the driver does. The previous multi-decode loop
+    // decoded up to four MORE times, which made the record disagree with the
+    // driver in the opposite direction from R3-7's encoder bug:
+    //     PGDATABASE="ai%5Fcapital"  ->  pg sees "ai%5Fcapital", record said "ai_capital"
+    // The `%5F` bypass this loop was added for stays closed regardless, because
+    // the driver's own decodeURI already resolves %5F. Matching the driver
+    // means decoding the same number of times it does — not more.
+    const canonical = raw.replace(/^\/+/, '').replace(/\/+$/, '').trim()
     // A NUL or other control character must not smuggle a live name past the
     // comparison and leave the wire protocol as the only defence.
     if (/[\u0000-\u001f\u007f]/.test(canonical)) return null
@@ -230,19 +238,37 @@ export function resolveDestination(connectionString?: string, cfg?: pg.ClientCon
  * one; only the value used for comparison against the protected set is folded.
  */
 export function resolveDestinationRaw(connectionString?: string, cfg?: pg.ClientConfig): string | null {
+  // pg's ACTUAL order, from connection-parameters.js:
+  //   val('database', config)  →  and if still undefined, `this.database = this.user`
+  // where val() falls back through config → PG* env → defaults, using ||.
+  // Expanded, and this is what we must match exactly:
+  //   config.database → PGDATABASE → user-from-connection-string → PGUSER → $USER
+  //
+  // TWO defects lived in the previous version, both found by Warden:
+  //
+  // R3-2: the USER PARSED FROM THE CONNECTION STRING was missing from the
+  // chain. `postgres://ai_capital@localhost:5432` routes to the database
+  // `ai_capital` — the real book — while the guard resolved `$USER` and
+  // reported "not protected". An exported gate that FAILS OPEN on a string the
+  // driver sends to production.
+  //
+  // R3-5: `??` where pg uses `||`. PGDATABASE="" (blanked, not unset) stopped
+  // the chain at the empty string. That is W-1's exact bug, one function away.
+  let csUser: string | undefined
   if (connectionString) {
     const fromUrl = databaseNameOfRaw(connectionString)
     if (fromUrl) return fromUrl
-    // A parseable URL with no database part still resolves through the
-    // environment; fall through rather than reporting "unknown".
+    // No database in the string, but the string's USER is next in pg's order.
+    try { csUser = parseConnectionString(connectionString).user || undefined } catch { /* unparseable */ }
   }
   const effective = (
     cfg?.database
-    ?? process.env.PGDATABASE
-    ?? cfg?.user
-    ?? process.env.PGUSER
-    ?? process.env.USER
-    ?? ''
+    || process.env.PGDATABASE
+    || csUser
+    || cfg?.user
+    || process.env.PGUSER
+    || process.env.USER
+    || ''
   ).trim()
   return effective || null
 }
@@ -282,9 +308,31 @@ export function pinDestination(connectionString: string): string {
   }
   try {
     const u = new URL(connectionString)
-    u.pathname = `/${encodeURIComponent(name)}`
-    return u.toString()
-  } catch {
+    // encodeURI, NOT encodeURIComponent. pg-connection-string reads the path
+    // with `decodeURI`, which by definition does not decode reserved
+    // characters — so encodeURIComponent's escaping of '/', '?' and '#'
+    // survived into the database name and CHANGED the destination:
+    //     PGDATABASE="my/db"  ->  pinned /my%2Fdb  ->  pg connects to "my%2Fdb"
+    // A literal '/' is safe here because pg takes everything after the first
+    // slash as the database name.
+    u.pathname = `/${encodeURI(name)}`
+    const pinned = u.toString()
+    // VERIFY THE ROUND TRIP. Pinning rewrites a connection string, and a
+    // rewrite that changes the destination is worse than no rewrite at all —
+    // it would silently point a legitimate caller at a different database.
+    // Some names cannot survive a URL round trip at all (a '?' or '#' must be
+    // escaped by the pathname setter or it would terminate the path), so
+    // rather than quietly altering the target, refuse.
+    const roundTripped = databaseNameOfRaw(pinned)
+    if (roundTripped !== name) {
+      throw new Error(
+        `@common/db: cannot pin the destination "${name}" into a connection string without ` +
+        `changing it (round-trips to "${roundTripped}"). Name the database explicitly in the ` +
+        'connection string instead of relying on PGDATABASE.')
+    }
+    return pinned
+  } catch (e) {
+    if (e instanceof Error && e.message.startsWith('@common/db:')) throw e
     return connectionString
   }
 }
@@ -300,15 +348,31 @@ export function pinDestination(connectionString: string): string {
  * Binding the destination to the pool object makes the two impossible to
  * disagree.
  */
-// A MODULE-PRIVATE symbol, deliberately not Symbol.for(). Warden showed that a
-// registry symbol lets any module mint the same key and forge the marker — or
-// shadow a real pool via Object.create() while .query() still delegates to the
-// production pool through the prototype chain. A private symbol cannot be
-// minted elsewhere, so the marker is a capability rather than a convention.
-export const POOL_DESTINATION: unique symbol = Symbol('@common/db.destination')
+// A WeakMap, NOT a symbol on the object.
+//
+// I claimed a module-private Symbol() made the marker "a capability rather than
+// a convention". That was wrong, and Warden demonstrated it in three lines:
+// own symbols are readable with Object.getOwnPropertySymbols, so any holder of
+// a pool can extract the key and forge a marker on an object whose .query()
+// still reaches production.
+//
+//   const KEY = Object.getOwnPropertySymbols(anyPool).find(s => s.description === '...')
+//   assertPoolWriteAuthorized({ [KEY]: 'harmless', query: prodPool.query.bind(prodPool) }, ...)
+//
+// A WeakMap has no such door: an outside module cannot read, enumerate, or
+// insert into a map it has no reference to. This is what "private" actually
+// requires. It also keeps the pool object unmodified, so nothing about the
+// marker can be frozen, deleted, or shadowed via the prototype chain.
+const DESTINATIONS = new WeakMap<object, string | null>()
+
+/** Record a pool's destination. Module-internal: the factories are the only callers. */
+function rememberDestination(pool: object, name: string | null): void {
+  DESTINATIONS.set(pool, name)
+}
 
 export function destinationOf(pool: unknown): string | null {
-  return (pool as Record<symbol, string | null>)?.[POOL_DESTINATION] ?? null
+  if (!pool || (typeof pool !== 'object' && typeof pool !== 'function')) return null
+  return DESTINATIONS.get(pool as object) ?? null
 }
 
 /** Construct a guarded connection pool. Use this instead of `new pg.Pool`. */
@@ -322,9 +386,22 @@ export function createPool(connectionString: string, opts: ConnectOptions = {}):
     idleTimeoutMillis: 30_000,
     connectionTimeoutMillis: opts.connectionTimeoutMillis ?? 10_000,
   })
-  // Bind the destination to the object, resolved NOW. See POOL_DESTINATION.
-  Object.defineProperty(pool, POOL_DESTINATION, {
-    value: databaseNameOf(pinned), enumerable: false, writable: false, configurable: false,
+  rememberDestination(pool, databaseNameOf(pinned))
+  // R3-4: pg-pool builds each client from `this.options` AT CHECKOUT, and
+  // options is plain and writable — so the record and the driver could be made
+  // to disagree permanently by mutating it after construction. Freeze it, and
+  // additionally assert on every real connection that the client landed where
+  // the record says. "Agree by construction" has to keep being true after
+  // construction.
+  Object.freeze(pool.options)
+  pool.on('connect', client => {
+    const actual = (client as unknown as { database?: string }).database
+    const recorded = destinationOf(pool)
+    if (actual && recorded && actual.toLowerCase() !== recorded) {
+      throw new Error(
+        `@common/db: connection destination drifted after construction — recorded "${recorded}", ` +
+        `connected to "${actual}". Refusing to use this pool.`)
+    }
   })
   return pool
 }

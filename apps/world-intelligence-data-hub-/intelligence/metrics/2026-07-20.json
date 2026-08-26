@@ -1,0 +1,224 @@
+{
+  "date": "2026-07-20",
+  "last_updated": "2026-07-20T14:24:23.033Z",
+  "collection": {
+    "last_run": "2026-07-20T14:20:05.157Z",
+    "run_count": 1,
+    "total_articles": 125,
+    "by_source": {
+      "bbc-world": 24,
+      "dw-world": 6,
+      "aljazeera-english": 25,
+      "france24-english": 23,
+      "nytimes-world": 25,
+      "washingtonpost-world": 2,
+      "bloomberg-markets": 20
+    },
+    "failed_sources": [
+      "npr-news",
+      "scmp-china",
+      "globaltimes-china",
+      "bangkokpost-top",
+      "khaosod-english"
+    ],
+    "skipped_sources": [],
+    "stale_articles": 0,
+    "stale_feed_sources": [],
+    "avg_article_age_hours": 13.1,
+    "oldest_article_days": 2.8
+  },
+  "scoring": {
+    "last_run": "2026-07-20T14:23:04.404Z",
+    "run_count": 1,
+    "total_scored": 270,
+    "recommended": 21,
+    "filtered": 249,
+    "reduction_pct": 92,
+    "score_distribution": {
+      "urgent": 1,
+      "high": 4,
+      "relevant": 13,
+      "marginal": 30,
+      "noise": 222
+    },
+    "by_source": {
+      "aljazeera-english": {
+        "total": 25,
+        "recommended": 1,
+        "narrative": 0
+      },
+      "bbc-world": {
+        "total": 24,
+        "recommended": 2,
+        "narrative": 0
+      },
+      "bloomberg-markets": {
+        "total": 20,
+        "recommended": 4,
+        "narrative": 0
+      },
+      "dw-world": {
+        "total": 6,
+        "recommended": 0,
+        "narrative": 0
+      },
+      "france24-english": {
+        "total": 23,
+        "recommended": 1,
+        "narrative": 0
+      },
+      "nytimes-world": {
+        "total": 25,
+        "recommended": 3,
+        "narrative": 0
+      },
+      "twitter-AlbertBourla": {
+        "total": 2,
+        "recommended": 0,
+        "narrative": 0
+      },
+      "twitter-BillyM2k": {
+        "total": 13,
+        "recommended": 0,
+        "narrative": 0
+      },
+      "twitter-CollinRugg": {
+        "total": 2,
+        "recommended": 0,
+        "narrative": 0
+      },
+      "twitter-MFA_China": {
+        "total": 4,
+        "recommended": 2,
+        "narrative": 0
+      },
+      "twitter-PGelsinger": {
+        "total": 1,
+        "recommended": 0,
+        "narrative": 0
+      },
+      "twitter-RALee85": {
+        "total": 12,
+        "recommended": 1,
+        "narrative": 0
+      },
+      "twitter-RapidResponse47": {
+        "total": 16,
+        "recommended": 3,
+        "narrative": 2
+      },
+      "twitter-TheFP": {
+        "total": 19,
+        "recommended": 0,
+        "narrative": 0
+      },
+      "twitter-VitalikButerin": {
+        "total": 2,
+        "recommended": 0,
+        "narrative": 0
+      },
+      "twitter-WhiteHouse": {
+        "total": 5,
+        "recommended": 0,
+        "narrative": 0
+      },
+      "twitter-benshapiro": {
+        "total": 2,
+        "recommended": 0,
+        "narrative": 0
+      },
+      "twitter-borzou": {
+        "total": 11,
+        "recommended": 3,
+        "narrative": 0
+      },
+      "twitter-brian_armstrong": {
+        "total": 1,
+        "recommended": 0,
+        "narrative": 0
+      },
+      "twitter-cz_binance": {
+        "total": 3,
+        "recommended": 0,
+        "narrative": 0
+      },
+      "twitter-elonmusk": {
+        "total": 11,
+        "recommended": 0,
+        "narrative": 0
+      },
+      "twitter-jasonfried": {
+        "total": 2,
+        "recommended": 0,
+        "narrative": 0
+      },
+      "twitter-jimfarley98": {
+        "total": 1,
+        "recommended": 0,
+        "narrative": 0
+      },
+      "twitter-mdudas": {
+        "total": 3,
+        "recommended": 0,
+        "narrative": 0
+      },
+      "twitter-mert": {
+        "total": 2,
+        "recommended": 0,
+        "narrative": 0
+      },
+      "twitter-mfa_russia": {
+        "total": 3,
+        "recommended": 0,
+        "narrative": 0
+      },
+      "twitter-paulg": {
+        "total": 1,
+        "recommended": 0,
+        "narrative": 0
+      },
+      "twitter-politico": {
+        "total": 14,
+        "recommended": 0,
+        "narrative": 0
+      },
+      "twitter-sundarpichai": {
+        "total": 1,
+        "recommended": 0,
+        "narrative": 0
+      },
+      "twitter-tim_cook": {
+        "total": 1,
+        "recommended": 0,
+        "narrative": 0
+      },
+      "twitter-toly": {
+        "total": 13,
+        "recommended": 0,
+        "narrative": 0
+      },
+      "washingtonpost-world": {
+        "total": 2,
+        "recommended": 1,
+        "narrative": 0
+      }
+    }
+  },
+  "extraction": {
+    "last_run": "2026-07-20T14:24:23.033Z",
+    "run_count": 1,
+    "articles_sent_to_ai": 21,
+    "batches_run": 3,
+    "events_extracted": 5,
+    "events_merged": 0,
+    "low_confidence": 0,
+    "human_review": 2,
+    "api_tokens": {
+      "input": 5206,
+      "output": 5070,
+      "cache_write": 3927,
+      "cache_read": 7854
+    },
+    "estimated_cost_usd": 0.10875045
+  }
+}

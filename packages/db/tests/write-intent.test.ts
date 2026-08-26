@@ -6,7 +6,7 @@ import {
   withProductionWrite, currentWriteIntent, assertProductionWriteAuthorized, assertPoolWriteAuthorized,
   isProtectedDestination, ProductionWriteRefused, UndeterminableDestination,
 } from '../src/write-intent.js'
-import { resolveDestination, destinationOf, createPool, pinDestination, databaseNameOf } from '../src/pool.js'
+import { resolveDestination, destinationOf, createPool, pinDestination, databaseNameOf, databaseNameOfRaw } from '../src/pool.js'
 
 // The invariant:
 //   Possessing a production write credential is not itself sufficient to
@@ -299,17 +299,98 @@ describe('bypasses Warden proved against the hardened gate', () => {
     }
   })
 
-  it('NEW-5: the destination marker cannot be forged', () => {
-    // POOL_DESTINATION was Symbol.for(), so any module could mint the same key
-    // and hand the gate a forged object — or shadow a real pool with
-    // Object.create() while .query() still delegated to production through the
-    // prototype chain. A module-private Symbol() cannot be minted elsewhere.
-    const forged = { [Symbol.for('@common/db.destination')]: 'harmless_scratch' }
-    expect(() => assertPoolWriteAuthorized(forged, 'claim-persistence'))
-      .toThrow(UndeterminableDestination)
-    expect(() => assertPoolWriteAuthorized({}, 'claim-persistence'))
-      .toThrow(UndeterminableDestination)
-    expect(() => assertPoolWriteAuthorized(null, 'claim-persistence'))
-      .toThrow(UndeterminableDestination)
+  it('NEW-5 / R3-3: the destination marker cannot be forged OR extracted', () => {
+    // First fix used a module-private Symbol() and I claimed that made the
+    // marker a capability. Wrong: own symbols are readable with
+    // Object.getOwnPropertySymbols, so any holder of a pool could extract the
+    // key and forge a marker on an object whose .query() still reached
+    // production. Warden did exactly that, live. It is a WeakMap now.
+    const pool = createPool('postgres://u@localhost:5432/scratch_db')
+    try {
+      // 1. Nothing about the marker is visible on the object.
+      const leaked = Object.getOwnPropertySymbols(pool)
+        .filter(sym => (sym.description ?? '').includes('destination'))
+      expect(leaked, 'the destination marker must not be an own property').toEqual([])
+      expect(JSON.stringify(Object.keys(pool))).not.toContain('destination')
+
+      // 2. The registry symbol route stays dead.
+      const forgedRegistry = { [Symbol.for('@common/db.destination')]: 'scratch_db' }
+      expect(() => assertPoolWriteAuthorized(forgedRegistry, 'claim-persistence'))
+        .toThrow(UndeterminableDestination)
+
+      // 3. Prototype shadowing stays dead.
+      expect(() => assertPoolWriteAuthorized(Object.create(pool), 'claim-persistence'))
+        .toThrow(UndeterminableDestination)
+
+      // 4. And a plain impostor is refused rather than believed.
+      for (const impostor of [{}, null, undefined, 'a string', 42]) {
+        expect(() => assertPoolWriteAuthorized(impostor, 'claim-persistence'))
+          .toThrow(UndeterminableDestination)
+      }
+      // The real pool still resolves correctly.
+      expect(destinationOf(pool)).toBe('scratch_db')
+    } finally { void pool.end() }
+  })
+
+  it('R3-2: the connection-string USER is part of pg\'s database fallback', () => {
+    // `postgres://ai_capital@localhost:5432` routes to the database
+    // `ai_capital` — pg falls back database→user. The guard resolved $USER
+    // instead and reported "not protected": an exported gate FAILING OPEN on a
+    // string the driver sends to the real book.
+    const saved = [process.env.PGDATABASE, process.env.PGUSER]
+    try {
+      delete process.env.PGDATABASE; delete process.env.PGUSER
+      expect(resolveDestination('postgres://ai_capital@localhost:5432')).toBe('ai_capital')
+      expect(isProtectedDestination('postgres://ai_capital@localhost:5432')).toBe(true)
+      expect(() => assertProductionWriteAuthorized('postgres://ai_capital@localhost:5432', 'claim-persistence'))
+        .toThrow(ProductionWriteRefused)
+    } finally {
+      const [a, b] = saved
+      if (a === undefined) delete process.env.PGDATABASE; else process.env.PGDATABASE = a
+      if (b === undefined) delete process.env.PGUSER; else process.env.PGUSER = b
+    }
+  })
+
+  it('R3-5: a BLANKED PGDATABASE does not stop the fallback chain', () => {
+    // `??` where pg uses `||` — W-1's exact bug, one function away.
+    const saved = [process.env.PGDATABASE, process.env.PGUSER]
+    try {
+      process.env.PGDATABASE = ''
+      process.env.PGUSER = 'ai_capital'
+      expect(resolveDestination('postgres://h@localhost:5432')).toBe('h')  // cs user wins over PGUSER
+      delete process.env.PGUSER
+      process.env.PGDATABASE = ''
+      expect(resolveDestination('postgres://ai_capital@localhost:5432')).toBe('ai_capital')
+    } finally {
+      const [a, b] = saved
+      if (a === undefined) delete process.env.PGDATABASE; else process.env.PGDATABASE = a
+      if (b === undefined) delete process.env.PGUSER; else process.env.PGUSER = b
+    }
+  })
+
+  it('R3-7: pinning uses the encoder the driver decodes with', () => {
+    // pg-connection-string reads the path with decodeURI, which does NOT decode
+    // reserved characters. encodeURIComponent escaped '/', '?' and '#' into the
+    // name and CHANGED the destination.
+    const saved = process.env.PGDATABASE
+    try {
+      // Names that CAN round-trip must do so byte-exactly.
+      for (const name of ['my/db', 'plain_db', 'MiXeD_Case', 'ünïcode_db', 'ai_capital_test']) {
+        process.env.PGDATABASE = name
+        const pinned = pinDestination('postgres://u@localhost:5432')
+        expect(databaseNameOfRaw(pinned), `round-trip for ${name}`).toBe(name)
+        expect(pinDestination(pinned), `idempotent for ${name}`).toBe(pinned)
+      }
+      // Names that CANNOT survive a URL round trip are REFUSED, never silently
+      // altered. '?' and '#' must be escaped by the pathname setter or they
+      // would terminate the path, so pinning them would change the destination.
+      for (const name of ['db?x', 'db#y']) {
+        process.env.PGDATABASE = name
+        expect(() => pinDestination('postgres://u@localhost:5432'), `must refuse ${name}`)
+          .toThrow(/without changing it/)
+      }
+    } finally {
+      if (saved === undefined) delete process.env.PGDATABASE; else process.env.PGDATABASE = saved
+    }
   })
 })

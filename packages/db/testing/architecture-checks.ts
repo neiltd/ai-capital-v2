@@ -166,15 +166,42 @@ export function constructsPostgres(src: string): boolean {
   // Always-suspect literal spellings, even with no import in this file.
   names.add('Pool'); names.add('Client')
 
+  // Transitive aliasing: `const F = pg.Pool; const G = F` — follow chains of
+  // plain identifier aliases until they stop growing.
+  for (let pass = 0; pass < 5; pass++) {
+    const before = names.size
+    for (const known of [...names]) {
+      for (const m of src.matchAll(new RegExp(`(?:const|let|var)\\s+([A-Za-z_$][\\w$]*)\\s*=\\s*${known}\\b(?!\\s*\\.)`, 'g'))) {
+        names.add(m[1])
+      }
+      // computed BINDING: `const P = pg['Pool']`
+      for (const m of src.matchAll(new RegExp(`(?:const|let|var)\\s+([A-Za-z_$][\\w$]*)\\s*=\\s*[A-Za-z_$][\\w$]*\\s*\\[\\s*['"\`](Pool|Client)['"\`]\\s*\\]`, 'g'))) {
+        names.add(m[1])
+      }
+    }
+    if (names.size === before) break
+  }
+
+  // Reflect.construct(pg.Pool, ...) — construction without `new`.
+  if (/Reflect\s*\.\s*construct\s*\(\s*[A-Za-z_$][\w$]*(?:\s*\.\s*[A-Za-z_$][\w$]*)*\s*[,)]/.test(src)
+      && /['"`]pg['"`]/.test(src)) return true
+
   // A SUBCLASS is a live construction with no guard at all — and it is what a
   // developer writes to add query logging, so it is the likeliest of these to
   // appear for honest reasons. `class AppPool extends Pool {}` then
   // `new AppPool()`. Follow the inheritance one level and treat the subclass
   // name as a constructor too.
-  for (const known of [...names]) {
-    for (const m of src.matchAll(new RegExp(`class\\s+([A-Za-z_$][\\w$]*)\\s+extends\\s+${known}\\b`, 'g'))) {
-      names.add(m[1])
+  // Follow inheritance TRANSITIVELY: `class A extends Pool {}` then
+  // `class B extends A {}`. One level was a disclosed limitation; two is a
+  // plausible accident, so iterate to a fixed point instead.
+  for (let pass = 0; pass < 5; pass++) {
+    const before = names.size
+    for (const known of [...names]) {
+      for (const m of src.matchAll(new RegExp(`class\\s+([A-Za-z_$][\\w$]*)\\s+extends\\s+${known}\\b`, 'g'))) {
+        names.add(m[1])
+      }
     }
+    if (names.size === before) break
   }
   for (const m of src.matchAll(/class\s+([A-Za-z_$][\w$]*)\s+extends\s+[A-Za-z_$][\w$]*\s*\.\s*(Pool|Client)\b/g)) {
     names.add(m[1])
@@ -193,40 +220,48 @@ export function constructsPostgres(src: string): boolean {
 }
 
 /**
- * Packages that have a `test` script but no test files at all.
+ * Workspace projects that ship source but no test files at all.
  *
- * A package with zero tests is invisible to findDeadTestFiles — that check
+ * KEYED ON SOURCE, NOT ON A TEST SCRIPT. The first version only considered
+ * packages where `scripts.test` existed — so the check written to stop vacuous
+ * coverage claims could be silenced by DELETING a script, and four projects
+ * already did so accidentally. Warden found them: unified-platform (193 source
+ * files), world-intelligence-data-hub- (88, a live pipeline stage),
+ * pipeline-runs (the observability layer the whole DAG writes through) and
+ * common-types were all outside every coverage guarantee, invisible to this
+ * check and skipped by `--if-present`.
+ *
+ * A package with zero tests is invisible to findDeadTestFiles too — that
  * catches tests that cannot LOAD, not tests that do not EXIST. Both are the
- * same failure in the end: a number that reads like coverage and is not.
+ * same failure: a number that reads like coverage and is not.
  *
- * This list may SHRINK freely. It must not grow without a deliberate decision,
- * which is what the meta-test enforces.
- *
- * apps/trade-graph: 10 source files, including src/store/trade-store.ts which
- * writes to Postgres through getPool(). It is on the ungated side of the
- * production-write boundary, so it is exactly the kind of package that should
- * have tests. Recorded 2026-08-26.
+ * This list may SHRINK freely. It must not grow without a deliberate decision.
  */
-export const KNOWN_UNTESTED = ['apps/trade-graph'] as const
+export const KNOWN_UNTESTED: readonly string[] = [
+  'apps/trade-graph',                  // 11 src; writes to Postgres via getPool()
+  'apps/unified-platform',             // 193 src; the dashboard
+  'apps/world-intelligence-data-hub-', // 88 src; live pipeline stage
+  'packages/common-types',             // 4 src; type declarations only
+  'packages/pipeline-runs',            // 5 src; observability layer for the DAG
+]
 
-/** Packages that declare a `test` script but ship no test file. */
+/** Workspace projects that ship TypeScript source but contain no test file. */
 export function packagesWithNoTests(repo: string): string[] {
   const out: string[] = []
   for (const group of workspaceGroups(repo)) {
     const dir = join(repo, group)
     if (!existsSync(dir)) continue
     for (const name of readdirSync(dir)) {
-      const rel = `${group}/${name}`
-      const pkgJson = join(dir, name, 'package.json')
-      if (!existsSync(pkgJson)) continue
-      let scripts: Record<string, string> = {}
-      try { scripts = JSON.parse(readFileSync(pkgJson, 'utf-8')).scripts ?? {} } catch { continue }
-      if (!scripts.test) continue
-      let found = false
-      walk(join(dir, name), repo, abs => {
-        if (/\.(test|spec)\.(ts|tsx|mts|js)$/.test(abs)) found = true
+      const projectDir = join(dir, name)
+      if (!existsSync(join(projectDir, 'package.json'))) continue
+      let hasSource = false
+      let hasTest = false
+      walk(projectDir, repo, abs => {
+        if (!/\.(ts|tsx|mts|cts)$/.test(abs)) return
+        if (/\.(test|spec)\.(ts|tsx|mts|js)$/.test(abs)) hasTest = true
+        else hasSource = true
       })
-      if (!found) out.push(rel)
+      if (hasSource && !hasTest) out.push(`${group}/${name}`)
     }
   }
   return out.sort()

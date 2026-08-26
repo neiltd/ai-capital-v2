@@ -44,7 +44,19 @@ describe('the guard refuses a test process a live connection', () => {
     expect(() => assertNotLiveDatabase('postgres://x@localhost:5432/ai%5Fcapital')).toThrow(/live database/)
     expect(() => assertNotLiveDatabase('postgres://x@localhost:5432/AI%5FCAPITAL')).toThrow(/live database/)
     expect(() => assertNotLiveDatabase('postgres://x@localhost:5432/%61i_capital')).toThrow(/live database/)   // 'a'
-    expect(() => assertNotLiveDatabase('postgres://x@localhost:5432/ai%255Fcapital')).toThrow(/live database/) // double-encoded
+    // DOUBLE-encoded is deliberately NOT refused, and that is a correction to
+    // this test rather than a regression. The driver decodes the path exactly
+    // ONCE (pg-connection-string uses decodeURI), so `ai%255Fcapital` resolves
+    // to a database literally named `ai%5Fcapital` — which is not the live
+    // book and does not exist. The earlier guard decoded up to four times,
+    // which refused this string but also made the guard's model of the driver
+    // wrong in the other direction: it reported `ai_capital` for a connection
+    // pg would send elsewhere. Verified against the driver:
+    //     parse('...://h/ai%5Fcapital').database    === 'ai_capital'    (refused above)
+    //     parse('...://h/ai%255Fcapital').database  === 'ai%5Fcapital'  (not production)
+    // The rule is equivalence with the driver, not maximal suspicion.
+    expect(databaseNameOf('postgres://x@localhost:5432/ai%255Fcapital')).toBe('ai%5fcapital')
+    expect(() => assertNotLiveDatabase('postgres://x@localhost:5432/ai%255Fcapital')).not.toThrow()
   })
 
   it('refuses a trailing slash or padding that disguises the name', () => {

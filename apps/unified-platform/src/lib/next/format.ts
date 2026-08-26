@@ -15,6 +15,22 @@ export const fmtUsd = (v: number, opts: { cents?: boolean } = {}) =>
 export const fmtThb = (v: number) =>
   '฿' + v.toLocaleString('en-US', { maximumFractionDigits: 0 })
 
+/**
+ * A THB *unit price / NAV* (per-share cost, quote, or fund NAV) with
+ * magnitude-scaled precision. Thai equities (฿6–152) and fund NAVs (฿8–14)
+ * are low-nominal, so whole-baht rounding hides real avg-cost↔price
+ * differences (HMPRO ฿6.66 vs ฿6.65 both collapsed to "฿7"). Aggregate THB
+ * position *values* (thousands of baht) still use fmtThb — cents are noise
+ * there. Uses the Thai baht sign ฿ (U+0E3F), not bitcoin ₿ (U+20BF).
+ */
+export const fmtThbPrice = (v: number) => {
+  const digits = Math.abs(v) < 1 ? 4 : 2
+  return (
+    '฿' +
+    v.toLocaleString('en-US', { minimumFractionDigits: digits, maximumFractionDigits: digits })
+  )
+}
+
 export const fmtSignedUsd = (v: number) =>
   (v > 0 ? '+' : v < 0 ? '−' : '') + fmtUsd(Math.abs(v))
 

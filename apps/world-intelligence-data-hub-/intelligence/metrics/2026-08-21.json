@@ -1,0 +1,120 @@
+{
+  "date": "2026-08-21",
+  "last_updated": "2026-08-21T14:17:03.409Z",
+  "collection": {
+    "last_run": "2026-08-21T14:14:52.766Z",
+    "run_count": 1,
+    "total_articles": 197,
+    "by_source": {
+      "bbc-world": 24,
+      "dw-world": 5,
+      "aljazeera-english": 25,
+      "france24-english": 24,
+      "nytimes-world": 22,
+      "washingtonpost-world": 2,
+      "bloomberg-markets": 20,
+      "npr-news": 10,
+      "scmp-china": 50,
+      "globaltimes-china": 0,
+      "bangkokpost-top": 10,
+      "khaosod-english": 5
+    },
+    "failed_sources": [],
+    "skipped_sources": [],
+    "stale_articles": 50,
+    "stale_feed_sources": [
+      "globaltimes-china"
+    ],
+    "avg_article_age_hours": 9.4,
+    "oldest_article_days": 2.4
+  },
+  "scoring": {
+    "last_run": "2026-08-21T14:16:22.468Z",
+    "run_count": 1,
+    "total_scored": 198,
+    "recommended": 14,
+    "filtered": 184,
+    "reduction_pct": 93,
+    "score_distribution": {
+      "urgent": 0,
+      "high": 1,
+      "relevant": 8,
+      "marginal": 41,
+      "noise": 148
+    },
+    "by_source": {
+      "aljazeera-english": {
+        "total": 25,
+        "recommended": 2,
+        "narrative": 0
+      },
+      "bangkokpost-top": {
+        "total": 10,
+        "recommended": 1,
+        "narrative": 0
+      },
+      "bbc-world": {
+        "total": 25,
+        "recommended": 1,
+        "narrative": 0
+      },
+      "bloomberg-markets": {
+        "total": 20,
+        "recommended": 1,
+        "narrative": 0
+      },
+      "dw-world": {
+        "total": 5,
+        "recommended": 2,
+        "narrative": 0
+      },
+      "france24-english": {
+        "total": 24,
+        "recommended": 1,
+        "narrative": 0
+      },
+      "khaosod-english": {
+        "total": 5,
+        "recommended": 0,
+        "narrative": 0
+      },
+      "npr-news": {
+        "total": 10,
+        "recommended": 1,
+        "narrative": 0
+      },
+      "nytimes-world": {
+        "total": 22,
+        "recommended": 2,
+        "narrative": 0
+      },
+      "scmp-china": {
+        "total": 50,
+        "recommended": 3,
+        "narrative": 0
+      },
+      "washingtonpost-world": {
+        "total": 2,
+        "recommended": 0,
+        "narrative": 0
+      }
+    }
+  },
+  "extraction": {
+    "last_run": "2026-08-21T14:17:03.409Z",
+    "run_count": 1,
+    "articles_sent_to_ai": 14,
+    "batches_run": 2,
+    "events_extracted": 14,
+    "events_merged": 0,
+    "low_confidence": 0,
+    "human_review": 1,
+    "api_tokens": {
+      "input": 3915,
+      "output": 4769,
+      "cache_write": 5574,
+      "cache_read": 5574
+    },
+    "estimated_cost_usd": 0.1058547
+  }
+}

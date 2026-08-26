@@ -133,7 +133,7 @@ describe('repository architecture invariants', () => {
     // coverage and is not. The list may shrink freely.
     const actual = packagesWithNoTests(REPO)
     const unexpected = actual.filter(p => !(KNOWN_UNTESTED as readonly string[]).includes(p))
-    expect(unexpected, `these packages declare a test script but ship no tests: ${unexpected.join(', ')}`).toEqual([])
+    expect(unexpected, `these projects ship source but no test file at all: ${unexpected.join(', ')}`).toEqual([])
   })
 
   it('no test file is silently dead', () => {

@@ -6,7 +6,7 @@
 
 import { Fragment, useState } from 'react'
 import type { Position } from '@/lib/next/types'
-import { fmtUsd, fmtThb, fmtQty, toUsd, pnlUsd, costUsd } from '@/lib/next/format'
+import { fmtUsd, fmtThb, fmtThbPrice, fmtQty, toUsd, pnlUsd, costUsd } from '@/lib/next/format'
 import { Th, Td, StrategyTag, Delta } from '@/components/next/ui'
 import { CLASS_META, CLASS_ORDER } from './class-meta'
 
@@ -136,5 +136,9 @@ export function HoldingsTable({ positions, usdThb }: { positions: Position[]; us
   )
 }
 
+// Avg cost / price are per-share unit prices, so precision scales with the
+// currency's nominal range: whole dollars read cleanly for high-nominal US
+// names (design intent — $1,805, not $1,805.00), while THB names need
+// decimals to stay meaningful (SCB ฿131.22, HMPRO ฿6.66).
 const localMoney = (v: number, ccy: 'USD' | 'THB') =>
-  ccy === 'THB' ? fmtThb(v) : fmtUsd(v, { cents: v < 100 })
+  ccy === 'THB' ? fmtThbPrice(v) : fmtUsd(v, { cents: v < 100 })

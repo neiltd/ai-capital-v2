@@ -1,117 +1,249 @@
 {
   "meta": {
     "schemaVersion": "1.0",
-    "generatedAt": "2026-07-08T14:13:17.795Z",
+    "generatedAt": "2026-08-25T01:50:40.081Z",
     "sourceVersions": {
-      "gdelt": "2026-07-08T14:05:43.427Z",
+      "gdelt": "2026-08-25T01:41:02.586Z",
       "acled": "2026-06-26T00:00:00.000Z",
-      "ucdp": "2026-07-02T07:41:33.230Z",
-      "eia": "2026-07-08T14:12:33.350Z",
-      "worldbank": "2026-07-05T14:12:57.009Z"
+      "ucdp": "2026-08-18T14:16:28.531Z",
+      "eia": "2026-08-25T01:50:37.410Z",
+      "worldbank": "2026-08-18T14:17:30.143Z"
     },
-    "recordCount": 9,
+    "recordCount": 21,
     "breaking": false,
     "staleSourcesPresent": true
   },
   "data": [
     {
-      "id": "335c98dbbb57990c1c34",
+      "id": "e41087f3709b858defee",
       "source": "eia",
-      "metric": "spot-prices",
-      "value": 3.049,
-      "unit": "$/GAL",
+      "metric": "brent_price_usd",
+      "value": 93.26,
+      "unit": "$/BBL",
       "country": "USA",
-      "date": "2026-06-29",
-      "fetchedAt": "2026-07-03T06:49:36.834Z",
-      "rawHash": "e986c2b74835926f"
+      "date": "2026-08-11",
+      "fetchedAt": "2026-08-13T14:11:06.130Z",
+      "rawHash": "177555f4e68a07ca"
     },
     {
-      "id": "ecd0aaac2bc6f45e8c90",
+      "id": "d323e52dfe9098051d61",
+      "source": "eia",
+      "metric": "spot-prices",
+      "value": 4.408,
+      "unit": "$/GAL",
+      "country": "USA",
+      "date": "2026-08-11",
+      "fetchedAt": "2026-08-13T14:11:06.130Z",
+      "rawHash": "afb50f20713454da"
+    },
+    {
+      "id": "d323e52dfe9098051d61",
+      "source": "eia",
+      "metric": "spot-prices",
+      "value": 4.248,
+      "unit": "$/GAL",
+      "country": "USA",
+      "date": "2026-08-11",
+      "fetchedAt": "2026-08-13T14:11:06.130Z",
+      "rawHash": "7be92126bc6c5074"
+    },
+    {
+      "id": "d323e52dfe9098051d61",
+      "source": "eia",
+      "metric": "spot-prices",
+      "value": 4.325,
+      "unit": "$/GAL",
+      "country": "USA",
+      "date": "2026-08-11",
+      "fetchedAt": "2026-08-13T14:11:06.130Z",
+      "rawHash": "4e0718f7b7aa5375"
+    },
+    {
+      "id": "9a3dac45a382d037253c",
       "source": "eia",
       "metric": "wti_price_usd",
-      "value": 71.87,
+      "value": 84.77,
       "unit": "$/BBL",
       "country": "USA",
-      "date": "2026-06-29",
-      "fetchedAt": "2026-07-03T06:49:36.834Z",
-      "rawHash": "665c588ab47bda02"
+      "date": "2026-08-11",
+      "fetchedAt": "2026-08-13T14:11:06.130Z",
+      "rawHash": "cbebec03f5556b28"
     },
     {
-      "id": "5ad768bbf6e838e17f9f",
-      "source": "eia",
-      "metric": "brent_price_usd",
-      "value": 71.59,
-      "unit": "$/BBL",
-      "country": "USA",
-      "date": "2026-06-29",
-      "fetchedAt": "2026-07-03T06:49:36.834Z",
-      "rawHash": "618e89344fa08110"
-    },
-    {
-      "id": "b9bebe7ec1e736271344",
+      "id": "d323e52dfe9098051d61",
       "source": "eia",
       "metric": "spot-prices",
-      "value": 2.963,
+      "value": 3.814,
       "unit": "$/GAL",
       "country": "USA",
-      "date": "2026-06-26",
-      "fetchedAt": "2026-07-03T06:49:36.834Z",
-      "rawHash": "1e2f9cad84223e15"
+      "date": "2026-08-11",
+      "fetchedAt": "2026-08-13T14:11:06.130Z",
+      "rawHash": "25e7083080306245"
     },
     {
-      "id": "cf943447bc2d959c8056",
+      "id": "d323e52dfe9098051d61",
+      "source": "eia",
+      "metric": "spot-prices",
+      "value": 3.449,
+      "unit": "$/GAL",
+      "country": "USA",
+      "date": "2026-08-11",
+      "fetchedAt": "2026-08-13T14:11:06.130Z",
+      "rawHash": "9cba2f93075c0162"
+    },
+    {
+      "id": "d323e52dfe9098051d61",
+      "source": "eia",
+      "metric": "spot-prices",
+      "value": 3.214,
+      "unit": "$/GAL",
+      "country": "USA",
+      "date": "2026-08-11",
+      "fetchedAt": "2026-08-13T14:11:06.130Z",
+      "rawHash": "efab89a3c3bed010"
+    },
+    {
+      "id": "d323e52dfe9098051d61",
+      "source": "eia",
+      "metric": "spot-prices",
+      "value": 3.152,
+      "unit": "$/GAL",
+      "country": "USA",
+      "date": "2026-08-11",
+      "fetchedAt": "2026-08-13T14:11:06.130Z",
+      "rawHash": "cf2fbad23de4ecb2"
+    },
+    {
+      "id": "d323e52dfe9098051d61",
+      "source": "eia",
+      "metric": "spot-prices",
+      "value": 4.175,
+      "unit": "$/GAL",
+      "country": "USA",
+      "date": "2026-08-11",
+      "fetchedAt": "2026-08-13T14:11:06.130Z",
+      "rawHash": "38e72c99859e8d40"
+    },
+    {
+      "id": "40d7b6b309c24baf3e9b",
+      "source": "eia",
+      "metric": "spot-prices",
+      "value": 4.235,
+      "unit": "$/GAL",
+      "country": "USA",
+      "date": "2026-07-27",
+      "fetchedAt": "2026-08-02T14:22:18.315Z",
+      "rawHash": "d1aad6d68c19b5b5"
+    },
+    {
+      "id": "40d7b6b309c24baf3e9b",
+      "source": "eia",
+      "metric": "spot-prices",
+      "value": 4.105,
+      "unit": "$/GAL",
+      "country": "USA",
+      "date": "2026-07-27",
+      "fetchedAt": "2026-08-02T14:22:18.315Z",
+      "rawHash": "b4e0a090cfd36196"
+    },
+    {
+      "id": "40d7b6b309c24baf3e9b",
+      "source": "eia",
+      "metric": "spot-prices",
+      "value": 4.103,
+      "unit": "$/GAL",
+      "country": "USA",
+      "date": "2026-07-27",
+      "fetchedAt": "2026-08-02T14:22:18.315Z",
+      "rawHash": "aa8a618a93c69810"
+    },
+    {
+      "id": "40d7b6b309c24baf3e9b",
+      "source": "eia",
+      "metric": "spot-prices",
+      "value": 3.998,
+      "unit": "$/GAL",
+      "country": "USA",
+      "date": "2026-07-27",
+      "fetchedAt": "2026-08-02T14:22:18.315Z",
+      "rawHash": "bf28fdd9e9f4269f"
+    },
+    {
+      "id": "40d7b6b309c24baf3e9b",
+      "source": "eia",
+      "metric": "spot-prices",
+      "value": 3.582,
+      "unit": "$/GAL",
+      "country": "USA",
+      "date": "2026-07-27",
+      "fetchedAt": "2026-08-02T14:22:18.315Z",
+      "rawHash": "07e03ba0bce78e01"
+    },
+    {
+      "id": "fb11bc62ace8c6e7c2b8",
       "source": "eia",
       "metric": "wti_price_usd",
-      "value": 70.3,
+      "value": 84.25,
       "unit": "$/BBL",
       "country": "USA",
-      "date": "2026-06-26",
-      "fetchedAt": "2026-07-03T06:49:36.834Z",
-      "rawHash": "b5c1cc74712623f2"
+      "date": "2026-07-27",
+      "fetchedAt": "2026-08-02T14:22:18.315Z",
+      "rawHash": "0c339b00ff704a90"
     },
     {
-      "id": "0261116905b37367f314",
-      "source": "eia",
-      "metric": "brent_price_usd",
-      "value": 70.16,
-      "unit": "$/BBL",
-      "country": "USA",
-      "date": "2026-06-26",
-      "fetchedAt": "2026-07-03T06:49:36.834Z",
-      "rawHash": "cbb172b343abcabe"
-    },
-    {
-      "id": "9054314fba8d60cc5731",
-      "source": "eia",
-      "metric": "production_mbpd",
-      "value": -4450,
-      "unit": "MBBL/D",
-      "country": "USA",
-      "date": "2026-06-26",
-      "fetchedAt": "2026-07-03T06:49:36.834Z",
-      "rawHash": "15e9c4922e54fb22"
-    },
-    {
-      "id": "cf9d6c0a8c4b7dde4f04",
+      "id": "40d7b6b309c24baf3e9b",
       "source": "eia",
       "metric": "spot-prices",
-      "value": 3.279,
+      "value": 3.504,
       "unit": "$/GAL",
       "country": "USA",
-      "date": "2026-06-25",
-      "fetchedAt": "2026-07-03T06:49:36.834Z",
-      "rawHash": "fea3ea5dfb86cadf"
+      "date": "2026-07-27",
+      "fetchedAt": "2026-08-02T14:22:18.315Z",
+      "rawHash": "57b2d2c43fc70a7c"
     },
     {
-      "id": "4d791fe54679350e9fc9",
+      "id": "40d7b6b309c24baf3e9b",
+      "source": "eia",
+      "metric": "spot-prices",
+      "value": 3.434,
+      "unit": "$/GAL",
+      "country": "USA",
+      "date": "2026-07-27",
+      "fetchedAt": "2026-08-02T14:22:18.315Z",
+      "rawHash": "4db5606b9e7c7749"
+    },
+    {
+      "id": "40d7b6b309c24baf3e9b",
+      "source": "eia",
+      "metric": "spot-prices",
+      "value": 3.242,
+      "unit": "$/GAL",
+      "country": "USA",
+      "date": "2026-07-27",
+      "fetchedAt": "2026-08-02T14:22:18.315Z",
+      "rawHash": "b05e982d1861035b"
+    },
+    {
+      "id": "f3ce5515aebe2dc9ff88",
       "source": "eia",
       "metric": "brent_price_usd",
-      "value": 73.74,
+      "value": 91.82,
       "unit": "$/BBL",
       "country": "USA",
-      "date": "2026-06-25",
-      "fetchedAt": "2026-07-03T06:49:36.834Z",
-      "rawHash": "fc2550f74b0c2d4d"
+      "date": "2026-07-27",
+      "fetchedAt": "2026-08-02T14:22:18.315Z",
+      "rawHash": "e8b33c25299f6080"
+    },
+    {
+      "id": "40d7b6b309c24baf3e9b",
+      "source": "eia",
+      "metric": "spot-prices",
+      "value": 0.678,
+      "unit": "$/GAL",
+      "country": "USA",
+      "date": "2026-07-27",
+      "fetchedAt": "2026-08-02T14:22:18.315Z",
+      "rawHash": "5ea98574c327733e"
     }
   ]
 }

@@ -180,6 +180,16 @@ That is correct. The honest statement of scope is:
 and any future persistence function that forgets to call the gate. Those are
 protected by the PostgreSQL roles alone.
 
+The single largest ungated route, named explicitly because it is easy to miss:
+**`runMigrations()`** (`packages/db/src/migrate.ts`) executes arbitrary SQL from
+`migrations/*.sql` through `getPool()` with no intent scope. The `'migration'`
+operation class exists in the type and is enforced nowhere. `npm run migrate`
+inside `packages/db` with `DATABASE_URL` set is exactly the ad-hoc-CLI shape
+that lost the CRWD split adjustment on 2026-07-05. It is consistent with the
+gate's documented scope, so it is not a bypass — but it is the biggest thing
+the gate does not cover, and gating it is a deliberate future decision, not an
+oversight.
+
 The four-word version of the invariant is aspirational about the database and
 accurate about one module. Do not cite it as though the cluster enforces it —
 **the roles are what the cluster enforces.** This layer raises the cost of an
