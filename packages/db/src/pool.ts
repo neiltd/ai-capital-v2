@@ -200,15 +200,68 @@ function guard(connectionString: string, opts?: ConnectOptions): void {
   assertNotLiveDatabase(connectionString)
 }
 
+
+/**
+ * Resolve the database a connection WILL actually reach, the way pg does.
+ *
+ * A connection string alone is NOT enough: `postgres://user@host:5432` with no
+ * path resolves through PGDATABASE, then the user, then PGUSER, then the OS
+ * user. Warden broke the first production-write gate on exactly this — the gate
+ * read only the connection string, saw `null`, concluded "not protected", and
+ * let an unauthorised write through to a database pg was about to connect to.
+ *
+ * Returns null ONLY when the destination is genuinely undeterminable, and every
+ * caller must treat null as "refuse", never as "allow".
+ */
+export function resolveDestination(connectionString?: string, cfg?: pg.ClientConfig): string | null {
+  if (connectionString) {
+    const fromUrl = databaseNameOf(connectionString)
+    if (fromUrl) return fromUrl
+    // A parseable URL with no database part still resolves through the
+    // environment; fall through rather than reporting "unknown".
+  }
+  const effective = (
+    cfg?.database
+    ?? process.env.PGDATABASE
+    ?? cfg?.user
+    ?? process.env.PGUSER
+    ?? process.env.USER
+    ?? ''
+  ).trim().toLowerCase()
+  return effective || null
+}
+
+/**
+ * The destination a pool was built against, recorded AT CONSTRUCTION.
+ *
+ * Why not just re-read the environment when checking? Because `getPool()`
+ * caches, and the environment can change after the pool is warm — Warden
+ * demonstrated a TOCTOU where the gate inspected a harmless destination while
+ * the cached pool still pointed at the protected one. `global-setup.ts` mutates
+ * and restores DATABASE_URL, so this is a pattern the repo actually contains.
+ * Binding the destination to the pool object makes the two impossible to
+ * disagree.
+ */
+export const POOL_DESTINATION: unique symbol = Symbol.for('@common/db.destination')
+
+export function destinationOf(pool: unknown): string | null {
+  return (pool as Record<symbol, string | null>)?.[POOL_DESTINATION] ?? null
+}
+
 /** Construct a guarded connection pool. Use this instead of `new pg.Pool`. */
 export function createPool(connectionString: string, opts: ConnectOptions = {}): pg.Pool {
   guard(connectionString, opts)
-  return new Pool({
+  const pool = new Pool({
     connectionString,
     max: opts.max ?? Number(process.env.PG_POOL_MAX ?? '5'),
     idleTimeoutMillis: 30_000,
     connectionTimeoutMillis: opts.connectionTimeoutMillis ?? 10_000,
   })
+  // Bind the destination to the object, resolved NOW. See POOL_DESTINATION.
+  Object.defineProperty(pool, POOL_DESTINATION, {
+    value: resolveDestination(connectionString), enumerable: false, writable: false, configurable: false,
+  })
+  return pool
 }
 
 /** Construct a guarded single client. Use this instead of `new pg.Client`. */
@@ -239,15 +292,10 @@ export function createClientFromConfig(cfg: pg.ClientConfig, opts: ConnectOption
     // A connection string in the config is a connection string: same guard.
     if (cfg.connectionString) assertNotLiveDatabase(cfg.connectionString)
 
-    // pg's own resolution order when `database` is absent.
-    const effective = (
-      cfg.database
-      ?? process.env.PGDATABASE
-      ?? cfg.user
-      ?? process.env.PGUSER
-      ?? process.env.USER
-      ?? ''
-    ).toLowerCase()
+    // ONE resolver, shared with the production-write gate. Two copies of a
+    // resolution order is how the gate ended up seeing a different destination
+    // than the driver.
+    const effective = resolveDestination(undefined, cfg) ?? ''
 
     if (!cfg.connectionString && !effective) {
       // Cannot prove safe must never mean allowed.

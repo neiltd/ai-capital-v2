@@ -1,5 +1,5 @@
 import { AsyncLocalStorage } from 'node:async_hooks'
-import { databaseNameOf, liveDatabaseNames } from './pool.js'
+import { liveDatabaseNames, resolveDestination, destinationOf } from './pool.js'
 
 /**
  * ── Production-write intent ────────────────────────────────────────────────
@@ -60,11 +60,32 @@ export interface WriteIntent {
   reason: string
 }
 
-const store = new AsyncLocalStorage<WriteIntent>()
+interface IntentBox { intent: WriteIntent; open: boolean }
 
-/** The intent in force for the current async call chain, if any. */
+const store = new AsyncLocalStorage<IntentBox>()
+
+/**
+ * The intent in force for the current async call chain, if any.
+ *
+ * The `open` flag is load-bearing. AsyncLocalStorage propagates to every async
+ * resource CREATED inside a scope, and those resources keep the context after
+ * the scope returns. Warden demonstrated four live escapes: a floating promise
+ * awaited outside, a `setTimeout` scheduled inside, `process.nextTick`, and an
+ * explicit `AsyncResource.bind` capture-and-replay. Each of them authorized a
+ * production write after the authorization had supposedly ended.
+ *
+ * The dangerous real-world shape is a missing `await`:
+ *   withProductionWrite(..., async () => { void ingestAgentOutput(...) })
+ * which authorizes a write that lands at an arbitrary later time — or a
+ * setInterval flusher started inside a scope, which would hold production
+ * authority for the lifetime of the process.
+ *
+ * Closing the box on the way out makes the authorization expire with the call
+ * rather than with the async context.
+ */
 export function currentWriteIntent(): WriteIntent | undefined {
-  return store.getStore()
+  const box = store.getStore()
+  return box?.open ? box.intent : undefined
 }
 
 /**
@@ -91,13 +112,37 @@ export function withProductionWrite<T>(intent: WriteIntent, fn: () => Promise<T>
   // protected destination under vitest and ai_capital_test_runtime has no
   // CONNECT privilege there. Keeping the two concerns separate is what lets
   // this layer be tested honestly rather than through a backdoor.
-  return store.run(intent, fn)
+  const box: IntentBox = { intent, open: true }
+  return store.run(box, async () => {
+    try { return await fn() } finally { box.open = false }
+  })
 }
 
-/** True when this connection string names a database we protect. */
+/**
+ * True when this connection string names a database we protect.
+ *
+ * Resolves the way pg does — a path-less URL still reaches PGDATABASE. The
+ * first version read only the connection string and Warden walked straight
+ * through it with `postgres://user@host:5432` + `PGDATABASE=ai_capital`.
+ */
 export function isProtectedDestination(connectionString: string): boolean {
-  const name = databaseNameOf(connectionString)
+  const name = resolveDestination(connectionString)
   return !!name && liveDatabaseNames().includes(name)
+}
+
+/** Raised when a destination cannot be determined at all. */
+export class UndeterminableDestination extends Error {
+  constructor(operation: WriteOperation) {
+    super(
+      `@common/db: REFUSED a ${operation} write — the destination database could not be\n` +
+      'determined from the connection string, PGDATABASE, or the environment.\n' +
+      '\n' +
+      'Cannot prove safe must never mean allowed. Every other guard in this\n' +
+      'package fails closed on an undeterminable destination; this one does too.\n' +
+      'Name the database explicitly.',
+    )
+    this.name = 'UndeterminableDestination'
+  }
 }
 
 export class ProductionWriteRefused extends Error {
@@ -136,13 +181,42 @@ export class ProductionWriteRefused extends Error {
  * database needs no ceremony, which is what keeps the whole test suite
  * untouched by this layer.
  */
-export function assertProductionWriteAuthorized(connectionString: string, operation: WriteOperation): void {
-  if (!isProtectedDestination(connectionString)) return
+export function assertProductionWriteAuthorized(
+  connectionString: string | undefined,
+  operation: WriteOperation,
+): void {
+  // FAIL CLOSED. The first version treated "cannot determine" as "not
+  // protected" — a polarity inversion, and the root of every bypass Warden
+  // found. An absent or unresolvable destination is refused, not waved through.
+  if (connectionString !== undefined && connectionString.trim() === '') {
+    throw new UndeterminableDestination(operation)
+  }
+  const name = connectionString === undefined
+    ? resolveDestination(undefined)
+    : resolveDestination(connectionString)
+  if (!name) throw new UndeterminableDestination(operation)
+
+  if (!liveDatabaseNames().includes(name)) return   // throwaway target: no ceremony
 
   const intent = currentWriteIntent()
-  if (!intent) throw new ProductionWriteRefused(databaseNameOf(connectionString)!, operation)
+  if (!intent || intent.operation !== operation) throw new ProductionWriteRefused(name, operation)
+}
 
-  if (intent.operation !== operation) {
-    throw new ProductionWriteRefused(databaseNameOf(connectionString)!, operation)
+/**
+ * Authorize against the destination a POOL was actually built with, not against
+ * whatever the environment says right now.
+ *
+ * This is the TOCTOU fix: `getPool()` caches, so the environment can change
+ * after the pool is warm. Falls back to environment resolution only for a pool
+ * that carries no recorded destination, and even then fails closed.
+ */
+export function assertPoolWriteAuthorized(pool: unknown, operation: WriteOperation): void {
+  const recorded = destinationOf(pool)
+  if (recorded) {
+    if (!liveDatabaseNames().includes(recorded)) return
+    const intent = currentWriteIntent()
+    if (!intent || intent.operation !== operation) throw new ProductionWriteRefused(recorded, operation)
+    return
   }
+  throw new UndeterminableDestination(operation)
 }

@@ -19,6 +19,18 @@ const PATTERN_HOLDERS = [
   'packages/db/tests/isolation-coverage.test.ts',
 ]
 
+/**
+ * Every top-level directory worth scanning — workspace globs are not enough,
+ * because code that constructs a connection does not stop being dangerous by
+ * living in a directory pnpm ignores.
+ */
+export function scanRoots(repo: string): string[] {
+  return readdirSync(repo, { withFileTypes: true })
+    .filter(e => e.isDirectory() && !SKIP.includes(e.name))
+    .map(e => e.name)
+    .sort()
+}
+
 export function workspaceGroups(repo: string): string[] {
   const f = join(repo, 'pnpm-workspace.yaml')
   if (!existsSync(f)) return ['apps', 'packages']
@@ -46,17 +58,33 @@ function walk(dir: string, repo: string, visit: (abs: string, rel: string) => vo
  * a real check acquires a reputation for crying wolf.
  */
 export function findRawConstructions(repo: string): string[] {
-  const CONSTRUCT = /new\s+(pg\.)?(Pool|Client)\s*\(/
-  const ALT_DRIVER = /^(?!.*\bimport\s+type\b).*(?:from|require\s*\(|import\s*\()\s*['"`](pg-pool|pg\/[^'"`]+|postgres|knex|slonik|drizzle-orm\/node-postgres)['"`]/m
+  // Warden showed the first version only matched the literal spellings
+  // `new pg.Pool(` / `new Pool(`. Every one of these got through, and none is
+  // deliberate evasion — the first is what a developer writes by reflex after
+  // copying pool.ts's own `export type { Pool as PgPool } from 'pg'`:
+  //
+  //   import { Pool as PgPool } from 'pg' ; new PgPool(...)
+  //   import pgDriver from 'pg'           ; new pgDriver.Pool(...)
+  //   const { Pool: PGPool } = pg         ; new PGPool(...)
+  //   const Ctor = pg.Pool                ; new Ctor(...)
+  //   new (require('pg').Pool)(...)
+  //
+  // So: find every identifier this file binds from a Postgres driver, then flag
+  // `new <that identifier>` in any spelling — plus the inline-require form.
+  const ALT_DRIVER = /^(?!.*\bimport\s+type\b).*(?:from|require\s*\(|import\s*\()\s*['"`](pg-pool|pg-native|pg-promise|pg\/[^'"`]+|postgres|knex|slonik|drizzle-orm\/node-postgres|@neondatabase\/serverless)['"`]/m
   const offenders: string[] = []
-  for (const group of [...workspaceGroups(repo), 'scripts']) {
+  // Scan the WHOLE repository, not just the workspace globs. Warden pointed out
+  // that `_archive/`, `design-redesign-2026-07/` and any root-level file were
+  // never looked at — and an unscanned directory is exactly where a copied-out
+  // connection helper survives a refactor and gets imported back in later.
+  for (const group of scanRoots(repo)) {
     const dir = join(repo, group)
     if (!existsSync(dir)) continue
     walk(dir, repo, (abs, rel) => {
       if (!CODE.test(abs)) return
       if (rel === CANONICAL_CONNECTION_MODULE || PATTERN_HOLDERS.includes(rel)) return
       const src = readFileSync(abs, 'utf-8')
-      if (CONSTRUCT.test(src) || ALT_DRIVER.test(src)) offenders.push(rel)
+      if (ALT_DRIVER.test(src) || constructsPostgres(src)) offenders.push(rel)
     })
   }
   return offenders.sort()
@@ -91,4 +119,46 @@ export function findDeadTestFiles(repo: string): string[] {
     })
   }
   return broken.sort()
+}
+
+/**
+ * Does this source actually CONSTRUCT a Postgres connection, under any name?
+ *
+ * Type-only imports are ignored — `import type pg from 'pg'` is legitimate, and
+ * an earlier version flagged it, which is how a check earns a reputation for
+ * crying wolf and gets disabled.
+ */
+export function constructsPostgres(src: string): boolean {
+  // `new (require('pg').Pool)(...)` and friends — no binding to track.
+  if (/new\s*\(\s*require\s*\(\s*['"`]pg['"`]\s*\)\s*\.\s*(Pool|Client)\s*\)/.test(src)) return true
+
+  const names = new Set<string>()
+  const valueImportsPg = [...src.matchAll(
+    /^(?!.*\bimport\s+type\b)\s*import\s+([^;]+?)\s+from\s*['"`]pg['"`]/gm)]
+  for (const m of valueImportsPg) {
+    const clause = m[1]
+    // default binding: `pg`, `pg, { Pool }`
+    const def = /^\s*([A-Za-z_$][\w$]*)/.exec(clause)
+    if (def && !clause.trimStart().startsWith('{')) names.add(def[1])
+    // named bindings, with or without aliases: `{ Pool as PgPool, Client }`
+    for (const n of clause.matchAll(/([A-Za-z_$][\w$]*)(?:\s+as\s+([A-Za-z_$][\w$]*))?/g)) {
+      if (n[1] === 'Pool' || n[1] === 'Client') names.add(n[2] ?? n[1])
+    }
+  }
+  // `const { Pool: PGPool } = pg` / `const Ctor = pg.Pool`
+  for (const m of src.matchAll(/(?:const|let|var)\s*\{([^}]*)\}\s*=\s*[A-Za-z_$][\w$]*/g)) {
+    for (const n of m[1].matchAll(/(Pool|Client)\s*(?::\s*([A-Za-z_$][\w$]*))?/g)) names.add(n[2] ?? n[1])
+  }
+  for (const m of src.matchAll(/(?:const|let|var)\s+([A-Za-z_$][\w$]*)\s*=\s*[A-Za-z_$][\w$]*\.(Pool|Client)\b/g)) {
+    names.add(m[1])
+  }
+  // Always-suspect literal spellings, even with no import in this file.
+  names.add('Pool'); names.add('Client')
+
+  for (const name of names) {
+    if (new RegExp(`new\\s+${name}\\s*\\(`).test(src)) return true
+    // `new pgDriver.Pool(...)` — any member expression ending in .Pool/.Client
+    if (new RegExp(`new\\s+${name}\\s*\\.\\s*(Pool|Client)\\s*\\(`).test(src)) return true
+  }
+  return /new\s+[A-Za-z_$][\w$]*\s*\.\s*(Pool|Client)\s*\(/.test(src)
 }

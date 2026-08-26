@@ -18,7 +18,7 @@
 
 import pg from 'pg'
 import { getPool, inTestRuntime, createPool } from './pool.js'
-import { assertProductionWriteAuthorized } from './write-intent.js'
+import { assertPoolWriteAuthorized, ProductionWriteRefused, UndeterminableDestination } from './write-intent.js'
 
 export const CLAIM_PROTOCOL = 'claim/1'
 
@@ -253,14 +253,22 @@ function writer(): pg.Pool | ReturnType<typeof getPool> {
   // Note the destination is resolved BEFORE the pool is built and BEFORE any
   // SQL is issued — refusing after connecting would already have handed a
   // production connection to an unauthorised caller.
-  const url = process.env.CLAIM_WRITER_DATABASE_URL
-  const destination = url ?? process.env.DATABASE_URL
-  if (destination) assertProductionWriteAuthorized(destination, 'claim-persistence')
-
-  if (!url) return getPool()
-  // createPool carries the destination+runtime guard, so this path cannot
-  // re-open the hole even if the check above is ever removed.
+  // W-1: `??` does not coalesce the empty string. `CLAIM_WRITER_DATABASE_URL=`
+  // (blanked, not unset — the normal way someone disables a credential in .env)
+  // made `destination` empty, which skipped the gate ENTIRELY and then fell
+  // through to the *more* privileged DATABASE_URL. `||` and an unconditional
+  // gate. There is no longer any input for which the gate does not run.
+  const url = process.env.CLAIM_WRITER_DATABASE_URL || undefined
+  if (!url) {
+    // Assert against the pool getPool() will actually hand back, not against
+    // the environment as it reads at this instant — the pool may have been
+    // cached when the environment said something else entirely.
+    const pool = getPool()
+    assertPoolWriteAuthorized(pool, 'claim-persistence')
+    return pool
+  }
   if (!writerPool) writerPool = createPool(url, { max: 2 })
+  assertPoolWriteAuthorized(writerPool, 'claim-persistence')
   return writerPool
 }
 
@@ -442,6 +450,14 @@ export async function ingestAgentOutput(opts: {
     }
     for (const e of parseEventBlocks(text)) await applyEvent(e)
   } catch (err) {
+    // An AUTHORIZATION refusal is not a parse error and must not be folded into
+    // errors[]. Warden found that a refused write returned
+    // {persisted: 0, errors: [...]} without throwing — so the caller saw a
+    // successful-looking result, and the agent_runs record that exists to make
+    // non-emission measurable was refused too. Nothing durable recorded that a
+    // claim had been dropped, which is precisely the silent disappearance this
+    // function exists to prevent. Refusals propagate.
+    if (err instanceof ProductionWriteRefused || err instanceof UndeterminableDestination) throw err
     errors.push((err as Error).message)
     out = { detected, parsed, persisted, ids: out.ids, ambiguous: out.ambiguous, errors }
   }
@@ -451,7 +467,10 @@ export async function ingestAgentOutput(opts: {
     sessionId: provenance.sourceSession, runRef: provenance.sourceAgentRun,
     taskSummary: opts.taskSummary ?? provenance.sourceContext,
     parseErrors: errors.length ? errors.join(' | ') : null,
-  }).catch(e => errors.push(`run record failed: ${(e as Error).message}`))
+  }).catch(e => {
+    if (e instanceof ProductionWriteRefused || e instanceof UndeterminableDestination) throw e
+    errors.push(`run record failed: ${(e as Error).message}`)
+  })
 
   return out
 }

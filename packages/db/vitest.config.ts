@@ -1,5 +1,31 @@
 import { fileURLToPath } from 'node:url'
+import { readFileSync, existsSync } from 'node:fs'
 import { defineConfig } from 'vitest/config'
+
+// Vitest does not load .env, so `pnpm --filter @common/db test` from a plain
+// shell failed with "No test files found" plus exit 1 — which reads like a
+// broken suite rather than a missing credential, and cost Warden real time
+// during the 2026-08-26 audit.
+//
+// So load the root .env HERE, but take ONLY the test-database variables from
+// it. Deliberately narrow: pulling the whole file in would re-introduce the
+// production credentials into the test process and lean on the isolation layer
+// to strip them again. Fewer credentials present beats more credentials
+// cleaned up.
+function loadTestCredentialsFromDotEnv(): void {
+  const envFile = fileURLToPath(new URL('../../.env', import.meta.url))
+  if (!existsSync(envFile)) return
+  const WANTED = ['TEST_RUNTIME_DATABASE_URL', 'BOOTSTRAP_DATABASE_URL', 'TEST_DATABASE_URL']
+  for (const line of readFileSync(envFile, 'utf-8').split('\n')) {
+    const m = /^\s*(?:export\s+)?([A-Z_][A-Z0-9_]*)\s*=\s*(.*)$/.exec(line)
+    if (!m) continue
+    const [, key, rawValue] = m
+    if (!WANTED.includes(key)) continue
+    if (process.env[key]) continue                       // an explicit shell value always wins
+    process.env[key] = rawValue.trim().replace(/^(['"])(.*)\1$/, '$2')
+  }
+}
+loadTestCredentialsFromDotEnv()
 
 // This package's own tests exercise real Postgres (the claim lifecycle, the
 // constraints, the immutability trigger). They must never touch the live book,

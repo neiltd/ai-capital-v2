@@ -13,6 +13,10 @@
     "./pool": {
       "types": "./src/pool.ts",
       "import": "./src/pool.ts"
+    },
+    "./write-intent": {
+      "types": "./src/write-intent.ts",
+      "import": "./src/write-intent.ts"
     }
   },
   "bin": {
