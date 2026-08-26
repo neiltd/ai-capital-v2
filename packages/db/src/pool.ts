@@ -84,6 +84,12 @@ export function liveDatabaseNames(): string[] {
  * treat that as UNSAFE, not as permission. See assertNotLiveDatabase.
  */
 export function databaseNameOf(connectionString: string): string | null {
+  const raw = databaseNameOfRaw(connectionString)
+  return raw ? raw.toLowerCase() : null
+}
+
+/** As `databaseNameOf`, preserving case — Postgres database names are case-sensitive. */
+export function databaseNameOfRaw(connectionString: string): string | null {
   try {
     // Use the DRIVER'S OWN parser, not a hand-rolled one. Two bypasses came
     // from reimplementing it: `%5F` (pg decodes the pathname, `new URL()` does
@@ -101,7 +107,7 @@ export function databaseNameOf(connectionString: string): string | null {
       if (decoded === name) break
       name = decoded
     }
-    const canonical = name.replace(/^\/+/, '').replace(/\/+$/, '').trim().toLowerCase()
+    const canonical = name.replace(/^\/+/, '').replace(/\/+$/, '').trim()
     // A NUL or other control character must not smuggle a live name past the
     // comparison and leave the wire protocol as the only defence.
     if (/[\u0000-\u001f\u007f]/.test(canonical)) return null
@@ -214,8 +220,18 @@ function guard(connectionString: string, opts?: ConnectOptions): void {
  * caller must treat null as "refuse", never as "allow".
  */
 export function resolveDestination(connectionString?: string, cfg?: pg.ClientConfig): string | null {
+  const raw = resolveDestinationRaw(connectionString, cfg)
+  return raw ? raw.toLowerCase() : null
+}
+
+/**
+ * As `resolveDestination`, but preserving case. PostgreSQL database names are
+ * case-sensitive, so the value used to PIN a connection string must be the raw
+ * one; only the value used for comparison against the protected set is folded.
+ */
+export function resolveDestinationRaw(connectionString?: string, cfg?: pg.ClientConfig): string | null {
   if (connectionString) {
-    const fromUrl = databaseNameOf(connectionString)
+    const fromUrl = databaseNameOfRaw(connectionString)
     if (fromUrl) return fromUrl
     // A parseable URL with no database part still resolves through the
     // environment; fall through rather than reporting "unknown".
@@ -227,8 +243,50 @@ export function resolveDestination(connectionString?: string, cfg?: pg.ClientCon
     ?? process.env.PGUSER
     ?? process.env.USER
     ?? ''
-  ).trim().toLowerCase()
+  ).trim()
   return effective || null
+}
+
+/**
+ * Pin the resolved destination INTO the connection string.
+ *
+ * WHY THIS IS NECESSARY AND WHY THE OBVIOUS ALTERNATIVE DOES NOT WORK.
+ * `pg.Pool` does not connect at construction — it builds a Client per checkout,
+ * and ConnectionParameters reads PGDATABASE at CONNECT time. So recording the
+ * destination when the pool is built produced a snapshot the driver could later
+ * disagree with, and Warden drove exactly that divergence to a row landing in
+ * desk.agent_runs on a protected database with no intent scope:
+ *
+ *   POOL_DESTINATION recorded  : thanapold      (env had no PGDATABASE yet)
+ *   pg actually connected to   : ai_capital_test (PGDATABASE set afterwards)
+ *
+ * Passing `database` explicitly alongside `connectionString` does NOT fix it —
+ * measured: pg ignores it and PGDATABASE still wins. Only the database embedded
+ * in the connection string itself is authoritative.
+ *
+ * So resolve once, write the answer into the string, and let the driver read it
+ * from there. The record and the destination then agree BY CONSTRUCTION rather
+ * than by a second check that could itself be skipped.
+ */
+export function pinDestination(connectionString: string): string {
+  if (databaseNameOfRaw(connectionString)) return connectionString   // already explicit
+  const name = resolveDestinationRaw(connectionString)
+  if (!name) {
+    throw new Error(
+      '@common/db: refusing to open a connection whose target database cannot be determined ' +
+      'from the connection string, PGDATABASE, or the environment. Name it explicitly.')
+  }
+  if (/^socket:/i.test(connectionString)) {
+    const sep = connectionString.includes('?') ? '&' : '?'
+    return `${connectionString}${sep}db=${encodeURIComponent(name)}`
+  }
+  try {
+    const u = new URL(connectionString)
+    u.pathname = `/${encodeURIComponent(name)}`
+    return u.toString()
+  } catch {
+    return connectionString
+  }
 }
 
 /**
@@ -242,7 +300,12 @@ export function resolveDestination(connectionString?: string, cfg?: pg.ClientCon
  * Binding the destination to the pool object makes the two impossible to
  * disagree.
  */
-export const POOL_DESTINATION: unique symbol = Symbol.for('@common/db.destination')
+// A MODULE-PRIVATE symbol, deliberately not Symbol.for(). Warden showed that a
+// registry symbol lets any module mint the same key and forge the marker — or
+// shadow a real pool via Object.create() while .query() still delegates to the
+// production pool through the prototype chain. A private symbol cannot be
+// minted elsewhere, so the marker is a capability rather than a convention.
+export const POOL_DESTINATION: unique symbol = Symbol('@common/db.destination')
 
 export function destinationOf(pool: unknown): string | null {
   return (pool as Record<symbol, string | null>)?.[POOL_DESTINATION] ?? null
@@ -250,25 +313,28 @@ export function destinationOf(pool: unknown): string | null {
 
 /** Construct a guarded connection pool. Use this instead of `new pg.Pool`. */
 export function createPool(connectionString: string, opts: ConnectOptions = {}): pg.Pool {
-  guard(connectionString, opts)
+  // Pin FIRST: guard, record and driver must all see the same destination.
+  const pinned = pinDestination(connectionString)
+  guard(pinned, opts)
   const pool = new Pool({
-    connectionString,
+    connectionString: pinned,
     max: opts.max ?? Number(process.env.PG_POOL_MAX ?? '5'),
     idleTimeoutMillis: 30_000,
     connectionTimeoutMillis: opts.connectionTimeoutMillis ?? 10_000,
   })
   // Bind the destination to the object, resolved NOW. See POOL_DESTINATION.
   Object.defineProperty(pool, POOL_DESTINATION, {
-    value: resolveDestination(connectionString), enumerable: false, writable: false, configurable: false,
+    value: databaseNameOf(pinned), enumerable: false, writable: false, configurable: false,
   })
   return pool
 }
 
 /** Construct a guarded single client. Use this instead of `new pg.Client`. */
 export function createClient(connectionString: string, opts: ConnectOptions = {}): pg.Client {
-  guard(connectionString, opts)
+  const pinned = pinDestination(connectionString)
+  guard(pinned, opts)
   return new pg.Client({
-    connectionString,
+    connectionString: pinned,
     connectionTimeoutMillis: opts.connectionTimeoutMillis ?? 10_000,
   })
 }

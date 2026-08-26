@@ -77,15 +77,22 @@ export function findRawConstructions(repo: string): string[] {
   // that `_archive/`, `design-redesign-2026-07/` and any root-level file were
   // never looked at — and an unscanned directory is exactly where a copied-out
   // connection helper survives a refactor and gets imported back in later.
+  const visit = (abs: string, rel: string) => {
+    if (!CODE.test(abs)) return
+    if (rel === CANONICAL_CONNECTION_MODULE || PATTERN_HOLDERS.includes(rel)) return
+    const src = readFileSync(abs, 'utf-8')
+    if (ALT_DRIVER.test(src) || constructsPostgres(src)) offenders.push(rel)
+  }
   for (const group of scanRoots(repo)) {
     const dir = join(repo, group)
-    if (!existsSync(dir)) continue
-    walk(dir, repo, (abs, rel) => {
-      if (!CODE.test(abs)) return
-      if (rel === CANONICAL_CONNECTION_MODULE || PATTERN_HOLDERS.includes(rel)) return
-      const src = readFileSync(abs, 'utf-8')
-      if (ALT_DRIVER.test(src) || constructsPostgres(src)) offenders.push(rel)
-    })
+    if (existsSync(dir)) walk(dir, repo, visit)
+  }
+  // Root-level FILES too. The previous comment claimed these were covered and
+  // they were not — scanRoots filters to directories, so a .ts at the repo root
+  // was invisible. Latent (there are none today), but a check that asserts a
+  // property it does not have is worse than one that admits its limits.
+  for (const e of readdirSync(repo, { withFileTypes: true })) {
+    if (e.isFile()) visit(join(repo, e.name), e.name)
   }
   return offenders.sort()
 }
@@ -145,6 +152,10 @@ export function constructsPostgres(src: string): boolean {
       if (n[1] === 'Pool' || n[1] === 'Client') names.add(n[2] ?? n[1])
     }
   }
+  // `let Ctor; Ctor = pg.Pool` — bare assignment, no declaration keyword.
+  for (const m of src.matchAll(/^\s*([A-Za-z_$][\w$]*)\s*=\s*[A-Za-z_$][\w$]*\.(Pool|Client)\b/gm)) {
+    names.add(m[1])
+  }
   // `const { Pool: PGPool } = pg` / `const Ctor = pg.Pool`
   for (const m of src.matchAll(/(?:const|let|var)\s*\{([^}]*)\}\s*=\s*[A-Za-z_$][\w$]*/g)) {
     for (const n of m[1].matchAll(/(Pool|Client)\s*(?::\s*([A-Za-z_$][\w$]*))?/g)) names.add(n[2] ?? n[1])
@@ -155,10 +166,68 @@ export function constructsPostgres(src: string): boolean {
   // Always-suspect literal spellings, even with no import in this file.
   names.add('Pool'); names.add('Client')
 
+  // A SUBCLASS is a live construction with no guard at all — and it is what a
+  // developer writes to add query logging, so it is the likeliest of these to
+  // appear for honest reasons. `class AppPool extends Pool {}` then
+  // `new AppPool()`. Follow the inheritance one level and treat the subclass
+  // name as a constructor too.
+  for (const known of [...names]) {
+    for (const m of src.matchAll(new RegExp(`class\\s+([A-Za-z_$][\\w$]*)\\s+extends\\s+${known}\\b`, 'g'))) {
+      names.add(m[1])
+    }
+  }
+  for (const m of src.matchAll(/class\s+([A-Za-z_$][\w$]*)\s+extends\s+[A-Za-z_$][\w$]*\s*\.\s*(Pool|Client)\b/g)) {
+    names.add(m[1])
+  }
+
   for (const name of names) {
     if (new RegExp(`new\\s+${name}\\s*\\(`).test(src)) return true
     // `new pgDriver.Pool(...)` — any member expression ending in .Pool/.Client
     if (new RegExp(`new\\s+${name}\\s*\\.\\s*(Pool|Client)\\s*\\(`).test(src)) return true
   }
-  return /new\s+[A-Za-z_$][\w$]*\s*\.\s*(Pool|Client)\s*\(/.test(src)
+  // Member CHAINS: `new pg.native.Pool(...)`, and computed access
+  // `new pg['Pool'](...)`, both of which the single-dot form missed.
+  if (/new\s+[A-Za-z_$][\w$]*(?:\s*\.\s*[A-Za-z_$][\w$]*)*\s*\.\s*(Pool|Client)\s*\(/.test(src)) return true
+  if (/new\s+[A-Za-z_$][\w$]*(?:\s*\.\s*[A-Za-z_$][\w$]*)*\s*\[\s*['"`](Pool|Client)['"`]\s*\]\s*\(/.test(src)) return true
+  return false
+}
+
+/**
+ * Packages that have a `test` script but no test files at all.
+ *
+ * A package with zero tests is invisible to findDeadTestFiles — that check
+ * catches tests that cannot LOAD, not tests that do not EXIST. Both are the
+ * same failure in the end: a number that reads like coverage and is not.
+ *
+ * This list may SHRINK freely. It must not grow without a deliberate decision,
+ * which is what the meta-test enforces.
+ *
+ * apps/trade-graph: 10 source files, including src/store/trade-store.ts which
+ * writes to Postgres through getPool(). It is on the ungated side of the
+ * production-write boundary, so it is exactly the kind of package that should
+ * have tests. Recorded 2026-08-26.
+ */
+export const KNOWN_UNTESTED = ['apps/trade-graph'] as const
+
+/** Packages that declare a `test` script but ship no test file. */
+export function packagesWithNoTests(repo: string): string[] {
+  const out: string[] = []
+  for (const group of workspaceGroups(repo)) {
+    const dir = join(repo, group)
+    if (!existsSync(dir)) continue
+    for (const name of readdirSync(dir)) {
+      const rel = `${group}/${name}`
+      const pkgJson = join(dir, name, 'package.json')
+      if (!existsSync(pkgJson)) continue
+      let scripts: Record<string, string> = {}
+      try { scripts = JSON.parse(readFileSync(pkgJson, 'utf-8')).scripts ?? {} } catch { continue }
+      if (!scripts.test) continue
+      let found = false
+      walk(join(dir, name), repo, abs => {
+        if (/\.(test|spec)\.(ts|tsx|mts|js)$/.test(abs)) found = true
+      })
+      if (!found) out.push(rel)
+    }
+  }
+  return out.sort()
 }

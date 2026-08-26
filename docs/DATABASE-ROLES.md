@@ -162,6 +162,31 @@ the protected destination, the operation class, and the absence of
 authorization — and it neither falls back to the test database nor silently
 skips persistence, because both would leave the caller believing it had written.
 
+### What this gate actually covers — stated honestly
+
+Warden's review made a point worth recording verbatim rather than softening:
+
+> "The gate is on `writer()`, not on the tables. `getPool` is exported from
+> `@common/db`; any code doing `getPool().query('INSERT INTO desk.agent_claims …')`
+> is entirely ungated. The invariant as written describes one function, not the
+> database."
+
+That is correct. The honest statement of scope is:
+
+**Gated:** the claim-persistence functions — `recordClaims`, `applyEvent`,
+`recordAgentRun`, `ingestAgentOutput` — all of which route through `writer()`.
+
+**Not gated:** raw SQL through `getPool()`, every other table in the cluster,
+and any future persistence function that forgets to call the gate. Those are
+protected by the PostgreSQL roles alone.
+
+The four-word version of the invariant is aspirational about the database and
+accurate about one module. Do not cite it as though the cluster enforces it —
+**the roles are what the cluster enforces.** This layer raises the cost of an
+accident on the one path that has already caused an incident twice; it is not a
+general mutation barrier, and treating it as one would be exactly the kind of
+confidently-wrong belief this desk keeps having to dig out.
+
 Only claim persistence is gated today. Nothing in production invokes it yet, so
 no launchd or DAG configuration changed. Extending the gate to pipeline writes
 would require the worker to declare intent, which IS a production launch

@@ -3,10 +3,10 @@ import { readFileSync } from 'node:fs'
 import { AsyncResource } from 'node:async_hooks'
 import type { WriteIntent } from '../src/write-intent.js'
 import {
-  withProductionWrite, currentWriteIntent, assertProductionWriteAuthorized,
+  withProductionWrite, currentWriteIntent, assertProductionWriteAuthorized, assertPoolWriteAuthorized,
   isProtectedDestination, ProductionWriteRefused, UndeterminableDestination,
 } from '../src/write-intent.js'
-import { resolveDestination, destinationOf, createPool } from '../src/pool.js'
+import { resolveDestination, destinationOf, createPool, pinDestination, databaseNameOf } from '../src/pool.js'
 
 // The invariant:
 //   Possessing a production write credential is not itself sufficient to
@@ -126,15 +126,41 @@ describe('production-write intent', () => {
 
 // ── Warden's bypasses, 2026-08-26. Each of these DEFEATED the first version. ──
 describe('bypasses Warden proved against the first gate', () => {
-  it('W-1: an EMPTY destination fails closed instead of skipping the gate', () => {
-    // `const destination = url ?? process.env.DATABASE_URL` — `??` does not
+  it('W-1: a BLANKED credential cannot bypass the gate', () => {
+    // The original defect: `url ?? process.env.DATABASE_URL` — `??` does not
     // coalesce ''. Blanking CLAIM_WRITER_DATABASE_URL (the normal way to
-    // disable a credential in .env) made destination '', which skipped the
-    // gate entirely AND fell through to the more privileged DATABASE_URL.
-    expect(() => assertProductionWriteAuthorized('', 'claim-persistence'))
-      .toThrow(UndeterminableDestination)
-    expect(() => assertProductionWriteAuthorized('   ', 'claim-persistence'))
-      .toThrow(UndeterminableDestination)
+    // disable a credential in .env) skipped the gate ENTIRELY and then fell
+    // through to the MORE privileged DATABASE_URL.
+    //
+    // The invariant is not "empty string throws" — an empty credential simply
+    // carries no destination, and the environment may legitimately supply one.
+    // The invariant is that whatever the connection would ACTUALLY reach gets
+    // checked. So: blank credential + environment pointing at production must
+    // still refuse.
+    const saved = process.env.PGDATABASE
+    try {
+      process.env.PGDATABASE = 'ai_capital'
+      expect(() => assertProductionWriteAuthorized('', 'claim-persistence'))
+        .toThrow(ProductionWriteRefused)
+      expect(() => assertProductionWriteAuthorized(undefined, 'claim-persistence'))
+        .toThrow(ProductionWriteRefused)
+    } finally {
+      if (saved === undefined) delete process.env.PGDATABASE; else process.env.PGDATABASE = saved
+    }
+  })
+
+  it('W-1b: the refusal names the REAL destination, not "undeterminable"', () => {
+    // It failed closed before this fix, but reported "the destination could not
+    // be determined" about a destination that was determined and protected.
+    // Right outcome, wrong explanation — the worst kind to meet at 2am.
+    const saved = process.env.PGDATABASE
+    try {
+      process.env.PGDATABASE = 'ai_capital'
+      try { assertProductionWriteAuthorized('', 'claim-persistence'); throw new Error('should refuse') }
+      catch (e) { expect((e as Error).message).toContain('ai_capital') }
+    } finally {
+      if (saved === undefined) delete process.env.PGDATABASE; else process.env.PGDATABASE = saved
+    }
   })
 
   it('W-2: a path-less URL resolves through PGDATABASE, the way pg does', () => {
@@ -227,5 +253,63 @@ describe('bypasses Warden proved against the first gate', () => {
     const index = await import('../src/index.js')
     expect(index).toHaveProperty('withProductionWrite')
     expect(index).toHaveProperty('ProductionWriteRefused')
+  })
+})
+
+// ── Round 2. Warden broke the FIXES; these pin the second set. ───────────────
+describe('bypasses Warden proved against the hardened gate', () => {
+  it('NEW-1: the destination is PINNED into the connection string', async () => {
+    // pg.Pool does not connect at construction — it builds a Client per
+    // checkout and reads PGDATABASE at CONNECT time. So recording the
+    // destination when the pool was built produced a snapshot the driver could
+    // later disagree with, and Warden drove that divergence to a real row in
+    // desk.agent_runs on a protected database with no intent scope:
+    //     recorded: thanapold   |   actually connected: ai_capital_test
+    //
+    // Passing `database` alongside `connectionString` does NOT fix it —
+    // measured, pg ignores it and PGDATABASE wins. Only the database embedded
+    // in the string is authoritative, so we resolve once and write it in.
+    const saved = process.env.PGDATABASE
+    try {
+      delete process.env.PGDATABASE
+      const pinned = pinDestination('postgres://someone@localhost:5432')
+      process.env.PGDATABASE = 'ai_capital'          // env moves after pinning
+      // The pinned string still names what was resolved, so pg cannot drift.
+      expect(databaseNameOf(pinned)).not.toBe('ai_capital')
+      expect(pinDestination(pinned)).toBe(pinned)    // idempotent
+    } finally {
+      if (saved === undefined) delete process.env.PGDATABASE; else process.env.PGDATABASE = saved
+    }
+  })
+
+  it('NEW-1b: pinning preserves an explicitly named database exactly', () => {
+    const cs = 'postgres://u:p@host:5432/Some_MixedCase_DB'
+    expect(pinDestination(cs)).toBe(cs)   // case-sensitive: never normalised away
+  })
+
+  it('NEW-1c: a pool records what pg will actually connect to', () => {
+    const saved = process.env.PGDATABASE
+    try {
+      process.env.PGDATABASE = 'ai_capital'
+      // Path-less string + protected PGDATABASE: pinning resolves it to
+      // ai_capital, which the guard then sees and (outside a scope) refuses.
+      expect(() => createPool('postgres://someone@localhost:5432')).toThrow()
+    } finally {
+      if (saved === undefined) delete process.env.PGDATABASE; else process.env.PGDATABASE = saved
+    }
+  })
+
+  it('NEW-5: the destination marker cannot be forged', () => {
+    // POOL_DESTINATION was Symbol.for(), so any module could mint the same key
+    // and hand the gate a forged object — or shadow a real pool with
+    // Object.create() while .query() still delegated to production through the
+    // prototype chain. A module-private Symbol() cannot be minted elsewhere.
+    const forged = { [Symbol.for('@common/db.destination')]: 'harmless_scratch' }
+    expect(() => assertPoolWriteAuthorized(forged, 'claim-persistence'))
+      .toThrow(UndeterminableDestination)
+    expect(() => assertPoolWriteAuthorized({}, 'claim-persistence'))
+      .toThrow(UndeterminableDestination)
+    expect(() => assertPoolWriteAuthorized(null, 'claim-persistence'))
+      .toThrow(UndeterminableDestination)
   })
 })

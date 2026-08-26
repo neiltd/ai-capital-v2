@@ -4,6 +4,7 @@ import { join, dirname, resolve } from 'node:path'
 import { fileURLToPath, pathToFileURL } from 'node:url'
 import {
   findRawConstructions, findDeadTestFiles, CANONICAL_CONNECTION_MODULE,
+  packagesWithNoTests, KNOWN_UNTESTED,
 } from '../testing/architecture-checks.js'
 
 // Meta-test: every package that can run tests must load the DB isolation setup.
@@ -124,6 +125,15 @@ describe('repository architecture invariants', () => {
   it('every Postgres constructor routes through the canonical connection module', () => {
     const offenders = findRawConstructions(REPO)
     expect(offenders, `direct construction outside ${CANONICAL_CONNECTION_MODULE}: ${offenders.join(', ')}`).toEqual([])
+  })
+
+  it('the set of packages with NO tests at all does not grow', () => {
+    // findDeadTestFiles catches tests that cannot load; this catches packages
+    // that ship none. Same failure in the end — a number that reads like
+    // coverage and is not. The list may shrink freely.
+    const actual = packagesWithNoTests(REPO)
+    const unexpected = actual.filter(p => !(KNOWN_UNTESTED as readonly string[]).includes(p))
+    expect(unexpected, `these packages declare a test script but ship no tests: ${unexpected.join(', ')}`).toEqual([])
   })
 
   it('no test file is silently dead', () => {

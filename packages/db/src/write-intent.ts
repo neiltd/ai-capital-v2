@@ -33,6 +33,14 @@ import { liveDatabaseNames, resolveDestination, destinationOf } from './pool.js'
  * reviewable, and makes accidental authorization essentially impossible: you
  * do not enter this scope by accident, you enter it by typing it.
  *
+ * SCOPE — READ THIS BEFORE CITING THE INVARIANT. The gate lives on `writer()`,
+ * not on the tables. `getPool()` is exported publicly, so raw SQL such as
+ * `getPool().query('INSERT INTO desk.agent_claims …')` is entirely ungated, as
+ * is every other table in the cluster. What is actually gated is the claim
+ * persistence path: recordClaims, applyEvent, recordAgentRun, ingestAgentOutput.
+ * The one-line invariant above is accurate about this module and aspirational
+ * about the database. The PostgreSQL roles are what the cluster enforces.
+ *
  * WHAT THIS IS NOT. This is defence in depth ABOVE the PostgreSQL roles, not a
  * replacement for them. The database remains the final authority: the agent
  * role holds SELECT and nothing else, the test-runtime role cannot CONNECT to
@@ -188,12 +196,15 @@ export function assertProductionWriteAuthorized(
   // FAIL CLOSED. The first version treated "cannot determine" as "not
   // protected" — a polarity inversion, and the root of every bypass Warden
   // found. An absent or unresolvable destination is refused, not waved through.
-  if (connectionString !== undefined && connectionString.trim() === '') {
-    throw new UndeterminableDestination(operation)
-  }
-  const name = connectionString === undefined
-    ? resolveDestination(undefined)
-    : resolveDestination(connectionString)
+  // An empty string carries no destination of its own, but the environment may
+  // still determine one — and it did: with PGDATABASE=ai_capital this used to
+  // report "could not be determined" about a destination that was determined,
+  // protected, and about to be written to. It failed closed, so the outcome was
+  // right and the explanation was wrong, which is the worst kind of error
+  // message to meet at 2am. Resolve through the environment and say what is
+  // actually true.
+  const supplied = connectionString?.trim() ? connectionString : undefined
+  const name = resolveDestination(supplied)
   if (!name) throw new UndeterminableDestination(operation)
 
   if (!liveDatabaseNames().includes(name)) return   // throwaway target: no ceremony

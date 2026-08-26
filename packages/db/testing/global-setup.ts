@@ -44,11 +44,32 @@ export function resolveTestUrl(): string {
   const explicit = process.env.BOOTSTRAP_DATABASE_URL || process.env.TEST_DATABASE_URL
   if (explicit) return explicit
 
+  // TEST_RUNTIME_DATABASE_URL is what vitest.config loads from root .env, and
+  // leaving it out of this chain meant the config loaded a variable this
+  // function never read — so from a clean shell the suite died in globalSetup
+  // and printed "No test files found", which reads like a broken suite rather
+  // than a missing credential. Warden hit exactly that, and it also means the
+  // regression tests for the whole write-intent boundary were not running for
+  // anyone who had not exported DATABASE_URL by hand.
+  //
+  // NOTE: this role is deliberately unprivileged — it cannot CREATE DATABASE.
+  // It is enough to run against an EXISTING test database; a fresh clone still
+  // needs BOOTSTRAP_DATABASE_URL for the initial create. That is the right
+  // trade: the common case works with no ceremony, and the case that genuinely
+  // needs privilege still has to ask for it.
+  const runtime = process.env.TEST_RUNTIME_DATABASE_URL
+  if (runtime) return runtime
+
   const live = process.env.DATABASE_URL
   if (!live) {
     fail(
-      'neither TEST_DATABASE_URL nor DATABASE_URL is set, so no Postgres host is known. ' +
-      'Set TEST_DATABASE_URL to a throwaway database (e.g. postgres://localhost:5432/ai_capital_test).',
+      'no test database is configured. Set ONE of:\n' +
+      '    TEST_RUNTIME_DATABASE_URL  (restricted role; works against an existing test db)\n' +
+      '    BOOTSTRAP_DATABASE_URL     (privileged; needed only to CREATE the test db)\n' +
+      '    TEST_DATABASE_URL          (explicit throwaway target)\n' +
+      '    DATABASE_URL               (a _test database is derived from it)\n' +
+      '  The root .env already defines TEST_RUNTIME_DATABASE_URL; if you are seeing this,\n' +
+      '  either .env is missing or this package was run from outside the repo.',
     )
   }
   let u: URL

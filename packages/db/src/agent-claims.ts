@@ -18,7 +18,7 @@
 
 import pg from 'pg'
 import { getPool, inTestRuntime, createPool } from './pool.js'
-import { assertPoolWriteAuthorized, ProductionWriteRefused, UndeterminableDestination } from './write-intent.js'
+import { assertPoolWriteAuthorized } from './write-intent.js'
 
 export const CLAIM_PROTOCOL = 'claim/1'
 
@@ -253,6 +253,16 @@ function writer(): pg.Pool | ReturnType<typeof getPool> {
   // Note the destination is resolved BEFORE the pool is built and BEFORE any
   // SQL is issued — refusing after connecting would already have handed a
   // production connection to an unauthorised caller.
+  // ACCURACY NOTE. An earlier commit message of mine claimed "the gate now runs
+  // unconditionally; there is no input for which it does not run." That was
+  // false, and Warden said so: the `inTestRuntime()` line above returns BEFORE
+  // this point whenever VITEST is truthy, and VITEST is an ordinary environment
+  // variable anything can set. There is no exploitable consequence — under
+  // vitest the connection factory refuses a protected destination and
+  // ai_capital_test_runtime has no CONNECT — but the guarantee is "the gate
+  // runs for every NON-TEST invocation", not "unconditionally". Overstating a
+  // safety property is how the next person stops checking it.
+  //
   // W-1: `??` does not coalesce the empty string. `CLAIM_WRITER_DATABASE_URL=`
   // (blanked, not unset — the normal way someone disables a credential in .env)
   // made `destination` empty, which skipped the gate ENTIRELY and then fell
@@ -457,8 +467,17 @@ export async function ingestAgentOutput(opts: {
     // non-emission measurable was refused too. Nothing durable recorded that a
     // claim had been dropped, which is precisely the silent disappearance this
     // function exists to prevent. Refusals propagate.
-    if (err instanceof ProductionWriteRefused || err instanceof UndeterminableDestination) throw err
-    errors.push((err as Error).message)
+    // POLARITY, again. The first fix here allowlisted two exception types and
+    // let everything else fall into errors[] — so a misconfigured guard, or
+    // Postgres simply being unreachable, still produced the silent
+    // successful-looking return this function exists to prevent. Worse: pg's
+    // aggregate connection error carries no `.message`, so the caller got
+    // {persisted: 0} plus two EMPTY strings.
+    //
+    // A parse failure is the ONLY class this function is entitled to absorb.
+    // Everything else propagates.
+    if (!(err instanceof ClaimParseError)) throw err
+    errors.push(String(err))
     out = { detected, parsed, persisted, ids: out.ids, ambiguous: out.ambiguous, errors }
   }
 
@@ -468,8 +487,10 @@ export async function ingestAgentOutput(opts: {
     taskSummary: opts.taskSummary ?? provenance.sourceContext,
     parseErrors: errors.length ? errors.join(' | ') : null,
   }).catch(e => {
-    if (e instanceof ProductionWriteRefused || e instanceof UndeterminableDestination) throw e
-    errors.push(`run record failed: ${(e as Error).message}`)
+    // Failing to record the run is never a parse error, and this row is the
+    // denominator that makes non-emission measurable — losing it silently
+    // defeats the instrumentation. Always propagate.
+    throw new Error(`run record failed: ${String(e)}`, { cause: e })
   })
 
   return out
