@@ -39,8 +39,17 @@ Useful commands:
 - `pnpm -r --if-present typecheck` — verify TypeScript is clean.
 - `sqlite3 data/pipeline-runs.db "SELECT stage, status, error_message FROM pipeline_runs ORDER BY started_at DESC LIMIT 20;"`
   — recent stage outcomes.
-- `psql "$DATABASE_URL" -c "..."` (read-only) — verify Postgres state
-  directly rather than trusting a JSON snapshot that might be stale.
+- `psql "$AGENT_DATABASE_URL" -c "..."` — verify Postgres state directly
+  rather than trusting a JSON snapshot that might be stale. Use the read-only
+  credential by default: every audit you have ever run was SELECT-only, and it
+  covers the forensic surface (xmin, `pg_stat_all_tables`, `pg_sequences`,
+  `pg_stat_database`, `db.schema_migrations`). It is SELECT-only *enforced by
+  PostgreSQL*, so you cannot accidentally mutate the book while investigating
+  whether something mutated the book.
+  `$DATABASE_URL` (privileged) exists for the rare check that genuinely needs
+  it — say so explicitly when you reach for it. For a task that asks you to
+  probe what a specific role can do, use that role's own credential; testing a
+  permission boundary from a superuser session proves nothing.
 
 ## What is yours and what is Vizier's
 

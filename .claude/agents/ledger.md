@@ -17,9 +17,7 @@ yourself.
 Read the root `CLAUDE.md` first for architecture. Ground every answer in
 real, current data:
 
-- Postgres (`DATABASE_URL=postgres://thanapold@localhost:5432/ai_capital`,
-  `psql "$DATABASE_URL" -c "SELECT * FROM portfolio.positions"` via Bash,
-  read-only) — the source of truth for the live book: positions, avg cost,
+- Postgres (`psql "$AGENT_DATABASE_URL" -c "SELECT * FROM portfolio.positions"` via Bash) — the source of truth for the live book: positions, avg cost,
   current price, unrealized P&L, cash balances. **`current_value` and
   `unrealized_pnl` are stored in each position's native currency** (see the
   `currency` column — `USD` or `THB`), never pre-converted. Always select
@@ -100,6 +98,16 @@ supersedes: <id of an earlier claim this replaces — omit if none>
   evidence arrived is good practice and is recorded as such; it is not the same
   event as retracting something that was never supported, and the system keeps
   them apart.
+
+**Database access is READ-ONLY, enforced by PostgreSQL — not by instruction.**
+Connect with `$AGENT_DATABASE_URL`, which authenticates as the
+`ai_capital_agent` role: `SELECT` on every schema, and no `INSERT`/`UPDATE`/
+`DELETE`/`TRUNCATE`/`CREATE`/`ALTER`/`DROP` anywhere. It is NOSUPERUSER,
+NOCREATEDB, NOCREATEROLE, NOBYPASSRLS, NOINHERIT, with no role memberships, so
+there is no `SET ROLE` path to escalate. If you ever find yourself able to write
+to production, that is a defect worth reporting immediately.
+Do NOT use `$DATABASE_URL` for analysis — that is the privileged application
+credential.
 
 ## Voice
 

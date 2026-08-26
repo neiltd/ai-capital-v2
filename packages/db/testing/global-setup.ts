@@ -41,7 +41,9 @@ export function fail(message: string): never {
  * confusing failure.
  */
 export function resolveTestUrl(): string {
-  const explicit = process.env.TEST_DATABASE_URL
+  // Bootstrap runs in the main vitest process and reads the shell environment,
+  // where the privileged credential lives. Workers never see it.
+  const explicit = process.env.BOOTSTRAP_DATABASE_URL || process.env.TEST_DATABASE_URL
   if (explicit) return explicit
 
   const live = process.env.DATABASE_URL
@@ -184,6 +186,45 @@ export async function setup(): Promise<void> {
     await verify.end().catch(() => {})
   }
 
-  // Hand the resolved URL to the test processes.
-  process.env.TEST_DATABASE_URL = testUrl
+  // ── 4. Hand test processes the RESTRICTED credential, not this one ─────
+  //
+  // Phase 1 of least-privilege separation. Bootstrap above needs authority to
+  // CREATE DATABASE and run migrations; ordinary test code must not keep it.
+  // `ai_capital_test_runtime` has no CONNECT on the production database at all,
+  // so even a completely broken TypeScript guard cannot reach the live book —
+  // Postgres refuses at authentication.
+  const runtimeUrl = process.env.TEST_RUNTIME_DATABASE_URL
+  if (!runtimeUrl) {
+    fail(
+      'TEST_RUNTIME_DATABASE_URL is not set. Ordinary tests must authenticate as the ' +
+      'restricted role (ai_capital_test_runtime), not as the privileged bootstrap ' +
+      'credential. Set it to postgres://ai_capital_test_runtime:<password>@<host>/<test-db>.',
+    )
+  }
+  // The restricted credential must point at the database we just prepared —
+  // otherwise tests would silently run somewhere unmigrated.
+  const runtimeName = assertSafeTestTarget(runtimeUrl)
+  if (runtimeName !== name) {
+    fail(
+      `TEST_RUNTIME_DATABASE_URL points at "${runtimeName}" but the bootstrap prepared "${name}". ` +
+      'They must be the same database.',
+    )
+  }
+  // Prove the restricted credential actually works before handing it over, so a
+  // wrong password fails here with a clear message rather than inside a test.
+  const probe = new Client({ connectionString: runtimeUrl, connectionTimeoutMillis: 10_000 })
+  try {
+    await probe.connect()
+    const { rows } = await probe.query<{ u: string }>('SELECT current_user AS u')
+    console.log(`[test-db] test runtime authenticates as "${rows[0].u}" (non-privileged)`)
+  } catch (err) {
+    fail(`the restricted test credential could not connect: ${(err as Error).message}`)
+  } finally {
+    await probe.end().catch(() => {})
+  }
+
+  process.env.TEST_DATABASE_URL = runtimeUrl
+  // Do not leave privileged credentials reachable by test code.
+  delete process.env.DATABASE_URL
+  delete process.env.BOOTSTRAP_DATABASE_URL
 }

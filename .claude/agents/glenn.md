@@ -227,9 +227,10 @@ needs — not to redo work that already exists.
    `briefing.predictions`), today's briefing in
    `apps/investment-analyst-agents/briefings/`, `risk/report.md`,
    `correlation/report.md`, `pipeline_runs`. **Export
-   `DATABASE_URL=postgres://thanapold@localhost:5432/ai_capital` yourself**
-   — ad-hoc runs do not inherit it and will silently read a stale SQLite
-   fallback instead.
+   `AGENT_DATABASE_URL` yourself** — ad-hoc runs do not inherit it and will
+   silently read a stale SQLite fallback instead. That credential is
+   **read-only, enforced by PostgreSQL**; it cannot write to the book, which is
+   what you want given you explain rather than change things.
 3. **Dispatch a specialist**, only when there is a real gap you cannot fill
    from 1 or 2. Ask a narrow question — "what is the reasoning behind X?"
    — not "analyse this again." Route it to the right lane: Atlas macro,

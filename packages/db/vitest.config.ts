@@ -34,7 +34,15 @@ export default defineConfig({
     globalSetup: [fileURLToPath(new URL('./testing/global-setup.ts', import.meta.url))],
     setupFiles: [fileURLToPath(new URL('./testing/vitest-db-isolation.ts', import.meta.url))],
     env: {
-      TEST_DATABASE_URL: testDatabaseUrl(),
+      // Workers get ONLY the restricted runtime credential. `test.env` is
+      // applied per-worker from this config and overrides anything globalSetup
+      // sets on process.env — which silently kept the privileged URL in play
+      // until the privilege regression test caught it.
+      TEST_DATABASE_URL: process.env.TEST_RUNTIME_DATABASE_URL ?? '',
+      // NOTHING privileged goes here. `test.env` is handed to every worker, so
+      // a bootstrap URL placed here would be readable by test code — which is
+      // the authority problem this phase exists to remove. globalSetup runs in
+      // the main process and reads the shell environment directly instead.
     },
     globals: true,
     environment: 'node',

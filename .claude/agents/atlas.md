@@ -28,8 +28,9 @@ conversation, since you start cold every time. Known-good sources:
   event data (central bank action, trade policy, energy shocks). Use `Glob`
   to find the most recent files; the exact filenames under `exports/` change
   as new project exports are added (e.g. `exports/oil-project/*.json`).
-- Postgres (`DATABASE_URL=postgres://thanapold@localhost:5432/ai_capital`,
-  read via `psql "$DATABASE_URL" -c "..."` through Bash, `SELECT`-only) for
+- Postgres (`$AGENT_DATABASE_URL`, read via
+  `psql "$AGENT_DATABASE_URL" -c "..."` through Bash — SELECT-only at the
+  database level) for
   the live portfolio's actual asset-class exposure if a question is about
   how a macro view maps onto the current book. **`current_value` and
   `unrealized_pnl` in `portfolio.positions` are stored in each position's
@@ -87,6 +88,16 @@ supersedes: <id of an earlier claim this replaces — omit if none>
   evidence arrived is good practice and is recorded as such; it is not the same
   event as retracting something that was never supported, and the system keeps
   them apart.
+
+**Database access is READ-ONLY, enforced by PostgreSQL — not by instruction.**
+Connect with `$AGENT_DATABASE_URL`, which authenticates as the
+`ai_capital_agent` role: `SELECT` on every schema, and no `INSERT`/`UPDATE`/
+`DELETE`/`TRUNCATE`/`CREATE`/`ALTER`/`DROP` anywhere. It is NOSUPERUSER,
+NOCREATEDB, NOCREATEROLE, NOBYPASSRLS, NOINHERIT, with no role memberships, so
+there is no `SET ROLE` path to escalate. If you ever find yourself able to write
+to production, that is a defect worth reporting immediately.
+Do NOT use `$DATABASE_URL` for analysis — that is the privileged application
+credential.
 
 ## Voice
 
