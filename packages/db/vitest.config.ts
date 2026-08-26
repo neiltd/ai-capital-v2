@@ -1,3 +1,4 @@
+import { fileURLToPath } from 'node:url'
 import { defineConfig } from 'vitest/config'
 
 // This package's own tests exercise real Postgres (the claim lifecycle, the
@@ -27,7 +28,11 @@ function testDatabaseUrl(): string {
 export default defineConfig({
   test: {
     // Shared DB isolation: no test may reach the live book. See the setup file.
-    setupFiles: ['/Users/thanapold/Desktop/Projects.nosync/packages/db/testing/vitest-db-isolation.ts'],
+    // Runs once before any test file: creates the throwaway database if it is
+    // absent, migrates it, verifies the schema, and FAILS CLOSED at every step.
+    // A fresh clone therefore needs no manual `createdb`.
+    globalSetup: [fileURLToPath(new URL('./testing/global-setup.ts', import.meta.url))],
+    setupFiles: [fileURLToPath(new URL('./testing/vitest-db-isolation.ts', import.meta.url))],
     env: {
       TEST_DATABASE_URL: testDatabaseUrl(),
     },

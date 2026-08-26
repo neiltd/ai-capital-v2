@@ -1,0 +1,174 @@
+// Vitest globalSetup: bring a throwaway test database into existence, migrate
+// it, and verify it — or stop the run. Never fall back to production.
+//
+// WHY THIS EXISTS. `ai_capital_test` was created by hand during the 2026-08-25
+// incident response. That made THIS machine safe and told us nothing about a
+// fresh clone, which has no such database. A safety property that depends on
+// undocumented local state is not a safety property.
+//
+// THE RULE, and it is the only one that matters here:
+//   If a safe test database cannot be established, TESTS STOP.
+//   They must never decide to use DATABASE_URL instead.
+//
+// Every failure path below throws. There is deliberately no branch that falls
+// through to the live database, because the whole class of bug this incident
+// came from was a fallback quietly choosing production.
+
+import pg from 'pg'
+import { runMigrations } from '../src/migrate.js'
+import { databaseNameOf } from '../src/pool.js'
+
+const { Client } = pg
+
+/** Schema objects that must exist for the suite to be meaningfully migrated. */
+const REQUIRED_SCHEMAS = ['portfolio', 'capital', 'briefing', 'desk'] as const
+
+function liveNames(): string[] {
+  return (process.env.LIVE_DATABASE_NAMES ?? 'ai_capital')
+    .split(',').map(n => n.trim().toLowerCase()).filter(Boolean)
+}
+
+export function fail(message: string): never {
+  throw new Error(
+    `[test-db] ${message}\n` +
+    '        Tests are stopping rather than continuing without a safe database. ' +
+    'They will NOT fall back to DATABASE_URL.',
+  )
+}
+
+/**
+ * The database the suite should use. Explicit TEST_DATABASE_URL wins; otherwise
+ * derive one from DATABASE_URL by suffixing the name, so a developer who only
+ * has the production URL still gets an isolated database rather than a
+ * confusing failure.
+ */
+export function resolveTestUrl(): string {
+  const explicit = process.env.TEST_DATABASE_URL
+  if (explicit) return explicit
+
+  const live = process.env.DATABASE_URL
+  if (!live) {
+    fail(
+      'neither TEST_DATABASE_URL nor DATABASE_URL is set, so no Postgres host is known. ' +
+      'Set TEST_DATABASE_URL to a throwaway database (e.g. postgres://localhost:5432/ai_capital_test).',
+    )
+  }
+  let u: URL
+  try { u = new URL(live) } catch { fail(`DATABASE_URL is not a parseable URL, so a test database cannot be derived from it.`) }
+  const name = u.pathname.replace(/^\//, '')
+  if (!name) fail('DATABASE_URL has no database name, so a test database cannot be derived from it.')
+  u.pathname = `/${name.endsWith('_test') ? name : `${name}_test`}`
+  return u.toString()
+}
+
+/**
+ * Throws unless the resolved target is provably safe to create/migrate/test
+ * against. Exported so the fail-closed paths are covered by real tests rather
+ * than by reading the code.
+ */
+export function assertSafeTestTarget(testUrl: string): string {
+  const name = databaseNameOf(testUrl)
+  if (name === null) {
+    fail('the test database URL could not be canonicalised, so it cannot be shown to be non-live.')
+  }
+  if (liveNames().includes(name)) {
+    fail(
+      `TEST_DATABASE_URL points at the LIVE database "${name}". ` +
+      'Refusing to create, migrate or test against it.',
+    )
+  }
+  return name
+}
+
+/** Connect to the maintenance database on the same server to run CREATE DATABASE. */
+function adminUrlFor(testUrl: string): string {
+  const u = new URL(testUrl)
+  u.pathname = '/postgres'
+  return u.toString()
+}
+
+export async function setup(): Promise<void> {
+  const testUrl = resolveTestUrl()
+  // Refuse to operate on a protected database, before doing anything.
+  const name = assertSafeTestTarget(testUrl)
+
+  // ── 1. Create if absent ────────────────────────────────────────────────
+  let existed = true
+  const admin = new Client({ connectionString: adminUrlFor(testUrl), connectionTimeoutMillis: 10_000 })
+  try {
+    await admin.connect()
+  } catch (err) {
+    fail(
+      `cannot reach the Postgres server to check for "${name}": ${(err as Error).message}. ` +
+      'Is Postgres running?',
+    )
+  }
+  try {
+    const { rows } = await admin.query('SELECT 1 FROM pg_database WHERE datname = $1', [name])
+    if (rows.length === 0) {
+      existed = false
+      // Identifier cannot be parameterised; `name` is canonicalised above and
+      // has already been proven free of control characters by databaseNameOf.
+      if (!/^[a-z0-9_]+$/.test(name)) {
+        fail(`refusing to CREATE DATABASE with an unexpected name "${name}".`)
+      }
+      await admin.query(`CREATE DATABASE ${name}`)
+      console.log(`[test-db] created "${name}"`)
+    }
+  } catch (err) {
+    fail(`failed to create "${name}": ${(err as Error).message}`)
+  } finally {
+    await admin.end().catch(() => {})
+  }
+
+  // ── 2. Migrate ─────────────────────────────────────────────────────────
+  // runMigrations reads DATABASE_URL via getPool(), so point it at the test
+  // database for the duration and restore afterwards.
+  const savedDb = process.env.DATABASE_URL
+  const savedTest = process.env.TEST_DATABASE_URL
+  process.env.TEST_DATABASE_URL = testUrl
+  process.env.DATABASE_URL = testUrl
+  try {
+    const result = await runMigrations()
+    if (!existed || result.applied.length) {
+      console.log(`[test-db] migrations: ${result.applied.length} applied, ${result.alreadyApplied.length} already applied`)
+    }
+  } catch (err) {
+    fail(`migrations failed against "${name}": ${(err as Error).message}`)
+  } finally {
+    const { closePool } = await import('../src/pool.js')
+    await closePool().catch(() => {})
+    if (savedDb === undefined) delete process.env.DATABASE_URL; else process.env.DATABASE_URL = savedDb
+    if (savedTest === undefined) delete process.env.TEST_DATABASE_URL; else process.env.TEST_DATABASE_URL = savedTest
+  }
+
+  // ── 3. Verify the resulting schema ─────────────────────────────────────
+  // A migration runner that reports success but leaves the schema wrong is
+  // exactly the silent-success shape this project has been bitten by.
+  const verify = new Client({ connectionString: testUrl, connectionTimeoutMillis: 10_000 })
+  try {
+    await verify.connect()
+    const { rows } = await verify.query<{ nspname: string }>(
+      'SELECT nspname FROM pg_namespace WHERE nspname = ANY($1::text[])',
+      [REQUIRED_SCHEMAS as unknown as string[]],
+    )
+    const present = new Set(rows.map(r => r.nspname))
+    const missing = REQUIRED_SCHEMAS.filter(s => !present.has(s))
+    if (missing.length) {
+      fail(`"${name}" is missing expected schema(s) after migration: ${missing.join(', ')}.`)
+    }
+    const { rows: dbRows } = await verify.query<{ db: string }>('SELECT current_database() AS db')
+    if (liveNames().includes(dbRows[0].db.toLowerCase())) {
+      fail(`verification connected to the LIVE database "${dbRows[0].db}".`)
+    }
+    console.log(`[test-db] ready: ${dbRows[0].db} (${REQUIRED_SCHEMAS.length} schemas verified)`)
+  } catch (err) {
+    if ((err as Error).message.startsWith('[test-db]')) throw err
+    fail(`could not verify "${name}": ${(err as Error).message}`)
+  } finally {
+    await verify.end().catch(() => {})
+  }
+
+  // Hand the resolved URL to the test processes.
+  process.env.TEST_DATABASE_URL = testUrl
+}
