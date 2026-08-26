@@ -62,6 +62,18 @@ authenticate as the restricted role (ai_capital_test_runtime), not as the
 privileged bootstrap credential.
 ```
 
+## Verifying the boundary
+
+```
+pnpm --filter @common/db verify-privileges
+```
+
+Connects with the agent credential and checks object-level grants across every
+production table, sequence and schema — the layer `privilege-model.test.ts`
+cannot see, since `has_table_privilege` resolves names in the current database
+and the test suite deliberately has no production access. Run it after any
+grant change. Read-only; exits non-zero on drift.
+
 ## What this does NOT cover
 
 **Production application runtime still uses `thanapold`, a superuser.** Moving
@@ -69,6 +81,12 @@ the pipeline off it is Phase 2 and is deliberately separate: it touches 3
 launchd plists, 4 shell scripts, `.env`, and `unified-platform/.env.local`, for
 a DAG that runs at 07:00 on a real-money book where a missing grant means a
 silently failed stage.
+
+**`ai_capital_test_runtime` can still connect to `postgres` and `template1`,**
+where PUBLIC's default CONNECT was never revoked. Verified inert by Warden: no
+CREATE on `public`, no persistent objects, no temp tables in `template1`, and no
+cross-database reach to production. Worth knowing it is not literally "zero
+cluster access".
 
 **Ownership is unchanged.** `thanapold` owns every object, and an owner bypasses
 grants. The Phase 1 boundary therefore rests on the restricted roles having no
