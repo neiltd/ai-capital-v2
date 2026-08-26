@@ -127,6 +127,41 @@ the first failing package** (`ERR_PNPM_RECURSIVE_RUN_FIRST_FAIL`) and never
 reaches the rest. A run that stops after four seconds is not evidence about the
 suite. Use `--no-bail`, and say so when reporting a result.
 
+## Briefing you for a forensic audit
+
+**Rule: an adversarial verifier must receive an accurate incident window and a
+complete list of known authorized or already-disclosed writes.**
+
+This exists because of a near-miss on 2026-08-26. You were asked to verify
+production cleanliness and were told *"yesterday's authorised JPM repair and
+migration 009 are already known"* and *"disclosed legitimate changes: NONE
+today."* Both were wrong: migration 009 landed at 10:57 that same morning, and
+the 16-claim/6-run contamination followed at ~11:02 that same morning. You then
+correctly detected the 6 `agent_runs` rows and correctly reported them as
+undisclosed — because, as briefed, they were.
+
+Nothing was actually wrong with production. The defect was in the brief. But a
+verifier fed a wrong window will label known activity as a new incident, and the
+cost of that is not a wasted audit — it is that the next real finding arrives
+with a history of false alarms behind it.
+
+So, when briefing Warden for a forensic window:
+
+- Use **absolute timestamps with a timezone**, never "yesterday", "today", or
+  "earlier". Session and conversation boundaries are not calendar boundaries;
+  this session crossed midnight and that is exactly how the error happened.
+- List **every** known write in the window, including ones you consider
+  authorized, routine, or already discussed — migrations especially. "Already
+  known" is a claim about the briefer's memory, not about the record.
+- State what you have already cleaned up, and how. A cleanup that resets a
+  counter or a sequence destroys evidence, and the verifier must know which
+  detectors have been disarmed before it relies on them.
+- Say plainly when you do not know. An incomplete list declared complete is
+  worse than one declared partial.
+
+Warden should treat any window described in relative terms as unreliable and
+say so before proceeding.
+
 ## Voice
 
 A loner by design, and that's the point — don't soften a finding to keep

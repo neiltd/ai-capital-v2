@@ -117,6 +117,96 @@ cannot see, since `has_table_privilege` resolves names in the current database
 and the test suite deliberately has no production access. Run it after any
 grant change. Read-only; exits non-zero on drift.
 
+## Layer above the roles: production-write intent
+
+The roles answer *"is this credential permitted to write?"* They cannot answer
+*"did anyone mean for this process to write?"* — and that second question is the
+one the incidents actually turned on.
+
+Every guard built on 2026-08-25/26 keyed on `process.env.VITEST`. Warden pointed
+out the consequence: outside vitest, nothing was guarded. `.env` carries
+`CLAIM_WRITER_DATABASE_URL`, so an ad-hoc `tsx` run that sourced it and reached a
+persistence function wrote straight to the real book. Same shape as the ad-hoc
+CLI hazard that lost the CRWD 4:1 split adjustment on 2026-07-05.
+
+**The invariant:** possessing a production write credential is not itself
+sufficient to perform a production write. Production mutation requires explicit
+production intent.
+
+```ts
+await withProductionWrite(
+  { operation: 'claim-persistence', context: 'pipeline',
+    reason: 'daily DAG persisting specialist claims' },
+  () => ingestAgentOutput(...),
+)
+```
+
+**Why a call scope and not an environment variable.** This is the entire design.
+An env var is the wrong instrument: it can be set once in `.env` and be
+permanently, invisibly true; it is inherited by every child process for free;
+and it grants authority by *ambient presence* — which is the exact property that
+caused both incidents. A `withProductionWrite()` scope cannot be granted by a
+file, cannot cross a process boundary, and exists only for the duration of a
+call that names its operation and states a reason in the source. You do not
+enter it by accident; you enter it by typing it.
+
+An earlier draft added `ALLOW_TEST_PRODUCTION_INTENT` so unit tests could open a
+scope. That was removed — it was the very thing the mechanism exists to prevent.
+Authorization and isolation are independent layers: a test may declare intent
+and still cannot reach production, because the connection factory refuses a
+protected destination under vitest and `ai_capital_test_runtime` has no CONNECT.
+
+**Scope is per operation class.** A `migration` scope does not authorize a
+`claim-persistence` write. **It fails closed before any SQL is issued**, naming
+the protected destination, the operation class, and the absence of
+authorization — and it neither falls back to the test database nor silently
+skips persistence, because both would leave the caller believing it had written.
+
+Only claim persistence is gated today. Nothing in production invokes it yet, so
+no launchd or DAG configuration changed. Extending the gate to pipeline writes
+would require the worker to declare intent, which IS a production launch
+configuration change and needs its own decision.
+
+## Verification binaries
+
+| Command | Property |
+|---|---|
+| `pnpm --filter @common/db verify-privileges` | least-privilege roles hold |
+| `pnpm --filter @common/db verify-architecture` | every Postgres constructor routes through `packages/db/src/pool.ts`; no test file is silently dead |
+| `pnpm --filter @common/db verify-all` | both |
+
+`verify-architecture` runs **outside vitest** deliberately. Enforcing a
+non-test invariant only inside the test runner is circular: disable the suite
+and the property protecting production disappears with it. Both checks share
+one implementation with the vitest meta-test (`testing/architecture-checks.ts`)
+so they cannot drift.
+
+## Future observability: `track_commit_timestamp`
+
+Currently **off**, and deliberately left off.
+
+Reconstructing the 2026-08-26 timeline required mapping transaction ids to wall
+time via migration anchors, relation file mtimes and OID ordering — several
+hours of forensic argument. `track_commit_timestamp = on` would have made it a
+single query against `pg_xact_commit_timestamp()`.
+
+**Operational cost of enabling it:**
+
+- Requires a **PostgreSQL restart**. This cluster serves the daily pipeline, the
+  launchd worker, and the dashboard; a restart is a real interruption, not a
+  reload.
+- Adds a small per-transaction write overhead and additional `pg_commit_ts`
+  storage that grows with transaction volume.
+- Not retroactive — it records nothing about transactions already committed, so
+  it would not have helped with any incident to date.
+
+**Decision (2026-08-26): not enabled.** A production restart for forensic
+convenience is not justified by the claim-governance work alone. Reconsider when
+a restart is already scheduled for another reason, at which point the cost is
+close to zero. If tamper-evidence on `desk.agent_claims` specifically is wanted
+sooner, an append-only audit table is the cheaper answer, and unlike sequence
+state it cannot be reset by a cleanup.
+
 ## What this does NOT cover
 
 **Production application runtime still uses `thanapold`, a superuser.** Moving

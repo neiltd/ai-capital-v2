@@ -25,7 +25,9 @@
     "migrate-data": "tsx bin/migrate-from-sqlite.ts",
     "migrate-vectors": "tsx bin/migrate-from-lance.ts",
     "test": "vitest run",
-    "verify-privileges": "tsx bin/verify-privileges.ts"
+    "verify-privileges": "tsx bin/verify-privileges.ts",
+    "verify-architecture": "tsx bin/verify-architecture.ts",
+    "verify-all": "npm run verify-architecture && npm run verify-privileges"
   },
   "dependencies": {
     "@lancedb/lancedb": "^0.29.0",

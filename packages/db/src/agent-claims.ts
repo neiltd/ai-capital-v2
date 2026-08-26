@@ -18,6 +18,7 @@
 
 import pg from 'pg'
 import { getPool, inTestRuntime, createPool } from './pool.js'
+import { assertProductionWriteAuthorized } from './write-intent.js'
 
 export const CLAIM_PROTOCOL = 'claim/1'
 
@@ -242,13 +243,27 @@ function writer(): pg.Pool | ReturnType<typeof getPool> {
   // reach production because ai_capital_test_runtime has no CONNECT there.
   if (inTestRuntime()) return getPool()
 
+  // ── PRODUCTION-WRITE INTENT ───────────────────────────────────────────────
+  // The above only distinguishes vitest from everything else, which Warden
+  // correctly identified as the remaining hole: an ad-hoc `tsx` run that
+  // sources .env is "everything else", and .env carries the claim-writer
+  // credential. So gate on the resolved DESTINATION, and require intent that
+  // no file and no inherited environment can supply.
+  //
+  // Note the destination is resolved BEFORE the pool is built and BEFORE any
+  // SQL is issued — refusing after connecting would already have handed a
+  // production connection to an unauthorised caller.
   const url = process.env.CLAIM_WRITER_DATABASE_URL
+  const destination = url ?? process.env.DATABASE_URL
+  if (destination) assertProductionWriteAuthorized(destination, 'claim-persistence')
+
   if (!url) return getPool()
   // createPool carries the destination+runtime guard, so this path cannot
   // re-open the hole even if the check above is ever removed.
   if (!writerPool) writerPool = createPool(url, { max: 2 })
   return writerPool
 }
+
 export async function closeClaimWriter(): Promise<void> {
   if (writerPool) { await writerPool.end(); writerPool = null }
 }
