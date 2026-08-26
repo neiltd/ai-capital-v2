@@ -43,18 +43,32 @@ let _pool: pg.Pool | null = null
  * once — an env var that turns off a real-money safety check when blank is the
  * same failure class as an empty-array fallback.
  */
+/**
+ * Databases that can never be removed from protection. The env var EXTENDS this
+ * set; it cannot replace it.
+ *
+ * The previous version returned the configured list verbatim, so any non-empty
+ * value that omitted `ai_capital` silently disabled every layer at once —
+ * including `LIVE_DATABASE_NAMES=ai_capital_prod`, which is precisely the
+ * mistake someone makes when adding a SECOND live database. Warden connected a
+ * test-runtime pool to the live book through it. A floor makes that impossible
+ * to express.
+ */
+const ALWAYS_LIVE = ['ai_capital'] as const
+
 export function liveDatabaseNames(): string[] {
   const configured = process.env.LIVE_DATABASE_NAMES
-  if (configured === undefined) return ['ai_capital']
-  const names = configured.split(',').map(n => n.trim().toLowerCase()).filter(Boolean)
-  if (names.length === 0) {
+  if (configured === undefined) return [...ALWAYS_LIVE]
+  const extra = configured.split(',').map(n => n.trim().toLowerCase()).filter(Boolean)
+  if (extra.length === 0) {
     throw new Error(
       '@common/db: LIVE_DATABASE_NAMES is set but empty after parsing ' +
       `(${JSON.stringify(configured)}). Refusing to run with NO protected databases. ` +
       'Unset it to use the default, or name at least one database.',
     )
   }
-  return names
+  // Union, never replacement.
+  return [...new Set([...ALWAYS_LIVE, ...extra])]
 }
 
 /**

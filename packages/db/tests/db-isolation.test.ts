@@ -113,6 +113,26 @@ describe('the guard refuses a test process a live connection', () => {
     }
   })
 
+  it('LIVE_DATABASE_NAMES EXTENDS the protected set and can never shrink it', () => {
+    // Warden reached the live book through this: the env var used to REPLACE
+    // the default, so `ai_capital_prod` — exactly what someone writes when
+    // adding a second live database — silently unprotected ai_capital.
+    const prev = process.env.LIVE_DATABASE_NAMES
+    try {
+      for (const hostile of ['ai_capital_prod', 'ai_capital_test', 'ai_capitaI', 'other', '0', 'none', '*']) {
+        process.env.LIVE_DATABASE_NAMES = hostile
+        expect(() => assertNotLiveDatabase('postgres://x@localhost:5432/ai_capital'),
+          `LIVE_DATABASE_NAMES=${hostile} must not unprotect ai_capital`).toThrow(/live database/)
+      }
+      // ...and it does still add the extra name.
+      process.env.LIVE_DATABASE_NAMES = 'ai_capital_prod'
+      expect(() => assertNotLiveDatabase('postgres://x@localhost:5432/ai_capital_prod')).toThrow(/live database/)
+    } finally {
+      if (prev === undefined) delete process.env.LIVE_DATABASE_NAMES
+      else process.env.LIVE_DATABASE_NAMES = prev
+    }
+  })
+
   it('honours LIVE_DATABASE_NAMES when a second live database is added', () => {
     const prev = process.env.LIVE_DATABASE_NAMES
     process.env.LIVE_DATABASE_NAMES = 'ai_capital,ai_capital_prod'

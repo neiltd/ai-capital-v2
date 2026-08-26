@@ -16,6 +16,7 @@
 
 import pg from 'pg'
 import { runMigrations } from '../src/migrate.js'
+import { parse as parseConnectionString } from 'pg-connection-string'
 import { databaseNameOf, liveDatabaseNames } from '../src/pool.js'
 
 const { Client } = pg
@@ -77,11 +78,28 @@ export function assertSafeTestTarget(testUrl: string): string {
   return name
 }
 
-/** Connect to the maintenance database on the same server to run CREATE DATABASE. */
-function adminUrlFor(testUrl: string): string {
-  const u = new URL(testUrl)
-  u.pathname = '/postgres'
-  return u.toString()
+/**
+ * Connection config for the maintenance database on the same server, used to
+ * run CREATE DATABASE.
+ *
+ * Built from PARSED COMPONENTS rather than by rewriting a URL pathname. Warden
+ * showed the old string-rewrite was the very pattern this file's guard exists
+ * to prevent: for `socket:/tmp?db=ai_capital_test`, setting `pathname` to
+ * `/postgres` left the database as `ai_capital_test`, so CREATE DATABASE would
+ * have run on a connection to the database being created. It failed closed
+ * because the target was already proven non-live upstream — but relying on a
+ * downstream catch is how the socket bypass happened in the first place.
+ */
+function adminConfigFor(testUrl: string): pg.ClientConfig {
+  const c = parseConnectionString(testUrl)
+  return {
+    host:     c.host ?? undefined,
+    port:     c.port ? Number(c.port) : undefined,
+    user:     c.user ?? undefined,
+    password: typeof c.password === 'string' ? c.password : undefined,
+    database: 'postgres',            // explicit, not derived from a rewritten path
+    connectionTimeoutMillis: 10_000,
+  }
 }
 
 export async function setup(): Promise<void> {
@@ -91,7 +109,7 @@ export async function setup(): Promise<void> {
 
   // ── 1. Create if absent ────────────────────────────────────────────────
   let existed = true
-  const admin = new Client({ connectionString: adminUrlFor(testUrl), connectionTimeoutMillis: 10_000 })
+  const admin = new Client(adminConfigFor(testUrl))
   try {
     await admin.connect()
   } catch (err) {

@@ -1,4 +1,4 @@
-import { describe, it, expect, beforeAll, afterAll } from 'vitest'
+import { describe, it, expect, afterAll } from 'vitest'
 import { parseClaimBlocks, ClaimParseError } from '../src/agent-claims.js'
 import {
   recordClaims, verifyClaim, resolveClaim, supersedeClaim, claimHistory,
