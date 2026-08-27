@@ -3,17 +3,17 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "next dev",
+    "dev": "next dev -H 127.0.0.1 -p 3000",
     "build": "next build",
-    "start": "next start",
+    "start": "next start -H 127.0.0.1 -p 3000",
     "lint": "next lint",
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {
     "@common/pipeline-runs": "workspace:*",
-    "@common/db":            "workspace:*",
-    "@common/types":         "workspace:*",
-    "@common/queue":         "workspace:*",
+    "@common/db": "workspace:*",
+    "@common/types": "workspace:*",
+    "@common/queue": "workspace:*",
     "@anthropic-ai/sdk": "^0.99.0",
     "@base-ui/react": "^1.5.0",
     "@napi-rs/canvas": "^1.0.0",

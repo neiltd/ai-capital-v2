@@ -46,3 +46,4 @@ agentdb.rvf
 
 # prisma generated client (see prisma/schema.prisma `output`)
 /src/generated/prisma/
+local-artifacts/

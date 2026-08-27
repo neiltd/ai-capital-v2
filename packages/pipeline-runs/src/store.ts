@@ -74,10 +74,35 @@ export function openDb(explicit?: string): Database.Database {
  * So a diagnostic opener must:
  *   - refuse when the database does not already exist (a fresh file is a decoy,
  *     never an answer);
- *   - open read-only, so no WAL/SHM sidecars are created and no schema is
- *     applied;
+ *   - open read-only, so no schema is applied and no rows can be written;
  *   - never create a directory.
+ *
+ * WHAT READ-ONLY DOES **NOT** GIVE YOU — corrected 2026-08-28. An earlier
+ * version of this comment claimed a read-only open "creates no WAL/SHM
+ * sidecars". **That is false, and the truth is inverted.** Measured on a copy
+ * of a real WAL database:
+ *
+ *     sqlite3 <file>                  -> no sidecars remain
+ *     sqlite3 "file:<file>?mode=ro"   -> -wal and -shm REMAIN
+ *
+ * A read-only connection must still build the WAL shared-memory index in order
+ * to read a WAL database, and then lacks the write permission required to
+ * remove it on close. A read-WRITE open cleans up after itself; the read-only
+ * one cannot. So the safest-looking invocation is the one that leaves traces.
+ *
+ * This matters twice over. It is why stray `-wal`/`-shm` pairs appear in
+ * directories where nobody ran a writer. And it is why a matching file hash
+ * proves no CONTENT changed but does not prove nothing WROTE — the distinction
+ * that made this opener look safer than it is during the 2026-08-28 evidence
+ * handling.
+ *
+ * "Read-only" here means: no schema application, no row writes, no file
+ * creation. It does NOT mean zero filesystem effect.
  */
+export function runStoreExists(explicit?: string): boolean {
+  return existsSync(resolveDbPath(explicit))
+}
+
 export function openDbReadOnly(explicit?: string): Database.Database {
   const path = resolveDbPath(explicit)
   if (!existsSync(path)) {

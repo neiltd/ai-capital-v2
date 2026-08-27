@@ -1,5 +1,5 @@
 import { randomUUID } from 'crypto'
-import { openDb } from './store.js'
+import { openDb, openDbReadOnly, runStoreExists } from './store.js'
 import type {
   PipelineRun,
   RecordStartInput,
@@ -128,8 +128,37 @@ export async function withRun<T>(
   }
 }
 
+/**
+ * An absent run store means "nothing has run yet", not an error.
+ *
+ * Before the read paths moved to the read-only opener, `openDb` silently
+ * CREATED the database, so no caller ever met this case — which is exactly the
+ * decoy-database defect: a freshly created empty store reads as "no pipeline
+ * problems". Returning an explicit empty summary keeps the dashboard honest on
+ * a fresh clone instead of either crashing or inventing a healthy answer.
+ */
+const EMPTY_SUMMARY: DashboardSummary = { generatedAt: new Date(0).toISOString(), stages: [], inFlight: [] }
+
+/**
+ * READ PATH — uses the read-only opener deliberately.
+ *
+ * These three functions are the only ones here that issue no INSERT/UPDATE/
+ * DELETE. `recordStart`, `recordEnd` and `reapOrphans` genuinely write and keep
+ * `openDb`; switching those would break them.
+ *
+ * The reason this matters is not tidiness. `openDb` runs `mkdirSync`, creates
+ * the file if absent, sets `journal_mode = WAL` and executes the schema. An
+ * unauthenticated `GET /api/status` and the ungated `/system/pipeline` page
+ * both reached this code, so a read request could take a write lock on the
+ * production run database — and manufacture an empty one if the real file were
+ * missing, which reads as "no pipeline problems" rather than as an error.
+ *
+ * Authentication decides WHO may call these. The opener decides what calling
+ * them DOES. They are independent controls and both are needed.
+ */
 export function getRecentRuns(stage: string, limit: number, dbPath?: string): PipelineRun[] {
-  const db = openDb(dbPath)
+  if (!runStoreExists(dbPath)) return []
+  const db = openDbReadOnly(dbPath)
   const rows = db.prepare(`
     SELECT * FROM pipeline_runs
      WHERE stage = ?
@@ -140,7 +169,8 @@ export function getRecentRuns(stage: string, limit: number, dbPath?: string): Pi
 }
 
 export function getInFlightRuns(dbPath?: string): PipelineRun[] {
-  const db = openDb(dbPath)
+  if (!runStoreExists(dbPath)) return []
+  const db = openDbReadOnly(dbPath)
   const rows = db.prepare(`
     SELECT * FROM pipeline_runs
      WHERE status = 'running'
@@ -150,7 +180,8 @@ export function getInFlightRuns(dbPath?: string): PipelineRun[] {
 }
 
 export function getDashboardSummary(dbPath?: string): DashboardSummary {
-  const db = openDb(dbPath)
+  if (!runStoreExists(dbPath)) return EMPTY_SUMMARY
+  const db = openDbReadOnly(dbPath)
 
   const stageNames = db.prepare(`
     SELECT DISTINCT stage FROM pipeline_runs ORDER BY stage

@@ -1,7 +1,45 @@
 import { NextRequest, NextResponse } from 'next/server'
 
+// ── DEFAULT DENY ────────────────────────────────────────────────────────────
+//
+// This matcher intercepts EVERYTHING except Next's own internals. Exemptions
+// are then listed explicitly in PUBLIC_PATHS below.
+//
+// WHY THE INVERSION. The previous matcher enumerated what to protect:
+//   ['/admin/:path*', '/studio/:path*', '/api/studio/:path*',
+//    '/api/thesis-proposals', '/api/theses/proposals/:path*']
+// Twelve routes fell outside it, including POST /api/portfolio/refresh, which
+// execFiles a child process with the production DATABASE_URL hardcoded, and
+// GET /api/status, which write-locks the production run database. A second
+// pipeline dashboard at /system/pipeline was also outside it — and was missed
+// even by the audit, because Next route groups like (legacy) and (next) do not
+// appear in the URL, so two distinct pages looked like one.
+//
+// An enumerate-the-dangerous list fails silently every time a route is added.
+// An enumerate-the-safe list fails loudly: the new route 401s until someone
+// makes a decision about it. That is the direction the failure should point.
+//
+// NOTE: `public/` files are served BEFORE middleware runs and cannot be
+// intercepted here at all. That is not an auth problem with a middleware fix —
+// see the ruvector.db relocation.
 export const config = {
-  matcher: ['/admin/:path*', '/studio/:path*', '/api/studio/:path*', '/api/thesis-proposals', '/api/theses/proposals/:path*'],
+  matcher: ['/((?!_next/static|_next/image|favicon.ico).*)'],
+}
+
+/**
+ * Paths that may be served without credentials.
+ *
+ * Every entry needs a reason. "It is only a GET" is not one: GET /api/status
+ * reaches openDb, which sets journal_mode=WAL and executes the schema against
+ * the production run database.
+ */
+const PUBLIC_PATHS: Array<{ pattern: RegExp; why: string }> = [
+  // Health probe: no database, no spawn, no network, no filesystem.
+  { pattern: /^\/api\/health$/, why: 'liveness probe, touches nothing' },
+]
+
+function isPublic(pathname: string): boolean {
+  return PUBLIC_PATHS.some(p => p.pattern.test(pathname))
 }
 
 // Logged once so repeated requests while misconfigured don't spam the console.
@@ -31,8 +69,12 @@ function unauthorized(isApi: boolean) {
 }
 
 export default function middleware(req: NextRequest) {
+  const pathname = req.nextUrl.pathname
   const accessKey = process.env.APP_ACCESS_KEY
-  const isApi = req.nextUrl.pathname.startsWith('/api')
+  const isApi = pathname.startsWith('/api')
+
+  // The only way past the gate without credentials.
+  if (isPublic(pathname)) return NextResponse.next()
 
   // Fail closed: this codebase's existing convention for required config
   // (see ANTHROPIC_API_KEY checks in api/ask and api/thesis-proposals) is to
