@@ -9,6 +9,71 @@ module that looks important.
 
 ---
 
+## F0. Processes currently running, REGARDLESS OF SUPERVISOR
+
+**Added after review. The original F1 enumerated launchd and stopped, which
+applied this document's own central failure mode to its own method: an
+authoritative-looking enumeration that the real path bypasses. launchd is not
+the only supervisor.**
+
+```
+51944  next-server (v14.2.35)   TCP *:3000 (LISTEN)   up 6d16h   NOT launchd-managed
+```
+
+`apps/unified-platform` has been serving since 2026-08-21 on a **wildcard bind**
+(all interfaces, not loopback). `launchctl list` never surfaces it. It holds more
+production-write authority than the alerts agent.
+
+### HTTP authority — the middleware matcher is a real boundary and was undrawn
+
+`apps/unified-platform/src/middleware.ts:4` gates only:
+
+```
+/admin/:path*  /studio/:path*  /api/studio/:path*
+/api/thesis-proposals  /api/theses/proposals/:path*
+```
+
+Everything else is unauthenticated. What is NOT covered:
+
+| Route | Side effect | Auth |
+|---|---|---|
+| `POST /api/portfolio/refresh` | `execFile`s `cli-refresh.ts` with `DATABASE_URL` **hardcoded to production Postgres** (route.ts:38-39); writes prices to the live book; hits Yahoo | **none** |
+| `GET /system/pipeline`, `GET /api/status` | `openDb()` — opens production `pipeline-runs.db` **read/write**, `db.exec(SCHEMA)`, `journal_mode=WAL` | **none** |
+| `POST /api/ask` | `new Anthropic(...)` — unmetered spend on the real key | **none** |
+| `POST /api/archive-qa` | `appendFileSync` into the repo | **none** |
+| `GET /admin/pipeline` | `reapOrphans()` → `UPDATE … SET status='timeout'` on production **during a page render** | gated |
+
+`POST /api/portfolio/refresh` is the highest-authority unauthenticated path in
+the system. Its only gate is `isMarketOpen()`.
+
+### Other schedulers that are not launchd
+
+Four `node-cron` daemons exist and can be started by hand:
+`apps/world-intelligence-data-hub-/ingestion/scheduler.ts` (execFiles `run.ts`,
+which is LINE path #4), `apps/scenario-simulator/src/cli/cli-schedule.ts`
+(06:30 simulate → LINE path #2; 06:45 spawns discover → LINE path #3),
+`apps/ai-analysis-engine/src/cli/cli-schedule.ts`,
+`apps/capital-intelligence-ingestion/src/scheduler.ts`.
+
+### Declared bins and documented commands with production authority
+
+`packages/db/bin/{migrate,migrate-from-sqlite,migrate-from-lance}.ts` — DDL and
+bulk writes to production Postgres. `packages/pipeline-runs/bin/run-step.ts` —
+spawns and writes `pipeline_runs`. `packages/queue/bin/{smoke,smoke-fail,run-daily}.ts`
+— production queue submitters.
+
+**`pnpm -F @common/queue smoke` is advertised in CLAUDE.md as "without hitting
+real APIs" and is not.** It writes a `queue-smoke` row to production
+`pipeline-runs.db`, enqueues onto the production `daily-pipeline` queue where the
+loaded worker picks it up and spawns, and sets
+`removeOnComplete/removeOnFail: {count: 50}` — which would **trim the retained
+sets being preserved as incident evidence**. `submit.ts` deliberately refuses
+`removeOnFail: {count:100}` as a resurrection hazard; `smoke.ts` sets 50 and is
+the more casually invoked command.
+
+`.claude/settings.local.json` pre-approves `Bash(scripts/run-alerts.sh)` — an
+agent can invoke the live LINE path with no prompt.
+
 ## F1. What macOS actually executes today
 
 ### Loaded agents — only two
@@ -169,6 +234,48 @@ from a test today.
 
 ---
 
+## F5b. Production outbound egress — the half F5 omitted
+
+F5 tabulated only the TEST side of network. Production egress is larger and
+credential-bearing.
+
+**30 Anthropic construction sites, 11 of them at MODULE SCOPE** — so *importing
+the module* acquires the capability before any guard can run. `new Anthropic()`
+with no argument reads `ANTHROPIC_API_KEY` implicitly: the same "reads the
+environment and asks nobody's permission" pattern identified in
+`connectionOptions()`, on a surface six times larger with a metered bill.
+
+Non-LLM egress, all credential-bearing or rate-limited:
+`query1.finance.yahoo.com` (×16), `www.sec.gov` (×7), `data.sec.gov`,
+`cdn.finra.org`, `api.sec.or.th`, `api.stlouisfed.org`, `api.eia.gov`,
+`api.gdeltproject.org`, `acleddata.com`, `ucdpapi.pcr.uu.se`,
+`api.worldbank.org`, `api.usaspending.gov`, `api.congress.gov`,
+`api.twitterapi.io`, `newsapi.org`, `www.googleapis.com`, `open.tiktokapis.com`,
+`admin-procurement.actai.co`, `financialdata.net`, `fbx.freightos.com`.
+
+## F4b. Beyond pipeline-runs.db
+
+**A materialized decoy already exists on disk.**
+`apps/capital-intelligence-ingestion/data/pipeline-runs.db` — 32 KB, mtime
+2026-07-17, untracked, **40 rows spanning 2026-06-11 → 2026-07-17 with 4
+permanently stuck in `running`**. The `resolveDbPath` cwd fallback has already
+fired repeatedly. A future `--parent` forensic query run from that directory
+would answer from it.
+
+**`openDb` write-locks production even from the CORRECT cwd.** The
+`daily-run-status.ts` problem is not only that it can create a decoy — from the
+repo root, which is where both scheduler scripts `cd`, it opens the real book
+read-write, runs `db.exec(SCHEMA)` and sets `journal_mode=WAL`, every
+invocation, while documented "READ-ONLY — never starts, repairs or records
+anything."
+
+**thesis-memory split brain, on a mutating HTTP route.**
+`apps/unified-platform/src/lib/thesis-db.ts:170` `resolveProposal()` does raw
+`new Database(...thesis.db)` and **never consults `usePostgres()`**, while the
+CLI routes through it. Postgres holds 20 theses; the SQLite file's mtime is
+**2026-07-04**. Accepting or rejecting a thesis proposal in the dashboard writes
+to a store seven weeks stale. This is the CRWD-4:1-split bug class, live.
+
 ## F6. Capability injection over environment inference
 
 The bypass record is the argument. Asking *"does this URL look like production?"*
@@ -181,10 +288,40 @@ Inference cannot win because the set of spellings that reach an endpoint is
 larger than the set anyone enumerates. Capability can: code that is never handed
 a client cannot open one.
 
+The model above was also wrong about HOW the capability is obtained. Corrected:
+
 ```
-today     module reads process.env -> builds client -> guard tries to prove the destination was safe
-proposed  entry point builds the capability -> passes it in -> module cannot obtain another
+actual today   bin's FIRST line calls ensurePipelineEnv()
+               -> loads the PRODUCTION .env from a path derived from import.meta.url
+                  (not cwd, not AI_CAPITAL_ROOT, not overridable)
+               -> injects DATABASE_URL, ANTHROPIC_API_KEY, AGENT_DATABASE_URL,
+                  CLAIM_WRITER_DATABASE_URL
+               -> SETS PIPELINE_RUNS_DB to the production path if unset
+               -> only THEN does any guard read the environment
+
+proposed       entry point builds the capability -> passes it in
+               -> module cannot obtain another
 ```
+
+Two consequences: **a queue bin cannot be isolated by unsetting variables** —
+`ensurePipelineEnv()` puts them back from production first. And **F8's
+provenance printing does not fix `queue-health`**: it calls
+`ensurePipelineEnv()`, which manufactures the production value out of an unset
+variable, so it would print production provenance because it made the
+environment production. A tool that mutates what it measures cannot be fixed by
+printing more facts.
+
+**`decideIsolation()` does not check `DATABASE_URL` at all.** It returns
+`mode: 'isolated'` for an environment with isolated Redis, SQLite and root and
+`DATABASE_URL` pointed at the live book — precisely the 2026-08-25 shape that
+rewrote 112 rows of `capital.watchlist`. Wiring the gate as written would ship an
+incomplete gate.
+
+**There are TWO unrelated isolation systems.** `packages/db/testing/vitest-db-isolation.ts`
+is loaded by all 14 vitest configs and is live; `packages/queue/src/isolation.ts`
+is wired to nothing. This document's earlier use of "the isolation gate" as a
+single thing is wrong, and a reader would conclude tests are unguarded against
+the live book. They are not.
 
 Environment validation stays as defence in depth. It stops being the authority.
 
