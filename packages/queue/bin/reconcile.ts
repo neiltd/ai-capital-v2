@@ -5,12 +5,15 @@
  * DEFAULTS TO DRY RUN. `--apply` is required to write, and even then it only
  * transitions rows whose assessment is unambiguous — `unknown` never mutates.
  */
+import { ensurePipelineEnv } from '../src/env.js'
 import { getQueue, closeAll } from '../src/queue.js'
 import { snapshotQueue, assessFlow, openParents } from '../src/reconcile.js'
-import { openDb, resolveDbPath } from '@common/pipeline-runs'
+import { openDbReadOnly, resolveDbPath } from '@common/pipeline-runs'
 
 const APPLY = process.argv.includes('--apply')
 const JSON_OUT = process.argv.includes('--json')
+
+ensurePipelineEnv()
 
 async function main() {
   const queue = getQueue()
@@ -24,7 +27,7 @@ async function main() {
   let parents = openParents()
   if (explicit !== -1 && process.argv[explicit + 1]) {
     const id = process.argv[explicit + 1]
-    const db = openDb(resolveDbPath())
+    const db = openDbReadOnly(resolveDbPath())
     const row = db.prepare('SELECT id, started_at, status FROM pipeline_runs WHERE id = ?').get(id) as
       { id: string; started_at: string; status: string } | undefined
     if (!row) { console.error(`no pipeline_runs row with id ${id}`); process.exit(1) }
@@ -52,7 +55,7 @@ async function main() {
   }
 
   if (APPLY) {
-    const db = openDb(resolveDbPath())
+    const db = openDbReadOnly(resolveDbPath())
     let changed = 0
     for (const r of results) {
       if (r.assessment === 'terminal_success' || r.assessment === 'terminal_failed' || r.assessment === 'terminal_removed') {

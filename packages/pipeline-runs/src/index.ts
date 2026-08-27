@@ -1,5 +1,5 @@
 export * from './types.js'
 export * from './api.js'
-export { openDb, closeDb, resolveDbPath } from './store.js'
+export { openDb, openDbReadOnly, closeDb, resolveDbPath } from './store.js'
 export * from './daily-run-state.js'
 export * from './heartbeat.js'

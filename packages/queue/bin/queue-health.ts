@@ -12,8 +12,11 @@
  * them. That is a dead flow, and it accumulated 228 jobs across 22 days without
  * a single signal.
  */
+import { ensurePipelineEnv } from '../src/env.js'
 import { getQueue, closeAll } from '../src/queue.js'
 import { snapshotQueue, assessFlow, openParents } from '../src/reconcile.js'
+
+ensurePipelineEnv()
 
 async function main() {
   const queue = getQueue()

@@ -38,11 +38,23 @@ export PATH="/opt/homebrew/bin:/usr/local/bin:/usr/bin:/bin"
 REPO="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 ROOT="${AI_CAPITAL_ROOT:-$REPO}"
 
-# Anything written under a non-default root is test output and says so, so it
-# can never be mistaken for production evidence even if isolation is imperfect.
-LOG_PREFIX=""
-if [ "$ROOT" != "$REPO" ]; then
+# ── ISOLATION MODE, DECIDED BEFORE ANYTHING ELSE ─────────────────────────────
+# Partial isolation is forbidden. Running with an isolated filesystem but
+# production credentials is how a "[TEST]" watchdog sent a real LINE push: the
+# mute file was looked for under the isolated root, was not there, and the real
+# token loaded from the real repo. A label is not a safety mechanism.
+#
+# This exits non-zero BEFORE any credential is read or any submitter invoked.
+ISOLATION_MODE="$(cd "$REPO" && npx tsx packages/queue/bin/check-isolation.ts 2>&1)"
+if [ $? -ne 0 ]; then
+  echo "$ISOLATION_MODE" >&2
+  echo "$ISOLATION_MODE" >> "$LOG" 2>/dev/null
+  exit 2
+fi
+if [ "$ISOLATION_MODE" = "isolated" ]; then
   LOG_PREFIX="[TEST] "
+else
+  LOG_PREFIX=""
 fi
 LOG="$ROOT/logs/daily-scheduler.log"
 LOCK="$ROOT/data/daily-scheduler.lock"
@@ -106,6 +118,14 @@ RECHECK=$(cd "$REPO" && npx tsx packages/pipeline-runs/bin/daily-run-status.ts -
   | python3 -c 'import json,sys;print(json.load(sys.stdin)["eligibleToRun"])' 2>/dev/null)
 if [ "$RECHECK" != "True" ] && [ "$RECHECK" != "true" ]; then
   log "no longer eligible after acquiring lock — another fire started it"
+  exit 0
+fi
+
+# An isolated run must never reach the production submitter. Redirecting only
+# logs while still enqueuing into production Redis is precisely the partial
+# isolation this phase forbids.
+if [ "$ISOLATION_MODE" = "isolated" ]; then
+  log "isolated environment — refusing to invoke the production submitter"
   exit 0
 fi
 

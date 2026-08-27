@@ -34,11 +34,23 @@ export PATH="/opt/homebrew/bin:/usr/local/bin:/usr/bin:/bin"
 REPO="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 ROOT="${AI_CAPITAL_ROOT:-$REPO}"
 
-# Anything written under a non-default root is test output and says so, so it
-# can never be mistaken for production evidence even if isolation is imperfect.
-LOG_PREFIX=""
-if [ "$ROOT" != "$REPO" ]; then
+# ── ISOLATION MODE, DECIDED BEFORE ANYTHING ELSE ─────────────────────────────
+# Partial isolation is forbidden. Running with an isolated filesystem but
+# production credentials is how a "[TEST]" watchdog sent a real LINE push: the
+# mute file was looked for under the isolated root, was not there, and the real
+# token loaded from the real repo. A label is not a safety mechanism.
+#
+# This exits non-zero BEFORE any credential is read or any submitter invoked.
+ISOLATION_MODE="$(cd "$REPO" && npx tsx packages/queue/bin/check-isolation.ts 2>&1)"
+if [ $? -ne 0 ]; then
+  echo "$ISOLATION_MODE" >&2
+  echo "$ISOLATION_MODE" >> "$LOG" 2>/dev/null
+  exit 2
+fi
+if [ "$ISOLATION_MODE" = "isolated" ]; then
   LOG_PREFIX="[TEST] "
+else
+  LOG_PREFIX=""
 fi
 LOG="$ROOT/logs/pipeline-watchdog.log"
 export SCHEDULER_HEARTBEAT_FILE="${SCHEDULER_HEARTBEAT_FILE:-$ROOT/data/scheduler-heartbeat.log}"
@@ -85,7 +97,19 @@ touch "$MARKER"
 
 log "ALERT state=$STATE logical=$LOGICAL — $FULL_REASON"
 
-if [ -f "$ROOT/data/line-notifications-muted" ]; then
+# ── NOTIFICATION POLICY — ONE CANONICAL SOURCE ───────────────────────────────
+# Isolated mode can never deliver, regardless of any mute file. This ordering is
+# the fix for the defect Warden found: the mute used to be read from $ROOT while
+# credentials came from $REPO, so isolating the filesystem DISARMED the kill
+# switch and a test run sent a real message.
+if [ "$ISOLATION_MODE" = "isolated" ]; then
+  log "isolated environment — real LINE delivery is structurally impossible; not loading credentials"
+  exit 0
+fi
+
+# The mute file is authoritative at the PRODUCTION repo, never at $ROOT. An
+# isolated root must not be able to make it disappear.
+if [ -f "$REPO/data/line-notifications-muted" ]; then
   log "LINE alert suppressed (line-notifications-muted)"
   exit 0
 fi

@@ -1,5 +1,5 @@
 import type { Job, Queue } from 'bullmq'
-import { openDb, resolveDbPath } from '@common/pipeline-runs'
+import { openDbReadOnly, resolveDbPath } from '@common/pipeline-runs'
 
 /**
  * ── Terminal-event reconciliation ──────────────────────────────────────────
@@ -146,7 +146,7 @@ export function assessFlow(
 
 /** Every `daily-pipeline` row still claiming to run. */
 export function openParents(dbPath = resolveDbPath()): Array<{ id: string; started_at: string; status: string }> {
-  const db = openDb(dbPath)
+  const db = openDbReadOnly(dbPath)
   return db.prepare(
     `SELECT id, started_at, status FROM pipeline_runs
       WHERE stage = 'daily-pipeline' AND status = 'running'
