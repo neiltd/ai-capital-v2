@@ -88,3 +88,49 @@ getLastFetched(ticker) returns NULL (fetch_log stores ticker='*'), so the increm
 COVERAGE               : ir_feed_status = discovered:3, pending:103
 chunks(ir_page) total  : 35, newest published_date 2026-08-13
 ```
+
+---
+
+## CORRECTION appended 2026-08-27 16:35 +07 — do not delete
+
+The P1 analysis recorded above is **wrong in two material ways**. The captured
+data is left exactly as it was; this section corrects the interpretation.
+
+**1. "The agent has fired 3 times ever" was an artefact of my own `tail -3`.**
+The complete `logs/daily-catchup.log` fire history shows the agent fired at
+**07:00:0x every single day from 2026-07-06 through 2026-08-22** — seven weeks
+of clean on-time fires. `launchctl`'s `runs = 3` counts only since the agent was
+last re-bootstrapped (~2026-08-24), not lifetime.
+
+So "a 07:00 StartCalendarInterval never fires on this machine" is false. It
+fired on time for seven weeks. The regression begins **2026-08-23**:
+
+```
+2026-07-06 .. 2026-08-22   07:00:0x   every day (except 07-27..08-01, which fired 10:00-10:04)
+2026-08-23                 21:00:03
+2026-08-24                 21:06:48, 21:23:24
+2026-08-25                 09:20:41, 21:12:19
+2026-08-26                 21:03:32
+2026-08-27                 (none as of 16:35 +07)
+```
+
+**2. "2026-08-26 never started" is false.** The 21:03:32 fire DID trigger a
+catch-up run: `[run-daily] submitting daily pipeline at 2026-08-26T14:03:33.586Z`.
+Thirteen stages executed. The run is still in state `running` more than 24 hours
+later — an **orphan**, not an absence:
+
+```
+2026-08-26 daily-pipeline        running   14:03:33Z   <-- never received recordEnd
+2026-08-26 scenario-simulate     failed    14:04:14Z   (later succeeded on retry 15:20:59Z)
+2026-08-26 world-intel-pipeline  failed    14:04:16Z, 14:44:51Z
+2026-08-26 risk-metrics          success   15:29:31Z   <-- last stage to complete
+```
+
+2026-08-27 genuinely has no rows of any kind.
+
+**Why this correction matters to the repair:** `daily-catchup.sh` counts
+`status IN ('running','success')` as "already handled". The 08-26 orphan will
+therefore look like a completed run for its own logical date forever. An
+absence and a permanent `running` are different failures and the current logic
+cannot tell them apart — which is precisely the "running forever != running
+normally" distinction the repair has to encode.

@@ -235,14 +235,14 @@ export function constructsPostgres(src: string): boolean {
  * catches tests that cannot LOAD, not tests that do not EXIST. Both are the
  * same failure: a number that reads like coverage and is not.
  *
- * This list may SHRINK freely. It must not grow without a deliberate decision.
+ * This list may SHRINK freely (packages/pipeline-runs left it on 2026-08-27 when the
+ * scheduler test matrix landed). It must not grow without a deliberate decision.
  */
 export const KNOWN_UNTESTED: readonly string[] = [
   'apps/trade-graph',                  // 11 src; writes to Postgres via getPool()
   'apps/unified-platform',             // 193 src; the dashboard
   'apps/world-intelligence-data-hub-', // 88 src; live pipeline stage
   'packages/common-types',             // 4 src; type declarations only
-  'packages/pipeline-runs',            // 5 src; observability layer for the DAG
 ]
 
 /** Workspace projects that ship TypeScript source but contain no test file. */

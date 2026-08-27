@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+  <key>Label</key><string>com.thanapol.ai-capital.daily</string>
+
+  <!-- EXECUTION OPPORTUNITY, not a business time.
+       The 07:00 StartCalendarInterval fired on time every day from 2026-07-06
+       to 2026-08-22, then fired at ~21:00 on four days and not at all on
+       2026-08-27. launchd defers a missed calendar fire to "the next wake" and
+       that deferral is not dependable.
+
+       StartInterval was verified in THIS launchd (probe agent, 20s interval:
+       3 fires, exactly 20s apart). It supplies opportunities every 15 minutes;
+       the script decides eligibility from recorded state, so correctness does
+       not depend on launchd catching anything up. The 07:00 business time now
+       lives in DUE_HOUR in packages/pipeline-runs/src/daily-run-state.ts —
+       one place, testable.
+
+       Deliberately NOT several hopeful calendar times. -->
+  <key>StartInterval</key><integer>900</integer>
+  <key>RunAtLoad</key><true/>
+
+  <key>ProgramArguments</key>
+  <array>
+    <string>/bin/bash</string>
+    <string>/Users/thanapold/Desktop/Projects.nosync/scripts/daily-scheduler.sh</string>
+  </array>
+
+  <key>StandardOutPath</key><string>/Users/thanapold/Desktop/Projects.nosync/logs/daily-scheduler.log</string>
+  <key>StandardErrorPath</key><string>/Users/thanapold/Desktop/Projects.nosync/logs/daily-scheduler.log</string>
+</dict>
+</plist>

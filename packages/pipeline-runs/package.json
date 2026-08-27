@@ -12,11 +12,14 @@
     }
   },
   "bin": {
-    "pipeline-run-step": "./bin/run-step.ts"
+    "pipeline-run-step": "./bin/run-step.ts",
+    "daily-run-status": "./bin/daily-run-status.ts"
   },
   "scripts": {
     "typecheck": "tsc --noEmit",
-    "run-step": "tsx bin/run-step.ts"
+    "run-step": "tsx bin/run-step.ts",
+    "test": "vitest run",
+    "status": "tsx bin/daily-run-status.ts"
   },
   "dependencies": {
     "better-sqlite3": "^12.0.0"
@@ -25,6 +28,7 @@
     "@types/better-sqlite3": "^7.6.11",
     "@types/node": "^22.0.0",
     "tsx": "^4.16.0",
-    "typescript": "^5.5.0"
+    "typescript": "^5.5.0",
+    "vitest": "^3.0.0"
   }
 }
