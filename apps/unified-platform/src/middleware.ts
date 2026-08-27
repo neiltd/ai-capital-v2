@@ -30,8 +30,8 @@ import { NextRequest, NextResponse } from 'next/server'
 // `public/` IS gated by this matcher: /countries-110m.json, /icons.svg and
 // /data/*.json all return 401. Verified by request, not by reading.
 //
-// What is genuinely NOT gated: `_next/static`, `_next/image` and `favicon.ico`,
-// because they are excluded above by name.
+// What is genuinely NOT gated: `_next/static` and `favicon.ico`. Those are the
+// only two exclusions, and they are the complete ungated surface.
 //
 // The ruvector.db relocation therefore stands as defence in depth — it also
 // survives a static export, where no middleware runs at all — but it was not
@@ -40,7 +40,14 @@ export const config = {
   // Segment-anchored, not prefix-anchored. `_next/static` as a bare prefix also
   // excused `/_next/staticXapi/status`; nothing is served there today, but the
   // exclusion should describe what it means.
-  matcher: ['/((?!_next/static/|_next/image\\?|favicon\\.ico$).*)'],
+  //
+  // `_next/image` is deliberately NOT excluded. An earlier revision listed it
+  // as `_next/image\?`, which never matched: Next tests this pattern against the
+  // PATHNAME, and a query string is not part of a pathname, so the exclusion was
+  // inert and the route was gated anyway. Rather than repair the exclusion, keep
+  // the behaviour and drop the pretence — there is no reason image optimisation
+  // should be anonymous when nothing else is.
+  matcher: ['/((?!_next/static/|favicon\\.ico$).*)'],
 }
 
 /**
