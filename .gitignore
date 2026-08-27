@@ -69,3 +69,14 @@ apps/investment-analyst-agents/tax/report.md
 apps/investment-analyst-agents/risk/risk.json
 apps/investment-analyst-agents/risk/report.md
 apps/investment-analyst-agents/correlation/report.md
+
+# Scheduler/watchdog runtime state (2026-08-27). NEVER commit these:
+# a checked-in empty pipeline-runs.db is a DECOY an ad-hoc run can bind to —
+# the exact stale-store hazard CLAUDE.md documents — and a checked-in
+# .scheduler-last-state carried a FAKE 'success' written by the test harness
+# from a throwaway database.
+data/.scheduler-last-state
+data/.watchdog-last-state
+data/.watchdog-alerted-*
+data/scheduler-heartbeat.log
+packages/pipeline-runs/data/
