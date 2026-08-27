@@ -157,3 +157,99 @@ spawns, and sets `removeOnComplete/removeOnFail: {count: 50}` — which would tr
 the retained job sets currently preserved as incident evidence (228 parked / 41
 failed). `submit.ts` deliberately refuses `{count:100}` as a resurrection hazard.
 **Do not run pending redesign.**
+
+## CORRECTION — chain of custody on the preserved decoy (appended, nothing rewritten)
+
+The "sidecars: none" line above was accurate at 00:06:56 and became false at
+00:08:39, when **my own read created them**:
+```
+pipeline-runs.db      mtime 2026-07-17 15:57:26   birth 2026-06-11 10:27:27   sha256 f6765a75… (UNCHANGED)
+pipeline-runs.db-wal  mtime 2026-08-28 00:08:39   birth 2026-08-28 00:08:39   size 0
+pipeline-runs.db-shm  mtime 2026-08-28 00:08:39   birth 2026-08-28 00:08:39   size 32768
+```
+
+Warden inferred from the sidecar birth times that "something opened it
+read-WRITE". That inference is **wrong, and the truth is the opposite** —
+measured on a copy of this exact file:
+```
+sqlite3 <file>                  -> no sidecars remain   (read-write open CLEANS UP on close)
+sqlite3 "file:<file>?mode=ro"   -> -wal and -shm REMAIN (read-only open cannot delete them)
+```
+A read-only connection still has to build the WAL shared-memory index to read a
+WAL database, and then lacks the write permission required to remove it on close.
+So the safest-looking invocation is the one that leaves traces.
+
+**What is and is not established:** the 40 rows are byte-identical — sha256
+verified twice, before and after, and again at 00:15. Content was not altered.
+What was wrong is my claim that reading it this way touched nothing. It created
+two files next to the evidence.
+
+Warden's underlying point stands and is the durable lesson: **a matching hash
+proves no content changed, not that nothing wrote.** For future evidence of this
+kind, copy the database AND its sidecars first and read the copy, or use
+SQLite's backup API — do not read the original in place.
+
+## Route map corrections from adversarial review
+
+### Missing — `/system/pipeline` is an UNGATED page that write-opens the production run DB
+
+The pipeline dashboard exists TWICE; the path derivation collapsed the route groups:
+```
+(legacy)/admin/pipeline/page.tsx  -> /admin/pipeline   GATED    (was in the map)
+(next)/system/pipeline/page.tsx   -> /system/pipeline  UNGATED  (was NOT)
+```
+Chain: `page.tsx` → `loadPipeline()` → `getDashboardSummary()` → `openDb()` →
+`mkdirSync` + `new Database` + `journal_mode = WAL` + `db.exec(SCHEMA)`, against
+the production path. `export const dynamic = "force-dynamic"` means every request
+re-renders and re-opens. It does NOT call `reapOrphans`, so no UPDATE — but the
+write-lock/WAL/schema/create-if-absent authority is identical to `/api/status`.
+
+The map's line "gated routes with mutation authority: /admin/pipeline" implied
+that authority sat behind auth. **Half of it did not.**
+
+### Missing — `apps/creator-studio`: a second Next.js server with NO middleware at all
+
+Not audited. No `middleware.ts` anywhere; no `APP_ACCESS_KEY`/`authorization`/
+`Basic`/`x-api-key` reference in `app/` or `lib/`. Eleven routes — the
+un-namespaced originals of the ones unified-platform gates under `/api/studio/*`:
+`/api/chat` `/api/upload` `/api/growth{,/manual,/sync}` `/api/session` `/api/topic`
+`/api/videos` `/api/visuals/{card,chart,illustration}`.
+
+Its `"dev": "next dev"` passes no `-H` **and no `-p`, so it defaults to port 3000**
+— the port just freed. Running `pnpm --filter creator-studio dev` puts the
+Anthropic chat, the OpenAI illustration generator and the upload writer on every
+interface, anonymously.
+
+### Missing — `public/` is unauthenticated static surface, middleware cannot intercept it
+```
+GET /ruvector.db                1.5 MB redb vector store (384-dim, cosine), gitignored artifact in public/
+GET /data/intelligence.json     37 KB world-intelligence export
+GET /data/imports/*.json        events, briefs, manifest
+```
+
+### Missing — `/api/theses/proposals` (the 26th route file)
+Gated (verified against the COMPILED matcher regex, where the path group is
+optional so the bare path matches) and read-only. Accounting gap, not exposure —
+but it is the read side of the split-brain store, serving the 82 SQLite-`rejected`
+proposals while Postgres holds them `pending`.
+
+### Wrong — `/api/trade-graph` is Postgres, not SQLite
+Uses `getPool()`, issuing only `select` against `trade.*`. Correct classification:
+**unauthenticated read of production Postgres, definitively no mutation.** Both
+halves of the map cell were wrong, and it matters because the map implied
+`/api/portfolio/refresh` was the only ungated route reaching Postgres.
+
+### Wrong — gated page renders with spend authority omitted
+`(next)/studio/chat/data.ts:31` runs a blocking `anthropic.messages.create()` on
+EVERY render. By the same reasoning that put `/api/ask` in the map as metered
+spend, this belongs in the gated-authority table, as do the Prisma-touching
+renders in `studio/data.ts`, `studio/dashboard/data.ts`, `studio/archive/data.ts`.
+
+### Verified clean — do not re-check
+Zero server actions at ANY scope (inline or file-level) — the inline-`use server`
+worry is unfounded, confirmed against the middleware manifest's empty functions
+map. No catch-all routes. No `default/not-found/error/loading/template`,
+`opengraph-image`, `icon`, `sitemap`, `robots`. No `instrumentation.ts`. No
+rewrites. Matcher not bypassable by trailing slash, `/_next/data/…` JSON routes,
+bare-path, casing, or doubled slashes. CVE-2025-29927 (`x-middleware-subrequest`)
+not applicable — the string appears in 0 files across next@14.2.35.
