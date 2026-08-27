@@ -20,22 +20,24 @@
     "queue-worker": "./bin/worker.ts"
   },
   "scripts": {
-    "typecheck":  "tsc --noEmit",
-    "submit":     "tsx bin/submit.ts",
-    "worker":     "tsx bin/worker.ts",
-    "smoke":      "tsx bin/smoke.ts",
-    "run-daily":  "tsx bin/run-daily.ts",
-    "test":       "vitest run",
-    "test:watch": "vitest"
+    "typecheck": "tsc --noEmit",
+    "submit": "tsx bin/submit.ts",
+    "worker": "tsx bin/worker.ts",
+    "smoke": "tsx bin/smoke.ts",
+    "run-daily": "tsx bin/run-daily.ts",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "reconcile": "tsx bin/reconcile.ts",
+    "health": "tsx bin/queue-health.ts"
   },
   "dependencies": {
     "@common/pipeline-runs": "workspace:*",
-    "bullmq":                "^5.30.0"
+    "bullmq": "^5.30.0"
   },
   "devDependencies": {
     "@types/node": "^22.0.0",
-    "tsx":         "^4.16.0",
-    "typescript":  "^5.5.0",
-    "vitest":      "^2.0.0"
+    "tsx": "^4.16.0",
+    "typescript": "^5.5.0",
+    "vitest": "^2.0.0"
   }
 }
