@@ -22,7 +22,8 @@ interface FlowNode {
     attempts: number
     backoff:  { type: 'exponential'; delay: number }
     removeOnComplete: { count: number }
-    removeOnFail:     { count: number }
+    /** false = retain failed leaves forever. See the note at the call site. */
+    removeOnFail:     false | { count: number }
   }
   children: FlowNode[]
 }
@@ -43,7 +44,31 @@ function buildFlowNode(
       backoff:  { type: 'exponential' as const, delay: retry.backoffMs },
       // Each retry waits backoffMs * 2^(attempt - 1) before re-running.
       removeOnComplete: { count: 100 },   // keep the last 100 completed for debugging
-      removeOnFail:     { count: 100 },
+
+      // ── CONTAINMENT, not the final lifecycle design ────────────────────────
+      // `removeOnFail: { count: 100 }` was a RESURRECTION HAZARD, reproduced on
+      // an isolated Redis on 2026-08-27.
+      //
+      // Trimming a FAILED job out of a capped set runs BullMQ's
+      // removeJobsByMaxCount -> removeJob -> removeParentDependencyKey, which
+      // SREMs that job from its parent's dependency set. Every parked flow in
+      // this queue is pinned by exactly ONE permanently-failed leaf, so the
+      // parent's pending count drops to zero, BullMQ ZREMs it from
+      // waiting-children and moves it to `wait` — where the live worker
+      // executes it, carrying its ORIGINAL parentRunId.
+      //
+      // In this queue that means a 2026-06-23 `investment-brief` could fire and
+      // publish a briefing from June's inputs under a run row already recorded
+      // `failed`. 221 jobs across 22 flows are parked; 22 of them are
+      // investment-brief and 22 are morning-status. The failed set was at
+      // 39/100 with a recent failure rate of 3-10/day.
+      //
+      // `false` retains failed leaves indefinitely, so no size-driven eviction
+      // can ever unpin a parent. Retention becomes an explicit whole-flow
+      // decision instead of an emergent side effect of a counter — see the
+      // lifecycle design in docs/proposals/2026-08-27-bullmq-execution-safety.md.
+      // Raising the count would only postpone the same event.
+      removeOnFail:     false,
     },
     children,
   }

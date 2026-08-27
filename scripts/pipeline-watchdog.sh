@@ -18,7 +18,28 @@
 set -o pipefail
 export PATH="/opt/homebrew/bin:/usr/local/bin:/usr/bin:/bin"
 
-ROOT="/Users/thanapold/Desktop/Projects.nosync"
+# ── FILESYSTEM ISOLATION ─────────────────────────────────────────────────────
+# AI_CAPITAL_ROOT is the filesystem destination, and it is a SEPARATE isolation
+# dimension from the database and Redis. A test that isolates PIPELINE_RUNS_DB
+# but not this writes real-looking output into production log paths — on
+# 2026-08-27 the case harness wrote a FAKE "state=success logical=2026-08-27"
+# into logs/daily-scheduler.log while its database was correctly isolated, and
+# that line then misled an auditor into suspecting a wrong-database production
+# run. A harness that isolates two of three dimensions is more dangerous than
+# one that isolates none, because its output looks genuine.
+# REPO = where the CODE lives, derived from this script's own location so it is
+# correct in a clone or a worktree. ROOT = where OUTPUT goes. Conflating them is
+# what made filesystem isolation impossible: a test could not redirect logs
+# without also breaking module resolution.
+REPO="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
+ROOT="${AI_CAPITAL_ROOT:-$REPO}"
+
+# Anything written under a non-default root is test output and says so, so it
+# can never be mistaken for production evidence even if isolation is imperfect.
+LOG_PREFIX=""
+if [ "$ROOT" != "$REPO" ]; then
+  LOG_PREFIX="[TEST] "
+fi
 LOG="$ROOT/logs/pipeline-watchdog.log"
 export SCHEDULER_HEARTBEAT_FILE="${SCHEDULER_HEARTBEAT_FILE:-$ROOT/data/scheduler-heartbeat.log}"
 
@@ -26,9 +47,9 @@ DRY_RUN=0
 [ "$1" = "--dry-run" ] && DRY_RUN=1
 
 mkdir -p "$ROOT/logs" "$ROOT/data"
-log() { echo "[$(date '+%Y-%m-%d %H:%M:%S %z')] $*" >> "$LOG"; }
+log() { echo "${LOG_PREFIX}[$(date '+%Y-%m-%d %H:%M:%S %z')] $*" >> "$LOG"; }
 
-STATUS_JSON=$(cd "$ROOT" && npx tsx packages/pipeline-runs/bin/daily-run-status.ts --json 2>>"$LOG")
+STATUS_JSON=$(cd "$REPO" && npx tsx packages/pipeline-runs/bin/daily-run-status.ts --json 2>>"$LOG")
 if [ -z "$STATUS_JSON" ]; then
   log "ERROR: could not evaluate daily run state"
   exit 1
@@ -76,7 +97,7 @@ case "$STATE" in
   *)       ICON="⚠️";  HEAD="daily pipeline needs attention";;
 esac
 
-LINE_ENV="$ROOT/apps/scenario-simulator/.env"
+LINE_ENV="$REPO/apps/scenario-simulator/.env"
 if [ -f "$LINE_ENV" ]; then
   set -a; . "$LINE_ENV"; set +a
   if [ -n "$LINE_CHANNEL_ACCESS_TOKEN" ] && [ -n "$LINE_USER_ID" ]; then
