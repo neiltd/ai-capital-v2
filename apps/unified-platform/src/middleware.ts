@@ -19,11 +19,28 @@ import { NextRequest, NextResponse } from 'next/server'
 // An enumerate-the-safe list fails loudly: the new route 401s until someone
 // makes a decision about it. That is the direction the failure should point.
 //
-// NOTE: `public/` files are served BEFORE middleware runs and cannot be
-// intercepted here at all. That is not an auth problem with a middleware fix —
-// see the ruvector.db relocation.
+// CORRECTION (2026-08-28): an earlier version of this comment claimed `public/`
+// files are "served BEFORE middleware runs and cannot be intercepted here at
+// all". **That is false.** Next's route pipeline
+// (next/dist/server/lib/router-utils/resolve-routes.js) orders the steps:
+//     middleware_next_data -> headers -> redirects -> middleware
+//       -> beforeFiles -> check_fs (public/) -> ...
+// `check_fs` — the step that serves `public/` — runs AFTER middleware, and
+// minimalMode is false for self-hosted `next dev` and `next start` alike. So
+// `public/` IS gated by this matcher: /countries-110m.json, /icons.svg and
+// /data/*.json all return 401. Verified by request, not by reading.
+//
+// What is genuinely NOT gated: `_next/static`, `_next/image` and `favicon.ico`,
+// because they are excluded above by name.
+//
+// The ruvector.db relocation therefore stands as defence in depth — it also
+// survives a static export, where no middleware runs at all — but it was not
+// the only thing standing between that file and the network.
 export const config = {
-  matcher: ['/((?!_next/static|_next/image|favicon.ico).*)'],
+  // Segment-anchored, not prefix-anchored. `_next/static` as a bare prefix also
+  // excused `/_next/staticXapi/status`; nothing is served there today, but the
+  // exclusion should describe what it means.
+  matcher: ['/((?!_next/static/|_next/image\\?|favicon\\.ico$).*)'],
 }
 
 /**
@@ -33,10 +50,13 @@ export const config = {
  * reaches openDb, which sets journal_mode=WAL and executes the schema against
  * the production run database.
  */
-const PUBLIC_PATHS: Array<{ pattern: RegExp; why: string }> = [
-  // Health probe: no database, no spawn, no network, no filesystem.
-  { pattern: /^\/api\/health$/, why: 'liveness probe, touches nothing' },
-]
+// DELIBERATELY EMPTY. The entry that used to sit here exempted /api/health — a
+// route that does not exist. A pre-authorised hole reserved for unwritten code
+// is exactly the silent-failure direction this inversion exists to remove:
+// whoever creates src/app/api/health/route.ts in six months would inherit an
+// unauthenticated route without ever opening this file. Add the exemption when
+// the route exists and its "touches nothing" claim can actually be checked.
+const PUBLIC_PATHS: Array<{ pattern: RegExp; why: string }> = []
 
 function isPublic(pathname: string): boolean {
   return PUBLIC_PATHS.some(p => p.pattern.test(pathname))
