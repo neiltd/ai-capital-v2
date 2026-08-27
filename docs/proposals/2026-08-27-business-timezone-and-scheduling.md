@@ -238,6 +238,51 @@ Acknowledgement mechanism is an open decision — a file
 `superseded_at`**, so the observability schema changes once rather than three
 times.
 
+## 9b. Two rollout-critical findings from Warden's concurrency review
+
+**The BullMQ trim-resurrection landmine.** `removeOnFail: {count: 100}` triggers
+`removeJobsByMaxCount` -> `removeJob` -> `removeParentDependencyKey`. Trimming a
+*failed* job out of the capped set removes it from its parent's dependency set;
+because each of the 22 parked flows is pinned by exactly one permanently-failed
+leaf (Warden enumerated all 221 parked jobs and all 238 dependency edges — 39 of
+them map 1:1 onto the 39 members of `failed`), the parent's pending count hits
+zero and BullMQ moves a **two-month-old parked parent into `wait`**, where the
+live worker executes it under a June/July `parentRunId`, cascading upward.
+
+Current headroom: `failed` is at **39 of 100**, accruing 1–4/day recently. A
+single run cannot reach the cap, so this is **not a blocker today — it is a
+dated landmine**. (`completed` is already at 100/100 and will trim on the next
+completion, but that path is harmless: a completed child is SREM'd from its
+parent's dependencies at completion time.)
+Fix options: purge the 22 parked flows and their 39 failed leaves, or set
+`removeOnFail: false` in `submit.ts`.
+
+**The worker is chronically losing job locks — this is the actual cause of the
+orphan, and it will recur.** `logs/queue-worker.err.log` holds **57**
+`Missing lock for job ... moveToDelayed`; `queue-worker.out.log` holds **20**
+`job stalled more than allowable limit`. `createWorker` in
+`packages/queue/src/queue.ts` passes only `connection` and `concurrency`, so
+`lockDuration=30s`, `stalledInterval=30s`, `maxStalledCount=1` are all BullMQ
+defaults — against stages that spawn 30–90 minute child processes.
+
+Two consequences, both present in the data:
+
+1. Jobs die as *stalled* instead of honouring `attempts`, so they never reach
+   `processor.ts`'s exhausted-attempts branch that closes the parent row. That
+   is the direct cause of the 2026-08-26 orphan.
+2. **Stages execute twice.** Under parent `8a72f47b`, `scenario-simulate` ran
+   three times — one failure and **two back-to-back successes**
+   (15:20:59->15:25:06 and 15:25:06->15:26:51), both writing
+   `apps/scenario-simulator/data/reports/2026-08-26.md`. A job that succeeded
+   does not retry; that is a stalled job re-delivered while the original was
+   still running. Same pattern on 08-25 (`ai-analysis-engine` x3), 08-22, 08-21.
+   A duplicated `scenario-simulate` overwrote a file harmlessly. A duplicated
+   `capital-ingestion` or `investment-brief` would not be.
+
+This means **duplicate prevention is needed at the STAGE level too**, not only
+at the logical-run level — the structural invariant in section 6 does not
+address it.
+
 ## 10. Deferred — explicitly not P1
 
 1. **BullMQ stalled-job path bypasses parent-close.** `failedReason: "job stalled
