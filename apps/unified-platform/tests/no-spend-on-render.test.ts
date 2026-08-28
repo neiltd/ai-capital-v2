@@ -53,25 +53,84 @@ describe('rendering /studio/chat does not spend', () => {
     expect(vm.opening).toBe('')
   })
 
-  it('no page or loader under (next)/studio imports the Anthropic client', async () => {
-    // Belt to the braces above: catch a NEW render path added later that
-    // reaches the client directly rather than through the rate-limited route.
-    const { readdirSync, readFileSync, statSync } = await import('node:fs')
-    const { join } = await import('node:path')
-    const offenders: string[] = []
-    const walk = (d: string) => {
+  it('the topic actually resolves — so the assertions above are not vacuous', async () => {
+    // loadStudioChat returns {topic: null, opening: ''} on its catch path, and
+    // opening === '' is true on BOTH branches. If the world-intel export ever
+    // goes missing, every test in this file would pass while asserting nothing.
+    const { loadStudioChat } = await import('@/app/(next)/studio/chat/data')
+    const vm = await loadStudioChat()
+    expect(vm.topic, 'topic is null — these tests are asserting on the early-return path').not.toBeNull()
+  })
+
+  it('NO render root transitively reaches an LLM client', async () => {
+    // Walks the import graph from every render root, following VALUE imports
+    // only, and asks whether any reached module can spend.
+    //
+    // Two earlier versions of this check were wrong in opposite directions.
+    // The first matched `from '@/lib/studio/agent'` with single quotes, and so
+    // missed `new Anthropic({...})` constructed inline — the DOMINANT style
+    // here (api/ask and api/thesis-proposals both do it). The second matched
+    // spend-shapes per FILE and produced two false positives: topic-engine.ts,
+    // which contains the string 'openai' in a keyword list, and agent.ts, which
+    // legitimately defines the shared client and is value-imported only by
+    // rate-limited POST routes.
+    //
+    // Reachability is the actual invariant. `import type` is erased at build
+    // time and cannot spend, which is why ChatThread importing ChatMessage from
+    // agent.ts is fine.
+    const { readdirSync, readFileSync, statSync, existsSync } = await import('node:fs')
+    const { join, dirname, resolve } = await import('node:path')
+
+    const SRC = join(process.cwd(), 'src')
+    // A bare quoted 'openai' is NOT enough: topic-engine.ts lists it as a
+    // scoring keyword. Require import context for the package names.
+    const SPEND = /(?:from|require\s*\(|import\s*\()\s*['"`](?:@anthropic-ai\/sdk|openai)['"`]|new\s+(?:Anthropic|OpenAI)\s*\(|api\.(?:anthropic|openai)\.com/
+    const RENDER_ROOT = /\/(page|layout|template|loading|error|not-found|default)\.tsx?$/
+
+    const roots: string[] = []
+    const collect = (d: string) => {
       for (const e of readdirSync(d)) {
         const p = join(d, e)
-        if (statSync(p).isDirectory()) { walk(p); continue }
-        if (!/\.(ts|tsx)$/.test(e)) continue
-        const src = readFileSync(p, 'utf-8')
-        // strip comments so an explanatory note about the old defect does not
-        // register as the defect — the false-positive shape from the reaper test
-        const code = src.split('\n').filter(l => !l.trim().startsWith('//') && !l.trim().startsWith('*')).join('\n')
-        if (/from\s+'@\/lib\/studio\/agent'/.test(code) && /\banthropic\b/.test(code)) offenders.push(p)
+        if (statSync(p).isDirectory()) { collect(p); continue }
+        // API routes are POST-gated and rate-limited; they may spend.
+        if (RENDER_ROOT.test(p) && !p.includes(join('src', 'app', 'api'))) roots.push(p)
       }
     }
-    walk(join(process.cwd(), 'src', 'app', '(next)', 'studio'))
-    expect(offenders, `these render paths import the Anthropic client: ${offenders.join(', ')}`).toEqual([])
+    collect(join(SRC, 'app'))
+    expect(roots.length, 'found no render roots — this test would pass vacuously').toBeGreaterThan(20)
+
+    const resolveSpec = (from: string, spec: string): string | null => {
+      const base = spec.startsWith('@/') ? join(SRC, spec.slice(2))
+                 : spec.startsWith('.')  ? resolve(dirname(from), spec)
+                 : null
+      if (!base) return null
+      for (const c of [base, `${base}.ts`, `${base}.tsx`, join(base, 'index.ts'), join(base, 'index.tsx')]) {
+        if (existsSync(c) && statSync(c).isFile()) return c
+      }
+      return null
+    }
+
+    const seen = new Set<string>()
+    const offenders: string[] = []
+    const visit = (file: string, chain: string[]) => {
+      if (seen.has(file)) return
+      seen.add(file)
+      const src = readFileSync(file, 'utf-8')
+      const code = src.split('\n')
+        .filter(l => !l.trim().startsWith('//') && !l.trim().startsWith('*'))
+        .join('\n')
+      if (SPEND.test(code.replace(/import\s+type\s+[^\n]*/g, ''))) {
+        offenders.push([...chain, file].map(f => f.replace(SRC + '/', '')).join(' -> '))
+        return
+      }
+      for (const m of code.matchAll(/import\s+(?!type\s)([\s\S]*?)from\s*['"`]([^'"`]+)['"`]/g)) {
+        if (/^\s*type\s/.test(m[1])) continue      // `import { type X }` style
+        const next = resolveSpec(file, m[2])
+        if (next) visit(next, [...chain, file])
+      }
+    }
+    for (const r of roots) visit(r, [])
+
+    expect(offenders, `render roots reach an LLM client:\n  ${offenders.join('\n  ')}`).toEqual([])
   })
 })

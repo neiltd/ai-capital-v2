@@ -36,6 +36,7 @@ export function ChatThread({ topic, initialMessage }: { topic: ScoredStory; init
   const [input, setInput] = useState('')
   const [streaming, setStreaming] = useState(false)
   const [saved, setSaved] = useState(false)
+  const [error, setError] = useState('')
   const bottomRef = useRef<HTMLDivElement>(null)
 
   useEffect(() => {
@@ -80,23 +81,48 @@ export function ChatThread({ topic, initialMessage }: { topic: ScoredStory; init
   async function startConversation() {
     if (streaming || messages.length > 0) return
     setStreaming(true)
-    const opening: ChatMessage[] = [{ role: 'user', content: 'morning' }]
-    const res = await fetch('/api/studio/chat', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ messages: opening, topic }),
-    })
-    const reader = res.body!.getReader()
-    const decoder = new TextDecoder()
-    let assistantText = ''
-    setMessages([{ role: 'assistant', content: '' }])
-    while (true) {
-      const { done, value } = await reader.read()
-      if (done) break
-      assistantText += decoder.decode(value)
-      setMessages([{ role: 'assistant', content: assistantText }])
+    try {
+      const opening: ChatMessage[] = [{ role: 'user', content: 'morning' }]
+      const res = await fetch('/api/studio/chat', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ messages: opening, topic }),
+      })
+
+      // Check the status BEFORE reading the body. Without this, a 429 — which a
+      // user reaches by clicking six times, since the route allows 5/min —
+      // streams the error JSON straight into the thread, so
+      // `{"error":"Rate limit exceeded"}` renders as the agent's opening line.
+      if (!res.ok || !res.body) {
+        setError(res.status === 429
+          ? 'Rate limited — wait a moment and try again.'
+          : 'Could not start the conversation. Try again.')
+        return
+      }
+
+      const reader = res.body.getReader()
+      const decoder = new TextDecoder()
+      let assistantText = ''
+      setMessages([{ role: 'assistant', content: '' }])
+      while (true) {
+        const { done, value } = await reader.read()
+        if (done) break
+        assistantText += decoder.decode(value)
+        setMessages([{ role: 'assistant', content: assistantText }])
+      }
+    } catch {
+      // A mid-stream failure rejects read(). The route returns 200 headers
+      // before the model errors (messages.stream() resolves first), so its own
+      // try/catch cannot cover this.
+      setError('The connection dropped. Try again.')
+      setMessages([])
+    } finally {
+      // MUST be finally: without it a mid-stream failure leaves the button
+      // disabled on "Starting…" while messages.length > 0 has already removed
+      // the start affordance — unrecoverable without a page reload. This path
+      // is one-shot, so getting stuck here is worse than in sendMessage.
+      setStreaming(false)
     }
-    setStreaming(false)
   }
 
   async function sendMessage() {
@@ -176,9 +202,12 @@ export function ChatThread({ topic, initialMessage }: { topic: ScoredStory; init
               Ready when you are — the opening line is generated on request, so simply
               opening this page doesn&apos;t call the model.
             </p>
+            {error && (
+              <p className="text-[13px] leading-[20px] text-loss">{error}</p>
+            )}
             <button
               type="button"
-              onClick={startConversation}
+              onClick={() => { setError(''); void startConversation() }}
               disabled={streaming}
               className="rounded-chip border border-hairline bg-surface-2 px-3 py-1.5 text-[13px] font-medium text-ink hover:bg-surface-3 disabled:opacity-50"
             >
