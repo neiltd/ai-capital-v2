@@ -123,7 +123,8 @@ describe('rendering /studio/chat does not spend', () => {
       const isImp = n.expression?.kind === ts.SyntaxKind.ImportKeyword
       const isReq = ts.isIdentifier(n.expression) && n.expression.text === 'require'
       const a = n.arguments?.[0]
-      return (isImp || isReq) && a && ts.isStringLiteral(a) ? a.text : null
+      const lit = a && (ts.isStringLiteral(a) || ts.isNoSubstitutionTemplateLiteral(a))
+      return (isImp || isReq) && lit ? a.text : null
     }
 
     /** Every specifier whose module is EVALUATED at runtime. */
@@ -134,6 +135,12 @@ describe('rendering /studio/chat does not spend', () => {
           if (!n.importClause?.isTypeOnly) out.push(n.moduleSpecifier.text)
         } else if (ts.isExportDeclaration(n) && n.moduleSpecifier && ts.isStringLiteral(n.moduleSpecifier)) {
           if (!n.isTypeOnly) out.push(n.moduleSpecifier.text)
+        } else if (ts.isImportEqualsDeclaration(n) && ts.isExternalModuleReference(n.moduleReference) &&
+                   ts.isStringLiteral(n.moduleReference.expression)) {
+          // `import h = require('./x')`. The AST rewrite covered Import/Export
+          // Declaration and CallExpression but not this — the enumeration had
+          // merely moved from regexes to ts.isX guards.
+          out.push(n.moduleReference.expression.text)
         } else if (ts.isCallExpression(n)) {
           const c = callSpec(n); if (c) out.push(c)
         }
@@ -153,8 +160,12 @@ describe('rendering /studio/chat does not spend', () => {
           const c = callSpec(n)
           if (c && SDK.test(c)) hits.push(n)
           if (ts.isIdentifier(n.expression) && /^create(?:Anthropic|OpenAI)$/.test(n.expression.text)) hits.push(n)
-        } else if (ts.isNewExpression(n) && ts.isIdentifier(n.expression) &&
-                   /^(?:Anthropic|OpenAI)$/.test(n.expression.text)) {
+        } else if (ts.isImportEqualsDeclaration(n) && ts.isExternalModuleReference(n.moduleReference) &&
+                   ts.isStringLiteral(n.moduleReference.expression) && SDK.test(n.moduleReference.expression.text)) {
+          hits.push(n)
+        } else if (ts.isNewExpression(n) &&
+                   ((ts.isIdentifier(n.expression) && /^(?:Anthropic|OpenAI)$/.test(n.expression.text)) ||
+                    (ts.isPropertyAccessExpression(n.expression) && /^(?:Anthropic|OpenAI)$/.test(n.expression.name.text)))) {
           hits.push(n)
         } else if ((ts.isStringLiteral(n) || ts.isNoSubstitutionTemplateLiteral(n)) && HOST.test(n.text)) {
           hits.push(n)
@@ -186,14 +197,33 @@ describe('rendering /studio/chat does not spend', () => {
       return found
     }
 
-    /** Spans of exported GET handlers, so a spend inside POST is not miscounted. */
-    const getSpans = (sf: any): Array<[number, number]> => {
+    /**
+     * Spans of exported NON-GET handlers — the only place a spend is provably
+     * unreachable on GET.
+     *
+     * WARDEN round 5: keying on GET spans was WORSE than the named exemption it
+     * replaced. `exportsGET` was widened to accept `export { GET }` and friends
+     * but the span finder was not, so for those forms it returned [] — and
+     * `spans.some()` over an empty array is always false, granting the WHOLE
+     * FILE immunity in the same pass that made it a root. The check was also
+     * purely lexical, so a module-scope `const client = new Anthropic(...)` used
+     * by GET was exempt: the singleton pattern, which is how agent.ts is written
+     * and is the shape of the /studio/chat incident this test exists to prevent.
+     * My RELOC decoy exercised the one arrangement where the lexical check
+     * happens to work, which is why round 4 read as closed.
+     *
+     * Polarity now matches the rest of this file: uncertainty resolves as COUNT,
+     * never as permit. A non-GET handler that cannot be located simply has no
+     * span, so the spend counts.
+     */
+    const NON_GET = /^(?:POST|PUT|PATCH|DELETE|HEAD|OPTIONS)$/
+    const nonGetSpans = (sf: any): Array<[number, number]> => {
       const spans: Array<[number, number]> = []
       each(sf, n => {
-        if (ts.isFunctionDeclaration(n) && n.name?.text === 'GET' && isExported(n)) spans.push([n.pos, n.end])
+        if (ts.isFunctionDeclaration(n) && n.name && NON_GET.test(n.name.text) && isExported(n)) spans.push([n.pos, n.end])
         if (ts.isVariableStatement(n) && isExported(n))
           for (const d of n.declarationList.declarations)
-            if (ts.isIdentifier(d.name) && d.name.text === 'GET') spans.push([n.pos, n.end])
+            if (ts.isIdentifier(d.name) && NON_GET.test(d.name.text)) spans.push([n.pos, n.end])
       })
       return spans
     }
@@ -246,19 +276,33 @@ describe('rendering /studio/chat does not spend', () => {
 
     const seen = new Set<string>()
     const offenders: string[] = []
+    const parseFailures: string[] = []
     const visit = (file: string, chain: string[], rootIsRoute: boolean) => {
       if (seen.has(file)) return
       seen.add(file)
+      // `import './globals.css'` and JSON data imports resolve to real files
+      // that are not JavaScript. Parsing them as TS produced diagnostics and
+      // meaningless edges; they cannot spend.
+      if (!SRC_FILE.test(file)) return
       const sf = parse(file)
+      // A malformed file yields a PARTIAL tree that walks clean — traversal
+      // edges silently vanish and the walk reports green. Make it loud.
+      if ((sf as any).parseDiagnostics?.length) parseFailures.push(file.replace(SRC + '/', ''))
       const hits = spendNodes(sf)
       if (hits.length) {
-        // For a route root, only a spend INSIDE an exported GET handler is
-        // reachable on GET. This replaces the old named exemption for
-        // thesis-proposals, whose `new Anthropic` sits in rate-limited POST —
-        // and unlike that exemption it notices if the spend is MOVED into GET.
+        // A route legitimately imports the SDK for POST, so for a ROUTE ROOT a
+        // hit is exempt only if provably POST-side: the bare module import,
+        // which does not spend by itself, or a node lexically inside an exported
+        // non-GET handler. Module scope and non-exported helpers both execute on
+        // GET, so both COUNT.
         const onlySelf = chain.length === 0 && rootIsRoute
-        const spans = onlySelf ? getSpans(sf) : null
-        const live = spans ? hits.filter(h => spans.some(([a, b]) => h.pos >= a && h.end <= b)) : hits
+        const spans = onlySelf ? nonGetSpans(sf) : null
+        const live = spans
+          ? hits.filter(h => {
+              if (ts.isImportDeclaration(h) || ts.isExportDeclaration(h) || ts.isImportEqualsDeclaration(h)) return false
+              return !spans.some(([a, b]) => h.pos >= a && h.end <= b)
+            })
+          : hits
         if (live.length) {
           offenders.push([...chain, file].map(f => f.replace(SRC + '/', '')).join(' -> '))
           // Keep walking: an offender's subtree must not go unexamined.
@@ -285,16 +329,24 @@ describe('rendering /studio/chat does not spend', () => {
       }
     }
     collectAll(SRC)
-    const reaches = (file: string, depth = 0, guard = new Set<string>()): boolean => {
-      if (depth > 12 || guard.has(file)) return false
-      guard.add(file)
+    // The depth cap memoised a `false` produced BY the cap, so a file first seen
+    // at depth 12 stayed negative on every shorter path. No cap now; cycles are
+    // broken by the in-progress stack and only POSITIVES are cached, which is
+    // always sound.
+    const reachMemo = new Map<string, boolean>()
+    const reaches = (file: string, stack = new Set<string>()): boolean => {
+      if (reachMemo.get(file)) return true
+      if (stack.has(file) || !SRC_FILE.test(file)) return false
+      stack.add(file)
       const sf = parse(file)
-      if (spendNodes(sf).length) return true
-      for (const spec of specifiers(sf)) {
+      let r = spendNodes(sf).length > 0
+      if (!r) for (const spec of specifiers(sf)) {
         const next = resolveSpec(file, spec)
-        if (next && reaches(next, depth + 1, guard)) return true
+        if (next && reaches(next, stack)) { r = true; break }
       }
-      return false
+      stack.delete(file)
+      if (r) reachMemo.set(file, true)
+      return r
     }
     // Reached only by POST handlers, which may legitimately spend.
     const POST_ONLY = (f: string) => f.startsWith(`app${sep}api${sep}`)
@@ -307,6 +359,10 @@ describe('rendering /studio/chat does not spend', () => {
     expect(unreachedSpenders,
       'a file the walk never opened can REACH an LLM client — traversal broke, or a new off-graph spender appeared',
     ).toEqual(['lib/studio/agent.ts'])
+
+    expect(parseFailures,
+      `these reached files do not parse, so their import edges silently vanish:\n  ${parseFailures.join('\n  ')}`,
+    ).toEqual([])
 
     // Traversal canary. WARDEN found the previous pair of guards included one
     // that was VACUOUS and always had been: `worldmap/store/useMapStore.ts` is
