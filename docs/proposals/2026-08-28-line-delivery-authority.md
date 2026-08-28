@@ -470,50 +470,210 @@ Frozen and untouched: daily scheduler, Aug 26/27 reconciliation, queue cleanup,
 reconciler execution, thesis reconciliation, creator-studio migration, DB Phase
 2, claim governance.
 
-## L6a — Logical identity per notification type (REVISED, for review)
+## L6a — Identity, in four layers (REVISION 4, for review)
 
-Revision 2 proposed one universal identity — `stage + logical_date +
-content_hash`. **Withdrawn.** Content hash in the identity means rewording a
-message turns the same business event into a new notification, which is the
-opposite of what dedupe is for. Different notification classes have different
-business identities, so identity is defined per class and the retry key is
-derived from it.
+**Revision 3's `uuidv5(NS, logical_key)` is WITHDRAWN.** It collapsed transport
+identity into business identity. Two consequences make that unsafe:
 
-| Notification | Business event | `logical_key` | Notes |
+1. **LINE retains retry-key protection for only 24 hours.** A key derived from a
+   permanent business fact keeps being *presented* after its protection has
+   lapsed, so the system believes it is idempotent when it no longer is. The
+   belief is worse than the absence.
+2. **A legitimate re-offer becomes unsendable.** If a suppressed event is later
+   re-evaluated and still holds, a deterministic key would collide with the
+   earlier attempt and LINE would answer "already accepted" — the re-offer would
+   be silently swallowed. The design would defeat its own recovery path.
+
+### The four layers
+
+| Layer | What it is | Identity | Lifetime |
 |---|---|---|---|
-| price alert | ticker crossed a threshold today | `alert:{ticker}:{kind}:{businessDate}` | `kind` distinguishes a price move from a news-velocity trigger; the price VALUE is evidence, not identity, so a further move the same day is the same event |
-| discovered trade | a paper position was opened | `discovery:{positionId}` | the durable DB key. No date — a position is opened once, and a re-notification would only ever be a duplicate |
-| scenario signal | today's actionable trade signals | `signals:{businessDate}` | **deliberately excludes content.** This is the fix for the stage-retry defect: today three BullMQ attempts can send three messages with *different* LLM-generated content for one logical day |
-| stale-source warning | a source has been stale as of today | `stale:{source}:{businessDate}` | **per source**, not per source-set as today. If a second source degrades later the same day it is a new business event and must be notifiable |
-| pipeline watchdog | pipeline is in state S for logical run date D | `watchdog:{logicalDate}:{state}` | matches the existing marker `$LOGICAL-$STATE`, which is already the right identity |
-| catch-up failure | the daily pipeline has failed today | `catchup:{businessDate}` | one per day regardless of failure count; the count is evidence |
+| **Business observation** | a raw measurement — this ticker crossed this threshold at this price at this instant | observation row id | forever (history) |
+| **Logical notification event** | the thing worth telling the user, once | business key, per class (below) | until accepted, expired, or terminal |
+| **Delivery episode** | one attempt-set at delivering that event | **minted UUID = the `X-Line-Retry-Key`** | ≤ 24h (LINE's protection window) |
+| **HTTP attempt** | one request | attempt number within the episode | one round trip |
 
-**Retry key is derived, not minted:** `retry_key = uuidv5(NS_LINE, logical_key)`.
+**The retry key belongs to the episode.** That is the only scope over which LINE
+guarantees anything, and it is bounded by the same 24 hours. Episode is not a
+synonym for event: one event may need a second episode (a new key) if the first
+lapses, and that is a feature, not a leak.
 
-This is the piece that makes the design survive BullMQ. Stage-level retry already
-gives three attempts (L0.c), and a re-attempt starts a fresh process with no
-memory of the previous one. A *minted* key would have to be recovered from the
-ledger before every attempt, and a ledger read that fails would silently mint a
-new one — producing exactly the duplicate this exists to prevent. A derived key
-is recomputable from the business event alone, so the same logical event always
-carries the same key even across process death.
+### Episode rules
 
-**Why deterministic derivation is safe here.** Identity is date-scoped for every
-class that can recur, so an intentional re-offer tomorrow produces a *different*
-logical key and therefore a different retry key. Within a business date, one
-accepted delivery per identity is exactly the dedupe rule we want, enforced by
-the partial unique index in L6.
+- **Mint** a UUID when the episode is created.
+- **Persist durably before the first LINE request** — the key, the exact
+  recipient, and the exact payload bytes. The payload is frozen at creation, so
+  a BullMQ re-attempt that regenerates content cannot send different words under
+  the same key.
+- **Every retry** — BullMQ stage re-attempt, process restart, network retry —
+  **reloads and reuses that same key, recipient and payload.** A retry never
+  re-derives any of the three.
+- **Outcomes:**
 
-**Two things to confirm before implementation:**
+| Condition | Result |
+|---|---|
+| 2xx | `accepted` |
+| 409 for the same retry key | `accepted` — previously accepted, not a new delivery |
+| timeout / connection reset / DNS | `retryable_failure`, same episode and key |
+| 5xx | `retryable_failure`, same episode and key |
+| **429** | `retryable_failure`, classified explicitly — quota, not fault. Honour `Retry-After`; it must not count toward the failure budget the way a 5xx does |
+| other 4xx (400/401/403/404) | `terminal_failure` — no automatic retry |
+| `key_expires_at` passed while not accepted | `abandoned` — see below |
 
-1. **LINE's retry-key honour window is finite** (documented as 24h at time of
-   writing). Beyond it a reused key is not deduplicated. Every identity above is
-   date-scoped, so this is consistent — but it must be verified against current
-   LINE documentation rather than assumed, and it means the retry key cannot be
-   relied on for de-duplication across days.
-2. **`businessDate` must be the business timezone date**, `America/Los_Angeles`
-   per the timezone decision, not the machine date. Two processes in different
-   timezones must derive the same key for the same event.
+- **Suppression performs zero LINE network activity.** No episode is created, so
+  no key is minted and nothing is attempted. Suppression is recorded on the
+  *event*, and it does **not** advance accepted-delivery dedupe.
+- **Re-offer** of a suppressed event is permitted only after the underlying
+  business condition is re-evaluated and **still holds**. That creates a **new
+  delivery episode** with a **new key**. No replay of a stale crossing.
+
+### The 24-hour rule, stated as a rule
+
+An episode whose `key_expires_at` has passed without acceptance **must not be
+retried under that key** — the protection is gone and a retry could duplicate a
+message LINE actually accepted. The episode becomes `abandoned`, and the event
+returns to eligible *only* if re-evaluation says the condition still holds, which
+mints a fresh episode. This is precisely the case the deterministic design could
+not represent.
+
+---
+
+## L6b — Per-class identity
+
+For each class: what was observed, what the notification *is*, when an episode
+may be opened, what suppression does, and when the event dies.
+
+### 1. `cli-alerts` — threshold alert
+
+| | |
+|---|---|
+| Observation identity | `(ticker, evaluated_at, price, reasons[])` — one row per evaluation that crossed |
+| Logical event identity | `alert:{ticker}:{triggerKind}:{businessDate}` — `triggerKind` separates a price move from a news-velocity trigger. **Price value is evidence, not identity**, so a further move the same day is the same event |
+| Freshness / episode boundary | the condition must still hold at episode creation. An episode is one delivery attempt-set; a later cycle may open a new one only on re-observation |
+| Suppression | event → `suppressed`; no episode; dedupe not advanced; stays eligible |
+| Episode creation | condition observed now **and** no accepted episode for this event **and** no live episode |
+| Terminal | accepted · business date rolls over (expired unsent) · terminal_failure |
+
+*This is the incident class. Today `saveState()` advances dedupe whatever
+happened, consuming the alert.*
+
+### 2. `cli-discover` — discovered trade
+
+| | |
+|---|---|
+| Observation identity | the paper position row: `(positionId, ticker, shares, price, opened_at)` |
+| Logical event identity | `discovery:{positionId}` — a durable DB key. **No date**: a position opens once |
+| Freshness / episode boundary | same business day. A trade alert delivered days late is noise, so the event expires rather than being re-offered indefinitely |
+| Suppression | `suppressed`; remains eligible within the window |
+| Episode creation | position exists, is unnotified, and the window is open |
+| Terminal | accepted · window expiry · terminal_failure |
+
+*Today stage retry **destroys** this notification: the retry re-reads open
+tickers, skips the already-open position, and the alert can never be recovered.
+An event keyed to `positionId` is re-found on retry instead.*
+
+### 3. `cli-run` — scenario signal
+
+| | |
+|---|---|
+| Observation identity | the generated action set for a date, plus its content hash **as evidence** |
+| Logical event identity | `signals:{businessDate}` — **deliberately excludes content** |
+| Freshness / episode boundary | the business date. Payload frozen at episode creation |
+| Suppression | `suppressed`; eligible until the date rolls |
+| Episode creation | actionable signals exist and no accepted episode for that date |
+| Terminal | accepted · date rollover · terminal_failure |
+
+*Today three BullMQ attempts can send three messages with **different**
+LLM-generated content for one logical day. Content-independent identity plus a
+frozen payload fixes both halves.*
+
+### 4. `world-intel` — stale source
+
+| | |
+|---|---|
+| Observation identity | `(source, measured_at, last_success_at)` |
+| Logical event identity | `stale:{source}:{businessDate}` — **per source**, not per source-set |
+| Freshness / episode boundary | the business date; still stale tomorrow is a new event |
+| Suppression | `suppressed`; eligible while still stale that day |
+| Episode creation | source stale now and no accepted episode today |
+| Terminal | accepted · **source recovers → condition moot, event expires** · date rollover |
+
+*Per-source matters: today one marker covers the whole set, so a second source
+degrading later the same day is unnotifiable. Note this implementation already
+orders mute before its marker correctly — it is the failure paths that advance
+it wrongly.*
+
+### 5. `watchdog` — pipeline state
+
+| | |
+|---|---|
+| Observation identity | `(logicalDate, state, evaluated_at)` |
+| Logical event identity | `watchdog:{logicalDate}:{state}` — matches today's `$LOGICAL-$STATE` marker, which is already the right identity |
+| Freshness / episode boundary | while that state persists |
+| Suppression | `suppressed`; **stays eligible while the state persists** |
+| Episode creation | state observed and no accepted episode for `(date, state)` |
+| Terminal | accepted · **state changes → alert moot** · terminal_failure |
+
+*Today `touch "$MARKER"` runs before both the isolation gate and the mute check,
+so a muted watchdog burns its marker permanently. Also: per the standing
+decision this path's ledger write is **best-effort** — losing the database must
+not disable the watchdog. That failure mode is specified in L6c.*
+
+### 6. `daily-catchup` — pipeline failure
+
+| | |
+|---|---|
+| Observation identity | `(businessDate, failure_count, observed_at)` |
+| Logical event identity | `catchup:{businessDate}` — one per day; **the count is evidence, not identity** |
+| Freshness / episode boundary | the business date |
+| Suppression | `suppressed`; eligible while failures persist |
+| Episode creation | failures > 0 and no accepted episode today |
+| Terminal | accepted · **a successful run occurs → condition moot** · date rollover |
+
+*Same marker-before-mute defect as the watchdog.*
+
+> **`businessDate` is the `America/Los_Angeles` date**, never the machine date —
+> two processes in different timezones must agree on the identity.
+
+---
+
+## L6c — Minimum durable ledger
+
+Two tables, because the two lifetimes differ. Fields listed are the minimum that
+make the survival cases below representable; this is a model, not a migration.
+
+**`notification_events`** — the logical layer
+`id` · `channel` · `class` · `logical_key` (unique per channel) · `business_date`
+· `state` (`eligible|suppressed|accepted|expired|terminal_failed`) ·
+`first_observed_at` · `last_observed_at` · `condition_snapshot` (evidence) ·
+`suppressed_reason` · `suppressed_at`
+
+**`delivery_episodes`** — the transport layer
+`id` · `event_id` → event · **`retry_key`** (UUID, unique, minted at creation) ·
+**`recipient`** · **`payload`** (exact bytes) · `payload_hash` ·
+`state` (`pending|accepted|retryable_failed|terminal_failed|abandoned`) ·
+`attempts` · `created_at` · **`key_expires_at`** (= `created_at` + 24h) ·
+`first_attempt_at` · `last_attempt_at` · `accepted_at` · `last_status` ·
+`last_error` · `retry_after_at` (for 429)
+
+Invariants worth enforcing in the schema rather than in code: at most one
+`accepted` episode per event; at most one live (`pending`/`retryable_failed`)
+episode per event; an `accepted` episode must carry `accepted_at`; a suppressed
+event must have **no** episode at all.
+
+### How each survival case is met
+
+| Case | Durable state at the moment of failure | Recovery |
+|---|---|---|
+| **crash before HTTP** | episode `pending`, `attempts = 0` | retry same key. Nothing was sent |
+| **timeout after LINE accepted** | episode `pending`, `attempts ≥ 1`; local truth unknown | retry **same key** → 409 → `accepted`. Works **only** because the key was persisted before the request |
+| **BullMQ stage retry** | event found by `logical_key`; a live episode already exists | reuse its key, recipient and payload — never mint, never regenerate the payload |
+| **process restart** | episodes left `pending`/`retryable_failed` | recovery sweep resumes them under the same key, bounded attempts, then `terminal_failed` |
+| **mute → unmute** | events `suppressed`, **no episodes exist** | nothing to replay by construction. Re-offer only after re-evaluation says the condition still holds, which mints a new episode |
+| **retry past 24h** | episode past `key_expires_at`, not accepted | **do not reuse the key.** Mark `abandoned`; re-offer only on re-evaluation, with a new episode and new key |
+
+The last row is the one the withdrawn design could not express, and the reason
+the key belongs to the episode.
 
 ---
 
