@@ -1,5 +1,20 @@
 # LINE delivery authority — architecture for review
 
+> **FROZEN 2026-08-28 — REVISION 4 REJECTED FOR IMPLEMENTATION.**
+>
+> The LINE delivery workstream is closed. Warden's architecture attack showed
+> that making LINE delivery trustworthy needs a stateful delivery subsystem
+> whose complexity is not justified by the channel's production value.
+>
+> **LINE is not part of the production correctness boundary.** The system must
+> be fully correct with LINE unavailable, credentials absent, LINE code removed,
+> and no outbound channel configured.
+>
+> This document is kept as **design evidence, not a plan**. Findings F1–F5 and
+> U1–U6 are **NOT REMEDIATED — channel retired before implementation**; see
+> `2026-08-28-line-retirement-audit.md`. Do not implement from this file. The
+> DDL in L6 is superseded by L6c and neither is to be built.
+
 **Status: PROPOSAL. No implementation.** Nothing here has been built. The alerts
 agent stays unloaded and LINE stays muted throughout.
 
@@ -338,7 +353,11 @@ ignores a variant fails to compile.
 
 ## L6 — Persistence
 
+**SUPERSEDED by L6c, and not to be built.** Retained only to show what the
+content-hash identity looked like before revision 4 withdrew it.
+
 ```sql
+-- WITHDRAWN — content-derived logical_key; do not implement
 CREATE TABLE notification_deliveries (
   id             BIGSERIAL PRIMARY KEY,
   retry_key      UUID        NOT NULL UNIQUE,
