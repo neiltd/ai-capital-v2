@@ -1,15 +1,24 @@
-// Loader for /studio/chat. This is a LIVE feature — visual redesign only,
-// same behavior as the legacy page: pickDailyTopic() scores world-intel
-// events (throws when world-intel.json is missing), then one blocking
-// anthropic.messages.create() generates the opening line.
+// Loader for /studio/chat.
 //
-// Known perf note (not fixed here — see studio-v2/README.md #6): this
-// blocks first paint on a full LLM round-trip. Rendering the topic card
-// immediately and streaming the opening into the thread would be the
-// single biggest perceived-quality win on this screen — kept as a follow-up
-// rather than changing behavior in a visual-redesign pass.
+// THIS LOADER MUST NOT CALL ANTHROPIC. It used to: `page.tsx` sets
+// `force-dynamic`, so every authenticated GET of this page made one blocking,
+// billable `anthropic.messages.create()` with no rate limit — the only
+// `messages.create` site in the app without one, and the only one on a GET.
+// Every other caller (api/studio/chat, api/studio/visuals/illustration,
+// api/thesis-proposals) is a rate-limited POST.
+//
+// The contract now:
+//     GET / render          -> no Anthropic request
+//     explicit user action  -> Anthropic request
+//
+// Picking the topic stays here: `pickDailyTopic()` reads a local JSON export
+// and costs nothing. The opening line moves behind a deliberate click, which
+// routes through the EXISTING rate-limited POST /api/studio/chat rather than a
+// new path — so the spend inherits a limiter that already exists.
+//
+// (The old perf note about blocking first paint on an LLM round-trip resolves
+// itself as a side effect: the page now paints the topic card immediately.)
 
-import { anthropic, buildSystemPrompt } from '@/lib/studio/agent'
 import { pickDailyTopic } from '@/lib/studio/topic-engine'
 import type { ScoredStory } from '@/lib/studio/topic-engine'
 
@@ -25,14 +34,7 @@ export async function loadStudioChat(): Promise<StudioChatVM> {
   } catch {
     return { topic: null, opening: '' }
   }
-
-  const res = await anthropic.messages.create({
-    model: 'claude-sonnet-5',
-    max_tokens: 512,
-    system: [{ type: 'text', text: buildSystemPrompt(topic), cache_control: { type: 'ephemeral' } }],
-    messages: [{ role: 'user', content: 'morning' }],
-  })
-  const opening = res.content[0].type === 'text' ? res.content[0].text : "Morning! Let's talk about today's story."
-
-  return { topic, opening }
+  // No opening is generated here. An empty string tells ChatThread to render
+  // the start affordance instead of an assistant turn.
+  return { topic, opening: '' }
 }

@@ -26,7 +26,12 @@ interface Visual {
 }
 
 export function ChatThread({ topic, initialMessage }: { topic: ScoredStory; initialMessage: string }) {
-  const [messages, setMessages] = useState<ChatMessage[]>([{ role: 'assistant', content: initialMessage }])
+  // An empty initialMessage means the server did NOT generate an opening —
+  // deliberately, so that loading this page costs nothing. The thread starts
+  // empty and the user opens it explicitly. See data.ts.
+  const [messages, setMessages] = useState<ChatMessage[]>(
+    initialMessage ? [{ role: 'assistant', content: initialMessage }] : [],
+  )
   const [visuals, setVisuals] = useState<Visual[]>([])
   const [input, setInput] = useState('')
   const [streaming, setStreaming] = useState(false)
@@ -64,6 +69,34 @@ export function ChatThread({ topic, initialMessage }: { topic: ScoredStory; init
         // malformed ```visual fence — skip, don't break the rest of the reply
       }
     }
+  }
+
+  /**
+   * The explicit user action that is allowed to spend.
+   *
+   * Routes through the same rate-limited POST /api/studio/chat as every other
+   * turn, so there is no second, unlimited path to the model.
+   */
+  async function startConversation() {
+    if (streaming || messages.length > 0) return
+    setStreaming(true)
+    const opening: ChatMessage[] = [{ role: 'user', content: 'morning' }]
+    const res = await fetch('/api/studio/chat', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ messages: opening, topic }),
+    })
+    const reader = res.body!.getReader()
+    const decoder = new TextDecoder()
+    let assistantText = ''
+    setMessages([{ role: 'assistant', content: '' }])
+    while (true) {
+      const { done, value } = await reader.read()
+      if (done) break
+      assistantText += decoder.decode(value)
+      setMessages([{ role: 'assistant', content: assistantText }])
+    }
+    setStreaming(false)
   }
 
   async function sendMessage() {
@@ -135,6 +168,24 @@ export function ChatThread({ topic, initialMessage }: { topic: ScoredStory; init
 
       {/* -------------------------------- messages -------------------------------- */}
       <div className="min-h-0 flex-1 space-y-4 overflow-y-auto px-4 py-4">
+        {/* The deliberate action. Loading this page generates nothing; the
+            opening line costs a model call, so a person asks for it. */}
+        {messages.length === 0 && (
+          <div className="flex flex-col items-start gap-2 py-6">
+            <p className="text-[13px] leading-[20px] text-ink-2">
+              Ready when you are — the opening line is generated on request, so simply
+              opening this page doesn&apos;t call the model.
+            </p>
+            <button
+              type="button"
+              onClick={startConversation}
+              disabled={streaming}
+              className="rounded-chip border border-hairline bg-surface-2 px-3 py-1.5 text-[13px] font-medium text-ink hover:bg-surface-3 disabled:opacity-50"
+            >
+              {streaming ? 'Starting…' : 'Start the conversation'}
+            </button>
+          </div>
+        )}
         {messages.map((msg, i) => (
           <div key={i}>
             {msg.role === 'user' ? (
