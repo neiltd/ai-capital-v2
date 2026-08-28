@@ -82,38 +82,63 @@ describe('rendering /studio/chat does not spend', () => {
     const { join, dirname, resolve, sep } = await import('node:path')
 
     const SRC = join(process.cwd(), 'src')
-    // A bare quoted 'openai' is NOT enough: topic-engine.ts lists it as a
-    // scoring keyword. Require import context for the package names.
     const SPEND = /(?:from|require\s*\(|import\s*\()\s*['"`](?:@anthropic-ai\/sdk|openai)['"`]|new\s+(?:Anthropic|OpenAI)\s*\(|api\.(?:anthropic|openai)\.com/
 
-    // WARDEN 2026-08-28 — this walk had EIGHT false negatives, two of them live
-    // in the tree. Every widening below is one of them. The shape of the bug was
-    // always the same: the walk knew a module-reference form existed (SPEND
-    // matches `require(` and `import(`) and still refused to TRAVERSE it.
-    //   - `global-error` was not a root, and a leading `\/` excluded scan-root files
-    //   - `.jsx`/`.js` pages were invisible
-    //   - only `import ... from` was traversed: not `import 'x'`, not
-    //     `export ... from`, not `export * from`, not `await import()`, not
-    //     `dynamic(() => import())`, not `require()`
-    //   - resolveSpec knew nothing of .js/.jsx/.mjs or index.js
-    //   - the `import type` strip ran to END OF LINE, deleting a real spend
-    //     placed on the same line
-    // Live consequences: `(legacy)/world/map/page.tsx` reaches its whole client
-    // subtree only through `dynamic(() => import(...))`, so 46 worldmap files
-    // were never opened; two `export ... from` edges stopped the walk dead.
-    const RENDER_ROOT = /(?:^|\/)(page|layout|template|loading|error|global-error|not-found|default)\.(?:tsx?|jsx?)$/
-    const SRC_FILE    = /\.(?:tsx?|jsx?|mjs)$/
+    // WARDEN round 3 — the TYPE STRIP was unanchored and ate runtime code.
+    // `[\s\S]*?` ran from any `export type` to the next text matching `from` +
+    // a quote, and a type ALIAS (`export type AssetClass = ...`, no from clause)
+    // opened a gap closed only by some later import — or by ORDINARY PROSE. In
+    // src/types.ts a single-line JSDoc containing "from `score`" terminated it:
+    // 44% of that file was invisible to both SPEND and the specifier extractor.
+    // 124 of 291 files had a nonzero deletion.
+    //
+    // The dangerous shape it hid is exactly the one this test exists for: a
+    // spend routed through the shared client, where NO file on the path holds a
+    // SPEND literal, so traversal is the only detector — and the strip deleted
+    // the traversal edge.
+    //
+    // Fixed two ways: comments are removed properly (not by line prefix), and a
+    // type import must now MATCH ITS OWN STATEMENT rather than being a gap
+    // between two anchors. The self-check below asserts the strip only ever
+    // removes type-import specifiers.
+    const TYPE_IMPORT = /\b(?:import|export)\s+type\s+(?:\{[^}]*\}|\*\s+as\s+[\w$]+|[\w$]+(?:\s*,\s*\{[^}]*\})?)\s+from\s*['"`][^'"`]+['"`]/g
+    const stripComments = (t: string) => t.replace(/\/\*[\s\S]*?\*\//g, '').replace(/(^|[^:])\/\/[^\n]*/g, '$1')
+    const runtimeCode   = (t: string) => stripComments(t).replace(TYPE_IMPORT, '')
+
+    const RENDER_ROOT = /(?:^|\/)(page|layout|template|loading|error|global-error|not-found|default)\.(?:tsx?|jsx?|mts|cts)$/
+    const SRC_FILE    = /\.(?:tsx?|jsx?|mjs|mts|cts)$/
+    const API_DIR     = join('src', 'app', 'api')
+
+    const specifiers = (code: string): string[] => {
+      const out: string[] = []
+      for (const m of code.matchAll(/(?:^|[\s;}])(?:import|export)\b[^;'"`]*?\bfrom\s*['"`]([^'"`]+)['"`]/g)) out.push(m[1])
+      for (const m of code.matchAll(/(?:^|[\s;}])import\s*['"`]([^'"`]+)['"`]/g)) out.push(m[1])
+      // `\(\s*` alone misses `import(/* webpackChunkName: "x" */ './impl')`.
+      for (const m of code.matchAll(/\b(?:import|require)\s*\(\s*(?:\/\*[\s\S]*?\*\/\s*)?['"`]([^'"`]+)['"`]\s*\)/g)) out.push(m[1])
+      return out
+    }
 
     const roots: string[] = []
     const collect = (d: string) => {
       for (const e of readdirSync(d)) {
         const p = join(d, e)
         if (statSync(p).isDirectory()) { collect(p); continue }
-        // API routes are POST-gated and rate-limited; they may spend.
-        if (RENDER_ROOT.test(p) && !p.includes(join('src', 'app', 'api'))) roots.push(p)
+        // A page under app/api is still served as a page — it was previously
+        // excluded from BOTH roots and coverage, i.e. invisible twice over.
+        if (RENDER_ROOT.test(p)) { roots.push(p); continue }
+        // WARDEN: "POST-gated and rate-limited" is not true of every API route.
+        // A route that exports GET renders on GET, so it is a render root.
+        if (/(?:^|\/)route\.(?:tsx?|jsx?)$/.test(p) &&
+            /\bexport\s+(?:async\s+)?(?:function\s+GET\b|const\s+GET\b)/.test(readFileSync(p, 'utf-8'))) roots.push(p)
       }
     }
     collect(join(SRC, 'app'))
+    // middleware runs on EVERY request matched by its matcher — the broadest GET
+    // surface in the app, including 401s. It was in the exclusion list.
+    for (const mw of ['middleware.ts', 'middleware.tsx']) {
+      const p = join(SRC, mw)
+      if (existsSync(p)) roots.push(p)
+    }
     expect(roots.length, 'found no render roots — this test would pass vacuously').toBeGreaterThan(20)
 
     const resolveSpec = (from: string, spec: string): string | null => {
@@ -121,50 +146,40 @@ describe('rendering /studio/chat does not spend', () => {
                  : spec.startsWith('.')  ? resolve(dirname(from), spec)
                  : null
       if (!base) return null
-      // A TS source may be imported by its EMITTED specifier ('./helper.js'),
-      // so try swapping a .js/.jsx suffix for its source form as well.
+      // next.config.mjs sets resolve.extensionAlias = { '.js': ['.ts','.tsx','.js'] },
+      // so webpack prefers the TS source. Trying `base` first made the walk read
+      // a different file than the build compiles.
       const swapped = base.replace(/\.(js|jsx|mjs)$/, '')
+      const aliased = swapped !== base ? [`${swapped}.ts`, `${swapped}.tsx`] : []
       for (const c of [
-        base, `${base}.ts`, `${base}.tsx`, `${base}.js`, `${base}.jsx`, `${base}.mjs`,
-        `${swapped}.ts`, `${swapped}.tsx`,
-        join(base, 'index.ts'), join(base, 'index.tsx'),
-        join(base, 'index.js'), join(base, 'index.jsx'),
+        ...aliased, base,
+        `${base}.ts`, `${base}.tsx`, `${base}.js`, `${base}.jsx`, `${base}.mjs`, `${base}.mts`, `${base}.cts`,
+        join(base, 'index.ts'), join(base, 'index.tsx'), join(base, 'index.js'), join(base, 'index.jsx'),
       ]) {
         if (existsSync(c) && statSync(c).isFile()) return c
       }
       return null
     }
 
-    // Every module-reference form that causes the target to be EVALUATED.
-    // Type-only statements are stripped first, terminating at the specifier's
-    // closing quote rather than at end of line.
-    const specifiers = (code: string): string[] => {
-      const runtime = code
-        .replace(/\bimport\s+type\s+[\s\S]*?from\s*['"`][^'"`]*['"`]/g, '')
-        .replace(/\bexport\s+type\s+[\s\S]*?from\s*['"`][^'"`]*['"`]/g, '')
-      const out: string[] = []
-      // import ... from 'x' / export ... from 'x' / export * as N from 'x'
-      for (const m of runtime.matchAll(/(?:^|[\s;}])(?:import|export)\b[^;'"`]*?\bfrom\s*['"`]([^'"`]+)['"`]/g)) out.push(m[1])
-      // side-effect import: import 'x'
-      for (const m of runtime.matchAll(/(?:^|[\s;}])import\s*['"`]([^'"`]+)['"`]/g)) out.push(m[1])
-      // await import('x'), dynamic(() => import('x')), require('x')
-      for (const m of runtime.matchAll(/\b(?:import|require)\s*\(\s*['"`]([^'"`]+)['"`]\s*\)/g)) out.push(m[1])
-      return out
-    }
-
     const seen = new Set<string>()
     const offenders: string[] = []
+    const stripViolations: string[] = []
     const visit = (file: string, chain: string[]) => {
       if (seen.has(file)) return
       seen.add(file)
       const src = readFileSync(file, 'utf-8')
-      const code = src.split('\n')
-        .filter(l => !l.trim().startsWith('//') && !l.trim().startsWith('*'))
-        .join('\n')
-      const runtimeOnly = code
-        .replace(/\bimport\s+type\s+[\s\S]*?from\s*['"`][^'"`]*['"`]/g, '')
-        .replace(/\bexport\s+type\s+[\s\S]*?from\s*['"`][^'"`]*['"`]/g, '')
-      if (SPEND.test(runtimeOnly)) {
+      const bare = stripComments(src)
+      const code = runtimeCode(src)
+
+      // SELF-CHECK: the strip may remove ONLY type-import specifiers. This is
+      // the assertion that would have caught the unanchored-strip defect.
+      const removed = specifiers(bare).filter(x => !specifiers(code).includes(x))
+      const declaredType = (bare.match(TYPE_IMPORT) ?? []).join('\n')
+      for (const r of removed) {
+        if (!declaredType.includes(r)) stripViolations.push(`${file.replace(SRC + '/', '')}: lost '${r}'`)
+      }
+
+      if (SPEND.test(code)) {
         offenders.push([...chain, file].map(f => f.replace(SRC + '/', '')).join(' -> '))
         return
       }
@@ -175,17 +190,10 @@ describe('rendering /studio/chat does not spend', () => {
     }
     for (const r of roots) visit(r, [])
 
-    // ── COVERAGE — a walk that never opened a file proves nothing about it ──
-    // WARDEN 2026-08-28: the previous version asserted only the ABSENCE of
-    // offenders among the files it happened to reach. It reached 202 of 273;
-    // the 46 unreached worldmap files made this check decorative for the entire
-    // world-map subtree while it reported green.
-    //
-    // The invariant that actually matters: a file the walk never opened is only
-    // safe if it CANNOT spend. agent.ts is the one legitimate exception — it
-    // defines the shared client and is value-imported only by rate-limited POST
-    // routes. If a SECOND file ever appears here, either traversal broke or a
-    // new spender was added off-graph. Both must be looked at by a human.
+    expect(stripViolations,
+      `the type-import strip removed a RUNTIME specifier — it is eating real code:\n  ${stripViolations.join('\n  ')}`,
+    ).toEqual([])
+
     const allFiles: string[] = []
     const collectAll = (d: string) => {
       for (const e of readdirSync(d)) {
@@ -195,9 +203,10 @@ describe('rendering /studio/chat does not spend', () => {
       }
     }
     collectAll(SRC)
+    // app/api helpers reached only by POST may legitimately spend; GET routes are
+    // now ROOTS, so the GET surface is covered by traversal rather than excluded.
     const STRUCTURAL = (f: string) =>
-      f.startsWith(`app${sep}api${sep}`) || f.startsWith(`generated${sep}`) ||
-      f.endsWith('.d.ts') || f === 'middleware.ts'
+      f.startsWith(`app${sep}api${sep}`) || f.startsWith(`generated${sep}`) || f.endsWith('.d.ts')
     const unreachedSpenders = allFiles
       .filter(f => !seen.has(f))
       .map(f => f.slice(SRC.length + 1))
@@ -208,9 +217,6 @@ describe('rendering /studio/chat does not spend', () => {
       'a file the reachability walk never opened can spend — traversal broke, or a new off-graph spender was added',
     ).toEqual(['lib/studio/agent.ts'])
 
-    // Direct regression guards for the two traversal edges that were LIVE holes.
-    // These are named explicitly because a count-based floor would not say WHICH
-    // edge broke, and these two are the ones that actually did.
     for (const [edge, mustReach] of [
       ['dynamic(() => import())', `app${sep}(legacy)${sep}world${sep}map${sep}WorldMapClient.tsx`],
       ['export ... from (barrel)', `worldmap${sep}store${sep}useMapStore.ts`],
@@ -219,6 +225,20 @@ describe('rendering /studio/chat does not spend', () => {
         `${mustReach} was never reached — the ${edge} traversal edge regressed`).toBe(true)
     }
 
-    expect(offenders, `render roots reach an LLM client:\n  ${offenders.join('\n  ')}`).toEqual([])
+    // A GET-exporting route.ts is a root, but SPEND is FILE-granular and a route
+    // may hold its spend inside POST. Rather than pretend a regex can split
+    // handler bodies, each such file is reviewed once and named here. Only the
+    // root file itself is exempt — anything it REACHES still fires.
+    //   app/api/thesis-proposals/route.ts — GET returns 405 at :10 before any
+    //   client exists; the `new Anthropic` at :44 is inside POST, which is
+    //   rate-limited at :14. Reviewed 2026-08-28.
+    const GET_ROUTE_REVIEWED = [`app${sep}api${sep}thesis-proposals${sep}route.ts`]
+    const realOffenders = offenders.filter(o => !GET_ROUTE_REVIEWED.includes(o))
+
+    expect(realOffenders, `render roots reach an LLM client:\n  ${realOffenders.join('\n  ')}`).toEqual([])
+    // The exemption must stay non-vacuous: if the file stops spending, drop it.
+    for (const r of GET_ROUTE_REVIEWED) {
+      expect(offenders, `${r} no longer spends — remove it from GET_ROUTE_REVIEWED`).toContain(r)
+    }
   })
 })
