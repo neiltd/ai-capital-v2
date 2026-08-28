@@ -74,6 +74,13 @@ describe('rendering /studio/chat does not spend', () => {
       `these reached files do not parse, so their edges vanish silently:\n  ${a.parseFailures.join('\n  ')}`,
     ).toEqual([])
     expect(a.roots.length, 'found no roots — this would pass vacuously').toBeGreaterThan(20)
+
+    // A project-owned edge must never vanish because resolution failed. Dropped
+    // silently, an unresolvable specifier into apps/* lost the traversal edge AND
+    // fell outside the backstop, which reads as green.
+    expect(a.unresolvedProjectEdges,
+      `these look project-owned but did not resolve:\n  ${a.unresolvedProjectEdges.join('\n  ')}`,
+    ).toEqual([])
     expect(a.offenders, `loading these acquires spending authority:\n  ${a.offenders.join('\n  ')}`).toEqual([])
 
     // Default-deny backstop, now covering workspace package sources too. This is
@@ -191,6 +198,66 @@ describe('rendering /studio/chat does not spend', () => {
         const a = analyze(join(dir, 'apps/w/src'), join(dir, 'apps/w'), dir)
         expect(a.offenders.length, 'the workspace-package edge was not followed').toBeGreaterThan(0)
       } finally { rmSync(dir, { recursive: true, force: true }) }
+    })
+
+    // ── The three seams Warden broke in round 8 ────────────────────────────
+    // Kept as semantic controls, not syntax variants: a body served under a
+    // non-user method; a project-owned edge that vanished on resolution
+    // failure; executable project-root code outside both traversal and backstop.
+    describe('repaired seams', () => {
+      const INL = `const { default: A } = await import('@anthropic-ai/sdk'); return Response.json(!!new A({apiKey:'x'}))`
+
+      // A body is permitted only if EVERY method it is exported under is a user
+      // action. Keying on the matching name let aliasing restore the incident.
+      it.each([
+        ['export { h as POST, h as GET }', `const h = async () => { ${INL} }\nexport { h as POST, h as GET }`],
+        ['export const GET = POST', `export async function POST(){ ${INL} }\nexport const GET = POST`],
+        ['export { POST as GET }', `export async function POST(){ ${INL} }\nexport { POST as GET }`],
+        ['export { h as PUT, h as HEAD }', `async function h(){ ${INL} }\nexport { h as PUT, h as HEAD }`],
+      ])('a body also served as a non-user method is forbidden: %s', (_n, src) => {
+        const dir = build({ 'src/app/api/x/route.ts': src })
+        try { expect(analyze(join(dir, 'src'), dir, dir).offenders.length).toBeGreaterThan(0) }
+        finally { rmSync(dir, { recursive: true, force: true }) }
+      })
+
+      it.each([
+        ['POST + PUT', `const h = async () => { ${INL} }\nexport { h as POST, h as PUT }`],
+        ['POST alone', `export async function POST(){ ${INL} }`],
+      ])('a body served only under user methods stays allowed: %s', (_n, src) => {
+        const dir = build({ 'src/app/api/x/route.ts': src })
+        try { expect(analyze(join(dir, 'src'), dir, dir).offenders).toEqual([]) }
+        finally { rmSync(dir, { recursive: true, force: true }) }
+      })
+
+      // dashboard -> apps/foo (name known, exports map blocks the subpath) -> SDK.
+      // Traversal loses the edge and the backstop excludes apps/*, so without
+      // this the result is silent green.
+      it('a project-owned edge cannot vanish because resolution failed', () => {
+        const dir = build({
+          'pnpm-workspace.yaml': `packages:\n  - 'packages/*'\n  - 'apps/*'\n`,
+          'apps/foo/package.json': JSON.stringify({ name: '@app/foo', exports: { '.': { import: './src/index.ts' } } }),
+          'apps/foo/src/secret.ts': SPEND,
+          'apps/w/package.json': JSON.stringify({ name: 'w', dependencies: {} }),
+          'apps/w/src/app/p/page.tsx': `${imp('{ use }', '@app/foo/secret')}\nexport default function P(){ return use() ? null : null }`,
+        })
+        try {
+          expect(analyze(join(dir, 'apps/w/src'), join(dir, 'apps/w'), dir).unresolvedProjectEdges.length,
+            'the failed edge disappeared instead of failing the guard').toBeGreaterThan(0)
+        } finally { rmSync(dir, { recursive: true, force: true }) }
+      })
+
+      // Not an enumeration of Next filenames — the point is that an UNKNOWN
+      // future convention at the project root degrades to a backstop hit rather
+      // than to silence.
+      it.each(['mdx-components.tsx', 'instrumentation-client.ts', 'sentry.server.config.ts', 'some-future-convention.ts'])(
+        'executable project-root code is backstopped: %s', file => {
+          const dir = build({ [file]: SPEND, 'src/app/p/page.tsx': `export default function P(){ return null }` })
+          try {
+            const a = analyze(join(dir, 'src'), dir, dir)
+            expect(a.unreachedSpenders.length + a.offenders.length,
+              'project-root code fell outside both traversal and backstop').toBeGreaterThan(0)
+          } finally { rmSync(dir, { recursive: true, force: true }) }
+        })
     })
 
     // `next build` evaluates config before any request exists.

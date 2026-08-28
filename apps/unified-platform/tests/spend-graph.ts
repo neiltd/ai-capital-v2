@@ -31,6 +31,7 @@
 import ts from 'typescript'
 import { readFileSync, readdirSync, statSync, existsSync, realpathSync } from 'node:fs'
 import { join, resolve, sep } from 'node:path'
+import { builtinModules } from 'node:module'
 
 const SDK = /^(?:@anthropic-ai\/(?:sdk|bedrock-sdk|vertex-sdk)|openai|@ai-sdk\/(?:anthropic|openai))(?:\/|$)/
 const HOST = /api\.(?:anthropic|openai)\.com/
@@ -52,6 +53,8 @@ const SRC_FILE = /\.(?:[mc]?[jt]sx?)$/
  * send.
  */
 const USER_METHOD = /^(?:POST|PUT|PATCH|DELETE)$/
+/** Every method Next dispatches — used to discover what a body is served as. */
+const ANY_METHOD = /^(?:GET|HEAD|OPTIONS|POST|PUT|PATCH|DELETE)$/
 
 const parse = (file: string) =>
   ts.createSourceFile(file, readFileSync(file, 'utf-8'), ts.ScriptTarget.Latest, true,
@@ -128,10 +131,8 @@ export function spendNodes(sf: ts.SourceFile): ts.Node[] {
  * that file is an offence — uncertainty fails closed.
  */
 function handlerBodies(sf: ts.SourceFile): Array<[number, number]> {
-  const spans: Array<[number, number]> = []
+  // Local name -> the function node it denotes. Needed to resolve aliases.
   const byName = new Map<string, ts.Node>()
-  const take = (fn: any) => { if (fn?.body) spans.push([fn.body.pos, fn.body.end]) }
-
   each(sf, (n: any) => {
     if (ts.isFunctionDeclaration(n) && n.name) byName.set(n.name.text, n)
     if (ts.isVariableStatement(n))
@@ -140,23 +141,62 @@ function handlerBodies(sf: ts.SourceFile): Array<[number, number]> {
             (ts.isArrowFunction(d.initializer) || ts.isFunctionExpression(d.initializer)))
           byName.set(d.name.text, d.initializer)
   })
+
+  // Function node -> EVERY HTTP-method name it is exported under.
+  const exportedAs = new Map<ts.Node, Set<string>>()
+  const mark = (node: ts.Node | undefined, name: string) => {
+    if (!node) return
+    const set = exportedAs.get(node) ?? new Set<string>()
+    set.add(name); exportedAs.set(node, set)
+  }
   each(sf, (n: any) => {
     // export async function POST() {}
-    if (ts.isFunctionDeclaration(n) && n.name && USER_METHOD.test(n.name.text) && isExported(n)) take(n)
-    // export const POST = async () => {}
+    if (ts.isFunctionDeclaration(n) && n.name && ANY_METHOD.test(n.name.text) && isExported(n)) mark(n, n.name.text)
     if (ts.isVariableStatement(n) && isExported(n))
-      for (const d of n.declarationList.declarations)
-        if (ts.isIdentifier(d.name) && USER_METHOD.test(d.name.text)) take(d.initializer)
-    // export { POST } / export { h as POST } — resolve back to the local binding
-    if (ts.isExportDeclaration(n) && n.exportClause && ts.isNamedExports(n.exportClause))
+      for (const d of n.declarationList.declarations) {
+        if (!ts.isIdentifier(d.name) || !ANY_METHOD.test(d.name.text)) continue
+        // export const POST = async () => {}
+        if (d.initializer && (ts.isArrowFunction(d.initializer) || ts.isFunctionExpression(d.initializer)))
+          mark(d.initializer, d.name.text)
+        // export const GET = POST  — an alias to a local binding. Untracked
+        // before, so a GET binding was discarded before anything looked at what
+        // it pointed to.
+        else if (d.initializer && ts.isIdentifier(d.initializer))
+          mark(byName.get(d.initializer.text), d.name.text)
+      }
+    // export { h as POST } / export { POST as GET } / export { POST }
+    if (ts.isExportDeclaration(n) && !n.moduleSpecifier && n.exportClause && ts.isNamedExports(n.exportClause))
       for (const e of n.exportClause.elements)
-        if (USER_METHOD.test(e.name.text)) take(byName.get((e.propertyName ?? e.name).text))
+        if (ANY_METHOD.test(e.name.text)) mark(byName.get((e.propertyName ?? e.name).text), e.name.text)
   })
+
+  // A body may hold authority only if EVERY method name it is served under is a
+  // user action. One function exported as both POST and GET is a GET handler;
+  // Next serves GET from it and a crawler bills the call. Keying on the name
+  // that happened to match let two tokens of aliasing restore the original
+  // incident shape.
+  const spans: Array<[number, number]> = []
+  for (const [node, names] of exportedAs) {
+    const body = (node as any).body
+    if (!body) continue                                   // unlocatable -> no span
+    if ([...names].every(m => USER_METHOD.test(m))) spans.push([body.pos, body.end])
+  }
   return spans
 }
 
 const inside = (n: ts.Node, spans: Array<[number, number]>) =>
   spans.some(([a, b]) => n.pos >= a && n.end <= b)
+
+/** Extensions that cannot hold authority, so failing to resolve them is inert. */
+const INERT = /\.(?:css|scss|sass|less|json|svg|png|jpe?g|gif|webp|avif|woff2?|ttf|otf|eot|mp4|webm|txt|md)$/
+/** Ask Node for its own builtin list rather than hand-enumerating it — the
+ *  hand-written version was missing `node:async_hooks`, which surfaced as nine
+ *  phantom "project-owned" edges. */
+const BUILTIN = new Set(builtinModules)
+const isBuiltin = (spec: string) => {
+  const bare = spec.replace(/^node:/, '')
+  return BUILTIN.has(bare) || BUILTIN.has(bare.split('/')[0])
+}
 
 export interface Analysis {
   roots: string[]
@@ -164,7 +204,8 @@ export interface Analysis {
   offenders: string[]
   unreachedSpenders: string[]
   parseFailures: string[]
-  unresolved: string[]
+  /** Specifiers that look project-owned but did not resolve. Must stay empty. */
+  unresolvedProjectEdges: string[]
 }
 
 /**
@@ -197,7 +238,29 @@ export function analyze(SRC_IN: string, projectRoot?: string, repoRoot?: string)
   // A fixture tree has no tsconfig; give it the same `@/*` convention the app uses.
   if (!OPTS.paths) { OPTS.baseUrl = projectRoot ?? SRC; OPTS.paths = { '@/*': [`${SRC}/*`] } }
 
-  const unresolved: string[] = []
+  // Defined before resolveSpec, which closes over it.
+  const rel = (f: string) => f.startsWith(SRC + sep) ? f.slice(SRC.length + 1)
+                           : f.startsWith(REPO + sep) ? f.slice(REPO.length + 1) : f
+  const unresolvedProjectEdges: string[] = []
+  // A workspace package name is project-owned even when the specifier fails to
+  // resolve (a blocked `exports` subpath, a typo, a package with no entry).
+  const wsNames = new Set<string>()
+  for (const g of ['packages', 'apps']) {
+    const d = join(REPO, g)
+    if (!existsSync(d)) continue
+    for (const nm of readdirSync(d)) {
+      const pj = join(d, nm, 'package.json')
+      if (!existsSync(pj)) continue
+      try { const j = JSON.parse(readFileSync(pj, 'utf-8')); if (j.name) wsNames.add(j.name) } catch { /* not an edge */ }
+    }
+  }
+  const declaredDeps = new Set<string>()
+  if (projectRoot && existsSync(join(projectRoot, 'package.json'))) {
+    try {
+      const j = JSON.parse(readFileSync(join(projectRoot, 'package.json'), 'utf-8'))
+      for (const k of Object.keys({ ...j.dependencies, ...j.devDependencies, ...j.peerDependencies })) declaredDeps.add(k)
+    } catch { /* leave empty; unknown packages then read as project candidates */ }
+  }
   const owned = (f: string): boolean => {
     let rp: string
     try { rp = realpathSync(f) } catch { return false }
@@ -206,7 +269,20 @@ export function analyze(SRC_IN: string, projectRoot?: string, repoRoot?: string)
   const resolveSpec = (from: string, spec: string): string | null => {
     const r = ts.resolveModuleName(spec, from, OPTS, ts.sys)
     const f = r.resolvedModule?.resolvedFileName
-    if (!f) { if (spec.startsWith('.') || spec.startsWith('@/')) unresolved.push(`${from} -> ${spec}`); return null }
+    if (!f) {
+      // S1: a bare specifier that failed to resolve used to be dropped with no
+      // record. Pointed at apps/*, traversal lost the edge AND the backstop
+      // excluded the target — silent green. A resolution failure on anything
+      // that could be project-owned is now a guard failure, not an ignored edge.
+      if (INERT.test(spec)) return null
+      if (spec.startsWith('.') || spec.startsWith('@/')) { unresolvedProjectEdges.push(`${rel(from)} -> ${spec}`); return null }
+      const pkg = spec.match(/^(@[^/]+\/[^/]+|[^@][^/]*)/)?.[1] ?? spec
+      if (wsNames.has(pkg)) { unresolvedProjectEdges.push(`${rel(from)} -> ${spec}`); return null }
+      // A declared third-party dependency or node builtin is a legitimate leaf.
+      if (isBuiltin(spec) || declaredDeps.has(pkg)) return null
+      unresolvedProjectEdges.push(`${rel(from)} -> ${spec}`)
+      return null
+    }
     // Traversal stops at the project boundary. A workspace package is symlinked
     // into node_modules, so realpath decides ownership, not the literal path.
     return owned(f) ? realpathSync(f) : null
@@ -239,8 +315,6 @@ export function analyze(SRC_IN: string, projectRoot?: string, repoRoot?: string)
   const seen = new Set<string>()
   const offenders: string[] = []
   const parseFailures: string[] = []
-  const rel = (f: string) => f.startsWith(SRC + sep) ? f.slice(SRC.length + 1)
-                           : f.startsWith(REPO + sep) ? f.slice(REPO.length + 1) : f
 
   const visit = (file: string, chain: string[], isRouteRoot: boolean) => {
     if (seen.has(file)) return
@@ -299,6 +373,18 @@ export function analyze(SRC_IN: string, projectRoot?: string, repoRoot?: string)
     }
   }
   collectAll(SRC)
+  // S2: the project ROOT directory was in neither traversal nor backstop, so any
+  // framework convention living outside src/ (mdx-components, instrumentation-
+  // client, sentry.*.config, whatever Next adds next) was invisible to both.
+  // Backstopped by default rather than by enumerating filenames: the named root
+  // list buys precision about what definitely executes, this stops an unknown
+  // convention becoming silent. Vitest config is excluded — test egress is a
+  // separate boundary and mislabelling it here would hide both.
+  if (projectRoot) for (const e of readdirSync(projectRoot)) {
+    const p = join(projectRoot, e)
+    if (SKIP.has(e) || /^vitest\.config\./.test(e)) continue
+    if (SRC_FILE.test(p) && !p.endsWith('.d.ts') && statSync(p).isFile()) allFiles.push(p)
+  }
   const pkgDir = join(REPO, 'packages')
   if (existsSync(pkgDir)) for (const n of readdirSync(pkgDir)) {
     const p = join(pkgDir, n)
@@ -310,5 +396,6 @@ export function analyze(SRC_IN: string, projectRoot?: string, repoRoot?: string)
     .map(rel)
     .sort()
 
-  return { roots, seen, offenders, unreachedSpenders, parseFailures, unresolved }
+  return { roots, seen, offenders, unreachedSpenders, parseFailures,
+           unresolvedProjectEdges: [...new Set(unresolvedProjectEdges)].sort() }
 }
