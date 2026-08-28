@@ -235,6 +235,53 @@ Warden's independently verified positive result is also worth keeping: the
 
 ---
 
+## OUTCOME — retired 2026-08-28
+
+Executed. Rollback tag `pre-line-retirement`.
+
+**Decision 1 — threshold alerts kept, with an authoritative record.**
+`apps/scenario-simulator/src/alerts/alert-store.ts` records that a condition
+EXISTED: `alert_id, rule_id, instrument, direction, severity, observed_value,
+threshold, detected_at, last_observed_at, status, resolved_at, business_date,
+evidence`. No delivery state, no retry key, no channel — deliberately not a
+notification ledger. Dedupe is a business question: identity is
+`(rule, instrument, business_date)`, a condition holding across runs is one
+alert whose observation updates, and it resolves when it stops holding. An
+instrument that could not be priced is left alone rather than wrongly resolved.
+Detection is unconditional — the old cooldown gated detection itself. Surfaced
+read-only on `/portfolio`; the file is directly readable by Glenn.
+
+**Decision 2 — no push replacement.** Watchdog and daily-catchup keep their
+detection and their derived interpretation of the state, and log it. Their
+markers are gone with the channel.
+
+> **PRODUCT LIMITATION, accepted:** a pipeline failure is visible in
+> authoritative status surfaces — `/admin/pipeline`, `/system/pipeline`, and the
+> script logs — but **does not currently page the operator.** Operational
+> awareness is pull-based. Revisit only if usage shows pull-only is
+> insufficient; do not solve it by building another outbound system.
+
+**Decision 3 — both formatters deleted.** `formatTradeSignals` and
+`formatDiscoveryBuy` composed LINE message text whose business content already
+exists in the daily report and `discovery.json`. Dead formatting was not kept
+against a hypothetical future consumer.
+
+**Removed:** `notify/line.ts`; the sends in `cli-run`, `cli-discover`,
+`cli-alerts`; `alertOnStaleSourcesOnce` with its hand-rolled `.env` parser and
+cwd-dependent mute check; both shell LINE blocks with their marker-before-mute
+behaviour; `notificationPolicy()` and its tests; `alert-state.json`; the
+watchdog, catch-up and stale-source markers; the mute file; and the LINE
+credentials.
+
+**Preserved:** `daily-catchup`'s `exit 0` — business logic, not notification: do
+not auto-resubmit a pipeline that already failed today.
+
+**Verified against the real detector**, not fixtures: 19 positions checked, LLY
+opened at −6.88% intraday; a second run reported `0 opened, 1 continuing` with
+`detected_at` preserved and `last_observed_at` advanced.
+
+---
+
 ## What I need decided before any implementation
 
 1. **Where do threshold alerts land?** This is the blocker. Options: a durable

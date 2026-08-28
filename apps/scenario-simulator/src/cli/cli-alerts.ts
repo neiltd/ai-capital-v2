@@ -16,7 +16,6 @@ import { existsSync, mkdirSync } from 'fs'
 import Database from 'better-sqlite3'
 import { usePostgres, getPool, closePool } from '@common/db'
 import { createPortfolioStore } from '../portfolio/portfolio-store.js'
-import { sendLine } from '../notify/line.js'
 import { alertsPath, loadAlerts, saveAlerts, reconcile, type Observation } from '../alerts/alert-store.js'
 
 const DATA_DIR        = join(process.cwd(), 'data')
@@ -27,17 +26,6 @@ const ALERTS_PATH     = alertsPath(DATA_DIR)
 const PRICE_DROP_THRESHOLD     = -0.05  // -5% intraday
 const NEWS_VELOCITY_THRESHOLD  = 3      // articles in last 6 hours
 const NEWS_WINDOW_HOURS        = 6
-
-interface TickerAlert {
-  ticker:          string
-  company:         string
-  currency:        string    // position's native currency — .BK prices are THB, not USD
-  currentPrice:    number
-  priorClose:      number
-  intradayPctChange: number
-  articleCount6h:  number
-  reasons:         string[]  // why alerted (drop, news, both)
-}
 
 // ── Yahoo intraday price fetch (current + prior close) ───────────────────────
 
@@ -105,7 +93,6 @@ async function run() {
     return ingestionDb ? articleCountSince(ingestionDb, ticker, sinceIso) : 0
   }
 
-  const alerts: TickerAlert[] = []
   const observations: Observation[] = []
   const evaluated: string[] = []
   for (const p of positions) {
@@ -114,12 +101,10 @@ async function run() {
     const { current, priorClose } = await fetchIntradayPrice(p.priceSymbol)
     const articleCount = await countArticles(p.ticker)
 
-    const reasons: string[] = []
     let intradayChange = 0
     if (current != null && priorClose != null && priorClose > 0) {
       intradayChange = (current - priorClose) / priorClose
       if (intradayChange <= PRICE_DROP_THRESHOLD) {
-        reasons.push(`📉 Intraday ${(intradayChange * 100).toFixed(2)}%`)
         observations.push({
           rule_id: 'price_drop', instrument: p.ticker, direction: 'down',
           // A drop past twice the threshold is materially worse than one that
@@ -132,7 +117,6 @@ async function run() {
       evaluated.push(p.ticker)
     }
     if (articleCount >= NEWS_VELOCITY_THRESHOLD) {
-      reasons.push(`📰 ${articleCount} articles in last ${NEWS_WINDOW_HOURS}h`)
       observations.push({
         rule_id: 'news_velocity', instrument: p.ticker, direction: 'elevated',
         severity: articleCount >= NEWS_VELOCITY_THRESHOLD * 2 ? 'critical' : 'warning',
@@ -141,18 +125,6 @@ async function run() {
       })
     }
 
-    if (reasons.length > 0 && current != null) {
-      alerts.push({
-        ticker:           p.ticker,
-        company:          p.company,
-        currency:         p.currency,
-        currentPrice:     current,
-        priorClose:       priorClose ?? 0,
-        intradayPctChange: intradayChange,
-        articleCount6h:   articleCount,
-        reasons,
-      })
-    }
   }
   if (ingestionDb) ingestionDb.close()
 
@@ -166,28 +138,6 @@ async function run() {
     `${rec.continuing.length} continuing, ${rec.resolved.length} resolved · recorded in ${ALERTS_PATH}`,
   )
 
-  if (alerts.length === 0) return
-
-  const lines: string[] = [
-    `🚨 Hot Ticker Alerts — ${new Date().toLocaleString('en-US', { timeZone: 'Asia/Bangkok' })}`,
-    ``,
-  ]
-  for (const a of alerts) {
-    const changeSign = a.intradayPctChange >= 0 ? '+' : ''
-    // .BK/Thai positions quote in THB — labeling them "$" reads ~33x wrong.
-    const sym = a.currency === 'THB' ? '฿' : '$'
-    lines.push(
-      `${a.ticker} (${a.company})`,
-      `  Price: ${sym}${a.currentPrice.toFixed(2)} (${changeSign}${(a.intradayPctChange * 100).toFixed(2)}% vs prev close ${a.priorClose.toFixed(2)})`,
-      `  Reasons: ${a.reasons.join(' · ')}`,
-      ``,
-    )
-  }
-  const message = lines.join('\n')
-
-  // Notification is now a side effect of a record that already exists. It is
-  // removed entirely in the final retirement step; nothing above depends on it.
-  await sendLine(message)
 }
 
 run()

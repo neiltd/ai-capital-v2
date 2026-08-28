@@ -1,6 +1,5 @@
 import {
-  resolveRedisEndpoint, canonicalPath, isInsideProductionRepo, pathExists,
-  DestinationError, PRODUCTION_REPO,
+  resolveRedisEndpoint, canonicalPath, isInsideProductionRepo, DestinationError, PRODUCTION_REPO,
 } from './destinations.js'
 
 /**
@@ -137,23 +136,4 @@ export async function requireIsolation(env: NodeJS.ProcessEnv = process.env): Pr
  * than loaded-then-not-used. The mute file is only ever consulted against the
  * PRODUCTION repo, so an isolated root cannot make it disappear.
  */
-export interface NotificationPolicy {
-  canDeliver: boolean
-  reason: string
-  /** Where the mute file is authoritative — always the production repo. */
-  mutePath: string
-}
 
-export async function notificationPolicy(env: NodeJS.ProcessEnv = process.env): Promise<NotificationPolicy> {
-  const mutePath = canonicalPath(`${PRODUCTION_REPO}/data/line-notifications-muted`)
-  const d = await decideIsolation(env)
-
-  if (d.mode === 'isolated') {
-    return { canDeliver: false, mutePath,
-      reason: 'isolated environment — real delivery is structurally impossible, mute file irrelevant' }
-  }
-  if (pathExists(mutePath)) {
-    return { canDeliver: false, mutePath, reason: `muted by ${mutePath}` }
-  }
-  return { canDeliver: true, mutePath, reason: 'production, not muted' }
-}

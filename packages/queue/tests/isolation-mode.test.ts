@@ -2,7 +2,7 @@ import { describe, it, expect } from 'vitest'
 import { readdirSync, readFileSync, existsSync } from 'node:fs'
 import { join, dirname } from 'node:path'
 import { fileURLToPath } from 'node:url'
-import { decideIsolation, requireIsolation, PartialIsolationError, notificationPolicy } from '../src/isolation.js'
+import { decideIsolation, requireIsolation, PartialIsolationError } from '../src/isolation.js'
 
 const HERE = dirname(fileURLToPath(import.meta.url))
 const REPO = '/Users/thanapold/Desktop/Projects.nosync'
@@ -45,28 +45,6 @@ describe('all-or-nothing isolation', () => {
 
   it('requireIsolation refuses a production environment', async () => {
     await expect(requireIsolation(PROD as NodeJS.ProcessEnv)).rejects.toThrow(PartialIsolationError)
-  })
-})
-
-describe('notification policy is one canonical source', () => {
-  it('isolated mode can NEVER deliver, regardless of any mute file', async () => {
-    const p = await notificationPolicy(ISO as NodeJS.ProcessEnv)
-    expect(p.canDeliver).toBe(false)
-    expect(p.reason).toMatch(/structurally impossible/)
-  })
-
-  it('the mute path is anchored to the PRODUCTION repo, not to AI_CAPITAL_ROOT', async () => {
-    // The defect: the mute used to be read from the isolated root, so isolating
-    // the filesystem DISARMED the kill switch and a test sent a real message.
-    const p = await notificationPolicy(ISO as NodeJS.ProcessEnv)
-    expect(p.mutePath).toBe(`${REPO}/data/line-notifications-muted`)
-    expect(p.mutePath).not.toContain('/tmp/iso')
-  })
-
-  it('production honours the mute file', async () => {
-    const p = await notificationPolicy(PROD as NodeJS.ProcessEnv)
-    expect(p.canDeliver).toBe(false)     // muted since 2026-07-10
-    expect(p.reason).toMatch(/muted by/)
   })
 })
 

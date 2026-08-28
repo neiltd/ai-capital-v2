@@ -52,27 +52,19 @@ if [ -f "$DB" ] && command -v sqlite3 > /dev/null 2>&1; then
   FAILED_COUNT=$(sqlite3 "file:$DB?mode=ro" "select count(*) from pipeline_runs
     where stage='daily-pipeline' and status='failed'
     and strftime('%Y-%m-%d', started_at) = strftime('%Y-%m-%d','now','localtime');" 2>/dev/null)
-  ALERT_MARKER="$ROOT/data/daily-catchup-alerted-$(date +%Y-%m-%d)"
-  if [ "${FAILED_COUNT:-0}" -gt 0 ] && [ ! -f "$ALERT_MARKER" ]; then
-    touch "$ALERT_MARKER"
-    if [ -f "$ROOT/data/line-notifications-muted" ]; then
-      log "today's daily-pipeline already failed ${FAILED_COUNT}x — LINE alert suppressed (line-notifications-muted)"
-      exit 0
-    fi
-    log "today's daily-pipeline already failed ${FAILED_COUNT}x — sending LINE alert instead of auto-retrying"
-    LINE_ENV="$ROOT/apps/scenario-simulator/.env"
-    if [ -f "$LINE_ENV" ]; then
-      set -a; . "$LINE_ENV"; set +a
-      if [ -n "$LINE_CHANNEL_ACCESS_TOKEN" ] && [ -n "$LINE_USER_ID" ]; then
-        curl -s -X POST https://api.line.me/v2/bot/message/push \
-          -H "Content-Type: application/json" \
-          -H "Authorization: Bearer $LINE_CHANNEL_ACCESS_TOKEN" \
-          -d "$(printf '{"to":"%s","messages":[{"type":"text","text":"⚠️ AI Capital: today'"'"'s pipeline failed %s time(s), no successful run yet. Ask Claude to run it manually (daily-queue.sh) when you'"'"'re back."}]}' "$LINE_USER_ID" "$FAILED_COUNT")" \
-          >> "$LOG" 2>&1
-      else
-        log "LINE_CHANNEL_ACCESS_TOKEN/LINE_USER_ID not set — cannot alert"
-      fi
-    fi
+  if [ "${FAILED_COUNT:-0}" -gt 0 ]; then
+    # BUSINESS RULE, not notification: do not auto-resubmit a pipeline that has
+    # already failed today. daily-queue.sh has exhausted its retries, and a day
+    # failing for a structural reason will keep failing and keep spending.
+    #
+    # NO NOTIFICATION CHANNEL. LINE was retired 2026-08-28. The per-day marker
+    # that used to gate the alert is gone with it — it was touched BEFORE the mute
+    # check, so a muted run burned it permanently. The exit below is unchanged and
+    # is what actually prevents the auto-retry.
+    #
+    # ACCEPTED LIMITATION: visible in this log and in the pipeline status surfaces,
+    # but it does not page the operator. Awareness is pull-based for now.
+    log "today's daily-pipeline already failed ${FAILED_COUNT}x — not auto-retrying; run daily-queue.sh manually"
     exit 0
   fi
 fi

@@ -88,53 +88,21 @@ if [ "$ALERT" != "True" ] && [ "$ALERT" != "true" ]; then
   exit 0
 fi
 
-# One alert per logical date PER STATE. A state change (missing -> stale, or
-# missing -> failed) is new information and should be told; the same state at
-# every poll is not.
-MARKER="$ROOT/data/.watchdog-alerted-$LOGICAL-$STATE"
-if [ -f "$MARKER" ]; then exit 0; fi
-touch "$MARKER"
-
-log "ALERT state=$STATE logical=$LOGICAL — $FULL_REASON"
-
-# ── NOTIFICATION POLICY — ONE CANONICAL SOURCE ───────────────────────────────
-# Isolated mode can never deliver, regardless of any mute file. This ordering is
-# the fix for the defect Warden found: the mute used to be read from $ROOT while
-# credentials came from $REPO, so isolating the filesystem DISARMED the kill
-# switch and a test run sent a real message.
-if [ "$ISOLATION_MODE" = "isolated" ]; then
-  log "isolated environment — real LINE delivery is structurally impossible; not loading credentials"
-  exit 0
-fi
-
-# The mute file is authoritative at the PRODUCTION repo, never at $ROOT. An
-# isolated root must not be able to make it disappear.
-if [ -f "$REPO/data/line-notifications-muted" ]; then
-  log "LINE alert suppressed (line-notifications-muted)"
-  exit 0
-fi
-
+# Derived interpretation of the state, kept because it is useful on its own.
 case "$STATE" in
-  missing) ICON="🔴"; HEAD="daily pipeline did not run";;
-  stale)   ICON="🟠"; HEAD="daily pipeline is stuck";;
-  failed)  ICON="🔴"; HEAD="daily pipeline failed";;
-  *)       ICON="⚠️";  HEAD="daily pipeline needs attention";;
+  missing) HEAD="daily pipeline did not run";;
+  stale)   HEAD="daily pipeline is stuck";;
+  failed)  HEAD="daily pipeline failed";;
+  *)       HEAD="daily pipeline needs attention";;
 esac
 
-LINE_ENV="$REPO/apps/scenario-simulator/.env"
-if [ -f "$LINE_ENV" ]; then
-  set -a; . "$LINE_ENV"; set +a
-  if [ -n "$LINE_CHANNEL_ACCESS_TOKEN" ] && [ -n "$LINE_USER_ID" ]; then
-    MSG="$ICON AI Capital: $HEAD ($LOGICAL, state=$STATE). $FULL_REASON"
-    curl -s -X POST https://api.line.me/v2/bot/message/push \
-      -H "Content-Type: application/json" \
-      -H "Authorization: Bearer $LINE_CHANNEL_ACCESS_TOKEN" \
-      -d "$(python3 -c "
-import json,sys
-print(json.dumps({'to': sys.argv[1], 'messages':[{'type':'text','text': sys.argv[2][:900]}]}))
-" "$LINE_USER_ID" "$MSG")" >> "$LOG" 2>&1
-    log "LINE alert sent"
-  else
-    log "LINE credentials not set — cannot alert"
-  fi
-fi
+# NO NOTIFICATION CHANNEL. LINE was retired 2026-08-28; it is not part of the
+# production correctness boundary. What used to live here — a marker touched
+# BEFORE the mute check (so a muted watchdog burned it permanently), an
+# isolation gate, a credential load and a raw curl that never inspected its own
+# HTTP result — is gone. Detection is unchanged and reads pipeline_runs.
+#
+# ACCEPTED LIMITATION: a pipeline failure is visible in authoritative status
+# surfaces (the /admin/pipeline and /system/pipeline dashboards, and this log)
+# but does NOT page the operator. Awareness is pull-based for now.
+log "ALERT state=$STATE logical=$LOGICAL — $HEAD. $FULL_REASON"

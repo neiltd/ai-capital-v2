@@ -14,7 +14,6 @@ import { PaperPortfolio } from '../discovery/paper-portfolio.js'
 import { exportDiscovery } from '../discovery/discovery-exporter.js'
 import { fetchPrices, fetchPricesAndFx } from '../portfolio/price-fetcher.js'
 import { createPortfolioStore } from '../portfolio/portfolio-store.js'
-import { sendLine, formatDiscoveryBuy } from '../notify/line.js'
 import {
   loadThemesMap, paperBookThemeValue, realPortfolioThemeValueUSD, formatThemeContext,
   THEME_CONCENTRATION_CAP,
@@ -539,15 +538,7 @@ async function run() {
         runningDeployed += finalAllocation
         positionsOpened++
         console.log(`[discover] Opened paper position: ${candidate.ticker} x ${shares} @ $${currentPrice} ($${finalAllocation.toFixed(2)})`)
-        await sendLine(formatDiscoveryBuy({
-          ticker:     candidate.ticker,
-          company:    candidate.company,
-          score:      candidate.score,
-          conviction: finalAction.conviction,
-          price:      currentPrice,
-          shares,
-          rationale:  candidate.rationale,
-        }))
+        // Position is already persisted above; no notification channel.
       } else {
         console.log(`[discover] ${candidate.ticker} => ${recommendation} (no position opened)`)
       }

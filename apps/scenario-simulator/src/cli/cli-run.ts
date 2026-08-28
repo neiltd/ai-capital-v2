@@ -9,7 +9,6 @@ import { generateScenarios } from '../simulation/scenario-generator.js'
 import { generateActions } from '../simulation/action-generator.js'
 import { exportSimulation } from '../export/exporter.js'
 import { generateReport } from '../export/reporter.js'
-import { sendLine, formatTradeSignals } from '../notify/line.js'
 import type { AnalysisJSON, GraphJSON } from '../types.js'
 
 const DATA_DIR      = join(process.cwd(), 'data')
@@ -82,9 +81,9 @@ async function run() {
     const reportPath = join(REPORTS_DIR, `${today}.md`)
     generateReport(today, scenarios, actions, freshPositions, reportPath, usdThb)
 
-    // Notify actionable trade signals (skip hold — only trim/exit/buy)
-    const tradeMsg = formatTradeSignals({ date: today, actions })
-    if (tradeMsg) await sendLine(tradeMsg)
+    // Trade signals are recorded in the report and simulation store above.
+    // There is no notification channel: LINE was retired 2026-08-28 and is not
+    // part of the production correctness boundary.
 
     console.log(`\nDone in ${((Date.now() - startTime) / 1000).toFixed(1)}s`)
     console.log(`Report: ${reportPath}`)
