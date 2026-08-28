@@ -170,6 +170,18 @@ dashboard BUILD for three days without any test noticing. The believed-universal
 the test suite does not cover compilation. Keep new code
 clean under these flags rather than loosening them.
 
+### Validation must not share `.next` with a running dev server
+
+`pnpm --filter unified-platform build` and a running `next dev` both write
+`apps/unified-platform/.next`. Running the gate build while the dev server is up
+empties the vendor chunks underneath it and every route starts returning 500 —
+which reads as a code defect and cost real time during the 2026-08-28 W4 audit
+(see `docs/findings/2026-08-28-D8-build-dev-next-state.md`).
+
+Before running a gate build, either stop the dev server, give the build its own
+`distDir`, or plan to restart the server afterwards. A verification step must not
+perturb the thing being verified.
+
 ## Documentation
 
 - `docs/ROADMAP.md` — phased plan with checkboxes; Phase 3 (monorepo + Postgres

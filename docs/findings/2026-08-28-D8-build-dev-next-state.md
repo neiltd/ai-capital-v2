@@ -35,7 +35,30 @@ apparatus perturbs what it measures.
 - Refuse to run the gate build while a dev server is detected on the port.
 - Accept it, and always restart the dev server after a gate run.
 
-## Current state
+## The rule going forward
+
+**Build/test validation and a running `next dev` must not share a mutable
+`.next` artifact.** This is not advice about tidiness; a shared mutable build
+directory makes a verification step a confounder for the thing being verified,
+and it did exactly that during the W4 audit.
+
+Concretely, any future validation work must do one of:
+
+- give the gate build its own `distDir` (e.g. `NEXT_DIST_DIR`), or
+- run the gate build in a separate worktree or copy, or
+- refuse to run a gate build while a dev server is listening on the port, or
+- treat "restart the dev server" as a mandatory step after any gate build.
+
+## Resolution — 2026-08-28
+
+The dev server was stopped cleanly, `.next` was removed, and a fresh instance
+was started on `127.0.0.1:3000`. It came up in ~1s and every verification
+passed: loopback-only binding, fail-closed auth, authenticated pages 200,
+representative HEAD/OPTIONS correct, zero non-loopback connections from the
+server process, and production operational state byte-identical before and
+after. Dashboard restoration is CLOSED.
+
+## Current state (superseded — kept for the record)
 
 The dev server was deliberately left stopped/broken rather than restarted
 mid-W4. A clean restart on `127.0.0.1:3000` with auth and read-only
