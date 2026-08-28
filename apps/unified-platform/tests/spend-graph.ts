@@ -131,55 +131,87 @@ export function spendNodes(sf: ts.SourceFile): ts.Node[] {
  * that file is an offence — uncertainty fails closed.
  */
 function handlerBodies(sf: ts.SourceFile): Array<[number, number]> {
-  // Local name -> the function node it denotes. Needed to resolve aliases.
-  const byName = new Map<string, ts.Node>()
+  // ── Local binding graph: a name denotes a function node, or another name ──
+  const nodeOf = new Map<string, ts.Node>()
+  const aliasOf = new Map<string, string>()
   each(sf, (n: any) => {
-    if (ts.isFunctionDeclaration(n) && n.name) byName.set(n.name.text, n)
+    if (ts.isFunctionDeclaration(n) && n.name) nodeOf.set(n.name.text, n)
     if (ts.isVariableStatement(n))
-      for (const d of n.declarationList.declarations)
-        if (ts.isIdentifier(d.name) && d.initializer &&
-            (ts.isArrowFunction(d.initializer) || ts.isFunctionExpression(d.initializer)))
-          byName.set(d.name.text, d.initializer)
+      for (const d of n.declarationList.declarations) {
+        if (!ts.isIdentifier(d.name) || !d.initializer) continue
+        if (ts.isArrowFunction(d.initializer) || ts.isFunctionExpression(d.initializer))
+          nodeOf.set(d.name.text, d.initializer)
+        else if (ts.isIdentifier(d.initializer)) aliasOf.set(d.name.text, d.initializer.text)
+      }
+    if (ts.isExpressionStatement(n) && ts.isBinaryExpression(n.expression) &&
+        n.expression.operatorToken.kind === ts.SyntaxKind.EqualsToken &&
+        ts.isIdentifier(n.expression.left) && ts.isIdentifier(n.expression.right))
+      aliasOf.set(n.expression.left.text, n.expression.right.text)
   })
 
-  // Function node -> EVERY HTTP-method name it is exported under.
-  const exportedAs = new Map<ts.Node, Set<string>>()
-  const mark = (node: ts.Node | undefined, name: string) => {
-    if (!node) return
-    const set = exportedAs.get(node) ?? new Set<string>()
-    set.add(name); exportedAs.set(node, set)
+  /** Follow the alias chain to a function node. null = could not prove. */
+  const resolveName = (name: string): ts.Node | null => {
+    const walked = new Set<string>()
+    for (let cur = name; ;) {
+      if (walked.has(cur)) return null            // cycle: unprovable
+      walked.add(cur)
+      const node = nodeOf.get(cur)
+      if (node) return node
+      const next = aliasOf.get(cur)
+      if (!next) return null                      // dead end: unprovable
+      cur = next
+    }
   }
+
+  // ── Which method names resolve to which body ──
+  const exportedAs = new Map<ts.Node, Set<string>>()
+  let unprovable = false
+  /**
+   * THE FAIL-CLOSED RULE, and the structural point of this design.
+   *
+   * `claim(undefined, 'GET')` does NOT mean "there is no GET alias". It means we
+   * cannot prove this body is exclusively user-action. Twice the guard broke
+   * because an unresolvable alias was silently indistinguishable from "no such
+   * export": the name was dropped, the remaining set looked like {POST}, and a
+   * body that Next serves on GET was granted permission. Uncertainty now
+   * suppresses permission for the whole file rather than vanishing.
+   */
+  const claim = (node: ts.Node | null, method: string) => {
+    if (!node) { unprovable = true; return }
+    const set = exportedAs.get(node) ?? new Set<string>()
+    set.add(method); exportedAs.set(node, set)
+  }
+
   each(sf, (n: any) => {
-    // export async function POST() {}
-    if (ts.isFunctionDeclaration(n) && n.name && ANY_METHOD.test(n.name.text) && isExported(n)) mark(n, n.name.text)
+    if (ts.isFunctionDeclaration(n) && n.name && ANY_METHOD.test(n.name.text) && isExported(n)) claim(n, n.name.text)
     if (ts.isVariableStatement(n) && isExported(n))
       for (const d of n.declarationList.declarations) {
         if (!ts.isIdentifier(d.name) || !ANY_METHOD.test(d.name.text)) continue
-        // export const POST = async () => {}
         if (d.initializer && (ts.isArrowFunction(d.initializer) || ts.isFunctionExpression(d.initializer)))
-          mark(d.initializer, d.name.text)
-        // export const GET = POST  — an alias to a local binding. Untracked
-        // before, so a GET binding was discarded before anything looked at what
-        // it pointed to.
-        else if (d.initializer && ts.isIdentifier(d.initializer))
-          mark(byName.get(d.initializer.text), d.name.text)
+          claim(d.initializer, d.name.text)
+        else if (d.initializer && ts.isIdentifier(d.initializer)) claim(resolveName(d.initializer.text), d.name.text)
+        else claim(null, d.name.text)             // ternary, call, anything unprovable
       }
-    // export { h as POST } / export { POST as GET } / export { POST }
-    if (ts.isExportDeclaration(n) && !n.moduleSpecifier && n.exportClause && ts.isNamedExports(n.exportClause))
-      for (const e of n.exportClause.elements)
-        if (ANY_METHOD.test(e.name.text)) mark(byName.get((e.propertyName ?? e.name).text), e.name.text)
+    if (ts.isExportDeclaration(n) && n.exportClause && ts.isNamedExports(n.exportClause))
+      for (const e of n.exportClause.elements) {
+        if (!ANY_METHOD.test(e.name.text)) continue
+        // `export { X } from './m'` — the body lives in another module, so it
+        // cannot be proven here. It fails closed by design; the sibling module is
+        // traversed separately as a non-route, where any authority is an offence.
+        if (n.moduleSpecifier) { claim(null, e.name.text); continue }
+        claim(resolveName((e.propertyName ?? e.name).text), e.name.text)
+      }
+    // `export * from './m'` may re-export any method under any name.
+    if (ts.isExportDeclaration(n) && !n.exportClause && n.moduleSpecifier) unprovable = true
   })
 
-  // A body may hold authority only if EVERY method name it is served under is a
-  // user action. One function exported as both POST and GET is a GET handler;
-  // Next serves GET from it and a crawler bills the call. Keying on the name
-  // that happened to match let two tokens of aliasing restore the original
-  // incident shape.
+  if (unprovable) return []                       // no permitted location anywhere in this file
+
   const spans: Array<[number, number]> = []
   for (const [node, names] of exportedAs) {
     const body = (node as any).body
-    if (!body) continue                                   // unlocatable -> no span
-    if ([...names].every(m => USER_METHOD.test(m))) spans.push([body.pos, body.end])
+    if (!body) continue
+    if (names.size && [...names].every(m => USER_METHOD.test(m))) spans.push([body.pos, body.end])
   }
   return spans
 }

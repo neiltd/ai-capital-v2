@@ -209,20 +209,43 @@ describe('rendering /studio/chat does not spend', () => {
 
       // A body is permitted only if EVERY method it is exported under is a user
       // action. Keying on the matching name let aliasing restore the incident.
+      // Authority may not be permitted through direct, transitive, cyclic or
+      // UNRESOLVED local aliasing. The last class is the structural one: twice
+      // an unprovable alias was silently indistinguishable from "no such
+      // export", so the name vanished and the body looked exclusively POST.
       it.each([
-        ['export { h as POST, h as GET }', `const h = async () => { ${INL} }\nexport { h as POST, h as GET }`],
-        ['export const GET = POST', `export async function POST(){ ${INL} }\nexport const GET = POST`],
-        ['export { POST as GET }', `export async function POST(){ ${INL} }\nexport { POST as GET }`],
-        ['export { h as PUT, h as HEAD }', `async function h(){ ${INL} }\nexport { h as PUT, h as HEAD }`],
-      ])('a body also served as a non-user method is forbidden: %s', (_n, src) => {
-        const dir = build({ 'src/app/api/x/route.ts': src })
+        ['direct: h as POST, h as GET', `const h = async () => { ${INL} }\nexport { h as POST, h as GET }`],
+        ['direct: h as PUT, h as OPTIONS', `const h = async () => { ${INL} }\nexport { h as PUT, h as OPTIONS }`],
+        ['one hop: export const GET = POST', `export async function POST(){ ${INL} }\nexport const GET = POST`],
+        ['one hop: export { POST as GET }', `export async function POST(){ ${INL} }\nexport { POST as GET }`],
+        ['two hops: h->g, h as POST, g as GET', `const h = async () => { ${INL} }\nconst g = h\nexport { h as POST }\nexport { g as GET }`],
+        ['two hops: h->g, h as POST, GET = g', `async function h(){ ${INL} }\nconst g = h\nexport { h as POST }\nexport const GET = g`],
+        ['three hops: h->g->k, h as POST, k as HEAD', `const h = async () => { ${INL} }\nconst g = h\nconst k = g\nexport { h as POST }\nexport { k as HEAD }`],
+        ['cyclic alias behind an HTTP export', `const a = b\nconst b = a\nexport async function POST(){ ${INL} }\nexport { a as GET }`],
+        ['unresolved HTTP-method alias', `export async function POST(){ ${INL} }\nexport const GET = someUnknown`],
+        ['export * from a sibling', `export async function POST(){ ${INL} }\nexport * from ` + `'./h'`],
+      ])('authority is not permitted when a body may be served as a non-user method: %s', (_n, src) => {
+        const dir = build({ 'src/app/api/x/route.ts': src, 'src/app/api/x/h.ts': `export const GET = async () => Response.json(1)` })
+        try { expect(analyze(join(dir, 'src'), dir, dir).offenders.length).toBeGreaterThan(0) }
+        finally { rmSync(dir, { recursive: true, force: true }) }
+      })
+
+      // Asserted, not assumed: a handler body living in a sibling module cannot
+      // be proven local, so the route file fails closed AND the sibling is
+      // traversed as a non-route where any authority is an offence.
+      it('a re-exported handler from a sibling module fails closed', () => {
+        const dir = build({
+          'src/app/api/x/route.ts': `export async function POST(){ ${INL} }\nexport { POST as GET } from ` + `'./h'`,
+          'src/app/api/x/h.ts': SPEND,
+        })
         try { expect(analyze(join(dir, 'src'), dir, dir).offenders.length).toBeGreaterThan(0) }
         finally { rmSync(dir, { recursive: true, force: true }) }
       })
 
       it.each([
-        ['POST + PUT', `const h = async () => { ${INL} }\nexport { h as POST, h as PUT }`],
         ['POST alone', `export async function POST(){ ${INL} }`],
+        ['POST + PUT', `const h = async () => { ${INL} }\nexport { h as POST, h as PUT }`],
+        ['POST + PATCH + DELETE', `const h = async () => { ${INL} }\nexport { h as POST, h as PATCH, h as DELETE }`],
       ])('a body served only under user methods stays allowed: %s', (_n, src) => {
         const dir = build({ 'src/app/api/x/route.ts': src })
         try { expect(analyze(join(dir, 'src'), dir, dir).offenders).toEqual([]) }
