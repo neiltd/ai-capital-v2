@@ -1,7 +1,9 @@
-import Anthropic from '@anthropic-ai/sdk'
 import type { ScoredStory } from './topic-engine'
 
-export const anthropic = new Anthropic({ apiKey: process.env.ANTHROPIC_API_KEY })
+// NO client is exported from here. A shared pre-constructed client is ambient
+// spending authority: every module that statically imports this one acquires it
+// at load, whether or not it ever spends. Routes acquire their own client inside
+// their handler instead.
 
 const BASE_SYSTEM = `You are a creative partner helping a Thai content creator in Los Angeles make daily TikTok videos about AI and world news.
 

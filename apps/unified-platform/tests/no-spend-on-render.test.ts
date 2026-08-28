@@ -66,98 +66,114 @@ describe('rendering /studio/chat does not spend', () => {
     expect(vm.topic, 'topic is null — these tests are asserting on the early-return path').not.toBeNull()
   })
 
-  it('NO render root reaches an LLM client', async () => {
+  it('loading any root, or its static dependencies, acquires no spending authority', () => {
     const SRC = join(process.cwd(), 'src')
     const a = analyze(SRC, process.cwd())
 
     expect(a.parseFailures,
       `these reached files do not parse, so their edges vanish silently:\n  ${a.parseFailures.join('\n  ')}`,
     ).toEqual([])
-    expect(a.roots.length, 'found no render roots — this would pass vacuously').toBeGreaterThan(20)
-    expect(a.offenders, `render roots reach an LLM client:\n  ${a.offenders.join('\n  ')}`).toEqual([])
+    expect(a.roots.length, 'found no roots — this would pass vacuously').toBeGreaterThan(20)
+    expect(a.offenders, `loading these acquires spending authority:\n  ${a.offenders.join('\n  ')}`).toEqual([])
 
-    // Default-deny backstop: an unreached file must not even be ABLE to reach
-    // spending authority. agent.ts is the one module that legitimately holds it.
+    // Default-deny backstop, now covering workspace package sources too. This is
+    // EMPTY rather than allowlisting lib/studio/agent.ts: that module used to
+    // export a pre-constructed client, which was ambient authority for every
+    // importer and is how four POST-only routes spent on GET. Nothing in the
+    // app holds a client at module scope any more.
     expect(a.unreachedSpenders,
-      'a file the walk never opened can reach an LLM client — traversal broke, or a new off-graph spender appeared',
-    ).toEqual(['lib/studio/agent.ts'])
-
-    // Traversal canary. WorldMapClient is reachable ONLY through
-    // `dynamic(() => import(...))`; removing that edge loses it and 45 files
-    // behind it. (A barrel canary is deliberately absent — measured, removing
-    // the `export ... from` edge loses zero files, and a sentinel that cannot
-    // wake reads as coverage.)
-    expect(a.seen.has(join(SRC, 'app', '(legacy)', 'world', 'map', 'WorldMapClient.tsx')),
-      'the dynamic-import traversal edge regressed').toBe(true)
+      'a file the walk never opened can reach an LLM client',
+    ).toEqual([])
   })
 
-  // ── Adversarial corpus, by FAILURE CLASS ────────────────────────────────
-  // Six rounds of attack produced dozens of syntax variants. Keeping one test
-  // per variant would preserve a museum of fixed bugs; these are the semantic
-  // classes instead. Each builds a miniature src tree and asserts the analyzer
-  // reports an offender.
-  describe('the walk catches each way spending authority reaches a non-user surface', () => {
-    // Built by interpolation, never written literally: the repo-wide
-    // findDeadTestFiles check scans test sources for import specifiers as TEXT,
-    // so a literal relative specifier inside a fixture string reads to it as a
-    // real unresolvable import. (Same text-matching-instead-of-parsing bug this
-    // file spent six rounds removing, one level up — not mine to fix here. This
-    // comment cannot spell the offending form either, for the same reason.)
+  // ── Adversarial corpus, by EXECUTION CLASS ──────────────────────────────
+  // Not one test per syntax spelling — that would rebuild the museum of fixed
+  // bugs six rounds produced. One per way authority can be acquired before an
+  // explicit handler runs.
+  describe('acquiring authority before an explicit handler runs', () => {
     const imp = (what: string, spec: string) => `import ${what} from ` + `'${spec}'`
-    const SPEND = `${imp('Anthropic', '@anthropic-ai/sdk')}\nexport const c = new Anthropic({ apiKey: 'x' })\nexport const use = () => c`
+    const SDK = imp('Anthropic', '@anthropic-ai/sdk')
+    const SPEND = `${SDK}\nexport const c = new Anthropic({ apiKey: 'x' })\nexport const use = () => c`
+
+    const build = (files: Record<string, string>) => {
+      const dir = mkdtempSync(join(tmpdir(), 'spend-'))
+      for (const [rel, src] of Object.entries(files)) {
+        const p = join(dir, rel)
+        mkdirSync(dirname(p), { recursive: true })
+        writeFileSync(p, src, 'utf-8')
+      }
+      return dir
+    }
+
     const CASES: Array<[string, Record<string, string>]> = [
-      ['module-scope client reachable by GET', {
-        'app/api/x/route.ts': `${imp('Anthropic', '@anthropic-ai/sdk')}\nconst c = new Anthropic({apiKey:'x'})\nexport async function GET(){ return Response.json(!!c) }`,
+      ['route module-load acquisition', {
+        'src/app/api/x/route.ts': `${SDK}\nconst c = new Anthropic({apiKey:'x'})\nexport async function POST(){ return Response.json(!!c) }`,
       }],
-      ['spending helper called by GET', {
-        'app/api/x/route.ts': `${imp('{ use }', './h')}\nexport async function GET(){ return Response.json(!!use()) }`,
-        'app/api/x/h.ts': SPEND,
+      ['page/render acquisition', {
+        'src/app/p/page.tsx': `${imp('{ use }', '../h')}\nexport default function P(){ return use() ? null : null }`,
+        'src/app/h.ts': SPEND,
       }],
-      ['dynamic-import spending path from GET', {
-        'app/api/x/route.ts': `export async function GET(){ const m = await import('./h'); return Response.json(!!m) }`,
-        'app/api/x/h.ts': SPEND,
+      ['middleware acquisition', {
+        'src/middleware.ts': `${imp('{ use }', './h')}\nexport function middleware(){ return use() }`,
+        'src/h.ts': SPEND,
       }],
-      ['HEAD-only spending route', {
-        'app/api/x/route.ts': `${imp('Anthropic', '@anthropic-ai/sdk')}\nexport async function HEAD(){ return Response.json(!!new Anthropic({apiKey:'x'})) }`,
+      ['HEAD-only route acquisition', {
+        'src/app/api/x/route.ts': `${SDK}\nconst c = new Anthropic({apiKey:'x'})\nexport async function HEAD(){ return Response.json(!!c) }`,
       }],
-      ['OPTIONS-only spending route', {
-        'app/api/x/route.ts': `${imp('Anthropic', '@anthropic-ai/sdk')}\nexport async function OPTIONS(){ return Response.json(!!new Anthropic({apiKey:'x'})) }`,
+      ['OPTIONS-only route acquisition', {
+        'src/app/api/x/route.ts': `${SDK}\nconst c = new Anthropic({apiKey:'x'})\nexport async function OPTIONS(){ return Response.json(!!c) }`,
       }],
-      ['page/render spending path', {
-        'app/p/page.tsx': `${imp('{ use }', '../h')}\nexport default function P(){ return use() ? null : null }`,
-        'app/h.ts': SPEND,
+      ['dynamic transitive path from a render root', {
+        'src/app/p/page.tsx': `export default async function P(){ const m = await import('../h'); return m ? null : null }`,
+        'src/app/h.ts': SPEND,
       }],
-      ['the thesis-proposals spend moved back to module scope', {
-        'app/api/thesis-proposals/route.ts': `${imp('Anthropic', '@anthropic-ai/sdk')}\nexport async function GET(){ return Response.json(405) }\nexport async function POST(){ return Response.json(!!new Anthropic({apiKey:'x'})) }`,
+      ['module-scope singleton behind a static import', {
+        'src/app/api/x/route.ts': `${imp('{ c }', './h')}\nexport async function POST(){ return Response.json(!!c) }`,
+        'src/app/api/x/h.ts': SPEND,
       }],
-      ['a non-canonical GET export cannot hide it', {
-        'app/api/x/route.ts': `${imp('Anthropic', '@anthropic-ai/sdk')}\nconst h = async () => Response.json(!!new Anthropic({apiKey:'x'}))\nexport { h as GET }`,
+      ['helper/factory invoked during module evaluation', {
+        'src/app/api/x/route.ts': `${imp('{ make }', './h')}\nconst c = make()\nexport async function POST(){ return Response.json(!!c) }`,
+        'src/app/api/x/h.ts': `${SDK}\nexport const make = () => new Anthropic({apiKey:'x'})`,
+      }],
+      ['top-level await acquisition in a route', {
+        'src/app/api/x/route.ts': `const { default: A } = await import('@anthropic-ai/sdk')\nexport async function POST(){ return Response.json(!!new A({apiKey:'x'})) }`,
       }],
     ]
 
-    it.each(CASES)('catches: %s', (_name, files) => {
-      const dir = mkdtempSync(join(tmpdir(), 'spend-'))
+    it.each(CASES)('catches: %s', (_n, files) => {
+      const dir = build(files)
       try {
-        for (const [rel, src] of Object.entries(files)) {
-          const p = join(dir, rel)
-          mkdirSync(dirname(p), { recursive: true })
-          writeFileSync(p, src, 'utf-8')
-        }
-        expect(analyze(dir).offenders.length, 'this should have been reported').toBeGreaterThan(0)
+        expect(analyze(join(dir, 'src'), dir, dir).offenders.length,
+          'this should have been reported').toBeGreaterThan(0)
       } finally { rmSync(dir, { recursive: true, force: true }) }
     })
 
-    // The mirror image, and the point of the whole simplification: a route that
-    // does NOT expose a non-user method may hold spending authority. This is the
-    // real api/thesis-proposals shape. If this ever goes red the analyzer has
-    // become over-strict and every POST route in the app is unbuildable.
-    it('does NOT flag a POST-only route that acquires the SDK inside POST', () => {
-      const dir = mkdtempSync(join(tmpdir(), 'spend-'))
+    // transpilePackages compiles workspace packages INTO the app, so they are in
+    // the executable graph and the authority graph must follow that edge. This
+    // fixture is a real miniature workspace — resolution comes from the
+    // package's own `exports`, never a list of packages presumed safe.
+    it('catches: workspace-package transitive path', () => {
+      const dir = build({
+        'pnpm-workspace.yaml': `packages:\n  - 'packages/*'\n  - 'apps/*'\n`,
+        'packages/foo/package.json': JSON.stringify({ name: '@common/foo', exports: { '.': { import: './src/index.ts' } } }),
+        'packages/foo/src/index.ts': SPEND,
+        'apps/w/src/app/p/page.tsx': `${imp('{ use }', '@common/foo')}\nexport default function P(){ return use() ? null : null }`,
+      })
       try {
-        const p = join(dir, 'app/api/x/route.ts')
-        mkdirSync(dirname(p), { recursive: true })
-        writeFileSync(p, `export async function POST(){ const { default: A } = await import('@anthropic-ai/sdk'); return Response.json(!!new A({apiKey:'x'})) }`, 'utf-8')
-        expect(analyze(dir).offenders).toEqual([])
+        const a = analyze(join(dir, 'apps/w/src'), join(dir, 'apps/w'), dir)
+        expect(a.offenders.length, 'the workspace-package edge was not followed').toBeGreaterThan(0)
+      } finally { rmSync(dir, { recursive: true, force: true }) }
+    })
+
+    // THE INVERSE CONTROL, and the point of the whole architecture: a route may
+    // acquire authority inside explicit handler execution. If this goes red the
+    // analyzer has become over-strict and no spending route is buildable.
+    it('does NOT flag a route that acquires its client inside the handler', () => {
+      const dir = build({
+        'src/app/api/x/route.ts': `export async function POST(){ const { default: A } = await import('@anthropic-ai/sdk'); return Response.json(!!new A({apiKey:'x'})) }`,
+      })
+      try {
+        expect(analyze(join(dir, 'src'), dir, dir).offenders).toEqual([])
       } finally { rmSync(dir, { recursive: true, force: true }) }
     })
   })

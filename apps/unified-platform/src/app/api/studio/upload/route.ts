@@ -1,5 +1,4 @@
 import { NextRequest, NextResponse } from 'next/server'
-import { anthropic } from '@/lib/studio/agent'
 import { prisma } from '@/lib/studio/db'
 
 const ACCEPTED_MEDIA_TYPES = new Set(['image/jpeg', 'image/png', 'image/webp', 'image/gif'])
@@ -44,6 +43,13 @@ export async function POST(req: NextRequest) {
 
   let text: string
   try {
+    // Spending authority is acquired INSIDE the handler, after the request has
+  // crossed this route's guards. It must never be held at module scope: Next
+  // evaluates a route module's whole static graph on ANY request that routes to
+  // it — including the GET/HEAD it answers 405 to, and twice during `next build`
+  // — so a module-scope client is constructed on traffic nobody chose to send.
+    const { default: Anthropic } = await import('@anthropic-ai/sdk')
+    const anthropic = new Anthropic({ apiKey: process.env.ANTHROPIC_API_KEY })
     const response = await anthropic.messages.create({
       model: 'claude-sonnet-5',
       max_tokens: 512,

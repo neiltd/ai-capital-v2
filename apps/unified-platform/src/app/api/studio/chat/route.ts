@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server'
-import { anthropic, buildSystemPrompt, ChatMessage } from '@/lib/studio/agent'
+import { buildSystemPrompt, type ChatMessage } from '@/lib/studio/agent'
 import { ScoredStory } from '@/lib/studio/topic-engine'
 import { checkRateLimit } from '@/lib/rate-limit'
 
@@ -45,6 +45,13 @@ export async function POST(req: NextRequest) {
 
   let stream
   try {
+    // Spending authority is acquired INSIDE the handler, after the request has
+  // crossed this route's guards. It must never be held at module scope: Next
+  // evaluates a route module's whole static graph on ANY request that routes to
+  // it — including the GET/HEAD it answers 405 to, and twice during `next build`
+  // — so a module-scope client is constructed on traffic nobody chose to send.
+    const { default: Anthropic } = await import('@anthropic-ai/sdk')
+    const anthropic = new Anthropic({ apiKey: process.env.ANTHROPIC_API_KEY })
     stream = await anthropic.messages.stream({
       model: 'claude-sonnet-5',
       max_tokens: 1024,

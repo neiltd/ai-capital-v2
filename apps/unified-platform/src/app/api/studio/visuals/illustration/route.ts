@@ -1,4 +1,3 @@
-import OpenAI from 'openai'
 import { NextRequest, NextResponse } from 'next/server'
 import { checkRateLimit } from '@/lib/rate-limit'
 
@@ -23,6 +22,12 @@ export async function POST(req: NextRequest) {
   }
 
   // Instantiate lazily so build-time static analysis doesn't require OPENAI_API_KEY
+  // Spending authority is acquired INSIDE the handler, after the request has
+  // crossed this route's guards. It must never be held at module scope: Next
+  // evaluates a route module's whole static graph on ANY request that routes to
+  // it — including the GET/HEAD it answers 405 to, and twice during `next build`
+  // — so a module-scope client is constructed on traffic nobody chose to send.
+  const { default: OpenAI } = await import('openai')
   const openai = new OpenAI({ apiKey: process.env.OPENAI_API_KEY ?? '' })
 
   const enhanced = `${prompt}. Style: clean modern digital art, dark background (#09090b), vibrant accent colors, tech aesthetic, cinematic composition, no text or words in image.`
