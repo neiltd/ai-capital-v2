@@ -176,21 +176,31 @@ describe('rendering /studio/chat does not spend', () => {
       return hits
     }
 
-    /** Does this module export a binding named GET, in ANY form? */
+    /**
+     * Methods that make a route file a RENDER ROOT: those served without an
+     * explicit user action. GET is the obvious one; HEAD is crawler/prefetch
+     * traffic and OPTIONS is browser CORS preflight, so a spend in either bills
+     * on unauthenticated automated requests and must be walked.
+     *
+     * A route exporting ONLY HEAD used to be invisible twice over — not a root,
+     * and excluded from coverage by app/api/** — which is the same double blind
+     * found for page.tsx-under-api and for non-canonical GET exports.
+     */
+    const ROOT_METHOD = /^(?:GET|HEAD|OPTIONS)$/
     const exportsGET = (sf: any): boolean => {
       let found = false
       each(sf, n => {
-        if (ts.isFunctionDeclaration(n) && n.name?.text === 'GET' && isExported(n)) found = true
+        if (ts.isFunctionDeclaration(n) && n.name && ROOT_METHOD.test(n.name.text) && isExported(n)) found = true
         if (ts.isVariableStatement(n) && isExported(n)) {
           for (const d of n.declarationList.declarations) {
-            if (ts.isIdentifier(d.name) && d.name.text === 'GET') found = true
+            if (ts.isIdentifier(d.name) && ROOT_METHOD.test(d.name.text)) found = true
             if (ts.isObjectBindingPattern(d.name))
-              for (const e of d.name.elements) if (ts.isIdentifier(e.name) && e.name.text === 'GET') found = true
+              for (const e of d.name.elements) if (ts.isIdentifier(e.name) && ROOT_METHOD.test(e.name.text)) found = true
           }
         }
         if (ts.isExportDeclaration(n)) {
           if (n.exportClause && ts.isNamedExports(n.exportClause)) {
-            for (const e of n.exportClause.elements) if (e.name.text === 'GET') found = true
+            for (const e of n.exportClause.elements) if (ROOT_METHOD.test(e.name.text)) found = true
           } else if (!n.exportClause) found = true   // `export * from` — cannot know; assume it does
         }
       })
@@ -216,10 +226,14 @@ describe('rendering /studio/chat does not spend', () => {
      * never as permit. A non-GET handler that cannot be located simply has no
      * span, so the spend counts.
      */
-    const NON_GET = /^(?:POST|PUT|PATCH|DELETE|HEAD|OPTIONS)$/
+    // HEAD and OPTIONS are NOT user actions — OPTIONS is browser CORS preflight
+    // and HEAD is crawler/prefetch traffic, so a spend in either bills on
+    // unauthenticated automated requests. Only genuinely user-initiated methods
+    // can justify an exemption.
+    const NON_GET = /^(?:POST|PUT|PATCH|DELETE)$/
+    const ASSIGN = (k: number) => k >= ts.SyntaxKind.FirstAssignment && k <= ts.SyntaxKind.LastAssignment
+
     const nonGetSpans = (sf: any): Array<[number, number]> => {
-      // Names declared at module scope. A handler that ASSIGNS to one of these
-      // can hand its client to GET, so its span stops being an exemption.
       const moduleScope = new Set<string>()
       for (const st of sf.statements) {
         if (ts.isVariableStatement(st))
@@ -227,21 +241,59 @@ describe('rendering /studio/chat does not spend', () => {
             if (ts.isIdentifier(d.name)) moduleScope.add(d.name.text)
         if ((ts.isFunctionDeclaration(st) || ts.isClassDeclaration(st)) && st.name) moduleScope.add(st.name.text)
       }
-      const leaks = (node: any): boolean => {
+      /**
+       * Does anything in this handler let a value outlive the request, or run at
+       * module load? Any of those and the span stops being an exemption.
+       *
+       * WARDEN round 6 listed five escapes the first version missed: it required
+       * `ts.isIdentifier(m.left)` and `EqualsToken`, so `cache.client = …`,
+       * `globalThis.x ??= …`, `pool.push(…)` and `;[c] = [ … ]` were all
+       * invisible, as was an IIFE that runs at module load while sitting
+       * lexically inside the handler.
+       */
+      const escapes = (node: any): boolean => {
+        const local = new Set<string>()
+        each(node, m => { if (ts.isVariableDeclaration(m) && ts.isIdentifier(m.name)) local.add(m.name.text) })
         let found = false
         each(node, m => {
-          if (ts.isBinaryExpression(m) && m.operatorToken.kind === ts.SyntaxKind.EqualsToken &&
-              ts.isIdentifier(m.left) && moduleScope.has(m.left.text)) found = true
+          // Any assignment operator, to anything that is not a local binding.
+          if (ts.isBinaryExpression(m) && ASSIGN(m.operatorToken.kind) &&
+              !(ts.isIdentifier(m.left) && local.has(m.left.text))) found = true
+          if (ts.isCallExpression(m)) {
+            // A method call on module state can stash a value: pool.push(client)
+            let root: any = ts.isPropertyAccessExpression(m.expression) ? m.expression.expression : null
+            while (root && ts.isPropertyAccessExpression(root)) root = root.expression
+            if (root && ts.isIdentifier(root) && moduleScope.has(root.text) && !local.has(root.text)) found = true
+          }
         })
         return found
       }
+      /**
+       * `export const POST = (() => { ... })()` is evaluated at MODULE LOAD, so
+       * a spend inside it runs on GET despite sitting lexically in a POST
+       * declarator. Only an IIFE in the initializer itself qualifies — a nested
+       * IIFE inside a handler BODY runs when the handler runs, which is why the
+       * first version of this check wrongly flagged the real thesis-proposals
+       * route for an ordinary local `(() => { try { ... } catch { ... } })()`.
+       */
+      const runsAtLoad = (d: any): boolean => {
+        if (!d.initializer || !ts.isCallExpression(d.initializer)) return false
+        const e = d.initializer.expression
+        const callee = ts.isParenthesizedExpression(e) ? e.expression : e
+        return ts.isFunctionExpression(callee) || ts.isArrowFunction(callee)
+      }
       const spans: Array<[number, number]> = []
-      const take = (n: any) => { if (!leaks(n)) spans.push([n.pos, n.end]) }
+      const take = (n: any) => { if (!escapes(n)) spans.push([n.pos, n.end]) }
       each(sf, n => {
         if (ts.isFunctionDeclaration(n) && n.name && NON_GET.test(n.name.text) && isExported(n)) take(n)
+        // WARDEN round 6: this used to hand `take` the whole VariableStatement
+        // while testing the DECLARATOR, so one declarator named POST exempted
+        // every SIBLING in the same const list. A module-scope client joined by
+        // a COMMA instead of a semicolon was exempt and spent on every GET —
+        // the design regressed to the defect it replaced, gated on punctuation.
         if (ts.isVariableStatement(n) && isExported(n))
           for (const d of n.declarationList.declarations)
-            if (ts.isIdentifier(d.name) && NON_GET.test(d.name.text)) take(n)
+            if (ts.isIdentifier(d.name) && NON_GET.test(d.name.text) && !runsAtLoad(d)) take(d)
       })
       return spans
     }
