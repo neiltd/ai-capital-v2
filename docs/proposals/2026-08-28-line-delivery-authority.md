@@ -470,6 +470,79 @@ Frozen and untouched: daily scheduler, Aug 26/27 reconciliation, queue cleanup,
 reconciler execution, thesis reconciliation, creator-studio migration, DB Phase
 2, claim governance.
 
+## L6a — Logical identity per notification type (REVISED, for review)
+
+Revision 2 proposed one universal identity — `stage + logical_date +
+content_hash`. **Withdrawn.** Content hash in the identity means rewording a
+message turns the same business event into a new notification, which is the
+opposite of what dedupe is for. Different notification classes have different
+business identities, so identity is defined per class and the retry key is
+derived from it.
+
+| Notification | Business event | `logical_key` | Notes |
+|---|---|---|---|
+| price alert | ticker crossed a threshold today | `alert:{ticker}:{kind}:{businessDate}` | `kind` distinguishes a price move from a news-velocity trigger; the price VALUE is evidence, not identity, so a further move the same day is the same event |
+| discovered trade | a paper position was opened | `discovery:{positionId}` | the durable DB key. No date — a position is opened once, and a re-notification would only ever be a duplicate |
+| scenario signal | today's actionable trade signals | `signals:{businessDate}` | **deliberately excludes content.** This is the fix for the stage-retry defect: today three BullMQ attempts can send three messages with *different* LLM-generated content for one logical day |
+| stale-source warning | a source has been stale as of today | `stale:{source}:{businessDate}` | **per source**, not per source-set as today. If a second source degrades later the same day it is a new business event and must be notifiable |
+| pipeline watchdog | pipeline is in state S for logical run date D | `watchdog:{logicalDate}:{state}` | matches the existing marker `$LOGICAL-$STATE`, which is already the right identity |
+| catch-up failure | the daily pipeline has failed today | `catchup:{businessDate}` | one per day regardless of failure count; the count is evidence |
+
+**Retry key is derived, not minted:** `retry_key = uuidv5(NS_LINE, logical_key)`.
+
+This is the piece that makes the design survive BullMQ. Stage-level retry already
+gives three attempts (L0.c), and a re-attempt starts a fresh process with no
+memory of the previous one. A *minted* key would have to be recovered from the
+ledger before every attempt, and a ledger read that fails would silently mint a
+new one — producing exactly the duplicate this exists to prevent. A derived key
+is recomputable from the business event alone, so the same logical event always
+carries the same key even across process death.
+
+**Why deterministic derivation is safe here.** Identity is date-scoped for every
+class that can recur, so an intentional re-offer tomorrow produces a *different*
+logical key and therefore a different retry key. Within a business date, one
+accepted delivery per identity is exactly the dedupe rule we want, enforced by
+the partial unique index in L6.
+
+**Two things to confirm before implementation:**
+
+1. **LINE's retry-key honour window is finite** (documented as 24h at time of
+   writing). Beyond it a reused key is not deduplicated. Every identity above is
+   date-scoped, so this is consistent — but it must be verified against current
+   LINE documentation rather than assumed, and it means the retry key cannot be
+   relied on for de-duplication across days.
+2. **`businessDate` must be the business timezone date**, `America/Los_Angeles`
+   per the timezone decision, not the machine date. Two processes in different
+   timezones must derive the same key for the same event.
+
+---
+
+## Decisions recorded 2026-08-28
+
+Approved by Neil; captured here so the design is not re-litigated.
+
+1. **Suppressed-alert re-offer** — re-offer only if the condition still holds on
+   re-evaluation. No replay of stale threshold crossings. Evaluation history is
+   historical truth; notification eligibility is recomputed from current
+   conditions.
+2. **Missing production credentials** — `terminal_failure`, not suppression. But
+   **no recursive "LINE is broken, page me via LINE"** mechanism: surface it
+   through operational health / dashboard / logging.
+3. **Watchdog** — crosses the same notification semantic boundary; **no
+   last-resort raw curl bypass**. Its ledger persistence may be best-effort so
+   losing the primary database does not disable the watchdog. Same delivery
+   semantics, *not* the same persistence dependency — and that failure mode must
+   be designed explicitly before implementation.
+4. **Unmanaged cron daemons** — treated as **untrusted dormant execution
+   surfaces**, not merely "to be gated". Before deciding whether they survive,
+   determine whether the DAG already supersedes their schedules. If yes, retire
+   them; if they provide genuinely unique behaviour, bring that evidence back
+   before integrating. They remain stopped.
+5. **Daily scheduler** — stays frozen. The resurrection finding (L0.e) makes
+   restoring autonomous submission *less* attractive, not more.
+
+---
+
 ## Open decisions for Neil
 
 1. **Re-offer policy for suppressed alerts** (L3) — recommend: only if the
