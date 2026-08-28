@@ -204,6 +204,38 @@ export function getDashboardSummary(dbPath?: string): DashboardSummary {
  * 'timeout' so the dashboard shows a recognisable failure mode instead of a
  * forever-spinning row. Returns the IDs that were swept.
  */
+/**
+ * Identify runs that LOOK orphaned, without touching them.
+ *
+ * The read-only counterpart to `reapOrphans`. Same threshold semantics, a
+ * SELECT instead of an UPDATE.
+ *
+ * WHY THIS EXISTS. `/admin/pipeline` called `reapOrphans` from a server-
+ * component render, so loading the dashboard rewrote rows — a GET with a side
+ * effect, and one that would have overwritten preserved incident evidence on
+ * the next page view. Observing a problem and repairing it are different acts
+ * and belong to different callers.
+ *
+ * A dashboard's job is to SHOW that reconciliation is needed. Deciding that a
+ * run is truly dead belongs to the terminal-event reconciler, which reads live
+ * queue state rather than inferring death from a clock — see
+ * `packages/queue/src/reconcile.ts`. An age threshold cannot distinguish "the
+ * worker died" from "this stage legitimately takes seven hours", and on this
+ * deployment the machine also suspends, which stretches wall-clock duration
+ * without anything being wrong.
+ */
+export function findStaleRuns(maxAgeMs: number, dbPath?: string): PipelineRun[] {
+  if (!runStoreExists(dbPath)) return []
+  const db = openDbReadOnly(dbPath)
+  const cutoff = new Date(Date.now() - maxAgeMs).toISOString()
+  const rows = db.prepare(
+    `SELECT * FROM pipeline_runs
+      WHERE status = 'running' AND started_at < ?
+      ORDER BY started_at`,
+  ).all(cutoff) as Row[]
+  return rows.map(rowToRun)
+}
+
 export function reapOrphans(maxAgeMs: number, dbPath?: string): string[] {
   const db = openDb(dbPath)
   const cutoff = new Date(Date.now() - maxAgeMs).toISOString()

@@ -6,13 +6,29 @@
 export const dynamic = 'force-dynamic'
 export const revalidate = 0
 
-import { getDashboardSummary, reapOrphans, type PipelineRun, type PipelineRunStatus } from '@common/pipeline-runs'
+import { getDashboardSummary, findStaleRuns, type PipelineRun, type PipelineRunStatus } from '@common/pipeline-runs'
 import { PageHeader } from '@/components/capital/ui/PageHeader'
 import { StatCard } from '@/components/capital/ui/StatCard'
 
-// Mark anything stuck running > 6 hours as 'timeout'. The daily pipeline
-// itself is ~20-60 min end-to-end, so 6h is a generous SLA.
-const ORPHAN_REAP_MS = 6 * 60 * 60 * 1000
+// Runs still 'running' after 6 hours are SHOWN as needing reconciliation. The
+// daily pipeline is ~20-60 min end-to-end, so 6h is a generous SLA.
+//
+// This page no longer repairs them. It used to call reapOrphans() here, which
+// issued an UPDATE from a server-component render — so loading the dashboard
+// silently rewrote pipeline state, and would have overwritten rows being
+// preserved as incident evidence on the next page view.
+//
+// A GET must not mutate. Observing that a run looks dead and DECIDING that it
+// is dead are different acts belonging to different owners: the terminal-event
+// reconciler (packages/queue/src/reconcile.ts) owns the decision, because it
+// reads live queue state instead of inferring death from a clock. An age
+// threshold cannot tell "the worker died" from "this stage legitimately ran
+// long", and on this deployment the machine suspends, which stretches
+// wall-clock duration without anything being wrong.
+//
+// Until that reconciler is wired, this deliberately shows the problem and
+// leaves it unrepaired. No automatic reaper is better than a hidden one.
+const STALE_AFTER_MS = 6 * 60 * 60 * 1000
 
 // NOTE: tailwind.config.ts has no distinct "orange" signal token — the palette
 // only defines green/amber/red/blue signals (each with a `-soft` variant).
@@ -92,13 +108,13 @@ function EmptyCell() {
 }
 
 export default async function PipelineDashboardPage() {
-  // Reap any orphan runs older than the SLA before we read — so dead "running"
-  // rows from killed pipelines don't pollute the grid.
-  let reaped = 0
+  // READ-ONLY. Identify runs that look stale so the grid can flag them; do not
+  // touch them. findStaleRuns is a SELECT.
+  let stale: PipelineRun[] = []
   try {
-    reaped = reapOrphans(ORPHAN_REAP_MS).length
+    stale = findStaleRuns(STALE_AFTER_MS)
   } catch {
-    /* DB not initialised yet — first request before daily.sh ever ran */
+    /* store not initialised yet — nothing has run */
   }
 
   let summary
@@ -168,9 +184,9 @@ export default async function PipelineDashboardPage() {
             {lastAcrossAll.status}
           </span>
           <span className="text-text-muted"> ({timeAgo(lastAcrossAll.startedAt)})</span>
-          {reaped > 0 && (
+          {stale.length > 0 && (
             <span className="ml-3 text-amber-signal">
-              · {reaped} orphan run{reaped > 1 ? 's' : ''} reaped this load
+              · {stale.length} run{stale.length > 1 ? 's' : ''} stuck &gt;6h — reconciliation needed (not repaired)
             </span>
           )}
         </section>
