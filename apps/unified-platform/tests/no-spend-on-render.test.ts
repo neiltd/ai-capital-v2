@@ -218,12 +218,30 @@ describe('rendering /studio/chat does not spend', () => {
      */
     const NON_GET = /^(?:POST|PUT|PATCH|DELETE|HEAD|OPTIONS)$/
     const nonGetSpans = (sf: any): Array<[number, number]> => {
+      // Names declared at module scope. A handler that ASSIGNS to one of these
+      // can hand its client to GET, so its span stops being an exemption.
+      const moduleScope = new Set<string>()
+      for (const st of sf.statements) {
+        if (ts.isVariableStatement(st))
+          for (const d of st.declarationList.declarations)
+            if (ts.isIdentifier(d.name)) moduleScope.add(d.name.text)
+        if ((ts.isFunctionDeclaration(st) || ts.isClassDeclaration(st)) && st.name) moduleScope.add(st.name.text)
+      }
+      const leaks = (node: any): boolean => {
+        let found = false
+        each(node, m => {
+          if (ts.isBinaryExpression(m) && m.operatorToken.kind === ts.SyntaxKind.EqualsToken &&
+              ts.isIdentifier(m.left) && moduleScope.has(m.left.text)) found = true
+        })
+        return found
+      }
       const spans: Array<[number, number]> = []
+      const take = (n: any) => { if (!leaks(n)) spans.push([n.pos, n.end]) }
       each(sf, n => {
-        if (ts.isFunctionDeclaration(n) && n.name && NON_GET.test(n.name.text) && isExported(n)) spans.push([n.pos, n.end])
+        if (ts.isFunctionDeclaration(n) && n.name && NON_GET.test(n.name.text) && isExported(n)) take(n)
         if (ts.isVariableStatement(n) && isExported(n))
           for (const d of n.declarationList.declarations)
-            if (ts.isIdentifier(d.name) && NON_GET.test(d.name.text)) spans.push([n.pos, n.end])
+            if (ts.isIdentifier(d.name) && NON_GET.test(d.name.text)) take(n)
       })
       return spans
     }
@@ -299,7 +317,17 @@ describe('rendering /studio/chat does not spend', () => {
         const spans = onlySelf ? nonGetSpans(sf) : null
         const live = spans
           ? hits.filter(h => {
-              if (ts.isImportDeclaration(h) || ts.isExportDeclaration(h) || ts.isImportEqualsDeclaration(h)) return false
+              // A BOUND import (`import Anthropic from …`) does not spend by
+              // itself and is plausibly there for POST. A SIDE-EFFECT-ONLY
+              // import (`import '@anthropic-ai/sdk/shims/node'`) exists solely
+              // to execute code, and it executes on GET too.
+              // NB: this callback returns TRUE to KEEP a hit as an offender.
+              // A BOUND import (`import Anthropic from …`) does not spend by
+              // itself and is plausibly there for POST -> exempt. A
+              // SIDE-EFFECT-ONLY import (`import '@anthropic-ai/sdk/shims/node'`)
+              // exists solely to execute code, and it executes on GET too.
+              if (ts.isImportDeclaration(h)) return !h.importClause
+              if (ts.isExportDeclaration(h) || ts.isImportEqualsDeclaration(h)) return false
               return !spans.some(([a, b]) => h.pos >= a && h.end <= b)
             })
           : hits
