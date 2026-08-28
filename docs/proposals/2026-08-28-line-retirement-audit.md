@@ -1,7 +1,9 @@
 # LINE retirement audit — inventory and sequence
 
-**No code changes. Nothing implemented. LINE remains muted, the alerts agent
-unloaded, the daily scheduler frozen.**
+> **EXECUTED 2026-08-28.** The inventory below is the pre-retirement state and
+> is kept as the record of what was removed and why. See **OUTCOME** near the end
+> for what was actually done. The alerts agent and daily scheduler remain
+> unloaded; LINE is not muted any more because there is no channel left to mute.
 
 ## The decision this serves
 
