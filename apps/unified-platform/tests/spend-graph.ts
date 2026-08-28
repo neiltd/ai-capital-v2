@@ -1,42 +1,57 @@
-// THE INVARIANT
+// THE PROPERTY
 //
-//   Loading any route module, page/render module, middleware surface, or their
-//   static transitive dependencies must not acquire or invoke external spending
-//   authority. Explicit handler execution may acquire it inside the handler.
+//   Project-owned code that the dashboard build or a non-user request evaluates
+//   must not acquire or reference LLM SDK authority, EXCEPT structurally inside
+//   the body of an exported HTTP handler.
 //
-// WHY IT IS PHRASED AROUND *LOADING*. Six adversarial rounds were spent proving
-// "a GET cannot reach the client", and every design failed because it reasoned
-// about which HTTP method a route exports. That model was simply wrong:
+// WHY IT IS PHRASED AS PLACEMENT. Four designs died here, each a variant of
+// "this spend is fine because of WHERE it sits": a named file list, a lexical
+// POST-span analysis, a directory exclusion, and finally an `atModuleScope`
+// predicate. The last one failed because it asked "is this node inside a
+// function" and the analyzer used the answer as "does this run at module load".
+// Those diverge the moment a function is invoked during module evaluation —
+// `await boot()`, an async IIFE, a factory call — and answering that question
+// properly means building a call graph.
 //
-//   route module evaluation  ≠  handler invocation
+// So this does not ask what executes. It asks WHERE authority is allowed to
+// appear, and forbids it everywhere else. A helper, IIFE or factory in a route
+// file fails not because we proved it runs at load, but because authority is not
+// permitted there at all. That is an authority-placement policy; there is no
+// data-flow, aliasing or reachability analysis anywhere in this file.
 //
-// Next constructs the route module from the ALREADY-EVALUATED userland module
-// and only then resolves the method; the 405 for an unexported method is
-// synthesized afterwards. So every method a route does *not* export is still a
-// live edge into that module's entire static graph — and `next build` evaluates
-// it twice besides. Four POST-only routes were therefore constructing Anthropic
-// and OpenAI clients on any GET, while the checker reported green, because they
-// sat inside an `app/api/**` exclusion justified as "reached only by POST".
-//
-// That exclusion was the third incarnation of the same carve-out: first a named
-// file list, then a lexical POST-span analysis, then a directory. Each one was a
-// way of saying "this spend is fine because of WHERE it sits". All three broke.
-//
-// So the question is no longer "can GET reach it". It is "does merely loading
-// this module acquire authority". No method inspection, no escape analysis.
+// WHAT IT DELIBERATELY DOES NOT COVER
+//   - Subprocess/delegated authority (execFile/spawn of something that spends).
+//     Tracked separately as W5; spending authority is a strictly larger set than
+//     SDK reference, and conflating them turns this into "detect every side
+//     effect".
+//   - Third-party package internals. Traversal stops at the project boundary.
+//   - Test/tooling execution (vitest configs and their imports). That belongs to
+//     the test-egress/isolation boundary, not to the dashboard property.
 
 import ts from 'typescript'
-import { readFileSync, readdirSync, statSync, existsSync } from 'node:fs'
-import { join, dirname, resolve, sep } from 'node:path'
+import { readFileSync, readdirSync, statSync, existsSync, realpathSync } from 'node:fs'
+import { join, resolve, sep } from 'node:path'
 
 const SDK = /^(?:@anthropic-ai\/(?:sdk|bedrock-sdk|vertex-sdk)|openai|@ai-sdk\/(?:anthropic|openai))(?:\/|$)/
 const HOST = /api\.(?:anthropic|openai)\.com/
 
-/** Next file conventions that produce a response without a user action. */
+/** Next conventions that render without a user action. */
 const RENDER_ROOT = /(?:^|[\\/])(page|layout|template|loading|error|global-error|not-found|default|sitemap|robots|manifest|opengraph-image|twitter-image|icon|apple-icon)\.(?:[mc]?[jt]sx?)$/
-/** EVERY route file is a root. Which methods it exports is deliberately not consulted. */
+/** EVERY route file is a root; which methods it exports is never consulted. */
 const ROUTE_FILE = /(?:^|[\\/])route\.(?:[mc]?[jt]sx?)$/
 const SRC_FILE = /\.(?:[mc]?[jt]sx?)$/
+/**
+ * The ONLY exported bindings whose body may hold authority — methods a person
+ * has to deliberately invoke.
+ *
+ * GET/HEAD/OPTIONS are excluded on purpose. Which methods a route exports is
+ * never consulted when deciding whether the module is a root (every route file
+ * is), but it decides which handler BODY is a permitted location: a GET is the
+ * original incident shape, HEAD is crawler/prefetch traffic and OPTIONS is CORS
+ * preflight, so authority inside those bodies bills on requests nobody chose to
+ * send.
+ */
+const USER_METHOD = /^(?:POST|PUT|PATCH|DELETE)$/
 
 const parse = (file: string) =>
   ts.createSourceFile(file, readFileSync(file, 'utf-8'), ts.ScriptTarget.Latest, true,
@@ -47,22 +62,7 @@ const each = (n: ts.Node, fn: (n: ts.Node) => void) => {
   walk(n)
 }
 
-/**
- * Is this node evaluated when the module is LOADED, rather than when something
- * is later called? True iff no function-like ancestor encloses it.
- *
- * This is the one positional question in the file, and it is the invariant's own
- * distinction — module evaluation versus invocation — not a reconstruction of
- * escape analysis. It asks nothing about data flow, aliasing or reachability.
- */
-function atModuleScope(n: ts.Node): boolean {
-  for (let p = n.parent; p; p = p.parent) {
-    if (ts.isFunctionDeclaration(p) || ts.isFunctionExpression(p) || ts.isArrowFunction(p) ||
-        ts.isMethodDeclaration(p) || ts.isConstructorDeclaration(p) ||
-        ts.isGetAccessorDeclaration(p) || ts.isSetAccessorDeclaration(p)) return false
-  }
-  return true
-}
+const isExported = (n: any) => n.modifiers?.some((m: any) => m.kind === ts.SyntaxKind.ExportKeyword)
 
 const callSpec = (n: any): string | null => {
   const isImp = n.expression?.kind === ts.SyntaxKind.ImportKeyword
@@ -72,101 +72,91 @@ const callSpec = (n: any): string | null => {
   return (isImp || isReq) && lit ? a.text : null
 }
 
-export interface Edge { spec: string; static: boolean; atLoad: boolean }
-
-/** Every specifier whose module is evaluated at runtime, tagged by edge kind. */
-export function edges(sf: ts.SourceFile): Edge[] {
-  const out: Edge[] = []
+/** Every specifier whose module is evaluated at runtime. Type-only is erased. */
+export function specifiers(sf: ts.SourceFile): string[] {
+  const out: string[] = []
   each(sf, (n: any) => {
     if (ts.isImportDeclaration(n) && ts.isStringLiteral(n.moduleSpecifier)) {
-      if (!n.importClause?.isTypeOnly) out.push({ spec: n.moduleSpecifier.text, static: true, atLoad: true })
+      if (!n.importClause?.isTypeOnly) out.push(n.moduleSpecifier.text)
     } else if (ts.isExportDeclaration(n) && n.moduleSpecifier && ts.isStringLiteral(n.moduleSpecifier)) {
-      if (!n.isTypeOnly) out.push({ spec: n.moduleSpecifier.text, static: true, atLoad: true })
+      if (!n.isTypeOnly) out.push(n.moduleSpecifier.text)
     } else if (ts.isImportEqualsDeclaration(n) && ts.isExternalModuleReference(n.moduleReference) &&
                ts.isStringLiteral(n.moduleReference.expression)) {
-      out.push({ spec: n.moduleReference.expression.text, static: true, atLoad: true })
+      out.push(n.moduleReference.expression.text)
     } else if (ts.isCallExpression(n)) {
-      const c = callSpec(n)
-      if (c) out.push({ spec: c, static: false, atLoad: atModuleScope(n) })
+      const c = callSpec(n); if (c) out.push(c)
     }
   })
   return out
 }
 
-/** Spend-capable nodes, with whether each is evaluated at module load. */
-export function spendNodes(sf: ts.SourceFile): Array<{ atLoad: boolean }> {
-  const hits: Array<{ atLoad: boolean }> = []
-  const hit = (n: ts.Node) => hits.push({ atLoad: atModuleScope(n) })
+/** Nodes that reference SDK authority, with their source positions. */
+export function spendNodes(sf: ts.SourceFile): ts.Node[] {
+  const hits: ts.Node[] = []
   each(sf, (n: any) => {
     if ((ts.isImportDeclaration(n) || ts.isExportDeclaration(n)) &&
         n.moduleSpecifier && ts.isStringLiteral(n.moduleSpecifier)) {
       const typeOnly = ts.isImportDeclaration(n) ? n.importClause?.isTypeOnly : n.isTypeOnly
-      if (!typeOnly && SDK.test(n.moduleSpecifier.text)) hit(n)
+      if (!typeOnly && SDK.test(n.moduleSpecifier.text)) hits.push(n)
     } else if (ts.isImportEqualsDeclaration(n) && ts.isExternalModuleReference(n.moduleReference) &&
                ts.isStringLiteral(n.moduleReference.expression) && SDK.test(n.moduleReference.expression.text)) {
-      hit(n)
+      hits.push(n)
     } else if (ts.isCallExpression(n)) {
       const c = callSpec(n)
-      if (c && SDK.test(c)) hit(n)
-      if (ts.isIdentifier(n.expression) && /^create(?:Anthropic|OpenAI)$/.test(n.expression.text)) hit(n)
+      if (c && SDK.test(c)) hits.push(n)
+      if (ts.isIdentifier(n.expression) && /^create(?:Anthropic|OpenAI)$/.test(n.expression.text)) hits.push(n)
     } else if (ts.isNewExpression(n) &&
                ((ts.isIdentifier(n.expression) && /^(?:Anthropic|OpenAI)$/.test(n.expression.text)) ||
                 (ts.isPropertyAccessExpression(n.expression) && /^(?:Anthropic|OpenAI)$/.test(n.expression.name.text)))) {
-      hit(n)
+      hits.push(n)
     } else if ((ts.isStringLiteral(n) || ts.isNoSubstitutionTemplateLiteral(n)) && HOST.test(n.text)) {
-      hit(n)
+      hits.push(n)
     } else if (ts.isTemplateExpression(n) && HOST.test(n.getText())) {
-      hit(n)
+      hits.push(n)
     }
   })
   return hits
 }
 
 /**
- * Workspace packages listed in `transpilePackages` are compiled INTO the app, so
- * they are part of the executable graph and the authority graph must follow
- * them. Resolution is derived from each package's own `exports`/`main` — the
- * question is "can the real build resolve this?", never a hardcoded allowlist of
- * packages presumed safe.
+ * Spans of the BODIES of exported HTTP handlers — the only place a route file
+ * may reference SDK authority.
+ *
+ * Body, not declaration: a spend in a default parameter value or a decorator
+ * sits outside the body and is therefore an offence, with no special case.
+ * A handler whose body cannot be located contributes no span, so anything in
+ * that file is an offence — uncertainty fails closed.
  */
-function workspacePackages(repo: string): Map<string, string> {
-  const map = new Map<string, string>()
-  const wsFile = join(repo, 'pnpm-workspace.yaml')
-  const groups = existsSync(wsFile)
-    ? [...readFileSync(wsFile, 'utf-8').matchAll(/^\s*-\s*['"]?([^'"\n*]+)\/\*/gm)].map(m => m[1].trim())
-    : ['apps', 'packages']
-  for (const g of groups) {
-    const dir = join(repo, g)
-    if (!existsSync(dir)) continue
-    for (const name of readdirSync(dir)) {
-      const pj = join(dir, name, 'package.json')
-      if (!existsSync(pj)) continue
-      try {
-        const j = JSON.parse(readFileSync(pj, 'utf-8'))
-        if (j.name) map.set(j.name, join(dir, name))
-      } catch { /* unparseable package.json is not a module edge */ }
-    }
-  }
-  return map
+function handlerBodies(sf: ts.SourceFile): Array<[number, number]> {
+  const spans: Array<[number, number]> = []
+  const byName = new Map<string, ts.Node>()
+  const take = (fn: any) => { if (fn?.body) spans.push([fn.body.pos, fn.body.end]) }
+
+  each(sf, (n: any) => {
+    if (ts.isFunctionDeclaration(n) && n.name) byName.set(n.name.text, n)
+    if (ts.isVariableStatement(n))
+      for (const d of n.declarationList.declarations)
+        if (ts.isIdentifier(d.name) && d.initializer &&
+            (ts.isArrowFunction(d.initializer) || ts.isFunctionExpression(d.initializer)))
+          byName.set(d.name.text, d.initializer)
+  })
+  each(sf, (n: any) => {
+    // export async function POST() {}
+    if (ts.isFunctionDeclaration(n) && n.name && USER_METHOD.test(n.name.text) && isExported(n)) take(n)
+    // export const POST = async () => {}
+    if (ts.isVariableStatement(n) && isExported(n))
+      for (const d of n.declarationList.declarations)
+        if (ts.isIdentifier(d.name) && USER_METHOD.test(d.name.text)) take(d.initializer)
+    // export { POST } / export { h as POST } — resolve back to the local binding
+    if (ts.isExportDeclaration(n) && n.exportClause && ts.isNamedExports(n.exportClause))
+      for (const e of n.exportClause.elements)
+        if (USER_METHOD.test(e.name.text)) take(byName.get((e.propertyName ?? e.name).text))
+  })
+  return spans
 }
 
-function resolveWorkspace(pkgDir: string, subpath: string): string | null {
-  let pj: any
-  try { pj = JSON.parse(readFileSync(join(pkgDir, 'package.json'), 'utf-8')) } catch { return null }
-  const key = subpath ? `./${subpath}` : '.'
-  const pick = (v: any): string | null =>
-    typeof v === 'string' ? v
-    : v && typeof v === 'object' ? (pick(v.import) ?? pick(v.default) ?? pick(v.require) ?? pick(v.types))
-    : null
-  let target = pj.exports ? pick(pj.exports[key]) : null
-  if (!target && !subpath) target = pj.main ?? null
-  if (!target && subpath) target = `./${subpath}`
-  if (!target) return null
-  const base = resolve(pkgDir, target)
-  for (const c of [base, ...['ts', 'tsx', 'js', 'jsx', 'mjs', 'mts', 'cjs', 'cts'].map(x => `${base}.${x}`)])
-    if (existsSync(c) && statSync(c).isFile()) return c
-  return null
-}
+const inside = (n: ts.Node, spans: Array<[number, number]>) =>
+  spans.some(([a, b]) => n.pos >= a && n.end <= b)
 
 export interface Analysis {
   roots: string[]
@@ -174,95 +164,115 @@ export interface Analysis {
   offenders: string[]
   unreachedSpenders: string[]
   parseFailures: string[]
+  unresolved: string[]
 }
 
-export function analyze(SRC: string, projectRoot?: string, repoRoot?: string): Analysis {
-  const REPO = repoRoot ?? resolve(SRC, '..', '..', '..')
-  const WS = workspacePackages(REPO)
-
-  const resolveSpec = (from: string, spec: string): string | null => {
-    if (spec.startsWith('@/') || spec.startsWith('.')) {
-      const base = spec.startsWith('@/') ? join(SRC, spec.slice(2)) : resolve(dirname(from), spec)
-      // next.config.mjs declares extensionAlias for '.js' only, so webpack
-      // prefers the TS source for that specifier and the walk must agree.
-      const aliased = /\.js$/.test(base) ? [base.replace(/\.js$/, '.ts'), base.replace(/\.js$/, '.tsx')] : []
-      const exts = ['ts', 'tsx', 'js', 'jsx', 'mjs', 'mts', 'cjs', 'cts']
-      for (const c of [...aliased, base, ...exts.map(x => `${base}.${x}`), ...exts.map(x => join(base, `index.${x}`))])
-        if (existsSync(c) && statSync(c).isFile()) return c
-      return null
+/**
+ * Module resolution is DELEGATED to the TypeScript compiler using the project's
+ * own tsconfig, rather than approximated. A hand-rolled resolver had already
+ * grown wrong in four ways (missing index fallback, `main`-less packages,
+ * conditional exports, wildcard subpaths) and some of those only looked safe
+ * because the backstop caught what traversal missed.
+ */
+function compilerOptions(projectRoot?: string): ts.CompilerOptions {
+  if (projectRoot) {
+    const cfg = ts.findConfigFile(projectRoot, ts.sys.fileExists, 'tsconfig.json')
+    if (cfg) {
+      const read = ts.readConfigFile(cfg, ts.sys.readFile)
+      return ts.parseJsonConfigFileContent(read.config, ts.sys, projectRoot).options
     }
-    // Bare specifier: a workspace package is part of the build graph, anything
-    // else (react, next, the SDKs themselves) is a leaf.
-    const m = spec.match(/^(@[^/]+\/[^/]+|[^@][^/]*)(?:\/(.*))?$/)
-    if (!m) return null
-    const dir = WS.get(m[1])
-    return dir ? resolveWorkspace(dir, m[2] ?? '') : null
+  }
+  return { moduleResolution: ts.ModuleResolutionKind.Bundler, allowJs: true }
+}
+
+export function analyze(SRC_IN: string, projectRoot?: string, repoRoot?: string): Analysis {
+  // Canonicalise before any prefix comparison. On macOS /tmp and /var are
+  // symlinks, so a path from mkdtemp does not string-prefix its own realpath and
+  // every ownership check silently answers "not ours".
+  const canon = (p: string) => { try { return realpathSync(p) } catch { return p } }
+  const SRC = canon(SRC_IN)
+  const REPO = canon(repoRoot ?? resolve(SRC, '..', '..', '..'))
+  projectRoot = projectRoot ? canon(projectRoot) : projectRoot
+  const OPTS = compilerOptions(projectRoot)
+  // A fixture tree has no tsconfig; give it the same `@/*` convention the app uses.
+  if (!OPTS.paths) { OPTS.baseUrl = projectRoot ?? SRC; OPTS.paths = { '@/*': [`${SRC}/*`] } }
+
+  const unresolved: string[] = []
+  const owned = (f: string): boolean => {
+    let rp: string
+    try { rp = realpathSync(f) } catch { return false }
+    return rp.startsWith(REPO + sep) && !rp.includes(`${sep}node_modules${sep}`)
+  }
+  const resolveSpec = (from: string, spec: string): string | null => {
+    const r = ts.resolveModuleName(spec, from, OPTS, ts.sys)
+    const f = r.resolvedModule?.resolvedFileName
+    if (!f) { if (spec.startsWith('.') || spec.startsWith('@/')) unresolved.push(`${from} -> ${spec}`); return null }
+    // Traversal stops at the project boundary. A workspace package is symlinked
+    // into node_modules, so realpath decides ownership, not the literal path.
+    return owned(f) ? realpathSync(f) : null
   }
 
   const roots: string[] = []
-  const pageRoots = new Set<string>()
+  const routeRoots = new Set<string>()
   const appDir = join(SRC, 'app')
   const collect = (d: string) => {
     for (const e of readdirSync(d)) {
       const p = join(d, e)
       if (statSync(p).isDirectory()) { collect(p); continue }
-      if (RENDER_ROOT.test(p)) { roots.push(p); pageRoots.add(p); continue }
-      if (ROUTE_FILE.test(p)) roots.push(p)   // unconditional — no method inspection
+      if (RENDER_ROOT.test(p)) { roots.push(p); continue }
+      if (ROUTE_FILE.test(p)) { roots.push(p); routeRoots.add(p) }
     }
   }
   if (existsSync(appDir)) collect(appDir)
   for (const base of [SRC, projectRoot].filter(Boolean) as string[])
     for (const conv of ['middleware', 'instrumentation'])
       for (const ext of ['ts', 'tsx', 'js', 'mjs'])
-        { const p = join(base, `${conv}.${ext}`); if (existsSync(p)) { roots.push(p); pageRoots.add(p) } }
+        { const p = join(base, `${conv}.${ext}`); if (existsSync(p)) roots.push(p) }
+  // Build-time surfaces: evaluated by `next build` before any request exists.
+  // Test/tooling configs are deliberately NOT here — that is the test-egress
+  // boundary, and mislabelling it as a dashboard property would hide both.
+  if (projectRoot)
+    for (const c of ['next.config', 'tailwind.config', 'postcss.config'])
+      for (const ext of ['ts', 'mts', 'cts', 'js', 'mjs', 'cjs'])
+        { const p = join(projectRoot, `${c}.${ext}`); if (existsSync(p)) roots.push(p) }
 
   const seen = new Set<string>()
   const offenders: string[] = []
   const parseFailures: string[] = []
-  const rel = (f: string) => f.startsWith(SRC + sep) ? f.slice(SRC.length + 1) : f.slice(REPO.length + 1)
+  const rel = (f: string) => f.startsWith(SRC + sep) ? f.slice(SRC.length + 1)
+                           : f.startsWith(REPO + sep) ? f.slice(REPO.length + 1) : f
 
-  /**
-   * `mode` is the evaluation class of the ROOT this walk started from.
-   *
-   *  'render' — a page/layout/middleware. The whole module, render function
-   *             included, runs on a request nobody chose to send, so EVERY spend
-   *             counts and every edge is followed.
-   *  'load'   — a route module. Only its module scope runs on a bare load, so in
-   *             the ROOT FILE only load-time spends count and only load-time
-   *             edges are followed. That is what permits the sanctioned pattern:
-   *             `await import('@anthropic-ai/sdk')` inside a handler.
-   *
-   * Past the root, 'load' becomes 'render': we cannot know whether the root calls
-   * an imported helper during module evaluation, so any spend in a statically
-   * reached module counts. The practical consequence is deliberate — spending
-   * authority may only be acquired inline in a handler, never parked in a shared
-   * module. A shared pre-constructed client is ambient authority for every
-   * importer, which is exactly how four routes ended up spending on GET.
-   */
-  const visit = (file: string, chain: string[], mode: 'render' | 'load') => {
-    const key = `${mode}:${file}`
-    if (seen.has(key)) return
-    seen.add(key)
+  const visit = (file: string, chain: string[], isRouteRoot: boolean) => {
+    if (seen.has(file)) return
     seen.add(file)
-    if (!SRC_FILE.test(file)) return          // .css / .json import targets
+    if (!SRC_FILE.test(file)) return                 // .css / .json import targets
     const sf = parse(file)
     if ((sf as any).parseDiagnostics?.length) parseFailures.push(rel(file))
 
     const hits = spendNodes(sf)
-    const live = mode === 'load' ? hits.filter(h => h.atLoad) : hits
-    if (live.length) offenders.push([...chain, file].map(rel).join(' -> '))
+    // THE POSITIVE RULE. In a route root, authority is permitted only inside an
+    // exported handler body. Everywhere else — including every module a route
+    // reaches — it is not permitted at all, which is what stops authority being
+    // parked in a shared module.
+    const bad = isRouteRoot ? hits.filter(h => !inside(h, handlerBodies(sf))) : hits
+    if (bad.length) offenders.push([...chain, file].map(rel).join(' -> '))
 
-    for (const e of edges(sf)) {
-      if (mode === 'load' && !e.static && !e.atLoad) continue   // deferred to invocation
-      const next = resolveSpec(file, e.spec)
-      if (next) visit(next, [...chain, file], 'render')
+    for (const spec of specifiers(sf)) {
+      const next = resolveSpec(file, spec)
+      if (next) visit(next, [...chain, file], false)
     }
   }
-  for (const r of roots) visit(r, [], pageRoots.has(r) ? 'render' : 'load')
+  for (const r of roots) visit(r, [], routeRoots.has(r))
 
-  // Default-deny backstop: a file the walk never opened must not even be ABLE to
-  // reach spending authority. Workspace package sources are included, because
-  // transpilePackages puts them in the executable graph.
+  // Default-deny backstop over project-owned executable source.
+  //
+  // SCOPE, deliberately: this app's `src`, plus every workspace PACKAGE source
+  // tree (those are compiled into the app via transpilePackages). Other `apps/*`
+  // are excluded on purpose — they are separate programs, several of which
+  // legitimately hold spending authority (the pipeline calls LLMs by design), so
+  // including them would force an allowlist and mislabel pipeline behaviour as a
+  // dashboard finding. Generated and vendored material is excluded because it is
+  // not project-authored.
   const reachMemo = new Map<string, boolean>()
   const reaches = (file: string, stack = new Set<string>()): boolean => {
     if (reachMemo.get(file)) return true
@@ -270,34 +280,35 @@ export function analyze(SRC: string, projectRoot?: string, repoRoot?: string): A
     stack.add(file)
     const sf = parse(file)
     let r = spendNodes(sf).length > 0
-    if (!r) for (const e of edges(sf)) {
-      const next = resolveSpec(file, e.spec)
+    if (!r) for (const spec of specifiers(sf)) {
+      const next = resolveSpec(file, spec)
       if (next && reaches(next, stack)) { r = true; break }
     }
     stack.delete(file)
     if (r) reachMemo.set(file, true)
     return r
   }
+  const SKIP = new Set(['node_modules', 'dist', '.next', 'generated', '.turbo', 'coverage'])
   const allFiles: string[] = []
   const collectAll = (d: string) => {
     for (const e of readdirSync(d)) {
+      if (SKIP.has(e)) continue
       const p = join(d, e)
-      if (p.includes(`${sep}node_modules${sep}`) || p.endsWith(`${sep}node_modules`)) continue
       if (statSync(p).isDirectory()) { collectAll(p); continue }
-      if (SRC_FILE.test(p)) allFiles.push(p)
+      if (SRC_FILE.test(p) && !p.endsWith('.d.ts')) allFiles.push(p)
     }
   }
   collectAll(SRC)
-  for (const dir of new Set(WS.values())) {
-    const s = join(dir, 'src')
-    if (existsSync(s) && dir.startsWith(join(REPO, 'packages'))) collectAll(s)
+  const pkgDir = join(REPO, 'packages')
+  if (existsSync(pkgDir)) for (const n of readdirSync(pkgDir)) {
+    const p = join(pkgDir, n)
+    if (statSync(p).isDirectory()) collectAll(p)     // src, bin, testing, migrations — all of it
   }
   const unreachedSpenders = allFiles
     .filter(f => !seen.has(f))
+    .filter(f => reaches(f))
     .map(rel)
-    .filter(f => !f.endsWith('.d.ts') && !f.startsWith(`generated${sep}`))
-    .filter(f => reaches(f.startsWith('packages' + sep) ? join(REPO, f) : join(SRC, f)))
     .sort()
 
-  return { roots, seen, offenders, unreachedSpenders, parseFailures }
+  return { roots, seen, offenders, unreachedSpenders, parseFailures, unresolved }
 }

@@ -1,6 +1,6 @@
 import { describe, it, expect, vi, beforeEach } from 'vitest'
 import { join, dirname } from 'node:path'
-import { mkdtempSync, mkdirSync, writeFileSync, rmSync } from 'node:fs'
+import { mkdtempSync, mkdirSync, writeFileSync, rmSync, symlinkSync } from 'node:fs'
 import { tmpdir } from 'node:os'
 import { analyze } from './spend-graph.js'
 
@@ -95,6 +95,13 @@ describe('rendering /studio/chat does not spend', () => {
     const SDK = imp('Anthropic', '@anthropic-ai/sdk')
     const SPEND = `${SDK}\nexport const c = new Anthropic({ apiKey: 'x' })\nexport const use = () => c`
 
+    // pnpm links workspace packages into node_modules; the fixture mirrors that
+    // so the compiler resolves `@common/foo` exactly as the real build does.
+    const link = (dir: string, name: string, target: string) => {
+      const p = join(dir, 'node_modules', name)
+      mkdirSync(dirname(p), { recursive: true })
+      symlinkSync(join(dir, target), p, 'dir')
+    }
     const build = (files: Record<string, string>) => {
       const dir = mkdtempSync(join(tmpdir(), 'spend-'))
       for (const [rel, src] of Object.entries(files)) {
@@ -135,6 +142,26 @@ describe('rendering /studio/chat does not spend', () => {
         'src/app/api/x/route.ts': `${imp('{ make }', './h')}\nconst c = make()\nexport async function POST(){ return Response.json(!!c) }`,
         'src/app/api/x/h.ts': `${SDK}\nexport const make = () => new Anthropic({apiKey:'x'})`,
       }],
+      // WARDEN round 7 defeated the previous `atModuleScope` model with these.
+      // They fail now because authority is not PERMITTED outside a user-action
+      // handler body — not because anything proved they run at load.
+      ['same-file helper awaited at module scope', {
+        'src/app/api/x/route.ts': `let c: any\nasync function boot(){ const { default: A } = await import('@anthropic-ai/sdk'); c = new A({apiKey:'x'}) }\nawait boot()\nexport async function POST(){ return Response.json(!!c) }`,
+      }],
+      ['module-scope async IIFE', {
+        'src/app/api/x/route.ts': `const c = await (async () => { const { default: A } = await import('@anthropic-ai/sdk'); return new A({apiKey:'x'}) })()\nexport async function POST(){ return Response.json(!!c) }`,
+      }],
+      ['factory invoked at module scope', {
+        'src/app/api/x/route.ts': `const make = () => import('@anthropic-ai/sdk')\nexport const client = make()\nexport async function POST(){ return Response.json(!!client) }`,
+      }],
+      // A GET/HEAD/OPTIONS body is a non-user surface, so it is not a permitted
+      // location even though it is an exported handler.
+      ['acquisition inside a GET handler body', {
+        'src/app/api/x/route.ts': `export async function GET(){ const { default: A } = await import('@anthropic-ai/sdk'); return Response.json(!!new A({apiKey:'x'})) }`,
+      }],
+      ['acquisition in a default parameter value', {
+        'src/app/api/x/route.ts': `export async function POST(x = await import('@anthropic-ai/sdk')){ return Response.json(!!x) }`,
+      }],
       ['top-level await acquisition in a route', {
         'src/app/api/x/route.ts': `const { default: A } = await import('@anthropic-ai/sdk')\nexport async function POST(){ return Response.json(!!new A({apiKey:'x'})) }`,
       }],
@@ -159,19 +186,35 @@ describe('rendering /studio/chat does not spend', () => {
         'packages/foo/src/index.ts': SPEND,
         'apps/w/src/app/p/page.tsx': `${imp('{ use }', '@common/foo')}\nexport default function P(){ return use() ? null : null }`,
       })
+      link(dir, '@common/foo', 'packages/foo')
       try {
         const a = analyze(join(dir, 'apps/w/src'), join(dir, 'apps/w'), dir)
         expect(a.offenders.length, 'the workspace-package edge was not followed').toBeGreaterThan(0)
       } finally { rmSync(dir, { recursive: true, force: true }) }
     })
 
+    // `next build` evaluates config before any request exists.
+    it('catches: build-time config acquisition', () => {
+      const dir = build({
+        'next.config.mjs': `${imp('{ use }', './cfg-helper.mjs')}\nexport default { env: { x: String(!!use) } }`,
+        'cfg-helper.mjs': SPEND,
+        'src/app/p/page.tsx': `export default function P(){ return null }`,
+      })
+      try {
+        expect(analyze(join(dir, 'src'), dir, dir).offenders.length,
+          'build-time config is an execution surface').toBeGreaterThan(0)
+      } finally { rmSync(dir, { recursive: true, force: true }) }
+    })
+
     // THE INVERSE CONTROL, and the point of the whole architecture: a route may
     // acquire authority inside explicit handler execution. If this goes red the
     // analyzer has become over-strict and no spending route is buildable.
-    it('does NOT flag a route that acquires its client inside the handler', () => {
-      const dir = build({
-        'src/app/api/x/route.ts': `export async function POST(){ const { default: A } = await import('@anthropic-ai/sdk'); return Response.json(!!new A({apiKey:'x'})) }`,
-      })
+    it.each([
+      ['export async function POST', `export async function POST(){ const { default: A } = await import('@anthropic-ai/sdk'); return Response.json(!!new A({apiKey:'x'})) }`],
+      ['export async function PUT', `export async function PUT(){ const { default: A } = await import('@anthropic-ai/sdk'); return Response.json(!!new A({apiKey:'x'})) }`],
+      ['export { h as POST }', `const h = async () => { const { default: A } = await import('@anthropic-ai/sdk'); return Response.json(!!new A({apiKey:'x'})) }\nexport { h as POST }`],
+    ])('does NOT flag inline acquisition in %s', (_n, src) => {
+      const dir = build({ 'src/app/api/x/route.ts': src })
       try {
         expect(analyze(join(dir, 'src'), dir, dir).offenders).toEqual([])
       } finally { rmSync(dir, { recursive: true, force: true }) }
