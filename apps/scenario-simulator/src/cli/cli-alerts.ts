@@ -12,25 +12,21 @@
 
 import 'dotenv/config'
 import { join } from 'path'
-import { readFileSync, writeFileSync, existsSync, mkdirSync } from 'fs'
+import { existsSync, mkdirSync } from 'fs'
 import Database from 'better-sqlite3'
 import { usePostgres, getPool, closePool } from '@common/db'
 import { createPortfolioStore } from '../portfolio/portfolio-store.js'
 import { sendLine } from '../notify/line.js'
+import { alertsPath, loadAlerts, saveAlerts, reconcile, type Observation } from '../alerts/alert-store.js'
 
 const DATA_DIR        = join(process.cwd(), 'data')
 const PORTFOLIO_DB    = join(DATA_DIR, 'portfolio.db')
 const INGESTION_DB    = join(process.cwd(), '../capital-intelligence-ingestion/data/sqlite.db')
-const STATE_PATH      = join(DATA_DIR, 'alert-state.json')
+const ALERTS_PATH     = alertsPath(DATA_DIR)
 
 const PRICE_DROP_THRESHOLD     = -0.05  // -5% intraday
 const NEWS_VELOCITY_THRESHOLD  = 3      // articles in last 6 hours
-const REPEAT_ALERT_MIN_MINUTES = 60     // suppress same-ticker alerts within this window
 const NEWS_WINDOW_HOURS        = 6
-
-interface AlertState {
-  [ticker: string]: { lastAlertedAt: string; lastAlertPrice: number }
-}
 
 interface TickerAlert {
   ticker:          string
@@ -68,20 +64,6 @@ async function fetchIntradayPrice(symbol: string): Promise<{ current: number | n
 
 // ── State persistence ────────────────────────────────────────────────────────
 
-function loadState(): AlertState {
-  if (!existsSync(STATE_PATH)) return {}
-  try { return JSON.parse(readFileSync(STATE_PATH, 'utf-8')) as AlertState }
-  catch { return {} }
-}
-
-function saveState(state: AlertState) {
-  writeFileSync(STATE_PATH, JSON.stringify(state, null, 2), 'utf-8')
-}
-
-function minutesSince(isoDate: string): number {
-  return (Date.now() - new Date(isoDate).getTime()) / 60_000
-}
-
 // ── News velocity ────────────────────────────────────────────────────────────
 
 function articleCountSince(ingestionDb: Database.Database, ticker: string, sinceIso: string): number {
@@ -115,7 +97,6 @@ async function run() {
     .filter(p => p.assetClass !== 'cash' && p.priceSymbol && p.shares > 0)
   await portfolioStore.close()
 
-  const state = loadState()
   const sinceIso = new Date(Date.now() - NEWS_WINDOW_HOURS * 3_600_000).toISOString()
   const ingestionAvailable = !usePostgres() && existsSync(INGESTION_DB)
   const ingestionDb = ingestionAvailable ? new Database(INGESTION_DB, { readonly: true }) : null
@@ -125,11 +106,11 @@ async function run() {
   }
 
   const alerts: TickerAlert[] = []
+  const observations: Observation[] = []
+  const evaluated: string[] = []
   for (const p of positions) {
-    // Skip if recent alert already fired
-    const last = state[p.ticker]
-    if (last && minutesSince(last.lastAlertedAt) < REPEAT_ALERT_MIN_MINUTES) continue
-
+    // Every position is evaluated every run. The old cooldown `continue`d here,
+    // BEFORE the price was fetched, so a transport concern was gating detection.
     const { current, priorClose } = await fetchIntradayPrice(p.priceSymbol)
     const articleCount = await countArticles(p.ticker)
 
@@ -139,10 +120,25 @@ async function run() {
       intradayChange = (current - priorClose) / priorClose
       if (intradayChange <= PRICE_DROP_THRESHOLD) {
         reasons.push(`📉 Intraday ${(intradayChange * 100).toFixed(2)}%`)
+        observations.push({
+          rule_id: 'price_drop', instrument: p.ticker, direction: 'down',
+          // A drop past twice the threshold is materially worse than one that
+          // grazes it; the record should say so rather than flattening both.
+          severity: intradayChange <= PRICE_DROP_THRESHOLD * 2 ? 'critical' : 'warning',
+          observed_value: intradayChange, threshold: PRICE_DROP_THRESHOLD,
+          evidence: { company: p.company, currency: p.currency, currentPrice: current, priorClose, source: 'yahoo:chart' },
+        })
       }
+      evaluated.push(p.ticker)
     }
     if (articleCount >= NEWS_VELOCITY_THRESHOLD) {
       reasons.push(`📰 ${articleCount} articles in last ${NEWS_WINDOW_HOURS}h`)
+      observations.push({
+        rule_id: 'news_velocity', instrument: p.ticker, direction: 'elevated',
+        severity: articleCount >= NEWS_VELOCITY_THRESHOLD * 2 ? 'critical' : 'warning',
+        observed_value: articleCount, threshold: NEWS_VELOCITY_THRESHOLD,
+        evidence: { company: p.company, windowHours: NEWS_WINDOW_HOURS, source: usePostgres() ? 'pg:articles' : 'sqlite:articles' },
+      })
     }
 
     if (reasons.length > 0 && current != null) {
@@ -156,12 +152,19 @@ async function run() {
         articleCount6h:   articleCount,
         reasons,
       })
-      state[p.ticker] = { lastAlertedAt: new Date().toISOString(), lastAlertPrice: current }
     }
   }
   if (ingestionDb) ingestionDb.close()
 
-  console.log(`[alerts] Checked ${positions.length} positions, ${alerts.length} alert(s) triggered`)
+  // THE AUTHORITATIVE OUTPUT. Written before, and independently of, any
+  // notification. The record states that a condition existed; it says nothing
+  // about delivery, and nothing downstream may make it conditional on delivery.
+  const rec = reconcile(loadAlerts(ALERTS_PATH), observations, evaluated)
+  saveAlerts(ALERTS_PATH, rec.file)
+  console.log(
+    `[alerts] Checked ${positions.length} positions · ${rec.opened.length} opened, ` +
+    `${rec.continuing.length} continuing, ${rec.resolved.length} resolved · recorded in ${ALERTS_PATH}`,
+  )
 
   if (alerts.length === 0) return
 
@@ -182,9 +185,9 @@ async function run() {
   }
   const message = lines.join('\n')
 
+  // Notification is now a side effect of a record that already exists. It is
+  // removed entirely in the final retirement step; nothing above depends on it.
   await sendLine(message)
-  saveState(state)
-  console.log(`[alerts] LINE message sent (${alerts.length} alerts) and state updated`)
 }
 
 run()

@@ -103,6 +103,43 @@ export function qaArchivePath(): string {
   return path.join(dataRoot(), 'investment-analyst-agents/archive/qa.jsonl')
 }
 
+/**
+ * Threshold alert records — "this condition existed", not "a message was sent".
+ *
+ * These replaced `alert-state.json`, which existed only to stop LINE repeating
+ * itself and which no surface read. The detector's output had nowhere to go, so
+ * a muted channel silently consumed alerts. Read-only here, as everywhere.
+ */
+export interface ThresholdAlertRecord {
+  alert_id: string
+  rule_id: 'price_drop' | 'news_velocity'
+  instrument: string
+  direction: 'down' | 'up' | 'elevated'
+  severity: 'info' | 'warning' | 'critical'
+  observed_value: number
+  threshold: number
+  detected_at: string
+  last_observed_at: string
+  status: 'active' | 'resolved'
+  resolved_at: string | null
+  business_date: string
+  evidence: Record<string, unknown>
+}
+
+export function readThresholdAlerts(): ThresholdAlertRecord[] {
+  const filePath = path.join(dataRoot(), 'scenario-simulator', 'data', 'threshold-alerts.json')
+  try {
+    const file = readJSON<{ alerts?: ThresholdAlertRecord[] }>(filePath)
+    if (!file?.alerts) return []
+    // Newest first; active before resolved so what is live reads first.
+    return [...file.alerts].sort((a, b) =>
+      (a.status === b.status ? 0 : a.status === 'active' ? -1 : 1) ||
+      b.last_observed_at.localeCompare(a.last_observed_at))
+  } catch {
+    return []
+  }
+}
+
 export function readDiscovery(): DiscoveryJSON | null {
   const filePath = path.join(dataRoot(), 'scenario-simulator', 'data', 'discovery.json')
   try {

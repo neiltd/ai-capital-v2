@@ -18,6 +18,7 @@ export const dynamic = 'force-dynamic'
 
 import { loadPortfolio } from './data'
 import { HoldingsTable } from './holdings-table'
+import { ThresholdAlerts } from './threshold-alerts'
 import { CLASS_META, CLASS_ORDER } from './class-meta'
 import { RefreshPricesButton } from './refresh-prices'
 import { StatTile, Delta, SectionCard, Label, ActionBadge, ConvictionBadge } from '@/components/next/ui'
@@ -104,6 +105,11 @@ export default function PortfolioPage() {
         <SectionCard title="Holdings" asOf={exportedAt} className="col-span-12 xl:col-span-8">
           <HoldingsTable positions={positions} usdThb={usdThb} />
         </SectionCard>
+
+        {/* Read-only record of detected threshold conditions. */}
+        <div className="col-span-12">
+          <ThresholdAlerts />
+        </div>
       </div>
 
       {/* ------------------------------ agent view ----------------------------- */}
