@@ -67,6 +67,48 @@ whose market conditions have long since changed.
 
 Belongs with the `pending -> accepted` ledger work. Not built here.
 
+## Containment applied 2026-08-28
+
+The 30-minute execution agent was stopped. Nothing else was changed: alert state
+was **not** altered, and no alert was replayed.
+
+```
+launchctl bootout gui/501/com.thanapol.ai-capital.alerts
+```
+
+**Why stopping rather than fixing.** Every 30-minute cycle that crosses a
+threshold consumes that alert permanently — `alert-state.json` records it as
+delivered and the dedupe suppresses it thereafter. The loss is irreversible and
+accrues on a timer, so the cheapest correct move is to stop the timer, not to
+race a fix against it. The repair belongs to the LINE delivery ledger, which is
+frozen.
+
+**State at containment** (all figures from the preserved copies):
+
+| | |
+|---|---|
+| evaluations logged | 3,044 |
+| `LINE message sent` lines | 155 |
+| `Notifications muted — skipping` lines | 122 |
+| error lines | 159 |
+| tickers holding a dedupe entry | 12 |
+| most recent consumed alert | `LLY` @ 1176.1, 2026-08-28T02:29:06Z |
+
+The 155-vs-122 gap is not the count of lost alerts — a "sent" line is written on
+every threshold crossing, muted or not, and the two counters cover overlapping
+but not identical conditions. It is only evidence that the two lines disagree
+about the same event. **How many real alerts were consumed while muted is not
+yet determined**, and determining it requires the delivery ledger work.
+
+**Restore path**, when the ledger repair lands and LINE is unmuted:
+
+```
+launchctl bootstrap gui/501 ~/Library/LaunchAgents/com.thanapol.ai-capital.alerts.plist
+```
+
+The plist is untouched on disk. Restoring the agent before the delivery ledger
+exists would resume consuming alerts under the same defect.
+
 ## Note on the mute path itself
 
 `isMuted()` resolves `join(process.cwd(), '..', '..', 'data', 'line-notifications-muted')`.
