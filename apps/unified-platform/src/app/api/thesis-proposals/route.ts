@@ -1,15 +1,14 @@
 export const dynamic = 'force-dynamic'
 
 import { NextResponse } from 'next/server'
-import Anthropic from '@anthropic-ai/sdk'
 import { readTheses } from '@/lib/thesis-db'
 import { readBriefing, readAnalysis, todayLocal } from '@/lib/data'
 import { checkRateLimit } from '@/lib/rate-limit'
 
-export async function GET() {
-  return NextResponse.json({ error: 'Method not allowed, use POST' }, { status: 405 })
-}
-
+// No GET/HEAD/OPTIONS handler by design. Next answers 405 for an unexported
+// method on its own, so this route is reachable ONLY by an explicit POST — which
+// is what keeps spending authority off every render-reachable path. Adding a GET
+// here would put the client below back on a GET-reachable graph.
 export async function POST() {
   if (!checkRateLimit('thesis-proposals')) {
     return NextResponse.json({ error: 'Rate limit exceeded, try again shortly' }, { status: 429 })
@@ -41,6 +40,9 @@ export async function POST() {
     briefing ? `\nLatest briefing (${today}):\n${briefing.slice(0, 3000)}` : '(no briefing today)',
   ].filter(Boolean).join('\n')
 
+  // Acquired here, not imported at module scope: loading this module (which
+  // happens even for a request that 405s) must not pull in the SDK.
+  const { default: Anthropic } = await import('@anthropic-ai/sdk')
   const client = new Anthropic({ apiKey: process.env.ANTHROPIC_API_KEY })
 
   const message = await client.messages.create({
