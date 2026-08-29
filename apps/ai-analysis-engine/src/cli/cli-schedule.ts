@@ -6,7 +6,10 @@ import { randomUUID } from 'crypto'
 import { createAnalysisStore } from '../store/sqlite.js'
 import { collectHealth } from '../collector/health-collector.js'
 import { analyzeRegime } from '../analysis/regime-analyzer.js'
-import { loadCoverage } from './cli-run.js'
+// From the LIBRARY, never from cli-run.ts. cli-run is an executable entrypoint
+// whose body ends in a bare run(); importing it here made merely starting this
+// daemon perform a full unscheduled analysis, model call and all.
+import { loadCoverage } from '../analysis/load-coverage.js'
 import { analyzePropagation } from '../analysis/propagation-analyzer.js'
 import { exportAnalysis } from '../export/exporter.js'
 import { generateReport } from '../export/reporter.js'

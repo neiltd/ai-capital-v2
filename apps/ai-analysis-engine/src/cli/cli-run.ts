@@ -5,15 +5,8 @@ import { randomUUID } from 'crypto'
 import { createAnalysisStore } from '../store/sqlite.js'
 import { collectHealth } from '../collector/health-collector.js'
 import { analyzeRegime } from '../analysis/regime-analyzer.js'
-import type { WorldIntelContext, WorldCoverage, LiquidityContext, GovFlowContext, ThaiGovFlowContext } from '../analysis/regime-analyzer.js'
-import { readProvenance, coverageIsComplete, absenceCaveat, type ProvenanceRecord } from '@common/types'
-
-/**
- * How old a provenance record may be before its verdicts stop being assertable.
- * The producer writes one per pipeline run (daily), so a record older than a day
- * plus slack means nobody has checked since — which is UNKNOWN, not healthy.
- */
-const PROVENANCE_MAX_AGE_HOURS = 30
+import type { WorldIntelContext, LiquidityContext, GovFlowContext, ThaiGovFlowContext } from '../analysis/regime-analyzer.js'
+import { loadCoverage } from '../analysis/load-coverage.js'
 import { analyzePropagation } from '../analysis/propagation-analyzer.js'
 import { analyzePeople } from '../analysis/people-analyzer.js'
 import { exportAnalysis } from '../export/exporter.js'
@@ -99,29 +92,6 @@ function loadPortfolioTickers(): string[] {
     })
   } catch {
     return []
-  }
-}
-
-/**
- * Source coverage behind the events. Read at ANALYSIS time, not export time, so
- * a provenance record that has itself gone stale cannot present its verdicts as
- * current — the classification is an observation with an age like any other.
- */
-export function loadCoverage(): WorldCoverage {
-  try {
-    const p = join(WORLD_INTEL_ROOT, 'quota', 'freshness.json')
-    const record = existsSync(p) ? JSON.parse(readFileSync(p, 'utf-8')) as ProvenanceRecord : null
-    const r = readProvenance(record, new Date(), PROVENANCE_MAX_AGE_HOURS)
-    return {
-      complete: coverageIsComplete(r.sources),
-      summary:  r.summary,
-      caveat:   absenceCaveat(r.sources),
-      sources:  r.sources,
-    }
-  } catch {
-    // Unreadable provenance is UNKNOWN coverage, never assumed-complete.
-    return { complete: false, summary: 'world-intel coverage unknown: provenance record unreadable',
-             caveat: 'events may be MISSING rather than absent — the provenance record could not be read', sources: [] }
   }
 }
 

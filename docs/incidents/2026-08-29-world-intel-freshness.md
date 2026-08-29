@@ -561,3 +561,79 @@ or notification mutation; tree clean; launchd unchanged.
 prohibited list, and regenerating it was the point of the surface — but it **is**
 a production-artifact write inside the incident window, and any later forensic
 pass working from a "no writes" brief needs it on the list.
+
+
+---
+
+## Containment patch — entrypoint import side effect
+
+Scope: the one defect. **No provenance semantics changed.**
+
+**Invariant:** importing any module must never execute analysis, make a
+model/API call, write analytical state, or terminate the process.
+
+**Fix.** `loadCoverage` extracted from `cli-run.ts` into
+`src/analysis/load-coverage.ts`, a side-effect-free library imported by both
+`cli-run.ts` and `cli-schedule.ts`. `cli-run.ts` remains the executable
+entrypoint. **No executable entrypoint is imported by anything.** Verified: the
+scheduler daemon now starts printing only its own line, with no `run()` in the
+stack.
+
+**Regression tests** (5, in `src/analysis/import-is-inert.test.ts`) run the
+import in a **child process** rather than behind mocks — a mock proves the mock
+was not called; a child process proves the real module does nothing. They assert
+zero model/API call, zero `insertRegime`, zero writes to `analysis.json` /
+`analysis.db` / the daily report (by mtime snapshot of the whole `data/` tree),
+zero `process.exit`, and zero scheduler execution. A structural test generalises
+the rule — no module may import a module with a top-level call — with a
+non-vacuity guard asserting `cli-run.ts` is still detected as an entrypoint.
+
+### Incident during this patch — I triggered the very effect being contained
+
+Checking that the child probe was non-vacuous, I pointed it at `cli-run.ts`.
+**That executed a real analysis**, reaching "Stage 2a: classifying macro
+regime" — the model call. A billable call very likely went out.
+
+My guard was `ANTHROPIC_API_KEY: ''` in the child env. **`cli-run.ts` imports
+`dotenv/config`, which repopulated it from `.env`.** An env-var guard that the
+program overwrites is not a guard, and I have written that same sentence about
+other people's code twice in this session.
+
+Bounded: no analytical state was written — `analysis.json`, `analysis.db`,
+`people-events.json` and the reports all retain their 2026-08-25 mtimes, and no
+process survived. The run died before its write stage.
+
+The test's guard is now **structural, not environmental**: an assertion that the
+probed module's transitive import graph contains no LLM SDK and no
+`dotenv/config`, so it cannot bill regardless of environment.
+
+### Repo-wide scan — one other module imports an executable entrypoint
+
+493 modules scanned. One offender, **pre-existing and not introduced here**:
+
+```
+apps/capital-intelligence-ingestion/src/scheduler.ts
+  -> apps/capital-intelligence-ingestion/src/pipeline.ts
+```
+
+`pipeline.ts` ends in a bare `runPipeline(…).catch(err => { … process.exit(1) })`
+with no main guard — the **identical defect**, so starting that scheduler would
+run a full ingestion at import time.
+
+**Deliberately NOT patched.** `pipeline.ts` is the live `capital-ingestion` DAG
+stage; a mis-written main guard would turn production ingestion into a silent
+no-op, which is a worse failure than the dormant one it fixes. Recommended fix,
+for a separate decision: extract `runPipeline` into a library exactly as
+`loadCoverage` was, rather than guarding in place.
+
+### Stale contracts corrected
+
+Three statements described pre-D2 behaviour and were false under it: the
+`source-freshness.tsx` banner and its JSX comment, and the `lib/data.ts` header.
+All now say what the code does — each source recomputed against **its own**
+bound at read time, with record age bearing only on the *observed* facts the
+record carries.
+
+**Gate:** typecheck 0 errors, **897 tests**, 0 failing suites. No scheduler
+restart, source fetch, backfill, queue operation, portfolio mutation,
+notification, or historical re-analysis.

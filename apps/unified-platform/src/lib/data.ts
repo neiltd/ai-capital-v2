@@ -131,8 +131,9 @@ export interface ThresholdAlertRecord {
  * Per-source provenance — the pull surface that replaced the LINE stale-source
  * alert, now classified rather than a bare boolean.
  *
- * Evaluated at READ time: a classification is an observation with an age, so an
- * export that has itself gone stale cannot assert that anything is "current".
+ * Evaluated at READ time: every time-dependent verdict is recomputed from
+ * `lastSuccessfulFetch` against that source's OWN bound, so a persisted
+ * "current" cannot outlive the bound it was measured against.
  * "Unavailable" and "all current" are different facts, and a missing export
  * means nobody has told us — not that every feed is healthy.
  */

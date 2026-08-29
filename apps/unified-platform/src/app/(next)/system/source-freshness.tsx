@@ -43,14 +43,16 @@ export function SourceFreshness() {
         </span>
       </header>
 
-      {/* The classification is itself an observation with an age. An old record
-          cannot assert that anything is current, and saying so is the point. */}
+      {/* The classification is itself an observation with an age. Verdicts are
+          recomputed per source below; what ages is the record's OBSERVED facts. */}
       {result.recordStale && (
         <p className="mb-3 rounded border border-amber-400/60 bg-amber-50/50 dark:bg-amber-950/20 px-3 py-2 text-sm text-amber-800 dark:text-amber-300">
           This provenance record is <strong>{result.recordAgeHours ?? '?'}h old</strong> (bound{' '}
-          {PROVENANCE_MAX_AGE_HOURS}h). Nothing has re-checked these sources since, so time-dependent
-          verdicts below read <em>unknown</em> rather than being asserted as current. Standing
-          entitlement restrictions still apply.
+          {PROVENANCE_MAX_AGE_HOURS}h), so nothing has re-checked these sources since. Each
+          source&rsquo;s freshness below is recomputed against <em>its own</em> bound at read time,
+          so a source may read <em>current</em> here if its bound is longer than the record&rsquo;s
+          age. What an old record cannot vouch for is the <em>observed</em> facts it carries — a
+          declared outage may since have been resolved.
         </p>
       )}
 
