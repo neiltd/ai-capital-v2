@@ -16,6 +16,40 @@ specifically to get out of iCloud sync — never move it back under an
 iCloud-synced path; iCloud eviction previously corrupted `node_modules`
 hardlinks and broke the pnpm store).
 
+## Repository topology
+
+`apps/capital-intelligence-ingestion` is a **Git submodule**, separately
+versioned at `github.com/neiltd/capital-intelligence-ingestion`. The supported
+source unit is *this repository plus the exact pinned submodule revision* —
+neither half is complete alone.
+
+```bash
+git clone --recurse-submodules <parent-remote>   # or, after an ordinary clone:
+git submodule update --init --recursive
+```
+
+A plain `git clone` leaves that directory empty, and the workspace will not
+install, typecheck, or test.
+
+The submodule depends on parent workspace packages (`@common/db`,
+`@common/pipeline-runs`) via `workspace:*`, which pnpm resolves only inside a
+workspace. It is therefore installed, typechecked and tested **from this
+workspace**, never as a standalone application — a bare clone of its own remote
+cannot `pnpm install`. That is by design, not a defect.
+
+**The restore contract covers source only.** `git checkout <ref> && git
+submodule update --init --recursive` does not restore local SQLite/runtime DBs,
+LanceDB indexes, `.env`, caches, `data/pipeline-runs.db`, BullMQ/Redis queue
+state, Postgres contents, or any external service state.
+
+**Historical limitation:** commits and tags created *before* this conversion —
+including `pre-line-retirement` — are parent-only restore points and pin no
+ingestion revision. They are deliberately not rewritten. Note also that the
+submodule's working tree carried uncommitted production source until
+2026-08-29, so no earlier point is fully reproducible: **`a48eb71` is the first
+committed ingestion revision known to represent the previously running source
+completely.**
+
 ## Commands
 
 ```bash

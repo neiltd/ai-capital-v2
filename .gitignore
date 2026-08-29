@@ -51,9 +51,11 @@ crontab.*.txt
 # Editor/tooling local state
 .superpowers/
 
-# Local-only personal data project (per user request: keep local, future per-user)
-capital-intelligence-ingestion/
-apps/capital-intelligence-ingestion/
+# apps/capital-intelligence-ingestion is a SUBMODULE (see .gitmodules), not
+# ignored content. Both rules that used to exclude it are gone: the bare
+# `capital-intelligence-ingestion/` matched at any depth, so removing only the
+# `apps/`-prefixed one would have left the gitlink ignored. Its own repository
+# still ignores the local/personal runtime data (data/, .env, caches).
 
 # Old project backups (large, not meant for version control)
 _archive/

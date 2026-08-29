@@ -1,0 +1,3 @@
+[submodule "apps/capital-intelligence-ingestion"]
+	path = apps/capital-intelligence-ingestion
+	url = https://github.com/neiltd/capital-intelligence-ingestion.git
