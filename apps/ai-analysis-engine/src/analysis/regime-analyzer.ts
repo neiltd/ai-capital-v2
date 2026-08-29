@@ -1,9 +1,22 @@
 import Anthropic from '@anthropic-ai/sdk'
 import { randomUUID } from 'crypto'
 import type { CompanyHealth, MacroRegime, RegimeConfidence } from '../types.js'
+import type { SourceProvenance } from '@common/types'
 import { stripLoneSurrogates } from '../util/sanitize.js'
 
 export interface WorldIntelContext {
+  /**
+   * Source coverage behind these events. Absent means coverage is UNKNOWN, and
+   * unknown coverage is treated exactly like degraded coverage — the empty list
+   * must never be read as "nothing happened".
+   */
+  coverage?: {
+    complete: boolean
+    summary: string
+    /** Non-null whenever an empty result may mean "missing", not "absent". */
+    caveat: string | null
+    sources: SourceProvenance[]
+  }
   marketEvents: Array<{
     title: string; summary: string; eventType: string
     severity: number; marketDirection?: string; marketRelevance: number; countries: string[]
@@ -75,7 +88,13 @@ Classify the current investment regime using the classify_macro_regime tool.
 
 You have four signal sources:
 1. Company health signals — thesis assumption status and recent documents per company
-2. World intelligence — live geopolitical events and market events ranked by severity
+2. World intelligence — geopolitical and market events ranked by severity. This feed may be
+   INCOMPLETE, and it says so when it is. If the world-intelligence section reports degraded or
+   unknown coverage, treat the missing portion as UNOBSERVED, never as quiet: do not lower
+   geopolitical risk and do not classify the regime as calmer on the strength of events you were
+   unable to see. Missing evidence must LOWER confidence — report 'medium' or 'low' rather than
+   'high' when a conclusion leans on the absence of geopolitical events — and the rationale must
+   name the degraded coverage.
 3. Global liquidity conditions — Fed balance sheet (QE/QT), Treasury issuance (TGA), reverse repo
    drainage, and M2 growth. Contracting liquidity compresses equity multiples even when company
    fundamentals are strong. When liquidity conditions are driving or modifying your assessment,
@@ -147,7 +166,7 @@ function formatHealth(health: CompanyHealth[]): string {
   }).join('\n\n')
 }
 
-function formatWorldIntel(world: WorldIntelContext): string {
+export function formatWorldIntel(world: WorldIntelContext): string {
   const SEVERITY = (n: number) => n >= 5 ? 'Critical' : n >= 4 ? 'High' : n >= 3 ? 'Medium' : 'Low'
 
   const marketLines = world.marketEvents
@@ -169,7 +188,37 @@ function formatWorldIntel(world: WorldIntelContext): string {
   const parts: string[] = []
   if (marketLines) parts.push(`### Market Events\n${marketLines}`)
   if (worldLines)  parts.push(`### Geopolitical Events\n${worldLines}`)
-  return parts.length ? parts.join('\n\n') : 'No significant world intelligence events.'
+
+  // THE INVARIANT: absence of events under incomplete coverage is MISSING
+  // evidence, not negative evidence. This function used to return
+  // "No significant world intelligence events." unconditionally — a false
+  // statement whenever a source was restricted, unavailable or simply not run,
+  // and one the model would reasonably read as a calm geopolitical backdrop.
+  // On 2026-08-29 that was the live case: ACLED entitlement-restricted since
+  // July and GDELT unreachable, with no consumer able to tell.
+  const complete = world.coverage?.complete === true
+  const caveat = world.coverage?.caveat
+    ?? 'source coverage is UNKNOWN — no provenance record was available'
+
+  if (parts.length === 0) {
+    return complete
+      ? 'No significant world intelligence events were reported, and source coverage was complete.'
+      : [
+          'WORLD-INTEL COVERAGE INCOMPLETE — NO EVENTS COULD BE READ.',
+          caveat,
+          'Treat this as MISSING evidence, not as evidence of a calm or stable geopolitical environment.',
+          'Do not lower geopolitical risk, and do not raise confidence, on the basis of this absence.',
+        ].join('\n')
+  }
+
+  if (!complete) {
+    parts.unshift([
+      'WORLD-INTEL COVERAGE INCOMPLETE — the events below are a PARTIAL view.',
+      caveat,
+      'Additional events may exist that are not shown. Do not infer the absence of a risk from its absence here.',
+    ].join('\n'))
+  }
+  return parts.join('\n\n')
 }
 
 function formatMacroAssets(macro: MacroContext): string {

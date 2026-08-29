@@ -1,5 +1,9 @@
 import { readFileSync, existsSync } from 'fs'
-import { join } from 'path'
+import { join, dirname } from 'path'
+import { readProvenance, coverageIsComplete, absenceCaveat, type ProvenanceRecord } from '@common/types'
+
+/** A provenance record older than a day plus slack means nobody has checked since. */
+const WORLD_PROVENANCE_MAX_AGE_HOURS = 30
 import Database from 'better-sqlite3'
 import type {
   ContextBundle, AnalysisJSON, SimulationJSON, GraphJSON, StockIntelJSON, WorldIntelJSON,
@@ -167,6 +171,22 @@ export function loadContext(date: string, paths: LoaderPaths = {}): ContextBundl
   const stockIntel: StockIntelJSON = JSON.parse(readFileSync(p.stockIntelPath, 'utf-8'))
   const worldIntel: WorldIntelJSON = JSON.parse(readFileSync(p.worldIntelPath, 'utf-8'))
 
+  // Source coverage behind those events, evaluated at READ time so a provenance
+  // record that has itself gone stale cannot assert its verdicts as current.
+  // Without this the briefing cannot tell "nothing happened" from "we could not
+  // see what happened" — which on 2026-08-29 was the live condition.
+  const worldCoverage = (() => {
+    try {
+      const fp = join(dirname(p.worldIntelPath), '..', '..', 'quota', 'freshness.json')
+      const rec = existsSync(fp) ? JSON.parse(readFileSync(fp, 'utf-8')) as ProvenanceRecord : null
+      const r = readProvenance(rec, new Date(), WORLD_PROVENANCE_MAX_AGE_HOURS)
+      return { complete: coverageIsComplete(r.sources), summary: r.summary, caveat: absenceCaveat(r.sources), sources: r.sources }
+    } catch {
+      return { complete: false, summary: 'world-intel coverage unknown: provenance record unreadable',
+               caveat: 'events may be MISSING rather than absent — the provenance record could not be read', sources: [] }
+    }
+  })()
+
   // Warn (don't fail) on schema version mismatch so the briefing keeps running
   // even if an upstream project ships an old format. Visible in stderr only.
   const EXPECTED = '1.0'
@@ -194,5 +214,5 @@ export function loadContext(date: string, paths: LoaderPaths = {}): ContextBundl
   const macro               = loadMacro(p.macroPath)
   const correlationReport  = loadCorrelationReport(p.correlationReportPath)
 
-  return { date, analysis, simulation, graph, stockIntel, worldIntel, profile, profileMissing, thesisSummary, peopleEvents, calibration, taxHarvest, risk, macro, correlationReport }
+  return { date, analysis, simulation, graph, stockIntel, worldIntel, worldCoverage, profile, profileMissing, thesisSummary, peopleEvents, calibration, taxHarvest, risk, macro, correlationReport }
 }

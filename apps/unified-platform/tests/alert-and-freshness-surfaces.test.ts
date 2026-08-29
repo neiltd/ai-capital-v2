@@ -81,46 +81,78 @@ describe('threshold alert surface', () => {
   })
 })
 
-describe('source freshness surface', () => {
+describe('source provenance surface', () => {
   const freshFile = 'world-intelligence-data-hub-/quota/freshness.json'
+  const NOW = new Date('2026-08-29T12:00:00Z')
+  const hoursAgo = (h: number) => new Date(NOW.getTime() - h * 3_600_000).toISOString()
   const src = (o: Record<string, unknown>) => ({
-    source: 'gdelt', lastSuccessfulFetch: '2026-08-28T17:00:00.000Z',
-    maxStalenessHours: 2, ageHours: 1, stale: false, reason: null, ...o,
+    source: 'gdelt', lastSuccessfulFetch: hoursAgo(1), maxStalenessHours: 2,
+    ageHours: 1, availability: 'current', reason: 'fresh', ...o,
   })
+  const record = (classifiedAt: string, sources: unknown[]) =>
+    JSON.stringify({ schemaVersion: 1, classifiedAt, sources })
 
-  it('a stale source is visible without any notification channel', async () => {
-    write(freshFile, JSON.stringify({ schemaVersion: 1, exportedAt: '2026-08-29T00:00:00.000Z', sources: [
-      src({ source: 'eia', stale: false }),
-      src({ source: 'acled', stale: true, ageHours: 1538, maxStalenessHours: 24, reason: 'last success was 1538h ago, past the 24h bound' }),
-    ]}))
+  it('a degraded source is visible without any notification channel', async () => {
+    write(freshFile, record(hoursAgo(1), [
+      src({ source: 'eia' }),
+      src({ source: 'acled', availability: 'restricted', ageHours: 1538, maxStalenessHours: 24,
+            reason: 'restricted by entitlement — 12 months old' }),
+    ]))
     const { readSourceFreshness } = await load()
-    const r = readSourceFreshness()
+    const r = readSourceFreshness(NOW)
     if (!r.ok) throw new Error('expected ok')
-    expect(r.sources[0].source).toBe('acled')       // stale sorts first
-    expect(r.sources[0].stale).toBe(true)
-    expect(r.sources[0].reason).toMatch(/1538h/)
+    expect(r.sources[0].source).toBe('acled')          // degraded sorts first
+    expect(r.sources[0].availability).toBe('restricted')
   })
 
-  it('a healthy source is NOT falsely shown as stale', async () => {
-    write(freshFile, JSON.stringify({ schemaVersion: 1, exportedAt: '2026-08-29T00:00:00.000Z',
-      sources: [src({ source: 'eia', stale: false, ageHours: 3, maxStalenessHours: 36 })] }))
+  it('restricted and unavailable are NOT collapsed into "stale"', async () => {
+    write(freshFile, record(hoursAgo(1), [
+      src({ source: 'acled', availability: 'restricted' }),
+      src({ source: 'gdelt', availability: 'unavailable' }),
+      src({ source: 'eia',   availability: 'stale' }),
+    ]))
     const { readSourceFreshness } = await load()
-    const r = readSourceFreshness()
-    expect(r.ok && r.sources.every(s => !s.stale)).toBe(true)
-    expect(r.ok && r.sources[0].reason).toBeNull()
+    const r = readSourceFreshness(NOW)
+    if (!r.ok) throw new Error('expected ok')
+    expect(r.sources.map(s => s.availability)).toEqual(['unavailable', 'restricted', 'stale'])
   })
 
-  // Absence of the export is absence of information, never a clean bill.
+  it('a healthy source is NOT falsely shown as degraded', async () => {
+    write(freshFile, record(hoursAgo(1), [src({ source: 'eia', maxStalenessHours: 36, ageHours: 3 })]))
+    const { readSourceFreshness } = await load()
+    const r = readSourceFreshness(NOW)
+    expect(r.ok && r.sources.every(s => s.availability === 'current')).toBe(true)
+    expect(r.ok && r.recordStale).toBe(false)
+  })
+
+  // B1: an old export must not keep asserting "current".
+  it('a STALE record downgrades current verdicts to unknown', async () => {
+    write(freshFile, record(hoursAgo(200), [src({ source: 'eia', availability: 'current' })]))
+    const { readSourceFreshness } = await load()
+    const r = readSourceFreshness(NOW)
+    if (!r.ok) throw new Error('expected ok')
+    expect(r.recordStale).toBe(true)
+    expect(r.sources[0].availability).toBe('unknown')
+    expect(r.sources[0].reason).toMatch(/provenance record is/)
+  })
+
+  it('but a standing restriction survives a stale record', async () => {
+    write(freshFile, record(hoursAgo(200), [src({ source: 'acled', availability: 'restricted' })]))
+    const { readSourceFreshness } = await load()
+    const r = readSourceFreshness(NOW)
+    expect(r.ok && r.sources[0].availability).toBe('restricted')
+  })
+
   it('a missing export reports unavailable, not "all healthy"', async () => {
     const { readSourceFreshness } = await load()
-    const r = readSourceFreshness()
+    const r = readSourceFreshness(NOW)
     expect(r.ok).toBe(false)
-    if (!r.ok) expect(r.error).toMatch(/no freshness export/)
+    if (!r.ok) expect(r.error).toMatch(/no provenance export/)
   })
 
   it('a malformed export reports unavailable', async () => {
     write(freshFile, '{"sources":"nope"}')
     const { readSourceFreshness } = await load()
-    expect(readSourceFreshness().ok).toBe(false)
+    expect(readSourceFreshness(NOW).ok).toBe(false)
   })
 })

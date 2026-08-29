@@ -150,7 +150,7 @@ For insider trades, always state the dollar amount. Do not invent people or quot
 
 async function formatContext(ctx: ContextBundle): Promise<string> {
   const tradeLookup = await loadTradeExposureLookup()
-  const { analysis, simulation, graph, stockIntel, worldIntel, profile, profileMissing, thesisSummary, peopleEvents, calibration, taxHarvest, risk, correlationReport, macro } = ctx
+  const { analysis, simulation, graph, stockIntel, worldIntel, worldCoverage, profile, profileMissing, thesisSummary, peopleEvents, calibration, taxHarvest, risk, correlationReport, macro } = ctx
 
   const profileBlock = profileMissing
     ? 'No investor profile found — proceeding without personal context.'
@@ -343,11 +343,24 @@ async function formatContext(ctx: ContextBundle): Promise<string> {
     tradeExposureLookup: tradeLookup ?? undefined,
   })
   const anyEnriched = enriched.some(e => e.counterfactual || e.causedByRationales.length > 0)
-  const worldEvents = anyEnriched
-    ? enriched.map(renderEnrichedEventBlock).join('\n\n') || '  None'
+  const worldEventLines = anyEnriched
+    ? enriched.map(renderEnrichedEventBlock).join('\n\n')
     : worldIntel.events.slice(0, 5).map(e =>
         `  [${e.severity}] ${e.title}: ${e.summary.slice(0, 150)}`
-      ).join('\n') || '  None'
+      ).join('\n')
+
+  // A compact caveat, and ONLY where it changes how the block should be read:
+  // coverage is degraded, or the block is empty and an empty block would
+  // otherwise be taken for a quiet world. No source-health boilerplate on a
+  // healthy day.
+  const coverageDegraded = worldCoverage ? !worldCoverage.complete : true
+  const worldEvents = worldEventLines
+    ? (coverageDegraded
+        ? `  ⚠️ PARTIAL — ${worldCoverage?.summary ?? 'world-intel coverage unknown'}. Events below are not a complete picture.\n\n${worldEventLines}`
+        : worldEventLines)
+    : (coverageDegraded
+        ? `  ⚠️ NO EVENTS READ, AND COVERAGE IS INCOMPLETE — ${worldCoverage?.caveat ?? 'no provenance record was available'}.\n  This is missing evidence, not a quiet world; do not read it as reduced geopolitical risk.`
+        : '  None reported (source coverage complete)')
 
   // Surface only portfolio-relevant people events. Sort: high-impact first, then by date desc.
   const impactRank: Record<string, number> = { high: 0, medium: 1, low: 2 }

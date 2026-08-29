@@ -1,4 +1,5 @@
 import fs from 'fs'
+import { readProvenance, type ProvenanceRecord, type SourceProvenance } from '@common/types'
 import path from 'path'
 import type { AnalysisJSON, SimulationJSON, GraphJSON, StockIntelJSON, WorldIntelJSON, DiscoveryJSON, DiscoveryPosition, MacroJSON, WavesJSON, WaveActionsJSON, WavePortfolioJSON, GovFlowJSON } from '@/types'
 import type { RiskJSON, HarvestJSON } from '@/lib/next/types'
@@ -127,38 +128,35 @@ export interface ThresholdAlertRecord {
 }
 
 /**
- * Per-source feed freshness — the pull surface that replaced the LINE
- * stale-source alert. Exported by the world-intel pipeline from the quota
- * tracker's OWN `isStale`, so the threshold is defined in one place.
+ * Per-source provenance — the pull surface that replaced the LINE stale-source
+ * alert, now classified rather than a bare boolean.
  *
- * "Unavailable" and "all current" are different facts: a missing export means
- * nobody has told us, not that every feed is healthy.
+ * Evaluated at READ time: a classification is an observation with an age, so an
+ * export that has itself gone stale cannot assert that anything is "current".
+ * "Unavailable" and "all current" are different facts, and a missing export
+ * means nobody has told us — not that every feed is healthy.
  */
-export interface SourceFreshness {
-  source: string
-  lastSuccessfulFetch: string | null
-  maxStalenessHours: number
-  ageHours: number | null
-  stale: boolean
-  reason: string | null
-}
-
 export type FreshnessResult =
-  | { ok: true; exportedAt: string; sources: SourceFreshness[] }
+  | { ok: true; sources: SourceProvenance[]; classifiedAt: string; recordAgeHours: number | null; recordStale: boolean; summary: string }
   | { ok: false; error: string }
 
-export function readSourceFreshness(): FreshnessResult {
+/** A record older than a day plus slack means nobody has checked since. */
+export const PROVENANCE_MAX_AGE_HOURS = 30
+
+export function readSourceFreshness(now: Date = new Date()): FreshnessResult {
   const filePath = path.join(dataRoot(), 'world-intelligence-data-hub-', 'quota', 'freshness.json')
   if (!fs.existsSync(filePath))
-    return { ok: false, error: 'no freshness export yet — the world-intel pipeline has not written one' }
+    return { ok: false, error: 'no provenance export yet — the world-intel pipeline has not written one' }
   try {
-    const file = readJSON<{ exportedAt?: string; sources?: SourceFreshness[] }>(filePath)
-    if (!file || !Array.isArray(file.sources))
+    const record = readJSON<ProvenanceRecord>(filePath)
+    if (!record || !Array.isArray(record.sources))
       return { ok: false, error: "freshness.json is malformed: 'sources' is not an array" }
-    // Stale first — the whole point is that a dead feed is hard to miss.
-    const sources = [...file.sources].sort((a, b) =>
-      (a.stale === b.stale ? 0 : a.stale ? -1 : 1) || (b.ageHours ?? 0) - (a.ageHours ?? 0))
-    return { ok: true, exportedAt: file.exportedAt ?? '', sources }
+    const r = readProvenance(record, now, PROVENANCE_MAX_AGE_HOURS)
+    // Degraded first — the point is that a dead feed is hard to miss.
+    const order: Record<string, number> = { unavailable: 0, restricted: 1, unknown: 2, stale: 3, current: 4 }
+    const sources = [...r.sources].sort((a, b) =>
+      (order[a.availability] ?? 9) - (order[b.availability] ?? 9) || (b.ageHours ?? 0) - (a.ageHours ?? 0))
+    return { ok: true, sources, classifiedAt: record.classifiedAt, recordAgeHours: r.recordAgeHours, recordStale: r.recordStale, summary: r.summary }
   } catch (err) {
     return { ok: false, error: (err as Error).message }
   }

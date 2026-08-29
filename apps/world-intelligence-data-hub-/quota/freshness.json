@@ -1,46 +1,57 @@
 {
   "schemaVersion": 1,
-  "exportedAt": "2026-08-29T01:38:52.612Z",
+  "classifiedAt": "2026-08-29T07:29:06.160Z",
   "sources": [
     {
       "source": "acled",
       "lastSuccessfulFetch": "2026-06-26T00:00:00.000Z",
       "maxStalenessHours": 24,
-      "ageHours": 1537.6,
-      "stale": true,
-      "reason": "last success was 1538h ago, past the 24h bound"
+      "ageHours": 1543.5,
+      "restriction": {
+        "kind": "recency-embargo",
+        "detail": "the account may only read events at least 12 months old, so no query can return recent events; this requires a subscription change, not an engineering repair",
+        "evidence": "ACLED /api/acled/read returns HTTP 200 success=true with 0 rows for any recent window, and reports data_query_restrictions.date_recency = {quantity: 12, unit: \"Months\", date: \"2025-08-29\"}. Probed read-only 2026-08-29; `event_date >= 2025-01-01` returns rows, unfiltered returns rows dated 2019.",
+        "accessibleOlderThanDays": 365
+      },
+      "availability": "restricted",
+      "reason": "restricted by entitlement — the account may only read events at least 12 months old, so no query can return recent events; this requires a subscription change, not an engineering repair"
     },
     {
       "source": "eia",
       "lastSuccessfulFetch": "2026-08-27T15:13:01.242Z",
       "maxStalenessHours": 36,
-      "ageHours": 34.4,
-      "stale": false,
-      "reason": null
+      "ageHours": 40.3,
+      "availability": "stale",
+      "reason": "last success 40.3h ago, past the 36h bound — cause not diagnosed (the producer may simply not have run)"
     },
     {
       "source": "gdelt",
       "lastSuccessfulFetch": "2026-08-27T15:08:20.071Z",
       "maxStalenessHours": 2,
-      "ageHours": 34.5,
-      "stale": true,
-      "reason": "last success was 35h ago, past the 2h bound"
+      "ageHours": 40.3,
+      "lastFailure": {
+        "at": "2026-08-28T19:50:12.000Z",
+        "kind": "transport",
+        "detail": "upstream TLS certificate expired (CN=*.gdeltproject.org, Let's Encrypt, notAfter Aug 28 19:50:12 2026 GMT); TCP connects but the handshake is rejected. Verified independently of our trust store — the macOS system CA bundle also rejects it and Node reports CERT_HAS_EXPIRED."
+      },
+      "availability": "unavailable",
+      "reason": "transport failure at 2026-08-28T19:50:12.000Z — upstream TLS certificate expired (CN=*.gdeltproject.org, Let's Encrypt, notAfter Aug 28 19:50:12 2026 GMT); TCP connects but the handshake is rejected. Verified independently of our trust store — the macOS system CA bundle also rejects it and Node reports CERT_HAS_EXPIRED."
     },
     {
       "source": "worldbank",
       "lastSuccessfulFetch": "2026-08-27T15:13:04.111Z",
       "maxStalenessHours": 336,
-      "ageHours": 34.4,
-      "stale": false,
-      "reason": null
+      "ageHours": 40.3,
+      "availability": "current",
+      "reason": "refreshed 40.3h ago, inside the 336h bound"
     },
     {
       "source": "ucdp",
       "lastSuccessfulFetch": "2026-08-18T14:16:28.531Z",
       "maxStalenessHours": 336,
-      "ageHours": 251.4,
-      "stale": false,
-      "reason": null
+      "ageHours": 257.2,
+      "availability": "current",
+      "reason": "refreshed 257.2h ago, inside the 336h bound"
     }
   ]
 }

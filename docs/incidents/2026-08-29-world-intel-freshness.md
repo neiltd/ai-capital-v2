@@ -197,3 +197,99 @@ No scheduler restart, no historical flow retry, no backfill, no queue cleanup, n
 freshness-implementation change, no portfolio mutation, no outbound
 notification. The only writes this session were the evidence copies outside the
 repo. Working tree clean.
+
+
+---
+
+# Phase 2 — provenance made part of analytical truth
+
+Implemented 2026-08-29. **No source repair, scheduler restart, backfill, queue
+mutation, notification work or portfolio mutation.**
+
+## Availability semantics
+
+Five states, in `@common/types/provenance.ts`, classified from one injected clock:
+
+| state | meaning |
+|---|---|
+| `current` | refreshed inside its bound |
+| `stale` | past its bound, **cause deliberately not diagnosed** — a producer that was never scheduled looks identical to a dead feed from here, and guessing is how a frozen scheduler gets reported as an outage |
+| `unavailable` | an **observed** transport failure. Requires evidence |
+| `restricted` | upstream answers successfully but withholds what we need, by entitlement. **Declared, never inferred**, and outranks every other state so it can never read as retryable |
+| `unknown` | no basis for a claim — the honest default |
+
+Live classification: **acled `restricted`**, **gdelt `unavailable`** (carrying the
+certificate evidence), **eia `stale`** with cause explicitly undiagnosed,
+worldbank/ucdp `current`.
+
+Declared evidence is **self-expiring**: an observed failure is ignored once the
+source succeeds more recently than the failure was observed, so a one-off
+finding cannot harden into permanent fiction.
+
+## Propagation to the bounded consumer set
+
+| consumer | change |
+|---|---|
+| **regime analyzer** | `formatWorldIntel` returned `'No significant world intelligence events.'` **unconditionally**. Under restricted/unavailable coverage that is a false statement handed to the model as a calm backdrop. It now reports missing coverage explicitly, and prepends a PARTIAL-view banner when events exist but coverage is degraded. The system prompt instructs that missing evidence must *lower* confidence and never lower geopolitical risk. |
+| **cli-run (analysis)** | loads provenance at analysis time and attaches `coverage`; unreadable provenance yields `complete: false`, never assumed-healthy |
+| **context loader** | carries `worldCoverage` into `ContextBundle`, evaluated at read time |
+| **briefing-agent** | compact caveat **only** when coverage is degraded or the block is empty. No source-health boilerplate on a healthy day |
+| **dashboard `/system/pipeline`** | five states with distinct styling; `restricted` is annotated "not fixable by retry" |
+
+## Freshness self-awareness (carried B1/B2)
+
+**B1** — read surfaces compute the age of the *classification itself*. A record
+older than 30h cannot assert that anything is `current`; time-dependent verdicts
+downgrade to `unknown`, while `restricted` survives because an entitlement is a
+standing fact rather than an observation. The dashboard says so in a banner.
+
+**B2** — one injected clock throughout. `classifySource` takes `now`; nothing
+reads `Date.now()` internally, so a record can no longer contradict itself.
+Producer and consumer contract covered by 14 tests in `common-types`, 5 in the
+regime analyzer, 12 on the dashboard surfaces.
+
+## ACLED — restriction, not repair
+
+Recorded in `RESTRICTIONS.acled` with the upstream evidence quoted.
+
+> **Recent ACLED data requires a subscription/procurement change, not an
+> engineering repair.** The account may only read events at least 12 months old.
+> No query change, retry, backfill or code fix can obtain recent events on this
+> entitlement. The integration is preserved and marked `restricted`.
+
+## GDELT cadence — unresolved architecture decision
+
+The configured bound is **2h**; the only producer in the DAG runs **daily**. The
+bound is therefore unsatisfiable by design and reports `stale` as a matter of
+architecture, independent of any failure.
+
+**Not silently relaxed, and the 15-minute daemon was not restarted.**
+
+Evidence gathered for the decision: **nothing consumes world-intel at sub-daily
+cadence.** The DAG chain runs daily; no shell script references world-intel; the
+30-minute alerts agent uses prices only. The only ≤2h-capable producer was the
+unmanaged `npm run schedule` daemon, which is stopped and separately recorded as
+an untrusted execution surface.
+
+So the choice is between relaxing the bound to match the daily DAG, or
+identifying a genuine ≤2h consumer that does not currently exist. **Decision
+deferred to Neil.**
+
+## Historical impact inventory — for later decision only
+
+**No re-analysis performed. These conclusions are NOT labelled wrong.**
+
+| window | basis | analytical artifacts in range |
+|---|---|---|
+| ACLED, from **2026-05-12** | last ACLED event in the normalized store is 2026-05-11 | **71 briefings** (2026-05-26 → 2026-08-25) |
+| ACLED definitive zero, from **2026-07-06** | `Returned 0 events` begins, 176 consecutive | **39 briefings** |
+| GDELT, from **2026-08-22** | last GDELT event is 2026-08-21 | **1 briefing** (2026-08-25) |
+
+Also in range: `analysis.json` regime calls produced by those runs, and 49
+world-intel daily event files.
+
+What is established is that these artifacts consumed world-intel **and could not
+see that coverage was incomplete** — no consumer read `meta.sourceVersions`, and
+the event files carry `source: unknown`. Whether any specific conclusion was
+materially affected is **Missing** and requires the deferred re-analysis
+decision.

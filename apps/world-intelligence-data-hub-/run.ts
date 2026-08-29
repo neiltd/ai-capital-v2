@@ -7,7 +7,7 @@
 import { existsSync, readFileSync, writeFileSync, mkdirSync } from 'fs';
 import { join, dirname } from 'path';
 import { QuotaTracker } from './quota/quota-tracker.ts';
-import { writeFreshness } from './quota/freshness.ts';
+import { writeProvenance } from './quota/freshness.ts';
 import type { SourceClient } from './ingestion/clients/base.client.ts';
 import { SOURCE_NAMES, createClient } from './lib/sources-config.ts';
 import { runPipeline, buildSourceVersions } from './ingestion/pipelines/pipeline.ts';
@@ -84,10 +84,10 @@ async function main(): Promise<void> {
   // advanced even when the send failed. Removing it also removed the only
   // human-facing consumer of quota.isStale(), so the answer is written down
   // instead — same detection, no delivery.
-  const freshness = writeFreshness(quota);
-  const staleNow = freshness.sources.filter(s => s.stale);
+  const freshness = writeProvenance(quota);
+  const staleNow = freshness.sources.filter(s => s.availability !== 'current');
   if (staleNow.length > 0)
-    logger.warn('run', `Stale sources: ${staleNow.map(s => s.source).join(', ')} — see quota/freshness.json`);
+    logger.warn('run', `Degraded coverage: ${staleNow.map(s => `${s.source}=${s.availability}`).join(', ')} — see quota/freshness.json`);
 
   // Exit summary
   const { sources } = manifest;

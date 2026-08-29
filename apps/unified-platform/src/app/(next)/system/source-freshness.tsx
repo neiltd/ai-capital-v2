@@ -1,8 +1,19 @@
-import { readSourceFreshness } from '@/lib/data'
+import { readSourceFreshness, PROVENANCE_MAX_AGE_HOURS } from '@/lib/data'
+import type { SourceProvenance } from '@common/types'
 
 // Read-only. Replaced the LINE stale-source alert with a pull surface: same
-// detection, no delivery. ACLED was 403-broken for nine days without anyone
-// noticing, which is why this control exists at all.
+// detection, no delivery. ACLED was 403-broken for nine days unnoticed once, and
+// on 2026-08-29 was found entitlement-restricted since July with GDELT
+// unreachable — which is why this page distinguishes five states rather than
+// showing a stale/current boolean.
+
+const STYLE: Record<SourceProvenance['availability'], { label: string; cls: string }> = {
+  current:     { label: 'current',     cls: 'text-neutral-500' },
+  stale:       { label: 'STALE',       cls: 'text-amber-600 dark:text-amber-400 font-medium' },
+  unavailable: { label: 'UNAVAILABLE', cls: 'text-red-600 dark:text-red-400 font-semibold' },
+  restricted:  { label: 'RESTRICTED',  cls: 'text-red-600 dark:text-red-400 font-semibold' },
+  unknown:     { label: 'unknown',     cls: 'text-neutral-400 italic' },
+}
 
 export function SourceFreshness() {
   const result = readSourceFreshness()
@@ -10,34 +21,45 @@ export function SourceFreshness() {
   if (!result.ok) {
     return (
       <section className="rounded-lg border border-amber-400/60 bg-amber-50/50 dark:bg-amber-950/20 p-4">
-        <h2 className="text-sm font-semibold tracking-tight mb-1">Feed freshness — unavailable</h2>
+        <h2 className="text-sm font-semibold tracking-tight mb-1">Feed coverage — unavailable</h2>
         <p className="text-sm text-amber-800 dark:text-amber-300">
-          No freshness export could be read, so it is <strong>unknown</strong> whether any
-          source is current. This is not the same as “all feeds healthy”.
+          No provenance record could be read, so it is <strong>unknown</strong> whether any source is
+          current. This is not the same as “all feeds healthy”.
         </p>
         <p className="mt-1 text-xs font-mono text-neutral-600 dark:text-neutral-400">{result.error}</p>
       </section>
     )
   }
 
-  const stale = result.sources.filter(s => s.stale)
+  const degraded = result.sources.filter(s => s.availability !== 'current')
 
   return (
     <section className="rounded-lg border border-neutral-200 dark:border-neutral-800 p-4">
       <header className="flex items-baseline justify-between gap-3 mb-3">
-        <h2 className="text-sm font-semibold tracking-tight">Feed freshness</h2>
+        <h2 className="text-sm font-semibold tracking-tight">Feed coverage</h2>
         <span className="text-xs text-neutral-500 tabular-nums">
-          {stale.length} stale · {result.sources.length} sources
-          {result.exportedAt ? ` · as of ${new Date(result.exportedAt).toLocaleString()}` : ''}
+          {degraded.length} degraded · {result.sources.length} sources
+          {result.recordAgeHours !== null ? ` · classified ${result.recordAgeHours}h ago` : ''}
         </span>
       </header>
+
+      {/* The classification is itself an observation with an age. An old record
+          cannot assert that anything is current, and saying so is the point. */}
+      {result.recordStale && (
+        <p className="mb-3 rounded border border-amber-400/60 bg-amber-50/50 dark:bg-amber-950/20 px-3 py-2 text-sm text-amber-800 dark:text-amber-300">
+          This provenance record is <strong>{result.recordAgeHours ?? '?'}h old</strong> (bound{' '}
+          {PROVENANCE_MAX_AGE_HOURS}h). Nothing has re-checked these sources since, so time-dependent
+          verdicts below read <em>unknown</em> rather than being asserted as current. Standing
+          entitlement restrictions still apply.
+        </p>
+      )}
 
       <div className="overflow-x-auto">
         <table className="w-full text-sm">
           <thead className="text-xs uppercase tracking-wide text-neutral-500">
             <tr className="text-left">
               <th className="py-1 pr-3 font-medium">Source</th>
-              <th className="py-1 pr-3 font-medium">State</th>
+              <th className="py-1 pr-3 font-medium">Availability</th>
               <th className="py-1 pr-3 font-medium">Last success</th>
               <th className="py-1 pr-3 font-medium">Age</th>
               <th className="py-1 font-medium">Why</th>
@@ -45,18 +67,25 @@ export function SourceFreshness() {
           </thead>
           <tbody>
             {result.sources.map(s => (
-              <tr key={s.source} className="border-t border-neutral-100 dark:border-neutral-900">
+              <tr key={s.source} className="border-t border-neutral-100 dark:border-neutral-900 align-top">
                 <td className="py-1.5 pr-3 font-medium">{s.source}</td>
-                <td className={`py-1.5 pr-3 ${s.stale ? 'text-red-600 dark:text-red-400 font-medium' : 'text-neutral-500'}`}>
-                  {s.stale ? 'STALE' : 'current'}
+                <td className={`py-1.5 pr-3 whitespace-nowrap ${STYLE[s.availability].cls}`}>
+                  {STYLE[s.availability].label}
                 </td>
-                <td className="py-1.5 pr-3 tabular-nums text-neutral-500">
+                <td className="py-1.5 pr-3 tabular-nums text-neutral-500 whitespace-nowrap">
                   {s.lastSuccessfulFetch ? new Date(s.lastSuccessfulFetch).toLocaleString() : 'never'}
                 </td>
-                <td className="py-1.5 pr-3 tabular-nums">
+                <td className="py-1.5 pr-3 tabular-nums whitespace-nowrap">
                   {s.ageHours === null ? '—' : `${s.ageHours}h / ${s.maxStalenessHours}h`}
                 </td>
-                <td className="py-1.5 text-neutral-500">{s.reason ?? ''}</td>
+                <td className="py-1.5 text-neutral-500">
+                  {s.reason}
+                  {s.availability === 'restricted' && (
+                    <span className="block text-xs mt-0.5 text-neutral-400">
+                      Not fixable by retry — requires a subscription change.
+                    </span>
+                  )}
+                </td>
               </tr>
             ))}
           </tbody>

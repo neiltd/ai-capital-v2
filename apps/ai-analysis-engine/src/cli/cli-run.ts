@@ -6,6 +6,14 @@ import { createAnalysisStore } from '../store/sqlite.js'
 import { collectHealth } from '../collector/health-collector.js'
 import { analyzeRegime } from '../analysis/regime-analyzer.js'
 import type { WorldIntelContext, LiquidityContext, GovFlowContext, ThaiGovFlowContext } from '../analysis/regime-analyzer.js'
+import { readProvenance, coverageIsComplete, absenceCaveat, type ProvenanceRecord } from '@common/types'
+
+/**
+ * How old a provenance record may be before its verdicts stop being assertable.
+ * The producer writes one per pipeline run (daily), so a record older than a day
+ * plus slack means nobody has checked since — which is UNKNOWN, not healthy.
+ */
+const PROVENANCE_MAX_AGE_HOURS = 30
 import { analyzePropagation } from '../analysis/propagation-analyzer.js'
 import { analyzePeople } from '../analysis/people-analyzer.js'
 import { exportAnalysis } from '../export/exporter.js'
@@ -17,7 +25,8 @@ const DATA_DIR              = join(process.cwd(), 'data')
 const REPORTS_DIR           = join(DATA_DIR, 'reports')
 const GRAPH_PATH            = join(process.cwd(), '../dependency-graph-engine/data/graph.json')
 const STOCK_INTEL_PATH      = join(process.cwd(), '../world-intelligence-data-hub-/exports/stock-project/intelligence.json')
-const WORLD_INTEL_PATH      = join(process.cwd(), '../world-intelligence-data-hub-/exports/world-map/intelligence.json')
+const WORLD_INTEL_ROOT      = join(process.cwd(), '../world-intelligence-data-hub-')
+const WORLD_INTEL_PATH      = join(WORLD_INTEL_ROOT, 'exports/world-map/intelligence.json')
 const MACRO_PATH            = join(process.cwd(), '../macro-asset-monitor/data/macro.json')
 const GOV_FLOW_PATH         = join(process.cwd(), '../government-flow-monitor/data/govflow.json')
 const THAI_GOV_FLOW_PATH    = join(process.cwd(), '../government-flow-monitor/data/thai-govflow.json')
@@ -93,12 +102,36 @@ function loadPortfolioTickers(): string[] {
   }
 }
 
+/**
+ * Source coverage behind the events. Read at ANALYSIS time, not export time, so
+ * a provenance record that has itself gone stale cannot present its verdicts as
+ * current — the classification is an observation with an age like any other.
+ */
+function loadCoverage(): WorldIntelContext['coverage'] {
+  try {
+    const p = join(WORLD_INTEL_ROOT, 'quota', 'freshness.json')
+    const record = existsSync(p) ? JSON.parse(readFileSync(p, 'utf-8')) as ProvenanceRecord : null
+    const r = readProvenance(record, new Date(), PROVENANCE_MAX_AGE_HOURS)
+    return {
+      complete: coverageIsComplete(r.sources),
+      summary:  r.summary,
+      caveat:   absenceCaveat(r.sources),
+      sources:  r.sources,
+    }
+  } catch {
+    // Unreadable provenance is UNKNOWN coverage, never assumed-complete.
+    return { complete: false, summary: 'world-intel coverage unknown: provenance record unreadable',
+             caveat: 'events may be MISSING rather than absent — the provenance record could not be read', sources: [] }
+  }
+}
+
 function loadWorldIntel(): WorldIntelContext | undefined {
   try {
     if (!existsSync(STOCK_INTEL_PATH) || !existsSync(WORLD_INTEL_PATH)) return undefined
     const stock = JSON.parse(readFileSync(STOCK_INTEL_PATH, 'utf-8'))
     const world = JSON.parse(readFileSync(WORLD_INTEL_PATH, 'utf-8'))
     return {
+      coverage: loadCoverage(),
       marketEvents: stock.marketEvents ?? [],
       worldEvents:  world.events ?? [],
     }

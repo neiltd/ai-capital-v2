@@ -234,6 +234,13 @@ export interface ContextBundle {
   graph:          GraphJSON
   stockIntel:     StockIntelJSON
   worldIntel:     WorldIntelJSON
+  /** Source coverage behind worldIntel.events, evaluated at read time. */
+  worldCoverage?: {
+    complete: boolean
+    summary: string
+    caveat: string | null
+    sources: Array<{ source: string; availability: string; reason: string }>
+  }
   profile:        string    // raw Markdown from knowledge/profile.md; '' if missing
   profileMissing: boolean   // true when profile.md was not found
   thesisSummary:  string    // formatted thesis snapshot; '' if no thesis DB found
