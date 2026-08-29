@@ -126,17 +126,73 @@ export interface ThresholdAlertRecord {
   evidence: Record<string, unknown>
 }
 
-export function readThresholdAlerts(): ThresholdAlertRecord[] {
+/**
+ * Per-source feed freshness — the pull surface that replaced the LINE
+ * stale-source alert. Exported by the world-intel pipeline from the quota
+ * tracker's OWN `isStale`, so the threshold is defined in one place.
+ *
+ * "Unavailable" and "all current" are different facts: a missing export means
+ * nobody has told us, not that every feed is healthy.
+ */
+export interface SourceFreshness {
+  source: string
+  lastSuccessfulFetch: string | null
+  maxStalenessHours: number
+  ageHours: number | null
+  stale: boolean
+  reason: string | null
+}
+
+export type FreshnessResult =
+  | { ok: true; exportedAt: string; sources: SourceFreshness[] }
+  | { ok: false; error: string }
+
+export function readSourceFreshness(): FreshnessResult {
+  const filePath = path.join(dataRoot(), 'world-intelligence-data-hub-', 'quota', 'freshness.json')
+  if (!fs.existsSync(filePath))
+    return { ok: false, error: 'no freshness export yet — the world-intel pipeline has not written one' }
+  try {
+    const file = readJSON<{ exportedAt?: string; sources?: SourceFreshness[] }>(filePath)
+    if (!file || !Array.isArray(file.sources))
+      return { ok: false, error: "freshness.json is malformed: 'sources' is not an array" }
+    // Stale first — the whole point is that a dead feed is hard to miss.
+    const sources = [...file.sources].sort((a, b) =>
+      (a.stale === b.stale ? 0 : a.stale ? -1 : 1) || (b.ageHours ?? 0) - (a.ageHours ?? 0))
+    return { ok: true, exportedAt: file.exportedAt ?? '', sources }
+  } catch (err) {
+    return { ok: false, error: (err as Error).message }
+  }
+}
+
+/** Business day in the business timezone — matches the detector's own notion. */
+export const BUSINESS_TIMEZONE = 'America/Los_Angeles'
+export function businessToday(now: Date = new Date()): string {
+  return now.toLocaleDateString('en-CA', { timeZone: BUSINESS_TIMEZONE })
+}
+
+/**
+ * A3 — "no alerts" and "the record is unreadable" are different facts and must
+ * not render the same. The previous version caught everything and returned [],
+ * so a corrupt authoritative store displayed as a clean day.
+ */
+export type ThresholdAlertsResult =
+  | { ok: true; alerts: ThresholdAlertRecord[] }
+  | { ok: false; error: string }
+
+export function readThresholdAlerts(): ThresholdAlertsResult {
   const filePath = path.join(dataRoot(), 'scenario-simulator', 'data', 'threshold-alerts.json')
+  if (!fs.existsSync(filePath)) return { ok: true, alerts: [] }   // genuinely nothing yet
   try {
     const file = readJSON<{ alerts?: ThresholdAlertRecord[] }>(filePath)
-    if (!file?.alerts) return []
+    if (!file || !Array.isArray(file.alerts))
+      return { ok: false, error: "threshold-alerts.json is malformed: 'alerts' is not an array" }
     // Newest first; active before resolved so what is live reads first.
-    return [...file.alerts].sort((a, b) =>
+    const alerts = [...file.alerts].sort((a, b) =>
       (a.status === b.status ? 0 : a.status === 'active' ? -1 : 1) ||
       b.last_observed_at.localeCompare(a.last_observed_at))
-  } catch {
-    return []
+    return { ok: true, alerts }
+  } catch (err) {
+    return { ok: false, error: (err as Error).message }
   }
 }
 

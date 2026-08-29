@@ -16,12 +16,12 @@ import { existsSync, mkdirSync } from 'fs'
 import Database from 'better-sqlite3'
 import { usePostgres, getPool, closePool } from '@common/db'
 import { createPortfolioStore } from '../portfolio/portfolio-store.js'
-import { alertsPath, loadAlerts, saveAlerts, reconcile, type Observation } from '../alerts/alert-store.js'
+import { alertsPath, loadAlerts, saveAlerts, reconcile, type Observation, type Evaluated } from '../alerts/alert-store.js'
 
 const DATA_DIR        = join(process.cwd(), 'data')
 const PORTFOLIO_DB    = join(DATA_DIR, 'portfolio.db')
 const INGESTION_DB    = join(process.cwd(), '../capital-intelligence-ingestion/data/sqlite.db')
-const ALERTS_PATH     = alertsPath(DATA_DIR)
+const ALERTS_PATH     = alertsPath()
 
 const PRICE_DROP_THRESHOLD     = -0.05  // -5% intraday
 const NEWS_VELOCITY_THRESHOLD  = 3      // articles in last 6 hours
@@ -87,6 +87,8 @@ async function run() {
 
   const sinceIso = new Date(Date.now() - NEWS_WINDOW_HOURS * 3_600_000).toISOString()
   const ingestionAvailable = !usePostgres() && existsSync(INGESTION_DB)
+  // Postgres always answers; the SQLite path only if the file is there.
+  const newsAvailable = usePostgres() || ingestionAvailable
   const ingestionDb = ingestionAvailable ? new Database(INGESTION_DB, { readonly: true }) : null
   const countArticles = async (ticker: string): Promise<number> => {
     if (usePostgres()) return articleCountSincePg(ticker, sinceIso)
@@ -94,7 +96,7 @@ async function run() {
   }
 
   const observations: Observation[] = []
-  const evaluated: string[] = []
+  const evaluated: Evaluated[] = []
   for (const p of positions) {
     // Every position is evaluated every run. The old cooldown `continue`d here,
     // BEFORE the price was fetched, so a transport concern was gating detection.
@@ -114,8 +116,13 @@ async function run() {
           evidence: { company: p.company, currency: p.currency, currentPrice: current, priorClose, source: 'yahoo:chart' },
         })
       }
-      evaluated.push(p.ticker)
+      // A4 — the PRICE rule was genuinely checked for this instrument.
+      evaluated.push({ rule_id: 'price_drop', instrument: p.ticker })
     }
+    // A4 — news evidence is only trustworthy when a store was actually
+    // available. In the SQLite fallback with the ingestion DB absent,
+    // countArticles returns 0, which must NOT read as "no news, resolve it".
+    if (newsAvailable) evaluated.push({ rule_id: 'news_velocity', instrument: p.ticker })
     if (articleCount >= NEWS_VELOCITY_THRESHOLD) {
       observations.push({
         rule_id: 'news_velocity', instrument: p.ticker, direction: 'elevated',

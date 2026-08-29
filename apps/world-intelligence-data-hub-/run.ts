@@ -7,6 +7,7 @@
 import { existsSync, readFileSync, writeFileSync, mkdirSync } from 'fs';
 import { join, dirname } from 'path';
 import { QuotaTracker } from './quota/quota-tracker.ts';
+import { writeFreshness } from './quota/freshness.ts';
 import type { SourceClient } from './ingestion/clients/base.client.ts';
 import { SOURCE_NAMES, createClient } from './lib/sources-config.ts';
 import { runPipeline, buildSourceVersions } from './ingestion/pipelines/pipeline.ts';
@@ -17,10 +18,11 @@ import { logger } from './lib/logger.ts';
 // A source can be individually "failed" this run yet still look like a clean
 // pipeline overall (anyOk gates the exit code, deliberately — see below).
 // That's how ACLED being 403-broken for 9 days went unnoticed: it never
-// showed up anywhere the briefing/user actually looks. This sends one LINE
-// ping per day (not per run) when any source has gone stale beyond its
-// configured maxStalenessHours, so a dead source stays visible without
-// making one flaky feed take down the whole pipeline.
+// showed up anywhere the briefing/user actually looks. Per-source freshness is
+// therefore EXPORTED to quota/freshness.json every run and surfaced on the
+// dashboard, so a dead source stays visible without making one flaky feed take
+// down the whole pipeline. It is a pull surface: there is no notification
+// channel (LINE was retired 2026-08-28).
 // NewsAPI removed — GDELT covers the same geopolitical queries (free, unlimited).
 // NewsAPI quota is reserved exclusively for capital-intelligence-ingestion (company news).
 //
@@ -76,10 +78,16 @@ async function main(): Promise<void> {
   // Write run record
   writeRunManifest(manifest);
 
-  // Source staleness remains recorded in the quota tracker (lastSuccessfulFetch
-  // per source) and is derivable from it. The LINE alert that used to fire here
-  // was retired 2026-08-28 along with its hand-rolled .env parser, cwd-dependent
-  // mute check, and a daily marker that advanced even when the send failed.
+  // Per-source freshness is EXPORTED here as a pull surface, not sent. The LINE
+  // alert that used to fire at this point was retired 2026-08-28 along with its
+  // hand-rolled .env parser, cwd-dependent mute check, and a daily marker that
+  // advanced even when the send failed. Removing it also removed the only
+  // human-facing consumer of quota.isStale(), so the answer is written down
+  // instead — same detection, no delivery.
+  const freshness = writeFreshness(quota);
+  const staleNow = freshness.sources.filter(s => s.stale);
+  if (staleNow.length > 0)
+    logger.warn('run', `Stale sources: ${staleNow.map(s => s.source).join(', ')} — see quota/freshness.json`);
 
   // Exit summary
   const { sources } = manifest;

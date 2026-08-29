@@ -278,6 +278,45 @@ credentials.
 **Preserved:** `daily-catchup`'s `exit 0` — business logic, not notification: do
 not auto-resubmit a pipeline that already failed today.
 
+### C — the daily-catchup change was NOT preservation (correction)
+
+I previously reported `daily-catchup`'s `exit 0` as "preserved, unchanged". That
+was wrong, and the correction matters because it is the incident shape again.
+
+The old guard was `[ "$FAILED_COUNT" -gt 0 ] && [ ! -f "$ALERT_MARKER" ]`. The
+marker existed to stop LINE repeating itself — but it also gated the `exit 0`.
+So on a **second** same-day fire the marker was present, the whole branch was
+skipped, and a pipeline that had already failed today was **auto-resubmitted**.
+
+A notification-dedupe marker was deciding whether a failed pipeline could be
+retried. That is precisely the coupling this retirement exists to remove, and it
+was found only because the channel was being pulled out.
+
+It is now unconditional on `FAILED_COUNT > 0`. **Recorded as an intentional
+business-correctness change discovered during retirement**, not as preservation.
+
+### B — world-intel staleness: detection kept, surfaced by pull
+
+Warden established that removing `alertOnStaleSourcesOnce` removed the only
+human-facing consumer of `quota.isStale()`. That is a visibility regression
+distinct from the accepted "pipeline failures are pull-based" limitation, and it
+is not accepted — that control exists because ACLED was 403-broken for nine days
+unnoticed.
+
+`quota/freshness.ts` now exports per-source freshness — source identity, last
+successful fetch, the bound it is judged against, age, stale/current, and a
+plain-language reason — written every pipeline run and surfaced read-only on
+`/system/pipeline`. It is built from the tracker's **own** `isStale`, so the
+threshold stays defined in one place rather than being re-implemented in the
+dashboard where it could drift.
+
+No notification delivery state, no retry state, no markers, no outbound
+messaging.
+
+**The first export immediately found two dead feeds:** ACLED last succeeded
+1538h ago against a 24h bound (64 days), and GDELT 35h against a 2h bound.
+Neither was visible anywhere before this.
+
 **Verified against the real detector**, not fixtures: 19 positions checked, LLY
 opened at −6.88% intraday; a second run reported `0 opened, 1 continuing` with
 `detected_at` preserved and `last_observed_at` advanced.

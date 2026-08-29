@@ -16,6 +16,7 @@ export const dynamic = 'force-dynamic'
 import { loadPipeline } from './data'
 import type { StageVM } from './data'
 import { SectionCard, StatTile, Th, Td } from '@/components/next/ui'
+import { SourceFreshness } from '../source-freshness'
 import { relTime } from '@/lib/next/format'
 
 const STATUS_COLOR: Record<string, string> = {
@@ -158,6 +159,9 @@ export default function PipelinePage() {
           correlation) run Sundays only — skipped on any other day is healthy, not a failure.
         </p>
       </SectionCard>
+
+      {/* Pull surface that replaced the LINE stale-source alert. */}
+      <SourceFreshness />
     </main>
   )
 }

@@ -1,0 +1,46 @@
+{
+  "schemaVersion": 1,
+  "exportedAt": "2026-08-29T01:38:52.612Z",
+  "sources": [
+    {
+      "source": "acled",
+      "lastSuccessfulFetch": "2026-06-26T00:00:00.000Z",
+      "maxStalenessHours": 24,
+      "ageHours": 1537.6,
+      "stale": true,
+      "reason": "last success was 1538h ago, past the 24h bound"
+    },
+    {
+      "source": "eia",
+      "lastSuccessfulFetch": "2026-08-27T15:13:01.242Z",
+      "maxStalenessHours": 36,
+      "ageHours": 34.4,
+      "stale": false,
+      "reason": null
+    },
+    {
+      "source": "gdelt",
+      "lastSuccessfulFetch": "2026-08-27T15:08:20.071Z",
+      "maxStalenessHours": 2,
+      "ageHours": 34.5,
+      "stale": true,
+      "reason": "last success was 35h ago, past the 2h bound"
+    },
+    {
+      "source": "worldbank",
+      "lastSuccessfulFetch": "2026-08-27T15:13:04.111Z",
+      "maxStalenessHours": 336,
+      "ageHours": 34.4,
+      "stale": false,
+      "reason": null
+    },
+    {
+      "source": "ucdp",
+      "lastSuccessfulFetch": "2026-08-18T14:16:28.531Z",
+      "maxStalenessHours": 336,
+      "ageHours": 251.4,
+      "stale": false,
+      "reason": null
+    }
+  ]
+}
