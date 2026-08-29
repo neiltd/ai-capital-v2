@@ -5,7 +5,7 @@ import { randomUUID } from 'crypto'
 import { createAnalysisStore } from '../store/sqlite.js'
 import { collectHealth } from '../collector/health-collector.js'
 import { analyzeRegime } from '../analysis/regime-analyzer.js'
-import type { WorldIntelContext, LiquidityContext, GovFlowContext, ThaiGovFlowContext } from '../analysis/regime-analyzer.js'
+import type { WorldIntelContext, WorldCoverage, LiquidityContext, GovFlowContext, ThaiGovFlowContext } from '../analysis/regime-analyzer.js'
 import { readProvenance, coverageIsComplete, absenceCaveat, type ProvenanceRecord } from '@common/types'
 
 /**
@@ -107,7 +107,7 @@ function loadPortfolioTickers(): string[] {
  * a provenance record that has itself gone stale cannot present its verdicts as
  * current — the classification is an observation with an age like any other.
  */
-function loadCoverage(): WorldIntelContext['coverage'] {
+export function loadCoverage(): WorldCoverage {
   try {
     const p = join(WORLD_INTEL_ROOT, 'quota', 'freshness.json')
     const record = existsSync(p) ? JSON.parse(readFileSync(p, 'utf-8')) as ProvenanceRecord : null
@@ -131,7 +131,6 @@ function loadWorldIntel(): WorldIntelContext | undefined {
     const stock = JSON.parse(readFileSync(STOCK_INTEL_PATH, 'utf-8'))
     const world = JSON.parse(readFileSync(WORLD_INTEL_PATH, 'utf-8'))
     return {
-      coverage: loadCoverage(),
       marketEvents: stock.marketEvents ?? [],
       worldEvents:  world.events ?? [],
     }
@@ -189,7 +188,10 @@ async function run() {
   } else {
     console.log('  Gov flow: not available')
   }
-  const regime = await analyzeRegime(health, { worldIntel, macroAssets, liquidityContext, govFlowContext, thaiGovFlow })
+  // Loaded SEPARATELY from the events: a failure to read the event exports must
+  // not take the coverage statement with it.
+  const worldCoverage = loadCoverage()
+  const regime = await analyzeRegime(health, { worldIntel, worldCoverage, macroAssets, liquidityContext, govFlowContext, thaiGovFlow })
   store.insertRegime(regime)
   console.log(`  Regime: ${regime.regime} (${regime.confidence})`)
 

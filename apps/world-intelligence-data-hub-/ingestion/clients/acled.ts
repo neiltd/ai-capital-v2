@@ -176,9 +176,23 @@ export class ACLEDClient implements SourceClient {
     }
 
     if (!Array.isArray(data.data) || data.data.length === 0) {
-      // A 7-day+ global window never legitimately has 0 events — this is the
-      // account-level read-permission failure presenting as an empty 200, so
-      // treat it as a failure to let the UCDP fallback engage (see run.ts).
+      // A 7-day+ global window never legitimately has 0 events, so this is a
+      // failure — but NOT the one previously recorded here.
+      //
+      // CORRECTED 2026-08-29. This comment used to call it an "account-level
+      // read-permission failure", which sent readers after a credentials fix.
+      // Read permission is intact: the account authenticates successfully and
+      // returns rows freely for older windows (`event_date >= 2025-01-01` works;
+      // an unfiltered query returns rows dated 2019). What it will not return is
+      // RECENT data — the API reports
+      // `data_query_restrictions.date_recency = {quantity: 12, unit: "Months"}`,
+      // i.e. an account-level recency embargo. See
+      // docs/incidents/2026-08-29-world-intel-freshness.md.
+      //
+      // No query change, retry or backfill obtains recent events on this
+      // entitlement. Still thrown so the UCDP fallback engages (see run.ts), and
+      // the source is separately classified `restricted` in quota/freshness.ts
+      // so no consumer mistakes it for something a retry would fix.
       throw new SourceFetchError(
         this.name,
         `Returned ${data.count ?? 0} events for a global window since ${from} — treating as failure`,

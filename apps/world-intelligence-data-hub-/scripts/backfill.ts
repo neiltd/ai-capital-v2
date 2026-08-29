@@ -1,6 +1,14 @@
 // Backfill historical data for a single source.
 // Usage: npm run backfill -- --source=acled --from=2026-01-01 --to=2026-05-01
 //
+// ⚠️ THAT EXAMPLE WINDOW IS UNAVAILABLE under the current ACLED entitlement.
+// The account may only read events at least 12 MONTHS OLD (recency embargo,
+// confirmed against the API 2026-08-29 — see
+// docs/incidents/2026-08-29-world-intel-freshness.md). Any ACLED window inside
+// the last twelve months returns HTTP 200 success=true with zero rows, so a
+// backfill over it silently succeeds having imported nothing. Windows older
+// than twelve months are still reachable.
+//
 // Respects quota. Writes to raw store only.
 // Does NOT normalize or export — run npm run pipeline after backfill.
 

@@ -1,12 +1,12 @@
 {
   "schemaVersion": 1,
-  "classifiedAt": "2026-08-29T07:29:06.160Z",
+  "classifiedAt": "2026-08-29T07:55:35.337Z",
   "sources": [
     {
       "source": "acled",
       "lastSuccessfulFetch": "2026-06-26T00:00:00.000Z",
       "maxStalenessHours": 24,
-      "ageHours": 1543.5,
+      "ageHours": 1543.9,
       "restriction": {
         "kind": "recency-embargo",
         "detail": "the account may only read events at least 12 months old, so no query can return recent events; this requires a subscription change, not an engineering repair",
@@ -20,15 +20,15 @@
       "source": "eia",
       "lastSuccessfulFetch": "2026-08-27T15:13:01.242Z",
       "maxStalenessHours": 36,
-      "ageHours": 40.3,
+      "ageHours": 40.7,
       "availability": "stale",
-      "reason": "last success 40.3h ago, past the 36h bound — cause not diagnosed (the producer may simply not have run)"
+      "reason": "last success 40.7h ago, past the 36h bound — cause not diagnosed (the producer may simply not have run)"
     },
     {
       "source": "gdelt",
       "lastSuccessfulFetch": "2026-08-27T15:08:20.071Z",
       "maxStalenessHours": 2,
-      "ageHours": 40.3,
+      "ageHours": 40.8,
       "lastFailure": {
         "at": "2026-08-28T19:50:12.000Z",
         "kind": "transport",
@@ -41,17 +41,17 @@
       "source": "worldbank",
       "lastSuccessfulFetch": "2026-08-27T15:13:04.111Z",
       "maxStalenessHours": 336,
-      "ageHours": 40.3,
+      "ageHours": 40.7,
       "availability": "current",
-      "reason": "refreshed 40.3h ago, inside the 336h bound"
+      "reason": "refreshed 40.7h ago, inside the 336h bound"
     },
     {
       "source": "ucdp",
       "lastSuccessfulFetch": "2026-08-18T14:16:28.531Z",
       "maxStalenessHours": 336,
-      "ageHours": 257.2,
+      "ageHours": 257.7,
       "availability": "current",
-      "reason": "refreshed 257.2h ago, inside the 336h bound"
+      "reason": "refreshed 257.7h ago, inside the 336h bound"
     }
   ]
 }

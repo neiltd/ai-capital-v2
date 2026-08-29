@@ -4,19 +4,23 @@ import type { CompanyHealth, MacroRegime, RegimeConfidence } from '../types.js'
 import type { SourceProvenance } from '@common/types'
 import { stripLoneSurrogates } from '../util/sanitize.js'
 
+/**
+ * Source coverage. A SEPARATE fact from the events themselves.
+ *
+ * It used to hang off WorldIntelContext, so a failure to load the event files
+ * discarded the coverage information with them and the world section vanished
+ * from the prompt entirely — the model then saw no coverage statement at all,
+ * having been told the feed "says so when it is incomplete".
+ */
+export interface WorldCoverage {
+  complete: boolean
+  summary: string
+  /** Non-null whenever an empty result may mean "missing", not "absent". */
+  caveat: string | null
+  sources: SourceProvenance[]
+}
+
 export interface WorldIntelContext {
-  /**
-   * Source coverage behind these events. Absent means coverage is UNKNOWN, and
-   * unknown coverage is treated exactly like degraded coverage — the empty list
-   * must never be read as "nothing happened".
-   */
-  coverage?: {
-    complete: boolean
-    summary: string
-    /** Non-null whenever an empty result may mean "missing", not "absent". */
-    caveat: string | null
-    sources: SourceProvenance[]
-  }
   marketEvents: Array<{
     title: string; summary: string; eventType: string
     severity: number; marketDirection?: string; marketRelevance: number; countries: string[]
@@ -88,13 +92,12 @@ Classify the current investment regime using the classify_macro_regime tool.
 
 You have four signal sources:
 1. Company health signals — thesis assumption status and recent documents per company
-2. World intelligence — geopolitical and market events ranked by severity. This feed may be
-   INCOMPLETE, and it says so when it is. If the world-intelligence section reports degraded or
-   unknown coverage, treat the missing portion as UNOBSERVED, never as quiet: do not lower
-   geopolitical risk and do not classify the regime as calmer on the strength of events you were
-   unable to see. Missing evidence must LOWER confidence — report 'medium' or 'low' rather than
-   'high' when a conclusion leans on the absence of geopolitical events — and the rationale must
-   name the degraded coverage.
+2. World intelligence — geopolitical and market events ranked by severity. This feed is often
+   INCOMPLETE. Absence or unreadability of world-intelligence is MISSING EVIDENCE, never evidence
+   of a quiet world: treat anything you cannot see as UNOBSERVED, do not lower geopolitical risk
+   on the strength of it, and do not classify the regime as calmer because few events appear.
+   Missing evidence must LOWER confidence — report 'medium' or 'low' rather than 'high' when a
+   conclusion leans on the absence of geopolitical events — and the rationale must say so.
 3. Global liquidity conditions — Fed balance sheet (QE/QT), Treasury issuance (TGA), reverse repo
    drainage, and M2 growth. Contracting liquidity compresses equity multiples even when company
    fundamentals are strong. When liquidity conditions are driving or modifying your assessment,
@@ -166,10 +169,10 @@ function formatHealth(health: CompanyHealth[]): string {
   }).join('\n\n')
 }
 
-export function formatWorldIntel(world: WorldIntelContext): string {
+export function formatWorldIntel(world: WorldIntelContext | undefined, coverage: WorldCoverage | undefined): string {
   const SEVERITY = (n: number) => n >= 5 ? 'Critical' : n >= 4 ? 'High' : n >= 3 ? 'Medium' : 'Low'
 
-  const marketLines = world.marketEvents
+  const marketLines = (world?.marketEvents ?? [])
     .filter(e => e.marketRelevance >= 0.5)
     .sort((a, b) => b.severity - a.severity)
     .slice(0, 6)
@@ -177,7 +180,7 @@ export function formatWorldIntel(world: WorldIntelContext): string {
       `  [${SEVERITY(e.severity)} · ${e.eventType} · mkt-relevance ${e.marketRelevance.toFixed(2)}] ${e.title}\n  ${e.summary.slice(0, 200)}`
     ).join('\n')
 
-  const worldLines = world.worldEvents
+  const worldLines = (world?.worldEvents ?? [])
     .filter(e => e.marketRelevance >= 0.3 || e.escalationPotential >= 0.6)
     .sort((a, b) => (b.severity + b.escalationPotential) - (a.severity + a.escalationPotential))
     .slice(0, 6)
@@ -196,9 +199,22 @@ export function formatWorldIntel(world: WorldIntelContext): string {
   // and one the model would reasonably read as a calm geopolitical backdrop.
   // On 2026-08-29 that was the live case: ACLED entitlement-restricted since
   // July and GDELT unreachable, with no consumer able to tell.
-  const complete = world.coverage?.complete === true
-  const caveat = world.coverage?.caveat
+  const complete = coverage?.complete === true
+  const caveat = coverage?.caveat
     ?? 'source coverage is UNKNOWN — no provenance record was available'
+
+  // Events and coverage are independent, and all FOUR combinations are
+  // representable. The one that used to disappear is `world === undefined`:
+  // the section is now rendered whatever happens to the event files.
+  if (!world) {
+    return [
+      'WORLD-INTEL EVENTS COULD NOT BE LOADED.',
+      coverage ? `Coverage: ${coverage.summary}` : 'Coverage: UNKNOWN — no provenance record was available.',
+      caveat,
+      'Treat this as MISSING evidence, not as evidence of a calm or stable geopolitical environment.',
+      'Do not lower geopolitical risk, and do not raise confidence, on the basis of this absence.',
+    ].join('\n')
+  }
 
   if (parts.length === 0) {
     return complete
@@ -341,6 +357,8 @@ export async function analyzeRegime(
   options: {
     client?: Anthropic
     worldIntel?: WorldIntelContext
+    /** Independent of worldIntel: absent means coverage is UNKNOWN, never complete. */
+    worldCoverage?: WorldCoverage
     macroAssets?: MacroContext
     liquidityContext?: LiquidityContext
     govFlowContext?: GovFlowContext
@@ -368,9 +386,11 @@ export async function analyzeRegime(
     ? `\n\n## ⚠ Yen Carry-Unwind Watch: ${carry.status.toUpperCase()}\n${carry.reasons.map(r => `  - ${r}`).join('\n')}\nA disorderly yen unwind transmits to global risk (equities down, VIX up); weigh this in the regime and rationale.`
     : ''
 
-  const worldSection = options.worldIntel
-    ? `\n\n## World Intelligence (live macro events)\n${formatWorldIntel(options.worldIntel)}`
-    : ''
+  // UNCONDITIONAL. Previously this was `options.worldIntel ? … : ''`, so every
+  // coverage statement lived inside a branch that a failed event load skipped —
+  // silence, on a prompt that promised the feed would speak up.
+  const worldSection =
+    `\n\n## World Intelligence (live macro events)\n${formatWorldIntel(options.worldIntel, options.worldCoverage)}`
 
   const liquiditySection = options.liquidityContext
     ? `\n\n${formatLiquidity(options.liquidityContext)}`

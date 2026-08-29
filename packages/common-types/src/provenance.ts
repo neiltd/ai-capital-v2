@@ -125,14 +125,29 @@ export interface ReadProvenanceResult {
 }
 
 /**
- * Read-time evaluation. **A classification is itself an observation with an age.**
+ * Read-time evaluation. **Every time-dependent verdict is RECOMPUTED here.**
  *
- * A stale record cannot assert that anything is `current` — the producer may not
- * have run since. Time-dependent verdicts are therefore downgraded to `unknown`,
- * while `restricted` survives, because an entitlement limit is a standing fact
- * about the account rather than something we last polled.
+ * The first version compared only the RECORD's age against one global grace
+ * period and, if it was under it, passed the producer's verdicts through
+ * verbatim. So a record classified at T0 kept asserting `current` for a source
+ * whose own bound had since elapsed: a 29h-old record reported GDELT `current`
+ * with `ageHours: 1` while the true age was 30h against a 2h bound, and
+ * `coverageIsComplete` returned true. That is the normal case rather than an
+ * edge case — the daily pipeline can never satisfy a 2h bound — and it renders
+ * the exact "coverage complete" sentence this module exists to prevent.
  *
- * This is the fix for reading an old exported classification as present tense.
+ * Now each source is re-derived from the evidence the record already carries:
+ * `now - lastSuccessfulFetch` against **that source's own** `maxStalenessHours`.
+ * No second global grace period.
+ *
+ *  - `restriction` is a STANDING fact about the account, not an observation, so
+ *    it survives record aging and keeps outranking everything.
+ *  - `lastFailure` keeps its self-expiring semantics: it applies until the
+ *    source succeeds more recently than the failure was observed.
+ *
+ * `recordAgeHours` / `recordStale` remain reported, but as a SEPARATE signal —
+ * they say whether the observational facts in the record (a declared failure,
+ * say) may themselves be obsolete. They no longer gate the classification.
  */
 export function readProvenance(
   record: ProvenanceRecord | null,
@@ -150,13 +165,20 @@ export function readProvenance(
   const recordStale = recordAgeHours === null || recordAgeHours > maxRecordAgeHours
 
   const sources = record.sources.map(s => {
-    if (!recordStale) return s
-    if (s.availability === 'restricted') return s   // standing fact, not an observation
-    return {
-      ...s,
-      availability: 'unknown' as const,
-      reason: `coverage unknown: the provenance record is ${recordAgeHours ?? '?'}h old (bound ${maxRecordAgeHours}h), so its "${s.availability}" verdict cannot be asserted as current`,
-    }
+    // Self-expiring: a declared failure stops applying once the source has
+    // succeeded more recently than the failure was observed.
+    const failureStillApplies = s.lastFailure && (
+      !s.lastSuccessfulFetch ||
+      new Date(s.lastSuccessfulFetch).getTime() <= new Date(s.lastFailure.at).getTime()
+    )
+    return classifySource({
+      source: s.source,
+      lastSuccessfulFetch: s.lastSuccessfulFetch,
+      maxStalenessHours: s.maxStalenessHours,
+      restriction: s.restriction,
+      lastFailure: failureStillApplies ? s.lastFailure : undefined,
+      now,
+    })
   })
 
   const degraded = sources.filter(s => s.availability !== 'current')

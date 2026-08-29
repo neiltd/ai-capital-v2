@@ -83,69 +83,92 @@ describe('threshold alert surface', () => {
 
 describe('source provenance surface', () => {
   const freshFile = 'world-intelligence-data-hub-/quota/freshness.json'
-  const NOW = new Date('2026-08-29T12:00:00Z')
-  const hoursAgo = (h: number) => new Date(NOW.getTime() - h * 3_600_000).toISOString()
+  const T0 = new Date('2026-08-29T12:00:00Z')
+  const at = (h: number) => new Date(T0.getTime() + h * 3_600_000)
+  const fetchedAt = (h: number) => new Date(T0.getTime() - h * 3_600_000).toISOString()
+
+  // Fixtures carry EVIDENCE, not verdicts: readProvenance recomputes every
+  // time-dependent classification from lastSuccessfulFetch against the source's
+  // own bound, so a stored `availability` is not trusted.
   const src = (o: Record<string, unknown>) => ({
-    source: 'gdelt', lastSuccessfulFetch: hoursAgo(1), maxStalenessHours: 2,
+    source: 'gdelt', lastSuccessfulFetch: fetchedAt(1), maxStalenessHours: 2,
     ageHours: 1, availability: 'current', reason: 'fresh', ...o,
   })
+  const EMBARGO = { kind: 'recency-embargo', detail: '12 months old' }
+  const CERT = { at: fetchedAt(2), kind: 'transport', detail: 'TLS certificate expired' }
   const record = (classifiedAt: string, sources: unknown[]) =>
     JSON.stringify({ schemaVersion: 1, classifiedAt, sources })
 
   it('a degraded source is visible without any notification channel', async () => {
-    write(freshFile, record(hoursAgo(1), [
-      src({ source: 'eia' }),
-      src({ source: 'acled', availability: 'restricted', ageHours: 1538, maxStalenessHours: 24,
-            reason: 'restricted by entitlement — 12 months old' }),
+    write(freshFile, record(fetchedAt(1), [
+      src({ source: 'eia', maxStalenessHours: 36, lastSuccessfulFetch: fetchedAt(1) }),
+      src({ source: 'acled', maxStalenessHours: 24, lastSuccessfulFetch: fetchedAt(1538), restriction: EMBARGO }),
     ]))
     const { readSourceFreshness } = await load()
-    const r = readSourceFreshness(NOW)
+    const r = readSourceFreshness(T0)
     if (!r.ok) throw new Error('expected ok')
     expect(r.sources[0].source).toBe('acled')          // degraded sorts first
     expect(r.sources[0].availability).toBe('restricted')
   })
 
   it('restricted and unavailable are NOT collapsed into "stale"', async () => {
-    write(freshFile, record(hoursAgo(1), [
-      src({ source: 'acled', availability: 'restricted' }),
-      src({ source: 'gdelt', availability: 'unavailable' }),
-      src({ source: 'eia',   availability: 'stale' }),
+    write(freshFile, record(fetchedAt(1), [
+      src({ source: 'acled', maxStalenessHours: 24, lastSuccessfulFetch: fetchedAt(1538), restriction: EMBARGO }),
+      src({ source: 'gdelt', maxStalenessHours: 2,  lastSuccessfulFetch: fetchedAt(50), lastFailure: CERT }),
+      src({ source: 'eia',   maxStalenessHours: 36, lastSuccessfulFetch: fetchedAt(50) }),
     ]))
     const { readSourceFreshness } = await load()
-    const r = readSourceFreshness(NOW)
+    const r = readSourceFreshness(T0)
     if (!r.ok) throw new Error('expected ok')
     expect(r.sources.map(s => s.availability)).toEqual(['unavailable', 'restricted', 'stale'])
   })
 
   it('a healthy source is NOT falsely shown as degraded', async () => {
-    write(freshFile, record(hoursAgo(1), [src({ source: 'eia', maxStalenessHours: 36, ageHours: 3 })]))
+    write(freshFile, record(fetchedAt(1), [src({ source: 'eia', maxStalenessHours: 36, lastSuccessfulFetch: fetchedAt(3) })]))
     const { readSourceFreshness } = await load()
-    const r = readSourceFreshness(NOW)
+    const r = readSourceFreshness(T0)
     expect(r.ok && r.sources.every(s => s.availability === 'current')).toBe(true)
     expect(r.ok && r.recordStale).toBe(false)
   })
 
-  // B1: an old export must not keep asserting "current".
-  it('a STALE record downgrades current verdicts to unknown', async () => {
-    write(freshFile, record(hoursAgo(200), [src({ source: 'eia', availability: 'current' })]))
+  // D2: a persisted `current` verdict is not trusted past the source's OWN bound,
+  // even while the record itself is young.
+  it('gdelt current at classification becomes stale once its 2h bound elapses', async () => {
+    write(freshFile, record(T0.toISOString(), [
+      src({ source: 'gdelt', maxStalenessHours: 2, lastSuccessfulFetch: fetchedAt(0.5) }),
+    ]))
     const { readSourceFreshness } = await load()
-    const r = readSourceFreshness(NOW)
-    if (!r.ok) throw new Error('expected ok')
-    expect(r.recordStale).toBe(true)
-    expect(r.sources[0].availability).toBe('unknown')
-    expect(r.sources[0].reason).toMatch(/provenance record is/)
+    expect((await load()).readSourceFreshness(at(1)).ok).toBe(true)
+    const early = readSourceFreshness(at(1))
+    const later = readSourceFreshness(at(3))
+    expect(early.ok && early.sources[0].availability).toBe('current')
+    expect(later.ok && later.sources[0].availability).toBe('stale')
+    expect(later.ok && later.recordStale).toBe(false)   // the RECORD is still young
   })
 
-  it('but a standing restriction survives a stale record', async () => {
-    write(freshFile, record(hoursAgo(200), [src({ source: 'acled', availability: 'restricted' })]))
+  it('a long-bound source stays current from the same record', async () => {
+    write(freshFile, record(T0.toISOString(), [
+      src({ source: 'gdelt',     maxStalenessHours: 2,   lastSuccessfulFetch: fetchedAt(0.5) }),
+      src({ source: 'worldbank', maxStalenessHours: 336, lastSuccessfulFetch: fetchedAt(0.5) }),
+    ]))
     const { readSourceFreshness } = await load()
-    const r = readSourceFreshness(NOW)
-    expect(r.ok && r.sources[0].availability).toBe('restricted')
+    const r = readSourceFreshness(at(3))
+    if (!r.ok) throw new Error('expected ok')
+    expect(Object.fromEntries(r.sources.map(s => [s.source, s.availability])))
+      .toEqual({ gdelt: 'stale', worldbank: 'current' })
+  })
+
+  it('a standing restriction survives an aged record', async () => {
+    write(freshFile, record(fetchedAt(200), [
+      src({ source: 'acled', maxStalenessHours: 24, lastSuccessfulFetch: fetchedAt(1538), restriction: EMBARGO }),
+    ]))
+    const { readSourceFreshness } = await load()
+    expect((readSourceFreshness(T0) as { sources: Array<{ availability: string }> }).sources[0].availability).toBe('restricted')
   })
 
   it('a missing export reports unavailable, not "all healthy"', async () => {
     const { readSourceFreshness } = await load()
-    const r = readSourceFreshness(NOW)
+    const r = readSourceFreshness(T0)
     expect(r.ok).toBe(false)
     if (!r.ok) expect(r.error).toMatch(/no provenance export/)
   })
@@ -153,6 +176,6 @@ describe('source provenance surface', () => {
   it('a malformed export reports unavailable', async () => {
     write(freshFile, '{"sources":"nope"}')
     const { readSourceFreshness } = await load()
-    expect(readSourceFreshness(NOW).ok).toBe(false)
+    expect(readSourceFreshness(T0).ok).toBe(false)
   })
 })

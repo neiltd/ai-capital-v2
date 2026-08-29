@@ -6,6 +6,7 @@ import { randomUUID } from 'crypto'
 import { createAnalysisStore } from '../store/sqlite.js'
 import { collectHealth } from '../collector/health-collector.js'
 import { analyzeRegime } from '../analysis/regime-analyzer.js'
+import { loadCoverage } from './cli-run.js'
 import { analyzePropagation } from '../analysis/propagation-analyzer.js'
 import { exportAnalysis } from '../export/exporter.js'
 import { generateReport } from '../export/reporter.js'
@@ -23,7 +24,10 @@ async function runAnalysis() {
 
   try {
     const health  = await collectHealth(graph.nodes)
-    const regime  = await analyzeRegime(health)
+    // This legacy daemon writes the SAME analysis.json as the DAG stage, so it
+    // must carry the same coverage statement. Without it the section renders
+    // UNKNOWN — honest, but needlessly blind when the record is right there.
+    const regime  = await analyzeRegime(health, { worldCoverage: loadCoverage() })
     store.insertRegime(regime)
     const signals = await analyzePropagation(regime, graph, health)
     for (const s of signals) store.insertSignal(s)

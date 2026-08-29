@@ -40,6 +40,14 @@ function runSource(source: string): void {
 
 const schedules: Array<{ source: string; expression: string; label: string }> = [
   { source: 'gdelt',     expression: '*/15 * * * *',   label: 'Every 15 min'       },
+  // ACLED cannot return recent events under the current entitlement (12-month
+  // recency embargo — see quota/freshness.ts RESTRICTIONS.acled). This daily
+  // schedule therefore requests impossible data and burns quota on a guaranteed
+  // empty 200, as if recovery by retry were expected. Behaviour deliberately
+  // UNCHANGED in this pass; the smallest safe proposal is recorded in
+  // docs/incidents/2026-08-29-world-intel-freshness.md — gate the schedule on
+  // the declared restriction so an entitlement change re-enables it
+  // automatically, rather than deleting the integration.
   { source: 'acled',     expression: '0 1 * * *',      label: 'Daily at 01:00 UTC' },
   { source: 'eia',       expression: '0 6,18 * * *',   label: 'Twice daily'        },
   { source: 'worldbank', expression: '0 2 * * 0',      label: 'Weekly Sun 02:00'   },

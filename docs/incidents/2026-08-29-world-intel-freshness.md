@@ -385,3 +385,96 @@ recovery · one injected clock with no `Date.now()` in any classification path �
   hardcoded `OBSERVED_FAILURES` map. A future real outage will classify as
   `stale`, and `unavailable` stays only as accurate as someone remembers to
   hand-edit it.
+
+
+---
+
+## Phase 2 corrective pass — D1 and D2 repaired
+
+### D1 — coverage survives event-load failure, by construction
+
+The fix is architectural, not another conditional. **Coverage is no longer a
+property of the event payload.** `WorldCoverage` is its own type, passed to
+`analyzeRegime` as `options.worldCoverage`, and the world section is now rendered
+**unconditionally**:
+
+```ts
+const worldSection = `\n\n## World Intelligence …\n${formatWorldIntel(options.worldIntel, options.worldCoverage)}`
+```
+
+All four combinations are representable and tested against the **rendered model
+input**, not helper returns:
+
+| events | coverage | rendered |
+|---|---|---|
+| available | complete | plain list, no caveat |
+| available | degraded | PARTIAL banner *before* the events |
+| unavailable | known/degraded | `EVENTS COULD NOT BE LOADED` + the coverage summary |
+| unavailable | unknown | `EVENTS COULD NOT BE LOADED` + `Coverage: UNKNOWN` |
+
+Callers audited: `cli-run` now loads coverage **independently** of the events, so
+the outer event-load catch can no longer discard it; `cli-schedule` — the legacy
+standalone daemon writing the same `analysis.json` — now passes real coverage
+instead of nothing. A test asserts that even `analyzeRegime(health)` with no
+options at all produces a prompt containing a world section and a coverage
+statement.
+
+**The prompt contract was corrected.** It previously promised the feed
+"says so when it is incomplete" — which the program did not structurally
+guarantee, and on the broken path the silence read as an assurance. Replaced with
+the invariant the program does enforce: *absence or unreadability of
+world-intelligence is MISSING EVIDENCE, never evidence of a quiet world.*
+
+### D2 — every time-dependent verdict recomputed at read time
+
+`readProvenance` no longer passes producer verdicts through. Each source is
+re-derived from the evidence the record already carries —
+`now − lastSuccessfulFetch` against **that source's own** `maxStalenessHours`.
+No second global grace period.
+
+- **Standing restrictions survive** record aging and keep outranking everything.
+- **Observed failures keep self-expiring** — applied until a success postdates them.
+- `recordAgeHours` / `recordStale` are still reported, but now as a *separate*
+  signal about whether observational facts may be obsolete. They no longer gate
+  classification.
+
+A record classified at T0 with GDELT `current` reads `current` at +1h and
+**`stale` at +3h**, while WorldBank's 336h bound stays `current` from the same
+record — and a 29h-old record inside the 30h grace still reports GDELT `stale`,
+which is the case that was broken.
+
+### Known-false contracts corrected
+
+- **`ingestion/clients/acled.ts`** — the "account-level read-permission failure"
+  diagnosis is replaced with the observed behaviour: successful authenticated
+  reads subject to an account-level **recency embargo**, with the probe evidence
+  and a pointer here. It sent readers after a credentials fix.
+- **`scripts/backfill.ts`** — its usage example targets a window entirely inside
+  the embargo. Marked: any ACLED window inside the last twelve months returns
+  `200 success=true` with zero rows, so a backfill over it **silently succeeds
+  having imported nothing**.
+- **`ingestion/scheduler.ts`** — annotated, **behaviour deliberately unchanged**.
+
+### Smallest safe proposal for entitlement-aware scheduling — NOT implemented
+
+Gate the ACLED schedule on the declared restriction rather than deleting the
+integration: if `RESTRICTIONS[source]` is present and its
+`accessibleOlderThanDays` excludes the window the scheduler would request, skip
+the run and record it as `restricted` rather than attempting and failing.
+
+Two properties make this the smallest safe version: the restriction is already
+declared in one place with evidence, and **an entitlement change re-enables the
+schedule automatically** — remove the declaration and the source resumes, with no
+second switch to remember. Requires no new state, no new subsystem, and no change
+to any other source.
+
+### FUTURE — structured source-attempt/failure provenance
+
+`QuotaTracker.recordFetch(source, success)` discards the failure reason, so
+`lastFailure` can only ever come from the hardcoded `OBSERVED_FAILURES` map. **A
+future real outage will classify as `stale`, not `unavailable`**, and
+`unavailable` stays only as accurate as someone remembers to hand-edit it.
+
+Fixing that means recording attempt outcome, timestamp and failure kind per
+source — an operational subsystem, deliberately **not** built during a D1/D2
+repair. Carried.

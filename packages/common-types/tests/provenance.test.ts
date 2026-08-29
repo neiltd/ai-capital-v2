@@ -65,37 +65,81 @@ describe('source availability is five states, not a boolean', () => {
   })
 })
 
-describe('a classification is itself an observation with an age', () => {
-  const rec = (classifiedAt: string): ProvenanceRecord => ({
-    schemaVersion: 1, classifiedAt,
+// D2: a persisted `current` verdict must not be trusted indefinitely. The first
+// version compared only the RECORD's age against one global grace period and,
+// under it, passed producer verdicts through verbatim — so a 29h-old record kept
+// reporting GDELT `current` with ageHours 1 while its true age was 30h against a
+// 2h bound. Each source is now re-derived against ITS OWN bound at read time.
+describe('time-dependent verdicts are recomputed at read time', () => {
+  const T0 = new Date('2026-08-29T00:00:00Z')
+  const at = (h: number) => new Date(T0.getTime() + h * 3_600_000)
+  const fetchedAt = (h: number) => new Date(T0.getTime() - h * 3_600_000).toISOString()
+
+  // One record, classified at T0, holding sources with very different bounds.
+  const record = (): ProvenanceRecord => ({
+    schemaVersion: 1, classifiedAt: T0.toISOString(),
     sources: [
-      classifySource({ source: 'eia', lastSuccessfulFetch: hoursAgo(3), maxStalenessHours: 36, now: NOW }),
-      classifySource({ source: 'acled', lastSuccessfulFetch: hoursAgo(1538), maxStalenessHours: 24, restriction: EMBARGO, now: NOW }),
+      classifySource({ source: 'gdelt',     lastSuccessfulFetch: fetchedAt(0.5), maxStalenessHours: 2,   now: T0 }),
+      classifySource({ source: 'worldbank', lastSuccessfulFetch: fetchedAt(0.5), maxStalenessHours: 336, now: T0 }),
+      classifySource({ source: 'acled',     lastSuccessfulFetch: fetchedAt(1538), maxStalenessHours: 24, restriction: EMBARGO, now: T0 }),
     ],
   })
+  const src = (r: ReturnType<typeof readProvenance>, name: string) => r.sources.find(s => s.source === name)!
 
-  it('a fresh record keeps its verdicts', () => {
-    const r = readProvenance(rec(hoursAgo(2)), NOW, 30)
+  it('gdelt classified current is still current when read 1h later', () => {
+    const r = readProvenance(record(), at(1), 30)
+    expect(src(r, 'gdelt').availability).toBe('current')
+  })
+
+  it('the SAME record read 3h later reports gdelt stale — its 2h bound elapsed', () => {
+    const r = readProvenance(record(), at(3), 30)
+    expect(src(r, 'gdelt').availability).toBe('stale')
+    expect(src(r, 'gdelt').ageHours).toBeGreaterThan(2)
+    expect(coverageIsComplete(r.sources)).toBe(false)
+    expect(absenceCaveat(r.sources)).toMatch(/may be MISSING rather than absent/)
+  })
+
+  it('world bank with its 336h bound is still current at +3h, from that same record', () => {
+    const r = readProvenance(record(), at(3), 30)
+    expect(src(r, 'worldbank').availability).toBe('current')
+  })
+
+  it('different bounds are evaluated independently from one record', () => {
+    const r = readProvenance(record(), at(3), 30)
+    expect(r.sources.map(s => [s.source, s.availability])).toEqual([
+      ['gdelt', 'stale'], ['worldbank', 'current'], ['acled', 'restricted'],
+    ])
+  })
+
+  it('the record staying young does NOT protect an elapsed source bound', () => {
+    const r = readProvenance(record(), at(29), 30)   // record 29h old, inside the 30h grace
     expect(r.recordStale).toBe(false)
-    expect(r.sources.find(s => s.source === 'eia')!.availability).toBe('current')
+    expect(src(r, 'gdelt').availability).toBe('stale')   // but its own 2h bound is long gone
+    expect(src(r, 'gdelt').reason).toMatch(/past the 2h bound/)
   })
 
-  // B1: an old export must not assert "current" — nobody has checked since.
-  it('a STALE record cannot assert that anything is current', () => {
-    const r = readProvenance(rec(hoursAgo(200)), NOW, 30)
-    expect(r.recordStale).toBe(true)
-    expect(r.sources.find(s => s.source === 'eia')!.availability).toBe('unknown')
-    expect(r.sources.find(s => s.source === 'eia')!.reason).toMatch(/provenance record is/)
+  it('a standing restriction survives record aging', () => {
+    expect(src(readProvenance(record(), at(500), 30), 'acled').availability).toBe('restricted')
   })
 
-  it('but a restriction survives, because it is a standing fact not an observation', () => {
-    const r = readProvenance(rec(hoursAgo(200)), NOW, 30)
-    expect(r.sources.find(s => s.source === 'acled')!.availability).toBe('restricted')
+  it('an observed failure still self-expires on a later success', () => {
+    const rec: ProvenanceRecord = { schemaVersion: 1, classifiedAt: T0.toISOString(), sources: [
+      { source: 'gdelt', availability: 'unavailable', lastSuccessfulFetch: fetchedAt(-1), // succeeded AFTER the failure
+        maxStalenessHours: 2, ageHours: 0, reason: 'x', lastFailure: CERT },
+    ]}
+    expect(readProvenance(rec, at(0.5), 30).sources[0].availability).not.toBe('unavailable')
+  })
+
+  it('an observed failure still applies when no later success exists', () => {
+    const rec: ProvenanceRecord = { schemaVersion: 1, classifiedAt: T0.toISOString(), sources: [
+      { source: 'gdelt', availability: 'unavailable', lastSuccessfulFetch: fetchedAt(50),
+        maxStalenessHours: 2, ageHours: 50, reason: 'x', lastFailure: CERT },
+    ]}
+    expect(readProvenance(rec, at(1), 30).sources[0].availability).toBe('unavailable')
   })
 
   it('a missing record is unknown coverage, never healthy', () => {
-    const r = readProvenance(null, NOW, 30)
-    expect(r.recordStale).toBe(true)
+    const r = readProvenance(null, at(0), 30)
     expect(coverageIsComplete(r.sources)).toBe(false)
     expect(r.summary).toMatch(/unknown/)
   })
