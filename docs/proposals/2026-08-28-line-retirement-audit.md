@@ -323,6 +323,64 @@ opened at −6.88% intraday; a second run reported `0 opened, 1 continuing` with
 
 ---
 
+## RETIREMENT CORRECTNESS — **LIMITED** (2026-08-29)
+
+The bounded correctness pass fixed A1–A5 and B, and Warden verified most of it.
+It then found defects still inside scope, so by the stopping rule this is
+recorded as LIMITED and briefed as-is. **No second repair round.**
+
+### Verified
+
+| | |
+|---|---|
+| **A1** cross-day resolution | Correct, and correct **on disk** — the live record holds one LLY alert spanning 2026-08-28→29 with `detected_at` intact. Flap-within-a-day, independent per-rule resolution and disjoint opened/continuing/resolved all probed. Double-counting is reachable only with a duplicate `(rule, instrument)` in one run, which `portfolio.positions.ticker PRIMARY KEY` prevents. |
+| **A2** NUL bytes | Gone: 2 → 0; git treats the module as text again. |
+| **A3** malformed state | The throw is swallowed nowhere. `loadAlerts` runs inside the same expression as the only `saveAlerts` call, so a corrupt store throws **before** any write and cannot be overwritten by the next run. |
+| **A4** per-rule evaluation | No cross-rule resolution in either direction. A failed price fetch cannot resolve a price alert; news is only "evaluated" when a store was available. |
+| **A5** anchored path | Anchored, and cwd-invariance genuinely tested. The remaining cwd-relative paths do not touch the record and fail safe. |
+| **C** description | My account of the old `daily-catchup` behaviour is **accurate** — confirmed against `7b7d8c9`. |
+| **B** null cases | A source with no successful fetch, and one absent from the state file, both correctly read stale. |
+
+### Defects remaining in scope
+
+**B1 — the freshness surface has no notion of its own staleness.** The dashboard
+consumes `stale`/`ageHours` verbatim from the export and prints them in the
+present tense. `freshness.json` is written only at the end of a pipeline run, and
+the pipeline is frozen. Measured: `eia` last succeeded 2026-08-27T15:13Z against
+a 36h bound, so it crosses at **2026-08-29T03:13Z** — after which
+`/system/pipeline` keeps rendering it "current · 34.4h / 36h" and the headline
+keeps saying "2 stale" instead of 3.
+
+This is the ACLED failure moved up one level: **the staleness detector can go
+dead without saying so.** Even unfrozen, with a daily pipeline and 2h/24h bounds,
+the exported verdict is up to a full run-interval out of date.
+
+**B2 — the producer is untested and its clock is inconsistent.**
+`apps/world-intelligence-data-hub-` has no `test` script, so `pnpm -r test` never
+reaches `buildFreshness`. The nine surface tests are fixtures in
+`unified-platform` and never execute the code that decides `stale`. And
+`freshness.ts` computes `ageHours`/`reason` from the injected `now` while `stale`
+comes from `quota.isStale()`, which reads `Date.now()` internally — so a record
+can contradict itself (`"1h ago, past the 2h bound"` with `stale: true`).
+Unreachable in production, but it means any future deterministic test of `stale`
+would be asserting against the wall clock.
+
+**C1 — the correction never reached the code.** `scripts/daily-catchup.sh:60-63`
+still reads *"The exit below is unchanged and is what actually prevents the
+auto-retry"* — the exact claim C retracts, live in the file that carries the
+behaviour. The correction exists only in this document. **The commit updated the
+record and not the thing the record is about.**
+
+### Limitation needing an explicit decision
+
+An instrument that leaves the portfolio is never evaluated again, so its alert
+stays `active` / `resolved_at: null` forever and is counted in "active now".
+This follows correctly from A4 — absence of evidence is not evidence of
+resolution — but it is a live route to a real-money surface showing a condition
+that stopped holding. It should be decided, not inherited.
+
+---
+
 ## What I need decided before any implementation
 
 1. **Where do threshold alerts land?** This is the blocker. Options: a durable
