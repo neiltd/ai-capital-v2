@@ -164,3 +164,108 @@ describe('absence may only be reported as absence under complete coverage', () =
     expect(coverageIsComplete([])).toBe(false)
   })
 })
+
+// ── The GDELT daily-cadence contract, and what availability must never imply ──
+//
+// GDELT's bound was 2h, sized for a 15-minute daemon that is retired and loaded
+// in no launchd job. Production fetches it once per day from the
+// world-intel-pipeline DAG stage, so a perfectly healthy daily fetch spent ~22
+// of every 24 hours labelled stale. The bound is now 36h: one daily cycle plus
+// tolerance, under 48h so two missed cycles are unambiguously stale.
+//
+// These pin the SEMANTICS the bound has to deliver. The production constant
+// itself is pinned separately, next to the DAG cadence that justifies it.
+describe('GDELT daily cadence contract (36h bound)', () => {
+  const DAILY_BOUND = 36
+  const gdelt = (ageHours: number, failure?: SourceFailure) =>
+    classifySource({ source: 'gdelt', lastSuccessfulFetch: hoursAgo(ageHours), maxStalenessHours: DAILY_BOUND, lastFailure: failure, now: NOW })
+
+  // A. a successful daily update stays current across its intended window
+  it('stays current right after the daily run', () => {
+    expect(gdelt(0.5).availability).toBe('current')
+  })
+
+  it('is still current just before the next daily run is due', () => {
+    expect(gdelt(23.5).availability).toBe('current')
+  })
+
+  it('tolerates a late run rather than flapping to stale at exactly 24h', () => {
+    // The DAG fires at 07:00 on a laptop that sleeps; a run can land hours late.
+    expect(gdelt(30).availability).toBe('current')
+  })
+
+  // B. a genuinely missed cycle does become stale
+  it('goes stale once the expected cycle is missed beyond tolerance', () => {
+    expect(gdelt(37).availability).toBe('stale')
+  })
+
+  it('is unambiguously stale after two missed cycles', () => {
+    expect(gdelt(48).availability).toBe('stale')
+  })
+
+  it('would have been WRONGLY stale under the retired 2h bound — the defect being fixed', () => {
+    const underOldBound = classifySource({ source: 'gdelt', lastSuccessfulFetch: hoursAgo(3), maxStalenessHours: 2, now: NOW })
+    expect(underOldBound.availability).toBe('stale')            // 3h after a healthy daily fetch
+    expect(gdelt(3).availability).toBe('current')               // ...now correctly current
+  })
+
+  // C. an unreachable endpoint is unavailable, never merely stale
+  it('reports a known endpoint failure as unavailable, not stale', () => {
+    const r = gdelt(3, CERT)
+    expect(r.availability).toBe('unavailable')
+    expect(r.reason).toMatch(/transport/)
+  })
+
+  it('outranks staleness even when the data is also old', () => {
+    expect(gdelt(200, CERT).availability).toBe('unavailable')
+  })
+
+  // D. recovery clears the transient failure through the existing mechanism
+  it('a success after the failure clears unavailable via the existing self-expiry', () => {
+    const recovered: SourceFailure = { ...CERT, at: hoursAgo(20) }
+    const record: ProvenanceRecord = {
+      schemaVersion: 1, classifiedAt: NOW.toISOString(),
+      sources: [{
+        source: 'gdelt', availability: 'unavailable', lastSuccessfulFetch: hoursAgo(2),
+        maxStalenessHours: DAILY_BOUND, ageHours: 2, reason: 'stale evidence', lastFailure: recovered,
+      }],
+    }
+    expect(readProvenance(record, NOW, 30).sources[0].availability).toBe('current')
+  })
+})
+
+// E + F. What a consumer may conclude from missing coverage.
+describe('unavailable and restricted coverage are never evidence of calm', () => {
+  const restrictedAcled = classifySource({
+    source: 'acled', lastSuccessfulFetch: hoursAgo(1), maxStalenessHours: 24, restriction: EMBARGO, now: NOW,
+  })
+
+  // E. recency of the fetch cannot dissolve an entitlement limit
+  it('ACLED stays restricted however recently it was fetched', () => {
+    expect(restrictedAcled.availability).toBe('restricted')
+    expect(classifySource({ source: 'acled', lastSuccessfulFetch: hoursAgo(0.01), maxStalenessHours: 24, restriction: EMBARGO, now: NOW }).availability).toBe('restricted')
+  })
+
+  it('says plainly that retrying will not help', () => {
+    expect(restrictedAcled.reason).toMatch(/restricted by entitlement/)
+  })
+
+  // F. the load-bearing question: may an empty result be read as "nothing happened"?
+  it('restricted coverage withdraws the licence to report absence', () => {
+    expect(coverageIsComplete([restrictedAcled])).toBe(false)
+    expect(absenceCaveat([restrictedAcled])).toMatch(/MISSING rather than absent/)
+  })
+
+  it('unavailable coverage withdraws it too, even alongside healthy sources', () => {
+    const down = classifySource({ source: 'gdelt', lastSuccessfulFetch: hoursAgo(3), maxStalenessHours: 36, lastFailure: CERT, now: NOW })
+    const ok   = classifySource({ source: 'eia', lastSuccessfulFetch: hoursAgo(3), maxStalenessHours: 36, now: NOW })
+    expect(coverageIsComplete([down, ok])).toBe(false)
+    expect(absenceCaveat([down, ok])).toContain('gdelt')
+  })
+
+  it('only fully current coverage licenses a plain statement of absence', () => {
+    const ok = classifySource({ source: 'eia', lastSuccessfulFetch: hoursAgo(3), maxStalenessHours: 36, now: NOW })
+    expect(coverageIsComplete([ok])).toBe(true)
+    expect(absenceCaveat([ok])).toBeNull()
+  })
+})

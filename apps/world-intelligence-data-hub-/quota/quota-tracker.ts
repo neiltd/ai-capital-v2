@@ -28,7 +28,22 @@ export const SOURCE_CONFIGS: Record<string, SourceConfig> = {
   gdelt: {
     name: 'gdelt',
     ttlHours: 0.25,          // 15 minutes
-    maxStalenessHours: 2,
+    // 36h, not 2h. The 2h bound was sized for the retired 15-minute daemon
+    // (ingestion/scheduler.ts, `*/15 * * * *`), which is stopped and loaded in
+    // no launchd job. Production fetches GDELT once per day, from the
+    // world-intel-pipeline DAG stage (no skipIf) that starts at 07:00 — so a
+    // healthy daily fetch spent ~22 of every 24 hours labelled stale, and
+    // `staleSourcesPresent` was permanently true and therefore meaningless.
+    //
+    // 36h = one daily cycle plus 12h of tolerance, matching the eia entry below
+    // (also daily-ish: ttl 12h, bound 36h). The slack is real, not padding: this
+    // runs on a laptop that sleeps, which is why the worker needs `caffeinate`.
+    // Under 48h, so two consecutive missed cycles are unambiguously stale.
+    //
+    // The current TLS outage is deliberately NOT encoded here — it lives in
+    // quota/freshness.ts OBSERVED_FAILURES.gdelt as `unavailable`, which
+    // outranks staleness and self-expires on the next success.
+    maxStalenessHours: 36,
     dailyLimit: null,
     monthlyLimit: null,
     resetPeriod: 'none',
