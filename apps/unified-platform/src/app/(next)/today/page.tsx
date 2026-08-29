@@ -25,6 +25,7 @@ import { DatePicker } from './date-picker'
 import { listBriefingDates, todayLocal } from '@/lib/data'
 import { SectionCard, Label, AsOf, ActionBadge, ConvictionBadge, AlertBanner } from '@/components/next/ui'
 import { ProbBar } from '@/components/next/charts'
+import { CoverageCallout, worldCoverageNotice } from '@/components/next/coverage-notice'
 import { fmtUsd, fmtSignedUsd } from '@/lib/next/format'
 
 const SCENARIO_ICON: Record<string, string> = { best: '◔', base: '◑', disruption: '◕' }
@@ -39,6 +40,7 @@ export default function BriefingPage({ searchParams }: { searchParams?: { date?:
   const dates = listBriefingDates()
   const selectedDate = searchParams?.date || today
   const b = loadBriefing(selectedDate)
+  const worldNotice = worldCoverageNotice()
 
   if (!b) {
     return (
@@ -194,8 +196,18 @@ export default function BriefingPage({ searchParams }: { searchParams?: { date?:
             </SectionCard>
           )}
 
-          {b.worldTop.length > 0 && (
+          {/* The section used to vanish entirely when the list was empty, which
+              is the quietest possible way to say "nothing happened". It now also
+              renders when coverage is degraded, so an empty world feed cannot
+              silently read as a calm day. */}
+          {(b.worldTop.length > 0 || worldNotice) && (
             <SectionCard title="World — top events (today)" actions={<a href="/world/intel" className="text-[12px] text-accent">More →</a>}>
+              {worldNotice && <div className="mb-2"><CoverageCallout where="today's world events" notice={worldNotice} /></div>}
+              {b.worldTop.length === 0 && (
+                <p className="text-[12px] leading-5 text-ink-3">
+                  Cannot establish whether significant events occurred — coverage above is incomplete.
+                </p>
+              )}
               <ul className="divide-y divide-hairline">
                 {b.worldTop.map((e) => (
                   <li key={e.eventId} className="py-2 first:pt-0 last:pb-0">

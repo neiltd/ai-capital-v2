@@ -4,6 +4,7 @@ import { readStockIntel, readWorldIntel } from '@/lib/data'
 import { StockEventCard, WorldEventCard } from '@/components/capital/WorldEventCard'
 import { PageHeader, MetaDot, SectionTitle } from '@/components/capital/ui/PageHeader'
 import { EmptyState } from '@/components/capital/ui/EmptyState'
+import { CoverageCallout, worldCoverageNotice } from '@/components/next/coverage-notice'
 import { SeverityHistogram } from '@/components/capital/ui/SeverityHistogram'
 import { SeverityDistributionBar } from '@/components/capital/ui/SeverityDistributionBar'
 import { PortfolioExposureList } from '@/components/capital/PortfolioExposureList'
@@ -92,14 +93,23 @@ export default function WorldIntelPage() {
 
   const totalEvents = stockEvents.length + worldEvents.length
 
+  // Legacy layout preserved; only the provenance semantics are added.
+  const coverage = worldCoverageNotice()
+
   if (totalEvents === 0) {
     return (
       <div className="max-w-5xl">
         <PageHeader title="World Intel" subtitle="Geopolitical and market events, ranked by severity" />
+        {coverage && <div className="mb-3"><CoverageCallout where="this page" notice={coverage} /></div>}
+        {/* "No events recorded" is a claim about the world. It may only be made
+            when coverage is complete; otherwise the honest statement is that we
+            cannot tell. */}
         <EmptyState
           icon="✦"
-          title="No events recorded"
-          description="The world-intel pipeline hasn't produced any market or geopolitical events yet."
+          title={coverage ? 'Cannot establish whether events occurred' : 'No events recorded'}
+          description={coverage
+            ? 'Source coverage is incomplete, so an empty feed is missing evidence rather than a quiet world. See the coverage note above.'
+            : "The world-intel pipeline hasn't produced any market or geopolitical events yet."}
         />
       </div>
     )
@@ -150,6 +160,10 @@ export default function WorldIntelPage() {
           </>
         }
       />
+
+      {/* Same provenance semantics as the empty path: a populated feed can still
+          be missing a source, and the operator has to be able to see that. */}
+      {coverage && <div className="mb-4"><CoverageCallout where="this page" notice={coverage} /></div>}
 
       <div className="grid grid-cols-1 lg:grid-cols-[1fr_300px] gap-6 items-start">
         {/* Main content — severity-tiered event groups */}

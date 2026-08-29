@@ -12,6 +12,7 @@ export const dynamic = 'force-dynamic'
 import { loadWorld } from './data'
 import { WorldTabs } from './world-tabs'
 import { AsOf, AlertBanner } from '@/components/next/ui'
+import { CoverageCallout } from '@/components/next/coverage-notice'
 
 export default function WorldPage() {
   const w = loadWorld()
@@ -20,6 +21,9 @@ export default function WorldPage() {
     return (
       <main className="mx-auto max-w-[1520px] p-page-pad">
         <AlertBanner level="warning" title="World intelligence unavailable" detail="world-map/intelligence.json not found." />
+        {/* Absence of the export is not absence of events — say which feeds we
+            could not read either. */}
+        <div className="mt-3"><CoverageCallout where="world intelligence" /></div>
       </main>
     )
   }
@@ -36,6 +40,9 @@ export default function WorldPage() {
         </div>
         <AsOf iso={w.generatedAt} />
       </header>
+
+      {/* Beside the event feed it qualifies, not as a global banner. */}
+      <CoverageCallout where="the events below" />
 
       <WorldTabs events={w.events} storylines={w.storylines} />
     </main>
