@@ -478,3 +478,86 @@ future real outage will classify as `stale`, not `unavailable`**, and
 Fixing that means recording attempt outcome, timestamp and failure kind per
 source — an operational subsystem, deliberately **not** built during a D1/D2
 repair. Carried.
+
+
+---
+
+## Phase 2 verification — **LIMITED**. One defect, and it is mine and new.
+
+Six of seven properties verified. One fails, on a defect **introduced by the D1
+fix itself** (`ac5fc9b`). Recorded and stopped per the no-third-loop rule.
+
+### The defect (#6) — an import with a production side effect
+
+`cli-schedule.ts:9` imports `loadCoverage` from `cli-run.ts`. **`cli-run.ts` is
+an entrypoint, not a library:** its module body ends in a bare
+`run().catch(err => { … process.exit(1) })` with no `import.meta` main guard.
+ESM evaluates an imported module's body, so merely *starting* the legacy daemon
+now executes `cli-run`'s entire `run()` — `collectHealth`, a real
+`client.messages.create` **(billable)**, `store.insertRegime`,
+`analyzePropagation`, and writes to `analysis.json`, `analysis.db` and the daily
+report — **at import time, before cron is ever consulted**, and again at 06:00
+from its own schedule. Any failure inside that import-time run calls
+`process.exit(1)` and kills the daemon before it can reach its schedule.
+
+Reproduced from an isolated cwd, aborting before any network call; the stack is
+unambiguous:
+
+```
+AI Analysis Engine scheduler started. Running daily at 06:00.
+Error: ENOENT: … /scratchpad/dependency-graph-engine/data/graph.json
+    at run (…/src/cli/cli-run.ts:148:39)
+    at <anonymous> (…/src/cli/cli-run.ts:238:1)
+```
+
+**Blast radius is bounded and it is currently dormant.** The DAG stage runs
+`npm run analyze` → `cli-run.ts` directly, so the production pipeline is
+unaffected; only `npm run schedule` triggers this, and that daemon is one of the
+unmanaged cron surfaces already stopped. No test covers it, which is why a
+892-test green gate said nothing.
+
+The coverage invariant itself is not violated on either path. What broke is the
+legacy caller the D1 fix was editing — I reached into an entrypoint for a helper
+instead of extracting the helper to a module. **A one-line revert of that import
+removes it** (the section still renders `Coverage: UNKNOWN` without it, which is
+honest); the durable fix is to move `loadCoverage` out of `cli-run.ts`.
+
+### Verified
+
+**#1** exactly two writers of `analysis.json`/`analysis.db`, both passing
+coverage; `worldSection` unconditional; `loadCoverage` cannot throw into its
+caller. **#2** analytical paths caveat empty and partial lists correctly.
+**#3** every stored verdict discarded and re-derived — confirmed live on
+`/system/pipeline`, ages rendering against read-time `now`, each against its own
+bound. **#4** the ACLED restriction declared with verbatim upstream evidence,
+outranking everything and surviving record aging. **#5** self-expiry identical on
+producer and read paths. **#7** no scheduler, source, backfill, queue, portfolio
+or notification mutation; tree clean; launchd unchanged.
+
+### Carried
+
+- **The dashboard world surfaces still state absence as absence.**
+  `(next)/world/page.tsx` renders an event count described as "the feed that
+  today's regime call and briefing were built from" with no provenance;
+  `(next)/today/data.ts` swallows a world-intel read failure into an empty list;
+  `(legacy)/world/intel/page.tsx` renders "No events recorded". Coverage reaches
+  only `/system/pipeline`. **Pre-existing and not claimed by this pass** — but it
+  is exactly the class of statement removed elsewhere, live while ACLED is
+  restricted and GDELT unavailable.
+- **Two of my own comments became false under D2.**
+  `source-freshness.tsx` still tells the reader that stale-record verdicts "read
+  *unknown* rather than being asserted as current" — under recomputation they no
+  longer do, and once the record passes 30h that banner will sit above a table
+  showing `current`. `lib/data.ts` carries the same claim. `PROVENANCE_MAX_AGE_HOURS`
+  is now inert in both model-facing consumers. Same shape as the C1 finding
+  earlier, inverted: I updated the code and left the record describing the old
+  behaviour.
+
+### Disclosure
+
+`quota/freshness.json` was rewritten during this session by running
+`bin/export-freshness.ts` against the production quota surface
+(`classifiedAt 2026-08-29T07:55:35Z`). It is a derived export and outside the
+prohibited list, and regenerating it was the point of the surface — but it **is**
+a production-artifact write inside the incident window, and any later forensic
+pass working from a "no writes" brief needs it on the list.
