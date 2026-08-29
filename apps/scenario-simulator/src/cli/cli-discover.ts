@@ -16,7 +16,7 @@ import { fetchPrices, fetchPricesAndFx } from '../portfolio/price-fetcher.js'
 import { createPortfolioStore } from '../portfolio/portfolio-store.js'
 import {
   loadThemesMap, paperBookThemeValue, realPortfolioThemeValueUSD, formatThemeContext,
-  THEME_CONCENTRATION_CAP,
+  themesFor, THEME_CONCENTRATION_CAP,
 } from '../discovery/theme-tracker.js'
 import { checkMechanicalExits, selectThesisCheckCandidates } from '../discovery/exit-checks.js'
 import { computeRiskProfile, computeRiskBasedAllocation, RISK_PER_TRADE_PCT } from '../discovery/risk-sizing.js'
@@ -59,7 +59,9 @@ const DISCOVERY_JSON_PATH = join(DATA_DIR, 'discovery.json')
 const CALIBRATION_JSON_PATH = join(DATA_DIR, 'discovery-calibration.json')
 const INGESTION_DB_PATH   = join(process.cwd(), '../capital-intelligence-ingestion/data/sqlite.db')
 const ANALYSIS_JSON_PATH  = join(process.cwd(), '../ai-analysis-engine/data/analysis.json')
-const THEMES_MAP_PATH     = join(process.cwd(), '../capital-intelligence-ingestion/data/themes-map.json')
+// Tracked artifact, NOT data/ — data/ is gitignored there, so a fresh checkout
+// had no map at all and the concentration cap silently switched itself off.
+const THEMES_MAP_PATH     = join(process.cwd(), '../capital-intelligence-ingestion/src/discovery/themes-map.json')
 
 // Manual exit path: `npm run discover -- --exit=TICKER --price=12.34 --reason="thesis broken"`.
 // Bypasses the full weekly screen — this is the only way to close a paper
@@ -260,7 +262,29 @@ async function run() {
     console.log(`[discover] Real portfolio: ${realPortfolioTickers.length} tickers`)
 
     // Theme-weight context (P1 — see docs/discovery-agent-enhancement-proposal-2026-07-06.md).
-    const themesMap = loadThemesMap(THEMES_MAP_PATH)
+    //
+    // FAIL CLOSED. Without theme coverage the concentration cap below cannot be
+    // enforced, and the old loader's `{}` made that indistinguishable from "no
+    // position has a theme" — so discovery deployed capital believing a
+    // guardrail was active when it was not. We refuse to deploy instead.
+    //
+    // The process still exits 0: people-tweets -> correlation -> briefing-backtest
+    // all descend from this stage, so exiting non-zero would take down Sunday's
+    // briefing over a regenerable file. Refusing to open positions contains the
+    // risk; killing the brief does not reduce it.
+    const coverage = loadThemesMap(THEMES_MAP_PATH)
+    if (!coverage.ok) {
+      console.error(
+        `[discover] THEME COVERAGE UNAVAILABLE (${coverage.reason}): ${coverage.detail}\n` +
+        '[discover] Refusing to open paper positions — the theme concentration cap ' +
+        `(${(THEME_CONCENTRATION_CAP * 100).toFixed(0)}%) and the real-portfolio overlap haircut ` +
+        'cannot be enforced without it.\n' +
+        '[discover] Fix: run `npm run export-themes-map` in capital-intelligence-ingestion ' +
+        'and commit the regenerated src/discovery/themes-map.json.',
+      )
+      return
+    }
+    const themesMap = coverage.map
     let usdThb: number | null = null
     try {
       const fx = await fetchPricesAndFx([], { includeFx: true })
@@ -420,20 +444,36 @@ async function run() {
       }
 
       // ── Theme concentration guardrails (P1) ─────────────────────────────
-      const theme = themesMap[candidate.ticker]
+      // A candidate must clear the cap for EVERY theme it belongs to. Checking
+      // one membership is how the old single-theme artifact let a pick through:
+      // IBM in a full cloud-hyperscalers book looked safe because the map had
+      // recorded only quantum-computing.
+      const candidateThemes = themesFor(themesMap, candidate.ticker)
       let themeHaircutNote = ''
-      if (theme) {
+      let cappedTheme: string | null = null
+      for (const theme of candidateThemes) {
         const themeDeployedSoFar = runningThemeDeployed.get(theme) ?? 0
         if (paperMaxDeployable > 0 && (themeDeployedSoFar + positionAllocation) / paperMaxDeployable > THEME_CONCENTRATION_CAP) {
           console.log(`[discover] Skipping ${candidate.ticker} — theme-cap: "${theme}" would exceed ${(THEME_CONCENTRATION_CAP * 100).toFixed(0)}% of paper book (currently $${themeDeployedSoFar.toFixed(2)} of $${paperMaxDeployable.toFixed(2)} max)`)
-          continue
+          cappedTheme = theme
+          break
         }
-        const realThemePct = realThemeValue.totalUsd > 0 ? (realThemeValue.byTheme.get(theme) ?? 0) / realThemeValue.totalUsd : 0
-        if (realThemePct > THEME_CONCENTRATION_CAP) {
-          positionAllocation = positionAllocation / 2
-          themeHaircutNote = ` [sized down 50% — "${theme}" is already ${(realThemePct * 100).toFixed(0)}% of real portfolio]`
-          console.log(`[discover] ${candidate.ticker} — real-portfolio overlap haircut applied (theme "${theme}" is ${(realThemePct * 100).toFixed(0)}% of real net worth)`)
-        }
+      }
+      if (cappedTheme) continue
+
+      // The haircut applies once, on the most concentrated applicable theme —
+      // halving per theme would compound into an arbitrary size for a ticker
+      // that merely appears in several lists.
+      let worstTheme: string | null = null
+      let worstPct = 0
+      for (const theme of candidateThemes) {
+        const pct = realThemeValue.totalUsd > 0 ? (realThemeValue.byTheme.get(theme) ?? 0) / realThemeValue.totalUsd : 0
+        if (pct > worstPct) { worstPct = pct; worstTheme = theme }
+      }
+      if (worstTheme && worstPct > THEME_CONCENTRATION_CAP) {
+        positionAllocation = positionAllocation / 2
+        themeHaircutNote = ` [sized down 50% — "${worstTheme}" is already ${(worstPct * 100).toFixed(0)}% of real portfolio]`
+        console.log(`[discover] ${candidate.ticker} — real-portfolio overlap haircut applied (theme "${worstTheme}" is ${(worstPct * 100).toFixed(0)}% of real net worth)`)
       }
 
       // Try cache first unless the ticker is in the hot list.
@@ -533,7 +573,8 @@ async function run() {
           benchmarkPrice,
           { stopPrice, targetPrice, adjustedConviction: finalAction.conviction },
         )
-        if (theme) runningThemeDeployed.set(theme, (runningThemeDeployed.get(theme) ?? 0) + finalAllocation)
+        // Charged to every theme it belongs to, matching how the cap reads them.
+        for (const theme of candidateThemes) runningThemeDeployed.set(theme, (runningThemeDeployed.get(theme) ?? 0) + finalAllocation)
         openDiscoveryTickers.add(candidate.ticker) // prevent re-opening in same run
         runningDeployed += finalAllocation
         positionsOpened++
