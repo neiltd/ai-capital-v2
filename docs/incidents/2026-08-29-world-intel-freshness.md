@@ -293,3 +293,95 @@ see that coverage was incomplete** — no consumer read `meta.sourceVersions`, a
 the event files carry `source: unknown`. Whether any specific conclusion was
 materially affected is **Missing** and requires the deferred re-analysis
 decision.
+
+
+---
+
+## Phase 2 verification — **DEFECTIVE**, two escapes recorded not repaired
+
+Warden verified five of the seven properties clean. Two paths still deliver
+"coverage complete / no events" without it being true. Both are mine, both
+reproduced independently.
+
+### D1 — the world section is dropped entirely, caveat and all
+
+`regime-analyzer.ts:371-373`:
+
+```ts
+const worldSection = options.worldIntel
+  ? `\n\n## World Intelligence (live macro events)\n${formatWorldIntel(options.worldIntel)}`
+  : ''
+```
+
+**All the coverage logic lives inside `formatWorldIntel`, which is never called
+when `worldIntel` is undefined.** The prompt then carries no world section and no
+coverage statement at all.
+
+Reachable two ways: `cli-run.ts` `loadWorldIntel()` returns `undefined` when
+either export file is missing or unparseable — its careful `loadCoverage` catch
+is bypassed because the *outer* catch returns first — and `cli-schedule.ts:26`
+calls `analyzeRegime(health)` with no options whatsoever (a legacy standalone
+cron daemon, not in `jobs.ts`, writing the same `analysis.db`/`analysis.json`).
+
+**Aggravating, and the part I got wrong:** the system prompt I added says the
+feed "may be INCOMPLETE, **and it says so when it is**". On this path it says
+nothing — so I handed the model an explicit guarantee that silence means
+coverage was fine. The promise is worse than the original omission.
+
+### D2 — a flat 30h grace ignores each source's own bound
+
+`provenance.ts:147-160`. `readProvenance` compares the record's age against one
+`maxRecordAgeHours` and, if under it, returns every verdict and `ageHours`
+**exactly as the producer wrote them** — it never recomputes age from
+`lastSuccessfulFetch` against the read clock.
+
+Reproduced: a 29h-old record (inside the 30h bound) reports gdelt
+
+```
+at classify time: current | refreshed 1h ago, inside the 2h bound
+at read time    : current | ageHours field: 1
+TRUE age at read: 30h vs bound 2h
+coverageIsComplete: true | absenceCaveat: null
+```
+
+which renders the exact sentence the invariant exists to prevent.
+
+**This is the normal case, not an edge case.** GDELT's bound is 2h and the daily
+DAG can never satisfy it, so the moment the certificate is renewed and GDELT
+succeeds once, every read between 2h and 30h after the run reports `current`.
+Today both GDELT and ACLED are masked by their declared `unavailable` /
+`restricted` states, which is the only reason this is not already live.
+
+None of the 14 provenance tests straddle a source's own bound — the
+"stale record cannot assert current" test only exercises the `> 30h` side.
+
+**Fix direction, not applied:** recompute `ageHours` from `lastSuccessfulFetch`
+against the injected `now` in `readProvenance` and re-derive the time-dependent
+verdict; or minimally downgrade any source with
+`maxStalenessHours < recordAgeHours` to `unknown`. `restricted` and
+`unavailable` handling is unaffected.
+
+### Verified clean
+
+Restricted/unavailable never read as current · every path *through*
+`formatWorldIntel` is correct and the caveat genuinely reaches the rendered
+prompt · ACLED reads as entitlement-restricted on both the model prompt and the
+dashboard · `stale` asserts no failure and the GDELT declaration self-expires on
+recovery · one injected clock with no `Date.now()` in any classification path ·
+**no scheduler, source, backfill, queue or portfolio mutation** (tree clean, last
+`pipeline_runs` row 2026-08-27, only the pre-existing worker loaded).
+
+### Carried findings, outside the seven
+
+- `ingestion/clients/acled.ts:179-181` still carries the diagnosis this document
+  refuted — "the account-level read-permission failure". Read permission is
+  intact; it is a recency embargo. A human reading that comment would try a
+  credentials fix.
+- `ingestion/scheduler.ts:43` still schedules acled daily, and
+  `scripts/backfill.ts` documents an ACLED backfill window entirely inside the
+  embargo. Retiring ACLED was option 4 and is not approved, so this is a note.
+- **`unavailable` has no automatic producer.** `QuotaTracker.recordFetch`
+  discards the failure reason, so `lastFailure` can only ever come from the
+  hardcoded `OBSERVED_FAILURES` map. A future real outage will classify as
+  `stale`, and `unavailable` stays only as accurate as someone remembers to
+  hand-edit it.
