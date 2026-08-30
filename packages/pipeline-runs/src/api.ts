@@ -48,11 +48,14 @@ function rowToRun(r: Row): PipelineRun {
 export function recordStart(input: RecordStartInput, dbPath?: string): string {
   const db = openDb(dbPath)
   const id = randomUUID()
+  // logical_date is NULL unless the caller explicitly claims one. That is what
+  // makes the partial unique index apply to scheduled daily parents only, and
+  // leaves manual runs and child stages untouched.
   db.prepare(`
     INSERT INTO pipeline_runs
-      (id, parent_run_id, stage, source, started_at, status, metadata_json)
+      (id, parent_run_id, stage, source, started_at, status, metadata_json, logical_date)
     VALUES
-      (?,  ?,             ?,     ?,      ?,          'running', ?)
+      (?,  ?,             ?,     ?,      ?,          'running', ?,          ?)
   `).run(
     id,
     input.parentRunId ?? null,
@@ -60,8 +63,32 @@ export function recordStart(input: RecordStartInput, dbPath?: string): string {
     input.source ?? null,
     new Date().toISOString(),
     input.metadata ? JSON.stringify(input.metadata) : null,
+    input.logicalDate ?? null,
   )
   return id
+}
+
+/**
+ * Explicitly supersede a scheduled run so a deliberate retry can claim the same
+ * logical date.
+ *
+ * DELIBERATE AND MANUAL. No automatic scheduler path calls this: the whole
+ * point of the uniqueness rule is that a machine cannot decide on its own to
+ * run a business day twice. Superseding is an operator's statement that the
+ * previous attempt should no longer hold the date.
+ *
+ * Returns the number of rows actually superseded (0 if the id does not exist or
+ * was already superseded), so a caller can tell a real supersession from a
+ * no-op rather than assuming success.
+ */
+export function supersedeScheduledRun(runId: string, dbPath?: string): number {
+  const db = openDb(dbPath)
+  const res = db.prepare(
+    `UPDATE pipeline_runs
+        SET superseded_at = ?
+      WHERE id = ? AND logical_date IS NOT NULL AND superseded_at IS NULL`,
+  ).run(new Date().toISOString(), runId)
+  return res.changes ?? 0
 }
 
 /** Mark a run complete (success / failed / killed / timeout). */

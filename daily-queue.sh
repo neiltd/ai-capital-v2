@@ -23,23 +23,25 @@ log "=============================="
 log " Daily pipeline (queue) — $(date '+%Y-%m-%d %H:%M')"
 log "=============================="
 
-# Close zombie pipeline_runs rows. Anything still 'running' after 12h is the
-# residue of a worker that died (macOS killed it, network outage, sleep, etc.)
-# and never got a chance to call recordEnd. Leaving them open means the
-# dashboard shows fake-running pipelines indefinitely.
-RUNS_DB="${PIPELINE_RUNS_DB:-$ROOT/data/pipeline-runs.db}"
-if [ -f "$RUNS_DB" ] && command -v sqlite3 > /dev/null 2>&1; then
-  ZOMBIE_COUNT=$(sqlite3 "$RUNS_DB" "select count(*) from pipeline_runs where status='running' and started_at < datetime('now','-12 hours');" 2>/dev/null || echo 0)
-  if [ "${ZOMBIE_COUNT:-0}" -gt 0 ]; then
-    sqlite3 "$RUNS_DB" "update pipeline_runs
-        set status='failed',
-            ended_at=datetime('now'),
-            error_message=COALESCE(error_message, 'orphaned >12h — worker died without recordEnd'),
-            duration_ms=cast((julianday('now')-julianday(started_at))*86400000 as integer)
-      where status='running' and started_at < datetime('now','-12 hours');" 2>/dev/null
-    log "closed $ZOMBIE_COUNT zombie pipeline_runs row(s) (>12h running)"
-  fi
-fi
+# RECONCILIATION IS NOT DONE HERE.
+#
+# This script used to close every pipeline_runs row left 'running' for >12h with
+# a single stage-unfiltered UPDATE. That was age-only: it consulted no queue
+# state, so it could not tell a job still retrying from one that had genuinely
+# died, and it closed rows belonging to ANY stage — including the independently
+# scheduled structured-ingestion parents, whose lane it knows nothing about.
+# It also wrote its own reason string and duration_ms, making a row it closed
+# indistinguishable from a genuine reconciliation and silently overwriting the
+# lane-aware result.
+#
+# There is now exactly one reconciliation authority:
+#   packages/queue/src/reconcile.ts  (per-lane snapshots, per-lane policy)
+#   packages/queue/bin/reconcile.ts  (dry-run by default)
+#
+# Applying a transition is an explicit operator action and is deliberately NOT
+# an automatic scheduler step:
+#   npx tsx packages/queue/bin/reconcile.ts            # dry run, read-only
+#   npx tsx packages/queue/bin/reconcile.ts --apply    # authorized mutation
 
 # Ensure a worker is running. Preferred: launchd-managed agent
 # (com.thanapol.ai-capital.worker) which auto-restarts on crash and survives
@@ -64,7 +66,32 @@ fi
 
 # Submit + wait. Exit code mirrors the pipeline outcome (0 success, 1 failed).
 log "submitting daily pipeline…"
-npx tsx "$ROOT/packages/queue/bin/run-daily.ts" 2>&1 | tee -a "$LOG"
+# ── Business logical date, supplied by the scheduler ─────────────────────────
+# Passed straight through to run-daily.ts and never recomputed. The scheduler
+# decides eligibility for a specific business date; recomputing downstream let a
+# submission crossing Los Angeles midnight claim the following day.
+#
+# Absent (direct/manual invocation), run-daily.ts keeps its previous default.
+LOGICAL_DATE_ARGS=()
+while [ $# -gt 0 ]; do
+  case "$1" in
+    --logical-date)
+      if [ -z "${2:-}" ] || case "${2:-}" in --*) true;; *) false;; esac; then
+        log "FATAL: --logical-date requires a YYYY-MM-DD value"
+        exit 2
+      fi
+      case "$2" in
+        [0-9][0-9][0-9][0-9]-[0-9][0-9]-[0-9][0-9]) ;;
+        *) log "FATAL: --logical-date must be YYYY-MM-DD, got '$2'"; exit 2 ;;
+      esac
+      LOGICAL_DATE_ARGS=(--logical-date "$2")
+      shift 2
+      ;;
+    *) log "ignoring unrecognised argument: $1"; shift ;;
+  esac
+done
+
+npx tsx "$ROOT/packages/queue/bin/run-daily.ts" "${LOGICAL_DATE_ARGS[@]}" 2>&1 | tee -a "$LOG"
 EXIT=${PIPESTATUS[0]}
 
 # Trim old logs (>30 days).

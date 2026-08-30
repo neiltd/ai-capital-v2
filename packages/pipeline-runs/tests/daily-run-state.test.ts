@@ -1,8 +1,14 @@
 import { describe, it, expect, beforeEach, afterEach } from 'vitest'
 import Database from 'better-sqlite3'
 import {
-  assessDailyRun, logicalRunDate, dueAt, findRunForDate,
-  STALE_AFTER_MIN, DUE_HOUR,
+  assessDailyRun,
+  logicalRunDate,
+  dueAt,
+  findRunForDate,
+  STALE_AFTER_MIN,
+  DUE_HOUR,
+  BUSINESS_TIMEZONE,
+  businessInstant,
 } from '../src/daily-run-state.js'
 
 // Scheduler test matrix for the 2026-08-27 P1 repair.
@@ -23,38 +29,40 @@ beforeEach(() => {
 })
 afterEach(() => db.close())
 
-/** Insert a daily-pipeline row whose LOCAL date is `logicalDate`. */
+/**
+ * Insert a daily-pipeline row whose BUSINESS date is `logicalDate`.
+ *
+ * Times are America/Los_Angeles wall clock, not the host's. These tests used to
+ * build host-local instants, so they passed only on a machine in the business
+ * timezone and silently asserted the wrong day anywhere else.
+ */
 function insertRun(logicalDate: string, status: string, startedLocal: string, endedLocal?: string) {
-  const toUtc = (local: string) => {
-    const [h, m] = local.split(':').map(Number)
-    const [y, mo, d] = logicalDate.split('-').map(Number)
-    return new Date(y, mo - 1, d, h, m, 0, 0).toISOString()
-  }
+  const toUtc = (local: string) => businessInstant(logicalDate, local).toISOString()
   db.prepare(`INSERT INTO pipeline_runs (id, stage, started_at, ended_at, status)
               VALUES (?, 'daily-pipeline', ?, ?, ?)`)
     .run(`run-${logicalDate}-${status}-${startedLocal}`, toUtc(startedLocal),
          endedLocal ? toUtc(endedLocal) : null, status)
 }
 
-const at = (date: string, time: string) => {
-  const [h, m] = time.split(':').map(Number)
-  const [y, mo, d] = date.split('-').map(Number)
-  return new Date(y, mo - 1, d, h, m, 0, 0)
-}
+/** An instant expressed in BUSINESS wall-clock time. */
+const at = (date: string, time: string) => businessInstant(date, time)
 
 const DATE = '2026-08-27'
 
 describe('logical run date', () => {
-  it('is the LOCAL calendar date, so evening runs bucket to the right day', () => {
-    // started_at is stored UTC; at +07 a 21:03 local run is 14:03Z the same day,
-    // but a naive UTC-date comparison mis-buckets runs after 17:00 local.
+  it('is the BUSINESS calendar date, so evening runs bucket to the right day', () => {
+    // started_at is stored UTC; a 21:03 Los Angeles run crosses midnight UTC,
+    // and a naive UTC-date comparison would file it under the next day.
     expect(logicalRunDate(at(DATE, '21:03'))).toBe(DATE)
     expect(logicalRunDate(at(DATE, '00:30'))).toBe(DATE)
   })
-  it('due time is the local due hour', () => {
-    expect(dueAt(DATE).getHours()).toBe(DUE_HOUR)
+  it('due time is the business due hour, whatever the host timezone is', () => {
+    const hourInBusinessTz = Number(new Intl.DateTimeFormat('en-US', {
+      timeZone: BUSINESS_TIMEZONE, hour: '2-digit', hour12: false,
+    }).format(dueAt(DATE))) % 24
+    expect(hourInBusinessTz).toBe(DUE_HOUR)
   })
-  it('finds a run by its LOCAL date', () => {
+  it('finds a run by its BUSINESS date', () => {
     insertRun(DATE, 'success', '21:03', '21:36')
     expect(findRunForDate(db, DATE)?.status).toBe('success')
   })

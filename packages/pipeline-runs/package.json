@@ -19,7 +19,8 @@
     "typecheck": "tsc --noEmit",
     "run-step": "tsx bin/run-step.ts",
     "test": "vitest run",
-    "status": "tsx bin/daily-run-status.ts"
+    "status": "tsx bin/daily-run-status.ts",
+    "migrate-run-store": "tsx bin/migrate-run-store.ts"
   },
   "dependencies": {
     "better-sqlite3": "^12.0.0"

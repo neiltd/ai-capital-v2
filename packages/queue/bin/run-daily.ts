@@ -10,6 +10,8 @@ import { ensurePipelineEnv } from '../src/env.js'
 ensurePipelineEnv()
 
 import { submitDailyPipeline } from '../src/submit.js'
+import { logicalRunDate } from '@common/pipeline-runs'
+import { resolveLogicalDateArg } from '../src/logical-date-arg.js'
 import { submitScheduledStructuredIngestion, structuredIngestionScheduled, STRUCTURED_INGESTION_SCHEDULE_ENV } from '../src/structured-scheduling.js'
 import { closeAll } from '../src/queue.js'
 
@@ -24,7 +26,24 @@ import { closeAll } from '../src/queue.js'
 
 async function main() {
   console.log(`[run-daily] submitting daily pipeline at ${new Date().toISOString()}`)
-  const { parentRunId, rootJobId } = await submitDailyPipeline()
+  // A SCHEDULED submission claims the business logical date, so the partial
+  // unique index structurally prevents two non-superseded scheduled runs for
+  // the same business day — whatever submits them. Manual submission
+  // (bin/submit.ts) deliberately passes nothing and stays outside that rule.
+  //
+  // The date the SCHEDULER approved is passed through and used verbatim.
+  // Recomputing it here meant a submission crossing Los Angeles midnight
+  // claimed the day after the one it was approved for. Direct invocation
+  // without the flag keeps the previous default.
+  const resolved = resolveLogicalDateArg(process.argv, () => logicalRunDate(new Date()))
+  if (!resolved.ok) {
+    console.error(`[run-daily] ${resolved.error}`)
+    process.exit(2)
+  }
+  const logicalDate = resolved.logicalDate
+  console.log(`[run-daily] business logical date: ${logicalDate}` +
+              `${resolved.supplied ? ' (supplied by the scheduler)' : ' (computed — no --logical-date given)'}`)
+  const { parentRunId, rootJobId } = await submitDailyPipeline({ logicalDate })
   console.log(`[run-daily] submitted — parentRunId=${parentRunId} rootJobId=${rootJobId}`)
   console.log(`[run-daily] launchd worker will drive the flow to completion`)
 

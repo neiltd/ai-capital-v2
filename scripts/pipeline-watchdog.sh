@@ -41,27 +41,84 @@ ROOT="${AI_CAPITAL_ROOT:-$REPO}"
 # token loaded from the real repo. A label is not a safety mechanism.
 #
 # This exits non-zero BEFORE any credential is read or any submitter invoked.
+# ── PATHS AND LOGGING FIRST ──────────────────────────────────────────────────
+# Same ordering defect the scheduler had: the isolation diagnostic was written
+# to "$LOG" before $LOG existed, so the one failure that must never be silent
+# produced an ambiguous redirect and disappeared.
+# MODE FIRST, for the same reason as the scheduler: --dry-run must not create
+# directories, the log, or the heartbeat. The status call's stderr redirection
+# alone used to create logs/pipeline-watchdog.log on every dry run.
+DRY_RUN=0
+[ "$1" = "--dry-run" ] && DRY_RUN=1
+
+# TEST CLOCK: REJECTED BEFORE ANY RUNTIME EVIDENCE EXISTS.
+#
+# This runs before `mkdir -p`, before the log file can be created or appended
+# to, before any heartbeat, state marker or lock, and before submission — so a
+# real invocation carrying a test clock leaves no trace suggesting it ran. The
+# later `clockOverride` check on the status output stays as a second line of
+# defence for an override that reaches the status CLI by another route.
+#
+# `echo`, not `log()`: log() would create the very file this guard exists to
+# keep untouched.
+if [ -n "${SCHEDULER_TEST_NOW:-}" ] && [ "$DRY_RUN" -eq 0 ]; then
+  echo "[pipeline-watchdog] FATAL: SCHEDULER_TEST_NOW is set — refusing to run for real on an overridden clock" >&2
+  echo "[pipeline-watchdog] Unset it, or pass --dry-run to preview against the test clock." >&2
+  exit 2
+fi
+
+LOG="$ROOT/logs/pipeline-watchdog.log"
+export SCHEDULER_HEARTBEAT_FILE="${SCHEDULER_HEARTBEAT_FILE:-$ROOT/data/scheduler-heartbeat.log}"
+
+[ "$DRY_RUN" -eq 0 ] && mkdir -p "$ROOT/logs" "$ROOT/data"
+LOG_PREFIX=""
+log() {
+  if [ "$DRY_RUN" -eq 1 ]; then
+    echo "${LOG_PREFIX}[dry-run] $*" >&2
+  else
+    echo "${LOG_PREFIX}[$(date '+%Y-%m-%d %H:%M:%S %z')] $*" >> "$LOG"
+  fi
+}
+
 ISOLATION_MODE="$(cd "$REPO" && npx tsx packages/queue/bin/check-isolation.ts 2>&1)"
 if [ $? -ne 0 ]; then
   echo "$ISOLATION_MODE" >&2
-  echo "$ISOLATION_MODE" >> "$LOG" 2>/dev/null
+  log "ISOLATION CHECK FAILED — refusing to read credentials: $ISOLATION_MODE"
   exit 2
 fi
 if [ "$ISOLATION_MODE" = "isolated" ]; then
   LOG_PREFIX="[TEST] "
-else
-  LOG_PREFIX=""
 fi
-LOG="$ROOT/logs/pipeline-watchdog.log"
-export SCHEDULER_HEARTBEAT_FILE="${SCHEDULER_HEARTBEAT_FILE:-$ROOT/data/scheduler-heartbeat.log}"
 
-DRY_RUN=0
-[ "$1" = "--dry-run" ] && DRY_RUN=1
+# ── INDEPENDENT LIVENESS EVIDENCE, BEFORE ASSESSING ──────────────────────────
+# The watchdog is a second, independent observer of MACHINE OPPORTUNITY, and it
+# writes the same canonical heartbeat file the scheduler writes. The question
+# that file answers is "was this machine awake and running our jobs at this
+# instant" — not "is the scheduler healthy". Conflating those is what made a
+# dead scheduler indistinguishable from a sleeping laptop: with only the
+# scheduler writing, a scheduler that never runs leaves no heartbeat, and that
+# absence reads exactly like a machine that was switched off.
+#
+# Because the watchdog fires on its own interval, "machine awake, scheduler
+# absent" now leaves heartbeats after the due time with no run row, which
+# becomes `missing` once the grace period passes instead of `no_opportunity`
+# forever.
+#
+# Written BEFORE assessment, so a crash during assessment still records that the
+# opportunity existed. Never written under --dry-run or isolation, so tests
+# cannot touch production evidence. Retention is bounded to the same 400 lines
+# the scheduler keeps.
+if [ "$DRY_RUN" -eq 0 ] && [ "$ISOLATION_MODE" != "isolated" ]; then
+  echo "$(date -u '+%Y-%m-%dT%H:%M:%S.000Z')" >> "$SCHEDULER_HEARTBEAT_FILE"
+  tail -n 400 "$SCHEDULER_HEARTBEAT_FILE" > "$SCHEDULER_HEARTBEAT_FILE.tmp" \
+    && mv "$SCHEDULER_HEARTBEAT_FILE.tmp" "$SCHEDULER_HEARTBEAT_FILE"
+fi
 
-mkdir -p "$ROOT/logs" "$ROOT/data"
-log() { echo "${LOG_PREFIX}[$(date '+%Y-%m-%d %H:%M:%S %z')] $*" >> "$LOG"; }
-
-STATUS_JSON=$(cd "$REPO" && npx tsx packages/pipeline-runs/bin/daily-run-status.ts --json 2>>"$LOG")
+if [ "$DRY_RUN" -eq 1 ]; then
+  STATUS_JSON=$(cd "$REPO" && npx tsx packages/pipeline-runs/bin/daily-run-status.ts --json 2>/dev/null)
+else
+  STATUS_JSON=$(cd "$REPO" && npx tsx packages/pipeline-runs/bin/daily-run-status.ts --json 2>>"$LOG")
+fi
 if [ -z "$STATUS_JSON" ]; then
   log "ERROR: could not evaluate daily run state"
   exit 1

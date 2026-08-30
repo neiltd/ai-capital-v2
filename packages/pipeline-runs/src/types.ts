@@ -27,6 +27,14 @@ export interface RecordStartInput {
   source?:      string | null
   parentRunId?: string | null
   metadata?:    Record<string, unknown> | null
+  /**
+   * Business logical date this run CLAIMS, for scheduled daily runs only.
+   *
+   * Omitted (NULL) for manual/ad hoc runs and every child stage, which keeps
+   * them outside the scheduled-identity uniqueness rule — a manual run must
+   * never silently become the scheduled run for a day.
+   */
+  logicalDate?: string | null
 }
 
 export interface RecordEndInput {

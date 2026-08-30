@@ -1,25 +1,22 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<!--
+  PROPOSED — NOT INSTALLED, NOT LOADED.
+
+  Opportunity-based daily scheduler. launchd supplies frequent execution opportunities; the script decides eligibility from recorded state.
+
+  RunAtLoad SEMANTICS. RunAtLoad=true makes launchd execute the SCRIPT
+  immediately on load. It does NOT mean a pipeline is submitted: daily-scheduler.sh
+  decides eligibility from recorded state every time, and an ineligible
+  opportunity exits 0 having submitted nothing.
+
+  Loading this plist is a PRODUCTION-STATE ACTION and requires separate
+  authorization:
+    launchctl bootstrap gui/$(id -u) ops/launchd-proposed/com.thanapol.ai-capital.daily.plist
+-->
 <plist version="1.0">
 <dict>
-  <key>Label</key><string>com.thanapol.ai-capital.daily</string>
-
-  <!-- EXECUTION OPPORTUNITY, not a business time.
-       The 07:00 StartCalendarInterval fired on time every day from 2026-07-06
-       to 2026-08-22, then fired at ~21:00 on four days and not at all on
-       2026-08-27. launchd defers a missed calendar fire to "the next wake" and
-       that deferral is not dependable.
-
-       StartInterval was verified in THIS launchd (probe agent, 20s interval:
-       3 fires, exactly 20s apart). It supplies opportunities every 15 minutes;
-       the script decides eligibility from recorded state, so correctness does
-       not depend on launchd catching anything up. The 07:00 business time now
-       lives in DUE_HOUR in packages/pipeline-runs/src/daily-run-state.ts —
-       one place, testable.
-
-       Deliberately NOT several hopeful calendar times. -->
-  <key>StartInterval</key><integer>900</integer>
-  <key>RunAtLoad</key><true/>
+  <key>Label</key>
+  <string>com.thanapol.ai-capital.daily</string>
 
   <key>ProgramArguments</key>
   <array>
@@ -27,7 +24,40 @@
     <string>/Users/thanapold/Desktop/Projects.nosync/scripts/daily-scheduler.sh</string>
   </array>
 
-  <key>StandardOutPath</key><string>/Users/thanapold/Desktop/Projects.nosync/logs/daily-scheduler.log</string>
-  <key>StandardErrorPath</key><string>/Users/thanapold/Desktop/Projects.nosync/logs/daily-scheduler.log</string>
+  <!-- Pinned so the script's REPO/ROOT derivation and module resolution do not
+       depend on launchd's inherited working directory. -->
+  <key>WorkingDirectory</key>
+  <string>/Users/thanapold/Desktop/Projects.nosync</string>
+
+  <!-- launchd supplies a minimal environment. Everything the script and its
+       node/tsx subprocesses need is pinned here, consistent with
+       com.thanapol.ai-capital.worker. -->
+  <key>EnvironmentVariables</key>
+  <dict>
+    <key>PATH</key>
+    <string>/opt/homebrew/bin:/usr/local/bin:/usr/bin:/bin</string>
+    <key>AI_CAPITAL_ROOT</key>
+    <string>/Users/thanapold/Desktop/Projects.nosync</string>
+    <key>PIPELINE_RUNS_DB</key>
+    <string>/Users/thanapold/Desktop/Projects.nosync/data/pipeline-runs.db</string>
+    <key>SCHEDULER_HEARTBEAT_FILE</key>
+    <string>/Users/thanapold/Desktop/Projects.nosync/data/scheduler-heartbeat.log</string>
+    <key>DATA_ROOT</key>
+    <string>/Users/thanapold/Desktop/Projects.nosync/apps</string>
+    <key>DATABASE_URL</key>
+    <string>postgres://thanapold@localhost:5432/ai_capital</string>
+    <key>REDIS_URL</key>
+    <string>redis://localhost:6379</string>
+  </dict>
+
+  <key>RunAtLoad</key>
+  <true/>
+  <key>StartInterval</key>
+  <integer>900</integer>
+
+  <key>StandardOutPath</key>
+  <string>/Users/thanapold/Desktop/Projects.nosync/logs/daily-scheduler.log</string>
+  <key>StandardErrorPath</key>
+  <string>/Users/thanapold/Desktop/Projects.nosync/logs/daily-scheduler.log</string>
 </dict>
 </plist>

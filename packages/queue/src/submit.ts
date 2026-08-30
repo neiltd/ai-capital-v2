@@ -189,7 +189,21 @@ export function buildDAGTree(stages: JobSpec[], parentRunId: string): FlowNode {
  * Submit the full daily pipeline as a chain. Returns the top-level
  * pipeline_runs row id so the caller can join logs back.
  */
-export async function submitDailyPipeline(): Promise<{ parentRunId: string; rootJobId: string }> {
+export interface SubmitDailyOptions {
+  /**
+   * Business logical date this submission claims, for SCHEDULED runs only.
+   *
+   * Omitted for manual/ad hoc submission (`pnpm -F @common/queue submit`), which
+   * therefore records a NULL logical_date and stays outside the scheduled-run
+   * uniqueness rule. A manual run must never silently become the scheduled run
+   * for a business day.
+   */
+  logicalDate?: string
+}
+
+export async function submitDailyPipeline(
+  options: SubmitDailyOptions = {},
+): Promise<{ parentRunId: string; rootJobId: string }> {
   // Apply skipIf at submit time. Function references don't survive Redis
   // serialization (BullMQ JSON-encodes job data), so a worker-side skipIf
   // check would always see `undefined`. Resolving here removes Sunday-only
@@ -207,6 +221,7 @@ export async function submitDailyPipeline(): Promise<{ parentRunId: string; root
   const parentRunId = recordStart({
     stage:    'daily-pipeline',
     source:   'queue',
+    logicalDate: options.logicalDate ?? null,
     metadata: {
       stages:        active.map(s => s.name),
       skippedStages: DAILY_PIPELINE.filter(s => !activeNames.has(s.name)).map(s => s.name),

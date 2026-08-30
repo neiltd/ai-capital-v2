@@ -1,15 +1,22 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<!--
+  PROPOSED — NOT INSTALLED, NOT LOADED.
+
+  Independent liveness observer. Records machine-opportunity evidence to the canonical heartbeat file, then assesses the daily run state. Sends no external notification — awareness is pull-only.
+
+  RunAtLoad SEMANTICS. RunAtLoad=true makes launchd execute the SCRIPT
+  immediately on load. It does NOT mean a pipeline is submitted: pipeline-watchdog.sh
+  decides eligibility from recorded state every time, and an ineligible
+  opportunity exits 0 having submitted nothing.
+
+  Loading this plist is a PRODUCTION-STATE ACTION and requires separate
+  authorization:
+    launchctl bootstrap gui/$(id -u) ops/launchd-proposed/com.thanapol.ai-capital.watchdog.plist
+-->
 <plist version="1.0">
 <dict>
-  <key>Label</key><string>com.thanapol.ai-capital.watchdog</string>
-
-  <!-- Separate agent, separate process, no shared code path with the pipeline.
-       The previous detector for "today's run is missing" lived inside
-       daily-catchup.sh — the job that has to run in order to notice. On
-       2026-08-27 nothing ran and nothing was reported. -->
-  <key>StartInterval</key><integer>1800</integer>
-  <key>RunAtLoad</key><true/>
+  <key>Label</key>
+  <string>com.thanapol.ai-capital.watchdog</string>
 
   <key>ProgramArguments</key>
   <array>
@@ -17,7 +24,40 @@
     <string>/Users/thanapold/Desktop/Projects.nosync/scripts/pipeline-watchdog.sh</string>
   </array>
 
-  <key>StandardOutPath</key><string>/Users/thanapold/Desktop/Projects.nosync/logs/pipeline-watchdog.log</string>
-  <key>StandardErrorPath</key><string>/Users/thanapold/Desktop/Projects.nosync/logs/pipeline-watchdog.log</string>
+  <!-- Pinned so the script's REPO/ROOT derivation and module resolution do not
+       depend on launchd's inherited working directory. -->
+  <key>WorkingDirectory</key>
+  <string>/Users/thanapold/Desktop/Projects.nosync</string>
+
+  <!-- launchd supplies a minimal environment. Everything the script and its
+       node/tsx subprocesses need is pinned here, consistent with
+       com.thanapol.ai-capital.worker. -->
+  <key>EnvironmentVariables</key>
+  <dict>
+    <key>PATH</key>
+    <string>/opt/homebrew/bin:/usr/local/bin:/usr/bin:/bin</string>
+    <key>AI_CAPITAL_ROOT</key>
+    <string>/Users/thanapold/Desktop/Projects.nosync</string>
+    <key>PIPELINE_RUNS_DB</key>
+    <string>/Users/thanapold/Desktop/Projects.nosync/data/pipeline-runs.db</string>
+    <key>SCHEDULER_HEARTBEAT_FILE</key>
+    <string>/Users/thanapold/Desktop/Projects.nosync/data/scheduler-heartbeat.log</string>
+    <key>DATA_ROOT</key>
+    <string>/Users/thanapold/Desktop/Projects.nosync/apps</string>
+    <key>DATABASE_URL</key>
+    <string>postgres://thanapold@localhost:5432/ai_capital</string>
+    <key>REDIS_URL</key>
+    <string>redis://localhost:6379</string>
+  </dict>
+
+  <key>RunAtLoad</key>
+  <true/>
+  <key>StartInterval</key>
+  <integer>1800</integer>
+
+  <key>StandardOutPath</key>
+  <string>/Users/thanapold/Desktop/Projects.nosync/logs/pipeline-watchdog.log</string>
+  <key>StandardErrorPath</key>
+  <string>/Users/thanapold/Desktop/Projects.nosync/logs/pipeline-watchdog.log</string>
 </dict>
 </plist>
