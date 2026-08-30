@@ -48,6 +48,9 @@ export interface SourceFailure {
 
 export interface SourceProvenance {
   source: string
+  /** Which evidence domain this source belongs to. Consumers must only be told
+   *  about the domain they actually read — see article-provenance.ts. */
+  domain?: 'article_intelligence' | 'structured_events' | 'energy_macro'
   availability: SourceAvailability
   lastSuccessfulFetch: string | null
   maxStalenessHours: number

@@ -1,4 +1,12 @@
-// World-intel source coverage, loaded from the provenance record.
+// World-intel ARTICLE coverage, derived from the collector's own feed registry,
+// health store and daily metrics.
+//
+// DOMAIN-CORRECT: the regime analyzer reads article-derived intelligence
+// (world-map/intelligence.json, 12 RSS feeds). It previously took coverage from
+// quota/freshness.json, which describes gdelt/acled/eia/worldbank/ucdp — sources
+// it does not consume. That warned about irrelevant evidence while real feed
+// degradation stayed invisible. Structured/energy provenance still exists for
+// its own consumers; it is simply not this one's dependency.
 //
 // SIDE-EFFECT-FREE BY CONTRACT. Importing this module must do nothing: no
 // analysis, no model call, no writes, no process exit, no scheduling. Only
@@ -15,10 +23,11 @@
 // THE RULE: an executable entrypoint must never be imported by another module.
 // Shared behaviour belongs in a library like this one.
 
-import { existsSync, readFileSync } from 'fs'
+import { existsSync, readFileSync, readdirSync } from 'fs'
 import { join } from 'path'
 import {
-  readProvenance, coverageIsComplete, absenceCaveat, type ProvenanceRecord,
+  coverageIsComplete, absenceCaveat, classifyArticleSources, withDomain,
+  type FeedRegistryEntry, type FeedHealthEntry, type CollectionMetrics,
 } from '@common/types'
 import type { WorldCoverage } from './regime-analyzer.js'
 
@@ -33,31 +42,64 @@ export const PROVENANCE_MAX_AGE_HOURS = 30
 /** Default location of the world-intel app, relative to an app-level cwd. */
 export const DEFAULT_WORLD_INTEL_ROOT = join(process.cwd(), '../world-intelligence-data-hub-')
 
-/**
- * Read source coverage. Never throws, and never reports "complete" on a guess:
- * an unreadable or absent record is UNKNOWN coverage, which consumers treat
- * exactly like degraded coverage.
- */
 export function loadCoverage(
   worldIntelRoot: string = DEFAULT_WORLD_INTEL_ROOT,
   now: Date = new Date(),
 ): WorldCoverage {
   try {
-    const p = join(worldIntelRoot, 'quota', 'freshness.json')
-    const record = existsSync(p) ? JSON.parse(readFileSync(p, 'utf-8')) as ProvenanceRecord : null
-    const r = readProvenance(record, now, PROVENANCE_MAX_AGE_HOURS)
+    const sourcesDir = join(worldIntelRoot, 'intelligence', 'sources')
+    const registryPath = join(sourcesDir, 'sources.json')
+    if (!existsSync(registryPath)) {
+      return unknownCoverage('article source registry not found')
+    }
+    const raw = JSON.parse(readFileSync(registryPath, 'utf-8')) as unknown
+    const registry = (Array.isArray(raw) ? raw : (raw as { sources?: unknown[] })?.sources ?? []) as FeedRegistryEntry[]
+    if (!Array.isArray(registry) || registry.length === 0) {
+      return unknownCoverage('article source registry is empty or malformed')
+    }
+
+    const healthPath = join(sourcesDir, 'source-health.json')
+    const health = existsSync(healthPath)
+      ? JSON.parse(readFileSync(healthPath, 'utf-8')) as Record<string, FeedHealthEntry>
+      : {}
+
+    // Latest daily collection record. Absent means unknown, never healthy.
+    let metrics: CollectionMetrics | null = null
+    const metricsDir = join(worldIntelRoot, 'intelligence', 'metrics')
+    if (existsSync(metricsDir)) {
+      const days = readdirSync(metricsDir).filter(f => /^\d{4}-\d{2}-\d{2}\.json$/.test(f)).sort()
+      const latest = days[days.length - 1]
+      if (latest) {
+        const rec = JSON.parse(readFileSync(join(metricsDir, latest), 'utf-8')) as { collection?: CollectionMetrics }
+        metrics = rec?.collection ?? null
+      }
+    }
+
+    const sources = withDomain(
+      classifyArticleSources({ registry, health, metrics, now }),
+      'article_intelligence',
+    )
+    if (sources.length === 0) return unknownCoverage('no enabled article feeds in the registry')
+
+    const degraded = sources.filter(s => s.availability !== 'current')
     return {
-      complete: coverageIsComplete(r.sources),
-      summary:  r.summary,
-      caveat:   absenceCaveat(r.sources),
-      sources:  r.sources,
+      complete: coverageIsComplete(sources),
+      summary: degraded.length === 0
+        ? 'article coverage complete'
+        : `article coverage degraded: ${degraded.map(s => `${s.source} ${s.availability}`).join(', ')}`,
+      caveat: absenceCaveat(sources),
+      sources,
     }
   } catch {
-    return {
-      complete: false,
-      summary: 'world-intel coverage unknown: provenance record unreadable',
-      caveat: 'events may be MISSING rather than absent — the provenance record could not be read',
-      sources: [],
-    }
+    return unknownCoverage('article coverage records unreadable')
+  }
+}
+
+function unknownCoverage(why: string): WorldCoverage {
+  return {
+    complete: false,
+    summary: `world-intel article coverage unknown: ${why}`,
+    caveat: 'events may be MISSING rather than absent — article feed health could not be established',
+    sources: [],
   }
 }

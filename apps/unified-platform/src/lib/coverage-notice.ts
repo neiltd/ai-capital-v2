@@ -8,9 +8,14 @@
 //
 // THE INVARIANT IT SERVES: "no events found" and "we cannot establish whether
 // events occurred" are different statements, and only complete coverage
-// licenses the first. The analytical layer already refuses to conflate them;
-// these three pages could still show absence with no provenance at all.
-import type { FreshnessResult } from './data'
+// licenses the first.
+//
+// DOMAIN-CORRECT: this reports on the ARTICLE feeds these pages actually read,
+// not on gdelt/acled/eia/worldbank/ucdp. Reporting the structured and energy
+// sources here warned about evidence the pages never use, while real RSS feed
+// degradation stayed invisible. Structured-event and energy provenance remain
+// available via readSourceFreshness() for their own consumers.
+import type { ArticleCoverageResult } from './data'
 import type { SourceProvenance } from '@common/types'
 
 export interface CoverageNotice {
@@ -32,12 +37,12 @@ const LABEL: Record<string, string> = {
  * no banner at all. Any degraded source produces a compact notice naming the
  * source, its state, and why.
  */
-export function buildCoverageNotice(result: FreshnessResult): CoverageNotice | null {
+export function buildCoverageNotice(result: ArticleCoverageResult): CoverageNotice | null {
   if (!result.ok) {
     return {
       level: 'error',
-      headline: 'Source coverage is unknown',
-      detail: `No provenance record could be read, so it is unknown whether any world-intel feed is current. This is not the same as all feeds being healthy. (${result.error})`,
+      headline: 'Article coverage is unknown',
+      detail: `Feed health could not be read, so it is unknown whether the news sources behind these events are current. This is not the same as all feeds being healthy. (${result.error})`,
       sources: [],
       absenceUnsafe: true,
     }
@@ -52,8 +57,8 @@ export function buildCoverageNotice(result: FreshnessResult): CoverageNotice | n
   return {
     level: worst,
     headline: worst === 'warning'
-      ? `World-intel coverage is stale — ${named}`
-      : `World-intel coverage is incomplete — ${named}`,
+      ? `News feed coverage is stale — ${named}`
+      : `News feed coverage is incomplete — ${named}`,
     detail:
       'Events below may be MISSING rather than absent. Do not read a short or empty list as evidence that little happened.',
     sources: degraded,

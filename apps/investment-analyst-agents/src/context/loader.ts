@@ -1,9 +1,9 @@
-import { readFileSync, existsSync } from 'fs'
+import { readFileSync, existsSync, readdirSync } from 'fs'
 import { join, dirname } from 'path'
-import { readProvenance, coverageIsComplete, absenceCaveat, type ProvenanceRecord } from '@common/types'
+import { coverageIsComplete, absenceCaveat, classifyArticleSources, withDomain,
+  type FeedRegistryEntry, type FeedHealthEntry, type CollectionMetrics } from '@common/types'
 
 /** A provenance record older than a day plus slack means nobody has checked since. */
-const WORLD_PROVENANCE_MAX_AGE_HOURS = 30
 import Database from 'better-sqlite3'
 import type {
   ContextBundle, AnalysisJSON, SimulationJSON, GraphJSON, StockIntelJSON, WorldIntelJSON,
@@ -175,15 +175,53 @@ export function loadContext(date: string, paths: LoaderPaths = {}): ContextBundl
   // record that has itself gone stale cannot assert its verdicts as current.
   // Without this the briefing cannot tell "nothing happened" from "we could not
   // see what happened" — which on 2026-08-29 was the live condition.
+  // DOMAIN-CORRECT: the briefing's world events come from world-map/intelligence.json,
+  // which is article-derived (12 RSS feeds). Coverage previously came from
+  // quota/freshness.json — gdelt/acled/eia/worldbank/ucdp — sources the briefing
+  // does not consume, so it warned about irrelevant evidence while real feed
+  // degradation was invisible.
   const worldCoverage = (() => {
+    const unknown = (why: string) => ({
+      complete: false, summary: `world-intel article coverage unknown: ${why}`,
+      caveat: 'events may be MISSING rather than absent — article feed health could not be established',
+      sources: [] as ReturnType<typeof classifyArticleSources>,
+    })
     try {
-      const fp = join(dirname(p.worldIntelPath), '..', '..', 'quota', 'freshness.json')
-      const rec = existsSync(fp) ? JSON.parse(readFileSync(fp, 'utf-8')) as ProvenanceRecord : null
-      const r = readProvenance(rec, new Date(), WORLD_PROVENANCE_MAX_AGE_HOURS)
-      return { complete: coverageIsComplete(r.sources), summary: r.summary, caveat: absenceCaveat(r.sources), sources: r.sources }
+      const hub = join(dirname(p.worldIntelPath), '..', '..')
+      const registryPath = join(hub, 'intelligence', 'sources', 'sources.json')
+      if (!existsSync(registryPath)) return unknown('article source registry not found')
+      const raw = JSON.parse(readFileSync(registryPath, 'utf-8')) as unknown
+      const registry = (Array.isArray(raw) ? raw : (raw as { sources?: unknown[] })?.sources ?? []) as FeedRegistryEntry[]
+      if (!Array.isArray(registry) || registry.length === 0) return unknown('article source registry is empty or malformed')
+
+      const healthPath = join(hub, 'intelligence', 'sources', 'source-health.json')
+      const health = existsSync(healthPath)
+        ? JSON.parse(readFileSync(healthPath, 'utf-8')) as Record<string, FeedHealthEntry>
+        : {}
+
+      let metrics: CollectionMetrics | null = null
+      const metricsDir = join(hub, 'intelligence', 'metrics')
+      if (existsSync(metricsDir)) {
+        const days = readdirSync(metricsDir).filter(f => /^\d{4}-\d{2}-\d{2}\.json$/.test(f)).sort()
+        const latest = days[days.length - 1]
+        if (latest) {
+          const rec = JSON.parse(readFileSync(join(metricsDir, latest), 'utf-8')) as { collection?: CollectionMetrics }
+          metrics = rec?.collection ?? null
+        }
+      }
+
+      const sources = withDomain(classifyArticleSources({ registry, health, metrics, now: new Date() }), 'article_intelligence')
+      if (sources.length === 0) return unknown('no enabled article feeds in the registry')
+      const degraded = sources.filter(s => s.availability !== 'current')
+      return {
+        complete: coverageIsComplete(sources),
+        summary: degraded.length === 0 ? 'article coverage complete'
+          : `article coverage degraded: ${degraded.map(s => `${s.source} ${s.availability}`).join(', ')}`,
+        caveat: absenceCaveat(sources),
+        sources,
+      }
     } catch {
-      return { complete: false, summary: 'world-intel coverage unknown: provenance record unreadable',
-               caveat: 'events may be MISSING rather than absent — the provenance record could not be read', sources: [] }
+      return unknown('article coverage records unreadable')
     }
   })()
 

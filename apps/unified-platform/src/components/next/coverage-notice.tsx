@@ -1,12 +1,13 @@
-// Compact world-intel coverage callout. Server component, read-only: it calls
-// the same readSourceFreshness() the /system page uses and renders NOTHING when
-// every source is current.
-import { readSourceFreshness } from '@/lib/data'
+// Compact ARTICLE-coverage callout. Server component, read-only. Reports on the
+// RSS feeds these pages actually consume — not the structured/energy sources,
+// which have their own consumers and their own surface at /system. Renders
+// NOTHING when every enabled feed is current.
+import { readArticleCoverage } from '@/lib/data'
 import { buildCoverageNotice, type CoverageNotice } from '@/lib/coverage-notice'
 
 /** Callers that must also branch on presence can compute once and pass it in. */
 export function worldCoverageNotice(): CoverageNotice | null {
-  return buildCoverageNotice(readSourceFreshness())
+  return buildCoverageNotice(readArticleCoverage())
 }
 
 const TONE = {

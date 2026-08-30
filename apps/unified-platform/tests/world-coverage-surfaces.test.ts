@@ -3,211 +3,190 @@ import { mkdtempSync, mkdirSync, writeFileSync, rmSync, readFileSync } from 'nod
 import { tmpdir } from 'node:os'
 import { join, dirname, resolve } from 'node:path'
 
-// The three human-facing world surfaces (/world, /today, legacy /world/intel)
-// could present an empty event feed with no provenance at all. The analytical
-// layer already refuses to read absence under incomplete coverage as calm; these
-// pages did not. "No events found" and "we cannot establish whether events
-// occurred" are different statements, and only complete coverage licenses the
-// first.
-//
-// Classification is NOT re-implemented here — these exercise the real
-// readSourceFreshness() -> @common/types pipeline against fixture records.
+// The four world surfaces (/world, /today, /world/intel, /world/map) display
+// ARTICLE-derived events. Their coverage notice must therefore describe the RSS
+// feeds behind those events — not gdelt/acled/eia/worldbank/ucdp, which no live
+// surface reads. Warning on the structured sources was a false positive; missing
+// real feed degradation was the more dangerous false negative.
 
 let root: string
-const write = (rel: string, body: string) => {
+const write = (rel: string, body: unknown) => {
   const p = join(root, rel)
   mkdirSync(dirname(p), { recursive: true })
-  writeFileSync(p, body, 'utf-8')
+  writeFileSync(p, typeof body === 'string' ? body : JSON.stringify(body), 'utf-8')
 }
 beforeEach(() => { root = mkdtempSync(join(tmpdir(), 'world-cov-')); process.env.DATA_ROOT = root })
 afterEach(() => { rmSync(root, { recursive: true, force: true }); delete process.env.DATA_ROOT })
 
 const NOW = new Date('2026-08-30T12:00:00Z')
-const hoursAgo = (h: number) => new Date(NOW.getTime() - h * 3_600_000).toISOString()
+const ago = (h: number) => new Date(NOW.getTime() - h * 3_600_000).toISOString()
+const HUB = 'world-intelligence-data-hub-'
 
-const source = (o: Record<string, unknown>) => ({
-  source: 'gdelt', availability: 'current', lastSuccessfulFetch: hoursAgo(1),
-  maxStalenessHours: 36, ageHours: 1, reason: 'refreshed 1h ago', ...o,
+const registry = (extra: unknown[] = []) => write(`${HUB}/intelligence/sources/sources.json`, [
+  { id: 'bbc-world', name: 'BBC World', enabled: true },
+  { id: 'aljazeera-english', name: 'Al Jazeera', enabled: true },
+  { id: 'globaltimes-china', name: 'Global Times', enabled: true },
+  { id: 'reuters-world', name: 'Reuters', enabled: false },
+  ...extra,
+])
+type H = Record<string, { source_id: string; consecutive_failures: number; last_success?: string; last_failure?: string; last_failure_reason?: string }>
+const healthy = (): H => ({
+  'bbc-world': { source_id: 'bbc-world', consecutive_failures: 0, last_success: ago(2) },
+  'aljazeera-english': { source_id: 'aljazeera-english', consecutive_failures: 0, last_success: ago(2) },
+  'globaltimes-china': { source_id: 'globaltimes-china', consecutive_failures: 0, last_success: ago(2) },
 })
-const record = (sources: unknown[]) =>
-  write('world-intelligence-data-hub-/quota/freshness.json',
-    JSON.stringify({ schemaVersion: 1, classifiedAt: hoursAgo(1), sources }))
+const collection = (o: Record<string, unknown> = {}) => ({
+  last_run: ago(2), by_source: { 'bbc-world': 18, 'aljazeera-english': 25, 'globaltimes-china': 0 },
+  failed_sources: [], skipped_sources: [], stale_feed_sources: [], ...o,
+})
+const scene = (health: H = healthy(), coll = collection()) => {
+  registry()
+  write(`${HUB}/intelligence/sources/source-health.json`, health)
+  write(`${HUB}/intelligence/metrics/2026-08-30.json`, { date: '2026-08-30', collection: coll })
+}
+/** Structured/energy provenance — present, and deliberately irrelevant here. */
+const structuredRecord = (sources: unknown[]) =>
+  write(`${HUB}/quota/freshness.json`, { schemaVersion: 1, classifiedAt: ago(1), sources })
 
 const notice = async () => {
-  const { readSourceFreshness } = await import('@/lib/data')
+  const { readArticleCoverage } = await import('@/lib/data')
   const { buildCoverageNotice } = await import('@/lib/coverage-notice')
-  return buildCoverageNotice(readSourceFreshness(NOW))
+  return buildCoverageNotice(readArticleCoverage(NOW))
 }
 
-// ── A. all current: stay quiet, and absence may be stated plainly ───────────
+// ── A. healthy article domain stays quiet ─────────────────────────────────
 
-describe('A. complete coverage', () => {
-  it('produces no notice at all', async () => {
-    record([source({ source: 'gdelt' }), source({ source: 'acled' }), source({ source: 'eia' })])
+describe('A. all article feeds healthy', () => {
+  it('produces no notice', async () => { scene(); expect(await notice()).toBeNull() })
+
+  it('a zero-result feed does not trigger a warning', async () => {
+    scene(healthy(), collection({ by_source: { 'bbc-world': 0, 'aljazeera-english': 0, 'globaltimes-china': 0 } }))
     expect(await notice()).toBeNull()
   })
 
   it('licenses the ordinary absence sentence', async () => {
-    record([source({})])
+    scene()
     const { absenceHeadline } = await import('@/lib/coverage-notice')
     expect(absenceHeadline(await notice(), 'No events recorded')).toBe('No events recorded')
   })
 })
 
-// ── B. unavailable: zero events is NOT evidence of absence ─────────────────
+// ── G/H. THE CRITICAL PAIR: structured impairment must not leak in ────────
 
-describe('B. GDELT unavailable', () => {
-  const down = () => record([
-    source({ source: 'gdelt', lastSuccessfulFetch: hoursAgo(40), ageHours: 40,
-      lastFailure: { at: hoursAgo(20), kind: 'transport', detail: 'TLS certificate expired' } }),
-    source({ source: 'eia' }),
-  ])
-
-  it('raises an error-level notice naming the source', async () => {
-    down()
-    const n = (await notice())!
-    expect(n).not.toBeNull()
-    expect(n.level).toBe('error')
-    expect(n.headline).toContain('gdelt unavailable')
+describe('G/H. structured and energy impairment do not touch article surfaces', () => {
+  it('G. ACLED restricted + article healthy -> no warning', async () => {
+    scene()
+    structuredRecord([{ source: 'acled', availability: 'restricted', lastSuccessfulFetch: ago(1500),
+      maxStalenessHours: 24, ageHours: 1500, reason: 'entitlement',
+      restriction: { kind: 'recency-embargo', detail: '12-month embargo' } }])
+    expect(await notice(), 'an ACLED restriction leaked into an article surface').toBeNull()
   })
 
-  it('marks absence unsafe and refuses the plain no-events sentence', async () => {
-    down()
-    const n = await notice()
-    expect(n!.absenceUnsafe).toBe(true)
-    const { absenceHeadline } = await import('@/lib/coverage-notice')
-    expect(absenceHeadline(n, 'No events recorded')).toBe('Cannot establish whether significant events occurred')
+  it('H. GDELT unavailable + article healthy -> no warning', async () => {
+    scene()
+    structuredRecord([{ source: 'gdelt', availability: 'unavailable', lastSuccessfulFetch: ago(60),
+      maxStalenessHours: 36, ageHours: 60, reason: 'TLS expired',
+      lastFailure: { at: ago(40), kind: 'transport', detail: 'certificate expired' } }])
+    expect(await notice(), 'a GDELT outage leaked into an article surface').toBeNull()
   })
 
-  it('says events may be missing rather than absent', async () => {
-    down()
-    expect((await notice())!.detail).toMatch(/MISSING rather than absent/)
+  it('both at once still leave the article domain quiet', async () => {
+    scene()
+    structuredRecord([
+      { source: 'acled', availability: 'restricted', lastSuccessfulFetch: ago(1500), maxStalenessHours: 24, ageHours: 1500, reason: 'x', restriction: { kind: 'recency-embargo', detail: 'y' } },
+      { source: 'gdelt', availability: 'unavailable', lastSuccessfulFetch: ago(60), maxStalenessHours: 36, ageHours: 60, reason: 'z', lastFailure: { at: ago(40), kind: 'transport', detail: 'w' } },
+    ])
+    expect(await notice()).toBeNull()
   })
 
-  it('is distinct from stale — an unreachable feed is not merely old', async () => {
-    down()
-    const unavailable = (await notice())!
-    record([source({ source: 'gdelt', lastSuccessfulFetch: hoursAgo(40), ageHours: 40 })])
-    const stale = (await notice())!
-    expect(unavailable.level).toBe('error')
-    expect(stale.level).toBe('warning')
-    expect(unavailable.headline).not.toBe(stale.headline)
+  it('the structured surface still reports them for its own consumers', async () => {
+    scene()
+    structuredRecord([{ source: 'gdelt', availability: 'unavailable', lastSuccessfulFetch: ago(60),
+      maxStalenessHours: 36, ageHours: 60, reason: 'TLS expired',
+      lastFailure: { at: ago(40), kind: 'transport', detail: 'certificate expired' } }])
+    const { readSourceFreshness } = await import('@/lib/data')
+    const r = readSourceFreshness(NOW)
+    expect(r.ok && r.sources[0].availability).toBe('unavailable')   // not deleted, just not shown to article pages
   })
 })
 
-// ── C. restricted: the recent window cannot be provided ───────────────────
+// ── B/C/D/I/J. real article degradation IS surfaced ───────────────────────
 
-describe('C. ACLED restricted', () => {
-  it('surfaces the entitlement limit, not staleness', async () => {
-    record([source({
-      source: 'acled', lastSuccessfulFetch: hoursAgo(1), ageHours: 1, maxStalenessHours: 24,
-      restriction: { kind: 'recency-embargo', detail: 'account may only read events at least 12 months old', accessibleOlderThanDays: 365 },
-    })])
+describe('I/J. article degradation warns', () => {
+  it('a failed feed is an error-level notice naming it', async () => {
+    scene({ ...healthy(), 'bbc-world': { source_id: 'bbc-world', consecutive_failures: 1, last_failure: ago(2), last_failure_reason: 'HTTP 503' } },
+      collection({ by_source: { 'aljazeera-english': 25, 'globaltimes-china': 0 }, failed_sources: ['bbc-world'] }))
     const n = (await notice())!
     expect(n.level).toBe('error')
-    expect(n.headline).toContain('acled restricted')
-    expect(n.sources[0].reason).toMatch(/restricted by entitlement/)
-    expect(n.sources[0].reason).toMatch(/12 months old/)
+    expect(n.headline).toContain('bbc-world unavailable')
+    expect(n.sources[0].reason).toMatch(/HTTP 503/)
   })
 
-  it('stays restricted however recently it was fetched', async () => {
-    record([source({
-      source: 'acled', lastSuccessfulFetch: hoursAgo(0.01), ageHours: 0.01, maxStalenessHours: 24,
-      restriction: { kind: 'recency-embargo', detail: 'recent window unavailable' },
-    })])
-    expect((await notice())!.headline).toContain('acled restricted')
-  })
-})
-
-// ── D. stale: still show data, but say so ────────────────────────────────
-
-describe('D. stale coverage', () => {
-  it('is a warning, not an error — events may still render', async () => {
-    record([source({ source: 'gdelt', lastSuccessfulFetch: hoursAgo(40), ageHours: 40 })])
+  it('a stale feed is a warning, distinct from a failure', async () => {
+    scene(healthy(), collection({ stale_feed_sources: ['globaltimes-china'] }))
     const n = (await notice())!
     expect(n.level).toBe('warning')
-    expect(n.headline).toContain('stale')
+    expect(n.headline).toContain('globaltimes-china stale')
   })
 
-  it('still withdraws the licence to state absence plainly', async () => {
-    record([source({ source: 'gdelt', lastSuccessfulFetch: hoursAgo(40), ageHours: 40 })])
-    expect((await notice())!.absenceUnsafe).toBe(true)
+  it('withdraws the plain absence sentence when degraded', async () => {
+    scene(healthy(), collection({ stale_feed_sources: ['globaltimes-china'] }))
+    const { absenceHeadline } = await import('@/lib/coverage-notice')
+    expect(absenceHeadline(await notice(), 'No events recorded')).toBe('Cannot establish whether significant events occurred')
+  })
+
+  it('J. a healthy feed cannot mask a degraded sibling', async () => {
+    scene({ ...healthy(), 'bbc-world': { source_id: 'bbc-world', consecutive_failures: 1, last_failure: ago(2), last_failure_reason: 'timeout' } },
+      collection({ by_source: { 'aljazeera-english': 25, 'globaltimes-china': 0 }, failed_sources: ['bbc-world'] }))
+    const n = (await notice())!
+    expect(n.sources.map(s => s.source)).toEqual(['bbc-world'])
   })
 })
 
-// ── E. unknown: uncertainty, never silent completeness ───────────────────
+// ── E/F. missing and malformed article evidence ───────────────────────────
 
-describe('E. unknown coverage', () => {
-  it('a missing provenance record reads as unknown, not healthy', async () => {
+describe('E/F. unknown article coverage', () => {
+  it('no registry at all is unknown, not healthy', async () => {
     const n = (await notice())!
     expect(n.level).toBe('error')
     expect(n.headline).toMatch(/unknown/i)
-    expect(n.detail).toMatch(/not the same as all feeds being healthy/)
   })
 
-  it('a malformed record reads as unknown too', async () => {
-    write('world-intelligence-data-hub-/quota/freshness.json', '{ "schemaVersion": 1, "sources": "nope" }')
+  it('registry present but no metrics record -> every feed unknown', async () => {
+    registry()
+    write(`${HUB}/intelligence/sources/source-health.json`, {})
+    const n = (await notice())!
+    expect(n.sources.every(s => s.availability === 'unknown')).toBe(true)
+  })
+
+  it('malformed registry degrades to unknown rather than throwing', async () => {
+    write(`${HUB}/intelligence/sources/sources.json`, '{ not json')
     expect((await notice())!.headline).toMatch(/unknown/i)
   })
-
-  it('a never-fetched source is unknown, not current', async () => {
-    record([source({ source: 'gdelt', lastSuccessfulFetch: null, ageHours: null })])
-    const n = (await notice())!
-    expect(n.headline).toContain('gdelt unknown')
-  })
 })
 
-// ── F. mixed: a healthy source cannot mask a broken one ──────────────────
+// ── K/L/M/N. the surfaces are wired and stay read-only ────────────────────
 
-describe('F. mixed coverage', () => {
-  it('one current source does not hide an unavailable one', async () => {
-    record([
-      source({ source: 'eia' }),
-      source({ source: 'gdelt', lastSuccessfulFetch: hoursAgo(40), ageHours: 40,
-        lastFailure: { at: hoursAgo(20), kind: 'transport', detail: 'TLS expired' } }),
-    ])
-    const n = (await notice())!
-    expect(n.headline).toContain('gdelt')
-    expect(n.sources.map(s => s.source)).not.toContain('eia')   // only the degraded are listed
-  })
-
-  it('escalates to error when any source is worse than stale', async () => {
-    record([
-      source({ source: 'eia', lastSuccessfulFetch: hoursAgo(40), ageHours: 40 }),       // stale
-      source({ source: 'acled', maxStalenessHours: 24, restriction: { kind: 'volume', detail: 'capped' } }),
-    ])
-    const n = (await notice())!
-    expect(n.level).toBe('error')
-    expect(n.sources).toHaveLength(2)
-  })
-})
-
-// ── The three surfaces actually consume it, and stay read-only ───────────
-
-describe('the surfaces are wired and remain readers', () => {
+describe('K-N. surfaces consume article coverage and remain readers', () => {
   const APP = resolve(__dirname, '..', 'src', 'app')
   const read = (p: string) => readFileSync(join(APP, p), 'utf-8')
 
   it.each([
-    ['(next)/world/page.tsx'],
-    ['(next)/today/page.tsx'],
-    ['(legacy)/world/intel/page.tsx'],
-  ])('%s renders the coverage callout', (p) => {
+    ['K', '(next)/world/page.tsx'],
+    ['L', '(next)/today/page.tsx'],
+    ['M', '(legacy)/world/intel/page.tsx'],
+    ['N', '(legacy)/world/map/page.tsx'],
+  ])('%s. %s renders the coverage callout', (_l, p) => {
     expect(read(p)).toMatch(/CoverageCallout/)
   })
 
-  it('/today no longer drops the world section when the feed is empty', () => {
-    const src = read('(next)/today/page.tsx')
-    expect(src).toContain('b.worldTop.length > 0 || worldNotice')
-    expect(src).toMatch(/Cannot establish whether significant events occurred/)
+  it('the callout resolves ARTICLE coverage, not structured freshness', () => {
+    const src = readFileSync(resolve(__dirname, '..', 'src', 'components', 'next', 'coverage-notice.tsx'), 'utf-8')
+    expect(src).toContain('readArticleCoverage')
+    expect(src).not.toContain('readSourceFreshness')
   })
 
-  it('legacy /world/intel no longer asserts "No events recorded" under degraded coverage', () => {
-    const src = read('(legacy)/world/intel/page.tsx')
-    expect(src).toMatch(/coverage \? 'Cannot establish whether events occurred' : 'No events recorded'/)
-  })
-
-  it('the coverage surface writes nothing and triggers no fetch', () => {
+  it('the coverage surface writes nothing and fetches nothing', () => {
     for (const f of ['../src/lib/coverage-notice.ts', '../src/components/next/coverage-notice.tsx']) {
       const src = readFileSync(resolve(__dirname, f), 'utf-8')
       expect(src).not.toMatch(/writeFileSync|appendFileSync|mkdirSync|rmSync|fetch\(|axios/)

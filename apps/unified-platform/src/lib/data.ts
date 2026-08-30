@@ -1,5 +1,7 @@
 import fs from 'fs'
-import { readProvenance, type ProvenanceRecord, type SourceProvenance } from '@common/types'
+import { readProvenance, classifyArticleSources, withDomain,
+  type ProvenanceRecord, type SourceProvenance,
+  type FeedRegistryEntry, type FeedHealthEntry, type CollectionMetrics } from '@common/types'
 import path from 'path'
 import type { AnalysisJSON, SimulationJSON, GraphJSON, StockIntelJSON, WorldIntelJSON, DiscoveryJSON, DiscoveryPosition, MacroJSON, WavesJSON, WaveActionsJSON, WavePortfolioJSON, GovFlowJSON } from '@/types'
 import type { RiskJSON, HarvestJSON } from '@/lib/next/types'
@@ -158,6 +160,64 @@ export function readSourceFreshness(now: Date = new Date()): FreshnessResult {
     const sources = [...r.sources].sort((a, b) =>
       (order[a.availability] ?? 9) - (order[b.availability] ?? 9) || (b.ageHours ?? 0) - (a.ageHours ?? 0))
     return { ok: true, sources, classifiedAt: record.classifiedAt, recordAgeHours: r.recordAgeHours, recordStale: r.recordStale, summary: r.summary }
+  } catch (err) {
+    return { ok: false, error: (err as Error).message }
+  }
+}
+
+/**
+ * ARTICLE-domain coverage, from the records the collector already writes.
+ *
+ * The four world surfaces and the analytical consumers read article-derived
+ * intelligence (12 RSS feeds), not gdelt/acled/eia/worldbank/ucdp. Reporting the
+ * structured/energy sources to them warned about evidence they never use while
+ * hiding real feed degradation. This reads the collector's own registry, health
+ * store and daily metrics — no new collection, no API call.
+ */
+export type ArticleCoverageResult =
+  | { ok: true; sources: SourceProvenance[]; metricsDate: string | null }
+  | { ok: false; error: string }
+
+export function readArticleCoverage(now: Date = new Date()): ArticleCoverageResult {
+  const hub = path.join(dataRoot(), 'world-intelligence-data-hub-')
+  const registryPath = path.join(hub, 'intelligence', 'sources', 'sources.json')
+  const healthPath   = path.join(hub, 'intelligence', 'sources', 'source-health.json')
+  const metricsDir   = path.join(hub, 'intelligence', 'metrics')
+
+  if (!fs.existsSync(registryPath))
+    return { ok: false, error: 'no article source registry — intelligence/sources/sources.json is missing' }
+  try {
+    const raw = readJSON<unknown>(registryPath)
+    const registry = (Array.isArray(raw) ? raw : (raw as { sources?: unknown[] })?.sources ?? []) as FeedRegistryEntry[]
+    if (!Array.isArray(registry) || registry.length === 0)
+      return { ok: false, error: 'article source registry is empty or malformed' }
+
+    const health = fs.existsSync(healthPath)
+      ? (readJSON<Record<string, FeedHealthEntry>>(healthPath) ?? {})
+      : {}
+
+    // Latest daily metrics record. Absent -> every feed classifies unknown,
+    // which is the honest answer, not a healthy one.
+    let metrics: CollectionMetrics | null = null
+    let metricsDate: string | null = null
+    if (fs.existsSync(metricsDir)) {
+      const days = fs.readdirSync(metricsDir).filter(f => /^\d{4}-\d{2}-\d{2}\.json$/.test(f)).sort()
+      const latest = days[days.length - 1]
+      if (latest) {
+        metricsDate = latest.replace('.json', '')
+        const rec = readJSON<{ collection?: CollectionMetrics }>(path.join(metricsDir, latest))
+        metrics = rec?.collection ?? null
+      }
+    }
+
+    const sources = withDomain(
+      classifyArticleSources({ registry, health, metrics, now }),
+      'article_intelligence',
+    )
+    if (sources.length === 0) return { ok: false, error: 'no enabled article feeds in the registry' }
+    const order: Record<string, number> = { unavailable: 0, unknown: 1, stale: 2, restricted: 3, current: 4 }
+    sources.sort((a, b) => (order[a.availability] ?? 9) - (order[b.availability] ?? 9) || a.source.localeCompare(b.source))
+    return { ok: true, sources, metricsDate }
   } catch (err) {
     return { ok: false, error: (err as Error).message }
   }
