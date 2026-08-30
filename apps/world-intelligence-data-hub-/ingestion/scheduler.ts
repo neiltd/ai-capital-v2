@@ -55,6 +55,28 @@ const schedules: Array<{ source: string; expression: string; label: string }> = 
 
 // ── Start ─────────────────────────────────────────────────────────────────────
 
+// ── SCHEDULING AUTHORITY GUARD ───────────────────────────────────────────────
+// There is exactly ONE production scheduling authority: the BullMQ DAG in
+// packages/queue (submitted by launchd via daily-queue.sh -> run-daily.ts).
+// This daemon is a second, unmanaged authority — it appears in no launchd job,
+// and its GDELT entry fires every 15 minutes, which would bypass the dormancy
+// setting entirely and resume structured collection nobody consumes.
+//
+// It is NOT deleted: the cadences and the per-source process isolation here are
+// still the reference for how sources were meant to be driven. It simply refuses
+// to start unless someone opts in deliberately, so it cannot become a competing
+// authority by accident.
+if (process.env.RUN_LEGACY_WORLD_INTEL_SCHEDULER !== 'true') {
+  logger.info('scheduler', 'Refusing to start: the production scheduling authority is the BullMQ DAG');
+  logger.info('scheduler', '  Structured ingestion is scheduled by packages/queue, and is dormant by default.');
+  logger.info('scheduler', '  Scheduled structured ingestion is DORMANT and activation-ready, not one flag away:');
+  logger.info('scheduler', '    1. install and verify the dedicated structured worker (ops/launchd-proposed/), then');
+  logger.info('scheduler', '    2. set SCHEDULE_STRUCTURED_INGESTION=true.');
+  logger.info('scheduler', '  Manual one-off run (unaffected by either setting): npm run pipeline');
+  logger.info('scheduler', '  To run this legacy daemon anyway: RUN_LEGACY_WORLD_INTEL_SCHEDULER=true npm run schedule');
+  process.exit(0);
+}
+
 logger.info('scheduler', '═══════════════════════════════════════');
 logger.info('scheduler', ' World Intelligence Data Hub — Scheduler');
 logger.info('scheduler', '═══════════════════════════════════════');

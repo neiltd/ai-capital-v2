@@ -1,5 +1,5 @@
 import fs from 'fs'
-import { readProvenance, classifyArticleSources, withDomain,
+import { readProvenance, classifyArticleSources, withDomain, schedulingFor,
   type ProvenanceRecord, type SourceProvenance,
   type FeedRegistryEntry, type FeedHealthEntry, type CollectionMetrics } from '@common/types'
 import path from 'path'
@@ -140,7 +140,21 @@ export interface ThresholdAlertRecord {
  * means nobody has told us — not that every feed is healthy.
  */
 export type FreshnessResult =
-  | { ok: true; sources: SourceProvenance[]; classifiedAt: string; recordAgeHours: number | null; recordStale: boolean; summary: string }
+  | {
+      ok: true
+      sources: SourceProvenance[]
+      classifiedAt: string
+      recordAgeHours: number | null
+      recordStale: boolean
+      /** Scheduling-aware: describes ACTIVE degradation only. Sources we have
+       *  deliberately stopped polling are reported as dormant, not degraded, so
+       *  this string always agrees with the count rendered beside it. */
+      summary: string
+      /** Non-current AND still scheduled — the set that needs attention. */
+      activeDegraded: SourceProvenance[]
+      /** Not scheduled here; last-known availability retained, unrewritten. */
+      dormant: SourceProvenance[]
+    }
   | { ok: false; error: string }
 
 /** A record older than a day plus slack means nobody has checked since. */
@@ -155,11 +169,32 @@ export function readSourceFreshness(now: Date = new Date()): FreshnessResult {
     if (!record || !Array.isArray(record.sources))
       return { ok: false, error: "freshness.json is malformed: 'sources' is not an array" }
     const r = readProvenance(record, now, PROVENANCE_MAX_AGE_HOURS)
+    // Scheduling intent is stamped alongside the verdict, never into it. A
+    // dormant source keeps whatever availability the evidence last supported —
+    // dormancy explains why it is no longer refreshing, it does not claim the
+    // source is healthy, down or restricted.
+    const scheduled = r.sources.map(s => ({ ...s, scheduling: schedulingFor(s.source, process.env) }))
     // Degraded first — the point is that a dead feed is hard to miss.
     const order: Record<string, number> = { unavailable: 0, restricted: 1, unknown: 2, stale: 3, current: 4 }
-    const sources = [...r.sources].sort((a, b) =>
+    const sources = [...scheduled].sort((a, b) =>
       (order[a.availability] ?? 9) - (order[b.availability] ?? 9) || (b.ageHours ?? 0) - (a.ageHours ?? 0))
-    return { ok: true, sources, classifiedAt: record.classifiedAt, recordAgeHours: r.recordAgeHours, recordStale: r.recordStale, summary: r.summary }
+    // Scheduling-aware summary. readProvenance's own summary counts every
+    // non-current source, which would describe a source we deliberately stopped
+    // polling as a live problem — and disagree with the degraded count on the
+    // page. Availability itself is untouched; only what we call "degraded" is
+    // narrowed to sources still being scheduled.
+    const activeDegraded = sources.filter(s => s.availability !== 'current' && s.scheduling !== 'dormant')
+    const dormant        = sources.filter(s => s.scheduling === 'dormant')
+    const dormantNote    = dormant.length > 0 ? `; ${dormant.length} dormant (not scheduled here)` : ''
+    const summary = activeDegraded.length === 0
+      ? `world-intel coverage complete for scheduled sources${dormantNote}`
+      : `world-intel coverage degraded: ${activeDegraded.map(s => `${s.source} ${s.availability}`).join(', ')}${dormantNote}`
+
+    return {
+      ok: true, sources, classifiedAt: record.classifiedAt,
+      recordAgeHours: r.recordAgeHours, recordStale: r.recordStale,
+      summary, activeDegraded, dormant,
+    }
   } catch (err) {
     return { ok: false, error: (err as Error).message }
   }

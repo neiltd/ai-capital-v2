@@ -16,6 +16,19 @@ const isSunday  = (): boolean => process.env.FORCE_SUNDAY === '1' || dayOfWeek()
 const notSunday = (): boolean => !isSunday()
 
 /**
+ * Structured-event + energy/macro ingestion is deliberately outside the main
+ * daily flow. Its external artifacts remain available through the app's manual
+ * `npm run pipeline` entrypoint, while optional scheduled execution is handled
+ * as an independent job so it cannot block article intelligence.
+ */
+export const STRUCTURED_INGESTION_JOB: JobSpec = {
+  name: 'world-intel-pipeline',
+  cmd:  ['npm', 'run', 'pipeline'],
+  cwd:  'apps/world-intelligence-data-hub-',
+  timeoutMs: 30 * 60 * 1000,
+}
+
+/**
  * Daily pipeline — mirrors daily.sh end-to-end. Each entry corresponds to
  * one `step` call in daily.sh.
  */
@@ -33,20 +46,10 @@ export const DAILY_PIPELINE: JobSpec[] = [
     cwd:  'apps/government-flow-monitor',
   },
   {
-    // Independent — fetches GDELT/ACLED/EIA/WorldBank.
-    // Runs daily; per-source TTLs in quota-tracker.ts ensure UCDP/WorldBank
-    // only hit the API once per week, GDELT/EIA/NewsAPI hit daily.
-    name: 'world-intel-pipeline',
-    cmd:  ['npm', 'run', 'pipeline'],
-    cwd:  'apps/world-intelligence-data-hub-',
-    timeoutMs: 30 * 60 * 1000,
-  },
-  {
     // Collect RSS feeds + Twitter accounts into intelligence/outputs/articles/today/
     name: 'world-intel-collect',
     cmd:  ['npm', 'run', 'collect'],
     cwd:  'apps/world-intelligence-data-hub-',
-    dependsOn: 'world-intel-pipeline',
     timeoutMs: 10 * 60 * 1000,
   },
   {

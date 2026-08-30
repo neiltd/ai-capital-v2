@@ -34,8 +34,8 @@ export interface JobSpec {
 
   /**
    * Skip the job at submit time when this returns true. Used for the
-   * Sunday-only stages (world-intelligence pipeline, scenario-discover,
-   * people-tweets) so they no-op the rest of the week without burning a
+   * Sunday-only stages (world-intel-memory, scenario-discover, people-tweets)
+   * so they no-op the rest of the week without burning a
    * queue slot.
    */
   skipIf?:     () => boolean

@@ -2,7 +2,7 @@ import { describe, it, expect } from 'vitest'
 import { readFileSync } from 'node:fs'
 import { dirname, resolve } from 'node:path'
 import { fileURLToPath } from 'node:url'
-import { DAILY_PIPELINE } from '../src/jobs.js'
+import { DAILY_PIPELINE, STRUCTURED_INGESTION_JOB } from '../src/jobs.js'
 
 // CADENCE / FRESHNESS CONSISTENCY
 //
@@ -31,13 +31,24 @@ const boundFor = (source: string): number => {
   return Number(m[1])
 }
 
-describe('world-intel source bounds match the DAG cadence', () => {
-  const stage = DAILY_PIPELINE.find(j => j.name === 'world-intel-pipeline')!
+describe('world-intel source bounds match the structured cadence', () => {
+  // The GDELT-fetching stage moved OUT of the daily flow: it is now an
+  // independent, optionally scheduled job, dormant by default. The bound it is
+  // measured against is unchanged — when scheduled, it still runs at most once
+  // per day — so the numeric contract below still holds. What changed is where
+  // the stage lives, and that it can no longer block article collection.
+  const stage = STRUCTURED_INGESTION_JOB
 
-  it('world-intel-pipeline is a DAILY stage', () => {
+  it('the structured stage exists and keeps its daily-scale contract', () => {
     expect(stage, 'the GDELT-fetching stage disappeared').toBeTruthy()
-    expect(stage.skipIf, 'stage became conditional — the daily-cadence bounds below no longer hold').toBeUndefined()
+    expect(stage.skipIf, 'scheduling is controlled by submission, not skipIf — see structured-scheduling.ts').toBeUndefined()
     expect(stage.cwd).toBe('apps/world-intelligence-data-hub-')
+  })
+
+  it('the structured stage is NOT part of the daily article flow', () => {
+    // This is the decoupling invariant: it must never regain a dependency path
+    // into article collection, which it blocked on 14 days.
+    expect(DAILY_PIPELINE.some(j => j.name === 'world-intel-pipeline')).toBe(false)
   })
 
   it("gdelt's freshness bound tolerates a full daily cycle", () => {

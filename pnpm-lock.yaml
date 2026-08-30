@@ -728,6 +728,9 @@ importers:
       '@common/pipeline-runs':
         specifier: workspace:*
         version: link:../pipeline-runs
+      '@common/types':
+        specifier: workspace:*
+        version: link:../common-types
       bullmq:
         specifier: ^5.30.0
         version: 5.78.0

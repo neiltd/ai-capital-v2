@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  PROPOSED — NOT LOADED. Mirrors com.thanapol.ai-capital.worker, but drives the
+  structured-ingestion queue instead of daily-pipeline.
+
+  WHY A SECOND WORKER. The daily worker runs at concurrency 1 and the article
+  flow is deliberately serial. Structured ingestion previously shared that lane,
+  so a slow, retrying or stalled structured job could occupy the only slot and
+  delay runnable article jobs — the blocking the decoupling removed at the graph
+  level, returning through execution resources.
+
+  This is only needed if scheduled structured ingestion is ever enabled
+  (SCHEDULE_STRUCTURED_INGESTION=true). While it is dormant nothing enqueues
+  structured work, so leaving this unregistered is safe and is the current state.
+
+  Registering it is a deliberate operator action:
+    launchctl bootstrap gui/$(id -u) ops/launchd-proposed/com.thanapol.ai-capital.structured-worker.plist
+-->
+<plist version="1.0">
+<dict>
+  <key>Label</key>
+  <string>com.thanapol.ai-capital.structured-worker</string>
+
+  <key>ProgramArguments</key>
+  <array>
+    <string>/usr/bin/caffeinate</string>
+    <string>-i</string>
+    <string>/opt/homebrew/bin/npx</string>
+    <string>tsx</string>
+    <string>packages/queue/bin/structured-worker.ts</string>
+  </array>
+
+  <key>WorkingDirectory</key>
+  <string>/Users/thanapold/Desktop/Projects.nosync</string>
+
+  <key>EnvironmentVariables</key>
+  <dict>
+    <key>PATH</key>
+    <string>/opt/homebrew/bin:/usr/local/bin:/usr/bin:/bin</string>
+    <key>DATABASE_URL</key>
+    <string>postgres://thanapold@localhost:5432/ai_capital</string>
+    <key>PIPELINE_RUNS_DB</key>
+    <string>/Users/thanapold/Desktop/Projects.nosync/data/pipeline-runs.db</string>
+    <key>REDIS_URL</key>
+    <string>redis://localhost:6379</string>
+    <key>DATA_ROOT</key>
+    <string>/Users/thanapold/Desktop/Projects.nosync/apps</string>
+    <!-- Scheduling itself stays off until deliberately enabled; this worker
+         merely drains the structured queue if anything is ever enqueued. -->
+  </dict>
+
+  <key>KeepAlive</key>
+  <true/>
+  <key>RunAtLoad</key>
+  <true/>
+
+  <key>StandardOutPath</key>
+  <string>/Users/thanapold/Desktop/Projects.nosync/logs/structured-worker.out.log</string>
+  <key>StandardErrorPath</key>
+  <string>/Users/thanapold/Desktop/Projects.nosync/logs/structured-worker.err.log</string>
+</dict>
+</plist>

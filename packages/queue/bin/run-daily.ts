@@ -10,6 +10,7 @@ import { ensurePipelineEnv } from '../src/env.js'
 ensurePipelineEnv()
 
 import { submitDailyPipeline } from '../src/submit.js'
+import { submitScheduledStructuredIngestion, structuredIngestionScheduled, STRUCTURED_INGESTION_SCHEDULE_ENV } from '../src/structured-scheduling.js'
 import { closeAll } from '../src/queue.js'
 
 // Submit-and-exit. The launchd-managed worker (com.thanapol.ai-capital.worker)
@@ -26,6 +27,31 @@ async function main() {
   const { parentRunId, rootJobId } = await submitDailyPipeline()
   console.log(`[run-daily] submitted — parentRunId=${parentRunId} rootJobId=${rootJobId}`)
   console.log(`[run-daily] launchd worker will drive the flow to completion`)
+
+  // Structured-event + energy/macro ingestion is submitted SEPARATELY and only
+  // when explicitly scheduled. It is dormant by default, so this is normally a
+  // no-op that touches no queue, no run record and no source.
+  //
+  // Deliberately after the daily submission and inside its own catch: this job
+  // must never be able to fail, delay or block the article flow. That coupling
+  // is the defect this separation exists to remove — it cost 14 days of article
+  // collection while nothing consumed the structured output.
+  if (structuredIngestionScheduled(process.env)) {
+    try {
+      const structured = await submitScheduledStructuredIngestion()
+      console.log(`[run-daily] structured ingestion submitted independently — parentRunId=${structured?.parentRunId} jobId=${structured?.jobId}`)
+    } catch (err) {
+      console.error('[run-daily] structured ingestion submission failed (daily flow unaffected):', err)
+    }
+  } else {
+    // ACTIVATION IS TWO STEPS, and this flag is only the second. The dedicated
+    // structured worker (packages/queue/bin/structured-worker.ts) must be
+    // installed and verified first; it exists as source plus an UNREGISTERED
+    // launchd definition under ops/launchd-proposed/. Setting the flag without
+    // that worker would enqueue structured jobs nothing drains.
+    console.log(`[run-daily] structured ingestion dormant — activation requires (1) the structured worker installed and verified, then (2) ${STRUCTURED_INGESTION_SCHEDULE_ENV}=true`)
+  }
+
   await closeAll()
   // Exit 0 means "we successfully handed work to the queue". The pipeline's
   // own success/failure is recorded against parentRunId in pipeline_runs.db.

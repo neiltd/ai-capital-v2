@@ -29,11 +29,18 @@ export const SOURCE_CONFIGS: Record<string, SourceConfig> = {
     name: 'gdelt',
     ttlHours: 0.25,          // 15 minutes
     // 36h, not 2h. The 2h bound was sized for the retired 15-minute daemon
-    // (ingestion/scheduler.ts, `*/15 * * * *`), which is stopped and loaded in
-    // no launchd job. Production fetches GDELT once per day, from the
-    // world-intel-pipeline DAG stage (no skipIf) that starts at 07:00 — so a
-    // healthy daily fetch spent ~22 of every 24 hours labelled stale, and
-    // `staleSourcesPresent` was permanently true and therefore meaningless.
+    // (ingestion/scheduler.ts, `*/15 * * * *`), which is stopped, loaded in no
+    // launchd job, and now refuses to start without an explicit opt-in. At most
+    // one fetch per day is possible, so a 2h bound left a healthy fetch labelled
+    // stale ~22 of every 24 hours and made `staleSourcesPresent` permanently
+    // true and therefore meaningless.
+    //
+    // Structured ingestion is no longer part of the daily article DAG: it is an
+    // independent, optionally scheduled job (packages/queue structured-scheduling.ts)
+    // and is DORMANT by default, so in the normal configuration this source is
+    // not refreshed at all. That is scheduling intent, not availability — the
+    // bound still describes the expectation when it IS scheduled, and operator
+    // surfaces mark the source dormant rather than degraded.
     //
     // 36h = one daily cycle plus 12h of tolerance, matching the eia entry below
     // (also daily-ish: ttl 12h, bound 36h). The slack is real, not padding: this

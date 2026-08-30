@@ -13,8 +13,9 @@
  * a single signal.
  */
 import { ensurePipelineEnv } from '../src/env.js'
-import { getQueue, closeAll } from '../src/queue.js'
-import { snapshotQueue, assessFlow, openParents } from '../src/reconcile.js'
+import { getQueue, getStructuredQueue, closeAll } from '../src/queue.js'
+import { snapshotQueue, openParents, classifyQueueHealth } from '../src/reconcile.js'
+import { STRUCTURED_PARENT_STAGE } from '../src/structured-scheduling.js'
 
 ensurePipelineEnv()
 
@@ -38,10 +39,18 @@ async function main() {
   const liveFlows = [...byRun.entries()].filter(([id]) => (runnableByRun.get(id) ?? 0) > 0)
 
   const parents = openParents()
-  const stuck = parents
-    .map(p => assessFlow(p.id, p.status, p.started_at, snap))
-    .filter(a => a.assessment === 'terminal_failed' || a.assessment === 'terminal_removed')
-
+  // Structured parents are surfaced too, so an orphaned structured run is
+  // visible rather than silently `running` forever. Counted separately — it is
+  // not part of daily-flow health.
+  const structuredParents = openParents(undefined, STRUCTURED_PARENT_STAGE)
+  // Each lane assessed against its OWN snapshot. Counting structured parents
+  // without assessing them let a terminally stuck structured run sit behind a
+  // HEALTHY verdict.
+  const structuredSnap = await snapshotQueue(getStructuredQueue())
+  const health = classifyQueueHealth({
+    main:       { snap, parents },
+    structured: { snap: structuredSnap, parents: structuredParents },
+  })
   const oldestUnresolved = parents.length
     ? parents.map(p => p.started_at).sort()[0]
     : null
@@ -61,12 +70,17 @@ async function main() {
   console.log(`  live flows with waiting children   ${liveFlows.length}   (healthy — a running DAG has these)`)
   console.log(`  DEAD flows (parked, nothing runnable) ${deadFlows.length}`)
   console.log(`  parked jobs in dead flows          ${deadFlows.reduce((n, [, c]) => n + c, 0)}`)
-  console.log(`  parents 'running' with no progress  ${stuck.length}`)
+  console.log(`  parents 'running' with no progress  ${health.dailyStuck.length}`)
   console.log(`  oldest unresolved parent           ${oldestUnresolved ?? '(none)'}${oldestUnresolved ? `  (${ageHours}h)` : ''}`)
+  // Separate lane, separate line: structured runs are not daily-flow health, but
+  // an orphaned one must not be invisible either.
+  console.log(`  structured parents still 'running'  ${structuredParents.length}`)
+  console.log(`  structured runs terminally stuck    ${health.structuredStuck.length}`)
 
-  const problems: string[] = []
+  // Queue-depth observations stay here; per-lane parent assessment comes from
+  // classifyQueueHealth so structured state cannot contaminate daily health.
+  const problems: string[] = [...health.problems]
   if (deadFlows.length > 0) problems.push(`${deadFlows.length} dead flow(s) holding ${deadFlows.reduce((n, [, c]) => n + c, 0)} parked jobs`)
-  if (stuck.length > 0)     problems.push(`${stuck.length} parent row(s) still 'running' with a dead DAG`)
   if (ageHours > 24)        problems.push(`oldest unresolved parent is ${ageHours}h old`)
 
   console.log(problems.length ? `\nUNHEALTHY: ${problems.join('; ')}` : '\nHEALTHY')

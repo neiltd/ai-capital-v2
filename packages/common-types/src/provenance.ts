@@ -51,6 +51,10 @@ export interface SourceProvenance {
   /** Which evidence domain this source belongs to. Consumers must only be told
    *  about the domain they actually read — see article-provenance.ts. */
   domain?: 'article_intelligence' | 'structured_events' | 'energy_macro'
+  /** Whether scheduled collection is configured for this source. ORTHOGONAL to
+   *  availability: dormancy is not a sixth state and never rewrites a verdict.
+   *  See scheduling.ts. */
+  scheduling?: 'scheduled' | 'dormant'
   availability: SourceAvailability
   lastSuccessfulFetch: string | null
   maxStalenessHours: number

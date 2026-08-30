@@ -31,17 +31,33 @@ export function SourceFreshness() {
     )
   }
 
-  const degraded = result.sources.filter(s => s.availability !== 'current')
+  // Dormancy is not degradation. These come from the reader so the count, the
+  // summary string and the table can never disagree.
+  const { activeDegraded: degraded, dormant } = result
 
   return (
     <section className="rounded-lg border border-neutral-200 dark:border-neutral-800 p-4">
       <header className="flex items-baseline justify-between gap-3 mb-3">
         <h2 className="text-sm font-semibold tracking-tight">Feed coverage</h2>
         <span className="text-xs text-neutral-500 tabular-nums">
-          {degraded.length} degraded · {result.sources.length} sources
+          {degraded.length} degraded · {dormant.length} dormant · {result.sources.length} sources
           {result.recordAgeHours !== null ? ` · classified ${result.recordAgeHours}h ago` : ''}
         </span>
       </header>
+
+      {/* Scheduling shown here is THIS process's configuration, not observed
+          scheduler state. The worker receives its environment from its own
+          launchd job; this dashboard is started separately and reads its own.
+          Nothing in the repository propagates one environment to both, so the
+          honest claim is "configured here", never "the scheduler is off". */}
+      {dormant.length > 0 && (
+        <p className="mb-3 rounded border border-neutral-300/60 dark:border-neutral-700 px-3 py-2 text-sm text-neutral-600 dark:text-neutral-400">
+          {dormant.length} source{dormant.length === 1 ? ' is' : 's are'} <strong>dormant</strong> in this
+          process&rsquo;s configuration — scheduled collection is off here, so their availability below is
+          the <em>last known</em> state rather than a live one. This reflects configuration visible to the
+          dashboard only; the scheduler&rsquo;s runtime state is not independently verified from here.
+        </p>
+      )}
 
       {/* The classification is itself an observation with an age. Verdicts are
           recomputed per source below; what ages is the record's OBSERVED facts. */}
@@ -62,6 +78,7 @@ export function SourceFreshness() {
             <tr className="text-left">
               <th className="py-1 pr-3 font-medium">Source</th>
               <th className="py-1 pr-3 font-medium">Availability</th>
+              <th className="py-1 pr-3 font-medium">Scheduling (configured here)</th>
               <th className="py-1 pr-3 font-medium">Last success</th>
               <th className="py-1 pr-3 font-medium">Age</th>
               <th className="py-1 font-medium">Why</th>
@@ -74,6 +91,10 @@ export function SourceFreshness() {
                 <td className={`py-1.5 pr-3 whitespace-nowrap ${STYLE[s.availability].cls}`}>
                   {STYLE[s.availability].label}
                 </td>
+                {/* Orthogonal to availability — not a sixth state. */}
+                <td className="py-1.5 pr-3 whitespace-nowrap text-neutral-500">
+                  {s.scheduling === 'dormant' ? 'dormant' : 'scheduled'}
+                </td>
                 <td className="py-1.5 pr-3 tabular-nums text-neutral-500 whitespace-nowrap">
                   {s.lastSuccessfulFetch ? new Date(s.lastSuccessfulFetch).toLocaleString() : 'never'}
                 </td>
@@ -81,6 +102,11 @@ export function SourceFreshness() {
                   {s.ageHours === null ? '—' : `${s.ageHours}h / ${s.maxStalenessHours}h`}
                 </td>
                 <td className="py-1.5 text-neutral-500">
+                  {s.scheduling === 'dormant' && (
+                    <span className="block text-xs mb-0.5 text-neutral-400">
+                      Not scheduled in this process&rsquo;s configuration — last known state, not a live one.
+                    </span>
+                  )}
                   {s.reason}
                   {s.availability === 'restricted' && (
                     <span className="block text-xs mt-0.5 text-neutral-400">

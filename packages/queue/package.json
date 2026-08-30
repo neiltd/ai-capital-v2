@@ -28,10 +28,12 @@
     "test": "vitest run",
     "test:watch": "vitest",
     "reconcile": "tsx bin/reconcile.ts",
-    "health": "tsx bin/queue-health.ts"
+    "health": "tsx bin/queue-health.ts",
+    "structured-worker": "tsx bin/structured-worker.ts"
   },
   "dependencies": {
     "@common/pipeline-runs": "workspace:*",
+    "@common/types": "workspace:*",
     "bullmq": "^5.30.0"
   },
   "devDependencies": {

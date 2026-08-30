@@ -168,10 +168,12 @@ describe('absence may only be reported as absence under complete coverage', () =
 // ── The GDELT daily-cadence contract, and what availability must never imply ──
 //
 // GDELT's bound was 2h, sized for a 15-minute daemon that is retired and loaded
-// in no launchd job. Production fetches it once per day from the
-// world-intel-pipeline DAG stage, so a perfectly healthy daily fetch spent ~22
-// of every 24 hours labelled stale. The bound is now 36h: one daily cycle plus
-// tolerance, under 48h so two missed cycles are unambiguously stale.
+// in no launchd job. At most one fetch per day is possible, so a perfectly
+// healthy daily fetch spent ~22 of every 24 hours labelled stale. The bound is
+// now 36h: one daily cycle plus tolerance, under 48h so two missed cycles are
+// unambiguously stale. (Structured ingestion is now an independent, optionally
+// scheduled job and dormant by default — the bound describes the expectation
+// when scheduled; dormancy is tracked separately as scheduling intent.)
 //
 // These pin the SEMANTICS the bound has to deliver. The production constant
 // itself is pinned separately, next to the DAG cadence that justifies it.
