@@ -1,8 +1,8 @@
 import { describe, it, expect, beforeEach, afterEach } from 'vitest'
 import Database from 'better-sqlite3'
-import { mkdtempSync, rmSync, existsSync, statSync, readFileSync } from 'node:fs'
+import { mkdtempSync, rmSync, existsSync, statSync, readFileSync, writeFileSync } from 'node:fs'
 import { createHash } from 'node:crypto'
-import { execFileSync } from 'node:child_process'
+import { execFileSync, spawnSync } from 'node:child_process'
 import { tmpdir } from 'node:os'
 import { join, resolve } from 'node:path'
 import { openDb, openDbReadOnly, closeDb, hasScheduledIdentity, migrateScheduledRunIdentity } from '../src/store.js'
@@ -379,3 +379,174 @@ describe('migrate-run-store argument parsing', () => {
     expect(cols(good)).toContain('logical_date')
   })
 }, 120_000)
+
+// ── D. inspection must not touch a WAL-mode store ─────────────────────────
+//
+// The CLI opened the target with `new Database(path)` — a WRITE-CAPABLE
+// connection — BEFORE branching on `--apply`, while printing
+// "INSPECT (no writes — pass --apply to migrate)". Against the production run
+// store, which is in WAL mode, that statement was false: the open rewrote the
+// `-wal` sidecar and the `-shm` sidecar. A read-only connection is no fix
+// either — it still materialises `-shm`, and closing the last connection
+// checkpoints the WAL into the main file and deletes both sidecars.
+//
+// The previous test for this contract used a NON-WAL fixture and compared only
+// schema, rows and the main file's timestamp, so it could not observe any of
+// that. These tests fingerprint all three files.
+
+describe('D. WAL-mode inspection is genuinely read-only', () => {
+  /**
+   * A legacy store whose committed rows live in the WAL, exactly like the
+   * production one: some rows checkpointed into the main file, the rest still
+   * WAL-resident. Built by a child process that is killed before it can close
+   * and thereby checkpoint — which is also how a crashed writer leaves one.
+   */
+  function walFixture(name: string): { path: string; mainRows: number; walRows: number } {
+    const dbPath = join(dir, name)
+    const helper = join(dir, `mkwal-${name}.ts`)
+    writeFileSync(helper, `
+import Database from 'better-sqlite3'
+import { writeFileSync } from 'fs'
+const p = process.argv[2]
+const d = new Database(p)
+d.pragma('journal_mode = WAL')
+d.pragma('wal_autocheckpoint = 0')
+d.exec(\`CREATE TABLE pipeline_runs (
+  id TEXT PRIMARY KEY, parent_run_id TEXT, stage TEXT NOT NULL, source TEXT,
+  started_at TEXT NOT NULL, ended_at TEXT, duration_ms INTEGER, status TEXT NOT NULL,
+  doc_count INTEGER, chunk_count INTEGER, ticker_count INTEGER,
+  error_message TEXT, error_stack TEXT, metadata_json TEXT)\`)
+const ins = d.prepare("INSERT INTO pipeline_runs (id,stage,started_at,status) VALUES (?,'daily-pipeline',?,'success')")
+for (let i = 0; i < 20; i++) ins.run('main-' + i, '2026-08-01T00:00:00Z')
+d.exec('PRAGMA wal_checkpoint(TRUNCATE)')      // these 20 reach the MAIN file
+for (let i = 0; i < 36; i++) ins.run('wal-' + i, '2026-08-02T00:00:00Z')   // these stay in the WAL
+writeFileSync(p + '.ready', 'y')
+setTimeout(() => {}, 120000)
+`, 'utf-8')
+    // Kill -9 before close: closing would checkpoint and delete the sidecars.
+    const r = spawnSync('/bin/bash', ['-c',
+      `"${TSX}" "${helper}" "${dbPath}" >/dev/null 2>&1 & c=$!; ` +
+      `for i in $(seq 1 300); do [ -f "${dbPath}.ready" ] && break; sleep 0.1; done; ` +
+      `kill -9 $c 2>/dev/null; wait $c 2>/dev/null; true`], { encoding: 'utf-8', timeout: 120_000 })
+    expect(r.status, `fixture builder failed: ${r.stderr}`).toBe(0)
+    expect(existsSync(dbPath), 'fixture database was not created').toBe(true)
+    return { path: dbPath, mainRows: 20, walRows: 36 }
+  }
+
+  /** Existence, content hash, size and mtime for the database and both sidecars. */
+  const stamp = (dbPath: string) => ['', '-wal', '-shm'].map(sfx => {
+    const f = `${dbPath}${sfx}`
+    if (!existsSync(f)) return `${sfx || 'db'}:absent`
+    const st = statSync(f)
+    return `${sfx || 'db'}:${hashFile(f)}:${st.size}:${st.mtimeMs}`
+  })
+
+  it('the fixture really is WAL-resident — the main file alone is short', () => {
+    // Non-vacuous by construction: if everything were checkpointed, "the WAL was
+    // not read" would cost nothing and the tests below would prove nothing.
+    const { path } = walFixture('wal-shape.db')
+    expect(existsSync(`${path}-wal`), 'no WAL sidecar — fixture is not WAL-resident').toBe(true)
+    expect(existsSync(`${path}-shm`)).toBe(true)
+    expect(statSync(`${path}-wal`).size).toBeGreaterThan(0)
+    const out = migrate(path)
+    expect(out).toMatch(/20 in the main file/)     // main-file view
+    expect(out).not.toMatch(/rows *: 56/)          // never the effective count
+  })
+
+  it('default inspection leaves the database, WAL and SHM byte-for-byte identical', () => {
+    const { path } = walFixture('wal-inspect.db')
+    const before = stamp(path)
+    const out = migrate(path)                      // no --apply
+    const after = stamp(path)
+    expect(after, `inspection mutated: ${before.filter((b, i) => b !== after[i]).join(', ')}`).toEqual(before)
+    expect(out).toMatch(/INSPECT/)
+    expect(out).toMatch(/not touched/)
+  })
+
+  it('NON-VACUOUS: the previous implementation is detected by this fixture', () => {
+    // `new Database(path)` — literally what the CLI used to do before branching
+    // on --apply. If this ever stops changing the sidecars, the test above is
+    // no longer evidence of anything.
+    const { path } = walFixture('wal-old-impl.db')
+    const before = stamp(path)
+    const db = new Database(path)                  // write-capable, as before
+    db.prepare('SELECT COUNT(*) AS n FROM pipeline_runs').get()
+    db.close()
+    const after = stamp(path)
+    const changed = before.map((b, i) => (b === after[i] ? null : b.split(':')[0])).filter(Boolean)
+    expect(changed.length, 'the old open no longer disturbs the store').toBeGreaterThan(0)
+    expect(changed).toContain('-shm')
+  })
+
+  it('does not report the main-file count as the database count', () => {
+    const { path } = walFixture('wal-count.db')
+    const out = migrate(path)
+    expect(out).toMatch(/rows *: UNAVAILABLE/)
+    expect(out).toMatch(/WAL is present/)
+    expect(out).toMatch(/uncheckpointed schema changes would also be invisible/)
+  })
+
+  it('a store with NO WAL still reports a plain, exact row count', () => {
+    // The caveat appears only where it is warranted.
+    const path = legacyStore('no-wal.db')          // rollback-journal fixture, 3 rows
+    const out = migrate(path)
+    expect(out).toMatch(/rows *: 3/)
+    expect(out).not.toMatch(/UNAVAILABLE/)
+  })
+
+  it('--apply still migrates a WAL store correctly, on an isolated fixture', () => {
+    const { path } = walFixture('wal-apply.db')
+    expect(cols(path)).not.toContain('logical_date')
+    const out = migrate(path, '--apply')
+    expect(out).toMatch(/mode *: APPLY/)
+    // APPLY opens the store properly, so it sees every committed row.
+    expect(out).toMatch(/rows before\/after: 56\/56/)
+    expect(out).toMatch(/preserved/)
+    const after = cols(path)
+    expect(after).toContain('logical_date')
+    expect(after).toContain('superseded_at')
+    expect(indexes(path)).toContain('idx_daily_scheduled_logical_date')
+  })
+
+  it('--apply on a WAL store is still idempotent and row-preserving', () => {
+    const { path } = walFixture('wal-apply-twice.db')
+    migrate(path, '--apply')
+    const out = migrate(path, '--apply')
+    expect(out).toMatch(/already migrated/)
+    expect(rowCount(path)).toBe(56)
+  })
+
+  it('refuses a non-SQLite or empty file cleanly, instead of a native crash', () => {
+    for (const [name, body] of [['empty.db', ''], ['garbage.db', 'not a database\n']] as const) {
+      const f = join(dir, name)
+      writeFileSync(f, body)
+      let out = '', code = 0
+      try { execFileSync(TSX, [MIGRATE, '--db', f], { encoding: 'utf-8', timeout: 90_000 }) }
+      catch (e: any) { code = e.status; out = `${e.stdout ?? ''}${e.stderr ?? ''}` }
+      expect(code, `${name} did not fail closed`).toBe(1)
+      expect(out).toMatch(/not a SQLite database/)
+      expect(out).not.toMatch(/wrappers\.js|at Database/)     // no raw native stack
+    }
+  })
+
+  it('refuses a SQLite database that is not a run store', () => {
+    const f = join(dir, 'other.db')
+    const d = new Database(f)
+    d.exec('CREATE TABLE something_else (x TEXT)')
+    d.close()
+    let out = '', code = 0
+    try { execFileSync(TSX, [MIGRATE, '--db', f], { encoding: 'utf-8', timeout: 90_000 }) }
+    catch (e: any) { code = e.status; out = `${e.stdout ?? ''}${e.stderr ?? ''}` }
+    expect(code).toBe(1)
+    expect(out).toMatch(/not a run store/)
+  })
+
+  it('inspection opens no connection to the source at all', () => {
+    const src = readFileSync(resolve(__dirname, '..', 'bin', 'migrate-run-store.ts'), 'utf-8')
+    const inspectBlock = src.slice(src.indexOf('function inspectWithoutTouching'), src.indexOf('// ── APPLY'))
+    // The only Database in the inspection path is the in-memory copy.
+    expect(inspectBlock).toMatch(/new Database\(copy\)/)
+    expect(inspectBlock).not.toMatch(/new Database\(\s*(db)?[Pp]ath/)
+    expect(inspectBlock).not.toMatch(/readonly:\s*true/)   // not needed: no file connection exists
+  })
+}, 180_000)
