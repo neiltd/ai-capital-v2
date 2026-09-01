@@ -435,7 +435,7 @@ describe('the reconcile CLI uses stage routing', () => {
   })
 
   it('dispatches through routeParentAssessment and exits non-zero on an unsupported stage', () => {
-    expect(cli).toContain('routeParentAssessment(row, lanes)')
+    expect(cli).toMatch(/routeParentAssessment\(row, \{[\s\S]{0,200}structured:/)
     expect(cli).toMatch(/if \(!routed\.ok\)[\s\S]{0,120}process\.exit\(2\)/)
   })
 
@@ -443,7 +443,37 @@ describe('the reconcile CLI uses stage routing', () => {
     expect(cli).not.toMatch(/explicit !== -1 \? \[\] :/)
   })
 
-  it('snapshots both lanes before routing', () => {
-    expect(cli).toContain('const lanes = { main: snap, structured: structuredSnap }')
+  it('snapshots both lanes by default, and only the requested lane otherwise', () => {
+    // Construction is a Redis WRITE: BullMQ 5.78.0's Queue constructor issues
+    // `client.hset(<queue>:meta, …)` unless skipMetasUpdate is passed. `--lane`
+    // exists so an inspection need not build the dormant structured lane at
+    // all; the INSPECTION CONSTRUCTORS then make the lanes it does build
+    // read-only. The DEFAULT remains both, so every existing caller is
+    // unchanged.
+    //
+    // This is a structural check on wiring — which lane is built under which
+    // flag. That the flag actually reaches BullMQ is proved separately, by
+    // instrumenting the constructor, in inspection-queue-options.test.ts;
+    // source matching alone could not tell a real option from a comment.
+    const DAILY_CTOR = 'getInspection' + 'Queue()'
+    const STRUCT_CTOR = 'getStructuredInspection' + 'Queue()'
+    expect(cli).toMatch(/if \(i === -1\) return 'both'/)
+    expect(cli).toContain("lane === 'structured' ? undefined : await snapshotQueue(" + DAILY_CTOR + ")")
+    expect(cli).toContain("lane === 'daily'      ? undefined : await snapshotQueue(" + STRUCT_CTOR + ")")
+  })
+
+  it('reconcile inspects through the read-only constructors, never the writing ones', () => {
+    // The whole point of the lane work is that inspecting the queue leaves no
+    // trace. A future edit that reaches for the submission constructor here
+    // would silently reintroduce the meta write this round removed.
+    expect(cli).not.toContain('snapshotQueue(' + 'get' + 'Queue())')
+    expect(cli).not.toContain('snapshotQueue(' + 'get' + 'StructuredQueue())')
+  })
+
+  it('never assesses a parent against a lane it did not construct', () => {
+    // Failing closed rather than guessing is the whole point: an unbuilt lane
+    // has no snapshot, and a missing snapshot must not read as "no jobs".
+    expect(cli).toMatch(/is a structured run but --lane[\s\S]{0,120}process\.exit\(2\)/)
+    expect(cli).toMatch(/is a daily run but --lane[\s\S]{0,120}process\.exit\(2\)/)
   })
 })

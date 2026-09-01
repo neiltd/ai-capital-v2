@@ -49,6 +49,28 @@ export function connectionOptions(): ConnectionOptions {
 let _queue:            Queue | null = null
 let _queueEvents:      QueueEvents | null = null
 let _structuredQueue:  Queue | null = null
+let _inspectQueue:           Queue | null = null
+let _inspectStructuredQueue: Queue | null = null
+
+/**
+ * Options for a queue handle that only ever READS.
+ *
+ * BullMQ 5.78.0's `Queue` constructor issues
+ * `client.hset(<queue>:meta, { 'opts.maxLenEvents', version })` from
+ * `waitUntilReady()` unless `skipMetasUpdate` is set. Construction is therefore
+ * a Redis WRITE. For the daily lane that silently rewrites an existing key; for
+ * the dormant structured lane it CREATES `bull:structured-ingestion:meta` where
+ * no key exists at all, which is precisely the kind of change a pre-activation
+ * inspection promises not to make.
+ *
+ * BullMQ documents the flag as "useful for read-only systems that should not
+ * update the metadata", which is exactly this use. Submission and worker
+ * constructors deliberately do NOT use it: they own the queue and must keep
+ * publishing their metadata.
+ */
+function inspectionOptions() {
+  return { connection: connectionOptions(), skipMetasUpdate: true as const }
+}
 
 export function getQueue(): Queue {
   if (_queue) return _queue
@@ -83,6 +105,24 @@ export function getStructuredQueue(): Queue {
 }
 
 /**
+ * Inspection-only handle on the daily lane. Never writes the meta key.
+ * Cached separately from getQueue() so an inspection can never be handed a
+ * meta-writing handle, and vice versa.
+ */
+export function getInspectionQueue(): Queue {
+  if (_inspectQueue) return _inspectQueue
+  _inspectQueue = new Queue(QUEUE_NAME, inspectionOptions())
+  return _inspectQueue
+}
+
+/** Inspection-only handle on the structured lane. Never writes the meta key. */
+export function getStructuredInspectionQueue(): Queue {
+  if (_inspectStructuredQueue) return _inspectStructuredQueue
+  _inspectStructuredQueue = new Queue(STRUCTURED_QUEUE_NAME, inspectionOptions())
+  return _inspectStructuredQueue
+}
+
+/**
  * Worker for the structured lane. Runs in its own process (bin/structured-worker.ts)
  * so its slot is not the article worker's slot — a stalled structured job
  * cannot starve article execution.
@@ -100,5 +140,10 @@ export function createStructuredWorker(
 export async function closeAll(): Promise<void> {
   if (_queue)            { await _queue.close();            _queue = null }
   if (_structuredQueue)  { await _structuredQueue.close();  _structuredQueue = null }
-  if (_queueEvents)  { await _queueEvents.close();  _queueEvents = null }
+  if (_queueEvents)      { await _queueEvents.close();      _queueEvents = null }
+  // Inspection handles hold their own Redis clients and must close too, or a
+  // dry-run inspection leaves a connection open after the process believes it
+  // has released everything.
+  if (_inspectQueue)           { await _inspectQueue.close();           _inspectQueue = null }
+  if (_inspectStructuredQueue) { await _inspectStructuredQueue.close(); _inspectStructuredQueue = null }
 }
