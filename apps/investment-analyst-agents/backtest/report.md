@@ -1,7 +1,7 @@
 # Briefing Backtest Report
-**Generated:** 2026-08-26
+**Generated:** 2026-09-01
 **Predictions analyzed:** 44
-**Scored calls (excluding informational holds/watches):** 769
+**Scored calls (excluding informational holds/watches):** 892
 
 > Methodology: each base-case action is scored against the actual price move
 > over 7/30/90 day windows. Buy = correct if price ↑. Trim/Exit = correct if
@@ -15,23 +15,23 @@
 |---|---|---|---|---|
 | 7d | 358 | 196 | 54.7% | +0.24% |
 | 30d | 362 | 113 | 31.2% | +1.78% |
-| 90d | 49 | 8 | 16.3% | -3.91% |
+| 90d | 172 | 32 | 18.6% | -0.59% |
 
 ## By action type
 
 | Action | 7d accuracy | 30d accuracy | 90d accuracy |
 |---|---|---|---|
-| buy | 42.9% | 85.7% | n/a |
-| hold | 53.9% | 30.4% | 11.4% |
-| trim | 76.5% | 25.0% | 60.0% |
+| buy | 42.9% | 85.7% | 100.0% |
+| hold | 53.9% | 30.4% | 16.8% |
+| trim | 76.5% | 25.0% | 26.7% |
 
 ## By conviction
 
 | Conviction | 7d accuracy | 30d accuracy | 90d accuracy |
 |---|---|---|---|
-| high | 42.4% | 28.1% | 11.1% |
-| medium | 57.0% | 33.7% | 21.9% |
-| low | 58.6% | 13.8% | 0.0% |
+| high | 42.4% | 28.1% | 9.8% |
+| medium | 57.0% | 33.7% | 24.3% |
+| low | 58.6% | 13.8% | 5.0% |
 
 ## Calibration — do "high" calls outperform "medium"?
 
@@ -39,7 +39,7 @@
 |---|---|---|---|---|
 | 7d | 42.4% | 57.0% | 58.6% | ❌ No (inverted) |
 | 30d | 28.1% | 33.7% | 13.8% | ❌ No (inverted) |
-| 90d | 11.1% | 21.9% | 0.0% | ❌ No (inverted) |
+| 90d | 9.8% | 24.3% | 5.0% | ❌ No (inverted) |
 
 ## Top 10 best 90d returns
 
@@ -52,24 +52,24 @@
 | 2026-05-27 | NOW | hold | medium | +28.15% | ❌ |
 | 2026-05-27 | NOW | hold | medium | +28.15% | ❌ |
 | 2026-05-27 | NOW | hold | medium | +28.15% | ❌ |
-| 2026-05-28 | NOW | hold | medium | +24.36% | ❌ |
-| 2026-05-28 | V | hold | medium | +17.47% | ❌ |
-| 2026-05-27 | V | hold | medium | +17.35% | ❌ |
+| 2026-05-30 | NET | hold | medium | +27.46% | ❌ |
+| 2026-05-30 | NET | hold | medium | +27.46% | ❌ |
+| 2026-05-31 | NET | hold | low | +27.46% | ❌ |
 
 ## Top 10 worst 90d returns
 
 | Date | Ticker | Action | Conv. | Return | Correct? |
 |---|---|---|---|---|---|
-| 2026-05-28 | APP | hold | medium | -45.31% | ❌ |
-| 2026-05-27 | APP | hold | medium | -41.94% | ❌ |
-| 2026-05-27 | APP | hold | medium | -41.94% | ❌ |
-| 2026-05-27 | APP | hold | medium | -41.94% | ❌ |
-| 2026-05-28 | IONQ | trim | medium | -35.70% | ✅ |
-| 2026-05-27 | IONQ | hold | low | -35.46% | ❌ |
-| 2026-05-27 | IONQ | hold | low | -35.46% | ❌ |
-| 2026-05-27 | IONQ | hold | low | -35.46% | ❌ |
-| 2026-05-27 | RGTI | trim | medium | -34.69% | ✅ |
-| 2026-05-27 | RGTI | trim | medium | -34.69% | ✅ |
+| 2026-06-01 | APP | hold | medium | -49.01% | ❌ |
+| 2026-06-01 | APP | hold | medium | -49.01% | ❌ |
+| 2026-06-01 | APP | hold | medium | -49.01% | ❌ |
+| 2026-05-31 | APP | hold | medium | -49.01% | ❌ |
+| 2026-05-31 | APP | hold | medium | -49.01% | ❌ |
+| 2026-05-30 | APP | hold | medium | -49.01% | ❌ |
+| 2026-05-30 | APP | hold | medium | -49.01% | ❌ |
+| 2026-05-29 | APP | hold | medium | -48.64% | ❌ |
+| 2026-06-03 | APP | hold | medium | -48.47% | ❌ |
+| 2026-06-03 | APP | hold | medium | -48.47% | ❌ |
 
 ## Interpretation hints
 

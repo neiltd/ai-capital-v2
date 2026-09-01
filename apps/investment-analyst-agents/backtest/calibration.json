@@ -1,7 +1,7 @@
 {
-  "generatedAt": "2026-08-26",
+  "generatedAt": "2026-09-01",
   "predictionsAnalyzed": 44,
-  "scoredCalls": 769,
+  "scoredCalls": 892,
   "windows": [
     7,
     30,
@@ -20,9 +20,9 @@
         "avgReturn": 1.6859611501926373
       },
       "90d": {
-        "calls": 44,
-        "accuracy": 0.11363636363636363,
-        "avgReturn": -2.376757627973295
+        "calls": 155,
+        "accuracy": 0.16774193548387098,
+        "avgReturn": -0.3037940211370034
       }
     },
     "trim": {
@@ -37,9 +37,9 @@
         "avgReturn": 0.149375668090725
       },
       "90d": {
-        "calls": 5,
-        "accuracy": 0.6,
-        "avgReturn": -17.385404927385032
+        "calls": 15,
+        "accuracy": 0.26666666666666666,
+        "avgReturn": -6.278461986196376
       }
     },
     "buy": {
@@ -54,9 +54,9 @@
         "avgReturn": 9.81854059821267
       },
       "90d": {
-        "accuracy": 0,
-        "calls": 0,
-        "avgReturn": 0
+        "calls": 2,
+        "accuracy": 1,
+        "avgReturn": 19.50752059999145
       }
     }
   },
@@ -73,9 +73,9 @@
         "avgReturn": -3.066035519713406
       },
       "90d": {
-        "calls": 9,
-        "accuracy": 0.1111111111111111,
-        "avgReturn": -5.9234308034922885
+        "calls": 41,
+        "accuracy": 0.0975609756097561,
+        "avgReturn": 5.461961784215262
       }
     },
     "medium": {
@@ -90,9 +90,9 @@
         "avgReturn": 2.7044104837994607
       },
       "90d": {
-        "calls": 32,
-        "accuracy": 0.21875,
-        "avgReturn": 0.28688901676487927
+        "calls": 111,
+        "accuracy": 0.24324324324324326,
+        "avgReturn": -2.619374835664005
       }
     },
     "low": {
@@ -107,9 +107,9 @@
         "avgReturn": 2.448529513353697
       },
       "90d": {
-        "calls": 8,
-        "accuracy": 0,
-        "avgReturn": -18.421741446599462
+        "calls": 20,
+        "accuracy": 0.05,
+        "avgReturn": -1.7719894131659686
       }
     }
   },
@@ -121,7 +121,7 @@
   },
   "worstSignal": {
     "signal": "hold (90d)",
-    "accuracy": 0.11363636363636363
+    "accuracy": 0.16774193548387098
   },
   "decayWindowPredictions": 15,
   "decaying": []

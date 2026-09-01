@@ -1,402 +1,574 @@
 {
   "schemaVersion": "1.0.0",
-  "generatedAt": "2026-08-27T15:16:28.117Z",
+  "generatedAt": "2026-09-01T04:01:17.612Z",
   "source": "world-intelligence-hub",
-  "eventCount": 18,
+  "eventCount": 26,
   "dateRange": {
-    "from": "2026-08-25",
-    "to": "2026-08-27"
+    "from": "2026-08-29",
+    "to": "2026-09-01"
   },
   "events": [
     {
-      "id": "68517c72c7a632a4e1235f36",
+      "id": "ae12e41bc5b6122ec2f8dd29",
       "source": "rss_intelligence",
-      "eventDate": "2026-08-27",
+      "eventDate": "2026-09-01",
       "iso3": [
-        "ISR",
-        "PSE"
+        "IRN",
+        "USA"
       ],
-      "eventType": "diplomatic.dispute",
-      "headline": "Gaza envoy Mladenov warns ceasefire collapse would be 'point of no return'",
-      "summary": "Nickolay Mladenov, the Board of Peace's Gaza envoy, criticized both Israeli strikes and Hamas actions, warning that a collapse of last October's ceasefire would represent a point of no return for the region.",
+      "eventType": "conflict.armed",
+      "headline": "US strikes Iran's Larak Island in Strait of Hormuz, killing two",
+      "summary": "A US strike hit Larak Island in the Strait of Hormuz, killing two people and injuring two others. This marks the first known US strike since late July and the first exchange of strikes between the US and Iran in weeks.",
       "confidenceScore": 0.75,
       "confidenceLabel": "high",
       "coordinateQuality": "missing",
-      "tier": 2,
+      "tier": 1,
       "tags": [
         "bbc-world",
-        "storyline:0f696472"
+        "storyline:b4296536"
       ],
-      "geopoliticalScore": 6,
-      "economicImpactScore": 2
+      "geopoliticalScore": 8.5,
+      "economicImpactScore": 8.5
     },
     {
-      "id": "8b9b5775fd6626246bd1441b",
+      "id": "e860f7c7e049f6f576473f22",
       "source": "rss_intelligence",
-      "eventDate": "2026-08-27",
+      "eventDate": "2026-09-01",
       "iso3": [
-        "USA",
-        "IRN",
-        "CHN"
+        "CHN",
+        "NPL"
       ],
-      "eventType": "economic.sanctions",
-      "headline": "US weighs new Iran sanctions amid balancing act with China ties",
-      "summary": "Washington is pursuing a strategy of maximum economic pressure on Iran through new sanctions, while seeking to avoid damaging political relations with China, a major buyer of Iranian oil and Iran's key economic partner.",
-      "confidenceScore": 0.65,
+      "eventType": "humanitarian.disaster",
+      "headline": "China censors viral footage of deadly Tibet flood after Nepal disaster",
+      "summary": "A deadly flood devastated communities along the China-Nepal border in Tibet, prompting Chinese authorities to erase viral footage of the disaster while state media flooded platforms with official content.",
+      "confidenceScore": 0.6,
       "confidenceLabel": "medium",
       "coordinateQuality": "missing",
-      "tier": 2,
+      "tier": 3,
       "tags": [
         "dw-world",
-        "storyline:87972419"
+        "storyline:6f18e9c5"
       ],
-      "geopoliticalScore": 6,
-      "economicImpactScore": 5
+      "geopoliticalScore": 4,
+      "economicImpactScore": 1
     },
     {
-      "id": "1178de10938fe006d5236eef",
+      "id": "4d7e2eecdcd861d888701e34",
       "source": "rss_intelligence",
-      "eventDate": "2026-08-27",
+      "eventDate": "2026-09-01",
       "iso3": [
-        "SYR",
-        "ISR",
-        "TUR"
+        "CMR",
+        "RUS",
+        "UKR"
       ],
-      "eventType": "conflict.armed",
-      "headline": "Israeli strike on Syrian military airfield fuels fears of Israel-Turkey confrontation over Syria",
-      "summary": "An Israeli attack on a Syrian military airfield has renewed concerns that Syria is becoming a key battleground in the rivalry between Israel and Turkey, both of which are competing for influence in the country.",
+      "eventType": "other",
+      "headline": "Cameroonian youth deceived and deployed to fight in Russia's war in Ukraine",
+      "summary": "Analysts report that economic desperation and fraudulent recruitment schemes are funneling young Cameroonians into the Russian military, resulting in deaths among recruits deployed to fight in Ukraine.",
       "confidenceScore": 0.6,
       "confidenceLabel": "medium",
       "coordinateQuality": "missing",
       "tier": 2,
       "tags": [
         "dw-world",
-        "storyline:2e8f1a6a"
+        "storyline:235b23a3"
       ],
-      "geopoliticalScore": 6.5,
-      "economicImpactScore": 2
+      "geopoliticalScore": 5,
+      "economicImpactScore": 1
     },
     {
-      "id": "1dafb85521e7241b0885abb9",
+      "id": "f9930fc8a7e69764c343a457",
       "source": "rss_intelligence",
-      "eventDate": "2026-08-27",
+      "eventDate": "2026-09-01",
       "iso3": [
-        "RUS",
-        "UKR"
+        "CAN",
+        "USA",
+        "CHN"
       ],
-      "eventType": "energy.disruption",
-      "headline": "Ukrainian drone strikes on Novorossiysk disrupt Russian grain and oil exports via Black Sea",
-      "summary": "Ukraine has intensified drone strikes on Russian Black Sea port infrastructure, disrupting grain and oil exports from Novorossiysk and other key hubs. The attacks are stalling grain export flows from Russia.",
-      "confidenceScore": 0.75,
-      "confidenceLabel": "high",
+      "eventType": "economic.trade",
+      "headline": "Canada faces new US tariffs after Carney refuses to match US levies on China",
+      "summary": "Canada is facing new US import penalties after Prime Minister Mark Carney refused to match US tariffs on China, escalating a trade dispute between Washington and Ottawa. Other countries are reportedly watching the clash as a test case over economic sovereignty.",
+      "confidenceScore": 0.7,
+      "confidenceLabel": "medium",
       "coordinateQuality": "missing",
       "tier": 2,
       "tags": [
         "dw-world",
-        "storyline:d7b89a21"
+        "bbc-world",
+        "storyline:413ac1b1"
       ],
-      "geopoliticalScore": 6,
-      "economicImpactScore": 7
-    },
-    {
-      "id": "02833d39ae1b96f714ee7660",
-      "source": "rss_intelligence",
-      "eventDate": "2026-08-27",
-      "iso3": [
-        "YEM",
-        "SAU",
-        "IRN"
-      ],
-      "eventType": "conflict.armed",
-      "headline": "Houthi strikes on Saudi Arabia risk reigniting full-scale Yemen war and disrupting Red Sea shipping",
-      "summary": "Iran-backed Houthi forces are using regional warfare to increase pressure on Saudi Arabia through strikes, risking a return to full-scale conflict in Yemen and threatening to disrupt shipping in the Red Sea.",
-      "confidenceScore": 0.7,
-      "confidenceLabel": "medium",
-      "coordinateQuality": "missing",
-      "tier": 1,
-      "tags": [
-        "dw-world",
-        "storyline:cb89f44e"
-      ],
-      "geopoliticalScore": 7,
+      "geopoliticalScore": 5,
       "economicImpactScore": 6
     },
     {
-      "id": "19e753f30a7c0f453c0c06d8",
+      "id": "40872041f50470d21e378bbb",
       "source": "rss_intelligence",
-      "eventDate": "2026-08-27",
+      "eventDate": "2026-09-01",
       "iso3": [
-        "IRN",
-        "QAT",
-        "USA"
+        "ISR",
+        "PSE"
       ],
-      "eventType": "diplomatic.dispute",
-      "headline": "Iran and Qatar hold talks on Strait of Hormuz as US naval blockade squeezes Iranian oil imports",
-      "summary": "Officials from Iran and Qatar met in Tehran to discuss the Strait of Hormuz as a US naval blockade continues to choke Iranian oil supplies amid a domestic shortfall. The talks follow a week of diplomacy involving Oman and Pakistan aimed at ending the conflict and reopening the strait.",
-      "confidenceScore": 0.75,
+      "eventType": "other",
+      "headline": "Masked Israeli settlers attack Palestinian homes in West Bank village of Qusra",
+      "summary": "Masked Israeli settlers launched an attack on Palestinian homes, their first major attack since initiating a siege of the village of Qusra earlier in the month. The attacks drew rare criticism from Israeli Prime Minister Benjamin Netanyahu.",
+      "confidenceScore": 0.7,
+      "confidenceLabel": "medium",
+      "coordinateQuality": "missing",
+      "tier": 2,
+      "tags": [
+        "dw-world",
+        "storyline:13e06972"
+      ],
+      "geopoliticalScore": 5,
+      "economicImpactScore": 1
+    },
+    {
+      "id": "bad8f56ac7894459c1589db2",
+      "source": "rss_intelligence",
+      "eventDate": "2026-09-01",
+      "iso3": [
+        "UKR",
+        "RUS"
+      ],
+      "eventType": "conflict.armed",
+      "headline": "Russian missile and drone attack on Kyiv kills at least four",
+      "summary": "A large-scale Russian missile and drone attack struck Kyiv and its surrounding region overnight, killing at least four people and wounding more than a dozen, according to Ukrainian officials. The strike came as children prepared to return to school amid heightened fears of further attacks.",
+      "confidenceScore": 0.85,
       "confidenceLabel": "high",
       "coordinateQuality": "missing",
       "tier": 1,
       "tags": [
         "france24-english",
-        "storyline:87972419"
-      ],
-      "geopoliticalScore": 7.5,
-      "economicImpactScore": 8.5
-    },
-    {
-      "id": "4da5f1d56ad6647d2b816999",
-      "source": "rss_intelligence",
-      "eventDate": "2026-08-27",
-      "iso3": [
-        "IRN",
-        "USA",
-        "CHN"
-      ],
-      "eventType": "economic.sanctions",
-      "headline": "US imposes sanctions on nearly 60 Iran-linked entities spanning crypto, tech, gold, aviation, shipping",
-      "summary": "The United States imposed sweeping sanctions on nearly 60 Iran-linked entities covering digital assets, technology, gold, aviation and shipping sectors, aiming to sever economic lifelines sustaining Tehran. China's foreign ministry denounced the measures as 'illegal unilateral sanctions' and vowed retaliation.",
-      "confidenceScore": 0.75,
-      "confidenceLabel": "high",
-      "coordinateQuality": "missing",
-      "tier": 2,
-      "tags": [
-        "scmp-china",
-        "storyline:87972419"
-      ],
-      "geopoliticalScore": 7,
-      "economicImpactScore": 6
-    },
-    {
-      "id": "be4f1d8e8923a57a84fee6f1",
-      "source": "rss_intelligence",
-      "eventDate": "2026-08-27",
-      "iso3": [
-        "IND",
-        "PAK",
-        "CHN"
-      ],
-      "eventType": "other",
-      "headline": "India transfers missile technology to private firms to boost defence self-reliance",
-      "summary": "India is transferring missile technology to private industry to build a wider manufacturing base, aiming to cut import dependence and boost defence export capacity. The move is intended to strengthen deterrence against Pakistan and China, though analysts say full self-reliance remains a distant goal.",
-      "confidenceScore": 0.65,
-      "confidenceLabel": "medium",
-      "coordinateQuality": "missing",
-      "tier": 3,
-      "tags": [
-        "scmp-china",
-        "storyline:4dd6ab57"
-      ],
-      "geopoliticalScore": 4,
-      "economicImpactScore": 3
-    },
-    {
-      "id": "b834989f2689c5e1c3a4fe4f",
-      "source": "rss_intelligence",
-      "eventDate": "2026-08-27",
-      "iso3": [
-        "RUS",
-        "GBR",
-        "UKR",
-        "FRA"
-      ],
-      "eventType": "diplomatic.dispute",
-      "headline": "Russia threatens to strike British military targets over UK missile technology transfer to Ukraine",
-      "summary": "Russian foreign ministry spokeswoman Maria Zakharova said Russia could strike British military targets inside and outside Ukraine in response to Ukrainian strikes using British missiles. She called on Britain to abandon its 'hostile stance' on Ukraine, warning it risked widening the conflict.",
-      "confidenceScore": 0.75,
-      "confidenceLabel": "high",
-      "coordinateQuality": "missing",
-      "tier": 2,
-      "tags": [
-        "scmp-china",
-        "storyline:5d402f80"
+        "storyline:3ccac860"
       ],
       "geopoliticalScore": 7,
       "economicImpactScore": 3
     },
     {
-      "id": "efeb27ea1070c7499d6e16e6",
+      "id": "b153e7c484a37d3db24ae2fd",
       "source": "rss_intelligence",
-      "eventDate": "2026-08-27",
-      "iso3": [
-        "PRK",
-        "USA",
-        "KOR"
-      ],
-      "eventType": "diplomatic.dispute",
-      "headline": "North Korea vows 'powerful response' to $125 million US-South Korea arms deal",
-      "summary": "North Korea's foreign ministry denounced a US decision to approve a $125 million sale of missiles and related equipment to South Korea, vowing to respond 'strongly and immediately' to hostile acts. This comes as US President Trump renewed overtures to North Korean leadership.",
-      "confidenceScore": 0.75,
-      "confidenceLabel": "high",
-      "coordinateQuality": "missing",
-      "tier": 3,
-      "tags": [
-        "scmp-china",
-        "storyline:87972419"
-      ],
-      "geopoliticalScore": 5,
-      "economicImpactScore": 2
-    },
-    {
-      "id": "e7193a7a42fd10da27cb3403",
-      "source": "rss_intelligence",
-      "eventDate": "2026-08-27",
+      "eventDate": "2026-09-01",
       "iso3": [
         "IRN",
         "USA",
-        "ISR"
+        "ARE",
+        "JOR"
       ],
-      "eventType": "other",
-      "headline": "Iran drafts bill imposing harsh penalties for contact with foreign media amid ongoing war fallout",
-      "summary": "Iran is considering a 'foreign influence' bill that would impose harsh penalties on citizens who have contact with outside media. The move comes nearly six months after the U.S. and Israel launched a war against Iran, with no diplomatic breakthrough achieved.",
-      "confidenceScore": 0.6,
-      "confidenceLabel": "medium",
-      "coordinateQuality": "missing",
-      "tier": 3,
-      "tags": [
-        "washingtonpost-world",
-        "storyline:e0bedc42"
-      ],
-      "geopoliticalScore": 5,
-      "economicImpactScore": 2
-    },
-    {
-      "id": "1cbdf3a0312fc85885a8f99b",
-      "source": "rss_intelligence",
-      "eventDate": "2026-08-27",
-      "iso3": [
-        "DEU",
-        "RUS"
-      ],
-      "eventType": "other",
-      "headline": "European officials suspect Russia behind explosive drone found at Leipzig/Halle airport",
-      "summary": "European security officials said an explosive drone discovered at Leipzig/Halle airport in Germany fits a pattern of suspected Russian sabotage activity across Europe targeting weapons and cargo shipments. Germany has been cautious about publicly attributing the attacks to Russia, while other European states urge a tougher stance.",
-      "confidenceScore": 0.65,
-      "confidenceLabel": "medium",
-      "coordinateQuality": "missing",
-      "tier": 2,
-      "tags": [
-        "washingtonpost-world",
-        "storyline:c4623b9f"
-      ],
-      "geopoliticalScore": 6,
-      "economicImpactScore": 2
-    },
-    {
-      "id": "921c16c774ebff3691c61fd5",
-      "source": "rss_intelligence",
-      "eventDate": "2026-08-27",
-      "iso3": [
-        "CAN",
-        "USA"
-      ],
-      "eventType": "economic.trade",
-      "headline": "Canada imposes retaliatory tariffs up to 50% on US goods amid deepening trade war",
-      "summary": "Canada announced new retaliatory tariffs of up to 50 percent on hundreds of American products in response to U.S. tariffs that took effect the previous week. Starting September 8, Canada will double tariffs on American steel and aluminum to 50 percent and impose new tariffs on roughly 700 other products.",
+      "eventType": "conflict.armed",
+      "headline": "US and Iran exchange strikes overnight, ending month-long lull in six-month war",
+      "summary": "The US and Iran traded strikes overnight after a month-long pause, following earlier US strikes on an island in the Strait of Hormuz. President Trump vowed to 'hit Iran hard' in response to the Iranian attacks on US targets in the Middle East, while Iran's president said further fighting was not in Iran's interest.",
       "confidenceScore": 0.85,
       "confidenceLabel": "high",
       "coordinateQuality": "missing",
-      "tier": 2,
+      "tier": 1,
       "tags": [
-        "washingtonpost-world",
-        "storyline:7bcf2c0f"
+        "france24-english",
+        "nytimes-world",
+        "storyline:b4296536"
       ],
-      "geopoliticalScore": 6,
-      "economicImpactScore": 8
+      "geopoliticalScore": 8.5,
+      "economicImpactScore": 7
     },
     {
-      "id": "06b6ad965ae8dae8426a3b38",
+      "id": "2f05e61b756cecf8f508fd64",
       "source": "rss_intelligence",
-      "eventDate": "2026-08-27",
+      "eventDate": "2026-09-01",
       "iso3": [
-        "CHN",
-        "USA",
-        "CAN"
+        "IRN",
+        "ISR",
+        "USA"
       ],
-      "eventType": "economic.trade",
-      "headline": "China positions itself as free-trade champion amid US-Canada tariff war",
-      "summary": "As the United States and Canada escalate a trade war with mutual tariffs, China is seeking to position itself as a global champion of free trade to gain economic and diplomatic advantage from the rift.",
+      "eventType": "diplomatic.dispute",
+      "headline": "Iran's FM accuses Netanyahu of tricking US into six-month war with Iran",
+      "summary": "Iran's foreign minister accused Israeli Prime Minister Benjamin Netanyahu of tricking the United States into war with Iran, six months into the conflict. An April ceasefire had ended intense fighting but sporadic attacks have continued, with no end to the conflict in sight.",
+      "confidenceScore": 0.7,
+      "confidenceLabel": "medium",
+      "coordinateQuality": "missing",
+      "tier": 2,
+      "tags": [
+        "france24-english",
+        "storyline:13e06972"
+      ],
+      "geopoliticalScore": 7.5,
+      "economicImpactScore": 5
+    },
+    {
+      "id": "e96321717602b894d05589d1",
+      "source": "rss_intelligence",
+      "eventDate": "2026-09-01",
+      "iso3": [
+        "ISR",
+        "PSE"
+      ],
+      "eventType": "conflict.protest",
+      "headline": "Former Israeli generals and officials accuse West Bank settlers of ethnic cleansing with government backing",
+      "summary": "A growing number of former Israeli generals, intelligence officials and prime ministers are publicly accusing settlers in the West Bank of committing what they describe as 'Jewish Terrorism' and ethnic cleansing with government support. One unnamed former official warned that a society behaving this way is 'doomed'.",
+      "confidenceScore": 0.65,
+      "confidenceLabel": "medium",
+      "coordinateQuality": "missing",
+      "tier": 2,
+      "tags": [
+        "nytimes-world",
+        "storyline:13e06972"
+      ],
+      "geopoliticalScore": 6,
+      "economicImpactScore": 1
+    },
+    {
+      "id": "0ee2a06e811498be3d349b0a",
+      "source": "rss_intelligence",
+      "eventDate": "2026-09-01",
+      "iso3": [
+        "UKR",
+        "RUS"
+      ],
+      "eventType": "conflict.armed",
+      "headline": "Russia intensifies near-constant drone attacks on Kyiv, marking new phase of war",
+      "summary": "Kyiv has experienced nearly constant air raids from Russian drones, a shift from previous years of largely overnight attacks, leaving residents exhausted and on edge. The change represents a new and more dangerous phase of the war in Ukraine.",
+      "confidenceScore": 0.75,
+      "confidenceLabel": "high",
+      "coordinateQuality": "missing",
+      "tier": 2,
+      "tags": [
+        "nytimes-world",
+        "storyline:3ccac860"
+      ],
+      "geopoliticalScore": 6,
+      "economicImpactScore": 2
+    },
+    {
+      "id": "bfe4c9e697aa9cdb06afe697",
+      "source": "rss_intelligence",
+      "eventDate": "2026-09-01",
+      "iso3": [
+        "ITA",
+        "UKR"
+      ],
+      "eventType": "other",
+      "headline": "Ukrainian drone expert Fedorov, fired by Kyiv, to advise Italy's defense chief",
+      "summary": "Mykhailo Fedorov, a former Ukrainian defense minister and drone warfare figure who was fired by Kyiv, has been appointed to advise Italy's defense chief. The move illustrates how other militaries are adapting to battlefield changes accelerated by the war in Ukraine.",
+      "confidenceScore": 0.7,
+      "confidenceLabel": "medium",
+      "coordinateQuality": "missing",
+      "tier": 3,
+      "tags": [
+        "nytimes-world",
+        "storyline:235b23a3"
+      ],
+      "geopoliticalScore": 4,
+      "economicImpactScore": 1
+    },
+    {
+      "id": "bd70284f0aa246e685a7928d",
+      "source": "rss_intelligence",
+      "eventDate": "2026-09-01",
+      "iso3": [
+        "USA",
+        "VEN"
+      ],
+      "eventType": "other",
+      "headline": "Pentagon office helps lead Trump administration's Venezuela oil deal",
+      "summary": "The Defense Department's Office of Strategic Capital, originally founded under the Biden administration to provide loans supporting the US defense industry, is now helping lead President Trump's oil deal involving Venezuela.",
       "confidenceScore": 0.6,
       "confidenceLabel": "medium",
       "coordinateQuality": "missing",
       "tier": 3,
       "tags": [
-        "washingtonpost-world",
-        "storyline:7bcf2c0f"
+        "nytimes-world",
+        "storyline:13e06972"
       ],
       "geopoliticalScore": 5,
       "economicImpactScore": 5
     },
     {
-      "id": "5912177b15d418be3c73ac07",
+      "id": "e4484fa983b8afe5a66386fb",
       "source": "rss_intelligence",
-      "eventDate": "2026-08-27",
+      "eventDate": "2026-09-01",
       "iso3": [
+        "USA",
+        "RUS",
+        "IRN"
+      ],
+      "eventType": "diplomatic.dispute",
+      "headline": "US invites Russia to G20 finance meeting focused on Iran war oil shock, Europe protests",
+      "summary": "The United States invited Russia's finance minister to attend a G20 finance meeting focused on the economic shock from the war in Iran, which has driven up global oil prices. China and Russia are attending the meeting, prompting protests from European officials.",
+      "confidenceScore": 0.75,
+      "confidenceLabel": "high",
+      "coordinateQuality": "missing",
+      "tier": 2,
+      "tags": [
+        "nytimes-world",
+        "storyline:13e06972"
+      ],
+      "geopoliticalScore": 7,
+      "economicImpactScore": 7
+    },
+    {
+      "id": "ffdba845f5257580ba21a4a5",
+      "source": "rss_intelligence",
+      "eventDate": "2026-09-01",
+      "iso3": [
+        "ARE",
         "IRN",
         "USA",
-        "CHN",
-        "IRQ",
-        "TUR",
-        "ARE"
+        "EGY"
       ],
       "eventType": "economic.sanctions",
-      "headline": "US escalates economic sanctions campaign against Iran targeting key trade partners",
-      "summary": "The Trump administration is escalating its economic war on Iran through new sanctions, though it has not specified which targets or trade partners—among them China, Iraq, Turkey and the UAE—would be affected or how the sanctions would be implemented.",
-      "confidenceScore": 0.6,
+      "headline": "UAE central bank to review Banque Misr branches after US Treasury sanctions over Iran links",
+      "summary": "The U.S. Treasury Department accused Banque Misr's branches in the United Arab Emirates of helping Iran evade sanctions. The Emirati central bank promised to conduct an examination of the bank.",
+      "confidenceScore": 0.75,
+      "confidenceLabel": "high",
+      "coordinateQuality": "missing",
+      "tier": 2,
+      "tags": [
+        "nytimes-world",
+        "storyline:13e06972"
+      ],
+      "geopoliticalScore": 5.5,
+      "economicImpactScore": 5
+    },
+    {
+      "id": "82b3e673a75477456bd2356e",
+      "source": "rss_intelligence",
+      "eventDate": "2026-09-01",
+      "iso3": [
+        "IRN",
+        "USA"
+      ],
+      "eventType": "energy.disruption",
+      "headline": "US blockade and war strain Iran's fuel supply, causing long gas lines",
+      "summary": "Iran is experiencing long lines for gasoline as war and a U.S. blockade squeeze fuel supply. The government is struggling to meet a shortfall in fuel and fears higher prices at the pump could trigger unrest.",
+      "confidenceScore": 0.75,
+      "confidenceLabel": "high",
+      "coordinateQuality": "missing",
+      "tier": 2,
+      "tags": [
+        "nytimes-world",
+        "storyline:413ac1b1"
+      ],
+      "geopoliticalScore": 6,
+      "economicImpactScore": 7
+    },
+    {
+      "id": "02cdd63770cbd8ba8a83636d",
+      "source": "rss_intelligence",
+      "eventDate": "2026-09-01",
+      "iso3": [
+        "ISR",
+        "PSE"
+      ],
+      "eventType": "conflict.protest",
+      "headline": "Israeli settlers attack Palestinians in West Bank, prompting Netanyahu rebuke",
+      "summary": "Israeli settlers carried out an intense assault against Palestinians in the West Bank on Saturday. The attack drew sharp condemnations from Israeli Prime Minister Benjamin Netanyahu and other officials.",
+      "confidenceScore": 0.75,
+      "confidenceLabel": "high",
+      "coordinateQuality": "missing",
+      "tier": 2,
+      "tags": [
+        "nytimes-world",
+        "storyline:13e06972"
+      ],
+      "geopoliticalScore": 5,
+      "economicImpactScore": 1
+    },
+    {
+      "id": "bcb94a21debfa41fd0e34cbb",
+      "source": "rss_intelligence",
+      "eventDate": "2026-09-01",
+      "iso3": [
+        "VEN",
+        "USA"
+      ],
+      "eventType": "other",
+      "headline": "US takes majority control of Venezuelan oil reserves in controversial deal",
+      "summary": "A deal gives the United States majority control of vast Venezuelan oil reserves. Venezuelans have criticized the arrangement as a new form of U.S. colonialism, seeing it as an affront to national identity.",
+      "confidenceScore": 0.65,
       "confidenceLabel": "medium",
       "coordinateQuality": "missing",
       "tier": 2,
       "tags": [
-        "washingtonpost-world",
-        "storyline:87972419"
+        "nytimes-world",
+        "storyline:13e06972"
       ],
       "geopoliticalScore": 6,
       "economicImpactScore": 6
     },
     {
-      "id": "11a095c3f54d7187da5548ea",
+      "id": "2f5b01ae1936f73177f0ddb7",
       "source": "rss_intelligence",
-      "eventDate": "2026-08-27",
+      "eventDate": "2026-09-01",
       "iso3": [
-        "USA",
-        "CAN"
+        "UKR",
+        "RUS"
+      ],
+      "eventType": "conflict.armed",
+      "headline": "Russian strike kills 37 at weapons depot near Kyiv; Zelensky blames negligence",
+      "summary": "A Russian strike on a weapons depot in a civilian area near Kyiv killed 37 people. Ukrainian President Volodymyr Zelensky said the depot's location in a civilian area 'definitely shouldn't have been there,' attributing the deaths partly to negligence.",
+      "confidenceScore": 0.8,
+      "confidenceLabel": "high",
+      "coordinateQuality": "missing",
+      "tier": 1,
+      "tags": [
+        "nytimes-world",
+        "storyline:3ccac860"
+      ],
+      "geopoliticalScore": 6.5,
+      "economicImpactScore": 2
+    },
+    {
+      "id": "e04f98cf09bad48a3186b304",
+      "source": "rss_intelligence",
+      "eventDate": "2026-09-01",
+      "iso3": [
+        "CAN",
+        "USA"
       ],
       "eventType": "economic.trade",
-      "headline": "Trump suggests renaming Lake Ontario 'Lake America' amid Canada trade war",
-      "summary": "President Trump said in a social media post that the U.S. could rename Lake Ontario as 'Lake America,' citing the ongoing tariff fight with Canada and stating the U.S. does not expect to be doing much business with Ontario any longer.",
+      "headline": "US-Canada trade talks collapse amid tariff dispute, Carney rallies nation",
+      "summary": "Trade talks between the United States and Canada collapsed, prompting Canadian Prime Minister Mark Carney to rally the nation and Canadian businesses to take a defiant stance. President Trump separately moved to rename Lake Ontario amid the dispute.",
+      "confidenceScore": 0.7,
+      "confidenceLabel": "medium",
+      "coordinateQuality": "missing",
+      "tier": 2,
+      "tags": [
+        "nytimes-world",
+        "storyline:413ac1b1"
+      ],
+      "geopoliticalScore": 5,
+      "economicImpactScore": 5
+    },
+    {
+      "id": "262b7dec4c3c7c42eb57ed5e",
+      "source": "rss_intelligence",
+      "eventDate": "2026-09-01",
+      "iso3": [
+        "CAN",
+        "USA"
+      ],
+      "eventType": "economic.trade",
+      "headline": "Canada-US trade war continues as Carney maintains withdrawal from negotiations",
+      "summary": "The trade war between the United States and Canada has continued, with Canadians rallying behind Prime Minister Mark Carney's decision to walk away from negotiations with the Trump administration. Questions remain over how and when talks might resume.",
+      "confidenceScore": 0.6,
+      "confidenceLabel": "medium",
+      "coordinateQuality": "missing",
+      "tier": 3,
+      "tags": [
+        "nytimes-world",
+        "storyline:413ac1b1"
+      ],
+      "geopoliticalScore": 4,
+      "economicImpactScore": 4
+    },
+    {
+      "id": "64ecb7f4e9b44d3526ec02eb",
+      "source": "rss_intelligence",
+      "eventDate": "2026-09-01",
+      "iso3": [
+        "USA",
+        "IRN",
+        "VEN"
+      ],
+      "eventType": "energy.disruption",
+      "headline": "Trump to meet US oil executives amid Iran war-driven fuel price spike ahead of midterms",
+      "summary": "US President Donald Trump will meet oil refining executives at the White House as he seeks to control fuel prices that have spiked due to the ongoing Iran war, ahead of November midterm elections. The meeting follows Trump's announcement of a deal for a large US stake in Venezuela's oil reserves.",
+      "confidenceScore": 0.75,
+      "confidenceLabel": "high",
+      "coordinateQuality": "missing",
+      "tier": 2,
+      "tags": [
+        "scmp-china",
+        "storyline:413ac1b1"
+      ],
+      "geopoliticalScore": 5,
+      "economicImpactScore": 8
+    },
+    {
+      "id": "7f6a7effa0ef71af6537485d",
+      "source": "rss_intelligence",
+      "eventDate": "2026-09-01",
+      "iso3": [
+        "IND",
+        "PAK"
+      ],
+      "eventType": "diplomatic.dispute",
+      "headline": "India rejects Hague court ruling ordering it to uphold Indus Waters Treaty with Pakistan",
+      "summary": "The Permanent Court of Arbitration in The Hague ruled that India must uphold the water-sharing treaty with Pakistan that it suspended amid bilateral tensions, and must limit work on a hydroelectric plant it is building in Kashmir. India suspended the treaty, which ensures water supply to 80% of Pakistani farms, in April last year.",
+      "confidenceScore": 0.8,
+      "confidenceLabel": "high",
+      "coordinateQuality": "missing",
+      "tier": 2,
+      "tags": [
+        "scmp-china",
+        "storyline:0920a384"
+      ],
+      "geopoliticalScore": 6,
+      "economicImpactScore": 2
+    },
+    {
+      "id": "555f53f89941d9560a74340c",
+      "source": "rss_intelligence",
+      "eventDate": "2026-09-01",
+      "iso3": [
+        "JPN",
+        "CHN",
+        "AUS"
+      ],
+      "eventType": "diplomatic.cooperation",
+      "headline": "China criticizes Japan's hypersonic and underwater drone weapon plans as regional threat",
+      "summary": "China has criticized Japan's plans to arm submarine drones with long-range missiles and test hypersonic weapons in Australia, in its latest swipe at Tokyo's military build-up. Analysts say the moves could threaten PLA Navy amphibious groups and surface combatants within the 'first island chain'.",
+      "confidenceScore": 0.65,
+      "confidenceLabel": "medium",
+      "coordinateQuality": "missing",
+      "tier": 3,
+      "tags": [
+        "scmp-china",
+        "storyline:9dc16843"
+      ],
+      "geopoliticalScore": 5,
+      "economicImpactScore": 1
+    },
+    {
+      "id": "b3b42a9948df6314f30b30c7",
+      "source": "rss_intelligence",
+      "eventDate": "2026-09-01",
+      "iso3": [
+        "EGY",
+        "CHN"
+      ],
+      "eventType": "diplomatic.dispute",
+      "headline": "Xi Jinping visits Egypt, deepening China-Egypt ties amid Western balancing act",
+      "summary": "Chinese President Xi Jinping visited Egypt for the first time in a decade, as Beijing deepens economic, military and diplomatic ties with Cairo and seeks closer cooperation on Middle East and Africa crises. The visit follows Xi's trip to Kyrgyzstan for the Shanghai Cooperation Organisation summit.",
+      "confidenceScore": 0.7,
+      "confidenceLabel": "medium",
+      "coordinateQuality": "missing",
+      "tier": 3,
+      "tags": [
+        "scmp-china",
+        "storyline:13e06972"
+      ],
+      "geopoliticalScore": 5,
+      "economicImpactScore": 2
+    },
+    {
+      "id": "79894f27285ba2cb8a3d5bd2",
+      "source": "rss_intelligence",
+      "eventDate": "2026-09-01",
+      "iso3": [
+        "CAN",
+        "USA"
+      ],
+      "eventType": "economic.trade",
+      "headline": "Ontario Premier Doug Ford urges thaw in US-Canada trade war",
+      "summary": "Ontario Premier Doug Ford called for a thaw in the U.S.-Canada trade war, criticizing President Trump while speaking warmly of the American people. Ford described the two countries as 'best friends'.",
       "confidenceScore": 0.7,
       "confidenceLabel": "medium",
       "coordinateQuality": "missing",
       "tier": 3,
       "tags": [
         "washingtonpost-world",
-        "storyline:7bcf2c0f"
+        "storyline:413ac1b1"
       ],
       "geopoliticalScore": 3,
-      "economicImpactScore": 2
-    },
-    {
-      "id": "5ab9323be5b385ae971dc3f9",
-      "source": "rss_intelligence",
-      "eventDate": "2026-08-27",
-      "iso3": [
-        "BIH",
-        "NLD"
-      ],
-      "eventType": "other",
-      "headline": "Convicted Bosnian Serb war criminal Ratko Mladić dies at 84",
-      "summary": "Ratko Mladić, the Bosnian Serb military commander convicted of genocide, war crimes and crimes against humanity during the 1992-95 Yugoslav wars, has died at age 84. He was jailed for life in 2017.",
-      "confidenceScore": 0.9,
-      "confidenceLabel": "high",
-      "coordinateQuality": "missing",
-      "tier": 3,
-      "tags": [
-        "bbc-world",
-        "scmp-china",
-        "storyline:af723667"
-      ],
-      "geopoliticalScore": 4,
-      "economicImpactScore": 0
+      "economicImpactScore": 3
     },
     {
       "id": "human-a15ae89f",
