@@ -460,4 +460,13 @@ log "state=$STATE logical=$LOGICAL — submitting: $REASON"
 # eligibility was evaluated against; anything recomputed downstream could differ
 # across a Los Angeles midnight boundary.
 "$REPO/daily-queue.sh" --logical-date "$LOGICAL" >> "$LOG" 2>&1
-log "submission finished, exit=$?"
+# CAPTURE FIRST. `log "... exit=$?"` printed the right number — the argument is
+# expanded before log runs — but log then became the script's LAST command, so
+# launchd received log's status (0) rather than the submitter's. A failed
+# submission was reported as success, which is exactly the signal the watchdog
+# and the activation proofs depend on.
+SUBMIT_RC=$?
+log "submission finished, exit=$SUBMIT_RC"
+# Exit with the submitter's status, not the logger's. `exit` still fires the
+# EXIT trap, so release_lock runs on both the success and the failure path.
+exit "$SUBMIT_RC"
