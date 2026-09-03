@@ -35,6 +35,11 @@ import { join, resolve } from 'node:path'
 
 const REAL_REPO = resolve(__dirname, '..', '..', '..')
 const REAL_SCHEDULER = join(REAL_REPO, 'scripts', 'daily-scheduler.sh')
+// The scheduler sources scripts/heartbeat.sh from the REPO it resolves, and now
+// exits nonzero if that file is missing — a heartbeat it cannot record is the
+// liveness evidence the watchdog reads. The sandbox is that REPO, so it must
+// carry the helper or every case below fails before reaching submission.
+const REAL_HELPER = join(REAL_REPO, 'scripts', 'heartbeat.sh')
 const LOGICAL = '2026-09-01'
 
 /** Build a sandbox REPO whose daily-queue.sh exits with `code`. */
@@ -56,6 +61,9 @@ function sandbox(code: number, schedulerSrc?: string) {
   // The real script, reached through the sandbox so REPO resolves here.
   if (schedulerSrc) writeFileSync(join(repo, 'scripts', 'daily-scheduler.sh'), schedulerSrc, { mode: 0o755 })
   else symlinkSync(REAL_SCHEDULER, join(repo, 'scripts', 'daily-scheduler.sh'))
+  // The real helper, reached the same way. AI_CAPITAL_ROOT points into the
+  // sandbox, so the heartbeat it writes lands there and never in production.
+  symlinkSync(REAL_HELPER, join(repo, 'scripts', 'heartbeat.sh'))
 
   // Non-isolated, so the script does not take its refuse-to-submit branch.
   writeFileSync(join(repo, 'packages', 'queue', 'bin', 'check-isolation.ts'),

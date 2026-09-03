@@ -70,6 +70,23 @@ fi
 LOG="$ROOT/logs/pipeline-watchdog.log"
 export SCHEDULER_HEARTBEAT_FILE="${SCHEDULER_HEARTBEAT_FILE:-$ROOT/data/scheduler-heartbeat.log}"
 
+# ── Shared heartbeat writer ──────────────────────────────────────────────────
+# Sourced, not executed. Defines heartbeat_record, which serializes the whole
+# append/trim/replace transaction against the other writer of this same file.
+#
+# CHECKED. A failed `source` does not stop a script without `set -e`: execution
+# continues, heartbeat_record is simply undefined, and the call site then fails
+# with 127. That is the same shape as the defect being fixed here — a missing
+# capability reported as an ordinary outcome — so the load is verified.
+if ! . "$REPO/scripts/heartbeat.sh"; then
+  echo "[pipeline-watchdog] FATAL: cannot load $REPO/scripts/heartbeat.sh" >&2
+  exit 1
+fi
+if ! type heartbeat_record >/dev/null 2>&1; then
+  echo "[pipeline-watchdog] FATAL: $REPO/scripts/heartbeat.sh defined no heartbeat_record" >&2
+  exit 1
+fi
+
 [ "$DRY_RUN" -eq 0 ] && mkdir -p "$ROOT/logs" "$ROOT/data"
 LOG_PREFIX=""
 log() {
@@ -108,10 +125,18 @@ fi
 # opportunity existed. Never written under --dry-run or isolation, so tests
 # cannot touch production evidence. Retention is bounded to the same 400 lines
 # the scheduler keeps.
+#
+# Serialized against the scheduler through scripts/heartbeat.sh: the two fire on
+# independent launchd intervals and overlap in practice. Sharing one fixed `.tmp`
+# path made the rename collide, and the append/read/trim/replace cycle could put
+# back a file missing the other writer's record — silently, since nothing checked
+# the result. A failed heartbeat is now a failed run, for the same reason it is in
+# the scheduler: this file IS the liveness evidence.
 if [ "$DRY_RUN" -eq 0 ] && [ "$ISOLATION_MODE" != "isolated" ]; then
-  echo "$(date -u '+%Y-%m-%dT%H:%M:%S.000Z')" >> "$SCHEDULER_HEARTBEAT_FILE"
-  tail -n 400 "$SCHEDULER_HEARTBEAT_FILE" > "$SCHEDULER_HEARTBEAT_FILE.tmp" \
-    && mv "$SCHEDULER_HEARTBEAT_FILE.tmp" "$SCHEDULER_HEARTBEAT_FILE"
+  if ! heartbeat_record "$SCHEDULER_HEARTBEAT_FILE"; then
+    log "ERROR: could not record the heartbeat — refusing to assess without liveness evidence"
+    exit 1
+  fi
 fi
 
 if [ "$DRY_RUN" -eq 1 ]; then

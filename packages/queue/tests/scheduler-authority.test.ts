@@ -256,12 +256,29 @@ describe('G/H. log initialisation and heartbeat ownership', () => {
     expect(src).not.toMatch(/echo "\$ISOLATION_MODE" >> "\$LOG"/)
   })
 
+  // The property is ownership of ONE canonical file with bounded retention. It
+  // used to be asserted by matching the inline append/tail/mv both scripts
+  // carried — which pinned the implementation, and specifically pinned the
+  // racing one: the two scripts share this file, launchd overlaps them, and that
+  // idiom lost records and collided on rename. The write now goes through
+  // scripts/heartbeat.sh, so the same property is asserted through the helper.
   it('both the scheduler and the watchdog write the SAME canonical heartbeat file', () => {
     for (const rel of ['scripts/daily-scheduler.sh', 'scripts/pipeline-watchdog.sh']) {
-      const src = readFileSync(join(REPO, rel), 'utf-8')
-      expect(src, rel).toMatch(/>> "\$SCHEDULER_HEARTBEAT_FILE"/)
-      expect(src, rel).toMatch(/tail -n 400 "\$SCHEDULER_HEARTBEAT_FILE"/)   // bounded retention
+      const code = readFileSync(join(REPO, rel), 'utf-8')
+        .split('\n').filter(l => !l.trim().startsWith('#')).join('\n')
+      // the same default path
+      expect(code, rel).toMatch(
+        /SCHEDULER_HEARTBEAT_FILE="\$\{SCHEDULER_HEARTBEAT_FILE:-\$ROOT\/data\/scheduler-heartbeat\.log\}"/)
+      // the same helper, loaded from the repository it resolves
+      expect(code, rel).toMatch(/\.\s+"\$REPO\/scripts\/heartbeat\.sh"/)
+      // …passing that same canonical variable, and checking the result
+      expect(code, rel).toMatch(/if ! heartbeat_record "\$SCHEDULER_HEARTBEAT_FILE"/)
+      expect(code.slice(code.indexOf('heartbeat_record "$SCHEDULER_HEARTBEAT_FILE"')), rel).toMatch(/exit 1/)
     }
+    // bounded retention, now owned by the helper — one definition, not two
+    const helper = readFileSync(join(REPO, 'scripts', 'heartbeat.sh'), 'utf-8')
+    expect(helper).toMatch(/HEARTBEAT_RETAIN_LINES="\$\{HEARTBEAT_RETAIN_LINES:-400\}"/)
+    expect(helper).toMatch(/tail -n "\$HEARTBEAT_RETAIN_LINES"/)
   })
 
   it('neither writes a heartbeat under --dry-run or isolation', () => {

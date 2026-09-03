@@ -79,6 +79,23 @@ LOG="$ROOT/logs/daily-scheduler.log"
 LOCK="$ROOT/data/daily-scheduler.lock"
 export SCHEDULER_HEARTBEAT_FILE="${SCHEDULER_HEARTBEAT_FILE:-$ROOT/data/scheduler-heartbeat.log}"
 
+# ── Shared heartbeat writer ──────────────────────────────────────────────────
+# Sourced, not executed. Defines heartbeat_record, which serializes the whole
+# append/trim/replace transaction against the other writer of this same file.
+#
+# CHECKED. A failed `source` does not stop a script without `set -e`: execution
+# continues, heartbeat_record is simply undefined, and the call site then fails
+# with 127. That is the same shape as the defect being fixed here — a missing
+# capability reported as an ordinary outcome — so the load is verified.
+if ! . "$REPO/scripts/heartbeat.sh"; then
+  echo "[daily-scheduler] FATAL: cannot load $REPO/scripts/heartbeat.sh" >&2
+  exit 1
+fi
+if ! type heartbeat_record >/dev/null 2>&1; then
+  echo "[daily-scheduler] FATAL: $REPO/scripts/heartbeat.sh defined no heartbeat_record" >&2
+  exit 1
+fi
+
 [ "$DRY_RUN" -eq 0 ] && mkdir -p "$ROOT/logs" "$ROOT/data"
 LOG_PREFIX=""
 # In dry-run the diagnostic goes to stderr instead of the log file, so the
@@ -108,10 +125,23 @@ fi
 # precisely what distinguishes a dead scheduler from a sleeping laptop. Writing
 # it later, or only on the paths that act, would make the watchdog blind in
 # exactly the case it exists for.
+#
+# The write is SERIALIZED against the watchdog, which writes the same file on its
+# own launchd interval. Both used to inline the same append/tail/mv with the same
+# fixed `.tmp` path; during the Round 20 activation that collided
+# (`mv: rename …scheduler-heartbeat.log.tmp…: No such file or directory`) and,
+# worse, could drop the other writer's record entirely. Neither failure was
+# visible, because the chain was joined by `&&` and nothing checked it.
+#
+# A failed heartbeat is now a failed run. The watchdog reads this file to decide
+# whether the machine was awake; continuing after failing to record that would
+# leave the very evidence this script exists to produce missing, while reporting
+# success to launchd.
 if [ "$DRY_RUN" -eq 0 ]; then
-  echo "$(date -u '+%Y-%m-%dT%H:%M:%S.000Z')" >> "$SCHEDULER_HEARTBEAT_FILE"
-  tail -n 400 "$SCHEDULER_HEARTBEAT_FILE" > "$SCHEDULER_HEARTBEAT_FILE.tmp" \
-    && mv "$SCHEDULER_HEARTBEAT_FILE.tmp" "$SCHEDULER_HEARTBEAT_FILE"
+  if ! heartbeat_record "$SCHEDULER_HEARTBEAT_FILE"; then
+    log "ERROR: could not record the heartbeat — refusing to continue without liveness evidence"
+    exit 1
+  fi
 fi
 
 if [ "$DRY_RUN" -eq 1 ]; then
