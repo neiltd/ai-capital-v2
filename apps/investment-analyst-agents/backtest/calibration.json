@@ -1,7 +1,7 @@
 {
-  "generatedAt": "2026-09-01",
+  "generatedAt": "2026-09-03",
   "predictionsAnalyzed": 44,
-  "scoredCalls": 892,
+  "scoredCalls": 916,
   "windows": [
     7,
     30,
@@ -20,9 +20,9 @@
         "avgReturn": 1.6859611501926373
       },
       "90d": {
-        "calls": 155,
-        "accuracy": 0.16774193548387098,
-        "avgReturn": -0.3037940211370034
+        "calls": 178,
+        "accuracy": 0.16853932584269662,
+        "avgReturn": -0.6174613479083861
       }
     },
     "trim": {
@@ -37,9 +37,9 @@
         "avgReturn": 0.149375668090725
       },
       "90d": {
-        "calls": 15,
-        "accuracy": 0.26666666666666666,
-        "avgReturn": -6.278461986196376
+        "calls": 16,
+        "accuracy": 0.25,
+        "avgReturn": -5.335975153824666
       }
     },
     "buy": {
@@ -73,9 +73,9 @@
         "avgReturn": -3.066035519713406
       },
       "90d": {
-        "calls": 41,
-        "accuracy": 0.0975609756097561,
-        "avgReturn": 5.461961784215262
+        "calls": 48,
+        "accuracy": 0.125,
+        "avgReturn": 3.510244526665416
       }
     },
     "medium": {
@@ -90,9 +90,9 @@
         "avgReturn": 2.7044104837994607
       },
       "90d": {
-        "calls": 111,
-        "accuracy": 0.24324324324324326,
-        "avgReturn": -2.619374835664005
+        "calls": 125,
+        "accuracy": 0.232,
+        "avgReturn": -2.5140495568333585
       }
     },
     "low": {
@@ -107,9 +107,9 @@
         "avgReturn": 2.448529513353697
       },
       "90d": {
-        "calls": 20,
-        "accuracy": 0.05,
-        "avgReturn": -1.7719894131659686
+        "calls": 23,
+        "accuracy": 0.043478260869565216,
+        "avgReturn": -0.45670538542063516
       }
     }
   },
@@ -121,7 +121,7 @@
   },
   "worstSignal": {
     "signal": "hold (90d)",
-    "accuracy": 0.16774193548387098
+    "accuracy": 0.16853932584269662
   },
   "decayWindowPredictions": 15,
   "decaying": []
