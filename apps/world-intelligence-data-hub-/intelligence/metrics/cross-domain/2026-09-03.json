@@ -1,14 +1,14 @@
 {
   "date": "2026-09-03",
-  "generatedAt": "2026-09-03T02:49:21.752Z",
+  "generatedAt": "2026-09-03T14:22:00.423Z",
   "observationWindowDays": 14,
   "storylineBenchmarkLinks": [
     {
       "storylineId": "b429653679b53912",
-      "storylineTitle": "Iran attack on Saudi oil tanker Sidr in Strait of Hormuz kills two Filipino sailors",
+      "storylineTitle": "Iran fires missiles and drones at US bases in Kuwait as US-Iran war escalates",
       "storylineState": "escalating",
       "daysActive": 3,
-      "avgEscalation": 0.709,
+      "avgEscalation": 0.672,
       "maxSeverity": 4,
       "countries": [
         "IRN",
@@ -21,13 +21,19 @@
         "RUS",
         "JPN",
         "IDN",
-        "UKR"
+        "UKR",
+        "KOR",
+        "TUR",
+        "PRK",
+        "KWT"
       ],
       "eventTypes": [
         "missile_attack",
         "military_operation",
         "airstrike",
-        "nuclear_incident"
+        "nuclear_incident",
+        "armed_conflict",
+        "military_exercise"
       ],
       "linkedBenchmarks": [
         "brent_crude",
@@ -35,17 +41,16 @@
       ],
       "linkStrength": 1,
       "linkReasons": [
-        "geopolitical_event_in_energy_region:IRN,ARE,SAU,RUS",
-        "high_escalation_energy_country",
-        "chokepoint:hormuz"
+        "geopolitical_event_in_energy_region:IRN,ARE,SAU,RUS,KWT",
+        "high_escalation_energy_country"
       ]
     },
     {
       "storylineId": "413ac1b17204210a",
       "storylineTitle": "India's economy grows 7.8% in Q1 despite oil price shock from US-Iran war",
       "storylineState": "escalating",
-      "daysActive": 3,
-      "avgEscalation": 0.538,
+      "daysActive": 4,
+      "avgEscalation": 0.525,
       "maxSeverity": 4,
       "countries": [
         "CAN",
@@ -104,10 +109,10 @@
     },
     {
       "storylineId": "13e06972de27435e",
-      "storylineTitle": "Germany blames Russia for August drone attack on airport, announces countermeasures",
-      "storylineState": "active",
-      "daysActive": 4,
-      "avgEscalation": 0.421,
+      "storylineTitle": "Xi Jinping urges Middle East to build independent security framework during Egypt visit",
+      "storylineState": "stabilizing",
+      "daysActive": 5,
+      "avgEscalation": 0.381,
       "maxSeverity": 3,
       "countries": [
         "ISR",
@@ -121,13 +126,15 @@
         "CHN",
         "DEU",
         "FRA",
-        "UKR"
+        "UKR",
+        "IRL"
       ],
       "eventTypes": [
         "other",
         "diplomatic_incident",
         "protest",
-        "sanctions"
+        "sanctions",
+        "treaty"
       ],
       "linkedBenchmarks": [
         "brent_crude",
@@ -203,15 +210,17 @@
     {
       "storylineId": "235b23a3c6973bc8",
       "storylineTitle": "Ukrainian drone expert Fedorov, fired by Kyiv, to advise Italy's defense chief",
-      "storylineState": "emerging",
-      "daysActive": 1,
-      "avgEscalation": 0.25,
+      "storylineState": "active",
+      "daysActive": 3,
+      "avgEscalation": 0.333,
       "maxSeverity": 3,
       "countries": [
         "CMR",
         "RUS",
         "UKR",
-        "ITA"
+        "ITA",
+        "IRN",
+        "USA"
       ],
       "eventTypes": [
         "other"
@@ -259,9 +268,9 @@
     },
     {
       "storylineId": "8e025ff44fbb7d62",
-      "storylineTitle": "Israeli settlers and forces kill two Palestinian teenagers in West Bank village raid",
-      "storylineState": "emerging",
-      "daysActive": 0,
+      "storylineTitle": "Israeli military raid kills two Palestinians in West Bank village of Al Mughayir",
+      "storylineState": "active",
+      "daysActive": 1,
       "avgEscalation": 0.5,
       "maxSeverity": 4,
       "countries": [
@@ -269,7 +278,8 @@
         "PSE"
       ],
       "eventTypes": [
-        "armed_conflict"
+        "armed_conflict",
+        "military_operation"
       ],
       "linkedBenchmarks": [],
       "linkStrength": 0,
@@ -880,11 +890,11 @@
     {
       "date": "2026-09-03",
       "maxEscalation": 0.9,
-      "avgEscalation": 0.565,
-      "eventCount": 37,
+      "avgEscalation": 0.524,
+      "eventCount": 55,
       "supplyDisruptionCount": 3,
       "energyEventCount": 3,
-      "hormuzEventCount": 12,
+      "hormuzEventCount": 14,
       "benchmarkDailyChange": [
         {
           "benchmarkId": "brent_crude",
@@ -1566,44 +1576,6 @@
       ]
     },
     {
-      "eventId": "1539e754d9030ca69a2d3602",
-      "eventDate": "2026-09-03",
-      "eventType": "airstrike",
-      "eventTitle": "US strikes on Iran kill 18-19 including wedding party, Trump threatens more attacks",
-      "countries": [
-        "IRN",
-        "USA"
-      ],
-      "escalationPotential": 0.9,
-      "chokepointLabel": "hormuz",
-      "benchmarkResponses": [
-        {
-          "benchmarkId": "brent_crude",
-          "priceAtEvent": null,
-          "price3dBefore": null,
-          "price3dAfter": null,
-          "deltaBefore": null,
-          "deltaAfter": null
-        },
-        {
-          "benchmarkId": "wti_crude",
-          "priceAtEvent": null,
-          "price3dBefore": null,
-          "price3dAfter": null,
-          "deltaBefore": null,
-          "deltaAfter": null
-        },
-        {
-          "benchmarkId": "henry_hub",
-          "priceAtEvent": null,
-          "price3dBefore": null,
-          "price3dAfter": null,
-          "deltaBefore": null,
-          "deltaAfter": null
-        }
-      ]
-    },
-    {
       "eventId": "ab0c9bd759641576ab9c7e60",
       "eventDate": "2026-09-03",
       "eventType": "diplomatic_incident",
@@ -1834,44 +1806,6 @@
       ]
     },
     {
-      "eventId": "adda5759ae4539ec4e5dec97",
-      "eventDate": "2026-09-03",
-      "eventType": "airstrike",
-      "eventTitle": "US airstrikes on Iran hit wedding, killing five and wounding 67, Iranian officials say",
-      "countries": [
-        "IRN",
-        "USA"
-      ],
-      "escalationPotential": 0.85,
-      "chokepointLabel": "hormuz",
-      "benchmarkResponses": [
-        {
-          "benchmarkId": "brent_crude",
-          "priceAtEvent": null,
-          "price3dBefore": null,
-          "price3dAfter": null,
-          "deltaBefore": null,
-          "deltaAfter": null
-        },
-        {
-          "benchmarkId": "wti_crude",
-          "priceAtEvent": null,
-          "price3dBefore": null,
-          "price3dAfter": null,
-          "deltaBefore": null,
-          "deltaAfter": null
-        },
-        {
-          "benchmarkId": "henry_hub",
-          "priceAtEvent": null,
-          "price3dBefore": null,
-          "price3dAfter": null,
-          "deltaBefore": null,
-          "deltaAfter": null
-        }
-      ]
-    },
-    {
       "eventId": "0e0e959dc8ff32cba360f8a5",
       "eventDate": "2026-09-03",
       "eventType": "armed_conflict",
@@ -2023,13 +1957,167 @@
           "deltaAfter": null
         }
       ]
+    },
+    {
+      "eventId": "eae80932dceacc42d6fa76b6",
+      "eventDate": "2026-09-03",
+      "eventType": "military_operation",
+      "eventTitle": "Trump claims US control of Strait of Hormuz amid near-daily attacks on ships",
+      "countries": [
+        "IRN",
+        "USA"
+      ],
+      "escalationPotential": 0.7,
+      "chokepointLabel": "hormuz",
+      "benchmarkResponses": [
+        {
+          "benchmarkId": "brent_crude",
+          "priceAtEvent": null,
+          "price3dBefore": null,
+          "price3dAfter": null,
+          "deltaBefore": null,
+          "deltaAfter": null
+        },
+        {
+          "benchmarkId": "wti_crude",
+          "priceAtEvent": null,
+          "price3dBefore": null,
+          "price3dAfter": null,
+          "deltaBefore": null,
+          "deltaAfter": null
+        },
+        {
+          "benchmarkId": "henry_hub",
+          "priceAtEvent": null,
+          "price3dBefore": null,
+          "price3dAfter": null,
+          "deltaBefore": null,
+          "deltaAfter": null
+        }
+      ]
+    },
+    {
+      "eventId": "e4797ef8d323a99f74059714",
+      "eventDate": "2026-09-03",
+      "eventType": "military_operation",
+      "eventTitle": "US military considers deploying cyber unit to South Korea, shifting focus toward China",
+      "countries": [
+        "KOR",
+        "USA",
+        "PRK",
+        "CHN"
+      ],
+      "escalationPotential": 0.4,
+      "chokepointLabel": "hormuz",
+      "benchmarkResponses": [
+        {
+          "benchmarkId": "brent_crude",
+          "priceAtEvent": null,
+          "price3dBefore": null,
+          "price3dAfter": null,
+          "deltaBefore": null,
+          "deltaAfter": null
+        },
+        {
+          "benchmarkId": "wti_crude",
+          "priceAtEvent": null,
+          "price3dBefore": null,
+          "price3dAfter": null,
+          "deltaBefore": null,
+          "deltaAfter": null
+        },
+        {
+          "benchmarkId": "henry_hub",
+          "priceAtEvent": null,
+          "price3dBefore": null,
+          "price3dAfter": null,
+          "deltaBefore": null,
+          "deltaAfter": null
+        }
+      ]
+    },
+    {
+      "eventId": "1539e754d9030ca69a2d3602",
+      "eventDate": "2026-09-03",
+      "eventType": "airstrike",
+      "eventTitle": "US strikes on Iran kill 18-19 including wedding party, Trump threatens more attacks",
+      "countries": [
+        "IRN",
+        "USA"
+      ],
+      "escalationPotential": 0.9,
+      "chokepointLabel": "hormuz",
+      "benchmarkResponses": [
+        {
+          "benchmarkId": "brent_crude",
+          "priceAtEvent": null,
+          "price3dBefore": null,
+          "price3dAfter": null,
+          "deltaBefore": null,
+          "deltaAfter": null
+        },
+        {
+          "benchmarkId": "wti_crude",
+          "priceAtEvent": null,
+          "price3dBefore": null,
+          "price3dAfter": null,
+          "deltaBefore": null,
+          "deltaAfter": null
+        },
+        {
+          "benchmarkId": "henry_hub",
+          "priceAtEvent": null,
+          "price3dBefore": null,
+          "price3dAfter": null,
+          "deltaBefore": null,
+          "deltaAfter": null
+        }
+      ]
+    },
+    {
+      "eventId": "adda5759ae4539ec4e5dec97",
+      "eventDate": "2026-09-03",
+      "eventType": "airstrike",
+      "eventTitle": "US airstrikes on Iran hit wedding, killing five and wounding 67, Iranian officials say",
+      "countries": [
+        "IRN",
+        "USA"
+      ],
+      "escalationPotential": 0.85,
+      "chokepointLabel": "hormuz",
+      "benchmarkResponses": [
+        {
+          "benchmarkId": "brent_crude",
+          "priceAtEvent": null,
+          "price3dBefore": null,
+          "price3dAfter": null,
+          "deltaBefore": null,
+          "deltaAfter": null
+        },
+        {
+          "benchmarkId": "wti_crude",
+          "priceAtEvent": null,
+          "price3dBefore": null,
+          "price3dAfter": null,
+          "deltaBefore": null,
+          "deltaAfter": null
+        },
+        {
+          "benchmarkId": "henry_hub",
+          "priceAtEvent": null,
+          "price3dBefore": null,
+          "price3dAfter": null,
+          "deltaBefore": null,
+          "deltaAfter": null
+        }
+      ]
     }
   ],
   "summary": {
     "totalActiveStorylines": 11,
     "energyLinkedStorylines": 5,
     "escalatingLinked": 2,
-    "avgEscalationLinked": 0.549,
+    "avgEscalationLinked": 0.531,
     "supplyDisruptionsRecent": 8,
     "energyEventsRecent": 10,
     "hormuzEventsRecent": 3,

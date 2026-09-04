@@ -1,21 +1,21 @@
 {
   "date": "2026-09-03",
-  "last_updated": "2026-09-03T02:49:20.817Z",
+  "last_updated": "2026-09-03T14:21:59.380Z",
   "collection": {
-    "last_run": "2026-09-03T02:45:46.616Z",
-    "run_count": 1,
-    "total_articles": 223,
+    "last_run": "2026-09-03T14:17:22.062Z",
+    "run_count": 2,
+    "total_articles": 167,
     "by_source": {
-      "bbc-world": 25,
-      "dw-world": 13,
+      "bbc-world": 27,
+      "dw-world": 7,
       "aljazeera-english": 25,
       "france24-english": 23,
-      "nytimes-world": 46,
-      "washingtonpost-world": 16,
+      "nytimes-world": 11,
+      "washingtonpost-world": 2,
       "npr-news": 10,
       "scmp-china": 50,
       "globaltimes-china": 0,
-      "bangkokpost-top": 10,
+      "bangkokpost-top": 7,
       "khaosod-english": 5
     },
     "failed_sources": [
@@ -26,91 +26,91 @@
     "stale_feed_sources": [
       "globaltimes-china"
     ],
-    "avg_article_age_hours": 37.4,
-    "oldest_article_days": 11.1
+    "avg_article_age_hours": 36,
+    "oldest_article_days": 11.6
   },
   "scoring": {
-    "last_run": "2026-09-03T02:47:17.393Z",
-    "run_count": 1,
-    "total_scored": 223,
-    "recommended": 40,
-    "filtered": 183,
-    "reduction_pct": 82,
+    "last_run": "2026-09-03T14:19:04.614Z",
+    "run_count": 2,
+    "total_scored": 390,
+    "recommended": 54,
+    "filtered": 336,
+    "reduction_pct": 86,
     "score_distribution": {
       "urgent": 2,
-      "high": 7,
-      "relevant": 18,
-      "marginal": 57,
-      "noise": 139
+      "high": 9,
+      "relevant": 23,
+      "marginal": 95,
+      "noise": 261
     },
     "by_source": {
       "aljazeera-english": {
-        "total": 25,
-        "recommended": 5,
+        "total": 50,
+        "recommended": 7,
         "narrative": 0
       },
       "bangkokpost-top": {
-        "total": 10,
+        "total": 17,
         "recommended": 0,
         "narrative": 0
       },
       "bbc-world": {
-        "total": 25,
-        "recommended": 5,
+        "total": 52,
+        "recommended": 6,
         "narrative": 0
       },
       "dw-world": {
-        "total": 13,
+        "total": 20,
         "recommended": 3,
         "narrative": 0
       },
       "france24-english": {
-        "total": 23,
-        "recommended": 4,
+        "total": 46,
+        "recommended": 5,
         "narrative": 0
       },
       "khaosod-english": {
-        "total": 5,
+        "total": 10,
         "recommended": 0,
         "narrative": 0
       },
       "npr-news": {
-        "total": 10,
-        "recommended": 1,
+        "total": 20,
+        "recommended": 2,
         "narrative": 0
       },
       "nytimes-world": {
-        "total": 46,
-        "recommended": 10,
+        "total": 57,
+        "recommended": 13,
         "narrative": 0
       },
       "scmp-china": {
-        "total": 50,
-        "recommended": 9,
+        "total": 100,
+        "recommended": 14,
         "narrative": 0
       },
       "washingtonpost-world": {
-        "total": 16,
-        "recommended": 3,
+        "total": 18,
+        "recommended": 4,
         "narrative": 0
       }
     }
   },
   "extraction": {
-    "last_run": "2026-09-03T02:49:20.817Z",
-    "run_count": 1,
-    "articles_sent_to_ai": 40,
-    "batches_run": 5,
-    "events_extracted": 37,
+    "last_run": "2026-09-03T14:21:59.380Z",
+    "run_count": 2,
+    "articles_sent_to_ai": 94,
+    "batches_run": 12,
+    "events_extracted": 58,
     "events_merged": 0,
     "low_confidence": 0,
-    "human_review": 8,
+    "human_review": 23,
     "api_tokens": {
-      "input": 11040,
-      "output": 15358,
-      "cache_write": 5574,
-      "cache_read": 22296
+      "input": 26008,
+      "output": 36014,
+      "cache_write": 11148,
+      "cache_read": 55740
     },
-    "estimated_cost_usd": 0.2910813
+    "estimated_cost_usd": 0.676761
   }
 }

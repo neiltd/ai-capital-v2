@@ -1,8 +1,8 @@
 {
   "schemaVersion": "1.0.0",
-  "generatedAt": "2026-09-03T02:49:21.772Z",
+  "generatedAt": "2026-09-03T14:22:00.427Z",
   "source": "world-intelligence-hub",
-  "eventCount": 30,
+  "eventCount": 42,
   "dateRange": {
     "from": "2026-09-01",
     "to": "2026-09-03"
@@ -252,28 +252,6 @@
       ],
       "geopoliticalScore": 9,
       "economicImpactScore": 9
-    },
-    {
-      "id": "adda5759ae4539ec4e5dec97",
-      "source": "rss_intelligence",
-      "eventDate": "2026-09-03",
-      "iso3": [
-        "IRN",
-        "USA"
-      ],
-      "eventType": "conflict.armed",
-      "headline": "US airstrikes on Iran hit wedding, killing five and wounding 67, Iranian officials say",
-      "summary": "The U.S. military conducted a night of intense strikes against Iran, described as retaliation for recent attacks on U.S. forces and marine traffic. Iranian officials said the strikes hit a wedding in a small town, killing five people and wounding 67 others; a weapons expert and visual analysis identified the bomb as American.",
-      "confidenceScore": 0.8,
-      "confidenceLabel": "high",
-      "coordinateQuality": "missing",
-      "tier": 1,
-      "tags": [
-        "nytimes-world",
-        "storyline:b4296536"
-      ],
-      "geopoliticalScore": 8.5,
-      "economicImpactScore": 7
     },
     {
       "id": "f303de2133a5c4436016d1e1",
@@ -653,6 +631,298 @@
       ],
       "geopoliticalScore": 6,
       "economicImpactScore": 1.5
+    },
+    {
+      "id": "1264534a3e343edf8e162b1b",
+      "source": "rss_intelligence",
+      "eventDate": "2026-09-03",
+      "iso3": [
+        "VEN",
+        "USA"
+      ],
+      "eventType": "other",
+      "headline": "Maduro asserts diplomatic immunity in US court, seeks dismissal of charges",
+      "summary": "Former Venezuelan leader Nicolas Maduro, who was abducted by US forces during a military attack on Caracas in January, is asserting immunity in a US court and urging dismissal of charges against him.",
+      "confidenceScore": 0.7,
+      "confidenceLabel": "medium",
+      "coordinateQuality": "missing",
+      "tier": 2,
+      "tags": [
+        "aljazeera-english",
+        "storyline:13e06972"
+      ],
+      "geopoliticalScore": 6,
+      "economicImpactScore": 2
+    },
+    {
+      "id": "eae80932dceacc42d6fa76b6",
+      "source": "rss_intelligence",
+      "eventDate": "2026-09-03",
+      "iso3": [
+        "IRN",
+        "USA"
+      ],
+      "eventType": "conflict.armed",
+      "headline": "Trump claims US control of Strait of Hormuz amid near-daily attacks on ships",
+      "summary": "Amid renewed fighting with Iran and near-daily attacks on ships, Trump suggested renaming the Strait of Hormuz as 'Trump Strait' and claimed it is under US control.",
+      "confidenceScore": 0.6,
+      "confidenceLabel": "medium",
+      "coordinateQuality": "missing",
+      "tier": 2,
+      "tags": [
+        "aljazeera-english",
+        "storyline:b4296536"
+      ],
+      "geopoliticalScore": 7.5,
+      "economicImpactScore": 8.5
+    },
+    {
+      "id": "93b948374ff52a0ec950154f",
+      "source": "rss_intelligence",
+      "eventDate": "2026-09-03",
+      "iso3": [
+        "IRL",
+        "ISR",
+        "UKR"
+      ],
+      "eventType": "diplomatic.dispute",
+      "headline": "EU foreign ministers fail to agree on Israel sanctions or Ukraine military support",
+      "summary": "EU foreign ministers meeting in Ireland failed to reach agreement on imposing trade sanctions on Israel or on providing additional military support for Ukraine, leaving the bloc deadlocked on both issues.",
+      "confidenceScore": 0.75,
+      "confidenceLabel": "high",
+      "coordinateQuality": "missing",
+      "tier": 3,
+      "tags": [
+        "aljazeera-english",
+        "storyline:13e06972"
+      ],
+      "geopoliticalScore": 6,
+      "economicImpactScore": 2
+    },
+    {
+      "id": "e5f77b88b786f2ba65c7a079",
+      "source": "rss_intelligence",
+      "eventDate": "2026-09-03",
+      "iso3": [
+        "CHN",
+        "EGY",
+        "USA"
+      ],
+      "eventType": "diplomatic.dispute",
+      "headline": "Xi Jinping visits Egypt as China seeks deeper influence in Middle East amid weakened US standing",
+      "summary": "China's President Xi Jinping visited Egypt for the first time in a decade, illustrating China's growing ambitions in the Middle East at a time when U.S. influence has been weakened by its war in Iran.",
+      "confidenceScore": 0.7,
+      "confidenceLabel": "medium",
+      "coordinateQuality": "missing",
+      "tier": 3,
+      "tags": [
+        "npr-news",
+        "storyline:13e06972"
+      ],
+      "geopoliticalScore": 6.5,
+      "economicImpactScore": 3
+    },
+    {
+      "id": "8957e8a175b6bdbbcf753d56",
+      "source": "rss_intelligence",
+      "eventDate": "2026-09-03",
+      "iso3": [
+        "UKR",
+        "RUS"
+      ],
+      "eventType": "conflict.armed",
+      "headline": "Russia and Ukraine trade escalating missile and drone strikes with no resolution in sight",
+      "summary": "Russia and Ukraine continue to exchange missile and drone attacks in an escalating pattern of warfare, causing ongoing human suffering. There is no indication that either side's resolve is weakening as the war continues.",
+      "confidenceScore": 0.7,
+      "confidenceLabel": "medium",
+      "coordinateQuality": "missing",
+      "tier": 2,
+      "tags": [
+        "nytimes-world",
+        "storyline:b4296536"
+      ],
+      "geopoliticalScore": 6,
+      "economicImpactScore": 3
+    },
+    {
+      "id": "7fb1db9bf11f13ce3f9c098c",
+      "source": "rss_intelligence",
+      "eventDate": "2026-09-03",
+      "iso3": [
+        "UKR",
+        "RUS"
+      ],
+      "eventType": "conflict.armed",
+      "headline": "New Russian jet-powered drones increase threat to Ukraine, harder to intercept",
+      "summary": "Russia has begun deploying jet-powered drones that are faster, more destructive, and more difficult to shoot down than previous propeller-driven models used throughout the war in Ukraine. The development is causing increased anxiety among Ukrainian defenders.",
+      "confidenceScore": 0.7,
+      "confidenceLabel": "medium",
+      "coordinateQuality": "missing",
+      "tier": 2,
+      "tags": [
+        "nytimes-world",
+        "storyline:b4296536"
+      ],
+      "geopoliticalScore": 5,
+      "economicImpactScore": 2
+    },
+    {
+      "id": "17eeb59b957e9c8521e94a4a",
+      "source": "rss_intelligence",
+      "eventDate": "2026-09-03",
+      "iso3": [
+        "PSE",
+        "ISR"
+      ],
+      "eventType": "conflict.armed",
+      "headline": "Israeli military raid kills two Palestinians in West Bank village of Al Mughayir",
+      "summary": "Israeli forces conducted a nighttime raid on the West Bank village of Al Mughayir, killing two Palestinians. The village has become a flashpoint for escalating settler violence, with the incident reportedly beginning as a dispute over livestock.",
+      "confidenceScore": 0.75,
+      "confidenceLabel": "high",
+      "coordinateQuality": "missing",
+      "tier": 2,
+      "tags": [
+        "nytimes-world",
+        "storyline:8e025ff4"
+      ],
+      "geopoliticalScore": 5,
+      "economicImpactScore": 1
+    },
+    {
+      "id": "6acbad4291cd0f29019740de",
+      "source": "rss_intelligence",
+      "eventDate": "2026-09-03",
+      "iso3": [
+        "CHN",
+        "USA"
+      ],
+      "eventType": "economic.trade",
+      "headline": "US export controls reshape China's tech IPO pipeline toward strategic 'chokepoint' sectors",
+      "summary": "A report found that years of US export controls have concentrated Chinese tech company IPOs in areas where Beijing seeks to reduce reliance on foreign technology. About 20% of companies listing on Shanghai's Star Market are in these chokepoint sectors.",
+      "confidenceScore": 0.65,
+      "confidenceLabel": "medium",
+      "coordinateQuality": "missing",
+      "tier": 3,
+      "tags": [
+        "scmp-china",
+        "storyline:413ac1b1"
+      ],
+      "geopoliticalScore": 5,
+      "economicImpactScore": 5
+    },
+    {
+      "id": "785a27fb30016937d9e632c4",
+      "source": "rss_intelligence",
+      "eventDate": "2026-09-03",
+      "iso3": [
+        "CHN",
+        "IRN",
+        "RUS"
+      ],
+      "eventType": "diplomatic.cooperation",
+      "headline": "SCO adopts first declaration on nuclear safety and security amid Iran tensions",
+      "summary": "The Shanghai Cooperation Organisation issued its first dedicated declaration on nuclear safety and security, condemning attacks on peaceful nuclear facilities. The document was adopted at the bloc's 25th anniversary summit amid tensions over Iran's nuclear programme.",
+      "confidenceScore": 0.75,
+      "confidenceLabel": "high",
+      "coordinateQuality": "missing",
+      "tier": 3,
+      "tags": [
+        "scmp-china",
+        "storyline:13e06972"
+      ],
+      "geopoliticalScore": 6,
+      "economicImpactScore": 3
+    },
+    {
+      "id": "314c726010cb156e50afaf8f",
+      "source": "rss_intelligence",
+      "eventDate": "2026-09-03",
+      "iso3": [
+        "CHN"
+      ],
+      "eventType": "other",
+      "headline": "Study finds Chinese military AI models lag foreign counterparts in combat applications",
+      "summary": "A study by researchers affiliated with China's Armed Police Force Shandong Corps and the Engineering University of People's Armed Police found China's military AI models trail foreign equivalents in performance, focusing more on support functions than combat.",
+      "confidenceScore": 0.6,
+      "confidenceLabel": "medium",
+      "coordinateQuality": "missing",
+      "tier": 3,
+      "tags": [
+        "scmp-china",
+        "storyline:13e06972"
+      ],
+      "geopoliticalScore": 3,
+      "economicImpactScore": 1
+    },
+    {
+      "id": "2e41c2e0ed880f562d890946",
+      "source": "rss_intelligence",
+      "eventDate": "2026-09-03",
+      "iso3": [
+        "USA",
+        "JPN",
+        "KOR",
+        "TUR"
+      ],
+      "eventType": "diplomatic.cooperation",
+      "headline": "US considers Japanese, South Korean and Turkish frigate designs to expand naval fleet",
+      "summary": "The US is considering using frigate designs from Japan, South Korea or Turkey to expand its naval fleet as domestic shipbuilding struggles to meet demand. The move follows a National Security Presidential Memorandum signed by President Trump on August 13 calling for use of foreign designs.",
+      "confidenceScore": 0.65,
+      "confidenceLabel": "medium",
+      "coordinateQuality": "missing",
+      "tier": 3,
+      "tags": [
+        "scmp-china",
+        "storyline:b4296536"
+      ],
+      "geopoliticalScore": 4,
+      "economicImpactScore": 3
+    },
+    {
+      "id": "e4797ef8d323a99f74059714",
+      "source": "rss_intelligence",
+      "eventDate": "2026-09-03",
+      "iso3": [
+        "KOR",
+        "USA",
+        "PRK",
+        "CHN"
+      ],
+      "eventType": "conflict.armed",
+      "headline": "US military considers deploying cyber unit to South Korea, shifting focus toward China",
+      "summary": "Reports indicate the Pentagon is considering moving elements of a US Army specialist cyber unit to South Korea. Analysts say this could reorient the US military role on the peninsula from deterring North Korea to containing China, complicating South Korea's diplomatic balancing act.",
+      "confidenceScore": 0.6,
+      "confidenceLabel": "medium",
+      "coordinateQuality": "missing",
+      "tier": 3,
+      "tags": [
+        "scmp-china",
+        "storyline:b4296536"
+      ],
+      "geopoliticalScore": 5,
+      "economicImpactScore": 1
+    },
+    {
+      "id": "11f0cb90ed90f60e69ccffbb",
+      "source": "rss_intelligence",
+      "eventDate": "2026-09-03",
+      "iso3": [
+        "EGY",
+        "CHN"
+      ],
+      "eventType": "diplomatic.dispute",
+      "headline": "Xi Jinping urges Middle East to build independent security framework during Egypt visit",
+      "summary": "Chinese President Xi Jinping, on his first visit to Egypt in a decade, urged Middle Eastern nations to build a self-led security model, reducing reliance on Washington amid ongoing US-Iran military clashes. He made the proposal during talks with the Egyptian President but did not offer Beijing as an alternative security guarantor.",
+      "confidenceScore": 0.75,
+      "confidenceLabel": "high",
+      "coordinateQuality": "missing",
+      "tier": 3,
+      "tags": [
+        "scmp-china",
+        "storyline:13e06972"
+      ],
+      "geopoliticalScore": 7,
+      "economicImpactScore": 2
     },
     {
       "id": "human-a15ae89f",
