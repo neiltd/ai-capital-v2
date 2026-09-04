@@ -1,872 +1,374 @@
 {
   "schemaVersion": "1.0.0",
-  "generatedAt": "2026-09-03T14:22:00.427Z",
+  "generatedAt": "2026-09-04T14:22:17.484Z",
   "source": "world-intelligence-hub",
-  "eventCount": 42,
+  "eventCount": 21,
   "dateRange": {
-    "from": "2026-09-01",
-    "to": "2026-09-03"
+    "from": "2026-09-03",
+    "to": "2026-09-04"
   },
   "events": [
     {
-      "id": "19e16bf1073f30661c3f5299",
+      "id": "3941f6aa20ac79d91a590a02",
       "source": "rss_intelligence",
-      "eventDate": "2026-09-03",
+      "eventDate": "2026-09-04",
       "iso3": [
-        "VEN",
-        "USA"
+        "YEM"
       ],
-      "eventType": "diplomatic.dispute",
-      "headline": "Maduro asserts diplomatic immunity in US court, seeks dismissal of charges",
-      "summary": "Former Venezuelan leader Nicolás Maduro, who was abducted by US forces during a military attack on Caracas in January, is asserting immunity in a US court and urging dismissal of charges against him.",
-      "confidenceScore": 0.7,
+      "eventType": "conflict.armed",
+      "headline": "Houthi rebels kill at least 100 in offensive toward Bab al-Mandab strait, Yemen",
+      "summary": "Fighting between Iran-backed Houthi rebels and Yemeni government forces has intensified since Thursday, with at least 100 people killed as Houthis push toward a key strait.",
+      "confidenceScore": 0.6,
       "confidenceLabel": "medium",
+      "coordinateQuality": "missing",
+      "tier": 1,
+      "tags": [
+        "aljazeera-english",
+        "storyline:181da00b"
+      ],
+      "geopoliticalScore": 6,
+      "economicImpactScore": 6
+    },
+    {
+      "id": "9a7e3eb419cb106af8c89e7e",
+      "source": "rss_intelligence",
+      "eventDate": "2026-09-04",
+      "iso3": [
+        "USA",
+        "IRN"
+      ],
+      "eventType": "energy.disruption",
+      "headline": "US diesel prices hit all-time high amid Iran conflict",
+      "summary": "US diesel prices have reached a record high, driven by the surge in wholesale oil prices since the Iran conflict began at the end of February.",
+      "confidenceScore": 0.8,
+      "confidenceLabel": "high",
       "coordinateQuality": "missing",
       "tier": 2,
       "tags": [
-        "aljazeera-english",
-        "storyline:13e06972"
+        "bbc-world",
+        "storyline:413ac1b1"
       ],
-      "geopoliticalScore": 7,
-      "economicImpactScore": 2
+      "geopoliticalScore": 5,
+      "economicImpactScore": 9
     },
     {
-      "id": "e91af310b0404679f7a105de",
+      "id": "d682d0982e17bb61e431c98c",
       "source": "rss_intelligence",
-      "eventDate": "2026-09-03",
+      "eventDate": "2026-09-04",
       "iso3": [
         "ISR",
         "PSE"
       ],
       "eventType": "conflict.armed",
-      "headline": "Israeli settlers and forces kill two Palestinian teenagers in West Bank village raid",
-      "summary": "Two Palestinian teenagers were killed in an attack by settlers and Israeli forces on the West Bank village of al-Mughayyer, amid continued violence in the West Bank.",
-      "confidenceScore": 0.7,
-      "confidenceLabel": "medium",
-      "coordinateQuality": "missing",
-      "tier": 2,
-      "tags": [
-        "aljazeera-english",
-        "storyline:8e025ff4"
-      ],
-      "geopoliticalScore": 6,
-      "economicImpactScore": 1
-    },
-    {
-      "id": "ab0c9bd759641576ab9c7e60",
-      "source": "rss_intelligence",
-      "eventDate": "2026-09-03",
-      "iso3": [
-        "USA",
-        "IRN"
-      ],
-      "eventType": "diplomatic.dispute",
-      "headline": "Trump claims US control of Strait of Hormuz, suggests renaming it 'Trump Strait' amid Iran war",
-      "summary": "Amid renewed US-Iran fighting and near-daily attacks on ships in the Strait of Hormuz, Trump said the strait is under US control and suggested renaming it 'Trump Strait.'",
+      "headline": "Two Palestinian teenagers shot dead in West Bank village amid settler-military raid",
+      "summary": "Palestinian teenagers Omar al-Naasan and Khalil Abu Alia were shot dead when Israeli settlers and soldiers entered a village in the occupied West Bank. The father of one of the teens told the BBC he expects his sons to be killed.",
       "confidenceScore": 0.65,
       "confidenceLabel": "medium",
       "coordinateQuality": "missing",
       "tier": 2,
       "tags": [
-        "aljazeera-english",
+        "bbc-world",
+        "storyline:8e025ff4"
+      ],
+      "geopoliticalScore": 5,
+      "economicImpactScore": 1
+    },
+    {
+      "id": "245ba3bd52066da5298708de",
+      "source": "rss_intelligence",
+      "eventDate": "2026-09-04",
+      "iso3": [
+        "USA"
+      ],
+      "eventType": "economic.trade",
+      "headline": "US August jobs report seen as signal for Fed inflation policy, BlackRock says",
+      "summary": "BlackRock portfolio manager Jeffrey Rosenberg said the August US employment report is significant primarily for its implications on inflation and Federal Reserve monetary policy.",
+      "confidenceScore": 0.7,
+      "confidenceLabel": "medium",
+      "coordinateQuality": "missing",
+      "tier": 3,
+      "tags": [
+        "bloomberg-markets",
+        "storyline:413ac1b1"
+      ],
+      "geopoliticalScore": 2,
+      "economicImpactScore": 6
+    },
+    {
+      "id": "25fbac8f8c10670ae5a3947e",
+      "source": "rss_intelligence",
+      "eventDate": "2026-09-04",
+      "iso3": [
+        "USA"
+      ],
+      "eventType": "energy.disruption",
+      "headline": "Gold falls as strong US payrolls fuel Fed rate hike bets",
+      "summary": "Gold prices fell after a stronger-than-anticipated increase in US payrolls drove bets that the Federal Reserve will be forced to raise interest rates this year.",
+      "confidenceScore": 0.75,
+      "confidenceLabel": "high",
+      "coordinateQuality": "missing",
+      "tier": 3,
+      "tags": [
+        "bloomberg-markets",
+        "storyline:413ac1b1"
+      ],
+      "geopoliticalScore": 2,
+      "economicImpactScore": 7
+    },
+    {
+      "id": "570e6efaf88b7c8ba2ab1d58",
+      "source": "rss_intelligence",
+      "eventDate": "2026-09-04",
+      "iso3": [
+        "IRN",
+        "USA"
+      ],
+      "eventType": "energy.disruption",
+      "headline": "Oil surges on renewed US-Iran fighting, Strait of Hormuz disruption fears",
+      "summary": "Oil prices were on track for a weekly surge as renewed fighting between the US and Iran heightened concerns about prolonged disruptions to energy flows through the Strait of Hormuz.",
+      "confidenceScore": 0.75,
+      "confidenceLabel": "high",
+      "coordinateQuality": "missing",
+      "tier": 1,
+      "tags": [
+        "bloomberg-markets",
+        "storyline:413ac1b1"
+      ],
+      "geopoliticalScore": 7,
+      "economicImpactScore": 9
+    },
+    {
+      "id": "ba3d3a6075bb9fc1a1913c70",
+      "source": "rss_intelligence",
+      "eventDate": "2026-09-04",
+      "iso3": [
+        "IRN",
+        "USA"
+      ],
+      "eventType": "conflict.armed",
+      "headline": "US launches fresh strikes on Iranian military targets amid 'forever war' concerns",
+      "summary": "The United States has launched fresh attacks on military targets in Iran, aiming to prevent Tehran from rebuilding destroyed military capabilities. Analysts warn the campaign risks becoming a sustained cycle of reconstruction followed by renewed attacks.",
+      "confidenceScore": 0.7,
+      "confidenceLabel": "medium",
+      "coordinateQuality": "missing",
+      "tier": 1,
+      "tags": [
+        "dw-world",
+        "storyline:b4296536"
+      ],
+      "geopoliticalScore": 8,
+      "economicImpactScore": 8
+    },
+    {
+      "id": "e6f8092216c843c74347f7bd",
+      "source": "rss_intelligence",
+      "eventDate": "2026-09-04",
+      "iso3": [
+        "NOR",
+        "RUS",
+        "UKR"
+      ],
+      "eventType": "diplomatic.dispute",
+      "headline": "Norway seizes Russian ship Professor Molchanov over Naftogaz court order",
+      "summary": "Norwegian authorities seized the Russian vessel Professor Molchanov near Svalbard following a court order sought by Ukraine's Naftogaz to compensate for damages Russia refused to pay. Russia has protested the seizure.",
+      "confidenceScore": 0.8,
+      "confidenceLabel": "high",
+      "coordinateQuality": "missing",
+      "tier": 3,
+      "tags": [
+        "dw-world",
         "storyline:13e06972"
+      ],
+      "geopoliticalScore": 5,
+      "economicImpactScore": 2
+    },
+    {
+      "id": "24fb36d935e1fd90d272cac6",
+      "source": "rss_intelligence",
+      "eventDate": "2026-09-04",
+      "iso3": [
+        "LBN",
+        "ISR"
+      ],
+      "eventType": "conflict.armed",
+      "headline": "Israel seizes strategic Ali al-Taher ridge from Hezbollah in south Lebanon",
+      "summary": "Israel's Defence Minister Israel Katz announced that Israeli forces have seized the Ali al-Taher ridge in southern Lebanon from Hezbollah, a highland about 10 kilometres from the Israeli border. The area had been targeted by Israeli strikes in recent weeks despite an existing ceasefire, and Hezbollah has not confirmed losing the position.",
+      "confidenceScore": 0.75,
+      "confidenceLabel": "high",
+      "coordinateQuality": "missing",
+      "tier": 2,
+      "tags": [
+        "france24-english",
+        "storyline:8e025ff4"
+      ],
+      "geopoliticalScore": 6,
+      "economicImpactScore": 2
+    },
+    {
+      "id": "38bd2676ebbeaebf23932b31",
+      "source": "rss_intelligence",
+      "eventDate": "2026-09-04",
+      "iso3": [
+        "GBR",
+        "ARG",
+        "USA"
+      ],
+      "eventType": "diplomatic.dispute",
+      "headline": "UK reasserts Falklands sovereignty after Milei and Trump remarks",
+      "summary": "Britain reaffirmed the Falkland Islands 'are British' after Argentine President Javier Milei suggested shifting US neutrality could favor Argentina's claim, following comments by President Trump. The dispute over the islands' sovereignty resurfaced in headlines.",
+      "confidenceScore": 0.7,
+      "confidenceLabel": "medium",
+      "coordinateQuality": "missing",
+      "tier": 3,
+      "tags": [
+        "france24-english",
+        "storyline:13e06972"
+      ],
+      "geopoliticalScore": 5,
+      "economicImpactScore": 0.5
+    },
+    {
+      "id": "93664589c8c97b7141435ff7",
+      "source": "rss_intelligence",
+      "eventDate": "2026-09-04",
+      "iso3": [
+        "IRN",
+        "USA"
+      ],
+      "eventType": "energy.disruption",
+      "headline": "Oil prices surge as US-Iran hostilities resume, Strait of Hormuz remains blocked",
+      "summary": "Renewed US-Iran hostilities have reignited fears of oil supply disruption, with prices on track for their steepest weekly gain since mid-July, up 7.6%, as the conflict enters its seventh month. The Strait of Hormuz, through which 25% of world oil supply passes, has been blocked since the start of the conflict.",
+      "confidenceScore": 0.75,
+      "confidenceLabel": "high",
+      "coordinateQuality": "missing",
+      "tier": 1,
+      "tags": [
+        "france24-english",
+        "storyline:413ac1b1"
+      ],
+      "geopoliticalScore": 8,
+      "economicImpactScore": 9.5
+    },
+    {
+      "id": "edb7d240bca965c9001d9981",
+      "source": "rss_intelligence",
+      "eventDate": "2026-09-04",
+      "iso3": [
+        "YEM"
+      ],
+      "eventType": "conflict.armed",
+      "headline": "Houthis advance toward Bab al-Mandab Strait port city amid escalating ground fighting",
+      "summary": "Yemen's Iran-backed Houthi militia appear to be pushing to seize control of a port city near the Bab al-Mandab Strait, a key global trade chokepoint, as ground fighting escalates in the region.",
+      "confidenceScore": 0.65,
+      "confidenceLabel": "medium",
+      "coordinateQuality": "missing",
+      "tier": 2,
+      "tags": [
+        "nytimes-world",
+        "storyline:181da00b"
       ],
       "geopoliticalScore": 7,
       "economicImpactScore": 7
     },
     {
-      "id": "e8b176e6cb9b8f595917df8d",
+      "id": "8b8b049255084a0ebe14e72b",
       "source": "rss_intelligence",
-      "eventDate": "2026-09-03",
+      "eventDate": "2026-09-04",
       "iso3": [
         "UKR",
         "RUS"
       ],
-      "eventType": "conflict.armed",
-      "headline": "Zelensky urges airlines to avoid Russian airspace as Ukraine escalates drone operations",
-      "summary": "Ukrainian President Zelensky said airlines should avoid Russian airspace as Ukraine escalates drone operations, noting Chinese and Gulf state airlines are still using Russian airspace. Russia said it will intensify its own attacks on Ukraine.",
-      "confidenceScore": 0.75,
-      "confidenceLabel": "high",
+      "eventType": "diplomatic.cooperation",
+      "headline": "Ukraine's Budanov advocates negotiated settlement as Russia-Ukraine talks set to resume",
+      "summary": "Kyrylo Budanov, a former Ukrainian military intelligence chief, has advocated for a negotiated settlement with Russia. Talks between the two sides are expected to resume this month.",
+      "confidenceScore": 0.65,
+      "confidenceLabel": "medium",
       "coordinateQuality": "missing",
-      "tier": 2,
+      "tier": 3,
       "tags": [
-        "bbc-world",
-        "storyline:3ccac860"
+        "nytimes-world",
+        "storyline:13e06972"
       ],
       "geopoliticalScore": 6,
-      "economicImpactScore": 4
+      "economicImpactScore": 2
     },
     {
-      "id": "e039b09c07d66d9f37c42a5d",
+      "id": "485b7233e72eb82f3a247280",
       "source": "rss_intelligence",
-      "eventDate": "2026-09-03",
+      "eventDate": "2026-09-04",
       "iso3": [
-        "VEN",
+        "NLD",
         "USA"
       ],
-      "eventType": "economic.trade",
-      "headline": "US-Venezuela oil deal for 65 billion barrels of crude sparks controversy",
-      "summary": "A US oil deal involving 65 billion barrels of Venezuelan crude has puzzled analysts and angered many Venezuelans. A former envoy labeled the deal a colonialist 'fever dream.'",
+      "eventType": "other",
+      "headline": "Dutch central bank repatriates 90 tons of gold from New York Fed citing geopolitical unrest",
+      "summary": "The Netherlands' central bank moved approximately 90 tons of gold out of the Federal Reserve Bank in New York, citing 'geopolitical unrest'. It is the second European nation this year to announce a decrease or elimination of its U.S. gold holdings.",
+      "confidenceScore": 0.8,
+      "confidenceLabel": "high",
+      "coordinateQuality": "missing",
+      "tier": 3,
+      "tags": [
+        "nytimes-world",
+        "storyline:235b23a3"
+      ],
+      "geopoliticalScore": 5,
+      "economicImpactScore": 5
+    },
+    {
+      "id": "8e5430f0ab2acb67e3508fa8",
+      "source": "rss_intelligence",
+      "eventDate": "2026-09-04",
+      "iso3": [
+        "CHN",
+        "USA"
+      ],
+      "eventType": "other",
+      "headline": "Chinese researchers claim uranium extraction from seawater at 8 times US target rate",
+      "summary": "A team from the Chinese Academy of Sciences in Qingdao developed a material called PhosCage that extracts uranium from seawater at a rate several times higher than the target set by the US Department of Energy. The advance could position China at the forefront of efforts to tap seawater as a nuclear fuel source.",
+      "confidenceScore": 0.6,
+      "confidenceLabel": "medium",
+      "coordinateQuality": "missing",
+      "tier": 3,
+      "tags": [
+        "scmp-china",
+        "storyline:235b23a3"
+      ],
+      "geopoliticalScore": 4,
+      "economicImpactScore": 3
+    },
+    {
+      "id": "ddde62dcb05adb74b43219e7",
+      "source": "rss_intelligence",
+      "eventDate": "2026-09-04",
+      "iso3": [
+        "CHN",
+        "JPN"
+      ],
+      "eventType": "energy.disruption",
+      "headline": "Fuel and petrochemical prices outpace crude oil, disrupting global supply chains like potato chip packaging",
+      "summary": "Fuel and petrochemical prices are rising faster than crude oil, with downstream effects reaching consumer goods such as Japanese snack brand Calbee, which changed its packaging due to supply chain pressures. The report examines the causes and durability of this price divergence.",
       "confidenceScore": 0.55,
       "confidenceLabel": "medium",
       "coordinateQuality": "missing",
       "tier": 3,
       "tags": [
-        "bbc-world",
-        "storyline:413ac1b1"
-      ],
-      "geopoliticalScore": 5,
-      "economicImpactScore": 6
-    },
-    {
-      "id": "5a25a6d3b2832296625cf93c",
-      "source": "rss_intelligence",
-      "eventDate": "2026-09-03",
-      "iso3": [
-        "DEU",
-        "RUS",
-        "FRA"
-      ],
-      "eventType": "diplomatic.dispute",
-      "headline": "EU and France summon Russian envoy over failed Leipzig drone attack",
-      "summary": "The EU's foreign policy chief Kaja Kallas said an attempted drone attack at Leipzig had 'all the hallmarks of state-sponsored terrorism' and announced the EU was summoning a Russian envoy. France announced a similar diplomatic step.",
-      "confidenceScore": 0.8,
-      "confidenceLabel": "high",
-      "coordinateQuality": "missing",
-      "tier": 2,
-      "tags": [
-        "dw-world",
-        "storyline:13e06972"
-      ],
-      "geopoliticalScore": 6,
-      "economicImpactScore": 2
-    },
-    {
-      "id": "099cc819a1a9b8ba8e7e078f",
-      "source": "rss_intelligence",
-      "eventDate": "2026-09-03",
-      "iso3": [
-        "DEU",
-        "RUS",
-        "UKR"
-      ],
-      "eventType": "conflict.armed",
-      "headline": "Germany blames Russia for attempted explosive drone attack at Leipzig airport targeting Ukrainian cargo plane",
-      "summary": "German investigators believe an explosives-laden drone deliberately targeted a Ukrainian cargo aircraft at Leipzig/Halle airport in early August. The German government said on Tuesday it held Russia 'responsible' for the attempted attack.",
-      "confidenceScore": 0.75,
-      "confidenceLabel": "high",
-      "coordinateQuality": "missing",
-      "tier": 2,
-      "tags": [
-        "dw-world",
-        "storyline:3ccac860"
-      ],
-      "geopoliticalScore": 6,
-      "economicImpactScore": 2
-    },
-    {
-      "id": "ecad5365d0be2e7cbe9286b1",
-      "source": "rss_intelligence",
-      "eventDate": "2026-09-03",
-      "iso3": [
-        "IRN",
-        "USA"
-      ],
-      "eventType": "energy.disruption",
-      "headline": "Iran fuel crisis deepens as war damage and US sanctions squeeze supplies",
-      "summary": "Long lines at fuel stations are spreading across Iran as war damage, import constraints and new US sanctions squeeze fuel supplies.",
-      "confidenceScore": 0.7,
-      "confidenceLabel": "medium",
-      "coordinateQuality": "missing",
-      "tier": 2,
-      "tags": [
-        "dw-world",
-        "storyline:413ac1b1"
-      ],
-      "geopoliticalScore": 5,
-      "economicImpactScore": 6
-    },
-    {
-      "id": "60e04148d66e918b409bf4eb",
-      "source": "rss_intelligence",
-      "eventDate": "2026-09-03",
-      "iso3": [
-        "IRN",
-        "USA"
-      ],
-      "eventType": "conflict.armed",
-      "headline": "US-Iran hostilities resume amid wave of misinformation on social media",
-      "summary": "US-Iran hostilities have flared up again with strikes resuming, accompanied by a wave of online misinformation using old and unrelated videos falsely presented as footage of new attacks on American bases in the Gulf.",
-      "confidenceScore": 0.6,
-      "confidenceLabel": "medium",
-      "coordinateQuality": "missing",
-      "tier": 2,
-      "tags": [
-        "france24-english",
-        "storyline:413ac1b1"
-      ],
-      "geopoliticalScore": 6,
-      "economicImpactScore": 5
-    },
-    {
-      "id": "f377f8ee924e67d93fda6187",
-      "source": "rss_intelligence",
-      "eventDate": "2026-09-03",
-      "iso3": [
-        "RUS",
-        "UKR"
-      ],
-      "eventType": "conflict.armed",
-      "headline": "Zelensky warns Russian airspace unsafe due to Ukrainian drone strikes, Putin accuses Ukraine of 'state terrorism'",
-      "summary": "Ukrainian President Volodymyr Zelensky warned that Ukrainian drones would make Russia's airspace 'completely unsafe' for the duration of the war. Russian President Vladimir Putin accused Ukraine of 'state terrorism' in response.",
-      "confidenceScore": 0.75,
-      "confidenceLabel": "high",
-      "coordinateQuality": "missing",
-      "tier": 2,
-      "tags": [
-        "france24-english",
-        "storyline:3ccac860"
-      ],
-      "geopoliticalScore": 6,
-      "economicImpactScore": 4
-    },
-    {
-      "id": "cddf01ed3d0cb7082354028f",
-      "source": "rss_intelligence",
-      "eventDate": "2026-09-03",
-      "iso3": [
-        "IRN",
-        "USA",
-        "SAU"
-      ],
-      "eventType": "conflict.armed",
-      "headline": "Iran fires on Gulf neighbors after US strikes in resumed six-month US-Iran war",
-      "summary": "Iran fired on its Gulf neighbors in retaliation for U.S. strikes, after a monthlong lull in what has become a six-month war between the U.S. and Iran. The conflict has spiked oil prices, disrupted the global economy, and created political challenges for President Trump's Republican Party ahead of November midterm elections.",
-      "confidenceScore": 0.75,
-      "confidenceLabel": "high",
-      "coordinateQuality": "missing",
-      "tier": 1,
-      "tags": [
-        "npr-news",
-        "storyline:413ac1b1"
-      ],
-      "geopoliticalScore": 9,
-      "economicImpactScore": 9
-    },
-    {
-      "id": "f303de2133a5c4436016d1e1",
-      "source": "rss_intelligence",
-      "eventDate": "2026-09-03",
-      "iso3": [
-        "ISR",
-        "IRN"
-      ],
-      "eventType": "diplomatic.dispute",
-      "headline": "Israeli FM warns Iran against attacking Israel, accuses Tehran of pursuing nuclear weapons",
-      "summary": "Israel's Foreign Minister Gideon Sa'ar, addressing the resumed U.S.-Iran fighting, warned that any Iranian attack on Israel would trigger a 'severe' response. He accused Iran of continuing to pursue nuclear weapons aspirations and said Israel would not allow Iran to acquire them.",
-      "confidenceScore": 0.75,
-      "confidenceLabel": "high",
-      "coordinateQuality": "missing",
-      "tier": 2,
-      "tags": [
-        "france24-english",
-        "storyline:13e06972"
-      ],
-      "geopoliticalScore": 7.5,
-      "economicImpactScore": 4
-    },
-    {
-      "id": "12456cc0c00963b72375cf77",
-      "source": "rss_intelligence",
-      "eventDate": "2026-09-03",
-      "iso3": [
-        "UKR",
-        "RUS"
-      ],
-      "eventType": "energy.disruption",
-      "headline": "Russian and Ukrainian strikes on Black Sea ports threaten global grain supply",
-      "summary": "Strikes on ports and vessels by both Russia and Ukraine in the Black Sea have left farmers facing ruin and threaten to cause another worldwide food shock, according to reporting.",
-      "confidenceScore": 0.7,
-      "confidenceLabel": "medium",
-      "coordinateQuality": "missing",
-      "tier": 2,
-      "tags": [
-        "nytimes-world",
-        "storyline:4252785c"
-      ],
-      "geopoliticalScore": 7,
-      "economicImpactScore": 8.5
-    },
-    {
-      "id": "0e0e959dc8ff32cba360f8a5",
-      "source": "rss_intelligence",
-      "eventDate": "2026-09-03",
-      "iso3": [
-        "USA",
-        "IRN"
-      ],
-      "eventType": "conflict.armed",
-      "headline": "US increasingly bogged down in Iran as war flares up again despite Trump's dominance claims",
-      "summary": "The United States appears increasingly bogged down in its six-month conflict with Iran as fighting flares up again, despite President Trump's earlier declarations of military dominance. Trump is reportedly returning to a familiar playbook, including discussion of the Strait of Hormuz.",
-      "confidenceScore": 0.6,
-      "confidenceLabel": "medium",
-      "coordinateQuality": "missing",
-      "tier": 2,
-      "tags": [
-        "nytimes-world",
-        "storyline:413ac1b1"
-      ],
-      "geopoliticalScore": 8,
-      "economicImpactScore": 7.5
-    },
-    {
-      "id": "0e384828520aeac95a7c3b66",
-      "source": "rss_intelligence",
-      "eventDate": "2026-09-03",
-      "iso3": [
-        "IRN",
-        "USA"
-      ],
-      "eventType": "conflict.armed",
-      "headline": "US-Iran war continues as Trump floats renaming Strait of Hormuz 'Trump Strait'",
-      "summary": "Fighting continued in the Strait of Hormuz between US and Iranian forces, with Iran having effectively shut the waterway. President Trump suggested renaming the strait 'Trump Strait' while asserting US control over it.",
-      "confidenceScore": 0.65,
-      "confidenceLabel": "medium",
-      "coordinateQuality": "missing",
-      "tier": 1,
-      "tags": [
         "scmp-china",
         "storyline:413ac1b1"
-      ],
-      "geopoliticalScore": 8,
-      "economicImpactScore": 8.5
-    },
-    {
-      "id": "25a04fb8ba5c5e4a418310bf",
-      "source": "rss_intelligence",
-      "eventDate": "2026-09-03",
-      "iso3": [
-        "IRN",
-        "USA"
-      ],
-      "eventType": "economic.sanctions",
-      "headline": "US sanctions on Iran force cancellation of English proficiency and graduate exams for students",
-      "summary": "New US sanctions measures on Iran have led to the cancellation of English proficiency and graduate exams needed for Iranians seeking to study abroad. The measures are isolating Iranians who sought educational ties with the wider world.",
-      "confidenceScore": 0.7,
-      "confidenceLabel": "medium",
-      "coordinateQuality": "missing",
-      "tier": 3,
-      "tags": [
-        "nytimes-world",
-        "storyline:13e06972"
-      ],
-      "geopoliticalScore": 4,
-      "economicImpactScore": 1
-    },
-    {
-      "id": "b70813fceeda59f53baf73ca",
-      "source": "rss_intelligence",
-      "eventDate": "2026-09-03",
-      "iso3": [
-        "USA"
-      ],
-      "eventType": "diplomatic.dispute",
-      "headline": "European allies push back on Trump's tariffs and Iran war at G20 summit",
-      "summary": "At a G20 summit meant to showcase President Trump's economic policies, European allies complained about US tariffs and the war with Iran. The summit, framed as a model for global economic policy, instead exposed friction between the US and its allies.",
-      "confidenceScore": 0.6,
-      "confidenceLabel": "medium",
-      "coordinateQuality": "missing",
-      "tier": 3,
-      "tags": [
-        "nytimes-world",
-        "storyline:13e06972"
-      ],
-      "geopoliticalScore": 6,
-      "economicImpactScore": 4
-    },
-    {
-      "id": "b64837f2607949c710b80fb6",
-      "source": "rss_intelligence",
-      "eventDate": "2026-09-03",
-      "iso3": [
-        "CAN",
-        "USA"
-      ],
-      "eventType": "economic.trade",
-      "headline": "Canada's Carney tells Trump officials to 'stop throwing shade' amid trade war, wins special elections",
-      "summary": "Canadian Prime Minister Mark Carney pushed back against US Trump administration officials during ongoing trade war tensions over tariffs. Amid the dispute, Carney's Liberal party swept three special votes and polling showed strong support for him and his retaliatory tariffs against the US.",
-      "confidenceScore": 0.7,
-      "confidenceLabel": "medium",
-      "coordinateQuality": "missing",
-      "tier": 3,
-      "tags": [
-        "nytimes-world",
-        "storyline:413ac1b1"
-      ],
-      "geopoliticalScore": 4,
-      "economicImpactScore": 4
-    },
-    {
-      "id": "ae96b353522a6765d4ab336e",
-      "source": "rss_intelligence",
-      "eventDate": "2026-09-03",
-      "iso3": [
-        "CHN",
-        "USA"
-      ],
-      "eventType": "other",
-      "headline": "US export controls push Chinese tech IPOs toward Beijing's strategic 'chokepoint' sectors",
-      "summary": "A report found that years of US export controls have reshaped China's technology sector, concentrating IPO activity in areas where Beijing seeks to reduce reliance on foreign technology. About 20 percent of companies listing on Shanghai's Star Market are in these strategic chokepoint areas.",
-      "confidenceScore": 0.6,
-      "confidenceLabel": "medium",
-      "coordinateQuality": "missing",
-      "tier": 3,
-      "tags": [
-        "scmp-china",
-        "storyline:13e06972"
-      ],
-      "geopoliticalScore": 5,
-      "economicImpactScore": 5
-    },
-    {
-      "id": "1fa4fdab4f884477fdf418f8",
-      "source": "rss_intelligence",
-      "eventDate": "2026-09-03",
-      "iso3": [
-        "USA",
-        "CHN"
-      ],
-      "eventType": "diplomatic.dispute",
-      "headline": "Trump touts US AI lead over China ahead of Xi's Washington visit amid rising inflation and oil prices",
-      "summary": "US President Donald Trump claimed the US holds a significant AI lead over China and said he was 'thrilled' about Chinese President Xi Jinping's upcoming visit to Washington. Trump's comments came as inflation and oil prices reportedly rise.",
-      "confidenceScore": 0.6,
-      "confidenceLabel": "medium",
-      "coordinateQuality": "missing",
-      "tier": 3,
-      "tags": [
-        "scmp-china",
-        "storyline:13e06972"
-      ],
-      "geopoliticalScore": 6,
-      "economicImpactScore": 4
-    },
-    {
-      "id": "64b0485f84535800b4550c3c",
-      "source": "rss_intelligence",
-      "eventDate": "2026-09-03",
-      "iso3": [
-        "SAU",
-        "IRN",
-        "PHL"
-      ],
-      "eventType": "conflict.armed",
-      "headline": "Iran attack on Saudi oil tanker Sidr in Strait of Hormuz kills two Filipino sailors",
-      "summary": "Saudi Arabia said an Iranian attack on the oil tanker Sidr, owned by state shipping company Bahri, killed two Filipino seafarers. The vessel was one of two supertankers carrying Saudi oil hit late Monday while transiting the Strait of Hormuz, amid the ongoing US-Iran war.",
-      "confidenceScore": 0.75,
-      "confidenceLabel": "high",
-      "coordinateQuality": "missing",
-      "tier": 1,
-      "tags": [
-        "scmp-china",
-        "storyline:b4296536"
-      ],
-      "geopoliticalScore": 8,
-      "economicImpactScore": 9
-    },
-    {
-      "id": "05712037c167ced3ab329005",
-      "source": "rss_intelligence",
-      "eventDate": "2026-09-03",
-      "iso3": [
-        "IRN",
-        "CHN",
-        "RUS"
-      ],
-      "eventType": "conflict.armed",
-      "headline": "SCO adopts first declaration on nuclear security amid renewed attacks on Iran",
-      "summary": "The Shanghai Cooperation Organisation issued its first dedicated declaration on nuclear safety and security, condemning attacks on peaceful nuclear facilities. The document was adopted Tuesday at the bloc's 25th anniversary summit amid tensions over Iran's nuclear programme.",
-      "confidenceScore": 0.7,
-      "confidenceLabel": "medium",
-      "coordinateQuality": "missing",
-      "tier": 2,
-      "tags": [
-        "scmp-china",
-        "storyline:b4296536"
-      ],
-      "geopoliticalScore": 7,
-      "economicImpactScore": 4
-    },
-    {
-      "id": "c9056e717306360680f169d7",
-      "source": "rss_intelligence",
-      "eventDate": "2026-09-03",
-      "iso3": [
-        "JPN",
-        "PHL",
-        "IDN",
-        "CHN"
-      ],
-      "eventType": "conflict.armed",
-      "headline": "Japan plans to transfer aging warships to Philippines and Indonesia to counter China",
-      "summary": "Japan is planning to transfer aging warships to the Philippines and Indonesia, a move observers say could deepen regional security ties and help Tokyo counterbalance Beijing's growing influence. The transfers fit into Japan's broader security assistance toolkit to strengthen regional partners.",
-      "confidenceScore": 0.65,
-      "confidenceLabel": "medium",
-      "coordinateQuality": "missing",
-      "tier": 3,
-      "tags": [
-        "scmp-china",
-        "storyline:b4296536"
-      ],
-      "geopoliticalScore": 6,
-      "economicImpactScore": 1
-    },
-    {
-      "id": "17817ca7ba7ac122c65c886a",
-      "source": "rss_intelligence",
-      "eventDate": "2026-09-03",
-      "iso3": [
-        "CHN",
-        "BEL"
-      ],
-      "eventType": "economic.trade",
-      "headline": "EU trade officials in Beijing press China to fix trade imbalances before October deadline",
-      "summary": "A European Commission delegation led by trade enforcement chief Denis Redonnet held talks with Chinese officials in Beijing seeking a diplomatic resolution to trade tensions before an October deadline set by Brussels. The talks aim to avert a looming trade war between the EU and China.",
-      "confidenceScore": 0.75,
-      "confidenceLabel": "high",
-      "coordinateQuality": "missing",
-      "tier": 2,
-      "tags": [
-        "scmp-china",
-        "storyline:413ac1b1"
-      ],
-      "geopoliticalScore": 6.5,
-      "economicImpactScore": 6
-    },
-    {
-      "id": "0134dccee99be1746f54b114",
-      "source": "rss_intelligence",
-      "eventDate": "2026-09-03",
-      "iso3": [
-        "IND",
-        "IRN",
-        "USA"
-      ],
-      "eventType": "economic.trade",
-      "headline": "India's economy grows 7.8% in Q1 despite oil price shock from US-Iran war",
-      "summary": "India's economy grew 7.8 per cent in the April-June quarter, stronger than expected, bolstering analyst confidence it can sustain 8 percent growth despite high oil prices caused by the US-Iran war. India remains the world's fastest-growing major economy.",
-      "confidenceScore": 0.75,
-      "confidenceLabel": "high",
-      "coordinateQuality": "missing",
-      "tier": 3,
-      "tags": [
-        "scmp-china",
-        "storyline:413ac1b1"
-      ],
-      "geopoliticalScore": 5,
-      "economicImpactScore": 6
-    },
-    {
-      "id": "d119a2dcc467d21a553f1a15",
-      "source": "rss_intelligence",
-      "eventDate": "2026-09-03",
-      "iso3": [
-        "RUS",
-        "UKR",
-        "USA"
-      ],
-      "eventType": "diplomatic.dispute",
-      "headline": "Putin rules out talks with Ukrainian 'terrorists' as Russia intensifies strikes on Kyiv",
-      "summary": "Russian President Vladimir Putin said at a 3 a.m. news conference he won't deal with Ukrainian 'terrorists,' while praising US mediators, as Moscow intensified strikes on Kyiv. The remarks suggested Putin sees little chance of a deal to end the war in Ukraine.",
-      "confidenceScore": 0.8,
-      "confidenceLabel": "high",
-      "coordinateQuality": "missing",
-      "tier": 2,
-      "tags": [
-        "washingtonpost-world",
-        "storyline:13e06972"
-      ],
-      "geopoliticalScore": 7.5,
-      "economicImpactScore": 3
-    },
-    {
-      "id": "4510e4fb9e3df56d650edf14",
-      "source": "rss_intelligence",
-      "eventDate": "2026-09-03",
-      "iso3": [
-        "RUS",
-        "UKR"
-      ],
-      "eventType": "conflict.armed",
-      "headline": "Russia deploys jet-powered drones overwhelming Ukraine's air defenses",
-      "summary": "Russia is attacking Ukraine with jet-propelled drones, straining Kyiv's air defense capabilities and forcing continued adaptation in the drone-warfare arms race defining the war.",
-      "confidenceScore": 0.7,
-      "confidenceLabel": "medium",
-      "coordinateQuality": "missing",
-      "tier": 2,
-      "tags": [
-        "washingtonpost-world",
-        "storyline:b4296536"
-      ],
-      "geopoliticalScore": 6,
-      "economicImpactScore": 2
-    },
-    {
-      "id": "a052517f5676556149230d32",
-      "source": "rss_intelligence",
-      "eventDate": "2026-09-03",
-      "iso3": [
-        "DEU",
-        "RUS"
-      ],
-      "eventType": "diplomatic.dispute",
-      "headline": "Germany blames Russia for August drone attack on airport, announces countermeasures",
-      "summary": "German officials said an August 4 drone attack attempt on an airport was carried out by Russia as part of a campaign to undermine European support for Ukraine. Germany announced countermeasures in response.",
-      "confidenceScore": 0.7,
-      "confidenceLabel": "medium",
-      "coordinateQuality": "missing",
-      "tier": 2,
-      "tags": [
-        "washingtonpost-world",
-        "storyline:13e06972"
-      ],
-      "geopoliticalScore": 6,
-      "economicImpactScore": 1.5
-    },
-    {
-      "id": "1264534a3e343edf8e162b1b",
-      "source": "rss_intelligence",
-      "eventDate": "2026-09-03",
-      "iso3": [
-        "VEN",
-        "USA"
-      ],
-      "eventType": "other",
-      "headline": "Maduro asserts diplomatic immunity in US court, seeks dismissal of charges",
-      "summary": "Former Venezuelan leader Nicolas Maduro, who was abducted by US forces during a military attack on Caracas in January, is asserting immunity in a US court and urging dismissal of charges against him.",
-      "confidenceScore": 0.7,
-      "confidenceLabel": "medium",
-      "coordinateQuality": "missing",
-      "tier": 2,
-      "tags": [
-        "aljazeera-english",
-        "storyline:13e06972"
-      ],
-      "geopoliticalScore": 6,
-      "economicImpactScore": 2
-    },
-    {
-      "id": "eae80932dceacc42d6fa76b6",
-      "source": "rss_intelligence",
-      "eventDate": "2026-09-03",
-      "iso3": [
-        "IRN",
-        "USA"
-      ],
-      "eventType": "conflict.armed",
-      "headline": "Trump claims US control of Strait of Hormuz amid near-daily attacks on ships",
-      "summary": "Amid renewed fighting with Iran and near-daily attacks on ships, Trump suggested renaming the Strait of Hormuz as 'Trump Strait' and claimed it is under US control.",
-      "confidenceScore": 0.6,
-      "confidenceLabel": "medium",
-      "coordinateQuality": "missing",
-      "tier": 2,
-      "tags": [
-        "aljazeera-english",
-        "storyline:b4296536"
-      ],
-      "geopoliticalScore": 7.5,
-      "economicImpactScore": 8.5
-    },
-    {
-      "id": "93b948374ff52a0ec950154f",
-      "source": "rss_intelligence",
-      "eventDate": "2026-09-03",
-      "iso3": [
-        "IRL",
-        "ISR",
-        "UKR"
-      ],
-      "eventType": "diplomatic.dispute",
-      "headline": "EU foreign ministers fail to agree on Israel sanctions or Ukraine military support",
-      "summary": "EU foreign ministers meeting in Ireland failed to reach agreement on imposing trade sanctions on Israel or on providing additional military support for Ukraine, leaving the bloc deadlocked on both issues.",
-      "confidenceScore": 0.75,
-      "confidenceLabel": "high",
-      "coordinateQuality": "missing",
-      "tier": 3,
-      "tags": [
-        "aljazeera-english",
-        "storyline:13e06972"
-      ],
-      "geopoliticalScore": 6,
-      "economicImpactScore": 2
-    },
-    {
-      "id": "e5f77b88b786f2ba65c7a079",
-      "source": "rss_intelligence",
-      "eventDate": "2026-09-03",
-      "iso3": [
-        "CHN",
-        "EGY",
-        "USA"
-      ],
-      "eventType": "diplomatic.dispute",
-      "headline": "Xi Jinping visits Egypt as China seeks deeper influence in Middle East amid weakened US standing",
-      "summary": "China's President Xi Jinping visited Egypt for the first time in a decade, illustrating China's growing ambitions in the Middle East at a time when U.S. influence has been weakened by its war in Iran.",
-      "confidenceScore": 0.7,
-      "confidenceLabel": "medium",
-      "coordinateQuality": "missing",
-      "tier": 3,
-      "tags": [
-        "npr-news",
-        "storyline:13e06972"
-      ],
-      "geopoliticalScore": 6.5,
-      "economicImpactScore": 3
-    },
-    {
-      "id": "8957e8a175b6bdbbcf753d56",
-      "source": "rss_intelligence",
-      "eventDate": "2026-09-03",
-      "iso3": [
-        "UKR",
-        "RUS"
-      ],
-      "eventType": "conflict.armed",
-      "headline": "Russia and Ukraine trade escalating missile and drone strikes with no resolution in sight",
-      "summary": "Russia and Ukraine continue to exchange missile and drone attacks in an escalating pattern of warfare, causing ongoing human suffering. There is no indication that either side's resolve is weakening as the war continues.",
-      "confidenceScore": 0.7,
-      "confidenceLabel": "medium",
-      "coordinateQuality": "missing",
-      "tier": 2,
-      "tags": [
-        "nytimes-world",
-        "storyline:b4296536"
-      ],
-      "geopoliticalScore": 6,
-      "economicImpactScore": 3
-    },
-    {
-      "id": "7fb1db9bf11f13ce3f9c098c",
-      "source": "rss_intelligence",
-      "eventDate": "2026-09-03",
-      "iso3": [
-        "UKR",
-        "RUS"
-      ],
-      "eventType": "conflict.armed",
-      "headline": "New Russian jet-powered drones increase threat to Ukraine, harder to intercept",
-      "summary": "Russia has begun deploying jet-powered drones that are faster, more destructive, and more difficult to shoot down than previous propeller-driven models used throughout the war in Ukraine. The development is causing increased anxiety among Ukrainian defenders.",
-      "confidenceScore": 0.7,
-      "confidenceLabel": "medium",
-      "coordinateQuality": "missing",
-      "tier": 2,
-      "tags": [
-        "nytimes-world",
-        "storyline:b4296536"
-      ],
-      "geopoliticalScore": 5,
-      "economicImpactScore": 2
-    },
-    {
-      "id": "17eeb59b957e9c8521e94a4a",
-      "source": "rss_intelligence",
-      "eventDate": "2026-09-03",
-      "iso3": [
-        "PSE",
-        "ISR"
-      ],
-      "eventType": "conflict.armed",
-      "headline": "Israeli military raid kills two Palestinians in West Bank village of Al Mughayir",
-      "summary": "Israeli forces conducted a nighttime raid on the West Bank village of Al Mughayir, killing two Palestinians. The village has become a flashpoint for escalating settler violence, with the incident reportedly beginning as a dispute over livestock.",
-      "confidenceScore": 0.75,
-      "confidenceLabel": "high",
-      "coordinateQuality": "missing",
-      "tier": 2,
-      "tags": [
-        "nytimes-world",
-        "storyline:8e025ff4"
-      ],
-      "geopoliticalScore": 5,
-      "economicImpactScore": 1
-    },
-    {
-      "id": "6acbad4291cd0f29019740de",
-      "source": "rss_intelligence",
-      "eventDate": "2026-09-03",
-      "iso3": [
-        "CHN",
-        "USA"
-      ],
-      "eventType": "economic.trade",
-      "headline": "US export controls reshape China's tech IPO pipeline toward strategic 'chokepoint' sectors",
-      "summary": "A report found that years of US export controls have concentrated Chinese tech company IPOs in areas where Beijing seeks to reduce reliance on foreign technology. About 20% of companies listing on Shanghai's Star Market are in these chokepoint sectors.",
-      "confidenceScore": 0.65,
-      "confidenceLabel": "medium",
-      "coordinateQuality": "missing",
-      "tier": 3,
-      "tags": [
-        "scmp-china",
-        "storyline:413ac1b1"
-      ],
-      "geopoliticalScore": 5,
-      "economicImpactScore": 5
-    },
-    {
-      "id": "785a27fb30016937d9e632c4",
-      "source": "rss_intelligence",
-      "eventDate": "2026-09-03",
-      "iso3": [
-        "CHN",
-        "IRN",
-        "RUS"
-      ],
-      "eventType": "diplomatic.cooperation",
-      "headline": "SCO adopts first declaration on nuclear safety and security amid Iran tensions",
-      "summary": "The Shanghai Cooperation Organisation issued its first dedicated declaration on nuclear safety and security, condemning attacks on peaceful nuclear facilities. The document was adopted at the bloc's 25th anniversary summit amid tensions over Iran's nuclear programme.",
-      "confidenceScore": 0.75,
-      "confidenceLabel": "high",
-      "coordinateQuality": "missing",
-      "tier": 3,
-      "tags": [
-        "scmp-china",
-        "storyline:13e06972"
-      ],
-      "geopoliticalScore": 6,
-      "economicImpactScore": 3
-    },
-    {
-      "id": "314c726010cb156e50afaf8f",
-      "source": "rss_intelligence",
-      "eventDate": "2026-09-03",
-      "iso3": [
-        "CHN"
-      ],
-      "eventType": "other",
-      "headline": "Study finds Chinese military AI models lag foreign counterparts in combat applications",
-      "summary": "A study by researchers affiliated with China's Armed Police Force Shandong Corps and the Engineering University of People's Armed Police found China's military AI models trail foreign equivalents in performance, focusing more on support functions than combat.",
-      "confidenceScore": 0.6,
-      "confidenceLabel": "medium",
-      "coordinateQuality": "missing",
-      "tier": 3,
-      "tags": [
-        "scmp-china",
-        "storyline:13e06972"
       ],
       "geopoliticalScore": 3,
-      "economicImpactScore": 1
+      "economicImpactScore": 6
     },
     {
-      "id": "2e41c2e0ed880f562d890946",
+      "id": "49c254e51a6ac8e5924251eb",
       "source": "rss_intelligence",
-      "eventDate": "2026-09-03",
+      "eventDate": "2026-09-04",
       "iso3": [
-        "USA",
-        "JPN",
-        "KOR",
-        "TUR"
+        "BFA",
+        "CHN"
       ],
       "eventType": "diplomatic.cooperation",
-      "headline": "US considers Japanese, South Korean and Turkish frigate designs to expand naval fleet",
-      "summary": "The US is considering using frigate designs from Japan, South Korea or Turkey to expand its naval fleet as domestic shipbuilding struggles to meet demand. The move follows a National Security Presidential Memorandum signed by President Trump on August 13 calling for use of foreign designs.",
+      "headline": "Burkina Faso tests Chinese Sky Dragon 30 surface-to-air missile system",
+      "summary": "Burkina Faso tested what observers identify as a Chinese-made Sky Dragon 30 surface-to-air missile system, with footage released by the Burkinabe president's office showing multiple missiles fired from a mobile launcher. This signals expanding Chinese military equipment exports into the Sahel region.",
       "confidenceScore": 0.65,
       "confidenceLabel": "medium",
       "coordinateQuality": "missing",
@@ -875,44 +377,21 @@
         "scmp-china",
         "storyline:b4296536"
       ],
-      "geopoliticalScore": 4,
+      "geopoliticalScore": 5,
       "economicImpactScore": 3
     },
     {
-      "id": "e4797ef8d323a99f74059714",
+      "id": "3e7821bf9ccd30f6a419e0f6",
       "source": "rss_intelligence",
-      "eventDate": "2026-09-03",
+      "eventDate": "2026-09-04",
       "iso3": [
-        "KOR",
+        "CHN",
         "USA",
-        "PRK",
-        "CHN"
-      ],
-      "eventType": "conflict.armed",
-      "headline": "US military considers deploying cyber unit to South Korea, shifting focus toward China",
-      "summary": "Reports indicate the Pentagon is considering moving elements of a US Army specialist cyber unit to South Korea. Analysts say this could reorient the US military role on the peninsula from deterring North Korea to containing China, complicating South Korea's diplomatic balancing act.",
-      "confidenceScore": 0.6,
-      "confidenceLabel": "medium",
-      "coordinateQuality": "missing",
-      "tier": 3,
-      "tags": [
-        "scmp-china",
-        "storyline:b4296536"
-      ],
-      "geopoliticalScore": 5,
-      "economicImpactScore": 1
-    },
-    {
-      "id": "11f0cb90ed90f60e69ccffbb",
-      "source": "rss_intelligence",
-      "eventDate": "2026-09-03",
-      "iso3": [
-        "EGY",
-        "CHN"
+        "CAN"
       ],
       "eventType": "diplomatic.dispute",
-      "headline": "Xi Jinping urges Middle East to build independent security framework during Egypt visit",
-      "summary": "Chinese President Xi Jinping, on his first visit to Egypt in a decade, urged Middle Eastern nations to build a self-led security model, reducing reliance on Washington amid ongoing US-Iran military clashes. He made the proposal during talks with the Egyptian President but did not offer Beijing as an alternative security guarantor.",
+      "headline": "China and US military commanders resume Taiwan Strait command-level talks in Canada after 2-year break",
+      "summary": "Chinese General Yang Zhibin, commander of the PLA Eastern Theatre Command, met US Admiral Samuel Paparo at the Indo-Pacific Chiefs of Defence Conference in Canada, ending a two-year break in command-level military contact between China and the US regarding the Taiwan Strait.",
       "confidenceScore": 0.75,
       "confidenceLabel": "high",
       "coordinateQuality": "missing",
@@ -921,8 +400,54 @@
         "scmp-china",
         "storyline:13e06972"
       ],
-      "geopoliticalScore": 7,
+      "geopoliticalScore": 6,
       "economicImpactScore": 2
+    },
+    {
+      "id": "8204a105e1f2931b400e9ceb",
+      "source": "rss_intelligence",
+      "eventDate": "2026-09-04",
+      "iso3": [
+        "SRB",
+        "NLD",
+        "BIH"
+      ],
+      "eventType": "other",
+      "headline": "Body of convicted war criminal Ratko Mladic returned to Serbia with military honours",
+      "summary": "The body of Bosnian Serb war criminal Ratko Mladic arrived in Serbia from The Hague and was received with military honours, carried by six soldiers with the casket draped in the Serbian flag. Mladic's son Darko and Serbia's Justice Minister Nenad Vujic accompanied the transfer.",
+      "confidenceScore": 0.75,
+      "confidenceLabel": "high",
+      "coordinateQuality": "missing",
+      "tier": 3,
+      "tags": [
+        "scmp-china",
+        "storyline:235b23a3"
+      ],
+      "geopoliticalScore": 5,
+      "economicImpactScore": 0.5
+    },
+    {
+      "id": "bf3ed68533301818f6abfab8",
+      "source": "rss_intelligence",
+      "eventDate": "2026-09-04",
+      "iso3": [
+        "RUS",
+        "UKR",
+        "USA"
+      ],
+      "eventType": "conflict.armed",
+      "headline": "Putin hardens resolve for military win in Ukraine after CIA Director Ratcliffe's Moscow visit fails",
+      "summary": "CIA Director John Ratcliffe's visit to Moscow failed to persuade Russian President Vladimir Putin to stop the war in Ukraine, and may have instead hardened his resolve to pursue a military victory. Following the visit, Putin escalated strikes on Ukraine.",
+      "confidenceScore": 0.7,
+      "confidenceLabel": "medium",
+      "coordinateQuality": "missing",
+      "tier": 1,
+      "tags": [
+        "washingtonpost-world",
+        "storyline:3ccac860"
+      ],
+      "geopoliticalScore": 8,
+      "economicImpactScore": 4
     },
     {
       "id": "human-a15ae89f",
