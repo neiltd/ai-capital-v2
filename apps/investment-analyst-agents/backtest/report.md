@@ -1,5 +1,5 @@
 # Briefing Backtest Report
-**Generated:** 2026-09-04
+**Generated:** 2026-09-05
 **Predictions analyzed:** 44
 **Scored calls (excluding informational holds/watches):** 935
 

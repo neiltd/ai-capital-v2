@@ -1,24 +1,45 @@
 {
   "schemaVersion": "1.0.0",
-  "generatedAt": "2026-09-04T14:22:17.484Z",
+  "generatedAt": "2026-09-05T14:23:51.015Z",
   "source": "world-intelligence-hub",
-  "eventCount": 21,
+  "eventCount": 12,
   "dateRange": {
-    "from": "2026-09-03",
-    "to": "2026-09-04"
+    "from": "2026-09-04",
+    "to": "2026-09-05"
   },
   "events": [
     {
-      "id": "3941f6aa20ac79d91a590a02",
+      "id": "d8005f5fa788e865788e3cc7",
       "source": "rss_intelligence",
-      "eventDate": "2026-09-04",
+      "eventDate": "2026-09-05",
       "iso3": [
         "YEM"
       ],
       "eventType": "conflict.armed",
-      "headline": "Houthi rebels kill at least 100 in offensive toward Bab al-Mandab strait, Yemen",
-      "summary": "Fighting between Iran-backed Houthi rebels and Yemeni government forces has intensified since Thursday, with at least 100 people killed as Houthis push toward a key strait.",
-      "confidenceScore": 0.6,
+      "headline": "Houthi missile strike kills at least four civilians near Yemen's Taiz",
+      "summary": "A Houthi missile struck a crowded road near Yemen's Taiz, killing at least four civilians. The attack occurred amid fierce clashes across Taiz and Hodeidah provinces and rapid civilian displacement.",
+      "confidenceScore": 0.75,
+      "confidenceLabel": "high",
+      "coordinateQuality": "missing",
+      "tier": 2,
+      "tags": [
+        "aljazeera-english",
+        "storyline:181da00b"
+      ],
+      "geopoliticalScore": 4,
+      "economicImpactScore": 3
+    },
+    {
+      "id": "c7f261d6198068415fb2f905",
+      "source": "rss_intelligence",
+      "eventDate": "2026-09-05",
+      "iso3": [
+        "YEM"
+      ],
+      "eventType": "conflict.armed",
+      "headline": "Yemen government launches own air attacks on Houthis amid major offensive toward Bab al-Mandeb",
+      "summary": "The Yemeni government has begun launching its own air attacks on Houthi forces as fighting intensifies. A major Houthi offensive towards the Bab al-Mandeb strait has triggered some of Yemen's worst fighting in years.",
+      "confidenceScore": 0.7,
       "confidenceLabel": "medium",
       "coordinateQuality": "missing",
       "tier": 1,
@@ -26,328 +47,202 @@
         "aljazeera-english",
         "storyline:181da00b"
       ],
-      "geopoliticalScore": 6,
-      "economicImpactScore": 6
+      "geopoliticalScore": 5.5,
+      "economicImpactScore": 5
     },
     {
-      "id": "9a7e3eb419cb106af8c89e7e",
+      "id": "4f8fb2555299d0df2581094b",
       "source": "rss_intelligence",
-      "eventDate": "2026-09-04",
+      "eventDate": "2026-09-05",
       "iso3": [
-        "USA",
+        "YEM",
+        "SAU",
         "IRN"
       ],
-      "eventType": "energy.disruption",
-      "headline": "US diesel prices hit all-time high amid Iran conflict",
-      "summary": "US diesel prices have reached a record high, driven by the surge in wholesale oil prices since the Iran conflict began at the end of February.",
-      "confidenceScore": 0.8,
-      "confidenceLabel": "high",
-      "coordinateQuality": "missing",
-      "tier": 2,
-      "tags": [
-        "bbc-world",
-        "storyline:413ac1b1"
-      ],
-      "geopoliticalScore": 5,
-      "economicImpactScore": 9
-    },
-    {
-      "id": "d682d0982e17bb61e431c98c",
-      "source": "rss_intelligence",
-      "eventDate": "2026-09-04",
-      "iso3": [
-        "ISR",
-        "PSE"
-      ],
       "eventType": "conflict.armed",
-      "headline": "Two Palestinian teenagers shot dead in West Bank village amid settler-military raid",
-      "summary": "Palestinian teenagers Omar al-Naasan and Khalil Abu Alia were shot dead when Israeli settlers and soldiers entered a village in the occupied West Bank. The father of one of the teens told the BBC he expects his sons to be killed.",
-      "confidenceScore": 0.65,
-      "confidenceLabel": "medium",
-      "coordinateQuality": "missing",
-      "tier": 2,
-      "tags": [
-        "bbc-world",
-        "storyline:8e025ff4"
-      ],
-      "geopoliticalScore": 5,
-      "economicImpactScore": 1
-    },
-    {
-      "id": "245ba3bd52066da5298708de",
-      "source": "rss_intelligence",
-      "eventDate": "2026-09-04",
-      "iso3": [
-        "USA"
-      ],
-      "eventType": "economic.trade",
-      "headline": "US August jobs report seen as signal for Fed inflation policy, BlackRock says",
-      "summary": "BlackRock portfolio manager Jeffrey Rosenberg said the August US employment report is significant primarily for its implications on inflation and Federal Reserve monetary policy.",
-      "confidenceScore": 0.7,
-      "confidenceLabel": "medium",
-      "coordinateQuality": "missing",
-      "tier": 3,
-      "tags": [
-        "bloomberg-markets",
-        "storyline:413ac1b1"
-      ],
-      "geopoliticalScore": 2,
-      "economicImpactScore": 6
-    },
-    {
-      "id": "25fbac8f8c10670ae5a3947e",
-      "source": "rss_intelligence",
-      "eventDate": "2026-09-04",
-      "iso3": [
-        "USA"
-      ],
-      "eventType": "energy.disruption",
-      "headline": "Gold falls as strong US payrolls fuel Fed rate hike bets",
-      "summary": "Gold prices fell after a stronger-than-anticipated increase in US payrolls drove bets that the Federal Reserve will be forced to raise interest rates this year.",
+      "headline": "Houthi forces push to secure Red Sea entry in southwest Yemen as fighting intensifies",
+      "summary": "Houthi forces are trying to secure high ground and solidify control of the entry to the Red Sea in southwest Yemen. The Iran-backed militia abandoned a shaky truce with the Saudi-backed government-in-exile in July.",
       "confidenceScore": 0.75,
       "confidenceLabel": "high",
-      "coordinateQuality": "missing",
-      "tier": 3,
-      "tags": [
-        "bloomberg-markets",
-        "storyline:413ac1b1"
-      ],
-      "geopoliticalScore": 2,
-      "economicImpactScore": 7
-    },
-    {
-      "id": "570e6efaf88b7c8ba2ab1d58",
-      "source": "rss_intelligence",
-      "eventDate": "2026-09-04",
-      "iso3": [
-        "IRN",
-        "USA"
-      ],
-      "eventType": "energy.disruption",
-      "headline": "Oil surges on renewed US-Iran fighting, Strait of Hormuz disruption fears",
-      "summary": "Oil prices were on track for a weekly surge as renewed fighting between the US and Iran heightened concerns about prolonged disruptions to energy flows through the Strait of Hormuz.",
-      "confidenceScore": 0.75,
-      "confidenceLabel": "high",
-      "coordinateQuality": "missing",
-      "tier": 1,
-      "tags": [
-        "bloomberg-markets",
-        "storyline:413ac1b1"
-      ],
-      "geopoliticalScore": 7,
-      "economicImpactScore": 9
-    },
-    {
-      "id": "ba3d3a6075bb9fc1a1913c70",
-      "source": "rss_intelligence",
-      "eventDate": "2026-09-04",
-      "iso3": [
-        "IRN",
-        "USA"
-      ],
-      "eventType": "conflict.armed",
-      "headline": "US launches fresh strikes on Iranian military targets amid 'forever war' concerns",
-      "summary": "The United States has launched fresh attacks on military targets in Iran, aiming to prevent Tehran from rebuilding destroyed military capabilities. Analysts warn the campaign risks becoming a sustained cycle of reconstruction followed by renewed attacks.",
-      "confidenceScore": 0.7,
-      "confidenceLabel": "medium",
       "coordinateQuality": "missing",
       "tier": 1,
       "tags": [
         "dw-world",
-        "storyline:b4296536"
-      ],
-      "geopoliticalScore": 8,
-      "economicImpactScore": 8
-    },
-    {
-      "id": "e6f8092216c843c74347f7bd",
-      "source": "rss_intelligence",
-      "eventDate": "2026-09-04",
-      "iso3": [
-        "NOR",
-        "RUS",
-        "UKR"
-      ],
-      "eventType": "diplomatic.dispute",
-      "headline": "Norway seizes Russian ship Professor Molchanov over Naftogaz court order",
-      "summary": "Norwegian authorities seized the Russian vessel Professor Molchanov near Svalbard following a court order sought by Ukraine's Naftogaz to compensate for damages Russia refused to pay. Russia has protested the seizure.",
-      "confidenceScore": 0.8,
-      "confidenceLabel": "high",
-      "coordinateQuality": "missing",
-      "tier": 3,
-      "tags": [
-        "dw-world",
-        "storyline:13e06972"
-      ],
-      "geopoliticalScore": 5,
-      "economicImpactScore": 2
-    },
-    {
-      "id": "24fb36d935e1fd90d272cac6",
-      "source": "rss_intelligence",
-      "eventDate": "2026-09-04",
-      "iso3": [
-        "LBN",
-        "ISR"
-      ],
-      "eventType": "conflict.armed",
-      "headline": "Israel seizes strategic Ali al-Taher ridge from Hezbollah in south Lebanon",
-      "summary": "Israel's Defence Minister Israel Katz announced that Israeli forces have seized the Ali al-Taher ridge in southern Lebanon from Hezbollah, a highland about 10 kilometres from the Israeli border. The area had been targeted by Israeli strikes in recent weeks despite an existing ceasefire, and Hezbollah has not confirmed losing the position.",
-      "confidenceScore": 0.75,
-      "confidenceLabel": "high",
-      "coordinateQuality": "missing",
-      "tier": 2,
-      "tags": [
-        "france24-english",
-        "storyline:8e025ff4"
-      ],
-      "geopoliticalScore": 6,
-      "economicImpactScore": 2
-    },
-    {
-      "id": "38bd2676ebbeaebf23932b31",
-      "source": "rss_intelligence",
-      "eventDate": "2026-09-04",
-      "iso3": [
-        "GBR",
-        "ARG",
-        "USA"
-      ],
-      "eventType": "diplomatic.dispute",
-      "headline": "UK reasserts Falklands sovereignty after Milei and Trump remarks",
-      "summary": "Britain reaffirmed the Falkland Islands 'are British' after Argentine President Javier Milei suggested shifting US neutrality could favor Argentina's claim, following comments by President Trump. The dispute over the islands' sovereignty resurfaced in headlines.",
-      "confidenceScore": 0.7,
-      "confidenceLabel": "medium",
-      "coordinateQuality": "missing",
-      "tier": 3,
-      "tags": [
-        "france24-english",
-        "storyline:13e06972"
-      ],
-      "geopoliticalScore": 5,
-      "economicImpactScore": 0.5
-    },
-    {
-      "id": "93664589c8c97b7141435ff7",
-      "source": "rss_intelligence",
-      "eventDate": "2026-09-04",
-      "iso3": [
-        "IRN",
-        "USA"
-      ],
-      "eventType": "energy.disruption",
-      "headline": "Oil prices surge as US-Iran hostilities resume, Strait of Hormuz remains blocked",
-      "summary": "Renewed US-Iran hostilities have reignited fears of oil supply disruption, with prices on track for their steepest weekly gain since mid-July, up 7.6%, as the conflict enters its seventh month. The Strait of Hormuz, through which 25% of world oil supply passes, has been blocked since the start of the conflict.",
-      "confidenceScore": 0.75,
-      "confidenceLabel": "high",
-      "coordinateQuality": "missing",
-      "tier": 1,
-      "tags": [
-        "france24-english",
-        "storyline:413ac1b1"
-      ],
-      "geopoliticalScore": 8,
-      "economicImpactScore": 9.5
-    },
-    {
-      "id": "edb7d240bca965c9001d9981",
-      "source": "rss_intelligence",
-      "eventDate": "2026-09-04",
-      "iso3": [
-        "YEM"
-      ],
-      "eventType": "conflict.armed",
-      "headline": "Houthis advance toward Bab al-Mandab Strait port city amid escalating ground fighting",
-      "summary": "Yemen's Iran-backed Houthi militia appear to be pushing to seize control of a port city near the Bab al-Mandab Strait, a key global trade chokepoint, as ground fighting escalates in the region.",
-      "confidenceScore": 0.65,
-      "confidenceLabel": "medium",
-      "coordinateQuality": "missing",
-      "tier": 2,
-      "tags": [
-        "nytimes-world",
         "storyline:181da00b"
       ],
-      "geopoliticalScore": 7,
-      "economicImpactScore": 7
+      "geopoliticalScore": 6,
+      "economicImpactScore": 5.5
     },
     {
-      "id": "8b8b049255084a0ebe14e72b",
+      "id": "76c769ff9639d463e5997856",
       "source": "rss_intelligence",
-      "eventDate": "2026-09-04",
+      "eventDate": "2026-09-05",
+      "iso3": [
+        "UKR",
+        "RUS",
+        "USA"
+      ],
+      "eventType": "conflict.armed",
+      "headline": "Russian attacks kill at least 5 in Ukraine as US envoys visit Moscow amid limited ceasefire announcement",
+      "summary": "At least five people were killed in Russian attacks on Ukraine as US envoys visited Moscow before a planned trip to Kyiv. Ukraine and Russia announced a three-day limited ceasefire during the visit.",
+      "confidenceScore": 0.75,
+      "confidenceLabel": "high",
+      "coordinateQuality": "missing",
+      "tier": 1,
+      "tags": [
+        "aljazeera-english",
+        "storyline:b4296536"
+      ],
+      "geopoliticalScore": 7.5,
+      "economicImpactScore": 4
+    },
+    {
+      "id": "400de9580ae96a11125eb621",
+      "source": "rss_intelligence",
+      "eventDate": "2026-09-05",
       "iso3": [
         "UKR",
         "RUS"
       ],
-      "eventType": "diplomatic.cooperation",
-      "headline": "Ukraine's Budanov advocates negotiated settlement as Russia-Ukraine talks set to resume",
-      "summary": "Kyrylo Budanov, a former Ukrainian military intelligence chief, has advocated for a negotiated settlement with Russia. Talks between the two sides are expected to resume this month.",
-      "confidenceScore": 0.65,
-      "confidenceLabel": "medium",
-      "coordinateQuality": "missing",
-      "tier": 3,
-      "tags": [
-        "nytimes-world",
-        "storyline:13e06972"
-      ],
-      "geopoliticalScore": 6,
-      "economicImpactScore": 2
-    },
-    {
-      "id": "485b7233e72eb82f3a247280",
-      "source": "rss_intelligence",
-      "eventDate": "2026-09-04",
-      "iso3": [
-        "NLD",
-        "USA"
-      ],
-      "eventType": "other",
-      "headline": "Dutch central bank repatriates 90 tons of gold from New York Fed citing geopolitical unrest",
-      "summary": "The Netherlands' central bank moved approximately 90 tons of gold out of the Federal Reserve Bank in New York, citing 'geopolitical unrest'. It is the second European nation this year to announce a decrease or elimination of its U.S. gold holdings.",
-      "confidenceScore": 0.8,
+      "eventType": "conflict.armed",
+      "headline": "Russia strikes Ukrainian security headquarters with drone in Kyiv, Zelensky says",
+      "summary": "Russia struck a Ukrainian security headquarters with an unmanned aerial vehicle in the heart of Kyiv without warning, according to President Zelensky.",
+      "confidenceScore": 0.75,
       "confidenceLabel": "high",
       "coordinateQuality": "missing",
-      "tier": 3,
+      "tier": 2,
       "tags": [
-        "nytimes-world",
-        "storyline:235b23a3"
+        "bbc-world",
+        "storyline:3ccac860"
       ],
-      "geopoliticalScore": 5,
-      "economicImpactScore": 5
+      "geopoliticalScore": 6,
+      "economicImpactScore": 3
     },
     {
-      "id": "8e5430f0ab2acb67e3508fa8",
+      "id": "902d17b96d6c0671aea66ab6",
       "source": "rss_intelligence",
-      "eventDate": "2026-09-04",
+      "eventDate": "2026-09-05",
       "iso3": [
-        "CHN",
-        "USA"
+        "NER",
+        "RUS"
       ],
-      "eventType": "other",
-      "headline": "Chinese researchers claim uranium extraction from seawater at 8 times US target rate",
-      "summary": "A team from the Chinese Academy of Sciences in Qingdao developed a material called PhosCage that extracts uranium from seawater at a rate several times higher than the target set by the US Department of Energy. The advance could position China at the forefront of efforts to tap seawater as a nuclear fuel source.",
+      "eventType": "conflict.armed",
+      "headline": "Russian forces in Niger reportedly prioritize protecting military junta over fighting jihadists",
+      "summary": "Russian forces brought into Niger to help combat jihadist insurgents are reported to also be focused on defending the country's military leadership. The report questions the effectiveness of Russian forces against insurgent threats versus regime protection.",
       "confidenceScore": 0.6,
       "confidenceLabel": "medium",
       "coordinateQuality": "missing",
       "tier": 3,
       "tags": [
-        "scmp-china",
-        "storyline:235b23a3"
+        "bbc-world",
+        "storyline:b4296536"
       ],
-      "geopoliticalScore": 4,
+      "geopoliticalScore": 5,
+      "economicImpactScore": 1.5
+    },
+    {
+      "id": "cf121273d9e2ed7a6afaa236",
+      "source": "rss_intelligence",
+      "eventDate": "2026-09-05",
+      "iso3": [
+        "CAN",
+        "USA"
+      ],
+      "eventType": "economic.trade",
+      "headline": "Canada-US trade war escalates as Canada weighs retaliatory options",
+      "summary": "The trade dispute between Canada and the United States continues to escalate, with analysis examining how much Canada can retaliate given the US is its larger trading partner.",
+      "confidenceScore": 0.5,
+      "confidenceLabel": "low",
+      "coordinateQuality": "missing",
+      "tier": 3,
+      "tags": [
+        "bbc-world",
+        "storyline:413ac1b1"
+      ],
+      "geopoliticalScore": 4.5,
+      "economicImpactScore": 5.5
+    },
+    {
+      "id": "170c3cec946b28f59073d3af",
+      "source": "rss_intelligence",
+      "eventDate": "2026-09-05",
+      "iso3": [
+        "UKR",
+        "RUS"
+      ],
+      "eventType": "conflict.armed",
+      "headline": "Russian drone strikes offices of Ukraine's intelligence chief in Kyiv",
+      "summary": "A Russian drone struck the office of Ukraine's intelligence chief in Kyiv. The attack occurred as U.S. envoys Steve Witkoff and Jared Kushner were reportedly planning imminent visits to Kyiv and Moscow to discuss peace efforts.",
+      "confidenceScore": 0.75,
+      "confidenceLabel": "high",
+      "coordinateQuality": "missing",
+      "tier": 2,
+      "tags": [
+        "nytimes-world",
+        "storyline:b4296536"
+      ],
+      "geopoliticalScore": 6,
+      "economicImpactScore": 2
+    },
+    {
+      "id": "397e0645227da5c74996eaa5",
+      "source": "rss_intelligence",
+      "eventDate": "2026-09-05",
+      "iso3": [
+        "RUS",
+        "USA",
+        "UKR"
+      ],
+      "eventType": "diplomatic.cooperation",
+      "headline": "US envoys Witkoff and Kushner arrive in Moscow with new Ukraine peace plan",
+      "summary": "U.S. envoys Steve Witkoff and Jared Kushner landed in Moscow to discuss a plan aimed at ending more than four years of war between Russia and Ukraine, in Washington's latest bid to break a diplomatic stalemate. The envoys were also expected to travel to Kyiv.",
+      "confidenceScore": 0.75,
+      "confidenceLabel": "high",
+      "coordinateQuality": "missing",
+      "tier": 2,
+      "tags": [
+        "scmp-china",
+        "nytimes-world",
+        "storyline:13e06972"
+      ],
+      "geopoliticalScore": 7,
       "economicImpactScore": 3
     },
     {
-      "id": "ddde62dcb05adb74b43219e7",
+      "id": "65f9a2e0c3b3b417f65470a6",
       "source": "rss_intelligence",
-      "eventDate": "2026-09-04",
+      "eventDate": "2026-09-05",
+      "iso3": [
+        "UKR",
+        "RUS"
+      ],
+      "eventType": "conflict.armed",
+      "headline": "Escalating Russian-Ukrainian airstrike campaign disrupts daily life in Kyiv",
+      "summary": "A deadly campaign of Russian and Ukrainian airstrikes has escalated since U.S.-brokered negotiations stalled in February, with near-constant drone attacks becoming a stark new reality in Kyiv. Commuters have been stranded, children rushed underground during school hours, and festivals cancelled as a result.",
+      "confidenceScore": 0.7,
+      "confidenceLabel": "medium",
+      "coordinateQuality": "missing",
+      "tier": 2,
+      "tags": [
+        "scmp-china",
+        "nytimes-world",
+        "storyline:b4296536"
+      ],
+      "geopoliticalScore": 5,
+      "economicImpactScore": 1.5
+    },
+    {
+      "id": "7ceb58e4c1f0f3eb7cc280b7",
+      "source": "rss_intelligence",
+      "eventDate": "2026-09-05",
       "iso3": [
         "CHN",
-        "JPN"
+        "EGY"
       ],
-      "eventType": "energy.disruption",
-      "headline": "Fuel and petrochemical prices outpace crude oil, disrupting global supply chains like potato chip packaging",
-      "summary": "Fuel and petrochemical prices are rising faster than crude oil, with downstream effects reaching consumer goods such as Japanese snack brand Calbee, which changed its packaging due to supply chain pressures. The report examines the causes and durability of this price divergence.",
-      "confidenceScore": 0.55,
+      "eventType": "economic.trade",
+      "headline": "China expands currency swap agreement with Egypt, deepening trade ties",
+      "summary": "China expanded its currency swap arrangement with Egypt as Chinese President Xi Jinping and Egyptian President Abdel-Fattah el-Sisi backed greater use of their currencies while linking closer financial ties. Experts say reduced reliance on the US dollar will not happen quickly.",
+      "confidenceScore": 0.7,
       "confidenceLabel": "medium",
       "coordinateQuality": "missing",
       "tier": 3,
@@ -355,98 +250,7 @@
         "scmp-china",
         "storyline:413ac1b1"
       ],
-      "geopoliticalScore": 3,
-      "economicImpactScore": 6
-    },
-    {
-      "id": "49c254e51a6ac8e5924251eb",
-      "source": "rss_intelligence",
-      "eventDate": "2026-09-04",
-      "iso3": [
-        "BFA",
-        "CHN"
-      ],
-      "eventType": "diplomatic.cooperation",
-      "headline": "Burkina Faso tests Chinese Sky Dragon 30 surface-to-air missile system",
-      "summary": "Burkina Faso tested what observers identify as a Chinese-made Sky Dragon 30 surface-to-air missile system, with footage released by the Burkinabe president's office showing multiple missiles fired from a mobile launcher. This signals expanding Chinese military equipment exports into the Sahel region.",
-      "confidenceScore": 0.65,
-      "confidenceLabel": "medium",
-      "coordinateQuality": "missing",
-      "tier": 3,
-      "tags": [
-        "scmp-china",
-        "storyline:b4296536"
-      ],
-      "geopoliticalScore": 5,
-      "economicImpactScore": 3
-    },
-    {
-      "id": "3e7821bf9ccd30f6a419e0f6",
-      "source": "rss_intelligence",
-      "eventDate": "2026-09-04",
-      "iso3": [
-        "CHN",
-        "USA",
-        "CAN"
-      ],
-      "eventType": "diplomatic.dispute",
-      "headline": "China and US military commanders resume Taiwan Strait command-level talks in Canada after 2-year break",
-      "summary": "Chinese General Yang Zhibin, commander of the PLA Eastern Theatre Command, met US Admiral Samuel Paparo at the Indo-Pacific Chiefs of Defence Conference in Canada, ending a two-year break in command-level military contact between China and the US regarding the Taiwan Strait.",
-      "confidenceScore": 0.75,
-      "confidenceLabel": "high",
-      "coordinateQuality": "missing",
-      "tier": 3,
-      "tags": [
-        "scmp-china",
-        "storyline:13e06972"
-      ],
-      "geopoliticalScore": 6,
-      "economicImpactScore": 2
-    },
-    {
-      "id": "8204a105e1f2931b400e9ceb",
-      "source": "rss_intelligence",
-      "eventDate": "2026-09-04",
-      "iso3": [
-        "SRB",
-        "NLD",
-        "BIH"
-      ],
-      "eventType": "other",
-      "headline": "Body of convicted war criminal Ratko Mladic returned to Serbia with military honours",
-      "summary": "The body of Bosnian Serb war criminal Ratko Mladic arrived in Serbia from The Hague and was received with military honours, carried by six soldiers with the casket draped in the Serbian flag. Mladic's son Darko and Serbia's Justice Minister Nenad Vujic accompanied the transfer.",
-      "confidenceScore": 0.75,
-      "confidenceLabel": "high",
-      "coordinateQuality": "missing",
-      "tier": 3,
-      "tags": [
-        "scmp-china",
-        "storyline:235b23a3"
-      ],
-      "geopoliticalScore": 5,
-      "economicImpactScore": 0.5
-    },
-    {
-      "id": "bf3ed68533301818f6abfab8",
-      "source": "rss_intelligence",
-      "eventDate": "2026-09-04",
-      "iso3": [
-        "RUS",
-        "UKR",
-        "USA"
-      ],
-      "eventType": "conflict.armed",
-      "headline": "Putin hardens resolve for military win in Ukraine after CIA Director Ratcliffe's Moscow visit fails",
-      "summary": "CIA Director John Ratcliffe's visit to Moscow failed to persuade Russian President Vladimir Putin to stop the war in Ukraine, and may have instead hardened his resolve to pursue a military victory. Following the visit, Putin escalated strikes on Ukraine.",
-      "confidenceScore": 0.7,
-      "confidenceLabel": "medium",
-      "coordinateQuality": "missing",
-      "tier": 1,
-      "tags": [
-        "washingtonpost-world",
-        "storyline:3ccac860"
-      ],
-      "geopoliticalScore": 8,
+      "geopoliticalScore": 4,
       "economicImpactScore": 4
     },
     {

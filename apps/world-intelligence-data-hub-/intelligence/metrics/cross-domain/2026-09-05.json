@@ -1,0 +1,2319 @@
+{
+  "date": "2026-09-05",
+  "generatedAt": "2026-09-05T14:23:51.012Z",
+  "observationWindowDays": 14,
+  "storylineBenchmarkLinks": [
+    {
+      "storylineId": "b429653679b53912",
+      "storylineTitle": "Escalating Russian-Ukrainian airstrike campaign disrupts daily life in Kyiv",
+      "storylineState": "active",
+      "daysActive": 5,
+      "avgEscalation": 0.64,
+      "maxSeverity": 4,
+      "countries": [
+        "IRN",
+        "USA",
+        "ARE",
+        "JOR",
+        "SAU",
+        "PHL",
+        "CHN",
+        "RUS",
+        "JPN",
+        "IDN",
+        "UKR",
+        "KOR",
+        "TUR",
+        "PRK",
+        "KWT",
+        "BFA",
+        "NER"
+      ],
+      "eventTypes": [
+        "missile_attack",
+        "military_operation",
+        "airstrike",
+        "nuclear_incident",
+        "armed_conflict",
+        "military_exercise"
+      ],
+      "linkedBenchmarks": [
+        "brent_crude",
+        "wti_crude"
+      ],
+      "linkStrength": 1,
+      "linkReasons": [
+        "geopolitical_event_in_energy_region:IRN,ARE,SAU,RUS,KWT",
+        "high_escalation_energy_country"
+      ]
+    },
+    {
+      "storylineId": "181da00b4a634452",
+      "storylineTitle": "Houthi forces push to secure Red Sea entry in southwest Yemen as fighting intensifies",
+      "storylineState": "escalating",
+      "daysActive": 1,
+      "avgEscalation": 0.72,
+      "maxSeverity": 4,
+      "countries": [
+        "YEM",
+        "SAU",
+        "IRN"
+      ],
+      "eventTypes": [
+        "armed_conflict",
+        "missile_attack",
+        "military_operation"
+      ],
+      "linkedBenchmarks": [
+        "brent_crude",
+        "wti_crude"
+      ],
+      "linkStrength": 1,
+      "linkReasons": [
+        "geopolitical_event_in_energy_region:YEM,SAU,IRN",
+        "high_escalation_energy_country",
+        "chokepoint:red_sea"
+      ]
+    },
+    {
+      "storylineId": "413ac1b17204210a",
+      "storylineTitle": "China expands currency swap agreement with Egypt, deepening trade ties",
+      "storylineState": "stabilizing",
+      "daysActive": 6,
+      "avgEscalation": 0.483,
+      "maxSeverity": 4,
+      "countries": [
+        "CAN",
+        "USA",
+        "CHN",
+        "IRN",
+        "VEN",
+        "JOR",
+        "SAU",
+        "BEL",
+        "IND",
+        "JPN",
+        "EGY"
+      ],
+      "eventTypes": [
+        "trade_dispute",
+        "supply_disruption",
+        "commodity_price_move",
+        "armed_conflict",
+        "economic_data_release"
+      ],
+      "linkedBenchmarks": [
+        "brent_crude",
+        "wti_crude"
+      ],
+      "linkStrength": 0.625,
+      "linkReasons": [
+        "energy_event_type:supply_disruption,commodity_price_move",
+        "geopolitical_event_in_energy_region:IRN,VEN,SAU,EGY"
+      ]
+    },
+    {
+      "storylineId": "3ccac8603e47dbf1",
+      "storylineTitle": "Russian missile and drone attack on Kyiv kills at least four",
+      "storylineState": "active",
+      "daysActive": 4,
+      "avgEscalation": 0.622,
+      "maxSeverity": 4,
+      "countries": [
+        "UKR",
+        "RUS",
+        "DEU",
+        "USA"
+      ],
+      "eventTypes": [
+        "missile_attack",
+        "military_operation",
+        "terrorist_attack"
+      ],
+      "linkedBenchmarks": [
+        "brent_crude",
+        "wti_crude"
+      ],
+      "linkStrength": 0.375,
+      "linkReasons": [
+        "geopolitical_event_in_energy_region:RUS",
+        "high_escalation_energy_country"
+      ]
+    },
+    {
+      "storylineId": "13e06972de27435e",
+      "storylineTitle": "US envoys Witkoff and Kushner arrive in Moscow with new Ukraine peace plan",
+      "storylineState": "active",
+      "daysActive": 7,
+      "avgEscalation": 0.38,
+      "maxSeverity": 3,
+      "countries": [
+        "ISR",
+        "PSE",
+        "IRN",
+        "USA",
+        "VEN",
+        "RUS",
+        "ARE",
+        "EGY",
+        "CHN",
+        "DEU",
+        "FRA",
+        "UKR",
+        "IRL",
+        "NOR",
+        "GBR",
+        "ARG",
+        "CAN"
+      ],
+      "eventTypes": [
+        "other",
+        "diplomatic_incident",
+        "protest",
+        "sanctions",
+        "treaty",
+        "peace_negotiation"
+      ],
+      "linkedBenchmarks": [
+        "brent_crude",
+        "wti_crude"
+      ],
+      "linkStrength": 0.25,
+      "linkReasons": [
+        "geopolitical_event_in_energy_region:IRN,VEN,RUS,ARE,EGY,NOR,GBR"
+      ]
+    },
+    {
+      "storylineId": "4252785c859d7069",
+      "storylineTitle": "Russian and Ukrainian strikes on Black Sea ports threaten global grain supply",
+      "storylineState": "emerging",
+      "daysActive": 1,
+      "avgEscalation": 0.45,
+      "maxSeverity": 3,
+      "countries": [
+        "UKR",
+        "RUS",
+        "IRL"
+      ],
+      "eventTypes": [
+        "supply_disruption"
+      ],
+      "linkedBenchmarks": [
+        "brent_crude",
+        "wti_crude"
+      ],
+      "linkStrength": 0.25,
+      "linkReasons": [
+        "energy_event_type:supply_disruption"
+      ]
+    },
+    {
+      "storylineId": "235b23a3c6973bc8",
+      "storylineTitle": "Body of convicted war criminal Ratko Mladic returned to Serbia with military honours",
+      "storylineState": "active",
+      "daysActive": 4,
+      "avgEscalation": 0.283,
+      "maxSeverity": 3,
+      "countries": [
+        "CMR",
+        "RUS",
+        "UKR",
+        "ITA",
+        "IRN",
+        "USA",
+        "NLD",
+        "CHN",
+        "SRB",
+        "BIH"
+      ],
+      "eventTypes": [
+        "other"
+      ],
+      "linkedBenchmarks": [],
+      "linkStrength": 0,
+      "linkReasons": []
+    },
+    {
+      "storylineId": "8e025ff44fbb7d62",
+      "storylineTitle": "Israel seizes strategic Ali al-Taher ridge from Hezbollah in south Lebanon",
+      "storylineState": "active",
+      "daysActive": 2,
+      "avgEscalation": 0.517,
+      "maxSeverity": 4,
+      "countries": [
+        "ISR",
+        "PSE",
+        "LBN"
+      ],
+      "eventTypes": [
+        "armed_conflict",
+        "military_operation"
+      ],
+      "linkedBenchmarks": [],
+      "linkStrength": 0,
+      "linkReasons": []
+    },
+    {
+      "storylineId": "40b3cd52873b7fce",
+      "storylineTitle": "Documents reveal alleged chemical weapons stockpile in Sudan",
+      "storylineState": "emerging",
+      "daysActive": 0,
+      "avgEscalation": 0.5,
+      "maxSeverity": 4,
+      "countries": [
+        "SDN"
+      ],
+      "eventTypes": [
+        "other"
+      ],
+      "linkedBenchmarks": [],
+      "linkStrength": 0,
+      "linkReasons": []
+    }
+  ],
+  "disruptionPriceWindows": [
+    {
+      "eventId": "0e86c0d3bfd56e981d1684fa",
+      "eventDate": "2026-08-25",
+      "eventType": "energy_infrastructure",
+      "eventTitle": "Ukrainian strikes on Russian refineries deepen fuel crisis reaching Moscow",
+      "countries": [
+        "RUS",
+        "UKR"
+      ],
+      "escalationPotential": 0.5,
+      "isSupplyDisruption": false,
+      "isHormuzRelated": false,
+      "benchmarkWindows": [
+        {
+          "benchmarkId": "brent_crude",
+          "priceOnDate": null,
+          "priceOnDateDate": null,
+          "price7dBefore": null,
+          "price7dBeforeDate": null,
+          "delta7dPct": null,
+          "price3dAfter": null,
+          "price3dAfterDate": null,
+          "delta3dForwardPct": null
+        },
+        {
+          "benchmarkId": "wti_crude",
+          "priceOnDate": null,
+          "priceOnDateDate": null,
+          "price7dBefore": null,
+          "price7dBeforeDate": null,
+          "delta7dPct": null,
+          "price3dAfter": null,
+          "price3dAfterDate": null,
+          "delta3dForwardPct": null
+        },
+        {
+          "benchmarkId": "henry_hub",
+          "priceOnDate": null,
+          "priceOnDateDate": null,
+          "price7dBefore": null,
+          "price7dBeforeDate": null,
+          "delta7dPct": null,
+          "price3dAfter": null,
+          "price3dAfterDate": null,
+          "delta3dForwardPct": null
+        }
+      ]
+    },
+    {
+      "eventId": "96210ba231761dd7842d7ef0",
+      "eventDate": "2026-08-25",
+      "eventType": "supply_disruption",
+      "eventTitle": "Renewed Black Sea blockade slows Ukrainian grain exports, hurting farmers",
+      "countries": [
+        "UKR",
+        "RUS"
+      ],
+      "escalationPotential": 0.6,
+      "isSupplyDisruption": true,
+      "isHormuzRelated": false,
+      "benchmarkWindows": [
+        {
+          "benchmarkId": "brent_crude",
+          "priceOnDate": null,
+          "priceOnDateDate": null,
+          "price7dBefore": null,
+          "price7dBeforeDate": null,
+          "delta7dPct": null,
+          "price3dAfter": null,
+          "price3dAfterDate": null,
+          "delta3dForwardPct": null
+        },
+        {
+          "benchmarkId": "wti_crude",
+          "priceOnDate": null,
+          "priceOnDateDate": null,
+          "price7dBefore": null,
+          "price7dBeforeDate": null,
+          "delta7dPct": null,
+          "price3dAfter": null,
+          "price3dAfterDate": null,
+          "delta3dForwardPct": null
+        },
+        {
+          "benchmarkId": "henry_hub",
+          "priceOnDate": null,
+          "priceOnDateDate": null,
+          "price7dBefore": null,
+          "price7dBeforeDate": null,
+          "delta7dPct": null,
+          "price3dAfter": null,
+          "price3dAfterDate": null,
+          "delta3dForwardPct": null
+        }
+      ]
+    },
+    {
+      "eventId": "1dafb85521e7241b0885abb9",
+      "eventDate": "2026-08-27",
+      "eventType": "energy_infrastructure",
+      "eventTitle": "Ukrainian drone strikes on Novorossiysk disrupt Russian grain and oil exports via Black Sea",
+      "countries": [
+        "RUS",
+        "UKR"
+      ],
+      "escalationPotential": 0.6,
+      "isSupplyDisruption": false,
+      "isHormuzRelated": false,
+      "benchmarkWindows": [
+        {
+          "benchmarkId": "brent_crude",
+          "priceOnDate": null,
+          "priceOnDateDate": null,
+          "price7dBefore": null,
+          "price7dBeforeDate": null,
+          "delta7dPct": null,
+          "price3dAfter": null,
+          "price3dAfterDate": null,
+          "delta3dForwardPct": null
+        },
+        {
+          "benchmarkId": "wti_crude",
+          "priceOnDate": null,
+          "priceOnDateDate": null,
+          "price7dBefore": null,
+          "price7dBeforeDate": null,
+          "delta7dPct": null,
+          "price3dAfter": null,
+          "price3dAfterDate": null,
+          "delta3dForwardPct": null
+        },
+        {
+          "benchmarkId": "henry_hub",
+          "priceOnDate": null,
+          "priceOnDateDate": null,
+          "price7dBefore": null,
+          "price7dBeforeDate": null,
+          "delta7dPct": null,
+          "price3dAfter": null,
+          "price3dAfterDate": null,
+          "delta3dForwardPct": null
+        }
+      ]
+    },
+    {
+      "eventId": "82b3e673a75477456bd2356e",
+      "eventDate": "2026-09-01",
+      "eventType": "supply_disruption",
+      "eventTitle": "US blockade and war strain Iran's fuel supply, causing long gas lines",
+      "countries": [
+        "IRN",
+        "USA"
+      ],
+      "escalationPotential": 0.5,
+      "isSupplyDisruption": true,
+      "isHormuzRelated": true,
+      "benchmarkWindows": [
+        {
+          "benchmarkId": "brent_crude",
+          "priceOnDate": null,
+          "priceOnDateDate": null,
+          "price7dBefore": null,
+          "price7dBeforeDate": null,
+          "delta7dPct": null,
+          "price3dAfter": null,
+          "price3dAfterDate": null,
+          "delta3dForwardPct": null
+        },
+        {
+          "benchmarkId": "wti_crude",
+          "priceOnDate": null,
+          "priceOnDateDate": null,
+          "price7dBefore": null,
+          "price7dBeforeDate": null,
+          "delta7dPct": null,
+          "price3dAfter": null,
+          "price3dAfterDate": null,
+          "delta3dForwardPct": null
+        },
+        {
+          "benchmarkId": "henry_hub",
+          "priceOnDate": null,
+          "priceOnDateDate": null,
+          "price7dBefore": null,
+          "price7dBeforeDate": null,
+          "delta7dPct": null,
+          "price3dAfter": null,
+          "price3dAfterDate": null,
+          "delta3dForwardPct": null
+        }
+      ]
+    },
+    {
+      "eventId": "ecad5365d0be2e7cbe9286b1",
+      "eventDate": "2026-09-03",
+      "eventType": "supply_disruption",
+      "eventTitle": "Iran fuel crisis deepens as war damage and US sanctions squeeze supplies",
+      "countries": [
+        "IRN",
+        "USA"
+      ],
+      "escalationPotential": 0.4,
+      "isSupplyDisruption": true,
+      "isHormuzRelated": true,
+      "benchmarkWindows": [
+        {
+          "benchmarkId": "brent_crude",
+          "priceOnDate": null,
+          "priceOnDateDate": null,
+          "price7dBefore": null,
+          "price7dBeforeDate": null,
+          "delta7dPct": null,
+          "price3dAfter": null,
+          "price3dAfterDate": null,
+          "delta3dForwardPct": null
+        },
+        {
+          "benchmarkId": "wti_crude",
+          "priceOnDate": null,
+          "priceOnDateDate": null,
+          "price7dBefore": null,
+          "price7dBeforeDate": null,
+          "delta7dPct": null,
+          "price3dAfter": null,
+          "price3dAfterDate": null,
+          "delta3dForwardPct": null
+        },
+        {
+          "benchmarkId": "henry_hub",
+          "priceOnDate": null,
+          "priceOnDateDate": null,
+          "price7dBefore": null,
+          "price7dBeforeDate": null,
+          "delta7dPct": null,
+          "price3dAfter": null,
+          "price3dAfterDate": null,
+          "delta3dForwardPct": null
+        }
+      ]
+    },
+    {
+      "eventId": "12456cc0c00963b72375cf77",
+      "eventDate": "2026-09-03",
+      "eventType": "supply_disruption",
+      "eventTitle": "Russian and Ukrainian strikes on Black Sea ports threaten global grain supply",
+      "countries": [
+        "UKR",
+        "RUS"
+      ],
+      "escalationPotential": 0.6,
+      "isSupplyDisruption": true,
+      "isHormuzRelated": false,
+      "benchmarkWindows": [
+        {
+          "benchmarkId": "brent_crude",
+          "priceOnDate": null,
+          "priceOnDateDate": null,
+          "price7dBefore": null,
+          "price7dBeforeDate": null,
+          "delta7dPct": null,
+          "price3dAfter": null,
+          "price3dAfterDate": null,
+          "delta3dForwardPct": null
+        },
+        {
+          "benchmarkId": "wti_crude",
+          "priceOnDate": null,
+          "priceOnDateDate": null,
+          "price7dBefore": null,
+          "price7dBeforeDate": null,
+          "delta7dPct": null,
+          "price3dAfter": null,
+          "price3dAfterDate": null,
+          "delta3dForwardPct": null
+        },
+        {
+          "benchmarkId": "henry_hub",
+          "priceOnDate": null,
+          "priceOnDateDate": null,
+          "price7dBefore": null,
+          "price7dBeforeDate": null,
+          "delta7dPct": null,
+          "price3dAfter": null,
+          "price3dAfterDate": null,
+          "delta3dForwardPct": null
+        }
+      ]
+    },
+    {
+      "eventId": "e3ec50b0050c57f84a3dbf9f",
+      "eventDate": "2026-09-03",
+      "eventType": "supply_disruption",
+      "eventTitle": "Irish alumina refinery investigated over possible supply to Russia's war effort in Ukraine",
+      "countries": [
+        "IRL",
+        "RUS",
+        "UKR"
+      ],
+      "escalationPotential": 0.3,
+      "isSupplyDisruption": true,
+      "isHormuzRelated": false,
+      "benchmarkWindows": [
+        {
+          "benchmarkId": "brent_crude",
+          "priceOnDate": null,
+          "priceOnDateDate": null,
+          "price7dBefore": null,
+          "price7dBeforeDate": null,
+          "delta7dPct": null,
+          "price3dAfter": null,
+          "price3dAfterDate": null,
+          "delta3dForwardPct": null
+        },
+        {
+          "benchmarkId": "wti_crude",
+          "priceOnDate": null,
+          "priceOnDateDate": null,
+          "price7dBefore": null,
+          "price7dBeforeDate": null,
+          "delta7dPct": null,
+          "price3dAfter": null,
+          "price3dAfterDate": null,
+          "delta3dForwardPct": null
+        },
+        {
+          "benchmarkId": "henry_hub",
+          "priceOnDate": null,
+          "priceOnDateDate": null,
+          "price7dBefore": null,
+          "price7dBeforeDate": null,
+          "delta7dPct": null,
+          "price3dAfter": null,
+          "price3dAfterDate": null,
+          "delta3dForwardPct": null
+        }
+      ]
+    }
+  ],
+  "escalationVolatilityLog": [
+    {
+      "date": "2026-08-25",
+      "maxEscalation": 0.8,
+      "avgEscalation": 0.439,
+      "eventCount": 23,
+      "supplyDisruptionCount": 1,
+      "energyEventCount": 5,
+      "hormuzEventCount": 5,
+      "benchmarkDailyChange": [
+        {
+          "benchmarkId": "brent_crude",
+          "price": null,
+          "priorPrice": null,
+          "changePct": null
+        },
+        {
+          "benchmarkId": "wti_crude",
+          "price": null,
+          "priorPrice": null,
+          "changePct": null
+        },
+        {
+          "benchmarkId": "henry_hub",
+          "price": null,
+          "priorPrice": null,
+          "changePct": null
+        }
+      ]
+    },
+    {
+      "date": "2026-08-27",
+      "maxEscalation": 0.75,
+      "avgEscalation": 0.488,
+      "eventCount": 21,
+      "supplyDisruptionCount": 0,
+      "energyEventCount": 1,
+      "hormuzEventCount": 4,
+      "benchmarkDailyChange": [
+        {
+          "benchmarkId": "brent_crude",
+          "price": null,
+          "priorPrice": null,
+          "changePct": null
+        },
+        {
+          "benchmarkId": "wti_crude",
+          "price": null,
+          "priorPrice": null,
+          "changePct": null
+        },
+        {
+          "benchmarkId": "henry_hub",
+          "price": null,
+          "priorPrice": null,
+          "changePct": null
+        }
+      ]
+    },
+    {
+      "date": "2026-09-01",
+      "maxEscalation": 0.85,
+      "avgEscalation": 0.473,
+      "eventCount": 28,
+      "supplyDisruptionCount": 1,
+      "energyEventCount": 2,
+      "hormuzEventCount": 4,
+      "benchmarkDailyChange": [
+        {
+          "benchmarkId": "brent_crude",
+          "price": null,
+          "priorPrice": null,
+          "changePct": null
+        },
+        {
+          "benchmarkId": "wti_crude",
+          "price": null,
+          "priorPrice": null,
+          "changePct": null
+        },
+        {
+          "benchmarkId": "henry_hub",
+          "price": null,
+          "priorPrice": null,
+          "changePct": null
+        }
+      ]
+    },
+    {
+      "date": "2026-09-03",
+      "maxEscalation": 0.9,
+      "avgEscalation": 0.524,
+      "eventCount": 55,
+      "supplyDisruptionCount": 3,
+      "energyEventCount": 3,
+      "hormuzEventCount": 14,
+      "benchmarkDailyChange": [
+        {
+          "benchmarkId": "brent_crude",
+          "price": null,
+          "priorPrice": null,
+          "changePct": null
+        },
+        {
+          "benchmarkId": "wti_crude",
+          "price": null,
+          "priorPrice": null,
+          "changePct": null
+        },
+        {
+          "benchmarkId": "henry_hub",
+          "price": null,
+          "priorPrice": null,
+          "changePct": null
+        }
+      ]
+    },
+    {
+      "date": "2026-09-04",
+      "maxEscalation": 0.8,
+      "avgEscalation": 0.452,
+      "eventCount": 25,
+      "supplyDisruptionCount": 0,
+      "energyEventCount": 5,
+      "hormuzEventCount": 8,
+      "benchmarkDailyChange": [
+        {
+          "benchmarkId": "brent_crude",
+          "price": null,
+          "priorPrice": null,
+          "changePct": null
+        },
+        {
+          "benchmarkId": "wti_crude",
+          "price": null,
+          "priorPrice": null,
+          "changePct": null
+        },
+        {
+          "benchmarkId": "henry_hub",
+          "price": null,
+          "priorPrice": null,
+          "changePct": null
+        }
+      ]
+    },
+    {
+      "date": "2026-09-05",
+      "maxEscalation": 0.75,
+      "avgEscalation": 0.535,
+      "eventCount": 13,
+      "supplyDisruptionCount": 0,
+      "energyEventCount": 0,
+      "hormuzEventCount": 3,
+      "benchmarkDailyChange": [
+        {
+          "benchmarkId": "brent_crude",
+          "price": null,
+          "priorPrice": null,
+          "changePct": null
+        },
+        {
+          "benchmarkId": "wti_crude",
+          "price": null,
+          "priorPrice": null,
+          "changePct": null
+        },
+        {
+          "benchmarkId": "henry_hub",
+          "price": null,
+          "priorPrice": null,
+          "changePct": null
+        }
+      ]
+    }
+  ],
+  "chokepointPriceObservations": [
+    {
+      "eventId": "164e837b6d8664dadc5c54f5",
+      "eventDate": "2026-08-25",
+      "eventType": "missile_attack",
+      "eventTitle": "Houthis claim attack on Saudi-flagged oil tanker in Red Sea",
+      "countries": [
+        "YEM",
+        "SAU"
+      ],
+      "escalationPotential": 0.6,
+      "chokepointLabel": "red_sea",
+      "benchmarkResponses": [
+        {
+          "benchmarkId": "brent_crude",
+          "priceAtEvent": null,
+          "price3dBefore": null,
+          "price3dAfter": null,
+          "deltaBefore": null,
+          "deltaAfter": null
+        },
+        {
+          "benchmarkId": "wti_crude",
+          "priceAtEvent": null,
+          "price3dBefore": null,
+          "price3dAfter": null,
+          "deltaBefore": null,
+          "deltaAfter": null
+        },
+        {
+          "benchmarkId": "henry_hub",
+          "priceAtEvent": null,
+          "price3dBefore": null,
+          "price3dAfter": null,
+          "deltaBefore": null,
+          "deltaAfter": null
+        }
+      ]
+    },
+    {
+      "eventId": "e23f20d5f3468e89f41ff2c0",
+      "eventDate": "2026-08-25",
+      "eventType": "commodity_price_move",
+      "eventTitle": "Oil prices fall as US intensifies pressure on Iran over Strait of Hormuz flows",
+      "countries": [
+        "IRN",
+        "USA"
+      ],
+      "escalationPotential": 0.6,
+      "chokepointLabel": "hormuz",
+      "benchmarkResponses": [
+        {
+          "benchmarkId": "brent_crude",
+          "priceAtEvent": null,
+          "price3dBefore": null,
+          "price3dAfter": null,
+          "deltaBefore": null,
+          "deltaAfter": null
+        },
+        {
+          "benchmarkId": "wti_crude",
+          "priceAtEvent": null,
+          "price3dBefore": null,
+          "price3dAfter": null,
+          "deltaBefore": null,
+          "deltaAfter": null
+        },
+        {
+          "benchmarkId": "henry_hub",
+          "priceAtEvent": null,
+          "price3dBefore": null,
+          "price3dAfter": null,
+          "deltaBefore": null,
+          "deltaAfter": null
+        }
+      ]
+    },
+    {
+      "eventId": "6eaf33d01c8103914cec34e1",
+      "eventDate": "2026-08-25",
+      "eventType": "commodity_price_move",
+      "eventTitle": "Analyst Ed Morse discusses Brent crude decline amid Iran sanctions and Hormuz Strait uncertainty",
+      "countries": [
+        "IRN",
+        "USA"
+      ],
+      "escalationPotential": 0.5,
+      "chokepointLabel": "hormuz",
+      "benchmarkResponses": [
+        {
+          "benchmarkId": "brent_crude",
+          "priceAtEvent": null,
+          "price3dBefore": null,
+          "price3dAfter": null,
+          "deltaBefore": null,
+          "deltaAfter": null
+        },
+        {
+          "benchmarkId": "wti_crude",
+          "priceAtEvent": null,
+          "price3dBefore": null,
+          "price3dAfter": null,
+          "deltaBefore": null,
+          "deltaAfter": null
+        },
+        {
+          "benchmarkId": "henry_hub",
+          "priceAtEvent": null,
+          "price3dBefore": null,
+          "price3dAfter": null,
+          "deltaBefore": null,
+          "deltaAfter": null
+        }
+      ]
+    },
+    {
+      "eventId": "ea9b4d335441af17789a5a6e",
+      "eventDate": "2026-08-25",
+      "eventType": "sanctions",
+      "eventTitle": "US prepares new round of sanctions on Iran amid existing naval blockade",
+      "countries": [
+        "IRN",
+        "USA"
+      ],
+      "escalationPotential": 0.5,
+      "chokepointLabel": "hormuz",
+      "benchmarkResponses": [
+        {
+          "benchmarkId": "brent_crude",
+          "priceAtEvent": null,
+          "price3dBefore": null,
+          "price3dAfter": null,
+          "deltaBefore": null,
+          "deltaAfter": null
+        },
+        {
+          "benchmarkId": "wti_crude",
+          "priceAtEvent": null,
+          "price3dBefore": null,
+          "price3dAfter": null,
+          "deltaBefore": null,
+          "deltaAfter": null
+        },
+        {
+          "benchmarkId": "henry_hub",
+          "priceAtEvent": null,
+          "price3dBefore": null,
+          "price3dAfter": null,
+          "deltaBefore": null,
+          "deltaAfter": null
+        }
+      ]
+    },
+    {
+      "eventId": "d6d00954fa97221848ca5c7b",
+      "eventDate": "2026-08-25",
+      "eventType": "military_operation",
+      "eventTitle": "US military strike kills 2 in eastern Pacific drug boat operation, first in over two months",
+      "countries": [
+        "USA"
+      ],
+      "escalationPotential": 0.3,
+      "chokepointLabel": "hormuz",
+      "benchmarkResponses": [
+        {
+          "benchmarkId": "brent_crude",
+          "priceAtEvent": null,
+          "price3dBefore": null,
+          "price3dAfter": null,
+          "deltaBefore": null,
+          "deltaAfter": null
+        },
+        {
+          "benchmarkId": "wti_crude",
+          "priceAtEvent": null,
+          "price3dBefore": null,
+          "price3dAfter": null,
+          "deltaBefore": null,
+          "deltaAfter": null
+        },
+        {
+          "benchmarkId": "henry_hub",
+          "priceAtEvent": null,
+          "price3dBefore": null,
+          "price3dAfter": null,
+          "deltaBefore": null,
+          "deltaAfter": null
+        }
+      ]
+    },
+    {
+      "eventId": "65ad267d222bb1441657b57d",
+      "eventDate": "2026-08-25",
+      "eventType": "diplomatic_incident",
+      "eventTitle": "China and Jordan call for reopening of Strait of Hormuz and maintained US-Iran ceasefire",
+      "countries": [
+        "CHN",
+        "JOR",
+        "IRN",
+        "USA"
+      ],
+      "escalationPotential": 0.3,
+      "chokepointLabel": "hormuz",
+      "benchmarkResponses": [
+        {
+          "benchmarkId": "brent_crude",
+          "priceAtEvent": null,
+          "price3dBefore": null,
+          "price3dAfter": null,
+          "deltaBefore": null,
+          "deltaAfter": null
+        },
+        {
+          "benchmarkId": "wti_crude",
+          "priceAtEvent": null,
+          "price3dBefore": null,
+          "price3dAfter": null,
+          "deltaBefore": null,
+          "deltaAfter": null
+        },
+        {
+          "benchmarkId": "henry_hub",
+          "priceAtEvent": null,
+          "price3dBefore": null,
+          "price3dAfter": null,
+          "deltaBefore": null,
+          "deltaAfter": null
+        }
+      ]
+    },
+    {
+      "eventId": "f58e3c4e1f63ffd2fee602b4",
+      "eventDate": "2026-08-27",
+      "eventType": "airstrike",
+      "eventTitle": "Iran school memorial: parents grieve six months after US missile strike killed 170",
+      "countries": [
+        "IRN",
+        "USA"
+      ],
+      "escalationPotential": 0.5,
+      "chokepointLabel": "hormuz",
+      "benchmarkResponses": [
+        {
+          "benchmarkId": "brent_crude",
+          "priceAtEvent": null,
+          "price3dBefore": null,
+          "price3dAfter": null,
+          "deltaBefore": null,
+          "deltaAfter": null
+        },
+        {
+          "benchmarkId": "wti_crude",
+          "priceAtEvent": null,
+          "price3dBefore": null,
+          "price3dAfter": null,
+          "deltaBefore": null,
+          "deltaAfter": null
+        },
+        {
+          "benchmarkId": "henry_hub",
+          "priceAtEvent": null,
+          "price3dBefore": null,
+          "price3dAfter": null,
+          "deltaBefore": null,
+          "deltaAfter": null
+        }
+      ]
+    },
+    {
+      "eventId": "02833d39ae1b96f714ee7660",
+      "eventDate": "2026-08-27",
+      "eventType": "military_operation",
+      "eventTitle": "Houthi strikes on Saudi Arabia risk reigniting full-scale Yemen war and disrupting Red Sea shipping",
+      "countries": [
+        "YEM",
+        "SAU",
+        "IRN"
+      ],
+      "escalationPotential": 0.75,
+      "chokepointLabel": "red_sea",
+      "benchmarkResponses": [
+        {
+          "benchmarkId": "brent_crude",
+          "priceAtEvent": null,
+          "price3dBefore": null,
+          "price3dAfter": null,
+          "deltaBefore": null,
+          "deltaAfter": null
+        },
+        {
+          "benchmarkId": "wti_crude",
+          "priceAtEvent": null,
+          "price3dBefore": null,
+          "price3dAfter": null,
+          "deltaBefore": null,
+          "deltaAfter": null
+        },
+        {
+          "benchmarkId": "henry_hub",
+          "priceAtEvent": null,
+          "price3dBefore": null,
+          "price3dAfter": null,
+          "deltaBefore": null,
+          "deltaAfter": null
+        }
+      ]
+    },
+    {
+      "eventId": "19e753f30a7c0f453c0c06d8",
+      "eventDate": "2026-08-27",
+      "eventType": "diplomatic_incident",
+      "eventTitle": "Iran and Qatar hold talks on Strait of Hormuz as US naval blockade squeezes Iranian oil imports",
+      "countries": [
+        "IRN",
+        "QAT",
+        "USA"
+      ],
+      "escalationPotential": 0.5,
+      "chokepointLabel": "hormuz",
+      "benchmarkResponses": [
+        {
+          "benchmarkId": "brent_crude",
+          "priceAtEvent": null,
+          "price3dBefore": null,
+          "price3dAfter": null,
+          "deltaBefore": null,
+          "deltaAfter": null
+        },
+        {
+          "benchmarkId": "wti_crude",
+          "priceAtEvent": null,
+          "price3dBefore": null,
+          "price3dAfter": null,
+          "deltaBefore": null,
+          "deltaAfter": null
+        },
+        {
+          "benchmarkId": "henry_hub",
+          "priceAtEvent": null,
+          "price3dBefore": null,
+          "price3dAfter": null,
+          "deltaBefore": null,
+          "deltaAfter": null
+        }
+      ]
+    },
+    {
+      "eventId": "55815a95a7b9feddefd22ba7",
+      "eventDate": "2026-08-27",
+      "eventType": "armed_conflict",
+      "eventTitle": "Iran endures six months of US-Israel strikes in stalemate, Trump war goals hit 'dangerous impasse'",
+      "countries": [
+        "IRN",
+        "USA",
+        "ISR"
+      ],
+      "escalationPotential": 0.6,
+      "chokepointLabel": "hormuz",
+      "benchmarkResponses": [
+        {
+          "benchmarkId": "brent_crude",
+          "priceAtEvent": null,
+          "price3dBefore": null,
+          "price3dAfter": null,
+          "deltaBefore": null,
+          "deltaAfter": null
+        },
+        {
+          "benchmarkId": "wti_crude",
+          "priceAtEvent": null,
+          "price3dBefore": null,
+          "price3dAfter": null,
+          "deltaBefore": null,
+          "deltaAfter": null
+        },
+        {
+          "benchmarkId": "henry_hub",
+          "priceAtEvent": null,
+          "price3dBefore": null,
+          "price3dAfter": null,
+          "deltaBefore": null,
+          "deltaAfter": null
+        }
+      ]
+    },
+    {
+      "eventId": "ae12e41bc5b6122ec2f8dd29",
+      "eventDate": "2026-09-01",
+      "eventType": "missile_attack",
+      "eventTitle": "US strikes Iran's Larak Island in Strait of Hormuz, killing two",
+      "countries": [
+        "IRN",
+        "USA"
+      ],
+      "escalationPotential": 0.85,
+      "chokepointLabel": "hormuz",
+      "benchmarkResponses": [
+        {
+          "benchmarkId": "brent_crude",
+          "priceAtEvent": null,
+          "price3dBefore": null,
+          "price3dAfter": null,
+          "deltaBefore": null,
+          "deltaAfter": null
+        },
+        {
+          "benchmarkId": "wti_crude",
+          "priceAtEvent": null,
+          "price3dBefore": null,
+          "price3dAfter": null,
+          "deltaBefore": null,
+          "deltaAfter": null
+        },
+        {
+          "benchmarkId": "henry_hub",
+          "priceAtEvent": null,
+          "price3dBefore": null,
+          "price3dAfter": null,
+          "deltaBefore": null,
+          "deltaAfter": null
+        }
+      ]
+    },
+    {
+      "eventId": "b153e7c484a37d3db24ae2fd",
+      "eventDate": "2026-09-01",
+      "eventType": "military_operation",
+      "eventTitle": "US and Iran exchange strikes overnight, ending month-long lull in six-month war",
+      "countries": [
+        "IRN",
+        "USA",
+        "ARE",
+        "JOR"
+      ],
+      "escalationPotential": 0.8,
+      "chokepointLabel": "hormuz",
+      "benchmarkResponses": [
+        {
+          "benchmarkId": "brent_crude",
+          "priceAtEvent": null,
+          "price3dBefore": null,
+          "price3dAfter": null,
+          "deltaBefore": null,
+          "deltaAfter": null
+        },
+        {
+          "benchmarkId": "wti_crude",
+          "priceAtEvent": null,
+          "price3dBefore": null,
+          "price3dAfter": null,
+          "deltaBefore": null,
+          "deltaAfter": null
+        },
+        {
+          "benchmarkId": "henry_hub",
+          "priceAtEvent": null,
+          "price3dBefore": null,
+          "price3dAfter": null,
+          "deltaBefore": null,
+          "deltaAfter": null
+        }
+      ]
+    },
+    {
+      "eventId": "82b3e673a75477456bd2356e",
+      "eventDate": "2026-09-01",
+      "eventType": "supply_disruption",
+      "eventTitle": "US blockade and war strain Iran's fuel supply, causing long gas lines",
+      "countries": [
+        "IRN",
+        "USA"
+      ],
+      "escalationPotential": 0.5,
+      "chokepointLabel": "hormuz",
+      "benchmarkResponses": [
+        {
+          "benchmarkId": "brent_crude",
+          "priceAtEvent": null,
+          "price3dBefore": null,
+          "price3dAfter": null,
+          "deltaBefore": null,
+          "deltaAfter": null
+        },
+        {
+          "benchmarkId": "wti_crude",
+          "priceAtEvent": null,
+          "price3dBefore": null,
+          "price3dAfter": null,
+          "deltaBefore": null,
+          "deltaAfter": null
+        },
+        {
+          "benchmarkId": "henry_hub",
+          "priceAtEvent": null,
+          "price3dBefore": null,
+          "price3dAfter": null,
+          "deltaBefore": null,
+          "deltaAfter": null
+        }
+      ]
+    },
+    {
+      "eventId": "fbb05b3002c9f44144aa4988",
+      "eventDate": "2026-09-01",
+      "eventType": "armed_conflict",
+      "eventTitle": "Trump vows military response to Iranian attack on Jordan amid escalating economic pressure on Iran",
+      "countries": [
+        "IRN",
+        "USA",
+        "JOR"
+      ],
+      "escalationPotential": 0.8,
+      "chokepointLabel": "hormuz",
+      "benchmarkResponses": [
+        {
+          "benchmarkId": "brent_crude",
+          "priceAtEvent": null,
+          "price3dBefore": null,
+          "price3dAfter": null,
+          "deltaBefore": null,
+          "deltaAfter": null
+        },
+        {
+          "benchmarkId": "wti_crude",
+          "priceAtEvent": null,
+          "price3dBefore": null,
+          "price3dAfter": null,
+          "deltaBefore": null,
+          "deltaAfter": null
+        },
+        {
+          "benchmarkId": "henry_hub",
+          "priceAtEvent": null,
+          "price3dBefore": null,
+          "price3dAfter": null,
+          "deltaBefore": null,
+          "deltaAfter": null
+        }
+      ]
+    },
+    {
+      "eventId": "ab0c9bd759641576ab9c7e60",
+      "eventDate": "2026-09-03",
+      "eventType": "diplomatic_incident",
+      "eventTitle": "Trump claims US control of Strait of Hormuz, suggests renaming it 'Trump Strait' amid Iran war",
+      "countries": [
+        "USA",
+        "IRN"
+      ],
+      "escalationPotential": 0.7,
+      "chokepointLabel": "hormuz",
+      "benchmarkResponses": [
+        {
+          "benchmarkId": "brent_crude",
+          "priceAtEvent": null,
+          "price3dBefore": null,
+          "price3dAfter": null,
+          "deltaBefore": null,
+          "deltaAfter": null
+        },
+        {
+          "benchmarkId": "wti_crude",
+          "priceAtEvent": null,
+          "price3dBefore": null,
+          "price3dAfter": null,
+          "deltaBefore": null,
+          "deltaAfter": null
+        },
+        {
+          "benchmarkId": "henry_hub",
+          "priceAtEvent": null,
+          "price3dBefore": null,
+          "price3dAfter": null,
+          "deltaBefore": null,
+          "deltaAfter": null
+        }
+      ]
+    },
+    {
+      "eventId": "61eba5e3005ce6538a0c8f7f",
+      "eventDate": "2026-09-03",
+      "eventType": "military_operation",
+      "eventTitle": "Iranian attack on Saudi tanker Sidr in Strait of Hormuz kills two Filipino sailors",
+      "countries": [
+        "SAU",
+        "IRN",
+        "PHL"
+      ],
+      "escalationPotential": 0.8,
+      "chokepointLabel": "hormuz",
+      "benchmarkResponses": [
+        {
+          "benchmarkId": "brent_crude",
+          "priceAtEvent": null,
+          "price3dBefore": null,
+          "price3dAfter": null,
+          "deltaBefore": null,
+          "deltaAfter": null
+        },
+        {
+          "benchmarkId": "wti_crude",
+          "priceAtEvent": null,
+          "price3dBefore": null,
+          "price3dAfter": null,
+          "deltaBefore": null,
+          "deltaAfter": null
+        },
+        {
+          "benchmarkId": "henry_hub",
+          "priceAtEvent": null,
+          "price3dBefore": null,
+          "price3dAfter": null,
+          "deltaBefore": null,
+          "deltaAfter": null
+        }
+      ]
+    },
+    {
+      "eventId": "ecad5365d0be2e7cbe9286b1",
+      "eventDate": "2026-09-03",
+      "eventType": "supply_disruption",
+      "eventTitle": "Iran fuel crisis deepens as war damage and US sanctions squeeze supplies",
+      "countries": [
+        "IRN",
+        "USA"
+      ],
+      "escalationPotential": 0.4,
+      "chokepointLabel": "hormuz",
+      "benchmarkResponses": [
+        {
+          "benchmarkId": "brent_crude",
+          "priceAtEvent": null,
+          "price3dBefore": null,
+          "price3dAfter": null,
+          "deltaBefore": null,
+          "deltaAfter": null
+        },
+        {
+          "benchmarkId": "wti_crude",
+          "priceAtEvent": null,
+          "price3dBefore": null,
+          "price3dAfter": null,
+          "deltaBefore": null,
+          "deltaAfter": null
+        },
+        {
+          "benchmarkId": "henry_hub",
+          "priceAtEvent": null,
+          "price3dBefore": null,
+          "price3dAfter": null,
+          "deltaBefore": null,
+          "deltaAfter": null
+        }
+      ]
+    },
+    {
+      "eventId": "c324324e773dd96aa4cd4da3",
+      "eventDate": "2026-09-03",
+      "eventType": "armed_conflict",
+      "eventTitle": "Iran and US trade threats after strike on wedding party, Trump warns of further strikes",
+      "countries": [
+        "IRN",
+        "USA"
+      ],
+      "escalationPotential": 0.85,
+      "chokepointLabel": "hormuz",
+      "benchmarkResponses": [
+        {
+          "benchmarkId": "brent_crude",
+          "priceAtEvent": null,
+          "price3dBefore": null,
+          "price3dAfter": null,
+          "deltaBefore": null,
+          "deltaAfter": null
+        },
+        {
+          "benchmarkId": "wti_crude",
+          "priceAtEvent": null,
+          "price3dBefore": null,
+          "price3dAfter": null,
+          "deltaBefore": null,
+          "deltaAfter": null
+        },
+        {
+          "benchmarkId": "henry_hub",
+          "priceAtEvent": null,
+          "price3dBefore": null,
+          "price3dAfter": null,
+          "deltaBefore": null,
+          "deltaAfter": null
+        }
+      ]
+    },
+    {
+      "eventId": "60e04148d66e918b409bf4eb",
+      "eventDate": "2026-09-03",
+      "eventType": "armed_conflict",
+      "eventTitle": "US-Iran hostilities resume amid wave of misinformation on social media",
+      "countries": [
+        "IRN",
+        "USA"
+      ],
+      "escalationPotential": 0.7,
+      "chokepointLabel": "hormuz",
+      "benchmarkResponses": [
+        {
+          "benchmarkId": "brent_crude",
+          "priceAtEvent": null,
+          "price3dBefore": null,
+          "price3dAfter": null,
+          "deltaBefore": null,
+          "deltaAfter": null
+        },
+        {
+          "benchmarkId": "wti_crude",
+          "priceAtEvent": null,
+          "price3dBefore": null,
+          "price3dAfter": null,
+          "deltaBefore": null,
+          "deltaAfter": null
+        },
+        {
+          "benchmarkId": "henry_hub",
+          "priceAtEvent": null,
+          "price3dBefore": null,
+          "price3dAfter": null,
+          "deltaBefore": null,
+          "deltaAfter": null
+        }
+      ]
+    },
+    {
+      "eventId": "cddf01ed3d0cb7082354028f",
+      "eventDate": "2026-09-03",
+      "eventType": "armed_conflict",
+      "eventTitle": "Iran fires on Gulf neighbors after US strikes in resumed six-month US-Iran war",
+      "countries": [
+        "IRN",
+        "USA",
+        "SAU"
+      ],
+      "escalationPotential": 0.9,
+      "chokepointLabel": "hormuz",
+      "benchmarkResponses": [
+        {
+          "benchmarkId": "brent_crude",
+          "priceAtEvent": null,
+          "price3dBefore": null,
+          "price3dAfter": null,
+          "deltaBefore": null,
+          "deltaAfter": null
+        },
+        {
+          "benchmarkId": "wti_crude",
+          "priceAtEvent": null,
+          "price3dBefore": null,
+          "price3dAfter": null,
+          "deltaBefore": null,
+          "deltaAfter": null
+        },
+        {
+          "benchmarkId": "henry_hub",
+          "priceAtEvent": null,
+          "price3dBefore": null,
+          "price3dAfter": null,
+          "deltaBefore": null,
+          "deltaAfter": null
+        }
+      ]
+    },
+    {
+      "eventId": "0e0e959dc8ff32cba360f8a5",
+      "eventDate": "2026-09-03",
+      "eventType": "armed_conflict",
+      "eventTitle": "US increasingly bogged down in Iran as war flares up again despite Trump's dominance claims",
+      "countries": [
+        "USA",
+        "IRN"
+      ],
+      "escalationPotential": 0.7,
+      "chokepointLabel": "hormuz",
+      "benchmarkResponses": [
+        {
+          "benchmarkId": "brent_crude",
+          "priceAtEvent": null,
+          "price3dBefore": null,
+          "price3dAfter": null,
+          "deltaBefore": null,
+          "deltaAfter": null
+        },
+        {
+          "benchmarkId": "wti_crude",
+          "priceAtEvent": null,
+          "price3dBefore": null,
+          "price3dAfter": null,
+          "deltaBefore": null,
+          "deltaAfter": null
+        },
+        {
+          "benchmarkId": "henry_hub",
+          "priceAtEvent": null,
+          "price3dBefore": null,
+          "price3dAfter": null,
+          "deltaBefore": null,
+          "deltaAfter": null
+        }
+      ]
+    },
+    {
+      "eventId": "db5ea9053e919ae14fd7aa74",
+      "eventDate": "2026-09-03",
+      "eventType": "airstrike",
+      "eventTitle": "US missile strike on wedding party in southern Iran kills at least four, wounds over 60",
+      "countries": [
+        "IRN",
+        "USA"
+      ],
+      "escalationPotential": 0.8,
+      "chokepointLabel": "hormuz",
+      "benchmarkResponses": [
+        {
+          "benchmarkId": "brent_crude",
+          "priceAtEvent": null,
+          "price3dBefore": null,
+          "price3dAfter": null,
+          "deltaBefore": null,
+          "deltaAfter": null
+        },
+        {
+          "benchmarkId": "wti_crude",
+          "priceAtEvent": null,
+          "price3dBefore": null,
+          "price3dAfter": null,
+          "deltaBefore": null,
+          "deltaAfter": null
+        },
+        {
+          "benchmarkId": "henry_hub",
+          "priceAtEvent": null,
+          "price3dBefore": null,
+          "price3dAfter": null,
+          "deltaBefore": null,
+          "deltaAfter": null
+        }
+      ]
+    },
+    {
+      "eventId": "0e384828520aeac95a7c3b66",
+      "eventDate": "2026-09-03",
+      "eventType": "armed_conflict",
+      "eventTitle": "US-Iran war continues as Trump floats renaming Strait of Hormuz 'Trump Strait'",
+      "countries": [
+        "IRN",
+        "USA"
+      ],
+      "escalationPotential": 0.8,
+      "chokepointLabel": "hormuz",
+      "benchmarkResponses": [
+        {
+          "benchmarkId": "brent_crude",
+          "priceAtEvent": null,
+          "price3dBefore": null,
+          "price3dAfter": null,
+          "deltaBefore": null,
+          "deltaAfter": null
+        },
+        {
+          "benchmarkId": "wti_crude",
+          "priceAtEvent": null,
+          "price3dBefore": null,
+          "price3dAfter": null,
+          "deltaBefore": null,
+          "deltaAfter": null
+        },
+        {
+          "benchmarkId": "henry_hub",
+          "priceAtEvent": null,
+          "price3dBefore": null,
+          "price3dAfter": null,
+          "deltaBefore": null,
+          "deltaAfter": null
+        }
+      ]
+    },
+    {
+      "eventId": "64b0485f84535800b4550c3c",
+      "eventDate": "2026-09-03",
+      "eventType": "missile_attack",
+      "eventTitle": "Iran attack on Saudi oil tanker Sidr in Strait of Hormuz kills two Filipino sailors",
+      "countries": [
+        "SAU",
+        "IRN",
+        "PHL"
+      ],
+      "escalationPotential": 0.8,
+      "chokepointLabel": "hormuz",
+      "benchmarkResponses": [
+        {
+          "benchmarkId": "brent_crude",
+          "priceAtEvent": null,
+          "price3dBefore": null,
+          "price3dAfter": null,
+          "deltaBefore": null,
+          "deltaAfter": null
+        },
+        {
+          "benchmarkId": "wti_crude",
+          "priceAtEvent": null,
+          "price3dBefore": null,
+          "price3dAfter": null,
+          "deltaBefore": null,
+          "deltaAfter": null
+        },
+        {
+          "benchmarkId": "henry_hub",
+          "priceAtEvent": null,
+          "price3dBefore": null,
+          "price3dAfter": null,
+          "deltaBefore": null,
+          "deltaAfter": null
+        }
+      ]
+    },
+    {
+      "eventId": "eae80932dceacc42d6fa76b6",
+      "eventDate": "2026-09-03",
+      "eventType": "military_operation",
+      "eventTitle": "Trump claims US control of Strait of Hormuz amid near-daily attacks on ships",
+      "countries": [
+        "IRN",
+        "USA"
+      ],
+      "escalationPotential": 0.7,
+      "chokepointLabel": "hormuz",
+      "benchmarkResponses": [
+        {
+          "benchmarkId": "brent_crude",
+          "priceAtEvent": null,
+          "price3dBefore": null,
+          "price3dAfter": null,
+          "deltaBefore": null,
+          "deltaAfter": null
+        },
+        {
+          "benchmarkId": "wti_crude",
+          "priceAtEvent": null,
+          "price3dBefore": null,
+          "price3dAfter": null,
+          "deltaBefore": null,
+          "deltaAfter": null
+        },
+        {
+          "benchmarkId": "henry_hub",
+          "priceAtEvent": null,
+          "price3dBefore": null,
+          "price3dAfter": null,
+          "deltaBefore": null,
+          "deltaAfter": null
+        }
+      ]
+    },
+    {
+      "eventId": "e4797ef8d323a99f74059714",
+      "eventDate": "2026-09-03",
+      "eventType": "military_operation",
+      "eventTitle": "US military considers deploying cyber unit to South Korea, shifting focus toward China",
+      "countries": [
+        "KOR",
+        "USA",
+        "PRK",
+        "CHN"
+      ],
+      "escalationPotential": 0.4,
+      "chokepointLabel": "hormuz",
+      "benchmarkResponses": [
+        {
+          "benchmarkId": "brent_crude",
+          "priceAtEvent": null,
+          "price3dBefore": null,
+          "price3dAfter": null,
+          "deltaBefore": null,
+          "deltaAfter": null
+        },
+        {
+          "benchmarkId": "wti_crude",
+          "priceAtEvent": null,
+          "price3dBefore": null,
+          "price3dAfter": null,
+          "deltaBefore": null,
+          "deltaAfter": null
+        },
+        {
+          "benchmarkId": "henry_hub",
+          "priceAtEvent": null,
+          "price3dBefore": null,
+          "price3dAfter": null,
+          "deltaBefore": null,
+          "deltaAfter": null
+        }
+      ]
+    },
+    {
+      "eventId": "1539e754d9030ca69a2d3602",
+      "eventDate": "2026-09-03",
+      "eventType": "airstrike",
+      "eventTitle": "US strikes on Iran kill 18-19 including wedding party, Trump threatens more attacks",
+      "countries": [
+        "IRN",
+        "USA"
+      ],
+      "escalationPotential": 0.9,
+      "chokepointLabel": "hormuz",
+      "benchmarkResponses": [
+        {
+          "benchmarkId": "brent_crude",
+          "priceAtEvent": null,
+          "price3dBefore": null,
+          "price3dAfter": null,
+          "deltaBefore": null,
+          "deltaAfter": null
+        },
+        {
+          "benchmarkId": "wti_crude",
+          "priceAtEvent": null,
+          "price3dBefore": null,
+          "price3dAfter": null,
+          "deltaBefore": null,
+          "deltaAfter": null
+        },
+        {
+          "benchmarkId": "henry_hub",
+          "priceAtEvent": null,
+          "price3dBefore": null,
+          "price3dAfter": null,
+          "deltaBefore": null,
+          "deltaAfter": null
+        }
+      ]
+    },
+    {
+      "eventId": "adda5759ae4539ec4e5dec97",
+      "eventDate": "2026-09-03",
+      "eventType": "airstrike",
+      "eventTitle": "US airstrikes on Iran hit wedding, killing five and wounding 67, Iranian officials say",
+      "countries": [
+        "IRN",
+        "USA"
+      ],
+      "escalationPotential": 0.85,
+      "chokepointLabel": "hormuz",
+      "benchmarkResponses": [
+        {
+          "benchmarkId": "brent_crude",
+          "priceAtEvent": null,
+          "price3dBefore": null,
+          "price3dAfter": null,
+          "deltaBefore": null,
+          "deltaAfter": null
+        },
+        {
+          "benchmarkId": "wti_crude",
+          "priceAtEvent": null,
+          "price3dBefore": null,
+          "price3dAfter": null,
+          "deltaBefore": null,
+          "deltaAfter": null
+        },
+        {
+          "benchmarkId": "henry_hub",
+          "priceAtEvent": null,
+          "price3dBefore": null,
+          "price3dAfter": null,
+          "deltaBefore": null,
+          "deltaAfter": null
+        }
+      ]
+    },
+    {
+      "eventId": "3941f6aa20ac79d91a590a02",
+      "eventDate": "2026-09-04",
+      "eventType": "armed_conflict",
+      "eventTitle": "Houthi rebels kill at least 100 in offensive toward Bab al-Mandab strait, Yemen",
+      "countries": [
+        "YEM"
+      ],
+      "escalationPotential": 0.7,
+      "chokepointLabel": "strait",
+      "benchmarkResponses": [
+        {
+          "benchmarkId": "brent_crude",
+          "priceAtEvent": null,
+          "price3dBefore": null,
+          "price3dAfter": null,
+          "deltaBefore": null,
+          "deltaAfter": null
+        },
+        {
+          "benchmarkId": "wti_crude",
+          "priceAtEvent": null,
+          "price3dBefore": null,
+          "price3dAfter": null,
+          "deltaBefore": null,
+          "deltaAfter": null
+        },
+        {
+          "benchmarkId": "henry_hub",
+          "priceAtEvent": null,
+          "price3dBefore": null,
+          "price3dAfter": null,
+          "deltaBefore": null,
+          "deltaAfter": null
+        }
+      ]
+    },
+    {
+      "eventId": "e7d4c25462070b67e35b1ca2",
+      "eventDate": "2026-09-04",
+      "eventType": "airstrike",
+      "eventTitle": "US investigates whether missile strike hit Iranian wedding, killing four",
+      "countries": [
+        "IRN",
+        "USA"
+      ],
+      "escalationPotential": 0.6,
+      "chokepointLabel": "hormuz",
+      "benchmarkResponses": [
+        {
+          "benchmarkId": "brent_crude",
+          "priceAtEvent": null,
+          "price3dBefore": null,
+          "price3dAfter": null,
+          "deltaBefore": null,
+          "deltaAfter": null
+        },
+        {
+          "benchmarkId": "wti_crude",
+          "priceAtEvent": null,
+          "price3dBefore": null,
+          "price3dAfter": null,
+          "deltaBefore": null,
+          "deltaAfter": null
+        },
+        {
+          "benchmarkId": "henry_hub",
+          "priceAtEvent": null,
+          "price3dBefore": null,
+          "price3dAfter": null,
+          "deltaBefore": null,
+          "deltaAfter": null
+        }
+      ]
+    },
+    {
+      "eventId": "570e6efaf88b7c8ba2ab1d58",
+      "eventDate": "2026-09-04",
+      "eventType": "commodity_price_move",
+      "eventTitle": "Oil surges on renewed US-Iran fighting, Strait of Hormuz disruption fears",
+      "countries": [
+        "IRN",
+        "USA"
+      ],
+      "escalationPotential": 0.7,
+      "chokepointLabel": "hormuz",
+      "benchmarkResponses": [
+        {
+          "benchmarkId": "brent_crude",
+          "priceAtEvent": null,
+          "price3dBefore": null,
+          "price3dAfter": null,
+          "deltaBefore": null,
+          "deltaAfter": null
+        },
+        {
+          "benchmarkId": "wti_crude",
+          "priceAtEvent": null,
+          "price3dBefore": null,
+          "price3dAfter": null,
+          "deltaBefore": null,
+          "deltaAfter": null
+        },
+        {
+          "benchmarkId": "henry_hub",
+          "priceAtEvent": null,
+          "price3dBefore": null,
+          "price3dAfter": null,
+          "deltaBefore": null,
+          "deltaAfter": null
+        }
+      ]
+    },
+    {
+      "eventId": "ba3d3a6075bb9fc1a1913c70",
+      "eventDate": "2026-09-04",
+      "eventType": "airstrike",
+      "eventTitle": "US launches fresh strikes on Iranian military targets amid 'forever war' concerns",
+      "countries": [
+        "IRN",
+        "USA"
+      ],
+      "escalationPotential": 0.8,
+      "chokepointLabel": "hormuz",
+      "benchmarkResponses": [
+        {
+          "benchmarkId": "brent_crude",
+          "priceAtEvent": null,
+          "price3dBefore": null,
+          "price3dAfter": null,
+          "deltaBefore": null,
+          "deltaAfter": null
+        },
+        {
+          "benchmarkId": "wti_crude",
+          "priceAtEvent": null,
+          "price3dBefore": null,
+          "price3dAfter": null,
+          "deltaBefore": null,
+          "deltaAfter": null
+        },
+        {
+          "benchmarkId": "henry_hub",
+          "priceAtEvent": null,
+          "price3dBefore": null,
+          "price3dAfter": null,
+          "deltaBefore": null,
+          "deltaAfter": null
+        }
+      ]
+    },
+    {
+      "eventId": "93664589c8c97b7141435ff7",
+      "eventDate": "2026-09-04",
+      "eventType": "commodity_price_move",
+      "eventTitle": "Oil prices surge as US-Iran hostilities resume, Strait of Hormuz remains blocked",
+      "countries": [
+        "IRN",
+        "USA"
+      ],
+      "escalationPotential": 0.8,
+      "chokepointLabel": "hormuz",
+      "benchmarkResponses": [
+        {
+          "benchmarkId": "brent_crude",
+          "priceAtEvent": null,
+          "price3dBefore": null,
+          "price3dAfter": null,
+          "deltaBefore": null,
+          "deltaAfter": null
+        },
+        {
+          "benchmarkId": "wti_crude",
+          "priceAtEvent": null,
+          "price3dBefore": null,
+          "price3dAfter": null,
+          "deltaBefore": null,
+          "deltaAfter": null
+        },
+        {
+          "benchmarkId": "henry_hub",
+          "priceAtEvent": null,
+          "price3dBefore": null,
+          "price3dAfter": null,
+          "deltaBefore": null,
+          "deltaAfter": null
+        }
+      ]
+    },
+    {
+      "eventId": "edb7d240bca965c9001d9981",
+      "eventDate": "2026-09-04",
+      "eventType": "armed_conflict",
+      "eventTitle": "Houthis advance toward Bab al-Mandab Strait port city amid escalating ground fighting",
+      "countries": [
+        "YEM"
+      ],
+      "escalationPotential": 0.7,
+      "chokepointLabel": "strait",
+      "benchmarkResponses": [
+        {
+          "benchmarkId": "brent_crude",
+          "priceAtEvent": null,
+          "price3dBefore": null,
+          "price3dAfter": null,
+          "deltaBefore": null,
+          "deltaAfter": null
+        },
+        {
+          "benchmarkId": "wti_crude",
+          "priceAtEvent": null,
+          "price3dBefore": null,
+          "price3dAfter": null,
+          "deltaBefore": null,
+          "deltaAfter": null
+        },
+        {
+          "benchmarkId": "henry_hub",
+          "priceAtEvent": null,
+          "price3dBefore": null,
+          "price3dAfter": null,
+          "deltaBefore": null,
+          "deltaAfter": null
+        }
+      ]
+    },
+    {
+      "eventId": "3e7821bf9ccd30f6a419e0f6",
+      "eventDate": "2026-09-04",
+      "eventType": "diplomatic_incident",
+      "eventTitle": "China and US military commanders resume Taiwan Strait command-level talks in Canada after 2-year break",
+      "countries": [
+        "CHN",
+        "USA",
+        "CAN"
+      ],
+      "escalationPotential": 0.2,
+      "chokepointLabel": "strait",
+      "benchmarkResponses": [
+        {
+          "benchmarkId": "brent_crude",
+          "priceAtEvent": null,
+          "price3dBefore": null,
+          "price3dAfter": null,
+          "deltaBefore": null,
+          "deltaAfter": null
+        },
+        {
+          "benchmarkId": "wti_crude",
+          "priceAtEvent": null,
+          "price3dBefore": null,
+          "price3dAfter": null,
+          "deltaBefore": null,
+          "deltaAfter": null
+        },
+        {
+          "benchmarkId": "henry_hub",
+          "priceAtEvent": null,
+          "price3dBefore": null,
+          "price3dAfter": null,
+          "deltaBefore": null,
+          "deltaAfter": null
+        }
+      ]
+    },
+    {
+      "eventId": "bf3ed68533301818f6abfab8",
+      "eventDate": "2026-09-04",
+      "eventType": "military_operation",
+      "eventTitle": "Putin hardens resolve for military win in Ukraine after CIA Director Ratcliffe's Moscow visit fails",
+      "countries": [
+        "RUS",
+        "UKR",
+        "USA"
+      ],
+      "escalationPotential": 0.7,
+      "chokepointLabel": "hormuz",
+      "benchmarkResponses": [
+        {
+          "benchmarkId": "brent_crude",
+          "priceAtEvent": null,
+          "price3dBefore": null,
+          "price3dAfter": null,
+          "deltaBefore": null,
+          "deltaAfter": null
+        },
+        {
+          "benchmarkId": "wti_crude",
+          "priceAtEvent": null,
+          "price3dBefore": null,
+          "price3dAfter": null,
+          "deltaBefore": null,
+          "deltaAfter": null
+        },
+        {
+          "benchmarkId": "henry_hub",
+          "priceAtEvent": null,
+          "price3dBefore": null,
+          "price3dAfter": null,
+          "deltaBefore": null,
+          "deltaAfter": null
+        }
+      ]
+    },
+    {
+      "eventId": "c7f261d6198068415fb2f905",
+      "eventDate": "2026-09-05",
+      "eventType": "military_operation",
+      "eventTitle": "Yemen government launches own air attacks on Houthis amid major offensive toward Bab al-Mandeb",
+      "countries": [
+        "YEM"
+      ],
+      "escalationPotential": 0.75,
+      "chokepointLabel": "strait",
+      "benchmarkResponses": [
+        {
+          "benchmarkId": "brent_crude",
+          "priceAtEvent": null,
+          "price3dBefore": null,
+          "price3dAfter": null,
+          "deltaBefore": null,
+          "deltaAfter": null
+        },
+        {
+          "benchmarkId": "wti_crude",
+          "priceAtEvent": null,
+          "price3dBefore": null,
+          "price3dAfter": null,
+          "deltaBefore": null,
+          "deltaAfter": null
+        },
+        {
+          "benchmarkId": "henry_hub",
+          "priceAtEvent": null,
+          "price3dBefore": null,
+          "price3dAfter": null,
+          "deltaBefore": null,
+          "deltaAfter": null
+        }
+      ]
+    },
+    {
+      "eventId": "4f8fb2555299d0df2581094b",
+      "eventDate": "2026-09-05",
+      "eventType": "armed_conflict",
+      "eventTitle": "Houthi forces push to secure Red Sea entry in southwest Yemen as fighting intensifies",
+      "countries": [
+        "YEM",
+        "SAU",
+        "IRN"
+      ],
+      "escalationPotential": 0.75,
+      "chokepointLabel": "red_sea",
+      "benchmarkResponses": [
+        {
+          "benchmarkId": "brent_crude",
+          "priceAtEvent": null,
+          "price3dBefore": null,
+          "price3dAfter": null,
+          "deltaBefore": null,
+          "deltaAfter": null
+        },
+        {
+          "benchmarkId": "wti_crude",
+          "priceAtEvent": null,
+          "price3dBefore": null,
+          "price3dAfter": null,
+          "deltaBefore": null,
+          "deltaAfter": null
+        },
+        {
+          "benchmarkId": "henry_hub",
+          "priceAtEvent": null,
+          "price3dBefore": null,
+          "price3dAfter": null,
+          "deltaBefore": null,
+          "deltaAfter": null
+        }
+      ]
+    },
+    {
+      "eventId": "8ef58e9568c665b44d0381b0",
+      "eventDate": "2026-09-05",
+      "eventType": "military_operation",
+      "eventTitle": "Trump threatens strike on Iran's Pickaxe Mountain nuclear site after tanker attack off Kharg Island",
+      "countries": [
+        "IRN",
+        "USA"
+      ],
+      "escalationPotential": 0.75,
+      "chokepointLabel": "hormuz",
+      "benchmarkResponses": [
+        {
+          "benchmarkId": "brent_crude",
+          "priceAtEvent": null,
+          "price3dBefore": null,
+          "price3dAfter": null,
+          "deltaBefore": null,
+          "deltaAfter": null
+        },
+        {
+          "benchmarkId": "wti_crude",
+          "priceAtEvent": null,
+          "price3dBefore": null,
+          "price3dAfter": null,
+          "deltaBefore": null,
+          "deltaAfter": null
+        },
+        {
+          "benchmarkId": "henry_hub",
+          "priceAtEvent": null,
+          "price3dBefore": null,
+          "price3dAfter": null,
+          "deltaBefore": null,
+          "deltaAfter": null
+        }
+      ]
+    }
+  ],
+  "summary": {
+    "totalActiveStorylines": 9,
+    "energyLinkedStorylines": 6,
+    "escalatingLinked": 1,
+    "avgEscalationLinked": 0.549,
+    "supplyDisruptionsRecent": 5,
+    "energyEventsRecent": 7,
+    "hormuzEventsRecent": 2,
+    "observationWindowDays": 14,
+    "benchmarkCoverage": [
+      {
+        "benchmarkId": "brent_crude",
+        "mostRecentDate": null,
+        "mostRecentPrice": null,
+        "daysWithPairedData": 0
+      },
+      {
+        "benchmarkId": "wti_crude",
+        "mostRecentDate": null,
+        "mostRecentPrice": null,
+        "daysWithPairedData": 0
+      },
+      {
+        "benchmarkId": "henry_hub",
+        "mostRecentDate": null,
+        "mostRecentPrice": null,
+        "daysWithPairedData": 0
+      }
+    ],
+    "pairedObservationDays": 6,
+    "avgMaxEscalation": 0.808,
+    "maxSingleDayEscalation": 0.9,
+    "maxSingleDayPriceChangePct": null
+  }
+}
