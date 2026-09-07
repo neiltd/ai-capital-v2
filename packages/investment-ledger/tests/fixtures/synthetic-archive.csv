@@ -1,0 +1,13 @@
+trade_date,broker,account,doc_type,side,asset,exchange,currency,units,unit_price,gross_amount,fee,vat,withholding_tax,net_amount,cash_flow,gross_thb,fee_thb,wht_thb,net_thb,is_switch,reference,source_file
+2020-01-02,Synthetic Broker A,SYN-0001,confirmation,BUY,SYNA,SYNX,THB,100,10.00,1000.00,1.00,0.07,0.00,1001.07,-1001.07,,,,,false,SYN-REF-1,synthetic_note_1.txt
+2020-01-03,Synthetic Broker A,SYN-0001,confirmation,SELL,SYNA,SYNX,THB,40,11.00,440.00,0.44,0.03,0.00,439.53,439.53,,,,,false,SYN-REF-2,synthetic_note_2.txt
+2020-02-10,Synthetic Broker B,SYN-0002,confirmation,SWITCH_OUT,SYNFUND-OUT,,THB,50,2.00,100.00,0.00,0.00,0.00,100.00,100.00,,,,,true,SYN-SW-OUT,synthetic_switch.txt
+2020-02-12,Synthetic Broker B,SYN-0002,confirmation,SWITCH_IN,SYNFUND-IN,,THB,25,4.00,100.00,0.00,0.00,0.00,100.00,-100.00,,,,,true,SYN-SW-IN,synthetic_switch.txt
+2020-03-05,Synthetic Broker B,SYN-0002,confirmation,SWITCH_OUT,SYNFUND-C,,THB,30,3.00,90.00,0.00,0.00,0.00,90.00,90.00,,,,,true,SYN-SW-2,synthetic_switch_2.txt
+2020-03-05,Synthetic Broker B,SYN-0002,confirmation,SWITCH_IN,SYNFUND-D,,THB,60,1.50,90.00,0.00,0.00,0.00,90.00,-90.00,,,,,true,SYN-SW-2,synthetic_switch_2.txt
+2020-04-01,Synthetic Broker A,SYN-0001,confirmation,SELL,SYNB,SYNX,THB,15,5.00,75.00,0.08,0.01,0.00,74.91,74.91,,,,,false,SYN-REF-3,synthetic_note_3.txt
+2020-05-01,Synthetic Broker B,SYN-0002,confirmation,SELL,SYNFUND-D,,THB,20,2.00,40.00,0.00,0.00,0.00,40.00,40.00,,,,,false,SYN-REF-4,synthetic_note_4.txt
+2020-06-02,Synthetic Broker B,SYN-0002,confirmation,SWITCH_OUT,SYNFUND-E,,THB,10,6.00,60.00,0.00,0.00,0.00,60.00,60.00,,,,,true,SYN-SW-3,synthetic_switch_3.txt
+2020-06-02,Synthetic Broker B,SYN-0002,confirmation,SWITCH_IN,SYNFUND-F,,THB,45,1.33,60.00,0.00,0.00,0.00,60.00,-60.00,,,,,true,SYN-SW-3,synthetic_switch_3.txt
+2020-07-01,Synthetic Broker B,SYN-0002,confirmation,SELL,SYNFUND-F,,THB,5,12.00,60.00,0.00,0.00,0.00,60.00,60.00,,,,,false,SYN-REF-5,synthetic_note_5.txt
+2020-08-01,Synthetic Broker A,SYN-0001,fee_invoice,FEE,SYNFEE,,THB,,,25.00,25.00,1.75,0.00,26.75,-26.75,,,,,false,SYN-REF-6,synthetic_note_6.txt

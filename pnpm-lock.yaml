@@ -701,6 +701,31 @@ importers:
         specifier: ^3.0.0
         version: 3.2.6(@types/debug@4.1.13)(@types/node@22.19.20)(jiti@2.7.0)(lightningcss@1.32.0)(msw@2.14.6(@types/node@22.19.20)(typescript@5.9.3))(tsx@4.22.4)
 
+  packages/investment-ledger:
+    dependencies:
+      '@common/db':
+        specifier: workspace:*
+        version: link:../db
+      pg:
+        specifier: ^8.13.0
+        version: 8.21.0
+    devDependencies:
+      '@types/node':
+        specifier: ^22.0.0
+        version: 22.19.20
+      '@types/pg':
+        specifier: ^8.11.10
+        version: 8.20.0
+      tsx:
+        specifier: ^4.16.0
+        version: 4.22.4
+      typescript:
+        specifier: ^5.5.0
+        version: 5.9.3
+      vitest:
+        specifier: ^3.0.0
+        version: 3.2.6(@types/debug@4.1.13)(@types/node@22.19.20)(jiti@2.7.0)(lightningcss@1.32.0)(msw@2.14.6(@types/node@22.19.20)(typescript@5.9.3))(tsx@4.22.4)
+
   packages/pipeline-runs:
     dependencies:
       better-sqlite3:

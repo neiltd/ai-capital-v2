@@ -15,6 +15,9 @@ const saved = {
   // short-circuit and stop exercising the derivation and fail-closed paths —
   // they would still pass green while testing nothing, which is the exact
   // shape of silent-hole this suite keeps finding elsewhere.
+  //
+  // Consulting it is about TARGET SELECTION, not about sufficiency: it names a
+  // database, it does not confer bootstrap authority.
   runtime: process.env.TEST_RUNTIME_DATABASE_URL,
   bootstrap: process.env.BOOTSTRAP_DATABASE_URL,
 }
@@ -30,12 +33,25 @@ afterEach(() => {
   else process.env.BOOTSTRAP_DATABASE_URL = saved.bootstrap
 })
 
+// SCOPE OF THESE CASES: resolveTestUrl decides WHICH DATABASE is targeted. It
+// does not decide, and these cases do not assert, whether the resolved
+// credential has the authority bootstrap needs. Resolution and migration
+// authority are separate concerns: a URL can resolve perfectly here and still
+// fail in globalSetup with "permission denied for database …" because the
+// restricted role cannot run `CREATE SCHEMA IF NOT EXISTS db`. Read a passing
+// case below as "the right database was chosen", never as "this configuration
+// is runnable".
+
 describe('resolveTestUrl', () => {
   it('falls back to TEST_RUNTIME_DATABASE_URL before deriving from DATABASE_URL', () => {
     // The clean-shell case. vitest.config loads this variable from root .env;
     // leaving it out of resolveTestUrl's chain meant the config loaded a
     // variable this function never read, the suite died in globalSetup, and
     // every write-intent regression test silently did not run.
+    //
+    // This asserts precedence only. The runtime credential naming the database
+    // does NOT make the suite runnable on its own — bootstrap still needs a
+    // privileged principal.
     delete process.env.TEST_DATABASE_URL
     delete process.env.BOOTSTRAP_DATABASE_URL
     process.env.TEST_RUNTIME_DATABASE_URL = 'postgres://runtime@localhost:5432/ai_capital_test'
@@ -44,8 +60,10 @@ describe('resolveTestUrl', () => {
   })
 
   it('BOOTSTRAP still outranks the restricted runtime credential', () => {
-    // The runtime role cannot CREATE DATABASE, so a fresh clone must still be
-    // able to hand over a privileged credential and have it win.
+    // The runtime role holds neither CREATE DATABASE nor CREATE on an existing
+    // database, so a privileged credential must win whenever one is supplied —
+    // for a fresh clone AND for an already-migrated database, because bootstrap
+    // runs migrations either way.
     process.env.TEST_RUNTIME_DATABASE_URL = 'postgres://runtime@localhost:5432/ai_capital_test'
     process.env.BOOTSTRAP_DATABASE_URL = 'postgres://super@localhost:5432/ai_capital_test'
     expect(resolveTestUrl()).toBe('postgres://super@localhost:5432/ai_capital_test')
