@@ -1,207 +1,188 @@
 {
   "schemaVersion": "1.0.0",
-  "generatedAt": "2026-09-05T14:23:51.015Z",
+  "generatedAt": "2026-09-06T14:16:25.210Z",
   "source": "world-intelligence-hub",
-  "eventCount": 12,
+  "eventCount": 14,
   "dateRange": {
-    "from": "2026-09-04",
-    "to": "2026-09-05"
+    "from": "2026-09-05",
+    "to": "2026-09-06"
   },
   "events": [
     {
-      "id": "d8005f5fa788e865788e3cc7",
+      "id": "3e964a32d524acff59b87888",
       "source": "rss_intelligence",
-      "eventDate": "2026-09-05",
+      "eventDate": "2026-09-06",
       "iso3": [
-        "YEM"
+        "IRN",
+        "USA"
       ],
       "eventType": "conflict.armed",
-      "headline": "Houthi missile strike kills at least four civilians near Yemen's Taiz",
-      "summary": "A Houthi missile struck a crowded road near Yemen's Taiz, killing at least four civilians. The attack occurred amid fierce clashes across Taiz and Hodeidah provinces and rapid civilian displacement.",
-      "confidenceScore": 0.75,
+      "headline": "US and Iran trade retaliatory strikes on tankers and warships near Strait of Hormuz",
+      "summary": "The US and Iran have been engaged in a months-long tanker war in the Strait of Hormuz. The US says it hit three Iranian oil tankers after the IRGC launched ballistic missiles toward two US Navy warships; Iran says it targeted three US-linked ships in retaliation.",
+      "confidenceScore": 0.85,
       "confidenceLabel": "high",
-      "coordinateQuality": "missing",
-      "tier": 2,
-      "tags": [
-        "aljazeera-english",
-        "storyline:181da00b"
-      ],
-      "geopoliticalScore": 4,
-      "economicImpactScore": 3
-    },
-    {
-      "id": "c7f261d6198068415fb2f905",
-      "source": "rss_intelligence",
-      "eventDate": "2026-09-05",
-      "iso3": [
-        "YEM"
-      ],
-      "eventType": "conflict.armed",
-      "headline": "Yemen government launches own air attacks on Houthis amid major offensive toward Bab al-Mandeb",
-      "summary": "The Yemeni government has begun launching its own air attacks on Houthi forces as fighting intensifies. A major Houthi offensive towards the Bab al-Mandeb strait has triggered some of Yemen's worst fighting in years.",
-      "confidenceScore": 0.7,
-      "confidenceLabel": "medium",
       "coordinateQuality": "missing",
       "tier": 1,
       "tags": [
         "aljazeera-english",
-        "storyline:181da00b"
+        "bbc-world",
+        "bloomberg-markets",
+        "storyline:b4296536"
       ],
-      "geopoliticalScore": 5.5,
-      "economicImpactScore": 5
+      "geopoliticalScore": 9,
+      "economicImpactScore": 9
     },
     {
-      "id": "4f8fb2555299d0df2581094b",
+      "id": "408d9e4e6a0a68c75a051b32",
       "source": "rss_intelligence",
-      "eventDate": "2026-09-05",
+      "eventDate": "2026-09-06",
       "iso3": [
-        "YEM",
-        "SAU",
+        "USA",
         "IRN"
       ],
       "eventType": "conflict.armed",
-      "headline": "Houthi forces push to secure Red Sea entry in southwest Yemen as fighting intensifies",
-      "summary": "Houthi forces are trying to secure high ground and solidify control of the entry to the Red Sea in southwest Yemen. The Iran-backed militia abandoned a shaky truce with the Saudi-backed government-in-exile in July.",
-      "confidenceScore": 0.75,
-      "confidenceLabel": "high",
+      "headline": "US races to boost missile interceptor production amid Iran conflict",
+      "summary": "The US retains significant munitions capacity for operations against Iran but stocks of sophisticated interceptor missiles are under greater pressure. Manufacturers are being pushed to sharply increase output, according to Bloomberg Intelligence analysis.",
+      "confidenceScore": 0.7,
+      "confidenceLabel": "medium",
       "coordinateQuality": "missing",
-      "tier": 1,
+      "tier": 2,
       "tags": [
-        "dw-world",
-        "storyline:181da00b"
+        "bloomberg-markets",
+        "storyline:b4296536"
       ],
       "geopoliticalScore": 6,
-      "economicImpactScore": 5.5
+      "economicImpactScore": 6
     },
     {
-      "id": "76c769ff9639d463e5997856",
+      "id": "4a1d2c6e461117cf9c66ee15",
       "source": "rss_intelligence",
-      "eventDate": "2026-09-05",
+      "eventDate": "2026-09-06",
       "iso3": [
         "UKR",
         "RUS",
         "USA"
       ],
-      "eventType": "conflict.armed",
-      "headline": "Russian attacks kill at least 5 in Ukraine as US envoys visit Moscow amid limited ceasefire announcement",
-      "summary": "At least five people were killed in Russian attacks on Ukraine as US envoys visited Moscow before a planned trip to Kyiv. Ukraine and Russia announced a three-day limited ceasefire during the visit.",
-      "confidenceScore": 0.75,
-      "confidenceLabel": "high",
-      "coordinateQuality": "missing",
-      "tier": 1,
-      "tags": [
-        "aljazeera-english",
-        "storyline:b4296536"
-      ],
-      "geopoliticalScore": 7.5,
-      "economicImpactScore": 4
-    },
-    {
-      "id": "400de9580ae96a11125eb621",
-      "source": "rss_intelligence",
-      "eventDate": "2026-09-05",
-      "iso3": [
-        "UKR",
-        "RUS"
-      ],
-      "eventType": "conflict.armed",
-      "headline": "Russia strikes Ukrainian security headquarters with drone in Kyiv, Zelensky says",
-      "summary": "Russia struck a Ukrainian security headquarters with an unmanned aerial vehicle in the heart of Kyiv without warning, according to President Zelensky.",
+      "eventType": "diplomatic.cooperation",
+      "headline": "US envoys Witkoff and Kushner visit Kyiv after inconclusive Putin talks in Moscow",
+      "summary": "US envoys Steve Witkoff and Jared Kushner arrived in Kyiv for their first official visit to Ukraine after more than three hours of talks with Russian President Vladimir Putin in Moscow produced no announced breakthrough. The renewed US effort comes amid ongoing Ukraine-Russia tensions.",
       "confidenceScore": 0.75,
       "confidenceLabel": "high",
       "coordinateQuality": "missing",
       "tier": 2,
       "tags": [
-        "bbc-world",
-        "storyline:3ccac860"
+        "bloomberg-markets",
+        "storyline:13e06972"
       ],
-      "geopoliticalScore": 6,
+      "geopoliticalScore": 7.5,
       "economicImpactScore": 3
     },
     {
-      "id": "902d17b96d6c0671aea66ab6",
+      "id": "b709a45a2f7e747de18ffd10",
       "source": "rss_intelligence",
-      "eventDate": "2026-09-05",
+      "eventDate": "2026-09-06",
       "iso3": [
-        "NER",
-        "RUS"
+        "IRN",
+        "USA",
+        "CHN"
       ],
-      "eventType": "conflict.armed",
-      "headline": "Russian forces in Niger reportedly prioritize protecting military junta over fighting jihadists",
-      "summary": "Russian forces brought into Niger to help combat jihadist insurgents are reported to also be focused on defending the country's military leadership. The report questions the effectiveness of Russian forces against insurgent threats versus regime protection.",
+      "eventType": "economic.sanctions",
+      "headline": "US intensifies economic sanctions and naval blockade against Iran, targeting remaining crude exports",
+      "summary": "The Trump administration is intensifying economic pressure on Iran through sanctions and a naval blockade. Treasury Secretary Scott Bessent said Tehran has about 30 million barrels of crude left for potential Chinese buyers.",
+      "confidenceScore": 0.75,
+      "confidenceLabel": "high",
+      "coordinateQuality": "missing",
+      "tier": 2,
+      "tags": [
+        "bloomberg-markets",
+        "storyline:13e06972"
+      ],
+      "geopoliticalScore": 7,
+      "economicImpactScore": 7.5
+    },
+    {
+      "id": "d375d43cafe9b08bc62b79da",
+      "source": "rss_intelligence",
+      "eventDate": "2026-09-06",
+      "iso3": [
+        "SAU",
+        "IRN"
+      ],
+      "eventType": "energy.disruption",
+      "headline": "OPEC+ maintains oil production quotas unchanged as Iran conflict shutters Middle East output",
+      "summary": "Major OPEC+ nations decided to keep oil production quotas unchanged, even as the ongoing Iran war continues to shutter significant swathes of Middle East oil output.",
+      "confidenceScore": 0.8,
+      "confidenceLabel": "high",
+      "coordinateQuality": "missing",
+      "tier": 2,
+      "tags": [
+        "bloomberg-markets",
+        "storyline:413ac1b1"
+      ],
+      "geopoliticalScore": 6,
+      "economicImpactScore": 8.5
+    },
+    {
+      "id": "bafcb56ba15e73838f0fd185",
+      "source": "rss_intelligence",
+      "eventDate": "2026-09-06",
+      "iso3": [
+        "VEN",
+        "USA"
+      ],
+      "eventType": "economic.trade",
+      "headline": "US-Venezuela oil deal draws criticism from Venezuelan opposition",
+      "summary": "New oil deals between the U.S. and Venezuela have unsettled Venezuelan opposition members, who fear agreements with the authoritarian government in Caracas could undermine democratic progress in the country.",
       "confidenceScore": 0.6,
       "confidenceLabel": "medium",
       "coordinateQuality": "missing",
       "tier": 3,
       "tags": [
-        "bbc-world",
-        "storyline:b4296536"
+        "npr-news",
+        "storyline:413ac1b1"
       ],
       "geopoliticalScore": 5,
-      "economicImpactScore": 1.5
+      "economicImpactScore": 5
     },
     {
-      "id": "cf121273d9e2ed7a6afaa236",
+      "id": "403ae533ca80c6f7c379cd38",
       "source": "rss_intelligence",
-      "eventDate": "2026-09-05",
+      "eventDate": "2026-09-06",
       "iso3": [
         "CAN",
         "USA"
       ],
       "eventType": "economic.trade",
-      "headline": "Canada-US trade war escalates as Canada weighs retaliatory options",
-      "summary": "The trade dispute between Canada and the United States continues to escalate, with analysis examining how much Canada can retaliate given the US is its larger trading partner.",
-      "confidenceScore": 0.5,
-      "confidenceLabel": "low",
+      "headline": "Trump tariffs compound bad year for Canadian honey producers in Alberta",
+      "summary": "Alberta, which produces 40 percent of Canada's honey, is facing a difficult year as poor weather and President Trump's trade tariffs combine to threaten the province's honey industry.",
+      "confidenceScore": 0.6,
+      "confidenceLabel": "medium",
       "coordinateQuality": "missing",
       "tier": 3,
       "tags": [
-        "bbc-world",
+        "nytimes-world",
         "storyline:413ac1b1"
       ],
-      "geopoliticalScore": 4.5,
-      "economicImpactScore": 5.5
+      "geopoliticalScore": 3,
+      "economicImpactScore": 4
     },
     {
-      "id": "170c3cec946b28f59073d3af",
+      "id": "efc7aad574a6f184f0ce5cfb",
       "source": "rss_intelligence",
-      "eventDate": "2026-09-05",
+      "eventDate": "2026-09-06",
       "iso3": [
         "UKR",
-        "RUS"
-      ],
-      "eventType": "conflict.armed",
-      "headline": "Russian drone strikes offices of Ukraine's intelligence chief in Kyiv",
-      "summary": "A Russian drone struck the office of Ukraine's intelligence chief in Kyiv. The attack occurred as U.S. envoys Steve Witkoff and Jared Kushner were reportedly planning imminent visits to Kyiv and Moscow to discuss peace efforts.",
-      "confidenceScore": 0.75,
-      "confidenceLabel": "high",
-      "coordinateQuality": "missing",
-      "tier": 2,
-      "tags": [
-        "nytimes-world",
-        "storyline:b4296536"
-      ],
-      "geopoliticalScore": 6,
-      "economicImpactScore": 2
-    },
-    {
-      "id": "397e0645227da5c74996eaa5",
-      "source": "rss_intelligence",
-      "eventDate": "2026-09-05",
-      "iso3": [
         "RUS",
-        "USA",
-        "UKR"
+        "USA"
       ],
       "eventType": "diplomatic.cooperation",
-      "headline": "US envoys Witkoff and Kushner arrive in Moscow with new Ukraine peace plan",
-      "summary": "U.S. envoys Steve Witkoff and Jared Kushner landed in Moscow to discuss a plan aimed at ending more than four years of war between Russia and Ukraine, in Washington's latest bid to break a diplomatic stalemate. The envoys were also expected to travel to Kyiv.",
-      "confidenceScore": 0.75,
-      "confidenceLabel": "high",
+      "headline": "Ukraine peace talks approach new round amid escalating Russian and Ukrainian airstrikes",
+      "summary": "A new round of U.S.-brokered Ukraine peace talks is approaching after negotiations stalled in February. A deadly campaign of Russian and Ukrainian airstrikes has escalated since talks broke down.",
+      "confidenceScore": 0.65,
+      "confidenceLabel": "medium",
       "coordinateQuality": "missing",
       "tier": 2,
       "tags": [
-        "scmp-china",
         "nytimes-world",
         "storyline:13e06972"
       ],
@@ -209,49 +190,117 @@
       "economicImpactScore": 3
     },
     {
-      "id": "65f9a2e0c3b3b417f65470a6",
+      "id": "85b6b0ade3590f20228f7004",
       "source": "rss_intelligence",
-      "eventDate": "2026-09-05",
+      "eventDate": "2026-09-06",
       "iso3": [
-        "UKR",
-        "RUS"
+        "RUS",
+        "USA",
+        "UKR"
       ],
-      "eventType": "conflict.armed",
-      "headline": "Escalating Russian-Ukrainian airstrike campaign disrupts daily life in Kyiv",
-      "summary": "A deadly campaign of Russian and Ukrainian airstrikes has escalated since U.S.-brokered negotiations stalled in February, with near-constant drone attacks becoming a stark new reality in Kyiv. Commuters have been stranded, children rushed underground during school hours, and festivals cancelled as a result.",
-      "confidenceScore": 0.7,
-      "confidenceLabel": "medium",
+      "eventType": "diplomatic.cooperation",
+      "headline": "US envoys Witkoff and Kushner meet Putin in Moscow to revive Russia-Ukraine peace talks",
+      "summary": "U.S. envoys Steve Witkoff and Jared Kushner met with Russian President Vladimir Putin in Moscow in an effort to revive Russia-Ukraine peace negotiations, which have been stalled for nearly eight months.",
+      "confidenceScore": 0.8,
+      "confidenceLabel": "high",
       "coordinateQuality": "missing",
       "tier": 2,
       "tags": [
-        "scmp-china",
-        "nytimes-world",
-        "storyline:b4296536"
+        "washingtonpost-world",
+        "storyline:13e06972"
       ],
-      "geopoliticalScore": 5,
-      "economicImpactScore": 1.5
+      "geopoliticalScore": 7.5,
+      "economicImpactScore": 3
     },
     {
-      "id": "7ceb58e4c1f0f3eb7cc280b7",
+      "id": "2e8f10243d509785d4b50220",
       "source": "rss_intelligence",
-      "eventDate": "2026-09-05",
+      "eventDate": "2026-09-06",
       "iso3": [
-        "CHN",
-        "EGY"
+        "ISR",
+        "PSE",
+        "USA"
       ],
-      "eventType": "economic.trade",
-      "headline": "China expands currency swap agreement with Egypt, deepening trade ties",
-      "summary": "China expanded its currency swap arrangement with Egypt as Chinese President Xi Jinping and Egyptian President Abdel-Fattah el-Sisi backed greater use of their currencies while linking closer financial ties. Experts say reduced reliance on the US dollar will not happen quickly.",
+      "eventType": "diplomatic.dispute",
+      "headline": "US Ambassador Huckabee condemns 'terrorist' settler attacks on Palestinians in West Bank",
+      "summary": "Mike Huckabee, the U.S. ambassador to Israel, made a rare visit to meet with Palestinians in a West Bank town hall following international backlash over attacks by Israeli settlers, condemning the attacks as 'terrorist' acts.",
       "confidenceScore": 0.7,
       "confidenceLabel": "medium",
       "coordinateQuality": "missing",
       "tier": 3,
       "tags": [
-        "scmp-china",
-        "storyline:413ac1b1"
+        "nytimes-world",
+        "storyline:13e06972"
       ],
-      "geopoliticalScore": 4,
-      "economicImpactScore": 4
+      "geopoliticalScore": 5,
+      "economicImpactScore": 1
+    },
+    {
+      "id": "8b383c46b02177135aa82a0f",
+      "source": "rss_intelligence",
+      "eventDate": "2026-09-06",
+      "iso3": [
+        "THA",
+        "USA"
+      ],
+      "eventType": "conflict.armed",
+      "headline": "USS Abraham Lincoln crew take port call in Thailand after months of war deployment",
+      "summary": "Thousands of U.S. troops aboard the USS Abraham Lincoln made a stopover in Pattaya, Thailand for relief after a grueling wartime deployment, described as months at war.",
+      "confidenceScore": 0.55,
+      "confidenceLabel": "medium",
+      "coordinateQuality": "missing",
+      "tier": 3,
+      "tags": [
+        "nytimes-world",
+        "storyline:b4296536"
+      ],
+      "geopoliticalScore": 3.5,
+      "economicImpactScore": 1
+    },
+    {
+      "id": "8b3fb5c1195a9b689a9e81ff",
+      "source": "rss_intelligence",
+      "eventDate": "2026-09-06",
+      "iso3": [
+        "IRN",
+        "USA"
+      ],
+      "eventType": "conflict.armed",
+      "headline": "US strikes three Iranian 'shadow network' oil tankers after Iran missile attack on warships",
+      "summary": "The U.S. military struck three Iranian 'shadow network' oil tankers, saying the action was retaliation after Iran launched missiles at two U.S. warships. The strikes followed days after an earlier intense exchange of fire between the two sides.",
+      "confidenceScore": 0.75,
+      "confidenceLabel": "high",
+      "coordinateQuality": "missing",
+      "tier": 1,
+      "tags": [
+        "nytimes-world",
+        "storyline:b4296536"
+      ],
+      "geopoliticalScore": 8,
+      "economicImpactScore": 8.5
+    },
+    {
+      "id": "d4af43f444333c7f53079b0a",
+      "source": "rss_intelligence",
+      "eventDate": "2026-09-06",
+      "iso3": [
+        "LBN",
+        "ISR"
+      ],
+      "eventType": "conflict.armed",
+      "headline": "Israeli air attacks on Lebanon kill at least four",
+      "summary": "Israeli air attacks on Lebanon killed at least four people. Two women were killed in an air attack on Arab Salim, and two people were killed in a strike on Nabatieh al-Fawqa.",
+      "confidenceScore": 0.75,
+      "confidenceLabel": "high",
+      "coordinateQuality": "missing",
+      "tier": 2,
+      "tags": [
+        "aljazeera-english",
+        "france24-english",
+        "storyline:8e025ff4"
+      ],
+      "geopoliticalScore": 5.5,
+      "economicImpactScore": 2
     },
     {
       "id": "human-a15ae89f",

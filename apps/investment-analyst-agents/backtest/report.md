@@ -1,7 +1,7 @@
 # Briefing Backtest Report
-**Generated:** 2026-09-05
+**Generated:** 2026-09-06
 **Predictions analyzed:** 44
-**Scored calls (excluding informational holds/watches):** 935
+**Scored calls (excluding informational holds/watches):** 942
 
 > Methodology: each base-case action is scored against the actual price move
 > over 7/30/90 day windows. Buy = correct if price ↑. Trim/Exit = correct if
@@ -15,23 +15,23 @@
 |---|---|---|---|---|
 | 7d | 358 | 196 | 54.7% | +0.24% |
 | 30d | 362 | 113 | 31.2% | +1.78% |
-| 90d | 215 | 42 | 19.5% | -1.27% |
+| 90d | 222 | 44 | 19.8% | -1.01% |
 
 ## By action type
 
 | Action | 7d accuracy | 30d accuracy | 90d accuracy |
 |---|---|---|---|
 | buy | 42.9% | 85.7% | 100.0% |
-| hold | 53.9% | 30.4% | 18.4% |
+| hold | 53.9% | 30.4% | 18.7% |
 | trim | 76.5% | 25.0% | 23.5% |
 
 ## By conviction
 
 | Conviction | 7d accuracy | 30d accuracy | 90d accuracy |
 |---|---|---|---|
-| high | 42.4% | 28.1% | 15.4% |
-| medium | 57.0% | 33.7% | 22.6% |
-| low | 58.6% | 13.8% | 11.5% |
+| high | 42.4% | 28.1% | 16.7% |
+| medium | 57.0% | 33.7% | 22.7% |
+| low | 58.6% | 13.8% | 11.1% |
 
 ## Calibration — do "high" calls outperform "medium"?
 
@@ -39,7 +39,7 @@
 |---|---|---|---|---|
 | 7d | 42.4% | 57.0% | 58.6% | ❌ No (inverted) |
 | 30d | 28.1% | 33.7% | 13.8% | ❌ No (inverted) |
-| 90d | 15.4% | 22.6% | 11.5% | ❌ No (inverted) |
+| 90d | 16.7% | 22.7% | 11.1% | ❌ No (inverted) |
 
 ## Top 10 best 90d returns
 
