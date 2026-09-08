@@ -19,3 +19,7 @@ export {
   ProductionWriteRefused, UndeterminableDestination,
 } from './write-intent.js'
 export type { WriteOperation, WriteContext, WriteIntent } from './write-intent.js'
+export {
+  withAuthorizedServiceWorkspaceTransaction, WorkspaceClient,
+} from './workspace-context.js'
+export type { ServiceCapability } from './workspace-context.js'

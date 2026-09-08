@@ -43,6 +43,22 @@ replacement). The lesson:
 
 ## Roles
 
+### V3 foundation roles (source only — none created in any database yet)
+
+| Role | Login | Purpose |
+|---|---|---|
+| `ai_capital_owner` | **no** | owns every schema, table, view, trigger |
+| `ai_capital_identity_authority` | **no** | owns the SECURITY DEFINER functions only |
+| `ai_capital_migrator` | yes | deployment identity; assumes the owner during a migration window. Reads `db.schema_migrations` permanently; may **append** to it only while the window is open (granted by `ops/bootstrap/010`, revoked by `090`) |
+| `ai_capital_app` | yes | human runtime — **no tenant privilege until the OIDC gate** |
+| `ai_capital_importer` | yes | archive import and manual entry |
+| `ai_capital_agent` | yes | specialist agents; SELECT only, now RLS-bound |
+| `ai_capital_operator` | yes | **global** grant administrator: CONNECT, `identity` USAGE and one EXECUTE, nothing else |
+
+Every runtime role has zero memberships, so `SET ROLE` cannot be used to assume
+another service's identity — which is what makes `session_user` trustworthy
+inside `identity.*`. See `ops/README.md` for the run order and the reasoning.
+
 | Role | Purpose | Production access |
 |---|---|---|
 | `thanapold` | Application runtime, migrations, DB administration | full (superuser) |
@@ -83,17 +99,58 @@ instructions *not* to use it.
 |---|---|---|
 | `DATABASE_URL` | production application, pipeline, migrations | privileged; set in launchd plists, `scripts/*.sh`, root `.env` |
 | `AGENT_DATABASE_URL` | specialist agents | read-only role |
-| `TEST_RUNTIME_DATABASE_URL` | test execution | restricted role; **required** to run tests |
+| `TEST_RUNTIME_DATABASE_URL` | test execution | restricted role; **required**, and **not sufficient alone** |
+| `BOOTSTRAP_DATABASE_URL` | bootstrap and migration verification | privileged; **required** unless a suitably privileged `TEST_DATABASE_URL` is supplied |
 
 `TEST_DATABASE_URL` is derived automatically and handed to workers by
 `packages/db/testing/global-setup.ts`. You do not normally set it.
 
+## The two-principal lifecycle
+
+Running the suite needs **two credentials for the same database**, and they do
+different jobs:
+
+| Phase | Credential | Authority it needs |
+|---|---|---|
+| 1. Target selection | any of the URLs above | names the database; confers no authority |
+| 2. Existence check + migration verification | **bootstrap** — `BOOTSTRAP_DATABASE_URL`, or a suitably privileged `TEST_DATABASE_URL` | `CONNECT`, `CREATE` on the database, and (for a fresh clone) `CREATE DATABASE` |
+| 3. Handover | — | the bootstrap credential is **deleted from the environment** |
+| 4. Test execution | **runtime** — `TEST_RUNTIME_DATABASE_URL` | `CONNECT`, plus `SELECT/INSERT/UPDATE` only |
+
+**`TEST_RUNTIME_DATABASE_URL` alone is not enough, even against an existing,
+fully migrated database.** Bootstrap always calls `runMigrations()`, whose first
+statement is `CREATE SCHEMA IF NOT EXISTS db` — and `IF NOT EXISTS` still
+requires `CREATE` on the database, which the restricted role does not hold. The
+symptom is `permission denied for database <name>` in `globalSetup`, followed by
+`No test files found`, on a database whose migration chain is already complete.
+
+**Both URLs must name the same safe test database.** `globalSetup` compares them
+and stops if they differ, so tests cannot silently run somewhere unmigrated.
+
+**`DATABASE_URL` is not a bootstrap alternative.** `resolveTestUrl` consults, in
+order, `BOOTSTRAP_DATABASE_URL` → `TEST_DATABASE_URL` → `TEST_RUNTIME_DATABASE_URL`
+→ `DATABASE_URL`. Because every valid run must set `TEST_RUNTIME_DATABASE_URL` for
+the test phase, that variable always precedes and shadows `DATABASE_URL`, which is
+therefore never reached. `DATABASE_URL` remains only as the last
+target-selection fallback for a bare shell with no test configuration — it selects
+a name, it does not supply bootstrap authority. Leave it unset when running the
+suite.
+
 ## Running tests from a fresh clone
 
-Requires Postgres reachable, `DATABASE_URL` (for bootstrap only), and
-`TEST_RUNTIME_DATABASE_URL`. The bootstrap creates the test database if absent,
-migrates it, verifies the schemas, then hands workers **only** the restricted
-credential and deletes the privileged one from the environment.
+Requires Postgres reachable, a privileged bootstrap credential
+(`BOOTSTRAP_DATABASE_URL`, recommended — or a suitably privileged
+`TEST_DATABASE_URL`), and `TEST_RUNTIME_DATABASE_URL`. Leave `DATABASE_URL` unset:
+it cannot act as the bootstrap principal here, because the required runtime
+variable precedes it in `resolveTestUrl`. The bootstrap creates the test database
+if absent, migrates it, verifies the schemas, then hands workers **only** the
+restricted credential and deletes the privileged one from the environment.
+
+```bash
+BOOTSTRAP_DATABASE_URL=postgres://<owner>@<host>:<port>/<safe_test_db> \
+TEST_RUNTIME_DATABASE_URL=postgres://ai_capital_test_runtime:<password>@<host>:<port>/<safe_test_db> \
+  pnpm --filter <package> test
+```
 
 Every failure path stops the run with an actionable message. **Nothing ever
 falls back to the production credential.** Missing `TEST_RUNTIME_DATABASE_URL`

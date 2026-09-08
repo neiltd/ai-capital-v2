@@ -33,10 +33,26 @@ export function fail(message: string): never {
 }
 
 /**
- * The database the suite should use. Explicit TEST_DATABASE_URL wins; otherwise
- * derive one from DATABASE_URL by suffixing the name, so a developer who only
- * has the production URL still gets an isolated database rather than a
- * confusing failure.
+ * The database the suite should use — that is, which database is TARGETED.
+ *
+ * This resolves a NAME, not an authority. A URL returned here may still lack the
+ * privilege bootstrap needs; the two are separate concerns and are reported
+ * separately.
+ *
+ * PRECEDENCE, in the order actually implemented below:
+ *   1. BOOTSTRAP_DATABASE_URL   privileged; the recommended bootstrap principal
+ *   2. TEST_DATABASE_URL        explicit target; usable as bootstrap if privileged
+ *   3. TEST_RUNTIME_DATABASE_URL  restricted; names the database, confers no authority
+ *   4. DATABASE_URL             final target-selection fallback, reached ONLY when
+ *                               none of the above is set (a `_test` name is derived)
+ *
+ * A CONSEQUENCE WORTH STATING PLAINLY: because ordinary tests REQUIRE
+ * TEST_RUNTIME_DATABASE_URL, that variable is always set in any valid run — and
+ * it sits ahead of DATABASE_URL here. DATABASE_URL is therefore shadowed and
+ * never reached in a working two-principal configuration. It is a
+ * target-selection fallback for a bare shell, not a bootstrap principal and not
+ * a recommended configuration. The working bootstrap sources are
+ * BOOTSTRAP_DATABASE_URL or a suitably privileged TEST_DATABASE_URL.
  */
 export function resolveTestUrl(): string {
   // Bootstrap runs in the main vitest process and reads the shell environment,
@@ -52,24 +68,53 @@ export function resolveTestUrl(): string {
   // regression tests for the whole write-intent boundary were not running for
   // anyone who had not exported DATABASE_URL by hand.
   //
-  // NOTE: this role is deliberately unprivileged — it cannot CREATE DATABASE.
-  // It is enough to run against an EXISTING test database; a fresh clone still
-  // needs BOOTSTRAP_DATABASE_URL for the initial create. That is the right
-  // trade: the common case works with no ceremony, and the case that genuinely
-  // needs privilege still has to ask for it.
+  // NOTE: this role is deliberately unprivileged. It identifies the RESTRICTED
+  // WORKER CREDENTIAL — the one ordinary tests authenticate as — and it is the
+  // last resort for naming the target database, not a complete configuration.
+  //
+  // IT IS NOT SUFFICIENT ON ITS OWN, even against an existing, fully migrated
+  // database. An earlier version of this comment claimed it was. Bootstrap
+  // ALWAYS calls runMigrations() (see step 3 below), whose first statement is
+  // `CREATE SCHEMA IF NOT EXISTS db` — and `IF NOT EXISTS` still requires CREATE
+  // on the database, which this role does not hold. Two validation attempts died
+  // here with "permission denied for database …" against a database whose
+  // migration chain was already complete and checksum-identical.
+  //
+  // So bootstrap authority must come from BOOTSTRAP_DATABASE_URL or a suitably
+  // privileged TEST_DATABASE_URL. The DATABASE_URL-derived path below is NOT a
+  // third option here: it is only the final bare-shell target-selection fallback,
+  // reached when none of the three variables above is set, and any valid run has
+  // TEST_RUNTIME_DATABASE_URL set — which returns just above and shadows it.
+  // BOOTSTRAP_DATABASE_URL is the recommended form: it states the two-principal
+  // split explicitly, and step 4 removes it before any test runs.
   const runtime = process.env.TEST_RUNTIME_DATABASE_URL
   if (runtime) return runtime
 
+  // FINAL TARGET-SELECTION FALLBACK ONLY, reached exclusively when none of the
+  // three variables above is set — i.e. a bare shell with no test configuration.
+  // It is NOT a bootstrap principal for the two-principal configuration: any run
+  // that reaches the test phase has TEST_RUNTIME_DATABASE_URL set, which returns
+  // above and shadows this branch entirely.
   const live = process.env.DATABASE_URL
   if (!live) {
     fail(
-      'no test database is configured. Set ONE of:\n' +
-      '    TEST_RUNTIME_DATABASE_URL  (restricted role; works against an existing test db)\n' +
-      '    BOOTSTRAP_DATABASE_URL     (privileged; needed only to CREATE the test db)\n' +
-      '    TEST_DATABASE_URL          (explicit throwaway target)\n' +
-      '    DATABASE_URL               (a _test database is derived from it)\n' +
-      '  The root .env already defines TEST_RUNTIME_DATABASE_URL; if you are seeing this,\n' +
-      '  either .env is missing or this package was run from outside the repo.',
+      'no test database is configured.\n' +
+      '  This suite uses TWO principals, and both are required:\n' +
+      '    TEST_RUNTIME_DATABASE_URL  (restricted role; the credential ORDINARY TESTS use)\n' +
+      '    BOOTSTRAP_DATABASE_URL     (privileged; used here for existence and migration\n' +
+      '                                verification, then removed before any test runs)\n' +
+      '  TEST_RUNTIME_DATABASE_URL ALONE IS NOT ENOUGH, even against an existing,\n' +
+      '  fully migrated database: bootstrap always runs migrations, whose\n' +
+      '  `CREATE SCHEMA IF NOT EXISTS db` needs CREATE on the database, which the\n' +
+      '  restricted role does not hold.\n' +
+      '  The only working bootstrap sources are BOOTSTRAP_DATABASE_URL or a\n' +
+      '  suitably privileged TEST_DATABASE_URL. DATABASE_URL cannot serve as the\n' +
+      '  bootstrap principal here: it is the last target-selection fallback, and\n' +
+      '  TEST_RUNTIME_DATABASE_URL — which every valid run must set — precedes it,\n' +
+      '  so DATABASE_URL is never reached. Leave it unset.\n' +
+      '  Both URLs must name the SAME safe test database.\n' +
+      '  The root .env defines TEST_RUNTIME_DATABASE_URL only; supply the bootstrap\n' +
+      '  credential in the command environment.',
     )
   }
   let u: URL
@@ -217,7 +262,8 @@ export async function setup(): Promise<void> {
     fail(
       'TEST_RUNTIME_DATABASE_URL is not set. Ordinary tests must authenticate as the ' +
       'restricted role (ai_capital_test_runtime), not as the privileged bootstrap ' +
-      'credential. Set it to postgres://ai_capital_test_runtime:<password>@<host>/<test-db>.',
+      'credential. Set it to postgres://ai_capital_test_runtime:<password>@<host>/<test-db>, ' +
+      'naming the SAME database as the bootstrap credential.',
     )
   }
   // The restricted credential must point at the database we just prepared —

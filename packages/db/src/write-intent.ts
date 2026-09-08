@@ -54,6 +54,7 @@ export type WriteOperation =
   | 'pipeline-write'      // a DAG stage persisting its own output
   | 'migration'           // schema change via db-migrate
   | 'admin-repair'        // a deliberate, disclosed operator correction
+  | 'investment-ledger-import' // explicit publication of an inspected ledger batch
 
 /**
  * Which kind of runtime opened the scope. Recorded rather than trusted: it
