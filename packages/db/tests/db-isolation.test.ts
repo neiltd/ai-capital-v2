@@ -1,6 +1,6 @@
-import { describe, it, expect, afterEach } from 'vitest'
+import { describe, it, expect } from 'vitest'
 import {
-  assertNotLiveDatabase, inTestRuntime, usePostgres, getPool,
+  assertNotLiveDatabase, inTestRuntime,
   createPool, createClient, createClientFromConfig,
   liveDatabaseNames, databaseNameOf,
 } from '../src/pool.js'
@@ -170,45 +170,19 @@ describe('the setup file cleared the inherited environment', () => {
     }
     expect(new URL(url).pathname.replace(/^\//, '').toLowerCase()).not.toBe('ai_capital')
   })
-
-  it('an explicitly configured test database wins in test context', () => {
-    // This is the property that lets the claim-lifecycle tests use real
-    // Postgres safely while everything else falls back to SQLite.
-    expect(process.env.TEST_DATABASE_URL).toBeTruthy()
-    expect(process.env.TEST_DATABASE_URL).toMatch(/_test$/)
-    expect(usePostgres()).toBe(true)
-  })
-
-  it('getPool connects to the test database, never the live one', async () => {
-    const { rows } = await getPool().query<{ db: string }>('SELECT current_database() AS db')
-    expect(rows[0].db).toBe(new URL(process.env.TEST_DATABASE_URL!).pathname.replace(/^\//, ''))
-    expect(rows[0].db).not.toBe('ai_capital')
-  })
 })
 
-describe('a fixture write lands in the test database, not the live book', () => {
-  const FIXTURE = '__ISOLATION_PROBE__'
-
-  afterEach(async () => {
-    await getPool().query('DELETE FROM portfolio.positions WHERE ticker = $1', [FIXTURE])
-  })
-
-  it('writes are visible in the test database', async () => {
-    // Deliberately mirrors the shape of the write that caused the incident.
-    await getPool().query(
-      `INSERT INTO portfolio.positions (ticker, company, shares, avg_cost, updated_at)
-       VALUES ($1, 'isolation probe', 100, 68.50, now())
-       ON CONFLICT (ticker) DO NOTHING`,
-      [FIXTURE],
-    )
-    const { rows } = await getPool().query(
-      'SELECT current_database() AS db, count(*)::int AS n FROM portfolio.positions WHERE ticker = $1 GROUP BY 1',
-      [FIXTURE],
-    )
-    expect(rows[0].n).toBe(1)
-    expect(rows[0].db).not.toBe('ai_capital')   // the whole point
-  })
-})
+// THE THREE LIVE ASSERTIONS THAT USED TO SIT HERE MOVED, VERBATIM, TO
+// tests/integration/db-isolation-live.test.ts:
+//
+//   'an explicitly configured test database wins in test context'
+//   'getPool connects to the test database, never the live one'
+//   'a fixture write lands in the test database, not the live book'
+//
+// They are not weakened and not deleted. They assert on a LIVE connection and
+// on TEST_DATABASE_URL being populated, neither of which exists in the
+// database-free suite — so leaving them here would have forced the default
+// command to keep loading credentials, which is the defect being removed.
 
 // ── The generic connection boundary ────────────────────────────────────────
 //

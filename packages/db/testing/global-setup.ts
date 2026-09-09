@@ -1,160 +1,45 @@
-// Vitest globalSetup: bring a throwaway test database into existence, migrate
-// it, and verify it — or stop the run. Never fall back to production.
-//
-// WHY THIS EXISTS. `ai_capital_test` was created by hand during the 2026-08-25
-// incident response. That made THIS machine safe and told us nothing about a
-// fresh clone, which has no such database. A safety property that depends on
-// undocumented local state is not a safety property.
+// Vitest globalSetup for the @common/db INTEGRATION suite. Loaded only by
+// vitest.integration.config.ts; the default database-free config registers no
+// globalSetup at all.
 //
 // THE RULE, and it is the only one that matters here:
 //   If a safe test database cannot be established, TESTS STOP.
 //   They must never decide to use DATABASE_URL instead.
 //
-// Every failure path below throws. There is deliberately no branch that falls
-// through to the live database, because the whole class of bug this incident
-// came from was a fallback quietly choosing production.
-
+// All ordering, validation and privilege proof live in ./preflight.ts, where
+// every side effect is injected — so the database-free suite drives the whole
+// state machine with fakes and asserts the ORDER of events rather than the mere
+// presence of a check. This file only supplies the real clients.
+import { readFileSync, readdirSync, existsSync } from 'node:fs'
+import { join, resolve, dirname } from 'node:path'
+import { fileURLToPath } from 'node:url'
 import type pg from 'pg'
-import { runMigrations } from '../src/migrate.js'
 import { parse as parseConnectionString } from 'pg-connection-string'
-import { databaseNameOf, liveDatabaseNames, createClient, createClientFromConfig } from '../src/pool.js'
+import { runMigrations } from '../src/migrate.js'
+import { createClient, createClientFromConfig, databaseNameOfRaw } from '../src/pool.js'
+import {
+  provision, preflight, assertDisposableName, PreflightError, type QueryClient,
+} from './preflight.js'
 
 /** Schema objects that must exist for the suite to be meaningfully migrated. */
 const REQUIRED_SCHEMAS = ['portfolio', 'capital', 'briefing', 'desk'] as const
 
-
-
 export function fail(message: string): never {
-  throw new Error(
-    `[test-db] ${message}\n` +
-    '        Tests are stopping rather than continuing without a safe database. ' +
-    'They will NOT fall back to DATABASE_URL.',
-  )
+  throw new PreflightError(message)
+}
+
+/** Repository root, for locating ops/. */
+function repoRoot(): string {
+  return resolve(dirname(fileURLToPath(import.meta.url)), '..', '..', '..')
 }
 
 /**
- * The database the suite should use — that is, which database is TARGETED.
+ * The bootstrap principal, pointed at the MAINTENANCE database.
  *
- * This resolves a NAME, not an authority. A URL returned here may still lack the
- * privilege bootstrap needs; the two are separate concerns and are reported
- * separately.
- *
- * PRECEDENCE, in the order actually implemented below:
- *   1. BOOTSTRAP_DATABASE_URL   privileged; the recommended bootstrap principal
- *   2. TEST_DATABASE_URL        explicit target; usable as bootstrap if privileged
- *   3. TEST_RUNTIME_DATABASE_URL  restricted; names the database, confers no authority
- *   4. DATABASE_URL             final target-selection fallback, reached ONLY when
- *                               none of the above is set (a `_test` name is derived)
- *
- * A CONSEQUENCE WORTH STATING PLAINLY: because ordinary tests REQUIRE
- * TEST_RUNTIME_DATABASE_URL, that variable is always set in any valid run — and
- * it sits ahead of DATABASE_URL here. DATABASE_URL is therefore shadowed and
- * never reached in a working two-principal configuration. It is a
- * target-selection fallback for a bare shell, not a bootstrap principal and not
- * a recommended configuration. The working bootstrap sources are
- * BOOTSTRAP_DATABASE_URL or a suitably privileged TEST_DATABASE_URL.
- */
-export function resolveTestUrl(): string {
-  // Bootstrap runs in the main vitest process and reads the shell environment,
-  // where the privileged credential lives. Workers never see it.
-  const explicit = process.env.BOOTSTRAP_DATABASE_URL || process.env.TEST_DATABASE_URL
-  if (explicit) return explicit
-
-  // TEST_RUNTIME_DATABASE_URL is what vitest.config loads from root .env, and
-  // leaving it out of this chain meant the config loaded a variable this
-  // function never read — so from a clean shell the suite died in globalSetup
-  // and printed "No test files found", which reads like a broken suite rather
-  // than a missing credential. Warden hit exactly that, and it also means the
-  // regression tests for the whole write-intent boundary were not running for
-  // anyone who had not exported DATABASE_URL by hand.
-  //
-  // NOTE: this role is deliberately unprivileged. It identifies the RESTRICTED
-  // WORKER CREDENTIAL — the one ordinary tests authenticate as — and it is the
-  // last resort for naming the target database, not a complete configuration.
-  //
-  // IT IS NOT SUFFICIENT ON ITS OWN, even against an existing, fully migrated
-  // database. An earlier version of this comment claimed it was. Bootstrap
-  // ALWAYS calls runMigrations() (see step 3 below), whose first statement is
-  // `CREATE SCHEMA IF NOT EXISTS db` — and `IF NOT EXISTS` still requires CREATE
-  // on the database, which this role does not hold. Two validation attempts died
-  // here with "permission denied for database …" against a database whose
-  // migration chain was already complete and checksum-identical.
-  //
-  // So bootstrap authority must come from BOOTSTRAP_DATABASE_URL or a suitably
-  // privileged TEST_DATABASE_URL. The DATABASE_URL-derived path below is NOT a
-  // third option here: it is only the final bare-shell target-selection fallback,
-  // reached when none of the three variables above is set, and any valid run has
-  // TEST_RUNTIME_DATABASE_URL set — which returns just above and shadows it.
-  // BOOTSTRAP_DATABASE_URL is the recommended form: it states the two-principal
-  // split explicitly, and step 4 removes it before any test runs.
-  const runtime = process.env.TEST_RUNTIME_DATABASE_URL
-  if (runtime) return runtime
-
-  // FINAL TARGET-SELECTION FALLBACK ONLY, reached exclusively when none of the
-  // three variables above is set — i.e. a bare shell with no test configuration.
-  // It is NOT a bootstrap principal for the two-principal configuration: any run
-  // that reaches the test phase has TEST_RUNTIME_DATABASE_URL set, which returns
-  // above and shadows this branch entirely.
-  const live = process.env.DATABASE_URL
-  if (!live) {
-    fail(
-      'no test database is configured.\n' +
-      '  This suite uses TWO principals, and both are required:\n' +
-      '    TEST_RUNTIME_DATABASE_URL  (restricted role; the credential ORDINARY TESTS use)\n' +
-      '    BOOTSTRAP_DATABASE_URL     (privileged; used here for existence and migration\n' +
-      '                                verification, then removed before any test runs)\n' +
-      '  TEST_RUNTIME_DATABASE_URL ALONE IS NOT ENOUGH, even against an existing,\n' +
-      '  fully migrated database: bootstrap always runs migrations, whose\n' +
-      '  `CREATE SCHEMA IF NOT EXISTS db` needs CREATE on the database, which the\n' +
-      '  restricted role does not hold.\n' +
-      '  The only working bootstrap sources are BOOTSTRAP_DATABASE_URL or a\n' +
-      '  suitably privileged TEST_DATABASE_URL. DATABASE_URL cannot serve as the\n' +
-      '  bootstrap principal here: it is the last target-selection fallback, and\n' +
-      '  TEST_RUNTIME_DATABASE_URL — which every valid run must set — precedes it,\n' +
-      '  so DATABASE_URL is never reached. Leave it unset.\n' +
-      '  Both URLs must name the SAME safe test database.\n' +
-      '  The root .env defines TEST_RUNTIME_DATABASE_URL only; supply the bootstrap\n' +
-      '  credential in the command environment.',
-    )
-  }
-  let u: URL
-  try { u = new URL(live) } catch { fail(`DATABASE_URL is not a parseable URL, so a test database cannot be derived from it.`) }
-  const name = u.pathname.replace(/^\//, '')
-  if (!name) fail('DATABASE_URL has no database name, so a test database cannot be derived from it.')
-  u.pathname = `/${name.endsWith('_test') ? name : `${name}_test`}`
-  return u.toString()
-}
-
-/**
- * Throws unless the resolved target is provably safe to create/migrate/test
- * against. Exported so the fail-closed paths are covered by real tests rather
- * than by reading the code.
- */
-export function assertSafeTestTarget(testUrl: string): string {
-  const name = databaseNameOf(testUrl)
-  if (name === null) {
-    fail('the test database URL could not be canonicalised, so it cannot be shown to be non-live.')
-  }
-  if (liveDatabaseNames().includes(name)) {
-    fail(
-      `TEST_DATABASE_URL points at the LIVE database "${name}". ` +
-      'Refusing to create, migrate or test against it.',
-    )
-  }
-  return name
-}
-
-/**
- * Connection config for the maintenance database on the same server, used to
- * run CREATE DATABASE.
- *
- * Built from PARSED COMPONENTS rather than by rewriting a URL pathname. Warden
- * showed the old string-rewrite was the very pattern this file's guard exists
- * to prevent: for `socket:/tmp?db=ai_capital_test`, setting `pathname` to
- * `/postgres` left the database as `ai_capital_test`, so CREATE DATABASE would
- * have run on a connection to the database being created. It failed closed
- * because the target was already proven non-live upstream — but relying on a
- * downstream catch is how the socket bypass happened in the first place.
+ * Built from PARSED COMPONENTS rather than by rewriting a URL pathname: for
+ * `socket:/tmp?db=ai_capital_test`, setting `pathname` to `/postgres` left the
+ * database as `ai_capital_test`, so CREATE DATABASE would have run on a
+ * connection to the database being created.
  */
 function adminConfigFor(testUrl: string): pg.ClientConfig {
   const c = parseConnectionString(testUrl)
@@ -168,128 +53,317 @@ function adminConfigFor(testUrl: string): pg.ClientConfig {
   }
 }
 
+/**
+ * THE MIGRATION CREDENTIAL — derived from the ALREADY VALIDATED bootstrap
+ * destination, with ONLY the principal changed.
+ *
+ * WHY THIS EXISTS (Round 6 gate, defect 2). This harness used to hand the
+ * migration runner `BOOTSTRAP_DATABASE_URL`, so migrations executed through the
+ * cluster-administrator login. `ops/README.md` documents step 3 as running as
+ * `ai_capital_migrator`, and the difference is not cosmetic: the migrator holds
+ * its owner membership `WITH INHERIT FALSE` and loses `CREATE` at lockdown, so
+ * a chain that only ever ran as a superuser has never exercised the privileges
+ * production actually uses.
+ *
+ * HOST, PORT AND DATABASE ARE CARRIED THROUGH UNCHANGED. They were already
+ * proven by preflight() to name the approved disposable target, and rebuilding
+ * them here would reopen exactly the destination question preflight closed. Only
+ * `user` changes, and the password is dropped rather than reused: a
+ * cluster-administrator password is not the migrator's, and carrying one over
+ * would be a credential leak wearing a different name.
+ *
+ * There is NO fallback. If the bootstrap URL cannot be parsed into a complete
+ * destination the run stops; it never reaches for DATABASE_URL.
+ */
+export const MIGRATION_LOGIN_ROLE = 'ai_capital_migrator'
+
+// ─────────────────────────────────────────────────────────────────────────────
+// TRANSPORT POLICY IS PART OF THE DESTINATION (Round 8, defect 2).
+//
+// Round 7 rebuilt host, port and database and dropped everything else. That is
+// not "changing the principal" — it is SILENTLY WEAKENING the connection:
+// `sslmode=verify-full` became libpq's default, a pinned `sslrootcert`
+// vanished, `channel_binding=require` vanished, and a run that looked identical
+// no longer verified the server it was migrating. A downgrade nobody chose is
+// worse than a refusal, because it still succeeds.
+//
+// So parameters are CLASSIFIED, and anything unrecognised stops the run rather
+// than being dropped on the floor. Three groups:
+// ─────────────────────────────────────────────────────────────────────────────
+
+/** Rebuilt verbatim from the parsed bootstrap destination; never copied twice. */
+const DESTINATION_PARAMS = new Set(['host', 'port', 'db', 'dbname'])
+
+/**
+ * Non-secret connection policy. Carried through UNCHANGED.
+ *
+ * Every entry here describes HOW to reach the endpoint safely — TLS strength,
+ * what to verify it against, timeouts, session selection, labelling. None of it
+ * identifies a principal, so copying it grants nothing.
+ */
+const PRESERVED_PARAMS = new Set([
+  // TLS strength and what the server is verified against
+  'ssl', 'sslmode', 'sslrootcert', 'sslcrl', 'sslcrldir', 'sslsni',
+  'sslnegotiation', 'sslcompression',
+  'ssl_min_protocol_version', 'ssl_max_protocol_version',
+  // authentication STRENGTH policy (not credentials)
+  'channel_binding', 'require_auth', 'gssencmode', 'krbsrvname',
+  // reachability and liveness
+  'hostaddr', 'connect_timeout', 'keepalives', 'keepalives_idle',
+  'keepalives_interval', 'keepalives_count', 'tcp_user_timeout',
+  'target_session_attrs', 'load_balance_hosts',
+  // session labelling and encoding
+  'application_name', 'fallback_application_name', 'client_encoding', 'options',
+])
+
+/**
+ * Identity-bearing material. NEVER copied, and never silently dropped either.
+ *
+ * A client certificate or key authenticates the BOOTSTRAP principal. Copying it
+ * would make the "migrator" connection the administrator wearing a different
+ * name — exactly the defect this whole round exists to close. Dropping it
+ * silently is no better: if the server requires certificate authentication, the
+ * migrator connection needs its OWN certificate, and quietly omitting one turns
+ * a policy question into a confusing runtime failure.
+ *
+ * So it fails closed and says what to do. Supplying a separate migrator
+ * credential is a configuration design decision, not something to invent here.
+ */
+const IDENTITY_PARAMS = new Set(['sslcert', 'sslkey', 'sslpassword', 'passfile'])
+
+/** The identity being REPLACED. Dropping these is the point of the function. */
+const REPLACED_IDENTITY_PARAMS = new Set(['user', 'password'])
+
+/** Query parameters exactly as written, for every URL shape this repo uses. */
+function queryParamsOf(url: string): URLSearchParams {
+  const q = url.indexOf('?')
+  return new URLSearchParams(q === -1 ? '' : url.slice(q + 1))
+}
+
+export function migratorUrlFrom(bootstrapUrl: string): string {
+  // CLASSIFY FIRST, PARSE SECOND. pg-connection-string READS THE FILESYSTEM
+  // while parsing — `sslcert`, `sslkey`, `sslrootcert` and `sslcrl` are opened
+  // eagerly — so parsing before classifying would turn a policy question into
+  // an ENOENT from deep inside the driver, and would touch a private key file
+  // this harness has already decided it must not carry.
+  const params = new URLSearchParams()
+  const preserved: Array<[string, string]> = []
+  const identity: string[] = []
+  const unknown: string[] = []
+  for (const [rawKey, value] of queryParamsOf(bootstrapUrl)) {
+    const key = rawKey.toLowerCase()
+    if (DESTINATION_PARAMS.has(key)) continue            // rebuilt from the parse
+    if (REPLACED_IDENTITY_PARAMS.has(key)) continue      // the whole point
+    if (IDENTITY_PARAMS.has(key)) { identity.push(rawKey); continue }
+    if (PRESERVED_PARAMS.has(key)) { preserved.push([key, value]); continue }
+    unknown.push(rawKey)
+  }
+
+  if (identity.length) {
+    fail(
+      `BOOTSTRAP_DATABASE_URL carries identity-bearing parameter(s): ${identity.join(', ')}.\n` +
+      `  Those authenticate the BOOTSTRAP principal. Copying them into the\n` +
+      `  ${MIGRATION_LOGIN_ROLE} URL would make the migration connection the\n` +
+      '  administrator under another name, and dropping them silently would leave\n' +
+      '  the migrator with no credential the server will accept.\n' +
+      `  Supply a separate ${MIGRATION_LOGIN_ROLE} credential instead, or use a\n` +
+      '  bootstrap URL that does not authenticate by certificate.',
+    )
+  }
+  if (unknown.length) {
+    fail(
+      `BOOTSTRAP_DATABASE_URL carries connection parameter(s) this harness does not\n` +
+      `  classify: ${unknown.join(', ')}.\n` +
+      '  They are NOT dropped silently: an unrecognised parameter may be transport or\n' +
+      '  security policy, and quietly losing it would weaken the migrator connection\n' +
+      '  relative to the bootstrap one while still appearing to work.\n' +
+      '  Classify it in PRESERVED_PARAMS or IDENTITY_PARAMS in testing/global-setup.ts,\n' +
+      '  or remove it from the bootstrap URL.',
+    )
+  }
+
+  // Only now, with nothing identity-bearing left to touch, resolve the
+  // destination. Built from PARSED COMPONENTS, never by string surgery on the
+  // original URL: a socket path, an IPv6 literal or a percent-encoded name each
+  // break a regex-rewrite in a different way, and all three appear here.
+  const c = parseConnectionString(bootstrapUrl)
+  const host = (c.host ?? '').trim()
+  const database = databaseNameOfRaw(bootstrapUrl)
+  if (!host) fail('BOOTSTRAP_DATABASE_URL names no host or socket directory.')
+  if (!database) fail('BOOTSTRAP_DATABASE_URL names no database.')
+  params.set('host', host)                       // socket directory or TCP host
+  if (c.port) params.set('port', String(c.port))
+  for (const [key, value] of preserved) params.set(key, value)
+
+  return `postgresql://${encodeURIComponent(MIGRATION_LOGIN_ROLE)}@/` +
+    `${encodeURIComponent(database)}?${params.toString()}`
+}
+
+/**
+ * The database the suite should use — resolved from ONE explicit source.
+ *
+ * There is no precedence chain. `BOOTSTRAP_DATABASE_URL` from the shell, or the
+ * run stops. Retained as a named export because the harness tests assert on it
+ * directly; the real validation is `preflight()`, which also requires
+ * TEST_RUNTIME_DATABASE_URL and checks both endpoints together.
+ */
+export function resolveTestUrl(): string {
+  return preflight(process.env).bootstrapUrl
+}
+
+/**
+ * Refuse anything that is not a deliberate disposable test database.
+ * Delegates to preflight's policy so there is ONE rule, not two that drift.
+ */
+export function assertSafeTestTarget(testUrl: string): string {
+  // RAW, not databaseNameOf(). Round 3 left this compatibility export calling
+  // the LOWERCASING helper, so `.../AI_CAPITAL_TEST` returned `ai_capital_test`
+  // — the exported guard normalised an identity the real provisioning path
+  // refuses. One policy, one identity: this delegates to exactly the rule
+  // preflight() uses, on exactly the name the driver would use.
+  return assertDisposableName(databaseNameOfRaw(testUrl))
+}
+
 export async function setup(): Promise<void> {
-  const testUrl = resolveTestUrl()
-  // Refuse to operate on a protected database, before doing anything.
-  const name = assertSafeTestTarget(testUrl)
-
-  // ── 1. Create if absent ────────────────────────────────────────────────
-  let existed = true
-  const admin = createClientFromConfig(adminConfigFor(testUrl))
-  try {
-    await admin.connect()
-  } catch (err) {
-    fail(
-      `cannot reach the Postgres server to check for "${name}": ${(err as Error).message}. ` +
-      'Is Postgres running?',
-    )
-  }
-  try {
-    const { rows } = await admin.query('SELECT 1 FROM pg_database WHERE datname = $1', [name])
-    if (rows.length === 0) {
-      existed = false
-      // Identifier cannot be parameterised; `name` is canonicalised above and
-      // has already been proven free of control characters by databaseNameOf.
-      if (!/^[a-z0-9_]+$/.test(name)) {
-        fail(`refusing to CREATE DATABASE with an unexpected name "${name}".`)
+  // THIN WRAPPER. All ordering, validation and privilege proof live in
+  // testing/preflight.ts, where they take their clients as parameters — so the
+  // database-free suite can drive the entire state machine with fakes and
+  // assert the ORDER of events, not merely the presence of a check.
+  const plan = await provision(process.env, {
+    connectAdmin: async () => {
+      const c = createClientFromConfig(adminConfigFor(process.env.BOOTSTRAP_DATABASE_URL!))
+      try { await c.connect() } catch (err) {
+        fail(`cannot reach the Postgres server: ${(err as Error).message}. Is Postgres running?`)
       }
-      await admin.query(`CREATE DATABASE ${name}`)
-      console.log(`[test-db] created "${name}"`)
-    }
-  } catch (err) {
-    fail(`failed to create "${name}": ${(err as Error).message}`)
-  } finally {
-    await admin.end().catch(() => {})
-  }
+      return c as unknown as QueryClient & { end(): Promise<void> }
+    },
+    connectTarget: async (url: string) => {
+      const c = createClient(url)
+      await c.connect()
+      return c as unknown as QueryClient & { end(): Promise<void> }
+    },
+    readOpsScript: (relPath, dbName) => {
+      const file = join(repoRoot(), relPath)
+      if (!existsSync(file)) fail(`required ops script is missing: ${relPath}`)
+      return readFileSync(file, 'utf-8').replaceAll(':"dbname"', `"${dbName}"`)
+    },
+    migrationFilesOnDisk: () =>
+      readdirSync(join(repoRoot(), 'packages', 'db', 'migrations')).filter(f => f.endsWith('.sql')),
+    runMigrations: async () => {
+      // THE MIGRATION PRINCIPAL IS THE MIGRATOR, NOT THE BOOTSTRAP LOGIN.
+      // Derived from the destination preflight already approved; host, port,
+      // database and transport policy are carried through. Never logged.
+      const migratorUrl = migratorUrlFrom(process.env.BOOTSTRAP_DATABASE_URL!)
+      const { closePool } = await import('../src/pool.js')
 
-  // ── 2. Migrate ─────────────────────────────────────────────────────────
-  // runMigrations reads DATABASE_URL via getPool(), so point it at the test
-  // database for the duration and restore afterwards.
-  const savedDb = process.env.DATABASE_URL
-  const savedTest = process.env.TEST_DATABASE_URL
-  process.env.TEST_DATABASE_URL = testUrl
-  process.env.DATABASE_URL = testUrl
-  try {
-    const result = await runMigrations()
-    if (!existed || result.applied.length) {
-      console.log(`[test-db] migrations: ${result.applied.length} applied, ${result.alreadyApplied.length} already applied`)
-    }
-  } catch (err) {
-    fail(`migrations failed against "${name}": ${(err as Error).message}`)
-  } finally {
-    const { closePool } = await import('../src/pool.js')
-    await closePool().catch(() => {})
-    if (savedDb === undefined) delete process.env.DATABASE_URL; else process.env.DATABASE_URL = savedDb
-    if (savedTest === undefined) delete process.env.TEST_DATABASE_URL; else process.env.TEST_DATABASE_URL = savedTest
-  }
+      // ── PRE-WINDOW RESET. MANDATORY, AND ITS FAILURE IS NOT SWALLOWED.
+      //
+      // Round 8, defect 1. This was `closePool().catch(() => {})`, and
+      // closePool() clears its singleton only AFTER pool.end() resolves — so a
+      // rejecting end() left the OLD pool cached, and the very next getPool()
+      // would hand the migration runner a connection built from whatever
+      // credential preceded it. The run would then report that migrations ran
+      // as ai_capital_migrator when they did not: a false claim about the
+      // principal, which is the one thing this whole round exists to establish.
+      //
+      // Nothing is changed before this succeeds — no environment variable, no
+      // migration attempt.
+      try {
+        await closePool()
+      } catch (err) {
+        fail(
+          'the shared connection pool could not be closed BEFORE the migration ' +
+          `window: ${(err as Error).message}\n` +
+          '  closePool() clears its singleton only after pool.end() succeeds, so a\n' +
+          '  surviving pool would still carry the previous credential and the runner\n' +
+          `  would NOT have connected as ${MIGRATION_LOGIN_ROLE}.\n` +
+          '  No environment variable was changed and no migration was attempted.',
+        )
+      }
 
-  // ── 3. Verify the resulting schema ─────────────────────────────────────
-  // A migration runner that reports success but leaves the schema wrong is
-  // exactly the silent-success shape this project has been bitten by.
-  const verify = createClient(testUrl)
-  try {
-    await verify.connect()
-    const { rows } = await verify.query<{ nspname: string }>(
-      'SELECT nspname FROM pg_namespace WHERE nspname = ANY($1::text[])',
-      [REQUIRED_SCHEMAS as unknown as string[]],
-    )
-    const present = new Set(rows.map(r => r.nspname))
-    const missing = REQUIRED_SCHEMAS.filter(s => !present.has(s))
-    if (missing.length) {
-      fail(`"${name}" is missing expected schema(s) after migration: ${missing.join(', ')}.`)
-    }
-    const { rows: dbRows } = await verify.query<{ db: string }>('SELECT current_database() AS db')
-    if (liveDatabaseNames().includes(dbRows[0].db.toLowerCase())) {
-      fail(`verification connected to the LIVE database "${dbRows[0].db}".`)
-    }
-    console.log(`[test-db] ready: ${dbRows[0].db} (${REQUIRED_SCHEMAS.length} schemas verified)`)
-  } catch (err) {
-    if ((err as Error).message.startsWith('[test-db]')) throw err
-    fail(`could not verify "${name}": ${(err as Error).message}`)
-  } finally {
-    await verify.end().catch(() => {})
-  }
+      const savedDb = process.env.DATABASE_URL
+      const savedTest = process.env.TEST_DATABASE_URL
+      process.env.DATABASE_URL = migratorUrl
+      process.env.TEST_DATABASE_URL = migratorUrl
 
-  // ── 4. Hand test processes the RESTRICTED credential, not this one ─────
-  //
-  // Phase 1 of least-privilege separation. Bootstrap above needs authority to
-  // CREATE DATABASE and run migrations; ordinary test code must not keep it.
-  // `ai_capital_test_runtime` has no CONNECT on the production database at all,
-  // so even a completely broken TypeScript guard cannot reach the live book —
-  // Postgres refuses at authentication.
-  const runtimeUrl = process.env.TEST_RUNTIME_DATABASE_URL
-  if (!runtimeUrl) {
-    fail(
-      'TEST_RUNTIME_DATABASE_URL is not set. Ordinary tests must authenticate as the ' +
-      'restricted role (ai_capital_test_runtime), not as the privileged bootstrap ' +
-      'credential. Set it to postgres://ai_capital_test_runtime:<password>@<host>/<test-db>, ' +
-      'naming the SAME database as the bootstrap credential.',
-    )
-  }
-  // The restricted credential must point at the database we just prepared —
-  // otherwise tests would silently run somewhere unmigrated.
-  const runtimeName = assertSafeTestTarget(runtimeUrl)
-  if (runtimeName !== name) {
-    fail(
-      `TEST_RUNTIME_DATABASE_URL points at "${runtimeName}" but the bootstrap prepared "${name}". ` +
-      'They must be the same database.',
-    )
-  }
-  // Prove the restricted credential actually works before handing it over, so a
-  // wrong password fails here with a clear message rather than inside a test.
-  const probe = createClient(runtimeUrl)
-  try {
-    await probe.connect()
-    const { rows } = await probe.query<{ u: string }>('SELECT current_user AS u')
-    console.log(`[test-db] test runtime authenticates as "${rows[0].u}" (non-privileged)`)
-  } catch (err) {
-    fail(`the restricted test credential could not connect: ${(err as Error).message}`)
-  } finally {
-    await probe.end().catch(() => {})
-  }
+      let migrationError: Error | null = null
+      let result: Awaited<ReturnType<typeof runMigrations>> | undefined
+      try {
+        // EXPLICIT, not via process.env: the environment variable is read by
+        // migrate.ts at CALL time now, but an option cannot lose a race with
+        // module evaluation order at all — which is what the Round 6 gate hit.
+        // Objects must be owned by ai_capital_owner, or 090's "the migrator
+        // controls nothing afterwards" claim is false.
+        result = await runMigrations({ ownerRole: 'ai_capital_owner' })
+      } catch (err) {
+        migrationError = err as Error
+      }
 
-  process.env.TEST_DATABASE_URL = runtimeUrl
-  // Do not leave privileged credentials reachable by test code.
+      // ── POST-WINDOW RESET. ALSO MANDATORY. A pool that survives here is a
+      //    MIGRATOR pool, and the environment is about to be restored — so it
+      //    would sit in the singleton, holding migrator authority, available to
+      //    every ordinary test that calls getPool() afterwards.
+      let closeError: Error | null = null
+      try {
+        await closePool()
+      } catch (err) {
+        closeError = err as Error
+      }
+
+      // The environment is restored on EVERY path, before anything is thrown.
+      if (savedDb === undefined) delete process.env.DATABASE_URL; else process.env.DATABASE_URL = savedDb
+      if (savedTest === undefined) delete process.env.TEST_DATABASE_URL; else process.env.TEST_DATABASE_URL = savedTest
+
+      // BOTH failures are reported. A cleanup failure never REPLACES the cause.
+      if (migrationError && closeError) {
+        fail(
+          'the migration failed AND the migrator pool could not be closed afterwards.\n' +
+          `  migration failure: ${migrationError.message}\n` +
+          `  pool close failure: ${closeError.message}\n` +
+          `  A pool holding ${MIGRATION_LOGIN_ROLE} authority may still be cached in ` +
+          'this process.',
+        )
+      }
+      if (migrationError) throw migrationError
+      if (closeError) {
+        fail(
+          'the migrator pool could not be closed after the migration window: ' +
+          `${closeError.message}\n` +
+          `  The cached pool still holds ${MIGRATION_LOGIN_ROLE} authority and would be\n` +
+          '  returned to the next getPool() caller, after the environment has been\n' +
+          '  restored. Setup stops rather than handing workers a database whose\n' +
+          '  privileged pool is still live.',
+        )
+      }
+      return result!
+    },
+    connectRuntime: async (url: string) => {
+      const c = createClient(url)
+      await c.connect()
+      return c as unknown as QueryClient & { end(): Promise<void> }
+    },
+    verifySchema: async (client, name) => {
+      // A runner that reports success but leaves the schema wrong is exactly the
+      // silent-success shape this project has been bitten by. Injected, so a
+      // behavioural test can prove a failure here prevents the CONNECT grant.
+      const { rows } = await client.query(
+        'SELECT nspname FROM pg_namespace WHERE nspname = ANY($1::text[])',
+        [REQUIRED_SCHEMAS as unknown as string[]],
+      )
+      const present = new Set(rows.map((r: any) => r.nspname))
+      const missing = REQUIRED_SCHEMAS.filter(x => !present.has(x))
+      if (missing.length) {
+        fail(`"${name}" is missing expected schema(s) after migration: ${missing.join(', ')}.`)
+      }
+    },
+    log: line => console.log(line),
+  })
+
+  // ── Hand workers the RESTRICTED credential, and nothing else ───────────
+  // preflight() already proved this URL names the same destination and
+  // authenticates as ai_capital_test_runtime, and the catalogue check proved
+  // that role is unprivileged. Nothing privileged survives into the workers.
+  process.env.TEST_DATABASE_URL = plan.runtimeUrl
   delete process.env.DATABASE_URL
   delete process.env.BOOTSTRAP_DATABASE_URL
 }

@@ -42,8 +42,90 @@ function sha256(s: string): string {
  *
  * Unset (the default) reproduces the previous behaviour exactly, so nothing
  * outside the tenancy work changes.
+ *
+ * ── ROUND 7. WHY THIS IS NO LONGER A MODULE-SCOPE CONSTANT ──────────────────
+ *
+ * It used to be:
+ *
+ *     const MIGRATION_OWNER_ROLE = process.env.MIGRATION_OWNER_ROLE?.trim() || null
+ *
+ * evaluated once, when the module was first imported. `testing/global-setup.ts`
+ * imports `runMigrations` at the top of the file and assigns
+ * `process.env.MIGRATION_OWNER_ROLE` later, inside the dependency it hands to
+ * provision() — by which time the constant had already been frozen at `null`.
+ *
+ * The 2026-09-08 disposable-cluster gate is what this cost: no `SET LOCAL ROLE`
+ * and no pinned search path ever ran, migrations 001-011 executed as the
+ * bootstrap login, every application schema ended up owned by that login, and
+ * migration 012's own `SET LOCAL ROLE ai_capital_owner` then failed with
+ * SQLSTATE 42501, `permission denied for schema identity` — because
+ * ai_capital_owner owned nothing and had been granted nothing. The claim "the
+ * migrator controls nothing after lockdown" was quietly false.
+ *
+ * Configuration is therefore resolved when `runMigrations()` is CALLED, and an
+ * explicit invocation option beats the environment, so a caller that knows what
+ * it wants never has to win a race with module evaluation order.
  */
-const MIGRATION_OWNER_ROLE = process.env.MIGRATION_OWNER_ROLE?.trim() || null
+
+/** Longest identifier PostgreSQL stores; longer names are TRUNCATED, silently. */
+const MAX_IDENTIFIER_BYTES = 63
+
+export interface MigrationOptions {
+  /**
+   * The role every migration's objects must belong to.
+   *
+   * `undefined` (or omitted) falls back to `MIGRATION_OWNER_ROLE` in the
+   * environment, read NOW rather than at import. `null` explicitly means "no
+   * role switch", overriding the environment. Anything else is used verbatim
+   * and quoted; empty, over-long or NUL-bearing values are rejected rather than
+   * silently truncated into a DIFFERENT role.
+   */
+  ownerRole?: string | null
+}
+
+/**
+ * Resolve the owner role AT INVOCATION TIME.
+ *
+ * Precedence: explicit option, then the environment, then none. Validation is
+ * deliberately strict-but-narrow — quoting is `escapeIdentifier`'s job, and the
+ * only things rejected here are values that could not be a role at all, or
+ * could silently become a role other than the one written.
+ */
+export function resolveMigrationOwnerRole(options: MigrationOptions = {}): string | null {
+  const explicit = options.ownerRole
+  if (explicit !== undefined) {
+    if (explicit === null) return null
+    if (typeof explicit !== 'string') {
+      throw new Error('@common/db: ownerRole must be a string, null, or omitted.')
+    }
+    return validateOwnerRole(explicit, 'the ownerRole option')
+  }
+  const fromEnv = process.env.MIGRATION_OWNER_ROLE
+  // An unset OR EMPTY variable means "not configured" — unchanged from before.
+  if (fromEnv === undefined || fromEnv.trim() === '') return null
+  return validateOwnerRole(fromEnv, 'MIGRATION_OWNER_ROLE')
+}
+
+function validateOwnerRole(raw: string, label: string): string {
+  const role = raw.trim()
+  if (!role) {
+    throw new Error(
+      `@common/db: ${label} is empty. Supply a role name, or omit it entirely — ` +
+      'an empty value is not a request to run migrations as nobody in particular.',
+    )
+  }
+  if (role.includes('\u0000')) {
+    throw new Error(`@common/db: ${label} contains a NUL byte and cannot be an identifier.`)
+  }
+  if (Buffer.byteLength(role, 'utf8') > MAX_IDENTIFIER_BYTES) {
+    throw new Error(
+      `@common/db: ${label} is ${Buffer.byteLength(role, 'utf8')} bytes; PostgreSQL ` +
+      `truncates identifiers at ${MAX_IDENTIFIER_BYTES}, so this would assume a ` +
+      'DIFFERENT role than the one written. Refusing.',
+    )
+  }
+  return role
+}
 
 /**
  * The search path every migration runs under, when an owner role is configured.
@@ -92,7 +174,10 @@ export interface MigrationResult {
   skipped: string[]
 }
 
-export async function runMigrations(): Promise<MigrationResult> {
+export async function runMigrations(options: MigrationOptions = {}): Promise<MigrationResult> {
+  // RESOLVED HERE, per call — see resolveMigrationOwnerRole. Reading it once at
+  // module load is the Round 6 gate failure.
+  const ownerRole = resolveMigrationOwnerRole(options)
   const pool = getPool()
   await pool.query(BOOTSTRAP_SQL)
 
@@ -145,12 +230,12 @@ export async function runMigrations(): Promise<MigrationResult> {
       // next borrower of this pooled connection. The value is a compile-time
       // constant, never configuration and never request data, so there is
       // nothing here to escape.
-      if (MIGRATION_OWNER_ROLE) {
-        await client.query(`SET LOCAL ROLE ${escapeIdentifier(MIGRATION_OWNER_ROLE)}`)
+      if (ownerRole) {
+        await client.query(`SET LOCAL ROLE ${escapeIdentifier(ownerRole)}`)
         await client.query(`SET LOCAL search_path = ${MIGRATION_SEARCH_PATH}`)
       }
       await client.query(sql)
-      if (MIGRATION_OWNER_ROLE) {
+      if (ownerRole) {
         await client.query('RESET ROLE')
       }
       await client.query(

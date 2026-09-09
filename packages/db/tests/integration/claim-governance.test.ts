@@ -3,8 +3,8 @@ import {
   parseClaimBlocks, parseCaptureBlocks, parseEventBlocks,
   recordClaims, applyEvent, ingestAgentOutput, claimHistory,
   ClaimParseError, CLAIM_PROTOCOL,
-} from '../src/agent-claims.js'
-import { getPool, closePool, usePostgres } from '../src/pool.js'
+} from '../../src/agent-claims.js'
+import { getPool, closePool, usePostgres } from '../../src/pool.js'
 
 // Claim governance, protocol claim/1.
 // Canonical spec: .claude/agents/CLAIM-PROTOCOL.md

@@ -232,3 +232,131 @@ describe('the assumptions the fixed path relies on', () => {
     expect(m006).not.toContain('public.vector')
   })
 })
+
+// ═════════════════════════════════════════════════════════════════════════════
+// ROUND 7 — configuration is resolved WHEN runMigrations() IS CALLED.
+//
+// It used to be a module-scope const. `testing/global-setup.ts` imports
+// `runMigrations` at the top of the file and assigned MIGRATION_OWNER_ROLE
+// later, so the constant was already frozen at null: no SET LOCAL ROLE, no
+// pinned search path, every schema owned by the bootstrap login, and migration
+// 012 failing with SQLSTATE 42501 on the 2026-09-08 disposable-cluster gate.
+//
+// The tests below deliberately do NOT call vi.resetModules(): the whole point
+// is that a module imported EARLY still honours configuration supplied LATE.
+// ═════════════════════════════════════════════════════════════════════════════
+describe('ROUND 7: owner configuration is resolved at invocation, not at import', () => {
+  // Import ONCE, LAZILY, with the variable unset — the Round 6 starting
+  // condition. Lazily because doing it at collection time would race the
+  // vi.resetModules() the suites above use; and once because the property under
+  // test is precisely that ONE module instance honours LATER configuration.
+  let earlyMod: typeof import('../src/migrate.js') | null = null
+  async function importedEarly(): Promise<typeof import('../src/migrate.js')> {
+    if (earlyMod) return earlyMod
+    const saved = process.env.MIGRATION_OWNER_ROLE
+    delete process.env.MIGRATION_OWNER_ROLE
+    vi.resetModules()
+    try {
+      earlyMod = await import('../src/migrate.js')
+    } finally {
+      if (saved === undefined) delete process.env.MIGRATION_OWNER_ROLE
+      else process.env.MIGRATION_OWNER_ROLE = saved
+    }
+    return earlyMod
+  }
+
+  /** Invoke the ALREADY-IMPORTED module; no module registry reset anywhere. */
+  async function invoke(
+    env: string | undefined, options?: { ownerRole?: string | null },
+  ): Promise<string[]> {
+    statements = []
+    const mod = await importedEarly()
+    const saved = process.env.MIGRATION_OWNER_ROLE
+    if (env === undefined) delete process.env.MIGRATION_OWNER_ROLE
+    else process.env.MIGRATION_OWNER_ROLE = env
+    try {
+      await (options === undefined ? mod.runMigrations() : mod.runMigrations(options))
+    } finally {
+      if (saved === undefined) delete process.env.MIGRATION_OWNER_ROLE
+      else process.env.MIGRATION_OWNER_ROLE = saved
+    }
+    return statements
+  }
+
+  it('1. imported BEFORE the variable was set, then set before the call — the new value wins', async () => {
+    const issued = await invoke('ai_capital_owner')
+    expect(at(issued, ROLE), 'the module froze the value at import').toBeGreaterThan(-1)
+    expect(issued.find(s => ROLE.test(s))).toBe('SET LOCAL ROLE "ai_capital_owner"')
+    expect(at(issued, PATH)).toBeGreaterThan(-1)
+  })
+
+  it('2. an explicit option works on a module that was already imported', async () => {
+    const issued = await invoke(undefined, { ownerRole: 'ai_capital_owner' })
+    expect(issued.find(s => ROLE.test(s))).toBe('SET LOCAL ROLE "ai_capital_owner"')
+  })
+
+  it('3. an explicit option BEATS a conflicting environment value', async () => {
+    const issued = await invoke('some_other_role', { ownerRole: 'ai_capital_owner' })
+    expect(issued.find(s => ROLE.test(s))).toBe('SET LOCAL ROLE "ai_capital_owner"')
+    expect(issued.join(' | ')).not.toMatch(/some_other_role/)
+  })
+
+  it('an explicit null overrides the environment and switches no role', async () => {
+    const issued = await invoke('ai_capital_owner', { ownerRole: null })
+    expect(at(issued, ROLE)).toBe(-1)
+    expect(at(issued, PATH)).toBe(-1)
+    expect(at(issued, RESET)).toBe(-1)
+    expect(at(issued, LEDGER), 'the migrations must still run').toBeGreaterThan(-1)
+  })
+
+  it('10. a caller supplying nothing, with nothing in the environment, is unchanged', async () => {
+    const issued = await invoke(undefined)
+    expect(at(issued, ROLE)).toBe(-1)
+    expect(at(issued, PATH)).toBe(-1)
+    expect(at(issued, RESET)).toBe(-1)
+    expect(at(issued, LEDGER)).toBeGreaterThan(-1)
+  })
+
+  it('7/8. ORDER survives: BEGIN then ROLE then search_path then body then RESET then ledger', async () => {
+    const issued = await invoke(undefined, { ownerRole: 'ai_capital_owner' })
+    const begin = issued.findIndex(s => /^BEGIN$/.test(s))
+    expect(begin).toBeGreaterThan(-1)
+    expect(at(issued, ROLE)).toBeGreaterThan(begin)
+    expect(at(issued, PATH)).toBeGreaterThan(at(issued, ROLE))
+    expect(at(issued, BODY)).toBeGreaterThan(at(issued, PATH))
+    expect(at(issued, RESET)).toBeGreaterThan(at(issued, BODY))
+    expect(at(issued, LEDGER), 'the ledger row must be written AFTER RESET ROLE')
+      .toBeGreaterThan(at(issued, RESET))
+  })
+
+  it('rejects configuration that could silently become a DIFFERENT role', async () => {
+    const mod = await importedEarly()
+    await expect(mod.runMigrations({ ownerRole: '   ' })).rejects.toThrow(/is empty/)
+    await expect(mod.runMigrations({ ownerRole: 'r'.repeat(64) })).rejects.toThrow(/truncates identifiers/)
+    await expect(mod.runMigrations({ ownerRole: `role${String.fromCharCode(0)}x` }))
+      .rejects.toThrow(/NUL byte/)
+  })
+
+  it('the role name is still quoted, not interpolated raw', async () => {
+    const issued = await invoke(undefined, { ownerRole: 'weird role"name' })
+    expect(issued.find(s => ROLE.test(s))).toBe('SET LOCAL ROLE "weird role""name"')
+  })
+
+  it('resolveMigrationOwnerRole is the ONE policy, and reads the environment live', async () => {
+    const mod = await importedEarly()
+    const saved = process.env.MIGRATION_OWNER_ROLE
+    try {
+      delete process.env.MIGRATION_OWNER_ROLE
+      expect(mod.resolveMigrationOwnerRole()).toBeNull()
+      process.env.MIGRATION_OWNER_ROLE = 'ai_capital_owner'
+      expect(mod.resolveMigrationOwnerRole()).toBe('ai_capital_owner')
+      process.env.MIGRATION_OWNER_ROLE = '   '
+      expect(mod.resolveMigrationOwnerRole(), 'an empty variable means unset').toBeNull()
+      expect(mod.resolveMigrationOwnerRole({ ownerRole: 'x' })).toBe('x')
+      expect(mod.resolveMigrationOwnerRole({ ownerRole: null })).toBeNull()
+    } finally {
+      if (saved === undefined) delete process.env.MIGRATION_OWNER_ROLE
+      else process.env.MIGRATION_OWNER_ROLE = saved
+    }
+  })
+})
