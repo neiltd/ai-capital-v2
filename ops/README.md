@@ -146,6 +146,249 @@ role membership, and no access to `investment_ledger` at all**. It cannot read a
 transaction, an account, a document or an archive row. It can only end a grant,
 and every termination records an immutable reason and its own principal id.
 
+## Taking a read-only inventory
+
+Before anything decides whether this database's privileges are *correct*,
+somebody has to be able to say what they **are**. `packages/db/bin/db-inventory.ts`
+is that step and only that step.
+
+```bash
+mkdir -p ~/ai-capital-evidence && chmod 700 ~/ai-capital-evidence
+
+VERIFY_INVENTORY_DATABASE_URL="postgres://ai_capital_migrator@…/ai_capital" \
+  pnpm --filter @common/db db-inventory \
+    --mode inventory \
+    --run-id 2026-09-10-preflight \
+    --output ~/ai-capital-evidence/inventory-$(date -u +%Y%m%dT%H%M%SZ).json
+```
+
+It opens one transaction, reads the catalogue, rolls back, disconnects, and
+publishes one canonical JSON fact document. It ends with
+
+```
+INVENTORY COMPLETE — NO VERDICT
+```
+
+**and that is not a pass.** It says the collection finished, not that the
+database is acceptable. This build issues no verdict of any kind: a missing
+object, an unexpected grant, a role that unexpectedly holds `LOGIN`, a drifted
+extension version and an invalid index are each *recorded* and none of them
+fails the run. Deciding what any of that means is a separate, later act.
+
+The one label the document carries is `binding.manifest_recognition`, either
+`CURRENT_V17` — all seventeen published migrations recorded under their exact
+content hashes and nothing else — or `UNRECOGNIZED`, with the evidence for it
+(`missing`, `additional`, `hash_mismatched`) beside it. There is deliberately no
+`V18` branch; migration 018 is unwritten and unauthorised, so a database
+carrying one lands in `UNRECOGNIZED` and gets a human.
+
+### `verify-privileges` and `verify-all` are NOT authoritative
+
+> **Warning.** `pnpm --filter @common/db verify-privileges` and `verify-all`
+> predate the V3 tenancy model. They do not know about `ai_capital_owner`,
+> `ai_capital_identity_authority`, the `SET`-without-`INHERIT` memberships, the
+> post-lockdown ACLs, `investment_ledger` or migration 017's RLS and grants.
+> A pass from either says nothing about whether this database matches the V3
+> design, and a failure from either is as likely to be the checker being out of
+> date as the database being wrong. **Do not quote them as evidence.** They stay
+> in the repository because removing them is a separate change; the inventory
+> collector is what the V3-aware enforcement slice will be built on.
+
+### The mandatory run ID
+
+`--run-id` is required and is **never generated**. A machine-made id would make
+every run look equally well-attested while tying none of them to anything; the
+operator's id is what binds the artifact to the change, ticket or maintenance
+window it was taken for. Letters, digits, dot, dash and underscore, up to 64
+characters.
+
+### The evidence directory must be `0700`
+
+The artifact is a complete map of who may read and write what in a real-money
+database. The collector refuses to write into a directory that is anything other
+than exactly `0700` — not `0755`, not `0750`, not `0770`. `0600` on the file
+does not help if the directory is group-readable: the name, size and mtime still
+leak, and a group-writable directory lets someone else replace the artifact
+outright. The published file is `0600`.
+
+It also refuses to overwrite an existing artifact, and the refusal is atomic
+rather than advisory — see the publication sequence below. Evidence is moved
+aside deliberately or not at all.
+
+### `VERIFY_INVENTORY_DATABASE_URL`, and nothing else
+
+The CLI reads that one variable. It does **not** fall back to `DATABASE_URL`,
+`AGENT_DATABASE_URL`, `TEST_DATABASE_URL`, `TEST_RUNTIME_DATABASE_URL`,
+`BOOTSTRAP_DATABASE_URL`, `CLAIM_WRITER_DATABASE_URL`, `PGDATABASE`, `PGHOST`, or
+any other generic database variable — a fallback chain is how a tool aimed at an
+inspection replica ends up on the live book because a shell happened to export
+something, and CLAUDE.md actively encourages exporting `DATABASE_URL`. Requiring
+a name that exists for no other purpose means "inventory this database" has to be
+said out loud, separately, every time.
+
+The URL is never printed, logged, serialised or hashed. The endpoint recorded in
+the artifact is asked of the **server** — `inet_server_addr()`,
+`unix_socket_directories`, `port` — rather than parsed out of the URL, so no user
+name or password can reach the evidence file even in principle.
+
+### What the artifact is bound to
+
+Every completed artifact carries a `binding` block, and the run fails rather than
+publish one that is missing a field:
+
+| Field | Why it is there |
+|---|---|
+| `run_id` | operator-supplied; ties the artifact to the operation |
+| `collected_at_utc` | UTC, so two artifacts are comparable across machines |
+| `repository_head` | which source produced it (read from `.git`, read-only) |
+| `database_name` | the book it describes |
+| `database_oid` | the name is reusable; drop and recreate `ai_capital` and every name-based fact still matches while every object is new |
+| `database_owner` | who owns the database itself |
+| `endpoint` | host **or** socket directory, port, database — never user, password or raw URL |
+| `server_version`, `server_version_num` | which engine |
+| `postmaster_start_time` | which *running instance*; a change between two artifacts means a restart happened |
+| `server_port`, `cluster_name` | which listener; `cluster_name` is recorded even when empty, because empty is its real default |
+| `manifest_recognition`, `manifest_version` | which published schema the ledger matched |
+| `exit_status` | stamped `0` at publication. A failed run publishes nothing, so this can never contradict the file's own existence |
+
+### Exit codes
+
+| Code | Meaning | Who fixes it |
+|---|---|---|
+| `0` | inventory complete — **not** a policy pass | nobody; read the artifact |
+| `2` | **refused**: bad or missing `--mode`, `--output` or `--run-id`; missing credential; output directory absent or not `0700`; artifact already present; the session was not read-only, not `ai_capital`, or not `ai_capital_migrator` as **both** `current_user` and `session_user`; inspection authority could not be proved | the operator — fix the invocation or the grant, run again |
+| `1` | **broke**: a query, the connection, the cleanup, the filesystem, or the collector itself | an engineer — this is a bug or an outage |
+
+Collapsing 1 and 2 into a single non-zero code is what makes a scheduled evidence
+run impossible to triage without reading the log, so they are kept apart.
+
+### What it refuses, and in what order
+
+Everything in the first group happens **before a client object exists**, so a
+malformed invocation cannot reach the network at all:
+
+1. a missing or unknown `--mode` (`inventory` is the only one implemented);
+2. a missing or relative `--output` — a relative path resolves against a working
+   directory the operator does not control under a scheduler;
+3. a missing or malformed `--run-id`;
+4. an output directory that is missing, is not a directory, or is not `0700`;
+5. an artifact already present at that path;
+6. a missing `VERIFY_INVENTORY_DATABASE_URL`.
+
+Then, on the connection, in this order:
+
+7. `BEGIN TRANSACTION READ ONLY` is the **first** statement on the session, so
+   there is no window in which anything else could have been sent;
+8. `transaction_read_only = on` is read back **from inside the session** rather
+   than assumed from the statement having succeeded — a connection parameter,
+   `ALTER ROLE … SET` or a pooler can each change what the session actually got;
+9. `current_database()` must be `ai_capital`, and `current_user` **and**
+   `session_user` must both be `ai_capital_migrator`. The last two are checked
+   separately because `SET ROLE` moves one and not the other; the collector never
+   issues `SET ROLE` and refuses to run if something already has;
+10. three capability probes must **evaluate**, each against a role that is not
+    the current user: `has_table_privilege`, `has_schema_privilege` and
+    `pg_has_role`. Each of those raises rather than answering wrongly when the
+    session may not ask, so a denial is loud. A probe that finds no non-self
+    subject at all is equally disqualifying — an empty catalogue and a filtered
+    view are indistinguishable from inside — and the run stops with
+    `INVENTORY INCOMPLETE — INSUFFICIENT INSPECTION AUTHORITY` rather than
+    producing a document that looks complete and is not.
+
+Then exactly one `ROLLBACK` attempt and exactly one connection-close attempt —
+one cleanup path, taken by success and failure alike, with the rollback counted
+before it is awaited so a rejected one is still recorded, and the close attempted
+even when the rollback rejected so the session cannot leak. A collection that
+succeeded but would not close cleanly **publishes nothing**: the rows may be
+fine, but "this session was released" is part of what an artifact on disk
+asserts.
+
+### The publication sequence
+
+Publication is last, and every step is load-bearing:
+
+1. `open(temp, O_CREAT|O_EXCL|O_WRONLY, 0600)` — a uniquely named temporary in
+   the **same directory** (both `link` and `rename` are confined to one
+   filesystem). `O_EXCL` means a stale or planted temporary file is never
+   adopted and published as evidence.
+2. **Write every byte, in a loop.** `write(2)` is allowed to write fewer bytes
+   than asked and still report success; the collector checks the returned count,
+   resumes at a **byte** offset into the UTF-8 payload, and fails closed on zero
+   progress, a negative count, a count larger than what remained, or a
+   non-integer. A short write must never become a truncated artifact stamped
+   `complete: true`.
+3. `fsync(file)` — the **contents** are durable before any name points at them.
+   Doing this after publication can leave a correctly-named empty artifact.
+4. `close`, then `chmod 0600`.
+5. `link(temp, output)` — **the publication**, and an atomic create-if-absent:
+   `link(2)` fails `EEXIST` if the destination exists. This is why it is not a
+   rename. `rename(2)` replaces its destination unconditionally, so
+   "check `existsSync`, then rename" silently destroys anything created in the
+   window between the two — which is exactly the situation the no-overwrite rule
+   exists for: two operators, or an operator and a scheduled run, pointed at the
+   same evidence path. A concurrent winner is left **byte-for-byte untouched**
+   and the loser exits `2`.
+6. `fsync(directory)` — the new **name** is durable.
+7. `unlink(temp)` — drop the second name; the artifact now has exactly one link
+   and the directory holds no residue.
+8. `fsync(directory)` — the removal is durable too.
+
+**Failure cleanup.** Before the link succeeds, only the temporary file is
+removed and the destination is left alone — on `EEXIST` it belongs to somebody
+else and is never deleted, truncated or replaced. After the link succeeds the
+destination was created by this call, so both names are removed: a
+`complete: true` document whose publication did not complete must not survive.
+
+So an artifact on disk is itself evidence that the session was released and the
+bytes reached the platter; there is no partial artifact and none at all on
+failure.
+
+### Extension evidence: four classes, and what the fourth one means
+
+| Class | Meaning |
+|---|---|
+| `direct_member` | `pg_depend` deptype `'e'` — the extension owns it |
+| `internal_support` | reached from a direct member through the `'i'`/`'a'` closure; dropping the extension drops it too |
+| `application_dependency` | an ordinary object with a **normal** (`'n'`) dependency on something in a closure — a `vector` column, an `hnsw` index, an exclusion constraint using btree_gist's operators. Dropping the extension does not drop it; the drop is refused |
+| `unrelated_public_object` | an object living in schema **`public`** that is in neither of the above relations |
+
+The fourth class is deliberately about `public`, not about the application.
+`public` is the one schema the bootstrap installs extensions into and then
+revokes from `PUBLIC`, so "what is sitting in there that no extension accounts
+for?" is a real question with a small answer. "Which application objects don't
+depend on an extension?" is not — it is nearly every table in the database, and
+labelling `portfolio.positions` or `investment_ledger.transactions`
+*unrelated* would drown the one signal the category carries.
+
+Public objects are discovered by **object address**, not by enumerating
+catalogues: every schema-qualified object records a normal `pg_depend` entry on
+its namespace, so one query finds tables, functions, types, **operators,
+operator classes, operator families, conversions, collations and text-search
+objects** alike, and `pg_describe_object` names each one. An object whose
+catalogue class the server cannot describe is recorded with `described: false`
+rather than dropped.
+
+None of the four classes is a verdict. An application object depending on an
+extension is not an error, and an unrelated public object is not an intruder —
+each is recorded so the enforcement slice can decide.
+
+### Taking an inventory from a linked worktree
+
+`git worktree add` checkouts are supported. There `.git` is a *file* containing
+`gitdir: <path>`; the collector resolves it, reads `HEAD` from the per-worktree
+Git directory, and follows `commondir` to find `refs/heads/*` and `packed-refs`
+in the original repository. Detached `HEAD` is supported in both layouts.
+Resolution is read-only file access with no `git` subprocess. Malformed metadata
+— a `.git` file naming no gitdir, a `gitdir` or `commondir` pointing nowhere, an
+unresolvable branch ref — fails the run before any client is constructed, and
+publishes nothing: an artifact that cannot say which source produced it is not
+evidence.
+
+### Running it costs the database nothing it can keep
+
+The run is `SELECT`-only inside a read-only transaction that is always rolled
+back. It creates nothing, grants nothing, revokes nothing and migrates nothing.
+
 ## Verifying a database after bootstrap
 
 Nothing in this directory has been executed. When the database-execution gate

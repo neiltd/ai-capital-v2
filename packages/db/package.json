@@ -31,6 +31,7 @@
     "test": "vitest run",
     "test:unit": "vitest run",
     "test:integration": "vitest run --config vitest.integration.config.ts",
+    "db-inventory": "tsx bin/db-inventory.ts",
     "verify-privileges": "tsx bin/verify-privileges.ts",
     "verify-architecture": "tsx bin/verify-architecture.ts",
     "verify-all": "npm run verify-architecture && npm run verify-privileges"
