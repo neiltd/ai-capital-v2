@@ -2,10 +2,22 @@
 //
 // INTEGRATION SUPPORT — USED ONLY BY THE ISOLATED POSTGRESQL TENANCY GATE.
 //
-// Every file in this directory needs a PostgreSQL
-// cluster with the seven roles from ops/roles/000_cluster_roles.sql and a
-// disposable database migrated 001-017. Creating roles and running migrations
-// is a separately authorized gate.
+// Every file in this directory needs a PostgreSQL cluster with all nine
+// production roles from ops/roles/000_cluster_roles.sql and a disposable
+// database migrated 001-018. Creating roles and running migrations is a
+// separately authorized gate.
+//
+// ROLE TOPOLOGY. ops/roles/000_cluster_roles.sql defines ALL NINE production
+// roles, and a database migrated through 018 needs every one of them to exist:
+// migration 018 grants privileges to ai_capital_pipeline and
+// ai_capital_claim_writer, so a cluster missing either cannot complete the
+// chain. ai_capital_owner and ai_capital_identity_authority are NOLOGIN and are
+// never connection identities at all.
+//
+// This suite directly authenticates SIX identities — migrator, operator,
+// importer, agent, app and a cluster administrator — and it does NOT
+// authenticate or exercise the pipeline or claim-writer credentials. Those are
+// reserved for the separately authorised runtime-role rehearsal.
 //
 // WHAT MAKES THESE TESTS DIFFERENT FROM THE EXISTING SUITE. The existing
 // integration tests connect as one privileged role and check business rules.

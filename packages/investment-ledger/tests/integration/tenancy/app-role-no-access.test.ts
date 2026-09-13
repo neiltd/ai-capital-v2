@@ -9,10 +9,24 @@ import { describeInPhase } from './phase.js'
 const ROOT = resolve(dirname(fileURLToPath(import.meta.url)), '..', '..', '..', '..', '..')
 const MIGRATIONS = join(ROOT, 'packages', 'db', 'migrations')
 
-/** Every SQL file this remediation authored: migrations 011-017 and all of ops/. */
+/**
+ * Every SQL file the TENANCY FOUNDATION authored: migrations 011-017 and all of
+ * ops/.
+ *
+ * A CLOSED RANGE, not ">= 11". The property below belongs to the tenancy work
+ * specifically — it did not touch the portfolio access model — and migration 018
+ * is not part of that work. 018 is the separately approved legacy-runtime grant
+ * migration; it names `portfolio` on purpose, granting `ai_capital_pipeline`
+ * SELECT and UPDATE on `portfolio.positions` and `portfolio.trade_log`. Sweeping
+ * it into this list would make a true statement about the tenancy foundation
+ * fail because of a different, deliberate decision.
+ */
 const TENANCY_SQL: string[] = [
   ...readdirSync(MIGRATIONS)
-    .filter(f => f.endsWith('.sql') && Number(f.slice(0, 3)) >= 11)
+    .filter(f => {
+      const n = Number(f.slice(0, 3))
+      return f.endsWith('.sql') && n >= 11 && n <= 17
+    })
     .sort()
     .map(f => join(MIGRATIONS, f)),
   join(ROOT, 'ops', 'roles', '000_cluster_roles.sql'),
@@ -56,6 +70,12 @@ const TENANCY_SQL: string[] = [
 // role acquired any privilege there, and the schema carries no policy, no RLS
 // and no trigger from this work. That is a regression check the repository can
 // honour.
+//
+// MIGRATION 018 IS OUT OF SCOPE HERE, DELIBERATELY. It does name `portfolio` —
+// SELECT and UPDATE for `ai_capital_pipeline`, the scheduled pipeline's own
+// least-privilege identity — which is a separately approved decision and not a
+// tenancy-foundation regression. The runtime assertions below still prove that
+// `ai_capital_app` reaches nothing, and 018 grants `ai_capital_app` nothing.
 //
 // SEPARATE DECISION, DELIBERATELY NOT MADE HERE: whether `ai_capital_app`
 // SHOULD hold read access to `portfolio` at all. It may well need it when the
@@ -125,7 +145,7 @@ describeInPhase('post-lockdown', 'the app role', () => {
     expect(code).toBe(INSUFFICIENT_PRIVILEGE)
   })
 
-  it('the tenancy work issues no statement naming portfolio — 011-017 and ops', () => {
+  it('the tenancy foundation issues no statement naming portfolio — 011-017 and ops only', () => {
     // The regression check, made against the SOURCE, because that is where the
     // property lives: a grant, revoke or ALTER on the legacy schema would have
     // to be written down somewhere, and there is nowhere else it could be.

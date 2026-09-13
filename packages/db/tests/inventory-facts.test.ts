@@ -32,7 +32,7 @@ import {
   sortRowsCanonically,
 } from '../src/inventory-facts.js'
 import {
-  CURRENT_V17_MANIFEST,
+  CURRENT_V18_MANIFEST,
   INVENTORY_QUERIES,
   PROBE_QUERIES,
   SERVER_BINDING_QUERY,
@@ -71,7 +71,7 @@ const SERVER: ServerBindingRow = {
 }
 
 function ledgerRows(): SchemaMigrationRow[] {
-  return CURRENT_V17_MANIFEST.map(m => ({
+  return CURRENT_V18_MANIFEST.map(m => ({
     filename: m.filename,
     sha256: m.sha256,
     applied_at: '2026-09-09 12:00:00+00',
@@ -230,10 +230,10 @@ describe('query definitions', () => {
 // ── Manifest recognition ────────────────────────────────────────────────────
 
 describe('manifest recognition', () => {
-  it('recognises CURRENT_V17 only from all seventeen filenames with exact hashes', () => {
+  it('recognises CURRENT_V18 only from all eighteen filenames with exact hashes', () => {
     const facts = recognizeManifest(ledgerRows())
-    expect(facts.recognition).toBe('CURRENT_V17')
-    expect(facts.recorded_count).toBe(17)
+    expect(facts.recognition).toBe('CURRENT_V18')
+    expect(facts.recorded_count).toBe(18)
     expect(facts.missing).toEqual([])
     expect(facts.additional).toEqual([])
     expect(facts.hash_mismatched).toEqual([])
@@ -247,7 +247,7 @@ describe('manifest recognition', () => {
     expect(facts.hash_mismatched).toEqual([{
       filename: '007_trade.sql',
       recorded_sha256: '0'.repeat(64),
-      manifest_sha256: CURRENT_V17_MANIFEST[6].sha256,
+      manifest_sha256: CURRENT_V18_MANIFEST[6].sha256,
     }])
   })
 
@@ -257,12 +257,25 @@ describe('manifest recognition', () => {
     expect(facts.missing).toEqual(['012_identity_security.sql'])
   })
 
-  it('an additional migration is UNRECOGNIZED — there is no V18 in this build', () => {
+  it('an additional migration is UNRECOGNIZED — there is no V19 in this build', () => {
     const facts = recognizeManifest([...ledgerRows(), {
-      filename: '018_future.sql', sha256: 'f'.repeat(64), applied_at: '2026-09-10 00:00:00+00',
+      filename: '019_future.sql', sha256: 'f'.repeat(64), applied_at: '2026-09-10 00:00:00+00',
     }])
     expect(facts.recognition).toBe('UNRECOGNIZED')
-    expect(facts.additional).toEqual(['018_future.sql'])
+    expect(facts.additional).toEqual(['019_future.sql'])
+  })
+
+  it('a DUPLICATED migration row is UNRECOGNIZED', () => {
+    // The shape the length comparison exists for. With a row recorded twice
+    // nothing is missing and nothing is additional — every filename is one the
+    // manifest knows — so only the count separates this from an exact match.
+    const rows = ledgerRows()
+    const facts = recognizeManifest([...rows, rows[3]])
+    expect(facts.recognition).toBe('UNRECOGNIZED')
+    expect(facts.recorded_count).toBe(19)
+    expect(facts.expected_count).toBe(18)
+    expect(facts.missing).toEqual([])
+    expect(facts.additional).toEqual([])
   })
 
   it('a ledger row naming a file the manifest has never heard of is UNRECOGNIZED', () => {
@@ -699,8 +712,8 @@ describe('the evidence binding', () => {
   })
 
   it('carries the manifest recognition and version', () => {
-    expect(binding().manifest_recognition).toBe('CURRENT_V17')
-    expect(binding().manifest_version).toBe('V17')
+    expect(binding().manifest_recognition).toBe('CURRENT_V18')
+    expect(binding().manifest_version).toBe('V18')
     const drifted = buildFactDocument({
       run_id: 'r', collected_at: '2026-09-10T00:00:00.000Z', repository_head: 'abc',
       session: SESSION, server: SERVER, probes: {},

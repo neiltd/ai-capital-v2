@@ -11,10 +11,22 @@ import { describeInPhase } from './phase.js'
 //
 // INTEGRATION TEST — RUN ONLY BY THE ISOLATED POSTGRESQL TENANCY GATE.
 //
-// Needs a disposable cluster carrying the roles from
-// ops/roles/000_cluster_roles.sql, a database migrated 001-017, and one
-// login URL per role. The database-free suite never executes it, so nothing
-// here is verified until that gate runs.
+// Needs a disposable cluster carrying all nine roles from
+// ops/roles/000_cluster_roles.sql, a database migrated 001-018, and the six
+// role-specific login URLs used directly by this suite. The database-free
+// suite never executes it, so nothing here is verified until that gate runs.
+//
+// ROLE TOPOLOGY. ops/roles/000_cluster_roles.sql defines ALL NINE production
+// roles, and a database migrated through 018 needs every one of them to exist:
+// migration 018 grants privileges to ai_capital_pipeline and
+// ai_capital_claim_writer, so a cluster missing either cannot complete the
+// chain. ai_capital_owner and ai_capital_identity_authority are NOLOGIN and are
+// never connection identities at all.
+//
+// This suite directly authenticates SIX identities — migrator, operator,
+// importer, agent, app and a cluster administrator — and it does NOT
+// authenticate or exercise the pipeline or claim-writer credentials. Those are
+// reserved for the separately authorised runtime-role rehearsal.
 //
 // THE GUARANTEE: ledger evidence is written once. A correction is a NEW row
 // that supersedes an old one in a view; it is never an edit. That is what makes

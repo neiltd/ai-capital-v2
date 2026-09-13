@@ -1,5 +1,5 @@
 -- ═══════════════════════════════════════════════════════════════════════════
--- DATABASE BOOTSTRAP. Prepares ONE database so that migrations 011-017 can run.
+-- DATABASE BOOTSTRAP. Prepares ONE database so that migrations 011-018 can run.
 --
 -- RUN AS: a cluster administrator. It needs CREATE EXTENSION (superuser) and
 -- the ability to SET ROLE ai_capital_owner.
@@ -145,13 +145,30 @@ REVOKE ALL ON SCHEMA public FROM PUBLIC;
 -- Without USAGE the first fails with `type "vector" does not exist`, which
 -- reads like a missing extension rather than a missing privilege.
 --
--- WHY IT IS ONLY THE OWNER. Source tracing over migrations 011-017 finds
--- exactly one reference from the tenancy schemas into `public` — 011's gist
--- opclass lookup, performed at DDL time by the owner. No runtime role holds any
--- grant on `capital.*` (where the only `vector` column lives) or on `public`,
--- and once the exclusion constraint exists its index references opclasses by
--- OID, so DML needs no schema lookup. A broader grant would be privilege
--- nobody has been shown to need.
+-- WHY ONLY THE OWNER HERE, AND WHAT MIGRATION 018 ADDS LATER.
+--
+-- This file grants `public` USAGE to `ai_capital_owner` alone, because the
+-- references above are resolved during OWNER-EXECUTED DDL: migration 006 needs
+-- the `vector` type and its opclass, migration 011 needs btree_gist's. That is
+-- the whole of what the bootstrap has to make possible, and `010` is a
+-- database-preparation script — RUNTIME OBJECT GRANTS ARE NOT ITS BUSINESS and
+-- belong in a migration.
+--
+-- One runtime role does need `public`, and `packages/db/migrations/018_legacy_runtime_grants.sql`
+-- grants it there: `ai_capital_pipeline` runs `$N::vector` and
+-- `ORDER BY embedding <=> $N` against `capital.chunks`, so it must resolve the
+-- `vector` TYPE and pgvector's `<=>` OPERATOR, both of which live in `public`.
+-- That is a DML-time lookup by name, not a DDL-time one, and no amount of
+-- opclass-by-OID reasoning removes it.
+--
+-- BOTH GRANTS ARE `USAGE` ONLY. Neither `ai_capital_owner` nor
+-- `ai_capital_pipeline` receives `CREATE` on `public`; no role does.
+--
+-- Migration 018 also grants `ai_capital_pipeline` table privileges on
+-- `capital.*` and four other legacy schemas, and grants `ai_capital_claim_writer`
+-- its `desk` privileges. An earlier version of this comment claimed no runtime
+-- role holds any grant on `capital.*` or `public`; that was true when it was
+-- written and is not true after 018.
 --
 -- WHY NOT CREATE. The owner creating objects in `public` is exactly what the
 -- revoke above exists to prevent; every application object belongs in a named

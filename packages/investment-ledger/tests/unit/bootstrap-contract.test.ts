@@ -379,11 +379,20 @@ describe('schema public stays shut (defect B3)', () => {
     expect(lockdownCode).not.toMatch(/GRANT[^;]*ON SCHEMA public/)
   })
 
-  it('no runtime or operations role receives a public-schema privilege', () => {
+  it('BOOTSTRAP 010 gives no runtime or operations role a public-schema privilege', () => {
+    // SCOPE: this is a statement about 010 ALONE — `bootstrapCode` is 010's text
+    // — and not about the migrations that follow it.
+    //
     // The gate used a deliberately broad diagnostic grant to all seven roles.
     // That was a probe, not a design: source tracing over 011-017 finds exactly
     // ONE reference from the tenancy schemas into `public` — 011's
     // `EXCLUDE USING gist` opclass lookup, performed at DDL time by the owner.
+    //
+    // Migration 018 SEPARATELY grants `USAGE` — never `CREATE` — on `public` to
+    // `ai_capital_pipeline`, because DAG-reachable pgvector queries resolve the
+    // `vector` type and the `<=>` operator there. That grant is not 010's to
+    // make and is not in scope here; its exact shape is enforced by
+    // packages/db/tests/migration-018-grants.test.ts.
     for (const role of ['ai_capital_migrator', 'ai_capital_importer', 'ai_capital_agent',
                         'ai_capital_app', 'ai_capital_operator',
                         'ai_capital_identity_authority']) {
@@ -392,9 +401,24 @@ describe('schema public stays shut (defect B3)', () => {
     }
   })
 
-  it('nothing in 011-017 asks for schema public either', () => {
+  it('nothing in the TENANCY FOUNDATION, 011-017, asks for schema public either', () => {
+    // A CLOSED RANGE, not ">= 11". The property being asserted belongs to the
+    // tenancy foundation: those seven migrations build `identity` and
+    // `investment_ledger`, and none of them may reach into `public`.
+    //
+    // 018 is deliberately outside it. It is the separately approved
+    // legacy-runtime grant migration, and it does name `public` — one
+    // `GRANT USAGE ON SCHEMA public TO ai_capital_pipeline`, never CREATE. The
+    // bound is 17, not "everything except 018", so a migration 019 that reached
+    // into `public` would still have to be justified on its own terms rather
+    // than inheriting an exemption.
     const dir = resolve(HERE, '..', '..', '..', 'db', 'migrations')
-    for (const f of readdirSync(dir).filter(f => f.endsWith('.sql') && Number(f.slice(0, 3)) >= 11)) {
+    const foundation = readdirSync(dir).filter(f => {
+      const n = Number(f.slice(0, 3))
+      return f.endsWith('.sql') && n >= 11 && n <= 17
+    })
+    expect(foundation, 'the 011-017 scan is vacuous').toHaveLength(7)
+    for (const f of foundation) {
       const body = code(readFileSync(join(dir, f), 'utf-8'))
       expect(body, `${f} references schema public`).not.toMatch(/ON SCHEMA public/)
     }

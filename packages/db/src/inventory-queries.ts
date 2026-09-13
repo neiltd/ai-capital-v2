@@ -839,7 +839,7 @@ export interface ManifestEntry {
 }
 
 /**
- * The seventeen migrations that constitute the current published schema.
+ * The eighteen migrations that constitute the current published schema.
  *
  * Recorded as filename AND content hash because either alone is defeatable: a
  * ledger row can name a migration whose file has since changed, and a hash
@@ -847,11 +847,11 @@ export interface ManifestEntry {
  * same digest — sha256 over the file's UTF-8 bytes — so a match here means the
  * database was built from exactly these bytes.
  *
- * There is no V18 entry, deliberately. Migration 018 is not written, not
- * applied and not authorised; a manifest that already knew about it would let a
- * database that had somehow acquired it be recognised as expected.
+ * There is no V19 entry, deliberately. A manifest that already knew about a
+ * migration nobody has written would let a database that had somehow acquired
+ * one be recognised as expected.
  */
-export const CURRENT_V17_MANIFEST: readonly ManifestEntry[] = Object.freeze([
+export const CURRENT_V18_MANIFEST: readonly ManifestEntry[] = Object.freeze([
   { filename: '001_portfolio.sql', sha256: '326fe2c3d266f62a6a3f1525ec95b0489906bd44aec7c5628e026d049626b13d' },
   { filename: '002_capital.sql', sha256: 'a41f43c8f3784dcc4c40b4de5d0da029c884517a8e9444bc41e1f8abeae46ec1' },
   { filename: '003_thesis.sql', sha256: 'e5dae3cc3c9952190a3fb8e8008a8f27997a3695dd2fd1413e32cce55087befa' },
@@ -869,6 +869,7 @@ export const CURRENT_V17_MANIFEST: readonly ManifestEntry[] = Object.freeze([
   { filename: '015_investment_ledger_series_and_corrections.sql', sha256: 'd076798413e5285a91fe6ce1252d715cffa208237cfd8c6de96f2cf0c3e13616' },
   { filename: '016_investment_ledger_enforcement.sql', sha256: 'daa8fc3dd05d03197ec31d57d832d10a930d1a50d42ef53208e1d838fd63ddac' },
   { filename: '017_ledger_views_rls_grants.sql', sha256: 'e069433155d74ae7553ea41a08c909f03ca87b8c0e882c745b40d54b36bdefa1' },
+  { filename: '018_legacy_runtime_grants.sql', sha256: '7632ef07ed2d5cd7101e5c684f23bea7c68080ffe51f6b9e260df3572f2d1f50' },
 ])
 
 /** The database this collector is written for. Asserted from inside the session. */

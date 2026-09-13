@@ -15,7 +15,7 @@ by a cluster administrator, in the order below.
 |---|---|---|---|
 | 1 | `roles/000_cluster_roles.sql` | cluster administrator | once per cluster |
 | 2 | `bootstrap/010_database_bootstrap.sql` | cluster administrator | once per database, and again to re-open a migration window |
-| 3 | *(migrations 001–017)* | `ai_capital_migrator` | every deployment |
+| 3 | *(migrations 001–018)* | `ai_capital_migrator` | every deployment |
 | 4 | `bootstrap/090_post_migration_lockdown.sql` | cluster administrator | immediately after step 3 |
 
 ### What step 2 must provide, and why each piece is load-bearing
@@ -71,10 +71,18 @@ nobody had executed:
   Revoking from `PUBLIC` removes the ability to *see* anything in `public`,
   including the extension objects step 2 just installed there — so 006 failed
   with `type "vector" does not exist`, which reads like a missing extension
-  rather than a missing privilege. Source tracing over 011–017 finds exactly one
-  reference from the tenancy schemas into `public`: 011's `EXCLUDE USING gist`
-  opclass lookup, at DDL time, by the owner. No runtime role needs it, and none
-  is given it. `CREATE` on `public` is granted to nobody at all.
+  rather than a missing privilege. Source tracing over 011–018 finds exactly one
+  reference from the *tenancy* schemas into `public`: 011's `EXCLUDE USING gist`
+  opclass lookup, at DDL time, by the owner.
+
+  **One runtime role does need `public`, and migration 018 grants it.**
+  `ai_capital_pipeline` runs `$N::vector` and `ORDER BY embedding <=> $N`
+  against `capital.chunks` (`packages/db/src/vector-store/pg.ts`), and both the
+  `vector` type and pgvector's `<=>` operator live in `public`; PostgreSQL
+  requires schema `USAGE` to resolve either by name. Without it those stages
+  fail with "permission denied for schema public" — a privilege error that reads
+  like a missing extension. It is **`USAGE` only**. `CREATE` on `public` is
+  granted to nobody at all, including the pipeline.
 
 ## Invocation
 
@@ -176,11 +184,68 @@ extension version and an invalid index are each *recorded* and none of them
 fails the run. Deciding what any of that means is a separate, later act.
 
 The one label the document carries is `binding.manifest_recognition`, either
-`CURRENT_V17` — all seventeen published migrations recorded under their exact
+`CURRENT_V18` — all eighteen published migrations recorded under their exact
 content hashes and nothing else — or `UNRECOGNIZED`, with the evidence for it
-(`missing`, `additional`, `hash_mismatched`) beside it. There is deliberately no
-`V18` branch; migration 018 is unwritten and unauthorised, so a database
-carrying one lands in `UNRECOGNIZED` and gets a human.
+(`missing`, `additional`, `hash_mismatched`) beside it. Recognition is strict:
+one missing migration, one extra, or one changed hash is `UNRECOGNIZED`, and
+there is no partial or subset match. There is deliberately no `V19` branch, so a
+database carrying a migration nobody has written lands in `UNRECOGNIZED` and
+gets a human.
+
+## Runtime roles: where each privilege comes from
+
+**No live database has been changed by any of this.** Everything below describes
+what a future run of the bootstrap and the migration chain would produce on a
+fresh target, or on one whose migration window has been deliberately reopened.
+
+Database access and object access are granted in two different places, by two
+different principals, and neither can do the other's job:
+
+| | Granted by | Run as | What it confers |
+|---|---|---|---|
+| `CONNECT` on the database | `bootstrap/010_database_bootstrap.sql` | cluster administrator | the right to open a connection, and nothing inside the database |
+| schema, table and sequence privileges | `migrations/018_legacy_runtime_grants.sql` | `ai_capital_owner`, via the migration runner | exactly the objects each role touches |
+
+Migration 018 cannot grant `CONNECT`: it executes under
+`SET LOCAL ROLE ai_capital_owner`, and that role holds `CONNECT` without the
+right to re-grant it and does not own the database, so the statement is refused
+with `SQLSTATE 42501`.
+
+### What migration 018 does
+
+It gives the two runtime identities their least-privilege object access, and
+nothing else. It creates nothing, drops nothing, alters no ownership, sets no
+default privileges, grants no role membership, and issues no `GRANT ALL` or
+`ON ALL`.
+
+- **`ai_capital_pipeline`** — the identity the scheduled DAG runs as, replacing
+  the cluster superuser the pipeline used to connect as. `USAGE` on `capital`,
+  `thesis`, `portfolio`, `briefing`, `trade` and `public`; per-table `SELECT`,
+  `INSERT` and `UPDATE` exactly where the DAG needs them; `USAGE` on one
+  sequence, `capital.fetch_log_id_seq`. **No `DELETE` anywhere**, and no
+  privilege at all in `identity`, `investment_ledger`, `cash_ledger`, `desk`,
+  `db` or `graph`.
+- **`ai_capital_claim_writer`** — the claim protocol and only that. `USAGE` on
+  `desk`; `SELECT, INSERT, UPDATE` on `desk.agent_claims`; `INSERT` on
+  `desk.agent_runs`; `USAGE` on both `desk` sequences. Nothing outside `desk`.
+- It also revokes the built-in `PUBLIC EXECUTE` from
+  `desk.agent_claims_assertion_is_immutable()`. No compensating `EXECUTE` grant
+  accompanies it: PostgreSQL checks a trigger function's `EXECUTE` when the
+  trigger is *created*, not when it fires, so the immutability trigger keeps
+  working for every writer.
+
+### Manual mutation is deliberately excluded
+
+Every privilege in 018 is reachable from one of the 23 stages of
+`DAILY_PIPELINE`. Paths whose only call site is a manual CLI are **not** granted
+to `ai_capital_pipeline`, even where the same source file defines them:
+`portfolio.positions` `DELETE` and `INSERT` (`cli-portfolio`),
+`capital.pending_manual_input` `UPDATE` (`cli-config`), the `thesis` create and
+update paths (`creator.ts`, `updater.ts`, `review.ts`), and every `graph.*` and
+`trade.*` write — `dependency-graph-engine` and `trade-graph` are not DAG
+stages. Those CLIs keep running under the administrator credential until a
+**manual-mutation role is separately designed**; that role does not exist yet
+and `ai_capital_pipeline` must not be widened to stand in for it.
 
 ### `verify-privileges` and `verify-all` are NOT authoritative
 
@@ -398,7 +463,7 @@ opens, the order is:
    cluster.
 2. `ops/bootstrap/010_database_bootstrap.sql` — once per database.
 3. `MIGRATION_OWNER_ROLE=ai_capital_owner` + the migration runner, connecting as
-   `ai_capital_migrator`.
+   `ai_capital_migrator`, applying migrations 001–018.
 4. `TENANCY_PHASE=pre-lockdown pnpm --filter @common/investment-ledger test:tenancy`
 5. `ops/bootstrap/090_post_migration_lockdown.sql` — as a cluster administrator.
 6. `TENANCY_PHASE=post-lockdown pnpm --filter @common/investment-ledger test:tenancy`

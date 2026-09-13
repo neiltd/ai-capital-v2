@@ -100,14 +100,14 @@ describe('with MIGRATION_OWNER_ROLE configured', () => {
 
   it('actually ran the migrations (a silent no-op must not read as a pass)', () => {
     const files = readdirSync(MIGRATIONS).filter(f => f.endsWith('.sql'))
-    expect(files.length).toBe(17)
-    expect(issued.filter(s => ROLE.test(s))).toHaveLength(17)
-    expect(issued.filter(s => BODY.test(s))).toHaveLength(17)
+    expect(files.length).toBe(18)
+    expect(issued.filter(s => ROLE.test(s))).toHaveLength(18)
+    expect(issued.filter(s => BODY.test(s))).toHaveLength(18)
   })
 
   it('sets a transaction-local search path', () => {
     const paths = issued.filter(s => PATH.test(s))
-    expect(paths).toHaveLength(17)
+    expect(paths).toHaveLength(18)
     // SET LOCAL, not SET: it must revert at COMMIT *and* ROLLBACK, so nothing
     // leaks onto the next borrower of a pooled connection.
     for (const p of paths) expect(p).toMatch(/^SET LOCAL search_path = /)
@@ -191,8 +191,8 @@ describe('with MIGRATION_OWNER_ROLE unset', () => {
   })
 
   it('the migrations and the ledger INSERT still run', () => {
-    expect(issued.filter(s => BODY.test(s))).toHaveLength(17)
-    expect(issued.filter(s => LEDGER.test(s))).toHaveLength(17)
+    expect(issued.filter(s => BODY.test(s))).toHaveLength(18)
+    expect(issued.filter(s => LEDGER.test(s))).toHaveLength(18)
   })
 })
 

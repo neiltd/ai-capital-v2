@@ -6,12 +6,25 @@ import { sharedDbTestAliases } from '../db/testing/vitest-db-resolution.js'
 // THE V3 TENANCY SUITE — a separately named command, deliberately.
 //
 // NOT RUN IN THE SOURCE-ONLY PHASE. Every file under tests/integration/tenancy
-// needs a PostgreSQL cluster carrying the seven roles from
-// ops/roles/000_cluster_roles.sql, a disposable database migrated 001-017, and
-// SEVEN SEPARATE LOGIN URLs — one per role. That is a materially larger
+// needs a PostgreSQL cluster carrying all nine production roles from
+// ops/roles/000_cluster_roles.sql, a disposable database migrated 001-018, and
+// SIX ROLE-SPECIFIC LOGIN URLs — the six `TENANCY_*_DATABASE_URL` values, one
+// per identity this suite opens a connection as. That is a materially larger
 // precondition than the ordinary integration suite's single database URL, which
 // is why it is its own config and its own script rather than more files under
 // the existing one.
+//
+// ROLE TOPOLOGY. ops/roles/000_cluster_roles.sql defines ALL NINE production
+// roles, and a database migrated through 018 needs every one of them to exist:
+// migration 018 grants privileges to ai_capital_pipeline and
+// ai_capital_claim_writer, so a cluster missing either cannot complete the
+// chain. ai_capital_owner and ai_capital_identity_authority are NOLOGIN and are
+// never connection identities at all.
+//
+// This suite directly authenticates SIX identities — migrator, operator,
+// importer, agent, app and a cluster administrator — and it does NOT
+// authenticate or exercise the pipeline or claim-writer credentials. Those are
+// reserved for the separately authorised runtime-role rehearsal.
 //
 // WHY SEPARATE LOGINS RATHER THAN `SET ROLE`. The authorization functions
 // resolve the caller from `session_user`, which SET ROLE does not change. A
@@ -20,17 +33,32 @@ import { sharedDbTestAliases } from '../db/testing/vitest-db-resolution.js'
 // production failed. That is the whole reason these tests exist, so the setup
 // cost is not negotiable.
 //
-// Required environment (all seven URLs; each is asserted at connect time
-// against `session_user`, so a mis-pointed URL fails loudly rather than
-// quietly testing the wrong role):
+// Required environment — the six role-specific URLs below. `connectAs` asserts
+// TWO different things about them, and the difference is deliberate:
+//
+//   * ALL SIX are checked, from inside the connection, to be pointing at a
+//     disposable database (`current_database()`, never the URL text), so a URL
+//     that resolves somewhere unexpected — a service alias, a pooler, a
+//     `PGDATABASE` default — cannot slip past.
+//   * THE FIVE NAMED APPLICATION ROLES are additionally checked against their
+//     expected `session_user`, so a mis-pointed URL fails loudly rather than
+//     quietly testing the wrong role.
+//   * THE ADMINISTRATOR IS EXEMPT from that second check, on purpose: it is a
+//     cluster administrator for seeding, and this suite does not require it to
+//     authenticate under any fixed `ai_capital_admin` name.
+//
 //   TENANCY_MIGRATOR_DATABASE_URL   ai_capital_migrator
 //   TENANCY_IMPORTER_DATABASE_URL   ai_capital_importer
 //   TENANCY_AGENT_DATABASE_URL      ai_capital_agent
 //   TENANCY_APP_DATABASE_URL        ai_capital_app
 //   TENANCY_OPERATOR_DATABASE_URL   ai_capital_operator
-//   TENANCY_ADMIN_DATABASE_URL      a cluster administrator, for seeding only
-//   TEST_DATABASE_URL               the same disposable database, for the
-//                                   support.ts allowlist check
+//   TENANCY_ADMIN_DATABASE_URL      a cluster administrator, for seeding only —
+//                                   no fixed username is asserted
+//
+// `TEST_DATABASE_URL` is OPTIONAL for this suite. The loader below preserves it
+// if it is supplied, but no tenancy test requires its original value, and
+// tests/integration/tenancy/migration-prelockdown.test.ts temporarily replaces
+// it with the migrator URL and then restores or deletes it.
 //
 // AND `TENANCY_PHASE`, which has NO DEFAULT. The suite is run TWICE against one
 // database, because some facts are true only before

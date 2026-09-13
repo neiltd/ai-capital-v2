@@ -30,10 +30,23 @@ export default defineConfig({
   test: {
     include: ['tests/integration/**/*.test.ts'],
     // master-archive: the single file that reads the operator's real archive.
-    // tenancy/**: the V3 suite, which needs seven separate role logins and a
-    // database migrated 001-017 with the cluster roles present. Both have their
-    // own config and their own script, so this command's preconditions stay
-    // exactly "a disposable database, and nothing private".
+    // tenancy/**: the V3 suite, which needs six role-specific login URLs, all
+    // nine cluster roles present, and a database migrated through 001-018.
+    // (`TEST_DATABASE_URL` is optional there, not a prerequisite.) Both have
+    // their own config and their own script, so this command's preconditions
+    // stay exactly "a disposable database, and nothing private".
+    //
+    // ROLE TOPOLOGY. ops/roles/000_cluster_roles.sql defines ALL NINE production
+    // roles, and a database migrated through 018 needs every one of them to exist:
+    // migration 018 grants privileges to ai_capital_pipeline and
+    // ai_capital_claim_writer, so a cluster missing either cannot complete the
+    // chain. ai_capital_owner and ai_capital_identity_authority are NOLOGIN and are
+    // never connection identities at all.
+    //
+    // This suite directly authenticates SIX identities — migrator, operator,
+    // importer, agent, app and a cluster administrator — and it does NOT
+    // authenticate or exercise the pipeline or claim-writer credentials. Those are
+    // reserved for the separately authorised runtime-role rehearsal.
     exclude: ['tests/integration/master-archive.test.ts', 'tests/integration/tenancy/**'],
     globals: true,
     environment: 'node',

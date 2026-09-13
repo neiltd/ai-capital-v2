@@ -51,7 +51,7 @@ import {
 } from '../bin/db-inventory.js'
 import type { ArtifactFs, InventoryClient } from '../bin/db-inventory.js'
 import {
-  CURRENT_V17_MANIFEST,
+  CURRENT_V18_MANIFEST,
   INVENTORY_QUERIES,
   PROBE_QUERIES,
   SERVER_BINDING_QUERY,
@@ -146,7 +146,7 @@ function makeFake(options: FakeOptions = {}) {
 
 function fixtureRows(id: string): unknown[] {
   if (id === 'schema_migrations') {
-    return CURRENT_V17_MANIFEST.map(m => ({
+    return CURRENT_V18_MANIFEST.map(m => ({
       filename: m.filename, sha256: m.sha256, applied_at: '2026-09-09 12:00:00+00',
     }))
   }
@@ -874,7 +874,7 @@ describe('artifact publication', () => {
     expect(binding.postmaster_start_time).toBe('2026-09-01 03:14:15+00')
     expect(binding.server_port).toBe('5432')
     expect(binding.cluster_name).toBe('')
-    expect(binding.manifest_recognition).toBe('CURRENT_V17')
+    expect(binding.manifest_recognition).toBe('CURRENT_V18')
     expect(binding.endpoint).toEqual({
       host: null, socket_directories: '/tmp', port: '5432', database: 'ai_capital',
     })

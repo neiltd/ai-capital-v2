@@ -29,9 +29,9 @@ describe('migration filenames', () => {
     expect(new Set(numbers).size, 'no duplicate migration number').toBe(numbers.length)
   })
 
-  it('cover 001-017 with no gaps', () => {
+  it('cover 001-018 with no gaps', () => {
     expect(files.map(f => Number(f.slice(0, 3))))
-      .toEqual(Array.from({ length: 17 }, (_, i) => i + 1))
+      .toEqual(Array.from({ length: 18 }, (_, i) => i + 1))
   })
 })
 
@@ -55,7 +55,10 @@ describe('dependency order', () => {
     }
   })
 
-  it('all nine views are defined once, in the final migration', () => {
+  it('all nine views are defined once, in 017 — the final LEDGER migration', () => {
+    // "Final ledger migration", not "final migration": 018 follows 017 and is a
+    // grants-only file that defines no object at all. The assertion is about
+    // where the views live, and that is 017.
     const per = files.map(f => [f, (text(f).match(/CREATE (?:OR REPLACE )?VIEW investment_ledger\./g) ?? []).length] as const)
     for (const [f, n] of per) {
       if (f === '017_ledger_views_rls_grants.sql') expect(n, f).toBe(9)
