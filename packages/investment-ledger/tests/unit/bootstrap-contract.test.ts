@@ -401,6 +401,227 @@ describe('schema public stays shut (defect B3)', () => {
   })
 })
 
+// ── ops/roles/000_cluster_roles.sql — the production role SET ────────────────
+//
+// WHY THIS IS PARSED AND NOT GREPPED. Every assertion below is about an
+// EXECUTABLE STATEMENT. This file is dense with prose that names roles,
+// attributes and privileges it does not confer — the operator block alone says
+// "CONNECT on the database", "USAGE on schema identity" and "EXECUTE on
+// identity.terminate_service_grant" in a comment, and ends with a COMMENT ON
+// ROLE whose string literal contains the words "no role memberships". A checker
+// that matched text would read all of that as design and could be satisfied by
+// a file that creates nothing at all. So the statements are extracted first and
+// the prose is discarded, exactly as `code()` does for 010 and 090.
+
+const roles = readFileSync(join(OPS, 'roles', '000_cluster_roles.sql'), 'utf-8')
+const rolesCode = code(roles)
+/** Statements with string literals blanked — a COMMENT ON ROLE is not a grant. */
+const rolesStatements = withoutStringLiterals(rolesCode)
+
+/** Executable statements, comment- and literal-free, semicolon-delimited. */
+const statements = rolesStatements
+  .split(';')
+  .map(s => s.replace(/\s+/g, ' ').trim())
+  .filter(Boolean)
+
+interface RoleDefinition { name: string; attributes: string[] }
+
+/** Every CREATE ROLE actually executed by this file, with its attribute list. */
+const definitions: RoleDefinition[] = statements
+  .map(s => /^CREATE ROLE ([A-Za-z_][A-Za-z0-9_]*)\b(.*)$/.exec(s))
+  .filter((m): m is RegExpExecArray => m !== null)
+  .map(m => ({
+    name: m[1],
+    attributes: m[2].trim().split(/\s+/).filter(Boolean).map(a => a.toUpperCase()),
+  }))
+
+const byName = new Map(definitions.map(d => [d.name, d]))
+
+/** The seven attributes every new production LOGIN role must carry, exactly. */
+const REQUIRED_LOGIN_ATTRIBUTES = [
+  'LOGIN', 'NOSUPERUSER', 'NOCREATEDB', 'NOCREATEROLE',
+  'NOBYPASSRLS', 'NOINHERIT', 'NOREPLICATION',
+].sort()
+
+/** Attributes that would make a role privileged. None may appear anywhere. */
+const PRIVILEGED_ATTRIBUTES = ['SUPERUSER', 'CREATEDB', 'CREATEROLE', 'BYPASSRLS', 'REPLICATION']
+
+describe('the production role set is parsed, not pattern-matched', () => {
+  it('the parser actually extracted CREATE ROLE statements', () => {
+    // NON-VACUITY. Every assertion below quantifies over `definitions`; if the
+    // parser silently produced an empty list, all of them would pass while
+    // proving nothing at all.
+    expect(definitions.length).toBeGreaterThanOrEqual(9)
+    expect(definitions.every(d => d.attributes.length > 0)).toBe(true)
+  })
+
+  it('discards prose: the operator comment names privileges the file never grants', () => {
+    // The comment says "CONNECT on the database" and "USAGE on schema identity".
+    // Those words are in the file; neither is an executed statement.
+    expect(roles).toContain('CONNECT on the database')
+    expect(statements.some(s => /^GRANT\b/.test(s))).toBe(false)
+  })
+})
+
+describe('ai_capital_pipeline and ai_capital_claim_writer (slice S2)', () => {
+  const NEW_ROLES = ['ai_capital_pipeline', 'ai_capital_claim_writer'] as const
+
+  it('the complete production role set contains both new roles', () => {
+    expect(definitions.map(d => d.name).sort()).toEqual([
+      'ai_capital_agent',
+      'ai_capital_app',
+      'ai_capital_claim_writer',
+      'ai_capital_identity_authority',
+      'ai_capital_importer',
+      'ai_capital_migrator',
+      'ai_capital_operator',
+      'ai_capital_owner',
+      'ai_capital_pipeline',
+    ])
+  })
+
+  for (const name of NEW_ROLES) {
+    it(`${name} carries exactly the seven required attributes`, () => {
+      const definition = byName.get(name)
+      expect(definition, `${name} has no CREATE ROLE statement`).toBeDefined()
+      expect([...(definition as RoleDefinition).attributes].sort()).toEqual(REQUIRED_LOGIN_ATTRIBUTES)
+    })
+
+    it(`${name} is a LOGIN role and is not privileged`, () => {
+      const attributes = (byName.get(name) as RoleDefinition).attributes
+      expect(attributes).toContain('LOGIN')
+      for (const privileged of PRIVILEGED_ATTRIBUTES) {
+        // Bare SUPERUSER, never the NO-prefixed negation that must be present.
+        expect(attributes, `${name} carries ${privileged}`).not.toContain(privileged)
+        expect(attributes).toContain(`NO${privileged}`)
+      }
+      expect(attributes).not.toContain('INHERIT')
+      expect(attributes).toContain('NOINHERIT')
+    })
+
+    it(`${name} carries no PASSWORD clause and no credential material`, () => {
+      const definition = byName.get(name) as RoleDefinition
+      expect(definition.attributes).not.toContain('PASSWORD')
+      expect(definition.attributes).not.toContain('ENCRYPTED')
+      // And nowhere in the file: a credential in repository SQL is a credential
+      // in every clone, every diff and every backup of this repository.
+      expect(rolesStatements).not.toMatch(/\bPASSWORD\b/i)
+      expect(rolesStatements).not.toMatch(/\bVALID UNTIL\b/i)
+    })
+
+    it(`${name} receives no membership and no grant in 000`, () => {
+      // Zero memberships is what makes session_user trustworthy: SET ROLE can
+      // only target a role you are a member of.
+      for (const statement of statements) {
+        expect(statement, `000 grants something to ${name}`)
+          .not.toMatch(new RegExp(`^GRANT\\b.*\\b${name}\\b`))
+        expect(statement, `000 revokes something from ${name}`)
+          .not.toMatch(new RegExp(`^REVOKE\\b.*\\b${name}\\b`))
+        expect(statement, `000 alters ${name}`)
+          .not.toMatch(new RegExp(`^ALTER ROLE ${name}\\b`))
+      }
+    })
+  }
+
+  it('the two roles are distinct definitions, not one name reused', () => {
+    // Collapsing them would give the pipeline the claim tables, or the claim
+    // writer the whole legacy book. Either is a silent widening.
+    expect(byName.has('ai_capital_pipeline')).toBe(true)
+    expect(byName.has('ai_capital_claim_writer')).toBe(true)
+    const pipeline = statements.filter(s => /^CREATE ROLE ai_capital_pipeline\b/.test(s))
+    const writer   = statements.filter(s => /^CREATE ROLE ai_capital_claim_writer\b/.test(s))
+    expect(pipeline).toHaveLength(1)
+    expect(writer).toHaveLength(1)
+    expect(pipeline[0]).not.toBe(writer[0])
+  })
+
+  it('ai_capital_claim_writer is not substituted for ai_capital_agent', () => {
+    // The agent stays the SELECT-only specialist identity; 017 gives it no
+    // ledger privilege, and the claim writer is a different role entirely.
+    expect(byName.has('ai_capital_agent')).toBe(true)
+    expect(byName.get('ai_capital_agent')?.attributes).toContain('LOGIN')
+    expect(byName.get('ai_capital_agent')?.name).not.toBe('ai_capital_claim_writer')
+    expect(new Set(definitions.map(d => d.name)).size).toBe(definitions.length)
+  })
+})
+
+describe('ai_capital_test_runtime never reaches a production cluster', () => {
+  it('no file under ops/roles mentions it in an executed statement', () => {
+    // It is created and granted by packages/db/testing/preflight.ts against a
+    // two-name allowlist of disposable databases. Putting it in the cluster
+    // role definition would place a test identity on the real-money cluster.
+    for (const f of readdirSync(join(OPS, 'roles'))) {
+      const body = withoutStringLiterals(code(readFileSync(join(OPS, 'roles', f), 'utf-8')))
+      expect(body, `${f} names ai_capital_test_runtime`).not.toMatch(/ai_capital_test_runtime/)
+    }
+  })
+
+  it('it is absent from the parsed production role set', () => {
+    expect(definitions.map(d => d.name)).not.toContain('ai_capital_test_runtime')
+  })
+
+  it('ai_capital_dashboard is not added yet either', () => {
+    // Deferred to the Unified Platform connection slice; adding it here would
+    // create a production login with no resolved consumer.
+    expect(definitions.map(d => d.name)).not.toContain('ai_capital_dashboard')
+  })
+})
+
+describe('the pre-existing roles are unchanged', () => {
+  it('the NOLOGIN owner and authority roles keep their exact attributes', () => {
+    // NOLOGIN is load-bearing: FORCE ROW LEVEL SECURITY binds the table owner,
+    // so an owner with a credential would be a way around every policy.
+    for (const name of ['ai_capital_owner', 'ai_capital_identity_authority']) {
+      expect([...(byName.get(name) as RoleDefinition).attributes].sort()).toEqual([
+        'NOBYPASSRLS', 'NOCREATEDB', 'NOCREATEROLE', 'NOINHERIT',
+        'NOLOGIN', 'NOREPLICATION', 'NOSUPERUSER',
+      ])
+    }
+  })
+
+  it('the pre-existing runtime logins keep their exact attributes', () => {
+    for (const name of ['ai_capital_migrator', 'ai_capital_app',
+                        'ai_capital_importer', 'ai_capital_agent',
+                        'ai_capital_operator']) {
+      expect([...(byName.get(name) as RoleDefinition).attributes].sort(),
+             `${name} was altered`).toEqual([
+        'LOGIN', 'NOBYPASSRLS', 'NOCREATEDB', 'NOCREATEROLE', 'NOINHERIT', 'NOSUPERUSER',
+      ])
+    }
+  })
+
+  it('no role in the file is privileged', () => {
+    for (const definition of definitions) {
+      for (const privileged of PRIVILEGED_ATTRIBUTES) {
+        expect(definition.attributes, `${definition.name} carries ${privileged}`)
+          .not.toContain(privileged)
+      }
+      expect(definition.attributes, `${definition.name} inherits`).not.toContain('INHERIT')
+    }
+  })
+})
+
+describe('000 stays a clean-cluster-only, non-idempotent role definition', () => {
+  it('creates roles unconditionally — no IF NOT EXISTS, no DO block, no reconciliation', () => {
+    // It is the statement of what the roles MUST be, run once on a fresh
+    // cluster. Making it idempotent would turn it into a reconciliation tool
+    // and erase the record of that intent.
+    expect(rolesStatements).not.toMatch(/IF NOT EXISTS/i)
+    expect(rolesStatements).not.toMatch(/\bDO \$/i)
+    expect(rolesStatements).not.toMatch(/\bDROP ROLE\b/i)
+    expect(rolesStatements).not.toMatch(/\bALTER ROLE\b/i)
+  })
+
+  it('creates roles and nothing else', () => {
+    // No database objects, no grants, no extensions — grants belong to 010 and
+    // to migration 018, which run against a database this file does not know.
+    for (const statement of statements) {
+      expect(statement, `unexpected statement: ${statement.slice(0, 60)}`)
+        .toMatch(/^(CREATE ROLE|COMMENT ON ROLE)\b/)
+    }
+  })
+})
+
 describe('the ops files remain single-transaction safe', () => {
   it('neither file contains its own transaction control', () => {
     // Both are run with psql --single-transaction, which supplies exactly one.

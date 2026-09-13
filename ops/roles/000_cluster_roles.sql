@@ -51,6 +51,39 @@ CREATE ROLE ai_capital_importer
 CREATE ROLE ai_capital_agent
   LOGIN NOSUPERUSER NOCREATEDB NOCREATEROLE NOBYPASSRLS NOINHERIT;
 
+-- The scheduled pipeline's own identity: the daily DAG, every stage app it
+-- spawns, and the alert/price scripts. It reads and writes the six legacy
+-- schemas (briefing, capital, graph, portfolio, thesis, trade) and holds
+-- NOTHING in identity, desk or investment_ledger.
+--
+-- WHY IT EXISTS AT ALL. Until now the pipeline connected as a cluster
+-- SUPERUSER, which bypasses row-level security unconditionally — so every
+-- boundary 011-017 install would have been decorative on the one connection
+-- that runs every night. Swapping the endpoint without swapping the identity
+-- would have preserved exactly that.
+--
+-- WHY NOT ai_capital_agent. That role is the specialist agents' SELECT-only
+-- identity and migration 017 deliberately gives it no ledger privilege. A role
+-- that writes portfolio.positions every day is a different thing with a
+-- different blast radius, and conflating them would silently hand six
+-- read-only subagents the ability to mutate the book.
+CREATE ROLE ai_capital_pipeline
+  LOGIN NOSUPERUSER NOCREATEDB NOCREATEROLE NOBYPASSRLS NOINHERIT NOREPLICATION;
+
+-- The claim protocol's identity, and only that: packages/db/src/agent-claims.ts
+-- reaches desk.agent_claims and desk.agent_runs through its own
+-- CLAIM_WRITER_DATABASE_URL, deliberately separate from every other credential.
+--
+-- WHY IT IS NOT FOLDED INTO ai_capital_pipeline. The separation is the point.
+-- The claim tables are the desk's record of what an agent asserted and when;
+-- the pipeline has no business writing them, and a leaked pipeline credential
+-- must not be able to fabricate a claim. Its UPDATE is further constrained by
+-- desk.agent_claims_assertion_immutable, which refuses to let an assertion be
+-- rewritten in place — the grant permits a status transition, the trigger
+-- forbids revising history.
+CREATE ROLE ai_capital_claim_writer
+  LOGIN NOSUPERUSER NOCREATEDB NOCREATEROLE NOBYPASSRLS NOINHERIT NOREPLICATION;
+
 -- GLOBAL GRANT ADMINISTRATOR — read this before granting it to anyone.
 --
 -- This role can cancel or revoke a capability grant in ANY workspace. That is
