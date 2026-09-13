@@ -401,6 +401,129 @@ describe('schema public stays shut (defect B3)', () => {
   })
 })
 
+// ── ops/bootstrap/010: the CONNECT-only role list (slice S3A) ───────────────
+//
+// WHAT THESE ASSERT, AND WHAT THEY DO NOT. They are statements about the TEXT
+// of 010 — about the state a future run of it would produce on a fresh target,
+// or on one whose migration window has been deliberately reopened. 010 has
+// never been executed against any database. Nothing here claims anything about
+// the privileges any live database currently holds, and no test in this file
+// can: there is no connection anywhere in it.
+//
+// WHY CONNECT HAS TO LIVE HERE. `ai_capital_pipeline` and
+// `ai_capital_claim_writer` cannot reach the database without it, and migration
+// 018 cannot supply it: migrations execute under `SET LOCAL ROLE
+// ai_capital_owner`, and that role holds CONNECT without any right to re-grant
+// it and does not own the database, so a GRANT CONNECT from a migration is
+// refused (SQLSTATE 42501). 010 is the only place the grant can be made.
+
+/** The seven roles 010 grants CONNECT to, and no others. */
+const CONNECT_ONLY_ROLES = [
+  'ai_capital_agent',
+  'ai_capital_app',
+  'ai_capital_claim_writer',
+  'ai_capital_importer',
+  'ai_capital_migrator',
+  'ai_capital_operator',
+  'ai_capital_pipeline',
+] as const
+
+/** Executable statements of 010, comment- and message-text free. */
+const bootstrapStatementList = bootstrapStatements
+  .split(';')
+  .map(s => s.replace(/\s+/g, ' ').trim())
+  .filter(Boolean)
+
+describe('010 grants the two new roles CONNECT, and nothing else (S3A)', () => {
+  /** The single `GRANT CONNECT ON DATABASE` statement that is not the owner's. */
+  const connectStatements = bootstrapStatementList.filter(
+    s => /^GRANT CONNECT ON DATABASE/.test(s),
+  )
+
+  it('there is exactly one CONNECT-only grant statement', () => {
+    // NON-VACUITY: every assertion below reads this statement. If the parser
+    // found none, they would all pass while proving nothing.
+    expect(connectStatements).toHaveLength(1)
+    expect(connectStatements[0]).toContain(':"dbname"')
+  })
+
+  it('its grantee list is exactly the seven intended roles', () => {
+    const grantees = (connectStatements[0].split(' TO ')[1] ?? '')
+      .split(',').map(r => r.trim()).filter(Boolean).sort()
+    expect(grantees).toEqual([...CONNECT_ONLY_ROLES].sort())
+    // The owner is granted separately, with CREATE; it must not be folded in.
+    expect(grantees).not.toContain('ai_capital_owner')
+    // A test identity must never appear in a production bootstrap.
+    expect(grantees).not.toContain('ai_capital_test_runtime')
+  })
+
+  it('that statement grants CONNECT alone — no CREATE, no TEMP', () => {
+    const privileges = connectStatements[0]
+      .replace(/^GRANT /, '').split(' ON DATABASE')[0]
+      .split(',').map(p => p.trim().toUpperCase())
+    expect(privileges).toEqual(['CONNECT'])
+  })
+
+  it('the owner keeps its separate CREATE, CONNECT grant', () => {
+    expect(bootstrapCode).toMatch(
+      /GRANT CREATE, CONNECT ON DATABASE :"dbname" TO ai_capital_owner;/,
+    )
+  })
+
+  for (const role of ['ai_capital_pipeline', 'ai_capital_claim_writer'] as const) {
+    it(`${role} appears in exactly one executable statement in 010`, () => {
+      const mentioning = bootstrapStatementList.filter(s => s.includes(role))
+      expect(mentioning).toHaveLength(1)
+      expect(mentioning[0]).toBe(connectStatements[0])
+    })
+
+    it(`${role} receives no CREATE, TEMP, schema, table, sequence or function privilege`, () => {
+      for (const statement of bootstrapStatementList) {
+        if (!statement.includes(role)) continue
+        expect(statement, `${role} receives CREATE`).not.toMatch(/^GRANT[^;]*\bCREATE\b/)
+        expect(statement, `${role} receives TEMP`).not.toMatch(/\bTEMP(ORARY)?\b/i)
+        expect(statement, `${role} receives a schema privilege`).not.toMatch(/ON SCHEMA/)
+        expect(statement, `${role} receives a relation privilege`).not.toMatch(/ON (TABLE|SEQUENCE|FUNCTION|ALL)/)
+      }
+    })
+
+    it(`${role} receives no membership and is never altered in 010`, () => {
+      for (const statement of bootstrapStatementList) {
+        // `GRANT <role> TO <member>` — a membership, not an object privilege.
+        expect(statement, `${role} is granted as a membership`)
+          .not.toMatch(new RegExp(`^GRANT ${role}\\b`))
+        expect(statement, `${role} is made a member of something`)
+          .not.toMatch(new RegExp(`^GRANT ai_capital_\\w+ TO[^;]*\\b${role}\\b`))
+        expect(statement, `010 alters ${role}`)
+          .not.toMatch(new RegExp(`^ALTER ROLE ${role}\\b`))
+      }
+    })
+  }
+
+  it('no grant in 010 confers the right to re-grant', () => {
+    // Nothing in ops/ may hand a role the ability to pass a privilege onward;
+    // a role that could would be able to widen database access from inside a
+    // migration, which is precisely the authority the two-principal design
+    // withholds from ai_capital_owner.
+    for (const statement of bootstrapStatementList) {
+      expect(statement, 'a grant in 010 is re-grantable')
+        .not.toMatch(/WITH GRANT OPTION/i)
+    }
+  })
+
+  it('the migration-window memberships still name only the migrator', () => {
+    // Untouched by S3A, asserted so a careless edit to the grant block above
+    // cannot quietly extend SET ROLE authority to a runtime identity.
+    const memberships = bootstrapStatementList.filter(s => /^GRANT ai_capital_\w+ TO /.test(s))
+    expect(memberships).toHaveLength(2)
+    for (const m of memberships) {
+      expect(m).toContain('TO ai_capital_migrator')
+      expect(m).toContain('INHERIT FALSE')
+      expect(m).toContain('SET TRUE')
+    }
+  })
+})
+
 // ── ops/roles/000_cluster_roles.sql — the production role SET ────────────────
 //
 // WHY THIS IS PARSED AND NOT GREPPED. Every assertion below is about an

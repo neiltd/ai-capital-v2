@@ -158,9 +158,21 @@ REVOKE ALL ON SCHEMA public FROM PUBLIC;
 -- schema this design owns.
 GRANT USAGE ON SCHEMA public TO ai_capital_owner;
 
+-- CONNECT AND NOTHING ELSE. Every role here receives the right to open a
+-- connection and no privilege inside the database; what each may then do is
+-- granted per-object by the migrations, never here. `ai_capital_pipeline` and
+-- `ai_capital_claim_writer` are on this list for exactly that reason: without
+-- CONNECT they cannot reach the database at all, and a migration cannot supply
+-- it for them --- migrations run as `ai_capital_owner`, which holds CONNECT
+-- without the right to re-grant it and does not own the database, so a GRANT
+-- CONNECT issued from a migration is refused with SQLSTATE 42501. This file is
+-- the only place it can be said. Nothing in ops/ confers a re-grant right on
+-- any role, deliberately: a role able to pass CONNECT on could widen database
+-- access from inside a migration.
 GRANT CONNECT ON DATABASE :"dbname"
   TO ai_capital_migrator, ai_capital_app, ai_capital_importer,
-     ai_capital_agent, ai_capital_operator;
+     ai_capital_agent, ai_capital_operator,
+     ai_capital_pipeline, ai_capital_claim_writer;
 GRANT CREATE, CONNECT ON DATABASE :"dbname" TO ai_capital_owner;
 
 -- ── Migration-window authority ──────────────────────────────────────────────
