@@ -70,7 +70,7 @@ describeInPhase('post-lockdown', 'lockdown closed the window', () => {
 
   it('a further migration is REFUSED: the migrator cannot create anything', async () => {
     // The concrete consequence. `runMigrations()` is not called here because
-    // with all eighteen already recorded it would be a no-op and would prove
+    // with all nineteen already recorded it would be a no-op and would prove
     // nothing either way; what a NEW migration would actually hit is this.
     const result = await probeDetached(migrator, () =>
       migrator.query('CREATE TABLE db.probe_after_lockdown (id int)'))
@@ -106,7 +106,7 @@ describeInPhase('post-lockdown', 'lockdown closed the window', () => {
     // applied, and with what hashes" must be answerable at any time.
     const { rows } = await migrator.query<{ n: number }>(
       'SELECT count(*)::int AS n FROM db.schema_migrations')
-    expect(rows[0].n).toBe(18)
+    expect(rows[0].n).toBe(19)
     const readable = await migrator.query<{ ok: boolean }>(
       "SELECT has_table_privilege(session_user, 'db.schema_migrations', 'SELECT') AS ok")
     expect(readable.rows[0].ok, 'the migrator must still be able to read the ledger').toBe(true)
@@ -136,7 +136,7 @@ describeInPhase('post-lockdown', 'lockdown closed the window', () => {
     // NON-VACUITY: the row must not have landed by any path.
     const { rows } = await migrator.query<{ n: number }>(
       'SELECT count(*)::int AS n FROM db.schema_migrations')
-    expect(rows[0].n, 'the ledger row count changed').toBe(18)
+    expect(rows[0].n, 'the ledger row count changed').toBe(19)
   })
 
   it('the authority lost CREATE and KEPT USAGE on both schemas', async () => {

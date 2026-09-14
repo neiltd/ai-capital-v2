@@ -885,3 +885,82 @@ rather than of what the SQL *says*. Defect 1 in particular is a statement that
 is syntactically valid, semantically meaningful, applied without error, and
 completely ineffective. Slices that change grants need a rehearsal on a real
 cluster, with probes issued in the production statement shape.
+
+
+## S4A / S4B — the dashboard read role (2026-09-14)
+
+Everything above this line is left as written. The 2026-09-13 statements describe
+the S3B rehearsal accurately **for that date**: nine roles, seven LOGIN, eighteen
+migrations. They are history, not error, and rewriting them would destroy the
+record of how the design arrived here. What follows supersedes their *counts*,
+not their method.
+
+**Current topology: ten production roles — eight LOGIN, two NOLOGIN.** The tenth
+is `ai_capital_dashboard`, the operator dashboard's read identity. The NOLOGIN
+pair is unchanged: `ai_capital_owner` and `ai_capital_identity_authority`.
+
+**The CONNECT set is nine, and the distinction matters.** `010`'s named
+CONNECT-only statement lists the **eight LOGIN roles**; `ai_capital_owner` reaches
+the database through its own separate `GRANT CREATE, CONNECT`. So nine roles hold
+`CONNECT` while eight are named — two different questions, and an assertion that
+conflates them fails against a correctly provisioned cluster. That is not
+hypothetical: the Round-3 design carried exactly that error and Codex caught it.
+`ai_capital_identity_authority` holds no `CONNECT`. `PUBLIC` holds neither
+`CONNECT` nor `TEMPORARY`, which is what makes a named list an admission list.
+
+**Migration 019 and `CURRENT_V19`.** `019_dashboard_read_grants.sql` is a
+grants-only migration — it defines no object, so `017` remains the final *ledger*
+migration. The manifest is renamed completely: `CURRENT_V19_MANIFEST`,
+`ManifestRecognition = 'CURRENT_V19' | 'UNRECOGNIZED'`, `manifest_version = 'V19'`,
+nineteen entries. **No `CURRENT_V18` alias is retained** — a superseded manifest
+that kept answering for a database which had moved past it would let the label
+mean two things, which is precisely what strict recognition exists to prevent.
+The one surviving mention of `CURRENT_V18` in the source is the sentence that says
+the alias does not exist.
+
+**The dashboard's grant boundary is five tables.** `USAGE` on schema `trade`, and
+`SELECT` on `trade.countries`, `trade.chokepoints`, `trade.chokepoint_routes`,
+`trade.ticker_dependencies` and `trade.flows` — traced from the one route that
+reads PostgreSQL, not assumed. No writes, no `ON ALL TABLES`, no default
+privileges, no sequences, no functions, no memberships, no grant option, no
+`public` USAGE, no `TEMPORARY`, no `CREATE`.
+
+**The connection boundary.** `getDashboardPool()` reads `DASHBOARD_DATABASE_URL`
+and nothing else, requires an explicit PostgreSQL scheme, user, host (or socket)
+and database, and refuses an incomplete value *before* constructing a pool —
+because `createPool()` would otherwise complete it from `PGDATABASE`/`PGUSER`/
+`USER`, which is a fallback wearing a different name. A password is not required
+structurally; production authentication policy is a separate provisioning gate.
+Manual refresh keeps its market-closed `409` precedence and otherwise returns
+`503 REFRESH_UNAVAILABLE`, holding no credential and launching no subprocess,
+until S4F-refresh.
+
+**S4B, on a disposable socket-only PostgreSQL 17.10 cluster with SCRAM
+authentication.** Ten roles created; **19/19 migrations applied** with all
+nineteen ledger hashes matching the files on disk; manifest recognition
+**`CURRENT_V19`**; zero real server `WARNING` records and zero `SQLSTATE 01007`.
+Pre-lockdown tenancy **10 passed**, post-lockdown **445 passed**, both zero
+failures. The dashboard gate ran **48 probes, 48 as expected**: five positive
+reads plus the real `DISTINCT ON` flows query; writes, forbidden schemas, object
+creation and `SET ROLE` escalation all `42501`; the `vector` type `42704`, because
+without `public` USAGE the name cannot resolve before any privilege check. The
+role's readable set, computed database-wide, was **exactly those five relations**,
+and a newly created table in the granted schema was **not** readable — the runtime
+proof that neither `ON ALL TABLES` nor default privileges were used. A real
+`getDashboardPool()` probe connected as `ai_capital_dashboard` to the disposable
+database over the Unix socket while `PGDATABASE`, `PGHOST`, `PGPORT`, `PGUSER` and
+`USER` all pointed elsewhere, read all five tables, and closed cleanly; `getPool()`
+refused for want of `DATABASE_URL`. Zero residue.
+
+Evidence: operator-local evidence bundle (stored outside the repository),
+`s4b-dashboard-gate-20260914T141413Z`, manifest `SHA256SUMS.txt` =
+`02eea006e16f5bb0ece468ed1aa9d7f7ee4e73f3ce7dfce8ef8ea455e306bb6d`, 16/16 entries
+verified. The bundle is not tracked here: an absolute operator path in a tracked
+record is wrong on every other machine, and the manifest hash is what makes the
+bundle identifiable regardless of where it lives.
+
+**Production remains unprovisioned and un-cut-over.** Nothing here has been
+applied to a production cluster: no role exists there, no credential has been
+installed, no consumer has been repointed. The `pg_hba.conf` and SCRAM audit
+remains a hard stop before provisioning, and the claim-writer credential fallback
+(S4C) and `ai_capital_app` activation remain separate and blocked.

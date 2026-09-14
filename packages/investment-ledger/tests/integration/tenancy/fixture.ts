@@ -2,22 +2,25 @@
 //
 // INTEGRATION SUPPORT — USED ONLY BY THE ISOLATED POSTGRESQL TENANCY GATE.
 //
-// Every file in this directory needs a PostgreSQL cluster with all nine
+// Every file in this directory needs a PostgreSQL cluster with all ten
 // production roles from ops/roles/000_cluster_roles.sql and a disposable
-// database migrated 001-018. Creating roles and running migrations is a
+// database migrated 001-019. Creating roles and running migrations is a
 // separately authorized gate.
 //
-// ROLE TOPOLOGY. ops/roles/000_cluster_roles.sql defines ALL NINE production
-// roles, and a database migrated through 018 needs every one of them to exist:
-// migration 018 grants privileges to ai_capital_pipeline and
-// ai_capital_claim_writer, so a cluster missing either cannot complete the
-// chain. ai_capital_owner and ai_capital_identity_authority are NOLOGIN and are
-// never connection identities at all.
+// ROLE TOPOLOGY. ops/roles/000_cluster_roles.sql defines ALL TEN production
+// roles, and a database migrated through 019 needs every one of them to exist:
+// Migration 018 grants the legacy runtime privileges to ai_capital_pipeline and
+// ai_capital_claim_writer. Migration 019 separately grants ai_capital_dashboard
+// its limited `trade` read privileges. A cluster missing any of those three
+// roles cannot complete migrations 018-019. ai_capital_owner and
+// ai_capital_identity_authority are NOLOGIN and are never connection identities
+// at all.
 //
 // This suite directly authenticates SIX identities — migrator, operator,
 // importer, agent, app and a cluster administrator — and it does NOT
-// authenticate or exercise the pipeline or claim-writer credentials. Those are
-// reserved for the separately authorised runtime-role rehearsal.
+// authenticate or exercise the pipeline, claim-writer or dashboard credentials.
+// Those are reserved for the separately authorised runtime-role rehearsal and
+// the S4B dashboard gate.
 //
 // WHAT MAKES THESE TESTS DIFFERENT FROM THE EXISTING SUITE. The existing
 // integration tests connect as one privileged role and check business rules.
@@ -93,19 +96,20 @@ export const NOLOGIN_ROLES = [
 ] as const
 
 /**
- * The seven LOGIN roles.
+ * The eight LOGIN roles.
  *
  * Only five are authenticated by this suite (see ROLE_URL_ENV below);
  * ai_capital_pipeline and ai_capital_claim_writer are exercised by the
- * separately authorized runtime-role rehearsal. They still belong here: this
- * manifest describes which roles the CLUSTER has, not which ones this suite
- * connects as, and a database migrated through 018 cannot complete without
- * both of them existing.
+ * separately authorized runtime-role rehearsal, and ai_capital_dashboard by the
+ * S4B gate. They still belong here: this manifest describes which roles the
+ * CLUSTER has, not which ones this suite connects as, and a database migrated
+ * through 019 cannot complete without all of them existing.
  */
 export const LOGIN_ROLES = [
   'ai_capital_agent',
   'ai_capital_app',
   'ai_capital_claim_writer',
+  'ai_capital_dashboard',
   'ai_capital_importer',
   'ai_capital_migrator',
   'ai_capital_operator',
@@ -113,7 +117,7 @@ export const LOGIN_ROLES = [
 ] as const
 
 /**
- * All nine production roles, sorted — the order `pg_roles ... ORDER BY rolname`
+ * All ten production roles, sorted — the order `pg_roles ... ORDER BY rolname`
  * returns, so a query result can be compared to this directly.
  */
 export const ALL_PRODUCTION_ROLES: readonly string[] =

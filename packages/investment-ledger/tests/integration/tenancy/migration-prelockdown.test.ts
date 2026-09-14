@@ -8,7 +8,7 @@ import { describeInPhase } from './phase.js'
 // INTEGRATION TEST — RUN ONLY BY THE ISOLATED POSTGRESQL TENANCY GATE.
 //
 // Runs against a database where the roles and
-// ops/bootstrap/010_database_bootstrap.sql are done, migrations 001-018 have
+// ops/bootstrap/010_database_bootstrap.sql are done, migrations 001-019 have
 // been applied as `ai_capital_migrator` with
 // MIGRATION_OWNER_ROLE=ai_capital_owner, and
 // ops/bootstrap/090_post_migration_lockdown.sql has NOT yet run.
@@ -26,11 +26,11 @@ describeInPhase('pre-lockdown', 'the migration chain applied as the migrator', (
   beforeAll(async () => { migrator = await connectAs('migrator') })
   afterAll(async () => { await migrator?.end() })
 
-  it('all eighteen migrations are recorded, in order, with no gaps', async () => {
+  it('all nineteen migrations are recorded, in order, with no gaps', async () => {
     const { rows } = await migrator.query<{ filename: string }>(
       'SELECT filename FROM db.schema_migrations ORDER BY filename')
     expect(rows.map(r => r.filename.slice(0, 3)))
-      .toEqual(Array.from({ length: 18 }, (_, i) => String(i + 1).padStart(3, '0')))
+      .toEqual(Array.from({ length: 19 }, (_, i) => String(i + 1).padStart(3, '0')))
   })
 
   it('identity was applied before the ledger referenced it', async () => {

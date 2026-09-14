@@ -15,7 +15,7 @@ by a cluster administrator, in the order below.
 |---|---|---|---|
 | 1 | `roles/000_cluster_roles.sql` | cluster administrator | once per cluster |
 | 2 | `bootstrap/010_database_bootstrap.sql` | cluster administrator | once per database, and again to re-open a migration window |
-| 3 | *(migrations 001–018)* | `ai_capital_migrator` | every deployment |
+| 3 | *(migrations 001–019)* | `ai_capital_migrator` | every deployment |
 | 4 | `bootstrap/090_post_migration_lockdown.sql` | cluster administrator | immediately after step 3 |
 
 ### What step 2 must provide, and why each piece is load-bearing
@@ -110,10 +110,11 @@ nobody had executed:
   `GRANT ... ON DATABASE`.**
   A new database is not private. PostgreSQL seeds its ACL from
   `acldefault('d', ...)`, which grants `CONNECT` and `TEMPORARY` to `PUBLIC` —
-  every role in the cluster, present and future. Naming seven roles in a
-  `GRANT CONNECT` therefore restricts nothing by itself, and the 2026-09-13
-  rehearsal measured both privileges still held by `PUBLIC` after 010 *and*
-  after the 090 lockdown. `TEMPORARY` goes with it because it is a write
+  every role in the cluster, present and future. A named `CONNECT` list — even
+  today's eight LOGIN roles — restricts nothing unless `PUBLIC` is revoked
+  first. The 2026-09-13 rehearsal observed this when the list contained seven
+  roles: both privileges were still held by `PUBLIC` after 010 *and* after the
+  090 lockdown. `TEMPORARY` goes with it because it is a write
   privilege: it lets any connected role put temp tables on the database's
   default tablespace. The revoke is placed *before* the named grants so that
   from the first moment the database has a restricted ACL, the named list is
@@ -219,13 +220,14 @@ extension version and an invalid index are each *recorded* and none of them
 fails the run. Deciding what any of that means is a separate, later act.
 
 The one label the document carries is `binding.manifest_recognition`, either
-`CURRENT_V18` — all eighteen published migrations recorded under their exact
+`CURRENT_V19` — all nineteen published migrations recorded under their exact
 content hashes and nothing else — or `UNRECOGNIZED`, with the evidence for it
 (`missing`, `additional`, `hash_mismatched`) beside it. Recognition is strict:
 one missing migration, one extra, or one changed hash is `UNRECOGNIZED`, and
-there is no partial or subset match. There is deliberately no `V19` branch, so a
-database carrying a migration nobody has written lands in `UNRECOGNIZED` and
-gets a human.
+there is no partial or subset match. There is deliberately no `V20` branch and no
+retained `CURRENT_V18` alias, so a database carrying a migration nobody has
+written — or one that has moved past a superseded manifest — lands in
+`UNRECOGNIZED` and gets a human.
 
 ## Runtime roles: where each privilege comes from
 
@@ -239,11 +241,32 @@ different principals, and neither can do the other's job:
 | | Granted by | Run as | What it confers |
 |---|---|---|---|
 | `CONNECT` on the database, and `USAGE` on schema `public` | `bootstrap/010_database_bootstrap.sql` | cluster administrator | the right to open a connection; the right to resolve names in the extension schema |
-| schema, table and sequence privileges on **application** schemas | `migrations/018_legacy_runtime_grants.sql` | `ai_capital_owner`, via the migration runner | exactly the objects each role touches |
+| schema, table and sequence privileges on **application** schemas | `migrations/018_legacy_runtime_grants.sql` | `ai_capital_owner`, via the migration runner | exactly the objects each runtime role touches |
+| the dashboard's read privileges | `migrations/019_dashboard_read_grants.sql` | `ai_capital_owner`, via the migration runner | `USAGE` on `trade` and `SELECT` on five tables |
 
-The dividing line is **ownership**, not convenience. Migration 018 executes
-under `SET LOCAL ROLE ai_capital_owner`, so it can grant only what that role
-owns. The database and schema `public` are not among them, and the two failure
+### The role topology, stated once
+
+**Ten production roles: eight LOGIN and two NOLOGIN.** The NOLOGIN pair —
+`ai_capital_owner` and `ai_capital_identity_authority` — are object owners and
+grantors, never connection identities.
+
+The **named `CONNECT` list in `010` contains all eight LOGIN roles**:
+`ai_capital_agent`, `ai_capital_app`, `ai_capital_claim_writer`,
+`ai_capital_dashboard`, `ai_capital_importer`, `ai_capital_migrator`,
+`ai_capital_operator`, `ai_capital_pipeline`.
+
+**The actual set of roles holding `CONNECT` after bootstrap and lockdown is
+NINE, not eight** — those eight plus `ai_capital_owner`, which is granted
+separately and additionally holds `CREATE`. The two counts answer different
+questions, and conflating them produces an assertion that fails against a
+correctly provisioned database. `ai_capital_identity_authority` holds **no**
+`CONNECT`. `PUBLIC` holds **neither `CONNECT` nor `TEMPORARY`**, which is what
+makes the named list the effective admission list rather than a description of
+one.
+
+The dividing line is **ownership**, not convenience. Migrations 018 and 019
+execute under `SET LOCAL ROLE ai_capital_owner`, so they can grant only what that
+role owns. The database and schema `public` are not among them, and the two failure
 modes differ in a way that matters:
 
 - `GRANT ... ON DATABASE` is **refused** with `SQLSTATE 42501`. Loud.
@@ -283,6 +306,72 @@ default privileges, grants no role membership, and issues no `GRANT ALL` or
   accompanies it: PostgreSQL checks a trigger function's `EXECUTE` when the
   trigger is *created*, not when it fires, so the immutability trigger keeps
   working for every writer.
+
+### What migration 019 does
+
+It gives `ai_capital_dashboard` — the operator dashboard's read identity — exactly
+what `apps/unified-platform/src/app/api/trade-graph/route.ts` reads, and nothing
+else. Six statements:
+
+- `USAGE` on schema **`trade`**, and on no other schema;
+- `SELECT` on exactly **`trade.countries`**, **`trade.chokepoints`**,
+  **`trade.chokepoint_routes`**, **`trade.ticker_dependencies`** and
+  **`trade.flows`**.
+
+It grants **no** `INSERT`, `UPDATE`, `DELETE`, `TRUNCATE`, `REFERENCES` or
+`TRIGGER`; **no** `ON ALL TABLES` and **no** `ALTER DEFAULT PRIVILEGES`; **no**
+sequence `USAGE` and **no** function `EXECUTE`; **no** role membership; **no**
+`WITH GRANT OPTION`; **no** `USAGE` on `public`; **no** `TEMPORARY`; and **no**
+`CREATE` on any schema or on the database.
+
+`CONNECT` is not 019's to give — the database is not an owner-owned object — so it
+comes from `010`, in the eight-role list above.
+
+The absences are load-bearing, not stylistic. Withholding `public` is the cheapest
+proof the route resolves no type or operator there: as this role,
+`SELECT '[0.1,0.2]'::vector` fails with `SQLSTATE 42704`, because without schema
+`USAGE` the name cannot be resolved at all and the failure precedes any privilege
+check. Naming five tables rather than `ON ALL TABLES` is what keeps the grant from
+widening when a sixth table is added to `trade` — verified on a disposable cluster,
+where a newly created table in the granted schema was **not** readable.
+
+### The dashboard connection boundary
+
+`apps/unified-platform` is network-facing, so the constraint is not only which
+database it reaches but which credential it can hold at all.
+
+- The `trade-graph` route calls **`getDashboardPool()`**, never `getPool()`.
+- `getDashboardPool()` reads **`DASHBOARD_DATABASE_URL`** and nothing else. It has
+  **no fallback** — not `DATABASE_URL`, not `TEST_DATABASE_URL`, not `PGDATABASE`,
+  `PGHOST`, `PGUSER` or `USER`.
+- The value must be written `postgres://` or `postgresql://` and must state its
+  **user**, **host** (a TCP host, or an explicit `?host=` socket directory) and
+  **database** explicitly. An incomplete URL is refused *before* any pool or client
+  is constructed, because `createPool()` would otherwise complete it from the
+  ambient environment — which is a fallback by another name.
+- A **password is not required** for the URL to be structurally valid;
+  passwordless authentication and `.pgpass` remain operator choices, and the
+  production authentication policy (`pg_hba.conf`, SCRAM) is a **separate
+  provisioning gate**, not something this validation decides.
+
+Why a second accessor exists at all: this app runs Prisma with
+`provider = "sqlite"` and `url = env("DATABASE_URL")`, so inside the Next server
+process `DATABASE_URL` is a `file:` URL. One variable cannot hold two mutually
+exclusive values, and the route that used `getPool()` therefore behaved
+differently depending on how the server had been started.
+
+**Manual price refresh is disabled.** `POST /api/portfolio/refresh` still answers
+`409` first when the market is closed — that is a different fact from "refresh is
+not configured" and the precedence is part of the contract — and otherwise returns
+**`503` with `code: REFRESH_UNAVAILABLE`**. It holds no PostgreSQL credential and
+launches no subprocess. Delegated submission of the existing background refresh
+job is slice **S4F-refresh**; until then the daily pipeline stage and the
+scheduled intraday price job continue to refresh prices.
+
+**The ordinary tenancy suite does not authenticate `ai_capital_dashboard`.** It
+authenticates five named identities plus a cluster administrator; the dashboard,
+pipeline and claim-writer credentials are exercised by dedicated runtime gates —
+pipeline and claim-writer by the S3B rehearsal, dashboard by **S4B**.
 
 ### Manual mutation is deliberately excluded
 
@@ -513,7 +602,7 @@ opens, the order is:
    cluster.
 2. `ops/bootstrap/010_database_bootstrap.sql` — once per database.
 3. `MIGRATION_OWNER_ROLE=ai_capital_owner` + the migration runner, connecting as
-   `ai_capital_migrator`, applying migrations 001–018.
+   `ai_capital_migrator`, applying migrations 001–019.
 4. `TENANCY_PHASE=pre-lockdown pnpm --filter @common/investment-ledger test:tenancy`
 5. `ops/bootstrap/090_post_migration_lockdown.sql` — as a cluster administrator.
 6. `TENANCY_PHASE=post-lockdown pnpm --filter @common/investment-ledger test:tenancy`

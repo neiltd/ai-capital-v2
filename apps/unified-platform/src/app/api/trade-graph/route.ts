@@ -3,7 +3,7 @@ export const dynamic = 'force-dynamic'
 import { NextResponse, type NextRequest } from 'next/server'
 // Import from the pool subpath, not '@common/db' root — root pulls in the
 // LanceDB vector-store which webpack can't bundle (native .node binary).
-import { getPool } from '@common/db/pool'
+import { getDashboardPool } from '@common/db/pool'
 
 // Public response shape — duplicated client-side in the trade layer rather
 // than imported, to avoid cross-app type coupling. Keep in sync.
@@ -58,7 +58,7 @@ export interface TradeGraphResponse {
  */
 export async function GET(req: NextRequest) {
   try {
-    const pool = getPool()
+    const pool = getDashboardPool()
     const params = req.nextUrl.searchParams
     const portfolioOnly = params.get('portfolioOnly') !== 'false'
     const ticker = params.get('ticker')

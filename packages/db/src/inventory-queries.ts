@@ -839,7 +839,7 @@ export interface ManifestEntry {
 }
 
 /**
- * The eighteen migrations that constitute the current published schema.
+ * The nineteen migrations that constitute the current published schema.
  *
  * Recorded as filename AND content hash because either alone is defeatable: a
  * ledger row can name a migration whose file has since changed, and a hash
@@ -851,7 +851,7 @@ export interface ManifestEntry {
  * migration nobody has written would let a database that had somehow acquired
  * one be recognised as expected.
  */
-export const CURRENT_V18_MANIFEST: readonly ManifestEntry[] = Object.freeze([
+export const CURRENT_V19_MANIFEST: readonly ManifestEntry[] = Object.freeze([
   { filename: '001_portfolio.sql', sha256: '326fe2c3d266f62a6a3f1525ec95b0489906bd44aec7c5628e026d049626b13d' },
   { filename: '002_capital.sql', sha256: 'a41f43c8f3784dcc4c40b4de5d0da029c884517a8e9444bc41e1f8abeae46ec1' },
   { filename: '003_thesis.sql', sha256: 'e5dae3cc3c9952190a3fb8e8008a8f27997a3695dd2fd1413e32cce55087befa' },
@@ -870,6 +870,7 @@ export const CURRENT_V18_MANIFEST: readonly ManifestEntry[] = Object.freeze([
   { filename: '016_investment_ledger_enforcement.sql', sha256: 'daa8fc3dd05d03197ec31d57d832d10a930d1a50d42ef53208e1d838fd63ddac' },
   { filename: '017_ledger_views_rls_grants.sql', sha256: 'e069433155d74ae7553ea41a08c909f03ca87b8c0e882c745b40d54b36bdefa1' },
   { filename: '018_legacy_runtime_grants.sql', sha256: '67b63b0acdf418308fa54802b9896523a314b1546bbc1924553f90fd75ad034b' },
+  { filename: '019_dashboard_read_grants.sql', sha256: '011cbd4d14ae9b548d6c99e1a4a8df965be3aacc2b6d2e1df86688551103aeaa' },
 ])
 
 /** The database this collector is written for. Asserted from inside the session. */

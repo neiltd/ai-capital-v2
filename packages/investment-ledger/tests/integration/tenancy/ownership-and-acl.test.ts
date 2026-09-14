@@ -295,9 +295,10 @@ describeInPhase('post-lockdown', 'object ownership and final ACLs', () => {
     const { rows } = await migrator.query<{ rolname: string; bypass: boolean }>(
       `SELECT rolname, rolbypassrls AS bypass FROM pg_roles
         WHERE rolname LIKE 'ai_capital_%' ORDER BY rolname`)
-    // NINE, and specifically WHICH nine. A bare count would pass on a cluster
-    // that had the right number of wrong roles; it also stood at 7 until the
-    // 2026-09-13 rehearsal met a correctly provisioned cluster and failed.
+    // TEN, and specifically WHICH ten. A bare count would pass on a cluster that
+    // had the right number of wrong roles; it also stood at 7 until the
+    // 2026-09-13 rehearsal met a correctly provisioned cluster and failed, and
+    // at 9 until slice S4A added ai_capital_dashboard.
     expect(rows.map(r => r.rolname).sort()).toEqual([...ALL_PRODUCTION_ROLES].sort())
     for (const row of rows) expect(row.bypass, row.rolname).toBe(false)
   })
@@ -366,8 +367,9 @@ describeInPhase('post-lockdown', 'object ownership and final ACLs', () => {
       [fn.rows[0].oid])
     // NON-VACUITY, AS AN EXACT SET RATHER THAN A FLOOR. `>= 5` was two
     // weaknesses in one line: the count was stale — it predated
-    // ai_capital_pipeline and ai_capital_claim_writer, so the contract is seven
-    // LOGIN roles, not five — and a floor cannot detect a role that is MISSING
+    // ai_capital_pipeline and ai_capital_claim_writer, and later
+    // ai_capital_dashboard, so the contract is EIGHT LOGIN roles, not five — and
+    // a floor cannot detect a role that is MISSING
     // as long as enough others are present, which is exactly the condition
     // under which "nobody can execute this" is trivially true. The queried
     // names are therefore compared to the canonical manifest as a set. Both

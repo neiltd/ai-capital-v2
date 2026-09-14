@@ -29,9 +29,9 @@ describe('migration filenames', () => {
     expect(new Set(numbers).size, 'no duplicate migration number').toBe(numbers.length)
   })
 
-  it('cover 001-018 with no gaps', () => {
+  it('cover 001-019 with no gaps', () => {
     expect(files.map(f => Number(f.slice(0, 3))))
-      .toEqual(Array.from({ length: 18 }, (_, i) => i + 1))
+      .toEqual(Array.from({ length: 19 }, (_, i) => i + 1))
   })
 })
 

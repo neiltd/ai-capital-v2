@@ -94,20 +94,36 @@ const LEDGER = /^INSERT INTO db\.schema_migrations/
 /** A migration body: the runner passes whole files, which all begin with a comment. */
 const BODY = /^--/
 
+/**
+ * The migrations that actually exist on disk.
+ *
+ * Hoisted to module scope because three of the six per-migration assertions live
+ * in `it` blocks that never had the listing in scope. Read from the DIRECTORY,
+ * never from CURRENT_V19_MANIFEST — see the anchor assertion below.
+ */
+const MIGRATION_FILES = readdirSync(MIGRATIONS).filter(f => f.endsWith('.sql'))
+
 describe('with MIGRATION_OWNER_ROLE configured', () => {
   let issued: string[]
   beforeEach(async () => { issued = await runWith('ai_capital_owner') })
 
   it('actually ran the migrations (a silent no-op must not read as a pass)', () => {
-    const files = readdirSync(MIGRATIONS).filter(f => f.endsWith('.sql'))
-    expect(files.length).toBe(18)
-    expect(issued.filter(s => ROLE.test(s))).toHaveLength(18)
-    expect(issued.filter(s => BODY.test(s))).toHaveLength(18)
+    // ONE INDEPENDENT LITERAL, and only one. This number is NOT derived from
+    // CURRENT_V19_MANIFEST: this file proves the runner's behaviour against the
+    // migrations that exist ON DISK, and the manifest is a separate authority
+    // that must be able to disagree with the directory. Deriving it would
+    // rebuild the self-consistency hole where a test builds its fixture from the
+    // manifest, so a wrong manifest passes against itself.
+    expect(MIGRATION_FILES.length, 'the migrations directory changed size').toBe(19)
+    // The per-migration counts derive from the disk listing rather than
+    // repeating the number, so they cannot drift apart from it.
+    expect(issued.filter(s => ROLE.test(s))).toHaveLength(MIGRATION_FILES.length)
+    expect(issued.filter(s => BODY.test(s))).toHaveLength(MIGRATION_FILES.length)
   })
 
   it('sets a transaction-local search path', () => {
     const paths = issued.filter(s => PATH.test(s))
-    expect(paths).toHaveLength(18)
+    expect(paths).toHaveLength(MIGRATION_FILES.length)
     // SET LOCAL, not SET: it must revert at COMMIT *and* ROLLBACK, so nothing
     // leaks onto the next borrower of a pooled connection.
     for (const p of paths) expect(p).toMatch(/^SET LOCAL search_path = /)
@@ -191,8 +207,8 @@ describe('with MIGRATION_OWNER_ROLE unset', () => {
   })
 
   it('the migrations and the ledger INSERT still run', () => {
-    expect(issued.filter(s => BODY.test(s))).toHaveLength(18)
-    expect(issued.filter(s => LEDGER.test(s))).toHaveLength(18)
+    expect(issued.filter(s => BODY.test(s))).toHaveLength(MIGRATION_FILES.length)
+    expect(issued.filter(s => LEDGER.test(s))).toHaveLength(MIGRATION_FILES.length)
   })
 })
 

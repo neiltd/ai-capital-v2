@@ -31,22 +31,25 @@ export default defineConfig({
     include: ['tests/integration/**/*.test.ts'],
     // master-archive: the single file that reads the operator's real archive.
     // tenancy/**: the V3 suite, which needs six role-specific login URLs, all
-    // nine cluster roles present, and a database migrated through 001-018.
+    // ten cluster roles present, and a database migrated through 001-019.
     // (`TEST_DATABASE_URL` is optional there, not a prerequisite.) Both have
     // their own config and their own script, so this command's preconditions
     // stay exactly "a disposable database, and nothing private".
     //
-    // ROLE TOPOLOGY. ops/roles/000_cluster_roles.sql defines ALL NINE production
-    // roles, and a database migrated through 018 needs every one of them to exist:
-    // migration 018 grants privileges to ai_capital_pipeline and
-    // ai_capital_claim_writer, so a cluster missing either cannot complete the
-    // chain. ai_capital_owner and ai_capital_identity_authority are NOLOGIN and are
+    // ROLE TOPOLOGY. ops/roles/000_cluster_roles.sql defines ALL TEN production
+    // roles, and a database migrated through 019 needs every one of them to exist:
+    // Migration 018 grants the legacy runtime privileges to ai_capital_pipeline
+    // and ai_capital_claim_writer. Migration 019 separately grants
+    // ai_capital_dashboard its limited `trade` read privileges. A cluster missing
+    // any of those three roles cannot complete migrations 018-019.
+    // ai_capital_owner and ai_capital_identity_authority are NOLOGIN and are
     // never connection identities at all.
     //
     // This suite directly authenticates SIX identities — migrator, operator,
     // importer, agent, app and a cluster administrator — and it does NOT
-    // authenticate or exercise the pipeline or claim-writer credentials. Those are
-    // reserved for the separately authorised runtime-role rehearsal.
+    // authenticate or exercise the pipeline, claim-writer or dashboard credentials.
+    // Those are covered by separately authorised runtime gates: pipeline and
+    // claim-writer by the S3B rehearsal, dashboard by S4B.
     exclude: ['tests/integration/master-archive.test.ts', 'tests/integration/tenancy/**'],
     globals: true,
     environment: 'node',

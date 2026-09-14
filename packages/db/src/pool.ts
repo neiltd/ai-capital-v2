@@ -485,6 +485,186 @@ export async function closePool(): Promise<void> {
   }
 }
 
+// ─────────────────────────────────────────────────────────────────────────────
+// THE DASHBOARD READ POOL — slice S4A.
+//
+// WHY A SECOND POOL EXISTS AT ALL, WHICH IS NOT A STYLE CHOICE.
+// `apps/unified-platform` runs Prisma with `provider = "sqlite"` and
+// `url = env("DATABASE_URL")` (prisma/schema.prisma:11-12), so inside the Next
+// server process DATABASE_URL is a `file:` URL. Its one PostgreSQL route,
+// src/app/api/trade-graph/route.ts, used to call getPool() — which reads that
+// same DATABASE_URL and would hand `pg` a `file:` string. Which value actually
+// won depended on whether the server was started from a shell that had already
+// exported a Postgres URL, because process env outranks .env.local in Next. One
+// variable cannot hold two mutually exclusive values; the route gets its own.
+//
+// getPool() and closePool() are deliberately UNCHANGED. Twenty-odd callers
+// invoke closePool() in `.finally()` blocks, and widening its meaning would
+// change behaviour for every one of them. There is no closeAllPools(): no caller
+// needs one, and speculative API surface is not justified.
+// ─────────────────────────────────────────────────────────────────────────────
+
+let _dashboardPool: pg.Pool | null = null
+
+/** Schemes a dashboard credential may carry. Everything else is refused. */
+const DASHBOARD_URL_SCHEMES = ['postgres:', 'postgresql:']
+
+/** The `scheme://` forms those schemes must actually be written in. */
+const DASHBOARD_URL_SCHEME_RE = /^postgres(ql)?:\/\//i
+
+/**
+ * Resolve and validate DASHBOARD_DATABASE_URL — BEFORE any pool or client exists.
+ *
+ * Validation is a separate step, and it completes before construction, so an
+ * invalid credential produces zero pg.Pool objects and zero connection attempts
+ * rather than a pool that fails on first use.
+ *
+ * THERE IS NO FALLBACK. Not DATABASE_URL, not TEST_DATABASE_URL, not PGDATABASE,
+ * not PGHOST. A guarded fallback would still be a fallback, and the value it
+ * would fall back to in this process is a SQLite file path.
+ *
+ * Errors name the VARIABLE and the failure, never the value: an operator needs
+ * to know which credential is wrong, and a log needs not to contain it.
+ */
+function resolveDashboardUrl(): string {
+  const raw = process.env.DASHBOARD_DATABASE_URL
+
+  if (raw === undefined) {
+    throw new Error(
+      '@common/db: DASHBOARD_DATABASE_URL is not set. The dashboard read pool has ' +
+      'no fallback — it must never borrow DATABASE_URL, which in the Unified ' +
+      'Platform process is the Prisma SQLite URL.',
+    )
+  }
+  // Empty and whitespace-only, in one check. `VAR=` is the ordinary way an
+  // operator disables a credential in .env, and it must fail like `VAR` unset
+  // rather than sliding into some other path.
+  if (raw.trim() === '') {
+    throw new Error('@common/db: DASHBOARD_DATABASE_URL is empty or whitespace-only.')
+  }
+  // Surrounding whitespace is REJECTED, not trimmed. The WHATWG URL parser
+  // silently strips leading and trailing spaces, so validating a trimmed copy and
+  // then connecting with the untrimmed original would check one string and use
+  // another. Refusing is honest; trimming would be a silent rewrite of a
+  // credential.
+  if (raw !== raw.trim()) {
+    throw new Error(
+      '@common/db: DASHBOARD_DATABASE_URL has leading or trailing whitespace. ' +
+      'It is refused rather than trimmed, so the value validated is the value used.',
+    )
+  }
+
+  // Scheme allowlist, not a denylist. `file:` is the specific hazard this whole
+  // seam exists for, but `http:`, `redis:` and anything else are refused by the
+  // same rule rather than by enumeration.
+  //
+  // WHY A PREFIX TEST AND NOT `new URL()`. The WHATWG parser is wrong for this
+  // job in BOTH directions, measured rather than assumed:
+  //
+  //   * it THROWS on a valid Unix-socket URL, because the authority is empty —
+  //     `postgresql://dashboard@/db?host=%2Fvar%2Frun%2Fpostgresql` is a
+  //     perfectly good target that `new URL()` calls malformed;
+  //   * it ACCEPTS `postgres:foo` and `postgres:/db`, reporting protocol
+  //     "postgres:", when neither names a server at all.
+  //
+  // Requiring the `scheme://` form admits every real PostgreSQL URI (TCP and
+  // socket alike) and rejects the scheme-relative shapes outright, which leaves
+  // pg-connection-string as the single parser of record below.
+  if (!DASHBOARD_URL_SCHEME_RE.test(raw)) {
+    throw new Error(
+      '@common/db: DASHBOARD_DATABASE_URL must be a PostgreSQL URL beginning ' +
+      `${DASHBOARD_URL_SCHEMES.map(s => `${s}//`).join(' or ')}.`,
+    )
+  }
+
+  // ── EXPLICIT COMPONENTS, OR NOTHING ──────────────────────────────────────
+  //
+  // Scheme validation alone is NOT enough, and the gap is not theoretical.
+  // createPool() -> pinDestination() deliberately resolves a MISSING database
+  // through PGDATABASE, then the connection-string user, then PGUSER, then USER,
+  // because for the ordinary pool that is correct libpq behaviour. For this pool
+  // it is a fallback by another name: the "no fallback" guarantee above would be
+  // satisfied to the letter while the ambient environment silently supplied the
+  // destination.
+  //
+  // Measured, not assumed, with PGDATABASE=ambient_dashboard_db set:
+  //
+  //   postgres://host.example        -> user '', host 'host.example', database null
+  //   postgres://user@host.example   -> user 'user', host 'host.example', database null
+  //   postgres:foo                   -> user '', host '', database 'oo'
+  //
+  // The first two then inherit `ambient_dashboard_db`; the third connects to a
+  // database named by a typo. So the SUPPLIED VALUE must carry all three fields
+  // itself. pg-connection-string is used here purely as a reader — it consults
+  // no environment variable, which is exactly why it can answer "what did this
+  // string actually say?" — and its answer is discarded afterwards.
+  let fields: { user?: string | null; host?: string | null; database?: string | null }
+  try {
+    fields = parseConnectionString(raw)
+  } catch {
+    throw new Error('@common/db: DASHBOARD_DATABASE_URL could not be parsed as a connection string.')
+  }
+  // Missing components come back as '' (user, host) or null (database), so
+  // emptiness is the single test for all three.
+  const missing = (['user', 'host', 'database'] as const)
+    .filter(k => {
+      const v = fields[k]
+      return v === undefined || v === null || String(v).trim() === ''
+    })
+  if (missing.length > 0) {
+    throw new Error(
+      `@common/db: DASHBOARD_DATABASE_URL must state its ${missing.join(', ')} explicitly. ` +
+      'This pool never inherits connection fields from PGDATABASE, PGHOST, PGUSER or USER; ' +
+      'an incomplete URL would be completed from the ambient environment, which is a ' +
+      'fallback by another name. A Unix-socket target must supply the socket directory ' +
+      'as an explicit ?host= parameter. A password is NOT required — passwordless ' +
+      'authentication and .pgpass remain operator choices.',
+    )
+  }
+
+  // The ORIGINAL string, byte for byte. Not parsed.href, not a normalised form,
+  // and nothing reassembled from the fields above: URL round-tripping can alter
+  // percent-encoding, and a rewritten database name is exactly the class of
+  // mutation assertNotLiveDatabase() exists to catch.
+  return raw
+}
+
+/**
+ * The dashboard read pool. Its own singleton, independent of getPool()'s.
+ *
+ * Construction goes through createPool(), so the destination pin, the
+ * live-database refusal and the immutability guard all still apply — validation
+ * precedes those guards, it does not replace them.
+ */
+export function getDashboardPool(): pg.Pool {
+  if (_dashboardPool) return _dashboardPool
+
+  const url = resolveDashboardUrl()   // throws before anything is constructed
+  _dashboardPool = createPool(url)
+
+  _dashboardPool.on('error', err => {
+    console.error('[@common/db] unexpected dashboard pool error:', err.message)
+  })
+
+  return _dashboardPool
+}
+
+/**
+ * Close the dashboard pool, and only the dashboard pool.
+ *
+ * The singleton is cleared ONLY after end() resolves. Round 8 of the harness
+ * work established why: clearing first, or clearing in a `finally`, makes a
+ * rejected end() orphan a pool that is still open and no longer addressable, so
+ * cleanup cannot be retried and the leak is invisible. On rejection the
+ * singleton is deliberately retained and the error propagates.
+ */
+export async function closeDashboardPool(): Promise<void> {
+  if (_dashboardPool) {
+    await _dashboardPool.end()
+    _dashboardPool = null
+  }
+}
+
 /** True if DATABASE_URL is set — callers use this to pick Postgres vs SQLite. */
 export function usePostgres(): boolean {
   // Mirrors getPool's precedence so a store's backend choice can never disagree

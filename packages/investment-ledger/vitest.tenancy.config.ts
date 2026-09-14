@@ -6,25 +6,28 @@ import { sharedDbTestAliases } from '../db/testing/vitest-db-resolution.js'
 // THE V3 TENANCY SUITE — a separately named command, deliberately.
 //
 // NOT RUN IN THE SOURCE-ONLY PHASE. Every file under tests/integration/tenancy
-// needs a PostgreSQL cluster carrying all nine production roles from
-// ops/roles/000_cluster_roles.sql, a disposable database migrated 001-018, and
+// needs a PostgreSQL cluster carrying all ten production roles from
+// ops/roles/000_cluster_roles.sql, a disposable database migrated 001-019, and
 // SIX ROLE-SPECIFIC LOGIN URLs — the six `TENANCY_*_DATABASE_URL` values, one
 // per identity this suite opens a connection as. That is a materially larger
 // precondition than the ordinary integration suite's single database URL, which
 // is why it is its own config and its own script rather than more files under
 // the existing one.
 //
-// ROLE TOPOLOGY. ops/roles/000_cluster_roles.sql defines ALL NINE production
-// roles, and a database migrated through 018 needs every one of them to exist:
-// migration 018 grants privileges to ai_capital_pipeline and
-// ai_capital_claim_writer, so a cluster missing either cannot complete the
-// chain. ai_capital_owner and ai_capital_identity_authority are NOLOGIN and are
-// never connection identities at all.
+// ROLE TOPOLOGY. ops/roles/000_cluster_roles.sql defines ALL TEN production
+// roles, and a database migrated through 019 needs every one of them to exist:
+// Migration 018 grants the legacy runtime privileges to ai_capital_pipeline and
+// ai_capital_claim_writer. Migration 019 separately grants ai_capital_dashboard
+// its limited `trade` read privileges. A cluster missing any of those three
+// roles cannot complete migrations 018-019. ai_capital_owner and
+// ai_capital_identity_authority are NOLOGIN and are never connection identities
+// at all.
 //
 // This suite directly authenticates SIX identities — migrator, operator,
 // importer, agent, app and a cluster administrator — and it does NOT
-// authenticate or exercise the pipeline or claim-writer credentials. Those are
-// reserved for the separately authorised runtime-role rehearsal.
+// authenticate or exercise the pipeline, claim-writer or dashboard credentials.
+// Those are covered by separately authorised runtime gates: pipeline and
+// claim-writer by the S3B rehearsal, dashboard by S4B.
 //
 // WHY SEPARATE LOGINS RATHER THAN `SET ROLE`. The authorization functions
 // resolve the caller from `session_user`, which SET ROLE does not change. A

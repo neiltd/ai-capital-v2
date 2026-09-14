@@ -13,9 +13,9 @@
  * is wrong, that a drifted extension version is wrong, or that an invalid index
  * is wrong. Each of those is a FACT here and a DECISION somewhere else, later.
  *
- * The one label it does emit — `CURRENT_V18` or `UNRECOGNIZED` — names which
+ * The one label it does emit — `CURRENT_V19` or `UNRECOGNIZED` — names which
  * published manifest the recorded migration ledger matches. It is a
- * recognition, not a verdict: `UNRECOGNIZED` says "this is not the eighteen
+ * recognition, not a verdict: `UNRECOGNIZED` says "this is not the nineteen
  * migrations I know", and says nothing about whether that is acceptable. The
  * evidence behind it (what was missing, what was extra, what hashed
  * differently) is recorded alongside so a later slice can decide without
@@ -32,7 +32,7 @@ import type {
   ServerBindingRow,
   SessionIdentityRow,
 } from './inventory-queries.js'
-import { CURRENT_V18_MANIFEST } from './inventory-queries.js'
+import { CURRENT_V19_MANIFEST } from './inventory-queries.js'
 
 // ── Canonical serialization ─────────────────────────────────────────────────
 
@@ -125,7 +125,7 @@ export function sortRowsCanonically<T>(rows: readonly T[]): T[] {
 
 // ── Migration manifest recognition ──────────────────────────────────────────
 
-export type ManifestRecognition = 'CURRENT_V18' | 'UNRECOGNIZED'
+export type ManifestRecognition = 'CURRENT_V19' | 'UNRECOGNIZED'
 
 export interface ManifestFacts {
   recognition: ManifestRecognition
@@ -143,24 +143,26 @@ export interface ManifestFacts {
 /**
  * Recognise the recorded ledger against a published manifest.
  *
- * `CURRENT_V18` requires ALL EIGHTEEN filenames present, each with the exact
+ * `CURRENT_V19` requires ALL NINETEEN filenames present, each with the exact
  * recorded hash, and nothing else recorded. Every other shape is
  * `UNRECOGNIZED`: one changed hash, one missing row, one extra row, one row
  * naming a file this manifest has never heard of. There is no partial credit
  * and no "close enough" — the point of the label is that it is worthless unless
  * it means exactly one thing.
  *
- * `CURRENT_V18` is the CURRENT exact recognition, and the only one. There is no
- * `CURRENT_V19` branch: a migration nobody has written yet must not be
- * recognisable in advance, so a database carrying one lands in `UNRECOGNIZED`
- * and is looked at by a person. Additional, missing, duplicated and
+ * `CURRENT_V19` is the CURRENT exact recognition, and the only one. There is no
+ * `CURRENT_V20` branch, and no retained `CURRENT_V18` alias: a migration nobody
+ * has written yet must not be recognisable in advance, and a superseded manifest
+ * must not keep answering for a database that has moved past it. Either would let
+ * the label mean two things. A database carrying an unknown shape lands in
+ * `UNRECOGNIZED` and is looked at by a person. Additional, missing, duplicated and
  * hash-drifted rows all reach the same verdict — `UNRECOGNIZED` is not a
- * severity, it is the single answer to "this is not the eighteen migrations I
+ * severity, it is the single answer to "this is not the nineteen migrations I
  * know".
  */
 export function recognizeManifest(
   rows: readonly SchemaMigrationRow[],
-  manifest: readonly ManifestEntry[] = CURRENT_V18_MANIFEST,
+  manifest: readonly ManifestEntry[] = CURRENT_V19_MANIFEST,
 ): ManifestFacts {
   const recorded = sortRowsCanonically(
     rows.map(r => ({ filename: r.filename, sha256: r.sha256, applied_at: r.applied_at })),
@@ -193,7 +195,7 @@ export function recognizeManifest(
     recorded.length === manifest.length
 
   return {
-    recognition: exact ? 'CURRENT_V18' : 'UNRECOGNIZED',
+    recognition: exact ? 'CURRENT_V19' : 'UNRECOGNIZED',
     expected_count: manifest.length,
     recorded_count: recorded.length,
     recorded,
@@ -642,7 +644,7 @@ export function buildBindingFacts(
     server_port: input.server.server_port,
     cluster_name: input.server.cluster_name,
     manifest_recognition: manifest.recognition,
-    manifest_version: manifest.recognition === 'CURRENT_V18' ? 'V18' : null,
+    manifest_version: manifest.recognition === 'CURRENT_V19' ? 'V19' : null,
   }
 }
 

@@ -21,7 +21,7 @@ import { dirname, join, resolve } from 'node:path'
 import { fileURLToPath } from 'node:url'
 import { describe, it, expect } from 'vitest'
 
-import { CURRENT_V18_MANIFEST } from '../src/inventory-queries.js'
+import { CURRENT_V19_MANIFEST } from '../src/inventory-queries.js'
 
 const HERE = dirname(fileURLToPath(import.meta.url))
 const MIGRATION = resolve(HERE, '..', 'migrations', '018_legacy_runtime_grants.sql')
@@ -65,23 +65,23 @@ const byObject = (role: string, type: string) =>
 // ── The manifest is pinned to the files on disk ─────────────────────────────
 //
 // WHY THIS EXISTS. A mutation control caught the gap: every other test builds
-// its ledger fixture FROM `CURRENT_V18_MANIFEST`, so a manifest whose hash does
+// its ledger fixture FROM `CURRENT_V19_MANIFEST`, so a manifest whose hash does
 // not match the migration it names is perfectly self-consistent and no
-// assertion notices. The collector would then report `CURRENT_V18` for a
+// assertion notices. The collector would then report `CURRENT_V19` for a
 // database built from different bytes, or `UNRECOGNIZED` for one built from the
 // right ones. The manifest has to be checked against the filesystem, once.
 
-describe('CURRENT_V18_MANIFEST matches the migrations on disk', () => {
+describe('CURRENT_V19_MANIFEST matches the migrations on disk', () => {
   const DIR = resolve(HERE, '..', 'migrations')
   const onDisk = readdirSync(DIR).filter(f => f.endsWith('.sql')).sort()
 
   it('names exactly the migration files that exist, in order', () => {
-    expect(CURRENT_V18_MANIFEST.map(m => m.filename)).toEqual(onDisk)
-    expect(CURRENT_V18_MANIFEST).toHaveLength(18)
+    expect(CURRENT_V19_MANIFEST.map(m => m.filename)).toEqual(onDisk)
+    expect(CURRENT_V19_MANIFEST).toHaveLength(19)
   })
 
   it('records the exact SHA-256 of every one of them', () => {
-    for (const entry of CURRENT_V18_MANIFEST) {
+    for (const entry of CURRENT_V19_MANIFEST) {
       const actual = createHash('sha256')
         .update(readFileSync(join(DIR, entry.filename)))
         .digest('hex')
@@ -90,9 +90,20 @@ describe('CURRENT_V18_MANIFEST matches the migrations on disk', () => {
   })
 
   it("018's own entry is present and correct", () => {
-    const entry = CURRENT_V18_MANIFEST.find(m => m.filename === '018_legacy_runtime_grants.sql')
+    const entry = CURRENT_V19_MANIFEST.find(m => m.filename === '018_legacy_runtime_grants.sql')
     expect(entry, 'migration 018 is absent from the manifest').toBeDefined()
     const actual = createHash('sha256').update(readFileSync(MIGRATION)).digest('hex')
+    expect((entry as { sha256: string }).sha256).toBe(actual)
+  })
+
+  it("019's own entry is present and correct", () => {
+    // The same pinning for the newest migration. Added with 019 rather than
+    // later: an entry that is never asserted individually is the one that drifts,
+    // and 018's own entry exists for exactly that reason.
+    const file  = '019_dashboard_read_grants.sql'
+    const entry = CURRENT_V19_MANIFEST.find(m => m.filename === file)
+    expect(entry, `migration 019 is absent from the manifest`).toBeDefined()
+    const actual = createHash('sha256').update(readFileSync(join(DIR, file))).digest('hex')
     expect((entry as { sha256: string }).sha256).toBe(actual)
   })
 })

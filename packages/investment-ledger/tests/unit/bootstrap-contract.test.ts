@@ -472,11 +472,12 @@ describe('schema public stays shut (defect B3)', () => {
 // it and does not own the database, so a GRANT CONNECT from a migration is
 // refused (SQLSTATE 42501). 010 is the only place the grant can be made.
 
-/** The seven roles 010 grants CONNECT to, and no others. */
+/** The eight LOGIN roles 010 grants CONNECT to, and no others. */
 const CONNECT_ONLY_ROLES = [
   'ai_capital_agent',
   'ai_capital_app',
   'ai_capital_claim_writer',
+  'ai_capital_dashboard',
   'ai_capital_importer',
   'ai_capital_migrator',
   'ai_capital_operator',
@@ -508,7 +509,7 @@ describe('010 grants the two new roles CONNECT, and nothing else (S3A)', () => {
     expect(connectStatements[0]).toContain(':"dbname"')
   })
 
-  it('its grantee list is exactly the seven intended roles', () => {
+  it('its grantee list is exactly the eight intended LOGIN roles', () => {
     const grantees = (connectStatements[0].split(' TO ')[1] ?? '')
       .split(',').map(r => r.trim()).filter(Boolean).sort()
     expect(grantees).toEqual([...CONNECT_ONLY_ROLES].sort())
@@ -584,7 +585,7 @@ describe('010 grants the two new roles CONNECT, and nothing else (S3A)', () => {
   it('010 REVOKES the built-in PUBLIC database privileges', () => {
     // A NEW DATABASE IS NOT PRIVATE. PostgreSQL seeds every database's ACL from
     // acldefault('d', ...), which grants CONNECT and TEMPORARY to PUBLIC — that
-    // is, to every role in the cluster, present and future. Naming seven roles
+    // is, to every role in the cluster, present and future. Naming eight roles
     // in a GRANT CONNECT therefore restricts nothing on its own; the 2026-09-13
     // isolated rehearsal measured both privileges still held by PUBLIC after
     // 010 AND after the 090 lockdown had run.
@@ -631,10 +632,14 @@ describe('010 grants the two new roles CONNECT, and nothing else (S3A)', () => {
     }
   })
 
-  it('after the revoke, exactly eight roles can reach the database, by name', () => {
-    // The full database-access allowlist: seven CONNECT-only runtime and
-    // operations roles plus the owner, which is granted separately with CREATE.
-    // PUBLIC is not a member of this list — that is what the revoke buys.
+  it('after the revoke, exactly nine roles can reach the database, by name', () => {
+    // NINE, NOT EIGHT, and the difference is the point. The named CONNECT-only
+    // statement lists EIGHT LOGIN roles; ai_capital_owner reaches the database
+    // through its own separate GRANT CREATE, CONNECT. Asserting eight would
+    // conflate "the named admission list" with "who can actually connect" and
+    // would fail against a correctly provisioned cluster. The tenth production
+    // role, ai_capital_identity_authority, is NOLOGIN and deliberately absent.
+    // PUBLIC is not a member either — that is what the revoke buys.
     const grantees = new Set<string>()
     for (const statement of bootstrapStatementList) {
       if (!/^GRANT[^;]*ON DATABASE/.test(statement)) continue
@@ -718,7 +723,7 @@ const PRIVILEGED_ATTRIBUTES = ['SUPERUSER', 'CREATEDB', 'CREATEROLE', 'BYPASSRLS
 
 describe('the tenancy role manifest matches ops/roles/000_cluster_roles.sql', () => {
   // WHY THIS TEST EXISTS. tests/integration/tenancy/fixture.ts exports the
-  // canonical nine-role manifest that the tenancy assertions read instead of
+  // canonical ten-role manifest that the tenancy assertions read instead of
   // restating a literal. That manifest is a MIRROR of 000, and a mirror that is
   // never compared to its subject is just a second literal that can drift — the
   // exact failure mode the manifest was introduced to end, when three tenancy
@@ -731,11 +736,11 @@ describe('the tenancy role manifest matches ops/roles/000_cluster_roles.sql', ()
 
   it('the manifest names exactly the roles 000 creates', () => {
     expect([...ALL_PRODUCTION_ROLES].sort()).toEqual(definitions.map(d => d.name).sort())
-    expect(ALL_PRODUCTION_ROLES, 'the manifest is not nine roles').toHaveLength(9)
+    expect(ALL_PRODUCTION_ROLES, 'the manifest is not ten roles').toHaveLength(10)
   })
 
   it('the LOGIN/NOLOGIN split matches the attributes 000 declares', () => {
-    expect(LOGIN_ROLES, 'seven roles log in').toHaveLength(7)
+    expect(LOGIN_ROLES, 'eight roles log in').toHaveLength(8)
     expect(NOLOGIN_ROLES, 'two roles do not').toHaveLength(2)
     for (const name of LOGIN_ROLES) {
       const d = byName.get(name)
@@ -752,7 +757,7 @@ describe('the tenancy role manifest matches ops/roles/000_cluster_roles.sql', ()
   it('the two halves are disjoint and together are the whole', () => {
     const overlap = LOGIN_ROLES.filter(r => (NOLOGIN_ROLES as readonly string[]).includes(r))
     expect(overlap, 'a role is listed as both LOGIN and NOLOGIN').toEqual([])
-    expect(new Set(ALL_PRODUCTION_ROLES).size, 'the manifest repeats a name').toBe(9)
+    expect(new Set(ALL_PRODUCTION_ROLES).size, 'the manifest repeats a name').toBe(10)
   })
 })
 
@@ -761,7 +766,7 @@ describe('the production role set is parsed, not pattern-matched', () => {
     // NON-VACUITY. Every assertion below quantifies over `definitions`; if the
     // parser silently produced an empty list, all of them would pass while
     // proving nothing at all.
-    expect(definitions.length).toBeGreaterThanOrEqual(9)
+    expect(definitions.length).toBeGreaterThanOrEqual(10)
     expect(definitions.every(d => d.attributes.length > 0)).toBe(true)
   })
 
@@ -781,6 +786,7 @@ describe('ai_capital_pipeline and ai_capital_claim_writer (slice S2)', () => {
       'ai_capital_agent',
       'ai_capital_app',
       'ai_capital_claim_writer',
+      'ai_capital_dashboard',
       'ai_capital_identity_authority',
       'ai_capital_importer',
       'ai_capital_migrator',
@@ -870,10 +876,18 @@ describe('ai_capital_test_runtime never reaches a production cluster', () => {
     expect(definitions.map(d => d.name)).not.toContain('ai_capital_test_runtime')
   })
 
-  it('ai_capital_dashboard is not added yet either', () => {
-    // Deferred to the Unified Platform connection slice; adding it here would
-    // create a production login with no resolved consumer.
-    expect(definitions.map(d => d.name)).not.toContain('ai_capital_dashboard')
+  it('ai_capital_dashboard IS defined — the consumer it was waiting for arrived', () => {
+    // This used to be `.not.toContain(...)`. The role was deferred because adding
+    // it would have created a production login with no resolved consumer; slice
+    // S4A resolved it. apps/unified-platform's trade-graph route now connects on
+    // DASHBOARD_DATABASE_URL, and migration 019 gives the role SELECT on the five
+    // `trade` tables that route reads.
+    //
+    // Inverted rather than deleted: the deferral was a real decision, and a test
+    // recording why it ended is worth more than a silent removal.
+    expect(definitions.map(d => d.name)).toContain('ai_capital_dashboard')
+    // Still a production LOGIN role, and still never a test identity.
+    expect(definitions.map(d => d.name)).not.toContain('ai_capital_test_runtime')
   })
 })
 

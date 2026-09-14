@@ -105,3 +105,41 @@ CREATE ROLE ai_capital_operator
 COMMENT ON ROLE ai_capital_operator IS
   'Global grant administrator. Terminates capability grants in any workspace. '
   'Holds no table privileges and no role memberships.';
+
+
+-- THE OPERATOR DASHBOARD'S READ IDENTITY — slice S4A.
+--
+-- `apps/unified-platform` serves one PostgreSQL route,
+-- `src/app/api/trade-graph/route.ts`, which issues six SELECTs against five
+-- tables in schema `trade` and nothing else. Until now that route called
+-- getPool() and therefore connected on DATABASE_URL — which in the Next process
+-- is Prisma's SQLite `file:` URL, so the route's behaviour depended on how the
+-- server happened to be launched. This role gives it a credential of its own.
+--
+-- WHY IT IS NOT ai_capital_agent. Both are read-only, which makes them look
+-- interchangeable, and they are not. `ai_capital_agent` is handed to specialist
+-- subagents that compose arbitrary SQL; the dashboard executes six fixed
+-- statements. Sharing one role would mean a leaked dashboard credential reads
+-- everything the agents can, and every future widening of the agents' surface
+-- silently widens a network-facing route's.
+--
+-- WHY IT IS NOT ai_capital_app, and never becomes it. `ai_capital_app` is the
+-- future friend-facing multi-tenant identity whose whole premise is per-workspace
+-- RLS bound to an authenticated session. This role is a single-operator,
+-- trusted-device surface. The separation is structural, not policy: 019 gives
+-- this role nothing in `identity` or `investment_ledger`, so it cannot read the
+-- tenancy substrate at all. ai_capital_app remains unprovisioned and blocked.
+--
+-- WHAT IT DELIBERATELY DOES NOT GET. No TEMPORARY, no CREATE anywhere, no USAGE
+-- on `public` — it runs no pgvector query, and withholding `public` is the
+-- cheapest proof it cannot. No write of any kind, no sequence, no function
+-- EXECUTE, no membership, no grant option. Its object privileges are granted by
+-- packages/db/migrations/019_dashboard_read_grants.sql; its CONNECT comes from
+-- ops/bootstrap/010_database_bootstrap.sql, because the database is not an
+-- owner-owned object and a migration cannot grant on it.
+CREATE ROLE ai_capital_dashboard
+  LOGIN NOSUPERUSER NOCREATEDB NOCREATEROLE NOBYPASSRLS NOINHERIT NOREPLICATION;
+
+COMMENT ON ROLE ai_capital_dashboard IS
+  'Operator dashboard read identity. SELECT on five trade tables and nothing '
+  'else. Never the friend-facing ai_capital_app role.';

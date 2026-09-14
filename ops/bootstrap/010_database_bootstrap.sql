@@ -222,7 +222,8 @@ REVOKE CONNECT, TEMPORARY ON DATABASE :"dbname" FROM PUBLIC;
 GRANT CONNECT ON DATABASE :"dbname"
   TO ai_capital_migrator, ai_capital_app, ai_capital_importer,
      ai_capital_agent, ai_capital_operator,
-     ai_capital_pipeline, ai_capital_claim_writer;
+     ai_capital_pipeline, ai_capital_claim_writer,
+     ai_capital_dashboard;
 GRANT CREATE, CONNECT ON DATABASE :"dbname" TO ai_capital_owner;
 
 -- ── Migration-window authority ──────────────────────────────────────────────
