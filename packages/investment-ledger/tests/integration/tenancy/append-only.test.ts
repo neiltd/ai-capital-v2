@@ -4,6 +4,7 @@ import {
   connectAs, ensurePrincipals, seedWorkspace, grantCapability, beginAuthorized,
   commit, rollback, probe, INSUFFICIENT_PRIVILEGE, RAISE_EXCEPTION,
   type Principals, type Workspace,
+  LOGIN_ROLES,
 } from './fixture.js'
 import { describeInPhase } from './phase.js'
 
@@ -165,13 +166,13 @@ describeInPhase('post-lockdown', 'append-only enforcement', () => {
       `SELECT rolname FROM pg_roles
         WHERE rolcanlogin AND NOT rolsuper AND rolname LIKE 'ai_capital_%'
         ORDER BY 1`)
-    expect(roles.map(r => r.rolname)).toEqual([
-      'ai_capital_agent',
-      'ai_capital_app',
-      'ai_capital_importer',
-      'ai_capital_migrator',
-      'ai_capital_operator',
-    ])
+    // Read from the canonical manifest rather than restating the list. The
+    // hard-coded five names that stood here predated ai_capital_pipeline and
+    // ai_capital_claim_writer, so a correctly provisioned cluster failed this
+    // assertion — the 2026-09-13 rehearsal is what surfaced it. Sorting both
+    // sides in JS rather than trusting ORDER BY keeps the comparison
+    // independent of the database's collation.
+    expect(roles.map(r => r.rolname).sort()).toEqual([...LOGIN_ROLES].sort())
 
     // And the owner is NOT among them, which is the whole point of the change.
     const { rows: owner } = await admin.query<{ rolcanlogin: boolean }>(

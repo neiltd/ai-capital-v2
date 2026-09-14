@@ -1,6 +1,6 @@
 import { it, expect, beforeAll, afterAll } from 'vitest'
 import type { Client } from 'pg'
-import { connectAs } from './fixture.js'
+import { connectAs, ALL_PRODUCTION_ROLES, LOGIN_ROLES } from './fixture.js'
 import { describeInPhase } from './phase.js'
 
 // FINAL OBJECT OWNERSHIP AND POST-LOCKDOWN ACLs.
@@ -295,7 +295,10 @@ describeInPhase('post-lockdown', 'object ownership and final ACLs', () => {
     const { rows } = await migrator.query<{ rolname: string; bypass: boolean }>(
       `SELECT rolname, rolbypassrls AS bypass FROM pg_roles
         WHERE rolname LIKE 'ai_capital_%' ORDER BY rolname`)
-    expect(rows.length).toBe(7)
+    // NINE, and specifically WHICH nine. A bare count would pass on a cluster
+    // that had the right number of wrong roles; it also stood at 7 until the
+    // 2026-09-13 rehearsal met a correctly provisioned cluster and failed.
+    expect(rows.map(r => r.rolname).sort()).toEqual([...ALL_PRODUCTION_ROLES].sort())
     for (const row of rows) expect(row.bypass, row.rolname).toBe(false)
   })
 
@@ -361,9 +364,17 @@ describeInPhase('post-lockdown', 'object ownership and final ACLs', () => {
         WHERE r.rolname LIKE 'ai_capital_%' AND r.rolcanlogin
         ORDER BY 1`,
       [fn.rows[0].oid])
-    // NON-VACUITY: the five LOGIN roles must actually have been examined.
-    expect(roles.rows.length, 'no ai_capital LOGIN roles were examined')
-      .toBeGreaterThanOrEqual(5)
+    // NON-VACUITY, AS AN EXACT SET RATHER THAN A FLOOR. `>= 5` was two
+    // weaknesses in one line: the count was stale — it predated
+    // ai_capital_pipeline and ai_capital_claim_writer, so the contract is seven
+    // LOGIN roles, not five — and a floor cannot detect a role that is MISSING
+    // as long as enough others are present, which is exactly the condition
+    // under which "nobody can execute this" is trivially true. The queried
+    // names are therefore compared to the canonical manifest as a set. Both
+    // sides are sorted in JavaScript so the comparison does not depend on the
+    // database's collation.
+    expect(roles.rows.map(r => r.rolname).sort(), 'the examined LOGIN role set is not the contract')
+      .toEqual([...LOGIN_ROLES].sort())
     expect(roles.rows.filter(r => r.ok).map(r => r.rolname)).toEqual([])
   })
 
@@ -391,19 +402,33 @@ describeInPhase('post-lockdown', 'object ownership and final ACLs', () => {
     expect(rows[0].n).toBe(17)
   })
 
-  it('only ai_capital_owner holds anything on schema public (defect B3)', async () => {
-    // The bootstrap grants the owner USAGE so migration 006's `vector` type and
-    // 011's btree_gist opclasses resolve. Nothing else needs it: the only
-    // reference from the tenancy schemas into `public` is 011's
-    // `EXCLUDE USING gist`, performed at DDL time by the owner.
+  it('exactly ai_capital_owner and ai_capital_pipeline hold USAGE on schema public, and nobody holds CREATE (defect B3)', async () => {
+    // TWO roles hold USAGE on public, for two different reasons, and both
+    // grants come from ops/bootstrap/010_database_bootstrap.sql.
+    //
+    // ai_capital_owner needs it at DDL TIME: migration 006's `vector` type and
+    // `vector_cosine_ops`, and 011's `EXCLUDE USING gist` opclass lookup, all
+    // resolve names in public while the owner is running the migration.
+    //
+    // ai_capital_pipeline needs it at DML TIME: packages/db/src/vector-store/pg.ts
+    // casts `$N::vector` and orders by `<=>`, both of which live in public.
+    //
+    // Neither can come from a migration. Migrations run as ai_capital_owner,
+    // public is owned by pg_database_owner, and the owner's USAGE carries no
+    // grant option — so such a GRANT is discarded with SQLSTATE 01007 and no
+    // error. Migration 018 did exactly that until the 2026-09-13 rehearsal
+    // measured the consequence: 42704, `type "vector" does not exist`.
+    //
+    // Every other role must still hold nothing, and NO role may hold CREATE.
     const { rows } = await migrator.query<{ rolname: string; usage: boolean; create: boolean }>(
       `SELECT r.rolname,
               has_schema_privilege(r.rolname, 'public', 'USAGE')  AS usage,
               has_schema_privilege(r.rolname, 'public', 'CREATE') AS create
          FROM pg_roles r WHERE r.rolname LIKE 'ai_capital_%' ORDER BY 1`)
-    expect(rows).toHaveLength(7)
+    expect(rows.map(r => r.rolname).sort()).toEqual([...ALL_PRODUCTION_ROLES].sort())
+    const PUBLIC_USAGE_ROLES = ['ai_capital_owner', 'ai_capital_pipeline']
     for (const row of rows) {
-      const expectUsage = row.rolname === 'ai_capital_owner'
+      const expectUsage = PUBLIC_USAGE_ROLES.includes(row.rolname)
       expect(row.usage, `${row.rolname} USAGE on public`).toBe(expectUsage)
       expect(row.create, `${row.rolname} must never hold CREATE on public`).toBe(false)
     }
@@ -591,13 +616,11 @@ describeInPhase('post-lockdown', 'object ownership and final ACLs', () => {
       `SELECT rolname FROM pg_roles
         WHERE rolcanlogin AND NOT rolsuper AND rolname LIKE 'ai_capital_%'
         ORDER BY 1`)
-    expect(roles.map(r => r.rolname)).toEqual([
-      'ai_capital_agent',
-      'ai_capital_app',
-      'ai_capital_importer',
-      'ai_capital_migrator',
-      'ai_capital_operator',
-    ])
+    // From the canonical manifest, not a literal: the five names that stood
+    // here predated ai_capital_pipeline and ai_capital_claim_writer. Both sides
+    // are sorted in JS so the comparison does not depend on the database's
+    // collation.
+    expect(roles.map(r => r.rolname).sort()).toEqual([...LOGIN_ROLES].sort())
 
     // The owner is deliberately NOT in that list, and must stay unauthenticable
     // — that, not an ACL entry, is what makes withholding these views real.

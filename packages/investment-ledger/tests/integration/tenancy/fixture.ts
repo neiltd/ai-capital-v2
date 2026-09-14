@@ -67,6 +67,58 @@ import { isDisposableTestDatabase } from '../support.js'
  * different mechanism from the one production uses and would pass while
  * production failed.
  */
+// ─────────────────────────────────────────────────────────────────────────────
+// THE CANONICAL PRODUCTION ROLE MANIFEST
+//
+// ONE definition of the production role set, exported so that every assertion
+// about "which roles exist" reads from here instead of restating a list.
+//
+// This exists because the 2026-09-13 isolated rehearsal found two tenancy tests
+// hard-coding a five-name list that predated ai_capital_pipeline and
+// ai_capital_claim_writer. Both asserted exact equality against
+// `pg_roles LIKE 'ai_capital_%'`, so a correctly provisioned nine-role cluster
+// failed them — the tests were stale, not the cluster. A duplicated literal
+// cannot be updated in one place; a shared manifest can.
+//
+// THE SOURCE OF TRUTH IS ops/roles/000_cluster_roles.sql. This constant mirrors
+// it, and packages/investment-ledger/tests/unit/bootstrap-contract.test.ts
+// parses that file and pins its contents independently, so a drift between the
+// two is caught without a database.
+// ─────────────────────────────────────────────────────────────────────────────
+
+/** The two NOLOGIN roles. Object owners and grantors, never login identities. */
+export const NOLOGIN_ROLES = [
+  'ai_capital_identity_authority',
+  'ai_capital_owner',
+] as const
+
+/**
+ * The seven LOGIN roles.
+ *
+ * Only five are authenticated by this suite (see ROLE_URL_ENV below);
+ * ai_capital_pipeline and ai_capital_claim_writer are exercised by the
+ * separately authorized runtime-role rehearsal. They still belong here: this
+ * manifest describes which roles the CLUSTER has, not which ones this suite
+ * connects as, and a database migrated through 018 cannot complete without
+ * both of them existing.
+ */
+export const LOGIN_ROLES = [
+  'ai_capital_agent',
+  'ai_capital_app',
+  'ai_capital_claim_writer',
+  'ai_capital_importer',
+  'ai_capital_migrator',
+  'ai_capital_operator',
+  'ai_capital_pipeline',
+] as const
+
+/**
+ * All nine production roles, sorted — the order `pg_roles ... ORDER BY rolname`
+ * returns, so a query result can be compared to this directly.
+ */
+export const ALL_PRODUCTION_ROLES: readonly string[] =
+  [...NOLOGIN_ROLES, ...LOGIN_ROLES].sort()
+
 export const ROLE_URL_ENV = {
   migrator: 'TENANCY_MIGRATOR_DATABASE_URL',
   operator: 'TENANCY_OPERATOR_DATABASE_URL',

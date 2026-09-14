@@ -67,22 +67,57 @@ nobody had executed:
   `SET LOCAL ROLE`, per migration, only when `MIGRATION_OWNER_ROLE` is
   configured. It is transaction-local, omits `"$user"` and every
   application-owned schema, and grants nothing — every ACL still applies.
-- **`USAGE ON SCHEMA public` for `ai_capital_owner`, and nobody else.**
+- **`USAGE ON SCHEMA public` for exactly two roles: `ai_capital_owner` and
+  `ai_capital_pipeline`.**
   Revoking from `PUBLIC` removes the ability to *see* anything in `public`,
   including the extension objects step 2 just installed there — so 006 failed
   with `type "vector" does not exist`, which reads like a missing extension
-  rather than a missing privilege. Source tracing over 011–018 finds exactly one
-  reference from the *tenancy* schemas into `public`: 011's `EXCLUDE USING gist`
-  opclass lookup, at DDL time, by the owner.
+  rather than a missing privilege.
 
-  **One runtime role does need `public`, and migration 018 grants it.**
-  `ai_capital_pipeline` runs `$N::vector` and `ORDER BY embedding <=> $N`
-  against `capital.chunks` (`packages/db/src/vector-store/pg.ts`), and both the
-  `vector` type and pgvector's `<=>` operator live in `public`; PostgreSQL
-  requires schema `USAGE` to resolve either by name. Without it those stages
-  fail with "permission denied for schema public" — a privilege error that reads
-  like a missing extension. It is **`USAGE` only**. `CREATE` on `public` is
-  granted to nobody at all, including the pipeline.
+  The **owner** needs it at DDL time. Source tracing over 011–018 finds exactly
+  one reference from the *tenancy* schemas into `public`: 011's
+  `EXCLUDE USING gist` opclass lookup — plus 006's own `vector(384)` and
+  `vector_cosine_ops`. All of these run as the owner, while a migration is
+  executing.
+
+  The **pipeline** needs it at DML time. `ai_capital_pipeline` runs `$N::vector`
+  and `ORDER BY embedding <=> $N` against `capital.chunks`
+  (`packages/db/src/vector-store/pg.ts`), and both the `vector` type and
+  pgvector's `<=>` operator live in `public`.
+
+  **Both grants are made here, in 010, and neither can be made by a migration.**
+  This was not the original design: migration 018 carried
+  `GRANT USAGE ON SCHEMA public TO ai_capital_pipeline` and appeared to work.
+  It did not. Migrations execute under `SET LOCAL ROLE ai_capital_owner`;
+  `public` is owned by the `pg_database_owner` pseudo-role, of which
+  `ai_capital_owner` is not a member, and the owner's own `USAGE` carries no
+  grant option. **PostgreSQL does not raise an error for a grant the grantor
+  cannot make** — it emits `SQLSTATE 01007`,
+  `WARNING: no privileges were granted for "public"`, which neither
+  `ON_ERROR_STOP` nor the node-postgres migration runner can observe. The
+  migration recorded itself as applied and granted nothing; the 2026-09-13
+  isolated rehearsal measured the result, and it was not
+  `permission denied for schema public` either — it was `SQLSTATE 42704`,
+  `type "vector" does not exist`.
+
+  The rule this produces: **010 grants on database-owned objects; migrations
+  grant on owner-owned application objects.** A migration may only grant what
+  `ai_capital_owner` owns.
+
+  It is **`USAGE` only** in both cases. `CREATE` on `public` is granted to
+  nobody at all.
+- **`REVOKE CONNECT, TEMPORARY ON DATABASE ... FROM PUBLIC`, before any
+  `GRANT ... ON DATABASE`.**
+  A new database is not private. PostgreSQL seeds its ACL from
+  `acldefault('d', ...)`, which grants `CONNECT` and `TEMPORARY` to `PUBLIC` —
+  every role in the cluster, present and future. Naming seven roles in a
+  `GRANT CONNECT` therefore restricts nothing by itself, and the 2026-09-13
+  rehearsal measured both privileges still held by `PUBLIC` after 010 *and*
+  after the 090 lockdown. `TEMPORARY` goes with it because it is a write
+  privilege: it lets any connected role put temp tables on the database's
+  default tablespace. The revoke is placed *before* the named grants so that
+  from the first moment the database has a restricted ACL, the named list is
+  the complete access list.
 
 ## Invocation
 
@@ -203,13 +238,19 @@ different principals, and neither can do the other's job:
 
 | | Granted by | Run as | What it confers |
 |---|---|---|---|
-| `CONNECT` on the database | `bootstrap/010_database_bootstrap.sql` | cluster administrator | the right to open a connection, and nothing inside the database |
-| schema, table and sequence privileges | `migrations/018_legacy_runtime_grants.sql` | `ai_capital_owner`, via the migration runner | exactly the objects each role touches |
+| `CONNECT` on the database, and `USAGE` on schema `public` | `bootstrap/010_database_bootstrap.sql` | cluster administrator | the right to open a connection; the right to resolve names in the extension schema |
+| schema, table and sequence privileges on **application** schemas | `migrations/018_legacy_runtime_grants.sql` | `ai_capital_owner`, via the migration runner | exactly the objects each role touches |
 
-Migration 018 cannot grant `CONNECT`: it executes under
-`SET LOCAL ROLE ai_capital_owner`, and that role holds `CONNECT` without the
-right to re-grant it and does not own the database, so the statement is refused
-with `SQLSTATE 42501`.
+The dividing line is **ownership**, not convenience. Migration 018 executes
+under `SET LOCAL ROLE ai_capital_owner`, so it can grant only what that role
+owns. The database and schema `public` are not among them, and the two failure
+modes differ in a way that matters:
+
+- `GRANT ... ON DATABASE` is **refused** with `SQLSTATE 42501`. Loud.
+- `GRANT ... ON SCHEMA public` is **silently discarded** with `SQLSTATE 01007`,
+  `WARNING: no privileges were granted`. Not an error, not visible to
+  `ON_ERROR_STOP`, not visible to the migration runner. 018 shipped with exactly
+  such a statement and granted nothing for it.
 
 ### What migration 018 does
 
@@ -220,11 +261,20 @@ default privileges, grants no role membership, and issues no `GRANT ALL` or
 
 - **`ai_capital_pipeline`** — the identity the scheduled DAG runs as, replacing
   the cluster superuser the pipeline used to connect as. `USAGE` on `capital`,
-  `thesis`, `portfolio`, `briefing`, `trade` and `public`; per-table `SELECT`,
+  `thesis`, `portfolio`, `briefing` and `trade` — **five schemas; `public` is
+  granted by 010, not here, for the reason above**; per-table `SELECT`,
   `INSERT` and `UPDATE` exactly where the DAG needs them; `USAGE` on one
   sequence, `capital.fetch_log_id_seq`. **No `DELETE` anywhere**, and no
   privilege at all in `identity`, `investment_ledger`, `cash_ledger`, `desk`,
   `db` or `graph`.
+
+  `briefing.predictions` carries `SELECT, INSERT, UPDATE`. The `SELECT` is not
+  general read access: `prediction-archiver.ts` issues
+  `INSERT ... ON CONFLICT (date) DO UPDATE`, and PostgreSQL requires `SELECT` on
+  the conflict target in addition to `INSERT` and `UPDATE`. With only the latter
+  two the statement fails outright with `SQLSTATE 42501` — measured against the
+  real production statement shape during the 2026-09-13 rehearsal, after an
+  earlier probe using a plain `UPDATE ... WHERE` missed it.
 - **`ai_capital_claim_writer`** — the claim protocol and only that. `USAGE` on
   `desk`; `SELECT, INSERT, UPDATE` on `desk.agent_claims`; `INSERT` on
   `desk.agent_runs`; `USAGE` on both `desk` sequences. Nothing outside `desk`.

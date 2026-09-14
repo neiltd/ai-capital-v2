@@ -46,8 +46,11 @@
 -- ─────────────────────────────────────────────────────────────────────────────
 -- 1. ai_capital_pipeline — SCHEMA USAGE
 --
--- USAGE only. CREATE is granted to nobody: every application object belongs to
+-- USAGE only, on the five legacy application schemas the scheduled DAG touches.
+-- CREATE is granted to nobody: every application object belongs to
 -- ai_capital_owner and is created by a migration, never by a runtime role.
+--
+-- `public` is NOT here — see the note below the grants.
 -- ─────────────────────────────────────────────────────────────────────────────
 
 GRANT USAGE ON SCHEMA capital   TO ai_capital_pipeline;
@@ -56,16 +59,28 @@ GRANT USAGE ON SCHEMA portfolio TO ai_capital_pipeline;
 GRANT USAGE ON SCHEMA briefing  TO ai_capital_pipeline;
 GRANT USAGE ON SCHEMA trade     TO ai_capital_pipeline;
 
--- WHY `public`, WHICH 010 REVOKED FROM PUBLIC AND GRANTED ONLY TO THE OWNER.
--- `packages/db/src/vector-store/pg.ts` builds `$N::vector` and
--- `ORDER BY embedding <=> $N` inside search(). The `vector` TYPE and pgvector's
--- `<=>` OPERATOR both live in `public`, and PostgreSQL requires USAGE on a
--- schema to resolve any object in it by name. search() is reachable from the
--- retrieval paths of ai-analysis-engine, investment-analyst-agents and
--- scenario-discover, so without this grant those stages fail with
--- "permission denied for schema public" — a privilege error that reads like a
--- missing extension. USAGE only; CREATE on `public` is still granted to nobody.
-GRANT USAGE ON SCHEMA public TO ai_capital_pipeline;
+-- `public` IS DELIBERATELY ABSENT FROM THIS FILE. It is granted by
+-- `ops/bootstrap/010_database_bootstrap.sql`, not here, and this migration must
+-- never attempt it again.
+--
+-- The pipeline genuinely needs USAGE on `public`: `packages/db/src/vector-store/pg.ts`
+-- builds `$N::vector` and `ORDER BY embedding <=> $N` inside search(), so the
+-- `vector` TYPE and pgvector's `<=>` OPERATOR must resolve by name.
+--
+-- But this file cannot confer it. Migrations execute under `SET LOCAL ROLE
+-- ai_capital_owner`; `public` is owned by `pg_database_owner`, of which
+-- `ai_capital_owner` is not a member, and the owner's own USAGE carries no grant
+-- option. PostgreSQL does not raise an error for that — it emits SQLSTATE 01007,
+-- `WARNING: no privileges were granted for "public"`, which neither
+-- ON_ERROR_STOP nor the node-postgres runner can see. An earlier revision of
+-- this migration carried exactly such a statement, recorded itself as applied,
+-- and left the pipeline with nothing; the 2026-09-13 isolated rehearsal is what
+-- caught it. The observed symptom was SQLSTATE 42704, `type "vector" does not
+-- exist` — not a permission error at all.
+--
+-- The rule this encodes: 010 grants on DATABASE-OWNED objects, 018 grants on
+-- OWNER-OWNED application objects. A migration may only grant what
+-- `ai_capital_owner` owns.
 
 
 -- ─────────────────────────────────────────────────────────────────────────────
@@ -98,7 +113,14 @@ GRANT INSERT                 ON thesis.proposal_changes      TO ai_capital_pipel
 GRANT SELECT, UPDATE         ON portfolio.positions          TO ai_capital_pipeline;
 GRANT SELECT, UPDATE         ON portfolio.trade_log          TO ai_capital_pipeline;
 
-GRANT INSERT, UPDATE         ON briefing.predictions         TO ai_capital_pipeline;
+-- SELECT here is NOT general read access — it is what the upsert itself
+-- requires. `apps/investment-analyst-agents/src/archive/prediction-archiver.ts`
+-- issues `INSERT ... ON CONFLICT (date) DO UPDATE`, and PostgreSQL requires
+-- SELECT on the conflict target's read columns to arbitrate the conflict. With
+-- INSERT and UPDATE alone the statement is refused outright with SQLSTATE 42501,
+-- `permission denied for table predictions`, which the 2026-09-13 rehearsal
+-- measured against the real production statement shape.
+GRANT SELECT, INSERT, UPDATE ON briefing.predictions         TO ai_capital_pipeline;
 
 GRANT SELECT                 ON trade.ticker_dependencies    TO ai_capital_pipeline;
 

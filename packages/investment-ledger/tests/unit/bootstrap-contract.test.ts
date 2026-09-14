@@ -3,6 +3,12 @@ import { readFileSync, readdirSync } from 'node:fs'
 import { join, dirname, resolve } from 'node:path'
 import { fileURLToPath } from 'node:url'
 import { describe, it, expect } from 'vitest'
+// The canonical role manifest, imported from the tenancy fixture so that this
+// database-free gate compares it against ops/roles/000_cluster_roles.sql. The
+// import is type/constant only — nothing here opens a connection.
+import {
+  ALL_PRODUCTION_ROLES, LOGIN_ROLES, NOLOGIN_ROLES,
+} from '../integration/tenancy/fixture.js'
 
 // THE ops/ BOOTSTRAP CONTRACT — no database connection anywhere in this file.
 //
@@ -363,12 +369,43 @@ describe('schema public stays shut (defect B3)', () => {
     expect(grantsToPublic.map(m => m[0])).toEqual([])
   })
 
-  it('exactly ONE role receives anything on schema public: ai_capital_owner', () => {
+  it('exactly TWO roles receive anything on schema public: the owner and the pipeline', () => {
+    // WHY BOTH, AND WHY BOTH ARE HERE RATHER THAN IN A MIGRATION.
+    //
+    // The owner needs USAGE at DDL time: migration 006 declares `vector(384)`
+    // and `vector_cosine_ops`, and 011 an `EXCLUDE USING gist` — all of which
+    // resolve names in `public`.
+    //
+    // The pipeline needs USAGE at DML time: vector-store/pg.ts casts `$N::vector`
+    // and orders by `<=>`, both of which live in `public` too.
+    //
+    // Neither grant can come from a migration. Migrations run under
+    // `SET LOCAL ROLE ai_capital_owner`; `public` is owned by the
+    // `pg_database_owner` pseudo-role, of which ai_capital_owner is not a
+    // member, and its own USAGE carries no grant option. PostgreSQL does not
+    // error on that — it emits SQLSTATE 01007, `no privileges were granted`,
+    // which neither ON_ERROR_STOP nor node-postgres surfaces. Migration 018
+    // carried exactly such a statement, recorded itself as applied, and granted
+    // nothing; the 2026-09-13 isolated rehearsal measured the result as
+    // SQLSTATE 42704, `type "vector" does not exist`.
+    //
+    // So the rule: 010 grants on DATABASE-OWNED objects, migrations grant on
+    // OWNER-OWNED application objects.
     const grants = [...bootstrapCode.matchAll(/GRANT\s+(\w+)\s+ON SCHEMA public\s+TO ([^;]+);/g)]
       .map(m => ({ privilege: m[1], grantees: m[2].split(',').map(x => x.trim()) }))
-    expect(grants).toHaveLength(1)
-    expect(grants[0].privilege).toBe('USAGE')
-    expect(grants[0].grantees).toEqual(['ai_capital_owner'])
+    expect(grants).toHaveLength(2)
+    for (const g of grants) expect(g.privilege).toBe('USAGE')
+    expect(grants.flatMap(g => g.grantees).sort())
+      .toEqual(['ai_capital_owner', 'ai_capital_pipeline'])
+  })
+
+  it('the pipeline public grant is in 010 and NOT in migration 018', () => {
+    // The division of labour above, pinned from both sides so the grant cannot
+    // silently migrate back into 018 where it would be a no-op again.
+    expect(bootstrapCode).toMatch(/GRANT USAGE ON SCHEMA public TO ai_capital_pipeline;/)
+    const m018 = code(readFileSync(
+      resolve(HERE, '..', '..', '..', 'db', 'migrations', '018_legacy_runtime_grants.sql'), 'utf-8'))
+    expect(m018, 'migration 018 must not touch schema public').not.toMatch(/ON SCHEMA public/)
   })
 
   it('the owner gets USAGE and never CREATE', () => {
@@ -379,22 +416,15 @@ describe('schema public stays shut (defect B3)', () => {
     expect(lockdownCode).not.toMatch(/GRANT[^;]*ON SCHEMA public/)
   })
 
-  it('BOOTSTRAP 010 gives no runtime or operations role a public-schema privilege', () => {
-    // SCOPE: this is a statement about 010 ALONE — `bootstrapCode` is 010's text
-    // — and not about the migrations that follow it.
-    //
+  it('no role OTHER than the owner and the pipeline gets a public-schema privilege', () => {
     // The gate used a deliberately broad diagnostic grant to all seven roles.
-    // That was a probe, not a design: source tracing over 011-017 finds exactly
-    // ONE reference from the tenancy schemas into `public` — 011's
-    // `EXCLUDE USING gist` opclass lookup, performed at DDL time by the owner.
-    //
-    // Migration 018 SEPARATELY grants `USAGE` — never `CREATE` — on `public` to
-    // `ai_capital_pipeline`, because DAG-reachable pgvector queries resolve the
-    // `vector` type and the `<=>` operator there. That grant is not 010's to
-    // make and is not in scope here; its exact shape is enforced by
-    // packages/db/tests/migration-018-grants.test.ts.
+    // That was a probe, not a design. Source tracing finds exactly two genuine
+    // consumers of `public`, both enumerated in the test above; every other
+    // role — including ai_capital_claim_writer, which touches only `desk` — is
+    // excluded here by name so a future edit cannot widen the set by accident.
     for (const role of ['ai_capital_migrator', 'ai_capital_importer', 'ai_capital_agent',
                         'ai_capital_app', 'ai_capital_operator',
+                        'ai_capital_claim_writer',
                         'ai_capital_identity_authority']) {
       const re = new RegExp(`GRANT[^;]*ON SCHEMA public[^;]*${role}`)
       expect(bootstrapCode, `${role} must not receive a public-schema privilege`).not.toMatch(re)
@@ -406,12 +436,13 @@ describe('schema public stays shut (defect B3)', () => {
     // tenancy foundation: those seven migrations build `identity` and
     // `investment_ledger`, and none of them may reach into `public`.
     //
-    // 018 is deliberately outside it. It is the separately approved
-    // legacy-runtime grant migration, and it does name `public` — one
-    // `GRANT USAGE ON SCHEMA public TO ai_capital_pipeline`, never CREATE. The
-    // bound is 17, not "everything except 018", so a migration 019 that reached
-    // into `public` would still have to be justified on its own terms rather
-    // than inheriting an exemption.
+    // 018 is deliberately outside it — it is the separately approved
+    // legacy-runtime grant migration, asserted in its own right above — but it
+    // is NOT an exemption: 018 names `public` nowhere either, because a
+    // migration cannot grant on a database-owned schema at all. The bound stays
+    // 17 rather than "everything", so that a migration 019 reaching into
+    // `public` has to be justified on its own terms rather than quietly
+    // widening a range assertion.
     const dir = resolve(HERE, '..', '..', '..', 'db', 'migrations')
     const foundation = readdirSync(dir).filter(f => {
       const n = Number(f.slice(0, 3))
@@ -458,6 +489,12 @@ const bootstrapStatementList = bootstrapStatements
   .map(s => s.replace(/\s+/g, ' ').trim())
   .filter(Boolean)
 
+/** Executable statements of 090, comment- and message-text free. */
+const lockdownStatementList = withoutStringLiterals(lockdownCode)
+  .split(';')
+  .map(s => s.replace(/\s+/g, ' ').trim())
+  .filter(Boolean)
+
 describe('010 grants the two new roles CONNECT, and nothing else (S3A)', () => {
   /** The single `GRANT CONNECT ON DATABASE` statement that is not the owner's. */
   const connectStatements = bootstrapStatementList.filter(
@@ -494,20 +531,40 @@ describe('010 grants the two new roles CONNECT, and nothing else (S3A)', () => {
     )
   })
 
-  for (const role of ['ai_capital_pipeline', 'ai_capital_claim_writer'] as const) {
-    it(`${role} appears in exactly one executable statement in 010`, () => {
-      const mentioning = bootstrapStatementList.filter(s => s.includes(role))
-      expect(mentioning).toHaveLength(1)
-      expect(mentioning[0]).toBe(connectStatements[0])
-    })
+  it('ai_capital_claim_writer appears in exactly one executable statement in 010', () => {
+    const mentioning = bootstrapStatementList.filter(s => s.includes('ai_capital_claim_writer'))
+    expect(mentioning).toHaveLength(1)
+    expect(mentioning[0]).toBe(connectStatements[0])
+  })
 
-    it(`${role} receives no CREATE, TEMP, schema, table, sequence or function privilege`, () => {
+  it('ai_capital_pipeline appears in exactly two executable statements in 010', () => {
+    // Two, not one, since the 2026-09-13 rehearsal moved the pipeline's
+    // `public` USAGE here from migration 018, where it was a silent 01007
+    // no-op. Both statements are named exactly, so a third would fail.
+    const mentioning = bootstrapStatementList.filter(s => s.includes('ai_capital_pipeline'))
+    expect(mentioning).toHaveLength(2)
+    expect(mentioning).toContain(connectStatements[0])
+    expect(mentioning).toContain('GRANT USAGE ON SCHEMA public TO ai_capital_pipeline')
+  })
+
+  for (const role of ['ai_capital_pipeline', 'ai_capital_claim_writer'] as const) {
+    it(`${role} receives no CREATE, TEMP, table, sequence or function privilege`, () => {
       for (const statement of bootstrapStatementList) {
         if (!statement.includes(role)) continue
         expect(statement, `${role} receives CREATE`).not.toMatch(/^GRANT[^;]*\bCREATE\b/)
         expect(statement, `${role} receives TEMP`).not.toMatch(/\bTEMP(ORARY)?\b/i)
-        expect(statement, `${role} receives a schema privilege`).not.toMatch(/ON SCHEMA/)
         expect(statement, `${role} receives a relation privilege`).not.toMatch(/ON (TABLE|SEQUENCE|FUNCTION|ALL)/)
+      }
+    })
+
+    it(`${role} receives no schema privilege other than the pipeline's public USAGE`, () => {
+      const allowed = role === 'ai_capital_pipeline'
+        ? ['GRANT USAGE ON SCHEMA public TO ai_capital_pipeline']
+        : []
+      for (const statement of bootstrapStatementList) {
+        if (!statement.includes(role) || !/ON SCHEMA/.test(statement)) continue
+        expect(allowed, `${role} receives an unexpected schema privilege: ${statement}`)
+          .toContain(statement)
       }
     })
 
@@ -523,6 +580,72 @@ describe('010 grants the two new roles CONNECT, and nothing else (S3A)', () => {
       }
     })
   }
+
+  it('010 REVOKES the built-in PUBLIC database privileges', () => {
+    // A NEW DATABASE IS NOT PRIVATE. PostgreSQL seeds every database's ACL from
+    // acldefault('d', ...), which grants CONNECT and TEMPORARY to PUBLIC — that
+    // is, to every role in the cluster, present and future. Naming seven roles
+    // in a GRANT CONNECT therefore restricts nothing on its own; the 2026-09-13
+    // isolated rehearsal measured both privileges still held by PUBLIC after
+    // 010 AND after the 090 lockdown had run.
+    //
+    // TEMPORARY is revoked alongside CONNECT because it is a write privilege:
+    // it lets any connected role create temp tables in the database's default
+    // tablespace, which is disk this design does not offer to unnamed roles.
+    const revokes = bootstrapStatementList.filter(
+      s => /^REVOKE\b/.test(s) && /ON DATABASE/.test(s) && /\bFROM PUBLIC$/.test(s),
+    )
+    expect(revokes, 'no PUBLIC database revoke in 010').toHaveLength(1)
+    const privileges = revokes[0]
+      .replace(/^REVOKE /, '').split(' ON DATABASE')[0]
+      .split(',').map(p => p.trim().toUpperCase()).sort()
+    expect(privileges).toEqual(['CONNECT', 'TEMPORARY'])
+    expect(revokes[0]).toContain(':"dbname"')
+  })
+
+  it('the PUBLIC revoke comes BEFORE every database grant', () => {
+    // ORDER IS THE WHOLE POINT. REVOKE ... FROM PUBLIC does not touch privileges
+    // held by name, so running it after the named grants would be harmless —
+    // but running it first is what makes the named grants the complete access
+    // list at every instant in between, including a crash between statements.
+    const revokeAt = bootstrapStatementList.findIndex(
+      s => /^REVOKE\b/.test(s) && /ON DATABASE/.test(s) && /\bFROM PUBLIC$/.test(s),
+    )
+    const grantIndexes = bootstrapStatementList
+      .map((s, i) => (/^GRANT[^;]*ON DATABASE/.test(s) ? i : -1))
+      .filter(i => i >= 0)
+    expect(revokeAt, 'the PUBLIC revoke is missing').toBeGreaterThanOrEqual(0)
+    expect(grantIndexes, 'no database grants found — the order check is vacuous')
+      .not.toHaveLength(0)
+    for (const i of grantIndexes) {
+      expect(revokeAt, `a database grant at ${i} precedes the PUBLIC revoke`).toBeLessThan(i)
+    }
+  })
+
+  it('nothing in 010 or 090 gives the PUBLIC database privileges back', () => {
+    for (const sql of [bootstrapStatementList, lockdownStatementList]) {
+      for (const statement of sql) {
+        expect(statement, 'a database privilege is granted back to PUBLIC')
+          .not.toMatch(/^GRANT[^;]*ON DATABASE[^;]*\bTO\b[^;]*\bPUBLIC\b/)
+      }
+    }
+  })
+
+  it('after the revoke, exactly eight roles can reach the database, by name', () => {
+    // The full database-access allowlist: seven CONNECT-only runtime and
+    // operations roles plus the owner, which is granted separately with CREATE.
+    // PUBLIC is not a member of this list — that is what the revoke buys.
+    const grantees = new Set<string>()
+    for (const statement of bootstrapStatementList) {
+      if (!/^GRANT[^;]*ON DATABASE/.test(statement)) continue
+      for (const g of (statement.split(' TO ')[1] ?? '').split(','))
+        if (g.trim()) grantees.add(g.trim())
+    }
+    expect([...grantees].sort())
+      .toEqual([...CONNECT_ONLY_ROLES, 'ai_capital_owner'].sort())
+    expect(grantees.has('PUBLIC')).toBe(false)
+    expect(grantees.has('public')).toBe(false)
+  })
 
   it('no grant in 010 confers the right to re-grant', () => {
     // Nothing in ops/ may hand a role the ability to pass a privilege onward;
@@ -592,6 +715,46 @@ const REQUIRED_LOGIN_ATTRIBUTES = [
 
 /** Attributes that would make a role privileged. None may appear anywhere. */
 const PRIVILEGED_ATTRIBUTES = ['SUPERUSER', 'CREATEDB', 'CREATEROLE', 'BYPASSRLS', 'REPLICATION']
+
+describe('the tenancy role manifest matches ops/roles/000_cluster_roles.sql', () => {
+  // WHY THIS TEST EXISTS. tests/integration/tenancy/fixture.ts exports the
+  // canonical nine-role manifest that the tenancy assertions read instead of
+  // restating a literal. That manifest is a MIRROR of 000, and a mirror that is
+  // never compared to its subject is just a second literal that can drift — the
+  // exact failure mode the manifest was introduced to end, when three tenancy
+  // tests carried a five-name list that predated ai_capital_pipeline and
+  // ai_capital_claim_writer and failed a correctly provisioned cluster.
+  //
+  // The comparison is made HERE, without a database, so the drift is caught by
+  // the ordinary unit gate rather than only by the separately authorized
+  // tenancy gate.
+
+  it('the manifest names exactly the roles 000 creates', () => {
+    expect([...ALL_PRODUCTION_ROLES].sort()).toEqual(definitions.map(d => d.name).sort())
+    expect(ALL_PRODUCTION_ROLES, 'the manifest is not nine roles').toHaveLength(9)
+  })
+
+  it('the LOGIN/NOLOGIN split matches the attributes 000 declares', () => {
+    expect(LOGIN_ROLES, 'seven roles log in').toHaveLength(7)
+    expect(NOLOGIN_ROLES, 'two roles do not').toHaveLength(2)
+    for (const name of LOGIN_ROLES) {
+      const d = byName.get(name)
+      expect(d, `${name} is not defined in 000`).toBeDefined()
+      expect(d!.attributes, `${name} must be LOGIN in 000`).toContain('LOGIN')
+    }
+    for (const name of NOLOGIN_ROLES) {
+      const d = byName.get(name)
+      expect(d, `${name} is not defined in 000`).toBeDefined()
+      expect(d!.attributes, `${name} must be NOLOGIN in 000`).toContain('NOLOGIN')
+    }
+  })
+
+  it('the two halves are disjoint and together are the whole', () => {
+    const overlap = LOGIN_ROLES.filter(r => (NOLOGIN_ROLES as readonly string[]).includes(r))
+    expect(overlap, 'a role is listed as both LOGIN and NOLOGIN').toEqual([])
+    expect(new Set(ALL_PRODUCTION_ROLES).size, 'the manifest repeats a name').toBe(9)
+  })
+})
 
 describe('the production role set is parsed, not pattern-matched', () => {
   it('the parser actually extracted CREATE ROLE statements', () => {

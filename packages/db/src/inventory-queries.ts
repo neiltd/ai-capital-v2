@@ -869,7 +869,7 @@ export const CURRENT_V18_MANIFEST: readonly ManifestEntry[] = Object.freeze([
   { filename: '015_investment_ledger_series_and_corrections.sql', sha256: 'd076798413e5285a91fe6ce1252d715cffa208237cfd8c6de96f2cf0c3e13616' },
   { filename: '016_investment_ledger_enforcement.sql', sha256: 'daa8fc3dd05d03197ec31d57d832d10a930d1a50d42ef53208e1d838fd63ddac' },
   { filename: '017_ledger_views_rls_grants.sql', sha256: 'e069433155d74ae7553ea41a08c909f03ca87b8c0e882c745b40d54b36bdefa1' },
-  { filename: '018_legacy_runtime_grants.sql', sha256: '7632ef07ed2d5cd7101e5c684f23bea7c68080ffe51f6b9e260df3572f2d1f50' },
+  { filename: '018_legacy_runtime_grants.sql', sha256: '67b63b0acdf418308fa54802b9896523a314b1546bbc1924553f90fd75ad034b' },
 ])
 
 /** The database this collector is written for. Asserted from inside the session. */

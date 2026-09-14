@@ -442,6 +442,9 @@ tracing over 011–017 finds exactly one reference from the tenancy schemas into
 the owner — and no runtime role holds any grant on `capital.*` or `public`.
 `CREATE` on `public` is still granted to nobody.
 
+*Superseded in part on 2026-09-13:* `ai_capital_pipeline` does hold `USAGE` on
+`public`, granted by 010. See "Runtime-role rehearsal remediation" below.
+
 ### Four in the migrations — each invisible to a static check that looked one way
 
 **V3-1 — a constraint name that no longer existed.** 015 dropped
@@ -589,7 +592,8 @@ of failing loudly.
 It is gated on `MIGRATION_OWNER_ROLE`, so a database migrated without that
 variable behaves exactly as before. And a search path grants nothing: it decides
 which schemas are searched for an unqualified name, never who may use what.
-`public` remains revoked from `PUBLIC`, with `USAGE` held by the owner alone.
+`public` remains revoked from `PUBLIC`, with `USAGE` held by the owner and —
+since the 2026-09-13 runtime-role rehearsal, see below — by `ai_capital_pipeline`.
 
 `packages/db/tests/migration-session.test.ts` proves the statement sequence
 behaviourally, by running the real `runMigrations()` against a recording client
@@ -729,11 +733,39 @@ not a boundary and revoking it would only have produced a comforting catalogue.
 The boundary that is real is that **nobody can authenticate as the owner**. Both
 tests now select on `pg_roles.rolcanlogin` (excluding superusers, who bypass
 privilege checks by definition), each with a positive non-vacuity assertion
-pinning the five LOGIN application roles — `agent`, `app`, `importer`,
-`migrator`, `operator` — and re-asserting that `ai_capital_owner` is NOLOGIN
-right where the exclusion is made. Coverage is unchanged in extent: every LOGIN
-role against every ledger table, and every LOGIN role against all five withheld
-views. Ownership itself was not weakened, and nothing was revoked.
+pinning the LOGIN application roles — **as of this round, the five that then
+existed: `agent`, `app`, `importer`, `migrator`, `operator`** — and re-asserting
+that `ai_capital_owner` is NOLOGIN right where the exclusion is made. Coverage
+is unchanged in extent: every LOGIN role against every ledger table, and every
+LOGIN role against all five withheld views. Ownership itself was not weakened,
+and nothing was revoked.
+
+> **Superseded on 2026-09-13 — the count, not the principle.** The *method*
+> above stands unchanged: select on `rolcanlogin`, exclude superusers, and pin
+> the examined role set positively so the assertion cannot pass vacuously. Only
+> the membership of that set has moved. Slices S2 and S3 added
+> `ai_capital_pipeline` and `ai_capital_claim_writer`, so **the contract is now
+> seven LOGIN roles** — `agent`, `app`, `claim_writer`, `importer`, `migrator`,
+> `operator`, `pipeline` — alongside two NOLOGIN roles, `ai_capital_owner` and
+> `ai_capital_identity_authority`: nine in total.
+>
+> Leaving the five-name lists in place had a cost. They were written as exact
+> equality against `pg_roles`, so the 2026-09-13 runtime-role rehearsal met a
+> *correctly* provisioned nine-role cluster and failed three assertions that
+> were themselves stale — the tests were wrong, not the cluster. A fourth
+> assertion had been written as `>= 5`, which does not fail on a stale count but
+> is worse: a floor cannot detect a role that is missing, which is precisely the
+> condition that makes "no LOGIN role can execute this" trivially true.
+>
+> Both shapes are gone. Every such assertion now reads its expected set from one
+> exported manifest — `ALL_PRODUCTION_ROLES`, `LOGIN_ROLES` and `NOLOGIN_ROLES`
+> in `tests/integration/tenancy/fixture.ts` — and compares it as an exact set
+> with both sides sorted in JavaScript, so the result does not depend on the
+> database's collation. `tests/unit/bootstrap-contract.test.ts` pins that
+> manifest against `ops/roles/000_cluster_roles.sql` **without a database**, so a
+> future role addition fails the ordinary unit gate rather than waiting for a
+> separately authorized cluster rehearsal to discover it. A duplicated literal
+> cannot be corrected in one place; a manifest can.
 
 ### Round 9 (2026-09-07) — two guards that did not guard
 
@@ -785,3 +817,71 @@ proves at runtime that both clients still authenticate as `ai_capital_importer`
 and resolve to the same principal. No second principal, login or role was
 created, and the cross-workspace test reuses `reconWs` instead of seeding a
 third workspace with an ad-hoc grant.
+
+
+## Runtime-role rehearsal remediation (2026-09-13)
+
+Slice S3B — `ai_capital_pipeline` and `ai_capital_claim_writer` — was rehearsed
+against a disposable, isolated PostgreSQL 17 cluster: nine roles from 000, the
+010 bootstrap, all eighteen migrations, the 090 lockdown, then the tenancy
+suite and a full positive/negative privilege probe matrix. Ownership was
+perfect, the negative probes were 37/37, and the privilege matrix matched the
+design exactly in every schema except one. Four defects survived, and none of
+them could have been found without a database.
+
+**1 — the `public` grant in migration 018 was a silent no-op.** 018 carried
+`GRANT USAGE ON SCHEMA public TO ai_capital_pipeline`, was applied cleanly, and
+granted nothing. Migrations execute under `SET LOCAL ROLE ai_capital_owner`;
+schema `public` is owned by the `pg_database_owner` pseudo-role, of which
+`ai_capital_owner` is not a member, and the owner's own `USAGE` carries no grant
+option.
+
+The load-bearing fact is that **PostgreSQL does not raise an error for a grant
+the grantor cannot make.** It emits `SQLSTATE 01007`,
+`WARNING: no privileges were granted for "public"` — a warning, not an error, so
+`ON_ERROR_STOP` does not stop and the node-postgres runner does not see it. The
+migration recorded itself as applied. The observable failure was not a
+permission error at all: it was `SQLSTATE 42704`, `type "vector" does not exist`,
+because a missing schema `USAGE` prevents name resolution before any privilege
+check on the type occurs. The grant moved to 010, where the cluster
+administrator can actually make it stick.
+
+This generalises into the rule the two files now follow: **010 grants on
+database-owned objects; migrations grant on owner-owned application objects.**
+A migration may only grant what `ai_capital_owner` owns.
+
+**2 — `PUBLIC` still held `CONNECT` and `TEMPORARY` on the database.** A new
+database is not private: its ACL is seeded from `acldefault('d', ...)`, which
+grants both to `PUBLIC`. Naming seven roles in a `GRANT CONNECT` adds privileges
+without removing the default, so the rehearsal measured `PUBLIC` holding both
+after 010 *and* after the 090 lockdown — a cluster-wide open door behind a list
+that looked like an allowlist. 010 now issues
+`REVOKE CONNECT, TEMPORARY ON DATABASE ... FROM PUBLIC` **before** any database
+grant, so the named list is the complete access list from the first moment
+onward. `TEMPORARY` is revoked with it because it is a write privilege.
+
+**3 — `briefing.predictions` was missing `SELECT`.** 018 granted
+`INSERT, UPDATE`, which is what a plain `INSERT` and a plain `UPDATE` need. The
+real statement is `INSERT ... ON CONFLICT (date) DO UPDATE`, and PostgreSQL
+requires `SELECT` on the conflict target to arbitrate the conflict; without it
+the whole statement is refused with `42501`. The first probe of this path used
+`UPDATE ... WHERE date = ...` and passed, which is exactly why it was re-probed
+with the production statement shape. **A privilege probe that does not use the
+real statement shape is not a probe of that path.**
+
+**4 — three tenancy assertions were stale, not wrong in principle.** They
+hard-coded a five-name role list and a count of seven that predated
+`ai_capital_pipeline` and `ai_capital_claim_writer`, so a *correctly* provisioned
+nine-role cluster failed them. The lists are now derived from a single exported
+manifest in `tests/integration/tenancy/fixture.ts` — nine roles, seven LOGIN and
+two NOLOGIN — which `bootstrap-contract.test.ts` independently pins against
+`ops/roles/000_cluster_roles.sql` without a database. A duplicated literal
+cannot be corrected in one place; a shared manifest can.
+
+**What the rehearsal establishes about method.** Three of these four defects are
+invisible to source review, to typechecking, and to every database-free test in
+this repository, because all three are properties of what PostgreSQL *does*
+rather than of what the SQL *says*. Defect 1 in particular is a statement that
+is syntactically valid, semantically meaningful, applied without error, and
+completely ineffective. Slices that change grants need a rehearsal on a real
+cluster, with probes issued in the production statement shape.

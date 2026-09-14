@@ -130,50 +130,62 @@ END $$;
 -- BEFORE this revoke — and the revoke must not be softened afterwards.
 REVOKE ALL ON SCHEMA public FROM PUBLIC;
 
--- ── The single exception to "nothing may use public". ──────────────────────
+-- ── The two exceptions to "nothing may use public". ───────────────────────
 --
--- USAGE, to ai_capital_owner, and to nobody else.
+-- USAGE — never CREATE — to exactly `ai_capital_owner` and `ai_capital_pipeline`,
+-- and to no other role.
 --
--- WHY IT IS NEEDED. Revoking from PUBLIC removes the ability to SEE anything in
--- `public` — including the extension objects this file just installed there.
--- Three DDL name resolutions performed by the owner (via MIGRATION_OWNER_ROLE)
--- land in that schema:
---   006  `embedding vector(384)`              — the TYPE lives in public
---   006  `USING hnsw (embedding vector_cosine_ops)`
---                                             — a pgvector OPERATOR CLASS does
---   011  `EXCLUDE USING gist (...)`           — btree_gist OPERATOR CLASSES do
--- Without USAGE the first fails with `type "vector" does not exist`, which
--- reads like a missing extension rather than a missing privilege.
+-- WHY USAGE IS NEEDED AT ALL. Revoking from PUBLIC removes the ability to SEE
+-- anything in `public` — including the extension objects this file just
+-- installed there.
 --
--- WHY ONLY THE OWNER HERE, AND WHAT MIGRATION 018 ADDS LATER.
+--   ai_capital_owner, at DDL time. Three name resolutions performed by the
+--   owner (via MIGRATION_OWNER_ROLE) land in that schema:
+--     006  `embedding vector(384)`              — the TYPE lives in public
+--     006  `USING hnsw (embedding vector_cosine_ops)`
+--                                               — a pgvector OPERATOR CLASS does
+--     011  `EXCLUDE USING gist (...)`           — btree_gist OPERATOR CLASSES do
 --
--- This file grants `public` USAGE to `ai_capital_owner` alone, because the
--- references above are resolved during OWNER-EXECUTED DDL: migration 006 needs
--- the `vector` type and its opclass, migration 011 needs btree_gist's. That is
--- the whole of what the bootstrap has to make possible, and `010` is a
--- database-preparation script — RUNTIME OBJECT GRANTS ARE NOT ITS BUSINESS and
--- belong in a migration.
+--   ai_capital_pipeline, at DML time. `packages/db/src/vector-store/pg.ts`
+--   builds `$N::vector` and `ORDER BY embedding <=> $N` against
+--   `capital.chunks`, so the scheduled DAG must resolve the `vector` TYPE and
+--   pgvector's `<=>` OPERATOR by name, on every retrieval. No amount of
+--   opclass-by-OID reasoning removes a by-name lookup.
 --
--- One runtime role does need `public`, and `packages/db/migrations/018_legacy_runtime_grants.sql`
--- grants it there: `ai_capital_pipeline` runs `$N::vector` and
--- `ORDER BY embedding <=> $N` against `capital.chunks`, so it must resolve the
--- `vector` TYPE and pgvector's `<=>` OPERATOR, both of which live in `public`.
--- That is a DML-time lookup by name, not a DDL-time one, and no amount of
--- opclass-by-OID reasoning removes it.
+-- WHY THE PIPELINE'S GRANT IS HERE AND NOT IN MIGRATION 018 — A PROVEN DEFECT.
 --
--- BOTH GRANTS ARE `USAGE` ONLY. Neither `ai_capital_owner` nor
--- `ai_capital_pipeline` receives `CREATE` on `public`; no role does.
+-- Migration 018 used to carry `GRANT USAGE ON SCHEMA public TO
+-- ai_capital_pipeline`. On a real PostgreSQL 17 cluster that statement was a
+-- SILENT NO-OP, and the 2026-09-13 isolated rehearsal caught it:
 --
--- Migration 018 also grants `ai_capital_pipeline` table privileges on
--- `capital.*` and four other legacy schemas, and grants `ai_capital_claim_writer`
--- its `desk` privileges. An earlier version of this comment claimed no runtime
--- role holds any grant on `capital.*` or `public`; that was true when it was
--- written and is not true after 018.
+--   * migrations execute under `SET LOCAL ROLE ai_capital_owner`;
+--   * schema `public` is owned by `pg_database_owner`, and `ai_capital_owner`
+--     is NOT a member of it and holds USAGE WITHOUT grant option;
+--   * a GRANT by a grantor lacking grant option is not an error. PostgreSQL
+--     emits SQLSTATE 01007, `WARNING: no privileges were granted for "public"`,
+--     and carries on.
 --
--- WHY NOT CREATE. The owner creating objects in `public` is exactly what the
--- revoke above exists to prevent; every application object belongs in a named
--- schema this design owns.
+-- `ON_ERROR_STOP` does not see a warning and neither does the node-postgres
+-- migration runner, so 018 recorded as applied while that one statement did
+-- nothing. The grant therefore belongs HERE, in the file run by the cluster
+-- administrator, who owns the database and so owns `public`.
+--
+-- THE DIVISION OF LABOUR, STATED ONCE: bootstrap 010 owns this one exceptional
+-- runtime grant because `public` is DATABASE-OWNED and no migration principal
+-- can make it stick. Migration 018 continues to own every APPLICATION-object
+-- grant, because those objects belong to `ai_capital_owner`, which can grant on
+-- what it owns.
+--
+-- WHAT THE FAILURE ACTUALLY LOOKS LIKE, since it is easy to misdiagnose: a
+-- pipeline session without this grant does not report "permission denied for
+-- schema public". It reports SQLSTATE 42704, `type "vector" does not exist` —
+-- measured, not predicted. It reads like a missing extension.
+--
+-- WHY NOT CREATE, FOR EITHER ROLE. Creating objects in `public` is exactly what
+-- the revoke above exists to prevent; every application object belongs in a
+-- named schema this design owns. Neither grant carries a grant option.
 GRANT USAGE ON SCHEMA public TO ai_capital_owner;
+GRANT USAGE ON SCHEMA public TO ai_capital_pipeline;
 
 -- CONNECT AND NOTHING ELSE. Every role here receives the right to open a
 -- connection and no privilege inside the database; what each may then do is
@@ -186,6 +198,27 @@ GRANT USAGE ON SCHEMA public TO ai_capital_owner;
 -- the only place it can be said. Nothing in ops/ confers a re-grant right on
 -- any role, deliberately: a role able to pass CONNECT on could widen database
 -- access from inside a migration.
+-- FIRST, TAKE AWAY POSTGRESQL'S OWN DEFAULT. A newly created database grants
+-- CONNECT and TEMPORARY to PUBLIC — that is the built-in `acldefault('d',...)`,
+-- not something anyone wrote. Until it is revoked the named grants below are
+-- decorative: every role in the cluster can already connect, and the allowlist
+-- describes an admission control that is not actually controlling anything.
+--
+-- The 2026-09-13 isolated rehearsal measured this on a real cluster: after both
+-- bootstrap AND lockdown, `has_database_privilege('public', db, 'CONNECT')` and
+-- `... 'TEMPORARY'` were still true, and both runtime roles reported
+-- `db TEMP = true` purely by inheritance from PUBLIC.
+--
+-- ORDER IS LOAD-BEARING: this revoke precedes the grants so that the moment the
+-- bootstrap finishes, the named list below IS the admission list. Revoking
+-- afterwards would leave a window; revoking only in 090 would leave the whole
+-- migration window open.
+--
+-- TEMPORARY IS GRANTED BACK TO NOBODY. No role in this design creates a
+-- temporary table; the only consumer that ever did was a test fixture, and it
+-- runs as a cluster administrator.
+REVOKE CONNECT, TEMPORARY ON DATABASE :"dbname" FROM PUBLIC;
+
 GRANT CONNECT ON DATABASE :"dbname"
   TO ai_capital_migrator, ai_capital_app, ai_capital_importer,
      ai_capital_agent, ai_capital_operator,

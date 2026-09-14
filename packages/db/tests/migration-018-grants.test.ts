@@ -127,21 +127,41 @@ describe('the parser sees migration 018 as executable SQL', () => {
 // ── ai_capital_pipeline ─────────────────────────────────────────────────────
 
 describe('ai_capital_pipeline schema privileges', () => {
-  it('holds USAGE on exactly six schemas', () => {
+  it('holds USAGE on exactly five schemas', () => {
     expect(byObject(PIPELINE, 'SCHEMA')).toEqual({
       capital:   ['USAGE'],
       thesis:    ['USAGE'],
       portfolio: ['USAGE'],
       briefing:  ['USAGE'],
       trade:     ['USAGE'],
-      public:    ['USAGE'],
     })
   })
 
-  it('public is USAGE and never CREATE', () => {
-    // Required because DAG-reachable pgvector operations resolve the `vector`
-    // type and the `<=>` operator in schema public.
-    expect(byObject(PIPELINE, 'SCHEMA').public).toEqual(['USAGE'])
+  it('grants nothing whatsoever on schema public', () => {
+    // The pipeline does need USAGE on public — vector-store/pg.ts resolves the
+    // `vector` type and the `<=>` operator there — but this migration cannot
+    // confer it and must not pretend to. Migrations run as ai_capital_owner;
+    // public is owned by pg_database_owner, so the GRANT is silently discarded
+    // with SQLSTATE 01007 (`no privileges were granted`), which ON_ERROR_STOP
+    // and node-postgres both ignore. The grant lives in
+    // ops/bootstrap/010_database_bootstrap.sql, where the database owner can
+    // actually make it stick, and bootstrap-contract.test.ts pins it there.
+    expect(byObject(PIPELINE, 'SCHEMA')).not.toHaveProperty('public')
+    for (const g of forGrantee(PIPELINE)) {
+      expect(g.object, 'references schema public').not.toMatch(/^public$|^public\./)
+    }
+  })
+
+  it('no statement in this migration touches schema public at all', () => {
+    // Guards the whole file, not just pipeline grants: no role may be granted
+    // anything on public from here, for the reason above.
+    for (const stmt of statements) {
+      expect(stmt, 'statement references schema public')
+        .not.toMatch(/\bON\s+SCHEMA\s+public\b/i)
+    }
+  })
+
+  it('grants CREATE on nothing', () => {
     for (const g of forGrantee(PIPELINE)) {
       expect(g.privileges, `${g.object} grants CREATE`).not.toContain('CREATE')
     }
@@ -173,9 +193,17 @@ describe('ai_capital_pipeline relation privileges', () => {
       'thesis.proposal_changes':      ['INSERT'],
       'portfolio.positions':          ['SELECT', 'UPDATE'],
       'portfolio.trade_log':          ['SELECT', 'UPDATE'],
-      'briefing.predictions':         ['INSERT', 'UPDATE'],
+      'briefing.predictions':         ['INSERT', 'SELECT', 'UPDATE'],
       'trade.ticker_dependencies':    ['SELECT'],
     })
+  })
+
+  it('briefing.predictions has SELECT — the ON CONFLICT upsert needs it', () => {
+    // prediction-archiver.ts issues INSERT ... ON CONFLICT (date) DO UPDATE.
+    // PostgreSQL requires SELECT on the conflict target in addition to INSERT
+    // and UPDATE; without it the statement fails outright with 42501. This is
+    // an upsert requirement, not general read access.
+    expect(byObject(PIPELINE, 'RELATION')['briefing.predictions']).toContain('SELECT')
   })
 
   it('capital.pending_manual_input has no UPDATE — resolvePendingManualInput is manual', () => {
