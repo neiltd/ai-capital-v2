@@ -962,5 +962,101 @@ bundle identifiable regardless of where it lives.
 **Production remains unprovisioned and un-cut-over.** Nothing here has been
 applied to a production cluster: no role exists there, no credential has been
 installed, no consumer has been repointed. The `pg_hba.conf` and SCRAM audit
-remains a hard stop before provisioning, and the claim-writer credential fallback
-(S4C) and `ai_capital_app` activation remain separate and blocked.
+remains a hard stop before provisioning, and `ai_capital_app` activation remains
+separate and blocked. The claim-writer credential fallback is addressed in the
+next section.
+
+
+## S4C — the claim-writer credential boundary (2026-09-14)
+
+Claim persistence used to fall back to the general pool when
+`CLAIM_WRITER_DATABASE_URL` was unset or blank, so a missing narrow credential
+silently escalated to a broader one. Tracing the path turned up something
+sharper: a blank, malformed or *incomplete* value did not fall back at all — it
+was handed to `createPool()`, whose `pinDestination()` completes a missing
+database from `PGDATABASE`, then the connection-string user, then `PGUSER`, then
+`USER`. Measured with `PGDATABASE=ambient_claims_db` set, `'   '`,
+`redis://localhost:6379` and `postgres://host.example` all resolved to
+`ambient_claims_db`. None of those names a protected database, so the write was
+*allowed*. Production `ai_capital` stayed protected by the live-name gate, but
+"not production" is not "intended".
+
+**The shared validator.** `requireExplicitPostgresUrl(varName, raw)` was
+extracted from the dashboard implementation in `pool.ts` and parameterised, so
+one piece of security logic serves both credentials rather than two copies
+drifting apart. It requires the `postgres://` or `postgresql://` form and an
+explicitly stated **user, host (or `?host=` socket) and database**; it refuses
+surrounding whitespace rather than trimming it; it returns the original string
+byte-for-byte; and it names the variable in every message while revealing no
+value. There is **no ambient fallback** for either caller.
+
+**Authorization, three times, each catching what the others cannot.** Against the
+validated URL *before* a protected writer pool is constructed — so a refused
+attempt neither builds a pool nor leaves one cached for the next call to find.
+Against the cached pool on every retrieval, because a pool may have been created
+when the environment read differently. And again at **SQL-issue time**, because
+`writer()` resolves synchronously before the first `await` and an authorizing
+scope can close in between; that is the W4-1 regression, and it is now covered by
+a behavioural test rather than a source scan.
+
+**The cached pool is byte-bound to its credential.** Validation answers "is this
+value usable?", not "is this the value we are using?". Without the binding, a
+process that started on credential A and later saw a different but equally valid
+credential B would validate B and write through A's pool. Drift now fails closed,
+naming neither value; `closeClaimWriter()` is the way to change credentials. A
+successful close clears pool and binding; a **failed** close retains both, so
+cleanup stays retryable and the next call cannot quietly rebuild against a
+different credential.
+
+**Evidence.** A new database-free suite of **88 tests** exercises the boundary
+through the public persistence API. Its driver mock is wholly inert — it imports
+no real driver class, extends nothing, and has no socket-capable path — and it
+proves that about itself with a structural self-check and a behavioural one. An
+earlier version of this harness subclassed the genuine pool and therefore
+*permitted* real connection attempts; that is recorded here because the
+conclusion drawn from it at the time was not warranted. The **73-test** dashboard
+suite passes **unmodified**, which is the regression proof for the shared
+extraction. Eleven mutation controls, including one that removes the
+cached-credential equality check, are all killed.
+
+**No role, migration or grant changed.** `ai_capital_claim_writer`, its `CONNECT`
+in `010` and its `desk` privileges in `018` already existed; S4C changes which
+credential the code demands, not what the database permits.
+
+**No database-backed gate was required — but not because everything here is
+pre-connection.** An earlier draft of this paragraph said every property was
+about what happens before a connection exists. That is false, and the exception
+is the most interesting property in the slice. The properties divide three ways:
+
+*Pre-construction:* credential presence, URL validation, refusal of ambient
+fallback, and the initial production authorization — all of which complete before
+any pool or client object is built.
+
+*Singleton-lifecycle:* the byte binding between the cached pool and the
+credential that created it, and the close semantics that clear both on success
+and retain both on failure. These are properties of module state across calls,
+not of any single connection.
+
+*Post-connect but pre-SQL:* the final authorization check. It runs **after**
+`Pool.connect()` resolves, deliberately, because that await is precisely where an
+authorizing scope can close beneath a caller who already holds the pool — the
+W4-1 regression. Calling it pre-connection would describe the wrong thing and
+would have missed the bug it exists to catch.
+
+All three are nevertheless tested **database-free**, because the fake Pool and
+client are wholly inert: `connect()` resolves to a stub the test installs, so the
+post-connect ordering is exercised without a server ever being involved.
+
+What makes a PostgreSQL-backed gate unnecessary is separate from that: **no grant
+and no database behaviour changed in this slice**, and the claim-writer role's
+actual database privileges were already proven by the S3B rehearsal. What a
+database-free suite cannot prove — real authentication, real connectivity, and an
+actual claim landing in `desk.agent_claims` under the real credential — is
+**still required**, and belongs to the later provisioning and cutover gate. It
+cannot exist before the credential does, and shipping this slice does not
+discharge it.
+
+**Status: the source boundary is implemented and awaiting commit; the production
+credential remains unprovisioned.** No production cutover has occurred. Until the
+credential is installed, non-Vitest claim persistence fails closed — the intended
+state, not a defect.

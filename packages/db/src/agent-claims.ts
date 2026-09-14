@@ -17,8 +17,8 @@
 // complete record and is not one.
 
 import pg from 'pg'
-import { getPool, inTestRuntime, createPool } from './pool.js'
-import { assertPoolWriteAuthorized } from './write-intent.js'
+import { getPool, inTestRuntime, createPool, requireExplicitPostgresUrl } from './pool.js'
+import { assertPoolWriteAuthorized, assertProductionWriteAuthorized } from './write-intent.js'
 
 export const CLAIM_PROTOCOL = 'claim/1'
 
@@ -220,11 +220,46 @@ export function parseEventBlocks(text: string): ParsedEvent[] {
 
 /**
  * The claim-writer pool. Separate from getPool() on purpose: this is the ONLY
- * credential in the system that can write claims, and it can write nothing
- * else. Falls back to the default pool when unset so tests can exercise the
- * logic against the throwaway database.
+ * credential in the system that can write claims, and it can write nothing else.
+ *
+ * OUTSIDE VITEST THERE IS NO FALLBACK (slice S4C). An earlier revision returned
+ * getPool() when CLAIM_WRITER_DATABASE_URL was unset or blank, so a missing
+ * narrow credential silently escalated to the broader one. Worse, a blank,
+ * malformed or INCOMPLETE value did not fall back at all — it was handed to
+ * createPool(), whose pinDestination() completes a missing database from
+ * PGDATABASE, then the connection-string user, then PGUSER, then USER. Measured
+ * with PGDATABASE=ambient_claims_db set:
+ *
+ *   '   '                        -> resolved destination "ambient_claims_db"
+ *   'redis://localhost:6379'     -> resolved destination "ambient_claims_db"
+ *   'postgres://host.example'    -> resolved destination "ambient_claims_db"
+ *
+ * None of those names a protected database, so assertPoolWriteAuthorized allowed
+ * the write. Production `ai_capital` stayed protected by the live-name gate, but
+ * "not production" is not "intended": claims would have landed wherever the
+ * ambient environment pointed, silently. The credential must therefore be
+ * explicit and complete, and that is checked BEFORE any pool exists.
+ *
+ * Under Vitest the writer is still the ordinary disposable pool — see below.
  */
 let writerPool: pg.Pool | null = null
+
+/**
+ * The exact credential string `writerPool` was constructed from.
+ *
+ * WHY THIS EXISTS. Validation answers "is this value usable?"; it does not
+ * answer "is this the value we are actually using?". With only the pool cached,
+ * a process that started with credential A and later had the environment moved
+ * to a different — equally valid — credential B would validate B and then write
+ * through A's pool. The claims would land at A's destination while every log and
+ * every operator expectation said B. That is the same class of divergence as
+ * validating a trimmed copy and connecting with the untrimmed original: "the
+ * value validated is the value used" has to remain literally true.
+ *
+ * So the binding is kept beside the pool, compared byte-for-byte on every
+ * retrieval, and cleared only when the pool is genuinely gone.
+ */
+let writerPoolCredential: string | null = null
 function writer(): pg.Pool | ReturnType<typeof getPool> {
   // ── A HOLE I MADE, AND THE FIX ────────────────────────────────────────────
   // The first version of this function opened its own pool from
@@ -276,21 +311,55 @@ function writer(): pg.Pool | ReturnType<typeof getPool> {
   // runs for every NON-TEST invocation", not "unconditionally". Overstating a
   // safety property is how the next person stops checking it.
   //
-  // W-1: `??` does not coalesce the empty string. `CLAIM_WRITER_DATABASE_URL=`
-  // (blanked, not unset — the normal way someone disables a credential in .env)
-  // made `destination` empty, which skipped the gate ENTIRELY and then fell
-  // through to the *more* privileged DATABASE_URL. `||` and an unconditional
-  // gate. There is no longer any input for which the gate does not run.
-  const url = process.env.CLAIM_WRITER_DATABASE_URL || undefined
-  if (!url) {
-    // Assert against the pool getPool() will actually hand back, not against
-    // the environment as it reads at this instant — the pool may have been
-    // cached when the environment said something else entirely.
-    const pool = getPool()
-    assertPoolWriteAuthorized(pool, 'claim-persistence')
-    return pool
+  // W-1, SUPERSEDED BY S4C. The previous revision read
+  //   const url = process.env.CLAIM_WRITER_DATABASE_URL || undefined
+  // and, when that was falsy, returned getPool(). `||` was right about the empty
+  // string — `??` would have let `CLAIM_WRITER_DATABASE_URL=` through — but the
+  // branch it guarded was itself the problem: unset and blank both escalated to
+  // the broader credential. There is now no such branch. getPool() is not
+  // consulted here, and neither is any other credential.
+  const url = requireExplicitPostgresUrl(
+    'CLAIM_WRITER_DATABASE_URL', process.env.CLAIM_WRITER_DATABASE_URL)
+
+  // AUTHORIZE BEFORE CONSTRUCTING, AND BEFORE CACHING.
+  //
+  // The destination is resolved from the validated URL, so a refused attempt
+  // never reaches `new Pool` and never leaves a `writerPool` behind for the next
+  // call to find already-cached. Caching a pool the caller was not allowed to
+  // use would make the SECOND attempt cheaper than the first, which is the wrong
+  // direction for a guard.
+  //
+  // assertProductionWriteAuthorized takes the connection string; the pool-shaped
+  // assertion below re-runs the same check against the object actually handed
+  // back, because a pool may have been cached when the environment read
+  // differently. Both remain: one covers construction, the other retrieval.
+  // CREDENTIAL DRIFT IS REFUSED, NOT SILENTLY IGNORED.
+  //
+  // The comparison is byte-for-byte against the string the cached pool was built
+  // from — not a re-parse, not a destination comparison. Two URLs can name the
+  // same database through different hosts, users or socket paths, and "close
+  // enough" is precisely the judgement this module must not make about a
+  // credential. Refusing is cheap; the operator closes the writer and reopens it.
+  if (writerPool && writerPoolCredential !== url) {
+    throw new Error(
+      '@common/db: CLAIM_WRITER_DATABASE_URL changed while a claim-writer pool ' +
+      'was still open. The cached pool was built from a different value, so ' +
+      'continuing would write through the OLD connection while the environment ' +
+      'named a new one. Call closeClaimWriter() before changing this credential. ' +
+      '(Neither value is shown here, by design.)',
+    )
   }
-  if (!writerPool) writerPool = createPool(url, { max: 2 })
+
+  if (!writerPool) {
+    // Authorize the validated URL BEFORE construction, so a refused attempt
+    // never builds a pool and never leaves one cached for the next call.
+    assertProductionWriteAuthorized(url, 'claim-persistence')
+    const built = createPool(url, { max: 2 })
+    // Record the binding only after construction succeeds: a throw from
+    // createPool must not leave a credential associated with no pool.
+    writerPool = built
+    writerPoolCredential = url
+  }
   assertPoolWriteAuthorized(writerPool, 'claim-persistence')
   return writerPool
 }
@@ -319,7 +388,16 @@ function assertStillAuthorized(db: pg.Pool | ReturnType<typeof getPool>): void {
 }
 
 export async function closeClaimWriter(): Promise<void> {
-  if (writerPool) { await writerPool.end(); writerPool = null }
+  // Both cleared only AFTER end() resolves. On rejection the pool AND its
+  // credential binding are retained: the pool is still open and still
+  // addressable, so cleanup must remain retryable, and a binding cleared early
+  // would let the very next call rebuild against a different credential without
+  // the drift check ever firing.
+  if (writerPool) {
+    await writerPool.end()
+    writerPool = null
+    writerPoolCredential = null
+  }
 }
 
 export interface PersistResult {

@@ -373,6 +373,57 @@ authenticates five named identities plus a cluster administrator; the dashboard,
 pipeline and claim-writer credentials are exercised by dedicated runtime gates —
 pipeline and claim-writer by the S3B rehearsal, dashboard by **S4B**.
 
+### The claim-writer connection boundary
+
+Claim persistence — `recordClaims`, `applyEvent`, `recordAgentRun`,
+`ingestAgentOutput` — has the same shape of boundary as the dashboard, and for a
+sharper reason: `ai_capital_claim_writer` holds production `INSERT`.
+
+- **Outside Vitest it reads `CLAIM_WRITER_DATABASE_URL` and nothing else.** There
+  is **no fallback** — not `DATABASE_URL`, not `TEST_DATABASE_URL`, not
+  `PGDATABASE`, `PGHOST`, `PGPORT`, `PGUSER` or `USER`, and not an ordinary pool
+  that already happens to be open. An earlier revision returned the general pool
+  when this variable was unset or blank, which silently escalated a missing
+  narrow credential to a broader one.
+- **The value must be written `postgres://` or `postgresql://` and must state its
+  user, host (or an explicit `?host=` socket directory) and database.** Missing,
+  empty, whitespace-only, whitespace-surrounded, malformed, wrong-scheme and
+  incomplete values are refused **before any pool or client is constructed**.
+  That last case is not pedantry: an incomplete URL would otherwise be completed
+  from the ambient environment, and a blank or malformed one was measured
+  resolving to whatever `PGDATABASE` named.
+- **Passwordless URLs and explicit Unix-socket URLs remain structurally valid.**
+  Authentication policy is a separate provisioning gate.
+- **A valid production credential is still not authorization.** A protected
+  destination additionally requires a matching
+  `withProductionWrite({ operation: 'claim-persistence', … })` scope. The check
+  runs three times, and each catches something the others cannot: against the
+  validated URL *before* a protected writer pool is constructed, against the
+  cached pool on every retrieval, and again at **SQL-issue time** — because
+  `writer()` resolves synchronously before the first `await`, so a scope can
+  close between obtaining the pool and issuing the statement.
+- **A cached writer is byte-bound to the credential that created it.** If the
+  environment later names a different value — even a perfectly valid one — the
+  call fails closed rather than writing through the old connection while the
+  environment names a new one. Neither value appears in the error. Call
+  `closeClaimWriter()` before changing the credential.
+- **Close semantics.** A successful `closeClaimWriter()` clears both the pool and
+  its credential binding; a **failed** one retains both, so cleanup stays
+  retryable and the next call cannot rebuild against a different credential with
+  the drift check never firing.
+- **Under Vitest the writer is the isolated ordinary test pool**, which the
+  harness has already pointed at a disposable database and which cannot reach a
+  protected one.
+- **`claimHistory` is deliberately outside this path.** It is a read, and it
+  continues to use `getPool()`.
+
+**This credential does not belong in the shared root `.env`.** It is a
+single-purpose production write credential; scoping it to the one process that
+needs it is the point of separating it from `DATABASE_URL` at all.
+
+**It is not yet provisioned.** Until it is, non-Vitest claim persistence fails
+closed — which is the intended state, not a defect.
+
 ### Manual mutation is deliberately excluded
 
 Every privilege in 018 is reachable from one of the 23 stages of

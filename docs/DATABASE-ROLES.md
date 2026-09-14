@@ -181,14 +181,37 @@ The roles answer *"is this credential permitted to write?"* They cannot answer
 one the incidents actually turned on.
 
 Every guard built on 2026-08-25/26 keyed on `process.env.VITEST`. Warden pointed
-out the consequence: outside vitest, nothing was guarded. `.env` carries
-`CLAIM_WRITER_DATABASE_URL`, so an ad-hoc `tsx` run that sourced it and reached a
-persistence function wrote straight to the real book. Same shape as the ad-hoc
-CLI hazard that lost the CRWD 4:1 split adjustment on 2026-07-05.
+out the consequence: outside vitest, nothing was guarded. **At that time** the
+shared `.env` carried `CLAIM_WRITER_DATABASE_URL`, so an ad-hoc `tsx` run that
+sourced it and reached a persistence function wrote straight to the real book.
+Same shape as the ad-hoc CLI hazard that lost the CRWD 4:1 split adjustment on
+2026-07-05.
+
+*That sentence is incident history, not a description of how production is
+configured.* The credential does not belong in the shared `.env`, and as of slice
+S4C it is **not provisioned in production**: production claim persistence fails
+closed until the credential is installed, deliberately, in the one process that
+needs it. (That is a statement about production, which this work can speak to —
+not a claim about every developer machine, test harness or disposable
+environment, which it cannot.)
 
 **The invariant:** possessing a production write credential is not itself
 sufficient to perform a production write. Production mutation requires explicit
 production intent.
+
+**And since S4C, the converse is enforced too: intent without an explicit
+credential is not sufficient either.** Outside Vitest, claim persistence reads
+`CLAIM_WRITER_DATABASE_URL` and nothing else — no fallback to `DATABASE_URL`,
+`TEST_DATABASE_URL`, `PGDATABASE`, `PGHOST`, `PGPORT`, `PGUSER`, `USER`, or an
+ordinary pool that is already open. The value must be a `postgres://` or
+`postgresql://` URL stating its user, host (or explicit `?host=` socket) and
+database; anything missing, blank, whitespace-surrounded, malformed,
+wrong-scheme or incomplete is refused **before any pool is constructed**.
+Passwordless and Unix-socket URLs stay structurally valid. A cached writer is
+byte-bound to the credential that built it, so a changed credential fails closed
+rather than writing through the old connection; `closeClaimWriter()` is how you
+change it. **Credential authority and write intent remain two separate
+requirements, and neither substitutes for the other.**
 
 ```ts
 await withProductionWrite(
@@ -236,6 +259,14 @@ That is correct. The honest statement of scope is:
 **Not gated:** raw SQL through `getPool()`, every other table in the cluster,
 and any future persistence function that forgets to call the gate. Those are
 protected by the PostgreSQL roles alone.
+
+S4C narrowed the credential, not the surface. It protects **those four public
+persistence functions**, which is not the same as protecting every possible
+mutation of `desk.agent_claims`: a caller who writes raw SQL through `getPool()`
+is as ungated after S4C as before. `claimHistory` is outside the writer path on
+purpose — it is a read, it needs no write credential, and routing it through one
+would make a read depend on a production write authority it has no business
+holding.
 
 The single largest ungated route, named explicitly because it is easy to miss:
 **`runMigrations()`** (`packages/db/src/migrate.ts`) executes arbitrary SQL from

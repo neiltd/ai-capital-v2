@@ -506,41 +506,51 @@ export async function closePool(): Promise<void> {
 
 let _dashboardPool: pg.Pool | null = null
 
-/** Schemes a dashboard credential may carry. Everything else is refused. */
-const DASHBOARD_URL_SCHEMES = ['postgres:', 'postgresql:']
+/** Schemes an explicit PostgreSQL credential may carry. Everything else is refused. */
+const POSTGRES_URL_SCHEMES = ['postgres:', 'postgresql:']
 
 /** The `scheme://` forms those schemes must actually be written in. */
-const DASHBOARD_URL_SCHEME_RE = /^postgres(ql)?:\/\//i
+const POSTGRES_URL_SCHEME_RE = /^postgres(ql)?:\/\//i
 
 /**
- * Resolve and validate DASHBOARD_DATABASE_URL — BEFORE any pool or client exists.
+ * Validate one explicit PostgreSQL credential — BEFORE any pool or client exists.
  *
- * Validation is a separate step, and it completes before construction, so an
- * invalid credential produces zero pg.Pool objects and zero connection attempts
- * rather than a pool that fails on first use.
+ * SHARED, AND DELIBERATELY SO. This began as the dashboard's validator in slice
+ * S4A and is now used by the claim writer as well (S4C). The logic encodes four
+ * facts that were each measured rather than reasoned, and that a second copy
+ * would eventually get wrong: the WHATWG parser is wrong in both directions for
+ * this job; pg-connection-string reports a missing user/host as `''` and a
+ * missing database as `null`; surrounding whitespace must be refused rather than
+ * trimmed; and the original string must reach the driver byte-for-byte.
  *
- * THERE IS NO FALLBACK. Not DATABASE_URL, not TEST_DATABASE_URL, not PGDATABASE,
- * not PGHOST. A guarded fallback would still be a fallback, and the value it
- * would fall back to in this process is a SQLite file path.
+ * Validation is a separate step and completes BEFORE construction, so an invalid
+ * credential produces zero pg.Pool objects and zero connection attempts rather
+ * than a pool that fails on first use.
+ *
+ * THERE IS NO FALLBACK, for any caller. Not DATABASE_URL, not TEST_DATABASE_URL,
+ * not PGDATABASE, PGHOST, PGPORT, PGUSER or USER. A guarded fallback is still a
+ * fallback, and the values it would reach for are exactly the ones that make an
+ * incomplete URL resolve somewhere unintended.
  *
  * Errors name the VARIABLE and the failure, never the value: an operator needs
- * to know which credential is wrong, and a log needs not to contain it.
+ * to know which credential is wrong, and a log needs not to contain it. No
+ * message here interpolates the credential, its user, its host or its database.
+ *
+ * @param varName the environment variable being validated, for the message only
+ * @param raw     its value, exactly as read
  */
-function resolveDashboardUrl(): string {
-  const raw = process.env.DASHBOARD_DATABASE_URL
-
+export function requireExplicitPostgresUrl(varName: string, raw: string | undefined): string {
   if (raw === undefined) {
     throw new Error(
-      '@common/db: DASHBOARD_DATABASE_URL is not set. The dashboard read pool has ' +
-      'no fallback — it must never borrow DATABASE_URL, which in the Unified ' +
-      'Platform process is the Prisma SQLite URL.',
+      `@common/db: ${varName} is not set. This credential has no fallback — it ` +
+      'must never borrow DATABASE_URL, TEST_DATABASE_URL or any PG* variable.',
     )
   }
   // Empty and whitespace-only, in one check. `VAR=` is the ordinary way an
   // operator disables a credential in .env, and it must fail like `VAR` unset
   // rather than sliding into some other path.
   if (raw.trim() === '') {
-    throw new Error('@common/db: DASHBOARD_DATABASE_URL is empty or whitespace-only.')
+    throw new Error(`@common/db: ${varName} is empty or whitespace-only.`)
   }
   // Surrounding whitespace is REJECTED, not trimmed. The WHATWG URL parser
   // silently strips leading and trailing spaces, so validating a trimmed copy and
@@ -549,8 +559,8 @@ function resolveDashboardUrl(): string {
   // credential.
   if (raw !== raw.trim()) {
     throw new Error(
-      '@common/db: DASHBOARD_DATABASE_URL has leading or trailing whitespace. ' +
-      'It is refused rather than trimmed, so the value validated is the value used.',
+      `@common/db: ${varName} has leading or trailing whitespace. It is refused ` +
+      'rather than trimmed, so the value validated is the value used.',
     )
   }
 
@@ -570,10 +580,10 @@ function resolveDashboardUrl(): string {
   // Requiring the `scheme://` form admits every real PostgreSQL URI (TCP and
   // socket alike) and rejects the scheme-relative shapes outright, which leaves
   // pg-connection-string as the single parser of record below.
-  if (!DASHBOARD_URL_SCHEME_RE.test(raw)) {
+  if (!POSTGRES_URL_SCHEME_RE.test(raw)) {
     throw new Error(
-      '@common/db: DASHBOARD_DATABASE_URL must be a PostgreSQL URL beginning ' +
-      `${DASHBOARD_URL_SCHEMES.map(s => `${s}//`).join(' or ')}.`,
+      `@common/db: ${varName} must be a PostgreSQL URL beginning ` +
+      `${POSTGRES_URL_SCHEMES.map(sc => `${sc}//`).join(' or ')}.`,
     )
   }
 
@@ -602,7 +612,7 @@ function resolveDashboardUrl(): string {
   try {
     fields = parseConnectionString(raw)
   } catch {
-    throw new Error('@common/db: DASHBOARD_DATABASE_URL could not be parsed as a connection string.')
+    throw new Error(`@common/db: ${varName} could not be parsed as a connection string.`)
   }
   // Missing components come back as '' (user, host) or null (database), so
   // emptiness is the single test for all three.
@@ -613,12 +623,12 @@ function resolveDashboardUrl(): string {
     })
   if (missing.length > 0) {
     throw new Error(
-      `@common/db: DASHBOARD_DATABASE_URL must state its ${missing.join(', ')} explicitly. ` +
-      'This pool never inherits connection fields from PGDATABASE, PGHOST, PGUSER or USER; ' +
-      'an incomplete URL would be completed from the ambient environment, which is a ' +
-      'fallback by another name. A Unix-socket target must supply the socket directory ' +
-      'as an explicit ?host= parameter. A password is NOT required — passwordless ' +
-      'authentication and .pgpass remain operator choices.',
+      `@common/db: ${varName} must state its ${missing.join(', ')} explicitly. ` +
+      'This credential never inherits connection fields from PGDATABASE, PGHOST, ' +
+      'PGPORT, PGUSER or USER; an incomplete URL would be completed from the ambient ' +
+      'environment, which is a fallback by another name. A Unix-socket target must ' +
+      'supply the socket directory as an explicit ?host= parameter. A password is NOT ' +
+      'required — passwordless authentication and .pgpass remain operator choices.',
     )
   }
 
@@ -639,7 +649,9 @@ function resolveDashboardUrl(): string {
 export function getDashboardPool(): pg.Pool {
   if (_dashboardPool) return _dashboardPool
 
-  const url = resolveDashboardUrl()   // throws before anything is constructed
+  // Same validator the claim writer uses; see requireExplicitPostgresUrl.
+  const url = requireExplicitPostgresUrl('DASHBOARD_DATABASE_URL',
+                                         process.env.DASHBOARD_DATABASE_URL)
   _dashboardPool = createPool(url)
 
   _dashboardPool.on('error', err => {
