@@ -1,5 +1,6 @@
 import { describe, it, expect } from 'vitest'
-import { resolveRedisEndpoint, canonicalPath, isInsideProductionRepo, DestinationError } from '../src/destinations.js'
+import { existsSync } from 'node:fs'
+import { resolveRedisEndpoint, canonicalPath, isInsideProductionRepo, DestinationError, PRODUCTION_REPO, PRODUCTION_ROOTS } from '../src/destinations.js'
 
 // Adversarial destination cases.
 //
@@ -71,12 +72,21 @@ describe('undeterminable destinations FAIL CLOSED', () => {
 })
 
 describe('filesystem targets are canonicalised, not string-matched', () => {
-  const REPO = '/Users/thanapold/Desktop/Projects.nosync'
+  // Taken from the module under test rather than re-typed: S4F protects TWO
+  // roots during the relocation, and a literal here would silently keep testing
+  // only the legacy one. tests/runtime-root-portability.test.ts pins the exact
+  // membership of PRODUCTION_ROOTS.
+  const REPO = PRODUCTION_REPO
 
-  it('a RELATIVE path resolves against cwd — which IS production inside the repo', () => {
+  it('a RELATIVE path resolves against cwd — which IS production inside a protected root', () => {
+    // The canonical runtime root does not exist on disk yet (S4F has not
+    // relocated anything), so this case uses whichever protected root is
+    // actually present. The rule under test is the resolution, not the path.
+    const present = PRODUCTION_ROOTS.find(r => existsSync(r))
+    if (present === undefined) return
     const prev = process.cwd()
     try {
-      process.chdir(REPO)
+      process.chdir(present)
       // The old prefix check accepted this; it is the production database.
       expect(isInsideProductionRepo('data/pipeline-runs.db')).toBe(true)
     } finally { process.chdir(prev) }

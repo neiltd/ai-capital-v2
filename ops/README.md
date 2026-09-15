@@ -540,6 +540,45 @@ and verified **before** the credential file is first created; otherwise the
 secret can enter a snapshot in the window between creation and exclusion. No
 `tmutil` command has been run.
 
+### The production runtime root (S4F, in transition)
+
+Two directories are protected as production for the duration of the relocation,
+and `packages/queue/src/destinations.ts` names both as frozen literals:
+
+| Root | Status |
+|---|---|
+| `/Users/thanapold/ai-capital-runtime` | **proposed canonical runtime root.** It does **not exist yet**, and nothing points at it. |
+| `/Users/thanapold/Desktop/Projects.nosync` | **legacy root — still protected and still authoritative** throughout the transition. |
+
+`isInsideProductionRepo()` classifies a path as production when it equals or sits
+under **either** root after canonicalization (`path.resolve` + `realpath`, so
+symlinks and `..` collapse, and a sibling like `…/ai-capital-runtime-old` is not
+swallowed by a prefix match). `PRODUCTION_REPO` is retained as the canonical
+default and now resolves to the **runtime** root, so an unset `PIPELINE_RUNS_DB`
+or `AI_CAPITAL_ROOT` resolves there — never to `cwd`, `HOME`, an environment
+variable, or the checkout that happened to load the module.
+
+**Why the roots are literals.** Deriving the root from the module's own location
+would make every checkout declare itself production — including the disposable
+`/private/tmp` worktrees the test suite runs from — so the guard would answer
+`true` for a temp worktree and `false` for the real runtime root. There is no
+input to point the boundary somewhere else, so no export and no stray `cd` can
+move it. `AI_CAPITAL_ROOT` keeps its only meaning: being **outside** these roots
+is one of three dimensions that must *all* hold before an environment counts as
+isolated.
+
+**Why the scripts changed.** `scripts/run-alerts.sh`, `refresh-prices.sh`,
+`daily-catchup.sh` and `dep-graph-scan.sh` hard-coded the Desktop path; they now
+derive `ROOT` from `BASH_SOURCE[0]`, and `refresh-prices.sh` derives `DATA_ROOT`
+from that `ROOT`. `daily-scheduler.sh`, `pipeline-watchdog.sh`, `daily-queue.sh`
+and `scripts/lib/worker-liveness.sh` were already root-relative and are
+unchanged.
+
+**This slice performs no relocation and no cutover.** It creates no directory,
+copies no data, installs no credential, renders no plist and touches no launchd
+job. Removing protection for the legacy root is a **later, separately approved
+retirement change** — not part of S4F.
+
 ### Manual mutation is deliberately excluded
 
 Every privilege in 018 is reachable from one of the 23 stages of

@@ -185,6 +185,19 @@ you export it yourself — without it they silently read/write the stale SQLite
 fallback stores instead of Postgres (this is exactly how the CRWD 4:1 split
 adjustment got lost on 2026-07-05).
 
+**Production runtime root (S4F, in transition).** Two roots are protected as
+production: `/Users/thanapold/ai-capital-runtime` — the **proposed canonical
+runtime root, which does not exist yet and which nothing points at** — and
+`/Users/thanapold/Desktop/Projects.nosync`, the legacy root, which **remains
+protected and authoritative** during the transition. Both are frozen literals in
+`packages/queue/src/destinations.ts`; neither is ever derived from the module's
+location, `cwd`, `HOME`, `AI_CAPITAL_ROOT` or Git metadata, because a derived
+root would make every temp worktree declare itself production. `PRODUCTION_REPO`
+still exists and now resolves to the runtime root, so unset isolation defaults
+resolve there. Scripts under `scripts/` derive `ROOT` from `BASH_SOURCE[0]`.
+Dropping the legacy root's protection requires a later, separately approved
+retirement change; the current slice performs **no relocation and no cutover**.
+
 `packages/pipeline-runs` (`@common/pipeline-runs`) is the structured
 observability layer: every stage calls `recordStart`/`recordEnd` around its
 work, writing to `data/pipeline-runs.db` (path overridable via

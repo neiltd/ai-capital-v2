@@ -1,5 +1,5 @@
 import dns from 'node:dns/promises'
-import { resolve as pathResolve, sep } from 'node:path'
+import { basename, dirname, join, resolve as pathResolve, sep } from 'node:path'
 import { realpathSync, existsSync } from 'node:fs'
 
 /**
@@ -36,7 +36,55 @@ export const PRODUCTION_REDIS_PORT = 6379
 /** Addresses that mean "this machine", where the production instance lives. */
 const LOCAL_ADDRESSES = new Set(['127.0.0.1', '::1', '0.0.0.0', '::'])
 
-export const PRODUCTION_REPO = '/Users/thanapold/Desktop/Projects.nosync'
+/**
+ * THE PROTECTED PRODUCTION ROOTS — FIXED LITERALS, BY DESIGN.
+ *
+ * Two roots are protected for the duration of the S4F relocation:
+ *
+ *   [0] /Users/thanapold/ai-capital-runtime      the canonical runtime root the
+ *                                                relocation moves production to
+ *   [1] /Users/thanapold/Desktop/Projects.nosync the legacy root, which stays
+ *                                                authoritative and protected
+ *                                                until a separately approved
+ *                                                retirement change removes it
+ *
+ * WHY THESE ARE LITERALS AND NOT DERIVED FROM ANYTHING.
+ *
+ * The obvious-looking alternative — deriving the root from this module's own
+ * location — is WRONG, and dangerously so. This file is imported by the test
+ * suite, by disposable git worktrees under /private/tmp, and by any developer
+ * clone. Under module-location derivation every one of those would declare
+ * ITSELF production: isInsideProductionRepo() would answer `true` for a temp
+ * worktree's paths and `false` for the real runtime root, inverting the guard it
+ * exists to provide. "The checkout that loaded this module" is not a definition
+ * of production; it is a description of whoever ran the code.
+ *
+ * For the same reason the roots are never read from cwd, PWD, HOME,
+ * AI_CAPITAL_ROOT, any other environment variable, or Git metadata. There is no
+ * input to point at a different directory, so no export, no test harness and no
+ * stray `cd` can move the boundary. AI_CAPITAL_ROOT keeps the only meaning it
+ * ever had — see isolation.ts, where being OUTSIDE these roots is one of three
+ * dimensions that must ALL hold before an environment counts as isolated.
+ *
+ * Adding or removing a root is therefore a reviewed source change, which is the
+ * point: the relocation adds one here, and only a later approved retirement
+ * removes the legacy one.
+ */
+export const PRODUCTION_ROOTS: readonly string[] = Object.freeze([
+  '/Users/thanapold/ai-capital-runtime',
+  '/Users/thanapold/Desktop/Projects.nosync',
+])
+
+/**
+ * The canonical production root — the one an unset default resolves to.
+ *
+ * Retained under its original name so every existing import keeps working, and
+ * deliberately pointed at the NEW runtime root: when PIPELINE_RUNS_DB or
+ * AI_CAPITAL_ROOT is unset, isolation.ts resolves against this, never against
+ * cwd or HOME. The legacy root stays protected through PRODUCTION_ROOTS, but it
+ * is no longer the default destination.
+ */
+export const PRODUCTION_REPO = PRODUCTION_ROOTS[0]
 
 export class DestinationError extends Error {
   constructor(message: string) { super(message); this.name = 'DestinationError' }
@@ -111,17 +159,72 @@ export async function resolveRedisEndpoint(url: string): Promise<RedisEndpoint> 
  */
 export function canonicalPath(p: string): string {
   const abs = pathResolve(p)
-  try { return realpathSync(abs) } catch { return abs }   // may not exist yet; absolute is still better than raw
+
+  try {
+    return realpathSync(abs)
+  } catch (e) {
+    // ENOENT is the ONLY recoverable case: the path names something that does
+    // not exist yet, which is ordinary — a run database about to be created, a
+    // destination about to be published. Everything else (EACCES, EPERM, ELOOP,
+    // ENOTDIR, EIO) means we could not determine what this path really is, and
+    // an undetermined path must FAIL CLOSED rather than be classified.
+    if ((e as NodeJS.ErrnoException).code !== 'ENOENT') throw e
+  }
+
+  // ── THE DEEPEST EXISTING ANCESTOR, THEN THE MISSING SUFFIX ────────────────
+  //
+  // The previous implementation returned `abs` unresolved whenever realpath
+  // failed, which was a FAIL-OPEN BYPASS of the production boundary. Measured:
+  // a symlink in /tmp pointing at the protected legacy root, plus a child that
+  // does not exist yet, kept the /tmp alias — so isInsideProductionRepo()
+  // answered `false` for a path that resolves squarely inside production.
+  //
+  // Walking up one component at a time and re-attaching the preserved suffix
+  // resolves every symlink that actually exists on the way down, so the alias
+  // collapses and only the genuinely-missing tail stays symbolic.
+  let current = abs
+  let suffix = ''
+  for (;;) {
+    const parent = dirname(current)
+    // dirname('/') === '/': the filesystem root always exists, so realpath above
+    // would have succeeded. Reaching here without progress means something is
+    // deeply wrong, and guessing is exactly what this function must not do.
+    if (parent === current) {
+      throw new DestinationError(`cannot canonicalize ${abs}: reached the filesystem root without resolving it`)
+    }
+    // join() only concatenates components — unlike resolve() it never consults
+    // cwd, so the preserved suffix stays a pure relative tail.
+    suffix = suffix === '' ? basename(current) : join(basename(current), suffix)
+    current = parent
+    try {
+      // realpathSync is the single source of truth for existence — no separate
+      // existsSync check, which would be a second answer that can disagree.
+      return pathResolve(realpathSync(current), suffix)
+    } catch (e) {
+      if ((e as NodeJS.ErrnoException).code !== 'ENOENT') throw e
+    }
+  }
 }
 
-/** True when a path is the production repository or lives inside it. */
+/**
+ * True when a path is one of the protected production roots, or lives inside one.
+ *
+ * Both roots are checked, so during the relocation neither the new runtime tree
+ * nor the legacy tree can be mistaken for an isolated destination. The
+ * comparison stays canonical (path.resolve + realpath, so symlinks and `..`
+ * collapse) and separator-bound, so a sibling like `…/ai-capital-runtime-old`
+ * is NOT swallowed by a bare prefix match.
+ */
 export function isInsideProductionRepo(p: string): boolean {
   const canon = canonicalPath(p)
-  const repo = canonicalPath(PRODUCTION_REPO)
-  return canon === repo || canon.startsWith(repo + sep)
+  return PRODUCTION_ROOTS.some(root => {
+    const repo = canonicalPath(root)
+    return canon === repo || canon.startsWith(repo + sep)
+  })
 }
 
-/** True when this SQLite path is (or would be) the production run database. */
+/** True when this SQLite path is (or would be) a production run database —
+ *  in EITHER protected root. */
 export function isProductionRunDb(p: string): boolean {
   return isInsideProductionRepo(p)
 }

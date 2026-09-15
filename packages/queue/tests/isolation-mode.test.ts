@@ -3,9 +3,12 @@ import { readdirSync, readFileSync, existsSync } from 'node:fs'
 import { join, dirname } from 'node:path'
 import { fileURLToPath } from 'node:url'
 import { decideIsolation, requireIsolation, PartialIsolationError } from '../src/isolation.js'
+import { PRODUCTION_REPO } from '../src/destinations.js'
 
 const HERE = dirname(fileURLToPath(import.meta.url))
-const REPO = '/Users/thanapold/Desktop/Projects.nosync'
+// From the module under test: S4F protects two roots and moves the canonical
+// default to /Users/thanapold/ai-capital-runtime.
+const REPO = PRODUCTION_REPO
 const ISO = { REDIS_URL: 'redis://127.0.0.1:6399', PIPELINE_RUNS_DB: '/tmp/iso/runs.db', AI_CAPITAL_ROOT: '/tmp/iso' }
 const PROD = { REDIS_URL: 'redis://localhost:6379', PIPELINE_RUNS_DB: `${REPO}/data/pipeline-runs.db`, AI_CAPITAL_ROOT: REPO }
 

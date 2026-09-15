@@ -2,7 +2,8 @@
 # Daily investment intelligence pipeline
 # Runs all projects in dependency order; external API failures are logged but don't abort.
 # Usage: ./daily.sh
-# Cron:  0 7 * * 1-5 /Users/thanapold/Desktop/Projects/daily.sh   # weekdays 7am Pacific
+# Scheduling authority is launchd (see ops/launchd/), never cron. The stale
+# cron line that used to sit here named a path this repository left long ago.
 
 # `pipefail` makes a piped command's exit code the FIRST non-zero, instead of
 # the last command (tee, which always succeeds). Without this, killed/failed
