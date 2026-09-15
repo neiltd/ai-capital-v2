@@ -11,14 +11,20 @@
 // nothing to do. It is safe to leave unregistered: nothing enqueues structured
 // work unless SCHEDULE_STRUCTURED_INGESTION=true.
 
-import { ensurePipelineEnv } from '../src/env.js'
+// Same structural startup order as bin/worker.ts — see the note there. This
+// lane remains DORMANT and UNREGISTERED; nothing enqueues structured work unless
+// SCHEDULE_STRUCTURED_INGESTION=true, and no launchd agent is installed for it.
+import type { Job } from 'bullmq'
+import { ensurePipelineEnv, requirePipelineCredential } from '../src/env.js'
+
 ensurePipelineEnv()
 
-import { createStructuredWorker, closeAll } from '../src/queue.js'
-import { processJob } from '../src/processor.js'
-import type { Job } from 'bullmq'
+const pipelineCredential = requirePipelineCredential()
 
-const worker = createStructuredWorker(async (job: Job) => processJob(job))
+const { createStructuredWorker, closeAll } = await import('../src/queue.js')
+const { processJob } = await import('../src/processor.js')
+
+const worker = createStructuredWorker(async (job: Job) => processJob(job, pipelineCredential))
 
 worker.on('completed', (job, result) => {
   console.log(`[structured-worker] ✅ ${job.name} (runId=${(result as { runId: string }).runId})`)

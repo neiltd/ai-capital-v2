@@ -32,9 +32,11 @@
     "structured-worker": "tsx bin/structured-worker.ts"
   },
   "dependencies": {
+    "@common/db": "workspace:*",
     "@common/pipeline-runs": "workspace:*",
     "@common/types": "workspace:*",
-    "bullmq": "^5.30.0"
+    "bullmq": "^5.30.0",
+    "dotenv": "^16.4.5"
   },
   "devDependencies": {
     "@types/node": "^22.0.0",

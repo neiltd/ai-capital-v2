@@ -17,6 +17,10 @@
     "./write-intent": {
       "types": "./src/write-intent.ts",
       "import": "./src/write-intent.ts"
+    },
+    "./credential-url": {
+      "types": "./src/credential-url.ts",
+      "import": "./src/credential-url.ts"
     }
   },
   "bin": {

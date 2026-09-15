@@ -424,6 +424,68 @@ needs it is the point of separating it from `DATABASE_URL` at all.
 **It is not yet provisioned.** Until it is, non-Vitest claim persistence fails
 closed — which is the intended state, not a defect.
 
+### The pipeline connection boundary
+
+The queue worker is the third consumer to get its own credential, and it is the
+one that spawns other processes — so the boundary has two halves.
+
+- **The workers read `PIPELINE_DATABASE_URL` and nothing else.**
+  `packages/queue/bin/worker.ts` and `bin/structured-worker.ts` validate it with
+  the same canonical validator the dashboard and claim writer use
+  (`@common/db/credential-url`), with **no fallback** to `DATABASE_URL`,
+  `TEST_DATABASE_URL` or any `PG*` variable.
+- **Validation happens before any resource module is even imported.** ESM
+  evaluates every static import before the first statement, so the entry points
+  import only inert code statically and pull `src/queue.js` and
+  `src/processor.js` in with `await import(...)` *after* the credential is
+  validated. A refused credential therefore produces no Worker, no QueueEvents
+  and no Redis connection at all, rather than ones that fail on first use.
+- **Stage children receive a DERIVED `DATABASE_URL`, never an inherited one.**
+  `buildPipelineChildEnv()` copies the parent environment, applies the JobSpec's
+  own `env` and the caller's additions, then **strips** every `PG*`
+  (`^PG[A-Z0-9_]*$` — `PGCONNECT_TIMEOUT` is why the pattern allows digits and
+  underscores), every `*_DATABASE_URL`, `MIGRATION_OWNER_ROLE` and
+  `LIVE_DATABASE_NAMES` — and only then assigns `DATABASE_URL` from the
+  validated credential. Sanitizing last is deliberate: it means it does not
+  matter where a variable came from. Assigning the credential last is also
+  deliberate: a JobSpec cannot redirect a stage's destination.
+- **`PIPELINE_DATABASE_URL` itself is not passed down.** One credential name per
+  process keeps "which credential am I holding" answerable.
+- **The direct (non-queue) consumers use the same code.**
+  `scripts/run-alerts.sh` and `scripts/refresh-prices.sh` carry no default and no
+  policy; they `exec packages/queue/bin/run-stage.ts -- <fixed command>`, which
+  validates and builds the child environment exactly as the worker does. The
+  previous `${DATABASE_URL:-postgres://…}` default meant a missing credential
+  silently ran the stage as the personal superuser role.
+- **The schedulers hold no credential at all.** `daily-queue.sh`,
+  `scripts/daily-scheduler.sh` and `scripts/pipeline-watchdog.sh` submit to Redis
+  and read the SQLite run ledger; nothing on their path connects to PostgreSQL.
+  `daily-queue.sh` additionally no longer starts a worker: the inline `nohup`
+  fallback inherited the scheduler's environment, which was the only reason a
+  scheduled job would have needed a production credential.
+- **A registered launchd job is not a running one.** `launchctl list` exits 0 for
+  a job that is merely loaded — crashed and waiting out `ThrottleInterval`, or
+  never started — and prints no `PID` key at all.
+  `scripts/lib/worker-liveness.sh` requires a live PID whose command line is the
+  expected worker entry point, run by a plausible runtime, so a stale PID, a
+  recycled PID and a `grep`/`tail` that merely mentions the path are all refused.
+  With no live worker the scheduler exits 3 and enqueues nothing.
+- **The root `.env` is no longer sourced wholesale.** `ensurePipelineEnv()` reads
+  it, parses it in memory with dotenv's pure `parse`, and copies only
+  `ANTHROPIC_API_KEY` and `SEC_FUND_API_KEY`. `process.loadEnvFile()` cannot be
+  made selective — it installs the whole file into `process.env` before any code
+  can look at it. A file that exists but cannot be read is a hard error, reported
+  with its path and error code and never its contents.
+
+**The launchd templates under `ops/launchd/` are source artifacts, not installers.**
+They contain `@@PLACEHOLDER@@` values and no credential. Rendering one safely
+requires XML-escaping the substituted value, keeping it out of argv and stdout,
+writing through a private temporary file at mode 0600, running `plutil -lint`,
+and publishing atomically. **That renderer does not exist yet, so installation is
+blocked**, and the earlier `sed`-based instructions were removed rather than
+patched. Production cutover to `ai_capital_pipeline` remains a separate,
+separately authorized action.
+
 ### Manual mutation is deliberately excluded
 
 Every privilege in 018 is reachable from one of the 23 stages of

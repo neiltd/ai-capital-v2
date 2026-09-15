@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<!--
+  TEMPLATE — NOT AN INSTALLED AGENT. Mirrors
+  com.thanapol.ai-capital.worker.plist.template, but drives the
+  structured-ingestion queue instead of daily-pipeline.
+
+  WHY A SECOND WORKER. The daily worker runs at concurrency 1 and the article
+  flow is deliberately serial. Structured ingestion previously shared that lane,
+  so a slow, retrying or stalled structured job could occupy the only slot and
+  delay runnable article jobs — the blocking the decoupling removed at the graph
+  level, returning through execution resources.
+
+  This is only needed if scheduled structured ingestion is ever enabled
+  (SCHEDULE_STRUCTURED_INGESTION=true). While it is dormant nothing enqueues
+  structured work, so leaving this unregistered is safe and is the current state.
+
+  CREDENTIAL CONTRACT is identical to the daily worker: @@PIPELINE_DATABASE_URL@@
+  is the least-privilege ai_capital_pipeline credential and is the ONLY database
+  variable this agent supplies. A stage child's DATABASE_URL is derived from it
+  by buildPipelineChildEnv() after sanitization, never handed down directly.
+
+  INSTALLATION IS BLOCKED UNTIL A CREDENTIAL-SAFE RENDERER EXISTS.
+  This file is a SOURCE ARTIFACT ONLY. It is not installable as written, and the
+  earlier `sed`-based instructions were removed rather than fixed: passing a
+  credential through command arguments exposes it in the process table, and
+  `sed` mishandles `&`, `|`, backslashes and the XML-sensitive characters
+  `& < >`, which can silently alter or corrupt the value it substitutes.
+
+  A separately reviewed renderer must exist first. Its contract:
+    * XML-escape every substituted value;
+    * keep credentials out of argv and out of stdout;
+    * write through a private temporary file created with mode 0600;
+    * run `plutil -lint` on the result;
+    * publish atomically into ~/Library/LaunchAgents/.
+  That renderer is deliberately NOT part of this slice.
+-->
+<plist version="1.0">
+<dict>
+	<key>Label</key>
+	<string>com.thanapol.ai-capital.structured-worker</string>
+
+	<!-- The entry point is given as an ABSOLUTE path. The superseded plist
+	     passed it relative to WorkingDirectory, which works for launchd but
+	     leaves a command line that names no checkout — two repositories would
+	     be indistinguishable in `ps`, and the scheduler's liveness check could
+	     not tell whose worker it had found. -->
+	<key>ProgramArguments</key>
+	<array>
+		<string>/usr/bin/caffeinate</string>
+		<string>-i</string>
+		<string>/opt/homebrew/bin/npx</string>
+		<string>tsx</string>
+		<string>@@AI_CAPITAL_ROOT@@/packages/queue/bin/structured-worker.ts</string>
+	</array>
+
+	<key>WorkingDirectory</key>
+	<string>@@AI_CAPITAL_ROOT@@</string>
+
+	<key>EnvironmentVariables</key>
+	<dict>
+		<key>PATH</key>
+		<string>/opt/homebrew/bin:/usr/local/bin:/usr/bin:/bin</string>
+		<key>PIPELINE_RUNS_DB</key>
+		<string>@@AI_CAPITAL_ROOT@@/data/pipeline-runs.db</string>
+		<key>DATA_ROOT</key>
+		<string>@@AI_CAPITAL_ROOT@@/apps</string>
+		<key>REDIS_URL</key>
+		<string>@@REDIS_URL@@</string>
+		<key>PIPELINE_DATABASE_URL</key>
+		<string>@@PIPELINE_DATABASE_URL@@</string>
+		<!-- Scheduling itself stays off until deliberately enabled; this worker
+		     merely drains the structured queue if anything is ever enqueued. -->
+	</dict>
+
+	<key>KeepAlive</key>
+	<true/>
+	<key>RunAtLoad</key>
+	<true/>
+
+	<key>StandardOutPath</key>
+	<string>@@AI_CAPITAL_ROOT@@/logs/structured-worker.out.log</string>
+	<key>StandardErrorPath</key>
+	<string>@@AI_CAPITAL_ROOT@@/logs/structured-worker.err.log</string>
+</dict>
+</plist>

@@ -101,11 +101,16 @@ describe('structured-ingestion scheduling', () => {
     expect(runDaily).toMatch(/structured worker installed and verified/)
     expect(runDaily).toMatch(/activation requires/i)
 
-    // The worker exists as source plus an UNREGISTERED launchd definition.
-    const plist = resolve(__dirname, '..', '..', '..', 'ops', 'launchd-proposed',
-      'com.thanapol.ai-capital.structured-worker.plist')
+    // The worker exists as source plus an UNREGISTERED launchd definition,
+    // which S4D moved to a credential-free template under ops/launchd/.
+    const plist = resolve(__dirname, '..', '..', '..', 'ops', 'launchd',
+      'com.thanapol.ai-capital.structured-worker.plist.template')
     expect(existsSync(plist)).toBe(true)
-    expect(readFileSync(plist, 'utf-8')).toMatch(/PROPOSED — NOT LOADED/)
+    const plistSrc = readFileSync(plist, 'utf-8')
+    expect(plistSrc).toMatch(/TEMPLATE — NOT AN INSTALLED AGENT/)
+    // Tracked templates carry placeholders, never a real connection URL.
+    expect(plistSrc).toContain('@@PIPELINE_DATABASE_URL@@')
+    expect(plistSrc).not.toMatch(new RegExp(['postgres', '(ql)?', ':', '//'].join('')))
     expect(existsSync(resolve(__dirname, '..', 'bin', 'structured-worker.ts'))).toBe(true)
   })
 })

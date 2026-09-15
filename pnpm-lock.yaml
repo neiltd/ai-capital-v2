@@ -750,6 +750,9 @@ importers:
 
   packages/queue:
     dependencies:
+      '@common/db':
+        specifier: workspace:*
+        version: link:../db
       '@common/pipeline-runs':
         specifier: workspace:*
         version: link:../pipeline-runs
@@ -759,6 +762,9 @@ importers:
       bullmq:
         specifier: ^5.30.0
         version: 5.78.0
+      dotenv:
+        specifier: ^16.4.5
+        version: 16.6.1
     devDependencies:
       '@types/node':
         specifier: ^22.0.0

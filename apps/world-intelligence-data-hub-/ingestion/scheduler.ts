@@ -70,7 +70,7 @@ if (process.env.RUN_LEGACY_WORLD_INTEL_SCHEDULER !== 'true') {
   logger.info('scheduler', 'Refusing to start: the production scheduling authority is the BullMQ DAG');
   logger.info('scheduler', '  Structured ingestion is scheduled by packages/queue, and is dormant by default.');
   logger.info('scheduler', '  Scheduled structured ingestion is DORMANT and activation-ready, not one flag away:');
-  logger.info('scheduler', '    1. install and verify the dedicated structured worker (ops/launchd-proposed/), then');
+  logger.info('scheduler', '    1. install and verify the dedicated structured worker (ops/launchd/), then');
   logger.info('scheduler', '    2. set SCHEDULE_STRUCTURED_INGESTION=true.');
   logger.info('scheduler', '  Manual one-off run (unaffected by either setting): npm run pipeline');
   logger.info('scheduler', '  To run this legacy daemon anyway: RUN_LEGACY_WORLD_INTEL_SCHEDULER=true npm run schedule');

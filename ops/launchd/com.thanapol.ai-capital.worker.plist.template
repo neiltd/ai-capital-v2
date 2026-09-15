@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<!--
+  TEMPLATE — NOT AN INSTALLED AGENT.
+
+  Supersedes the tracked daily-queue.worker.plist, which carried a literal
+  superuser connection URL in Git. Tracked templates are credential-free: every
+  @@PLACEHOLDER@@ is substituted at install time into a copy under
+  ~/Library/LaunchAgents/, and that copy is never committed.
+
+  CREDENTIAL CONTRACT. @@PIPELINE_DATABASE_URL@@ must be the least-privilege
+  ai_capital_pipeline credential, never a superuser or personal one.
+
+  ONE CREDENTIAL NAME, AND ONLY ONE. The worker holds PIPELINE_DATABASE_URL and
+  nothing else. It does not also receive a generic DATABASE_URL: the worker
+  process never reads one, and each stage child gets its DATABASE_URL from
+  buildPipelineChildEnv(), which derives it from the validated value AFTER
+  stripping every inherited database, PG* and authority variable. A duplicate
+  here would add a second name for the same secret, widen what a crash dump or
+  an `ps -E` shows, and contradict the boundary it is meant to support.
+
+  INSTALLATION IS BLOCKED UNTIL A CREDENTIAL-SAFE RENDERER EXISTS.
+  This file is a SOURCE ARTIFACT ONLY. It is not installable as written, and the
+  earlier `sed`-based instructions were removed rather than fixed: passing a
+  credential through command arguments exposes it in the process table, and
+  `sed` mishandles `&`, `|`, backslashes and the XML-sensitive characters
+  `& < >`, which can silently alter or corrupt the value it substitutes.
+
+  A separately reviewed renderer must exist first. Its contract:
+    * XML-escape every substituted value;
+    * keep credentials out of argv and out of stdout;
+    * write through a private temporary file created with mode 0600;
+    * run `plutil -lint` on the result;
+    * publish atomically into ~/Library/LaunchAgents/.
+  That renderer is deliberately NOT part of this slice.
+-->
+<plist version="1.0">
+<dict>
+	<key>Label</key>
+	<string>com.thanapol.ai-capital.worker</string>
+
+	<!-- caffeinate -i blocks idle sleep; npx-tsx resolves the worker entry.
+	     Absolute paths so we don't depend on launchd's shell PATH. -->
+	<!-- The entry point is given as an ABSOLUTE path. The superseded plist
+	     passed it relative to WorkingDirectory, which works for launchd but
+	     leaves a command line that names no checkout — two repositories would
+	     be indistinguishable in `ps`, and the scheduler's liveness check could
+	     not tell whose worker it had found. -->
+	<key>ProgramArguments</key>
+	<array>
+		<string>/usr/bin/caffeinate</string>
+		<string>-i</string>
+		<string>/opt/homebrew/bin/npx</string>
+		<string>tsx</string>
+		<string>@@AI_CAPITAL_ROOT@@/packages/queue/bin/worker.ts</string>
+	</array>
+
+	<key>WorkingDirectory</key>
+	<string>@@AI_CAPITAL_ROOT@@</string>
+
+	<key>RunAtLoad</key>
+	<true/>
+	<key>KeepAlive</key>
+	<true/>
+	<!-- ThrottleInterval: wait 30s before respawning a freshly-crashed worker
+	     so a tight crash loop doesn't burn CPU. -->
+	<key>ThrottleInterval</key>
+	<integer>30</integer>
+
+	<key>EnvironmentVariables</key>
+	<dict>
+		<key>PATH</key>
+		<string>/opt/homebrew/bin:/usr/local/bin:/usr/bin:/bin</string>
+		<key>PIPELINE_RUNS_DB</key>
+		<string>@@AI_CAPITAL_ROOT@@/data/pipeline-runs.db</string>
+		<key>DATA_ROOT</key>
+		<string>@@AI_CAPITAL_ROOT@@/apps</string>
+		<key>REDIS_URL</key>
+		<string>@@REDIS_URL@@</string>
+		<key>PIPELINE_DATABASE_URL</key>
+		<string>@@PIPELINE_DATABASE_URL@@</string>
+	</dict>
+
+	<key>StandardOutPath</key>
+	<string>@@AI_CAPITAL_ROOT@@/logs/queue-worker.out.log</string>
+	<key>StandardErrorPath</key>
+	<string>@@AI_CAPITAL_ROOT@@/logs/queue-worker.err.log</string>
+</dict>
+</plist>

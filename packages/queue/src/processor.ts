@@ -10,6 +10,7 @@ import type { Job } from 'bullmq'
 import { recordStart, recordEnd } from '@common/pipeline-runs'
 import { workspaceRoot } from './env.js'
 import type { JobSpec, JobResult } from './types.js'
+import { buildPipelineChildEnv } from './child-env.js'
 
 interface JobPayload {
   spec: JobSpec
@@ -53,7 +54,19 @@ function spawnChild(
   })
 }
 
-export async function processJob(job: Job<JobPayload>): Promise<JobResult> {
+/**
+ * Execute one stage.
+ *
+ * @param pipelineCredential the validated PIPELINE_DATABASE_URL, captured by the
+ *   worker entrypoint at startup and passed in explicitly. It is NOT re-read
+ *   from process.env here: a credential that could change under a running worker
+ *   would make "which database did that stage write" unanswerable after the
+ *   fact. Rotation requires an intentional restart.
+ */
+export async function processJob(
+  job: Job<JobPayload>,
+  pipelineCredential: string,
+): Promise<JobResult> {
   const { spec, parentRunId, isRoot } = job.data
 
   // Skip via spec.skipIf() — fast path that doesn't even record a run.
@@ -73,9 +86,11 @@ export async function processJob(job: Job<JobPayload>): Promise<JobResult> {
   // even when the worker was spawned with a stripped PATH (nohup/launchd often
   // hand the child a near-empty env).
   const STANDARD_PATH = '/opt/homebrew/bin:/usr/local/bin:/usr/bin:/bin'
-  const env: NodeJS.ProcessEnv = {
-    ...process.env,
-    ...(spec.env ?? {}),
+  // One builder, shared with bin/run-stage.ts. It strips every database, PG* and
+  // authority variable AFTER spec.env and the additions below are applied, then
+  // assigns DATABASE_URL from the validated credential last — so neither a
+  // JobSpec nor a future addition can redirect a stage's destination.
+  const env = buildPipelineChildEnv(process.env, spec.env, pipelineCredential, {
     PATH: process.env.PATH
       ? `${STANDARD_PATH}:${process.env.PATH}`
       : STANDARD_PATH,
@@ -83,7 +98,7 @@ export async function processJob(job: Job<JobPayload>): Promise<JobResult> {
     // (unified-platform, capital-intel notebooklm, scenario refresh export,
     // gov-flow exporter) resolve correctly.
     DATA_ROOT: process.env.DATA_ROOT ?? join(root, 'apps'),
-  }
+  })
 
   const startedAt = Date.now()
   const runId = recordStart({

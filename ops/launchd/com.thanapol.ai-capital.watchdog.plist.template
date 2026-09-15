@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<!--
+  TEMPLATE — NOT AN INSTALLED AGENT. Supersedes
+  ops/launchd-proposed/com.thanapol.ai-capital.watchdog.plist.
+
+  Independent liveness observer. Records machine-opportunity evidence to the
+  canonical heartbeat file, then assesses the daily run state. Sends no external
+  notification — awareness is pull-only.
+
+  RunAtLoad SEMANTICS. RunAtLoad=true makes launchd execute the SCRIPT
+  immediately on load. It does NOT mean a pipeline is submitted:
+  pipeline-watchdog.sh decides eligibility from recorded state every time, and an
+  ineligible opportunity exits 0 having submitted nothing.
+
+  NO DATABASE CREDENTIAL, DELIBERATELY. The superseded file carried one. The
+  watchdog only reads the SQLite run ledger and the heartbeat file; it never
+  connects to PostgreSQL. An observer does not need write authority over the
+  thing it observes.
+
+  Loading the installed copy is a PRODUCTION-STATE ACTION and requires separate
+  authorization.
+
+  INSTALLATION IS BLOCKED UNTIL A CREDENTIAL-SAFE RENDERER EXISTS.
+  This file is a SOURCE ARTIFACT ONLY. It is not installable as written, and the
+  earlier `sed`-based instructions were removed rather than fixed: passing a
+  credential through command arguments exposes it in the process table, and
+  `sed` mishandles `&`, `|`, backslashes and the XML-sensitive characters
+  `& < >`, which can silently alter or corrupt the value it substitutes.
+
+  A separately reviewed renderer must exist first. Its contract:
+    * XML-escape every substituted value;
+    * keep credentials out of argv and out of stdout;
+    * write through a private temporary file created with mode 0600;
+    * run `plutil -lint` on the result;
+    * publish atomically into ~/Library/LaunchAgents/.
+  That renderer is deliberately NOT part of this slice.
+-->
+<plist version="1.0">
+<dict>
+	<key>Label</key>
+	<string>com.thanapol.ai-capital.watchdog</string>
+
+	<key>ProgramArguments</key>
+	<array>
+		<string>/bin/bash</string>
+		<string>@@AI_CAPITAL_ROOT@@/scripts/pipeline-watchdog.sh</string>
+	</array>
+
+	<key>WorkingDirectory</key>
+	<string>@@AI_CAPITAL_ROOT@@</string>
+
+	<key>EnvironmentVariables</key>
+	<dict>
+		<key>PATH</key>
+		<string>/opt/homebrew/bin:/usr/local/bin:/usr/bin:/bin</string>
+		<key>AI_CAPITAL_ROOT</key>
+		<string>@@AI_CAPITAL_ROOT@@</string>
+		<key>PIPELINE_RUNS_DB</key>
+		<string>@@AI_CAPITAL_ROOT@@/data/pipeline-runs.db</string>
+		<key>SCHEDULER_HEARTBEAT_FILE</key>
+		<string>@@AI_CAPITAL_ROOT@@/data/scheduler-heartbeat.log</string>
+		<key>DATA_ROOT</key>
+		<string>@@AI_CAPITAL_ROOT@@/apps</string>
+		<key>REDIS_URL</key>
+		<string>@@REDIS_URL@@</string>
+	</dict>
+
+	<key>RunAtLoad</key>
+	<true/>
+	<key>StartInterval</key>
+	<integer>1800</integer>
+
+	<key>StandardOutPath</key>
+	<string>@@AI_CAPITAL_ROOT@@/logs/pipeline-watchdog.log</string>
+	<key>StandardErrorPath</key>
+	<string>@@AI_CAPITAL_ROOT@@/logs/pipeline-watchdog.log</string>
+</dict>
+</plist>

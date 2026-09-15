@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<!--
+  TEMPLATE — NOT AN INSTALLED AGENT. Supersedes the tracked daily-alerts.plist.
+
+  LaunchAgent for the hot-ticker alerter (scenario-simulator's cli-alerts.ts).
+  Runs every 30 min across three market windows (PT local): US 9:30-4pm ET,
+  Thai SET morning, Thai SET afternoon. Uses launchd (not cron) so it inherits
+  the logged-in user's TCC grants instead of hitting "Operation not permitted"
+  on files under ~/Desktop.
+
+  CREDENTIAL CONTRACT. scripts/run-alerts.sh no longer carries a default
+  connection string; it execs packages/queue/bin/run-stage.ts, which validates
+  PIPELINE_DATABASE_URL, strips every other database credential from the child
+  environment, and derives DATABASE_URL from the validated value. So the
+  credential must arrive here, and it must be the least-privilege
+  ai_capital_pipeline credential — never a superuser or personal one. The alerter
+  is a pipeline consumer like any stage.
+
+  INSTALLATION IS BLOCKED UNTIL A CREDENTIAL-SAFE RENDERER EXISTS.
+  This file is a SOURCE ARTIFACT ONLY. It is not installable as written, and the
+  earlier `sed`-based instructions were removed rather than fixed: passing a
+  credential through command arguments exposes it in the process table, and
+  `sed` mishandles `&`, `|`, backslashes and the XML-sensitive characters
+  `& < >`, which can silently alter or corrupt the value it substitutes.
+
+  A separately reviewed renderer must exist first. Its contract:
+    * XML-escape every substituted value;
+    * keep credentials out of argv and out of stdout;
+    * write through a private temporary file created with mode 0600;
+    * run `plutil -lint` on the result;
+    * publish atomically into ~/Library/LaunchAgents/.
+  That renderer is deliberately NOT part of this slice.
+-->
+<plist version="1.0">
+<dict>
+	<key>Label</key>
+	<string>com.thanapol.ai-capital.alerts</string>
+
+	<key>ProgramArguments</key>
+	<array>
+		<string>/bin/bash</string>
+		<string>@@AI_CAPITAL_ROOT@@/scripts/run-alerts.sh</string>
+	</array>
+
+	<key>EnvironmentVariables</key>
+	<dict>
+		<key>PATH</key>
+		<string>/opt/homebrew/bin:/usr/local/bin:/usr/bin:/bin</string>
+		<key>PIPELINE_RUNS_DB</key>
+		<string>@@AI_CAPITAL_ROOT@@/data/pipeline-runs.db</string>
+		<key>DATA_ROOT</key>
+		<string>@@AI_CAPITAL_ROOT@@/apps</string>
+		<key>PIPELINE_DATABASE_URL</key>
+		<string>@@PIPELINE_DATABASE_URL@@</string>
+	</dict>
+
+	<key>StartCalendarInterval</key>
+	<array>
+		<!-- US session 9:30am-4pm ET = 6:00-13:00 PT, Mon-Fri -->
+		<dict>
+			<key>Weekday</key>
+			<array><integer>1</integer><integer>2</integer><integer>3</integer><integer>4</integer><integer>5</integer></array>
+			<key>Hour</key>
+			<array><integer>6</integer><integer>7</integer><integer>8</integer><integer>9</integer><integer>10</integer><integer>11</integer><integer>12</integer><integer>13</integer></array>
+			<key>Minute</key>
+			<array><integer>0</integer><integer>30</integer></array>
+		</dict>
+		<!-- Thai SET morning 10:00-12:30 ICT = 19:00-22:30 PT prior evening, Sun-Thu -->
+		<dict>
+			<key>Weekday</key>
+			<array><integer>0</integer><integer>1</integer><integer>2</integer><integer>3</integer><integer>4</integer></array>
+			<key>Hour</key>
+			<array><integer>19</integer><integer>20</integer><integer>21</integer><integer>22</integer></array>
+			<key>Minute</key>
+			<array><integer>0</integer><integer>30</integer></array>
+		</dict>
+		<!-- Thai SET afternoon 14:30-16:30 ICT = 0:30-3:30 PT same night, Mon-Fri -->
+		<dict>
+			<key>Weekday</key>
+			<array><integer>1</integer><integer>2</integer><integer>3</integer><integer>4</integer><integer>5</integer></array>
+			<key>Hour</key>
+			<array><integer>0</integer><integer>1</integer><integer>2</integer><integer>3</integer></array>
+			<key>Minute</key>
+			<array><integer>0</integer><integer>30</integer></array>
+		</dict>
+	</array>
+
+	<key>StandardOutPath</key>
+	<string>@@AI_CAPITAL_ROOT@@/logs/alerts.log</string>
+	<key>StandardErrorPath</key>
+	<string>@@AI_CAPITAL_ROOT@@/logs/alerts.log</string>
+</dict>
+</plist>

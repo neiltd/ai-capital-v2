@@ -2,10 +2,20 @@
 # Phase 3.4 replacement for daily.sh.
 #
 # Submits the daily pipeline to BullMQ and blocks until the flow completes.
-# Spawns the worker if it isn't already running (via pgrep on the script name).
 #
-# Cron line (replaces the daily.sh entry):
-#   0 7 * * 1-5 /Users/thanapold/Desktop/Projects/daily-queue.sh >> /Users/thanapold/Desktop/Projects/logs/cron.log 2>&1
+# IT STARTS NO WORKER. Slice S4D removed the inline nohup fallback: that worker
+# inherited THIS process's environment, which was the only reason a scheduled
+# job needed a PostgreSQL credential at all. This script requires a worker that
+# is already running, holds no database credential itself, and refuses to submit
+# when none is live.
+#
+# THE SCHEDULING AUTHORITY IS launchd, AND ONLY launchd. This header used to
+# carry a ready-to-paste cron line — pointing at a path the repository has not
+# lived at since it moved out of iCloud, and at a stale logs directory. Adding
+# it would create a SECOND scheduler alongside com.thanapol.ai-capital.daily:
+# two independent triggers submitting the same logical date, neither aware of
+# the other. The example is removed rather than corrected; the supported trigger
+# is the launchd agent whose template lives in ops/launchd/.
 
 set -o pipefail
 export PATH="/opt/homebrew/bin:/usr/local/bin:/usr/bin:/bin"
@@ -15,7 +25,6 @@ cd "$ROOT" || exit 2
 
 mkdir -p "$ROOT/logs" "$ROOT/data"
 LOG="$ROOT/logs/daily-queue-$(date +%F).log"
-WORKER_LOG="$ROOT/logs/queue-worker.log"
 
 log() { echo "[$(date '+%H:%M:%S')] $*" | tee -a "$LOG"; }
 
@@ -43,25 +52,63 @@ log "=============================="
 #   npx tsx packages/queue/bin/reconcile.ts            # dry run, read-only
 #   npx tsx packages/queue/bin/reconcile.ts --apply    # authorized mutation
 
-# Ensure a worker is running. Preferred: launchd-managed agent
-# (com.thanapol.ai-capital.worker) which auto-restarts on crash and survives
-# sleep/wake via caffeinate. Fallback: spawn one inline via nohup.
+# Require a LIVE worker belonging to the ONE declared authority: the
+# launchd-managed agent com.thanapol.ai-capital.worker, which auto-restarts on
+# crash and survives sleep/wake via caffeinate.
+#
+# A HAND-STARTED WORKER NO LONGER AUTHORIZES A SCHEDULED SUBMISSION. Discovering
+# one meant scanning every process on the machine for this path, which is a
+# search for a string rather than for an authority — and packages/queue/src/
+# submit.ts already records the same principle from the other direction: a
+# manual run must never silently become the scheduled run. An operator who wants
+# the scheduled run to proceed restores or kickstarts the agent. Ad-hoc work is
+# unaffected: `pnpm --filter @common/queue submit` still runs against whatever
+# worker the operator has up.
+#
+# REGISTRATION IS NOT LIVENESS, AND MENTIONING IS NOT RUNNING. This block used
+# to accept a successful `launchctl list <label>` as proof. That command
+# succeeds for a job that is merely LOADED — one crashed and waiting out its
+# ThrottleInterval, one that exited non-zero, one that has never run — and such
+# a job has no "PID" key at all. A later version required only that the target
+# appear somewhere in the command line, which accepted `npx vitest run
+# <target>`: a test runner READING the worker file counted as a worker running.
+# scripts/lib/worker-liveness.sh now parses the command structurally and
+# requires the target to be the entry point the runtime actually executes, and
+# to be the final argument, since this worker takes no arguments of its own.
+#
+# THE AUTOMATIC FALLBACK WAS REMOVED IN SLICE S4D, DELIBERATELY.
+# This block used to spawn a worker inline with nohup when neither was found.
+# That inline worker inherited THIS process's environment, which made the
+# scheduler the only reason the daily job would need a PostgreSQL credential at
+# all — a scheduled process holding a production write credential purely to hand
+# it onward. Removing the fallback lets the scheduler hold none.
+#
+# The reliability cost is smaller than it looks: the launchd agent has KeepAlive,
+# so it restarts itself on crash. The fallback only ever fired when the agent was
+# UNLOADED, which is an operator state change, not a failure mode. Failing loudly
+# and same-day is better than a worker silently started from whatever environment
+# the scheduler happened to have.
+#
+# Fail closed: do NOT submit the flow after reporting a missing worker. No
+# database credential is read, required or inspected anywhere in this script.
 WORKER_TARGET="$ROOT/packages/queue/bin/worker.ts"
 LAUNCHD_LABEL="com.thanapol.ai-capital.worker"
-if launchctl list "$LAUNCHD_LABEL" > /dev/null 2>&1; then
-  log "worker managed by launchd ($LAUNCHD_LABEL) — pid=$(launchctl list "$LAUNCHD_LABEL" | awk '/"PID"/{gsub(/[",;]/,"",$3); print $3}')"
-elif pgrep -f "$WORKER_TARGET" > /dev/null 2>&1; then
-  log "worker already running (manual) — pid=$(pgrep -f "$WORKER_TARGET" | tr '\n' ' ')"
+
+# shellcheck source=scripts/lib/worker-liveness.sh
+. "$ROOT/scripts/lib/worker-liveness.sh"
+
+if WORKER_FOUND="$(find_live_worker "$WORKER_TARGET" "$LAUNCHD_LABEL")"; then
+  log "worker live (${WORKER_FOUND%%:*}) — pid=${WORKER_FOUND##*:}"
 else
-  log "starting worker → $WORKER_LOG (fallback; consider loading launchd plist)"
-  nohup caffeinate -i npx tsx "$WORKER_TARGET" > "$WORKER_LOG" 2>&1 &
-  disown
-  sleep 3
-  if ! pgrep -f "$WORKER_TARGET" > /dev/null 2>&1; then
-    log "FATAL: worker failed to start — see $WORKER_LOG"
-    exit 2
-  fi
-  log "worker started — pid=$(pgrep -f "$WORKER_TARGET" | tr '\n' ' ')"
+  log "FATAL: no live $LAUNCHD_LABEL worker, and this scheduler starts none."
+  log "  A registered launchd job is NOT sufficient: the label must have a live"
+  log "  PID whose runtime is actually EXECUTING $WORKER_TARGET"
+  log "  (a process that merely names it as an argument does not count)."
+  log "  The daily flow was NOT submitted; nothing was enqueued."
+  log "  Restore the agent, then re-run:"
+  log "    launchctl kickstart -k gui/\$(id -u)/$LAUNCHD_LABEL"
+  log "  or load it if it is not installed."
+  exit 3
 fi
 
 # Submit + wait. Exit code mirrors the pipeline outcome (0 success, 1 failed).

@@ -66,7 +66,7 @@ async function main() {
     // ACTIVATION IS TWO STEPS, and this flag is only the second. The dedicated
     // structured worker (packages/queue/bin/structured-worker.ts) must be
     // installed and verified first; it exists as source plus an UNREGISTERED
-    // launchd definition under ops/launchd-proposed/. Setting the flag without
+    // launchd template under ops/launchd/. Setting the flag without
     // that worker would enqueue structured jobs nothing drains.
     console.log(`[run-daily] structured ingestion dormant — activation requires (1) the structured worker installed and verified, then (2) ${STRUCTURED_INGESTION_SCHEDULE_ENV}=true`)
   }

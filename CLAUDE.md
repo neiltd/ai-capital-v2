@@ -89,9 +89,20 @@ pnpm --filter @common/queue smoke
 ```
 
 Production orchestration is launchd, not cron or a shell script directly:
-- `com.thanapol.ai-capital.worker` — long-running BullMQ worker (`daily-queue.worker.plist`), auto-restarts via `KeepAlive`, uses `caffeinate -i` to survive sleep.
-- `com.thanapol.ai-capital.daily` — triggers `daily-queue.sh`, which ensures the worker is up and submits the daily flow.
+- `com.thanapol.ai-capital.worker` — long-running BullMQ worker, auto-restarts via `KeepAlive`, uses `caffeinate -i` to survive sleep.
+- `com.thanapol.ai-capital.daily` — triggers `daily-queue.sh`, which REQUIRES a live worker and submits the daily flow. It no longer starts one: if no live worker exists it logs FATAL, submits nothing and exits 3.
 - `com.thanapol.ai-capital.alerts` — every 30 min during US/Thai market hours, runs `scripts/run-alerts.sh` (hot-ticker LINE alerts).
+
+The tracked **source** for these agents is `ops/launchd/*.plist.template`. The
+older `daily-queue.worker.plist`, `daily-alerts.plist`, `daily-catchup.plist`
+and `ops/launchd-proposed/` are gone — each embedded a literal superuser
+connection URL, and `daily-catchup.plist` additionally claimed the
+`com.thanapol.ai-capital.daily` label. **The templates are not directly
+installable**: rendering a credential into a plist safely (XML escaping, no
+credential in argv, mode 0600, atomic publish) needs a reviewed renderer that
+does not exist yet, so installation is deliberately blocked. Production cutover
+to the least-privilege credentials remains a separate, separately authorized
+action.
 
 `daily.sh` (root) is the **legacy** pre-queue orchestrator kept for reference/rollback; it is not what runs in production anymore. When editing pipeline stage order or dependencies, edit `packages/queue/src/jobs.ts`, not `daily.sh`.
 
@@ -138,11 +149,25 @@ carry a `schemaVersion`; loaders warn (not fail) on mismatch.
 `packages/db` (`@common/db`) exposes `usePostgres()` (true iff `DATABASE_URL` is
 set) and `getPool()`. When `DATABASE_URL` is unset, callers fall back to local
 SQLite (`better-sqlite3`) and LanceDB for vectors — this is the migration
-fallback path, not the intended steady state. The launchd worker plist sets
-`DATABASE_URL=postgres://thanapold@localhost:5432/ai_capital`; the root `.env`
-now also sets it for the queue bins (worker/submit/smoke, incl. the
-daily-queue.sh fallback worker), and `scripts/run-alerts.sh` /
-`scripts/refresh-prices.sh` export it themselves. **Per-app ad-hoc CLI runs
+fallback path, not the intended steady state.
+
+**Who holds which credential (slice S4D).** Each consumer names its own variable
+and there is no fallback between them:
+
+| Process | Variable it reads | Notes |
+|---|---|---|
+| queue worker / structured worker | `PIPELINE_DATABASE_URL` | validated at startup, before any queue or Redis module is even imported |
+| stage children (every DAG stage) | `DATABASE_URL` | *derived* by `buildPipelineChildEnv()` from the validated value, after every inherited `PG*`, `*_DATABASE_URL` and authority variable is stripped |
+| `scripts/run-alerts.sh`, `scripts/refresh-prices.sh` | `PIPELINE_DATABASE_URL` | via `packages/queue/bin/run-stage.ts`; the scripts hold no default |
+| dashboard API routes | `DASHBOARD_DATABASE_URL` | read-only role (S4A) |
+| claim writer | `CLAIM_WRITER_DATABASE_URL` | (S4C) |
+| `daily-queue.sh`, `daily-scheduler.sh`, `pipeline-watchdog.sh` | *none* | they submit to Redis and read the SQLite run ledger; they never connect to PostgreSQL |
+
+The root `.env` is no longer sourced wholesale by the queue: `ensurePipelineEnv()`
+parses it in memory and copies only `ANTHROPIC_API_KEY` and `SEC_FUND_API_KEY`.
+Scheduled structured ingestion remains **dormant and unregistered**.
+
+**Per-app ad-hoc CLI runs
 (e.g. `npm run portfolio` inside an app dir) still won't have it set** unless
 you export it yourself — without it they silently read/write the stale SQLite
 fallback stores instead of Postgres (this is exactly how the CRWD 4:1 split

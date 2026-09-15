@@ -16,7 +16,7 @@
 //
 // ACTIVATION: enabling the flag is step TWO. The structured worker must be
 // installed and verified first (bin/structured-worker.ts + the unregistered
-// definition in ops/launchd-proposed/); otherwise submissions accumulate with
+// template in ops/launchd/); otherwise submissions accumulate with
 // no consumer. Source state today is DORMANT / ACTIVATION-READY.
 //
 // EXECUTION ISOLATION: this submits to the structured queue, not the daily one.

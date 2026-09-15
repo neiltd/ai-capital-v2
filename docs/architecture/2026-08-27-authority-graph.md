@@ -96,8 +96,8 @@ agent can invoke the live LINE path with no prompt.
 
 ```
 plist target ................ scripts/daily-catchup.sh      <- what launchd runs
-scripts I hardened .......... scripts/daily-scheduler.sh    <- referenced only by ops/launchd-proposed/
-                              scripts/pipeline-watchdog.sh  <- referenced only by ops/launchd-proposed/
+scripts I hardened .......... scripts/daily-scheduler.sh    <- referenced only by an uninstalled proposal
+                              scripts/pipeline-watchdog.sh  <- referenced only by an uninstalled proposal
 ```
 
 **The isolation gate is not on the production path.** `daily-catchup.sh` has a
@@ -378,3 +378,26 @@ goes first.
 5. **Default-deny test network.**
 6. **Diagnostic provenance + mixed-provenance refusal.**
 7. Only then resume the reconciler classification work, which remains frozen.
+
+---
+
+## Update — slice S4D (credential boundary)
+
+This document records the state on 2026-08-27 and is kept as written. Three of
+its facts have since changed, and are noted here rather than edited above:
+
+- `ops/launchd-proposed/` no longer exists. The uninstalled proposals it held
+  were replaced by credential-free templates under `ops/launchd/`, which are
+  **source artifacts only** — installation is blocked until a reviewed,
+  credential-safe renderer exists.
+- `daily-catchup.plist` was deleted. It declared the label
+  `com.thanapol.ai-capital.daily` — the same label as the scheduler template —
+  and carried copy-into-LaunchAgents instructions that would have overwritten the
+  supported agent. `scripts/daily-catchup.sh` is retained; removing it is a
+  separate dead-code decision.
+- The "plist target vs. hardened script" finding above is therefore now a
+  question about which template an operator installs, not about which of two
+  tracked plists wins. The isolation gate still reaches production only when the
+  scheduler template is the installed source for that label.
+
+Nothing in this update installs, loads or unloads anything.

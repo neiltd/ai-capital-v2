@@ -4,14 +4,23 @@
 # Uses launchd rather than cron: cron invocations were hitting macOS TCC
 # "Operation not permitted" errors reading files under ~/Desktop, while
 # launchd user agents inherit the logged-in user's TCC grants.
+#
+# CREDENTIAL POLICY LIVES IN THE LAUNCHER, NOT HERE (slice S4D).
+# This script used to export a hard-coded superuser connection string as a
+# `${VAR:-default}` fallback, so a missing credential silently ran as the
+# personal role. Even `${VAR:?}` would be too weak — it accepts whitespace, a
+# wrong scheme, and an incomplete URL that libpq completes from PGDATABASE.
+# packages/queue/bin/run-stage.ts applies the same validation the worker uses,
+# strips every other database credential, and derives DATABASE_URL from the
+# validated PIPELINE_DATABASE_URL. This file passes a FIXED command and nothing
+# else; it holds no policy and no default.
+
+set -euo pipefail
 
 export PATH="/opt/homebrew/bin:/usr/local/bin:/usr/bin:/bin"
 
-# Mirror the launchd worker's DATABASE_URL (daily-queue.worker.plist). Without
-# it, createPortfolioStore() silently falls back to the stale SQLite
-# portfolio.db and alerts monitor an out-of-date position set.
-export DATABASE_URL="${DATABASE_URL:-postgres://thanapold@localhost:5432/ai_capital}"
-
 ROOT="/Users/thanapold/Desktop/Projects.nosync"
 cd "$ROOT/apps/scenario-simulator" || exit 2
-exec /opt/homebrew/bin/npx tsx src/cli/cli-alerts.ts
+
+exec /opt/homebrew/bin/npx tsx "$ROOT/packages/queue/bin/run-stage.ts" \
+  -- /opt/homebrew/bin/npx tsx src/cli/cli-alerts.ts

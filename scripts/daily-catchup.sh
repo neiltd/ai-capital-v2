@@ -1,11 +1,19 @@
 #!/bin/bash
 # Wake/login catch-up guard for the daily pipeline.
 #
-# Fired by com.thanapol.ai-capital.daily.plist (StartCalendarInterval + RunAtLoad).
-# launchd runs missed StartCalendarInterval jobs once on wake, which covers
-# "Mac was asleep at 7am" — RunAtLoad additionally covers "Mac was fully
-# powered off/logged out at 7am, booted later", which StartCalendarInterval
-# alone does not catch up on.
+# NOT CURRENTLY WIRED TO A LAUNCHD SOURCE. Its installation source, the tracked
+# daily-catchup.plist, was deleted in slice S4D: it declared the label
+# com.thanapol.ai-capital.daily — the same label as the supported scheduler
+# template — and carried copy-into-LaunchAgents instructions that would have
+# overwritten the supported agent. The supported source for that label is now
+# ops/launchd/com.thanapol.ai-capital.daily.plist.template, which runs
+# scripts/daily-scheduler.sh.
+#
+# This script is retained because removing it is a separate dead-code decision,
+# not part of the credential boundary. It remains safe to run by hand: launchd
+# runs missed StartCalendarInterval jobs once on wake, which covers "Mac was
+# asleep at 7am", and RunAtLoad covers "Mac was fully powered off at 7am, booted
+# later" — the behaviours the scheduler template now provides.
 #
 # Idempotent: safe to fire multiple times same day (double-fire guard below),
 # and safe to fire before 7am (exits without doing anything).

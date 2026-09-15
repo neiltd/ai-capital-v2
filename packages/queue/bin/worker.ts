@@ -3,14 +3,31 @@
 // them via the processor. Multiple workers can run in parallel for
 // horizontal scaling; for the personal-use case one worker is plenty.
 
-import { ensurePipelineEnv } from '../src/env.js'
+// ── STARTUP ORDER IS STRUCTURAL, NOT TEXTUAL ────────────────────────────────
+// ESM evaluates every STATIC import before the first statement of this file, so
+// writing ensurePipelineEnv() between imports did not actually order anything.
+// It happened to be safe only because queue.ts constructs its Redis resources
+// lazily — an accident of that file, not a guarantee of this one.
+//
+// So the static imports here are inert code only, and the modules that can
+// construct a Worker, QueueEvents or a Redis connection are imported
+// DYNAMICALLY, after the credential has been validated. If validation throws,
+// those modules are never evaluated and no resource can exist.
+import type { Job } from 'bullmq'
+import { ensurePipelineEnv, requirePipelineCredential } from '../src/env.js'
+
 ensurePipelineEnv()
 
-import { createWorker, getQueueEvents, closeAll } from '../src/queue.js'
-import { processJob } from '../src/processor.js'
-import type { Job } from 'bullmq'
+// Captured once, here, and passed explicitly to every job. Nothing downstream
+// re-reads the environment for it: rotating the credential requires restarting
+// the worker, which is the honest contract for a process that may already have
+// spawned children against the old value.
+const pipelineCredential = requirePipelineCredential()
 
-const worker = createWorker(async (job: Job) => processJob(job))
+const { createWorker, getQueueEvents, closeAll } = await import('../src/queue.js')
+const { processJob } = await import('../src/processor.js')
+
+const worker = createWorker(async (job: Job) => processJob(job, pipelineCredential))
 
 worker.on('completed', (job, result) => {
   console.log(`[worker] ✅ ${job.name} (runId=${(result as { runId: string }).runId})`)
