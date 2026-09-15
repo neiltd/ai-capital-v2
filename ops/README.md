@@ -567,12 +567,40 @@ move it. `AI_CAPITAL_ROOT` keeps its only meaning: being **outside** these roots
 is one of three dimensions that must *all* hold before an environment counts as
 isolated.
 
-**Why the scripts changed.** `scripts/run-alerts.sh`, `refresh-prices.sh`,
-`daily-catchup.sh` and `dep-graph-scan.sh` hard-coded the Desktop path; they now
-derive `ROOT` from `BASH_SOURCE[0]`, and `refresh-prices.sh` derives `DATA_ROOT`
-from that `ROOT`. `daily-scheduler.sh`, `pipeline-watchdog.sh`, `daily-queue.sh`
-and `scripts/lib/worker-liveness.sh` were already root-relative and are
-unchanged.
+**Why the scripts changed.** Five shell files hard-coded the Desktop path. All
+five now derive `ROOT` from `BASH_SOURCE[0]` — the executing file's own path,
+which is the one thing that always describes the checkout it belongs to (`$0`
+differs when a file is sourced, and cwd is whatever the caller left behind).
+
+| File | Kind | What ROOT selects |
+|---|---|---|
+| `scripts/run-alerts.sh` | **production launcher** — the `alerts` launchd agent runs it every 30 min during market hours | the checkout whose `run-stage.ts` and app it executes |
+| `scripts/refresh-prices.sh` | **production launcher** | the checkout it executes, and `DATA_ROOT`, which is now derived **from** that `ROOT` so the two can never disagree |
+| `scripts/daily-catchup.sh` | **production launcher** | its run database, log and lock |
+| `scripts/dep-graph-scan.sh` | **production launcher** | the app directory it runs `npm run scan` in |
+| `scripts/test-scheduler-cases.sh` | **dry-run test harness — not production** | **which copy of the real scheduler and watchdog is under test** |
+
+The harness is the one that is easy to dismiss and the most dangerous to leave
+alone. It never submits a pipeline, never touches `data/pipeline-runs.db`, and
+runs every case as `--dry-run` against a `mktemp` database and heartbeat — so it
+cannot corrupt production state. But it invokes the **real**
+`./scripts/daily-scheduler.sh` and `./scripts/pipeline-watchdog.sh` from inside
+`cd "$ROOT"`. With the old literal, a copy of the harness living in the new
+runtime checkout would have exercised the **legacy Desktop** scripts while
+appearing to test the ones beside it — measured, that line still produced
+`/Users/thanapold/Desktop/Projects.nosync/scripts/daily-scheduler.sh` when run
+from a checkout outside `~/Desktop`. A false PASS for code that never ran is
+worse than a failure, because nothing prompts anyone to look.
+
+`daily-scheduler.sh`, `pipeline-watchdog.sh`, `daily-queue.sh` and
+`scripts/lib/worker-liveness.sh` were already root-relative and are unchanged.
+`packages/queue/tests/runtime-root-portability.test.ts` holds all five files to
+the derivation behaviourally: each script's prologue — stopping before the first
+line that would *do* anything — is copied into a temporary fake checkout and
+executed there, and the answer must be that fake checkout. The harness probe
+additionally runs from a decoy working directory that has its own `scripts/`
+subdirectory, so a cwd-derived `ROOT` would look plausible and still be caught.
+A return to the Desktop literal fails the suite either way.
 
 **This slice performs no relocation and no cutover.** It creates no directory,
 copies no data, installs no credential, renders no plist and touches no launchd

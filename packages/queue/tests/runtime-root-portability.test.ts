@@ -374,6 +374,93 @@ describe('the four relocated scripts derive ROOT from their own location', () =>
   })
 })
 
+describe('the scheduler test harness derives ROOT from its own location too', () => {
+  // WHY THIS HARNESS IS PART OF THE PORTABILITY CONTRACT.
+  //
+  // scripts/test-scheduler-cases.sh is not production — every invocation is
+  // --dry-run against a throwaway database and heartbeat. But it runs the REAL
+  // daily-scheduler.sh and pipeline-watchdog.sh out of "$ROOT/scripts", so ROOT
+  // decides WHICH COPY of those scripts is under test. With the old Desktop
+  // literal, a harness sitting in the new runtime checkout would exercise the
+  // LEGACY scripts and report PASS for code that never ran — a false green,
+  // which is worse than a failure because nobody investigates it.
+  const HARNESS = 'test-scheduler-cases.sh'
+
+  /** Copy the harness prologue into <work>/fake-root/scripts/ and echo ROOT. */
+  function derivedRoot(): string {
+    const fakeRoot = join(work, 'harness-root')
+    mkdirSync(join(fakeRoot, 'scripts'), { recursive: true })
+    const dst = join(fakeRoot, 'scripts', HARNESS)
+    copyFileSync(join(REPO, 'scripts', HARNESS), dst)
+    chmodSync(dst, 0o755)
+    // Stop before the first line that would DO anything: no mktemp, no sqlite3,
+    // no scheduler, no watchdog. Only the ROOT derivation is evaluated.
+    const body = readFileSync(dst, 'utf-8').split('\n')
+    const cut = body.findIndex(l => /^(TMP=|sqlite3|exec|cd |npm |npx |"\$ROOT)/.test(l.trim()))
+    const prologue = body.slice(0, cut > 0 ? cut : undefined).join('\n')
+    // The probe MUST live where the real harness lives — BASH_SOURCE[0] is the
+    // executing file, which is the whole property under test.
+    const probe = join(fakeRoot, 'scripts', `probe-${HARNESS}`)
+    writeFileSync(probe, `${prologue}\nprintf '%s\\n' "\${ROOT:-}"\n`, { mode: 0o755 })
+    // Run it from a DECOY directory that also has a scripts/ subdirectory, so a
+    // cwd-derived ROOT would look plausible and still be demonstrably wrong.
+    const decoy = join(work, 'decoy')
+    mkdirSync(join(decoy, 'scripts'), { recursive: true })
+    return execFileSync('bash', [probe], { encoding: 'utf-8', cwd: decoy, timeout: 20_000 })
+      .split('\n')[0] ?? ''
+  }
+
+  it('derives ROOT from the harness file, not from Desktop and not from cwd', () => {
+    const root = derivedRoot()
+    expect(realpathSync(root)).toBe(realpathSync(join(work, 'harness-root')))
+    // The two ways this can regress, named explicitly:
+    expect(root).not.toContain('Desktop/Projects.nosync')          // the old literal
+    expect(realpathSync(root)).not.toBe(realpathSync(join(work, 'decoy')))  // cwd
+  })
+
+  it('retains no Desktop absolute root in its CODE', () => {
+    const code = readFileSync(join(REPO, 'scripts', HARNESS), 'utf-8')
+      .split('\n').filter(l => !/^\s*#/.test(l)).join('\n')
+    expect(code).not.toContain('/Users/thanapold/Desktop')
+    // Non-vacuity: the comment-stripped text is still the body of the harness.
+    expect(code).toContain('BASH_SOURCE[0]')
+  })
+
+  it('uses the BASH_SOURCE derivation, not $0 and not any cwd form', () => {
+    const code = readFileSync(join(REPO, 'scripts', HARNESS), 'utf-8')
+      .split('\n').filter(l => !/^\s*#/.test(l)).join('\n')
+    expect(code).toMatch(/ROOT="\$\(cd "\$\(dirname "\$\{BASH_SOURCE\[0\]\}"\)\/\.\." && pwd\)"/)
+    expect(code).not.toMatch(/ROOT="\$\(cd "\$\(dirname "\$0"\)/)
+    expect(code).not.toMatch(/ROOT="?\$\(pwd\)/)
+    expect(code).not.toMatch(/ROOT="?\$\{?PWD\}?"?\s*$/m)
+  })
+
+  it('actually selects the scripts under test through ROOT — so a regression is not cosmetic', () => {
+    // Non-vacuity for the whole block: if the harness stopped reaching the
+    // scheduler and watchdog through "$ROOT", the derivation above would no
+    // longer decide anything and these tests would be guarding nothing.
+    const code = readFileSync(join(REPO, 'scripts', HARNESS), 'utf-8')
+    expect(code).toMatch(/cd "\$ROOT"/)
+    expect(code).toContain('./scripts/daily-scheduler.sh --dry-run')
+    expect(code).toContain('./scripts/pipeline-watchdog.sh --dry-run')
+  })
+
+  it('remains a dry-run harness against throwaway state, never production', () => {
+    // It is included in the portability contract BECAUSE it runs the real
+    // launchers — but it must keep doing so harmlessly.
+    const code = readFileSync(join(REPO, 'scripts', HARNESS), 'utf-8')
+    expect(code).toContain('TMP=$(mktemp -d)')
+    expect(code).toMatch(/DB="\$TMP\/pipeline-runs\.db"/)
+    expect(code).toMatch(/HB="\$TMP\/heartbeat\.log"/)
+    // Every scheduler/watchdog invocation carries --dry-run.
+    const invocations = code.split('\n').filter(l => /\.\/scripts\/(daily-scheduler|pipeline-watchdog)\.sh/.test(l))
+    expect(invocations.length).toBeGreaterThan(0)
+    for (const line of invocations) expect(line).toContain('--dry-run')
+    // And it never binds the real run database.
+    expect(code).not.toMatch(/PIPELINE_RUNS_DB="?\$ROOT\/data/)
+  })
+})
+
 describe('daily.sh suggests no competing scheduler', () => {
   const src = readFileSync(join(REPO, 'daily.sh'), 'utf-8')
 

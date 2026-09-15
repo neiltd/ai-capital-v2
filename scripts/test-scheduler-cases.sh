@@ -6,7 +6,21 @@
 # every invocation is --dry-run. A test that created a fake 'success' row in the
 # real database would corrupt the exact record the watchdog reads.
 set -uo pipefail
-ROOT="/Users/thanapold/Desktop/Projects.nosync"
+# ROOT IS DERIVED FROM THIS SCRIPT'S OWN LOCATION.
+#
+# It used to be the literal /Users/thanapold/Desktop/Projects.nosync. That is a
+# COLLISION, not merely a stale path: this harness runs the REAL scheduler and
+# watchdog out of "$ROOT/scripts", so a copy of the harness sitting in the new
+# runtime checkout would silently exercise the LEGACY Desktop scripts instead of
+# the ones beside it — reporting PASS for code that was never run. Measured from
+# a checkout outside ~/Desktop, the old line still yielded
+# /Users/thanapold/Desktop/Projects.nosync/scripts/daily-scheduler.sh.
+#
+# BASH_SOURCE[0], not $0 and not cwd: $0 is the interpreter's view and differs
+# when the file is sourced, while cwd is whatever the operator happened to leave
+# behind. The script's own path is the one thing that always describes the
+# checkout it belongs to.
+ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 TMP=$(mktemp -d)
 trap 'rm -rf "$TMP"' EXIT
 DB="$TMP/pipeline-runs.db"
