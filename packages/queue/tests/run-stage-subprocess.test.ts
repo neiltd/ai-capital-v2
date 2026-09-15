@@ -17,8 +17,9 @@ const LAUNCHER = fileURLToPath(new URL('../bin/run-stage.ts', import.meta.url))
 const TSX = fileURLToPath(new URL('../node_modules/.bin/tsx', import.meta.url))
 const FIXTURES = fileURLToPath(new URL('./fixtures/', import.meta.url))
 
-/** Valid shape, unroutable target. Never connected to; only validated. */
-const FAKE_CREDENTIAL = 'postgres://fake_role@fake.invalid:5432/fake_db'
+/** Valid shape and the required role, unroutable target (.invalid is reserved).
+ *  Never connected to; only validated. */
+const FAKE_CREDENTIAL = 'postgres://ai_capital_pipeline@fake.invalid:5432/fake_db'
 
 let work: string
 beforeEach(() => { work = mkdtempSync(join(tmpdir(), 'run-stage-')) })
@@ -82,7 +83,8 @@ describe('credential validation happens before any child exists', () => {
     ['empty', ''],
     ['whitespace-wrapped', ` ${FAKE_CREDENTIAL} `],
     ['wrong scheme', 'file:///etc/passwd'],
-    ['incomplete', 'postgres://fake_role@fake.invalid:5432'],
+    ['incomplete', 'postgres://ai_capital_pipeline@fake.invalid:5432'],
+    ['the wrong role', 'postgres://ai_capital_owner@fake.invalid:5432/fake_db'],
   ])('creates NO child for a %s credential', (_label, value) => {
     const marker = join(work, 'marker.txt')
     const r = runLauncher(

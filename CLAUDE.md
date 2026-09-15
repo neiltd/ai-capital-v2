@@ -97,12 +97,21 @@ The tracked **source** for these agents is `ops/launchd/*.plist.template`. The
 older `daily-queue.worker.plist`, `daily-alerts.plist`, `daily-catchup.plist`
 and `ops/launchd-proposed/` are gone — each embedded a literal superuser
 connection URL, and `daily-catchup.plist` additionally claimed the
-`com.thanapol.ai-capital.daily` label. **The templates are not directly
-installable**: rendering a credential into a plist safely (XML escaping, no
-credential in argv, mode 0600, atomic publish) needs a reviewed renderer that
-does not exist yet, so installation is deliberately blocked. Production cutover
-to the least-privilege credentials remains a separate, separately authorized
-action.
+`com.thanapol.ai-capital.daily` label. Three source tools now
+render and inspect them, all inside `@common/queue`:
+
+| Tool | Script | Role |
+|---|---|---|
+| renderer | `pnpm -F @common/queue render-plist` | substitutes path / Redis / credential-file **path** only; refuses a credential placeholder, parses its own output, publishes atomically with `link(2)` |
+| installer | `pnpm -F @common/queue install-credential` | writes the credential file (0600) from a no-echo TTY or a pre-opened fd — never argv or stdout |
+| inspector | `pnpm -F @common/queue inspect-plist` | parses an installed plist and **exits non-zero** on a forbidden key, a PostgreSQL literal or an unresolved placeholder; prints key names, never values |
+
+**Nothing has been provisioned or installed.** No credential file exists, no
+plist is installed, and no agent has been restarted. Production cutover to the
+least-privilege credentials remains a separate, separately authorized action. If
+Time Machine exclusion of the credential directory is approved, it must be
+applied and verified **before** the credential file is first created — deleting
+a file does not remove it from existing backup history.
 
 `daily.sh` (root) is the **legacy** pre-queue orchestrator kept for reference/rollback; it is not what runs in production anymore. When editing pipeline stage order or dependencies, edit `packages/queue/src/jobs.ts`, not `daily.sh`.
 
@@ -156,15 +165,18 @@ and there is no fallback between them:
 
 | Process | Variable it reads | Notes |
 |---|---|---|
-| queue worker / structured worker | `PIPELINE_DATABASE_URL` | validated at startup, before any queue or Redis module is even imported |
+| queue worker / structured worker | `PIPELINE_CREDENTIAL_FILE` | the launchd plists carry the **path** of a file holding the URL, never the URL. `requirePipelineCredential()` reads it in-process, validates the URL **and the exact `ai_capital_pipeline` role**, and keeps the value as a local — it is never written into `process.env`. Validated before any queue or Redis module is imported |
 | stage children (every DAG stage) | `DATABASE_URL` | *derived* by `buildPipelineChildEnv()` from the validated value, after every inherited `PG*`, `*_DATABASE_URL` and authority variable is stripped |
-| `scripts/run-alerts.sh`, `scripts/refresh-prices.sh` | `PIPELINE_DATABASE_URL` | via `packages/queue/bin/run-stage.ts`; the scripts hold no default |
+| `scripts/run-alerts.sh`, `scripts/refresh-prices.sh` | `PIPELINE_CREDENTIAL_FILE` | via `packages/queue/bin/run-stage.ts`, same in-process load and validation; the scripts hold no default |
 | dashboard API routes | `DASHBOARD_DATABASE_URL` | read-only role (S4A) |
 | claim writer | `CLAIM_WRITER_DATABASE_URL` | (S4C) |
 | `daily-queue.sh`, `daily-scheduler.sh`, `pipeline-watchdog.sh` | *none* | they submit to Redis and read the SQLite run ledger; they never connect to PostgreSQL |
 
 The root `.env` is no longer sourced wholesale by the queue: `ensurePipelineEnv()`
 parses it in memory and copies only `ANTHROPIC_API_KEY` and `SEC_FUND_API_KEY`.
+`ensurePipelineEnv()` runs in ten bins and is deliberately **credential-free**;
+only `requirePipelineCredential()` — called by `worker`, `structured-worker` and
+`run-stage` — ever reads a credential.
 Scheduled structured ingestion remains **dormant and unregistered**.
 
 **Per-app ad-hoc CLI runs

@@ -43,6 +43,10 @@ describe('isForbiddenChildVariable', () => {
     'PGPASSFILE',
     'MIGRATION_OWNER_ROLE',
     'LIVE_DATABASE_NAMES',
+    // The PATH of the credential file. Not a secret itself, but a stage that can
+    // reopen the authoritative file holds a second, unvalidated copy of the
+    // credential — which defeats one-credential-per-process.
+    'PIPELINE_CREDENTIAL_FILE',
   ])('forbids %s', (key) => {
     expect(isForbiddenChildVariable(key)).toBe(true)
   })
@@ -170,5 +174,43 @@ describe('both spawning call sites use the shared builder', () => {
     expect(code).toContain('buildPipelineChildEnv(')
     // And assembles no environment of its own alongside it.
     expect(code).not.toMatch(/env:\s*\{\s*\.\.\.process\.env/)
+  })
+})
+
+// THE CREDENTIAL-FILE PATH IS STRIPPED WHATEVER LAYER IT ARRIVES THROUGH.
+//
+// Sanitization runs AFTER specEnv and additions precisely so the answer does not
+// depend on where a variable came from; these three cases pin that.
+describe('PIPELINE_CREDENTIAL_FILE never reaches a child', () => {
+  const FILE = '/Users/nobody/.config/ai-capital/pipeline-database.url'
+
+  it('is removed when inherited from the parent environment', () => {
+    const env = buildPipelineChildEnv({ PATH: '/usr/bin', PIPELINE_CREDENTIAL_FILE: FILE }, undefined, CREDENTIAL)
+    expect(env.PIPELINE_CREDENTIAL_FILE).toBeUndefined()
+  })
+
+  it('is removed when a JobSpec supplies it', () => {
+    const env = buildPipelineChildEnv({ PATH: '/usr/bin' }, { PIPELINE_CREDENTIAL_FILE: FILE, STAGE_FLAG: 'on' }, CREDENTIAL)
+    expect(env.PIPELINE_CREDENTIAL_FILE).toBeUndefined()
+    expect(env.STAGE_FLAG).toBe('on')
+  })
+
+  it('is removed when a caller addition supplies it', () => {
+    const env = buildPipelineChildEnv({ PATH: '/usr/bin' }, undefined, CREDENTIAL, { PIPELINE_CREDENTIAL_FILE: FILE, DATA_ROOT: '/fake/apps' })
+    expect(env.PIPELINE_CREDENTIAL_FILE).toBeUndefined()
+    expect(env.DATA_ROOT).toBe('/fake/apps')
+  })
+
+  it('leaves the child with exactly one derived DATABASE_URL and nothing else credential-shaped', () => {
+    const env = buildPipelineChildEnv(
+      { PATH: '/usr/bin', PIPELINE_CREDENTIAL_FILE: FILE, PGHOST: 'h', DASHBOARD_DATABASE_URL: OTHER, DATABASE_URL: OTHER, MIGRATION_OWNER_ROLE: 'r' },
+      { PIPELINE_CREDENTIAL_FILE: FILE },
+      CREDENTIAL,
+      { PIPELINE_CREDENTIAL_FILE: FILE },
+    )
+    const credentialish = Object.keys(env).filter(k =>
+      /^DATABASE_URL$|_DATABASE_URL$|^PG[A-Z0-9_]*$|^PIPELINE_CREDENTIAL_FILE$|^MIGRATION_OWNER_ROLE$|^LIVE_DATABASE_NAMES$/.test(k))
+    expect(credentialish).toEqual(['DATABASE_URL'])
+    expect(env.DATABASE_URL).toBe(CREDENTIAL)
   })
 })

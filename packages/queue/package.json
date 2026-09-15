@@ -29,7 +29,10 @@
     "test:watch": "vitest",
     "reconcile": "tsx bin/reconcile.ts",
     "health": "tsx bin/queue-health.ts",
-    "structured-worker": "tsx bin/structured-worker.ts"
+    "structured-worker": "tsx bin/structured-worker.ts",
+    "render-plist": "tsx bin/render-launchd-plist.ts",
+    "install-credential": "tsx bin/install-pipeline-credential.ts",
+    "inspect-plist": "tsx bin/inspect-launchd-plist.ts"
   },
   "dependencies": {
     "@common/db": "workspace:*",

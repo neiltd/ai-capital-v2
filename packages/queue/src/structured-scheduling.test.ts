@@ -109,7 +109,10 @@ describe('structured-ingestion scheduling', () => {
     const plistSrc = readFileSync(plist, 'utf-8')
     expect(plistSrc).toMatch(/TEMPLATE — NOT AN INSTALLED AGENT/)
     // Tracked templates carry placeholders, never a real connection URL.
-    expect(plistSrc).toContain('@@PIPELINE_DATABASE_URL@@')
+    // S4E replaced the credential placeholder with the PATH of a credential
+    // file: a plist never carries a credential value.
+    expect(plistSrc).toContain('@@PIPELINE_CREDENTIAL_FILE@@')
+    expect(plistSrc).not.toContain('@@PIPELINE_DATABASE_URL@@')
     expect(plistSrc).not.toMatch(new RegExp(['postgres', '(ql)?', ':', '//'].join('')))
     expect(existsSync(resolve(__dirname, '..', 'bin', 'structured-worker.ts'))).toBe(true)
   })

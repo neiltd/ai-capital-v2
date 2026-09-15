@@ -429,11 +429,26 @@ closed — which is the intended state, not a defect.
 The queue worker is the third consumer to get its own credential, and it is the
 one that spawns other processes — so the boundary has two halves.
 
-- **The workers read `PIPELINE_DATABASE_URL` and nothing else.**
-  `packages/queue/bin/worker.ts` and `bin/structured-worker.ts` validate it with
-  the same canonical validator the dashboard and claim writer use
-  (`@common/db/credential-url`), with **no fallback** to `DATABASE_URL`,
-  `TEST_DATABASE_URL` or any `PG*` variable.
+- **Two explicit credential sources, and exactly one may be set.**
+  `PIPELINE_DATABASE_URL` carries the URL itself (tests, deliberate manual runs);
+  `PIPELINE_CREDENTIAL_FILE` carries the **absolute path** of a file holding it,
+  and is what the launchd plists use. Both set is a refusal, not a precedence
+  rule; neither set is a refusal; there is no implicit default path and no
+  `HOME`-derived location. `packages/queue/bin/worker.ts`,
+  `bin/structured-worker.ts` and `bin/run-stage.ts` validate with the same
+  canonical validator the dashboard and claim writer use
+  (`@common/db/credential-url`), extended with an **exact-role constraint**: a
+  credential naming any role other than `ai_capital_pipeline` is refused even
+  when otherwise valid. A file-loaded value stays a local and is **never written
+  into `process.env`**.
+- **The credential file is data, never shell code.** One URL, one optional
+  terminating LF as framing, no CR/NUL/second line, fatal UTF-8 decoding, no
+  trimming, 4 KiB bound. It is opened `O_RDONLY|O_NOFOLLOW`, and its type, owner,
+  owner-only mode and single hard link are checked on the **descriptor**; its
+  containing directory must be a real, owner-owned, mode-0700 directory.
+- **`ensurePipelineEnv()` holds no credential.** It runs in ten bins, five of
+  which never reach PostgreSQL; only `requirePipelineCredential()` (three bins)
+  reads a credential.
 - **Validation happens before any resource module is even imported.** ESM
   evaluates every static import before the first statement, so the entry points
   import only inert code statically and pull `src/queue.js` and
@@ -477,14 +492,53 @@ one that spawns other processes — so the boundary has two halves.
   can look at it. A file that exists but cannot be read is a hard error, reported
   with its path and error code and never its contents.
 
-**The launchd templates under `ops/launchd/` are source artifacts, not installers.**
-They contain `@@PLACEHOLDER@@` values and no credential. Rendering one safely
-requires XML-escaping the substituted value, keeping it out of argv and stdout,
-writing through a private temporary file at mode 0600, running `plutil -lint`,
-and publishing atomically. **That renderer does not exist yet, so installation is
-blocked**, and the earlier `sed`-based instructions were removed rather than
-patched. Production cutover to `ai_capital_pipeline` remains a separate,
-separately authorized action.
+**The launchd templates under `ops/launchd/` are source artifacts.** They contain
+`@@PLACEHOLDER@@` values and no credential — the worker, structured-worker and
+alerts templates carry `PIPELINE_CREDENTIAL_FILE` (a path); daily and watchdog
+carry no database variable of any kind.
+
+Three source tools now exist, all inside `@common/queue` so they are typechecked
+and their tests are collected:
+
+- **`bin/render-launchd-plist.ts`** — substitutes path, Redis endpoint and
+  credential-file path only. It refuses a template carrying a credential-value
+  placeholder, enforces an exact per-agent placeholder allowlist with expected
+  occurrence counts, escapes XML, and then **parses its own output** with
+  `plutil` and inspects the real `EnvironmentVariables` dictionary, so a
+  mixed-case or XML-entity-encoded PostgreSQL URL cannot slip past a regex. Each
+  agent maps to exactly one destination — there is no arbitrary `--out` — and a
+  staging directory must not already exist.
+- **`bin/install-pipeline-credential.ts`** — reads the secret only from a no-echo
+  terminal or a pre-opened descriptor, validates it (including the exact role)
+  **before** writing, and publishes at mode 0600. `--rotate` is required to
+  replace an existing file and never silently becomes an initial installation.
+  No backup is written: a stale secret copy is a liability, and recovery from a
+  bad rotation is re-provisioning, not restoring a file.
+- **`bin/inspect-launchd-plist.ts`** — parses an installed plist (so an XML
+  comment cannot spoof a `Label` or a key), refuses a symlinked input, treats
+  lint/parser failure as an error, reports an ACL check that fails as `unknown`
+  rather than `absent`, and **exits non-zero** on a forbidden credential key, a
+  PostgreSQL literal or an unresolved placeholder. It prints environment key
+  names and never values; a credential-shaped `ProgramArgument` is suppressed
+  and counted.
+
+Both publishing tools share one primitive, `src/atomic-publish.ts`: validate the
+directory → take a lock → re-inspect the destination → private same-directory
+temporary → complete write → fsync → close → validate → publish → fsync the
+directory. Initial publication uses `link(2)`, which fails with `EEXIST` rather
+than destroying a competing writer's file; `rename(2)` is used only for an
+explicit replacement, under the lock, after re-validation. A temporary is
+unlinked only when this invocation created it, and a lock is never stolen.
+
+**Nothing has been provisioned or installed.** Production cutover to
+`ai_capital_pipeline` remains a separate, separately authorized action.
+
+**Time Machine ordering.** `~/.config` is *not* excluded from Time Machine
+automatically, and deleting a local file does not remove it from existing backup
+history. If exclusion of the credential directory is approved, it must be applied
+and verified **before** the credential file is first created; otherwise the
+secret can enter a snapshot in the window between creation and exclusion. No
+`tmutil` command has been run.
 
 ### Manual mutation is deliberately excluded
 

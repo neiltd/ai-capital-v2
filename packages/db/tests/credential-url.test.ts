@@ -113,6 +113,57 @@ describe('requireExplicitPostgresUrl — the rules survived extraction', () => {
   })
 })
 
+describe('the optional exact-role constraint', () => {
+  const PIPELINE = 'postgres://ai_capital_pipeline@fake.invalid:5432/fake_db'
+
+  it('accepts the expected role', () => {
+    expect(requireExplicitPostgresUrl('SOME_VAR', PIPELINE, { user: 'ai_capital_pipeline' })).toBe(PIPELINE)
+  })
+
+  it('accepts a PERCENT-ENCODED spelling of the expected role', () => {
+    // Measured, not assumed: pg-connection-string decodes the userinfo, so the
+    // comparison must be against the decoded name or a legitimate credential
+    // would be refused.
+    const encoded = 'postgres://ai%5Fcapital%5Fpipeline@fake.invalid:5432/fake_db'
+    expect(requireExplicitPostgresUrl('SOME_VAR', encoded, { user: 'ai_capital_pipeline' })).toBe(encoded)
+  })
+
+  it.each([
+    'postgres://ai_capital_owner@fake.invalid:5432/fake_db',
+    'postgres://ai_capital_dashboard@fake.invalid:5432/fake_db',
+    'postgres://postgres@fake.invalid:5432/fake_db',
+    'postgres://AI_Capital_Pipeline@fake.invalid:5432/fake_db',
+  ])('refuses %s', (url) => {
+    expect(() => requireExplicitPostgresUrl('SOME_VAR', url, { user: 'ai_capital_pipeline' }))
+      .toThrow(/must name the ai_capital_pipeline role/)
+  })
+
+  it('never names the role it actually found', () => {
+    let message = ''
+    try {
+      requireExplicitPostgresUrl('SOME_VAR', 'postgres://secret_role@secret.invalid:5432/secret_db', { user: 'ai_capital_pipeline' })
+    } catch (e) { message = (e as Error).message }
+    expect(message).toContain('SOME_VAR')
+    for (const part of ['secret_role', 'secret.invalid', 'secret_db']) {
+      expect(message).not.toContain(part)
+    }
+  })
+
+  it('is OPT-IN: omitting the constraint leaves every existing caller unchanged', () => {
+    // The dashboard pool and the claim writer pass no `expected`; a role that
+    // would fail the constraint must still pass without it.
+    const other = 'postgres://ai_capital_dashboard@fake.invalid:5432/fake_db'
+    expect(requireExplicitPostgresUrl('SOME_VAR', other)).toBe(other)
+  })
+
+  it('still applies every other rule when a role is required', () => {
+    expect(() => requireExplicitPostgresUrl('SOME_VAR', ' ' + PIPELINE, { user: 'ai_capital_pipeline' }))
+      .toThrow(/whitespace/)
+    expect(() => requireExplicitPostgresUrl('SOME_VAR', 'postgres://ai_capital_pipeline@fake.invalid:5432', { user: 'ai_capital_pipeline' }))
+      .toThrow(/database/)
+  })
+})
+
 describe('credential-url.ts is driver-free and import-inert', () => {
   it('imports exactly one module, the connection-string reader', () => {
     const src = readFileSync(SOURCE, 'utf-8')

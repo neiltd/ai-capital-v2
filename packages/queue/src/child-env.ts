@@ -30,7 +30,17 @@ const PG_VARIABLE = /^PG[A-Z0-9_]*$/
 const DATABASE_URL_VARIABLE = /_DATABASE_URL$/
 
 /** Authority controls that change what a connection is allowed to do. */
-const AUTHORITY_VARIABLES = ['MIGRATION_OWNER_ROLE', 'LIVE_DATABASE_NAMES']
+const AUTHORITY_VARIABLES = [
+  'MIGRATION_OWNER_ROLE',
+  'LIVE_DATABASE_NAMES',
+  // The PATH of the credential file, not a credential itself — and still
+  // forbidden. A stage that can reopen the authoritative file holds a second,
+  // unvalidated copy of the credential and can outlive the worker's own
+  // validation, which defeats one-credential-per-process. Listed by exact name
+  // rather than matched by a pattern like /CREDENTIAL/, which would also strike
+  // unrelated variables a stage legitimately needs.
+  'PIPELINE_CREDENTIAL_FILE',
+]
 
 /**
  * True if `key` must never reach a spawned stage.
@@ -78,8 +88,9 @@ export function buildPipelineChildEnv(
   }
 
   // PIPELINE_DATABASE_URL is removed by the rule above (it ends in
-  // _DATABASE_URL) and is deliberately NOT re-added: no traced child reads it,
-  // and one name per process keeps "which credential am I holding" answerable.
+  // _DATABASE_URL), PIPELINE_CREDENTIAL_FILE by the authority list, and neither
+  // is re-added: no traced child reads either, and one name per process keeps
+  // "which credential am I holding" answerable.
   env.DATABASE_URL = pipelineCredential
 
   return env

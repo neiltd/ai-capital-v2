@@ -77,8 +77,10 @@ export function isDirectEntrypoint(
 
 export const USAGE =
   'usage: run-stage.ts -- <command> [args…]\n' +
-  '  The command must follow a literal `--`. PIPELINE_DATABASE_URL must be set\n' +
-  '  to an explicit PostgreSQL URL; it is validated before the child is created.'
+  '  The command must follow a literal `--`. Exactly one of PIPELINE_DATABASE_URL\n' +
+  '  (the URL itself) or PIPELINE_CREDENTIAL_FILE (an absolute path to a file\n' +
+  '  holding it) must be set; the credential is validated, including its exact\n' +
+  '  role, before the child is created.'
 
 /** Exit status for a child killed by a signal. Non-zero, and distinguishable. */
 export function signalExitCode(signal: NodeJS.Signals): number {

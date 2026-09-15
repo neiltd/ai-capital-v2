@@ -11,19 +11,19 @@ import { describe, it, expect } from 'vitest'
 import { readFileSync } from 'node:fs'
 import { fileURLToPath } from 'node:url'
 
-import { requirePipelineCredential } from '../src/env.js'
+import { PIPELINE_FILE_VAR, PIPELINE_URL_VAR, requirePipelineCredential } from '../src/env.js'
 
 const SOURCE = fileURLToPath(new URL('../src/env.ts', import.meta.url))
 
-const COMPLETE = 'postgres://fake_pipeline@fake.invalid:5432/fake_db'
+const COMPLETE = 'postgres://ai_capital_pipeline@fake.invalid:5432/fake_db'
 
 describe('requirePipelineCredential', () => {
   it('returns the validated value byte for byte', () => {
     expect(requirePipelineCredential({ PIPELINE_DATABASE_URL: COMPLETE })).toBe(COMPLETE)
   })
 
-  it('refuses an unset credential', () => {
-    expect(() => requirePipelineCredential({})).toThrow(/PIPELINE_DATABASE_URL/)
+  it('refuses when NEITHER source is set', () => {
+    expect(() => requirePipelineCredential({})).toThrow(/neither PIPELINE_DATABASE_URL nor PIPELINE_CREDENTIAL_FILE/)
   })
 
   it('does NOT fall back to DATABASE_URL', () => {
@@ -44,7 +44,7 @@ describe('requirePipelineCredential', () => {
 
   it('does NOT accept an incomplete URL completed from PG* variables', () => {
     expect(() => requirePipelineCredential({
-      PIPELINE_DATABASE_URL: 'postgres://fake_pipeline@fake.invalid:5432',
+      PIPELINE_DATABASE_URL: 'postgres://ai_capital_pipeline@fake.invalid:5432',
       PGDATABASE: 'ambient_fake_db',
       PGUSER: 'ambient_fake_role',
     })).toThrow(/database/)
@@ -111,5 +111,79 @@ describe('the queue reuses the canonical validator instead of copying it', () =>
     expect(code).not.toMatch(/new URL\(/)
     expect(code).not.toMatch(/parseConnectionString|pg-connection-string/)
     expect(code).toContain('requireExplicitPostgresUrl(')
+  })
+})
+
+// TWO EXPLICIT SOURCES, EXACTLY ONE CHOSEN.
+//
+// This is source SELECTION, not fallback. Both set is a refusal rather than a
+// precedence rule: two sources of truth let an operator rotate one and keep
+// running on the other without noticing.
+describe('XOR source selection', () => {
+  const FILE = '/abs/path/pipeline-database.url'
+  const neverRead = (): string => { throw new Error('the file must not be read in this case') }
+
+  it('refuses when BOTH sources are set', () => {
+    expect(() => requirePipelineCredential(
+      { [PIPELINE_URL_VAR]: COMPLETE, [PIPELINE_FILE_VAR]: FILE },
+      neverRead,
+    )).toThrow(/both PIPELINE_DATABASE_URL and PIPELINE_CREDENTIAL_FILE are set/)
+  })
+
+  it('refuses when both are set even if one is EMPTY — presence, not truthiness', () => {
+    expect(() => requirePipelineCredential(
+      { [PIPELINE_URL_VAR]: '', [PIPELINE_FILE_VAR]: FILE },
+      neverRead,
+    )).toThrow(/both/)
+  })
+
+  it('names no default path when neither is set', () => {
+    let message = ''
+    try { requirePipelineCredential({}, neverRead) } catch (e) { message = (e as Error).message }
+    expect(message).toMatch(/no fallback and no default location/)
+    // The message may NAME the things it refuses to use ("a path derived from
+    // HOME"); what it must not contain is an actual candidate path.
+    expect(message).not.toMatch(/\.config|\/Users\/|~\//)
+  })
+
+  it('reads the file only in file mode, and returns its contents validated', () => {
+    const seen: string[] = []
+    const read = (p: string) => { seen.push(p); return COMPLETE }
+    expect(requirePipelineCredential({ [PIPELINE_FILE_VAR]: FILE }, read)).toBe(COMPLETE)
+    expect(seen).toEqual([FILE])
+  })
+
+  it('does NOT read the file in direct-value mode', () => {
+    expect(requirePipelineCredential({ [PIPELINE_URL_VAR]: COMPLETE }, neverRead)).toBe(COMPLETE)
+  })
+
+  it('applies the exact role to a file-loaded credential too', () => {
+    const wrongRole = () => 'postgres://ai_capital_owner@fake.invalid:5432/fake_db'
+    expect(() => requirePipelineCredential({ [PIPELINE_FILE_VAR]: FILE }, wrongRole))
+      .toThrow(/must name the ai_capital_pipeline role/)
+  })
+
+  it('reports the FILE variable name when file mode fails', () => {
+    const bad = () => 'not-a-url'
+    expect(() => requirePipelineCredential({ [PIPELINE_FILE_VAR]: FILE }, bad))
+      .toThrow(/PIPELINE_CREDENTIAL_FILE/)
+  })
+
+  it('NEVER writes the loaded value into process.env', () => {
+    const before = { ...process.env }
+    requirePipelineCredential({ [PIPELINE_FILE_VAR]: FILE }, () => COMPLETE)
+    expect({ ...process.env }).toEqual(before)
+    expect(process.env[PIPELINE_URL_VAR]).toBeUndefined()
+    expect(process.env[PIPELINE_FILE_VAR]).toBeUndefined()
+  })
+})
+
+describe('the exact role is required of the pipeline credential', () => {
+  it.each([
+    'postgres://ai_capital_owner@fake.invalid:5432/fake_db',
+    'postgres://ai_capital_dashboard@fake.invalid:5432/fake_db',
+  ])('refuses %s', (url) => {
+    expect(() => requirePipelineCredential({ [PIPELINE_URL_VAR]: url }))
+      .toThrow(/must name the ai_capital_pipeline role/)
   })
 })

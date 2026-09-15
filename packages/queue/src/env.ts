@@ -14,6 +14,8 @@ import { parse as parseDotenv } from 'dotenv'
 
 import { requireExplicitPostgresUrl } from '@common/db/credential-url'
 
+import { readCredentialFile } from './credential-file.js'
+
 /** Absolute path to the monorepo root (the dir that holds pnpm-workspace.yaml). */
 export function workspaceRoot(): string {
   // packages/queue/src/env.ts → ../../../ = repo root
@@ -133,21 +135,79 @@ export function ensurePipelineEnv(): void {
   }
 }
 
+/** The one role a pipeline credential may name. */
+export const PIPELINE_ROLE = 'ai_capital_pipeline'
+
+/** Direct-value mode: the credential itself, for tests and manual runs. */
+export const PIPELINE_URL_VAR = 'PIPELINE_DATABASE_URL'
+
+/** File mode: the absolute path of a file holding the credential. */
+export const PIPELINE_FILE_VAR = 'PIPELINE_CREDENTIAL_FILE'
+
 /**
- * Validate PIPELINE_DATABASE_URL and return the exact validated string.
+ * Obtain and validate the pipeline credential.
  *
- * Called ONLY by the two workers and the launcher — the three entrypoints that
- * spawn PostgreSQL-touching children. It uses the same canonical validator as
- * the dashboard pool and the claim writer, so "explicit scheme, user, host and
- * database, no ambient completion, whitespace refused not trimmed" means the
- * same thing in all three places.
+ * CALLED BY EXACTLY THREE ENTRYPOINTS — bin/worker.ts, bin/structured-worker.ts
+ * and bin/run-stage.ts — and deliberately NOT by ensurePipelineEnv(). That
+ * distinction is the whole boundary: ensurePipelineEnv() runs in ten bins, five
+ * of which (submit, run-daily, smoke, queue-health, reconcile) never reach
+ * PostgreSQL and must not be made to hold a production write credential merely
+ * because they share a startup helper. Putting the file read there would have
+ * recreated, through a different door, exactly the root-.env defect this slice
+ * removed.
  *
- * The returned string is what the caller must hand onward; nothing downstream
- * re-reads the environment for it. A rotated credential therefore requires an
- * intentional worker restart rather than taking effect mid-process.
+ * TWO EXPLICIT SOURCES, AND EXACTLY ONE OF THEM. This is SOURCE SELECTION, not
+ * fallback:
+ *
+ *   PIPELINE_DATABASE_URL     the credential itself — tests, deliberate manual runs
+ *   PIPELINE_CREDENTIAL_FILE  an ABSOLUTE path to a file holding it — the plists
+ *
+ * Both set is a refusal, not a precedence rule: two sources of truth means an
+ * operator can rotate one and keep running on the other without noticing. Neither
+ * set is a refusal. There is NO implicit default path and no HOME-derived
+ * location — nothing in this function guesses where a credential might live, so
+ * a misconfigured job fails loudly instead of quietly finding something.
+ *
+ * THE FILE-LOADED VALUE NEVER TOUCHES process.env. It is returned as a local
+ * string and handed explicitly to processJob() and buildPipelineChildEnv(). A
+ * value in process.env is visible to every later reader, inherited by any child
+ * created without an explicit environment, and captured by crash dumps; a local
+ * is not. This also keeps the existing guarantee — nothing downstream re-reads
+ * the environment for the credential — literally true.
+ *
+ * Validation is the canonical one, extended with the exact role: a credential
+ * for a broader role satisfies every syntactic check and is still an escalation.
+ * Errors name the variable and never the value.
  */
 export function requirePipelineCredential(
   env: NodeJS.ProcessEnv = process.env,
+  readFile: (path: string) => string = readCredentialFile,
 ): string {
-  return requireExplicitPostgresUrl('PIPELINE_DATABASE_URL', env.PIPELINE_DATABASE_URL)
+  const direct = env[PIPELINE_URL_VAR]
+  const file = env[PIPELINE_FILE_VAR]
+  const directSet = direct !== undefined
+  const fileSet = file !== undefined
+
+  if (directSet && fileSet) {
+    throw new Error(
+      `@common/queue: both ${PIPELINE_URL_VAR} and ${PIPELINE_FILE_VAR} are set. ` +
+      'Exactly one credential source must be chosen; there is no precedence rule ' +
+      'between them, because two sources of truth let a rotation of one go unnoticed ' +
+      'while the process keeps running on the other.',
+    )
+  }
+  if (!directSet && !fileSet) {
+    throw new Error(
+      `@common/queue: neither ${PIPELINE_URL_VAR} nor ${PIPELINE_FILE_VAR} is set. ` +
+      'This credential has no fallback and no default location — it never borrows ' +
+      'DATABASE_URL, a PG* variable, or a path derived from HOME.',
+    )
+  }
+
+  if (directSet) {
+    return requireExplicitPostgresUrl(PIPELINE_URL_VAR, direct, { user: PIPELINE_ROLE })
+  }
+  // File mode. The loader returns bytes; every rule about what a credential may
+  // look like still belongs to the canonical validator below.
+  return requireExplicitPostgresUrl(PIPELINE_FILE_VAR, readFile(file as string), { user: PIPELINE_ROLE })
 }

@@ -47,10 +47,24 @@ const POSTGRES_URL_SCHEME_RE = /^postgres(ql)?:\/\//i
  * to know which credential is wrong, and a log needs not to contain it. No
  * message here interpolates the credential, its user, its host or its database.
  *
- * @param varName the environment variable being validated, for the message only
- * @param raw     its value, exactly as read
+ * AN OPTIONAL ROLE CONSTRAINT, SHARING THE SAME PARSE. Some credentials are not
+ * merely "explicit" but must belong to one named role — the pipeline worker must
+ * hold `ai_capital_pipeline` and nothing else, because a valid URL for a broader
+ * role is exactly the escalation the boundary exists to prevent. That check
+ * reuses the fields parsed below rather than introducing a second parser: one
+ * parse, one set of rules, one place to get them wrong. Callers that omit
+ * `expected` are unaffected — the dashboard pool and the claim writer pass
+ * nothing and behave exactly as before.
+ *
+ * @param varName  the environment variable being validated, for the message only
+ * @param raw      its value, exactly as read
+ * @param expected optional constraint on the DECODED username
  */
-export function requireExplicitPostgresUrl(varName: string, raw: string | undefined): string {
+export function requireExplicitPostgresUrl(
+  varName: string,
+  raw: string | undefined,
+  expected?: { user: string },
+): string {
   if (raw === undefined) {
     throw new Error(
       `@common/db: ${varName} is not set. This credential has no fallback — it ` +
@@ -141,6 +155,34 @@ export function requireExplicitPostgresUrl(varName: string, raw: string | undefi
       'supply the socket directory as an explicit ?host= parameter. A password is NOT ' +
       'required — passwordless authentication and .pgpass remain operator choices.',
     )
+  }
+
+  // ── OPTIONAL EXACT ROLE ───────────────────────────────────────────────────
+  //
+  // Compared against the DECODED username. pg-connection-string percent-decodes
+  // the userinfo, measured rather than assumed:
+  //
+  //   postgres://ai%5Fcapital%5Fpipeline@h:5432/d  ->  user 'ai_capital_pipeline'
+  //
+  // so a percent-encoded spelling of the right role is accepted and a different
+  // role spelled plainly is not. The comparison is exact and case-sensitive:
+  // PostgreSQL folds unquoted identifiers to lower case, so a credential naming
+  // `AI_Capital_Pipeline` is either a quoted identifier for a DIFFERENT role or
+  // an operator mistake, and guessing which one is not this function's job.
+  //
+  // The error names the variable and the role that was required. It never names
+  // the role that was found: that value came from the credential, and a message
+  // is one `tee` away from a log file.
+  if (expected !== undefined) {
+    const actual = fields.user === undefined || fields.user === null ? '' : String(fields.user)
+    if (actual !== expected.user) {
+      throw new Error(
+        `@common/db: ${varName} must name the ${expected.user} role. ` +
+        'A credential for any other role is refused here even when it is otherwise ' +
+        'valid — a broader role would satisfy every syntactic check and still be an ' +
+        'escalation. The role actually named is not reported.',
+      )
+    }
   }
 
   // The ORIGINAL string, byte for byte. Not parsed.href, not a normalised form,

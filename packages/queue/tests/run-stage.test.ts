@@ -81,6 +81,7 @@ describe('the launcher itself', () => {
   it('documents the `--` contract in its usage text', () => {
     expect(USAGE).toMatch(/--/)
     expect(USAGE).toMatch(/PIPELINE_DATABASE_URL/)
+    expect(USAGE).toMatch(/PIPELINE_CREDENTIAL_FILE/)
   })
 
   it('validates before the child is created', () => {
@@ -215,13 +216,14 @@ describe('ops/launchd templates', () => {
   it.each([
     'com.thanapol.ai-capital.worker.plist.template',
     'com.thanapol.ai-capital.structured-worker.plist.template',
-  ])('%s supplies PIPELINE_DATABASE_URL and no generic DATABASE_URL', (f) => {
+  ])('%s supplies a credential FILE PATH and no credential value', (f) => {
     const src = readFileSync(join(dir, f), 'utf-8')
-    // ONE credential name. The worker process reads only PIPELINE_DATABASE_URL;
-    // a stage child's DATABASE_URL is derived by buildPipelineChildEnv() after
-    // sanitization, so a duplicate here would be a second name for one secret.
-    expect(src).toContain('<key>PIPELINE_DATABASE_URL</key>')
+    // S4E: the plist carries the PATH of the credential file, never the
+    // credential. A stage child's DATABASE_URL is derived by
+    // buildPipelineChildEnv() after sanitization.
+    expect(src).toContain('<key>PIPELINE_CREDENTIAL_FILE</key>')
     expect(src).not.toContain('<key>DATABASE_URL</key>')
+    expect(src).not.toContain('<key>PIPELINE_DATABASE_URL</key>')
   })
 
   it.each([
@@ -245,17 +247,20 @@ describe('ops/launchd templates', () => {
     expect(src).not.toContain(`<string>${rel}</string>`)
   })
 
-  it.each(files)('%s contains no executable installation instruction', (f) => {
+  it.each(files)('%s contains no credential-bearing installation instruction', (f) => {
     // Interpolating a credential through `sed` arguments exposes it in the
-    // process table and mishandles `&`, `|`, backslashes and `& < >`. The
-    // instructions were removed rather than patched; a reviewed renderer comes
-    // in a later slice.
+    // process table and mishandles `&`, `|`, backslashes and `& < >`. Those
+    // instructions stay removed. S4E replaced them with the renderer, which
+    // handles no secret — so documenting how to INVOKE it is correct, while a
+    // hand-rolled substitution or a direct launchctl call is not.
     const src = readFileSync(join(dir, f), 'utf-8')
     expect(src).not.toMatch(/^\s*sed\s+-e/m)
     expect(src).not.toMatch(/envsubst/)
     expect(src).not.toMatch(/launchctl\s+(bootstrap|bootout|kickstart)/)
     expect(src).not.toMatch(/^\s*cp\s+/m)
-    expect(src).toMatch(/INSTALLATION IS BLOCKED/)
+    // …and it states plainly that nothing has been provisioned or installed.
+    expect(src).toMatch(/NOTHING HAS BEEN PROVISIONED OR INSTALLED/)
+    expect(src).toMatch(/render-launchd-plist\.ts/)
   })
 })
 

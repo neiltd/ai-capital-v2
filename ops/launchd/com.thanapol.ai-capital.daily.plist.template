@@ -21,20 +21,23 @@
   Loading the installed copy is a PRODUCTION-STATE ACTION and requires separate
   authorization.
 
-  INSTALLATION IS BLOCKED UNTIL A CREDENTIAL-SAFE RENDERER EXISTS.
-  This file is a SOURCE ARTIFACT ONLY. It is not installable as written, and the
-  earlier `sed`-based instructions were removed rather than fixed: passing a
-  credential through command arguments exposes it in the process table, and
-  `sed` mishandles `&`, `|`, backslashes and the XML-sensitive characters
-  `& < >`, which can silently alter or corrupt the value it substitutes.
+  RENDERING (the renderer now exists, and it handles no secret).
+  This file is a SOURCE ARTIFACT. It is rendered by
+  packages/queue/bin/render-launchd-plist.ts, which for this agent substitutes
+  only a repository path and an unauthenticated Redis endpoint — this job
+  receives NO PostgreSQL credential and NO credential-file path at all. The
+  renderer escapes XML, writes through a private same-directory temporary,
+  fsyncs, lints, parses its own output to confirm no environment entry holds a
+  PostgreSQL URL, publishes with link(2), and fsyncs the directory.
 
-  A separately reviewed renderer must exist first. Its contract:
-    * XML-escape every substituted value;
-    * keep credentials out of argv and out of stdout;
-    * write through a private temporary file created with mode 0600;
-    * run `plutil -lint` on the result;
-    * publish atomically into ~/Library/LaunchAgents/.
-  That renderer is deliberately NOT part of this slice.
+    pnpm --filter @common/queue render-plist -- --agent <name> --root <abs> …
+
+  The earlier `sed` instructions were removed rather than fixed: passing a value
+  through command arguments exposes it in the process table, and `sed`
+  mishandles `&`, `|`, backslashes and `& < >`.
+
+  NOTHING HAS BEEN PROVISIONED OR INSTALLED. No plist is installed and no agent
+  has been started or restarted.
 -->
 <plist version="1.0">
 <dict>

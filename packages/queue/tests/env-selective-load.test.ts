@@ -24,7 +24,7 @@ import { tmpdir } from 'node:os'
 import { join } from 'node:path'
 import { fileURLToPath } from 'node:url'
 
-import { loadApprovedRootEnv, APPROVED_ROOT_ENV_KEYS } from '../src/env.js'
+import { loadApprovedRootEnv, APPROVED_ROOT_ENV_KEYS, ensurePipelineEnv } from '../src/env.js'
 
 const SOURCE = fileURLToPath(new URL('../src/env.ts', import.meta.url))
 
@@ -207,7 +207,11 @@ describe('env.ts reaches the file the only way that can be selective', () => {
     // redacted. Nothing read from the file, nothing parsed out of it, and not
     // the environment being populated may appear in a thrown message.
     const code = src().split('\n').filter(l => !/^\s*(\/\/|\*|\/\*)/.test(l)).join('\n')
-    const throws = [...code.matchAll(/throw new Error\(([\s\S]*?)\n\s*\)/g)].map(m => m[1])
+    // Scoped to loadApprovedRootEnv: requirePipelineCredential's own errors
+    // interpolate variable-NAME constants and are covered just below.
+    const loader = code.slice(code.indexOf('export function loadApprovedRootEnv'),
+                              code.indexOf('export function ensurePipelineEnv'))
+    const throws = [...loader.matchAll(/throw new Error\(([\s\S]*?)\n\s*\)/g)].map(m => m[1])
     expect(throws.length).toBeGreaterThan(0)
     for (const body of throws) {
       // Only the INTERPOLATIONS can carry a value; the prose may legitimately
@@ -242,4 +246,52 @@ describe('env.ts reaches the file the only way that can be selective', () => {
   })
 
 
+})
+
+// ensurePipelineEnv() RUNS IN TEN BINS, AND MUST STAY CREDENTIAL-FREE.
+//
+// It is called by worker, structured-worker and run-stage — which do need a
+// credential — but also by submit, run-daily, queue-health, reconcile, smoke,
+// smoke-flow and smoke-fail, which do not and must never hold one. Loading the
+// credential file here would have handed a production write credential to seven
+// processes with no caller for it: the root-.env defect, through another door.
+describe('ensurePipelineEnv is credential-free', () => {
+  const envSource = readFileSyncRaw(SOURCE, 'utf-8')
+
+  it('does not read PIPELINE_CREDENTIAL_FILE even when it is set', () => {
+    // A DIRECTORY at the path: readFileSync would fail with EISDIR, so if
+    // ensurePipelineEnv touched it at all this test would throw.
+    const unreadable = join(root, 'credential-as-directory')
+    mkdirSync(unreadable)
+    const priorFile = process.env.PIPELINE_CREDENTIAL_FILE
+    const priorRuns = process.env.PIPELINE_RUNS_DB
+    const priorData = process.env.DATA_ROOT
+    process.env.PIPELINE_CREDENTIAL_FILE = unreadable
+    try {
+      expect(() => ensurePipelineEnv()).not.toThrow()
+      // …and it installs no credential of its own.
+      expect(process.env.PIPELINE_DATABASE_URL).toBeUndefined()
+    } finally {
+      if (priorFile === undefined) delete process.env.PIPELINE_CREDENTIAL_FILE
+      else process.env.PIPELINE_CREDENTIAL_FILE = priorFile
+      if (priorRuns === undefined) delete process.env.PIPELINE_RUNS_DB; else process.env.PIPELINE_RUNS_DB = priorRuns
+      if (priorData === undefined) delete process.env.DATA_ROOT; else process.env.DATA_ROOT = priorData
+    }
+  })
+
+  it('names neither credential variable in its own body', () => {
+    const start = envSource.indexOf('export function ensurePipelineEnv')
+    const end = envSource.indexOf('export const PIPELINE_ROLE')
+    const body = envSource.slice(start, end > start ? end : undefined)
+    expect(body).not.toMatch(/PIPELINE_CREDENTIAL_FILE|readCredentialFile|requireExplicitPostgresUrl/)
+    // Non-vacuity: this really is the function's body.
+    expect(body).toContain('loadApprovedRootEnv(root, process.env)')
+  })
+
+  it('the credential errors name VARIABLES, never a value or a path', () => {
+    const cred = envSource.slice(envSource.indexOf('export function requirePipelineCredential'))
+    for (const m of cred.matchAll(/\$\{([^}]*)\}/g)) {
+      expect(['PIPELINE_URL_VAR', 'PIPELINE_FILE_VAR']).toContain(m[1])
+    }
+  })
 })

@@ -21,7 +21,7 @@
 // property that makes execution order provable — the absence of a static import
 // of anything that constructs.
 import { describe, it, expect } from 'vitest'
-import { readFileSync } from 'node:fs'
+import { readFileSync, readdirSync } from 'node:fs'
 import { fileURLToPath } from 'node:url'
 
 const ENTRYPOINTS = ['../bin/worker.ts', '../bin/structured-worker.ts'] as const
@@ -90,6 +90,9 @@ describe('the shared env module is itself inert at import time', () => {
       // engines.node is ">=20".
       'dotenv',
       '@common/db/credential-url',
+      // The credential-file reader. Importing it is inert — it opens nothing
+      // until requirePipelineCredential() selects file mode.
+      './credential-file.js',
     ])
   })
 })
@@ -104,5 +107,48 @@ describe('processJob receives the credential as a parameter', () => {
     expect(code).toMatch(/processJob\([^)]*pipelineCredential: string/s)
     expect(code).not.toMatch(/process\.env\.[A-Z_]*DATABASE_URL/)
     expect(code).not.toMatch(/requirePipelineCredential/)
+  })
+})
+
+// ONLY THREE BINS MAY ASK FOR THE CREDENTIAL.
+//
+// ensurePipelineEnv() is called by ten bins; requirePipelineCredential() by
+// three. That asymmetry IS the boundary — submit, run-daily, queue-health,
+// reconcile and the smoke bins never reach PostgreSQL and must not hold a
+// production write credential. A fourth caller appearing here is the regression
+// this test exists to catch.
+describe('the credential has exactly three consumers', () => {
+  const BIN = fileURLToPath(new URL('../bin/', import.meta.url))
+  const bins = readdirSync(BIN).filter(f => f.endsWith('.ts'))
+
+  const callers = bins.filter(f => /\brequirePipelineCredential\s*\(/.test(readFileSync(`${BIN}${f}`, 'utf-8')))
+
+  it('is requested by worker, structured-worker and run-stage — and nothing else', () => {
+    expect(callers.sort()).toEqual(['run-stage.ts', 'structured-worker.ts', 'worker.ts'])
+  })
+
+  it('the other bins call ensurePipelineEnv without it (non-vacuity)', () => {
+    const preparers = bins.filter(f => /\bensurePipelineEnv\s*\(\)/.test(readFileSync(`${BIN}${f}`, 'utf-8')))
+    // Ten preparers, three consumers: the asymmetry is the point.
+    expect(preparers.length).toBeGreaterThan(callers.length)
+    for (const f of ['submit.ts', 'run-daily.ts', 'queue-health.ts', 'reconcile.ts', 'smoke.ts']) {
+      expect(preparers).toContain(f)
+      expect(callers).not.toContain(f)
+    }
+  })
+
+  it('no bin reads the credential file directly', () => {
+    for (const f of bins) {
+      const src = readFileSync(`${BIN}${f}`, 'utf-8')
+      expect(src, `${f} reads the credential file itself`).not.toMatch(/readCredentialFile\s*\(/)
+    }
+  })
+
+  it('no bin writes a credential into process.env', () => {
+    for (const f of bins) {
+      const src = readFileSync(`${BIN}${f}`, 'utf-8')
+      expect(src, f).not.toMatch(/process\.env\.PIPELINE_DATABASE_URL\s*=/)
+      expect(src, f).not.toMatch(/process\.env\[[^\]]*PIPELINE[^\]]*\]\s*=/)
+    }
   })
 })
