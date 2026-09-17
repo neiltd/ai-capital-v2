@@ -394,3 +394,45 @@ describe('bypasses Warden proved against the hardened gate', () => {
     }
   })
 })
+
+describe('legacy-copy is its own operation', () => {
+  // AWAITED, like its two siblings. Written without `async`/`await` this test
+  // discarded the promise withProductionWrite returns, so vitest could finish
+  // the test independently of the authorization scope - and the assertion
+  // inside it proved nothing. Measured: with `intent.operation !== operation`
+  // removed from assertProductionWriteAuthorized, the un-awaited version still
+  // passed.
+  it('an intent for legacy-copy does not satisfy a migration assertion', async () => {
+    await withProductionWrite(
+      { operation: 'legacy-copy', context: 'admin', reason: 'zz round-3 test' },
+      async () => {
+        expect(() => assertProductionWriteAuthorized(PROD, 'migration'))
+          .toThrow(ProductionWriteRefused)
+      },
+    )
+  })
+
+  it('a migration intent does not satisfy a legacy-copy assertion', async () => {
+    await withProductionWrite(
+      { operation: 'migration', context: 'migration', reason: 'zz round-3 test' },
+      async () => {
+        expect(() => assertProductionWriteAuthorized(PROD, 'legacy-copy'))
+          .toThrow(ProductionWriteRefused)
+      },
+    )
+  })
+
+  it('a legacy-copy intent satisfies a legacy-copy assertion', async () => {
+    await withProductionWrite(
+      { operation: 'legacy-copy', context: 'admin', reason: 'zz round-3 test' },
+      async () => {
+        expect(() => assertProductionWriteAuthorized(PROD, 'legacy-copy')).not.toThrow()
+      },
+    )
+  })
+
+  it('with no intent at all, legacy-copy is refused', () => {
+    expect(() => assertProductionWriteAuthorized(PROD, 'legacy-copy'))
+      .toThrow(ProductionWriteRefused)
+  })
+})

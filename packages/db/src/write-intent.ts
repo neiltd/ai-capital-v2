@@ -53,8 +53,24 @@ export type WriteOperation =
   | 'claim-persistence'   // desk.agent_claims / desk.agent_runs
   | 'pipeline-write'      // a DAG stage persisting its own output
   | 'migration'           // schema change via db-migrate
+  | 'legacy-copy'         // the one-time legacy SQLite/JSONL/LanceDB data copy
   | 'admin-repair'        // a deliberate, disclosed operator correction
   | 'investment-ledger-import' // explicit publication of an inspected ledger batch
+
+/**
+ * WHY `legacy-copy` IS NOT `migration`.
+ *
+ * `migration` means a SCHEMA change applied by db-migrate: DDL, recorded in
+ * db.schema_migrations, replayable from the repository. The legacy copy is
+ * none of those. It moves BULK DATA once, during a deployment window, from
+ * stores that no migration describes, and it is authorised against a snapshot
+ * digest rather than a migration ledger.
+ *
+ * Reusing `migration` would have made the two indistinguishable in an audit
+ * and, worse, made an intent opened for one satisfy an assertion written for
+ * the other - the exact failure the operation match exists to prevent. Every
+ * existing operation still matches only itself.
+ */
 
 /**
  * Which kind of runtime opened the scope. Recorded rather than trusted: it
