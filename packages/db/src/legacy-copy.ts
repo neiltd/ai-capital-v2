@@ -27,6 +27,7 @@ import { createHash } from 'node:crypto'
 import { lstatSync, readFileSync, readdirSync, statSync, existsSync, realpathSync } from 'node:fs'
 import { isAbsolute, join, relative, sep } from 'node:path'
 import type { Pool, PoolClient } from 'pg'
+import { escapeIdentifier } from 'pg'
 
 import { createPool, databaseNameOfRaw } from './pool.js'
 import { requireExplicitPostgresUrl } from './credential-url.js'
@@ -725,22 +726,77 @@ export interface SequenceState {
 }
 
 /**
- * READ ONLY. `nextval` and `setval` are NOT used, and no probe insert is made:
- * sequence advancement is NOT rolled back, so a "harmless" test insert inside a
- * transaction would still burn a value and leave the target differing from a
- * replay of the same fixtures.
+ * READ ONLY, AND READ FROM THE SEQUENCE RELATION ITSELF.
+ *
+ * NOT `pg_sequences`. That view does not expose `is_called` — in PostgreSQL 17
+ * its column list is schemaname, sequencename, sequenceowner, data_type,
+ * start_value, min_value, max_value, increment_by, cycle, cache_size and
+ * last_value, and nothing else (share/postgresql/system_views.sql). Selecting
+ * `is_called` from it raises 42703 at runtime; the database-free suite hid that
+ * because its fake client fabricated the column. The view's `last_value` is not
+ * equivalent either: it is `pg_sequence_last_value()`, which answers NULL for a
+ * sequence that has never been advanced and for a caller without privileges.
+ *
+ * A sequence RELATION exposes both columns directly. This read calls no
+ * `nextval`, `setval` or `currval` and modifies no sequence state — but it is
+ * NOT lock-free, and claiming so would be wrong: it is an ordinary SELECT and
+ * takes the ordinary ACCESS SHARE relation lock that every SELECT takes. That
+ * is what makes it safe for OBSERVING state, not what makes it invisible.
+ *
+ * Nor is any probe insert made: sequence advancement is NOT rolled back, so a
+ * "harmless" test insert inside a transaction would still burn a value and
+ * leave the target differing from a replay of the same fixtures.
+ *
+ * The relation name is interpolated, so BOTH components are escaped with the
+ * driver's own `escapeIdentifier`. There is no `regclass` cast and no reliance
+ * on `search_path` — the orchestrator has already pinned it to `pg_catalog`, so
+ * an unqualified or unquoted name would resolve to nothing or, worse, to
+ * something else.
  */
 export async function readSequenceStates(client: CopyClient): Promise<SequenceState[]> {
   const out: SequenceState[] = []
   for (const s of TARGET_SEQUENCES) {
     const parts = s.sequence.split('.')
+    if (parts.length !== 2 || parts[0] === '' || parts[1] === '') {
+      throw new CopyRefused(
+        `sequence "${s.sequence}" is not a schema-qualified name of exactly two ` +
+        'non-empty components; it will not be interpolated into a query.',
+      )
+    }
+    const relation = `${escapeIdentifier(parts[0])}.${escapeIdentifier(parts[1])}`
     const r = await client.query(
-      `SELECT last_value::text AS last_value, is_called
-         FROM pg_sequences WHERE schemaname = $1 AND sequencename = $2`,
-      [parts[0], parts[1]],
+      `SELECT last_value::text AS last_value, is_called FROM ${relation}`,
     )
-    if (r.rows.length === 0) throw new CopyRefused(`sequence ${s.sequence} does not exist.`)
-    const row = r.rows[0] as { last_value: string | null; is_called: boolean }
+    if (r.rows.length === 0) {
+      throw new CopyRefused(`sequence ${s.sequence} returned no row; it does not exist.`)
+    }
+    if (r.rows.length > 1) {
+      throw new CopyRefused(
+        `sequence ${s.sequence} returned ${r.rows.length} rows. A sequence relation ` +
+        'holds exactly one row; more than one means this is not the object it claims ' +
+        'to be, and the state is not trustworthy.',
+      )
+    }
+    const row = r.rows[0] as { last_value: unknown; is_called: unknown }
+    if (typeof row.is_called !== 'boolean') {
+      throw new CopyRefused(
+        `sequence ${s.sequence} reported is_called as ${JSON.stringify(row.is_called)}, ` +
+        'which is not a boolean.',
+      )
+    }
+    // VALIDATED, NOT CONVERTED. The expression is `last_value::text`, so the only
+    // shapes the driver may hand back are a string and SQL NULL. `String(v)` -
+    // what this used to do - turns a number into a rounded decimal, `undefined`
+    // into the four characters "undefined", an object into "[object Object]" and
+    // `false` into "false", and every one of those reaches the evidence manifest
+    // looking like a sequence value somebody read.
+    if (row.last_value !== null && typeof row.last_value !== 'string') {
+      throw new CopyRefused(
+        `sequence ${s.sequence} reported last_value as ${JSON.stringify(row.last_value)} ` +
+        `(type ${typeof row.last_value}); last_value::text yields a string or SQL NULL, ` +
+        'and nothing else is accepted.',
+      )
+    }
     out.push({ sequence: s.sequence, lastValue: row.last_value, isCalled: row.is_called })
   }
   return out

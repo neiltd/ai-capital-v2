@@ -126,6 +126,9 @@ interface FakeOpts {
   counts?: Record<string, number>
   identity?: Record<string, unknown>
   ledger?: { filename: string; sha256: string; applied_at: string }[]
+  /** Per-sequence reply: a row, several rows, or the string 'none' for zero. */
+  sequences?: Record<string, { last_value: unknown; is_called: unknown } |
+    { last_value: unknown; is_called: unknown }[] | 'none'>
   failOn?: RegExp
   ignoreSetRole?: boolean
 }
@@ -147,7 +150,10 @@ function fakeClient(opts: FakeOpts = {}) {
   const client = {
     statements,
     released: 0,
-    async query(text: string, values?: unknown[]) {
+    // `_values` is accepted and deliberately unused: nothing this fake answers is
+    // parameterised any more. The sequence read that used to need $1/$2 is now a
+    // direct, escaped relation read.
+    async query(text: string, _values?: unknown[]) {
       statements.push(text.replace(/\s+/g, ' ').trim())
       if (opts.failOn && opts.failOn.test(text)) {
         const err = new Error(`injected failure: ${text.slice(0, 40)}`) as Error & { code?: string }
@@ -172,9 +178,15 @@ function fakeClient(opts: FakeOpts = {}) {
       }
       const count = /SELECT count\(\*\)::int AS n FROM ([a-z_]+\.[a-z_]+)/.exec(text)
       if (count) return { rows: [{ n: opts.counts?.[count[1]] ?? 0 }], rowCount: 1 }
-      if (/FROM pg_sequences/.test(text)) {
-        const name = (values as string[])[1]
-        return { rows: [{ last_value: '1', is_called: false, sequence: name }], rowCount: 1 }
+      // The three DIRECT, QUOTED sequence-relation reads. pg_sequences is NOT
+      // recognised here: it has no is_called column in PostgreSQL 17, and a fake
+      // that answered one is exactly what let impossible SQL pass review.
+      const seq = /^SELECT last_value::text AS last_value, is_called FROM "([a-z_]+)"\."([a-z_]+)"$/
+        .exec(text)
+      if (seq) {
+        const name = `${seq[1]}.${seq[2]}`
+        const st = opts.sequences?.[name] ?? { last_value: '1', is_called: false }
+        return { rows: st === 'none' ? [] : Array.isArray(st) ? st : [st], rowCount: 1 }
       }
       return { rows: [], rowCount: 0 }
     },
@@ -753,7 +765,7 @@ describe('LanceDB traversal', () => {
   })
 })
 
-describe('sequences are represented without being advanced', () => {
+describe('sequence state is read from the sequence relation, not pg_sequences', () => {
   it('all three sequences are declared', () => {
     expect(TARGET_SEQUENCES.map(s => s.sequence)).toEqual([
       'portfolio.trade_log_id_seq',
@@ -762,19 +774,147 @@ describe('sequences are represented without being advanced', () => {
     ])
   })
 
-  it('reading them sends no nextval, setval or insert', async () => {
+  it('exactly the three declared sequences are read, each schema-qualified and quoted', async () => {
     const client = fakeClient()
     const states = await readSequenceStates(client)
-    expect(states).toHaveLength(3)
-    const sent = client.statements.join(' ')
-    expect(/nextval|setval|INSERT/i.test(sent)).toBe(false)
-    expect(/pg_sequences/.test(sent)).toBe(true)
+    expect(states.map(s => s.sequence)).toEqual([
+      'portfolio.trade_log_id_seq',
+      'capital.fetch_log_id_seq',
+      'briefing.qa_id_seq',
+    ])
+    const reads = client.statements.filter(x => /last_value/.test(x))
+    expect(reads).toEqual([
+      'SELECT last_value::text AS last_value, is_called FROM "portfolio"."trade_log_id_seq"',
+      'SELECT last_value::text AS last_value, is_called FROM "capital"."fetch_log_id_seq"',
+      'SELECT last_value::text AS last_value, is_called FROM "briefing"."qa_id_seq"',
+    ])
   })
 
-  it('no legacy-copy source calls nextval or setval', () => {
-    for (const f of [join(SRC, 'legacy-copy.ts'), ...ADAPTER_FILES]) {
-      expect(/nextval|setval/i.test(executableOf(f)), f).toBe(false)
+  it('pg_sequences is not consulted', async () => {
+    const client = fakeClient()
+    await readSequenceStates(client)
+    expect(client.statements.join(' ')).not.toContain('pg_sequences')
+    // and the shipped source does not mention it outside the comment explaining why
+    expect(executableOf(join(SRC, 'legacy-copy.ts'))).not.toContain('pg_sequences')
+  })
+
+  it('no advancing statement is issued', async () => {
+    const client = fakeClient()
+    await readSequenceStates(client)
+    const sent = client.statements.join(' ')
+    expect(/nextval|setval|currval|INSERT|UPDATE|DELETE/i.test(sent)).toBe(false)
+    expect(/nextval|setval|currval/i.test(executableOf(join(SRC, 'legacy-copy.ts')))).toBe(false)
+  })
+
+  it('an uncalled sequence preserves last_value 1 and is_called false', async () => {
+    const states = await readSequenceStates(fakeClient())
+    for (const s of states) {
+      expect(s.lastValue).toBe('1')
+      expect(s.isCalled).toBe(false)
     }
+  })
+
+  it('a called sequence preserves its non-default last value and is_called true', async () => {
+    const states = await readSequenceStates(fakeClient({
+      sequences: {
+        'portfolio.trade_log_id_seq': { last_value: '42', is_called: true },
+        'capital.fetch_log_id_seq': { last_value: '9007199254740993', is_called: true },
+        'briefing.qa_id_seq': { last_value: null, is_called: false },
+      },
+    }))
+    expect(states[0]).toEqual({
+      sequence: 'portfolio.trade_log_id_seq', lastValue: '42', isCalled: true,
+    })
+    // Beyond 2^53: proof the value stays a string and is not rounded.
+    expect(states[1].lastValue).toBe('9007199254740993')
+    expect(states[2].lastValue).toBeNull()
+  })
+
+  it('zero returned rows fail closed', async () => {
+    await expect(readSequenceStates(fakeClient({
+      sequences: { 'capital.fetch_log_id_seq': 'none' },
+    }))).rejects.toThrow(/returned no row; it does not exist/)
+  })
+
+  it('more than one returned row fails closed', async () => {
+    await expect(readSequenceStates(fakeClient({
+      sequences: {
+        'briefing.qa_id_seq': [
+          { last_value: '1', is_called: false },
+          { last_value: '2', is_called: true },
+        ],
+      },
+    }))).rejects.toThrow(/returned 2 rows.*exactly one row/s)
+  })
+
+  it('a last_value beyond 2^53 is preserved byte-for-byte, never converted', async () => {
+    const huge = '9007199254740993'
+    const states = await readSequenceStates(fakeClient({
+      sequences: { 'capital.fetch_log_id_seq': { last_value: huge, is_called: true } },
+    }))
+    const got = states.find(x => x.sequence === 'capital.fetch_log_id_seq')!
+    expect(got.lastValue).toBe(huge)
+    // Not merely equal-ish: the same string, and not a number that round-trips.
+    expect(typeof got.lastValue).toBe('string')
+    expect(Number(got.lastValue).toString()).not.toBe(huge)
+  })
+
+  it('a null last_value stays null', async () => {
+    const states = await readSequenceStates(fakeClient({
+      sequences: { 'briefing.qa_id_seq': { last_value: null, is_called: false } },
+    }))
+    expect(states.find(x => x.sequence === 'briefing.qa_id_seq')!.lastValue).toBeNull()
+  })
+
+  it.each([
+    ['a number', 42, 'number'],
+    ['a boolean', false, 'boolean'],
+    ['an object', { v: 1 }, 'object'],
+    ['an array', ['1'], 'object'],
+  ])('%s last_value is refused, not converted', async (_label, value, typeName) => {
+    await expect(readSequenceStates(fakeClient({
+      sequences: { 'portfolio.trade_log_id_seq': { last_value: value, is_called: false } },
+    }))).rejects.toThrow(new RegExp(`last_value as .*\\(type ${typeName}\\)`))
+  })
+
+  it('an undefined last_value is refused, not treated as null', async () => {
+    await expect(readSequenceStates(fakeClient({
+      sequences: { 'portfolio.trade_log_id_seq': { last_value: undefined, is_called: false } },
+    }))).rejects.toThrow(/type undefined/)
+  })
+
+  it('last_value is never passed through String()', () => {
+    const code = executableOf(join(SRC, 'legacy-copy.ts'))
+    expect(code).not.toContain('String(row.last_value)')
+    expect(code).toContain("typeof row.last_value !== ''")
+  })
+
+  it('the comment does not claim the read is lock-free', () => {
+    const src = readFileSync(join(SRC, 'legacy-copy.ts'), 'utf-8')
+    expect(src).not.toContain('neither advances nor locks')
+    expect(src).toContain('ACCESS SHARE relation lock')
+    expect(src).toContain('NOT lock-free')
+  })
+
+  it('a non-boolean is_called fails closed', async () => {
+    await expect(readSequenceStates(fakeClient({
+      sequences: { 'portfolio.trade_log_id_seq': { last_value: '1', is_called: 'f' } },
+    }))).rejects.toThrow(/reported is_called as "f", which is not a boolean/)
+  })
+
+  it('a sequence name that is not exactly two components is refused', async () => {
+    // The guard that stands between TARGET_SEQUENCES and string interpolation.
+    const code = executableOf(join(SRC, 'legacy-copy.ts'))
+    expect(code).toContain('escapeIdentifier(parts[0])')
+    expect(code).toContain('escapeIdentifier(parts[1])')
+    expect(code).toContain("parts.length !== 2")
+  })
+
+  it('the identifier is escaped by the driver, never interpolated raw', () => {
+    const code = executableOf(join(SRC, 'legacy-copy.ts'))
+    expect(code).toContain("import { escapeIdentifier } from ''")
+    expect(/FROM \$\{parts\[0\]\}/.test(code)).toBe(false)
+    expect(/::regclass/.test(code)).toBe(false)
   })
 })
 
