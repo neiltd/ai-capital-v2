@@ -24,43 +24,6 @@ const POSTGRES_URL_SCHEMES = ['postgres:', 'postgresql:']
 const POSTGRES_URL_SCHEME_RE = /^postgres(ql)?:\/\//i
 
 /**
- * Validate one explicit PostgreSQL credential — BEFORE any pool or client exists.
- *
- * SHARED, AND DELIBERATELY SO. This began as the dashboard's validator in slice
- * S4A and is now used by the claim writer as well (S4C). The logic encodes four
- * facts that were each measured rather than reasoned, and that a second copy
- * would eventually get wrong: the WHATWG parser is wrong in both directions for
- * this job; pg-connection-string reports a missing user/host as `''` and a
- * missing database as `null`; surrounding whitespace must be refused rather than
- * trimmed; and the original string must reach the driver byte-for-byte.
- *
- * Validation is a separate step and completes BEFORE construction, so an invalid
- * credential produces zero pg.Pool objects and zero connection attempts rather
- * than a pool that fails on first use.
- *
- * THERE IS NO FALLBACK, for any caller. Not DATABASE_URL, not TEST_DATABASE_URL,
- * not PGDATABASE, PGHOST, PGPORT, PGUSER or USER. A guarded fallback is still a
- * fallback, and the values it would reach for are exactly the ones that make an
- * incomplete URL resolve somewhere unintended.
- *
- * Errors name the VARIABLE and the failure, never the value: an operator needs
- * to know which credential is wrong, and a log needs not to contain it. No
- * message here interpolates the credential, its user, its host or its database.
- *
- * AN OPTIONAL ROLE CONSTRAINT, SHARING THE SAME PARSE. Some credentials are not
- * merely "explicit" but must belong to one named role — the pipeline worker must
- * hold `ai_capital_pipeline` and nothing else, because a valid URL for a broader
- * role is exactly the escalation the boundary exists to prevent. That check
- * reuses the fields parsed below rather than introducing a second parser: one
- * parse, one set of rules, one place to get them wrong. Callers that omit
- * `expected` are unaffected — the dashboard pool and the claim writer pass
- * nothing and behave exactly as before.
- *
- * @param varName  the environment variable being validated, for the message only
- * @param raw      its value, exactly as read
- * @param expected optional constraint on the DECODED username
- */
-/**
  * The NON-SECRET endpoint fields a credential states, plus the credential
  * itself unchanged.
  *
@@ -94,11 +57,47 @@ export interface CredentialEndpoint {
 }
 
 /**
- * Validate a credential and return its decoded endpoint.
+ * Validate one explicit PostgreSQL credential — BEFORE any pool or client exists.
  *
- * This is requireExplicitPostgresUrl's whole body; that function is now a thin
- * wrapper returning `.url`, so every existing caller and its tests are
- * unaffected in signature, behaviour and error text.
+ * SHARED, AND DELIBERATELY SO. This began as the dashboard's validator in slice
+ * S4A and is now used by the claim writer as well (S4C). The logic encodes four
+ * facts that were each measured rather than reasoned, and that a second copy
+ * would eventually get wrong: the WHATWG parser is wrong in both directions for
+ * this job; pg-connection-string reports a missing user/host as `''` and a
+ * missing database as `null`; surrounding whitespace must be refused rather than
+ * trimmed; and the original string must reach the driver byte-for-byte.
+ *
+ * Validation is a separate step and completes BEFORE construction, so an invalid
+ * credential produces zero pg.Pool objects and zero connection attempts rather
+ * than a pool that fails on first use.
+ *
+ * THERE IS NO FALLBACK, for any caller. Not DATABASE_URL, not TEST_DATABASE_URL,
+ * not PGDATABASE, PGHOST, PGPORT, PGUSER or USER. A guarded fallback is still a
+ * fallback, and the values it would reach for are exactly the ones that make an
+ * incomplete URL resolve somewhere unintended.
+ *
+ * Errors name the VARIABLE and the failure, never the value: an operator needs
+ * to know which credential is wrong, and a log needs not to contain it. No
+ * message here interpolates the credential, its user, its host or its database.
+ *
+ * AN OPTIONAL ROLE CONSTRAINT, SHARING THE SAME PARSE. Some credentials are not
+ * merely "explicit" but must belong to one named role — the pipeline worker must
+ * hold `ai_capital_pipeline` and nothing else, because a valid URL for a broader
+ * role is exactly the escalation the boundary exists to prevent. That check
+ * reuses the fields parsed below rather than introducing a second parser: one
+ * parse, one set of rules, one place to get them wrong. Callers that omit
+ * `expected` are unaffected — the dashboard pool and the claim writer pass
+ * nothing and behave exactly as before.
+ *
+ * THIS FUNCTION IS THE WHOLE VALIDATOR, and the endpoint it returns is the one
+ * parse everything else reuses. requireExplicitPostgresUrl below is a thin
+ * wrapper over it that returns `url` alone, so every existing caller and its
+ * tests are unaffected in signature, behaviour and error text; a caller that also
+ * needs to know WHERE the credential points calls this function instead.
+ *
+ * @param varName  the environment variable being validated, for the message only
+ * @param raw      its value, exactly as read
+ * @param expected optional constraint on the DECODED username
  */
 export function describeExplicitPostgresUrl(
   varName: string,
