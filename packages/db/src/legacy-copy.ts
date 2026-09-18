@@ -30,7 +30,7 @@ import type { Pool, PoolClient } from 'pg'
 import { escapeIdentifier } from 'pg'
 
 import { createPool, databaseNameOfRaw } from './pool.js'
-import { requireExplicitPostgresUrl } from './credential-url.js'
+import { describeExplicitPostgresUrl } from './credential-url.js'
 import { recognizeManifest } from './inventory-facts.js'
 import { CURRENT_V19_MANIFEST } from './inventory-queries.js'
 import { withProductionWrite, assertPoolWriteAuthorized } from './write-intent.js'
@@ -207,9 +207,81 @@ export class CopyCommitOutcomeUnknown extends Error {
  * here even though it would work.
  */
 export function resolveCredential(env: NodeJS.ProcessEnv): string {
-  return requireExplicitPostgresUrl(CREDENTIAL_VAR, env[CREDENTIAL_VAR], {
+  return resolveCredentialEndpoint(env).url
+}
+
+/**
+ * The credential's DECODED endpoint: one role, one host, one port, one database,
+ * and the original URL for the driver.
+ *
+ * WHY THE COPY NEEDS MORE THAN "VALID". The generic validator answers "is this a
+ * complete, explicit credential for the right role". This boundary additionally
+ * has to answer "WHERE was this connection asked to go", because that is half of
+ * the evidence that identifies the listener - the other half being what the
+ * server itself reports. So the single parse the validator already performs is
+ * reused; there is no second parser and no URL library here.
+ *
+ * ONE ENDPOINT, NOT A LIST. libpq accepts `host=/a,/b` and `port=5432,5433` and
+ * tries them in turn, which would make "the credential names this socket" a
+ * statement about a set rather than a path. A comma in either field is refused
+ * outright rather than resolved to a first element.
+ *
+ * THE PORT IS REQUIRED HERE, though the generic validator leaves it optional: a
+ * TCP consumer may legitimately take the server default, but this proof compares
+ * the credential's port with the plan's and with the server's, and a defaulted
+ * port would compare something nobody wrote.
+ *
+ * No error below names the credential, its password or any component of it that
+ * an attacker could have chosen; they name the CONTRACT that failed.
+ */
+export interface CopyCredentialEndpoint {
+  /** The credential exactly as supplied, for the driver. */
+  url: string
+  /** The decoded socket directory for a Unix target, else the hostname. */
+  host: string
+  /** The decoded port, as a number. */
+  port: number
+  /** The decoded database name. */
+  database: string
+}
+
+export function resolveCredentialEndpoint(env: NodeJS.ProcessEnv): CopyCredentialEndpoint {
+  const ep = describeExplicitPostgresUrl(CREDENTIAL_VAR, env[CREDENTIAL_VAR], {
     user: REQUIRED_CREDENTIAL_ROLE,
   })
+  if (ep.host.includes(',')) {
+    throw new CopyRefused(
+      `${CREDENTIAL_VAR} names more than one host. This copy proves WHICH listener ` +
+      'answered, and a list of candidates is not a listener. Supply exactly one.',
+    )
+  }
+  if (ep.port.trim() === '') {
+    throw new CopyRefused(
+      `${CREDENTIAL_VAR} states no port. The port is compared with the confirmed ` +
+      'plan and with the server\'s own configured port, so a defaulted port would ' +
+      'compare a value nobody wrote.',
+    )
+  }
+  if (ep.port.includes(',')) {
+    throw new CopyRefused(
+      `${CREDENTIAL_VAR} names more than one port. Supply exactly one.`,
+    )
+  }
+  // INTEGER, AND IN RANGE. `Number('5435abc')` is NaN and `Number('')` is 0, so
+  // neither a loose cast nor a truthiness test would do; the text must be all
+  // digits and the value must be a port a server can actually listen on.
+  if (!/^[0-9]+$/.test(ep.port)) {
+    throw new CopyRefused(
+      `${CREDENTIAL_VAR} states a port that is not a whole number.`,
+    )
+  }
+  const port = Number(ep.port)
+  if (!Number.isInteger(port) || port < 1 || port > 65535) {
+    throw new CopyRefused(
+      `${CREDENTIAL_VAR} states a port outside the range 1-65535.`,
+    )
+  }
+  return { url: ep.url, host: ep.host, port, database: ep.database }
 }
 
 /**
@@ -503,13 +575,22 @@ export interface TargetIdentity {
    * database and port is a different connection and is refused.
    */
   unixTransport: boolean
-  socketDirectories: string
 }
 
 /**
  * WHERE DID THIS CONNECTION ACTUALLY LAND. A URL is a request, not proof. The
  * system_identifier is what makes the answer non-forgeable: a same-named
  * database on a different cluster answers with a different identifier.
+ *
+ * EVERY SETTING READ HERE IS READABLE BY AN ORDINARY ROLE. An earlier version
+ * also read `current_setting('unix_socket_directories')`, which PostgreSQL
+ * restricts to `pg_read_all_settings`: the copy connects as ai_capital_migrator,
+ * which holds no such membership and must not be given one for a read, so the
+ * query failed outright with "permission denied to examine". It failed in the
+ * FIRST identity read, before SET LOCAL ROLE — and moving it after the role
+ * change would not have helped, because ai_capital_owner is not privileged for
+ * settings either. The socket is proved instead from the credential; see
+ * assertTargetIdentity.
  */
 export async function readTargetIdentity(client: CopyClient): Promise<TargetIdentity> {
   const r = await client.query(
@@ -519,8 +600,7 @@ export async function readTargetIdentity(client: CopyClient): Promise<TargetIden
             current_setting('server_version_num')::int AS server_version_num,
             (SELECT system_identifier::text FROM pg_control_system()) AS system_identifier,
             current_setting('port')::int               AS configured_port,
-            (inet_server_addr() IS NULL)               AS unix_transport,
-            current_setting('unix_socket_directories') AS socket_directories`,
+            (inet_server_addr() IS NULL)               AS unix_transport`,
   )
   const row = r.rows[0] as Record<string, unknown>
   return {
@@ -534,24 +614,7 @@ export async function readTargetIdentity(client: CopyClient): Promise<TargetIden
         ? null
         : Number(row.configured_port),
     unixTransport: row.unix_transport === true,
-    socketDirectories: String(row.socket_directories),
   }
-}
-
-/**
- * The configured socket directories, as a list.
- *
- * PostgreSQL does NOT expose which socket directory the current session came
- * in through - there is no such function - so "the session used THIS socket"
- * cannot be asked directly. What makes the proof sound for this controlled
- * rehearsal is the combination: the session is proved to be on Unix transport,
- * the configured port matches, and the server is configured with EXACTLY ONE
- * socket directory. With one directory configured, a Unix session can only
- * have arrived through it. Zero is unusable and more than one is ambiguous, so
- * both are refused rather than reasoned about.
- */
-export function configuredSocketDirectories(setting: string): string[] {
-  return setting.split(',').map(x => x.trim()).filter(x => x !== '')
 }
 
 /** The cluster-identifying half of a confirmed plan. */
@@ -563,12 +626,38 @@ export interface ExpectedTargetIdentity {
 }
 
 /**
- * ENFORCED, NOT RECORDED. The earlier version compared the database name and a
- * version floor and let everything else past, so a same-named database on
- * another cluster - a colleague's, a restored copy, a second local instance -
- * satisfied it. The system identifier is the cluster's own identity and cannot
- * be spelled differently by accident; the port and socket directory pin WHICH
- * listener answered.
+ * ENFORCED, NOT RECORDED, FROM TWO INDEPENDENT SOURCES.
+ *
+ * The earlier version compared the database name and a version floor and let
+ * everything else past, so a same-named database on another cluster - a
+ * colleague's, a restored copy, a second local instance - satisfied it.
+ *
+ * WHICH SOCKET ANSWERED, WITHOUT A PRIVILEGED READ. PostgreSQL exposes no
+ * function naming the socket THIS session arrived through, and
+ * `unix_socket_directories` is readable only with `pg_read_all_settings` - a
+ * broad predefined role the migrator must not hold. The proof is therefore
+ * assembled from two sources that cannot both be wrong in the same direction:
+ *
+ *   the CREDENTIAL says where the connection was ASKED to go - one explicit
+ *   host, one explicit port, one database, one role, decoded by the same
+ *   canonical parser the driver itself uses;
+ *
+ *   the SERVER says what actually answered - its database, its session and
+ *   current role, its major version, its system identifier, its configured
+ *   port, and whether the transport was a Unix socket.
+ *
+ * For a session the SERVER proves is Unix-transport, the only socket the
+ * connection can have used is the one the credential named, because that is the
+ * path the driver connect(2)s to. Requiring that path to equal the confirmed
+ * plan's socket directory therefore pins the socket exactly - and the system
+ * identifier independently pins the cluster that answered on it. Neither
+ * requires the server to have exactly one socket directory configured, which
+ * was an assumption about the server's configuration rather than a fact about
+ * this connection.
+ *
+ * ORDER MATTERS. The transport check comes FIRST among the connection facts: a
+ * TCP session must be refused as TCP, not as a socket-path mismatch, or the
+ * genuine transport negative would be reported as the wrong failure.
  *
  * All of it runs BEFORE SET LOCAL ROLE and before any target-table query, so a
  * wrong cluster is refused while the session still holds no owner privilege.
@@ -576,6 +665,7 @@ export interface ExpectedTargetIdentity {
 export function assertTargetIdentity(
   actual: TargetIdentity,
   expected: ExpectedTargetIdentity,
+  credential: CopyCredentialEndpoint,
 ): void {
   if (actual.database !== expected.database) {
     throw new CopyRefused(
@@ -628,18 +718,35 @@ export function assertTargetIdentity(
       `${expected.port}.`,
     )
   }
-  const sockets = configuredSocketDirectories(actual.socketDirectories)
-  if (sockets.length !== 1) {
+  // The credential's port, independently of the server's. Both must equal the
+  // confirmed plan: the server states what it listens on, the credential states
+  // what was dialled, and a proof that rests on only one of them is a proof
+  // about only one of them.
+  if (credential.port !== expected.port) {
     throw new CopyRefused(
-      `the server has ${sockets.length} unix_socket_directories configured ` +
-      `[${sockets.join(', ')}]. This proof requires exactly one: with several ` +
-      'configured, nothing the server exposes says which one this session used.',
+      `${CREDENTIAL_VAR} names a port that is not the confirmed ${expected.port}. ` +
+      'The port it named is not reported.',
     )
   }
-  if (sockets[0] !== expected.socketDirectory) {
+  // THE SOCKET, from the credential, for a session the server proved is Unix.
+  //
+  // WHAT THIS MESSAGE MAY SAY. The CONFIRMED plan's socket directory is the
+  // operator's own expectation, already printed in the confirmation string they
+  // typed back, so naming it tells them which contract failed. The path the
+  // CREDENTIAL named is a different thing entirely: it arrived from the
+  // environment, an attacker who can set it can choose its text, and a refusal
+  // message is one redirect away from a log file. `host=/tmp/SECRET` would
+  // otherwise write SECRET into the log by way of an error about it.
+  //
+  // So no credential component is interpolated anywhere in this function: not
+  // the host, not the port, not the role, not the database, not the URL.
+  if (credential.host !== expected.socketDirectory) {
     throw new CopyRefused(
-      `the server's only socket directory is ${sockets[0]}, not the confirmed ` +
-      `${expected.socketDirectory}.`,
+      'this Unix session was opened on a socket directory that is not the confirmed ' +
+      `${expected.socketDirectory}. The path it was opened on is not reported. The ` +
+      'transport is proved by the server; which socket was dialled is stated by the ' +
+      'credential, and the two together identify the listener without reading a ' +
+      'privileged setting.',
     )
   }
 }
@@ -951,7 +1058,12 @@ export async function runLegacyCopy(opts: CopyOptions): Promise<CopyOutcome> {
   const plan = opts.plan
 
   // -- OFFLINE: inputs, completeness, and the plan comparison ---------------
-  const url = resolveCredential(opts.env)
+  //
+  // The credential is DECODED here, once, and every comparison that can be made
+  // without a server is made before a pool exists. A credential naming the wrong
+  // database or the wrong port never reaches connect(2).
+  const credential = resolveCredentialEndpoint(opts.env)
+  const url = credential.url
   const sourceRoot = resolveSourceRoot(opts.env)
   if (sourceRoot !== plan.sourceRoot) {
     throw new CopyRefused(
@@ -962,8 +1074,31 @@ export async function runLegacyCopy(opts: CopyOptions): Promise<CopyOutcome> {
   const database = requireDatabaseName(url)
   if (database !== plan.database) {
     throw new CopyRefused(
-      `the confirmed plan names database ${plan.database}, but the credential names ` +
-      `${database}.`,
+      `${CREDENTIAL_VAR} names a database that is not the confirmed plan's ` +
+      `${plan.database}. The database it named is not reported.`,
+    )
+  }
+  // The decoded database, from the same parse that produced the host and port.
+  // requireDatabaseName above answers the same question through the driver's own
+  // resolution; agreeing with it is a property worth keeping, not redundancy to
+  // remove - they are two readings of one string and a disagreement is a defect.
+  //
+  // Both refusals name the CONFIRMED plan's database and withhold the credential's:
+  // the operator already knows what they confirmed, and the other value is
+  // attacker-choosable text that must not reach a log.
+  if (credential.database !== plan.database) {
+    throw new CopyRefused(
+      `${CREDENTIAL_VAR} decodes to a database that is not the confirmed plan's ` +
+      `${plan.database}. The database it decoded to is not reported.`,
+    )
+  }
+  // OFFLINE, BEFORE ANY POOL. The server's own configured port is compared again
+  // once a session exists; this one catches a credential that was never going to
+  // reach the confirmed listener, without opening a socket to find out.
+  if (credential.port !== plan.port) {
+    throw new CopyRefused(
+      `${CREDENTIAL_VAR} names a port that is not the confirmed plan's ${plan.port}. ` +
+      'The port it named is not reported. No connection was opened.',
     )
   }
 
@@ -1031,12 +1166,16 @@ export async function runLegacyCopy(opts: CopyOptions): Promise<CopyOutcome> {
           began = true
 
           const identityBefore = await readTargetIdentity(client)
-          assertTargetIdentity(identityBefore, {
-            database: plan.database,
-            systemIdentifier: plan.systemIdentifier,
-            port: plan.port,
-            socketDirectory: plan.socketDirectory,
-          })
+          assertTargetIdentity(
+            identityBefore,
+            {
+              database: plan.database,
+              systemIdentifier: plan.systemIdentifier,
+              port: plan.port,
+              socketDirectory: plan.socketDirectory,
+            },
+            credential,
+          )
 
           const migrationCount = await assertMigrationLedger(client)
 

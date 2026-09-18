@@ -88,7 +88,7 @@ import {
   symlinkRequiredFile,
 } from '../testing/legacy-copy-fixtures.js'
 import type { ConfirmedPlan, TargetIdentity } from '../src/legacy-copy.js'
-import { CopyCommitOutcomeUnknown, configuredSocketDirectories } from '../src/legacy-copy.js'
+import { CopyCommitOutcomeUnknown, resolveCredentialEndpoint } from '../src/legacy-copy.js'
 import {
   COMMIT_UNKNOWN_MESSAGE,
   EXIT_COMMIT_UNKNOWN,
@@ -107,8 +107,21 @@ const SRC = join(HERE, '..', 'src')
 const BIN = join(HERE, '..', 'bin')
 const ADAPTER_FILES = ADAPTER_ORDER.map(n => join(SRC, 'legacy-copy', `${n}.ts`))
 
+// Declared here rather than beside the identity tests: GOOD_URL below is built
+// from them, so the credential and the confirmed plan cannot drift apart.
+const SYSTEM_ID = '7000000000000000000'
+const PORT = 5435
+const SOCKET = '/tmp/zz-sock'
+
+// A COHERENT CREDENTIAL: the socket and port it names are the ones the plan
+// below confirms. It used to be `@localhost:5435`, which was a TCP credential
+// paired with a plan whose socketDirectory was /tmp/zz-sock — an incoherence the
+// old proof could not see, because it compared the plan's socket against a
+// setting the SERVER reported rather than against the path actually dialled.
+// Now the credential is half the evidence, so the fixture has to be consistent.
 const GOOD_URL =
-  `postgresql://${REQUIRED_CREDENTIAL_ROLE}@localhost:5435/ai_capital_copy_rehearsal`
+  `postgresql://${REQUIRED_CREDENTIAL_ROLE}@/ai_capital_copy_rehearsal` +
+  `?host=${SOCKET}&port=${PORT}`
 
 let root = ''
 // realpathSync because /var is a symlink to /private/var on macOS, and the
@@ -221,9 +234,6 @@ function executableOf(file: string): string {
   return codeOf(file).replace(/'[^'\n]*'/g, "''").replace(/"[^"\n]*"/g, '""')
 }
 
-const SYSTEM_ID = '7000000000000000000'
-const PORT = 5435
-const SOCKET = '/tmp/zz-sock'
 
 async function positiveEnv(): Promise<NodeJS.ProcessEnv> {
   await writePositiveFixtures(root)
@@ -1119,7 +1129,7 @@ describe('authorization is bound to the bytes actually copied', () => {
     const env = await positiveEnv()
     const plan = { ...planFor(env), database: 'zz_other_db' }
     await expect(runLegacyCopy({ env, plan, createPoolFn: poolFactory(fakeClient()), adapters: noopAdapters() }))
-      .rejects.toThrow(/confirmed plan names database zz_other_db/)
+      .rejects.toThrow(/not the confirmed plan's zz_other_db/)
   })
 
   it('a source changed DURING the copy is caught again before COMMIT', async () => {
@@ -1345,16 +1355,19 @@ describe('target identity is enforced before SET LOCAL ROLE', () => {
     systemIdentifier: SYSTEM_ID,
     configuredPort: PORT,
     unixTransport: true,
-    // EXACTLY ONE configured directory: see configuredSocketDirectories.
-    socketDirectories: SOCKET,
   }
   const expected = {
     database: 'ai_capital_copy_rehearsal', systemIdentifier: SYSTEM_ID,
     port: PORT, socketDirectory: SOCKET,
   }
+  // The credential half of the proof: what the connection was ASKED to reach.
+  const cred = {
+    url: `postgresql://${REQUIRED_CREDENTIAL_ROLE}@/ai_capital_copy_rehearsal?host=${SOCKET}&port=${PORT}`,
+    host: SOCKET, port: PORT, database: 'ai_capital_copy_rehearsal',
+  }
 
   it('a matching identity passes', () => {
-    expect(() => assertTargetIdentity(base, expected)).not.toThrow()
+    expect(() => assertTargetIdentity(base, expected, cred)).not.toThrow()
   })
 
   it.each([
@@ -1367,11 +1380,167 @@ describe('target identity is enforced before SET LOCAL ROLE', () => {
     ['configured port', { configuredPort: 5432 }, /configured on port 5432, not the confirmed/],
     ['TCP transport', { unixTransport: false }, /connected over TCP/],
     ['null port', { configuredPort: null }, /returned no value/],
-    ['socket directory', { socketDirectories: '/var/run/postgresql' }, /only socket directory is/],
-    ['zero socket directories', { socketDirectories: '' }, /has 0 unix_socket_directories/],
-    ['multiple socket directories', { socketDirectories: `/var/run/postgresql, ${SOCKET}` }, /has 2 unix_socket_directories/],
-  ])('a mismatched %s refuses', (_name, patch, re) => {
-    expect(() => assertTargetIdentity({ ...base, ...patch }, expected)).toThrow(re)
+  ])('a mismatched server %s refuses', (_name, patch, re) => {
+    expect(() => assertTargetIdentity({ ...base, ...patch }, expected, cred)).toThrow(re)
+  })
+
+  // ── THE CREDENTIAL HALF ──
+  it.each([
+    ['socket directory', { host: '/var/run/postgresql' }, /socket directory that is not the confirmed/],
+    ['port', { port: 5432 }, /names a port that is not the confirmed/],
+  ])('a mismatched credential %s refuses', (_name, patch, re) => {
+    expect(() => assertTargetIdentity(base, expected, { ...cred, ...patch })).toThrow(re)
+  })
+
+  it('a TCP session is refused as TCP, never as a socket mismatch', () => {
+    // BOTH are wrong here: the transport is TCP AND the credential names a host
+    // that is not the plan's socket. The transport must be the reported reason,
+    // or the genuine TCP negative would be reported as the wrong failure.
+    expect(() => assertTargetIdentity(
+      { ...base, unixTransport: false }, expected,
+      { ...cred, host: '127.0.0.1' },
+    )).toThrow(/connected over TCP/)
+    expect(() => assertTargetIdentity(
+      { ...base, unixTransport: false }, expected,
+      { ...cred, host: '127.0.0.1' },
+    )).not.toThrow(/socket directory/)
+  })
+
+  // ── NO CREDENTIAL COMPONENT REACHES A MESSAGE ──
+  //
+  // Testing only the password and the whole URL was not enough: the host and
+  // the port were interpolated verbatim, so `host=/tmp/SECRET_SENTINEL` wrote
+  // SECRET_SENTINEL into the log by way of an error complaining about it. Every
+  // decoded component now gets its own sentinel, and every credential-sourced
+  // refusal is checked against all of them.
+  const SENT = {
+    user: 'zzuser_sentinel_7f3a',
+    password: 'zzpass_sentinel_9b1c',
+    database: 'zzdb_sentinel_4e8d',
+    host: '/tmp/zzhost_sentinel_2c6b',
+    port: 54321,
+  }
+  const SENT_URL =
+    `postgresql://${SENT.user}:${SENT.password}@/${SENT.database}` +
+    `?host=${SENT.host}&port=${SENT.port}`
+  const ALL_SENTINELS = [
+    SENT.user, SENT.password, SENT.database, SENT.host, String(SENT.port), SENT_URL,
+  ]
+  function expectNoSentinel(msg: string): void {
+    for (const sentinel of ALL_SENTINELS) {
+      expect(msg, `leaked ${sentinel}`).not.toContain(sentinel)
+    }
+  }
+
+  // EACH CASE MUST REACH THE CHECK IT NAMES. Every other component is left
+  // MATCHING, so the intended refusal is the one that fires — a credential with
+  // several sentinels at once is refused by whichever check comes first, and the
+  // later ones are then never exercised at all. Two of these tests were written
+  // that way and passed while the code still leaked; the mutation controls are
+  // what exposed it.
+  it.each([
+    ['a socket-host mismatch',
+      { url: SENT_URL, host: SENT.host, port: PORT, database: 'ai_capital_copy_rehearsal' }],
+    ['a port mismatch',
+      { url: SENT_URL, host: SOCKET, port: SENT.port, database: 'ai_capital_copy_rehearsal' }],
+  ])('%s names no decoded credential component', (_name, sentinelCred) => {
+    try {
+      assertTargetIdentity(base, expected, sentinelCred)
+      throw new Error('expected a refusal')
+    } catch (e) {
+      const msg = (e as Error).message
+      expect(msg).toMatch(/is not the confirmed/)
+      expectNoSentinel(msg)
+    }
+  })
+
+  it('no refusal message in the source interpolates a credential component', () => {
+    // A SOURCE-LEVEL COMPANION to the behavioural sentinels above, for one
+    // specific reason: the decoded-database refusal is UNREACHABLE from any
+    // credential. `requireDatabaseName` and `resolveCredentialEndpoint` both read
+    // the same string with pg-connection-string, so they cannot disagree, and the
+    // driver-resolved check always fires first. That branch exists to catch a
+    // future divergence between the two readers - which means no sentinel test
+    // can ever exercise it, and only the text can be pinned.
+    const code = codeOf(join(SRC, 'legacy-copy.ts'))
+    // Every template-literal interpolation in the file.
+    const interpolations = code.match(/\$\{[^}]*\}/g) ?? []
+    const leaked = interpolations.filter(x =>
+      /\$\{\s*credential\./.test(x) || /^\$\{\s*database\s*\}$/.test(x))
+    expect(leaked, `these interpolate a credential component: ${leaked.join(', ')}`)
+      .toEqual([])
+    // And the redaction sentences are actually present, so the check above is
+    // not passing merely because the messages were deleted.
+    expect(code).toContain('The database it named is not reported.')
+    expect(code).toContain('The database it decoded to is not reported.')
+    expect(code).toContain('The port it named is not reported.')
+    expect(code).toContain('The path it was opened on is not reported.')
+  })
+
+  it.each([
+    ['a decoded database mismatch',
+      `postgresql://${REQUIRED_CREDENTIAL_ROLE}:${SENT.password}@/${SENT.database}` +
+      `?host=${SOCKET}&port=${PORT}`],
+    ['an offline port mismatch',
+      `postgresql://${REQUIRED_CREDENTIAL_ROLE}:${SENT.password}@/ai_capital_copy_rehearsal` +
+      `?host=${SOCKET}&port=${SENT.port}`],
+    ['a socket host that is never dialled',
+      `postgresql://${REQUIRED_CREDENTIAL_ROLE}:${SENT.password}@/ai_capital_copy_rehearsal` +
+      `?host=${SENT.host}&port=${PORT}`],
+  ])('%s refuses offline without naming a credential component', async (_name, url) => {
+    const env = await positiveEnv()
+    let pools = 0
+    try {
+      await runLegacyCopy({
+        env: { ...env, [CREDENTIAL_VAR]: url }, plan: planFor(env),
+        createPoolFn: () => { pools++; throw new Error('a pool must not be built') },
+        adapters: noopAdapters(),
+      })
+      throw new Error('expected a refusal')
+    } catch (e) {
+      const msg = (e as Error).message
+      expect(msg).not.toBe('expected a refusal')
+      expectNoSentinel(msg)
+    }
+    // The socket-host case is proved against a live session, not offline, so it
+    // legitimately reaches pool construction; the other two must not.
+    expect(pools).toBeLessThanOrEqual(1)
+  })
+
+  it('the identity query asks for no privileged setting', () => {
+    // THE COPY6 FAILURE, MADE IMPOSSIBLE. The first live attempt died on
+    // `permission denied to examine "unix_socket_directories"`: that GUC needs
+    // pg_read_all_settings, which ai_capital_migrator does not and must not
+    // hold. Nothing in the identity query may require it, and the same is true
+    // of the other settings PostgreSQL restricts the same way.
+    const code = codeOf(join(SRC, 'legacy-copy.ts'))
+    const query = code.slice(code.indexOf('SELECT current_database()'))
+      .slice(0, code.slice(code.indexOf('SELECT current_database()')).indexOf('`'))
+    expect(query).toContain("current_setting('port')")
+    for (const restricted of [
+      'unix_socket_directories', 'data_directory', 'config_file', 'hba_file',
+      'ident_file', 'ssl_key_file', 'log_directory', 'stats_temp_directory',
+    ]) {
+      expect(query, restricted).not.toContain(restricted)
+    }
+  })
+
+  it('both identity reads use the same unprivileged query', async () => {
+    const env = await positiveEnv()
+    const client = fakeClient()
+    await runLegacyCopy({
+      env, plan: planFor(env), createPoolFn: poolFactory(client), adapters: noopAdapters(),
+    })
+    const identityReads = client.statements.filter(x => /current_database\(\)/.test(x))
+    // One before SET LOCAL ROLE and one after; neither privileged.
+    expect(identityReads.length).toBe(2)
+    for (const q of identityReads) {
+      expect(q).not.toContain('unix_socket_directories')
+      expect(q).toContain('inet_server_addr() IS NULL')
+    }
+    const setRole = client.statements.findIndex(x => /SET LOCAL ROLE/.test(x))
+    const firstIdentity = client.statements.findIndex(x => /current_database\(\)/.test(x))
+    expect(firstIdentity).toBeLessThan(setRole)
   })
 
   it('a same-named database on another cluster refuses before SET ROLE or TRUNCATE', async () => {
@@ -1602,7 +1771,7 @@ describe('SOURCE_HEAD semantics are documented correctly', () => {
 // ---------------------------------------------------------------------------
 
 describe('the port and transport facts are usable over a Unix socket', () => {
-  it('a Unix-socket identity with the configured port and one socket passes', () => {
+  it('a Unix-socket identity with the configured port and the dialled socket passes', () => {
     expect(() => assertTargetIdentity({
       database: 'ai_capital_copy_rehearsal',
       sessionUser: REQUIRED_CREDENTIAL_ROLE,
@@ -1611,10 +1780,12 @@ describe('the port and transport facts are usable over a Unix socket', () => {
       systemIdentifier: SYSTEM_ID,
       configuredPort: PORT,
       unixTransport: true,
-      socketDirectories: SOCKET,
     }, {
       database: 'ai_capital_copy_rehearsal', systemIdentifier: SYSTEM_ID,
       port: PORT, socketDirectory: SOCKET,
+    }, {
+      url: `postgresql://${REQUIRED_CREDENTIAL_ROLE}@/ai_capital_copy_rehearsal?host=${SOCKET}&port=${PORT}`,
+      host: SOCKET, port: PORT, database: 'ai_capital_copy_rehearsal',
     })).not.toThrow()
   })
 
@@ -1644,11 +1815,100 @@ describe('the port and transport facts are usable over a Unix socket', () => {
     expect(client.statements.some(x => /TRUNCATE/.test(x))).toBe(false)
   })
 
-  it('configuredSocketDirectories splits, trims and drops empties', () => {
-    expect(configuredSocketDirectories('/a')).toEqual(['/a'])
-    expect(configuredSocketDirectories(' /a , /b ')).toEqual(['/a', '/b'])
-    expect(configuredSocketDirectories('')).toEqual([])
-    expect(configuredSocketDirectories('  ,  ')).toEqual([])
+  it('the restricted socket GUC is gone from every executable file', () => {
+    for (const f of [join(SRC, 'legacy-copy.ts'), ...ADAPTER_FILES, join(BIN, 'legacy-copy.ts')]) {
+      expect(/unix_socket_directories/.test(executableOf(f)), f).toBe(false)
+      expect(/pg_read_all_settings|pg_monitor/.test(executableOf(f)), f).toBe(false)
+    }
+  })
+})
+
+describe('the credential states one explicit endpoint, decoded once', () => {
+  const V = 'AI_CAPITAL_COPY_DATABASE_URL'
+  const ok = `postgresql://${REQUIRED_CREDENTIAL_ROLE}@/ai_capital_copy_a?host=%2Fprivate%2Ftmp%2Fs%2Fsock&port=5435`
+
+  it('a percent-encoded Unix URL decodes to socket, port, role and database', () => {
+    const ep = resolveCredentialEndpoint({ [V]: ok })
+    expect(ep.host).toBe('/private/tmp/s/sock')
+    expect(ep.port).toBe(5435)
+    expect(ep.database).toBe('ai_capital_copy_a')
+    // THE RAW URL SURVIVES BYTE FOR BYTE. The driver gets what the operator
+    // wrote, not a re-encoded round trip of it.
+    expect(ep.url).toBe(ok)
+  })
+
+  it('a plain Unix URL decodes the same way', () => {
+    const url = `postgresql://${REQUIRED_CREDENTIAL_ROLE}@/zz_db?host=/tmp/zz&port=5999`
+    const ep = resolveCredentialEndpoint({ [V]: url })
+    expect(ep).toEqual({ url, host: '/tmp/zz', port: 5999, database: 'zz_db' })
+  })
+
+  it.each([
+    ['no port', `postgresql://${REQUIRED_CREDENTIAL_ROLE}@/d?host=/s`, /states no port/],
+    ['a non-numeric port', `postgresql://${REQUIRED_CREDENTIAL_ROLE}@/d?host=/s&port=54x5`, /not a whole number/],
+    ['a zero port', `postgresql://${REQUIRED_CREDENTIAL_ROLE}@/d?host=/s&port=0`, /outside the range/],
+    ['an out-of-range port', `postgresql://${REQUIRED_CREDENTIAL_ROLE}@/d?host=/s&port=70000`, /outside the range/],
+    ['two hosts', `postgresql://${REQUIRED_CREDENTIAL_ROLE}@/d?host=/a,/b&port=5435`, /more than one host/],
+    ['two ports', `postgresql://${REQUIRED_CREDENTIAL_ROLE}@/d?host=/a&port=5435,5436`, /more than one port/],
+    ['the wrong role', 'postgresql://ai_capital_owner@/d?host=/a&port=5435', /must name the ai_capital_migrator role/],
+    ['no database', `postgresql://${REQUIRED_CREDENTIAL_ROLE}@h:5435`, /must state its database/],
+  ])('%s is refused', (_name, url, re) => {
+    expect(() => resolveCredentialEndpoint({ [V]: url })).toThrow(re)
+  })
+
+  it('no refusal names the credential or its password', () => {
+    const secret = `postgresql://${REQUIRED_CREDENTIAL_ROLE}:hunter2@/d?host=/a,/b&port=5435`
+    try {
+      resolveCredentialEndpoint({ [V]: secret })
+      throw new Error('expected a refusal')
+    } catch (e) {
+      const msg = (e as Error).message
+      expect(msg).not.toContain('hunter2')
+      expect(msg).not.toContain(secret)
+      expect(msg).toContain(V)
+    }
+  })
+
+  it('resolveCredential still returns the raw URL, unchanged', () => {
+    expect(resolveCredential({ [V]: ok })).toBe(ok)
+  })
+})
+
+describe('credential and plan disagreements fail before a pool exists', () => {
+  it('a database mismatch refuses without constructing a pool', async () => {
+    const env = await positiveEnv()
+    const plan = planFor(env)
+    let pools = 0
+    await expect(runLegacyCopy({
+      env, plan: { ...plan, database: 'ai_capital_copy_elsewhere' },
+      createPoolFn: () => { pools++; throw new Error('a pool must not be built') },
+      adapters: noopAdapters(),
+    })).rejects.toThrow(/not the confirmed plan's ai_capital_copy_elsewhere/)
+    expect(pools).toBe(0)
+  })
+
+  it('a port mismatch refuses without constructing a pool', async () => {
+    const env = await positiveEnv()
+    const plan = planFor(env)
+    let pools = 0
+    await expect(runLegacyCopy({
+      env, plan: { ...plan, port: plan.port + 1 },
+      createPoolFn: () => { pools++; throw new Error('a pool must not be built') },
+      adapters: noopAdapters(),
+    })).rejects.toThrow(/names a port that is not the confirmed plan's \d+/)
+    expect(pools).toBe(0)
+  })
+
+  it('a malformed credential refuses without constructing a pool', async () => {
+    const env = await positiveEnv()
+    let pools = 0
+    await expect(runLegacyCopy({
+      env: { ...env, AI_CAPITAL_COPY_DATABASE_URL: `postgresql://${REQUIRED_CREDENTIAL_ROLE}@/d?host=/a` },
+      plan: planFor(env),
+      createPoolFn: () => { pools++; throw new Error('a pool must not be built') },
+      adapters: noopAdapters(),
+    })).rejects.toThrow(/states no port/)
+    expect(pools).toBe(0)
   })
 })
 

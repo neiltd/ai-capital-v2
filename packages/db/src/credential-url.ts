@@ -60,11 +60,51 @@ const POSTGRES_URL_SCHEME_RE = /^postgres(ql)?:\/\//i
  * @param raw      its value, exactly as read
  * @param expected optional constraint on the DECODED username
  */
-export function requireExplicitPostgresUrl(
+/**
+ * The NON-SECRET endpoint fields a credential states, plus the credential
+ * itself unchanged.
+ *
+ * WHY THIS EXISTS. A caller that must prove WHERE a connection was asked to go
+ * — not merely that the request was well formed — needs the decoded host,
+ * port, database and role. Re-parsing the URL at the call site would mean a
+ * second parser with a second set of rules, which is exactly what this module
+ * was extracted to prevent. So the one parse that already happens is made
+ * available, and `url` carries the original string byte for byte for the driver.
+ *
+ * `port` is the credential's own text, NOT normalised and NOT defaulted: the
+ * generic validator does not require a port (a TCP consumer may legitimately
+ * rely on the server default), so callers that DO require one impose that rule
+ * themselves and can say precisely what was wrong. An absent port reads as ''.
+ *
+ * THE PASSWORD IS DELIBERATELY ABSENT. pg-connection-string returns it; nothing
+ * here copies it, so no caller can accidentally log an endpoint description and
+ * leak a secret with it.
+ */
+export interface CredentialEndpoint {
+  /** The credential exactly as supplied. Never reassembled or normalised. */
+  url: string
+  /** The DECODED role. Percent-encoding is resolved by the parser. */
+  user: string
+  /** The DECODED host: a socket directory for a Unix target, else a hostname. */
+  host: string
+  /** The DECODED database name. */
+  database: string
+  /** The port exactly as the credential stated it; '' when it stated none. */
+  port: string
+}
+
+/**
+ * Validate a credential and return its decoded endpoint.
+ *
+ * This is requireExplicitPostgresUrl's whole body; that function is now a thin
+ * wrapper returning `.url`, so every existing caller and its tests are
+ * unaffected in signature, behaviour and error text.
+ */
+export function describeExplicitPostgresUrl(
   varName: string,
   raw: string | undefined,
   expected?: { user: string },
-): string {
+): CredentialEndpoint {
   if (raw === undefined) {
     throw new Error(
       `@common/db: ${varName} is not set. This credential has no fallback — it ` +
@@ -189,5 +229,26 @@ export function requireExplicitPostgresUrl(
   // and nothing reassembled from the fields above: URL round-tripping can alter
   // percent-encoding, and a rewritten database name is exactly the class of
   // mutation assertNotLiveDatabase() exists to catch.
-  return raw
+  const str = (v: string | null | undefined): string =>
+    v === undefined || v === null ? '' : String(v)
+  return {
+    url: raw,
+    user: str(fields.user),
+    host: str(fields.host),
+    database: str(fields.database),
+    port: str((fields as { port?: string | null }).port),
+  }
+}
+
+/**
+ * The credential, validated, returned byte for byte. UNCHANGED in signature and
+ * in behaviour: it is describeExplicitPostgresUrl's `.url`, so the dashboard
+ * pool, the claim writer and the pipeline worker see exactly what they saw.
+ */
+export function requireExplicitPostgresUrl(
+  varName: string,
+  raw: string | undefined,
+  expected?: { user: string },
+): string {
+  return describeExplicitPostgresUrl(varName, raw, expected).url
 }

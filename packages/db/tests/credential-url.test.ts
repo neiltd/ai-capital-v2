@@ -18,7 +18,7 @@ import { describe, it, expect } from 'vitest'
 import { readFileSync } from 'node:fs'
 import { fileURLToPath } from 'node:url'
 
-import { requireExplicitPostgresUrl } from '../src/credential-url.js'
+import { describeExplicitPostgresUrl, requireExplicitPostgresUrl } from '../src/credential-url.js'
 
 const SOURCE = fileURLToPath(new URL('../src/credential-url.ts', import.meta.url))
 
@@ -189,5 +189,72 @@ describe('credential-url.ts is driver-free and import-inert', () => {
     // The function bodies name PG* variables in prose and in one error message;
     // what must not appear anywhere is an actual read of process.env.
     expect(src).not.toMatch(/process\.env/)
+  })
+})
+
+describe('the decoded endpoint, shared with callers that must prove a destination', () => {
+  const V = 'ZZ_CREDENTIAL'
+
+  it('returns the decoded non-secret fields and the untouched URL', () => {
+    const url = 'postgresql://zz_role@/zz_db?host=%2Fprivate%2Ftmp%2Fzz&port=5435'
+    const ep = describeExplicitPostgresUrl(V, url)
+    expect(ep).toEqual({
+      url, user: 'zz_role', host: '/private/tmp/zz', database: 'zz_db', port: '5435',
+    })
+  })
+
+  it('exposes no password field, however the credential spells one', () => {
+    const url = 'postgresql://zz_role:hunter2@/zz_db?host=/tmp/zz&port=5435'
+    const ep = describeExplicitPostgresUrl(V, url)
+    // `url` IS the credential, byte for byte — that is its contract, because the
+    // driver needs exactly what the operator wrote, secret included. What must
+    // never exist is a DECODED password field: a caller building a message from
+    // the endpoint's parts can then never pick one up by accident.
+    expect(Object.keys(ep).sort()).toEqual(['database', 'host', 'port', 'url', 'user'])
+    for (const [k, v] of Object.entries(ep)) {
+      if (k === 'url') continue
+      expect(String(v), k).not.toContain('hunter2')
+    }
+    expect(ep.user).toBe('zz_role')
+  })
+
+  it('reports an absent port as the empty string rather than a default', () => {
+    // The generic validator does NOT require a port; a caller that does can then
+    // say precisely what was missing instead of comparing an invented value.
+    const ep = describeExplicitPostgresUrl(V, 'postgresql://zz_role@zz.host/zz_db')
+    expect(ep.port).toBe('')
+  })
+
+  it('reports multiple hosts and ports verbatim, for the caller to refuse', () => {
+    const ep = describeExplicitPostgresUrl(V, 'postgresql://zz_role@/zz_db?host=/a,/b&port=1,2')
+    expect(ep.host).toBe('/a,/b')
+    expect(ep.port).toBe('1,2')
+  })
+
+  it('applies exactly the same rules as the string-returning wrapper', () => {
+    for (const bad of [
+      undefined, '', '   ', ' postgresql://zz_role@h:5/d ', 'http://zz.host/db',
+      'postgres:zz_db', 'postgresql://zz.host/zz_db',
+    ]) {
+      let wrapperMsg = ''
+      let describeMsg = ''
+      try { requireExplicitPostgresUrl(V, bad) } catch (e) { wrapperMsg = (e as Error).message }
+      try { describeExplicitPostgresUrl(V, bad) } catch (e) { describeMsg = (e as Error).message }
+      expect(wrapperMsg).not.toBe('')
+      expect(describeMsg).toBe(wrapperMsg)
+    }
+  })
+
+  it('applies the same optional role constraint', () => {
+    const url = 'postgresql://zz_other@/zz_db?host=/tmp/zz&port=5435'
+    expect(() => describeExplicitPostgresUrl(V, url, { user: 'zz_role' }))
+      .toThrow(/must name the zz_role role/)
+    expect(describeExplicitPostgresUrl(V, url, { user: 'zz_other' }).user).toBe('zz_other')
+  })
+
+  it('the wrapper is the endpoint url, so existing consumers are unchanged', () => {
+    const url = 'postgresql://zz_role@zz.host:5435/zz_db'
+    expect(requireExplicitPostgresUrl(V, url)).toBe(url)
+    expect(requireExplicitPostgresUrl(V, url)).toBe(describeExplicitPostgresUrl(V, url).url)
   })
 })
