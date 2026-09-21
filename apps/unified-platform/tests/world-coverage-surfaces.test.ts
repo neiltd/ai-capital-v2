@@ -180,6 +180,24 @@ describe('K-N. surfaces consume article coverage and remain readers', () => {
     expect(read(p)).toMatch(/CoverageCallout/)
   })
 
+  it('N. the map page renders at REQUEST time, not during the build', () => {
+    // CoverageCallout reads DATA_ROOT-backed coverage state. Statically evaluating
+    // this page during `next build` threw "DATA_ROOT env var is not set" and failed
+    // the export of /world/map. Executable source is inspected, not prose.
+    const src = read('(legacy)/world/map/page.tsx')
+
+    expect(src, 'the route is no longer pinned to request-time rendering')
+      .toMatch(/^export const dynamic = 'force-dynamic'$/m)
+    expect(src, 'the callout was dropped — the page no longer needs request-time data')
+      .toMatch(/<CoverageCallout\b/)
+    expect(src, 'WorldMapClient is no longer a client-only dynamic import')
+      .toMatch(/nextDynamic\(\s*\(\)\s*=>\s*import\('\.\/WorldMapClient'\),\s*\{\s*ssr:\s*false\s*\}\s*\)/)
+    // `dynamic` is the route-config name here; the next/dynamic default must not
+    // reclaim it or the module has two bindings called `dynamic`.
+    expect(src, "next/dynamic's default is bound to `dynamic`, colliding with the route config")
+      .not.toMatch(/^import dynamic from 'next\/dynamic'$/m)
+  })
+
   it('the callout resolves ARTICLE coverage, not structured freshness', () => {
     const src = readFileSync(resolve(__dirname, '..', 'src', 'components', 'next', 'coverage-notice.tsx'), 'utf-8')
     expect(src).toContain('readArticleCoverage')
