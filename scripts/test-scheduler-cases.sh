@@ -27,6 +27,33 @@ DB="$TMP/pipeline-runs.db"
 HB="$TMP/heartbeat.log"
 PASS=0; FAIL=0
 
+# FULL ISOLATION, OR NONE. decideIsolation() classifies three dimensions —
+# database, Redis and filesystem — and refuses to run when only some are
+# isolated, because isolating one disarms the safety mechanisms living in the
+# others. This harness used to override PIPELINE_RUNS_DB alone, so every real
+# scheduler/watchdog invocation was refused with PARTIALLY isolated and the
+# cases that expected output failed. Supply all three from here.
+ISO_ROOT="$TMP/isolated-root"          # outside BOTH protected production roots
+ISO_REDIS="redis://127.0.0.1:6380"     # loopback, non-production port; never connected to
+mkdir -p "$ISO_ROOT"
+
+# The ONE way a real scheduler/watchdog is invoked: every isolation dimension is
+# supplied here, and nothing calls these scripts directly. The command and its
+# flags are forwarded verbatim so each call site still reads
+# "./scripts/<script>.sh --dry-run" — the portability contract in
+# packages/queue/tests/runtime-root-portability.test.ts inspects those lines and
+# requires --dry-run on every one of them.
+# Usage: run_isolated ./scripts/<script>.sh --dry-run ; sets ISO_OUT and ISO_RC.
+run_isolated() {
+  ISO_OUT=$(cd "$ROOT" && \
+    AI_CAPITAL_ROOT="$ISO_ROOT" \
+    REDIS_URL="$ISO_REDIS" \
+    PIPELINE_RUNS_DB="$DB" \
+    SCHEDULER_HEARTBEAT_FILE="$HB" \
+    "$@" 2>&1)
+  ISO_RC=$?
+}
+
 sqlite3 "$DB" "CREATE TABLE pipeline_runs (
   id TEXT PRIMARY KEY, parent_run_id TEXT, stage TEXT NOT NULL, source TEXT,
   started_at TEXT NOT NULL, ended_at TEXT, duration_ms INTEGER, status TEXT NOT NULL,
@@ -96,8 +123,13 @@ check "Edge    just-started run is healthy, not stale"    running        false f
 echo
 echo "── the scheduler script itself, on the Case C database (must NOT submit) ──"
 reset; add_run "07:00" success "07:33"; beat "07:05"
-OUT=$(cd "$ROOT" && PIPELINE_RUNS_DB="$DB" SCHEDULER_HEARTBEAT_FILE="$HB" ./scripts/daily-scheduler.sh --dry-run 2>&1)
-if echo "$OUT" | grep -q "would submit"; then
+run_isolated ./scripts/daily-scheduler.sh --dry-run
+# EXIT STATUS FIRST. "no 'would submit' in the output" is also true when the
+# script never ran — a refusal, a crash, a missing file. Awarding PASS on the
+# absence of a string is the vacuous pass this check exists to prevent.
+if [ "$ISO_RC" -ne 0 ]; then
+  echo "  FAIL  scheduler exited $ISO_RC on an already-successful day: $ISO_OUT"; FAIL=$((FAIL+1))
+elif echo "$ISO_OUT" | grep -q "would submit"; then
   echo "  FAIL  scheduler would DUPLICATE a successful day"; FAIL=$((FAIL+1))
 else
   echo "  PASS  scheduler does not submit when the day already succeeded"; PASS=$((PASS+1))
@@ -105,24 +137,36 @@ fi
 
 echo "── the scheduler script on the Case A database (must submit) ──"
 reset; beat "07:05"
-OUT=$(cd "$ROOT" && PIPELINE_RUNS_DB="$DB" SCHEDULER_HEARTBEAT_FILE="$HB" ./scripts/daily-scheduler.sh --dry-run 2>&1)
-if echo "$OUT" | grep -q "would submit"; then
+run_isolated ./scripts/daily-scheduler.sh --dry-run
+if [ "$ISO_RC" -ne 0 ]; then
+  echo "  FAIL  scheduler exited $ISO_RC on a missing run: $ISO_OUT"; FAIL=$((FAIL+1))
+elif echo "$ISO_OUT" | grep -q "would submit"; then
   echo "  PASS  scheduler submits when the run is genuinely missing"; PASS=$((PASS+1))
 else
-  echo "  FAIL  scheduler did NOT submit a missing run: $OUT"; FAIL=$((FAIL+1))
+  echo "  FAIL  scheduler did NOT submit a missing run: $ISO_OUT"; FAIL=$((FAIL+1))
 fi
 
 echo "── the watchdog on the Case F database (must alert) ──"
 reset; beat "07:05"; beat "08:00"
-OUT=$(cd "$ROOT" && PIPELINE_RUNS_DB="$DB" SCHEDULER_HEARTBEAT_FILE="$HB" ./scripts/pipeline-watchdog.sh --dry-run 2>&1)
-echo "$OUT" | grep -q "alert=True" && { echo "  PASS  watchdog alerts on a missing run"; PASS=$((PASS+1)); } \
-                                   || { echo "  FAIL  watchdog silent on a missing run: $OUT"; FAIL=$((FAIL+1)); }
+run_isolated ./scripts/pipeline-watchdog.sh --dry-run
+if [ "$ISO_RC" -ne 0 ]; then
+  echo "  FAIL  watchdog exited $ISO_RC on a missing run: $ISO_OUT"; FAIL=$((FAIL+1))
+elif echo "$ISO_OUT" | grep -q "alert=True"; then
+  echo "  PASS  watchdog alerts on a missing run"; PASS=$((PASS+1))
+else
+  echo "  FAIL  watchdog silent on a missing run: $ISO_OUT"; FAIL=$((FAIL+1))
+fi
 
 echo "── the watchdog on the Case B database (must NOT alert) ──"
 reset; beat_ago 3
-OUT=$(cd "$ROOT" && PIPELINE_RUNS_DB="$DB" SCHEDULER_HEARTBEAT_FILE="$HB" ./scripts/pipeline-watchdog.sh --dry-run 2>&1)
-echo "$OUT" | grep -q "alert=False" && { echo "  PASS  watchdog silent when the machine merely slept"; PASS=$((PASS+1)); } \
-                                    || { echo "  FAIL  watchdog false-alarmed on a sleeping laptop: $OUT"; FAIL=$((FAIL+1)); }
+run_isolated ./scripts/pipeline-watchdog.sh --dry-run
+if [ "$ISO_RC" -ne 0 ]; then
+  echo "  FAIL  watchdog exited $ISO_RC on a sleeping laptop: $ISO_OUT"; FAIL=$((FAIL+1))
+elif echo "$ISO_OUT" | grep -q "alert=False"; then
+  echo "  PASS  watchdog silent when the machine merely slept"; PASS=$((PASS+1))
+else
+  echo "  FAIL  watchdog false-alarmed on a sleeping laptop: $ISO_OUT"; FAIL=$((FAIL+1))
+fi
 
 echo
 echo "PASS=$PASS FAIL=$FAIL"
