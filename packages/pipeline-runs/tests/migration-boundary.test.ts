@@ -5,6 +5,8 @@ import { createHash } from 'node:crypto'
 import { execFileSync, spawnSync } from 'node:child_process'
 import { tmpdir } from 'node:os'
 import { join, resolve } from 'node:path'
+import { createRequire } from 'node:module'
+import { pathToFileURL } from 'node:url'
 import { openDb, openDbReadOnly, closeDb, hasScheduledIdentity, migrateScheduledRunIdentity } from '../src/store.js'
 import { recordStart } from '../src/api.js'
 
@@ -27,6 +29,25 @@ import { recordStart } from '../src/api.js'
 const PKG = resolve(__dirname, '..')
 const MIGRATE = join(PKG, 'bin', 'migrate-run-store.ts')
 const TSX = resolve(PKG, '..', '..', 'node_modules', '.bin', 'tsx')
+
+// WHY THIS RESOLUTION EXISTS. The WAL fixture below is built by a CHILD process
+// whose script must live in the fixture's temp directory — the writer has to be
+// SIGKILLed mid-transaction, and only a separate process can be. A bare
+// `import 'better-sqlite3'` inside that child cannot resolve: Node walks up from
+// the script's own directory, and `os.tmpdir()` has no `node_modules` on any
+// ancestor. The child therefore died instantly, the supervising shell masked it
+// with a trailing `true`, and the failure surfaced 30s later as the useless
+// "database was not created". Resolve the real entry point HERE, from this test
+// module, and hand the child an absolute file: URL. No NODE_PATH, no cwd
+// assumption, no hard-coded node_modules path.
+const BETTER_SQLITE3_URL = pathToFileURL(
+  createRequire(__filename).resolve('better-sqlite3'),
+).href
+
+/** Child-supervision outcomes. Distinct codes so a failure says which one it was. */
+const FIXTURE_OK = 0
+const FIXTURE_CHILD_DIED = 10
+const FIXTURE_TIMEOUT = 11
 
 let dir: string
 beforeEach(() => { dir = mkdtempSync(join(tmpdir(), 'run-store-migration-')) })
@@ -401,12 +422,28 @@ describe('D. WAL-mode inspection is genuinely read-only', () => {
    * WAL-resident. Built by a child process that is killed before it can close
    * and thereby checkpoint — which is also how a crashed writer leaves one.
    */
-  function walFixture(name: string): { path: string; mainRows: number; walRows: number } {
+  interface FixtureAttempt {
+    status: number
+    /** Whatever the child wrote to stdout/stderr before it died. */
+    diagnostic: string
+    dbPath: string
+    elapsedMs: number
+  }
+
+  /**
+   * Start the writer, supervise it, and report precisely how it ended.
+   *
+   * `moduleUrl` is a seam: the tests below pass the real resolved URL, and the
+   * fail-fast regression passes a deliberately unresolvable one.
+   */
+  function attemptWalFixture(name: string, moduleUrl: string = BETTER_SQLITE3_URL): FixtureAttempt {
     const dbPath = join(dir, name)
-    const helper = join(dir, `mkwal-${name}.ts`)
+    const helper = join(dir, `mkwal-${name}.mjs`)
+    const childLog = join(dir, `mkwal-${name}.log`)
+    // Plain ESM: no TSX, no transpiler, run straight under this same Node binary.
     writeFileSync(helper, `
-import Database from 'better-sqlite3'
-import { writeFileSync } from 'fs'
+import Database from ${JSON.stringify(moduleUrl)}
+import { writeFileSync } from 'node:fs'
 const p = process.argv[2]
 const d = new Database(p)
 d.pragma('journal_mode = WAL')
@@ -421,17 +458,59 @@ for (let i = 0; i < 20; i++) ins.run('main-' + i, '2026-08-01T00:00:00Z')
 d.exec('PRAGMA wal_checkpoint(TRUNCATE)')      // these 20 reach the MAIN file
 for (let i = 0; i < 36; i++) ins.run('wal-' + i, '2026-08-02T00:00:00Z')   // these stay in the WAL
 writeFileSync(p + '.ready', 'y')
-setTimeout(() => {}, 120000)
+setTimeout(() => d.close(), 120000)
 `, 'utf-8')
-    // Kill -9 before close: closing would checkpoint and delete the sidecars.
-    const r = spawnSync('/bin/bash', ['-c',
-      `"${TSX}" "${helper}" "${dbPath}" >/dev/null 2>&1 & c=$!; ` +
-      `for i in $(seq 1 300); do [ -f "${dbPath}.ready" ] && break; sleep 0.1; done; ` +
-      `kill -9 $c 2>/dev/null; wait $c 2>/dev/null; true`], { encoding: 'utf-8', timeout: 120_000 })
-    expect(r.status, `fixture builder failed: ${r.stderr}`).toBe(0)
-    expect(existsSync(dbPath), 'fixture database was not created').toBe(true)
-    return { path: dbPath, mainRows: 20, walRows: 36 }
+
+    // FAIL FAST. The old supervisor ended in `; true`, so a child that never
+    // started still reported success and the wait ran the full 30s. This one
+    // polls liveness alongside the readiness file and gives up the instant the
+    // child is gone, with a status that says which way it ended.
+    const script = [
+      `"${process.execPath}" "${helper}" "${dbPath}" > "${childLog}" 2>&1 & c=$!;`,
+      `for i in $(seq 1 300); do`,
+      `  [ -f "${dbPath}.ready" ] && break;`,
+      `  kill -0 $c 2>/dev/null || { wait $c; exit ${FIXTURE_CHILD_DIED}; };`,
+      `  sleep 0.1;`,
+      `done;`,
+      `[ -f "${dbPath}.ready" ] || { kill -9 $c 2>/dev/null; wait $c 2>/dev/null; exit ${FIXTURE_TIMEOUT}; };`,
+      // Kill -9 before close: closing would checkpoint and delete the sidecars.
+      `kill -9 $c 2>/dev/null; wait $c 2>/dev/null; exit ${FIXTURE_OK};`,
+    ].join(' ')
+
+    const startedAt = Date.now()
+    const r = spawnSync('/bin/bash', ['-c', script], { encoding: 'utf-8', timeout: 120_000 })
+    const elapsedMs = Date.now() - startedAt
+    const diagnostic = (existsSync(childLog) ? readFileSync(childLog, 'utf-8') : '') + (r.stderr ?? '')
+    return { status: r.status ?? -1, diagnostic, dbPath, elapsedMs }
   }
+
+  /**
+   * A legacy store whose committed rows live in the WAL, exactly like the
+   * production one: some rows checkpointed into the main file, the rest still
+   * WAL-resident. Built by a child process that is killed before it can close
+   * and thereby checkpoint — which is also how a crashed writer leaves one.
+   */
+  function walFixture(name: string): { path: string; mainRows: number; walRows: number } {
+    const a = attemptWalFixture(name)
+    expect(a.status, `fixture builder exited ${a.status}; child said: ${a.diagnostic}`).toBe(FIXTURE_OK)
+    expect(existsSync(a.dbPath), `fixture database was not created; child said: ${a.diagnostic}`).toBe(true)
+    return { path: a.dbPath, mainRows: 20, walRows: 36 }
+  }
+
+  it('FAIL FAST: an unresolvable helper import reports the real module error, quickly', () => {
+    // The regression this guards. With a bare specifier the child could not
+    // resolve better-sqlite3 from os.tmpdir(); the supervisor swallowed that and
+    // the suite waited ~30s per test before claiming only that the database was
+    // missing. A broken helper must now surface Node's own diagnostic at once.
+    const bogus = pathToFileURL(join(dir, 'no-such-module-here.mjs')).href
+    const a = attemptWalFixture('wal-failfast.db', bogus)
+
+    expect(a.status, 'a child that cannot start must be detected, not waited out').toBe(FIXTURE_CHILD_DIED)
+    expect(a.elapsedMs, `took ${a.elapsedMs}ms — that is the old 30s poll, not fail-fast`).toBeLessThan(10_000)
+    expect(a.diagnostic).toMatch(/ERR_MODULE_NOT_FOUND|Cannot find module/)
+    expect(a.diagnostic).toMatch(/no-such-module-here/)
+    expect(existsSync(a.dbPath)).toBe(false)
+  })
 
   /** Existence, content hash, size and mtime for the database and both sidecars. */
   const stamp = (dbPath: string) => ['', '-wal', '-shm'].map(sfx => {
