@@ -141,6 +141,21 @@ describe('the refresh route holds no credential and spawns nothing', () => {
     expect(text).toMatch(/ok:\s*false/)
   })
 
+  it('declares REFRESH_UNAVAILABLE but does NOT export it', () => {
+    // `next build` type-checks App Router route modules against a fixed export
+    // shape: only GET/POST/... and the route segment config (dynamic, revalidate,
+    // ...). Any other named export fails the build with
+    //   "REFRESH_UNAVAILABLE" is not a valid Route export field
+    // even though every test here passes and the bundle compiles. The constant
+    // has no consumer outside this module, so it stays module-local.
+    expect(text, 'the constant was removed, not just unexported')
+      .toMatch(/^const REFRESH_UNAVAILABLE = 'REFRESH_UNAVAILABLE'$/m)
+    expect(text, 'REFRESH_UNAVAILABLE is exported again — `next build` will reject this route')
+      .not.toMatch(/^export\s+(const|let|var)\s+REFRESH_UNAVAILABLE\b/m)
+    expect(text, 'REFRESH_UNAVAILABLE is re-exported — `next build` will reject this route')
+      .not.toMatch(/^export\s*\{[^}]*\bREFRESH_UNAVAILABLE\b/m)
+  })
+
   it('does not enqueue anything yet — delegated refresh is a later slice', () => {
     expect(text).not.toMatch(/@common\/queue|FlowProducer|submitDaily|Queue\(/)
   })

@@ -47,7 +47,7 @@ import { isMarketOpen } from '@/lib/market-hours'
 // exist yet.
 
 /** Stable machine-readable code for the disabled state. */
-export const REFRESH_UNAVAILABLE = 'REFRESH_UNAVAILABLE'
+const REFRESH_UNAVAILABLE = 'REFRESH_UNAVAILABLE'
 
 export async function POST() {
   // ORDER IS PART OF THE CONTRACT. The market-closed check runs FIRST and still
