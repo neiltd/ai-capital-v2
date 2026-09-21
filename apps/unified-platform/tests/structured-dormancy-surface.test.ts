@@ -152,14 +152,49 @@ describe('19. compatibility preserved', () => {
     expect(existsSync(join(hub, rel))).toBe(true)
   })
 
+  // TRACKED fixtures: committed to the repository, so a source-only checkout has
+  // them and their absence really would mean an integration was removed.
   it.each([
-    'exports/world-map/events.json',
     'exports/oil-project/oil-events.json',
     'exports/oil-project/energy-indicators.json',
-    'exports/stock-project/macro-indicators.json',
-  ])('compatibility export %s still present', (rel) => {
+  ])('tracked compatibility export %s still present', (rel) => {
     expect(existsSync(join(hub, rel))).toBe(true)
   })
+
+  // GENERATED outputs: gitignored, produced by a pipeline run. A fresh clone does
+  // not have them, so asserting their presence tested whether someone had run the
+  // pipeline on this machine — not whether the integration survived. Assert the
+  // SOURCE CONTRACT instead: the exporter still writes each path, and the manifest
+  // still covers it. That is what a removal would actually have to change.
+  const GENERATED_EXPORTS = [
+    {
+      rel: 'exports/world-map/events.json',
+      emitted: "PATHS.exports.worldMap, 'events.json'",
+      manifested: "'world-map/events.json'",
+    },
+    {
+      rel: 'exports/stock-project/macro-indicators.json',
+      emitted: "PATHS.exports.stockProject, 'macro-indicators.json'",
+      manifested: "'stock-project/macro-indicators.json'",
+    },
+  ]
+
+  const exporterSrc = readFileSync(join(hub, 'exports/exporter.ts'), 'utf-8')
+  const manifestSrc = readFileSync(join(hub, 'lib/manifest.ts'), 'utf-8')
+
+  it.each(GENERATED_EXPORTS)(
+    'generated compatibility export $rel is still emitted by the exporter',
+    ({ emitted }) => {
+      expect(exporterSrc).toContain(emitted)
+    },
+  )
+
+  it.each(GENERATED_EXPORTS)(
+    'generated compatibility export $rel is still covered by the manifest',
+    ({ manifested }) => {
+      expect(manifestSrc).toContain(manifested)
+    },
+  )
 
   it('the manual structured entrypoint is unchanged', () => {
     const pkg = JSON.parse(readFileSync(join(hub, 'package.json'), 'utf-8'))

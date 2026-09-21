@@ -1,4 +1,4 @@
-import { describe, it, expect, vi, beforeEach } from 'vitest'
+import { describe, it, expect, vi, beforeEach, afterEach } from 'vitest'
 import { join, dirname } from 'node:path'
 import { mkdtempSync, mkdirSync, writeFileSync, rmSync, symlinkSync } from 'node:fs'
 import { tmpdir } from 'node:os'
@@ -29,7 +29,66 @@ vi.mock('@/lib/studio/agent', () => ({
   buildSystemPrompt: () => 'system',
 }))
 
-beforeEach(() => { createSpy.mockClear() })
+// NON-VACUITY FIXTURE.
+//
+// `pickDailyTopic()` reads `world-map/intelligence.json` from the hub export
+// root. That export is a gitignored pipeline output, so in a source-only
+// checkout it is absent, `loadStudioChat()` takes its catch path and returns
+// `{topic: null, opening: ''}` — and `opening === ''` holds on BOTH branches.
+// The suite would then pass while asserting nothing, which is exactly what the
+// topic assertion below exists to prevent. Provision a throwaway export instead
+// of requiring a pipeline run. No pipeline, database, Redis, network, API or
+// model is involved: this writes one JSON file to a temp directory.
+let hubRoot: string
+let dataRoot: string
+let prevHubPath: string | undefined
+let prevDataRoot: string | undefined
+
+const FIXTURE_EVENT = {
+  eventId: 'fixture-0001',
+  title: 'Fixture event for topic resolution',
+  summary: 'A single valid hub event so pickDailyTopic has something to score.',
+  eventType: 'geopolitical',
+  eventState: 'active',
+  severity: 2,
+  confidence: 0.9,
+  marketRelevance: 0.5,
+  geopoliticalRelevance: 0.5,
+  firstSeenAt: new Date().toISOString(),
+  latestSeenAt: new Date().toISOString(),
+  countries: ['US'],
+  sourceIds: ['fixture'],
+}
+
+beforeEach(() => {
+  createSpy.mockClear()
+
+  prevHubPath = process.env.HUB_EXPORTS_PATH
+  prevDataRoot = process.env.DATA_ROOT
+
+  hubRoot = mkdtempSync(join(tmpdir(), 'no-spend-hub-'))
+  dataRoot = mkdtempSync(join(tmpdir(), 'no-spend-data-'))
+
+  const exportPath = join(hubRoot, 'world-map', 'intelligence.json')
+  mkdirSync(dirname(exportPath), { recursive: true })
+  writeFileSync(exportPath, JSON.stringify({ schemaVersion: 1, events: [FIXTURE_EVENT] }), 'utf-8')
+
+  process.env.HUB_EXPORTS_PATH = hubRoot
+  process.env.DATA_ROOT = dataRoot
+
+  // `hub.ts` captures HUB_PATH at module scope. A module cached from an earlier
+  // test would keep the old root and quietly bypass this fixture.
+  vi.resetModules()
+})
+
+afterEach(() => {
+  rmSync(hubRoot, { recursive: true, force: true })
+  rmSync(dataRoot, { recursive: true, force: true })
+  if (prevHubPath === undefined) delete process.env.HUB_EXPORTS_PATH
+  else process.env.HUB_EXPORTS_PATH = prevHubPath
+  if (prevDataRoot === undefined) delete process.env.DATA_ROOT
+  else process.env.DATA_ROOT = prevDataRoot
+})
 
 describe('rendering /studio/chat does not spend', () => {
   it('the loader makes no Anthropic call', async () => {
