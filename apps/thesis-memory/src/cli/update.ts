@@ -2,7 +2,8 @@
 import 'dotenv/config'
 import { join } from 'path'
 import { randomUUID } from 'crypto'
-import { existsSync } from 'fs'
+import { existsSync, realpathSync } from 'fs'
+import { fileURLToPath } from 'node:url'
 import Database from 'better-sqlite3'
 import { createThesisStore } from '../store/thesis-store.js'
 import { createRetriever } from '../reasoning/retriever.js'
@@ -227,4 +228,29 @@ async function main() {
   }
 }
 
-main().catch(err => { console.error(err); process.exit(1) })
+/**
+ * True only when this module IS the process entry point. Compared on REAL
+ * paths, so a symlinked bin or a `/private` vs `/tmp` spelling does not make an
+ * imported module look like the entry point, or the reverse.
+ *
+ * WHY THIS GUARD EXISTS. `main()` used to run at module scope, so merely
+ * IMPORTING this file — which the tests do, for `hasNewDocs` — started the CLI
+ * workflow, hit the missing ANTHROPIC_API_KEY and called process.exit(1).
+ * Vitest reported that as an unhandled rejection and failed the whole package
+ * even though every test passed.
+ */
+export function isDirectEntrypoint(
+  argv1: string | undefined,
+  moduleUrl: string,
+): boolean {
+  if (!argv1) return false
+  try {
+    return realpathSync(argv1) === realpathSync(fileURLToPath(moduleUrl))
+  } catch {
+    return false
+  }
+}
+
+if (isDirectEntrypoint(process.argv[1], import.meta.url)) {
+  main().catch(err => { console.error(err); process.exit(1) })
+}
