@@ -35,6 +35,27 @@
  * A sequence is 's'. Passing 'r' for a sequence yields the wrong default set
  * (INSERT/DELETE/… instead of USAGE/SELECT/UPDATE) and would silently
  * misdescribe every default-ACL sequence in the database.
+ *
+ * WHY THE RELATION CODE CARRIES AN EXPLICIT CAST AND THE OTHERS DO NOT. The
+ * declared signature is `acldefault("char", oid)` — PostgreSQL's internal
+ * single-byte `"char"`, which is not `text`, not `char` and not `char(1)`. A
+ * BARE literal like 'd' is still of type `unknown` when overload resolution
+ * runs, so it coerces to `"char"` by itself and needs no cast. A CASE expression
+ * does not: the parser must give it a concrete result type FIRST, and with only
+ * unknown-typed branches it settles on `text`. The call then resolves against a
+ * signature that does not exist, and the server answers
+ * `function pg_catalog.acldefault(text, oid) does not exist` — which is exactly
+ * how this query failed against the live cluster. Casting the WHOLE CASE to
+ * `pg_catalog."char"` gives the expression its type before resolution runs.
+ *
+ * A one-branch cast would also resolve: CASE picks its common type from the
+ * branches that HAVE one, so typing a single branch as `"char"` selects `"char"`
+ * and the remaining unknown branch coerces to it. That is not why the whole
+ * expression is cast here. It is cast because this is one dynamic object-class
+ * expression, and the type belongs to the expression as a whole — stated once,
+ * symmetrically, where a reader looks for it, rather than inferred from which
+ * arm happened to carry the annotation. Only this call site is dynamic, so only
+ * this one needs any cast at all.
  */
 
 /** A single statement the collector may send. Parameterless by construction. */
@@ -591,7 +612,8 @@ export const INVENTORY_QUERIES: readonly InventoryQuery[] = Object.freeze([
   LEFT JOIN LATERAL pg_catalog.aclexplode(
          COALESCE(c.relacl,
                   pg_catalog.acldefault(
-                    CASE WHEN c.relkind = 'S' THEN 's' ELSE 'r' END, c.relowner))) AS x ON true
+                    (CASE WHEN c.relkind = 'S' THEN 's' ELSE 'r' END)::pg_catalog."char",
+                    c.relowner))) AS x ON true
  WHERE ${SYSTEM_SCHEMA_FILTER}
    AND c.relkind IN (${GRANTABLE_RELKINDS})
  ORDER BY n.nspname, c.relname, grantee, x.privilege_type, x.is_grantable`,

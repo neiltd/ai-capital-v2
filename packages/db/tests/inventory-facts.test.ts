@@ -152,7 +152,72 @@ describe('query definitions', () => {
   })
 
   it('uses the sequence ACL default for sequences and the relation default otherwise', () => {
-    expect(byId.get('relations')).toContain("CASE WHEN c.relkind = 'S' THEN 's' ELSE 'r' END")
+    const relations = byId.get('relations') as string
+    expect(relations).toContain("CASE WHEN c.relkind = 'S' THEN 's' ELSE 'r' END")
+    // 's' for sequences, 'r' for every other grantable kind. Swapping them
+    // reports USAGE/SELECT/UPDATE as INSERT/DELETE/... and vice versa.
+    expect(relations).not.toContain("CASE WHEN c.relkind = 'S' THEN 'r' ELSE 's' END")
+  })
+
+  it("casts the whole relation CASE to pg_catalog.\"char\", the declared argument type", () => {
+    // acldefault is declared acldefault("char", oid). A bare literal stays
+    // `unknown` until overload resolution and coerces on its own; a CASE must
+    // acquire a concrete type FIRST and settles on `text`, so the call resolves
+    // against a signature that does not exist:
+    //   function pg_catalog.acldefault(text, oid) does not exist
+    const relations = byId.get('relations') as string
+    // The entire CASE is parenthesised and cast -- not one branch, not the
+    // acldefault result -- and the cast precedes the owner argument.
+    expect(relations).toContain(
+      `(CASE WHEN c.relkind = 'S' THEN 's' ELSE 'r' END)::pg_catalog."char",\n` +
+      '                    c.relowner',
+    )
+    // The internal single-byte type, schema-qualified and quoted. The spellings
+    // rejected below are genuinely DIFFERENT TYPES -- text, bpchar, char(1),
+    // character(1), character varying -- and each would fail resolution the same
+    // way. The schema qualification and the quoting are required by this source
+    // contract, not because an unqualified quoted "char" would be some other
+    // type: it resolves to the same type, and is simply not the spelling this
+    // file commits to.
+    expect(relations).toContain('::pg_catalog."char"')
+    for (const wrong of ['::text', '::pg_catalog.text', '::char(1)', '::pg_catalog.char(1)',
+                         '::character(1)', '::character varying', '::bpchar']) {
+      expect(relations, `the relation code is cast to ${wrong}`).not.toContain(`END)${wrong}`)
+      expect(relations, `a CASE branch is cast to ${wrong}`).not.toContain(`'r'${wrong}`)
+      expect(relations, `a CASE branch is cast to ${wrong}`).not.toContain(`'s'${wrong}`)
+    }
+    // A per-branch cast is rejected as a SOURCE-SHAPE rule, not because it
+    // could not resolve: typing one branch as "char" would select "char" as the
+    // CASE's common type and the remaining unknown branch would coerce to it.
+    // The contract here is that the whole dynamic expression carries its type
+    // explicitly, in one place, rather than leaving it to be inferred from
+    // whichever arm happens to be annotated.
+    expect(relations).not.toMatch(/THEN\s+'s'::[^\s]+/)
+    expect(relations).not.toMatch(/ELSE\s+'r'::[^\s]+/)
+  })
+
+  it('no acldefault call passes an uncast CASE expression', () => {
+    for (const q of INVENTORY_QUERIES) {
+      expect(q.sql, `${q.id} passes a bare CASE to acldefault`)
+        .not.toMatch(/acldefault\(\s*CASE\b/)
+    }
+  })
+
+  it('has exactly five acldefault call sites, four of them directly coercible literals', () => {
+    // NON-VACUITY: if a call site were deleted or renamed, the assertions above
+    // would pass against a query that no longer exists.
+    const calls = INVENTORY_QUERIES
+      .flatMap(q => [...q.sql.matchAll(/pg_catalog\.acldefault\(/g)].map(() => q.id))
+    expect(calls.length).toBe(5)
+    const all = INVENTORY_QUERIES.map(q => q.sql).join('\n')
+    for (const literal of ["pg_catalog.acldefault('d', d.datdba)",
+                           "pg_catalog.acldefault('n', n.nspowner)",
+                           "pg_catalog.acldefault('f', p.proowner)",
+                           "pg_catalog.acldefault('T', t.typowner)"]) {
+      expect(all, `${literal} changed`).toContain(literal)
+    }
+    // ...and the fifth is the dynamic one, which is the cast site.
+    expect(all).toContain('pg_catalog.acldefault(\n                    (CASE')
   })
 
   it('keeps indexes, which carry no ACL, in their own dedicated section', () => {
