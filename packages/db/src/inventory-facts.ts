@@ -526,7 +526,14 @@ export interface FactDocumentInput {
   raw: Readonly<Record<string, readonly unknown[]>>
 }
 
-export const ARTIFACT_VERSION = 2
+/**
+ * Bumped 2 -> 3 when the binding shape changed: `endpoint.socket_directories`
+ * was removed and `binding.system_identifier` plus `endpoint.unix_transport`
+ * took its place. A reader that assumes a socket directory is present must be
+ * able to tell a v3 artifact from a v2 one by looking, so the version moves
+ * with the shape rather than only with the collector.
+ */
+export const ARTIFACT_VERSION = 3
 
 /** Sections carried through verbatim (sorted, never filtered, never merged). */
 const PASSTHROUGH_SECTIONS = [
@@ -561,9 +568,27 @@ const PASSTHROUGH_SECTIONS = [
  *   database_name + _oid   the NAME is reusable — drop and recreate `ai_capital`
  *                          and every name-based fact still matches while every
  *                          object is new. The OID says which database this was.
- *   endpoint               host or socket directory, port, database. NEVER the
- *                          user, the password or the raw URL. Derived from the
- *                          server, which does not know a credential to leak.
+ *   system_identifier      which cluster LINEAGE, as created by `initdb`. The
+ *                          database name and even its OID are unique only WITHIN
+ *                          one cluster, so a same-named database on a second
+ *                          local instance or a colleague's machine satisfies
+ *                          every name-based field; a separately initialized
+ *                          cluster normally does not share this identifier. A
+ *                          physical clone, replica or base-backup restore DOES
+ *                          keep it, and privileged offline tooling can rewrite
+ *                          it, so this is evidence and not proof. Read it
+ *                          together with the OID, the address and transport, the
+ *                          port, the cluster name and the postmaster start time
+ *                          — that combination is what narrows the answer. Text,
+ *                          always: the value is larger than JavaScript's
+ *                          safe-integer range.
+ *   endpoint               host, port, database and whether the session arrived
+ *                          over a Unix socket. NEVER the user, the password or
+ *                          the raw URL. Derived from the server, which does not
+ *                          know a credential to leak. The socket DIRECTORY is
+ *                          deliberately absent: reading it needs
+ *                          `pg_read_all_settings`, which the collector's role
+ *                          must not hold.
  *   server_version,        which engine, and which running instance: two
  *   postmaster_start_time  artifacts with the same start time came from the
  *   server_port,           same postmaster, and a changed start time means a
@@ -587,11 +612,12 @@ export interface BindingFacts {
   database_name: string
   database_oid: string
   database_owner: string
+  system_identifier: string
   endpoint: {
     host: string | null
-    socket_directories: string
     port: string
     database: string
+    unix_transport: boolean
   }
   server_version: string
   server_version_num: string
@@ -605,9 +631,9 @@ export interface BindingFacts {
 /** Every binding field that must be present in a completed artifact. */
 export const REQUIRED_BINDING_FIELDS: readonly string[] = Object.freeze([
   'run_id', 'collected_at_utc', 'repository_head', 'database_name', 'database_oid',
-  'database_owner', 'endpoint', 'server_version', 'server_version_num',
-  'postmaster_start_time', 'server_port', 'cluster_name', 'manifest_recognition',
-  'manifest_version',
+  'database_owner', 'system_identifier', 'endpoint', 'server_version',
+  'server_version_num', 'postmaster_start_time', 'server_port', 'cluster_name',
+  'manifest_recognition', 'manifest_version',
 ])
 
 export function buildBindingFacts(
@@ -630,13 +656,20 @@ export function buildBindingFacts(
     database_name: input.server.database_name,
     database_oid: input.server.database_oid,
     database_owner: input.server.database_owner,
+    // Passed through as the string the server sent. `Number()` here would be a
+    // silent corruption: system identifiers exceed Number.MAX_SAFE_INTEGER, so
+    // two distinct identifiers can round-trip to the same float.
+    system_identifier: input.server.system_identifier,
     endpoint: {
-      // NULL host means a Unix-socket connection; the socket directory is then
-      // the endpoint. Neither carries a user name or a password.
+      // NULL host means the session arrived over a Unix socket; `unix_transport`
+      // says the same thing as a fact the server asserted, rather than leaving
+      // the reader to infer it from a null. The socket PATH is not recorded —
+      // see the note on SERVER_BINDING_QUERY. Nothing here carries a user name
+      // or a password.
       host: input.server.server_address,
-      socket_directories: input.server.socket_directories,
       port: input.server.server_port,
       database: input.server.database_name,
+      unix_transport: input.server.unix_transport,
     },
     server_version: input.server.server_version,
     server_version_num: input.server.server_version_num,

@@ -21,6 +21,7 @@
 import { describe, it, expect } from 'vitest'
 
 import {
+  ARTIFACT_VERSION,
   buildBindingFacts,
   buildFactDocument,
   buildIndexFacts,
@@ -67,7 +68,12 @@ const SERVER: ServerBindingRow = {
   server_port: '5432',
   cluster_name: '',
   server_address: null,
-  socket_directories: '/tmp',
+  // A REAL system identifier is a 19-digit value, far above
+  // Number.MAX_SAFE_INTEGER (9007199254740991). The fixture uses one so that any
+  // numeric round trip in the pipeline shows up as a changed value rather than
+  // passing on a conveniently small number.
+  system_identifier: '7460551234567890123',
+  unix_transport: true,
 }
 
 function ledgerRows(): SchemaMigrationRow[] {
@@ -171,7 +177,6 @@ describe('query definitions', () => {
   it('asks the SERVER for the endpoint and never parses the credential', () => {
     const sql = SERVER_BINDING_QUERY.sql
     expect(sql).toContain('inet_server_addr()')
-    expect(sql).toContain('unix_socket_directories')
     expect(sql).toContain("current_setting('port')")
     expect(sql).toContain("current_setting('cluster_name')")
     expect(sql).toContain('pg_postmaster_start_time()')
@@ -179,6 +184,42 @@ describe('query definitions', () => {
     // password, and no client identity of any kind.
     expect(sql).not.toMatch(/password/i)
     expect(sql).not.toMatch(/session_user|current_user|inet_client/)
+  })
+
+  it('records the cluster system identifier from pg_control_system()', () => {
+    const sql = SERVER_BINDING_QUERY.sql
+    expect(sql).toContain('pg_control_system()')
+    // ::text, not a bare column: the identifier exceeds JavaScript's safe-integer
+    // range, and the driver would hand back a lossy number for an int8.
+    expect(sql).toContain('system_identifier::text')
+    expect(sql).toMatch(/SELECT\s+system_identifier::text\s+FROM\s+pg_catalog\.pg_control_system\(\)/)
+  })
+
+  it('observes the transport from the live session instead of reading a setting', () => {
+    expect(SERVER_BINDING_QUERY.sql).toContain('inet_server_addr() IS NULL')
+    expect(SERVER_BINDING_QUERY.sql).toContain('AS unix_transport')
+    // Not a literal. `SELECT true AS unix_transport` would satisfy a naive
+    // presence check while asserting nothing about the connection.
+    expect(SERVER_BINDING_QUERY.sql).not.toMatch(/\b(true|false)\s+AS unix_transport/i)
+  })
+
+  it('reads no setting that requires pg_read_all_settings', () => {
+    // Each of these is GUC_SUPERUSER_ONLY. `unix_socket_directories` is the one
+    // that actually took an --apply down at phase 16/25 with
+    // `permission denied to examine "unix_socket_directories"`; the rest are
+    // listed because they fail the same way for the same reason, and the
+    // collector connects as ai_capital_migrator, which must not be granted
+    // pg_read_all_settings merely to record a fact.
+    const RESTRICTED = [
+      'unix_socket_directories', 'data_directory', 'config_file', 'hba_file',
+      'ident_file', 'ssl_key_file', 'log_directory', 'stats_temp_directory',
+    ]
+    // NON-VACUITY: a typo'd or emptied list would pass against anything.
+    expect(RESTRICTED).toContain('unix_socket_directories')
+    expect(RESTRICTED.length).toBe(8)
+    for (const setting of RESTRICTED) {
+      expect(SERVER_BINDING_QUERY.sql, `server_binding reads ${setting}`).not.toContain(setting)
+    }
   })
 
   it('probes capability against a non-self role, and none of them is tautological', () => {
@@ -682,6 +723,15 @@ describe('the fact document', () => {
 describe('the evidence binding', () => {
   const binding = () => (documentFixture() as { binding: Record<string, unknown> }).binding
 
+  it('stamps artifact_version 3 — the binding shape changed', () => {
+    // v2 published `endpoint.socket_directories`. v3 publishes
+    // `binding.system_identifier` and `endpoint.unix_transport` instead. A
+    // reader must be able to tell the two apart without guessing, so the number
+    // moves with the shape.
+    expect(ARTIFACT_VERSION).toBe(3)
+    expect((documentFixture() as { artifact_version: number }).artifact_version).toBe(3)
+  })
+
   it('carries every required field', () => {
     const b = binding()
     for (const field of REQUIRED_BINDING_FIELDS) {
@@ -711,18 +761,50 @@ describe('the evidence binding', () => {
     expect(b.cluster_name).toBe('')
   })
 
-  it('records a sanitized endpoint: host or socket directory, port and database only', () => {
+  it('records a sanitized endpoint: host, port, database and transport only', () => {
     const endpoint = binding().endpoint as Record<string, unknown>
-    expect(Object.keys(endpoint).sort()).toEqual(['database', 'host', 'port', 'socket_directories'])
+    expect(Object.keys(endpoint).sort()).toEqual(['database', 'host', 'port', 'unix_transport'])
     expect(endpoint.host).toBeNull()
-    expect(endpoint.socket_directories).toBe('/tmp')
+    expect(endpoint.port).toBe('5432')
     expect(endpoint.database).toBe('ai_capital')
+    expect(endpoint.unix_transport).toBe(true)
+    // The socket PATH is gone for good: reading it needs pg_read_all_settings.
+    expect(endpoint).not.toHaveProperty('socket_directories')
   })
 
-  it('records a TCP host when the connection was not over a socket', () => {
-    const doc = documentFixture({}, { ...SERVER, server_address: '10.0.0.7' })
+  it('records a TCP host and a false transport when the connection was not over a socket', () => {
+    const doc = documentFixture({}, { ...SERVER, server_address: '10.0.0.7', unix_transport: false })
     const endpoint = (doc as { binding: { endpoint: Record<string, unknown> } }).binding.endpoint
     expect(endpoint.host).toBe('10.0.0.7')
+    expect(endpoint.unix_transport).toBe(false)
+  })
+
+  it('records the cluster system identifier, and keeps it an exact string', () => {
+    const b = binding()
+    expect(b.system_identifier).toBe('7460551234567890123')
+    expect(typeof b.system_identifier).toBe('string')
+    // NON-VACUITY: this fixture is genuinely outside the safe-integer range, so
+    // a Number() anywhere in the pipeline would change the value, not merely
+    // its type.
+    expect(Number(b.system_identifier)).toBeGreaterThan(Number.MAX_SAFE_INTEGER)
+    expect(String(Number(b.system_identifier))).not.toBe(b.system_identifier)
+    // A different lineage answering for the same database name is recorded as a
+    // different identifier. (A physical clone of THIS cluster would keep this
+    // one — the identifier says which lineage, not which copy.)
+    const other = documentFixture({}, { ...SERVER, system_identifier: '7460551234567890124' })
+    expect((other as { binding: { system_identifier: string } }).binding.system_identifier)
+      .toBe('7460551234567890124')
+  })
+
+  it('refuses to complete a binding that lost the system identifier', () => {
+    const doc = documentFixture() as Record<string, unknown>
+    const b = { ...(doc.binding as Record<string, unknown>) }
+    delete b.system_identifier
+    expect(() => markComplete({ ...doc, binding: b })).toThrow(/missing "system_identifier"/)
+  })
+
+  it('declares system_identifier required', () => {
+    expect(REQUIRED_BINDING_FIELDS).toContain('system_identifier')
   })
 
   it('carries the manifest recognition and version', () => {
@@ -825,6 +907,16 @@ describe('SQL special forms are never schema-qualified', () => {
     for (const probe of PROBE_QUERIES) {
       expect(probe.sql, `${probe.id} does not use CURRENT_USER::text`).toContain('CURRENT_USER::text')
       expect(probe.sql, `${probe.id} qualifies the special form`).not.toMatch(/pg_catalog\.current_user/)
+    }
+  })
+
+  it('proposes no privilege escalation as a workaround', () => {
+    // Scoped to the SQL the collector SENDS, not to the source text: the modules
+    // explain in prose why `pg_read_all_settings` is not acceptable, and a
+    // file-wide grep would forbid writing that explanation down.
+    for (const q of DECLARED_QUERIES) {
+      expect(q.sql, `${q.id} references pg_read_all_settings`).not.toContain('pg_read_all_settings')
+      expect(q.sql, `${q.id} references pg_monitor`).not.toContain('pg_monitor')
     }
   })
 

@@ -79,7 +79,10 @@ const SERVER: ServerBindingRow = {
   database_name: 'ai_capital', database_oid: '16401', database_owner: 'thanapold',
   server_version: '16.4', server_version_num: '160004',
   postmaster_start_time: '2026-09-01 03:14:15+00',
-  server_port: '5432', cluster_name: '', server_address: null, socket_directories: '/tmp',
+  server_port: '5432', cluster_name: '', server_address: null,
+  // 19 digits, above Number.MAX_SAFE_INTEGER, so a numeric round trip anywhere
+  // between the driver and the published file changes the value visibly.
+  system_identifier: '7460551234567890123', unix_transport: true,
 }
 
 interface FakeOptions {
@@ -1058,9 +1061,40 @@ describe('artifact publication', () => {
     expect(binding.server_port).toBe('5432')
     expect(binding.cluster_name).toBe('')
     expect(binding.manifest_recognition).toBe('CURRENT_V19')
+    expect(binding.system_identifier).toBe('7460551234567890123')
     expect(binding.endpoint).toEqual({
-      host: null, socket_directories: '/tmp', port: '5432', database: 'ai_capital',
+      host: null, port: '5432', database: 'ai_capital', unix_transport: true,
     })
+  })
+
+  it('publishes artifact_version 3 and the cluster system identifier', async () => {
+    const { output } = await runOk()
+    const doc = JSON.parse(readFileSync(output, 'utf-8')) as
+      { artifact_version: number; binding: Record<string, unknown> }
+    expect(doc.artifact_version).toBe(3)
+    // Survives JSON.stringify -> file -> JSON.parse as the SAME STRING. Had any
+    // stage coerced it to a number, this fixture would come back as
+    // 7460551234567890000.
+    expect(doc.binding.system_identifier).toBe('7460551234567890123')
+    expect(typeof doc.binding.system_identifier).toBe('string')
+  })
+
+  it('records a TCP endpoint as TCP', async () => {
+    const { output } = await runOk({ server: { server_address: '10.0.0.7', unix_transport: false } })
+    const doc = JSON.parse(readFileSync(output, 'utf-8')) as
+      { binding: { endpoint: Record<string, unknown> } }
+    expect(doc.binding.endpoint).toEqual({
+      host: '10.0.0.7', port: '5432', database: 'ai_capital', unix_transport: false,
+    })
+  })
+
+  it('never lets a socket directory, user name, password or raw URL into the artifact', async () => {
+    const { output } = await runOk()
+    const text = readFileSync(output, 'utf-8')
+    expect(text).not.toContain('socket_directories')
+    expect(text).not.toContain('unix_socket_directories')
+    expect(text).not.toMatch(/postgres(ql)?:\/\//)
+    expect(text).not.toMatch(/password/i)
   })
 
   it('fails, and publishes nothing, when the repository head cannot be captured', async () => {

@@ -147,11 +147,27 @@ export interface ServerBindingRow {
    *  the empty string rather than folded to null, because "unset" and "set to
    *  nothing" are the same thing here and inventing a null would say otherwise. */
   cluster_name: string
-  /** NULL for a Unix-socket connection. Together with `socket_directories` this
-   *  is the SANITIZED endpoint: where the server is, and nothing about who
-   *  connected. */
+  /** NULL for a Unix-socket connection. The SANITIZED endpoint: where the
+   *  server answered from, and nothing about who connected. */
   server_address: string | null
-  socket_directories: string
+  /** `pg_control_system().system_identifier`, as TEXT — the identifier of the
+   *  cluster LINEAGE that `initdb` created. A separately initialized cluster
+   *  normally answers with a different value, so it distinguishes a second local
+   *  instance or a colleague's machine from this one. It does NOT distinguish a
+   *  physical clone: a replica, a `pg_basebackup` copy or a physical restore
+   *  inherits the identifier of the cluster it was taken from. Nor is it
+   *  cryptographic proof — sufficiently privileged offline tooling can rewrite
+   *  the control file. It is recorded because it is materially stronger evidence
+   *  than the database name and OID alone, alongside the rest of the binding.
+   *  Carried as a string because the value exceeds JavaScript's safe-integer
+   *  range and a numeric round trip would silently change it. */
+  system_identifier: string
+  /** TRUE when THIS session arrived over a Unix socket, observed live from
+   *  `inet_server_addr() IS NULL`. It is a fact about the connection that was
+   *  actually made, not a claim about which socket directory the server offers:
+   *  that is `unix_socket_directories`, which requires `pg_read_all_settings`
+   *  and is never read here. */
+  unix_transport: boolean
 }
 
 /**
@@ -163,10 +179,33 @@ export interface ServerBindingRow {
  * mailed around. Worse, `pg-connection-string` OPENS `sslcert`, `sslkey`,
  * `sslrootcert` and `sslcrl` from disk while parsing, so merely inspecting the
  * URL touches the filesystem. Asking the server where it is instead cannot leak
- * a credential, because the server does not know one: `inet_server_addr()`,
- * `inet_server_port()` and `unix_socket_directories` describe the listener, not
- * the client. Host-or-socket-directory, port and database name; no user, no
- * password, no raw URL, anywhere.
+ * a credential, because the server does not know one: it answers about the
+ * listener and about this session, never about the client. Port and database
+ * name; no user, no password, no raw URL, anywhere.
+ *
+ * EVERY FACT READ HERE IS READABLE BY AN ORDINARY ROLE. An earlier version read
+ * `current_setting('unix_socket_directories')`, which PostgreSQL restricts to
+ * `pg_read_all_settings`. The collector connects as ai_capital_migrator, which
+ * holds no such membership and must not be granted one merely to record a fact,
+ * so the query failed outright with `permission denied to examine
+ * "unix_socket_directories"` — and took the whole inventory down with it. The
+ * same reasoning already governs `packages/db/src/legacy-copy.ts`; this query
+ * now follows it.
+ *
+ * WHAT REPLACES IT. The socket directory was never the interesting fact anyway:
+ * it named what the SERVER offers, not where THIS connection landed.
+ *
+ *   `system_identifier` records which cluster LINEAGE answered. It comes from
+ *   `pg_control_system()`, which carries no ACL restriction. A separately
+ *   initialized cluster normally has a different one; a physical clone, replica
+ *   or base-backup restore keeps the original's; and it is not cryptographic
+ *   proof, since privileged offline tooling can rewrite the control file. It is
+ *   evidence, and materially better evidence than a reusable database name.
+ *
+ *   `unix_transport` records the transport this session actually used, observed
+ *   from `inet_server_addr() IS NULL` rather than inferred from the URL.
+ *
+ * Neither claims to know the socket path, and the artifact does not record one.
  *
  * The database OID is here because the NAME is reusable: drop `ai_capital` and
  * recreate it and every name-based fact still matches while every object is
@@ -183,7 +222,9 @@ export const SERVER_BINDING_QUERY: InventoryQuery = {
        pg_catalog.current_setting('port')               AS server_port,
        pg_catalog.current_setting('cluster_name')       AS cluster_name,
        pg_catalog.inet_server_addr()::text              AS server_address,
-       pg_catalog.current_setting('unix_socket_directories') AS socket_directories
+       (SELECT system_identifier::text
+          FROM pg_catalog.pg_control_system())          AS system_identifier,
+       (pg_catalog.inet_server_addr() IS NULL)          AS unix_transport
   FROM pg_catalog.pg_database d
  WHERE d.datname = pg_catalog.current_database()`,
 }

@@ -690,10 +690,41 @@ something, and CLAUDE.md actively encourages exporting `DATABASE_URL`. Requiring
 a name that exists for no other purpose means "inventory this database" has to be
 said out loud, separately, every time.
 
+The credential is `ai_capital_migrator`'s — the same deployment identity that
+applies the migrations, and deliberately **not** a superuser and **not** a member
+of `pg_read_all_settings` or `pg_monitor`.
+
 The URL is never printed, logged, serialised or hashed. The endpoint recorded in
-the artifact is asked of the **server** — `inet_server_addr()`,
-`unix_socket_directories`, `port` — rather than parsed out of the URL, so no user
-name or password can reach the evidence file even in principle.
+the artifact is asked of the **server** — `inet_server_addr()`, `port` — rather
+than parsed out of the URL, so no user name or password can reach the evidence
+file even in principle.
+
+**The socket directory is not read and not recorded.** An earlier version asked
+for `current_setting('unix_socket_directories')`, which PostgreSQL restricts to
+`pg_read_all_settings`; as the migrator, the collector was refused with
+`permission denied to examine "unix_socket_directories"` and the whole inventory
+failed. Granting that membership to make a *recording* succeed would widen the
+migrator far beyond what the artifact is worth, so the query was changed instead.
+Two facts replace it, both readable by an ordinary role:
+
+- **`system_identifier`** — from `pg_control_system()`, cast to `text`. It names
+  the cluster **lineage** that `initdb` created. The database name, and even its
+  OID, are unique only *within* one cluster, so a same-named database on a second
+  local instance or a colleague's machine satisfies every name-based field; a
+  separately initialized cluster normally answers with a different identifier.
+  Two limits are worth stating plainly: a **physical clone keeps it** — a
+  streaming replica, a `pg_basebackup` copy and a physical restore all inherit
+  the source cluster's identifier — and it is **not cryptographic proof**, since
+  sufficiently privileged offline tooling can rewrite the control file. It is
+  recorded because it is materially stronger evidence than the database name and
+  OID alone, and because the binding does not rest on it by itself: the OID, the
+  server address and transport, the port, the cluster name and the postmaster
+  start time are all recorded alongside it. It stays a string because the value
+  is larger than JavaScript's safe-integer range.
+- **`unix_transport`** — from `inet_server_addr() IS NULL`, so it describes the
+  transport **this session actually used**, not a setting describing what the
+  server offers. It does not say which socket path answered, and nothing in the
+  artifact claims to know one.
 
 ### What the artifact is bound to
 
@@ -708,12 +739,19 @@ publish one that is missing a field:
 | `database_name` | the book it describes |
 | `database_oid` | the name is reusable; drop and recreate `ai_capital` and every name-based fact still matches while every object is new |
 | `database_owner` | who owns the database itself |
-| `endpoint` | host **or** socket directory, port, database — never user, password or raw URL |
+| `system_identifier` | which cluster **lineage** — `pg_control_system()`, kept as text. A separately initialized cluster normally differs; a physical clone or restore keeps it, and privileged offline tooling can rewrite it, so it is evidence rather than proof |
+| `endpoint` | host, port, database and `unix_transport` — never user, password, raw URL or socket directory |
 | `server_version`, `server_version_num` | which engine |
 | `postmaster_start_time` | which *running instance*; a change between two artifacts means a restart happened |
 | `server_port`, `cluster_name` | which listener; `cluster_name` is recorded even when empty, because empty is its real default |
 | `manifest_recognition`, `manifest_version` | which published schema the ledger matched |
 | `exit_status` | stamped `0` at publication. A failed run publishes nothing, so this can never contradict the file's own existence |
+
+The document is stamped `artifact_version: 3`. Version 2 published
+`endpoint.socket_directories`; version 3 removes it and publishes
+`binding.system_identifier` and `endpoint.unix_transport` instead. A reader must
+be able to tell the shapes apart by looking, so the number moves with the shape
+rather than only with the collector.
 
 ### Exit codes
 

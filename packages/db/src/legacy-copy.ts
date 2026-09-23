@@ -578,9 +578,15 @@ export interface TargetIdentity {
 }
 
 /**
- * WHERE DID THIS CONNECTION ACTUALLY LAND. A URL is a request, not proof. The
- * system_identifier is what makes the answer non-forgeable: a same-named
- * database on a different cluster answers with a different identifier.
+ * WHERE DID THIS CONNECTION ACTUALLY LAND. A URL is a request, not an answer.
+ * The system_identifier narrows the answer: it names the cluster LINEAGE that
+ * `initdb` created, so a separately initialized cluster - a colleague's, a
+ * second local instance - normally answers with a different one. It is not a
+ * fingerprint of a particular copy. A streaming replica, a `pg_basebackup` copy
+ * and a physical restore all inherit the identifier of the cluster they came
+ * from, and privileged offline tooling can rewrite the control file outright.
+ * So it is evidence, not cryptographic proof, and it is checked together with
+ * the rest of the identity rather than on its own.
  *
  * EVERY SETTING READ HERE IS READABLE BY AN ORDINARY ROLE. An earlier version
  * also read `current_setting('unix_socket_directories')`, which PostgreSQL
@@ -630,13 +636,33 @@ export interface ExpectedTargetIdentity {
  *
  * The earlier version compared the database name and a version floor and let
  * everything else past, so a same-named database on another cluster - a
- * colleague's, a restored copy, a second local instance - satisfied it.
+ * colleague's, a restored copy, a second local instance - satisfied it. That
+ * remains true as history, and the WHOLE set of checks below is what narrows
+ * it, not the system identifier alone.
+ *
+ * WHAT THE COMBINED CHECKS ESTABLISH, AND WHAT THEY DO NOT. Together they
+ * establish that the connection reached the endpoint the credential requested,
+ * and that whatever responded there reports the expected database, the expected
+ * session and current roles, the expected configured port, a Unix transport and
+ * the expected cluster-lineage identifier.
+ *
+ * They do NOT distinguish a physical clone deliberately placed at that same
+ * endpoint with the same configuration and the same roles. Such a copy carries
+ * the source cluster's system identifier by construction, and every other fact
+ * here is a property of the endpoint and the configuration rather than of the
+ * particular bytes on disk. That limitation is stated here rather than left to
+ * be inferred, because a reader who believes these checks exclude it would draw
+ * a stronger conclusion from a successful copy than the checks support.
  *
  * WHICH SOCKET ANSWERED, WITHOUT A PRIVILEGED READ. PostgreSQL exposes no
  * function naming the socket THIS session arrived through, and
  * `unix_socket_directories` is readable only with `pg_read_all_settings` - a
- * broad predefined role the migrator must not hold. The proof is therefore
- * assembled from two sources that cannot both be wrong in the same direction:
+ * broad predefined role the migrator must not hold. The identity check is
+ * therefore assembled from two independent sources, cross-checking the endpoint
+ * that was REQUESTED against the facts the RESPONDER reports. That materially
+ * narrows accidental misdirection - a stale variable, a pasted URL, a second
+ * local instance - but it is not cryptographic attestation that a unique
+ * physical copy answered:
  *
  *   the CREDENTIAL says where the connection was ASKED to go - one explicit
  *   host, one explicit port, one database, one role, decoded by the same
@@ -646,14 +672,22 @@ export interface ExpectedTargetIdentity {
  *   current role, its major version, its system identifier, its configured
  *   port, and whether the transport was a Unix socket.
  *
- * For a session the SERVER proves is Unix-transport, the only socket the
+ * For a session the SERVER reports as Unix-transport, the only socket the
  * connection can have used is the one the credential named, because that is the
  * path the driver connect(2)s to. Requiring that path to equal the confirmed
  * plan's socket directory therefore pins the socket exactly - and the system
- * identifier independently pins the cluster that answered on it. Neither
- * requires the server to have exactly one socket directory configured, which
- * was an assumption about the server's configuration rather than a fact about
- * this connection.
+ * identifier is independent evidence that the cluster answering on it is the
+ * expected LINEAGE, not merely a database of the expected name. Physical copies
+ * share that identifier, so it separates a differently initialized cluster from
+ * this one and does not, by itself, separate this cluster from a clone of it.
+ * Neither check requires the server to have exactly one socket directory
+ * configured, which was an assumption about the server's configuration rather
+ * than a fact about this connection.
+ *
+ * NO SINGLE FACT CARRIES THE REFUSAL. What actually narrows the target is the
+ * set evaluated together: the credential's endpoint, the transport the server
+ * reports, the configured port, the database and both role identities, and the
+ * expected system identifier. Any one of them alone admits something.
  *
  * ORDER MATTERS. The transport check comes FIRST among the connection facts: a
  * TCP session must be refused as TCP, not as a socket-path mismatch, or the
