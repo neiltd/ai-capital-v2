@@ -906,3 +906,39 @@ default — is refused rather than written to. `TENANCY_ADMIN_DATABASE_URL` seed
 identity rows and installs the append-only test's temporary control policy; it
 never asserts a result, because a superuser bypasses every boundary these tests
 exist to prove.
+
+## The ai-capital-v3 cluster (PostgreSQL 17, port 5433)
+
+A second cluster now exists in this repository's operational surface: the V3
+migration target, on **port 5433**, holding the database **`ai_capital_v3`**.
+Its artifacts, topology, authentication contract and rollback boundary live in
+[`ops/clusters/ai-capital-v3/README.md`](clusters/ai-capital-v3/README.md).
+
+**Everything in the rest of this file addresses the 5432 cluster and the
+`ai_capital` database unless it says otherwise.** Two clusters mean `TARGET_DB`
+and the `psql` examples above are no longer self-evident about which one they
+mean, so state the port explicitly whenever you adapt them.
+
+Two rules from that document are load-bearing enough to repeat here:
+
+- **`ops/bootstrap/090_post_migration_lockdown.sql` must not be applied during
+  V3 provisioning.** Its line 41 revokes `ai_capital_owner` from
+  `ai_capital_migrator` — precisely the membership `packages/db/src/legacy-copy.ts`
+  needs for its `SET LOCAL ROLE` during the copy. It runs only after the copy
+  has completed and been verified.
+- **The V3 cluster is excluded from Time Machine and therefore has no backup.**
+  It must not become the system of record until a backup and recovery design is
+  separately approved.
+
+The provisioning and verification scripts each take an explicit mode and have no
+default:
+
+```bash
+ops/clusters/ai-capital-v3/provision.sh --inspect   # read-only preflight
+ops/clusters/ai-capital-v3/provision.sh --apply     # re-runs --inspect, then provisions
+ops/clusters/ai-capital-v3/verify.sh --stopped      # filesystem/control-file, no connection
+ops/clusters/ai-capital-v3/verify.sh --running      # live, read-only
+```
+
+The artifacts are checked as text, with no PostgreSQL contact, by
+`packages/db/tests/v3-cluster-artifacts.test.ts`.
