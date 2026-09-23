@@ -102,12 +102,32 @@ export interface SessionIdentityRow {
  * `ALTER ROLE ... SET`, a pooler or `default_transaction_read_only` can each
  * change what the session actually got. The collector refuses to read a
  * production database on the strength of a statement it merely *sent*.
+ *
+ * `CURRENT_USER` AND `SESSION_USER` ARE UNQUALIFIED, AND MUST STAY THAT WAY.
+ * They are SQL special forms — reserved key words the grammar resolves — so
+ * schema-qualifying one does not name a function: the parser reads
+ * `pg_catalog.current_user` as a FIELD reference whose relation or alias is
+ * `pg_catalog`, and with no `FROM` clause defining that relation the statement
+ * fails with `missing FROM-clause entry for table "pg_catalog"`. They also take
+ * no argument list, so `CURRENT_USER()` is equally invalid. A key word cannot
+ * be shadowed by `search_path`, so there is nothing to pin.
+ *
+ * The other `pg_catalog.` prefixes here are deliberate and stay: qualified
+ * FUNCTION calls such as `current_database()` and `has_table_privilege()`, and
+ * qualified catalog RELATIONS such as `pg_catalog.pg_roles`. Both are pinned to
+ * the system catalog regardless of `search_path`, which is wanted. Only the two
+ * special forms are exempt — do not "make them consistent" with their
+ * neighbours.
+ *
+ * Case is cosmetic: PostgreSQL key words are case-insensitive, and the
+ * upper-case spelling is used only to make the special-form nature legible. The
+ * defect being guarded against is schema qualification, not lower case.
  */
 export const SESSION_IDENTITY_QUERY: InventoryQuery = {
   id: 'session_identity',
   sql: `SELECT pg_catalog.current_database()                       AS current_database,
-       pg_catalog.current_user::text                        AS current_user,
-       pg_catalog.session_user::text                        AS session_user,
+       CURRENT_USER::text                        AS current_user,
+       SESSION_USER::text                        AS session_user,
        pg_catalog.current_setting('transaction_read_only')  AS transaction_read_only,
        pg_catalog.current_setting('server_version')         AS server_version,
        pg_catalog.current_setting('server_version_num')     AS server_version_num`,
@@ -221,7 +241,7 @@ export const PROBE_QUERIES: readonly InventoryQuery[] = Object.freeze([
  WHERE ${SYSTEM_SCHEMA_FILTER}
    AND c.relkind IN ('r', 'p', 'v', 'm', 'f')
    AND c.relowner <> (SELECT r.oid FROM pg_catalog.pg_roles r
-                       WHERE r.rolname = pg_catalog.current_user::text)
+                       WHERE r.rolname = CURRENT_USER::text)
  ORDER BY n.nspname, c.relname
  LIMIT 1`,
   },
@@ -233,7 +253,7 @@ export const PROBE_QUERIES: readonly InventoryQuery[] = Object.freeze([
   FROM pg_catalog.pg_namespace n
  WHERE ${SYSTEM_SCHEMA_FILTER}
    AND n.nspowner <> (SELECT r.oid FROM pg_catalog.pg_roles r
-                       WHERE r.rolname = pg_catalog.current_user::text)
+                       WHERE r.rolname = CURRENT_USER::text)
  ORDER BY n.nspname
  LIMIT 1`,
   },
@@ -244,8 +264,8 @@ export const PROBE_QUERIES: readonly InventoryQuery[] = Object.freeze([
        pg_catalog.pg_describe_object('pg_authid'::regclass, b.oid, 0) AS object_description
   FROM pg_catalog.pg_roles a
   JOIN pg_catalog.pg_roles b ON b.oid <> a.oid
- WHERE a.rolname <> pg_catalog.current_user::text
-   AND b.rolname <> pg_catalog.current_user::text
+ WHERE a.rolname <> CURRENT_USER::text
+   AND b.rolname <> CURRENT_USER::text
  ORDER BY a.rolname, b.rolname
  LIMIT 1`,
   },

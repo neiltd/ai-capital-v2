@@ -187,7 +187,14 @@ describe('query definitions', () => {
     for (const probe of PROBE_QUERIES) {
       // A tautology — count(*) >= 1, or worse count(*) + 1 — asserts nothing.
       expect(probe.sql, `${probe.id} counts rows instead of asking a question`).not.toContain('count(*)')
-      expect(probe.sql, `${probe.id} does not exclude the current user`).toContain('current_user')
+      // Upper case only because the queries spell the special form that way;
+      // PostgreSQL key words are case-insensitive, so the casing carries no
+      // meaning. What matters is that the form is UNQUALIFIED — see the
+      // 'SQL special forms' block below.
+      expect(probe.sql, `${probe.id} does not exclude the current user`).toContain('CURRENT_USER')
+      expect(probe.sql, `${probe.id} does not exclude the current principal with CURRENT_USER::text`)
+        .toContain('CURRENT_USER::text')
+      expect(probe.sql, `${probe.id} schema-qualifies CURRENT_USER`).not.toContain('pg_catalog.current_user')
     }
     expect(PROBE_QUERIES[0].sql).toContain('has_table_privilege')
     expect(PROBE_QUERIES[1].sql).toContain('has_schema_privilege')
@@ -753,5 +760,84 @@ describe('the evidence binding', () => {
 
   it('never contains a user name, a password or a raw URL', () => {
     expect(canonicalJson(binding())).not.toMatch(/password|postgres:\/\/|@localhost/i)
+  })
+})
+
+// ── SQL special forms must never be schema-qualified ────────────────────────
+//
+// `CURRENT_USER` and `SESSION_USER` are SQL special forms — reserved key words
+// the grammar resolves. Writing `pg_catalog.current_user` does not name a
+// function: the parser reads it as a FIELD reference whose relation or alias is
+// `pg_catalog`, and with no FROM clause defining that relation the statement
+// dies with `missing FROM-clause entry for table "pg_catalog"`. The form takes
+// no argument list either, so `CURRENT_USER()` is equally invalid.
+//
+// The other `pg_catalog.` prefixes in inventory-queries.ts are deliberate and
+// stay: qualified function calls, and qualified catalog relations. Only these
+// two forms are exempt.
+
+describe('SQL special forms are never schema-qualified', () => {
+  /**
+   * The declared SELECT queries: identity, server binding, capability probes
+   * and the inventory reads.
+   *
+   * NOT every statement the collector sends — `BEGIN TRANSACTION READ ONLY` and
+   * `ROLLBACK` are issued by the runner and are not declared here.
+   */
+  const DECLARED_QUERIES = [
+    SESSION_IDENTITY_QUERY,
+    SERVER_BINDING_QUERY,
+    ...PROBE_QUERIES,
+    ...INVENTORY_QUERIES,
+  ]
+
+  it('covers every declared query', () => {
+    // NON-VACUITY for the whole block: an empty or truncated collection would
+    // make every absence assertion below trivially true.
+    expect(DECLARED_QUERIES.length).toBe(2 + PROBE_QUERIES.length + INVENTORY_QUERIES.length)
+    expect(PROBE_QUERIES.length).toBeGreaterThan(0)
+    expect(INVENTORY_QUERIES.length).toBeGreaterThan(0)
+    for (const q of DECLARED_QUERIES) expect(q.sql.length, `${q.id} is empty`).toBeGreaterThan(0)
+  })
+
+  it('no query schema-qualifies CURRENT_USER or SESSION_USER', () => {
+    const offenders = DECLARED_QUERIES
+      .filter(q => /pg_catalog\.(current_user|session_user)\b/.test(q.sql))
+      .map(q => q.id)
+    expect(offenders, `these queries would fail to parse: ${offenders.join(', ')}`).toEqual([])
+  })
+
+  it('no query turns a special form into a call with parentheses', () => {
+    // `CURRENT_USER()` is equally invalid — the form takes no argument list.
+    const offenders = DECLARED_QUERIES
+      .filter(q => /\b(CURRENT_USER|SESSION_USER)\s*\(/.test(q.sql))
+      .map(q => q.id)
+    expect(offenders).toEqual([])
+  })
+
+  it('the session identity query uses the exact unqualified expressions', () => {
+    expect(SESSION_IDENTITY_QUERY.sql).toContain('CURRENT_USER::text                        AS current_user')
+    expect(SESSION_IDENTITY_QUERY.sql).toContain('SESSION_USER::text                        AS session_user')
+  })
+
+  it('every capability probe excludes the current principal with unqualified CURRENT_USER::text', () => {
+    expect(PROBE_QUERIES.length).toBe(3)
+    for (const probe of PROBE_QUERIES) {
+      expect(probe.sql, `${probe.id} does not use CURRENT_USER::text`).toContain('CURRENT_USER::text')
+      expect(probe.sql, `${probe.id} qualifies the special form`).not.toMatch(/pg_catalog\.current_user/)
+    }
+  })
+
+  it('leaves genuinely qualified catalog FUNCTIONS alone', () => {
+    // A blanket de-qualification would break these. They are real functions,
+    // and qualifying them pins the call to the system catalog regardless of
+    // search_path — which is wanted.
+    expect(SESSION_IDENTITY_QUERY.sql).toContain('pg_catalog.current_database()')
+    expect(SESSION_IDENTITY_QUERY.sql).toContain("pg_catalog.current_setting('transaction_read_only')")
+    expect(PROBE_QUERIES[0].sql).toContain('pg_catalog.has_table_privilege(')
+    expect(PROBE_QUERIES[1].sql).toContain('pg_catalog.has_schema_privilege(')
+    expect(PROBE_QUERIES[2].sql).toContain('pg_catalog.pg_has_role(')
+    // ...and the catalog relations they read are still qualified too.
+    expect(PROBE_QUERIES[2].sql).toContain('FROM pg_catalog.pg_roles')
   })
 })
