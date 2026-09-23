@@ -425,6 +425,14 @@ describe('ROUND 3: the runtime role cannot reach a protected database', () => {
     expect(liveDatabaseNames()).toContain('ai_capital')
   })
 
+  it('the permanent ai_capital_v3 protection floor is configured too', () => {
+    // The 5433 migration target. Preflight reaches the protected set through
+    // liveDatabaseNames(), so provisioning a test runtime must refuse a
+    // CONNECT-capable runtime role on the new database exactly as it does on
+    // the old one — without preflight naming either database itself.
+    expect(liveDatabaseNames()).toContain('ai_capital_v3')
+  })
+
   it('stops the run with ZERO mutations', async () => {
     const log: string[] = []
     await expect(provision(okEnv(), deps(log, {}, {

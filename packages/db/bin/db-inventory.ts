@@ -31,9 +31,20 @@
  * parsed out of the URL, so there is no path by which a user name or password
  * reaches the evidence file.
  *
+ * ── THE TARGET ──────────────────────────────────────────────────────────────
+ *
+ * `--target` is MANDATORY, has NO default, and is closed to the two recognised
+ * live databases in `INVENTORY_TARGETS`. It is independent of
+ * `VERIFY_INVENTORY_DATABASE_URL`: the credential says where the driver was
+ * asked to connect, the target says which database the operator meant, and
+ * `assertSessionIsSafe` compares the SERVER's answer against the target. If the
+ * target were derived from the credential the comparison would be circular and
+ * would pass against any database at all.
+ *
  * ── ORDER OF OPERATIONS, AND WHY IT IS THIS ORDER ───────────────────────────
  *
- *   1. Parse and validate arguments (mode, absolute output, MANDATORY run id)
+ *   1. Parse and validate arguments (mode, absolute output, MANDATORY run id,
+ *      MANDATORY closed-set target)
  *   2. Check the output directory is private (0700) and the artifact absent  ─┐
  *   3. Read the credential                                                    │
  *   4. Capture the repository revision through the read-only seam            ─┘
@@ -62,14 +73,17 @@ import { fileURLToPath } from 'node:url'
 
 import { createClient } from '../src/pool.js'
 import {
-  EXPECTED_DATABASE,
   EXPECTED_PRINCIPAL,
   INVENTORY_QUERIES,
+  INVENTORY_TARGETS,
+  INVENTORY_TARGET_NAMES,
   PROBE_QUERIES,
   SERVER_BINDING_QUERY,
   SESSION_IDENTITY_QUERY,
 } from '../src/inventory-queries.js'
-import type { ProbeRow, ServerBindingRow, SessionIdentityRow } from '../src/inventory-queries.js'
+import type {
+  InventoryTargetName, ProbeRow, ServerBindingRow, SessionIdentityRow,
+} from '../src/inventory-queries.js'
 import { buildFactDocument, canonicalJson, markComplete } from '../src/inventory-facts.js'
 
 export const COMPLETE_MESSAGE = 'INVENTORY COMPLETE — NO VERDICT'
@@ -463,6 +477,10 @@ export interface ParsedArguments {
   mode: 'inventory'
   output: string
   runId: string
+  /** The recognised target name the operator named, verbatim. */
+  target: InventoryTargetName
+  /** The database that target resolves to — a literal from the closed map. */
+  expectedDatabase: string
 }
 
 const RUN_ID_PATTERN = /^[A-Za-z0-9][A-Za-z0-9._-]{0,63}$/
@@ -471,6 +489,7 @@ export function parseArguments(argv: readonly string[]): ParsedArguments {
   let mode: string | null = null
   let output: string | null = null
   let runId: string | null = null
+  let target: string | null = null
 
   for (let i = 0; i < argv.length; i += 1) {
     const flag = argv[i]
@@ -486,9 +505,11 @@ export function parseArguments(argv: readonly string[]): ParsedArguments {
       case '--mode':   mode   = takeValue(); break
       case '--output': output = takeValue(); break
       case '--run-id': runId  = takeValue(); break
+      case '--target': target = takeValue(); break
       default:
         throw new InventoryRefusal(
-          `Unknown argument "${flag}". This CLI accepts only --mode, --output and --run-id.`,
+          `Unknown argument "${flag}". This CLI accepts only --mode, --output, --run-id ` +
+          'and --target.',
         )
     }
   }
@@ -530,7 +551,48 @@ export function parseArguments(argv: readonly string[]): ParsedArguments {
       `--run-id "${runId}" is not a plain identifier. Use letters, digits, dot, dash or underscore.`,
     )
   }
-  return { mode: 'inventory', output, runId }
+  // THE TARGET IS MANDATORY, CLOSED, AND NEVER DEFAULTED.
+  //
+  // A default would mean an invocation that named no database could still
+  // inventory one — and with two live databases now recognised, the one it
+  // silently chose would be whichever happened to be written first here. The
+  // operator says which book they meant, out loud, every time.
+  if (target === null) {
+    throw new InventoryRefusal(
+      '--target is required. It names which recognised live database this inventory is ' +
+      `for, and has no default. Recognised targets: ${INVENTORY_TARGET_NAMES.join(', ')}.`,
+    )
+  }
+  // REFUSED, NOT TRIMMED — the same rule credential-url.ts applies to a
+  // credential. Validating a trimmed copy and then reporting the untrimmed
+  // original would check one string and attest to another.
+  if (target !== target.trim()) {
+    throw new InventoryRefusal(
+      '--target has leading or trailing whitespace. It is refused rather than trimmed, ' +
+      'so the value validated is the value recorded.',
+    )
+  }
+  // Membership against the NAME ARRAY, never `target in INVENTORY_TARGETS` and
+  // never a bare index: an object index walks the prototype chain, so
+  // `--target constructor` would resolve to a function and pass a truthiness
+  // test. Comparison is exact and case-sensitive — `AI_CAPITAL` is either a
+  // quoted identifier for a different database or an operator mistake, and
+  // guessing which is not this function's job.
+  if (!(INVENTORY_TARGET_NAMES as readonly string[]).includes(target)) {
+    throw new InventoryRefusal(
+      `--target "${target}" is not a recognised live database. This CLI inventories only ` +
+      `${INVENTORY_TARGET_NAMES.join(' and ')}, and the set is closed: a target is never ` +
+      'read from the environment and never derived from the credential.',
+    )
+  }
+  const resolved = target as InventoryTargetName
+  return {
+    mode: 'inventory',
+    output,
+    runId,
+    target: resolved,
+    expectedDatabase: INVENTORY_TARGETS[resolved],
+  }
 }
 
 // ── Preconditions that must hold before a client exists ─────────────────────
@@ -711,7 +773,7 @@ export async function runInventory(
 
     const session = (await send(SESSION_IDENTITY_QUERY.sql))[0] as SessionIdentityRow | undefined
     if (!session) throw new Error('The session identity query returned no row.')
-    assertSessionIsSafe(session)
+    assertSessionIsSafe(session, args.expectedDatabase)
 
     const probes = await runProbes(send)
 
@@ -823,17 +885,26 @@ function assertPermittedStatement(sql: string): void {
  * `current_user` and `session_user` are checked INDEPENDENTLY because `SET ROLE`
  * moves the first and not the second. Equal-and-expected is the only shape that
  * means "this is the migrator, and nothing has assumed another identity".
+ *
+ * `expectedDatabase` is passed in, and its only legitimate source is
+ * `ParsedArguments.expectedDatabase` — a literal from the closed
+ * `INVENTORY_TARGETS` map. It must never be derived from the credential: the
+ * whole value of this check is that it compares the SERVER's answer against
+ * something the server did not supply.
  */
-export function assertSessionIsSafe(session: SessionIdentityRow): void {
+export function assertSessionIsSafe(
+  session: SessionIdentityRow,
+  expectedDatabase: string,
+): void {
   if (session.transaction_read_only !== 'on') {
     throw new UnsafeSessionError(
       `The session reports transaction_read_only=${session.transaction_read_only}. ` +
       'A read-only transaction was requested and not granted; refusing to read further.',
     )
   }
-  if (session.current_database !== EXPECTED_DATABASE) {
+  if (session.current_database !== expectedDatabase) {
     throw new UnsafeSessionError(
-      `Connected to database "${session.current_database}", expected "${EXPECTED_DATABASE}".`,
+      `Connected to database "${session.current_database}", expected "${expectedDatabase}".`,
     )
   }
   if (session.session_user !== EXPECTED_PRINCIPAL) {

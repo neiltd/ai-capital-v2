@@ -149,6 +149,77 @@ describe('the guard refuses a test process a live connection', () => {
     }
   })
 
+  // ── ai_capital_v3: the 5433 migration target, protected before it exists ──
+
+  it('protects BOTH permanent live names', () => {
+    expect([...liveDatabaseNames()].sort()).toEqual(['ai_capital', 'ai_capital_v3'])
+    expect(() => assertNotLiveDatabase('postgres://x@localhost:5432/ai_capital')).toThrow(/live database/)
+    expect(() => assertNotLiveDatabase('postgres://x@localhost:5433/ai_capital_v3')).toThrow(/live database/)
+  })
+
+  it('no LIVE_DATABASE_NAMES value can remove EITHER permanent name', () => {
+    // The floor is the whole point. `ai_capital` alone is exactly what someone
+    // writes when they think they are "keeping the existing protection" while
+    // adding the new database — and it must not unprotect ai_capital_v3.
+    const prev = process.env.LIVE_DATABASE_NAMES
+    try {
+      const hostile = [
+        'ai_capital', 'ai_capital_v3', 'ai_capital_prod', 'ai_capital_test',
+        'other', '0', 'none', '*', 'ai_capitaI',
+      ]
+      for (const value of hostile) {
+        process.env.LIVE_DATABASE_NAMES = value
+        expect(() => assertNotLiveDatabase('postgres://x@localhost:5432/ai_capital'),
+          `LIVE_DATABASE_NAMES=${value} must not unprotect ai_capital`).toThrow(/live database/)
+        expect(() => assertNotLiveDatabase('postgres://x@localhost:5433/ai_capital_v3'),
+          `LIVE_DATABASE_NAMES=${value} must not unprotect ai_capital_v3`).toThrow(/live database/)
+      }
+    } finally {
+      if (prev === undefined) delete process.env.LIVE_DATABASE_NAMES
+      else process.env.LIVE_DATABASE_NAMES = prev
+    }
+  })
+
+  it('matches ai_capital_v3 EXACTLY — near misses stay unprotected', () => {
+    // NON-VACUITY for the test above. If the new entry were a prefix or
+    // substring rule, every one of these would throw and the "both names are
+    // protected" assertion would be true for the wrong reason — while quietly
+    // forbidding the throwaway databases an operator names after the target.
+    for (const throwaway of [
+      'ai_capital_v3_test', 'ai_capital_v', 'ai_capital_v2', 'ai_capital_v30',
+      'ai_capital_v3_scratch', 'v3', 'ai_capital_v3x',
+    ]) {
+      expect(() => assertNotLiveDatabase(`postgres://x@localhost:5433/${throwaway}`),
+        `${throwaway} must not be protected`).not.toThrow()
+    }
+  })
+
+  it('closes the encoded and socket-form bypasses for ai_capital_v3 too', () => {
+    // The same two proven bypasses Warden walked through for ai_capital: pg
+    // decodes the pathname where `new URL()` does not, and the socket: branch
+    // takes the database from ?db= while the pathname says "tmp". A guard that
+    // covered only the older name would leave the newer one open to both.
+    expect(() => assertNotLiveDatabase('postgres://x@localhost:5433/ai%5Fcapital%5Fv3')).toThrow(/live database/)
+    expect(() => assertNotLiveDatabase('socket:/tmp?db=ai_capital_v3')).toThrow(/live database/)
+    expect(() => assertNotLiveDatabase('socket://x/tmp?db=ai_capital_v3')).toThrow(/live database/)
+    expect(() => assertNotLiveDatabase('socket:/tmp?db=ai%5Fcapital%5Fv3')).toThrow(/live database/)
+    expect(() => assertNotLiveDatabase('socket:/tmp?db=AI_CAPITAL_V3')).toThrow(/live database/)
+    // The Unix-socket URL shape the 5433 migrator credential actually uses.
+    expect(() => assertNotLiveDatabase(
+      'postgresql://ai_capital_migrator@/ai_capital_v3?host=%2FUsers%2Fthanapold%2Fai-capital-v3-run&port=5433',
+    )).toThrow(/live database/)
+    // ...and the keyword/value form, which is not a URL at all.
+    expect(() => assertNotLiveDatabase('host=/tmp port=5433 dbname=ai_capital_v3'))
+      .toThrow(/live database/)
+  })
+
+  it('refuses ai_capital_v3 through the connection factories', () => {
+    expect(() => createPool('postgres://x@localhost:5433/ai_capital_v3')).toThrow(/live database "ai_capital_v3"/)
+    expect(() => createClient('postgres://x@localhost:5433/ai_capital_v3')).toThrow(/live database "ai_capital_v3"/)
+    expect(() => createClientFromConfig({ host: 'localhost', port: 5433, database: 'ai_capital_v3' }))
+      .toThrow(/live database "ai_capital_v3"/)
+  })
+
   it('honours LIVE_DATABASE_NAMES when a second live database is added', () => {
     const prev = process.env.LIVE_DATABASE_NAMES
     process.env.LIVE_DATABASE_NAMES = 'ai_capital,ai_capital_prod'

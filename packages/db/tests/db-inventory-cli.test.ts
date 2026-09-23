@@ -53,6 +53,8 @@ import type { ArtifactFs, InventoryClient } from '../bin/db-inventory.js'
 import {
   CURRENT_V19_MANIFEST,
   INVENTORY_QUERIES,
+  INVENTORY_TARGETS,
+  INVENTORY_TARGET_NAMES,
   PROBE_QUERIES,
   SERVER_BINDING_QUERY,
   SESSION_IDENTITY_QUERY,
@@ -82,6 +84,8 @@ const SERVER: ServerBindingRow = {
 
 interface FakeOptions {
   session?: Partial<SessionIdentityRow>
+  /** Overrides for the server binding row, so a non-default target fixture is coherent. */
+  server?: Partial<ServerBindingRow>
   probeObserved?: Record<string, string | null>
   probeThrows?: string
   probeNoRow?: string
@@ -121,7 +125,7 @@ function makeFake(options: FakeOptions = {}) {
         return { rows: [] }
       }
       if (sql === SESSION_IDENTITY_QUERY.sql) return { rows: [{ ...SESSION, ...options.session }] }
-      if (sql === SERVER_BINDING_QUERY.sql) return { rows: [SERVER] }
+      if (sql === SERVER_BINDING_QUERY.sql) return { rows: [{ ...SERVER, ...options.server }] }
       const probe = PROBE_QUERIES.find(p => p.sql === sql)
       if (probe) {
         if (options.probeThrows === probe.id) throw new Error('permission denied for relation')
@@ -173,14 +177,15 @@ async function runOk(options: FakeOptions = {}, depsOver: Record<string, unknown
   const output = join(dir, 'inventory.json')
   const fake = makeFake(options)
   const outcome = await runInventory(
-    ['--mode', 'inventory', '--output', output, '--run-id', 'fixture-run'],
+    ['--mode', 'inventory', '--output', output, '--run-id', 'fixture-run', '--target', 'ai_capital'],
     baseDeps(fake, depsOver),
   )
   return { dir, output, fake, outcome }
 }
 
 function argv(dir: string, extra: string[] = []): string[] {
-  return ['--mode', 'inventory', '--output', join(dir, 'out.json'), '--run-id', 'fixture-run', ...extra]
+  return ['--mode', 'inventory', '--output', join(dir, 'out.json'), '--run-id', 'fixture-run',
+          '--target', 'ai_capital', ...extra]
 }
 
 // ── Refusals, all before a client exists ────────────────────────────────────
@@ -211,7 +216,8 @@ describe('invocation refusals happen before any client is constructed', () => {
   it('the run id is never generated — it is mandatory and operator-supplied', () => {
     expect(() => parseArguments(['--mode', 'inventory', '--output', '/tmp/x.json']))
       .toThrow(/never generated/)
-    expect(parseArguments(['--mode', 'inventory', '--output', '/tmp/x.json', '--run-id', 'w-42']).runId)
+    expect(parseArguments(['--mode', 'inventory', '--output', '/tmp/x.json', '--run-id', 'w-42',
+                           '--target', 'ai_capital']).runId)
       .toBe('w-42')
   })
 
@@ -271,7 +277,8 @@ describe('invocation refusals happen before any client is constructed', () => {
   it('refuses an output directory that does not exist', async () => {
     const fake = makeFake()
     await expect(runInventory(
-      ['--mode', 'inventory', '--output', join(scratch(), 'missing', 'out.json'), '--run-id', 'r'],
+      ['--mode', 'inventory', '--output', join(scratch(), 'missing', 'out.json'), '--run-id', 'r',
+       '--target', 'ai_capital'],
       baseDeps(fake),
     )).rejects.toThrow(/does not exist/)
     expect(fake.state.constructions).toBe(0)
@@ -281,7 +288,8 @@ describe('invocation refusals happen before any client is constructed', () => {
     const first = await runOk()
     const fake = makeFake()
     const error = await runInventory(
-      ['--mode', 'inventory', '--output', first.output, '--run-id', 'second-run'],
+      ['--mode', 'inventory', '--output', first.output, '--run-id', 'second-run',
+       '--target', 'ai_capital'],
       baseDeps(fake),
     ).catch((e: Error) => e)
     expect(String(error)).toMatch(/already exists/)
@@ -304,6 +312,180 @@ describe('importing the module does nothing', () => {
   it('does not consider itself the entrypoint when something else is', () => {
     expect(isDirectEntrypoint(undefined, import.meta.url)).toBe(false)
     expect(isDirectEntrypoint('/usr/local/bin/vitest', import.meta.url)).toBe(false)
+  })
+})
+
+// ── The target is closed, mandatory, and never inferred ─────────────────────
+//
+// There are two live databases now. Which one an inventory describes is the
+// operator's statement, not something the tool works out — so this block proves
+// the three ways it could have been inferred are all shut: no default, no
+// environment variable, and no derivation from the credential.
+
+describe('--target selects from a closed set', () => {
+  const withoutTarget = (dir: string): string[] =>
+    ['--mode', 'inventory', '--output', join(dir, 'out.json'), '--run-id', 'fixture-run']
+
+  it('the target map contains exactly the two recognised live databases', () => {
+    // NON-VACUITY. Every assertion below is about a set with two members; if the
+    // map silently lost one, the cross-target refusals would still "pass" by
+    // never being exercised against anything.
+    expect([...INVENTORY_TARGET_NAMES].sort()).toEqual(['ai_capital', 'ai_capital_v3'])
+    expect(INVENTORY_TARGETS.ai_capital).toBe('ai_capital')
+    expect(INVENTORY_TARGETS.ai_capital_v3).toBe('ai_capital_v3')
+  })
+
+  it('refuses a missing --target before any client is constructed', async () => {
+    const dir = scratch()
+    const fake = makeFake()
+    const error = await runInventory(withoutTarget(dir), baseDeps(fake)).catch((e: Error) => e)
+    expect(String(error)).toMatch(/--target is required/)
+    expect(error).toBeInstanceOf(InventoryRefusal)
+    expect(exitCodeFor(error)).toBe(EXIT_REFUSED)
+    // The property that matters is "nothing could have reached the network",
+    // and only the counter witnesses it.
+    expect(fake.state.constructions).toBe(0)
+    expect(fake.state.connects).toBe(0)
+  })
+
+  it('has no default — the refusal message names no chosen database', async () => {
+    const dir = scratch()
+    const error = await runInventory(withoutTarget(dir), baseDeps(makeFake())).catch((e: Error) => e)
+    // It may LIST the recognised names; it must not announce one it picked.
+    expect(String(error)).not.toMatch(/defaults? to/i)
+  })
+
+  it('refuses every unrecognised target, before constructing a client', async () => {
+    // `constructor`, `toString` and `__proto__` are here because an object index
+    // walks the prototype chain: `INVENTORY_TARGETS['constructor']` is a
+    // function, so a truthiness test would accept all three.
+    const rejected = [
+      'ai_capital_prod', 'ai_capital_test', 'AI_CAPITAL', 'Ai_Capital_V3', 'ai_capital_v',
+      'ai_capital_v3_test', 'postgres', '', 'constructor', 'toString', '__proto__', 'valueOf',
+    ]
+    for (const bad of rejected) {
+      const dir = scratch()
+      const fake = makeFake()
+      const error = await runInventory([...withoutTarget(dir), '--target', bad], baseDeps(fake))
+        .catch((e: Error) => e)
+      expect(String(error), `--target ${JSON.stringify(bad)} was accepted`)
+        .toMatch(/--target .* requires a value|is not a recognised live database/)
+      expect(error, `--target ${JSON.stringify(bad)} did not refuse`).toBeInstanceOf(InventoryRefusal)
+      expect(fake.state.constructions, `--target ${JSON.stringify(bad)} reached a client`).toBe(0)
+    }
+  })
+
+  it('refuses surrounding whitespace rather than trimming it', async () => {
+    for (const spelling of [' ai_capital', 'ai_capital ', '\tai_capital_v3', 'ai_capital_v3\n']) {
+      const dir = scratch()
+      const fake = makeFake()
+      const error = await runInventory([...withoutTarget(dir), '--target', spelling], baseDeps(fake))
+        .catch((e: Error) => e)
+      expect(String(error), `${JSON.stringify(spelling)} was accepted`)
+        .toMatch(/leading or trailing whitespace|is not a recognised live database/)
+      expect(fake.state.constructions).toBe(0)
+    }
+  })
+
+  it('cannot be supplied by the ambient environment', async () => {
+    // Every plausible spelling someone would reach for. None of them may stand
+    // in for the flag: an env-var target is an ambient fallback, and this whole
+    // assertion exists so it cannot become one by accident later.
+    const ambient = {
+      [CREDENTIAL]: URL_VALUE,
+      INVENTORY_TARGET: 'ai_capital',
+      INVENTORY_DATABASE: 'ai_capital',
+      EXPECTED_DATABASE: 'ai_capital',
+      TARGET: 'ai_capital',
+      PGDATABASE: 'ai_capital',
+      DB_INVENTORY_TARGET: 'ai_capital',
+    }
+    const dir = scratch()
+    const fake = makeFake()
+    const error = await runInventory(withoutTarget(dir), baseDeps(fake, { env: ambient }))
+      .catch((e: Error) => e)
+    expect(String(error)).toMatch(/--target is required/)
+    expect(fake.state.constructions).toBe(0)
+  })
+
+  it('is not derived from the credential — a v3 credential does not make a v3 target', async () => {
+    // The circularity this closes: if the expected database came from the URL,
+    // comparing it with current_database() would prove only that the driver
+    // connected where it was told, and would pass against ANY database.
+    const dir = scratch()
+    const fake = makeFake({ session: { current_database: 'ai_capital_v3' } })
+    const env = { [CREDENTIAL]: 'postgres://ai_capital_migrator@localhost:5433/ai_capital_v3' }
+    const error = await runInventory([...withoutTarget(dir), '--target', 'ai_capital'],
+                                     baseDeps(fake, { env })).catch((e: Error) => e)
+    expect(String(error)).toMatch(/Connected to database "ai_capital_v3", expected "ai_capital"/)
+    expect(error).toBeInstanceOf(UnsafeSessionError)
+  })
+
+  it('--target ai_capital refuses a session connected to ai_capital_v3', async () => {
+    const dir = scratch()
+    const fake = makeFake({ session: { current_database: 'ai_capital_v3' } })
+    const error = await runInventory([...withoutTarget(dir), '--target', 'ai_capital'], baseDeps(fake))
+      .catch((e: Error) => e)
+    expect(String(error)).toMatch(/Connected to database "ai_capital_v3", expected "ai_capital"/)
+    expect(error).toBeInstanceOf(UnsafeSessionError)
+    expect(exitCodeFor(error)).toBe(EXIT_REFUSED)
+    expect(readdirSync(dir)).toEqual([])
+  })
+
+  it('--target ai_capital_v3 refuses a session connected to ai_capital', async () => {
+    const dir = scratch()
+    const fake = makeFake()   // the default fixture session is on ai_capital
+    const error = await runInventory([...withoutTarget(dir), '--target', 'ai_capital_v3'], baseDeps(fake))
+      .catch((e: Error) => e)
+    expect(String(error)).toMatch(/Connected to database "ai_capital", expected "ai_capital_v3"/)
+    expect(error).toBeInstanceOf(UnsafeSessionError)
+    expect(exitCodeFor(error)).toBe(EXIT_REFUSED)
+    expect(readdirSync(dir)).toEqual([])
+  })
+
+  it('both matching target/session pairs complete', async () => {
+    for (const name of INVENTORY_TARGET_NAMES) {
+      const database = INVENTORY_TARGETS[name]
+      const dir = scratch()
+      const fake = makeFake({
+        session: { current_database: database },
+        server: { database_name: database },
+      })
+      const outcome = await runInventory([...withoutTarget(dir), '--target', name], baseDeps(fake))
+      expect(outcome.message, `${name} did not complete`).toBe(COMPLETE_MESSAGE)
+      expect(readdirSync(dir)).toEqual(['out.json'])
+    }
+  })
+
+  it('parseArguments resolves the target to a literal from the closed map', () => {
+    for (const name of INVENTORY_TARGET_NAMES) {
+      const parsed = parseArguments(
+        ['--mode', 'inventory', '--output', '/tmp/x.json', '--run-id', 'r', '--target', name])
+      expect(parsed.target).toBe(name)
+      expect(parsed.expectedDatabase).toBe(INVENTORY_TARGETS[name])
+    }
+  })
+
+  it('the documented invocation carries the mandatory target', () => {
+    // DOCUMENTATION ATOMICITY. A required flag that the README's copy-pasteable
+    // command omits is a refusal the operator meets for the first time in
+    // production, at the moment they needed the evidence.
+    const readme = join(dirname(dirname(dirname(fileURLToPath(import.meta.url)))), '..', 'ops', 'README.md')
+    const text = readFileSync(readme, 'utf-8')
+    // Non-vacuity: the block we are asserting about must actually be there.
+    expect(text, 'the db-inventory invocation is not in ops/README.md at all')
+      .toContain('pnpm --filter @common/db db-inventory')
+    const invocation = text.slice(text.indexOf('pnpm --filter @common/db db-inventory'))
+      .slice(0, text.slice(text.indexOf('pnpm --filter @common/db db-inventory')).indexOf('```'))
+    expect(invocation).toContain('--mode inventory')
+    expect(invocation).toContain('--target ai_capital')
+    for (const name of INVENTORY_TARGET_NAMES) expect(text).toContain(name)
+  })
+
+  it('names --target in the unknown-argument message, so the flag is discoverable', () => {
+    expect(() => parseArguments(['--mode', 'inventory', '--output', '/tmp/x.json',
+                                 '--run-id', 'r', '--target', 'ai_capital', '--force']))
+      .toThrow(/--target/)
   })
 })
 
@@ -778,7 +960,8 @@ describe('artifact publication', () => {
     const output = join(dir, 'out.json')
     const runners = ['run-a', 'run-b'].map(id => {
       const fake = makeFake()
-      return runInventory(['--mode', 'inventory', '--output', output, '--run-id', id], baseDeps(fake))
+      return runInventory(['--mode', 'inventory', '--output', output, '--run-id', id,
+                            '--target', 'ai_capital'], baseDeps(fake))
     })
     const settled = await Promise.allSettled(runners)
     const fulfilled = settled.filter(r => r.status === 'fulfilled')
@@ -1236,7 +1419,8 @@ describe('the real entrypoint, in a child process', () => {
 
   it('exits 2 on a missing credential, naming only the variable it reads', () => {
     const dir = scratch()
-    const result = runCli(['--mode', 'inventory', '--output', join(dir, 'out.json'), '--run-id', 'r'])
+    const result = runCli(['--mode', 'inventory', '--output', join(dir, 'out.json'), '--run-id', 'r',
+                           '--target', 'ai_capital'])
     expect(result.status).toBe(EXIT_REFUSED)
     expect(result.stderr).toContain(`${CREDENTIAL} is not set`)
     // Naming which OTHER variables were or were not set would print a map of
@@ -1250,7 +1434,8 @@ describe('the real entrypoint, in a child process', () => {
 
   it('exits 2 on an output directory that is not 0700', () => {
     const dir = scratch(0o755)
-    const result = runCli(['--mode', 'inventory', '--output', join(dir, 'out.json'), '--run-id', 'r'],
+    const result = runCli(['--mode', 'inventory', '--output', join(dir, 'out.json'), '--run-id', 'r',
+                           '--target', 'ai_capital'],
                           { [CREDENTIAL]: URL_VALUE })
     expect(result.status).toBe(EXIT_REFUSED)
     expect(result.stderr).toContain('must land in a directory')
@@ -1262,7 +1447,8 @@ describe('the real entrypoint, in a child process', () => {
     // A Unix socket directory that cannot exist: the failure is ENOENT from the
     // filesystem, so no server — least of all a real one — is ever contacted.
     const result = runCli(
-      ['--mode', 'inventory', '--output', join(dir, 'out.json'), '--run-id', 'r'],
+      ['--mode', 'inventory', '--output', join(dir, 'out.json'), '--run-id', 'r',
+       '--target', 'ai_capital'],
       { [CREDENTIAL]: 'postgres://ai_capital_migrator@/ai_capital?host=/nonexistent-socket-dir-inventory-test' },
     )
     expect(result.status).toBe(EXIT_FAILURE)

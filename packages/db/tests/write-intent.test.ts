@@ -395,6 +395,92 @@ describe('bypasses Warden proved against the hardened gate', () => {
   })
 })
 
+// ── The 5433 migration target is a protected destination ────────────────────
+//
+// Before ai_capital_v3 joined the protection floor, a write aimed at it took
+// the "throwaway target: no ceremony" branch in assertProductionWriteAuthorized
+// — so the legacy copy into the new book would have proceeded with no declared
+// intent at all. This block is the proof that the branch changed.
+
+describe('ai_capital_v3 requires production ceremony', () => {
+  const V3 = 'postgresql://ai_capital_migrator@/ai_capital_v3' +
+             '?host=%2FUsers%2Fthanapold%2Fai-capital-v3-run&port=5433'
+  const V3_TCP = 'postgres://ai_capital_pipeline@127.0.0.1:5433/ai_capital_v3'
+  const V3_THROWAWAY = 'postgres://someone@127.0.0.1:5433/ai_capital_v3_test'
+
+  it('is a protected destination, over the socket URL and over TCP alike', () => {
+    expect(isProtectedDestination(V3)).toBe(true)
+    expect(isProtectedDestination(V3_TCP)).toBe(true)
+    expect(databaseNameOfRaw(V3)).toBe('ai_capital_v3')
+  })
+
+  it('takes the ceremony branch, NOT the throwaway branch', () => {
+    // The distinction this asserts is exactly the one that changed: same code
+    // path, opposite outcome, and nothing but the protection floor decides it.
+    expect(() => assertProductionWriteAuthorized(V3, 'legacy-copy'))
+      .toThrow(ProductionWriteRefused)
+    expect(() => assertProductionWriteAuthorized(V3_TCP, 'claim-persistence'))
+      .toThrow(ProductionWriteRefused)
+  })
+
+  it('names ai_capital_v3 as the protected destination in the refusal', () => {
+    try {
+      assertProductionWriteAuthorized(V3, 'legacy-copy')
+      throw new Error('should have refused')
+    } catch (e) {
+      expect(e).toBeInstanceOf(ProductionWriteRefused)
+      expect((e as ProductionWriteRefused).destination).toBe('ai_capital_v3')
+      expect((e as Error).message).toContain('ai_capital_v3')
+      expect((e as Error).message).toContain('ABSENT')
+    }
+  })
+
+  it('allows the write inside a declared scope of the matching class', async () => {
+    await withProductionWrite(
+      { operation: 'legacy-copy', context: 'migration', reason: 'S4F Phase-H rehearsal copy' },
+      async () => {
+        expect(() => assertProductionWriteAuthorized(V3, 'legacy-copy')).not.toThrow()
+        // ...and still only its own class.
+        expect(() => assertProductionWriteAuthorized(V3, 'migration')).toThrow(ProductionWriteRefused)
+      },
+    )
+  })
+
+  it('a pool built for ai_capital_v3 is gated by its RECORDED destination', () => {
+    // The TOCTOU path: assertPoolWriteAuthorized keys on what the pool was
+    // built with, not on the environment as it stands now. Building the pool at
+    // all needs the deliberately awkward escape hatch, which is itself the
+    // proof that the factory now refuses ai_capital_v3 under vitest.
+    const pool = createPool(V3_TCP, {
+      allowProtectedInTests: { reason: 'unit test of the v3 production-write gate' },
+    })
+    try {
+      expect(destinationOf(pool)).toBe('ai_capital_v3')
+      expect(() => assertPoolWriteAuthorized(pool, 'legacy-copy')).toThrow(ProductionWriteRefused)
+      // The pinned string the driver will actually use still names the database.
+      expect(pinDestination(V3_TCP)).toBe(V3_TCP)
+      expect(resolveDestination(V3_TCP)).toBe('ai_capital_v3')
+    } finally {
+      void pool.end()
+    }
+  })
+
+  it('NON-VACUITY: a near-miss name still needs no ceremony', () => {
+    // If ai_capital_v3 protection were a prefix rule, this would throw and every
+    // assertion above would be true for the wrong reason.
+    expect(isProtectedDestination(V3_THROWAWAY)).toBe(false)
+    expect(() => assertProductionWriteAuthorized(V3_THROWAWAY, 'legacy-copy')).not.toThrow()
+  })
+
+  it('ai_capital behaviour is unchanged by the addition', () => {
+    expect(isProtectedDestination(PROD)).toBe(true)
+    expect(isProtectedDestination(TEST)).toBe(false)
+    expect(() => assertProductionWriteAuthorized(PROD, 'claim-persistence'))
+      .toThrow(ProductionWriteRefused)
+    expect(() => assertProductionWriteAuthorized(TEST, 'claim-persistence')).not.toThrow()
+  })
+})
+
 describe('legacy-copy is its own operation', () => {
   // AWAITED, like its two siblings. Written without `async`/`await` this test
   // discarded the promise withProductionWrite returns, so vitest could finish

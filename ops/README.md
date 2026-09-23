@@ -202,6 +202,7 @@ mkdir -p ~/ai-capital-evidence && chmod 700 ~/ai-capital-evidence
 VERIFY_INVENTORY_DATABASE_URL="postgres://ai_capital_migrator@…/ai_capital" \
   pnpm --filter @common/db db-inventory \
     --mode inventory \
+    --target ai_capital \
     --run-id 2026-09-10-preflight \
     --output ~/ai-capital-evidence/inventory-$(date -u +%Y%m%dT%H%M%SZ).json
 ```
@@ -652,6 +653,31 @@ outright. The published file is `0600`.
 It also refuses to overwrite an existing artifact, and the refusal is atomic
 rather than advisory — see the publication sequence below. Evidence is moved
 aside deliberately or not at all.
+
+### `--target`, and why it is not the credential
+
+`--target` is **mandatory**, has **no default**, and is **closed** to the live
+databases the collector recognises:
+
+| `--target` | database asserted from inside the session |
+|---|---|
+| `ai_capital` | `ai_capital` |
+| `ai_capital_v3` | `ai_capital_v3` |
+
+Anything else is refused — including a different case, a near miss such as
+`ai_capital_v3_test`, and a value with surrounding whitespace, which is refused
+rather than trimmed so the value validated is the value recorded. Every one of
+these refusals happens **before a client object exists**, so a mistyped target
+cannot reach a server at all.
+
+It is **independent of `VERIFY_INVENTORY_DATABASE_URL`**, and deliberately so.
+The credential says where the driver was asked to connect; the target says which
+database the operator meant; and `assertSessionIsSafe` compares the **server's**
+answer with the target. Deriving the target from the credential would make that
+comparison circular — it would prove only that the driver connected where it was
+told, which was never in doubt, and it would pass against any database at all.
+For the same reason the target is never read from the environment: an ambient
+target is a fallback by another name.
 
 ### `VERIFY_INVENTORY_DATABASE_URL`, and nothing else
 

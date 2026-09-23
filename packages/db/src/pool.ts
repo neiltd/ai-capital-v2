@@ -61,7 +61,21 @@ let _pool: pg.Pool | null = null
  * test-runtime pool to the live book through it. A floor makes that impossible
  * to express.
  */
-const ALWAYS_LIVE = ['ai_capital'] as const
+/**
+ * `ai_capital_v3` is the PostgreSQL 17 migration target on port 5433. It is
+ * listed here BEFORE it exists, deliberately: a window in which the database is
+ * real and unprotected is a window in which a stray `pnpm -r test` can reach a
+ * real-money destination. Protection precedes creation.
+ *
+ * Adding it here — rather than via `LIVE_DATABASE_NAMES` — is what makes it
+ * permanent. The env var extends this floor and can never shrink it, so neither
+ * name is removable through configuration.
+ *
+ * Matching stays EXACT. `ai_capital_v3_test` and `ai_capital_v` are not
+ * protected, and must not be: a prefix rule here would silently forbid every
+ * throwaway database an operator names after the target it is standing in for.
+ */
+const ALWAYS_LIVE = ['ai_capital', 'ai_capital_v3'] as const
 
 export function liveDatabaseNames(): string[] {
   const configured = process.env.LIVE_DATABASE_NAMES

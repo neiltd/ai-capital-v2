@@ -873,8 +873,49 @@ export const CURRENT_V19_MANIFEST: readonly ManifestEntry[] = Object.freeze([
   { filename: '019_dashboard_read_grants.sql', sha256: '011cbd4d14ae9b548d6c99e1a4a8df965be3aacc2b6d2e1df86688551103aeaa' },
 ])
 
-/** The database this collector is written for. Asserted from inside the session. */
-export const EXPECTED_DATABASE = 'ai_capital'
+/**
+ * The databases this collector is written for, as a CLOSED compile-time set.
+ * The selected entry is asserted from inside the session.
+ *
+ * WHY A MAP AND NOT A CONSTANT. There are now two live databases: `ai_capital`
+ * on 5432 and `ai_capital_v3`, the PostgreSQL 17 migration target on 5433. A
+ * single constant could only ever inventory one of them.
+ *
+ * WHY NOT AN ENVIRONMENT VARIABLE, AND WHY NOT THE CREDENTIAL. Both were
+ * considered and both are refused:
+ *
+ *   An env-var target (`INVENTORY_DATABASE ?? 'ai_capital'`) is an ambient
+ *   fallback — the exact shape `credential-url.ts` exists to prevent. It would
+ *   let the environment redirect an assertion whose entire purpose is to be
+ *   unredirectable.
+ *
+ *   Deriving the expected name from `VERIFY_INVENTORY_DATABASE_URL` is worse:
+ *   comparing the session's `current_database()` against the database the
+ *   credential named proves only that the driver connected where it was told,
+ *   which is not in doubt. The check would be circular and would pass against
+ *   ANY database.
+ *
+ * So the operator names the target out loud, `--target` has no default, and the
+ * expected name is a literal from this map — one of two fixed destinations
+ * chosen explicitly, never a value that arrived from anywhere.
+ */
+export const INVENTORY_TARGETS = Object.freeze({
+  ai_capital: 'ai_capital',
+  ai_capital_v3: 'ai_capital_v3',
+} as const)
+
+export type InventoryTargetName = keyof typeof INVENTORY_TARGETS
+
+/**
+ * The recognised target names, as an array.
+ *
+ * Membership is tested against THIS, not with `name in INVENTORY_TARGETS` or a
+ * bare index: an object index walks the prototype chain, so `--target
+ * constructor` and `--target toString` would both resolve to a function and
+ * sail past a truthiness check. An array membership test cannot.
+ */
+export const INVENTORY_TARGET_NAMES: readonly InventoryTargetName[] =
+  Object.freeze(Object.keys(INVENTORY_TARGETS) as InventoryTargetName[])
 
 /**
  * The only principal authorised to run the inventory.
