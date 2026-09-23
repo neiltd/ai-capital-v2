@@ -356,7 +356,7 @@ describe('provision.sh --inspect mutates nothing', () => {
 
   it('asserts port 5433 is unused, by listener and by socket', () => {
     const body = inspectBody()
-    expect(body).toMatch(/lsof -nP -iTCP:"\$\{TARGET_PORT\}"/)
+    expect(body).toMatch(/lsof_count -nP -iTCP:"\$\{TARGET_PORT\}"/)
     expect(body).toMatch(/\.s\.PGSQL\.\$\{TARGET_PORT\}/)
   })
 
@@ -1302,5 +1302,232 @@ describe('the README matches the implemented behaviour', () => {
     expect(md).toMatch(/postgresql\.auto\.conf/)
     expect(md).toMatch(/pg_hba_file_rules/)
     expect(md).toMatch(/first-match-wins/)
+  })
+})
+
+// ── lsof's three states, exercised under the scripts' own shell options ─────
+//
+// WHAT GATE C FOUND. `lsof` exits 1 when it matches nothing — its ordinary way
+// of saying "no such listener". Under `set -o pipefail` a pipeline inherits
+// that 1, so
+//
+//     listeners="$(lsof -iTCP:5433 2>/dev/null | wc -l | tr -d ' ')"
+//
+// failed as an assignment and `set -e` killed provision.sh BEFORE the explicit
+// `[ "${listeners}" = '0' ]` comparison it fed. The abort fired in exactly the
+// desired case — a clean host — so --inspect could never pass, and --apply,
+// which begins by calling it, could never run.
+//
+// `bash -n` parses that line happily and every text assertion about it was
+// true: the check was present, correctly spelled, and in the right place. Only
+// execution could find it. So these tests run the real helper against a FAKE
+// lsof on disk, under the same `set -euo pipefail` and `IFS=$'\n\t'`.
+
+describe("lsof no-match semantics", () => {
+  const HARNESS = mkdtempSync(join(tmpdir(), 'v3-lsof-'))
+
+  /** Extract a script's real helper block, verbatim, with `readonly LSOF` repointed. */
+  const helperBlock = (path: string, fakeLsof: string): string => {
+    const src = read(path)
+    const start = src.indexOf("readonly LSOF='/usr/sbin/lsof'")
+    expect(start, `the LSOF constant is missing from ${path}`).toBeGreaterThan(-1)
+    const end = src.indexOf('\n# ──', start)
+    expect(end, 'the helper block is not terminated by a section rule').toBeGreaterThan(start)
+    return src.slice(start, end).replace("readonly LSOF='/usr/sbin/lsof'", `readonly LSOF='${fakeLsof}'`)
+  }
+
+  /** Write a fake lsof with the given exit status, stdout and stderr. */
+  const fakeLsof = (name: string, status: number, out = '', err = ''): string => {
+    const dir = join(HARNESS, name)
+    mkdirSync(dir, { recursive: true })
+    const p = join(dir, 'lsof')
+    writeFileSync(p, [
+      '#!/bin/bash',
+      out ? `cat <<'EOF_OUT'\n${out}\nEOF_OUT` : ':',
+      err ? `cat >&2 <<'EOF_ERR'\n${err}\nEOF_ERR` : ':',
+      `exit ${status}`,
+    ].join('\n'))
+    chmodSync(p, 0o755)
+    return p
+  }
+
+  /** Run `body` with the real helper in scope, under the scripts' own options. */
+  const withHelper = (scriptPath: string, lsof: string, body: string) =>
+    spawnSync('/bin/bash', ['-c', [
+      'set -euo pipefail',
+      "IFS=$'\\n\\t'",
+      helperBlock(scriptPath, lsof),
+      body,
+    ].join('\n')], { encoding: 'utf-8', cwd: HARNESS,
+                     env: { PATH: '/usr/bin:/bin:/usr/sbin:/sbin', HOME: HARNESS } })
+
+  /**
+   * Make a function body runnable at top level.
+   *
+   * `local` is illegal outside a function. A declaration-only line
+   * (`local foo bar`) must be DELETED — stripping just the keyword would leave
+   * `foo bar`, which bash runs as a command and reports as "command not
+   * found". A line that also assigns keeps its assignment.
+   */
+  const topLevel = (block: string): string =>
+    block.split('\n')
+      .filter(l => !/^\s*local\s+[A-Za-z_][A-Za-z0-9_ ]*$/.test(l))
+      .map(l => l.replace(/^(\s*)local\s+/, '$1'))
+      .join('\n')
+
+  const LISTENER_ROWS = [
+    'COMMAND   PID      USER   FD   TYPE             DEVICE SIZE/OFF NODE NAME',
+    'postgres 9011 thanapold    7u  IPv6 0xd357521           0t0  TCP [::1]:5433 (LISTEN)',
+    'postgres 9011 thanapold    8u  IPv4 0x82f1af5           0t0  TCP 127.0.0.1:5433 (LISTEN)',
+  ].join('\n')
+
+  for (const [label, path] of [['provision.sh', PROVISION_PATH], ['verify.sh', VERIFY_PATH]] as const) {
+    describe(label, () => {
+      it('exit 1 with no output is a NO-MATCH: the caller continues and counts 0', () => {
+        // THE GATE-C REGRESSION, stated as a test. Before the fix this aborted.
+        const r = withHelper(path, fakeLsof(`${label}-nomatch`, 1),
+          'n="$(lsof_count -nP -iTCP:5433)" || { echo ABORTED; exit 9; }\necho "count=${n}"\necho CONTINUED')
+        expect(r.status, `the script aborted on a benign no-match: ${r.stderr}`).toBe(0)
+        expect(r.stdout).toContain('count=0')
+        expect(r.stdout).toContain('CONTINUED')
+        expect(r.stdout).not.toContain('ABORTED')
+      })
+
+      it('a zero count is exactly "0", with no whitespace to defeat the comparison', () => {
+        const r = withHelper(path, fakeLsof(`${label}-zero`, 1),
+          'n="$(lsof_count -nP -iTCP:5433)"\n[ "${n}" = "0" ] && echo EXACTLY_ZERO || echo "NOT_ZERO:[${n}]"')
+        expect(r.stdout.trim()).toBe('EXACTLY_ZERO')
+      })
+
+      it('exit 0 with listener rows preserves every row and detects both families', () => {
+        const r = withHelper(path, fakeLsof(`${label}-rows`, 0, LISTENER_ROWS),
+          [ 'rows="$(lsof_query -nP -iTCP:5433 -sTCP:LISTEN)"',
+            'printf "%s\\n" "${rows}" | /usr/bin/grep -q "127\\.0\\.0\\.1" && echo HAS_V4 || echo NO_V4',
+            'printf "%s\\n" "${rows}" | /usr/bin/grep -q "\\[::1\\]" && echo HAS_V6 || echo NO_V6',
+            'echo "count=$(lsof_count -nP -iTCP:5433 -sTCP:LISTEN)"',
+          ].join('\n'))
+        expect(r.status, r.stderr).toBe(0)
+        expect(r.stdout).toContain('HAS_V4')
+        expect(r.stdout).toContain('HAS_V6')
+        expect(r.stdout).toContain('count=3')
+      })
+
+      it('exit 2 with a diagnostic is REJECTED, and the diagnostic survives', () => {
+        const r = withHelper(path, fakeLsof(`${label}-err2`, 2, '', 'lsof: permission denied'),
+          'if n="$(lsof_count -nP -iTCP:5433)"; then echo "ACCEPTED:${n}"; else echo REJECTED; fi')
+        expect(r.stdout.trim()).toBe('REJECTED')
+        expect(r.stderr, 'the diagnostic was swallowed').toContain('permission denied')
+        expect(r.stderr).toContain('exit 2')
+      })
+
+      it('exit 1 WITH a diagnostic is REJECTED — it is not a benign no-match', () => {
+        // The distinction that makes `|| true` unacceptable: same status, very
+        // different meaning, and only the output separates them.
+        const r = withHelper(path, fakeLsof(`${label}-err1`, 1, '', 'lsof: no pwd entry for UID 501'),
+          'if n="$(lsof_count -nP -iTCP:5433)"; then echo "ACCEPTED:${n}"; else echo REJECTED; fi')
+        expect(r.stdout.trim()).toBe('REJECTED')
+        expect(r.stderr).toContain('no pwd entry')
+      })
+
+      it('a missing lsof binary is REJECTED, not read as "nothing is listening"', () => {
+        const r = withHelper(path, join(HARNESS, 'does-not-exist', 'lsof'),
+          'if n="$(lsof_count -nP -iTCP:5433)"; then echo "ACCEPTED:${n}"; else echo REJECTED; fi')
+        expect(r.stdout.trim()).toBe('REJECTED')
+      })
+
+      it('uses no blanket `|| true` around an lsof call', () => {
+        // `|| true` would collapse all three states into success, which is the
+        // failure mode this whole helper exists to avoid.
+        const src = commands(read(path))
+        for (const line of src.split('\n')) {
+          if (!/lsof/.test(line)) continue
+          expect(line, `an lsof call is suppressed with || true: ${line.trim()}`)
+            .not.toMatch(/\|\|\s*(true|:)\s*$/)
+        }
+      })
+    })
+  }
+
+  it('provision.sh reaches its NAMED refusal when the expected 5432 listener is absent', () => {
+    // Before the fix, an absent foreign listener aborted the assignment and the
+    // operator saw nothing — the refusal that explains what is wrong was
+    // unreachable. The message must actually be produced.
+    const src = read(PROVISION_PATH)
+    const start = src.indexOf('  local foreign_rows foreign_pid')
+    expect(start, 'the foreign-listener block was not found').toBeGreaterThan(-1)
+    // `local` is illegal outside a function and the harness runs the block at
+    // top level; the logic under test is unaffected.
+    const block = topLevel(src.slice(start, src.indexOf('[ -e "${SOCKET_ROOT}', start)))
+      .replace(/\$\{FOREIGN_PGDATA\}/g, '/nowhere')
+    const r = withHelper(PROVISION_PATH, fakeLsof('foreign-absent', 1), [
+      'die() { printf "provision.sh: REFUSED: %s\\n" "$*" >&2; exit 1; }',
+      block,
+      'echo SHOULD_NOT_REACH',
+    ].join('\n'))
+    expect(r.status, 'an absent foreign listener did not refuse').not.toBe(0)
+    expect(r.stdout).not.toContain('SHOULD_NOT_REACH')
+    expect(r.stderr, 'the named refusal was not reached').toContain('the existing listener vanished during provisioning')
+  })
+
+  it('provision.sh IPv6-absence cannot pass when lsof itself failed', () => {
+    // The old form was `! lsof | grep -q '[::1]'`. With lsof failing, grep
+    // finds nothing in an empty stream and `!` turns that miss into a PASS —
+    // an error reading as a satisfied security property.
+    const src = read(PROVISION_PATH)
+    const start = src.indexOf('  local v3_listen')
+    expect(start, 'the v3 listener block was not found').toBeGreaterThan(-1)
+    const block = topLevel(src.slice(start, src.indexOf('  note "the existing listener', start)))
+    const r = withHelper(PROVISION_PATH, fakeLsof('v3-broken', 2, '', 'lsof: internal error'), [
+      'die() { printf "provision.sh: REFUSED: %s\\n" "$*" >&2; exit 1; }',
+      // The block references constants the real script declares above it.
+      "readonly TARGET_PORT='5433'",
+      "readonly SOCKET_ROOT='/Users/thanapold/ai-capital-v3-run'",
+      block,
+      'echo PASSED_DESPITE_LSOF_FAILURE',
+    ].join('\n'))
+    expect(r.status, 'a failing lsof was treated as a satisfied check').not.toBe(0)
+    expect(r.stdout).not.toContain('PASSED_DESPITE_LSOF_FAILURE')
+    expect(r.stderr).toMatch(/could not query the port .* listener/)
+  })
+
+  it('verify.sh reports UNKNOWN rather than absent when lsof fails', () => {
+    for (const marker of [
+      /the .* listener state is UNKNOWN, not proven absent/,
+      /IPv4 presence and IPv6 absence are UNKNOWN, not proven/,
+    ]) {
+      expect(read(VERIFY_PATH), `missing the UNKNOWN branch matching ${marker}`).toMatch(marker)
+    }
+    // And those branches call bad(), so they FAIL the run rather than printing
+    // a note beside a green tick.
+    // Executable lines only — a comment explaining the distinction is not a
+    // branch, and failing on it would push an author to delete the comment.
+    const executableUnknown = executable(read(VERIFY_PATH))
+      .split('\n')
+      .filter(l => l.includes('UNKNOWN'))
+    expect(executableUnknown.length, 'no UNKNOWN branch exists at all').toBe(2)
+    for (const line of executableUnknown) {
+      expect(line, `an UNKNOWN branch does not fail: ${line.trim()}`).toMatch(/^\s*bad /)
+    }
+  })
+
+  it('every lsof call in both scripts goes through the helper', () => {
+    for (const path of [PROVISION_PATH, VERIFY_PATH]) {
+      const direct = commands(read(path)).split('\n')
+        .filter(l => /\/usr\/sbin\/lsof/.test(l) && !/^readonly LSOF=/.test(l.trim()))
+      expect(direct, `a direct lsof pipeline survives in ${path}: ${direct.join(' | ')}`).toEqual([])
+      // ...and the helper itself is the only place the binary is named.
+      expect(read(path)).toMatch(/readonly LSOF='\/usr\/sbin\/lsof'/)
+    }
+  })
+
+  it('runs lsof once per assertion group, not once per property', () => {
+    // Two runs could observe two different instants, and would report a state
+    // that never existed at any single moment.
+    for (const path of [PROVISION_PATH, VERIFY_PATH]) {
+      const body = commands(read(path))
+      const listenQueries = body.split('\n')
+        .filter(l => /lsof_query .*-sTCP:LISTEN/.test(l) && !/5432/.test(l))
+      expect(listenQueries.length, `${path} queries the v3 listener ${listenQueries.length} times`).toBe(1)
+    }
   })
 })

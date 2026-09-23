@@ -49,6 +49,51 @@ ok()   { printf '  ok    %s\n' "$*"; }
 bad()  { FAILURES=$((FAILURES + 1)); printf '  FAIL  %s\n' "$*"; }
 check(){ if [ "$1" = 'true' ]; then ok "$2"; else bad "$2${3:+ — $3}"; fi; }
 
+# ── lsof, with its three states made explicit ───────────────────────────────
+#
+# `lsof` exits 1 when it matches nothing — its ordinary way of saying "no such
+# listener", not an error. Under `set -o pipefail` a pipeline inherits that 1,
+# so `listeners="$(lsof ... | wc -l)"` fails as an assignment and `set -e`
+# kills the script before the zero comparison it was written to feed. The
+# failure therefore fires in exactly the case --stopped exists to confirm.
+#
+# NOT `|| true`: that would flatten all three states into success and report a
+# permission error or a missing binary as "nothing is listening".
+#
+#   exit 0                        matched; emit the rows
+#   exit 1 with no output at all  matched nothing; emit nothing, succeed
+#   anything else                 a real failure; diagnose and fail
+#
+# `-w` suppresses lsof's own warnings, so a warning line can never be counted
+# as a matching row.
+readonly LSOF='/usr/sbin/lsof'
+
+lsof_query() {
+  local out rc
+  out="$("${LSOF}" -w "$@" 2>&1)" && rc=0 || rc=$?
+  if [ "${rc}" -eq 0 ]; then
+    if [ -n "${out}" ]; then printf '%s\n' "${out}"; fi
+    return 0
+  fi
+  if [ "${rc}" -eq 1 ] && [ -z "${out}" ]; then
+    return 0
+  fi
+  printf 'lsof failed: exit %s%s\n' "${rc}" "${out:+ — ${out}}" >&2
+  return 1
+}
+
+# Callers MUST handle a non-zero return: it means the state is UNKNOWN, which
+# this script must never report as zero.
+lsof_count() {
+  local rows
+  rows="$(lsof_query "$@")" || return 1
+  if [ -z "${rows}" ]; then
+    printf '0\n'
+  else
+    printf '%s\n' "${rows}" | /usr/bin/wc -l | /usr/bin/tr -d ' '
+  fi
+}
+
 # ── The read-only session ───────────────────────────────────────────────────
 #
 # A FUNCTION WITH SEPARATE ARGUMENTS, NOT A COMMAND STRING.
@@ -172,8 +217,13 @@ verify_stopped() {
 
   printf '\n== the cluster is stopped, cleanly\n'
   local listeners
-  listeners="$(/usr/sbin/lsof -nP -iTCP:"${TARGET_PORT}" 2>/dev/null | /usr/bin/wc -l | /usr/bin/tr -d ' ')"
-  check "$([ "${listeners}" = '0' ] && echo true || echo false)" "no listener on ${TARGET_PORT}" "lsof rows ${listeners}"
+  if listeners="$(lsof_count -nP -iTCP:"${TARGET_PORT}")"; then
+    check "$([ "${listeners}" = '0' ] && echo true || echo false)" "no listener on ${TARGET_PORT}" "lsof rows ${listeners}"
+  else
+    # UNKNOWN IS NOT ZERO. A failed query must not be reported as an absent
+    # listener; that is the whole property this mode exists to establish.
+    bad "lsof could not be queried — the ${TARGET_PORT} listener state is UNKNOWN, not proven absent"
+  fi
   check "$([ ! -e "${SOCKET_ROOT}/.s.PGSQL.${TARGET_PORT}" ] && echo true || echo false)" 'no socket file'
   check "$([ ! -e "${SOCKET_ROOT}/.s.PGSQL.${TARGET_PORT}.lock" ] && echo true || echo false)" 'no socket lock'
 
@@ -198,10 +248,20 @@ verify_running() {
   verify_filesystem
 
   printf '\n== the cluster is running, on the expected endpoint only\n'
-  check "$(/usr/sbin/lsof -nP -iTCP:"${TARGET_PORT}" -sTCP:LISTEN 2>/dev/null | /usr/bin/grep -q '127\.0\.0\.1' && echo true || echo false)" \
-        "listening on 127.0.0.1:${TARGET_PORT}"
-  check "$(/usr/sbin/lsof -nP -iTCP:"${TARGET_PORT}" -sTCP:LISTEN 2>/dev/null | /usr/bin/grep -q '\[::1\]' && echo false || echo true)" \
-        'NOT listening on ::1'
+  # ONE QUERY, TWO PROPERTIES. Two separate lsof runs could observe two
+  # different instants, and the old IPv6 form reported "not listening on ::1"
+  # whenever lsof itself failed: grep finds nothing in an empty stream, and the
+  # negation turns that miss into a pass. An error must never read as a
+  # satisfied security property.
+  local listen_rows
+  if listen_rows="$(lsof_query -nP -iTCP:"${TARGET_PORT}" -sTCP:LISTEN)"; then
+    check "$(printf '%s\n' "${listen_rows}" | /usr/bin/grep -q '127\.0\.0\.1' && echo true || echo false)" \
+          "listening on 127.0.0.1:${TARGET_PORT}"
+    check "$(printf '%s\n' "${listen_rows}" | /usr/bin/grep -q '\[::1\]' && echo false || echo true)" \
+          'NOT listening on ::1'
+  else
+    bad 'lsof could not be queried — IPv4 presence and IPv6 absence are UNKNOWN, not proven'
+  fi
   check "$([ -S "${SOCKET_ROOT}/.s.PGSQL.${TARGET_PORT}" ] && echo true || echo false)" 'the Unix socket exists'
 
   printf '\n== the verification session is read-only, as the SERVER reports it\n'

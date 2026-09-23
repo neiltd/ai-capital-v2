@@ -105,6 +105,60 @@ die() { printf 'provision.sh: REFUSED: %s\n' "$*" >&2; exit 1; }
 note() { printf '  %s\n' "$*"; }
 step() { printf '\n== %s\n' "$*"; }
 
+# ── lsof, with its three states made explicit ───────────────────────────────
+#
+# THE DEFECT THIS EXISTS TO FIX. `lsof` exits 1 when it matches nothing, which
+# is its ordinary way of saying "no such listener" — not an error. Under
+# `set -o pipefail` a pipeline inherits that 1, so
+#
+#     listeners="$(lsof -iTCP:5433 2>/dev/null | wc -l | tr -d ' ')"
+#
+# fails as an assignment and `set -e` kills the script BEFORE the explicit
+# `[ "${listeners}" = '0' ]` comparison it was written to feed. The failure
+# therefore fires in exactly the desired case — a clean host — so --inspect
+# could never pass and --apply, which begins by calling it, could never run.
+# Gate C's single authorized execution is what surfaced this.
+#
+# NOT `|| true`. That would flatten all three states into success and hide a
+# permission error, a missing binary or a truncated result as "nothing is
+# listening" — which is the most dangerous possible misreading here.
+#
+# The three states:
+#   exit 0                        the query ran and matched; emit the rows
+#   exit 1 with no output at all  the query ran and matched nothing; emit
+#                                 nothing, succeed
+#   anything else                 a real failure; emit a diagnostic and fail
+#
+# `-w` suppresses lsof's own warnings, so stderr carries only genuine errors
+# and a warning line can never be counted as a matching row.
+readonly LSOF='/usr/sbin/lsof'
+
+lsof_query() {
+  local out rc
+  out="$("${LSOF}" -w "$@" 2>&1)" && rc=0 || rc=$?
+  if [ "${rc}" -eq 0 ]; then
+    if [ -n "${out}" ]; then printf '%s\n' "${out}"; fi
+    return 0
+  fi
+  if [ "${rc}" -eq 1 ] && [ -z "${out}" ]; then
+    return 0                        # benign "no matches"
+  fi
+  printf 'lsof failed: exit %s%s\n' "${rc}" "${out:+ — ${out}}" >&2
+  return 1
+}
+
+# Row count, via the same three-state query. Callers MUST handle a non-zero
+# return: it means the state is unknown, which is not the same as zero.
+lsof_count() {
+  local rows
+  rows="$(lsof_query "$@")" || return 1
+  if [ -z "${rows}" ]; then
+    printf '0\n'
+  else
+    printf '%s\n' "${rows}" | /usr/bin/wc -l | /usr/bin/tr -d ' '
+  fi
+}
+
 # ── The environment this script runs in ─────────────────────────────────────
 #
 # Refuse rather than sanitise. Unsetting an inherited DATABASE_URL would make
@@ -184,7 +238,10 @@ run_inspect() {
 
   note "-- port ${TARGET_PORT} must be unused"
   local listeners
-  listeners="$(/usr/sbin/lsof -nP -iTCP:"${TARGET_PORT}" 2>/dev/null | /usr/bin/wc -l | /usr/bin/tr -d ' ')"
+  listeners="$(lsof_count -nP -iTCP:"${TARGET_PORT}")" \
+    || die "could not determine whether port ${TARGET_PORT} is in use. An unanswerable
+       question is not a negative answer, and provisioning over an occupied port is
+       exactly what this check exists to prevent."
   [ "${listeners}" = '0' ] || die "port ${TARGET_PORT} already has ${listeners} lsof rows"
   [ ! -e "${SOCKET_ROOT}/.s.PGSQL.${TARGET_PORT}" ] || die "a ${TARGET_PORT} socket already exists"
   note "port ${TARGET_PORT}: 0 listeners, no socket"
@@ -272,18 +329,36 @@ run_apply() {
   step 'APPLY 8/25 — isolation from the 5432 cluster, WITHOUT connecting to it'
   # Process and filesystem comparison only. Asserting "5432 is untouched" by
   # connecting to it would be the one thing this proof must not do.
-  local foreign_pid
-  foreign_pid="$(/usr/sbin/lsof -nP -iTCP:5432 -sTCP:LISTEN -t 2>/dev/null | /usr/bin/sort -u | /usr/bin/head -1)"
-  [ -n "${foreign_pid}" ] || die 'the 5432 listener vanished during provisioning'
+  # The foreign listener, through the three-state query. An absent listener now
+  # reaches the NAMED refusal below instead of aborting the script on an
+  # assignment, so the operator is told what was wrong rather than only that
+  # something was.
+  local foreign_rows foreign_pid
+  foreign_rows="$(lsof_query -nP -iTCP:5432 -sTCP:LISTEN -t)" \
+    || die 'could not query the existing cluster listener; its state is unknown'
+  foreign_pid="$(printf '%s\n' "${foreign_rows}" | /usr/bin/sort -u | /usr/bin/head -1)"
+  [ -n "${foreign_pid}" ] || die 'the existing listener vanished during provisioning'
   /bin/ps -o command= -p "${foreign_pid}" | /usr/bin/grep -q -- "-D ${FOREIGN_PGDATA}" \
-    || die 'the 5432 listener is no longer the expected cluster'
+    || die 'the existing listener is no longer the expected cluster'
   [ -e "${SOCKET_ROOT}/.s.PGSQL.${TARGET_PORT}" ] || die 'the v3 socket was not created'
   [ "$(/usr/bin/stat -f '%Lp' "${SOCKET_ROOT}/.s.PGSQL.${TARGET_PORT}")" = '700' ] \
     || die 'the v3 socket is not mode 0700'
-  /usr/sbin/lsof -nP -iTCP:"${TARGET_PORT}" -sTCP:LISTEN | /usr/bin/grep -q '127\.0\.0\.1' \
+
+  # ONE QUERY, TWO PROPERTIES. The previous version ran lsof twice for the same
+  # assertion group, which could observe two different instants, and the IPv6
+  # form was `! lsof | grep -q '[::1]'` — that PASSES when lsof itself fails,
+  # because grep then finds nothing in an empty stream and `!` inverts the
+  # miss into success. An lsof error would have read as "not listening on ::1",
+  # which is the single most dangerous misreading available here.
+  local v3_listen
+  v3_listen="$(lsof_query -nP -iTCP:"${TARGET_PORT}" -sTCP:LISTEN)" \
+    || die "could not query the port ${TARGET_PORT} listener; its address family is unknown"
+  [ -n "${v3_listen}" ] || die "nothing is listening on port ${TARGET_PORT} at all"
+  printf '%s\n' "${v3_listen}" | /usr/bin/grep -q '127\.0\.0\.1' \
     || die "nothing is listening on 127.0.0.1:${TARGET_PORT}"
-  ! /usr/sbin/lsof -nP -iTCP:"${TARGET_PORT}" -sTCP:LISTEN | /usr/bin/grep -q '\[::1\]' \
-    || die 'the v3 cluster is listening on ::1; listen_addresses was not honoured'
+  if printf '%s\n' "${v3_listen}" | /usr/bin/grep -q '\[::1\]'; then
+    die 'the v3 cluster is listening on ::1; listen_addresses was not honoured'
+  fi
   note "the existing listener is still pid ${foreign_pid} on its own PGDATA; v3 on 127.0.0.1:${TARGET_PORT} only"
 
   step 'APPLY 9/25 — cluster roles'
@@ -473,8 +548,12 @@ SQL
   "${PG_CTL}" -D "${PGDATA_ROOT}" -m fast -w -t 60 stop
 
   step 'APPLY 23/25 — prove the shutdown was clean and PGDATA is intact'
+  # After a clean stop there is nothing to match, which is the very case the
+  # old direct pipeline could not express: it aborted the script instead of
+  # reporting zero.
   local after
-  after="$(/usr/sbin/lsof -nP -iTCP:"${TARGET_PORT}" 2>/dev/null | /usr/bin/wc -l | /usr/bin/tr -d ' ')"
+  after="$(lsof_count -nP -iTCP:"${TARGET_PORT}")" \
+    || die "could not confirm port ${TARGET_PORT} was released after the stop"
   [ "${after}" = '0' ] || die "port ${TARGET_PORT} still has ${after} lsof rows after stop"
   [ ! -e "${SOCKET_ROOT}/.s.PGSQL.${TARGET_PORT}" ] || die 'the socket survived the stop'
   [ ! -e "${SOCKET_ROOT}/.s.PGSQL.${TARGET_PORT}.lock" ] || die 'the socket lock survived the stop'
