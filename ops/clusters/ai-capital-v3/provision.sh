@@ -49,6 +49,11 @@ readonly SOCKET_ROOT='/Users/thanapold/ai-capital-v3-run'
 readonly SECRET_ROOT='/Users/thanapold/ai-capital-secrets/s4f-d4'
 readonly EVIDENCE_ROOT='/Users/thanapold/ai-capital-evidence/s4f-d4-provision'
 
+# pg_ctl's -l target lives here. The directory is NOT created by initdb and NOT
+# created by the server before it starts, so provisioning must create it — see
+# prepare_log_directory().
+readonly LOG_DIR="${PGDATA_ROOT}/log"
+
 # SECRET_ROOT and EVIDENCE_ROOT are DISJOINT SUBTREES. Neither is inside the
 # other and neither is reachable from the other by following a component: the
 # evidence walk is rooted at EVIDENCE_ROOT, so "the digest never sees a
@@ -157,6 +162,69 @@ lsof_count() {
   else
     printf '%s\n' "${rows}" | /usr/bin/wc -l | /usr/bin/tr -d ' '
   fi
+}
+
+# ── The pg_ctl log directory ────────────────────────────────────────────────
+#
+# THE DEFECT THIS EXISTS TO FIX. `pg_ctl -l FILE` opens FILE through a shell
+# redirect BEFORE the postmaster starts. The target is ${PGDATA}/log/pg_ctl.log,
+# but `log/` is created by the SERVER, when logging_collector=on with
+# log_directory='log' — which cannot happen until the server starts. initdb does
+# not create it either. Chicken-and-egg: the first --apply died with
+#
+#     /bin/sh: .../log/pg_ctl.log: No such file or directory
+#     pg_ctl: could not start server
+#
+# before any role, credential or database existed. Fail-closed, but fatal.
+#
+# NOT `mkdir -p`. The fresh-run contract says this directory does not exist yet,
+# and -p would silently accept whatever is already there — a symlink pointing
+# somewhere else, a regular file, or a directory left by an earlier partial run
+# with a mode nobody checked. An unexpected object here is a reason to stop, not
+# a condition to absorb: pg_ctl is about to redirect the postmaster's stdout and
+# stderr into it.
+prepare_log_directory() {
+  # ZERO ARGUMENTS, BY CONTRACT.
+  #
+  # The previous version took the path as "$1" and checked `[ "${dir}" =
+  # "${LOG_DIR}" ]` only AFTER `mkdir` — so a caller passing an alternate path
+  # got that path CREATED and then refused. The refusal was real; the
+  # confinement was not. A check that runs after the mutation it is meant to
+  # prevent is not a guard, and the regression test for it asserted only the
+  # non-zero exit, never that nothing had been made.
+  #
+  # Taking no argument removes the class rather than the instance: there is no
+  # caller-supplied path to validate, so there is nothing to validate late. The
+  # destination comes only from the reviewed constant.
+  [ "$#" -eq 0 ] || die "prepare_log_directory takes no arguments; it prepares ${LOG_DIR}
+       and nothing else. A caller-selected path is refused before any filesystem
+       change, because a path this script did not choose must never be created."
+
+  local dir="${LOG_DIR}"
+
+  # Both tests: -e is false for a BROKEN symlink while -L is true, so a dangling
+  # link would slip past an -e check alone.
+  if [ -e "${dir}" ] || [ -L "${dir}" ]; then
+    die "something already exists at ${dir}. A fresh provisioning run expects to
+       create it; refusing to reuse or overwrite an object this script did not make."
+  fi
+
+  # NOT `mkdir -p`. The fresh-run contract says this does not exist yet, and -p
+  # would silently accept whatever is already there.
+  /bin/mkdir -m 700 "${dir}"
+
+  # Validate what was actually created, rather than trusting that mkdir did what
+  # was asked. -L first: [ -d symlink_to_dir ] follows the link and reports true.
+  #
+  # The old string-equality and parent-inode checks are gone: both existed only
+  # to prove a caller-provided path was the intended one, and there is no longer
+  # a caller-provided path.
+  [ ! -L "${dir}" ] || die "${dir} is a symlink; refusing to redirect server output through it"
+  [ -d "${dir}" ] || die "${dir} is not a directory"
+  [ "$(/usr/bin/stat -f '%Su' "${dir}")" = "${SUPERUSER}" ] \
+    || die "${dir} is owned by $(/usr/bin/stat -f '%Su' "${dir}"), not ${SUPERUSER}"
+  [ "$(/usr/bin/stat -f '%Lp' "${dir}")" = '700' ] \
+    || die "${dir} is mode $(/usr/bin/stat -f '%Lp' "${dir}"), expected 700"
 }
 
 # ── The environment this script runs in ─────────────────────────────────────
@@ -318,13 +386,20 @@ run_apply() {
   ! /usr/bin/grep -qE '^[^#]*[[:space:]]trust([[:space:]]|$)' "${PGDATA_ROOT}/pg_hba.conf" \
     || die 'installed HBA contains a trust rule'
 
-  step 'APPLY 7/25 — start, manually, with absolute pg_ctl'
+  step 'APPLY 7/25 — prepare the log directory, then start with absolute pg_ctl'
+  # THE LOG DIRECTORY COMES FIRST, and after the configuration install rather
+  # than before it: pg_ctl redirects into ${LOG_DIR}/pg_ctl.log, and that
+  # redirect happens before the postmaster exists, so the directory must already
+  # be there. See prepare_log_directory() for why this is not `mkdir -p`.
+  prepare_log_directory
+  note "log directory ready at ${LOG_DIR} (0700, ${SUPERUSER}, real directory)"
+
   # Manual pg_ctl, not launchd and not brew services. The cluster is under
   # construction: it must not survive a reboot unattended, and it must not be
   # resurrectable by a service manager after a rollback removes its PGDATA.
   # brew services is keyed on formula name and could only be made to work by
   # endangering the existing postgresql@17 service.
-  "${PG_CTL}" -D "${PGDATA_ROOT}" -l "${PGDATA_ROOT}/log/pg_ctl.log" -w -t 60 start
+  "${PG_CTL}" -D "${PGDATA_ROOT}" -l "${LOG_DIR}/pg_ctl.log" -w -t 60 start
 
   step 'APPLY 8/25 — isolation from the 5432 cluster, WITHOUT connecting to it'
   # Process and filesystem comparison only. Asserting "5432 is untouched" by

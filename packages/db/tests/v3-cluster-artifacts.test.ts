@@ -22,6 +22,7 @@
 import { describe, it, expect } from 'vitest'
 import {
   readFileSync, existsSync, statSync, mkdtempSync, mkdirSync, writeFileSync, chmodSync, symlinkSync,
+  lstatSync, readdirSync, realpathSync,
 } from 'node:fs'
 import { tmpdir } from 'node:os'
 import { spawnSync } from 'node:child_process'
@@ -1528,6 +1529,291 @@ describe("lsof no-match semantics", () => {
       const listenQueries = body.split('\n')
         .filter(l => /lsof_query .*-sTCP:LISTEN/.test(l) && !/5432/.test(l))
       expect(listenQueries.length, `${path} queries the v3 listener ${listenQueries.length} times`).toBe(1)
+    }
+  })
+})
+
+// ── The pg_ctl log directory, at the real production seam ───────────────────
+//
+// WHAT THE FIRST --apply FOUND. `pg_ctl -l FILE` opens FILE through a shell
+// redirect BEFORE the postmaster starts. The target was ${PGDATA}/log/pg_ctl.log
+// — but `log/` is created by the SERVER (logging_collector=on,
+// log_directory='log'), which cannot happen until the server starts, and initdb
+// does not create it either. The run died at phase 7 of 25 with
+//
+//     /bin/sh: .../log/pg_ctl.log: No such file or directory
+//     pg_ctl: could not start server
+//
+// after initdb had succeeded and the reviewed config was installed. Fail-closed,
+// but fatal, and invisible to `bash -n` and to every text assertion — the line
+// was present, correctly spelled and in the right place.
+//
+// So this block EXECUTES the production helper, extracted verbatim, against a
+// temporary PGDATA fixture. No real PGDATA is touched and no PostgreSQL runs.
+
+describe('pg_ctl log directory preparation', () => {
+  const HARNESS = mkdtempSync(join(tmpdir(), 'v3-logdir-'))
+
+  /** The production helper, lifted verbatim from provision.sh. */
+  const helperSource = (): string => {
+    const src = read(PROVISION_PATH)
+    const start = src.indexOf('prepare_log_directory() {')
+    expect(start, 'prepare_log_directory is not defined').toBeGreaterThan(-1)
+    const end = src.indexOf('\n}', start)
+    expect(end, 'prepare_log_directory is not closed').toBeGreaterThan(start)
+    return src.slice(start, end + 2)
+  }
+
+  /**
+   * Run the real helper against a fixture PGDATA.
+   *
+   * `LOG_DIR` and `SUPERUSER` are the constants the helper reads; they are
+   * supplied here exactly as the script supplies them, so the code under test
+   * is unmodified.
+   */
+  const runHelper = (pgdata: string, opts: { argv?: string; superuser?: string } = {}) => {
+    // The helper takes NO argument: its destination is the reviewed LOG_DIR
+    // constant, bound here exactly as provision.sh binds it. `argv` exists only
+    // so the confinement test can prove that a caller-supplied path is refused
+    // before anything is created.
+    const call = opts.argv === undefined
+      ? 'prepare_log_directory'
+      : `prepare_log_directory '${opts.argv}'`
+    return spawnSync('/bin/bash', ['-c', [
+      'set -euo pipefail',
+      "IFS=$'\\n\\t'",
+      'die() { printf "provision.sh: REFUSED: %s\\n" "$*" >&2; exit 1; }',
+      `readonly LOG_DIR='${join(pgdata, 'log')}'`,
+      `readonly SUPERUSER='${opts.superuser ?? process.env.USER ?? 'thanapold'}'`,
+      helperSource(),
+      call,
+      'echo PREPARED',
+    ].join('\n')], { encoding: 'utf-8', env: { PATH: '/usr/bin:/bin', HOME: HARNESS } })
+  }
+
+  /** A fresh PGDATA-shaped fixture with NO log directory. */
+  const fixture = (name: string): string => {
+    const d = join(HARNESS, name)
+    mkdirSync(d, { recursive: true, mode: 0o700 })
+    writeFileSync(join(d, 'PG_VERSION'), '17\n')
+    expect(existsSync(join(d, 'log')), 'the fixture already has a log directory').toBe(false)
+    return d
+  }
+
+  /** What `pg_ctl -l FILE` does: open FILE for append through a shell redirect. */
+  const openLogLikePgCtl = (pgdata: string) =>
+    spawnSync('/bin/sh', ['-c', `: >> '${join(pgdata, 'log', 'pg_ctl.log')}'`], { encoding: 'utf-8' })
+
+  it('reproduces the failure: without preparation, the pg_ctl-style open fails', () => {
+    // NON-VACUITY for everything below. If this passed, the fix would be
+    // unnecessary and every success assertion would be meaningless.
+    const pgdata = fixture('repro')
+    const r = openLogLikePgCtl(pgdata)
+    expect(r.status, 'the open unexpectedly succeeded with no log directory').not.toBe(0)
+    expect(r.stderr).toMatch(/No such file or directory/)
+  })
+
+  it('preparation creates exactly <PGDATA>/log, and the open then succeeds', () => {
+    const pgdata = fixture('happy')
+    const r = runHelper(pgdata)
+    expect(r.status, `the helper failed: ${r.stderr}`).toBe(0)
+    expect(r.stdout).toContain('PREPARED')
+
+    const dir = join(pgdata, 'log')
+    const st = lstatSync(dir)
+    expect(st.isSymbolicLink(), 'the log directory is a symlink').toBe(false)
+    expect(st.isDirectory(), 'the log directory is not a directory').toBe(true)
+    expect(st.mode & 0o7777, 'the log directory is not mode 0700').toBe(0o700)
+    expect(st.uid, 'the log directory is not owned by the invoking user').toBe(process.getuid!())
+    // It landed inside the PGDATA the constant names — asserted against the
+    // filesystem, which is where it matters, rather than inside the helper.
+    expect(realpathSync(join(dir, '..')), 'the log directory is not inside PGDATA')
+      .toBe(realpathSync(pgdata))
+
+    // The thing the whole fix exists for.
+    expect(openLogLikePgCtl(pgdata).status, 'the pg_ctl-style open still fails').toBe(0)
+  })
+
+  it('creates no sibling or alternate log directory', () => {
+    const pgdata = fixture('exact')
+    expect(runHelper(pgdata).status).toBe(0)
+    // Exactly one new entry, named `log`, beside the fixture's PG_VERSION.
+    expect(readdirSync(pgdata).sort()).toEqual(['PG_VERSION', 'log'])
+    // ...and nothing was created beside PGDATA itself.
+    expect(readdirSync(HARNESS).includes('log'), 'a log directory appeared outside PGDATA').toBe(false)
+    expect(existsSync(join(pgdata, 'pg_log')), 'an alternate pg_log was created').toBe(false)
+    expect(existsSync(join(pgdata, 'logs')), 'an alternate logs directory was created').toBe(false)
+  })
+
+  // ── Fail-closed cases ─────────────────────────────────────────────────────
+
+  it('refuses a pre-existing SYMLINK at <PGDATA>/log', () => {
+    // -p would follow it and redirect the postmaster's output somewhere nobody
+    // reviewed. A dangling link is covered too: -e is false for one, which is
+    // why the guard tests -e OR -L rather than -e alone.
+    const pgdata = fixture('symlink')
+    const elsewhere = join(HARNESS, 'elsewhere')
+    mkdirSync(elsewhere, { recursive: true })
+    symlinkSync(elsewhere, join(pgdata, 'log'))
+    const r = runHelper(pgdata)
+    expect(r.status, 'a symlinked log directory was accepted').not.toBe(0)
+    expect(r.stderr).toMatch(/something already exists/)
+    // The link is untouched — the helper refuses, it does not "fix".
+    expect(lstatSync(join(pgdata, 'log')).isSymbolicLink()).toBe(true)
+  })
+
+  it('refuses a DANGLING symlink, which -e alone would miss', () => {
+    const pgdata = fixture('dangling')
+    symlinkSync(join(HARNESS, 'no-such-target'), join(pgdata, 'log'))
+    expect(existsSync(join(pgdata, 'log')), 'the fixture link is not actually dangling').toBe(false)
+    expect(runHelper(pgdata).status, 'a dangling symlink was accepted').not.toBe(0)
+  })
+
+  it('refuses a pre-existing regular file or directory — no silent reuse', () => {
+    const asFile = fixture('as-file')
+    writeFileSync(join(asFile, 'log'), '')
+    expect(runHelper(asFile).status, 'a regular file at the log path was accepted').not.toBe(0)
+
+    const asDir = fixture('as-dir')
+    mkdirSync(join(asDir, 'log'), { mode: 0o755 })
+    const r = runHelper(asDir)
+    expect(r.status, 'a pre-existing directory was silently reused').not.toBe(0)
+    expect(r.stderr).toMatch(/refusing to reuse or overwrite/)
+    // Proof this is the -p behaviour being rejected: mkdir -p would accept it.
+    expect(spawnSync('/bin/mkdir', ['-p', join(asDir, 'log')]).status,
+           'mkdir -p would have accepted it — that is the difference').toBe(0)
+  })
+
+  it('refuses wrong OWNERSHIP', () => {
+    // Changing a directory's owner needs root, which this suite must not have.
+    // The ownership BRANCH is still exercised honestly by pointing the helper's
+    // expected owner at a principal that is not the creator: the comparison the
+    // production code makes is identical, and it fires.
+    const pgdata = fixture('owner')
+    const r = runHelper(pgdata, { superuser: 'definitely-not-the-owner' })
+    expect(r.status, 'a mismatched owner was accepted').not.toBe(0)
+    expect(r.stderr).toMatch(/is owned by .*, not definitely-not-the-owner/)
+  })
+
+  it('detects mode widening to 0755', () => {
+    // The helper creates with `mkdir -m 700` and then RE-READS the mode, so a
+    // umask or a filesystem that ignored the mode is caught. Demonstrated by
+    // widening the same check's input.
+    const pgdata = fixture('mode')
+    expect(runHelper(pgdata).status).toBe(0)
+    chmodSync(join(pgdata, 'log'), 0o755)
+    const r = spawnSync('/bin/bash', ['-c', [
+      'set -euo pipefail',
+      'die() { printf "REFUSED: %s\\n" "$*" >&2; exit 1; }',
+      `[ "$(/usr/bin/stat -f '%Lp' '${join(pgdata, 'log')}')" = '700' ] || die "mode widened"`,
+      'echo OK',
+    ].join('\n')], { encoding: 'utf-8' })
+    expect(r.status, '0755 passed the mode check').not.toBe(0)
+    expect(r.stderr).toContain('mode widened')
+    // And the production source really does assert the exact mode.
+    expect(helperSource()).toMatch(/stat -f '%Lp' "\$\{dir\}"\)" = '700'/)
+  })
+
+  it('refuses a caller-supplied path BEFORE creating anything', () => {
+    // THE DEFECT THIS REPLACES. The previous helper took the path as "$1",
+    // ran `mkdir` on it, and only then compared it with LOG_DIR — so an
+    // alternate path was CREATED and then refused. The old test asserted the
+    // non-zero exit and never looked at the filesystem, so it passed while the
+    // directory sat there. A check that runs after the mutation it exists to
+    // prevent is not a guard.
+    const pgdata = fixture('confinement')
+    const before = readdirSync(pgdata).sort()
+
+    const r = runHelper(pgdata, { argv: join(pgdata, 'pg_log') })
+
+    expect(r.status, 'a caller-supplied path was accepted').not.toBe(0)
+    expect(r.stderr).toMatch(/takes no arguments/)
+    // NOTHING WAS CREATED — neither the alternate path nor the canonical one.
+    expect(existsSync(join(pgdata, 'pg_log')), 'the alternate path was created').toBe(false)
+    expect(existsSync(join(pgdata, 'log')), 'the canonical path was created').toBe(false)
+    expect(readdirSync(pgdata).sort(), 'the fixture listing changed').toEqual(before)
+    expect(before).toEqual(['PG_VERSION'])
+  })
+
+  it('refuses even a caller-supplied path that happens to equal LOG_DIR', () => {
+    // Arity, not equality. Accepting the "right" path from a caller would keep
+    // the seam open for the wrong one.
+    const pgdata = fixture('confinement-equal')
+    const r = runHelper(pgdata, { argv: join(pgdata, 'log') })
+    expect(r.status, 'a caller-supplied path was accepted because it matched').not.toBe(0)
+    expect(r.stderr).toMatch(/takes no arguments/)
+    expect(existsSync(join(pgdata, 'log')), 'the directory was created anyway').toBe(false)
+  })
+
+  it('the production call passes zero arguments', () => {
+    const src = read(PROVISION_PATH)
+    const calls = commands(src).split('\n')
+      // `prepare_log_directory() {` also starts with the name; the definition
+      // is not a call.
+      .filter(l => /^\s*prepare_log_directory\b/.test(l) && !/\(\)\s*\{/.test(l))
+    expect(calls.length, 'the helper is not called exactly once').toBe(1)
+    expect(calls[0].trim(), 'the production call passes an argument').toBe('prepare_log_directory')
+  })
+
+  it('the arity guard precedes mkdir in executable code', () => {
+    // Ordering inside the helper is the property: a guard after mkdir would be
+    // the defect this order corrects.
+    const body = commands(helperSource()).split('\n')
+    const guard = body.findIndex(l => /"\$#" -eq 0/.test(l))
+    const mk = body.findIndex(l => /mkdir/.test(l))
+    expect(guard, 'there is no arity guard').toBeGreaterThan(-1)
+    expect(mk, 'the helper does not create anything').toBeGreaterThan(-1)
+    expect(guard, 'the arity guard runs after mkdir').toBeLessThan(mk)
+    // ...and the path is bound from the constant, not from a parameter.
+    expect(helperSource()).toMatch(/local dir="\$\{LOG_DIR\}"/)
+    expect(commands(helperSource()), 'the helper still reads a positional parameter')
+      .not.toMatch(/local dir="\$1"/)
+  })
+
+  // ── Ordering and wiring in the production script ──────────────────────────
+
+  it('prepares the directory BEFORE the pg_ctl start, and after the config install', () => {
+    const src = read(PROVISION_PATH)
+    const start = src.indexOf('run_apply() {')
+    // COMMANDS, NOT COMMENTS. `prepare_log_directory` is named in the comment
+    // that explains it, several lines ABOVE the call — so a raw line search
+    // finds the prose and reports the right order even when the call has been
+    // moved after pg_ctl. A mutation that did exactly that survived this test
+    // until the body was stripped of comments first.
+    const body = commands(src.slice(start, src.indexOf('\nmain() {', start)))
+    const at = (re: RegExp): number => {
+      const i = body.split('\n').findIndex(l => re.test(l))
+      expect(i, `no command line matched ${re}`).toBeGreaterThan(-1)
+      return i
+    }
+    expect(at(/\$\{INITDB\}/)).toBeLessThan(at(/install -m 600 "\$\{HBA_SRC\}"/))
+    expect(at(/install -m 600 "\$\{HBA_SRC\}"/)).toBeLessThan(at(/^\s*prepare_log_directory\s*$/))
+    expect(at(/^\s*prepare_log_directory\s*$/)).toBeLessThan(at(/\$\{PG_CTL\}.*start/))
+  })
+
+  it('points pg_ctl at exactly the prepared directory', () => {
+    const src = read(PROVISION_PATH)
+    expect(src).toMatch(/readonly LOG_DIR="\$\{PGDATA_ROOT\}\/log"/)
+    expect(src).toMatch(/^\s*prepare_log_directory\s*$/m)
+    expect(src).toMatch(/"\$\{PG_CTL\}" -D "\$\{PGDATA_ROOT\}" -l "\$\{LOG_DIR\}\/pg_ctl\.log" -w -t 60 start/)
+    // The destination is unchanged from the reviewed design.
+    expect(src).not.toMatch(/-l "\$\{PGDATA_ROOT\}\/log\/pg_ctl\.log"/)
+  })
+
+  it('never uses mkdir -p for the log directory', () => {
+    // -p silently accepts whatever is already there. The fresh-run contract
+    // says nothing is.
+    expect(commands(helperSource())).not.toMatch(/mkdir\s+-p/)
+    expect(helperSource()).toMatch(/mkdir -m 700 "\$\{dir\}"/)
+  })
+
+  it('validates what was created rather than trusting mkdir', () => {
+    const h = helperSource()
+    // -L before -d: [ -d symlink_to_dir ] follows the link and reports true.
+    expect(h.indexOf('-L "${dir}"')).toBeGreaterThan(-1)
+    expect(h.indexOf('! -L "${dir}"')).toBeLessThan(h.indexOf('-d "${dir}"'))
+    for (const check of [/-d "\$\{dir\}"/, /%Su/, /%Lp/]) {
+      expect(h, `the helper omits ${check}`).toMatch(check)
     }
   })
 })
