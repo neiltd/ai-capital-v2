@@ -52,8 +52,13 @@ export const FORBIDDEN_PORTS: readonly number[] = Object.freeze([5432, 5433])
 /**
  * ASCII unit separator as a field delimiter. Chosen because no value this
  * suite stores contains it, so a split on it cannot cut a value in half.
+ *
+ * RE-EXPORTED, NOT REDEFINED. The production psql transport splits on the same
+ * byte; two constants would be two authorities, and the day one moved the other
+ * would keep splitting correctly on the wrong character.
  */
-export const FIELD_SEP = '\x1f'
+export { FIELD_SEP } from '../src/pg-copy/psql-backend.js'
+import { FIELD_SEP } from '../src/pg-copy/psql-backend.js'
 
 export interface DisposableCluster {
   readonly root: string
