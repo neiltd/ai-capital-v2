@@ -43,7 +43,7 @@ import { fileURLToPath } from 'node:url'
 
 import { EXPORT_ROLE_NAME } from '../src/pg-copy/export-role.js'
 import { openPsqlBackend, type PsqlBackend } from '../src/pg-copy/psql-backend.js'
-import { newRunId } from '../src/pg-copy/evidence.js'
+import { EvidencePublishedButUnverified, newRunId } from '../src/pg-copy/evidence.js'
 import {
   MANIFEST_FILE, runStage1, type OperatorInput,
 } from '../src/pg-copy/source-manifest.js'
@@ -51,6 +51,14 @@ import {
 export const EXIT_OK = 0
 export const EXIT_FAILED = 1
 export const EXIT_REFUSED = 2
+/**
+ * The bundle EXISTS but could not be completed or verified.
+ *
+ * Its own code, because it is the one outcome an operator must not read as
+ * either success or "nothing happened": the final name is taken, by evidence
+ * that has not been proved good, and it is being kept deliberately.
+ */
+export const EXIT_PUBLISHED_UNVERIFIED = 3
 
 export const PKG_ROOT = resolve(dirname(fileURLToPath(import.meta.url)), '..')
 export const REPO_ROOT = resolve(PKG_ROOT, '..', '..')
@@ -59,17 +67,33 @@ export const GIT = '/usr/bin/git'
 export const DEFAULT_PSQL = '/opt/homebrew/opt/postgresql@17/bin/psql'
 
 /** Every option this CLI accepts. Anything else is refused, never ignored. */
+/**
+ * Every option this CLI accepts.
+ *
+ * THERE IS EXACTLY ONE ENDPOINT ARGUMENT. An earlier revision took both
+ * `--host` (what psql connects through) and `--source-endpoint` (what the
+ * manifest recorded), which is two independent claims about one thing: change
+ * `--host` and keep the old `--source-endpoint`, and the document describes a
+ * connection nobody made. `--host` is now the only one, and the manifest
+ * records it as the endpoint that was REQUESTED.
+ *
+ * `--expected-system-identifier` replaces the old friendly `--source-system`:
+ * it must equal the cluster's own `system_identifier`. The friendly name
+ * survives as `--source-label` and is recorded under `label`, because a name
+ * someone chose is not an identity.
+ */
 export const OPTIONS: readonly string[] = Object.freeze([
   '--evidence-root', '--host', '--port', '--database',
   '--export-passfile', '--supervisor-user', '--supervisor-passfile',
-  '--expected-target', '--source-system', '--source-endpoint',
+  '--expected-target-label', '--expected-system-identifier', '--source-label',
   '--provenance-head', '--run-id', '--psql',
 ])
 
 export const REQUIRED: readonly string[] = Object.freeze([
   '--evidence-root', '--host', '--port', '--database',
   '--export-passfile', '--supervisor-user', '--supervisor-passfile',
-  '--expected-target', '--source-system', '--source-endpoint', '--provenance-head',
+  '--expected-target-label', '--expected-system-identifier', '--source-label',
+  '--provenance-head',
 ])
 
 export class CliRefused extends Error {
@@ -187,9 +211,12 @@ export async function runCli(argv: readonly string[]): Promise<CliResult> {
     implementationHead: provenance.implementationHead,
     provenanceHead: args['--provenance-head'],
     ingestionGitlink: provenance.ingestionGitlink,
-    expectedTargetSystem: args['--expected-target'],
-    sourceSystem: args['--source-system'],
-    sourceEndpoint: args['--source-endpoint'],
+    expectedTargetLabel: args['--expected-target-label'],
+    expectedSystemIdentifier: args['--expected-system-identifier'],
+    sourceLabel: args['--source-label'],
+    // THE SAME STRING psql is given. There is no second endpoint claim that
+    // could drift from it, because there is no second endpoint option.
+    requestedEndpoint: args['--host'],
     sourcePort: String(port),
     sourceDatabase: args['--database'],
   }
@@ -216,21 +243,14 @@ export async function runCli(argv: readonly string[]): Promise<CliResult> {
     })
     say(`published ${result.published.finalPath}`)
     say(`manifest ${MANIFEST_FILE}`)
+    say(`source system identifier ${result.systemIdentifier}`)
     say(`root digest ${result.rootDigest}`)
     say(`source contract digest ${result.contractDigest}`)
     say(`files ${result.published.files.join(' ')}`)
     return { exitCode: EXIT_OK, lines }
   } catch (e) {
-    // BOUNDED. Stage-1 and evidence errors are already closed unions of
-    // reviewed sentences; anything else is reported by its class alone,
-    // because an unexpected error may carry a statement or a row.
-    const name = e instanceof Error ? e.name : 'Error'
-    const bounded = name === 'ManifestRefused' || name === 'EvidenceRefused' ||
-                    name === 'FenceRefused' || name === 'ContractRefused' ||
-                    name === 'CanonicalRefused' || name === 'CliRefused'
-    say(bounded && e instanceof Error ? e.message : `stage 1 failed (${name}).`)
-    say('No manifest was published under the final name.')
-    return { exitCode: bounded ? EXIT_REFUSED : EXIT_FAILED, lines }
+    for (const l of dispositionOf(e).lines) say(l)
+    return { exitCode: dispositionOf(e).exitCode, lines }
   } finally {
     // The fence is released HERE, after publication and rollback have both
     // completed - or after a failure, where nothing was published at all.
@@ -241,6 +261,42 @@ export async function runCli(argv: readonly string[]): Promise<CliResult> {
       if (s !== null) { try { await s.close() } catch { /* bounded */ } }
     }
   }
+}
+
+/**
+ * What a failure MEANS for the operator, and what is true about the disk.
+ *
+ * Separated from `runCli` so it can be exercised on a real error instance -
+ * the difference this function encodes is the difference between "retry
+ * safely" and "a final name is now taken by evidence nobody has proved", and
+ * that is not something to leave to a source-level assertion.
+ */
+export function dispositionOf(e: unknown): CliResult {
+  const lines: string[] = []
+
+  // THE BUNDLE EXISTS. Reported first and separately, because saying "nothing
+  // was published" here would be false, and because the operator has to know a
+  // final name is now taken by evidence nobody has verified.
+  if (e instanceof EvidencePublishedButUnverified) {
+    lines.push(e.message)
+    lines.push('Publication is INCOMPLETE or UNVERIFIED: a bundle EXISTS under the final name.')
+    lines.push('It has been preserved exactly as it is. Do not delete, reuse or repair it.')
+    return { exitCode: EXIT_PUBLISHED_UNVERIFIED, lines }
+  }
+
+  // BOUNDED. Stage-1 and evidence errors are already closed unions of reviewed
+  // sentences; anything else is reported by its CLASS alone, because an
+  // unexpected error may carry a statement, a row or a credential. Stage 1
+  // re-raises the fence, contract and canonical primitives' errors as bounded
+  // reasons of its own, so those class names are gone from this list.
+  const name = e instanceof Error ? e.name : 'Error'
+  const bounded = name === 'ManifestRefused' || name === 'EvidenceRefused' ||
+                  name === 'CliRefused'
+  lines.push(bounded && e instanceof Error ? e.message : `stage 1 failed (${name}).`)
+  // TRUE ON THIS PATH ONLY. Every error reaching here is raised before the
+  // atomic publication, so the final name provably does not exist.
+  lines.push('No manifest was published under the final name.')
+  return { exitCode: bounded ? EXIT_REFUSED : EXIT_FAILED, lines }
 }
 
 export function isDirectEntrypoint(argv1: string | undefined, moduleUrl: string): boolean {

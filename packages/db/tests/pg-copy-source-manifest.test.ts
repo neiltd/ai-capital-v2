@@ -31,7 +31,8 @@ import {
 } from '../src/pg-copy/schema-contract.js'
 import { FENCE_SEQUENCES, type FencedSequenceState } from '../src/pg-copy/source-fence.js'
 import {
-  EXPORT_BEGIN_SQL, EXPORT_IDENTITY_SQL, EXPORT_ROLLBACK_SQL, MANIFEST_ARTIFACT_VERSION,
+  EXPORT_BEGIN_SQL, EXPORT_IDENTITY_COLUMNS, EXPORT_IDENTITY_SQL, EXPORT_ROLLBACK_SQL,
+  MANIFEST_ARTIFACT_VERSION,
   MANIFEST_FILE, MANIFEST_PREFIX, ManifestRefused, SOURCE_CONTRACT_FILE, assertOperatorInput,
   buildManifest, guardExportSession, hashAllTables, hashTable, parseColumnSpecs,
   proveExportSession, typeContractFrom, type ExportSession, type OperatorInput,
@@ -64,18 +65,28 @@ const surfaces = (e: unknown): string => {
           inspect(err, { depth: 6 })].join('\n')
 }
 
+/** A real-shaped 19-digit cluster identity, as pg_control_system() reports it. */
+const SYSID = '7689229024919775042'
+
 const OPERATOR: OperatorInput = Object.freeze({
   runId: 'a1b2c3d4',
   generatedAtUtc: '2026-09-24T10:15:30Z',
   implementationHead: '9e3bf539586273bc6af649243d48f92369208134',
   provenanceHead: '1dabab358d6543ae44d61532b8a6a163dfb1c5e5',
   ingestionGitlink: '1dabab358d6543ae44d61532b8a6a163dfb1c5e5',
-  expectedTargetSystem: 'ai-capital-v3',
-  sourceSystem: 'ai-capital-v2',
-  sourceEndpoint: '/Users/x/ai-capital-run',
+  expectedTargetLabel: 'ai-capital-v3',
+  expectedSystemIdentifier: SYSID,
+  sourceLabel: 'ai-capital-v2',
+  requestedEndpoint: '/Users/x/ai-capital-run',
   sourcePort: '5432',
   sourceDatabase: 'ai_capital',
 })
+
+/** The eleven identity values, in statement order. */
+const IDENTITY_ROW: readonly string[] = Object.freeze([
+  '4242', 'on', 'repeatable read', SYSID, '170010', 'ai_capital', '5432',
+  EXPORT_ROLE_NAME, EXPORT_ROLE_NAME, '', 'true',
+])
 
 // ---------------------------------------------------------------------------
 // A fake export session, driven by the COMMITTED contract
@@ -122,10 +133,7 @@ function fakeExport(opts: FakeOpts = {}): ExportSession & { issued: string[] } {
     issued,
     rows: async (sql: string): Promise<string[][]> => {
       issued.push(sql)
-      if (sql === EXPORT_IDENTITY_SQL) {
-        return [opts.identity ?? ['4242', 'on', 'repeatable read', 'ai_capital', '5432',
-                                  EXPORT_ROLE_NAME]]
-      }
+      if (sql === EXPORT_IDENTITY_SQL) return [opts.identity ?? [...IDENTITY_ROW]]
       const live = /nspname = '([a-z_]+)' AND c\.relname = '([a-z_]+)'[\s\S]*ORDER BY a\.attnum/
         .exec(sql)
       if (live !== null) {
@@ -251,31 +259,71 @@ describe('the export session is guarded, not trusted', () => {
   })
 })
 
-describe('the export session must be the one backend, in the one state', () => {
+describe('the export session must be the one backend, on the one cluster', () => {
   const identity = (over: Partial<Record<number, string>>): string[] => {
-    const base = ['4242', 'on', 'repeatable read', 'ai_capital', '5432', EXPORT_ROLE_NAME]
+    const base = [...IDENTITY_ROW]
     for (const [k, v] of Object.entries(over)) base[Number(k)] = v as string
     return base
   }
 
-  it('accepts the reviewed identity', async () => {
+  it('returns only MEASURED facts, including the exact system identifier', async () => {
     const got = await proveExportSession(fakeExport(), OPERATOR)
     expect(got).toEqual({
-      pid: '4242', database: 'ai_capital', port: '5432', principal: EXPORT_ROLE_NAME,
+      pid: '4242',
+      systemIdentifier: SYSID,
+      serverVersionNum: '170010',
+      database: 'ai_capital',
+      port: '5432',
+      currentUser: EXPORT_ROLE_NAME,
+      sessionUser: EXPORT_ROLE_NAME,
+      serverAddress: null,
+      unixTransport: true,
     })
+    // The identifier survives as an EXACT decimal string, not a JSON number.
+    expect(got.systemIdentifier).toBe('7689229024919775042')
+    expect(got.systemIdentifier.length).toBe(19)
+    expect(Number(got.systemIdentifier).toString()).not.toBe(got.systemIdentifier)
   })
 
-  it('refuses a different pid, a writable session, the wrong isolation, database, port or role',
+  it('reports a TCP peer as the server saw it, and does not claim a Unix socket', async () => {
+    const got = await proveExportSession(
+      fakeExport({ identity: identity({ 9: '127.0.0.1', 10: 'false' }) }), OPERATOR)
+    expect(got.serverAddress).toBe('127.0.0.1')
+    expect(got.unixTransport).toBe(false)
+  })
+
+  it('REFUSES a substituted expected source identifier', async () => {
+    for (const wrong of ['7689229024919775043', '1', '9999999999999999999']) {
+      await expect(
+        proveExportSession(fakeExport(), { ...OPERATOR, expectedSystemIdentifier: wrong }), wrong)
+        .rejects.toThrow(/not on the expected source cluster/)
+    }
+  })
+
+  it('REFUSES a different cluster answering on the same host, port and database', async () => {
+    // Everything a command line can say is identical; only the cluster differs.
+    await expect(proveExportSession(
+      fakeExport({ identity: identity({ 3: '7689229024919775999' }) }), OPERATOR))
+      .rejects.toThrow(/not on the expected source cluster/)
+  })
+
+  it('refuses a malformed or missing system identifier', async () => {
+    for (const bad of ['', 'abc', '0', '-1', '1.5']) {
+      await expect(
+        proveExportSession(fakeExport({ identity: identity({ 3: bad }) }), OPERATOR), bad)
+        .rejects.toThrow(/usable system identifier|expected source cluster/)
+    }
+  })
+
+  it('refuses a different pid, a writable session, the wrong isolation, database or port',
     async () => {
     const cases: Array<[string[], RegExp]> = [
       [identity({ 0: '9999' }), /not the backend it reported/],
       [identity({ 1: 'off' }), /not read only/],
       [identity({ 2: 'read committed' }), /not repeatable read/],
       [identity({ 2: 'serializable' }), /not repeatable read/],
-      [identity({ 3: 'ai_capital_v3' }), /reviewed source database/],
-      [identity({ 4: '5433' }), /reviewed source endpoint/],
-      [identity({ 5: 'ai_capital_migrator' }), /reviewed export role/],
-      [identity({ 5: 'postgres' }), /reviewed export role/],
+      [identity({ 5: 'ai_capital_v3' }), /reviewed source database/],
+      [identity({ 6: '5433' }), /reviewed source endpoint/],
     ]
     for (const [row, re] of cases) {
       await expect(proveExportSession(fakeExport({ identity: row }), OPERATOR), row.join(','))
@@ -283,19 +331,38 @@ describe('the export session must be the one backend, in the one state', () => {
     }
   })
 
+  it('requires BOTH role names to be the reviewed export role', async () => {
+    for (const bad of ['ai_capital_migrator', 'postgres', 'ai_capital_owner']) {
+      await expect(
+        proveExportSession(fakeExport({ identity: identity({ 7: bad }) }), OPERATOR), bad)
+        .rejects.toThrow(/reviewed export role/)
+    }
+    // Authenticated as someone else, then SET ROLE to the export role.
+    await expect(proveExportSession(
+      fakeExport({ identity: identity({ 8: 'ai_capital_owner' }) }), OPERATOR))
+      .rejects.toThrow(/assumed a role it did not authenticate as/)
+  })
+
   it('refuses a malformed identity row', async () => {
-    for (const row of [['4242'], []]) {
+    for (const row of [['4242'], [], [...IDENTITY_ROW, 'extra']]) {
       await expect(proveExportSession(fakeExport({ identity: row }), OPERATOR))
         .rejects.toThrow(/one row of identity facts/)
     }
   })
 
-  it('reads all six facts in ONE statement', () => {
+  it('reads all eleven facts in ONE statement', () => {
+    expect(EXPORT_IDENTITY_COLUMNS).toBe(11)
     expect(EXPORT_IDENTITY_SQL.trim().split(/;/).length).toBe(1)
     expect(EXPORT_IDENTITY_SQL).toMatch(/^\s*SELECT/)
-    // CURRENT_USER is a special form: qualifying it does not resolve.
+    expect(EXPORT_IDENTITY_SQL).toContain('pg_control_system()).system_identifier')
+    expect(EXPORT_IDENTITY_SQL).toContain('inet_server_addr')
+    // CURRENT_USER and SESSION_USER are special forms: qualifying does not resolve.
     expect(EXPORT_IDENTITY_SQL).toContain('CURRENT_USER::pg_catalog.text')
+    expect(EXPORT_IDENTITY_SQL).toContain('SESSION_USER::pg_catalog.text')
     expect(EXPORT_IDENTITY_SQL).not.toContain('pg_catalog.CURRENT_USER')
+    expect(EXPORT_IDENTITY_SQL).not.toContain('pg_catalog.SESSION_USER')
+    // The identifier is cast to text so the exact decimal survives.
+    expect(EXPORT_IDENTITY_SQL).toContain('system_identifier::pg_catalog.text')
   })
 })
 
@@ -310,13 +377,17 @@ describe('operator input', () => {
       { generatedAtUtc: '2026-09-24 10:15:30' }, { generatedAtUtc: '2026-09-24T10:15:30+01:00' },
       { implementationHead: 'not-a-sha' }, { implementationHead: '9E3BF539586273BC6AF649243D48F92369208134' },
       { provenanceHead: '' }, { ingestionGitlink: '1dabab35' },
-      { expectedTargetSystem: 'x|y' }, { expectedTargetSystem: 'a\nb' },
+      { expectedTargetLabel: 'x|y' }, { expectedTargetLabel: 'a\nb' },
       // A connection URL fits the label grammar; it is refused anyway, because
       // a label is copied verbatim into immutable evidence.
-      { expectedTargetSystem: 'postgresql://u:s@h/db' },
-      { sourceEndpoint: 'postgresql://u:s@h/db' },
-      { sourceSystem: 'postgres://u:s@h/db' },
-      { sourceEndpoint: '' }, { sourcePort: '0' }, { sourcePort: 'abc' },
+      { expectedTargetLabel: 'postgresql://u:s@h/db' },
+      { requestedEndpoint: 'postgresql://u:s@h/db' },
+      { sourceLabel: 'postgres://u:s@h/db' },
+      { requestedEndpoint: '' }, { sourcePort: '0' }, { sourcePort: 'abc' },
+      // The expected identifier is a decimal cluster identity, not a label.
+      { expectedSystemIdentifier: 'ai-capital-v2' }, { expectedSystemIdentifier: '' },
+      { expectedSystemIdentifier: '0' }, { expectedSystemIdentifier: '12a' },
+      { expectedSystemIdentifier: '76892290249197750421' },
       { sourceDatabase: 'Ai_Capital' }, { sourceDatabase: 'ai capital' },
     ]
     for (const over of cases) {
@@ -328,7 +399,7 @@ describe('operator input', () => {
   it('never echoes the offending value', () => {
     const canary = `postgresql://u:pw_${Math.random().toString(36).slice(2)}@h/db`
     let thrown: unknown = null
-    try { assertOperatorInput({ ...OPERATOR, expectedTargetSystem: canary }) } catch (e) {
+    try { assertOperatorInput({ ...OPERATOR, expectedTargetLabel: canary }) } catch (e) {
       thrown = e
     }
     expect(thrown).toBeInstanceOf(ManifestRefused)
@@ -474,7 +545,12 @@ describe('the manifest document', () => {
   const build = (over: Partial<Parameters<typeof buildManifest>[0]> = {}): Record<string, unknown> =>
     buildManifest({
       operator: OPERATOR,
-      identity: { pid: '4242', database: 'ai_capital', port: '5432', principal: EXPORT_ROLE_NAME },
+      identity: {
+        pid: '4242', systemIdentifier: SYSID, serverVersionNum: '170010',
+        database: 'ai_capital', port: '5432',
+        currentUser: EXPORT_ROLE_NAME, sessionUser: EXPORT_ROLE_NAME,
+        serverAddress: null, unixTransport: true,
+      },
       contract: ARTIFACT, tables: tables(), sequences: allFenced(),
       fence: FENCE, proof: PROOF, batchRows: 10_000, ...over,
     }) as Record<string, unknown>
@@ -490,15 +566,27 @@ describe('the manifest document', () => {
     expect(m.complete).toBe(true)
 
     const source = m.source as Record<string, unknown>
-    expect(source.system_identifier).toBe('ai-capital-v2')
+    // MEASURED, and never the operator's label.
+    expect(source.system_identifier).toBe(SYSID)
+    expect(source.system_identifier).not.toBe(OPERATOR.sourceLabel)
+    expect(source.server_version_num).toBe('170010')
     expect(source.database).toBe('ai_capital')
     expect(source.port).toBe('5432')
-    expect(source.principal).toBe(EXPORT_ROLE_NAME)
+    expect(source.current_user).toBe(EXPORT_ROLE_NAME)
+    expect(source.session_user).toBe(EXPORT_ROLE_NAME)
+    expect(source.server_address).toBeNull()
+    expect(source.unix_transport).toBe(true)
     expect(source.transaction).toBe(EXPORT_BEGIN_SQL)
+    // OPERATOR-SUPPLIED, and named as such.
+    expect(source.label).toBe('ai-capital-v2')
+    expect(source.requested_endpoint).toBe('/Users/x/ai-capital-run')
 
     const target = m.expected_target as Record<string, unknown>
-    expect(target.system_identifier).toBe('ai-capital-v3')
+    expect(target.label).toBe('ai-capital-v3')
+    expect(target.system_identifier).toBeUndefined()
     expect(target.contract_digest).toBe(REVIEWED_CONTRACT_DIGEST)
+    expect(target.operator_supplied).toBe(true)
+    expect(target.verified).toBe(false)
     expect(target.contacted).toBe(false)
 
     const contract = m.source_contract as Record<string, unknown>
@@ -531,6 +619,41 @@ describe('the manifest document', () => {
     expect((fence.tables as unknown[]).length).toBe(21)
     expect((fence.sequences as unknown[]).length).toBe(3)
     expect(fence.ungranted_requests).toBe(0)
+  })
+
+  it('never represents a friendly LABEL as a system identifier', () => {
+    const m = build()
+    const source = m.source as Record<string, unknown>
+    const target = m.expected_target as Record<string, unknown>
+    // No field named *system_identifier* anywhere holds a non-decimal label.
+    const labels = [OPERATOR.sourceLabel, OPERATOR.expectedTargetLabel]
+    for (const [k, v] of Object.entries(source)) {
+      if (k.includes('system_identifier')) {
+        expect(typeof v, k).toBe('string')
+        expect(String(v), k).toMatch(/^[1-9][0-9]{0,19}$/)
+        expect(labels, k).not.toContain(v)
+      }
+    }
+    expect(Object.keys(target)).not.toContain('system_identifier')
+    expect(target.label).toBe('ai-capital-v3')
+    // And the target is explicitly marked unverified and uncontacted.
+    expect(target.verified).toBe(false)
+    expect(target.contacted).toBe(false)
+  })
+
+  it('records the requested endpoint as a REQUEST, not as a server-reported fact', () => {
+    const m = build()
+    const source = m.source as Record<string, unknown>
+    expect(source.requested_endpoint).toBe('/Users/x/ai-capital-run')
+    // PostgreSQL never reports a socket directory; the document does not claim
+    // it did. The server-reported address is null for a Unix connection.
+    expect(source.server_address).toBeNull()
+    expect(Object.keys(source)).not.toContain('endpoint')
+  })
+
+  it('is version 2, because the identity schema changed', () => {
+    expect(MANIFEST_ARTIFACT_VERSION).toBe(2)
+    expect((build() as { artifact_version: number }).artifact_version).toBe(2)
   })
 
   it('binds the expected-target digest to the reviewed anchor, not to the source', () => {
@@ -590,10 +713,14 @@ describe('Stage 1 constructs no target connection at all', () => {
     expect(CODE).not.toMatch(/PGPASSWORD/)
   })
 
-  it('states the expected target as a label and a compile-time digest only', () => {
-    expect(CODE).toContain('expectedTargetSystem')
+  it('states the expected target as a LABEL and a compile-time digest only', () => {
+    expect(CODE).toContain('expectedTargetLabel')
     expect(CODE).toContain('REVIEWED_CONTRACT_DIGEST')
     expect(CODE).toContain('contacted: false')
+    expect(CODE).toContain('verified: false')
+    // The measured identifier comes from the SESSION, never from the operator.
+    expect(CODE).toContain('system_identifier: i.identity.systemIdentifier')
+    expect(CODE).not.toContain('system_identifier: i.operator')
   })
 
   it('publishes under the reviewed prefix and file names', () => {

@@ -24,10 +24,14 @@ import { inspect } from 'node:util'
 import { afterEach, describe, expect, it } from 'vitest'
 
 import {
-  BUILD_DIR_MODE, DIGEST_FILE, EvidenceRefused, FROZEN_DIR_MODE, FROZEN_FILE_MODE,
-  REAL_EVIDENCE_OPS, assertArtifactPath, assertEvidenceRoot, digestFileText, evidenceNames,
-  evidenceStamp, newRunId, parseDigestFile, pathIsPresent, publishEvidence, sha256Hex,
-  verifyPublishedEvidence, type EvidenceArtifact, type EvidenceOps,
+  HELPER_SOURCE, LIBSYSTEM, PYTHON3, RENAME_EXCL, atomicRenameNoReplace,
+} from '../src/pg-copy/atomic-rename.js'
+import {
+  BUILD_DIR_MODE, DIGEST_FILE, EvidencePublishedButUnverified, EvidenceRefused,
+  FROZEN_DIR_MODE, FROZEN_FILE_MODE, REAL_EVIDENCE_OPS, assertArtifactPath, assertEvidenceRoot,
+  digestFileText, evidenceNames, evidenceStamp, newRunId, parseDigestFile, pathIsPresent,
+  publishEvidence, sha256Hex, verifyPublishedEvidence,
+  type EvidenceArtifact, type EvidenceOps,
 } from '../src/pg-copy/evidence.js'
 
 const ROOTS: string[] = []
@@ -96,9 +100,10 @@ function recordingOps(over: Partial<EvidenceOps> = {}): { ops: EvidenceOps; log:
     chmodSync: ((p: string, m: number) => {
       log.push(`chmod ${(m).toString(8)} ${rel(p)}`); return REAL_EVIDENCE_OPS.chmodSync(p, m)
     }) as typeof import('node:fs').chmodSync,
-    renameSync: ((a: string, b: string) => {
-      log.push(`rename ${rel(a)} -> ${rel(b)}`); return REAL_EVIDENCE_OPS.renameSync(a, b)
-    }) as typeof renameSync,
+    renameNoReplace: ((a: string, b: string) => {
+      log.push(`rename ${rel(a)} -> ${rel(b)}`)
+      return REAL_EVIDENCE_OPS.renameNoReplace(a, b)
+    }),
     ...over,
   }
   return { ops, log }
@@ -415,8 +420,9 @@ describe('a published bundle cannot be edited', () => {
   })
 })
 
+const finalOf = (root: string): string => join(root, `source-manifest-${STAMP}-${RUN}`)
+
 describe('injected filesystem failures fail closed', () => {
-  const finalOf = (root: string): string => join(root, `source-manifest-${STAMP}-${RUN}`)
 
   it('a failed WRITE leaves the temporary directory and no final path', () => {
     const root = makeRoot()
@@ -474,38 +480,26 @@ describe('injected filesystem failures fail closed', () => {
 
   it('a failed RENAME publishes nothing and keeps the temporary directory', () => {
     const root = makeRoot()
-    const { ops } = recordingOps({
-      renameSync: (() => { throw new Error('EXDEV: cross-device link, pw_canary') }) as never,
-    })
-    let thrown: unknown = null
-    try { publish(root, {}, ops) } catch (e) { thrown = e }
-    expect((thrown as EvidenceRefused).phase).toBe('publish')
-    expect(pathIsPresent(finalOf(root))).toBe(false)
-    expect(pathIsPresent(join(root, `.tmp-${RUN}`))).toBe(true)
-    expect(surfaces(thrown)).not.toContain('pw_canary')
-    expect(surfaces(thrown)).not.toContain('EXDEV')
-  })
-
-  it('a failed PARENT fsync fails after publication rather than reporting success', () => {
-    const root = makeRoot()
-    let renamed = false
-    let post = 0
-    const { ops } = recordingOps({
-      renameSync: ((a: string, b: string) => {
-        renamed = true; return REAL_EVIDENCE_OPS.renameSync(a, b)
-      }) as typeof renameSync,
-      fsyncSync: ((fd: number) => {
-        // The LAST fsync is the parent's; the one before it is the freshly
-        // frozen bundle root.
-        if (renamed) { post += 1; if (post === 2) throw new Error('EIO: parent fsync, pw_canary') }
-        return REAL_EVIDENCE_OPS.fsyncSync(fd)
-      }),
-    })
+    const { ops } = recordingOps({ renameNoReplace: () => 'failed' })
     let thrown: unknown = null
     try { publish(root, {}, ops) } catch (e) { thrown = e }
     expect(thrown).toBeInstanceOf(EvidenceRefused)
-    expect((thrown as EvidenceRefused).phase).toBe('fsync')
-    expect(surfaces(thrown)).not.toContain('pw_canary')
+    expect((thrown as EvidenceRefused).phase).toBe('publish')
+    expect(pathIsPresent(finalOf(root))).toBe(false)
+    expect(pathIsPresent(join(root, `.tmp-${RUN}`))).toBe(true)
+  })
+
+  it('REFUSES rather than falling back when atomic no-replace is unavailable', () => {
+    // The one downgrade that must never happen quietly: publishing through an
+    // overwrite-capable primitive because the safe one could not be reached.
+    const root = makeRoot()
+    const { ops } = recordingOps({ renameNoReplace: () => 'unavailable' })
+    let thrown: unknown = null
+    try { publish(root, {}, ops) } catch (e) { thrown = e }
+    expect(thrown).toBeInstanceOf(EvidenceRefused)
+    expect(String((thrown as Error).message)).toMatch(/no atomic no-replace publication/)
+    expect(pathIsPresent(finalOf(root))).toBe(false)
+    expect(pathIsPresent(join(root, `.tmp-${RUN}`))).toBe(true)
   })
 })
 
@@ -528,5 +522,284 @@ describe('errors never carry filesystem content or a credential', () => {
     expect(seen).not.toContain('/var/folders')
     expect(seen).not.toContain('postgresql://')
     expect((thrown as EvidenceRefused & { cause?: unknown }).cause).toBeUndefined()
+  })
+})
+
+// ---------------------------------------------------------------------------
+// D — a path probe may only answer "absent" when it MEANS absent
+// ---------------------------------------------------------------------------
+
+describe('path probes fail closed', () => {
+  it('answers false only for ENOENT', () => {
+    const root = makeRoot()
+    expect(pathIsPresent(join(root, 'nothing-here'))).toBe(false)
+    expect(pathIsPresent(root)).toBe(true)
+  })
+
+  it('still reports a DANGLING symlink as present', () => {
+    const root = makeRoot()
+    const link = join(root, 'dangling')
+    symlinkSync(join(root, 'nowhere-at-all'), link)
+    // `existsSync` would follow the link and say false. That is the bug.
+    expect(pathIsPresent(link)).toBe(true)
+  })
+
+  it('REFUSES on every other lstat failure rather than calling it absent', () => {
+    const root = makeRoot()
+    for (const code of ['EACCES', 'EPERM', 'EIO', 'ENOTDIR', 'ELOOP', 'ENAMETOOLONG']) {
+      const ops: EvidenceOps = {
+        ...REAL_EVIDENCE_OPS,
+        lstatSync: (() => {
+          const e = new Error(`${code}: injected, pw_canary /absolute/secret/path`) as
+            NodeJS.ErrnoException
+          e.code = code
+          throw e
+        }) as typeof lstatSync,
+      }
+      let thrown: unknown = null
+      try { pathIsPresent(join(root, 'x'), ops) } catch (e) { thrown = e }
+      expect(thrown, code).toBeInstanceOf(EvidenceRefused)
+      expect((thrown as EvidenceRefused).reason, code).toBe('a path could not be examined')
+      expect(surfaces(thrown), code).not.toContain('pw_canary')
+      expect(surfaces(thrown), code).not.toContain('/absolute/secret/path')
+      expect(surfaces(thrown), code).not.toContain(code)
+    }
+  })
+
+  it('an unreadable evidence ROOT refuses rather than reading as missing', () => {
+    const ops: EvidenceOps = {
+      ...REAL_EVIDENCE_OPS,
+      lstatSync: (() => {
+        const e = new Error('EACCES: injected') as NodeJS.ErrnoException
+        e.code = 'EACCES'
+        throw e
+      }) as typeof lstatSync,
+    }
+    let thrown: unknown = null
+    try { assertEvidenceRoot('/anywhere', ops) } catch (e) { thrown = e }
+    expect((thrown as EvidenceRefused).reason).toBe('a path could not be examined')
+  })
+
+  it('a publication whose collision probe cannot answer publishes nothing', () => {
+    const root = makeRoot()
+    const real = REAL_EVIDENCE_OPS.lstatSync
+    const ops: EvidenceOps = {
+      ...REAL_EVIDENCE_OPS,
+      lstatSync: ((p: string) => {
+        if (String(p).includes('source-manifest-')) {
+          const e = new Error('EIO: injected') as NodeJS.ErrnoException
+          e.code = 'EIO'
+          throw e
+        }
+        return real(p)
+      }) as typeof lstatSync,
+    }
+    let thrown: unknown = null
+    try { publish(root, {}, ops) } catch (e) { thrown = e }
+    expect((thrown as EvidenceRefused).reason).toBe('a path could not be examined')
+    expect(readdirSync(root)).toEqual([])
+  })
+})
+
+// ---------------------------------------------------------------------------
+// C — atomic no-replace, and the race the old primitive lost
+// ---------------------------------------------------------------------------
+
+describe('publication is atomic and cannot replace a destination', () => {
+  it('uses renamex_np with RENAME_EXCL through the OS interpreter only', () => {
+    expect(PYTHON3).toBe('/usr/bin/python3')
+    expect(LIBSYSTEM).toBe('/usr/lib/libSystem.B.dylib')
+    expect(RENAME_EXCL).toBe(0x4)
+    expect(HELPER_SOURCE).toContain('renamex_np')
+    // The program travels on stdin, so it never appears in a process list.
+    expect(HELPER_SOURCE).toContain('sys.argv[1]')
+    // And there is no fallback to an overwrite-capable primitive anywhere.
+    expect(HELPER_SOURCE).not.toContain('os.rename')
+    expect(HELPER_SOURCE).not.toContain('shutil')
+  })
+
+  it('publishes onto an absent name and REFUSES an existing one', () => {
+    const root = makeRoot()
+    mkdirSync(join(root, 'src'), { mode: 0o700 })
+    writeFileSync(join(root, 'src', 'f'), 'payload')
+    expect(atomicRenameNoReplace(join(root, 'src'), join(root, 'fresh'))).toBe('published')
+    expect(readFileSync(join(root, 'fresh', 'f'), 'utf-8')).toBe('payload')
+
+    mkdirSync(join(root, 'src2'), { mode: 0o700 })
+    expect(atomicRenameNoReplace(join(root, 'src2'), join(root, 'fresh')))
+      .toBe('destination-exists')
+    expect(readFileSync(join(root, 'fresh', 'f'), 'utf-8')).toBe('payload')
+    expect(readdirSync(join(root, 'src2'))).toEqual([])
+  })
+
+  it('PRESERVES a destination created in the former check-then-rename window', () => {
+    // The exact race the old implementation lost: an EMPTY directory appearing
+    // between the absence check and the rename. Plain rename(2) replaces it
+    // silently on this platform - measured - so the empty case is the one that
+    // matters, and inode identity is how "not replaced" is proved for it.
+    const root = makeRoot()
+    const final = finalOf(root)
+    let raced: { ino: bigint; dev: number } | null = null
+    const { ops } = recordingOps({
+      renameNoReplace: (a: string, b: string) => {
+        // Slip into the window, exactly as a concurrent publisher would.
+        mkdirSync(final, { mode: 0o700 })
+        const st = lstatSync(final, { bigint: true })
+        raced = { ino: st.ino, dev: Number(st.dev) }
+        return REAL_EVIDENCE_OPS.renameNoReplace(a, b)
+      },
+    })
+    let thrown: unknown = null
+    try { publish(root, {}, ops) } catch (e) { thrown = e }
+
+    expect(thrown).toBeInstanceOf(EvidenceRefused)
+    expect(String((thrown as Error).message))
+      .toMatch(/already present at the publication destination/)
+    // The racer's directory is STILL THERE, and is the same object.
+    const after = lstatSync(final, { bigint: true })
+    expect(after.ino).toBe((raced as unknown as { ino: bigint }).ino)
+    expect(readdirSync(final)).toEqual([])
+    // And our bundle is still under its temporary name, untouched.
+    expect(pathIsPresent(join(root, `.tmp-${RUN}`))).toBe(true)
+    expect(readdirSync(join(root, `.tmp-${RUN}`)).sort())
+      .toEqual([DIGEST_FILE, 'manifest.json', 'source-contract.json'])
+  })
+
+  it('PRESERVES a non-empty destination byte for byte', () => {
+    const root = makeRoot()
+    const final = finalOf(root)
+    const { ops } = recordingOps({
+      renameNoReplace: (a: string, b: string) => {
+        mkdirSync(final, { mode: 0o700 })
+        writeFileSync(join(final, 'someone-elses.json'), '{"complete":true,"theirs":1}')
+        return REAL_EVIDENCE_OPS.renameNoReplace(a, b)
+      },
+    })
+    expect(() => publish(root, {}, ops))
+      .toThrow(/already present at the publication destination/)
+    expect(readdirSync(final)).toEqual(['someone-elses.json'])
+    expect(readFileSync(join(final, 'someone-elses.json'), 'utf-8'))
+      .toBe('{"complete":true,"theirs":1}')
+  })
+})
+
+// ---------------------------------------------------------------------------
+// B — before the rename nothing exists; after it, something does
+// ---------------------------------------------------------------------------
+
+describe('publication state is truthful on both sides of the rename', () => {
+  const postRename = (over: Partial<EvidenceOps>): {
+    thrown: unknown; root: string; final: string
+  } => {
+    const root = makeRoot()
+    let renamed = false
+    const { ops } = recordingOps({
+      renameNoReplace: (a: string, b: string) => {
+        const r = REAL_EVIDENCE_OPS.renameNoReplace(a, b)
+        renamed = r === 'published'
+        return r
+      },
+      ...Object.fromEntries(Object.entries(over).map(([k, v]) => [
+        k, ((...args: unknown[]) => {
+          if (renamed) return (v as (...a: unknown[]) => unknown)(...args)
+          return (REAL_EVIDENCE_OPS as unknown as Record<string, (...a: unknown[]) => unknown>)
+            [k](...args)
+        }),
+      ])),
+    })
+    let thrown: unknown = null
+    try { publish(root, {}, ops) } catch (e) { thrown = e }
+    return { thrown, root, final: finalOf(root) }
+  }
+
+  it('freeze-final: the bundle EXISTS and is preserved', () => {
+    const { thrown, root, final } = postRename({
+      chmodSync: () => { throw new Error('EPERM: pw_canary') },
+    })
+    expect(thrown).toBeInstanceOf(EvidencePublishedButUnverified)
+    expect((thrown as EvidencePublishedButUnverified).phase).toBe('freeze-final')
+    expect(pathIsPresent(final)).toBe(true)
+    expect(pathIsPresent(join(root, `.tmp-${RUN}`))).toBe(false)
+    expect(readdirSync(final).sort())
+      .toEqual([DIGEST_FILE, 'manifest.json', 'source-contract.json'])
+    expect(surfaces(thrown)).not.toContain('pw_canary')
+  })
+
+  it('fsync-final: the bundle EXISTS and is preserved', () => {
+    let seen = 0
+    const { thrown, root, final } = postRename({
+      fsyncSync: () => { seen += 1; throw new Error('EIO: pw_canary') },
+    })
+    expect(seen).toBeGreaterThan(0)
+    expect((thrown as EvidencePublishedButUnverified).phase).toBe('fsync-final')
+    expect(pathIsPresent(final)).toBe(true)
+    expect(pathIsPresent(join(root, `.tmp-${RUN}`))).toBe(false)
+    expect(surfaces(thrown)).not.toContain('pw_canary')
+  })
+
+  it('fsync-parent: the bundle EXISTS and is preserved', () => {
+    let n = 0
+    const { thrown, root, final } = postRename({
+      fsyncSync: ((fd: number) => {
+        n += 1
+        // The first post-rename fsync is the bundle root's; the second is the
+        // parent's, which is the one under test.
+        if (n === 2) throw new Error('EIO: pw_canary')
+        return REAL_EVIDENCE_OPS.fsyncSync(fd)
+      }) as never,
+    })
+    expect((thrown as EvidencePublishedButUnverified).phase).toBe('fsync-parent')
+    expect(pathIsPresent(final)).toBe(true)
+    expect(pathIsPresent(join(root, `.tmp-${RUN}`))).toBe(false)
+    expect(surfaces(thrown)).not.toContain('pw_canary')
+  })
+
+  it('verify: the bundle EXISTS, is preserved, and is NOT repaired', () => {
+    const { thrown, root, final } = postRename({
+      readFileSync: (() => 'deadbeef  tampered.json\n') as never,
+    })
+    expect(thrown).toBeInstanceOf(EvidencePublishedButUnverified)
+    expect((thrown as EvidencePublishedButUnverified).phase).toBe('verify')
+    expect(pathIsPresent(final)).toBe(true)
+    expect(pathIsPresent(join(root, `.tmp-${RUN}`))).toBe(false)
+    // Untouched: the real DIGEST is still the real DIGEST.
+    expect(verifyPublishedEvidence(final)).toEqual(
+      ['manifest.json', 'source-contract.json', DIGEST_FILE])
+    expect(readdirSync(root).sort()).toEqual([`source-manifest-${STAMP}-${RUN}`])
+  })
+
+  it('names the bundle but never an absolute path, a cause or a filesystem error', () => {
+    const { thrown } = postRename({
+      chmodSync: () => { throw new Error('EPERM: /var/folders/secret pw_canary') },
+    })
+    const e = thrown as EvidencePublishedButUnverified
+    expect(e.publishedName).toBe(`source-manifest-${STAMP}-${RUN}`)
+    expect(e.temporaryName).toBe(`.tmp-${RUN}`)
+    const seen = surfaces(thrown)
+    expect(seen).toContain('has NOT been removed')
+    expect(seen).not.toContain('/var/folders')
+    expect(seen).not.toContain('pw_canary')
+    expect(seen).not.toContain('EPERM')
+    expect((e as unknown as { cause?: unknown }).cause).toBeUndefined()
+  })
+
+  it('EVERY pre-rename failure leaves no final path at all', () => {
+    const cases: Array<[string, Partial<EvidenceOps>]> = [
+      ['construct', { openSync: (() => { throw new Error('EIO') }) as never }],
+      ['digest', { writeSync: (() => { throw new Error('EIO') }) as never }],
+      ['freeze', { chmodSync: (() => { throw new Error('EPERM') }) as never }],
+      ['fsync', { fsyncSync: (() => { throw new Error('EIO') }) as never }],
+      ['publish', { renameNoReplace: () => 'failed' }],
+    ]
+    for (const [label, over] of cases) {
+      const root = makeRoot()
+      const { ops } = recordingOps(over)
+      let thrown: unknown = null
+      try { publish(root, {}, ops) } catch (e) { thrown = e }
+      expect(thrown, label).toBeInstanceOf(EvidenceRefused)
+      expect(thrown, label).not.toBeInstanceOf(EvidencePublishedButUnverified)
+      expect(pathIsPresent(finalOf(root)), label).toBe(false)
+      expect(readdirSync(root), label).toEqual([`.tmp-${RUN}`])
+    }
   })
 })

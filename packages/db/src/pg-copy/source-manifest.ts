@@ -59,12 +59,20 @@ import {
 } from './schema-contract.js'
 import {
   FENCE_PROOF_SQL, FENCE_SEQUENCES, acquireSourceFence, assertFenceProof, effectiveNext,
-  fenceRelationArray, parseLockRows, readFencedSequenceState,
+  fenceRelationArray, parseLockRows, pgBool, readFencedSequenceState,
   type AcquiredFence, type FenceExecutor, type FencedSequenceState,
 } from './source-fence.js'
 
-/** Bumped when the manifest's shape changes. Part of the document. */
-export const MANIFEST_ARTIFACT_VERSION = 1
+/**
+ * Bumped when the manifest's shape changes. Part of the document.
+ *
+ * v2 replaced an operator-asserted source identity with a MEASURED one: the
+ * cluster's `system_identifier`, both role names, the server-reported address
+ * and whether the transport is a Unix socket, all read in one statement. v1
+ * recorded an operator LABEL under `system_identifier`, which is a different
+ * claim wearing the same name, so the two documents must not be comparable.
+ */
+export const MANIFEST_ARTIFACT_VERSION = 2
 
 /** The evidence prefix this stage publishes under. */
 export const MANIFEST_PREFIX = 'source-manifest'
@@ -85,20 +93,48 @@ export const EXPORT_BEGIN_SQL = 'BEGIN TRANSACTION READ ONLY ISOLATION LEVEL REP
 export const EXPORT_ROLLBACK_SQL = 'ROLLBACK'
 
 /**
- * The export session's identity and state, read in ONE statement.
+ * WHO and WHERE this session actually is, read in ONE statement.
  *
  * One statement for the same reason `SESSION_GUARD_SQL` is one statement:
- * separately, these facts can be observed in different states. `CURRENT_USER`
- * is a SQL special form and is deliberately NOT schema-qualified - qualifying
- * it does not resolve.
+ * separately, these facts can be observed in different states, and a manifest
+ * that proves its read-only-ness against one moment and its cluster identity
+ * against another proves neither.
+ *
+ * THE CLUSTER'S OWN IDENTITY IS THE ANCHOR. `pg_control_system()` reports the
+ * `system_identifier` written into pg_control at `initdb` - a 64-bit value no
+ * two clusters share, which a host name, a port or a database name cannot
+ * substitute for. All three of those can be repointed at a different cluster
+ * without changing a single character of the command line; the system
+ * identifier cannot. It is read as `::text` so the exact decimal survives - a
+ * JSON number would round a 19-digit value silently.
+ *
+ * BOTH ROLE NAMES. `CURRENT_USER` is the effective role and `SESSION_USER` is
+ * the authenticated one; they differ after `SET ROLE`, and a session that
+ * authenticated as something else and then assumed the export role is not the
+ * authority this manifest claims. Both are SQL special forms and are
+ * deliberately NOT schema-qualified - qualifying them does not resolve.
+ *
+ * WHAT THE SERVER CAN AND CANNOT TELL US ABOUT THE TRANSPORT.
+ * `inet_server_addr()` is NULL for a Unix-socket connection, which is how the
+ * transport is determined. PostgreSQL does NOT report the socket DIRECTORY, so
+ * the manifest never claims it did: the directory is recorded separately, as
+ * the endpoint this process REQUESTED.
  */
 export const EXPORT_IDENTITY_SQL = `
 SELECT pg_catalog.pg_backend_pid()::pg_catalog.text,
        pg_catalog.current_setting('transaction_read_only'),
        pg_catalog.current_setting('transaction_isolation'),
+       (pg_catalog.pg_control_system()).system_identifier::pg_catalog.text,
+       pg_catalog.current_setting('server_version_num'),
        pg_catalog.current_database(),
        pg_catalog.current_setting('port'),
-       CURRENT_USER::pg_catalog.text`
+       CURRENT_USER::pg_catalog.text,
+       SESSION_USER::pg_catalog.text,
+       COALESCE(pg_catalog.inet_server_addr()::pg_catalog.text, ''),
+       (pg_catalog.inet_server_addr() IS NULL)::pg_catalog.text`
+
+/** How many values that statement returns. Checked, so a drift is a refusal. */
+export const EXPORT_IDENTITY_COLUMNS = 11
 
 export const REQUIRED_READ_ONLY = 'on'
 export const REQUIRED_ISOLATION = 'repeatable read'
@@ -138,7 +174,13 @@ export type ManifestReason =
   | 'the export session is not repeatable read'
   | 'the export session is not connected to the reviewed source database'
   | 'the export session is not connected to the reviewed source endpoint'
+  | 'the export session is not on the expected source cluster'
+  | 'the export session did not report a usable system identifier'
   | 'the export session is not authenticated as the reviewed export role'
+  | 'the export session assumed a role it did not authenticate as'
+  | 'the source fence could not be taken'
+  | 'the source contract could not be extracted'
+  | 'the fenced sequence state could not be read'
   | 'the source contract is not the reviewed contract version'
   | 'the source contract does not describe the reviewed copy set'
   | 'the source contract states no reviewed vector extension version'
@@ -299,6 +341,21 @@ const URL_SCHEME = /:\/\//
 const PORT = /^[1-9][0-9]{0,4}$/
 const IDENT = /^[a-z_][a-z0-9_]*$/
 
+/**
+ * A cluster system identifier: an unsigned 64-bit value, in exact decimal.
+ *
+ * The shape and the RANGE are both checked. Twenty digits is a legal length -
+ * the maximum is 18446744073709551615 - so a length-only rule would accept
+ * 76892290249197750421, which no cluster can report. Compared as a BigInt
+ * because the value does not fit a double.
+ */
+const SYSTEM_IDENTIFIER_SHAPE = /^[1-9][0-9]{0,19}$/
+const UINT64_LIMIT = 18446744073709551616n
+
+export function isSystemIdentifier(v: string): boolean {
+  return SYSTEM_IDENTIFIER_SHAPE.test(v) && BigInt(v) < UINT64_LIMIT
+}
+
 export interface OperatorInput {
   /** Eight lowercase hex. Names the run, the temporary directory and the bundle. */
   readonly runId: string
@@ -309,12 +366,30 @@ export interface OperatorInput {
   readonly provenanceHead: string
   /** The ingestion submodule's recorded gitlink. */
   readonly ingestionGitlink: string
-  /** What the EXPECTED target is called. Stated; never contacted. */
-  readonly expectedTargetSystem: string
-  /** What the SOURCE system is called, for the record. */
-  readonly sourceSystem: string
-  /** The endpoint identity the export session must actually be on. */
-  readonly sourceEndpoint: string
+  /**
+   * What the EXPECTED target is CALLED. A label, and recorded as one.
+   *
+   * Stage 1 never contacts the target, so there is nothing here that could be
+   * verified. Storing "ai-capital-v3" under a field called `system_identifier`
+   * would dress an operator's word up as a measurement; it is recorded as
+   * `expected_target.label`, beside `verified: false`.
+   */
+  readonly expectedTargetLabel: string
+  /**
+   * The source cluster's system identifier, as the operator EXPECTS it.
+   *
+   * Required to equal the value measured from `pg_control_system()`. This is
+   * what makes "am I talking to the right database" answerable: a host, port
+   * or database name can all be repointed without changing the command line.
+   */
+  readonly expectedSystemIdentifier: string
+  /** A friendly name for the source. A LABEL, recorded under `label`. */
+  readonly sourceLabel: string
+  /**
+   * The endpoint this process ASKED for - the host or socket directory handed
+   * to psql. Recorded as a request, never as something the server reported.
+   */
+  readonly requestedEndpoint: string
   readonly sourcePort: string
   readonly sourceDatabase: string
 }
@@ -328,9 +403,10 @@ export function assertOperatorInput(i: OperatorInput): OperatorInput {
   for (const h of [i.implementationHead, i.provenanceHead, i.ingestionGitlink]) {
     if (!HEX40.test(h)) bad()
   }
-  for (const l of [i.expectedTargetSystem, i.sourceSystem, i.sourceEndpoint]) {
+  for (const l of [i.expectedTargetLabel, i.sourceLabel, i.requestedEndpoint]) {
     if (!LABEL.test(l) || URL_SCHEME.test(l)) bad()
   }
+  if (!isSystemIdentifier(i.expectedSystemIdentifier)) bad()
   if (!PORT.test(i.sourcePort)) bad()
   if (!IDENT.test(i.sourceDatabase)) bad()
   return i
@@ -384,23 +460,34 @@ export async function proveFence(
   })
 }
 
+/** Everything the SESSION ITSELF reported. Nothing here is operator-supplied. */
 export interface ExportIdentity {
   readonly pid: string
+  /** pg_control_system().system_identifier, exact decimal. The cluster's name. */
+  readonly systemIdentifier: string
+  readonly serverVersionNum: string
   readonly database: string
   readonly port: string
-  readonly principal: string
+  /** The effective role. */
+  readonly currentUser: string
+  /** The AUTHENTICATED role. Differs from the above after SET ROLE. */
+  readonly sessionUser: string
+  /** inet_server_addr(), or null - which is what a Unix socket reports. */
+  readonly serverAddress: string | null
+  readonly unixTransport: boolean
 }
 
-/** Prove the export session is the one backend, in the one state, on the one source. */
+/** Prove the export session is the one backend, in the one state, on the one cluster. */
 export async function proveExportSession(
   s: ExportSession, i: OperatorInput,
 ): Promise<ExportIdentity> {
   const rows = await s.rows(EXPORT_IDENTITY_SQL)
-  if (rows.length !== 1 || rows[0].length !== 6) {
+  if (rows.length !== 1 || rows[0].length !== EXPORT_IDENTITY_COLUMNS) {
     throw new ManifestRefused(
       'export-identity', 'the export session did not report one row of identity facts')
   }
-  const [pid, readOnly, isolation, database, port, principal] = rows[0]
+  const [pid, readOnly, isolation, systemIdentifier, serverVersionNum, database, port,
+         currentUser, sessionUser, address, unix] = rows[0]
   if (!/^\d+$/.test(pid) || pid !== s.pid) {
     throw new ManifestRefused(
       'export-identity', 'the export session is not the backend it reported')
@@ -411,6 +498,16 @@ export async function proveExportSession(
   if (isolation !== REQUIRED_ISOLATION) {
     throw new ManifestRefused('export-identity', 'the export session is not repeatable read')
   }
+  if (!isSystemIdentifier(systemIdentifier)) {
+    throw new ManifestRefused(
+      'export-identity', 'the export session did not report a usable system identifier')
+  }
+  // THE ANCHOR. Checked before the database name, because a matching database
+  // name on the wrong cluster is exactly the mistake this catches.
+  if (systemIdentifier !== i.expectedSystemIdentifier) {
+    throw new ManifestRefused(
+      'export-identity', 'the export session is not on the expected source cluster')
+  }
   if (database !== i.sourceDatabase) {
     throw new ManifestRefused(
       'export-identity', 'the export session is not connected to the reviewed source database')
@@ -419,11 +516,20 @@ export async function proveExportSession(
     throw new ManifestRefused(
       'export-identity', 'the export session is not connected to the reviewed source endpoint')
   }
-  if (principal !== EXPORT_ROLE_NAME) {
+  if (currentUser !== EXPORT_ROLE_NAME) {
     throw new ManifestRefused(
       'export-identity', 'the export session is not authenticated as the reviewed export role')
   }
-  return Object.freeze({ pid, database, port, principal })
+  if (sessionUser !== currentUser) {
+    throw new ManifestRefused(
+      'export-identity', 'the export session assumed a role it did not authenticate as')
+  }
+  const unixTransport = pgBool(unix, 'inet_server_addr() IS NULL')
+  return Object.freeze({
+    pid, systemIdentifier, serverVersionNum, database, port, currentUser, sessionUser,
+    serverAddress: address === '' ? null : address,
+    unixTransport,
+  })
 }
 
 // ---------------------------------------------------------------------------
@@ -628,22 +734,39 @@ export function buildManifest(i: ManifestInput): Canonical {
     provenance_head: i.operator.provenanceHead,
     ingestion_gitlink: i.operator.ingestionGitlink,
     source: {
-      // The ACTUAL system, as the session itself reported it - not as the
-      // operator described it. The operator's description was already required
-      // to match, and recording the measured value keeps the document a
-      // statement about a database rather than about a command line.
-      system_identifier: i.operator.sourceSystem,
-      endpoint: i.operator.sourceEndpoint,
-      port: i.identity.port,
+      // MEASURED. Every value in this block but `label` and
+      // `requested_endpoint` came out of the one identity statement, on the
+      // one backend, inside the one snapshot. The system identifier in
+      // particular is never an operator's word: it is what the cluster calls
+      // itself, and the operator's expectation had to match it to get here.
+      system_identifier: i.identity.systemIdentifier,
+      server_version_num: i.identity.serverVersionNum,
       database: i.identity.database,
-      principal: i.identity.principal,
+      port: i.identity.port,
+      current_user: i.identity.currentUser,
+      session_user: i.identity.sessionUser,
       backend_pid: i.identity.pid,
       transaction: EXPORT_BEGIN_SQL,
+      // What the SERVER said about the transport. NULL address is what a Unix
+      // socket reports; PostgreSQL does not report the socket directory, so
+      // this document does not pretend it did.
+      server_address: i.identity.serverAddress,
+      unix_transport: i.identity.unixTransport,
+      // OPERATOR-SUPPLIED, and named so. `label` is a friendly name and
+      // `requested_endpoint` is the host argument this process handed to psql
+      // - a request, not a server-reported fact.
+      label: i.operator.sourceLabel,
+      requested_endpoint: i.operator.requestedEndpoint,
     },
     expected_target: {
-      // STATED, NEVER CONTACTED. Stage 1 opens no target connection at all.
-      system_identifier: i.operator.expectedTargetSystem,
+      // STATED, NEVER CONTACTED. Stage 1 opens no target connection at all, so
+      // there is nothing here that could have been verified - and a label is
+      // recorded as a label rather than under a name that would imply it was
+      // measured. The contract digest IS a reviewed compile-time anchor.
+      label: i.operator.expectedTargetLabel,
       contract_digest: REVIEWED_CONTRACT_DIGEST,
+      operator_supplied: true,
+      verified: false,
       contacted: false,
     },
     source_contract: {
@@ -723,6 +846,8 @@ export interface Stage1Result {
   readonly manifest: Canonical
   readonly rootDigest: string
   readonly contractDigest: string
+  /** The cluster the manifest was measured from, exact decimal. */
+  readonly systemIdentifier: string
   readonly fence: AcquiredFence
   /** Every phase completed, in order. The ORDER is the guarantee. */
   readonly timeline: readonly string[]
@@ -750,7 +875,19 @@ export async function runStage1(i: Stage1Input): Promise<Stage1Result> {
   const timeline: string[] = []
 
   // 1-2. The whole fence, then an INDEPENDENT proof, before anything else.
-  const fence = await acquireSourceFence(i.supervisor)
+  //
+  // The reviewed fence and contract primitives raise errors that name the
+  // failing STATEMENT and, for the fence, carry psql's stderr. Both are
+  // appropriate inside their own modules and neither may cross Stage 1's
+  // boundary, where the result is about to be reported and logged - so each is
+  // re-raised as a bounded reason here.
+  let fence: AcquiredFence
+  try {
+    fence = await acquireSourceFence(i.supervisor)
+  } catch (e) {
+    throw e instanceof ManifestRefused
+      ? e : new ManifestRefused('fence', 'the source fence could not be taken')
+  }
   timeline.push('fence-acquired')
   await proveFence(i.prover, fence)
   timeline.push('fence-proved')
@@ -765,7 +902,13 @@ export async function runStage1(i: Stage1Input): Promise<Stage1Result> {
   timeline.push('export-proved')
 
   // 5. The schema contract, from that same backend and that same snapshot.
-  const contract = await extractContractFromSession(exp, identity.pid)
+  let contract: ContractArtifact
+  try {
+    contract = await extractContractFromSession(exp, identity.pid)
+  } catch (e) {
+    throw e instanceof ManifestRefused
+      ? e : new ManifestRefused('contract', 'the source contract could not be extracted')
+  }
   timeline.push('contract-extracted')
 
   // 6. The content, 21 tables, once each, in the reviewed order.
@@ -774,7 +917,13 @@ export async function runStage1(i: Stage1Input): Promise<Stage1Result> {
   timeline.push('content-hashed')
 
   // 7. Mutable sequence state, from the SUPERVISOR only, after its own proof.
-  const sequences = await readFencedSequenceState(i.supervisor, i.prover, fence)
+  let sequences: Record<string, FencedSequenceState>
+  try {
+    sequences = await readFencedSequenceState(i.supervisor, i.prover, fence)
+  } catch (e) {
+    throw e instanceof ManifestRefused
+      ? e : new ManifestRefused('sequences', 'the fenced sequence state could not be read')
+  }
   timeline.push('sequences-read')
 
   // 8. Re-prove: same supervisor backend, whole fence, nothing queued.
@@ -821,6 +970,7 @@ export async function runStage1(i: Stage1Input): Promise<Stage1Result> {
   return Object.freeze({
     published,
     manifest,
+    systemIdentifier: identity.systemIdentifier,
     rootDigest: ((manifest as { content: { root_digest: string } }).content).root_digest,
     contractDigest: contract.digest,
     fence,

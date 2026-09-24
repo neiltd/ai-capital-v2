@@ -9,19 +9,28 @@
 // removed, `runCli` would run at import time with vitest's own argv and the
 // suite would fail loudly rather than quietly proving nothing.
 
-import { readFileSync } from 'node:fs'
+import { execFileSync } from 'node:child_process'
+import { mkdtempSync, readFileSync, rmSync, writeFileSync } from 'node:fs'
+import { tmpdir } from 'node:os'
 import { dirname, join, resolve } from 'node:path'
 import { fileURLToPath } from 'node:url'
+import { inspect } from 'node:util'
 
-import { describe, expect, it } from 'vitest'
+import { afterEach, describe, expect, it } from 'vitest'
 
 import {
-  CliRefused, DEFAULT_PSQL, EXIT_FAILED, EXIT_OK, EXIT_REFUSED, GIT, INGESTION_SUBMODULE,
-  OPTIONS, REQUIRED, isDirectEntrypoint, parseArgs, repositoryProvenance,
+  CliRefused, DEFAULT_PSQL, EXIT_FAILED, EXIT_OK, EXIT_PUBLISHED_UNVERIFIED, EXIT_REFUSED,
+  GIT, INGESTION_SUBMODULE, OPTIONS, REQUIRED, dispositionOf, isDirectEntrypoint, parseArgs,
+  repositoryProvenance,
 } from '../bin/pg-copy-manifest.js'
+import {
+  EvidencePublishedButUnverified, EvidenceRefused,
+} from '../src/pg-copy/evidence.js'
+import { ManifestRefused } from '../src/pg-copy/source-manifest.js'
 import { FORBIDDEN_PSQL_ARGS, sterileBatchEnv } from '../src/pg-copy/export-role.js'
 import {
-  FIELD_SEP, PsqlBackendRefused, openPsqlBackendCount, psqlBackendArgs,
+  FIELD_SEP, PsqlBackendRefused, closeAllPsqlBackends, openPsqlBackend,
+  openPsqlBackendCount, psqlBackendArgs,
 } from '../src/pg-copy/psql-backend.js'
 import { sqlWithoutComments } from '../src/pg-copy/source-manifest.js'
 
@@ -31,6 +40,18 @@ const strip = (text: string): string => text
   .split('\n').filter(l => !/^\s*(\/\/|\*)/.test(l)).join('\n')
 
 const CLI = strip(readFileSync(join(PKG_ROOT, 'bin', 'pg-copy-manifest.ts'), 'utf-8'))
+
+/** Every surface an error could carry a secret on. */
+const surfaces = (e: unknown): string => {
+  const err = e as Error & Record<string, unknown>
+  let json = ''
+  try { json = JSON.stringify(err, Object.getOwnPropertyNames(err)) } catch { json = '' }
+  const syms = Object.getOwnPropertySymbols(err)
+    .map(s => `${String(s)}=${String((err as unknown as Record<symbol, unknown>)[s])}`)
+  return [String(err.message), String(err.stack ?? ''),
+          Object.getOwnPropertyNames(err).join(','), json, syms.join(','),
+          inspect(err, { depth: 8, showHidden: true })].join('\n')
+}
 const TRANSPORT = strip(readFileSync(join(PKG_ROOT, 'src', 'pg-copy', 'psql-backend.ts'), 'utf-8'))
 
 const GOOD: readonly string[] = Object.freeze([
@@ -41,9 +62,9 @@ const GOOD: readonly string[] = Object.freeze([
   '--export-passfile', '/tmp/secrets/export.pgpass',
   '--supervisor-user', 'thanapold',
   '--supervisor-passfile', '/tmp/secrets/admin.pgpass',
-  '--expected-target', 'ai-capital-v3',
-  '--source-system', 'ai-capital-v2',
-  '--source-endpoint', '/tmp/sock',
+  '--expected-target-label', 'ai-capital-v3',
+  '--expected-system-identifier', '7689229024919775042',
+  '--source-label', 'ai-capital-v2',
   '--provenance-head', 'b'.repeat(40),
 ])
 
@@ -64,8 +85,8 @@ describe('the entry point is inert on import', () => {
     expect(CLI).toContain('isDirectEntrypoint(process.argv[1], import.meta.url)')
   })
 
-  it('exits 0, 1 and 2 for success, failure and refusal', () => {
-    expect([EXIT_OK, EXIT_FAILED, EXIT_REFUSED]).toEqual([0, 1, 2])
+  it('exits 0, 1, 2 and 3 for success, failure, refusal and published-but-unverified', () => {
+    expect([EXIT_OK, EXIT_FAILED, EXIT_REFUSED, EXIT_PUBLISHED_UNVERIFIED]).toEqual([0, 1, 2, 3])
   })
 })
 
@@ -82,6 +103,35 @@ describe('the option surface admits no credential', () => {
   it('requires every connection and provenance option, and nothing optional matters', () => {
     expect([...REQUIRED].every(r => OPTIONS.includes(r))).toBe(true)
     expect(OPTIONS.filter(o => !REQUIRED.includes(o)).sort()).toEqual(['--psql', '--run-id'])
+  })
+
+  it('has EXACTLY ONE endpoint argument, so two claims cannot drift apart', () => {
+    expect(OPTIONS.filter(o => /host|endpoint|socket|addr/i.test(o))).toEqual(['--host'])
+    expect(OPTIONS).not.toContain('--source-endpoint')
+    // And the manifest's requested endpoint IS that argument, verbatim.
+    expect(CLI).toContain("requestedEndpoint: args['--host']")
+  })
+
+  it('takes an expected system IDENTIFIER, and a friendly name only as a label', () => {
+    expect(OPTIONS).toContain('--expected-system-identifier')
+    expect(OPTIONS).toContain('--source-label')
+    expect(OPTIONS).toContain('--expected-target-label')
+    expect(OPTIONS).not.toContain('--source-system')
+    expect(OPTIONS).not.toContain('--expected-target')
+    expect(CLI).toContain("expectedSystemIdentifier: args['--expected-system-identifier']")
+    expect(CLI).toContain("sourceLabel: args['--source-label']")
+  })
+
+  it('reports a published-but-unverified bundle as such, and never as nothing', () => {
+    expect(CLI).toContain('EvidencePublishedButUnverified')
+    expect(CLI).toContain('Publication is INCOMPLETE or UNVERIFIED')
+    expect(CLI).toContain('a bundle EXISTS under the final name')
+    expect(CLI).toContain('Do not delete, reuse or repair it')
+    expect(CLI).toContain('EXIT_PUBLISHED_UNVERIFIED')
+    // The "nothing was published" line is reachable ONLY after that branch has
+    // already returned, so it can never be printed about an existing bundle.
+    expect(CLI.indexOf('EXIT_PUBLISHED_UNVERIFIED, lines'))
+      .toBeLessThan(CLI.indexOf('No manifest was published under the final name'))
   })
 
   it('reads no environment variable and names no fallback', () => {
@@ -201,10 +251,122 @@ describe('the psql transport', () => {
     expect(TRANSPORT).toContain('sterileBatchEnv')
   })
 
-  it('does not name a failing statement when it times out', () => {
-    // A batch can carry a SCRAM verifier; the timeout message must not echo it.
-    expect(TRANSPORT).toContain('the psql session timed out on a statement.')
+  it('carries only fixed reviewed reasons, never an interpolated one', () => {
+    // A batch can carry a SCRAM verifier and psql echoes a failing statement;
+    // every message this class can emit is a literal in a closed union.
+    expect(TRANSPORT).toContain("'the psql session timed out on a statement'")
+    expect(TRANSPORT).toContain("'the psql session refused a statement'")
+    expect(TRANSPORT).not.toMatch(/new PsqlBackendRefused\(`/)
     expect(TRANSPORT).not.toMatch(/timed out on: \$\{/)
+    expect(TRANSPORT).not.toMatch(/psql refused/)
+  })
+})
+
+// ---------------------------------------------------------------------------
+// E — a real psql that shouts secrets, and an error that repeats none of them
+// ---------------------------------------------------------------------------
+
+describe('the transport error boundary, against a psql that leaks everything', () => {
+  const SQL_CANARY = 'SELECT pw FROM vault.secrets WHERE id = 1'
+  const URL_CANARY = 'postgresql://ai_capital_v3_export:pw_LEAKCANARY@localhost/ai_capital'
+  const PATH_CANARY = '/Users/someone/ai-capital-secrets/s4f-d4/export.pgpass'
+  const roots: string[] = []
+
+  afterEach(async () => {
+    await closeAllPsqlBackends()
+    for (const r of roots.splice(0)) rmSync(r, { recursive: true, force: true })
+  })
+
+  /** A fake psql that answers the pid query and shouts canaries at everything else. */
+  function fakePsql(opts: { pid?: string } = {}): string {
+    const dir = mkdtempSync(join(tmpdir(), 'pgcopy-fakepsql-'))
+    roots.push(dir)
+    const bin = join(dir, 'psql')
+    writeFileSync(bin, [
+      '#!/bin/sh',
+      'while IFS= read -r line; do',
+      '  case "$line" in',
+      "    '\\echo '*) printf '%s\\n' \"${line#\\\\echo }\" ;;",
+      "    '\\warn '*) printf '%s\\n' \"${line#\\\\warn }\" >&2 ;;",
+      opts.pid === undefined
+        ? '    *pg_backend_pid*) printf "not-a-pid\\n" ;;'
+        : `    *pg_backend_pid*) printf "${opts.pid}\\n" ;;`,
+      '    *)',
+      `      printf 'ERROR:  syntax error at or near "%s"\\n' "$line" >&2`,
+      `      printf 'LINE 1: %s\\n' "$line" >&2`,
+      `      printf 'DETAIL: ${URL_CANARY} ${PATH_CANARY}\\n' >&2`,
+      '      ;;',
+      '  esac',
+      'done',
+    ].join('\n'), { mode: 0o700 })
+    return bin
+  }
+
+  it('repeats no SQL, no stderr, no URL, no password and no absolute path', async () => {
+    const s = await openPsqlBackend({
+      psqlPath: fakePsql({ pid: '4242' }), host: '/tmp/sock', port: 5432,
+      database: 'ai_capital', user: 'ai_capital_v3_export',
+    })
+    try {
+      expect(s.pid).toBe('4242')
+      // The LOW-LEVEL path may see the raw text - that is how it decides.
+      const raw = await s.send(SQL_CANARY)
+      expect(raw.error).toContain('pw_LEAKCANARY')
+
+      // The REVIEWED boundary may not repeat any of it.
+      let thrown: unknown = null
+      try { await s.must(SQL_CANARY) } catch (e) { thrown = e }
+      expect(thrown).toBeInstanceOf(PsqlBackendRefused)
+      expect((thrown as PsqlBackendRefused).reason).toBe('the psql session refused a statement')
+
+      const seen = surfaces(thrown)
+      for (const canary of [SQL_CANARY, URL_CANARY, PATH_CANARY, 'pw_LEAKCANARY',
+                            'postgresql://', 'vault.secrets', '/Users/someone',
+                            'syntax error', 'LINE 1', 'DETAIL']) {
+        expect(seen, canary).not.toContain(canary)
+      }
+      expect((thrown as { cause?: unknown }).cause).toBeUndefined()
+      expect(Object.getOwnPropertyNames(thrown as object).sort())
+        .toEqual(['message', 'name', 'reason', 'stack'])
+      expect(Object.getOwnPropertySymbols(thrown as object)).toEqual([])
+    } finally {
+      await s.close()
+    }
+  })
+
+  it('reaps the child when opening fails before the session is registered', async () => {
+    const before = openPsqlBackendCount()
+    // The EXACT binary path, which is unique to this run: a prefix match would
+    // also find this test file's own source in a wrapper's command line.
+    const bin = fakePsql()
+    let thrown: unknown = null
+    try {
+      await openPsqlBackend({
+        psqlPath: bin, host: '/tmp/sock', port: 5432,
+        database: 'ai_capital', user: 'ai_capital_v3_export',
+      })
+    } catch (e) { thrown = e }
+    expect(thrown).toBeInstanceOf(PsqlBackendRefused)
+    expect((thrown as PsqlBackendRefused).reason).toBe('the psql session did not report a backend pid')
+    // Nothing was registered, and nothing was left running: until the session
+    // reaches OPEN nothing else could ever close it, so a leaked child here
+    // would be a backend - and possibly a held fence - with no handle to it.
+    expect(openPsqlBackendCount()).toBe(before)
+    const alive = execFileSync('/bin/ps', ['-Ao', 'command'],
+                               { encoding: 'utf-8', maxBuffer: 64 * 1024 * 1024 })
+    expect(alive).not.toContain(bin)
+  })
+
+  it('refuses a statement on an exited session without naming it', async () => {
+    const s = await openPsqlBackend({
+      psqlPath: fakePsql({ pid: '77' }), host: '/tmp/sock', port: 5432,
+      database: 'ai_capital', user: 'ai_capital_v3_export',
+    })
+    await s.close()
+    let thrown: unknown = null
+    try { await s.send(SQL_CANARY) } catch (e) { thrown = e }
+    expect(thrown).toBeInstanceOf(PsqlBackendRefused)
+    expect(surfaces(thrown)).not.toContain('vault.secrets')
   })
 })
 
@@ -261,5 +423,65 @@ describe('repository provenance', () => {
   it('never carries git error text into a refusal', () => {
     expect(CLI).toContain('could not read repository provenance')
     expect(CLI).not.toMatch(/e instanceof Error \? e\.message : String\(e\)\s*\)\s*\n\s*\}\s*\n\}/)
+  })
+})
+
+// ---------------------------------------------------------------------------
+// B — the CLI's disposition, exercised on real error instances
+// ---------------------------------------------------------------------------
+
+describe('the CLI tells the truth about what is on disk', () => {
+  const published = (phase: 'freeze-final' | 'fsync-final' | 'fsync-parent' | 'verify') =>
+    new EvidencePublishedButUnverified(
+      phase, 'a filesystem operation did not complete',
+      'source-manifest-20260924T101530Z-a1b2c3d4', '.tmp-a1b2c3d4')
+
+  it('says the bundle EXISTS for every post-rename phase, and exits 3', () => {
+    for (const phase of ['freeze-final', 'fsync-final', 'fsync-parent', 'verify'] as const) {
+      const d = dispositionOf(published(phase))
+      const text = d.lines.join('\n')
+      expect(d.exitCode, phase).toBe(EXIT_PUBLISHED_UNVERIFIED)
+      expect(text, phase).toContain('a bundle EXISTS under the final name')
+      expect(text, phase).toContain('Publication is INCOMPLETE or UNVERIFIED')
+      expect(text, phase).toContain('It has NOT been removed')
+      expect(text, phase).toContain('Do not delete, reuse or repair it')
+      expect(text, phase).toContain('source-manifest-20260924T101530Z-a1b2c3d4')
+      expect(text, phase).toContain(phase)
+      // THE LINE THAT MUST NEVER APPEAR HERE.
+      expect(text, phase).not.toContain('No manifest was published')
+    }
+  })
+
+  it('says NOTHING was published for a pre-rename refusal, and exits 2', () => {
+    for (const e of [
+      new EvidenceRefused('collision', 'a path is already present at the publication destination'),
+      new EvidenceRefused('publish', 'this platform offers no atomic no-replace publication'),
+      new EvidenceRefused('collision', 'a path could not be examined'),
+      new ManifestRefused('export-identity', 'the export session is not on the expected source cluster'),
+      new CliRefused('option "--host" is required.'),
+    ]) {
+      const d = dispositionOf(e)
+      expect(d.exitCode, e.message).toBe(EXIT_REFUSED)
+      expect(d.lines.join('\n'), e.message).toContain('No manifest was published under the final name')
+      expect(d.lines.join('\n'), e.message).toContain((e as Error).message)
+    }
+  })
+
+  it('reports an UNEXPECTED error by its class alone, and exits 1', () => {
+    const d = dispositionOf(new Error(
+      'ERROR: relation vault.secrets; postgresql://u:pw_CLICANARY@h/db; /Users/x/secret'))
+    expect(d.exitCode).toBe(EXIT_FAILED)
+    const text = d.lines.join('\n')
+    expect(text).toContain('stage 1 failed (Error).')
+    for (const canary of ['pw_CLICANARY', 'postgresql://', 'vault.secrets', '/Users/x/secret']) {
+      expect(text, canary).not.toContain(canary)
+    }
+  })
+
+  it('never leaks a thrown non-Error value either', () => {
+    const d = dispositionOf({ password: 'pw_CLICANARY', url: 'postgresql://u:p@h/db' })
+    expect(d.exitCode).toBe(EXIT_FAILED)
+    expect(d.lines.join('\n')).not.toContain('pw_CLICANARY')
+    expect(d.lines.join('\n')).not.toContain('postgresql://')
   })
 })

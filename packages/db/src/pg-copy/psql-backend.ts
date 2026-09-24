@@ -51,8 +51,29 @@ export const STATEMENT_TIMEOUT_MS = 120_000
 /** How long a close waits for a graceful exit before killing the client. */
 export const CLOSE_GRACE_MS = 15_000
 
+/**
+ * WHY a session refusal happened. A CLOSED union of reviewed sentences.
+ *
+ * NOTHING ELSE IS EVER CARRIED. psql echoes the failing statement into stderr,
+ * and a batch this transport carries may contain a SCRAM verifier; a statement
+ * may name a table, a row or a credential URL. An error raised here is going to
+ * be logged by whoever catches it, so the raw text stops at this boundary. The
+ * `send` path still INSPECTS stderr internally to decide whether a statement
+ * succeeded - it just never republishes it.
+ */
+export type PsqlBackendReason =
+  | 'the psql path must be absolute'
+  | 'the passfile must be an absolute path'
+  | 'the port is not a port number'
+  | 'the psql session has already exited'
+  | 'the psql session timed out on a statement'
+  | 'the psql session could not report its backend pid'
+  | 'the psql session did not report a backend pid'
+  | 'the psql session refused a statement'
+  | 'the psql session could not be started'
+
 export class PsqlBackendRefused extends Error {
-  constructor(reason: string) {
+  constructor(readonly reason: PsqlBackendReason) {
     super(reason)
     this.name = 'PsqlBackendRefused'
   }
@@ -123,13 +144,13 @@ export interface PsqlBackendOptions {
  */
 export function psqlBackendArgs(o: PsqlBackendOptions): readonly string[] {
   if (!isAbsolute(o.psqlPath)) {
-    throw new PsqlBackendRefused('the psql path must be absolute.')
+    throw new PsqlBackendRefused('the psql path must be absolute')
   }
   if (o.passfile !== undefined && !isAbsolute(o.passfile)) {
-    throw new PsqlBackendRefused('the passfile must be an absolute path.')
+    throw new PsqlBackendRefused('the passfile must be an absolute path')
   }
   if (!Number.isSafeInteger(o.port) || o.port < 1 || o.port > 65_535) {
-    throw new PsqlBackendRefused('the port is not a port number.')
+    throw new PsqlBackendRefused('the port is not a port number')
   }
   return assertBatchArgs([
     '--no-psqlrc', '-q', '-A', '-t', '-F', FIELD_SEP, '--pset', 'footer=off',
@@ -161,7 +182,7 @@ export async function openPsqlBackend(o: PsqlBackendOptions): Promise<PsqlBacken
   let queue: Promise<unknown> = Promise.resolve()
 
   const raw = async (sql: string): Promise<SqlResult> => {
-    if (exited) throw new PsqlBackendRefused('the psql session has already exited.')
+    if (exited) throw new PsqlBackendRefused('the psql session has already exited')
     const tag = `__PSQL_SENTINEL_${++seq}__`
     const startOut = out.length
     const startErr = err.length
@@ -176,7 +197,7 @@ export async function openPsqlBackend(o: PsqlBackendOptions): Promise<PsqlBacken
       if (exited) break
       if (Date.now() > deadline) {
         // The STATEMENT is not named: it may be a batch carrying a verifier.
-        throw new PsqlBackendRefused('the psql session timed out on a statement.')
+        throw new PsqlBackendRefused('the psql session timed out on a statement')
       }
       await new Promise(r => setTimeout(r, 15))
     }
@@ -194,28 +215,52 @@ export async function openPsqlBackend(o: PsqlBackendOptions): Promise<PsqlBacken
     return next
   }
 
+  /**
+   * `send`, refusing a SQL error - and saying NOTHING about what it was.
+   *
+   * An earlier revision raised `psql refused "<sql>": <stderr>`. Both halves
+   * are exactly what must not travel: the statement can name a relation, a
+   * value or a credential URL, and psql's stderr echoes the failing statement
+   * back verbatim. A caller that needs to branch on the outcome uses `send`,
+   * which returns the raw result without raising it.
+   */
   const must = async (sql: string): Promise<string[][]> => {
     const r = await send(sql)
-    if (r.error !== null) {
-      throw new PsqlBackendRefused(`psql refused "${sql.slice(0, 160)}": ${r.error}`)
-    }
+    if (r.error !== null) throw new PsqlBackendRefused('the psql session refused a statement')
     return r.rows
   }
 
-  const pidRows = await (async () => {
+  /**
+   * Reap the child before propagating an opening failure.
+   *
+   * Until the session is added to `OPEN` nothing else can close it, so a throw
+   * between `spawn` and registration used to leave a live psql - and therefore
+   * a live BACKEND - with no handle to it. For a fence supervisor that is not
+   * an untidy process, it is a lock nobody can release.
+   */
+  const abandon = async (reason: PsqlBackendReason): Promise<never> => {
+    try { child.stdin.end() } catch { /* already gone */ }
+    const deadline = Date.now() + CLOSE_GRACE_MS
+    while (!exited && Date.now() < deadline) await new Promise(r => setTimeout(r, 15))
+    if (!exited) { child.kill('SIGKILL'); await done }
+    throw new PsqlBackendRefused(reason)
+  }
+
+  let pid: string | undefined
+  try {
     const r = await send('SELECT pg_catalog.pg_backend_pid()')
-    if (r.error !== null) {
-      throw new PsqlBackendRefused('the session could not report its backend pid.')
-    }
-    return r.rows
-  })()
-  const pid = pidRows[0]?.[0]
+    if (r.error !== null) await abandon('the psql session could not report its backend pid')
+    pid = r.rows[0]?.[0]
+  } catch (e) {
+    if (e instanceof PsqlBackendRefused) throw e
+    await abandon('the psql session could not be started')
+  }
   if (pid === undefined || !/^\d+$/.test(pid)) {
-    throw new PsqlBackendRefused('the session did not report a backend pid.')
+    await abandon('the psql session did not report a backend pid')
   }
 
   const session: PsqlBackend = {
-    pid,
+    pid: pid as string,
     send,
     must,
     rows: must,

@@ -39,8 +39,8 @@ import {
   FENCE_SEQUENCES, SEQUENCE_STATE_SQL, effectiveNext,
 } from '../../src/pg-copy/source-fence.js'
 import {
-  EXPORT_BEGIN_SQL, MANIFEST_FILE, SOURCE_CONTRACT_FILE, hashTable, runStage1,
-  sqlWithoutComments, typeContractFrom, type OperatorInput,
+  EXPORT_BEGIN_SQL, MANIFEST_FILE, SOURCE_CONTRACT_FILE, hashTable, proveExportSession,
+  runStage1, sqlWithoutComments, typeContractFrom, type OperatorInput,
 } from '../../src/pg-copy/source-manifest.js'
 import {
   cleanSecretRoots, makeSecretRoot, openExportSession,
@@ -95,15 +95,19 @@ const SEED: readonly string[] = Object.freeze([
      VALUES ('AAA', 'Alpha Corp', 10, 1.1, TIMESTAMPTZ '2026-01-01 00:00:00+00')`,
 ])
 
+/** The cluster's own identity, measured once in `beforeAll`. */
+let SYSID = ''
+
 const OPERATOR = (runId: string): OperatorInput => ({
   runId,
   generatedAtUtc: new Date().toISOString().replace(/\.\d{3}Z$/, 'Z'),
   implementationHead: 'a'.repeat(40),
   provenanceHead: 'b'.repeat(40),
   ingestionGitlink: 'c'.repeat(40),
-  expectedTargetSystem: 'ai-capital-v3',
-  sourceSystem: 'ai-capital-v2-disposable',
-  sourceEndpoint: C.socketDir,
+  expectedTargetLabel: 'ai-capital-v3',
+  expectedSystemIdentifier: SYSID,
+  sourceLabel: 'ai-capital-v2-disposable',
+  requestedEndpoint: C.socketDir,
   sourcePort: String(C.port),
   sourceDatabase: DB,
 })
@@ -120,6 +124,9 @@ beforeAll(async () => {
   const s = await snapshot()
   try {
     CONTRACT = await extractContractFromSession(s, s.pid)
+    const sys = await s.must(
+      'SELECT (pg_catalog.pg_control_system()).system_identifier::pg_catalog.text')
+    SYSID = sys[0][0]
   } finally {
     await s.must('ROLLBACK')
     await s.close()
@@ -317,8 +324,37 @@ describe('Stage 1, end to end, under a held fence', () => {
       expect((doc.content as unknown as { tables: Array<{ qname: string }> }).tables
         .map(t => t.qname)).toEqual([...COPY_TABLES])
       expect((doc.content as unknown as { root_digest: string }).root_digest).toBe(r.rootDigest)
-      expect((doc.expected_target as unknown as { contacted: boolean }).contacted).toBe(false)
-      expect((doc.source as unknown as { principal: string }).principal).toBe(EXPORT_ROLE_NAME)
+      const tgt = doc.expected_target as unknown as Record<string, unknown>
+      expect(tgt.contacted).toBe(false)
+      expect(tgt.verified).toBe(false)
+      expect(tgt.operator_supplied).toBe(true)
+      expect(tgt.label).toBe('ai-capital-v3')
+      expect(tgt.system_identifier).toBeUndefined()
+
+      // THE MEASURED SOURCE IDENTITY, SURVIVING PUBLICATION EXACTLY.
+      const src = doc.source as unknown as Record<string, unknown>
+      expect(src.system_identifier).toBe(SYSID)
+      expect(String(src.system_identifier)).toMatch(/^[1-9][0-9]{18}$/)
+      expect(String(src.system_identifier).length).toBe(19)
+      expect(r.systemIdentifier).toBe(SYSID)
+      // A 19-digit value does not survive a JSON number; this one is a string
+      // and round-trips through the published bytes unchanged.
+      expect(typeof src.system_identifier).toBe('string')
+      expect(Number(src.system_identifier).toString()).not.toBe(src.system_identifier)
+      // Never the operator's friendly name.
+      expect(src.system_identifier).not.toBe('ai-capital-v2-disposable')
+      expect(src.label).toBe('ai-capital-v2-disposable')
+      // BOTH role names, measured.
+      expect(src.current_user).toBe(EXPORT_ROLE_NAME)
+      expect(src.session_user).toBe(EXPORT_ROLE_NAME)
+      // The transport, as the SERVER reported it - null address over a socket.
+      expect(src.server_address).toBeNull()
+      expect(src.unix_transport).toBe(true)
+      // And the endpoint recorded as a REQUEST, never as a server-reported fact.
+      expect(src.requested_endpoint).toBe(C.socketDir)
+      expect(Object.keys(src)).not.toContain('endpoint')
+      expect(src.server_version_num).toMatch(/^17\d{4}$/)
+      expect(doc.artifact_version).toBe(2)
       expect((doc.source_contract as unknown as { digest: string }).digest)
         .toBe(r.contractDigest)
 
@@ -448,6 +484,72 @@ describe('Stage 1, end to end, under a held fence', () => {
       for (const s of [exportSession, prover, supervisor]) await s.close()
     }
   }, 900_000)
+})
+
+describe('the manifest is bound to the CLUSTER, not to a command line', () => {
+  it('REFUSES a substituted expected system identifier on the real export session',
+    async () => {
+    const e = await openExportSession(C, DB, PASSFILE)
+    try {
+      await e.must(EXPORT_BEGIN_SQL)
+      // Every other fact matches; only the expectation is wrong.
+      await expect(proveExportSession(e, {
+        ...OPERATOR(newRunId()),
+        expectedSystemIdentifier: SYSID === '1' ? '2' : '1',
+      })).rejects.toThrow(/not on the expected source cluster/)
+    } finally {
+      await e.send('ROLLBACK')
+      await e.close()
+    }
+  }, 300_000)
+
+  it('REFUSES a different cluster reached through a different host, with the old claim kept',
+    async () => {
+    // The exact mistake an endpoint STRING cannot catch: point the connection
+    // at another cluster and leave the recorded identity untouched. Two real
+    // clusters, two real system identifiers, and the binding is to the
+    // identifier - which no command line can change.
+    const other = await startDisposableCluster()
+    try {
+      const s = await openPsqlSession(other, 'postgres')
+      try {
+        await s.must(EXPORT_BEGIN_SQL)
+        const got = await s.must(
+          'SELECT (pg_catalog.pg_control_system()).system_identifier::pg_catalog.text')
+        expect(got[0][0]).not.toBe(SYSID)
+        expect(other.socketDir).not.toBe(C.socketDir)
+
+        await expect(proveExportSession(s, {
+          // The OLD identity claim, retained, while the host and port change.
+          ...OPERATOR(newRunId()),
+          requestedEndpoint: other.socketDir,
+          sourcePort: String(other.port),
+          sourceDatabase: 'postgres',
+        })).rejects.toThrow(/not on the expected source cluster/)
+      } finally {
+        await s.send('ROLLBACK')
+        await s.close()
+      }
+    } finally {
+      await other.stop()
+    }
+  }, 900_000)
+
+  it('the export role authenticates AS itself: both role names agree', async () => {
+    const e = await openExportSession(C, DB, PASSFILE)
+    try {
+      await e.must(EXPORT_BEGIN_SQL)
+      const got = await proveExportSession(e, OPERATOR(newRunId()))
+      expect(got.currentUser).toBe(EXPORT_ROLE_NAME)
+      expect(got.sessionUser).toBe(EXPORT_ROLE_NAME)
+      expect(got.systemIdentifier).toBe(SYSID)
+      expect(got.unixTransport).toBe(true)
+      expect(got.serverAddress).toBeNull()
+    } finally {
+      await e.send('ROLLBACK')
+      await e.close()
+    }
+  }, 300_000)
 })
 
 describe('residue', () => {

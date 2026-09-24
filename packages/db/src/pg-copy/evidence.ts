@@ -51,9 +51,11 @@
 import { createHash, randomBytes } from 'node:crypto'
 import {
   chmodSync, closeSync, fstatSync, fsyncSync, lstatSync, mkdirSync, openSync,
-  readFileSync, readdirSync, renameSync, writeSync,
+  readFileSync, readdirSync, writeSync,
 } from 'node:fs'
 import { dirname, join, resolve } from 'node:path'
+
+import { atomicRenameNoReplace, type AtomicRenameOutcome } from './atomic-rename.js'
 
 /** The one file that describes every other file, and is written last. */
 export const DIGEST_FILE = 'DIGEST'
@@ -79,6 +81,29 @@ export type EvidencePhase =
   | 'freeze'
   | 'fsync'
   | 'publish'
+  /**
+   * Standalone verification of a bundle that already exists.
+   *
+   * Reachable two ways, which mean different things: an operator re-checking a
+   * published bundle weeks later gets an `EvidenceRefused` with this phase,
+   * while the same failure DURING a publication is re-raised as
+   * `EvidencePublishedButUnverified`, because there the bundle is one this run
+   * just created.
+   */
+  | 'verify'
+
+/**
+ * The phases that can only be reached AFTER the atomic rename has succeeded.
+ *
+ * Kept as a separate type because the difference is not cosmetic: before the
+ * rename there is provably no bundle at the final name, and after it there
+ * provably is one. A caller that cannot tell those apart will either delete
+ * evidence it should have kept or tell an operator nothing was published when
+ * something was.
+ */
+export type PublishedPhase =
+  | 'freeze-final'
+  | 'fsync-final'
   | 'fsync-parent'
   | 'verify'
 
@@ -109,6 +134,8 @@ export type EvidenceReason =
   | 'a published entry is not the type, mode or link count it was frozen at'
   | 'the published digest does not describe the published bytes'
   | 'the published bundle carries no digest file'
+  | 'a path could not be examined'
+  | 'this platform offers no atomic no-replace publication'
 
 /**
  * A refusal. Carries the phase, the reviewed reason and, at most, a RELATIVE
@@ -131,6 +158,35 @@ export class EvidenceRefused extends Error {
 }
 
 /**
+ * A failure AFTER the bundle was published. The bundle EXISTS.
+ *
+ * Distinct from `EvidenceRefused` because the two demand opposite responses. A
+ * refusal means nothing reached the final name and a retry is safe. This means
+ * the final name is taken, by a bundle that may be unfrozen, unsynced or
+ * unverified - and it must be preserved exactly as it is, for a human to look
+ * at. Nothing here deletes, overwrites, reuses or repairs it, and a later run
+ * will refuse that name rather than tidy it away.
+ *
+ * It carries the two reviewed NAMES, not absolute paths: the operator supplied
+ * the root, so a name is enough to find the bundle, and an absolute path in an
+ * error is one more thing that travels into a log.
+ */
+export class EvidencePublishedButUnverified extends Error {
+  constructor(
+    readonly phase: PublishedPhase,
+    readonly reason: EvidenceReason,
+    readonly publishedName: string,
+    readonly temporaryName: string,
+  ) {
+    super(
+      `the bundle was published but could not be completed or verified during ` +
+      `"${phase}": ${reason}. It has NOT been removed. ` +
+      `published=${publishedName} temporary=${temporaryName}`)
+    this.name = 'EvidencePublishedButUnverified'
+  }
+}
+
+/**
  * The filesystem operations publication performs, as one injectable seam.
  *
  * Same reasoning as the credential publisher's `PublishOps`: every branch after
@@ -147,14 +203,20 @@ export interface EvidenceOps {
   fstatSync: typeof fstatSync
   closeSync: typeof closeSync
   chmodSync: typeof chmodSync
-  renameSync: typeof renameSync
+  /**
+   * ATOMIC NO-REPLACE publication. NOT `renameSync`.
+   *
+   * The seam names the guarantee rather than the syscall, so a change that
+   * swapped in an overwrite-capable primitive would have to say so here.
+   */
+  renameNoReplace: (from: string, to: string) => AtomicRenameOutcome
   readdirSync: typeof readdirSync
   readFileSync: typeof readFileSync
 }
 
 export const REAL_EVIDENCE_OPS: EvidenceOps = {
   lstatSync, mkdirSync, openSync, writeSync, fsyncSync, fstatSync, closeSync,
-  chmodSync, renameSync, readdirSync, readFileSync,
+  chmodSync, renameNoReplace: atomicRenameNoReplace, readdirSync, readFileSync,
 }
 
 // ---------------------------------------------------------------------------
@@ -249,7 +311,12 @@ export function evidenceNames(prefix: string, stamp: string, runId: string): Evi
  */
 export function assertEvidenceRoot(root: string, ops: EvidenceOps = REAL_EVIDENCE_OPS): string {
   const st = (() => {
-    try { return ops.lstatSync(root) } catch { return null }
+    try {
+      return ops.lstatSync(root)
+    } catch (e) {
+      if ((e as NodeJS.ErrnoException | null)?.code === 'ENOENT') return null
+      throw new EvidenceRefused('root', 'a path could not be examined')
+    }
   })()
   if (st === null) {
     throw new EvidenceRefused('root', 'the evidence root is not an existing directory')
@@ -280,8 +347,14 @@ export function pathIsPresent(path: string, ops: EvidenceOps = REAL_EVIDENCE_OPS
   try {
     ops.lstatSync(path)
     return true
-  } catch {
-    return false
+  } catch (e) {
+    // ENOENT - and ONLY ENOENT - means absent. Every other failure means the
+    // question was not answered: EACCES on the parent, EIO from the device,
+    // ENOTDIR because a path component is a file, ELOOP from a symlink cycle.
+    // Treating "I could not look" as "nothing is there" is how a publisher
+    // walks into the one case it exists to refuse, so it refuses instead.
+    if ((e as NodeJS.ErrnoException | null)?.code === 'ENOENT') return false
+    throw new EvidenceRefused('collision', 'a path could not be examined')
   }
 }
 
@@ -561,34 +634,66 @@ export function publishEvidence(
   for (const rel of dirsDeepestFirst) sync(ops, join(tempPath, rel), rel)
   sync(ops, tempPath, null)
 
-  // 10. ONE rename, same parent, only after re-confirming absence. The window
-  //     between the check and the rename cannot be closed for a directory -
-  //     there is no O_EXCL for rename - but it is bounded: renaming onto a
-  //     non-empty directory fails with ENOTEMPTY and onto a file with ENOTDIR,
-  //     so the only losable race is an EMPTY directory created in the gap
-  //     under a name carrying this run's own random identifier.
-  if (pathIsPresent(finalPath, ops)) {
-    throw new EvidenceRefused('publish', 'a path is already present at the publication destination')
+  // 10. ONE atomic no-replace publication. There is NO absence check here and
+  //     no need for one: `renamex_np(..., RENAME_EXCL)` is a single syscall
+  //     that fails with EEXIST rather than replacing, so there is no window
+  //     between deciding and acting. The earlier check-then-rename could lose
+  //     an EMPTY destination created in the gap; this cannot lose anything.
+  //     `unavailable` is a REFUSAL, never a fallback: publishing through an
+  //     overwrite-capable primitive would silently downgrade the one guarantee
+  //     this function exists to make.
+  const outcome = ops.renameNoReplace(tempPath, finalPath)
+  if (outcome === 'destination-exists') {
+    throw new EvidenceRefused(
+      'publish', 'a path is already present at the publication destination')
   }
-  try {
-    ops.renameSync(tempPath, finalPath)
-  } catch {
+  if (outcome === 'unavailable') {
+    throw new EvidenceRefused(
+      'publish', 'this platform offers no atomic no-replace publication')
+  }
+  if (outcome !== 'published') {
     throw new EvidenceRefused('publish', 'a filesystem operation did not complete')
+  }
+
+  // ---- EVERYTHING BELOW THIS LINE HAPPENS WITH THE BUNDLE ALREADY PUBLISHED.
+  //
+  // The final name now exists. A failure from here on is NOT a refusal, and
+  // saying "nothing was published" would be false. Each one is raised as
+  // `EvidencePublishedButUnverified`, which names the bundle and states plainly
+  // that it has not been removed. Nothing below deletes or repairs it.
+  const published = (phase: PublishedPhase, reason: EvidenceReason): never => {
+    throw new EvidencePublishedButUnverified(
+      phase, reason, names.finalName, names.temporaryName)
   }
 
   // 10b. The bundle root, now that it has been moved. See step 8.
   try {
     ops.chmodSync(finalPath, FROZEN_DIR_MODE)
   } catch {
-    throw new EvidenceRefused('freeze', 'a filesystem operation did not complete')
+    published('freeze-final', 'a filesystem operation did not complete')
   }
-  sync(ops, finalPath, null)
+  try {
+    sync(ops, finalPath, null)
+  } catch {
+    published('fsync-final', 'a filesystem operation did not complete')
+  }
 
   // 11. The parent, so the NAME survives a crash.
-  sync(ops, root, null)
+  try {
+    sync(ops, root, null)
+  } catch {
+    published('fsync-parent', 'a filesystem operation did not complete')
+  }
 
   // 12. Verified from the outside, through the published name.
-  const files = verifyPublishedEvidence(finalPath, ops)
+  let files: readonly string[] = []
+  try {
+    files = verifyPublishedEvidence(finalPath, ops)
+  } catch (e) {
+    published('verify', e instanceof EvidenceRefused
+      ? e.reason
+      : 'a published entry is not the type, mode or link count it was frozen at')
+  }
 
   return Object.freeze({
     finalPath,
