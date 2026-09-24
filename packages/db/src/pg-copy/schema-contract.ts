@@ -933,6 +933,24 @@ export interface TableCopySpec {
 const SPEC_IDENT = /^[a-z_][a-z0-9_]*$/
 
 /**
+ * The ONE reviewed contract a copy may be bound to.
+ *
+ * WHY SELF-CONSISTENCY IS NOT ENOUGH. An artifact's digest proves only that its
+ * digest matches its own payload - which anyone can arrange by editing the
+ * payload and recomputing. A re-digested artifact with a column removed, a
+ * column added, or a table duplicated is perfectly self-consistent and describes
+ * a schema nobody reviewed; binding a binary COPY to it would move values into
+ * the wrong columns while every internal check passed. So the digest is also
+ * compared to this anchor: the digest of the committed expected-target contract.
+ *
+ * The constant is written out rather than read from the artifact file, because
+ * reading it from the file would make the file its own authority again. A test
+ * asserts the two agree, so they cannot drift apart silently.
+ */
+export const REVIEWED_CONTRACT_DIGEST =
+  '59d4289f72a1027772fcfb2f907d311fe587d99cf8db09a911f53cec080bdc82'
+
+/**
  * Derive a copy specification from a verified artifact.
  *
  * WHY THE CALLER MAY NOT SUPPLY COLUMNS. Binary COPY carries no column names -
@@ -960,16 +978,35 @@ export function tableCopySpec(artifact: ContractArtifact, qname: string): TableC
     throw new ContractRefused(
       `artifact digest ${artifact.digest} does not match its payload (recomputed ${recomputed}).`)
   }
+  // AND it must be the REVIEWED contract, not merely a self-consistent one.
+  if (artifact.digest !== REVIEWED_CONTRACT_DIGEST) {
+    throw new ContractRefused(
+      `artifact digest ${artifact.digest} is not the reviewed expected-target digest ` +
+      `${REVIEWED_CONTRACT_DIGEST}; a self-consistent artifact still describes a schema ` +
+      'nobody reviewed.')
+  }
   if (!COPY_TABLES.includes(qname)) {
     throw new ContractRefused(`${qname} is not in the reviewed copy set.`)
   }
+  const columns = deriveCopyColumns(artifact.payload, qname)
+  const [schema, table] = qname.split('.')
+  return Object.freeze({ qname, schema, table, columns: Object.freeze(columns) })
+}
 
-  const payload = artifact.payload as unknown as {
-    table_order?: unknown
-    tables?: unknown
-  }
-  const order = Array.isArray(payload.table_order) ? payload.table_order : null
-  const tables = Array.isArray(payload.tables) ? payload.tables : null
+/**
+ * The structural half, separated so it stays REACHABLE.
+ *
+ * Once the anchor above is in place, nothing that reaches this code can be
+ * structurally wrong - which would make every check below unreachable and its
+ * tests impossible to write honestly. Exporting the derivation keeps the shape
+ * rules testable on their own terms, and keeps them meaningful the day the
+ * anchor moves to a new reviewed digest: a fresh contract still has to be a
+ * well-formed one.
+ */
+export function deriveCopyColumns(payload: Canonical, qname: string): string[] {
+  const p = payload as unknown as { table_order?: unknown; tables?: unknown }
+  const order = Array.isArray(p.table_order) ? p.table_order : null
+  const tables = Array.isArray(p.tables) ? p.tables : null
   if (order === null || tables === null) {
     throw new ContractRefused('the artifact carries no table_order or tables.')
   }
@@ -984,8 +1021,7 @@ export function tableCopySpec(artifact: ContractArtifact, qname: string): TableC
     throw new ContractRefused(`${qname} occurs ${matches.length} times in the contract, not once.`)
   }
 
-  const entry = matches[0]
-  const raw = Array.isArray(entry.columns) ? entry.columns : null
+  const raw = Array.isArray(matches[0].columns) ? matches[0].columns : null
   if (raw === null || raw.length === 0) {
     throw new ContractRefused(`${qname} has no live columns in the contract.`)
   }
@@ -1012,7 +1048,5 @@ export function tableCopySpec(artifact: ContractArtifact, qname: string): TableC
     seen.add(name)
     columns.push(name)
   })
-
-  const [schema, table] = qname.split('.')
-  return Object.freeze({ qname, schema, table, columns: Object.freeze(columns) })
+  return columns
 }

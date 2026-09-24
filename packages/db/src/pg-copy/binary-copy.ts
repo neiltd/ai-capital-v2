@@ -24,7 +24,10 @@
 
 import { pipeline } from 'node:stream/promises'
 
-import { from as copyFrom, to as copyTo } from 'pg-copy-streams'
+import {
+  from as copyFrom, to as copyTo,
+  type CopyStreamQuery, type CopyToStreamQuery,
+} from 'pg-copy-streams'
 // Type-only: this module never constructs a client, and the canonical
 // connection module stays the only place that can.
 import type { ClientBase } from 'pg'
@@ -58,8 +61,9 @@ export class BinaryCopyFailed extends Error {
   constructor(readonly qname: string, readonly phase: BinaryCopyPhase) {
     super(
       `binary copy of ${qname} ${phase === 'cancelled' ? 'was cancelled' : 'failed'}. ` +
-      'Discard the target transaction and both sessions. Nothing further is ' +
-      'retained: a failure of this kind names the offending row.')
+      'Discard the target transaction and both sessions. The original PostgreSQL ' +
+      'failure has been discarded and is not retained anywhere, because it may ' +
+      'name the offending row.')
     this.name = 'BinaryCopyFailed'
   }
 }
@@ -185,49 +189,51 @@ export async function copyTableBinary(
   const sourceSql = copyOutSql(spec.qname, columns)
   const targetSql = copyInSql(spec.qname, columns)
 
-  // The SAME captured sessions throughout. There is no branch that opens
-  // another one, and no connection parameter to open one with.
-  const outStream = source.query(copyTo(sourceSql))
-  const inStream = target.query(copyFrom(targetSql))
+  // ALREADY CANCELLED: refuse before either session is touched. Starting a COPY
+  // only to abandon it would cost a connection for nothing.
+  if (signal !== undefined && signal.aborted) {
+    throw new BinaryCopyFailed(spec.qname, 'cancelled')
+  }
 
-  // LATE-ERROR SINKS, attached before anything can fail.
+  // THE PROTECTED BOUNDARY STARTS HERE, not after the streams exist.
   //
-  // Destroying an in-flight COPY terminates its connection, and pg then pushes
-  // "Connection terminated" into whatever query was active - which is one of
-  // these streams, now detached from `pipeline` and carrying no listener of its
-  // own. A stream that emits `error` with no listener throws, so without these
-  // the caller gets a rejected promise AND, a moment later, an uncaught
-  // exception that takes the process down. The failure has already been
-  // reported; this second, asynchronous notice is absorbed. `pipeline` attaches
-  // its own listeners regardless, so nothing is hidden from it.
-  outStream.on('error', () => { /* reported through the pipeline */ })
-  inStream.on('error', () => { /* reported through the pipeline */ })
-
+  // `source.query(copyTo(...))` and `target.query(copyFrom(...))` can fail
+  // synchronously - a malformed statement, a session already in a failed
+  // transaction, a driver that throws on a busy connection. With construction
+  // outside the try, such a failure escaped redaction entirely, and a target
+  // failure left the source's COPY running with nobody holding its handle.
+  // Both are inside now, and the catch destroys whichever streams exist.
+  let outStream: CopyToStreamQuery | null = null
+  let inStream: CopyStreamQuery | null = null
   let bytes = 0
-  outStream.on('data', (chunk: Buffer) => { bytes += chunk.length })
 
   try {
+    const out = source.query(copyTo(sourceSql)) as unknown as CopyToStreamQuery
+    outStream = out
+    // The error sink goes on IMMEDIATELY, before anything else can throw:
+    // destroying an in-flight COPY terminates its connection, and pg then pushes
+    // "Connection terminated" into the stream. A stream that emits `error` with
+    // no listener throws, turning a handled failure into an uncaught exception.
+    out.on('error', () => { /* reported through the pipeline */ })
+
+    const inn = target.query(copyFrom(targetSql)) as unknown as CopyStreamQuery
+    inStream = inn
+    inn.on('error', () => { /* reported through the pipeline */ })
+
+    out.on('data', (chunk: Buffer) => { bytes += chunk.length })
+
     // `pipeline` wires backpressure, forwards errors in BOTH directions and
     // destroys the other side when one fails - which is what turns a source
     // failure into a CopyFail on the target rather than a truncated but
     // "successful" COPY.
-    await pipeline(outStream, inStream, signal === undefined ? {} : { signal })
+    await pipeline(out, inn, signal === undefined ? {} : { signal })
   } catch {
-    // Destroy both ends so neither COPY is left running in the background, then
-    // raise a REDACTED failure. No COMMIT is issued here, or anywhere in this
-    // module, and the original error is not re-raised, wrapped or attached.
-    //
-    // A CONSEQUENCE THE CALLER MUST KNOW. Destroying an in-flight COPY stream
-    // terminates the connection it was running on - there is no protocol-level
-    // way to abandon a COPY mid-flight and keep the session. So after this
-    // throws, the affected client is finished: it will emit `error`
-    // ("Connection terminated"), and a caller without a listener on it gets an
-    // unhandled exception rather than a failed copy. The session is not reusable
-    // and must be closed. The TARGET keeps its connection when the failure came
-    // from the server, which is why its transaction can still be observed to be
-    // aborted rather than committed.
-    outStream.destroy()
-    inStream.destroy()
+    // Destroy whichever ends were created, so neither COPY is left running in
+    // the background, then raise a REDACTED failure. No COMMIT is issued here,
+    // or anywhere in this module, and the original error is not re-raised,
+    // wrapped or attached.
+    if (outStream !== null) outStream.destroy()
+    if (inStream !== null) inStream.destroy()
     // The phase comes from the AbortSignal, not from the error text: deciding
     // "was this a cancellation" by matching on a message would mean reading the
     // very string this class refuses to keep.
@@ -235,9 +241,8 @@ export async function copyTableBinary(
       spec.qname, signal !== undefined && signal.aborted ? 'cancelled' : 'stream-failed')
   }
 
-  const rowCount = typeof (inStream as { rowCount?: unknown }).rowCount === 'number'
-    ? (inStream as unknown as { rowCount: number }).rowCount
-    : null
+  const finished = inStream as unknown as { rowCount?: unknown }
+  const rowCount = typeof finished.rowCount === 'number' ? finished.rowCount : null
 
   return { qname: spec.qname, columns, bytes, rowCount, sourceSql, targetSql }
 }

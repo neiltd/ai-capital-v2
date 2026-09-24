@@ -5,6 +5,8 @@
 import { readFileSync } from 'node:fs'
 import { fileURLToPath } from 'node:url'
 
+import { PassThrough } from 'node:stream'
+
 import { describe, it, expect } from 'vitest'
 
 import {
@@ -13,9 +15,10 @@ import {
 } from '../src/pg-copy/binary-copy.js'
 import { ARTIFACT_PATH } from '../bin/pg-copy-contract.js'
 import {
-  COPY_TABLES, ContractRefused, contractDigest, parseArtifact, serializeArtifact,
-  tableCopySpec, type ContractArtifact,
+  COPY_TABLES, ContractRefused, REVIEWED_CONTRACT_DIGEST, contractDigest, deriveCopyColumns,
+  parseArtifact, serializeArtifact, tableCopySpec, type ContractArtifact,
 } from '../src/pg-copy/schema-contract.js'
+import { inspect } from 'node:util'
 
 /** The committed artifact: a real, verified contract to derive specs from. */
 const ARTIFACT = parseArtifact(readFileSync(ARTIFACT_PATH, 'utf-8'))
@@ -116,7 +119,7 @@ describe('the primitive is a transport and nothing else', () => {
 
   it('streams through pipeline and never buffers the table', () => {
     expect(SRC).toContain("import { pipeline } from 'node:stream/promises'")
-    expect(CODE).toContain('await pipeline(outStream, inStream')
+    expect(CODE).toContain('await pipeline(out, inn')
     for (const banned of ['Buffer.concat', 'toArray()', 'chunks.push', '.read()',
                           'readFileSync', 'JSON.stringify(chunk']) {
       expect(CODE, banned).not.toContain(banned)
@@ -128,7 +131,9 @@ describe('the primitive is a transport and nothing else', () => {
   it('wires AbortSignal into the pipeline', () => {
     const fn = CODE.slice(CODE.indexOf('export async function copyTableBinary'))
     expect(fn).toContain('signal')
-    expect(fn).toMatch(/pipeline\(outStream, inStream, signal === undefined \? \{\} : \{ signal \}\)/)
+    expect(fn).toMatch(/pipeline\(out, inn, signal === undefined \? \{\} : \{ signal \}\)/)
+    // And an already-aborted signal short-circuits before any session is used.
+    expect(fn).toContain("throw new BinaryCopyFailed(spec.qname, 'cancelled')")
   })
 
   it('destroys both directions on failure and never commits after one', () => {
@@ -200,62 +205,93 @@ describe('the column list comes from the VERIFIED contract, never the caller', (
     expect(() => tableCopySpec(wrongVersion, T)).toThrow(/artifact version 99/)
   })
 
-  it('refuses a table absent from, or duplicated in, the contract', () => {
-    const absent = reDigested(p => {
-      p.table_order = (p.table_order as string[]).filter(t => t !== T)
-      p.tables = (p.tables as Array<Record<string, unknown>>).filter(t => t.qname !== T)
-    })
-    expect(() => tableCopySpec(absent, T)).toThrow(/occurs 0 times in table_order/)
-
-    const twiceInOrder = reDigested(p => { (p.table_order as string[]).push(T) })
-    expect(() => tableCopySpec(twiceInOrder, T)).toThrow(/occurs 2 times in table_order/)
-
-    const twiceInTables = reDigested(p => {
-      const t = p.table_order as string[]
-      void t
-      ;(p.tables as Array<Record<string, unknown>>).push(
-        JSON.parse(JSON.stringify(tableOf(p, T))) as Record<string, unknown>)
-    })
-    expect(() => tableCopySpec(twiceInTables, T)).toThrow(/occurs 2 times in the contract/)
+  it('anchors to the committed reviewed contract, so the constant cannot drift', () => {
+    const onDisk = JSON.parse(readFileSync(ARTIFACT_PATH, 'utf-8')) as { digest: string }
+    expect(REVIEWED_CONTRACT_DIGEST).toBe(onDisk.digest)
+    expect(ARTIFACT.digest).toBe(REVIEWED_CONTRACT_DIGEST)
   })
 
-  it('refuses a missing, extra, reordered or duplicated column', () => {
-    const missing = reDigested(p => {
-      const t = tableOf(p, T)
-      const cols = (t.columns as Array<Record<string, unknown>>).slice(1)
-      cols.forEach((c, i) => { c.position = i + 1 })
-      t.columns = cols
-    })
-    // A dropped column re-numbered cleanly is still WRONG - it is caught by the
-    // integration test's digest comparison, so here we prove the count changed.
-    expect(tableCopySpec(missing, T).columns.length).toBe(11)
+  it('refuses a SELF-CONSISTENT artifact that is not the reviewed one', () => {
+    // Every one of these is internally valid - payload edited, digest
+    // recomputed. Self-consistency is not review: an artifact can agree with
+    // itself perfectly and still describe a schema nobody approved.
+    const cases: Array<[string, ContractArtifact]> = [
+      ['missing column', reDigested(p => {
+        const t = tableOf(p, T)
+        const cols = (t.columns as Array<Record<string, unknown>>).slice(1)
+        cols.forEach((c, i) => { c.position = i + 1 })
+        t.columns = cols
+      })],
+      ['extra column', reDigested(p => {
+        const cols = tableOf(p, T).columns as Array<Record<string, unknown>>
+        cols.push({ ...cols[0], name: 'bogus_extra', position: cols.length + 1 })
+      })],
+      ['reordered columns', reDigested(p => {
+        const cols = tableOf(p, T).columns as Array<Record<string, unknown>>
+        ;[cols[0], cols[1]] = [cols[1], cols[0]]
+      })],
+      ['duplicated column', reDigested(p => {
+        const cols = tableOf(p, T).columns as Array<Record<string, unknown>>
+        cols[1] = { ...cols[1], name: cols[0].name }
+      })],
+      ['missing table', reDigested(p => {
+        p.table_order = (p.table_order as string[]).filter(t => t !== T)
+        p.tables = (p.tables as Array<Record<string, unknown>>).filter(t => t.qname !== T)
+      })],
+      ['duplicated table', reDigested(p => { (p.table_order as string[]).push(T) })],
+    ]
+    for (const [label, artifact] of cases) {
+      // NON-VACUITY: each really is self-consistent, and really is not reviewed.
+      expect(contractDigest(artifact.payload), label).toBe(artifact.digest)
+      expect(artifact.digest, label).not.toBe(REVIEWED_CONTRACT_DIGEST)
+      expect(() => tableCopySpec(artifact, T), label)
+        .toThrow(/is not the reviewed expected-target digest/)
+    }
+  })
 
-    const extra = reDigested(p => {
-      const t = tableOf(p, T)
-      const cols = t.columns as Array<Record<string, unknown>>
-      cols.push({ ...cols[0], name: 'bogus_extra', position: cols.length + 1 })
-    })
-    expect(tableCopySpec(extra, T).columns).toContain('bogus_extra')
+  it('refuses a structurally broken contract on its own terms', () => {
+    // Exercised through the structural derivation, because the reviewed-digest
+    // anchor would otherwise stop every one of these first - and a check that
+    // can never run is not a check.
+    const payload = (a: ContractArtifact): Record<string, unknown> =>
+      a.payload as unknown as Record<string, unknown>
+    const broken = (mutate: (p: Record<string, unknown>) => void): Record<string, unknown> => {
+      const p = JSON.parse(JSON.stringify(ARTIFACT.payload)) as Record<string, unknown>
+      mutate(p)
+      return p
+    }
+    expect(deriveCopyColumns(payload(ARTIFACT) as never, T).length).toBe(12)
 
-    const reordered = reDigested(p => {
-      const t = tableOf(p, T)
-      const cols = t.columns as Array<Record<string, unknown>>
+    expect(() => deriveCopyColumns(broken(p => {
+      p.table_order = (p.table_order as string[]).filter(t => t !== T)
+    }) as never, T)).toThrow(/occurs 0 times in table_order/)
+
+    expect(() => deriveCopyColumns(broken(p => {
+      (p.table_order as string[]).push(T)
+    }) as never, T)).toThrow(/occurs 2 times in table_order/)
+
+    expect(() => deriveCopyColumns(broken(p => {
+      (p.tables as Array<Record<string, unknown>>).push(
+        JSON.parse(JSON.stringify(tableOf(p, T))) as Record<string, unknown>)
+    }) as never, T)).toThrow(/occurs 2 times in the contract/)
+
+    expect(() => deriveCopyColumns(broken(p => {
+      const cols = tableOf(p, T).columns as Array<Record<string, unknown>>
       ;[cols[0], cols[1]] = [cols[1], cols[0]]
-    })
-    expect(() => tableCopySpec(reordered, T)).toThrow(/is recorded at position/)
+    }) as never, T)).toThrow(/is recorded at position/)
 
-    const duplicated = reDigested(p => {
-      const t = tableOf(p, T)
-      const cols = t.columns as Array<Record<string, unknown>>
+    expect(() => deriveCopyColumns(broken(p => {
+      const cols = tableOf(p, T).columns as Array<Record<string, unknown>>
       cols[1] = { ...cols[1], name: cols[0].name }
-    })
-    expect(() => tableCopySpec(duplicated, T)).toThrow(/appears more than once/)
+    }) as never, T)).toThrow(/appears more than once/)
 
-    const badName = reDigested(p => {
-      const t = tableOf(p, T)
-      ;(t.columns as Array<Record<string, unknown>>)[0].name = 'Bad Name'
-    })
-    expect(() => tableCopySpec(badName, T)).toThrow(/not a bare identifier/)
+    expect(() => deriveCopyColumns(broken(p => {
+      (tableOf(p, T).columns as Array<Record<string, unknown>>)[0].name = 'Bad Name'
+    }) as never, T)).toThrow(/not a bare identifier/)
+
+    expect(() => deriveCopyColumns(broken(p => {
+      tableOf(p, T).columns = []
+    }) as never, T)).toThrow(/no live columns/)
   })
 
   it('refuses an unreviewed table', () => {
@@ -273,6 +309,16 @@ describe('the column list comes from the VERIFIED contract, never the caller', (
       ['reordered columns', reDigested(p => {
         const cols = tableOf(p, T).columns as Array<Record<string, unknown>>
         ;[cols[0], cols[1]] = [cols[1], cols[0]]
+      }), T],
+      ['missing column', reDigested(p => {
+        const t = tableOf(p, T)
+        const cols = (t.columns as Array<Record<string, unknown>>).slice(1)
+        cols.forEach((c, i) => { c.position = i + 1 })
+        t.columns = cols
+      }), T],
+      ['extra column', reDigested(p => {
+        const cols = tableOf(p, T).columns as Array<Record<string, unknown>>
+        cols.push({ ...cols[0], name: 'bogus_extra', position: cols.length + 1 })
       }), T],
       ['duplicate column', reDigested(p => {
         const cols = tableOf(p, T).columns as Array<Record<string, unknown>>
@@ -297,6 +343,17 @@ describe('the column list comes from the VERIFIED contract, never the caller', (
   })
 })
 
+/** Every surface an error can leak through once someone logs it. */
+const surfaces = (e: unknown): string => {
+  const err = e as Error & Record<string, unknown>
+  let json = ''
+  try { json = JSON.stringify(err, Object.getOwnPropertyNames(err)) } catch { json = '' }
+  return [
+    String(err.message), String(err.stack ?? ''),
+    Object.getOwnPropertyNames(err).join(','), json, inspect(err, { depth: 6 }),
+  ].join('\n')
+}
+
 describe('a copy failure says nothing about the data', () => {
   it('carries only the table and the phase', () => {
     const e = new BinaryCopyFailed(T, 'stream-failed')
@@ -305,6 +362,7 @@ describe('a copy failure says nothing about the data', () => {
     expect(e.name).toBe('BinaryCopyFailed')
     expect(e.message).toContain(T)
     expect(e.message).toContain('Discard the target transaction')
+    expect(e.message).toContain('has been discarded')
     // No original error, by construction.
     expect((e as { cause?: unknown }).cause).toBeUndefined()
     expect(Object.keys(e).sort()).toEqual(['name', 'phase', 'qname'])
@@ -312,6 +370,54 @@ describe('a copy failure says nothing about the data', () => {
       expect((e as unknown as Record<string, unknown>)[leak], leak).toBeUndefined()
     }
     expect(new BinaryCopyFailed(T, 'cancelled').message).toContain('was cancelled')
+  })
+
+  it('redacts a SYNCHRONOUS source-setup failure, canary and all', async () => {
+    const canary = `setup_src_${Math.random().toString(36).slice(2)}`
+    let targetTouched = 0
+    const source = { query: () => { throw new Error(`boom ${canary}`) } }
+    const target = { query: () => { targetTouched += 1; return null } }
+    let thrown: unknown = null
+    try {
+      await copyTableBinary(source as never, target as never, { artifact: ARTIFACT, qname: T })
+    } catch (e) { thrown = e }
+    expect(thrown).toBeInstanceOf(BinaryCopyFailed)
+    expect((thrown as BinaryCopyFailed).phase).toBe('stream-failed')
+    // The target was never asked for a stream it could not use.
+    expect(targetTouched).toBe(0)
+    expect(surfaces(thrown)).not.toContain(canary)
+  })
+
+  it('redacts a SYNCHRONOUS target-setup failure and destroys the source stream', async () => {
+    const canary = `setup_tgt_${Math.random().toString(36).slice(2)}`
+    let destroyed = 0
+    const fakeOut = new PassThrough()
+    fakeOut.destroy = ((): void => { destroyed += 1 }) as never
+    const source = { query: () => fakeOut }
+    const target = { query: () => { throw new Error(`boom ${canary}`) } }
+    let thrown: unknown = null
+    try {
+      await copyTableBinary(source as never, target as never, { artifact: ARTIFACT, qname: T })
+    } catch (e) { thrown = e }
+    expect(thrown).toBeInstanceOf(BinaryCopyFailed)
+    // The already-created source COPY was not left running.
+    expect(destroyed, 'the source stream was stranded').toBe(1)
+    expect(surfaces(thrown)).not.toContain(canary)
+  })
+
+  it('refuses an ALREADY-aborted signal without touching either session', async () => {
+    let touched = 0
+    const s = { query: () => { touched += 1; return null } }
+    const ac = new AbortController()
+    ac.abort()
+    let thrown: unknown = null
+    try {
+      await copyTableBinary(s as never, s as never,
+        { artifact: ARTIFACT, qname: T, signal: ac.signal })
+    } catch (e) { thrown = e }
+    expect(thrown).toBeInstanceOf(BinaryCopyFailed)
+    expect((thrown as BinaryCopyFailed).phase).toBe('cancelled')
+    expect(touched).toBe(0)
   })
 
   it('never re-raises, wraps or attaches the original', () => {
