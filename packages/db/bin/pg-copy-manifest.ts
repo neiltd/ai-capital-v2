@@ -43,7 +43,9 @@ import { fileURLToPath } from 'node:url'
 
 import { EXPORT_ROLE_NAME } from '../src/pg-copy/export-role.js'
 import { openPsqlBackend, type PsqlBackend } from '../src/pg-copy/psql-backend.js'
-import { EvidencePublishedButUnverified, newRunId } from '../src/pg-copy/evidence.js'
+import {
+  EvidencePublicationUnknown, EvidencePublishedButUnverified, newRunId,
+} from '../src/pg-copy/evidence.js'
 import {
   MANIFEST_FILE, runStage1, type OperatorInput,
 } from '../src/pg-copy/source-manifest.js'
@@ -59,6 +61,15 @@ export const EXIT_REFUSED = 2
  * that has not been proved good, and it is being kept deliberately.
  */
 export const EXIT_PUBLISHED_UNVERIFIED = 3
+/**
+ * The publication outcome is UNKNOWN and a retry is not safe.
+ *
+ * Its own code, distinct from both "refused" and "published but unverified",
+ * because the operator cannot act on it the way they act on either: nothing
+ * here has been proved about the final name, so it must be looked at before
+ * anything else is attempted.
+ */
+export const EXIT_PUBLICATION_UNKNOWN = 4
 
 export const PKG_ROOT = resolve(dirname(fileURLToPath(import.meta.url)), '..')
 export const REPO_ROOT = resolve(PKG_ROOT, '..', '..')
@@ -178,8 +189,15 @@ export interface CliResult {
  * THE `finally` RELEASES THE FENCE, AND ONLY THERE. `runStage1` never ends the
  * supervisor's transaction: releasing it inside would put the release before
  * the caller could know publication succeeded. Here it runs after Stage 1 has
- * returned or thrown - so on the failure path the fence is released too, which
- * is correct, because on that path nothing was published.
+ * returned or thrown.
+ *
+ * RELEASING IT ON THE FAILURE PATH IS CORRECT, AND NOT BECAUSE "nothing was
+ * published". That was the earlier claim and it is not true of every failure:
+ * a bundle may exist unverified, and an unknown outcome may have published
+ * one. It is correct because the fence's job - holding the source still while
+ * it is READ - is over either way once Stage 1 has stopped reading, and
+ * holding it longer would block the source for no benefit. What must not be
+ * tidied is the EVIDENCE, and no failure path here touches it.
  */
 export async function runCli(argv: readonly string[]): Promise<CliResult> {
   const lines: string[] = []
@@ -274,7 +292,17 @@ export async function runCli(argv: readonly string[]): Promise<CliResult> {
 export function dispositionOf(e: unknown): CliResult {
   const lines: string[] = []
 
-  // THE BUNDLE EXISTS. Reported first and separately, because saying "nothing
+  // THE OUTCOME IS UNKNOWN. Reported before anything else, because it is the
+  // only disposition on which a retry is unsafe: the final name may or may not
+  // exist, and nothing here is entitled to say which.
+  if (e instanceof EvidencePublicationUnknown) {
+    lines.push(e.message)
+    lines.push('Publication state is UNKNOWN: the final name may or may not exist.')
+    lines.push('Nothing was removed or repaired. Inspect both names; a retry is NOT safe.')
+    return { exitCode: EXIT_PUBLICATION_UNKNOWN, lines }
+  }
+
+  // THE BUNDLE EXISTS. Reported next and separately, because saying "nothing
   // was published" here would be false, and because the operator has to know a
   // final name is now taken by evidence nobody has verified.
   if (e instanceof EvidencePublishedButUnverified) {
@@ -293,8 +321,11 @@ export function dispositionOf(e: unknown): CliResult {
   const bounded = name === 'ManifestRefused' || name === 'EvidenceRefused' ||
                   name === 'CliRefused'
   lines.push(bounded && e instanceof Error ? e.message : `stage 1 failed (${name}).`)
-  // TRUE ON THIS PATH ONLY. Every error reaching here is raised before the
-  // atomic publication, so the final name provably does not exist.
+  // TRUE ON THIS PATH ONLY, AND BOTH EXCEPTIONS HAVE ALREADY RETURNED ABOVE.
+  // A published-but-unverified bundle EXISTS, and an unknown outcome MAY have
+  // published one; each is reported as such and neither reaches this line.
+  // Everything that does reach it was raised BEFORE the atomic publication, so
+  // the absence of the final name is proved rather than assumed.
   lines.push('No manifest was published under the final name.')
   return { exitCode: bounded ? EXIT_REFUSED : EXIT_FAILED, lines }
 }

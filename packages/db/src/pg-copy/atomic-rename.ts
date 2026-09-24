@@ -60,14 +60,29 @@ export const HELPER_DESTINATION_EXISTS = 17
 export const HELPER_TIMEOUT_MS = 20_000
 
 export type AtomicRenameOutcome =
-  /** The directory now lives at the destination. */
+  /** The directory now lives at the destination. Proved by exit 0. */
   | 'published'
   /** Something was already at the destination. It was NOT touched. */
   | 'destination-exists'
-  /** No atomic no-replace primitive here. Nothing was attempted. */
+  /** No atomic no-replace primitive here. Nothing was ATTEMPTED. */
   | 'unavailable'
-  /** The syscall failed for some other reason. Nothing was published. */
+  /** The syscall ran and failed. Nothing was published. */
   | 'failed'
+  /**
+   * THE HELPER DID NOT REPORT. Whether the syscall ran is UNKNOWN.
+   *
+   * This is the outcome an earlier revision did not have, and its absence was
+   * a lie in both directions. A helper that is killed, times out, dies on a
+   * signal, or exits with a code nobody assigned may have completed
+   * `renamex_np` microseconds before it went away - the rename is atomic, the
+   * REPORTING of it is not. Calling that "unavailable" claims nothing was
+   * attempted; calling it "failed" claims nothing was published. Both would be
+   * guesses, and one of them would be a published bundle reported as absent.
+   *
+   * The caller must resolve it by LOOKING - device and inode, fail-closed -
+   * and never by assuming.
+   */
+  | 'indeterminate'
 
 /**
  * The helper, verbatim. Sent on stdin; never written to disk.
@@ -75,7 +90,26 @@ export type AtomicRenameOutcome =
  * It resolves the symbol, calls it once, and exits with a code. It prints
  * nothing on either stream, so no filesystem text can travel back through it.
  */
+/**
+ * Interpreter isolation, and why each flag is load-bearing.
+ *
+ * `-I` is isolated mode: it ignores PYTHON* environment variables, drops the
+ * script's directory and the current working directory from `sys.path`, and
+ * implies `-E` and `-s` (no user site directory). `-S` additionally skips
+ * `site` altogether, so no `sitecustomize.py` or `usercustomize.py` runs.
+ *
+ * MEASURED, NOT ASSUMED. A plain `/usr/bin/python3 -c pass` on this machine
+ * EXECUTES a `sitecustomize.py` planted in the user site directory; under
+ * `-I -S` it does not, `sys.flags.isolated` and `sys.flags.no_site` are both
+ * 1, and `ctypes` still resolves `renamex_np` and completes the rename. The
+ * publication path must not be a place where anything on the machine can get
+ * arbitrary code to run, and these two flags are what stops that.
+ */
+export const PYTHON_ISOLATION_FLAGS: readonly string[] = Object.freeze(['-I', '-S'])
+
 export const HELPER_SOURCE = `import ctypes, os, sys
+if not (sys.flags.isolated and sys.flags.no_site):
+    sys.exit(${HELPER_UNAVAILABLE})
 try:
     lib = ctypes.CDLL(${JSON.stringify(LIBSYSTEM)}, use_errno=True)
     fn = lib.renamex_np
@@ -103,24 +137,59 @@ sys.exit(${HELPER_DESTINATION_EXISTS} if e in (17, 66) else ${HELPER_FAILED})
  * means. It never reports `published` unless the helper exited zero, and it
  * reports `unavailable` - never `published` - when it cannot tell.
  */
-export function atomicRenameNoReplace(from: string, to: string): AtomicRenameOutcome {
+/**
+ * TEST-ONLY seams. Production passes nothing and gets the reviewed constants.
+ *
+ * They exist because the outcomes that matter most here - a helper that is
+ * killed after doing the work, one that times out, one that exits with a code
+ * nobody assigned - cannot be produced by the real interpreter on demand, and
+ * a 20-second timeout cannot be reached in a test suite. Double-underscored,
+ * following this repository's convention for seams nothing in production sets.
+ */
+export interface AtomicRenameSeams {
+  readonly __interpreter?: string
+  readonly __timeoutMs?: number
+}
+
+export function atomicRenameNoReplace(
+  from: string, to: string, seams: AtomicRenameSeams = {},
+): AtomicRenameOutcome {
   if (process.platform !== 'darwin') return 'unavailable'
   try {
-    execFileSync(PYTHON3, ['-', from, to], {
+    execFileSync(seams.__interpreter ?? PYTHON3, [...PYTHON_ISOLATION_FLAGS, '-', from, to], {
       input: HELPER_SOURCE,
       // Nothing comes back but the exit code: no stdout, no stderr, no path
       // echoed into an error this repository would then log.
       stdio: ['pipe', 'ignore', 'ignore'],
-      timeout: HELPER_TIMEOUT_MS,
+      timeout: seams.__timeoutMs ?? HELPER_TIMEOUT_MS,
       env: { PATH: '/usr/bin:/bin', LC_ALL: 'C', LANG: 'C' },
     })
     return 'published'
   } catch (e) {
-    const status = (e as { status?: unknown }).status
-    if (status === HELPER_DESTINATION_EXISTS) return 'destination-exists'
-    if (status === HELPER_UNAVAILABLE) return 'unavailable'
-    // A missing interpreter surfaces as a spawn error with no status at all.
-    if (typeof status !== 'number') return 'unavailable'
-    return 'failed'
+    const err = e as { status?: unknown; signal?: unknown; code?: unknown }
+    if (err.status === HELPER_DESTINATION_EXISTS) return 'destination-exists'
+    if (err.status === HELPER_UNAVAILABLE) return 'unavailable'
+    if (err.status === HELPER_FAILED) return 'failed'
+
+    // A SPAWN failure - the interpreter is missing or not executable - is the
+    // only case where the syscall provably never ran. `execFileSync` reports
+    // it with an errno code and no exit status.
+    // MEASURED SHAPE: a spawn failure carries `status: null`, `signal: null`
+    // and an errno `code` such as ENOENT or EACCES. A TIMEOUT also has no
+    // numeric status, but it carries `code: 'ETIMEDOUT'` and a signal, which
+    // is exactly the case that must NOT be read as "never attempted".
+    if (typeof err.status !== 'number' && typeof err.code === 'string' &&
+        err.code !== 'ETIMEDOUT' &&
+        (err.signal === undefined || err.signal === null)) {
+      return 'unavailable'
+    }
+
+    // EVERYTHING ELSE IS UNKNOWN. A timeout (`ETIMEDOUT`), a signal
+    // (`SIGTERM` from the timeout, `SIGKILL` from anywhere), or an exit code
+    // nobody here assigned all leave the same question open: the helper may
+    // have completed the rename and then been killed before `execFileSync`
+    // could observe its zero. Guessing either way would be a claim this
+    // function cannot support.
+    return 'indeterminate'
   }
 }

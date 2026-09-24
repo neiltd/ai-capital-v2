@@ -340,8 +340,16 @@ export const FENCE_ADVISORY_SQL =
   `SELECT pg_catalog.pg_advisory_xact_lock(${FENCE_ADVISORY_CLASSID}, ${FENCE_ADVISORY_OBJID})`
 export const tableFenceSql = (q: string): string => `LOCK TABLE ${assertQName(q)} IN SHARE MODE`
 
+/**
+ * What a fence statement's outcome may say.
+ *
+ * A FIXED TOKEN, never PostgreSQL's prose. The executor this interface
+ * describes is satisfied by the reviewed psql transport, whose raw stderr is
+ * read inside its framing implementation and converted there; nothing that
+ * reaches this module has ever seen it.
+ */
 export interface FenceExecutor {
-  send(sql: string): Promise<{ rows: string[][]; error: string | null }>
+  send(sql: string): Promise<{ rows: string[][]; error: 'statement-refused' | null }>
 }
 
 /**
@@ -413,11 +421,16 @@ export interface AcquiredFence {
  */
 export async function acquireSourceFence(x: FenceExecutor): Promise<AcquiredFence> {
   const statements: string[] = []
+  // BOUNDED. The reviewed sequence is deterministic, so its ORDINAL says which
+  // statement failed without reproducing either the statement or PostgreSQL's
+  // reply - and the reply is no longer available here in any case: `send`
+  // reports a fixed token, never psql's prose.
   const one = async (sql: string): Promise<string[][]> => {
     statements.push(sql)
     const r = await x.send(sql)
     if (r.error !== null) {
-      throw new FenceRefused(`fence statement refused: ${sql}\n${r.error}`)
+      throw new FenceRefused(
+        `fence statement ${statements.length} of the reviewed sequence was refused.`)
     }
     return r.rows
   }
@@ -592,13 +605,13 @@ export async function readFencedSequenceState(
 ): Promise<Record<string, FencedSequenceState>> {
   const pidRes = await prover.send('SELECT pg_catalog.pg_backend_pid()')
   if (pidRes.error !== null) {
-    throw new FenceRefused(`the proving backend could not report its pid: ${pidRes.error}`)
+    throw new FenceRefused('the proving backend could not report its pid.')
   }
   const provingPid = pidRes.rows[0]?.[0] ?? ''
 
   const proofRes = await prover.send(FENCE_PROOF_SQL.replace('$1', fenceRelationArray()))
   if (proofRes.error !== null) {
-    throw new FenceRefused(`the fence proof could not be taken: ${proofRes.error}`)
+    throw new FenceRefused('the fence proof could not be taken.')
   }
   assertFenceProof(parseLockRows(proofRes.rows), {
     supervisorPid: fence.supervisorPid,
@@ -610,7 +623,9 @@ export async function readFencedSequenceState(
   for (const q of FENCE_SEQUENCES) {
     const res = await supervisor.send(SEQUENCE_STATE_SQL(q))
     if (res.error !== null) {
-      throw new FenceRefused(`fenced state read refused for ${q}: ${res.error}`)
+      // The reviewed qualified name is a compile-time constant of this module;
+      // nothing the server said is repeated.
+      throw new FenceRefused(`the fenced state read for ${q} was refused.`)
     }
     // The one place the brand is applied, immediately after the proof above.
     out[q] = parseSequenceState(res.rows, q) as FencedSequenceState

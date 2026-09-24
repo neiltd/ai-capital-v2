@@ -19,12 +19,13 @@ import { inspect } from 'node:util'
 import { afterEach, describe, expect, it } from 'vitest'
 
 import {
-  CliRefused, DEFAULT_PSQL, EXIT_FAILED, EXIT_OK, EXIT_PUBLISHED_UNVERIFIED, EXIT_REFUSED,
+  CliRefused, DEFAULT_PSQL, EXIT_FAILED, EXIT_OK, EXIT_PUBLICATION_UNKNOWN,
+  EXIT_PUBLISHED_UNVERIFIED, EXIT_REFUSED,
   GIT, INGESTION_SUBMODULE, OPTIONS, REQUIRED, dispositionOf, isDirectEntrypoint, parseArgs,
   repositoryProvenance,
 } from '../bin/pg-copy-manifest.js'
 import {
-  EvidencePublishedButUnverified, EvidenceRefused,
+  EvidencePublicationUnknown, EvidencePublishedButUnverified, EvidenceRefused,
 } from '../src/pg-copy/evidence.js'
 import { ManifestRefused } from '../src/pg-copy/source-manifest.js'
 import { FORBIDDEN_PSQL_ARGS, sterileBatchEnv } from '../src/pg-copy/export-role.js'
@@ -85,8 +86,9 @@ describe('the entry point is inert on import', () => {
     expect(CLI).toContain('isDirectEntrypoint(process.argv[1], import.meta.url)')
   })
 
-  it('exits 0, 1, 2 and 3 for success, failure, refusal and published-but-unverified', () => {
-    expect([EXIT_OK, EXIT_FAILED, EXIT_REFUSED, EXIT_PUBLISHED_UNVERIFIED]).toEqual([0, 1, 2, 3])
+  it('exits 0-4 for success, failure, refusal, published-but-unverified and unknown', () => {
+    expect([EXIT_OK, EXIT_FAILED, EXIT_REFUSED, EXIT_PUBLISHED_UNVERIFIED,
+            EXIT_PUBLICATION_UNKNOWN]).toEqual([0, 1, 2, 3, 4])
   })
 })
 
@@ -277,6 +279,23 @@ describe('the transport error boundary, against a psql that leaks everything', (
     for (const r of roots.splice(0)) rmSync(r, { recursive: true, force: true })
   })
 
+  /**
+   * A fake psql that NEVER answers and ignores stdin entirely.
+   *
+   * It must outlive a graceful close, or the test would prove nothing: the
+   * point is that `abandon` escalates to SIGKILL and reaps.
+   */
+  function silentPsql(): string {
+    const dir = mkdtempSync(join(tmpdir(), 'pgcopy-silentpsql-'))
+    roots.push(dir)
+    const bin = join(dir, 'psql')
+    // The loop keeps the SHELL itself alive, so its command line - which is
+    // what `ps` is searched for - stays this exact binary path.
+    writeFileSync(bin, ['#!/bin/sh', 'trap "" TERM', 'while : ; do sleep 1; done'].join('\n'),
+                  { mode: 0o700 })
+    return bin
+  }
+
   /** A fake psql that answers the pid query and shouts canaries at everything else. */
   function fakePsql(opts: { pid?: string } = {}): string {
     const dir = mkdtempSync(join(tmpdir(), 'pgcopy-fakepsql-'))
@@ -309,11 +328,21 @@ describe('the transport error boundary, against a psql that leaks everything', (
     })
     try {
       expect(s.pid).toBe('4242')
-      // The LOW-LEVEL path may see the raw text - that is how it decides.
-      const raw = await s.send(SQL_CANARY)
-      expect(raw.error).toContain('pw_LEAKCANARY')
 
-      // The REVIEWED boundary may not repeat any of it.
+      // THE PUBLIC RESULT IS A TOKEN, NOT PROSE. The framing implementation
+      // reads psql's stderr to decide that this statement failed; what leaves
+      // the boundary is one fixed word, and there is nothing to read out of it.
+      const raw = await s.send(SQL_CANARY)
+      expect(raw.error).toBe('statement-refused')
+      expect(raw.rows).toEqual([])
+      const resultText = JSON.stringify(raw) + inspect(raw, { depth: 8, showHidden: true })
+      for (const canary of [SQL_CANARY, URL_CANARY, PATH_CANARY, 'pw_LEAKCANARY',
+                            'postgresql://', 'vault.secrets', '/Users/someone',
+                            'syntax error', 'LINE 1', 'DETAIL', 'ERROR']) {
+        expect(resultText, `send(): ${canary}`).not.toContain(canary)
+      }
+
+      // The REVIEWED boundary may not repeat any of it either.
       let thrown: unknown = null
       try { await s.must(SQL_CANARY) } catch (e) { thrown = e }
       expect(thrown).toBeInstanceOf(PsqlBackendRefused)
@@ -356,6 +385,41 @@ describe('the transport error boundary, against a psql that leaks everything', (
                                { encoding: 'utf-8', maxBuffer: 64 * 1024 * 1024 })
     expect(alive).not.toContain(bin)
   })
+
+  it('REAPS a child that stays alive while the opening statement times out', async () => {
+    // The case the earlier revision leaked: `raw()` raises the timeout as a
+    // PsqlBackendRefused, and the old catch rethrew that class directly -
+    // skipping cleanup in exactly the situation where the child is still
+    // running. A psql nobody holds a handle to is, for a supervisor, a backend
+    // that may still be holding the fence.
+    const before = openPsqlBackendCount()
+    const bin = silentPsql()
+    const started = Date.now()
+    let thrown: unknown = null
+    try {
+      await openPsqlBackend({
+        psqlPath: bin, host: '/tmp/sock', port: 5432,
+        database: 'ai_capital', user: 'ai_capital_v3_export',
+        __statementTimeoutMs: 400, __closeGraceMs: 400,
+      })
+    } catch (e) { thrown = e }
+
+    expect(thrown).toBeInstanceOf(PsqlBackendRefused)
+    expect((thrown as PsqlBackendRefused).reason)
+      .toBe('the psql session timed out on a statement')
+    // It really did time out rather than fail instantly for another reason.
+    expect(Date.now() - started).toBeGreaterThanOrEqual(400)
+    expect(openPsqlBackendCount()).toBe(before)
+
+    // The child - which ignores stdin and would otherwise outlive us - is gone,
+    // and so is every descendant it could have left.
+    const alive = execFileSync('/bin/ps', ['-Ao', 'command'],
+                               { encoding: 'utf-8', maxBuffer: 64 * 1024 * 1024 })
+    expect(alive).not.toContain(bin)
+    // No descendant either: nothing anywhere still names this run's directory.
+    expect(alive).not.toContain(bin.slice(0, bin.lastIndexOf('/')))
+    expect(surfaces(thrown)).not.toContain(bin)
+  }, 60_000)
 
   it('refuses a statement on an exited session without naming it', async () => {
     const s = await openPsqlBackend({
@@ -450,6 +514,29 @@ describe('the CLI tells the truth about what is on disk', () => {
       // THE LINE THAT MUST NEVER APPEAR HERE.
       expect(text, phase).not.toContain('No manifest was published')
     }
+  })
+
+  it('says the outcome is UNKNOWN, refuses to claim absence, and exits 4', () => {
+    const d = dispositionOf(new EvidencePublicationUnknown(
+      'source-manifest-20260924T101530Z-a1b2c3d4', '.tmp-a1b2c3d4'))
+    const text = d.lines.join('\n')
+    expect(d.exitCode).toBe(EXIT_PUBLICATION_UNKNOWN)
+    expect(text).toContain('Publication state is UNKNOWN')
+    expect(text).toContain('the final name may or may not exist')
+    expect(text).toContain('a retry is NOT safe')
+    expect(text).toContain('nothing has been removed or repaired')
+    expect(text).toContain('source-manifest-20260924T101530Z-a1b2c3d4')
+    // THE LINE THAT MUST NEVER APPEAR HERE.
+    expect(text).not.toContain('No manifest was published')
+  })
+
+  it('the absence claim is unreachable for both published and unknown outcomes', () => {
+    // Asserted on the source too, so the ordering that makes it unreachable
+    // cannot be quietly rearranged.
+    expect(CLI.indexOf('EXIT_PUBLICATION_UNKNOWN, lines'))
+      .toBeLessThan(CLI.indexOf('EXIT_PUBLISHED_UNVERIFIED, lines'))
+    expect(CLI.indexOf('EXIT_PUBLISHED_UNVERIFIED, lines'))
+      .toBeLessThan(CLI.indexOf('No manifest was published under the final name'))
   })
 
   it('says NOTHING was published for a pre-rename refusal, and exits 2', () => {

@@ -249,12 +249,22 @@ describe('the export role', () => {
         expect(r.error, q).toBeNull()
       }
       // The sequence relations are NOT readable by it: the authority grants no
-      // sequence privilege at all.
+      // sequence privilege at all. Proved as a bounded outcome plus the STATE
+      // that makes it meaningful - the supervisor reads the very same
+      // statement successfully, so the refusal is about authority, not SQL.
       for (const q of FENCE_SEQUENCES) {
         const r = await e.send(SEQUENCE_STATE_SQL(q))
-        expect(r.error, q).not.toBeNull()
-        expect(r.error, q).toMatch(/permission denied/i)
+        expect(r.error, q).toBe('statement-refused')
+        expect(r.rows, q).toEqual([])
       }
+      const sup = await openPsqlSession(C, DB)
+      try {
+        for (const q of FENCE_SEQUENCES) {
+          const ok = await sup.send(SEQUENCE_STATE_SQL(q))
+          expect(ok.error, q).toBeNull()
+          expect(ok.rows.length, q).toBe(1)
+        }
+      } finally { await sup.close() }
     } finally { await e.close() }
   }, 300_000)
 })
@@ -385,7 +395,13 @@ describe('Stage 1, end to end, under a held fence', () => {
         const r2 = await blocked.send(
           "INSERT INTO capital.watchlist (ticker, company, themes, added_at, news_search_terms)" +
           " VALUES ('QQQ','Q','q', now(), 'q')")
-        expect(r2.error).toMatch(/lock timeout|canceling statement/i)
+        expect(r2.error).toBe('statement-refused')
+        // The write really was blocked by the FENCE: the same statement
+        // succeeds once nothing holds it (proved in the fence suite), and the
+        // table is unchanged here.
+        const after = await blocked.must(
+          `SELECT pg_catalog.count(*)::pg_catalog.text FROM capital.watchlist`)
+        expect(after[0][0]).toBe('3')
       } finally { await blocked.close() }
     } finally {
       await supervisor.send('ROLLBACK')

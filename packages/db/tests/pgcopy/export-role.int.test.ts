@@ -230,7 +230,17 @@ describe('the export role, its authority and the fenced extraction', () => {
       `TRUNCATE ${LEDGER_RELATION}`,
     ]) {
       const r = await session.send(sql)
-      expect(r.error, sql).toMatch(/permission denied/i)
+      // A BOUNDED outcome. What makes it mean "denied" rather than "malformed"
+      // is the catalogue, asserted immediately below: the role genuinely holds
+      // no privilege on this relation. PostgreSQL's prose is not repeated,
+      // because the transport no longer carries it across its boundary.
+      expect(r.error, sql).toBe('statement-refused')
+    }
+    for (const priv of ['SELECT', 'INSERT', 'UPDATE', 'DELETE', 'TRUNCATE']) {
+      const has = await session.must(
+        `SELECT pg_catalog.has_table_privilege('${EXPORT_ROLE_NAME}', ` +
+        `'${LEDGER_RELATION}', '${priv}')::pg_catalog.text`)
+      expect(has[0][0], `${LEDGER_RELATION} ${priv}`).toBe('false')
     }
   }, 300_000)
 
@@ -248,7 +258,14 @@ describe('the export role, its authority and the fenced extraction', () => {
     expect(outside).toContain('trade.probe')
     for (const q of outside) {
       const r = await session.send(`SELECT * FROM ${q}`)
-      expect(r.error, q).toMatch(/permission denied/i)
+      expect(r.error, q).toBe('statement-refused')
+      // The catalogue is the authority on WHY, asserted rather than inferred
+      // from a message - and asked of the SUPERUSER, because the export role
+      // cannot even resolve a relation in a schema it has no USAGE on.
+      const has = await C.rows(
+        `SELECT pg_catalog.has_table_privilege('${EXPORT_ROLE_NAME}', '${q}', ` +
+        `'SELECT')::pg_catalog.text`, DB)
+      expect(has[0][0], q).toBe('false')
     }
   }, 300_000)
 

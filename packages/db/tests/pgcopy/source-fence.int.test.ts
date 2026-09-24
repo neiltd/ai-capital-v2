@@ -29,6 +29,12 @@ const SRC = 'source_v19'
 const TGT = 'target_v19'
 /** A reviewed table with a text primary key, used for the writer probes. */
 const T = 'graph.nodes'
+/**
+ * A reviewed table NO foreign key points at, so `TRUNCATE` on it can only be
+ * stopped by the fence. `graph.nodes` is referenced by `graph.edges`, and
+ * PostgreSQL refuses to truncate a referenced table regardless of any lock.
+ */
+const UNREFERENCED = 'portfolio.positions'
 const SHORT_TIMEOUT = `SET lock_timeout = '1200ms'`
 
 let C: DisposableCluster
@@ -84,14 +90,31 @@ describe('the table fence holds the reviewed 21 still', () => {
     const w = await openPsqlSession(C, SRC)
     try {
       await w.must(SHORT_TIMEOUT)
-      for (const stmt of [
+      // TRUNCATE IS PROBED ON A DIFFERENT TABLE, AND THAT IS THE POINT.
+      // `graph.nodes` is referenced by a foreign key, so `TRUNCATE` on it is
+      // refused whether or not a fence is held - which the control loop below
+      // caught: the original probe was passing for the wrong reason. The
+      // TRUNCATE probe therefore runs on a reviewed table with no inbound
+      // reference, where only the fence can stop it.
+      const WRITES = [
         `INSERT INTO ${T} SELECT * FROM ${T} WHERE false`,
         `UPDATE ${T} SET ticker = ticker WHERE false`,
         `DELETE FROM ${T} WHERE false`,
-        `TRUNCATE ${T}`,
-      ]) {
+        `TRUNCATE ${UNREFERENCED}`,
+      ]
+      for (const stmt of WRITES) {
         const r = await w.send(stmt)
-        expect(r.error, `${stmt} was NOT blocked`).toMatch(/lock timeout/)
+        expect(r.error, `${stmt} was NOT blocked`).toBe('statement-refused')
+        await w.send('ROLLBACK')
+      }
+      // NON-VACUOUS, and the reason a bounded token is enough here: the SAME
+      // four statements SUCCEED on the SAME session once the fence is gone. A
+      // refusal that survived that control would be a syntax error, not a
+      // fence - which is what matching PostgreSQL's prose used to rule out.
+      await sup.send('ROLLBACK')
+      for (const stmt of WRITES) {
+        const r = await w.send(stmt)
+        expect(r.error, `${stmt} was refused with NO fence held`).toBeNull()
         await w.send('ROLLBACK')
       }
     } finally { await w.close(); await sup.close() }
@@ -118,7 +141,12 @@ describe('the table fence holds the reviewed 21 still', () => {
     const sup = await openPsqlSession(C, SRC)
     try {
       await expect(acquireSourceFence(sup)).rejects.toThrow(FenceRefused)
-      await expect(acquireSourceFence(sup)).rejects.toThrow(/lock timeout|current transaction is aborted/)
+      // The session is now inside an aborted transaction, so the SECOND
+      // attempt cannot even read its own backend pid: it fails at statement 1
+      // rather than quietly succeeding. Named by ordinal, because the
+      // transport no longer carries PostgreSQL's wording across its boundary.
+      await expect(acquireSourceFence(sup))
+        .rejects.toThrow(/fence statement 1 of the reviewed sequence was refused/)
     } finally {
       await sup.send('ROLLBACK'); await sup.close()
       await w.send('ROLLBACK'); await w.close()
@@ -206,7 +234,7 @@ describe('the table fence holds the reviewed 21 still', () => {
 
 interface CandidateResult {
   accepted: boolean
-  acceptError: string | null
+  acceptError: 'statement-refused' | null
   p1ByteIdentity: boolean
   p2NextvalBlocked: boolean
   p3ReadsTruthful: boolean
@@ -255,7 +283,7 @@ async function evaluate(id: SequenceFenceId): Promise<CandidateResult> {
       const res = await sup.send(sql)
       if (res.error !== null) {
         r.accepted = false
-        r.acceptError = res.error.replace(/^psql:[^:]*:\d+: /, '')
+        r.acceptError = res.error
         break
       }
     }
@@ -466,10 +494,18 @@ describe('sequence-fence candidates S1-S4, evaluated against live PostgreSQL 17'
           : ` error=${String(r.acceptError)} | sql: ${r.sql.join(' ;; ')}`))
     }
 
+    // REFUSED BY THE SERVER, proved as a bounded outcome. The wording
+    // PostgreSQL 17 uses - "not supported for sequences" for S1 and "cannot
+    // lock rows in sequence" for S4 - is recorded in source-fence.ts, where it
+    // belongs; asserting it here would mean the transport had carried raw
+    // server prose across a boundary that exists to stop exactly that.
     expect(results.S1!.accepted, `S1 unexpectedly accepted`).toBe(false)
-    expect(results.S1!.acceptError).toMatch(/not supported for sequences|cannot lock relation/)
+    expect(results.S1!.acceptError).toBe('statement-refused')
     expect(results.S4!.accepted, `S4 unexpectedly accepted`).toBe(false)
-    expect(results.S4!.acceptError).toMatch(/cannot lock rows in sequence/)
+    expect(results.S4!.acceptError).toBe('statement-refused')
+    // NON-VACUOUS: the two candidates that WERE accepted refused nothing.
+    expect(results.S2!.acceptError).toBeNull()
+    expect(results.S3!.acceptError).toBeNull()
     expect(results.S2!.accepted).toBe(true)
     expect(results.S3!.accepted).toBe(true)
   })

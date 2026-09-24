@@ -100,13 +100,20 @@ export const EXPORT_ROLLBACK_SQL = 'ROLLBACK'
  * that proves its read-only-ness against one moment and its cluster identity
  * against another proves neither.
  *
- * THE CLUSTER'S OWN IDENTITY IS THE ANCHOR. `pg_control_system()` reports the
- * `system_identifier` written into pg_control at `initdb` - a 64-bit value no
- * two clusters share, which a host name, a port or a database name cannot
- * substitute for. All three of those can be repointed at a different cluster
- * without changing a single character of the command line; the system
- * identifier cannot. It is read as `::text` so the exact decimal survives - a
- * JSON number would round a 19-digit value silently.
+ * THE CLUSTER'S OWN IDENTITY IS THE ANCHOR, AND EXACTLY WHAT IT IDENTIFIES.
+ * `pg_control_system()` reports the `system_identifier` written into
+ * pg_control at `initdb`. It identifies a cluster's LINEAGE, not a running
+ * server: a physical copy, a `pg_basebackup` replica, a PITR restore and a
+ * filesystem clone of PGDATA all carry the SAME identifier as their origin, so
+ * it must not be described as unique per cluster. What it does do is what this
+ * check needs - a host name, a port and a database name can each be repointed
+ * at an UNRELATED cluster without changing a character of the command line,
+ * and the identifier cannot. So a mismatch proves the wrong lineage, and a
+ * match narrows the source to one lineage rather than to one server.
+ * Distinguishing a primary from its own replica is a different question, and
+ * the fence, the read-only snapshot and the export role's authority are what
+ * answer it. Read as `::text` so the exact decimal survives - a JSON number
+ * would round a 19-digit value silently.
  *
  * BOTH ROLE NAMES. `CURRENT_USER` is the effective role and `SESSION_USER` is
  * the authenticated one; they differ after `SET ROLE`, and a session that

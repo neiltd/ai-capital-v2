@@ -136,6 +136,7 @@ export type EvidenceReason =
   | 'the published bundle carries no digest file'
   | 'a path could not be examined'
   | 'this platform offers no atomic no-replace publication'
+  | 'the publication outcome could not be determined'
 
 /**
  * A refusal. Carries the phase, the reviewed reason and, at most, a RELATIVE
@@ -154,6 +155,33 @@ export class EvidenceRefused extends Error {
   ) {
     super(`${reason} (phase ${phase}${relativePath === null ? '' : ` at ${relativePath}`})`)
     this.name = 'EvidenceRefused'
+  }
+}
+
+/**
+ * THE PUBLICATION OUTCOME IS UNKNOWN. Nothing may be assumed or touched.
+ *
+ * Reached when the atomic helper did not report - killed, timed out, died on a
+ * signal - AND the subsequent fail-closed examination could not establish
+ * which side of the rename the filesystem ended up on. `renamex_np` is atomic,
+ * but the REPORTING of it is not, so a helper can complete the rename and then
+ * be killed microseconds before its exit code is observed.
+ *
+ * This is deliberately NOT retryable and deliberately not tidied. A retry
+ * would either publish a second bundle beside a first one nobody knows about,
+ * or refuse on a destination it created itself. Both the temporary and the
+ * final names are preserved exactly, and a person has to look.
+ */
+export class EvidencePublicationUnknown extends Error {
+  constructor(
+    readonly publishedName: string,
+    readonly temporaryName: string,
+  ) {
+    super(
+      'the publication outcome could not be determined, and nothing has been removed or ' +
+      'repaired. Inspect both names before any retry; a retry is NOT safe. ' +
+      `published=${publishedName} temporary=${temporaryName}`)
+    this.name = 'EvidencePublicationUnknown'
   }
 }
 
@@ -343,6 +371,69 @@ export function assertEvidenceRoot(root: string, ops: EvidenceOps = REAL_EVIDENC
  * precisely the case that must refuse - publishing onto it would write through
  * the link to wherever it points.
  */
+/**
+ * A path's filesystem IDENTITY - `device:inode` - or null if it is absent.
+ *
+ * Identity, not existence, is what resolves an unreported rename: after
+ * `renamex_np` the SAME directory object lives under a new name, so finding
+ * the temporary directory's original device and inode at the final path is
+ * proof the syscall ran, and finding it still at the temporary path is proof
+ * it did not. Comparing names or mere presence could not tell either apart
+ * from a directory somebody else created.
+ *
+ * Fail-closed, exactly like `pathIsPresent`: only ENOENT means absent.
+ */
+export function pathIdentity(
+  path: string, ops: EvidenceOps = REAL_EVIDENCE_OPS,
+): string | null {
+  try {
+    const st = ops.lstatSync(path, { bigint: true }) as unknown as
+      { dev: bigint; ino: bigint }
+    return `${String(st.dev)}:${String(st.ino)}`
+  } catch (e) {
+    if ((e as NodeJS.ErrnoException | null)?.code === 'ENOENT') return null
+    throw new EvidenceRefused('publish', 'a path could not be examined')
+  }
+}
+
+/** What an unreported rename turned out to have done. */
+export type PublicationDisposition =
+  | 'published'
+  | 'not-published'
+  | 'destination-exists'
+  | 'unknown'
+
+/**
+ * Resolve an unreported rename by LOOKING, never by assuming.
+ *
+ * Four outcomes, and anything that is not exactly one of the first three -
+ * including a probe that throws - is `unknown`. There is no default that
+ * guesses in the direction of "nothing happened", because that is the guess
+ * that reports a published bundle as absent.
+ */
+export function classifyUnreportedRename(
+  temporaryPath: string, finalPath: string, temporaryIdentityBefore: string,
+  ops: EvidenceOps = REAL_EVIDENCE_OPS,
+): PublicationDisposition {
+  let tempNow: string | null
+  let finalNow: string | null
+  try {
+    tempNow = pathIdentity(temporaryPath, ops)
+    finalNow = pathIdentity(finalPath, ops)
+  } catch {
+    return 'unknown'
+  }
+  // The bundle moved: the object that was the temporary directory is now the
+  // final name, and the temporary name is gone.
+  if (tempNow === null && finalNow === temporaryIdentityBefore) return 'published'
+  // The bundle did not move: it is still itself, under its own name, and
+  // nothing is at the destination.
+  if (tempNow === temporaryIdentityBefore && finalNow === null) return 'not-published'
+  // The bundle did not move, and something ELSE is at the destination.
+  if (tempNow === temporaryIdentityBefore && finalNow !== null) return 'destination-exists'
+  return 'unknown'
+}
+
 export function pathIsPresent(path: string, ops: EvidenceOps = REAL_EVIDENCE_OPS): boolean {
   try {
     ops.lstatSync(path)
@@ -642,7 +733,31 @@ export function publishEvidence(
   //     `unavailable` is a REFUSAL, never a fallback: publishing through an
   //     overwrite-capable primitive would silently downgrade the one guarantee
   //     this function exists to make.
-  const outcome = ops.renameNoReplace(tempPath, finalPath)
+  //
+  //     IDENTITY IS TAKEN FIRST, because the helper can complete the rename
+  //     and then be killed before its exit code is observed. `device:inode` is
+  //     what makes that resolvable afterwards: the same directory OBJECT under
+  //     a new name is proof the syscall ran.
+  const temporaryIdentity = pathIdentity(tempPath, ops)
+  if (temporaryIdentity === null) {
+    throw new EvidenceRefused('publish', 'a path could not be examined')
+  }
+
+  let outcome = ops.renameNoReplace(tempPath, finalPath)
+
+  // THE HELPER DID NOT REPORT. Resolve it by looking at both paths, and never
+  // by assuming which side of the rename the filesystem ended up on.
+  if (outcome === 'indeterminate') {
+    const disposition = classifyUnreportedRename(tempPath, finalPath, temporaryIdentity, ops)
+    if (disposition === 'unknown') {
+      // NOT retryable, NOT tidied. Everything stays exactly as it is.
+      throw new EvidencePublicationUnknown(names.finalName, names.temporaryName)
+    }
+    outcome = disposition === 'published' ? 'published'
+      : disposition === 'destination-exists' ? 'destination-exists'
+        : 'failed'
+  }
+
   if (outcome === 'destination-exists') {
     throw new EvidenceRefused(
       'publish', 'a path is already present at the publication destination')

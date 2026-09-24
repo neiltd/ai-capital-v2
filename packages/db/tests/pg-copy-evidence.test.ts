@@ -24,10 +24,12 @@ import { inspect } from 'node:util'
 import { afterEach, describe, expect, it } from 'vitest'
 
 import {
-  HELPER_SOURCE, LIBSYSTEM, PYTHON3, RENAME_EXCL, atomicRenameNoReplace,
+  HELPER_SOURCE, LIBSYSTEM, PYTHON3, PYTHON_ISOLATION_FLAGS, RENAME_EXCL,
+  atomicRenameNoReplace,
 } from '../src/pg-copy/atomic-rename.js'
 import {
-  BUILD_DIR_MODE, DIGEST_FILE, EvidencePublishedButUnverified, EvidenceRefused,
+  BUILD_DIR_MODE, DIGEST_FILE, EvidencePublicationUnknown, EvidencePublishedButUnverified,
+  EvidenceRefused, classifyUnreportedRename, pathIdentity,
   FROZEN_DIR_MODE, FROZEN_FILE_MODE, REAL_EVIDENCE_OPS, assertArtifactPath, assertEvidenceRoot,
   digestFileText, evidenceNames, evidenceStamp, newRunId, parseDigestFile, pathIsPresent,
   publishEvidence, sha256Hex, verifyPublishedEvidence,
@@ -801,5 +803,321 @@ describe('publication state is truthful on both sides of the rename', () => {
       expect(pathIsPresent(finalOf(root)), label).toBe(false)
       expect(readdirSync(root), label).toEqual([`.tmp-${RUN}`])
     }
+  })
+})
+
+// ---------------------------------------------------------------------------
+// D — the interpreter cannot be made to run anything of its own
+// ---------------------------------------------------------------------------
+
+describe('the atomic helper runs in an isolated interpreter', () => {
+  it('declares -I and -S, and the helper refuses to act without them', () => {
+    expect([...PYTHON_ISOLATION_FLAGS]).toEqual(['-I', '-S'])
+    // The program checks for itself, so an invocation that dropped the flags
+    // exits "unavailable" rather than doing the rename in a loaded interpreter.
+    expect(HELPER_SOURCE).toContain('sys.flags.isolated and sys.flags.no_site')
+  })
+
+  it('reports isolated and no-site as ACTIVE when invoked the way publication does', () => {
+    const out = execFileSync(PYTHON3, [...PYTHON_ISOLATION_FLAGS, '-'], {
+      input: 'import sys; print(sys.flags.isolated, sys.flags.no_site, "sitecustomize" in sys.modules)',
+      encoding: 'utf-8',
+      env: { PATH: '/usr/bin:/bin', LC_ALL: 'C', LANG: 'C' },
+    }).trim()
+    expect(out).toBe('1 1 False')
+  })
+
+  it('does NOT import a canary module from the WORKING DIRECTORY', () => {
+    // MEASURED, and the reason this is an IMPORT canary rather than a
+    // sitecustomize one: a plain `python3 -` puts '' - the working directory -
+    // at sys.path[0], so any module there is importable and its top-level code
+    // runs. `sitecustomize` is not reached that way on this interpreter; the
+    // user-site vector below is. Both are covered, each by what actually works.
+    const root = makeRoot()
+    const canary = join(root, 'IMPORT_CANARY_RAN')
+    writeFileSync(join(root, 'evilmod.py'),
+                  `open(${JSON.stringify(canary)}, 'w').write('x')\n`)
+    mkdirSync(join(root, 'src'), { mode: 0o700 })
+    writeFileSync(join(root, 'src', 'f'), 'payload')
+
+    // NON-VACUOUS FIRST: unisolated, from this directory, the module imports
+    // and its code runs.
+    execFileSync(PYTHON3, ['-'], {
+      input: 'import evilmod', cwd: root, env: { PATH: '/usr/bin:/bin' },
+    })
+    expect(pathIsPresent(canary)).toBe(true)
+    rmSync(canary, { force: true })
+
+    // Isolated, it is not even on the path.
+    const probe = execFileSync(PYTHON3, [...PYTHON_ISOLATION_FLAGS, '-'], {
+      input: 'import sys\nprint(sys.path[0])\ntry:\n import evilmod\n print("IMPORTED")\n' +
+             'except ModuleNotFoundError:\n print("NOT-FOUND")\n',
+      cwd: root, encoding: 'utf-8', env: { PATH: '/usr/bin:/bin' },
+    })
+    expect(probe).toContain('NOT-FOUND')
+    expect(probe.split('\n')[0]).not.toBe('')
+    expect(probe.split('\n')[0]).not.toBe(root)
+
+    // And publication itself, run from that same directory, is unaffected.
+    const before = process.cwd()
+    try {
+      process.chdir(root)
+      expect(atomicRenameNoReplace(join(root, 'src'), join(root, 'moved'))).toBe('published')
+    } finally {
+      process.chdir(before)
+    }
+    expect(readFileSync(join(root, 'moved', 'f'), 'utf-8')).toBe('payload')
+    expect(pathIsPresent(canary)).toBe(false)
+  })
+
+  it('does NOT execute a sitecustomize canary from the USER SITE directory', () => {
+    const root = makeRoot()
+    const userSite = execFileSync(PYTHON3, ['-c', 'import site; print(site.getusersitepackages())'],
+                                  { encoding: 'utf-8' }).trim()
+    const planted = join(userSite, 'sitecustomize.py')
+    const canary = join(root, 'CANARY_USERSITE')
+    if (pathIsPresent(planted)) return   // never disturb a real one
+    mkdirSync(userSite, { recursive: true })
+    try {
+      writeFileSync(planted, `open(${JSON.stringify(canary)}, 'w').write('x')\n`)
+      mkdirSync(join(root, 'src'), { mode: 0o700 })
+      expect(atomicRenameNoReplace(join(root, 'src'), join(root, 'moved'))).toBe('published')
+      expect(pathIsPresent(canary)).toBe(false)
+      // NON-VACUOUS: unisolated, it runs.
+      execFileSync(PYTHON3, ['-c', 'pass'], { env: { PATH: '/usr/bin:/bin' } })
+      expect(pathIsPresent(canary)).toBe(true)
+    } finally {
+      rmSync(planted, { force: true })
+    }
+  })
+})
+
+// ---------------------------------------------------------------------------
+// C — an unreported rename is resolved by looking, never by assuming
+// ---------------------------------------------------------------------------
+
+describe('the publication outcome is resolved, not guessed', () => {
+  const finalName = `source-manifest-${STAMP}-${RUN}`
+
+  it('identifies a path by device and inode, and fails closed', () => {
+    const root = makeRoot()
+    mkdirSync(join(root, 'a'), { mode: 0o700 })
+    const id = pathIdentity(join(root, 'a'))
+    expect(id).toMatch(/^\d+:\d+$/)
+    expect(pathIdentity(join(root, 'absent'))).toBeNull()
+    // The SAME object under a new name keeps its identity - which is the whole
+    // reason identity, and not presence, resolves an unreported rename.
+    renameSync(join(root, 'a'), join(root, 'b'))
+    expect(pathIdentity(join(root, 'b'))).toBe(id)
+
+    const ops: EvidenceOps = {
+      ...REAL_EVIDENCE_OPS,
+      lstatSync: (() => {
+        const e = new Error('EIO: injected') as NodeJS.ErrnoException
+        e.code = 'EIO'
+        throw e
+      }) as typeof lstatSync,
+    }
+    expect(() => pathIdentity(join(root, 'b'), ops)).toThrow(/could not be examined/)
+  })
+
+  it('classifies all four states of an unreported rename', () => {
+    const root = makeRoot()
+    const mk = (n: string): string => { mkdirSync(join(root, n), { mode: 0o700 }); return join(root, n) }
+
+    // published: the object moved, the temporary name is gone.
+    const t1 = mk('t1'); const id1 = pathIdentity(t1) as string
+    renameSync(t1, join(root, 'f1'))
+    expect(classifyUnreportedRename(t1, join(root, 'f1'), id1)).toBe('published')
+
+    // not-published: still itself, destination absent.
+    const t2 = mk('t2'); const id2 = pathIdentity(t2) as string
+    expect(classifyUnreportedRename(t2, join(root, 'f2'), id2)).toBe('not-published')
+
+    // destination-exists: still itself, something ELSE at the destination.
+    const t3 = mk('t3'); const id3 = pathIdentity(t3) as string
+    mk('f3')
+    expect(classifyUnreportedRename(t3, join(root, 'f3'), id3)).toBe('destination-exists')
+
+    // unknown: neither path is the object we started with.
+    const t4 = mk('t4'); const id4 = pathIdentity(t4) as string
+    rmSync(t4, { recursive: true })
+    mk('f4')
+    expect(classifyUnreportedRename(t4, join(root, 'f4'), id4)).toBe('unknown')
+
+    // unknown: the probe itself could not answer.
+    const ops: EvidenceOps = {
+      ...REAL_EVIDENCE_OPS,
+      lstatSync: (() => {
+        const e = new Error('EACCES') as NodeJS.ErrnoException
+        e.code = 'EACCES'
+        throw e
+      }) as typeof lstatSync,
+    }
+    expect(classifyUnreportedRename(t2, join(root, 'f2'), id2, ops)).toBe('unknown')
+  })
+
+  it('DETECTS a rename that really happened but was never reported', () => {
+    const root = makeRoot()
+    // The helper completes the syscall and is then killed: the rename is
+    // atomic, the REPORTING of it is not.
+    const { ops } = recordingOps({
+      renameNoReplace: (a: string, b: string) => {
+        REAL_EVIDENCE_OPS.renameNoReplace(a, b)
+        return 'indeterminate'
+      },
+    })
+    const p = publish(root, {}, ops)
+    // Publication is recognised and the sequence COMPLETES: frozen, synced and
+    // verified, exactly as if the helper had reported its zero.
+    expect(p.finalPath).toBe(join(root, finalName))
+    expect(lstatSync(p.finalPath).mode & 0o777).toBe(FROZEN_DIR_MODE)
+    expect(verifyPublishedEvidence(p.finalPath)).toEqual(
+      ['manifest.json', 'source-contract.json', DIGEST_FILE])
+    expect(pathIsPresent(join(root, `.tmp-${RUN}`))).toBe(false)
+  })
+
+  it('detects that an unreported rename did NOT happen', () => {
+    const root = makeRoot()
+    const { ops } = recordingOps({ renameNoReplace: () => 'indeterminate' })
+    let thrown: unknown = null
+    try { publish(root, {}, ops) } catch (e) { thrown = e }
+    expect(thrown).toBeInstanceOf(EvidenceRefused)
+    expect(thrown).not.toBeInstanceOf(EvidencePublicationUnknown)
+    expect(pathIsPresent(join(root, finalName))).toBe(false)
+    expect(pathIsPresent(join(root, `.tmp-${RUN}`))).toBe(true)
+  })
+
+  it('detects a destination collision behind an unreported rename, preserving both', () => {
+    const root = makeRoot()
+    const { ops } = recordingOps({
+      renameNoReplace: () => {
+        mkdirSync(join(root, finalName), { mode: 0o700 })
+        writeFileSync(join(root, finalName, 'theirs.json'), '{"theirs":1}')
+        return 'indeterminate'
+      },
+    })
+    expect(() => publish(root, {}, ops))
+      .toThrow(/already present at the publication destination/)
+    expect(readFileSync(join(root, finalName, 'theirs.json'), 'utf-8')).toBe('{"theirs":1}')
+    expect(readdirSync(join(root, `.tmp-${RUN}`)).sort())
+      .toEqual([DIGEST_FILE, 'manifest.json', 'source-contract.json'])
+  })
+
+  it('reports UNKNOWN, preserves everything, and never claims absence', () => {
+    const root = makeRoot()
+    const { ops } = recordingOps({
+      renameNoReplace: (a: string) => {
+        // The temporary directory is gone and the destination is not what we
+        // started with: nothing here can say which side the filesystem is on.
+        rmSync(a, { recursive: true, force: true })
+        mkdirSync(join(root, finalName), { mode: 0o700 })
+        return 'indeterminate'
+      },
+    })
+    let thrown: unknown = null
+    try { publish(root, {}, ops) } catch (e) { thrown = e }
+    expect(thrown).toBeInstanceOf(EvidencePublicationUnknown)
+    const e = thrown as EvidencePublicationUnknown
+    expect(e.publishedName).toBe(finalName)
+    expect(e.temporaryName).toBe(`.tmp-${RUN}`)
+    expect(String(e.message)).toContain('a retry is NOT safe')
+    expect(String(e.message)).toContain('nothing has been removed or repaired')
+    // Whatever is there is still there.
+    expect(pathIsPresent(join(root, finalName))).toBe(true)
+    const seen = surfaces(thrown)
+    expect(seen).not.toContain(root)
+    expect(seen).not.toContain('/var/folders')
+  })
+
+  it('an unreported rename it cannot even probe is UNKNOWN, not "nothing happened"', () => {
+    const root = makeRoot()
+    let renamed = false
+    const real = REAL_EVIDENCE_OPS.lstatSync
+    const { ops } = recordingOps({
+      renameNoReplace: () => { renamed = true; return 'indeterminate' },
+      lstatSync: ((pth: string, o?: unknown) => {
+        if (renamed) {
+          const err = new Error('EIO: injected') as NodeJS.ErrnoException
+          err.code = 'EIO'
+          throw err
+        }
+        return real(pth, o as never)
+      }) as typeof lstatSync,
+    })
+    let thrown: unknown = null
+    try { publish(root, {}, ops) } catch (e) { thrown = e }
+    expect(thrown).toBeInstanceOf(EvidencePublicationUnknown)
+    expect(pathIsPresent(join(root, `.tmp-${RUN}`))).toBe(true)
+  })
+})
+
+// ---------------------------------------------------------------------------
+// C — what the HELPER ITSELF reports, for outcomes only a dying process makes
+// ---------------------------------------------------------------------------
+
+describe('the atomic helper classifies its own outcomes truthfully', () => {
+  /** A fake interpreter. It receives `-I -S - <from> <to>`, i.e. $4 and $5. */
+  function fakeInterpreter(body: readonly string[]): string {
+    const dir = mkdtempSync(join(tmpdir(), 'pgcopy-fakepy-'))
+    ROOTS.push(dir)
+    const bin = join(dir, 'python3')
+    writeFileSync(bin, ['#!/bin/sh', 'cat > /dev/null', ...body].join('\n'), { mode: 0o700 })
+    return bin
+  }
+
+  it('a helper that never returns is INDETERMINATE, not unavailable or failed', () => {
+    const root = makeRoot()
+    mkdirSync(join(root, 'src'), { mode: 0o700 })
+    const slow = fakeInterpreter(['sleep 30'])
+    expect(atomicRenameNoReplace(join(root, 'src'), join(root, 'dst'),
+                                 { __interpreter: slow, __timeoutMs: 500 }))
+      .toBe('indeterminate')
+  }, 60_000)
+
+  it('a helper KILLED after completing the rename is INDETERMINATE, and it really renamed', () => {
+    // The exact race the outcome exists for: `renamex_np` is atomic, the
+    // reporting of it is not. Reporting "failed" here would be a published
+    // bundle described as absent.
+    const root = makeRoot()
+    mkdirSync(join(root, 'src'), { mode: 0o700 })
+    writeFileSync(join(root, 'src', 'f'), 'payload')
+    // argv is: -I -S - <from> <to>, so the paths are $4 and $5.
+    const killer = fakeInterpreter(['mv "$4" "$5"', 'kill -9 $$'])
+    expect(atomicRenameNoReplace(join(root, 'src'), join(root, 'dst'),
+                                 { __interpreter: killer })).toBe('indeterminate')
+    expect(readFileSync(join(root, 'dst', 'f'), 'utf-8')).toBe('payload')
+    expect(pathIsPresent(join(root, 'src'))).toBe(false)
+  }, 60_000)
+
+  it('an exit code nobody assigned is INDETERMINATE', () => {
+    const root = makeRoot()
+    mkdirSync(join(root, 'src'), { mode: 0o700 })
+    expect(atomicRenameNoReplace(join(root, 'src'), join(root, 'dst'),
+                                 { __interpreter: fakeInterpreter(['exit 42']) }))
+      .toBe('indeterminate')
+  }, 60_000)
+
+  it('the reviewed exit codes still map to their own outcomes', () => {
+    const root = makeRoot()
+    mkdirSync(join(root, 'src'), { mode: 0o700 })
+    const cases: Array<[string, string]> = [
+      ['exit 0', 'published'],
+      ['exit 17', 'destination-exists'],
+      ['exit 3', 'unavailable'],
+      ['exit 1', 'failed'],
+    ]
+    for (const [body, expected] of cases) {
+      expect(atomicRenameNoReplace(join(root, 'src'), join(root, 'dst'),
+                                   { __interpreter: fakeInterpreter([body]) }), body)
+        .toBe(expected)
+    }
+  }, 60_000)
+
+  it('a MISSING interpreter is unavailable - the one case the syscall provably never ran', () => {
+    const root = makeRoot()
+    expect(atomicRenameNoReplace(join(root, 'src'), join(root, 'dst'),
+                                 { __interpreter: join(root, 'no-such-interpreter') }))
+      .toBe('unavailable')
   })
 })

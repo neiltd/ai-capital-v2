@@ -137,10 +137,14 @@ describe('the statements the supervisor issues', () => {
       send: async (sql: string) => {
         sent.push(sql)
         if (sql.startsWith('SELECT pg_catalog.pg_backend_pid')) return { rows: [[SUP]], error: null }
-        if (sql === failing) return { rows: [], error: 'ERROR:  canceling statement due to lock timeout' }
+        // The transport reports a FIXED token; PostgreSQL's prose never
+        // reaches this module, so the fake cannot supply any either.
+        if (sql === failing) return { rows: [], error: 'statement-refused' as const }
         return { rows: [], error: null }
       },
-    })).rejects.toThrow(/lock timeout/)
+      // The refusal names WHICH statement by its ordinal in the reviewed
+      // sequence - pid, BEGIN, lock_timeout, advisory, then the four tables.
+    })).rejects.toThrow(/fence statement 8 of the reviewed sequence was refused/)
     expect(sent.filter(s => s === failing).length).toBe(1)
     expect(sent[sent.length - 1]).toBe(failing)
   })

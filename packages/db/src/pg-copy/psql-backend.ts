@@ -79,10 +79,27 @@ export class PsqlBackendRefused extends Error {
   }
 }
 
-/** One statement's outcome. `error` is psql's message, verbatim, or null. */
+/**
+ * The ONLY outcome a refused statement is reported as.
+ *
+ * A fixed token, not psql's prose. psql echoes the failing statement into
+ * stderr and names the relation, the value and sometimes the credential that
+ * upset it; a caller that receives that string will eventually log it, put it
+ * in an error, or assert against its wording. All three are things this
+ * boundary exists to prevent.
+ */
+export type SqlOutcome = 'statement-refused'
+
+/**
+ * One statement's outcome. `rows` is the result; `error` is a fixed token.
+ *
+ * The null-versus-token shape is deliberately the same shape the raw string
+ * had, so every existing `r.error !== null` reads the same - what changed is
+ * that there is no longer anything to read OUT of it.
+ */
 export interface SqlResult {
   readonly rows: string[][]
-  readonly error: string | null
+  readonly error: SqlOutcome | null
 }
 
 export interface PsqlBackend {
@@ -119,6 +136,15 @@ export function openPsqlBackendCount(): number {
 export interface PsqlBackendOptions {
   /** Absolute path to the psql binary. Never resolved through PATH. */
   readonly psqlPath: string
+  /**
+   * TEST-ONLY. How long one statement may take. Production uses the reviewed
+   * constant; a test needs a short one to reach the timeout path in seconds
+   * rather than in two minutes. Double-underscored, following the disposable
+   * cluster's convention for seams nothing in production sets.
+   */
+  readonly __statementTimeoutMs?: number
+  /** TEST-ONLY. How long teardown waits before SIGKILL. See above. */
+  readonly __closeGraceMs?: number
   /** A socket DIRECTORY or a host. Goes in argv; it is not a secret. */
   readonly host: string
   readonly port: number
@@ -160,6 +186,8 @@ export function psqlBackendArgs(o: PsqlBackendOptions): readonly string[] {
 
 export async function openPsqlBackend(o: PsqlBackendOptions): Promise<PsqlBackend> {
   const args = psqlBackendArgs(o)
+  const statementTimeoutMs = o.__statementTimeoutMs ?? STATEMENT_TIMEOUT_MS
+  const closeGraceMs = o.__closeGraceMs ?? CLOSE_GRACE_MS
   // The caller cannot hand us an environment to forward: it is constructed from
   // an allow-list, and only the PASSFILE PATH may enter it.
   const env = sterileBatchEnv(o.passfile)
@@ -173,9 +201,7 @@ export async function openPsqlBackend(o: PsqlBackendOptions): Promise<PsqlBacken
   child.stderr.setEncoding('utf-8')
   child.stdout.on('data', d => { out += d })
   child.stderr.on('data', d => { err += d })
-  const done = new Promise<void>(resolve => {
-    child.on('close', () => { exited = true; resolve() })
-  })
+  child.on('close', () => { exited = true })
   child.on('error', () => { exited = true })
 
   let seq = 0
@@ -191,7 +217,7 @@ export async function openPsqlBackend(o: PsqlBackendOptions): Promise<PsqlBacken
     // let the sentinel arrive BEFORE the result it is supposed to close.
     const stmt = `${sql.trim().replace(/;+$/, '')};`
     child.stdin.write(`${stmt}\n\\echo ${tag}\n\\warn ${tag}\n`)
-    const deadline = Date.now() + STATEMENT_TIMEOUT_MS
+    const deadline = Date.now() + statementTimeoutMs
     for (;;) {
       if (out.slice(startOut).includes(tag) && err.slice(startErr).includes(tag)) break
       if (exited) break
@@ -204,8 +230,11 @@ export async function openPsqlBackend(o: PsqlBackendOptions): Promise<PsqlBacken
     const bodyOut = out.slice(startOut).split(`${tag}\n`)[0]
     const bodyErr = err.slice(startErr).split(`${tag}\n`)[0]
     const rows = bodyOut.split('\n').filter(l => l !== '').map(l => l.split(FIELD_SEP))
+    // RAW STDERR IS READ HERE AND NOWHERE ELSE. Its only job is to answer one
+    // question - did this statement fail - and the answer leaves as a token.
+    // The text itself is a local that goes out of scope on the next line.
     const message = bodyErr.trim()
-    return { rows, error: message === '' ? null : message }
+    return { rows, error: message === '' ? null : 'statement-refused' }
   }
 
   /** Serialised: one psql stdin, so two concurrent sends would interleave. */
@@ -238,25 +267,61 @@ export async function openPsqlBackend(o: PsqlBackendOptions): Promise<PsqlBacken
    * a live BACKEND - with no handle to it. For a fence supervisor that is not
    * an untidy process, it is a lock nobody can release.
    */
-  const abandon = async (reason: PsqlBackendReason): Promise<never> => {
+  /**
+   * End the child, escalating to SIGKILL, and NEVER wait unboundedly.
+   *
+   * `close` fires only once every stdio stream has ended, and a stream ends
+   * when the last writer lets go of it - which is not necessarily the child.
+   * A process the child spawned inherits these pipes and can hold them open
+   * after the child itself is gone, so `await done` is a wait on something
+   * this module does not control. Measured while building the timeout test: a
+   * fake psql whose shell forked `sleep` left `done` pending indefinitely. So
+   * the post-SIGKILL wait is bounded too, and our ends of the pipes are
+   * destroyed rather than waited on.
+   */
+  const reap = async (): Promise<void> => {
     try { child.stdin.end() } catch { /* already gone */ }
-    const deadline = Date.now() + CLOSE_GRACE_MS
-    while (!exited && Date.now() < deadline) await new Promise(r => setTimeout(r, 15))
-    if (!exited) { child.kill('SIGKILL'); await done }
+    const graceful = Date.now() + closeGraceMs
+    while (!exited && Date.now() < graceful) await new Promise(r => setTimeout(r, 15))
+    if (exited) return
+    child.kill('SIGKILL')
+    const hard = Date.now() + closeGraceMs
+    while (!exited && Date.now() < hard) await new Promise(r => setTimeout(r, 15))
+    try { child.stdout.destroy() } catch { /* already gone */ }
+    try { child.stderr.destroy() } catch { /* already gone */ }
+  }
+
+  let abandoned = false
+  const abandon = async (reason: PsqlBackendReason): Promise<never> => {
+    abandoned = true
+    await reap()
     throw new PsqlBackendRefused(reason)
   }
 
+  /**
+   * EVERY failure between spawn and registration goes through `abandon`.
+   *
+   * An earlier revision rethrew a `PsqlBackendRefused` straight out of this
+   * catch, which looks like a harmless pass-through and is not: the statement
+   * TIMEOUT is raised as exactly that class, and a timed-out opening is
+   * precisely the case where the child is still alive. Until the session
+   * reaches `OPEN` nothing else holds a handle to it, so what was left running
+   * was an unreachable psql - and, for a supervisor, an unreachable backend
+   * that may be holding the fence. The `abandoned` flag distinguishes
+   * `abandon`'s own throw from every other one, so nothing escapes uncleaned.
+   */
   let pid: string | undefined
   try {
     const r = await send('SELECT pg_catalog.pg_backend_pid()')
     if (r.error !== null) await abandon('the psql session could not report its backend pid')
     pid = r.rows[0]?.[0]
+    if (pid === undefined || !/^\d+$/.test(pid)) {
+      await abandon('the psql session did not report a backend pid')
+    }
   } catch (e) {
-    if (e instanceof PsqlBackendRefused) throw e
-    await abandon('the psql session could not be started')
-  }
-  if (pid === undefined || !/^\d+$/.test(pid)) {
-    await abandon('the psql session did not report a backend pid')
+    if (abandoned) throw e
+    await abandon(e instanceof PsqlBackendRefused
+      ? e.reason : 'the psql session could not be started')
   }
 
   const session: PsqlBackend = {
@@ -266,18 +331,10 @@ export async function openPsqlBackend(o: PsqlBackendOptions): Promise<PsqlBacken
     rows: must,
     alive: () => !exited,
     close: async () => {
-      if (!exited) {
-        try { child.stdin.end() } catch { /* already gone */ }
-        const deadline = Date.now() + CLOSE_GRACE_MS
-        while (!exited && Date.now() < deadline) await new Promise(r => setTimeout(r, 15))
-        if (!exited) {
-          // The session is wedged behind a lock it will never get. SIGKILL the
-          // CLIENT: the backend then dies on its own, which is exactly the
-          // "backend death releases the fence" path.
-          child.kill('SIGKILL')
-          await done
-        }
-      }
+      // The session may be wedged behind a lock it will never get. `reap`
+      // escalates to SIGKILL on the CLIENT: the backend then dies on its own,
+      // which is exactly the "backend death releases the fence" path.
+      if (!exited) await reap()
       OPEN.delete(session)
     },
   }
