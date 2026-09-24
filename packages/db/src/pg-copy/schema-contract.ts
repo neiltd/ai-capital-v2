@@ -914,3 +914,105 @@ export async function extractContractFromSession(
 
   return buildContract(raw)
 }
+
+// ---------------------------------------------------------------------------
+// The copy specification
+// ---------------------------------------------------------------------------
+
+/**
+ * What a table copy is allowed to move: one reviewed table and its live columns,
+ * in the order the VERIFIED contract recorded them.
+ */
+export interface TableCopySpec {
+  readonly qname: string
+  readonly schema: string
+  readonly table: string
+  readonly columns: readonly string[]
+}
+
+const SPEC_IDENT = /^[a-z_][a-z0-9_]*$/
+
+/**
+ * Derive a copy specification from a verified artifact.
+ *
+ * WHY THE CALLER MAY NOT SUPPLY COLUMNS. Binary COPY carries no column names -
+ * only a tuple of values in the order the COPY statement named them. A
+ * caller-supplied list is therefore a second, unverified authority on what the
+ * table looks like, and if it drifts from the contract by one column, one
+ * position, or one omission, the copy still "succeeds" and writes the wrong
+ * values into the wrong columns. So the list comes from the artifact, and the
+ * artifact's digest is recomputed here before a single name is read from it:
+ * accepting a tampered artifact would reintroduce exactly the second authority
+ * this removes.
+ *
+ * There is no live-catalogue query here. The contract has already been extracted
+ * from the fenced source and verified; asking the catalogue again would be a
+ * third authority and a second moment.
+ */
+export function tableCopySpec(artifact: ContractArtifact, qname: string): TableCopySpec {
+  if (artifact.pgcopy_schema_contract_version !== SCHEMA_CONTRACT_VERSION) {
+    throw new ContractRefused(
+      `artifact version ${String(artifact.pgcopy_schema_contract_version)} is not ` +
+      `${SCHEMA_CONTRACT_VERSION}.`)
+  }
+  const recomputed = contractDigest(artifact.payload)
+  if (recomputed !== artifact.digest) {
+    throw new ContractRefused(
+      `artifact digest ${artifact.digest} does not match its payload (recomputed ${recomputed}).`)
+  }
+  if (!COPY_TABLES.includes(qname)) {
+    throw new ContractRefused(`${qname} is not in the reviewed copy set.`)
+  }
+
+  const payload = artifact.payload as unknown as {
+    table_order?: unknown
+    tables?: unknown
+  }
+  const order = Array.isArray(payload.table_order) ? payload.table_order : null
+  const tables = Array.isArray(payload.tables) ? payload.tables : null
+  if (order === null || tables === null) {
+    throw new ContractRefused('the artifact carries no table_order or tables.')
+  }
+
+  const inOrder = order.filter(t => t === qname).length
+  if (inOrder !== 1) {
+    throw new ContractRefused(`${qname} occurs ${inOrder} times in table_order, not once.`)
+  }
+  const matches = (tables as Array<{ qname?: unknown; columns?: unknown }>)
+    .filter(t => t.qname === qname)
+  if (matches.length !== 1) {
+    throw new ContractRefused(`${qname} occurs ${matches.length} times in the contract, not once.`)
+  }
+
+  const entry = matches[0]
+  const raw = Array.isArray(entry.columns) ? entry.columns : null
+  if (raw === null || raw.length === 0) {
+    throw new ContractRefused(`${qname} has no live columns in the contract.`)
+  }
+
+  // Recorded physical order. The contract writes columns in `attnum` order and
+  // carries `position`; both are checked, so a reordered artifact is refused
+  // rather than silently copied in the wrong order.
+  const columns: string[] = []
+  const seen = new Set<string>()
+  raw.forEach((c: unknown, i: number) => {
+    const col = c as { name?: unknown; position?: unknown }
+    const name = col.name
+    if (typeof name !== 'string' || !SPEC_IDENT.test(name)) {
+      throw new ContractRefused(`${qname} has a column name that is not a bare identifier.`)
+    }
+    if (col.position !== i + 1) {
+      throw new ContractRefused(
+        `${qname} column "${name}" is recorded at position ${String(col.position)}, ` +
+        `not ${i + 1}; the contract's column order cannot be trusted.`)
+    }
+    if (seen.has(name)) {
+      throw new ContractRefused(`${qname} column "${name}" appears more than once in the contract.`)
+    }
+    seen.add(name)
+    columns.push(name)
+  })
+
+  const [schema, table] = qname.split('.')
+  return Object.freeze({ qname, schema, table, columns: Object.freeze(columns) })
+}
