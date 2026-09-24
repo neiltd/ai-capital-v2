@@ -23,6 +23,13 @@ import { buildV19Database } from '../../testing/v19-database.js'
 
 const DB = 'seq_v19'
 
+/** The owning table.column of each reviewed sequence, from the reviewed schema. */
+const OWNED_BY: Readonly<Record<string, string>> = Object.freeze({
+  'briefing.qa_id_seq': 'briefing.qa.id',
+  'capital.fetch_log_id_seq': 'capital.fetch_log.id',
+  'portfolio.trade_log_id_seq': 'portfolio.trade_log.id',
+})
+
 let SRC: DisposableCluster
 let TGT: DisposableCluster
 
@@ -43,21 +50,46 @@ const exec = (s: PsqlSession): { rows: (sql: string) => Promise<string[][]> } =>
   ({ rows: async (sql: string) => await s.must(sql) })
 
 /**
- * A GENUINE fenced state: acquire the whole fence, prove it from an independent
- * backend, then read. The brand is never counterfeited on this path - that is
- * the entire point of the type.
+ * Run a target-side body while the SOURCE FENCE IS STILL HELD.
+ *
+ * WHY A SCOPE AND NOT A GETTER. An earlier version acquired the fence, proved
+ * it, read the state, then rolled back and closed the supervisor before handing
+ * the state to the caller. That proves provenance - the numbers were read after
+ * a proof - and proves nothing about protection: by the time the target was
+ * touched, the source was free to move. `FencedSequenceState` is a snapshot, not
+ * a lease, and only the orchestrator can keep the lease alive.
+ *
+ * So the body runs INSIDE the fence, and the fence is re-proved from the
+ * independent backend AFTER the body has committed or rolled back the target -
+ * still held, still by the same supervisor PID, still with nothing queued. Only
+ * then is the supervisor released. Branded state is never returned to a caller
+ * whose fence has already ended.
  */
-async function fencedSourceState(): Promise<Record<string, FencedSequenceState>> {
+async function withHeldFence(
+  body: (state: Record<string, FencedSequenceState>) => Promise<void>,
+): Promise<void> {
   const sup = await openPsqlSession(SRC, DB)
   const prover = await openPsqlSession(SRC, DB)
   try {
     const fence = await acquireSourceFence(sup)
-    assertFenceProof(
-      parseLockRows(await prover.must(FENCE_PROOF_SQL.replace('$1', fenceRelationArray()))),
+    const proof = (): Promise<string[][]> =>
+      prover.must(FENCE_PROOF_SQL.replace('$1', fenceRelationArray()))
+    assertFenceProof(parseLockRows(await proof()),
       { supervisorPid: fence.supervisorPid, provingPid: prover.pid })
+
     const state = await readFencedSequenceState(sup, prover, fence)
+
+    // The target work happens here, with both source sessions alive and the
+    // supervisor transaction still open.
+    await body(state)
+
+    // Still held, by the SAME supervisor, after the target settled.
+    const live = (await sup.must('SELECT pg_catalog.pg_backend_pid()::pg_catalog.text'))[0][0]
+    expect(live, 'the supervisor backend changed under us').toBe(fence.supervisorPid)
+    assertFenceProof(parseLockRows(await proof()),
+      { supervisorPid: fence.supervisorPid, provingPid: prover.pid })
+
     await sup.send('ROLLBACK')
-    return state
   } finally {
     await prover.close()
     await sup.close()
@@ -83,21 +115,22 @@ async function resetTarget(): Promise<void> {
 describe('a rollback leaves the target exactly as it was', () => {
   it('restores every field of all three sequences', async () => {
     await resetTarget()
-    const source = await fencedSourceState()
     const before = await allStatesOn(TGT)
-    const t = await openPsqlSession(TGT, DB)
-    try {
-      await t.must('BEGIN')
-      const r = await applySequencePolicy(exec(t), source)
-      expect(r.qnames).toEqual([...POLICY_SEQUENCES])
-      expect(r.effectiveNext.length).toBe(3)
-      // Inside the transaction the change IS visible.
-      for (const q of POLICY_SEQUENCES) {
-        const inTx = parseSequenceState(await t.must(SEQUENCE_STATE_SQL(q)), q)
-        expect(effectiveNext(inTx, q)).toBe(effectiveNext(source[q], q))
-      }
-      await t.must('ROLLBACK')
-    } finally { await t.close() }
+    await withHeldFence(async source => {
+      const t = await openPsqlSession(TGT, DB)
+      try {
+        await t.must('BEGIN')
+        const r = await applySequencePolicy(exec(t), source)
+        expect(r.qnames).toEqual([...POLICY_SEQUENCES])
+        expect(r.effectiveNext.length).toBe(3)
+        // Inside the transaction the change IS visible.
+        for (const q of POLICY_SEQUENCES) {
+          const inTx = parseSequenceState(await t.must(SEQUENCE_STATE_SQL(q)), q)
+          expect(effectiveNext(inTx, q)).toBe(effectiveNext(source[q], q))
+        }
+        await t.must('ROLLBACK')
+      } finally { await t.close() }
+    })
 
     // ... and after rollback every field is back. This is what setval() would
     // fail: its effect survives a rollback.
@@ -117,16 +150,16 @@ describe('a commit makes the target issue what the source would have issued', ()
       for (let i = 0; i < burn; i += 1) {
         await SRC.sql(`SELECT pg_catalog.nextval('${POLICY_SEQUENCES[0]}')`, DB)
       }
-      const source = await fencedSourceState()
-      const expected = Object.fromEntries(
-        POLICY_SEQUENCES.map(q => [q, effectiveNext(source[q], q)]))
-
-      const t = await openPsqlSession(TGT, DB)
-      try {
-        await t.must('BEGIN')
-        await applySequencePolicy(exec(t), source)
-        await t.must('COMMIT')
-      } finally { await t.close() }
+      const expected: Record<string, bigint> = {}
+      await withHeldFence(async source => {
+        for (const q of POLICY_SEQUENCES) expected[q] = effectiveNext(source[q], q)
+        const t = await openPsqlSession(TGT, DB)
+        try {
+          await t.must('BEGIN')
+          await applySequencePolicy(exec(t), source)
+          await t.must('COMMIT')
+        } finally { await t.close() }
+      })
 
       // On the TARGET, an INSERT that leaves the owning column to its DEFAULT
       // must receive exactly that value - the property the policy exists to
@@ -146,7 +179,7 @@ describe('a commit makes the target issue what the source would have issued', ()
           `VALUES (DATE '2026-01-01', 'PROBE', 'buy', 1, 1)`,
       }
       for (const q of POLICY_SEQUENCES) {
-        const [schema, table, column] = source[q].owned_by.split('.')
+        const [schema, table, column] = OWNED_BY[q].split('.')
         const rel = `${schema}.${table}`
         const got = await TGT.rows(
           `INSERT INTO ${rel} ${MINIMAL[rel]} RETURNING ${column}::pg_catalog.text`, DB)
@@ -161,45 +194,47 @@ describe('a commit makes the target issue what the source would have issued', ()
 describe('nothing is altered unless everything can be', () => {
   it('refuses without an outer transaction, leaving all three unchanged', async () => {
     await resetTarget()
-    const source = await fencedSourceState()
     const before = await allStatesOn(TGT)
-    const t = await openPsqlSession(TGT, DB)
-    try {
-      // No BEGIN: psql is in autocommit, so SAVEPOINT is refused by the server.
-      await expect(applySequencePolicy(exec(t), source))
-        .rejects.toThrow(SequencePolicyRefused)
-      await expect(applySequencePolicy(exec(t), source))
-        .rejects.toThrow(/no outer transaction is open/)
-    } finally { await t.close() }
+    await withHeldFence(async source => {
+      const t = await openPsqlSession(TGT, DB)
+      try {
+        // No BEGIN: psql is in autocommit, so SAVEPOINT is refused by the server.
+        await expect(applySequencePolicy(exec(t), source))
+          .rejects.toThrow(SequencePolicyRefused)
+        await expect(applySequencePolicy(exec(t), source))
+          .rejects.toThrow(/no outer transaction is open/)
+      } finally { await t.close() }
+    })
     expect(await allStatesOn(TGT)).toEqual(before)
   }, 900_000)
 
   it('refuses a non-pristine THIRD sequence before altering the first two', async () => {
     await resetTarget()
-    const source = await fencedSourceState()
     // Consume one value from the THIRD reviewed sequence on the target.
     await TGT.sql(`SELECT pg_catalog.nextval('${POLICY_SEQUENCES[2]}')`, DB)
     const before = await allStatesOn(TGT)
-    const t = await openPsqlSession(TGT, DB)
-    try {
-      await t.must('BEGIN')
-      await expect(applySequencePolicy(exec(t), source))
-        .rejects.toThrow(/already issued a value/)
-      // The first two are untouched INSIDE the transaction, before any rollback.
-      for (const q of [POLICY_SEQUENCES[0], POLICY_SEQUENCES[1]]) {
-        const inTx = parseSequenceState(await t.must(SEQUENCE_STATE_SQL(q)), q)
-        expect(inTx, q).toEqual(before[q])
-      }
-      await t.must('ROLLBACK')
-    } finally { await t.close() }
+    await withHeldFence(async source => {
+      const t = await openPsqlSession(TGT, DB)
+      try {
+        await t.must('BEGIN')
+        await expect(applySequencePolicy(exec(t), source))
+          .rejects.toThrow(/already issued a value/)
+        // The first two are untouched INSIDE the transaction, before any rollback.
+        for (const q of [POLICY_SEQUENCES[0], POLICY_SEQUENCES[1]]) {
+          const inTx = parseSequenceState(await t.must(SEQUENCE_STATE_SQL(q)), q)
+          expect(inTx, q).toEqual(before[q])
+        }
+        await t.must('ROLLBACK')
+      } finally { await t.close() }
+    })
     expect(await allStatesOn(TGT)).toEqual(before)
     await resetTarget()
   }, 900_000)
 
   it('leaves a mid-apply failure fully recoverable by the caller ROLLBACK', async () => {
     await resetTarget()
-    const source = await fencedSourceState()
     const before = await allStatesOn(TGT)
+    await withHeldFence(async source => {
     const t = await openPsqlSession(TGT, DB)
     try {
       await t.must('BEGIN')
@@ -223,6 +258,7 @@ describe('nothing is altered unless everything can be', () => {
       // The caller rolls back - production code never committed.
       await t.must('ROLLBACK')
     } finally { await t.close() }
+    })
     expect(await allStatesOn(TGT)).toEqual(before)
   }, 900_000)
 })

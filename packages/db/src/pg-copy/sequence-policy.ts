@@ -9,12 +9,15 @@
 // undone by the same ROLLBACK that undoes the rows, so the target is either
 // wholly copied or wholly untouched.
 //
-// WHY THE STATE MUST BE FENCED. The value to restart to is the source's next
-// value, and that number only means something if nothing could hand it out
-// between reading it and using it. `FencedSequenceState` can only be produced by
-// `readFencedSequenceState`, which will not return until an independent backend
-// has proved the whole 21-table, 3-sequence fence. An ordinary `SequenceState`
-// is a number somebody read at some moment, and the type system refuses it here.
+// WHAT `FencedSequenceState` DOES AND DOES NOT PROVE. It proves the state was
+// READ after an independent backend proved the whole 21-table, 3-sequence fence:
+// an ordinary `SequenceState` is a number somebody read at some moment, and the
+// type system refuses it here. It is a SNAPSHOT, not a live lease - the type
+// says nothing about whether the fence is still held now. Keeping it held is the
+// Stage-2 orchestrator's job: it must keep the supervisor transaction alive
+// through the target COMMIT and re-prove the fence before releasing it. This
+// module is target-only and takes no source session, so it cannot check that
+// itself and does not claim to.
 //
 // WHY THIS MODULE OWNS NO TRANSACTION. The target transaction spans the rows and
 // the sequences together; committing here would end it after the sequences and
@@ -34,13 +37,39 @@ export type SequencePolicyPhase =
   | 'apply' | 'verify' | 'release'
 
 const DISCARD =
-  'Roll back the outer target transaction; it is not reusable. No detail is ' +
-  'retained, because a driver error can carry statement text and row values.'
+  'If an outer target transaction is open, roll it back and do not continue; it ' +
+  'is not reusable. Nothing further is retained, because a driver error, a source ' +
+  'value or an unexpected key can carry statement text, row values or a credential.'
+
+/**
+ * Fixed wording only.
+ *
+ * WHY THE REASON IS A CONSTANT AND NOT A SENTENCE SOMEONE BUILT. Every one of
+ * these errors is going to be logged by whoever catches it. A reason assembled
+ * from a value - an unexpected object key, a malformed `last_value`, a qname a
+ * caller passed in - carries that value into the log, and the caller is exactly
+ * who might have put a credential there.
+ */
+export type RefusalReason =
+  | 'not a reviewed sequence'
+  | 'the reviewed sequence set does not match'
+  | 'the source state is not usable arithmetic'
+  | 'the target sequence has already issued a value'
+  | 'the target sequence is not at its start value'
+  | 'the target configuration does not match the fenced source'
+  | 'no outer transaction is open, so nothing was altered'
+  | 'the target would not issue the value the fenced source would issue next'
 
 /** A refusal decided BEFORE anything was altered. */
 export class SequencePolicyRefused extends Error {
-  constructor(readonly phase: SequencePolicyPhase, readonly qname: string | null, why: string) {
-    super(`sequence policy refused at ${phase}${qname === null ? '' : ` for ${qname}`}: ${why}`)
+  constructor(
+    readonly phase: SequencePolicyPhase,
+    readonly qname: string | null,
+    readonly reason: RefusalReason,
+  ) {
+    super(
+      `sequence policy refused at ${phase}${qname === null ? '' : ` for ${qname}`}: ` +
+      `${reason}. ${DISCARD}`)
     this.name = 'SequencePolicyRefused'
   }
 }
@@ -76,7 +105,10 @@ export const RELEASE_SQL = `RELEASE SAVEPOINT ${POLICY_SAVEPOINT}`
 /** `ALTER SEQUENCE <qname> RESTART WITH <n>` - the only statement that mutates. */
 export function restartSql(qname: string, next: bigint): string {
   if (!POLICY_SEQUENCES.includes(qname)) {
-    throw new SequencePolicyRefused('preflight', qname, 'not a reviewed sequence')
+    // qname is NULL here on purpose: it has not been proven to be one of the
+    // reviewed three, so reflecting it would put caller-controlled text - which
+    // could be anything - into an error that is about to be logged.
+    throw new SequencePolicyRefused('preflight', null, 'not a reviewed sequence')
   }
   // Decimal, from a bigint. Never a Number: 2^53 is well inside bigserial's
   // range, and a float would round a position into a different position.
@@ -97,15 +129,16 @@ const CONFIG_FIELDS = [
 ] as const
 
 function assertExactKeys(source: Readonly<Record<string, FencedSequenceState>>): void {
-  const given = Object.keys(source).sort()
+  const given = Object.keys(source)
   const want = [...POLICY_SEQUENCES]
-  const missing = want.filter(q => !given.includes(q))
-  const extra = given.filter(q => !want.includes(q))
-  if (missing.length > 0 || extra.length > 0) {
+  const missing = want.filter(q => !given.includes(q)).length
+  const extra = given.filter(q => !want.includes(q)).length
+  if (missing > 0 || extra > 0) {
+    // COUNTS, never the keys themselves. An unexpected key is a string the
+    // caller chose, and naming it in an error hands whatever it contains to the
+    // log. The counts say what went wrong without saying what it said.
     throw new SequencePolicyRefused(
-      'source-state', null,
-      `expected exactly ${want.length} reviewed sequences; missing [${missing.join(', ')}], ` +
-      `unexpected [${extra.join(', ')}]`)
+      'source-state', null, 'the reviewed sequence set does not match')
   }
 }
 
@@ -127,10 +160,20 @@ export async function applySequencePolicy(
   assertExactKeys(source)
 
   // 1. Everything computed before the target is touched at all.
+  //
+  // `effectiveNext` parses bigints out of the source state, so a malformed
+  // last_value or increment throws a SyntaxError carrying that value, and its
+  // own range refusal quotes the number. Both are wrapped: the qname here is
+  // already proven to be one of the reviewed three.
   const wanted = new Map<string, bigint>()
   for (const q of POLICY_SEQUENCES) {
     const state: SequenceState = source[q]
-    wanted.set(q, effectiveNext(state, q))
+    try {
+      wanted.set(q, effectiveNext(state, q))
+    } catch {
+      throw new SequencePolicyRefused(
+        'source-state', q, 'the source state is not usable arithmetic')
+    }
   }
 
   const ask = async (sql: string, phase: SequencePolicyPhase, qname: string | null):
@@ -149,14 +192,21 @@ export async function applySequencePolicy(
     await target.rows(SAVEPOINT_SQL)
   } catch {
     throw new SequencePolicyRefused(
-      'no-transaction', null,
-      'SAVEPOINT was refused, so no outer transaction is open; nothing was altered')
+      'no-transaction', null, 'no outer transaction is open, so nothing was altered')
   }
 
   // 3. Read ALL THREE target states before any of them is altered.
+  //
+  // The query AND the parse are inside the same guard: `parseSequenceState`
+  // quotes the offending value when a boolean or a row count is wrong, and that
+  // value came from the target's own data.
   const before = new Map<string, SequenceState>()
   for (const q of POLICY_SEQUENCES) {
-    before.set(q, parseSequenceState(await ask(SEQUENCE_STATE_SQL(q), 'target-read', q), q))
+    try {
+      before.set(q, parseSequenceState(await ask(SEQUENCE_STATE_SQL(q), 'target-read', q), q))
+    } catch (e) {
+      throw e instanceof SequencePolicyFailed ? e : new SequencePolicyFailed('target-read', q)
+    }
   }
 
   // 4. Validate ALL THREE before the first ALTER.
@@ -165,7 +215,7 @@ export async function applySequencePolicy(
     const s: SequenceState = source[q]
     if (t.is_called) {
       throw new SequencePolicyRefused(
-        'preflight', q, 'the target sequence has already issued a value (is_called)')
+        'preflight', q, 'the target sequence has already issued a value')
     }
     if (t.last_value !== t.start_value) {
       throw new SequencePolicyRefused(
@@ -173,12 +223,15 @@ export async function applySequencePolicy(
     }
     for (const f of CONFIG_FIELDS) {
       if (t[f] !== s[f]) {
+        // The FIELD is not named either: `owned_by` carries a qualified name and
+        // the numeric fields carry positions.
         throw new SequencePolicyRefused(
-          'preflight', q, `target ${f} does not match the fenced source`)
+          'preflight', q, 'the target configuration does not match the fenced source')
       }
     }
     if (t.cycle !== s.cycle) {
-      throw new SequencePolicyRefused('preflight', q, 'target cycle does not match the fenced source')
+      throw new SequencePolicyRefused(
+        'preflight', q, 'the target configuration does not match the fenced source')
     }
   }
 
@@ -187,10 +240,17 @@ export async function applySequencePolicy(
     await ask(restartSql(q, wanted.get(q) as bigint), 'apply', q)
   }
 
-  // 6. Prove it, inside the same transaction.
+  // 6. Prove it, inside the same transaction. Read, parse and arithmetic are all
+  //    guarded together, for the same reason as the preflight read.
   for (const q of POLICY_SEQUENCES) {
-    const after = parseSequenceState(await ask(SEQUENCE_STATE_SQL(q), 'verify', q), q)
-    if (effectiveNext(after, q) !== (wanted.get(q) as bigint)) {
+    let issues: bigint
+    try {
+      const after = parseSequenceState(await ask(SEQUENCE_STATE_SQL(q), 'verify', q), q)
+      issues = effectiveNext(after, q)
+    } catch (e) {
+      throw e instanceof SequencePolicyFailed ? e : new SequencePolicyFailed('verify', q)
+    }
+    if (issues !== (wanted.get(q) as bigint)) {
       throw new SequencePolicyRefused(
         'verify', q, 'the target would not issue the value the fenced source would issue next')
     }

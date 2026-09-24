@@ -206,13 +206,13 @@ describe('validation finishes before the first ALTER', () => {
     const full = allFenced()
     const { [Q2]: _omit, ...missing } = full
     void _omit
-    await expect(applySequencePolicy(t.exec, missing)).rejects.toThrow(/missing \[/)
-    await expect(applySequencePolicy(
-      t.exec, { ...full, 'desk.probe_seq': fenced(Q0) })).rejects.toThrow(/unexpected \[/)
-    // Malformed arithmetic is refused too.
+    await expect(applySequencePolicy(t.exec, missing))
+      .rejects.toThrow(/the reviewed sequence set does not match/)
+    await expect(applySequencePolicy(t.exec, { ...full, 'desk.probe_seq': fenced(Q0) }))
+      .rejects.toThrow(/the reviewed sequence set does not match/)
     await expect(applySequencePolicy(
       t.exec, allFenced({ [Q0]: { last_value: '99', is_called: true, max_value: '99' } })))
-      .rejects.toThrow(/outside/)
+      .rejects.toThrow(/not usable arithmetic/)
     expect(t.sent).toEqual([])
   })
 
@@ -250,12 +250,20 @@ describe('failures say nothing the driver said', () => {
       expect(seen, phase).not.toContain('ALTER SEQUENCE')
       expect(seen, phase).not.toContain('postgresql://')
       expect((thrown as SequencePolicyFailed & { cause?: unknown }).cause).toBeUndefined()
-      expect(seen).toContain('Roll back the outer target transaction')
+      expect(seen).toContain('roll it back and do not continue')
     }
   })
 
   it('never rethrows or attaches the original', () => {
-    expect(CODE).not.toMatch(/catch \(e[^)]*\)\s*\{\s*throw e/)
+    // A bare re-throw is forbidden. Re-raising an error THIS module already
+    // bounded is not - and is how the read-and-parse guards avoid double-wrapping
+    // a SequencePolicyFailed the inner call just produced. So every `throw e`
+    // must carry the instanceof guard.
+    const rethrows = CODE.match(/throw e\b[^\n]*/g) ?? []
+    for (const r of rethrows) {
+      expect(r, r).toMatch(/^throw e instanceof SequencePolicyFailed \? e : new SequencePolicyFailed\(/)
+    }
+    expect(CODE).not.toMatch(/catch \(e[^)]*\)\s*\{\s*throw e\s*[\n}]/)
     // Precise: a bare 'cause' also matches the word 'because' in this module's
     // own explanatory string, and proves nothing.
     expect(CODE).not.toMatch(/\bcause\s*[:=]/)
@@ -268,8 +276,135 @@ describe('failures say nothing the driver said', () => {
     expect(Object.keys(f).sort()).toEqual(['name', 'phase', 'qname'])
     expect(f.phase).toBe('apply')
     expect(f.qname).toBe(Q1)
-    const r = new SequencePolicyRefused('preflight', null, 'why')
-    expect(Object.keys(r).sort()).toEqual(['name', 'phase', 'qname'])
+    const r = new SequencePolicyRefused('preflight', null, 'not a reviewed sequence')
+    expect(Object.keys(r).sort()).toEqual(['name', 'phase', 'qname', 'reason'])
+    expect(r.message).toContain('roll it back and do not continue')
+  })
+})
+
+describe('no error surface reflects anything it was given', () => {
+  const canary = (): string =>
+    `postgresql://u:pw_${Math.random().toString(36).slice(2)}@h/db`
+
+  it('never names an unexpected source key', async () => {
+    const c = canary()
+    const t = fakeTarget()
+    let thrown: unknown = null
+    try {
+      await applySequencePolicy(t.exec, { ...allFenced(), [c]: fenced(Q0) })
+    } catch (e) { thrown = e }
+    expect(thrown).toBeInstanceOf(SequencePolicyRefused)
+    expect(surfaces(thrown)).not.toContain(c)
+    expect(surfaces(thrown)).not.toContain('pw_')
+    expect(t.sent).toEqual([])
+  })
+
+  it('never reflects a malformed SOURCE value', async () => {
+    for (const [label, bad] of [
+      ['last_value', { last_value: `${canary()}` }],
+      ['increment_by', { increment_by: `${canary()}` }],
+      ['min_value', { min_value: `${canary()}`, is_called: true }],
+      ['max_value', { max_value: `${canary()}`, is_called: true }],
+    ] as Array<[string, Partial<SequenceState>]>) {
+      const t = fakeTarget()
+      let thrown: unknown = null
+      try { await applySequencePolicy(t.exec, allFenced({ [Q1]: bad })) } catch (e) { thrown = e }
+      expect(thrown, label).toBeInstanceOf(SequencePolicyRefused)
+      expect((thrown as SequencePolicyRefused).phase, label).toBe('source-state')
+      expect((thrown as SequencePolicyRefused).qname, label).toBe(Q1)
+      const seen = surfaces(thrown)
+      expect(seen, label).not.toContain('postgresql://')
+      expect(seen, label).not.toContain('pw_')
+      expect(seen, label).not.toContain('SyntaxError')
+      expect(t.sent, label).toEqual([])
+    }
+  })
+
+  it('never reflects a malformed TARGET state during preflight', async () => {
+    for (const [label, bad] of [
+      ['is_called', { is_called: canary() as unknown as boolean }],
+      ['numeric', { last_value: canary() }],
+    ] as Array<[string, Partial<SequenceState>]>) {
+      const t = fakeTarget({ state: { [Q1]: bad } })
+      let thrown: unknown = null
+      try { await applySequencePolicy(t.exec, allFenced()) } catch (e) { thrown = e }
+      const seen = surfaces(thrown)
+      expect(seen, label).not.toContain('postgresql://')
+      expect(seen, label).not.toContain('pw_')
+      expect(t.sent.filter(x => x.startsWith('ALTER SEQUENCE')), label).toEqual([])
+    }
+  })
+
+  it('never reflects a malformed TARGET state during verification', async () => {
+    const c = canary()
+    // Pristine at preflight, malformed only once re-read after the ALTERs.
+    let alters = 0
+    const t = fakeTarget()
+    const drifting = {
+      rows: async (sql: string) => {
+        if (sql.startsWith('ALTER SEQUENCE')) { alters += 1; return await t.exec.rows(sql) }
+        if (alters === 3 && sql.includes('pg_sequence o')) {
+          return [[c, c, c, c, c, c, c, c, c, c]]
+        }
+        return await t.exec.rows(sql)
+      },
+    }
+    let thrown: unknown = null
+    try { await applySequencePolicy(drifting, allFenced()) } catch (e) { thrown = e }
+    expect(thrown).toBeInstanceOf(SequencePolicyFailed)
+    expect((thrown as SequencePolicyFailed).phase).toBe('verify')
+    const seen = surfaces(thrown)
+    expect(seen).not.toContain('postgresql://')
+    expect(seen).not.toContain('pw_')
+  })
+
+  it('never reflects an unreviewed qname handed to restartSql', () => {
+    const c = canary()
+    let thrown: unknown = null
+    try { restartSql(c, 1n) } catch (e) { thrown = e }
+    expect(thrown).toBeInstanceOf(SequencePolicyRefused)
+    expect((thrown as SequencePolicyRefused).qname).toBeNull()
+    expect(surfaces(thrown)).not.toContain(c)
+    expect(surfaces(thrown)).not.toContain('pw_')
+  })
+
+  it('always tells the caller to roll back and stop', () => {
+    for (const e of [
+      new SequencePolicyRefused('preflight', Q0, 'not a reviewed sequence'),
+      new SequencePolicyFailed('apply', Q1),
+    ]) {
+      expect(e.message).toMatch(/roll it back and do not continue/)
+    }
+  })
+})
+
+describe('the integration scope holds the fence through target use', () => {
+  const INT = readFileSync(
+    fileURLToPath(new URL('./pgcopy/sequence-policy.int.test.ts', import.meta.url)), 'utf-8')
+  const scope = INT.slice(INT.indexOf('async function withHeldFence'),
+                          INT.indexOf('const stateOn ='))
+
+  it('reads state, runs the body, then RE-PROVES before releasing', () => {
+    // Structural, because a removed assertion cannot fail a suite: the only way
+    // to notice the re-proof going missing is to require it to be there.
+    const iRead = scope.indexOf('readFencedSequenceState')
+    const iBody = scope.indexOf('await body(state)')
+    const iReproof = scope.indexOf('assertFenceProof', scope.indexOf('await body(state)'))
+    const iRollback = scope.indexOf("sup.send('ROLLBACK')")
+    expect(iRead).toBeGreaterThan(-1)
+    expect(iBody).toBeGreaterThan(iRead)
+    expect(iReproof, 'the fence is never re-proved after the body').toBeGreaterThan(iBody)
+    expect(iRollback, 'the supervisor is released before the re-proof')
+      .toBeGreaterThan(iReproof)
+    // The same supervisor backend, checked explicitly.
+    expect(scope).toContain('the supervisor backend changed under us')
+  })
+
+  it('never hands branded state back after its fence has ended', () => {
+    // A getter that returned FencedSequenceState would let the caller use it
+    // after the fence was released; the scope shape makes that unexpressible.
+    expect(INT).not.toContain('Promise<Record<string, FencedSequenceState>>')
+    expect(scope).toContain('body: (state: Record<string, FencedSequenceState>) => Promise<void>')
   })
 })
 
