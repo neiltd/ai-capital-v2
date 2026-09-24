@@ -58,9 +58,15 @@ export type RefusalReason =
   | 'the target sequence is not at its start value'
   | 'the target configuration does not match the fenced source'
   | 'no outer transaction is open, so nothing was altered'
-  | 'the target would not issue the value the fenced source would issue next'
 
-/** A refusal decided BEFORE anything was altered. */
+/**
+ * A refusal decided BEFORE anything was altered.
+ *
+ * EXCLUSIVELY PRE-ALTERATION. Callers map this to "refused; nothing happened",
+ * so it must never be raised once an ALTER has been attempted - a verification
+ * mismatch found after the three ALTERs is a `SequencePolicyFailed`, because by
+ * then something did happen and the transaction has to be rolled back.
+ */
 export class SequencePolicyRefused extends Error {
   constructor(
     readonly phase: SequencePolicyPhase,
@@ -75,11 +81,16 @@ export class SequencePolicyRefused extends Error {
 }
 
 /**
- * A failure while talking to the target.
+ * A failure at the target, after something may already have been altered.
+ *
+ * Covers the query, parse, apply and release paths, AND the semantic
+ * verification mismatch after the ALTERs: at that point all three statements
+ * have been attempted, so "nothing happened" would be false.
  *
  * Carries the phase and, where one applies, a reviewed qualified name - nothing
  * else. The original driver error is discarded rather than wrapped: it can carry
- * the failing statement and, for a sequence, the values around it.
+ * the failing statement and, for a sequence, the values around it. Neither the
+ * expected nor the observed position is named, for the same reason.
  */
 export class SequencePolicyFailed extends Error {
   constructor(readonly phase: SequencePolicyPhase, readonly qname: string | null) {
@@ -251,8 +262,11 @@ export async function applySequencePolicy(
       throw e instanceof SequencePolicyFailed ? e : new SequencePolicyFailed('verify', q)
     }
     if (issues !== (wanted.get(q) as bigint)) {
-      throw new SequencePolicyRefused(
-        'verify', q, 'the target would not issue the value the fenced source would issue next')
+      // A FAILURE, not a refusal: all three ALTERs have already been attempted,
+      // so the caller's transaction is dirty and must be rolled back. Neither
+      // the expected nor the observed position is reported - both are source or
+      // target positions, and this error is about to be logged.
+      throw new SequencePolicyFailed('verify', q)
     }
   }
 

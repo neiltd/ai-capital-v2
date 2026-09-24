@@ -216,18 +216,52 @@ describe('validation finishes before the first ALTER', () => {
     expect(t.sent).toEqual([])
   })
 
-  it('refuses when the post-ALTER state would not issue the fenced value', async () => {
+  it('fails - does not refuse - when the post-ALTER state would not issue the fenced value',
+    async () => {
+    // The ALTERs have all been attempted by the time verify reads back, so
+    // "refused; nothing happened" is false and the caller must roll back.
     const t = fakeTarget({ failOn: () => false })
-    // A target that ignores the ALTER: the verify step must catch it.
+    const cred = `postgresql://u:pw_${Math.random().toString(36).slice(2)}@h/db`
+    // A distinctive expected position, so asserting its absence means something.
+    const EXPECTED = '7654321987654321'
+    const attempted: string[] = []
+    // A target that swallows the ALTER: the verify step must catch it.
     const ignoring = {
+      password: cred,
       rows: async (sql: string) => {
-        if (sql.startsWith('ALTER SEQUENCE')) return []
-        return await t.exec.rows(sql.startsWith('ALTER SEQUENCE') ? 'x' : sql)
+        if (sql.startsWith('ALTER SEQUENCE')) { attempted.push(sql); return [] }
+        return await t.exec.rows(sql)
       },
     }
-    await expect(applySequencePolicy(
-      ignoring, allFenced({ [Q0]: { last_value: '5', is_called: false } })))
-      .rejects.toThrow(/would not issue the value/)
+    let thrown: unknown = null
+    try {
+      await applySequencePolicy(
+        ignoring, allFenced({ [Q0]: { last_value: EXPECTED, is_called: false } }))
+    } catch (e) { thrown = e }
+
+    // At least one alteration was attempted before the mismatch was found.
+    expect(attempted.length).toBeGreaterThanOrEqual(1)
+    expect(attempted.every(s => s.startsWith('ALTER SEQUENCE'))).toBe(true)
+
+    // A target operation failure at the verify phase - never a refusal.
+    expect(thrown).toBeInstanceOf(SequencePolicyFailed)
+    expect(thrown).not.toBeInstanceOf(SequencePolicyRefused)
+    expect((thrown as SequencePolicyFailed).phase).toBe('verify')
+    expect((thrown as SequencePolicyFailed).qname).toBe(Q0)
+
+    const seen = surfaces(thrown)
+    // Neither the expected nor the observed position.
+    expect(seen).not.toContain(EXPECTED)
+    expect(seen).not.toMatch(/would not issue/)
+    // No statement text, no catalog internals, no credential-shaped material.
+    expect(seen).not.toContain('ALTER SEQUENCE')
+    expect(seen).not.toContain('pg_sequence')
+    expect(seen).not.toContain('postgresql://')
+    expect(seen).not.toContain('pw_')
+    expect(seen).not.toContain(cred)
+    expect((thrown as SequencePolicyFailed & { cause?: unknown }).cause).toBeUndefined()
+    // And it still tells the caller what to do about it.
+    expect(String((thrown as Error).message)).toMatch(/roll it back and do not continue/)
   })
 })
 
