@@ -22,14 +22,14 @@ import { dirname, join, resolve } from 'node:path'
 import { fileURLToPath } from 'node:url'
 
 import {
-  COPY_SEQUENCES, COPY_TABLES, CONTRACT_PRELUDE, COLUMNS_SQL, CONSTRAINTS_SQL,
-  DROPPED_COLUMNS_SQL, EXTENSIONS_SQL, INDEXES_SQL, MIGRATIONS_SQL, PLATFORM_SQL,
-  RELATIONS_SQL, SEQUENCES_SQL, TRIGGERS_SQL,
-  buildContract, canonicalJson, parseArtifact, serializeArtifact,
-  type ContractArtifact, type RawCatalog,
+  canonicalJson, extractContractFromSession, parseArtifact, pgTextArray, serializeArtifact,
+  type ContractArtifact,
 } from '../src/pg-copy/schema-contract.js'
 import { startDisposableCluster, type DisposableCluster } from '../testing/disposable-cluster.js'
+import { openPsqlSession } from '../testing/psql-session.js'
 import { buildV19Database } from '../testing/v19-database.js'
+
+export { pgTextArray }
 
 export const EXIT_OK = 0
 export const EXIT_DRIFT = 1
@@ -38,33 +38,37 @@ export const EXIT_REFUSED = 2
 export const PKG_ROOT = resolve(dirname(fileURLToPath(import.meta.url)), '..')
 export const ARTIFACT_PATH = join(PKG_ROOT, 'contracts', 'expected-target-v19.json')
 
-/** A PostgreSQL text array literal, for `= ANY ($1)` without a bind parameter. */
-export function pgTextArray(values: readonly string[]): string {
-  return `'{${values.map(v => `"${v}"`).join(',')}}'::pg_catalog.text[]`
-}
+/**
+ * The transaction Stage 1 runs in, and the one this generator runs in too.
+ *
+ * Generating the committed artifact through a DIFFERENT reader than the copy
+ * uses would make the artifact a claim about a reader nobody runs. One
+ * primitive, one transaction shape, both paths.
+ */
+export const EXTRACTION_BEGIN_SQL =
+  'BEGIN TRANSACTION READ ONLY ISOLATION LEVEL REPEATABLE READ'
 
-/** Read the whole contract from one database. One prelude, ten queries. */
+/**
+ * Read the whole contract from one database, on ONE backend inside ONE
+ * READ ONLY REPEATABLE READ transaction.
+ *
+ * This wrapper owns the transaction; `extractContractFromSession` never begins
+ * or ends one. The rollback is unconditional: the transaction read nothing it
+ * could write, and leaving it open would hold a snapshot after the caller is
+ * done with it.
+ */
 export async function extractContract(
   c: DisposableCluster, database: string,
 ): Promise<ContractArtifact> {
-  const tables = pgTextArray(COPY_TABLES)
-  const seqs = pgTextArray(COPY_SEQUENCES)
-  const q = async (sql: string, arg?: string): Promise<string[][]> =>
-    c.rows(`${CONTRACT_PRELUDE} ${arg ? sql.replace('$1', arg) : sql}`, database)
-
-  const raw: RawCatalog = {
-    platform: await q(PLATFORM_SQL),
-    extensions: await q(EXTENSIONS_SQL),
-    migrations: await q(MIGRATIONS_SQL),
-    relations: await q(RELATIONS_SQL, tables),
-    columns: await q(COLUMNS_SQL, tables),
-    droppedColumns: await q(DROPPED_COLUMNS_SQL, tables),
-    constraints: await q(CONSTRAINTS_SQL, tables),
-    indexes: await q(INDEXES_SQL, tables),
-    triggers: await q(TRIGGERS_SQL, tables),
-    sequences: await q(SEQUENCES_SQL, seqs),
+  const session = await openPsqlSession(c, database)
+  try {
+    await session.must(EXTRACTION_BEGIN_SQL)
+    const artifact = await extractContractFromSession(session, session.pid)
+    await session.must('ROLLBACK')
+    return artifact
+  } finally {
+    await session.close()
   }
-  return buildContract(raw)
 }
 
 /** Build a throwaway V19 database and extract its contract. */

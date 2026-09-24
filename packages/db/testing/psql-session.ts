@@ -24,7 +24,7 @@
 
 import { spawn, type ChildProcessWithoutNullStreams } from 'node:child_process'
 
-import { PSQL, type DisposableCluster } from './disposable-cluster.js'
+import { FIELD_SEP, PSQL, type DisposableCluster } from './disposable-cluster.js'
 
 /** One statement's outcome. `error` is psql's message, verbatim, or null. */
 export interface SqlResult {
@@ -39,6 +39,15 @@ export interface PsqlSession {
   send(sql: string): Promise<SqlResult>
   /** Send one command and refuse a SQL error. */
   must(sql: string): Promise<string[][]>
+  /**
+   * `must` under the name the production `ContractQueryExecutor` asks for.
+   *
+   * The adapter is this alias and nothing else: the session already IS one
+   * backend with one PID, which is the whole contract that interface states.
+   * Production source never imports this file - it names a shape, and this
+   * shape satisfies it.
+   */
+  rows(sql: string): Promise<string[][]>
   /** Close stdin and wait for the backend to go away. Idempotent. */
   close(): Promise<void>
   /** True until `close()` resolves or the child exits. */
@@ -61,14 +70,35 @@ export function openPsqlSessionCount(): number {
   return OPEN.size
 }
 
+export interface PsqlSessionOptions {
+  /** Authenticate as this role instead of the cluster superuser. */
+  readonly user?: string
+  /**
+   * A 0600 pgpass file for that role.
+   *
+   * A PATH in the environment, never the password itself: `PGPASSWORD` would put
+   * the secret in the child's environment, where `ps -E` and /proc can read it.
+   */
+  readonly passfile?: string
+}
+
 export async function openPsqlSession(
-  c: DisposableCluster, database: string,
+  c: DisposableCluster, database: string, opts: PsqlSessionOptions = {},
 ): Promise<PsqlSession> {
+  const env = { ...process.env }
+  delete (env as Record<string, string | undefined>).PGPASSWORD
+  if (opts.passfile !== undefined) env.PGPASSFILE = opts.passfile
   const child: ChildProcessWithoutNullStreams = spawn(PSQL, [
-    '--no-psqlrc', '-X', '-q', '-A', '-t', '--pset', 'footer=off',
+    // ONE separator, shared with DisposableCluster. psql's default is '|',
+    // which appears inside real contract values - pg_get_constraintdef() emits
+    // it for a '||' concatenation in a CHECK, and pg_get_indexdef() for an
+    // expression index. Splitting on '|' would shift every later column of such
+    // a row and silently change the artifact. US (0x1f) cannot occur in these
+    // catalogue strings.
+    '--no-psqlrc', '-X', '-q', '-A', '-t', '-F', FIELD_SEP, '--pset', 'footer=off',
     '-v', 'ON_ERROR_STOP=0',
-    '-h', c.socketDir, '-p', String(c.port), '-U', c.user, '-d', database, '-f', '-',
-  ], { stdio: ['pipe', 'pipe', 'pipe'] })
+    '-h', c.socketDir, '-p', String(c.port), '-U', opts.user ?? c.user, '-d', database, '-f', '-',
+  ], { stdio: ['pipe', 'pipe', 'pipe'], env })
 
   let out = ''
   let err = ''
@@ -103,7 +133,7 @@ export async function openPsqlSession(
     }
     const bodyOut = out.slice(startOut).split(`${tag}\n`)[0]
     const bodyErr = err.slice(startErr).split(`${tag}\n`)[0]
-    const rows = bodyOut.split('\n').filter(l => l !== '').map(l => l.split('|'))
+    const rows = bodyOut.split('\n').filter(l => l !== '').map(l => l.split(FIELD_SEP))
     const message = bodyErr.trim()
     return { rows, error: message === '' ? null : message }
   }
@@ -135,6 +165,7 @@ export async function openPsqlSession(
     pid,
     send,
     must,
+    rows: must,
     alive: () => !exited,
     close: async () => {
       if (!exited) {

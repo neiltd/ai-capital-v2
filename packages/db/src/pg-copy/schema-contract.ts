@@ -240,21 +240,28 @@ SELECT n.nspname || '.' || c.relname                              AS qname,
   -- pg_get_serial_sequence: the dependency IS the linkage, and a name-returning
   -- helper cannot show why the two objects are connected or what the sequence's
   -- options are.
+  --
+  -- STATIC CATALOGUE ONLY. An earlier revision joined pg_catalog.pg_sequences,
+  -- whose target list calls pg_sequence_last_value(). That function takes the
+  -- same RowExclusiveLock nextval() does, so the view cannot be read while the
+  -- source fence is held - and the fence is exactly when this contract must be
+  -- taken. pg_catalog.pg_sequence carries every field below as static
+  -- definition and takes no such lock.
   LEFT JOIN LATERAL (
     SELECT sn.nspname || '.' || sq.relname             AS qname,
-           s.data_type::pg_catalog.text                AS data_type,
-           s.start_value::pg_catalog.text              AS start_value,
-           s.increment_by::pg_catalog.text             AS increment_by,
-           s.min_value::pg_catalog.text                AS min_value,
-           s.max_value::pg_catalog.text                AS max_value,
-           s.cache_size::pg_catalog.text               AS cache_size,
-           s.cycle::pg_catalog.text                    AS cycle,
+           pg_catalog.format_type(s.seqtypid, NULL)    AS data_type,
+           s.seqstart::pg_catalog.text                 AS start_value,
+           s.seqincrement::pg_catalog.text             AS increment_by,
+           s.seqmin::pg_catalog.text                   AS min_value,
+           s.seqmax::pg_catalog.text                   AS max_value,
+           s.seqcache::pg_catalog.text                 AS cache_size,
+           s.seqcycle::pg_catalog.text                 AS cycle,
            'pg_depend(deptype=' || dep.deptype::pg_catalog.text || ',refobjsubid=' ||
              dep.refobjsubid::pg_catalog.text || ')'   AS linkage
       FROM pg_catalog.pg_depend dep
       JOIN pg_catalog.pg_class sq     ON sq.oid = dep.objid AND sq.relkind = 'S'
       JOIN pg_catalog.pg_namespace sn ON sn.oid = sq.relnamespace
-      JOIN pg_catalog.pg_sequences s  ON s.schemaname = sn.nspname AND s.sequencename = sq.relname
+      JOIN pg_catalog.pg_sequence s   ON s.seqrelid = sq.oid
      WHERE dep.classid = 'pg_catalog.pg_class'::pg_catalog.regclass
        AND dep.refclassid = 'pg_catalog.pg_class'::pg_catalog.regclass
        AND dep.refobjid = a.attrelid
@@ -322,25 +329,37 @@ SELECT n.nspname || '.' || c.relname          AS qname,
  WHERE n.nspname || '.' || c.relname = ANY ($1)
  ORDER BY n.nspname, c.relname, g.tgname`
 
+/**
+ * Sequence DEFINITION, never sequence state.
+ *
+ * `pg_catalog.pg_sequences` was the obvious source and is the wrong one: its
+ * target list calls `pg_sequence_last_value()`, which acquires the same
+ * RowExclusiveLock `nextval()` takes, so the view blocks under the source fence.
+ * It is also privilege-filtered, which would silently hide a sequence from a
+ * reader holding no privilege on it. `pg_catalog.pg_sequence` has neither
+ * property, and carries every field this contract records. The join is on
+ * `seqrelid = pg_class.oid` rather than on matching names.
+ */
 export const SEQUENCES_SQL = `
-SELECT s.schemaname || '.' || s.sequencename        AS qname,
-       s.data_type::pg_catalog.text                 AS data_type,
-       s.start_value::pg_catalog.text               AS start_value,
-       s.increment_by::pg_catalog.text              AS increment_by,
-       s.min_value::pg_catalog.text                 AS min_value,
-       s.max_value::pg_catalog.text                 AS max_value,
-       s.cache_size::pg_catalog.text                AS cache_size,
-       s.cycle::pg_catalog.text                     AS cycle,
-       COALESCE(dn.nspname || '.' || dc.relname || '.' || da.attname, '') AS owned_by
-  FROM pg_catalog.pg_sequences s
-  JOIN pg_catalog.pg_class sc     ON sc.relname = s.sequencename
-  JOIN pg_catalog.pg_namespace sn ON sn.oid = sc.relnamespace AND sn.nspname = s.schemaname
+SELECT n.nspname || '.' || c.relname                              AS qname,
+       pg_catalog.format_type(sq.seqtypid, NULL)                  AS data_type,
+       sq.seqstart::pg_catalog.text                               AS start_value,
+       sq.seqincrement::pg_catalog.text                           AS increment_by,
+       sq.seqmin::pg_catalog.text                                 AS min_value,
+       sq.seqmax::pg_catalog.text                                 AS max_value,
+       sq.seqcache::pg_catalog.text                               AS cache_size,
+       sq.seqcycle::pg_catalog.text                               AS cycle,
+       COALESCE(dn.nspname || '.' || dc.relname || '.' || da.attname,
+                ''::pg_catalog.text)                              AS owned_by
+  FROM pg_catalog.pg_sequence sq
+  JOIN pg_catalog.pg_class     c ON c.oid = sq.seqrelid AND c.relkind = 'S'
+  JOIN pg_catalog.pg_namespace n ON n.oid = c.relnamespace
   LEFT JOIN pg_catalog.pg_depend d ON d.classid = 'pg_catalog.pg_class'::pg_catalog.regclass
-                                  AND d.objid = sc.oid AND d.deptype = 'a'
-  LEFT JOIN pg_catalog.pg_class dc     ON dc.oid = d.refobjid
+                                  AND d.objid = c.oid AND d.deptype = 'a'
+  LEFT JOIN pg_catalog.pg_class     dc ON dc.oid = d.refobjid
   LEFT JOIN pg_catalog.pg_namespace dn ON dn.oid = dc.relnamespace
   LEFT JOIN pg_catalog.pg_attribute da ON da.attrelid = d.refobjid AND da.attnum = d.refobjsubid
- WHERE s.schemaname || '.' || s.sequencename = ANY ($1)
+ WHERE n.nspname || '.' || c.relname = ANY ($1)
  ORDER BY 1`
 
 /** Every statement the extractor sends, so a test can assert the whole set. */
@@ -768,4 +787,130 @@ export function assertNoRawOids(artifact: ContractArtifact): void {
       throw new ContractRefused(`the artifact carries a raw catalogue key "${key}".`)
     }
   }
+}
+
+// ---------------------------------------------------------------------------
+// Session-bound extraction
+// ---------------------------------------------------------------------------
+
+/** A PostgreSQL text array literal, for `= ANY ($1)` without a bind parameter. */
+export function pgTextArray(values: readonly string[]): string {
+  return `'{${values.map(v => `"${v}"`).join(',')}}'::pg_catalog.text[]`
+}
+
+/**
+ * One backend that stays open, with the PID it claims to be.
+ *
+ * Deliberately tiny, and deliberately in production source: the copy's Stage 1
+ * runs against a real source database, not a disposable one, so the extraction
+ * primitive cannot live in the test harness. It also takes no connection
+ * parameters - it cannot open anything, which is what makes "no second
+ * connection" a property of the type rather than a rule someone has to follow.
+ */
+export interface ContractQueryExecutor {
+  readonly pid: string
+  rows(sql: string): Promise<string[][]>
+}
+
+/**
+ * The three session facts, read in ONE statement.
+ *
+ * Separately they can be observed in different states: a session could be read
+ * only when its PID is checked and read write by the time the first catalogue
+ * query runs. One statement makes them one observation.
+ */
+export const SESSION_GUARD_SQL = `
+SELECT pg_catalog.pg_backend_pid()::pg_catalog.text,
+       pg_catalog.current_setting('transaction_read_only'),
+       pg_catalog.current_setting('transaction_isolation')`
+
+/** Just the PID, for the re-read after the last catalogue query. */
+export const SESSION_PID_SQL = 'SELECT pg_catalog.pg_backend_pid()::pg_catalog.text'
+
+export const REQUIRED_TRANSACTION_ISOLATION = 'repeatable read'
+
+/**
+ * Read the whole contract through ONE open transaction on ONE backend.
+ *
+ * WHY THIS EXISTS. The generator's original reader called a helper that spawns
+ * `psql -c` per query, so ten queries meant ten backends, ten transactions and
+ * ten snapshots. For a quiescent disposable database that is harmless. For
+ * Stage 1 - one authenticated principal reading a live source under a fence - it
+ * is not a contract at all: nothing would stop the tenth query describing a
+ * different moment than the first.
+ *
+ * THE CALLER OWNS THE TRANSACTION. This function never sends BEGIN, COMMIT or
+ * ROLLBACK. It is handed a session that is already inside a READ ONLY
+ * REPEATABLE READ transaction, proves that from inside, and reads. Ending the
+ * transaction here would end the snapshot the caller is still relying on.
+ */
+export async function extractContractFromSession(
+  executor: ContractQueryExecutor,
+  expectedPid: string,
+): Promise<ContractArtifact> {
+  if (!/^\d+$/.test(expectedPid)) {
+    throw new ContractRefused(`the expected backend pid "${expectedPid}" is not a backend pid.`)
+  }
+  if (executor.pid !== expectedPid) {
+    throw new ContractRefused(
+      `the executor reports backend pid ${executor.pid}, not the expected ${expectedPid}.`)
+  }
+
+  const guard = await executor.rows(SESSION_GUARD_SQL)
+  if (guard.length !== 1 || guard[0].length !== 3) {
+    throw new ContractRefused('the session guard did not return one row of three values.')
+  }
+  const [livePid, readOnly, isolation] = guard[0]
+  if (livePid !== expectedPid) {
+    throw new ContractRefused(
+      `the session is backend ${livePid}, not the expected ${expectedPid}.`)
+  }
+  if (readOnly !== 'on') {
+    throw new ContractRefused(
+      `transaction_read_only is "${readOnly}", not "on"; the extraction session could write.`)
+  }
+  if (isolation !== REQUIRED_TRANSACTION_ISOLATION) {
+    throw new ContractRefused(
+      `transaction_isolation is "${isolation}", not "${REQUIRED_TRANSACTION_ISOLATION}"; ` +
+      'without one snapshot the ten queries can describe ten different moments.')
+  }
+
+  const tables = pgTextArray(COPY_TABLES)
+  const seqs = pgTextArray(COPY_SEQUENCES)
+  // ONE captured executor. There is no per-query executor argument, so nothing
+  // can be swapped in partway through.
+  const q = async (sql: string, arg?: string): Promise<string[][]> => {
+    try {
+      return await executor.rows(arg ? sql.replace('$1', arg) : sql)
+    } catch (e) {
+      // Bounded and redaction-safe: the failing query is named by its first
+      // line, never by the rows it would have returned.
+      throw new ContractRefused(
+        `contract query failed: ${sql.trim().split('\n')[0].slice(0, 120)}`)
+    }
+  }
+
+  await q(CONTRACT_PRELUDE)
+
+  const raw: RawCatalog = {
+    platform: await q(PLATFORM_SQL),
+    extensions: await q(EXTENSIONS_SQL),
+    migrations: await q(MIGRATIONS_SQL),
+    relations: await q(RELATIONS_SQL, tables),
+    columns: await q(COLUMNS_SQL, tables),
+    droppedColumns: await q(DROPPED_COLUMNS_SQL, tables),
+    constraints: await q(CONSTRAINTS_SQL, tables),
+    indexes: await q(INDEXES_SQL, tables),
+    triggers: await q(TRIGGERS_SQL, tables),
+    sequences: await q(SEQUENCES_SQL, seqs),
+  }
+
+  const after = await executor.rows(SESSION_PID_SQL)
+  if (after[0]?.[0] !== expectedPid) {
+    throw new ContractRefused(
+      `the session became backend ${String(after[0]?.[0])} during extraction; the contract ` +
+      'would describe more than one session.')
+  }
+
+  return buildContract(raw)
 }
