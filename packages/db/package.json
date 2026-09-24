@@ -35,6 +35,8 @@
     "test:unit": "vitest run",
     "test:integration": "vitest run --config vitest.integration.config.ts",
     "test:pgcopy": "vitest run --config vitest.pgcopy.config.ts",
+    "pgcopy-contract:generate": "tsx bin/pg-copy-contract.ts --generate",
+    "pgcopy-contract:check": "tsx bin/pg-copy-contract.ts --check",
     "db-inventory": "tsx bin/db-inventory.ts",
     "verify-privileges": "tsx bin/verify-privileges.ts",
     "verify-architecture": "tsx bin/verify-architecture.ts",

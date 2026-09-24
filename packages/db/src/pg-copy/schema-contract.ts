@@ -1,0 +1,771 @@
+// The schema contract — slice 2 of the PostgreSQL→PostgreSQL copy.
+//
+// WHAT IT IS. A deterministic, OID-independent description of exactly the 21
+// tables the copy moves, their columns, constraints, indexes and sequences, and
+// the platform facts that make those descriptions comparable at all. It is
+// generated from a live catalogue and compared against a COMMITTED artifact, so
+// "the target is the target we reviewed" becomes a byte comparison rather than
+// a belief.
+//
+// WHY IT REFUSES RATHER THAN RECORDS, IN SOME CASES. `COPY ... FROM` is not a
+// bulk bypass. It fires row-level and statement-level INSERT triggers, enforces
+// CHECK, NOT NULL and foreign-key constraints, and is NOT SUPPORTED AT ALL on a
+// table with row-level security enabled. A source with RLS is worse still:
+// `COPY ... TO` applies the relevant SELECT policies, so it would silently
+// export a filtered subset and the digest would faithfully attest to the subset.
+// So the refusals below are not belt-and-braces; each one names a way the copy
+// could otherwise land values the source never held, or miss values it did.
+//
+// WHAT IS RECORDED BUT NOT REFUSED. Extra non-identity indexes and extra
+// VALIDATED, NON-DEFERRABLE foreign keys on the target: an index cannot change a
+// stored value, and a validated immediate FK constrains without transforming. A
+// NOT VALID or DEFERRABLE foreign key IS refused - the first would admit rows
+// the constraint claims to forbid, and the second moves the violation to COMMIT,
+// turning a clean in-transaction failure into the indeterminate case.
+//
+// IDENTITY IS RESOLVED, NEVER NAMED. Every OID is resolved to a stable
+// qualified name, every catalogue function and cast is schema-qualified, and
+// `search_path` is pinned to `pg_catalog` for the extraction session, so nothing
+// a source can create changes what the contract reads.
+
+import { createHash } from 'node:crypto'
+
+import { recognizeManifest } from '../inventory-facts.js'
+import { CURRENT_V19_MANIFEST } from '../inventory-queries.js'
+
+/**
+ * Bumped when the contract's shape or digest domain changes.
+ *
+ * 1 -> 2: the migration ledger replaced a bare row count; collation records both
+ * the catalogue version and the provider's ACTUAL version; columns carry a
+ * nullable identity-sequence structure. All three change the payload shape, so a
+ * v1 artifact must not be comparable with a v2 extraction.
+ */
+export const SCHEMA_CONTRACT_VERSION = 2
+
+/**
+ * Settings the reviewed V3 target FIXES, and which the expected-target database
+ * must therefore establish explicitly.
+ *
+ * WHY THEY ARE CENTRALISED HERE AND SET BY THE BUILDER, NOT BY THE EXTRACTOR.
+ * `initdb` derives `TimeZone` from the host, so the first version of this
+ * contract recorded `America/Los_Angeles` because that is where it happened to
+ * be generated - the artifact was a fact about one machine. Setting them on the
+ * expected-target DATABASE makes generation host-independent. Setting them
+ * inside extraction would instead make the extractor blind to the drift it
+ * exists to catch, because it would be reading back its own assignment.
+ */
+export const REVIEWED_TARGET_SETTINGS: Readonly<Record<string, string>> = Object.freeze({
+  TimeZone: 'America/Los_Angeles',
+  default_text_search_config: 'pg_catalog.english',
+})
+
+/** The reviewed copy set, in the order the copy uses (parents before children). */
+export const COPY_TABLES: readonly string[] = Object.freeze([
+  'portfolio.positions',
+  'portfolio.trade_log',
+  'capital.watchlist',
+  'capital.documents',
+  'capital.fetch_log',
+  'capital.short_interest',
+  'capital.api_budget',
+  'capital.pending_manual_input',
+  'capital.chunks',
+  'thesis.theses',
+  'thesis.assumptions',
+  'thesis.narratives',
+  'thesis.proposals',
+  'thesis.proposal_changes',
+  'thesis.theme_memberships',
+  'briefing.predictions',
+  'briefing.qa',
+  'graph.nodes',
+  'graph.edges',
+  'graph.proposals',
+  'graph.proposal_edges',
+])
+
+/** The three generated sequences behind the three serial columns. */
+export const COPY_SEQUENCES: readonly string[] = Object.freeze([
+  'portfolio.trade_log_id_seq',
+  'capital.fetch_log_id_seq',
+  'briefing.qa_id_seq',
+])
+
+/** The migration set a V19 target must recognise, exactly. */
+export const EXPECTED_MIGRATION_COUNT = 19
+export const EXPECTED_MIGRATION_RECOGNITION = 'CURRENT_V19'
+
+/** A refusal: the schema is not one this contract is willing to describe. */
+export class ContractRefused extends Error {
+  constructor(message: string) {
+    super(message)
+    this.name = 'ContractRefused'
+  }
+}
+
+// ---------------------------------------------------------------------------
+// CANONICAL SERIALISATION
+// ---------------------------------------------------------------------------
+
+export type Canonical =
+  | string | number | boolean | null
+  | readonly Canonical[]
+  | { readonly [k: string]: Canonical }
+
+/**
+ * Deterministic JSON: object keys sorted, no incidental whitespace.
+ *
+ * The committed artifact is written pretty-printed for review, but the DIGEST
+ * is taken over this form, so a reformatting cannot change the digest and a
+ * value change cannot hide behind formatting.
+ */
+export function canonicalJson(value: Canonical): string {
+  if (value === null || typeof value !== 'object') return JSON.stringify(value)
+  if (Array.isArray(value)) return `[${value.map(canonicalJson).join(',')}]`
+  const o = value as { readonly [k: string]: Canonical }
+  return `{${Object.keys(o).sort().map(k => `${JSON.stringify(k)}:${canonicalJson(o[k])}`).join(',')}}`
+}
+
+export function sha256Hex(text: string): string {
+  return createHash('sha256').update(Buffer.from(text, 'utf-8')).digest('hex')
+}
+
+// ---------------------------------------------------------------------------
+// EXTRACTION SQL — every OID resolved, every helper qualified
+// ---------------------------------------------------------------------------
+//
+// The extraction session sets `search_path = pg_catalog` (see CONTRACT_PRELUDE),
+// so even an unqualified reference could not reach a schema a source created.
+// The statements qualify everything anyway: pinning and qualifying are two
+// independent guards, and a mutant that removes one is caught by the other.
+
+export const CONTRACT_PRELUDE = 'SET search_path = pg_catalog;'
+
+export const PLATFORM_SQL = `
+SELECT pg_catalog.current_setting('server_version_num')            AS server_version_num,
+       pg_catalog.pg_encoding_to_char(d.encoding)                  AS encoding,
+       d.datcollate                                                AS lc_collate,
+       d.datctype                                                  AS lc_ctype,
+       pg_catalog.current_setting('TimeZone')                      AS timezone,
+       pg_catalog.current_setting('default_text_search_config')    AS default_text_search_config
+  FROM pg_catalog.pg_database d
+ WHERE d.datname = pg_catalog.current_database()`
+
+export const EXTENSIONS_SQL = `
+SELECT e.extname, e.extversion, n.nspname
+  FROM pg_catalog.pg_extension e
+  JOIN pg_catalog.pg_namespace n ON n.oid = e.extnamespace
+ ORDER BY e.extname`
+
+/**
+ * The migration LEDGER, not a count.
+ *
+ * A count of 19 says nothing about WHICH nineteen. Recognition is delegated to
+ * `recognizeManifest` and `CURRENT_V19_MANIFEST` - the same published list and
+ * the same comparison the inventory uses - so exactly one place in this
+ * repository knows what V19 means.
+ */
+export const MIGRATIONS_SQL = `
+SELECT m.filename, m.sha256 FROM db.schema_migrations m ORDER BY m.filename`
+
+export const RELATIONS_SQL = `
+SELECT n.nspname, c.relname,
+       c.relkind::pg_catalog.text, c.relpersistence::pg_catalog.text,
+       pg_catalog.pg_get_userbyid(c.relowner),
+       c.relrowsecurity::pg_catalog.text, c.relforcerowsecurity::pg_catalog.text
+  FROM pg_catalog.pg_class c
+  JOIN pg_catalog.pg_namespace n ON n.oid = c.relnamespace
+ WHERE n.nspname || '.' || c.relname = ANY ($1)
+ ORDER BY n.nspname, c.relname`
+
+/**
+ * Columns in physical `attnum` order, with every identity resolved.
+ *
+ * Dropped columns are excluded from the list but COUNTED, because the copy
+ * transports an explicit live-column list and is unaffected by the attnum gap,
+ * while a reviewer still needs to see that a gap exists.
+ */
+export const COLUMNS_SQL = `
+SELECT n.nspname || '.' || c.relname                              AS qname,
+       a.attnum::pg_catalog.text                                  AS attnum,
+       a.attname                                                  AS name,
+       pg_catalog.format_type(a.atttypid, a.atttypmod)            AS format_type,
+       tn.nspname                                                 AS type_schema,
+       t.typname                                                  AS type_name,
+       t.typtype::pg_catalog.text                                 AS typtype,
+       t.typcategory::pg_catalog.text                             AS typcategory,
+       a.atttypmod::pg_catalog.text                               AS typmod,
+       te.extname                                                 AS type_extension,
+       te.extversion                                              AS type_extension_version,
+       a.attnotnull::pg_catalog.text                              AS notnull,
+       a.atthasdef::pg_catalog.text                               AS hasdefault,
+       pg_catalog.pg_get_expr(ad.adbin, ad.adrelid)               AS default_expr,
+       a.attidentity::pg_catalog.text                             AS identity,
+       a.attgenerated::pg_catalog.text                            AS generated,
+       pg_catalog.pg_get_serial_sequence(pg_catalog.quote_ident(n.nspname) || '.' ||
+                                         pg_catalog.quote_ident(c.relname), a.attname) AS serial_sequence,
+       coll_n.nspname                                             AS collation_schema,
+       coll.collname                                              AS collation_name,
+       coll.collprovider::pg_catalog.text                         AS collation_provider,
+       coll.collisdeterministic::pg_catalog.text                  AS collation_deterministic,
+       coll.collencoding::pg_catalog.text                         AS collation_encoding,
+       coll.collcollate                                           AS collation_collate,
+       coll.collctype                                             AS collation_ctype,
+       coll.colllocale                                            AS collation_locale,
+       coll.collicurules                                          AS collation_icu_rules,
+       coll.collversion                                           AS collation_version,
+       pg_catalog.pg_collation_actual_version(coll.oid)           AS collation_actual_version,
+       idseq.qname                                                AS identity_sequence,
+       idseq.data_type                                            AS identity_seq_data_type,
+       idseq.start_value                                          AS identity_seq_start,
+       idseq.increment_by                                         AS identity_seq_increment,
+       idseq.min_value                                            AS identity_seq_min,
+       idseq.max_value                                            AS identity_seq_max,
+       idseq.cache_size                                           AS identity_seq_cache,
+       idseq.cycle                                                AS identity_seq_cycle,
+       idseq.linkage                                              AS identity_seq_linkage
+  FROM pg_catalog.pg_attribute a
+  JOIN pg_catalog.pg_class c      ON c.oid = a.attrelid
+  JOIN pg_catalog.pg_namespace n  ON n.oid = c.relnamespace
+  JOIN pg_catalog.pg_type t       ON t.oid = a.atttypid
+  JOIN pg_catalog.pg_namespace tn ON tn.oid = t.typnamespace
+  LEFT JOIN pg_catalog.pg_attrdef ad ON ad.adrelid = a.attrelid AND ad.adnum = a.attnum
+  LEFT JOIN pg_catalog.pg_depend dt ON dt.classid = 'pg_catalog.pg_type'::pg_catalog.regclass
+                                   AND dt.objid = t.oid AND dt.deptype = 'e'
+  LEFT JOIN pg_catalog.pg_extension te ON te.oid = dt.refobjid
+  LEFT JOIN pg_catalog.pg_collation coll  ON coll.oid = a.attcollation AND a.attcollation <> 0
+  LEFT JOIN pg_catalog.pg_namespace coll_n ON coll_n.oid = coll.collnamespace
+  -- The identity sequence, reached through pg_depend rather than only through
+  -- pg_get_serial_sequence: the dependency IS the linkage, and a name-returning
+  -- helper cannot show why the two objects are connected or what the sequence's
+  -- options are.
+  LEFT JOIN LATERAL (
+    SELECT sn.nspname || '.' || sq.relname             AS qname,
+           s.data_type::pg_catalog.text                AS data_type,
+           s.start_value::pg_catalog.text              AS start_value,
+           s.increment_by::pg_catalog.text             AS increment_by,
+           s.min_value::pg_catalog.text                AS min_value,
+           s.max_value::pg_catalog.text                AS max_value,
+           s.cache_size::pg_catalog.text               AS cache_size,
+           s.cycle::pg_catalog.text                    AS cycle,
+           'pg_depend(deptype=' || dep.deptype::pg_catalog.text || ',refobjsubid=' ||
+             dep.refobjsubid::pg_catalog.text || ')'   AS linkage
+      FROM pg_catalog.pg_depend dep
+      JOIN pg_catalog.pg_class sq     ON sq.oid = dep.objid AND sq.relkind = 'S'
+      JOIN pg_catalog.pg_namespace sn ON sn.oid = sq.relnamespace
+      JOIN pg_catalog.pg_sequences s  ON s.schemaname = sn.nspname AND s.sequencename = sq.relname
+     WHERE dep.classid = 'pg_catalog.pg_class'::pg_catalog.regclass
+       AND dep.refclassid = 'pg_catalog.pg_class'::pg_catalog.regclass
+       AND dep.refobjid = a.attrelid
+       AND dep.refobjsubid = a.attnum
+       AND dep.deptype = 'i'
+     ORDER BY 1
+     LIMIT 1
+  ) idseq ON true
+ WHERE n.nspname || '.' || c.relname = ANY ($1)
+   AND a.attnum > 0 AND NOT a.attisdropped
+ ORDER BY n.nspname, c.relname, a.attnum`
+
+export const DROPPED_COLUMNS_SQL = `
+SELECT n.nspname || '.' || c.relname, pg_catalog.count(*)::pg_catalog.text
+  FROM pg_catalog.pg_attribute a
+  JOIN pg_catalog.pg_class c     ON c.oid = a.attrelid
+  JOIN pg_catalog.pg_namespace n ON n.oid = c.relnamespace
+ WHERE n.nspname || '.' || c.relname = ANY ($1) AND a.attnum > 0 AND a.attisdropped
+ GROUP BY 1 ORDER BY 1`
+
+export const CONSTRAINTS_SQL = `
+SELECT n.nspname || '.' || c.relname                    AS qname,
+       k.conname                                        AS name,
+       k.contype::pg_catalog.text                       AS contype,
+       pg_catalog.pg_get_constraintdef(k.oid, false)    AS definition,
+       k.convalidated::pg_catalog.text                  AS validated,
+       k.condeferrable::pg_catalog.text                 AS deferrable,
+       k.condeferred::pg_catalog.text                   AS deferred,
+       COALESCE((SELECT pg_catalog.string_agg(ca.attname, ',' ORDER BY u.ord)
+                   FROM pg_catalog.unnest(k.conkey) WITH ORDINALITY AS u(attnum, ord)
+                   JOIN pg_catalog.pg_attribute ca
+                     ON ca.attrelid = k.conrelid AND ca.attnum = u.attnum), '') AS columns
+  FROM pg_catalog.pg_constraint k
+  JOIN pg_catalog.pg_class c     ON c.oid = k.conrelid
+  JOIN pg_catalog.pg_namespace n ON n.oid = c.relnamespace
+ WHERE n.nspname || '.' || c.relname = ANY ($1)
+ ORDER BY n.nspname, c.relname, k.contype, k.conname`
+
+export const INDEXES_SQL = `
+SELECT n.nspname || '.' || c.relname                      AS qname,
+       ic.relname                                         AS index_name,
+       pg_catalog.pg_get_indexdef(i.indexrelid, 0, true)  AS definition,
+       i.indisprimary::pg_catalog.text                    AS is_primary,
+       i.indisunique::pg_catalog.text                     AS is_unique,
+       i.indisvalid::pg_catalog.text                      AS is_valid,
+       i.indisready::pg_catalog.text                      AS is_ready,
+       COALESCE(pg_catalog.pg_get_expr(i.indpred, i.indrelid), '')    AS predicate,
+       COALESCE(pg_catalog.pg_get_expr(i.indexprs, i.indrelid), '')   AS expressions
+  FROM pg_catalog.pg_index i
+  JOIN pg_catalog.pg_class c      ON c.oid = i.indrelid
+  JOIN pg_catalog.pg_class ic     ON ic.oid = i.indexrelid
+  JOIN pg_catalog.pg_namespace n  ON n.oid = c.relnamespace
+ WHERE n.nspname || '.' || c.relname = ANY ($1)
+ ORDER BY n.nspname, c.relname, ic.relname`
+
+export const TRIGGERS_SQL = `
+SELECT n.nspname || '.' || c.relname          AS qname,
+       g.tgname                               AS name,
+       g.tgtype::pg_catalog.int4::pg_catalog.text AS tgtype,
+       g.tgisinternal::pg_catalog.text        AS internal,
+       g.tgenabled::pg_catalog.text           AS enabled
+  FROM pg_catalog.pg_trigger g
+  JOIN pg_catalog.pg_class c     ON c.oid = g.tgrelid
+  JOIN pg_catalog.pg_namespace n ON n.oid = c.relnamespace
+ WHERE n.nspname || '.' || c.relname = ANY ($1)
+ ORDER BY n.nspname, c.relname, g.tgname`
+
+export const SEQUENCES_SQL = `
+SELECT s.schemaname || '.' || s.sequencename        AS qname,
+       s.data_type::pg_catalog.text                 AS data_type,
+       s.start_value::pg_catalog.text               AS start_value,
+       s.increment_by::pg_catalog.text              AS increment_by,
+       s.min_value::pg_catalog.text                 AS min_value,
+       s.max_value::pg_catalog.text                 AS max_value,
+       s.cache_size::pg_catalog.text                AS cache_size,
+       s.cycle::pg_catalog.text                     AS cycle,
+       COALESCE(dn.nspname || '.' || dc.relname || '.' || da.attname, '') AS owned_by
+  FROM pg_catalog.pg_sequences s
+  JOIN pg_catalog.pg_class sc     ON sc.relname = s.sequencename
+  JOIN pg_catalog.pg_namespace sn ON sn.oid = sc.relnamespace AND sn.nspname = s.schemaname
+  LEFT JOIN pg_catalog.pg_depend d ON d.classid = 'pg_catalog.pg_class'::pg_catalog.regclass
+                                  AND d.objid = sc.oid AND d.deptype = 'a'
+  LEFT JOIN pg_catalog.pg_class dc     ON dc.oid = d.refobjid
+  LEFT JOIN pg_catalog.pg_namespace dn ON dn.oid = dc.relnamespace
+  LEFT JOIN pg_catalog.pg_attribute da ON da.attrelid = d.refobjid AND da.attnum = d.refobjsubid
+ WHERE s.schemaname || '.' || s.sequencename = ANY ($1)
+ ORDER BY 1`
+
+/** Every statement the extractor sends, so a test can assert the whole set. */
+export const CONTRACT_QUERIES: readonly string[] = Object.freeze([
+  PLATFORM_SQL, EXTENSIONS_SQL, MIGRATIONS_SQL, RELATIONS_SQL, COLUMNS_SQL,
+  DROPPED_COLUMNS_SQL, CONSTRAINTS_SQL, INDEXES_SQL, TRIGGERS_SQL, SEQUENCES_SQL,
+])
+
+// ---------------------------------------------------------------------------
+// RAW CATALOGUE INPUT — one row set per query, as text
+// ---------------------------------------------------------------------------
+
+export interface RawCatalog {
+  readonly platform: readonly string[][]
+  readonly extensions: readonly string[][]
+  readonly migrations: readonly (readonly string[])[]
+  readonly relations: readonly string[][]
+  readonly columns: readonly string[][]
+  readonly droppedColumns: readonly string[][]
+  readonly constraints: readonly string[][]
+  readonly indexes: readonly string[][]
+  readonly triggers: readonly string[][]
+  readonly sequences: readonly string[][]
+}
+
+const isTrue = (v: string): boolean => v === 't' || v === 'true'
+const orNull = (v: string): string | null => (v === '' ? null : v)
+
+/** `tgtype` bit 2 (value 4) is the INSERT event, whatever the timing or level. */
+export const TRIGGER_INSERT_BIT = 4
+
+/** The reviewed extension set. A new extension is a contract change. */
+export const REVIEWED_EXTENSIONS: readonly string[] = Object.freeze(['btree_gist', 'plpgsql', 'vector'])
+
+/** Types accepted in a copied column, by `schema.typename`. */
+const SUPPORTED_BUILTIN = new Set([
+  'pg_catalog.text', 'pg_catalog.numeric', 'pg_catalog.int4', 'pg_catalog.int8',
+  'pg_catalog.bool', 'pg_catalog.date', 'pg_catalog.timestamptz',
+  'pg_catalog.jsonb', 'pg_catalog.uuid',
+])
+
+// ---------------------------------------------------------------------------
+// BUILD — refusals first, then the canonical payload
+// ---------------------------------------------------------------------------
+
+export interface ContractArtifact {
+  readonly pgcopy_schema_contract_version: number
+  readonly digest: string
+  readonly payload: Canonical
+}
+
+export function buildContract(raw: RawCatalog): ContractArtifact {
+  // ---- platform -----------------------------------------------------------
+  if (raw.platform.length !== 1) {
+    throw new ContractRefused(`expected exactly one platform row, got ${raw.platform.length}.`)
+  }
+  const [svn, encoding, lcCollate, lcCtype, timezone, tsConfig] = raw.platform[0]
+  const major = Math.floor(Number(svn) / 10_000)
+  if (major !== 17) {
+    throw new ContractRefused(`PostgreSQL major ${major} is not the reviewed 17.`)
+  }
+
+  const extensions = raw.extensions.map(r => ({ name: r[0], version: r[1], schema: r[2] }))
+  const extNames = extensions.map(e => e.name)
+  if (new Set(extNames).size !== extNames.length) {
+    throw new ContractRefused('an extension name appears more than once.')
+  }
+  for (const e of extNames) {
+    if (!REVIEWED_EXTENSIONS.includes(e)) {
+      throw new ContractRefused(`extension "${e}" is not in the reviewed set; that is a contract change.`)
+    }
+  }
+  for (const e of REVIEWED_EXTENSIONS) {
+    if (!extNames.includes(e)) throw new ContractRefused(`reviewed extension "${e}" is not installed.`)
+  }
+
+  // ---- migration recognition ---------------------------------------------
+  // Recognition is by LEDGER, never by count. `recognizeManifest` is the
+  // inventory's own comparison against `CURRENT_V19_MANIFEST`; duplicates are
+  // rejected here first, because a map-based comparison collapses them.
+  const ledgerRows = raw.migrations.map(r => ({ filename: r[0], sha256: r[1], applied_at: '' }))
+  const seenMigration = new Set<string>()
+  for (const row of ledgerRows) {
+    if (seenMigration.has(row.filename)) {
+      throw new ContractRefused(`migration "${row.filename}" appears more than once in db.schema_migrations.`)
+    }
+    seenMigration.add(row.filename)
+  }
+  const manifestFacts = recognizeManifest(ledgerRows, CURRENT_V19_MANIFEST)
+  if (manifestFacts.recognition !== EXPECTED_MIGRATION_RECOGNITION) {
+    throw new ContractRefused(
+      `the migration ledger is not ${EXPECTED_MIGRATION_RECOGNITION}: ` +
+      `${manifestFacts.recorded_count} recorded vs ${manifestFacts.expected_count} expected; ` +
+      `missing [${manifestFacts.missing.join(', ')}]; ` +
+      `unexpected [${manifestFacts.additional.join(', ')}]; ` +
+      `hash-mismatched [${manifestFacts.hash_mismatched.map(h => h.filename).join(', ')}]. ` +
+      'A row count of 19 is not recognition - every filename and every SHA-256 must match.',
+    )
+  }
+  const migrationCount = ledgerRows.length
+  if (migrationCount !== EXPECTED_MIGRATION_COUNT) {
+    // Unreachable while recognition holds; kept so the published count constant
+    // cannot silently disagree with the published manifest.
+    throw new ContractRefused(
+      `recognition passed but the ledger holds ${migrationCount} rows, not ${EXPECTED_MIGRATION_COUNT}.`,
+    )
+  }
+
+  // ---- relations ----------------------------------------------------------
+  const relByName = new Map<string, string[]>()
+  for (const r of raw.relations) {
+    const q = `${r[0]}.${r[1]}`
+    if (relByName.has(q)) throw new ContractRefused(`relation ${q} appears more than once.`)
+    relByName.set(q, r)
+  }
+  for (const q of COPY_TABLES) {
+    if (!relByName.has(q)) throw new ContractRefused(`required table ${q} is missing.`)
+  }
+  for (const q of relByName.keys()) {
+    if (!COPY_TABLES.includes(q)) throw new ContractRefused(`unexpected table ${q} in the copy set.`)
+  }
+
+  const droppedByTable = new Map(raw.droppedColumns.map(r => [r[0], Number(r[1])]))
+  const colsByTable = new Map<string, string[][]>()
+  for (const r of raw.columns) {
+    const list = colsByTable.get(r[0]) ?? []
+    list.push(r)
+    colsByTable.set(r[0], list)
+  }
+  const group = <T extends string[]>(rows: readonly T[]): Map<string, T[]> => {
+    const m = new Map<string, T[]>()
+    for (const r of rows) { const l = m.get(r[0]) ?? []; l.push(r); m.set(r[0], l) }
+    return m
+  }
+  const consByTable = group(raw.constraints)
+  const idxByTable = group(raw.indexes)
+  const trgByTable = group(raw.triggers)
+
+  const tables = COPY_TABLES.map(q => {
+    const rel = relByName.get(q) as string[]
+    const [nsp, rname, relkind, relpersistence, owner, rls, forceRls] = rel
+
+    if (relkind !== 'r') throw new ContractRefused(`${q} has relkind "${relkind}", not an ordinary table.`)
+    if (relpersistence !== 'p') {
+      throw new ContractRefused(`${q} has relpersistence "${relpersistence}", not permanent.`)
+    }
+    // COPY FROM is NOT SUPPORTED on an RLS table, and COPY TO on the source
+    // would apply SELECT policies and export a filtered subset. Unconditional.
+    if (isTrue(rls)) throw new ContractRefused(`${q} has relrowsecurity enabled; refused unconditionally.`)
+    if (isTrue(forceRls)) {
+      throw new ContractRefused(`${q} has relforcerowsecurity enabled; refused unconditionally.`)
+    }
+
+    for (const t of trgByTable.get(q) ?? []) {
+      const [, tname, tgtype, internal, enabled] = t
+      if (isTrue(internal)) continue  // FK enforcement triggers are expected
+      if ((Number(tgtype) & TRIGGER_INSERT_BIT) !== 0) {
+        throw new ContractRefused(
+          `${q} carries non-internal trigger "${tname}" that fires for INSERT (tgtype=${tgtype}, ` +
+          `tgenabled=${enabled}). COPY FROM fires row- and statement-level INSERT triggers, so a ` +
+          'trigger could transform the values between the wire and storage. Disabled is not exempt: ' +
+          'enabling it is one statement away.',
+        )
+      }
+    }
+
+    const colRows = colsByTable.get(q) ?? []
+    if (colRows.length === 0) throw new ContractRefused(`${q} has no live columns.`)
+    const seenCols = new Set<string>()
+    const columns = colRows.map((r, i) => {
+      const [, attnum, name, formatType, typeSchema, typeName, typtype, typcategory, typmod,
+             typeExt, typeExtVer, notnull, hasdef, defExpr, identity, generated, serialSeq,
+             collSchema, collName, collProvider, collDet, collEnc, collCollate, collCtype,
+             collIcu, collIcuRules, collVersion, collActualVersion,
+             idSeqName, idSeqType, idSeqStart, idSeqIncrement, idSeqMin, idSeqMax,
+             idSeqCache, idSeqCycle, idSeqLinkage] = r
+
+      // Extracted BEFORE the compatibility-policy refusal below, so the refusal
+      // can name the object it rejected. A refusal that cannot describe what it
+      // found is a refusal nobody can act on.
+      const identitySequence = orNull(idSeqName) === null ? null : {
+        qname: idSeqName,
+        data_type: idSeqType,
+        start_value: idSeqStart,
+        increment_by: idSeqIncrement,
+        min_value: idSeqMin,
+        max_value: idSeqMax,
+        cache_size: idSeqCache,
+        cycle: isTrue(idSeqCycle),
+        linkage: idSeqLinkage,
+      }
+      if (seenCols.has(name)) throw new ContractRefused(`${q} column "${name}" appears more than once.`)
+      seenCols.add(name)
+
+      if (identity !== '') {
+        throw new ContractRefused(
+          `${q}.${name} is an identity column (attidentity="${identity}"); its identity sequence is ` +
+          `${identitySequence
+            ? `${identitySequence.qname} [data_type=${identitySequence.data_type} ` +
+              `start=${identitySequence.start_value} increment=${identitySequence.increment_by} ` +
+              `min=${identitySequence.min_value} max=${identitySequence.max_value} ` +
+              `cache=${identitySequence.cache_size} cycle=${String(identitySequence.cycle)} ` +
+              `linkage=${identitySequence.linkage}]`
+            : 'ABSENT'}. ` +
+          `This is COMPATIBILITY ` +
+          'POLICY, not a claim that COPY cannot accept identity values - COPY FROM behaves as if ' +
+          'OVERRIDING SYSTEM VALUE were given. The reviewed design does not model that semantic.',
+        )
+      }
+      if (generated === 's') {
+        throw new ContractRefused(
+          `${q}.${name} is a stored generated column; it cannot appear in a COPY column list.`,
+        )
+      }
+      const typeId = `${typeSchema}.${typeName}`
+      const supported = SUPPORTED_BUILTIN.has(typeId) ||
+        (typeName === 'vector' && typeExt === 'vector' && typtype === 'b')
+      if (!supported) {
+        throw new ContractRefused(
+          `${q}.${name} has type ${formatType} identified as ${typeId} ` +
+          `(typtype=${typtype}, extension=${typeExt ?? 'none'}), which is not in the reviewed set.`,
+        )
+      }
+      if (collName !== '') {
+        if (!isTrue(collDet)) {
+          throw new ContractRefused(
+            `${q}.${name} uses nondeterministic collation ${collSchema}.${collName}; equality would ` +
+            'not be the relation the primary-key-ordered digest relies on.',
+          )
+        }
+        // A versioned provider records a version at CREATE time; the actual
+        // version is what the provider reports NOW. If they differ, the
+        // operating system's collation moved under an existing index and the
+        // ordering on disk may no longer be the ordering the digest assumes.
+        // A provider with no versioning (the C locale) reports NULL for both,
+        // and NULL == NULL is not drift.
+        const recordedCollVersion = orNull(collVersion)
+        const actualCollVersion = orNull(collActualVersion)
+        if (recordedCollVersion !== null && actualCollVersion !== null &&
+            recordedCollVersion !== actualCollVersion) {
+          throw new ContractRefused(
+            `${q}.${name} collation ${collSchema}.${collName} records version ` +
+            `"${recordedCollVersion}" but the provider now reports "${actualCollVersion}". ` +
+            'Index ordering may no longer match the collation.',
+          )
+        }
+        if (recordedCollVersion === null && actualCollVersion !== null) {
+          throw new ContractRefused(
+            `${q}.${name} collation ${collSchema}.${collName} records NO version while the ` +
+            `provider reports "${actualCollVersion}"; catalogue and provider disagree.`,
+          )
+        }
+        if (recordedCollVersion !== null && actualCollVersion === null) {
+          throw new ContractRefused(
+            `${q}.${name} collation ${collSchema}.${collName} records version ` +
+            `"${recordedCollVersion}" while the provider reports none; catalogue and provider disagree.`,
+          )
+        }
+      }
+      return {
+        position: i + 1,
+        attnum: Number(attnum),
+        name,
+        format_type: formatType,
+        type_schema: typeSchema,
+        type_name: typeName,
+        typtype,
+        typcategory,
+        typmod: Number(typmod),
+        type_extension: orNull(typeExt),
+        type_extension_version: orNull(typeExtVer),
+        not_null: isTrue(notnull),
+        has_default: isTrue(hasdef),
+        default_expression: orNull(defExpr),
+        identity: identity === '' ? null : identity,
+        generated: generated === '' ? null : generated,
+        serial_sequence: orNull(serialSeq),
+        identity_sequence: identitySequence,
+        collation: collName === '' ? null : {
+          schema: collSchema, name: collName, provider: collProvider,
+          deterministic: isTrue(collDet), encoding: Number(collEnc),
+          collate: orNull(collCollate), ctype: orNull(collCtype),
+          locale: orNull(collIcu), icu_rules: orNull(collIcuRules),
+          version: orNull(collVersion), actual_version: orNull(collActualVersion),
+        },
+      }
+    })
+
+    const cons = (consByTable.get(q) ?? []).map(r => {
+      const [, name, contype, definition, validated, deferrable, deferred, cols] = r
+      if (contype === 'f') {
+        if (!isTrue(validated)) {
+          throw new ContractRefused(
+            `${q} foreign key "${name}" is NOT VALID; it would admit rows it claims to forbid.`,
+          )
+        }
+        if (isTrue(deferrable)) {
+          throw new ContractRefused(
+            `${q} foreign key "${name}" is DEFERRABLE; a deferred violation surfaces at COMMIT, ` +
+            'which is exactly the indeterminate case the copy must not create.',
+          )
+        }
+      }
+      return {
+        name, type: contype, definition, columns: cols,
+        validated: isTrue(validated), deferrable: isTrue(deferrable), deferred: isTrue(deferred),
+      }
+    })
+
+    const indexes = (idxByTable.get(q) ?? []).map(r => {
+      const [, name, definition, isPrimary, isUnique, isValid, isReady, predicate, expressions] = r
+      const identityIndex = isTrue(isPrimary) || isTrue(isUnique)
+      if (identityIndex && (!isTrue(isValid) || !isTrue(isReady))) {
+        throw new ContractRefused(
+          `${q} identity index "${name}" is not valid/ready (indisvalid=${isValid}, indisready=${isReady}).`,
+        )
+      }
+      return {
+        name, definition,
+        is_primary: isTrue(isPrimary), is_unique: isTrue(isUnique),
+        is_valid: isTrue(isValid), is_ready: isTrue(isReady),
+        predicate, expressions,
+      }
+    })
+
+    return {
+      qname: q, schema: nsp, name: rname,
+      relkind, relpersistence, owner,
+      row_security: isTrue(rls), force_row_security: isTrue(forceRls),
+      dropped_column_count: droppedByTable.get(q) ?? 0,
+      columns,
+      constraints: cons,
+      indexes,
+    }
+  })
+
+  // ---- sequences ----------------------------------------------------------
+  const seqByName = new Map<string, string[]>()
+  for (const r of raw.sequences) {
+    if (seqByName.has(r[0])) throw new ContractRefused(`sequence ${r[0]} appears more than once.`)
+    seqByName.set(r[0], r)
+  }
+  const sequences = COPY_SEQUENCES.map(q => {
+    const r = seqByName.get(q)
+    if (!r) throw new ContractRefused(`required sequence ${q} is missing.`)
+    const [, dataType, start, increment, minValue, maxValue, cache, cycle, ownedBy] = r
+    if (ownedBy === '') throw new ContractRefused(`sequence ${q} has no owning table column.`)
+    return {
+      qname: q, data_type: dataType, start_value: start, increment_by: increment,
+      min_value: minValue, max_value: maxValue, cache_size: cache,
+      cycle: isTrue(cycle), owned_by: ownedBy,
+    }
+  })
+  for (const q of seqByName.keys()) {
+    if (!COPY_SEQUENCES.includes(q)) throw new ContractRefused(`unexpected sequence ${q}.`)
+  }
+
+  const payload = {
+    platform: {
+      server_version_major: major,
+      encoding, lc_collate: lcCollate, lc_ctype: lcCtype,
+      timezone, default_text_search_config: tsConfig,
+      extensions,
+    },
+    migrations: {
+      recognition: EXPECTED_MIGRATION_RECOGNITION,
+      count: migrationCount,
+      // The ordered ledger itself, plus its own digest. Carrying both lets a
+      // reader see WHICH nineteen without recomputing, and lets a comparison
+      // fail on one filename or one hash instead of on a count.
+      ledger: ledgerRows.map(r => ({ filename: r.filename, sha256: r.sha256 })),
+      ledger_digest: sha256Hex(ledgerRows.map(r => `${r.filename}:${r.sha256}`).join('\n')),
+    },
+    table_order: [...COPY_TABLES],
+    tables,
+    sequences,
+  } as unknown as Canonical
+
+  return {
+    pgcopy_schema_contract_version: SCHEMA_CONTRACT_VERSION,
+    digest: contractDigest(payload),
+    payload,
+  }
+}
+
+/**
+ * The digest domain is the canonical JSON of the PAYLOAD and the version, and
+ * nothing else. The `digest` field is a sibling of `payload`, so it cannot
+ * appear in its own input, and the version is included so a shape change under
+ * the same bytes is impossible.
+ */
+export function contractDigest(payload: Canonical): string {
+  return sha256Hex(
+    canonicalJson({ version: SCHEMA_CONTRACT_VERSION, payload } as unknown as Canonical),
+  )
+}
+
+/** The committed artifact's exact bytes: pretty for review, newline-terminated. */
+export function serializeArtifact(artifact: ContractArtifact): string {
+  return `${JSON.stringify(artifact, null, 2)}\n`
+}
+
+/** Parse and re-verify: an artifact whose digest does not match is refused. */
+export function parseArtifact(text: string): ContractArtifact {
+  const a = JSON.parse(text) as ContractArtifact
+  if (a.pgcopy_schema_contract_version !== SCHEMA_CONTRACT_VERSION) {
+    throw new ContractRefused(
+      `artifact version ${String(a.pgcopy_schema_contract_version)} is not ${SCHEMA_CONTRACT_VERSION}.`,
+    )
+  }
+  const recomputed = contractDigest(a.payload)
+  if (recomputed !== a.digest) {
+    throw new ContractRefused(
+      `artifact digest ${a.digest} does not match its payload (recomputed ${recomputed}).`,
+    )
+  }
+  return a
+}
+
+/** No raw catalogue OID may reach the artifact. Checked, not assumed. */
+export function assertNoRawOids(artifact: ContractArtifact): void {
+  const text = canonicalJson(artifact.payload)
+  for (const key of ['oid', 'relfilenode', 'atttypid', 'attrelid', 'conrelid', 'indexrelid', 'refobjid']) {
+    if (text.includes(`"${key}"`)) {
+      throw new ContractRefused(`the artifact carries a raw catalogue key "${key}".`)
+    }
+  }
+}

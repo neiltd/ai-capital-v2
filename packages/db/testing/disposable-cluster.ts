@@ -77,6 +77,13 @@ export interface DisposableCluster {
 /** Test-only seams. Never used by the suite's ordinary path. */
 export interface DisposableOptions {
   readonly user?: string
+  /**
+   * Timezone the CLUSTER is created under. `initdb` guesses `timezone` from the
+   * environment, so this is how a test can build a cluster whose host-derived
+   * default is deliberately wrong and prove the expected target does not inherit
+   * it. Unset means "whatever this machine is", which is the normal case.
+   */
+  readonly tz?: string
   /** Simulate `pg_ctl -w start` failing AFTER a postmaster came up. */
   readonly __failStartWait?: boolean
   /** Simulate the shutdown command failing, so the root must be preserved. */
@@ -149,6 +156,9 @@ export async function startDisposableCluster(
   const pgdata = join(root, 'd')
   const socketDir = join(root, 's')
   const port = reservePort()
+  const childEnv = opts.tz === undefined
+    ? undefined
+    : { env: { ...process.env, TZ: opts.tz } as NodeJS.ProcessEnv }
 
   let queries = 0
   const sent: string[] = []
@@ -220,7 +230,7 @@ export async function startDisposableCluster(
     await run(INITDB, [
       '-D', pgdata, '--username', user, '--auth=trust', '--no-sync',
       '--encoding=UTF8', '--locale=en_US.UTF-8',
-    ])
+    ], childEnv)
     mkdirSync(socketDir, { mode: 0o700, recursive: true })
     appendFileSync(join(pgdata, 'postgresql.conf'), [
       '',
@@ -234,7 +244,7 @@ export async function startDisposableCluster(
       'max_connections = 20',
       '',
     ].join('\n'), 'utf-8')
-    await run(PG_CTL, ['-D', pgdata, '-w', '-t', '60', '-l', join(root, 'pg.log'), 'start'])
+    await run(PG_CTL, ['-D', pgdata, '-w', '-t', '60', '-l', join(root, 'pg.log'), 'start'], childEnv)
     if (opts.__failStartWait) {
       throw new Error('simulated: pg_ctl -w start reported failure after the postmaster came up')
     }
