@@ -33,9 +33,9 @@ import {
 import type { ClientBase } from 'pg'
 
 import {
-  COPY_TABLES, REVIEWED_CONTRACT_DIGEST, tableCopySpec,
-  type ContractArtifact, type TableCopySpec,
+  COPY_TABLES, tableCopySpec, type ContractArtifact, type TableCopySpec,
 } from './schema-contract.js'
+import { sourceTableCopySpec, type CompatibilityProof } from './copy-compatibility.js'
 
 export class BinaryCopyRefused extends Error {
   constructor(message: string) {
@@ -151,15 +151,19 @@ export interface BinaryCopyRequest {
   readonly qname: string
   readonly signal?: AbortSignal
   /**
-   * WHICH digest the artifact must carry, or `null` for a C1-verified source.
+   * EVIDENCE that C1 passed for this artifact. Required for a SOURCE artifact.
    *
-   * Defaults to the reviewed expected-target digest, so every existing caller
-   * keeps the anchor it had. Stage 2 passes `null` because its artifact is the
-   * SOURCE contract - a CURRENT_V10 database with a digest of its own - and
-   * what stands in for the anchor there is C1, which has already proved
-   * property by property that this column list is one the target accepts.
+   * WHY A PROOF AND NOT A FLAG. The previous design took `anchorDigest: null`
+   * to mean "trust me, C1 ran" - a review convention that any caller could
+   * assert, and which nothing could check. A proof can only be minted by
+   * `assertCopyCompatible`, and consuming it re-derives the source digest from
+   * the payload, so it cannot be carried to a different artifact and the
+   * artifact cannot be edited after the proof was issued.
+   *
+   * Omit it and the artifact is anchored to the reviewed expected-target
+   * digest exactly as before.
    */
-  readonly anchorDigest?: string | null
+  readonly proof?: CompatibilityProof
 }
 
 /**
@@ -193,9 +197,9 @@ export async function copyTableBinary(
   const { artifact, qname, signal } = request
   // DERIVED BEFORE EITHER SESSION IS TOUCHED. A refusal here must cost nothing:
   // no COPY has started, so there is no transaction to discard.
-  const spec: TableCopySpec = tableCopySpec(
-    artifact, qname,
-    request.anchorDigest === undefined ? REVIEWED_CONTRACT_DIGEST : request.anchorDigest)
+  const spec: TableCopySpec = request.proof === undefined
+    ? tableCopySpec(artifact, qname)
+    : sourceTableCopySpec(artifact, qname, request.proof)
   const columns = spec.columns
   assertReviewedTable(spec.qname)
   assertCopyColumns(spec.qname, columns)

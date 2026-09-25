@@ -21,11 +21,12 @@ import { describe, expect, it } from 'vitest'
 
 import {
   CopyIncompatible, assertCopyCompatible, assertCopyDomainSafe, compatibilityDocument,
-  type CompatibilityCategory,
+  sourceTableCopySpec, type CompatibilityCategory, type CompatibilityProof,
 } from '../src/pg-copy/copy-compatibility.js'
 import {
-  CURRENT_V10_MANIFEST, ContractRefused, SOURCE_V10_PROFILE, TARGET_V19_PROFILE,
-  buildContract, parseArtifact, type ContractArtifact,
+  CURRENT_V10_MANIFEST, ContractRefused, REVIEWED_CONTRACT_DIGEST, SOURCE_V10_PROFILE,
+  TARGET_V19_PROFILE, buildContract, contractDigest, parseArtifact, tableCopySpec,
+  type ContractArtifact,
 } from '../src/pg-copy/schema-contract.js'
 
 const PKG_ROOT = resolve(dirname(fileURLToPath(import.meta.url)), '..')
@@ -65,7 +66,10 @@ const refusal = (fn: () => unknown): CopyIncompatible => {
 describe('an identical pair is compatible', () => {
   it('accepts, and reports both recognitions without comparing them', () => {
     const { s, t } = pair()
-    const r = assertCopyCompatible(s, t)
+    const proof = assertCopyCompatible(s, t)
+    expect(proof.sourceDigest).toBe(s.digest)
+    expect(proof.targetDigest).toBe(t.digest)
+    const r = proof.report
     expect(r.sourceRecognition).toBe('CURRENT_V19')
     expect(r.targetRecognition).toBe('CURRENT_V19')
     expect(r.targetOnlyIndexes).toEqual([])
@@ -79,7 +83,7 @@ describe('an identical pair is compatible', () => {
     ;(payload(s).migrations as AnyRec).recognition = 'CURRENT_V10'
     ;(payload(s).migrations as AnyRec).count = 10
     ;(payload(s).migrations as AnyRec).ledger = CURRENT_V10_MANIFEST
-    const r = assertCopyCompatible(s, t)
+    const r = assertCopyCompatible(s, t).report
     expect(r.sourceRecognition).toBe('CURRENT_V10')
     expect(r.targetRecognition).toBe('CURRENT_V19')
   })
@@ -223,7 +227,7 @@ describe('the two allowed target supersets, and their boundaries', () => {
   it('ALLOWS a target-only non-identity index, and records its full definition', () => {
     const { s, t } = pair()
     extraIndex(t)
-    const r = assertCopyCompatible(s, t)
+    const r = assertCopyCompatible(s, t).report
     expect(r.targetOnlyIndexes.length).toBe(1)
     const i = r.targetOnlyIndexes[0]
     expect(i.qname).toBe('graph.edges')
@@ -266,7 +270,7 @@ describe('the two allowed target supersets, and their boundaries', () => {
   it('ALLOWS a validated, non-deferrable, non-deferred target-only FK', () => {
     const { s, t } = pair()
     extraFk(t)
-    const r = assertCopyCompatible(s, t)
+    const r = assertCopyCompatible(s, t).report
     expect(r.targetOnlyForeignKeys.length).toBe(1)
     expect(r.targetOnlyForeignKeys[0].name).toBe('edges_extra_fkey')
     expect(r.targetOnlyForeignKeys[0].definition).toContain('REFERENCES graph.nodes')
@@ -402,5 +406,183 @@ describe('the CURRENT_V10 source profile', () => {
     const dup = ledger(CURRENT_V10_MANIFEST)
     dup.push([...dup[0]])
     expect(() => buildContract(rawWith(dup), SOURCE_V10_PROFILE)).toThrow(ContractRefused)
+  })
+})
+
+// ---------------------------------------------------------------------------
+// B — collation identity is COMPLETE, versions included
+// ---------------------------------------------------------------------------
+
+describe('collation identity includes both version fields', () => {
+  const coll = (a: ContractArtifact): AnyRec =>
+    columns(a, 'graph.edges')[1].collation as AnyRec
+
+  it('REFUSES X/X against Y/Y - both drift-free, and still different', () => {
+    // Neither side has drifted from what it was built with, so the per-side
+    // drift check is silent; the two databases still sort differently.
+    const { s, t } = pair()
+    coll(s).version = 'X'
+    coll(s).actual_version = 'X'
+    coll(t).version = 'Y'
+    coll(t).actual_version = 'Y'
+    const e = refusal(() => assertCopyCompatible(s, t))
+    expect(e.category).toBe('column-collation')
+    expect(e.message).toContain('a column collation differs')
+    expect(e.message).not.toContain('drifted')
+  })
+
+  it('REFUSES a difference in either field alone', () => {
+    for (const field of ['version', 'actual_version']) {
+      const { s, t } = pair()
+      // Both sides internally consistent at first...
+      coll(s).version = 'X'
+      coll(s).actual_version = 'X'
+      coll(t).version = 'X'
+      coll(t).actual_version = 'X'
+      // ...then one field moves on the target, and its own drift check would
+      // fire too - so the source is moved to match, isolating the cross-side
+      // comparison as the only thing that can refuse.
+      coll(t)[field] = 'Y'
+      coll(t)[field === 'version' ? 'actual_version' : 'version'] = 'Y'
+      coll(s)[field === 'version' ? 'actual_version' : 'version'] = 'X'
+      expect(refusal(() => assertCopyCompatible(s, t)).category, field)
+        .toBe('column-collation')
+    }
+  })
+
+  it('REFUSES when only `version` differs and the drift check CANNOT fire', () => {
+    // `actual_version` null on both sides, so the per-side drift check skips
+    // (it needs both fields non-null). The only thing that can refuse this is
+    // `version` being part of the cross-side identity.
+    const { s, t } = pair()
+    coll(s).version = 'X'
+    coll(s).actual_version = null
+    coll(t).version = 'Y'
+    coll(t).actual_version = null
+    const e = refusal(() => assertCopyCompatible(s, t))
+    expect(e.category).toBe('column-collation')
+    expect(e.message).toContain('a column collation differs')
+    expect(e.message).not.toContain('drifted')
+  })
+
+  it('REFUSES when only `actual_version` differs and the drift check CANNOT fire', () => {
+    // Mirror image: `version` null on both sides, so drift again cannot fire.
+    const { s, t } = pair()
+    coll(s).version = null
+    coll(s).actual_version = 'X'
+    coll(t).version = null
+    coll(t).actual_version = 'Y'
+    const e = refusal(() => assertCopyCompatible(s, t))
+    expect(e.category).toBe('column-collation')
+    expect(e.message).not.toContain('drifted')
+  })
+
+  it('ACCEPTS null/null on both sides when everything else matches', () => {
+    const { s, t } = pair()
+    for (const a of [s, t]) {
+      coll(a).version = null
+      coll(a).actual_version = null
+    }
+    expect(() => assertCopyCompatible(s, t)).not.toThrow()
+  })
+
+  it('still refuses a side that has drifted from itself', () => {
+    const { s, t } = pair()
+    coll(s).version = 'X'
+    coll(s).actual_version = 'Y'
+    coll(t).version = 'X'
+    coll(t).actual_version = 'Y'
+    // Identical across the sides, so only the per-side check can catch it.
+    expect(refusal(() => assertCopyCompatible(s, t)).message).toContain('drifted')
+  })
+})
+
+// ---------------------------------------------------------------------------
+// C — the proof, and what it makes impossible
+// ---------------------------------------------------------------------------
+
+describe('the compatibility proof cannot be forged, reused or outrun', () => {
+  const v10ish = (): ContractArtifact => {
+    // A source that is NOT the reviewed target artifact: a different ledger,
+    // re-digested so it is perfectly self-consistent. Exactly the artifact the
+    // old nullable anchor would have accepted on a caller's say-so.
+    const a = clone(ARTIFACT)
+    ;(payload(a).migrations as AnyRec).recognition = 'CURRENT_V10'
+    ;(payload(a).migrations as AnyRec).count = 10
+    ;(payload(a).migrations as AnyRec).ledger = CURRENT_V10_MANIFEST
+    return { ...a, digest: contractDigest(a.payload) }
+  }
+
+  it('a SELF-CONSISTENT source is still refused by the target-anchored path', () => {
+    const a = v10ish()
+    expect(contractDigest(a.payload)).toBe(a.digest)
+    expect(a.digest).not.toBe(REVIEWED_CONTRACT_DIGEST)
+    expect(() => tableCopySpec(a, 'graph.edges'))
+      .toThrow(/is not the reviewed expected-target digest/)
+  })
+
+  it('the unanchored path REQUIRES a proof, and the proof has no public shape', () => {
+    const a = v10ish()
+    // There is no object literal that satisfies `CompatibilityProof`: the
+    // brand is a module-private unique symbol. Asserted at COMPILE time.
+    // @ts-expect-error a proof cannot be constructed outside the comparator
+    const forged: CompatibilityProof = {
+      sourceDigest: a.digest, targetDigest: ARTIFACT.digest,
+      report: {
+        sourceRecognition: 'CURRENT_V10', targetRecognition: 'CURRENT_V19',
+        targetOnlyIndexes: [], targetOnlyForeignKeys: [],
+      },
+    }
+    // And at RUN time the recomputation still governs what it can be used for.
+    expect(() => sourceTableCopySpec(a, 'graph.edges', forged)).not.toThrow()
+  })
+
+  it('a real proof unlocks the source path', () => {
+    const a = v10ish()
+    const proof = assertCopyCompatible(a, ARTIFACT)
+    const spec = sourceTableCopySpec(a, 'graph.edges', proof)
+    expect(spec.qname).toBe('graph.edges')
+    expect(spec.columns.length).toBeGreaterThan(0)
+    expect(spec.columns).toEqual(
+      (columns(ARTIFACT, 'graph.edges')).map(c => c.name as string))
+  })
+
+  it('a proof issued for ANOTHER artifact is refused', () => {
+    const a = v10ish()
+    const other = clone(ARTIFACT)
+    ;(payload(other).migrations as AnyRec).recognition = 'CURRENT_V10'
+    ;(payload(other).migrations as AnyRec).count = 11
+    const rebadged = { ...other, digest: contractDigest(other.payload) }
+    const proofForOther = assertCopyCompatible(rebadged, ARTIFACT)
+    expect(proofForOther.sourceDigest).not.toBe(a.digest)
+    expect(() => sourceTableCopySpec(a, 'graph.edges', proofForOther))
+      .toThrow(/issued for a different source artifact/)
+  })
+
+  it('MUTATING the artifact after the proof was issued is refused', () => {
+    const a = v10ish()
+    const proof = assertCopyCompatible(a, ARTIFACT)
+    // Edit a column name and re-digest, so the artifact is self-consistent
+    // again - the proof still records what it actually verified.
+    const tampered = clone(a)
+    columns(tampered, 'graph.edges')[1].name = 'smuggled'
+    const resealed = { ...tampered, digest: contractDigest(tampered.payload) }
+    expect(() => sourceTableCopySpec(resealed, 'graph.edges', proof))
+      .toThrow(/issued for a different source artifact/)
+  })
+
+  it('an artifact whose digest field was edited is refused before any column is read', () => {
+    const a = v10ish()
+    const proof = assertCopyCompatible(a, ARTIFACT)
+    const lying = { ...a, digest: 'f'.repeat(64) }
+    expect(() => sourceTableCopySpec(lying, 'graph.edges', proof))
+      .toThrow(/does not match its payload/)
+  })
+
+  it('refuses a table outside the reviewed copy set even with a valid proof', () => {
+    const a = v10ish()
+    const proof = assertCopyCompatible(a, ARTIFACT)
+    expect(() => sourceTableCopySpec(a, 'desk.probe', proof))
+      .toThrow(/not in the reviewed copy set/)
   })
 })

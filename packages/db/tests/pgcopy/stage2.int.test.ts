@@ -22,9 +22,7 @@ import { afterAll, beforeAll, describe, expect, it } from 'vitest'
 import { newRunId } from '../../src/pg-copy/evidence.js'
 import { EXPORT_ROLE_NAME } from '../../src/pg-copy/export-role.js'
 import { openDriverSession, type DriverSession } from '../../src/pg-copy/driver-session.js'
-import {
-  COPY_TABLES, REVIEWED_CONTRACT_DIGEST,
-} from '../../src/pg-copy/schema-contract.js'
+import { COPY_TABLES } from '../../src/pg-copy/schema-contract.js'
 import {
   FENCE_PROOF_SQL, FENCE_SEQUENCES, FENCE_TABLES, assertFenceProof, fenceRelationArray,
   parseLockRows,
@@ -36,7 +34,9 @@ import {
   CommitOutcomeUnknown, Stage2Refused, readPublishedBundle, runApply, runInspect,
   type PublishedManifest,
 } from '../../src/pg-copy/stage2.js'
-import { sha256Hex } from '../../src/pg-copy/schema-contract.js'
+import {
+  REVIEWED_CONTRACT_DIGEST, SOURCE_V10_PROFILE, extractContractFromSession, sha256Hex,
+} from '../../src/pg-copy/schema-contract.js'
 import { loadReviewedTarget } from '../../src/pg-copy/stage2.js'
 import { TARGET_OWNER_ROLE } from '../../src/pg-copy/target-authority.js'
 import {
@@ -306,6 +306,40 @@ describe('inspect never reaches the target', () => {
     }
     expect(thrown).toBeInstanceOf(Stage2Refused)
     expect((thrown as Stage2Refused).phase).toBe('A3-fence-proof')
+  }, 1_800_000)
+
+  it('the SOURCE carries no btree_gist, and is still extracted and recognised', async () => {
+    // The reviewed target installs `btree_gist` in its bootstrap; no migration
+    // 001-010 does, and the real source does not have it. A source profile
+    // that demanded it would refuse every real source there is.
+    const s = await openPsqlSession(SRC, SRC_DB)
+    try {
+      const ext = (await s.must(
+        'SELECT extname FROM pg_catalog.pg_extension ORDER BY 1')).map(r => r[0])
+      expect(ext).toContain('plpgsql')
+      expect(ext).toContain('vector')
+      expect(ext).not.toContain('btree_gist')
+
+      // And extraction under the SOURCE profile still succeeds, with exact
+      // CURRENT_V10 recognition.
+      await s.must(EXPORT_BEGIN_SQL)
+      const a = await extractContractFromSession(s, s.pid, SOURCE_V10_PROFILE)
+      const m = (a.payload as unknown as { migrations: Record<string, unknown> }).migrations
+      expect(m.recognition).toBe('CURRENT_V10')
+      expect(m.count).toBe(10)
+      expect((m.ledger as unknown[]).length).toBe(10)
+      expect(a.digest).not.toBe(REVIEWED_CONTRACT_DIGEST)
+      await s.must('ROLLBACK')
+    } finally { await s.close() }
+
+    // The TARGET does carry it, so the asymmetry is real and not an artefact
+    // of both fixtures being built the same way.
+    const tgt = await openPsqlSession(TGT, TGT_DB)
+    try {
+      const ext = (await tgt.must(
+        'SELECT extname FROM pg_catalog.pg_extension ORDER BY 1')).map(r => r[0])
+      expect(ext).toContain('btree_gist')
+    } finally { await tgt.close() }
   }, 1_800_000)
 
   it('a C1 refusal happens on the SOURCE, before any target could be reached', async () => {

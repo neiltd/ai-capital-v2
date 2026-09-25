@@ -135,19 +135,54 @@ export const CURRENT_V10_MANIFEST: readonly ManifestEntry[] = Object.freeze([
  * other: a V10 source and a V19 target are supposed to have different ledgers,
  * and requiring them to match would refuse every legitimate copy.
  */
+/** The extensions the reviewed V19 target carries, exactly. */
+export const REVIEWED_EXTENSIONS: readonly string[] = Object.freeze(['btree_gist', 'plpgsql', 'vector'])
+
+/**
+ * WHICH extensions a profile demands, and whether anything else is tolerated.
+ *
+ * THE TWO SIDES ARE NOT THE SAME QUESTION. The reviewed TARGET is a database
+ * this project builds, so its extension set is exactly what was reviewed and
+ * anything else is a contract change. The SOURCE is a database that already
+ * exists and was not built to this contract: it must carry what the copy
+ * depends on and it is none of the copy's business what else is installed
+ * beside it. Requiring the source to carry `btree_gist` - which no migration
+ * 001-010 installs, and which only the target's bootstrap adds - would refuse
+ * every real source there is.
+ *
+ * WHAT STILL CONSTRAINS THE SOURCE. Tolerating an unrelated extension is not
+ * tolerating an unrelated TYPE: `assertSupportedColumns` still refuses any
+ * column outside the reviewed built-in set and the one reviewed extension
+ * type, and C1 still requires the two sides' `vector` versions to be equal.
+ * So an extra extension can exist; it cannot reach a copied column.
+ */
+export interface ExtensionPolicy {
+  /** Must be installed. Refused if absent. */
+  readonly required: readonly string[]
+  /** true: anything outside `required` is refused. false: extras are ignored. */
+  readonly exact: boolean
+}
+
 export interface MigrationProfile {
   readonly recognition: string
   readonly manifest: readonly ManifestEntry[]
+  readonly extensions: ExtensionPolicy
 }
 
 export const TARGET_V19_PROFILE: MigrationProfile = Object.freeze({
   recognition: EXPECTED_MIGRATION_RECOGNITION,
   manifest: CURRENT_V19_MANIFEST,
+  extensions: Object.freeze({ required: REVIEWED_EXTENSIONS, exact: true }),
 })
+
+/** The source needs `plpgsql` and `vector`. It does NOT need `btree_gist`. */
+export const SOURCE_REQUIRED_EXTENSIONS: readonly string[] =
+  Object.freeze(['plpgsql', 'vector'])
 
 export const SOURCE_V10_PROFILE: MigrationProfile = Object.freeze({
   recognition: 'CURRENT_V10',
   manifest: CURRENT_V10_MANIFEST,
+  extensions: Object.freeze({ required: SOURCE_REQUIRED_EXTENSIONS, exact: false }),
 })
 
 /** A refusal: the schema is not one this contract is willing to describe. */
@@ -446,7 +481,6 @@ const orNull = (v: string): string | null => (v === '' ? null : v)
 export const TRIGGER_INSERT_BIT = 4
 
 /** The reviewed extension set. A new extension is a contract change. */
-export const REVIEWED_EXTENSIONS: readonly string[] = Object.freeze(['btree_gist', 'plpgsql', 'vector'])
 
 /** Types accepted in a copied column, by `schema.typename`. */
 const SUPPORTED_BUILTIN = new Set([
@@ -483,12 +517,15 @@ export function buildContract(
   if (new Set(extNames).size !== extNames.length) {
     throw new ContractRefused('an extension name appears more than once.')
   }
-  for (const e of extNames) {
-    if (!REVIEWED_EXTENSIONS.includes(e)) {
-      throw new ContractRefused(`extension "${e}" is not in the reviewed set; that is a contract change.`)
+  if (profile.extensions.exact) {
+    for (const e of extNames) {
+      if (!profile.extensions.required.includes(e)) {
+        throw new ContractRefused(
+          `extension "${e}" is not in the reviewed set; that is a contract change.`)
+      }
     }
   }
-  for (const e of REVIEWED_EXTENSIONS) {
+  for (const e of profile.extensions.required) {
     if (!extNames.includes(e)) throw new ContractRefused(`reviewed extension "${e}" is not installed.`)
   }
 
@@ -1027,10 +1064,7 @@ export const REVIEWED_CONTRACT_DIGEST =
  * from the fenced source and verified; asking the catalogue again would be a
  * third authority and a second moment.
  */
-export function tableCopySpec(
-  artifact: ContractArtifact, qname: string,
-  anchorDigest: string | null = REVIEWED_CONTRACT_DIGEST,
-): TableCopySpec {
+export function tableCopySpec(artifact: ContractArtifact, qname: string): TableCopySpec {
   if (artifact.pgcopy_schema_contract_version !== SCHEMA_CONTRACT_VERSION) {
     throw new ContractRefused(
       `artifact version ${String(artifact.pgcopy_schema_contract_version)} is not ` +
@@ -1041,22 +1075,18 @@ export function tableCopySpec(
     throw new ContractRefused(
       `artifact digest ${artifact.digest} does not match its payload (recomputed ${recomputed}).`)
   }
-  // AND it must be the anchored contract, not merely a self-consistent one.
+  // AND it must be the REVIEWED contract, not merely a self-consistent one.
   //
-  // THE ANCHOR IS A PARAMETER BECAUSE THE SOURCE HAS A DIFFERENT ONE. When the
-  // columns come from the V19 target artifact, the anchor is that artifact's
-  // digest and nothing else may be accepted. When they come from the SOURCE -
-  // a CURRENT_V10 database whose digest is its own - the anchor is `null`,
-  // because requiring the source to equal the target digest would refuse every
-  // legitimate V10 to V19 copy. What replaces the anchor on that path is C1:
-  // `assertCopyCompatible` has already proved, property by property, that the
-  // source's explicit column list is the one the target will accept. A caller
-  // that passes `null` without having run C1 is the thing to look for in
-  // review; there is exactly one such caller and it runs C1 first.
-  if (anchorDigest !== null && artifact.digest !== anchorDigest) {
+  // THIS PATH IS FOR THE TARGET ARTIFACT AND HAS NO ESCAPE HATCH. An earlier
+  // revision took a nullable anchor so the SOURCE could be passed through
+  // here, which made `null` a standing claim that C1 had run - a review
+  // convention nothing could check. The source path now lives in
+  // `sourceTableCopySpec`, which requires a proof only `assertCopyCompatible`
+  // can mint.
+  if (artifact.digest !== REVIEWED_CONTRACT_DIGEST) {
     throw new ContractRefused(
-      `artifact digest ${artifact.digest} is not the anchored digest ` +
-      `${anchorDigest}; a self-consistent artifact still describes a schema ` +
+      `artifact digest ${artifact.digest} is not the reviewed expected-target digest ` +
+      `${REVIEWED_CONTRACT_DIGEST}; a self-consistent artifact still describes a schema ` +
       'nobody reviewed.')
   }
   if (!COPY_TABLES.includes(qname)) {

@@ -65,7 +65,8 @@ import {
   type Canonical, type ContractArtifact,
 } from './schema-contract.js'
 import {
-  assertCopyCompatible, compatibilityDocument, type CompatibilityReport,
+  assertCopyCompatible, compatibilityDocument,
+  type CompatibilityProof, type CompatibilityReport,
 } from './copy-compatibility.js'
 import { applySequencePolicy } from './sequence-policy.js'
 import {
@@ -336,6 +337,14 @@ export interface SourceStageResult {
   readonly fence: AcquiredFence
   readonly derivation: SourceDerivation
   readonly compatibility: CompatibilityReport
+  /**
+   * The proof C1 just issued. Consumed by the copy, and by nothing else.
+   *
+   * Carried out of `runSourceStages` rather than re-derived later, so the
+   * proof the copy uses is the one the check that ran immediately before it
+   * produced - not a second, later verdict that could differ.
+   */
+  readonly proof: CompatibilityProof
 }
 
 /**
@@ -391,9 +400,9 @@ export async function runSourceStages(
   // can never share a digest, and equality would also refuse harmless target
   // supersets while saying nothing about WHICH property diverged. The
   // comparator answers property by property and names what it found.
-  let compatibility: CompatibilityReport
+  let proof: CompatibilityProof
   try {
-    compatibility = assertCopyCompatible(contract, i.reviewedTarget)
+    proof = assertCopyCompatible(contract, i.reviewedTarget)
   } catch (e) {
     // The comparator's own message already names the category, the table and
     // the column, and carries nothing from the data.
@@ -402,7 +411,7 @@ export async function runSourceStages(
       : new Stage2Refused('A5-compatibility', 'the source is not compatible with the reviewed target')
   }
 
-  return Object.freeze({ fence, derivation, compatibility })
+  return Object.freeze({ fence, derivation, compatibility: proof.report, proof })
 }
 
 /** The binding both modes compute, from the same inputs, independently. */
@@ -433,6 +442,8 @@ export function bindingFor(
 
 export interface InspectResult {
   readonly compatibility: CompatibilityReport
+  /** The same report, canonical, for the future lifecycle owner to record. */
+  readonly compatibilityDocument: Canonical
   readonly confirmation: string
   readonly rootDigest: string
   readonly contractDigest: string
@@ -449,6 +460,7 @@ export async function runInspect(
   const binding = bindingFor(published, derivation, target, i.operator)
   return Object.freeze({
     compatibility,
+    compatibilityDocument: compatibilityDocument(compatibility),
     confirmation: confirmationToken(binding),
     rootDigest: derivation.rootDigest,
     contractDigest: derivation.contract.digest,
@@ -475,6 +487,14 @@ export interface ApplyResult {
   readonly bundleName: string
   readonly tablesCopied: number
   readonly confirmation: string
+  /**
+   * The canonical compatibility document, for the future lifecycle owner.
+   *
+   * NOT published evidence. Nothing writes an immutable compatibility bundle
+   * yet, and describing this as evidence would be a claim about durability
+   * that no code here supports.
+   */
+  readonly compatibility: Canonical
 }
 
 /**
@@ -486,8 +506,7 @@ export interface ApplyResult {
 export async function runApply(i: ApplyInput, published: PublishedManifest): Promise<ApplyResult> {
   // A2-A5, from scratch. Inspect-time state is not trusted, and is not even
   // available: this repeats the work rather than receiving its result.
-  const { fence, derivation, compatibility } = await runSourceStages(i, published)
-  void compatibility
+  const { fence, derivation, compatibility, proof } = await runSourceStages(i, published)
 
   // THE CONFIRMATION IS CHECKED BEFORE THE TARGET IS TOUCHED. A mismatch must
   // cost nothing, and constructing a client is not nothing.
@@ -557,10 +576,11 @@ export async function runApply(i: ApplyInput, published: PublishedManifest): Pro
     for (const qname of COPY_TABLES) {
       try {
         await copyTableBinary(i.source.client, target.client, {
-          // THE SOURCE contract, which C1 has already verified against the
-          // reviewed target - so the anchor is that verification, not a digest
-          // the source can never carry.
-          artifact: derivation.contract, qname, anchorDigest: null,
+          // THE SOURCE contract, with the proof C1 issued for it moments ago.
+          // `copyTableBinary` re-derives the digest from the payload before it
+          // reads a column name, so neither the artifact nor the proof can have
+          // been swapped in between.
+          artifact: derivation.contract, qname, proof,
         })
       } catch {
         throw new Stage2Refused(
@@ -620,6 +640,10 @@ export async function runApply(i: ApplyInput, published: PublishedManifest): Pro
     bundleName: published.bundleName,
     tablesCopied: COPY_TABLES.length,
     confirmation: i.confirmation,
+    // HANDED ON, NOT DISCARDED. The lifecycle owner that will run the
+    // independent verifier needs to know what C1 tolerated; nothing publishes
+    // it yet, and this does not claim otherwise.
+    compatibility: compatibilityDocument(compatibility),
   })
 }
 

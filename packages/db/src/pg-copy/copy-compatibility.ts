@@ -42,7 +42,8 @@
 // seeing it happen.
 
 import {
-  COPY_SEQUENCES, COPY_TABLES, type Canonical, type ContractArtifact,
+  COPY_SEQUENCES, COPY_TABLES, ContractRefused, contractDigest, deriveCopyColumns,
+  type Canonical, type ContractArtifact, type TableCopySpec,
 } from './schema-contract.js'
 
 /** WHICH property diverged. A closed set, so a refusal is always specific. */
@@ -214,6 +215,31 @@ const payloadOf = (a: ContractArtifact): Payload => a.payload as unknown as Payl
  * the caller can put it in the manifest and a person can read later what this
  * copy was willing to accept.
  */
+/**
+ * The brand. MODULE-PRIVATE, so nothing outside this file can mint a proof.
+ *
+ * `unique symbol` and not a string field: a string could be written by any
+ * caller with an object literal, which is precisely the authority this
+ * replaces. The old design let a caller say `anchorDigest: null` and be
+ * believed - a review convention wearing the costume of a type.
+ */
+declare const COMPATIBILITY_PROOF: unique symbol
+
+/**
+ * EVIDENCE that C1 passed, for this source against this target.
+ *
+ * Only `assertCopyCompatible` constructs one, and consuming it re-derives the
+ * source digest from the artifact it is handed - so a proof cannot be carried
+ * across to a different artifact, and an artifact cannot be edited after the
+ * proof was minted. Both are things a nullable anchor could not notice.
+ */
+export interface CompatibilityProof {
+  readonly [COMPATIBILITY_PROOF]: true
+  readonly sourceDigest: string
+  readonly targetDigest: string
+  readonly report: CompatibilityReport
+}
+
 export interface CompatibilityReport {
   readonly sourceRecognition: string
   readonly targetRecognition: string
@@ -237,11 +263,21 @@ const indexKey = (i: Index): string =>
 
 function collationKey(c: Collation | null): string {
   if (c === null) return 'none'
-  // EVERY field, because two collations that agree on a name and disagree on a
-  // provider or a locale sort differently - and a PK built on one of them does
-  // not mean the same thing on the other.
+  // EVERY field, INCLUDING BOTH VERSIONS.
+  //
+  // Two collations that agree on a name and disagree on a provider or a locale
+  // sort differently, and a PK built on one of them does not mean the same
+  // thing on the other. The versions belong here for the same reason and are
+  // the case the per-side drift check cannot see: a source at X/X and a target
+  // at Y/Y are each internally consistent - neither has drifted from what it
+  // was built with - and they still sort differently from each other. Omitting
+  // them would let exactly that pair through.
+  //
+  // `null`/`null` is a fine value and compares equal to `null`/`null`; what is
+  // refused is a DIFFERENCE, not the absence of version information.
   return [c.schema, c.name, c.provider, String(c.deterministic), String(c.encoding),
-          c.collate, c.ctype, c.locale, c.icu_rules].map(v => String(v)).join('|')
+          c.collate, c.ctype, c.locale, c.icu_rules,
+          c.version, c.actual_version].map(v => String(v)).join('|')
 }
 
 /**
@@ -296,7 +332,7 @@ export function assertCopyDomainSafe(artifact: ContractArtifact): void {
  */
 export function assertCopyCompatible(
   source: ContractArtifact, target: ContractArtifact,
-): CompatibilityReport {
+): CompatibilityProof {
   assertCopyDomainSafe(source)
   assertCopyDomainSafe(target)
 
@@ -494,7 +530,7 @@ export function assertCopyCompatible(
   const recognitionOf = (a: ContractArtifact): string =>
     String((a.payload as unknown as { migrations: { recognition: string } }).migrations.recognition)
 
-  return Object.freeze({
+  const report: CompatibilityReport = Object.freeze({
     // THE LEDGERS ARE REPORTED, NEVER COMPARED. Each side was recognised
     // exactly, independently, when its contract was extracted.
     sourceRecognition: recognitionOf(source),
@@ -502,6 +538,41 @@ export function assertCopyCompatible(
     targetOnlyIndexes: Object.freeze(targetOnlyIndexes),
     targetOnlyForeignKeys: Object.freeze(targetOnlyForeignKeys),
   })
+
+  // THE ONLY PLACE A PROOF IS MINTED. Both digests are recorded so consuming
+  // it can check that the artifact in hand is still the artifact that passed.
+  return Object.freeze({ sourceDigest: source.digest, targetDigest: target.digest, report }) as
+    CompatibilityProof
+}
+
+/**
+ * The explicit column list for ONE source table, and only against a proof.
+ *
+ * WHY THE DIGEST IS RECOMPUTED HERE. A proof records the digest of the artifact
+ * that passed C1. Comparing it to `artifact.digest` alone would compare a claim
+ * with a claim: an artifact whose payload was edited and whose `digest` field
+ * was edited to match is self-consistent and describes a schema nobody
+ * verified. So the digest is re-derived from the PAYLOAD and all three have to
+ * agree - the recomputation, the artifact's own field, and the proof.
+ */
+export function sourceTableCopySpec(
+  artifact: ContractArtifact, qname: string, proof: CompatibilityProof,
+): TableCopySpec {
+  const recomputed = contractDigest(artifact.payload)
+  if (recomputed !== artifact.digest) {
+    throw new ContractRefused(
+      `artifact digest ${artifact.digest} does not match its payload (recomputed ${recomputed}).`)
+  }
+  if (recomputed !== proof.sourceDigest) {
+    throw new ContractRefused(
+      'the compatibility proof was issued for a different source artifact.')
+  }
+  if (!COPY_TABLES.includes(qname)) {
+    throw new ContractRefused(`${qname} is not in the reviewed copy set.`)
+  }
+  const columns = deriveCopyColumns(artifact.payload, qname)
+  const [schema, table] = qname.split('.')
+  return Object.freeze({ qname, schema, table, columns: Object.freeze(columns) })
 }
 
 /** The report as a canonical document, for the manifest and the evidence. */

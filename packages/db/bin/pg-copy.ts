@@ -307,9 +307,24 @@ export async function runCli(argv: readonly string[]): Promise<CliResult> {
       say(`content root digest ${r.rootDigest}`)
       say(`expected target ${targetExpectation.database} on ${targetExpectation.endpoint}:` +
           `${targetExpectation.port} as ${targetExpectation.role}`)
+      say(`source ledger ${r.compatibility.sourceRecognition}` +
+          ` -> target ledger ${r.compatibility.targetRecognition}`)
+      say(`compatible: ${r.compatibility.targetOnlyIndexes.length} target-only index(es), ` +
+          `${r.compatibility.targetOnlyForeignKeys.length} target-only foreign key(s) accepted`)
+      for (const i of r.compatibility.targetOnlyIndexes) say(`  index  ${i.qname}: ${i.name}`)
+      for (const f of r.compatibility.targetOnlyForeignKeys) say(`  fkey   ${f.qname}: ${f.name}`)
       say('')
-      say('To apply this exact copy, re-run with --apply and:')
-      say(`  --confirm ${r.confirmation}`)
+      // TRUTHFUL, AND DELIBERATELY NOT AN INSTRUCTION. Telling an operator to
+      // "re-run with --apply" when --apply refuses by design is an instruction
+      // to go and hit a wall, and it reads as though the copy were one command
+      // away. It is not: the independent verifier and the final fence-release
+      // gate have to exist first.
+      say('This inspection did NOT copy anything, and nothing was published.')
+      say('Standalone --apply is UNAVAILABLE and refuses before opening a target:')
+      say('the independent verifier and the final fence-release gate do not exist yet,')
+      say('and they must run while one process still holds the supervisor lease.')
+      say('The confirmation below binds this exact run, for when that lifecycle lands:')
+      say(`  ${r.confirmation}`)
       return { exitCode: EXIT_OK, lines }
     }
 

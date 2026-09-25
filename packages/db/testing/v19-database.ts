@@ -40,6 +40,27 @@ export const REPO_ROOT = resolve(PKG_ROOT, '..', '..')
 export const ROLES_SQL = join(REPO_ROOT, 'ops', 'roles', '000_cluster_roles.sql')
 export const BOOTSTRAP_SQL = join(REPO_ROOT, 'ops', 'bootstrap', '010_database_bootstrap.sql')
 export const TSX = join(PKG_ROOT, 'node_modules', '.bin', 'tsx')
+
+/**
+ * The ONLY bootstrap a V10 source fixture gets.
+ *
+ * Byte-for-byte the ledger table `runMigrations` creates for itself, so the
+ * fixture's ledger is the one the repository's own runner would have written.
+ */
+export const SOURCE_LEDGER_BOOTSTRAP_SQL = [
+  // `vector` is installed by the SUPERUSER, because `CREATE EXTENSION` is not
+  // something `ai_capital_owner` may do - migration 006 asks for it with
+  // IF NOT EXISTS and finds it already there, exactly as it would on a real
+  // source. `btree_gist` is deliberately NOT installed: no migration 001-010
+  // needs it, and its absence is the whole point of this fixture.
+  'CREATE EXTENSION IF NOT EXISTS vector;',
+  'CREATE SCHEMA IF NOT EXISTS db;',
+  'CREATE TABLE IF NOT EXISTS db.schema_migrations (',
+  '  filename    TEXT PRIMARY KEY,',
+  '  applied_at  TIMESTAMPTZ NOT NULL DEFAULT now(),',
+  '  sha256      TEXT NOT NULL',
+  ');',
+].join('\n')
 export const OWNER_ROLE = 'ai_capital_owner'
 export const MIGRATOR_ROLE = 'ai_capital_migrator'
 
@@ -136,8 +157,20 @@ export async function buildV10Database(
   for (const [k, v] of Object.entries(reviewedTargetSettings())) {
     await run(PSQL, psqlArgs('postgres', ['-c', `ALTER DATABASE ${database} SET ${k} = '${v}'`]))
   }
-  await run(PSQL, psqlArgs(database,
-    ['--single-transaction', '-v', `dbname=${database}`, '-f', BOOTSTRAP_SQL]))
+  // THE TARGET BOOTSTRAP IS DELIBERATELY NOT RUN.
+  //
+  // `ops/bootstrap/010_database_bootstrap.sql` is the reviewed TARGET's
+  // provisioning: among other things it installs `btree_gist`, which no
+  // migration 001-010 needs and which the real production source does not
+  // have. Running it here would build a source that is not shaped like the
+  // source, and the extension-policy check would then pass for the wrong
+  // reason - the fixture would be carrying the very extension the policy is
+  // supposed to stop requiring.
+  //
+  // So only what migrations 001-010 actually need is created: the ledger table
+  // the runner itself bootstraps, and the `vector` extension that 006 installs.
+  // Every schema is created by the migrations themselves.
+  await run(PSQL, psqlArgs(database, ['-c', SOURCE_LEDGER_BOOTSTRAP_SQL]))
 
   for (const entry of CURRENT_V10_MANIFEST) {
     const sql = readFileSync(join(PKG_ROOT, 'migrations', entry.filename), 'utf-8')

@@ -188,12 +188,13 @@ describe('the column list comes from the VERIFIED contract, never the caller', (
 
   it('carries no caller-supplied column channel at all', () => {
     // The request type has no `columns`; the only source is the artifact.
-    // The spec comes from the ARTIFACT and an explicit anchor; the anchor
-    // DEFAULTS to the reviewed target digest, so a caller that says nothing
-    // keeps exactly the guarantee this test was written for.
-    expect(CODE).toContain('const spec: TableCopySpec = tableCopySpec(')
-    expect(CODE).toContain(
-      'request.anchorDigest === undefined ? REVIEWED_CONTRACT_DIGEST : request.anchorDigest')
+    // Without a proof the spec is anchored to the reviewed target digest,
+    // exactly as this test was written for. With one, it goes through
+    // `sourceTableCopySpec`, which only `assertCopyCompatible` can satisfy -
+    // there is no caller-assertable escape hatch any more.
+    expect(CODE).toContain('tableCopySpec(artifact, qname)')
+    expect(CODE).toContain('sourceTableCopySpec(artifact, qname, request.proof)')
+    expect(CODE).not.toContain('anchorDigest')
     expect(CODE).toContain('const columns = spec.columns')
     // The REQUEST type offers no column channel; the RESULT reporting them is
     // a fact about what was copied, not an input.
@@ -250,7 +251,7 @@ describe('the column list comes from the VERIFIED contract, never the caller', (
       expect(contractDigest(artifact.payload), label).toBe(artifact.digest)
       expect(artifact.digest, label).not.toBe(REVIEWED_CONTRACT_DIGEST)
       expect(() => tableCopySpec(artifact, T), label)
-        .toThrow(/is not the anchored digest/)
+        .toThrow(/is not the reviewed expected-target digest/)
     }
   })
 

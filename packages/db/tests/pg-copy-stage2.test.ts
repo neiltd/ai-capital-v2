@@ -39,6 +39,10 @@ const strip = (text: string): string => text
 
 const STAGE2 = strip(readFileSync(join(PKG_ROOT, 'src', 'pg-copy', 'stage2.ts'), 'utf-8'))
 const CLI = strip(readFileSync(join(PKG_ROOT, 'bin', 'pg-copy.ts'), 'utf-8'))
+const BINARY = strip(readFileSync(join(PKG_ROOT, 'src', 'pg-copy', 'binary-copy.ts'), 'utf-8'))
+const COMPAT = strip(readFileSync(join(PKG_ROOT, 'src', 'pg-copy', 'copy-compatibility.ts'), 'utf-8'))
+/** Unstripped, for claims that live in the COMMENTARY rather than the code. */
+const STAGE2_RAW = readFileSync(join(PKG_ROOT, 'src', 'pg-copy', 'stage2.ts'), 'utf-8')
 
 const surfaces = (e: unknown): string => {
   const err = e as Error & Record<string, unknown>
@@ -426,7 +430,9 @@ describe('Stage 2 binds the source by compatibility, not by the target digest', 
   })
 
   it('derives the COPY columns from the SOURCE contract with no target anchor', () => {
-    expect(STAGE2).toContain('artifact: derivation.contract, qname, anchorDigest: null')
+    expect(STAGE2).toContain('artifact: derivation.contract, qname, proof,')
+    // The nullable escape hatch is gone entirely.
+    expect(STAGE2).not.toContain('anchorDigest')
   })
 
   it('extracts each side under its own profile', () => {
@@ -443,5 +449,67 @@ describe('Stage 2 binds the source by compatibility, not by the target digest', 
   it('the confirmation binds BOTH digests', () => {
     expect(STAGE2).toContain('sourceContractDigest: d.contract.digest')
     expect(STAGE2).toContain('expectedTargetContractDigest: REVIEWED_CONTRACT_DIGEST')
+  })
+})
+
+// ---------------------------------------------------------------------------
+// D — the lifecycle output says what is actually true
+// ---------------------------------------------------------------------------
+
+describe('inspect reports honestly and instructs nothing impossible', () => {
+  it('never tells the operator to re-run a mode that refuses', () => {
+    expect(CLI).not.toContain('To apply this exact copy, re-run with --apply')
+    expect(CLI).not.toMatch(/re-run with --apply/)
+  })
+
+  it('states plainly that standalone apply is unavailable, and why', () => {
+    expect(CLI).toContain('Standalone --apply is UNAVAILABLE')
+    expect(CLI).toContain('the independent verifier and the final fence-release gate do not exist')
+    expect(CLI).toContain('This inspection did NOT copy anything, and nothing was published.')
+  })
+
+  it('claims no published compatibility evidence', () => {
+    expect(CLI).not.toMatch(/compatibility evidence (was )?published/i)
+    expect(STAGE2_RAW).toContain('NOT published evidence')
+  })
+
+  it('does not discard the compatibility result', () => {
+    expect(STAGE2).not.toContain('void compatibility')
+    expect(STAGE2).toContain('compatibility: compatibilityDocument(compatibility)')
+    expect(STAGE2).toContain('compatibilityDocument: compatibilityDocument(compatibility)')
+  })
+
+  it('reports what C1 tolerated', () => {
+    expect(CLI).toContain('target-only index(es)')
+    expect(CLI).toContain('target-only foreign key(s) accepted')
+    expect(CLI).toContain('r.compatibility.sourceRecognition')
+  })
+})
+
+// ---------------------------------------------------------------------------
+// C — the proof is threaded, not asserted
+// ---------------------------------------------------------------------------
+
+describe('the source copy path is gated by a proof', () => {
+  it('passes the proof from the C1 that ran immediately before it', () => {
+    const body = STAGE2.slice(STAGE2.indexOf('export async function runSourceStages'))
+    expect(body).toContain('proof = assertCopyCompatible(contract, i.reviewedTarget)')
+    expect(body).toContain('compatibility: proof.report, proof')
+    expect(STAGE2).toContain('artifact: derivation.contract, qname, proof,')
+  })
+
+  it('has no nullable-anchor escape hatch anywhere', () => {
+    expect(STAGE2).not.toContain('anchorDigest')
+    expect(BINARY).not.toContain('anchorDigest')
+  })
+
+  it('the proof is minted in exactly one place', () => {
+    expect(COMPAT.match(/as\s*\n?\s*CompatibilityProof/g)?.length ?? 0).toBe(1)
+    expect(COMPAT).toContain('declare const COMPATIBILITY_PROOF: unique symbol')
+  })
+
+  it('consuming the proof recomputes the source digest from the payload', () => {
+    expect(COMPAT).toContain('const recomputed = contractDigest(artifact.payload)')
+    expect(COMPAT).toContain("'the compatibility proof was issued for a different source artifact.'")
   })
 })
