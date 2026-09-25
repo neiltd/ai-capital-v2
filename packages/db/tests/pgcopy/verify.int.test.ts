@@ -28,7 +28,11 @@ import { afterAll, beforeAll, describe, expect, it } from 'vitest'
 
 import { DIGEST_FILE, newRunId } from '../../src/pg-copy/evidence.js'
 import { EXPORT_ROLE_NAME } from '../../src/pg-copy/export-role.js'
-import { openDriverSession, type DriverSession } from '../../src/pg-copy/driver-session.js'
+import {
+  openDriverSession, openSilentDriverSession, reviewedClientFactory,
+  type DriverSession, type DriverTarget,
+} from '../../src/pg-copy/driver-session.js'
+import type { Client } from 'pg'
 import { COPY_TABLES, SOURCE_V10_PROFILE, extractContractFromSession, sha256Hex }
   from '../../src/pg-copy/schema-contract.js'
 import {
@@ -286,19 +290,66 @@ function bundle(): PublishedManifest {
   return readPublishedBundle(BUNDLE, p => readFileSync(p, 'utf-8'), sha256Hex)
 }
 
-/** Every statement a borrowed session was asked for, in order. */
-interface Recorded { readonly sql: string[] }
-
-function record(s: DriverSession, into: Recorded): DriverSession {
-  return Object.freeze({
-    pid: s.pid,
-    client: s.client,
-    rows: async (sql: string) => { into.sql.push(sql); return await s.rows(sql) },
-    command: s.command,
-    end: s.end,
-    alive: s.alive,
-  }) as DriverSession
+/**
+ * Every statement a session was asked for, recorded AT THE CLIENT.
+ *
+ * WHY NOT AROUND THE SESSION. A recorder wrapped around an already-opened
+ * `DriverSession` is attached after the opener has finished, and therefore
+ * cannot see anything the opener itself issued. That is not hypothetical: the
+ * reviewed Stage-2 opener asks the server for its backend pid before returning,
+ * and the first version of this suite asserted "BEGIN is the first statement"
+ * while a `SELECT pg_backend_pid()` had already run in its own implicit
+ * transaction, unseen. The seam is therefore the CLIENT FACTORY, which is the
+ * last point before any byte reaches PostgreSQL.
+ */
+interface Recorded {
+  readonly sql: string[]
+  /** How many statements had been issued by the time the session was handed back. */
+  atOpen: number
+  session: DriverSession | null
 }
+
+const newRecorded = (): Recorded => ({ sql: [], atOpen: -1, session: null })
+
+function recordingFactory(into: string[]): (t: DriverTarget) => Client {
+  return (t: DriverTarget): Client => {
+    const client = reviewedClientFactory(t)
+    return new Proxy(client, {
+      get(target, prop) {
+        if (prop === 'query') {
+          return (cfg: unknown, ...rest: unknown[]) => {
+            into.push(typeof cfg === 'string'
+              ? cfg : String((cfg as { text?: unknown }).text))
+            return (target.query as (...a: unknown[]) => unknown).call(target, cfg, ...rest)
+          }
+        }
+        const value = Reflect.get(target, prop, target)
+        return typeof value === 'function' ? value.bind(target) : value
+      },
+    }) as Client
+  }
+}
+
+/** Open a verifier session with the recorder attached BEFORE connect. */
+async function openRecorded(
+  target: DriverTarget, rec: Recorded,
+): Promise<DriverSession> {
+  const s = await openSilentDriverSession(target, recordingFactory(rec.sql))
+  rec.atOpen = rec.sql.length
+  rec.session = s
+  return s
+}
+
+const sourceTarget = (): DriverTarget => {
+  const cred = readPublishedCredential(ROLE.credentialPath)
+  return { host: cred.host, port: Number(cred.port), database: cred.database,
+           user: cred.user, password: cred.password }
+}
+
+const targetTarget = (db: string): DriverTarget => ({
+  host: TGT.socketDir, port: TGT.port, database: db,
+  user: TARGET_LOGIN, password: TARGET_PASSWORD,
+})
 
 /** Put the target back to empty and pristine, as the owner. */
 async function resetTarget(): Promise<void> {
@@ -327,8 +378,8 @@ async function copyThenVerify(opts: {
   thrown: unknown
   supervisor: PsqlSession
   prover: PsqlSession
-  sourceStatements: string[][]
-  targetStatements: string[][]
+  sourceStatements: Recorded[]
+  targetStatements: Recorded[]
   handoff: VerifierHandoff
   evidenceRoot: string
 }> {
@@ -356,8 +407,8 @@ async function copyThenVerify(opts: {
   const supervisor = await openPsqlSession(SRC, SRC_DB)
   const prover = await openPsqlSession(SRC, SRC_DB)
   const source = await openSourceDriver()
-  const sourceStatements: string[][] = []
-  const targetStatements: string[][] = []
+  const sourceStatements: Recorded[] = []
+  const targetStatements: Recorded[] = []
   let result: unknown = null
   let thrown: unknown = null
   let handoff: VerifierHandoff | null = null
@@ -382,14 +433,14 @@ async function copyThenVerify(opts: {
         supervisor,
         prover,
         openSource: async () => {
-          const r: Recorded = { sql: [] }
-          sourceStatements.push(r.sql)
-          return record(await openSourceDriver(), r)
+          const r = newRecorded()
+          sourceStatements.push(r)
+          return await openRecorded(sourceTarget(), r)
         },
         openTarget: async () => {
-          const r: Recorded = { sql: [] }
-          targetStatements.push(r.sql)
-          return record(await openTargetDriver(opts.targetDb ?? TGT_DB), r)
+          const r = newRecorded()
+          targetStatements.push(r)
+          return await openRecorded(targetTarget(opts.targetDb ?? TGT_DB), r)
         },
         reviewedTarget: REVIEWED_TARGET(),
         evidenceRoot: root,
@@ -480,26 +531,60 @@ describe('a committed copy, independently verified', () => {
     } finally { await release(r.supervisor, r.prover) }
   }, 1_800_000)
 
-  it('uses FRESH sessions whose FIRST statement is READ ONLY REPEATABLE READ', async () => {
+  it('opens FRESH sessions that issue NO SQL before BEGIN', async () => {
     const r = await copyThenVerify({})
     try {
       expect(r.thrown).toBeNull()
       expect(r.sourceStatements.length).toBe(1)
       expect(r.targetStatements.length).toBe(1)
-      for (const stmts of [r.sourceStatements[0], r.targetStatements[0]]) {
-        expect(stmts[0])
+      for (const [side, rec] of
+           [['source', r.sourceStatements[0]], ['target', r.targetStatements[0]]] as const) {
+        // CONNECT ISSUED NOTHING. Recorded at the client, so an opener that
+        // asked the server anything at all would show up here.
+        expect(rec.atOpen, side).toBe(0)
+        // BEGIN IS STATEMENT 1, and identity is statement 2.
+        expect(rec.sql[0], side)
           .toBe('BEGIN TRANSACTION READ ONLY ISOLATION LEVEL REPEATABLE READ')
-        expect(stmts[stmts.length - 1]).toBe('ROLLBACK')
+        expect(rec.sql[1], side).toContain('CURRENT_USER')
+        expect(rec.sql[1], side).toContain("current_setting('transaction_read_only')")
+        // ROLLBACK IS THE LAST THING THE VERIFIER OWNS.
+        expect(rec.sql[rec.sql.length - 1], side).toBe('ROLLBACK')
+        expect(rec.sql.filter(q => q === 'ROLLBACK').length, side).toBe(1)
+        // And the session it owned is closed.
+        expect(rec.session?.alive(), side).toBe(false)
         // NO SELECT *, and nothing that would write.
-        for (const sql of stmts) {
-          expect(sql).not.toMatch(/SELECT\s+\*/i)
-          expect(sql).not.toMatch(/^\s*(INSERT|UPDATE|DELETE|TRUNCATE|ALTER|DROP|CREATE)\b/i)
+        for (const sql of rec.sql) {
+          expect(sql, side).not.toMatch(/SELECT\s+\*/i)
+          expect(sql, side)
+            .not.toMatch(/^\s*(INSERT|UPDATE|DELETE|TRUNCATE|ALTER|DROP|CREATE)\b/i)
         }
       }
-      // And the target's identity was taken BEFORE it assumed the owner role.
-      const t = r.targetStatements[0]
-      expect(t.findIndex(s => s.includes('CURRENT_USER')))
-        .toBeLessThan(t.findIndex(s => s.startsWith('SET LOCAL ROLE')))
+      // THE TARGET ASSUMES THE OWNER ROLE ONLY AFTER ITS IDENTITY IS TAKEN.
+      const t = r.targetStatements[0].sql
+      const role = t.findIndex(q => q.startsWith('SET LOCAL ROLE'))
+      expect(role).toBe(2)
+      expect(t.findIndex(q => q.includes('CURRENT_USER'))).toBeLessThan(role)
+      // The protocol pid the opener used is the one the server confirmed.
+      expect(r.targetStatements[0].session?.pid).toMatch(/^\d+$/)
+      // THE BORROWED SESSIONS ARE UNTOUCHED.
+      expect(r.supervisor.alive()).toBe(true)
+    } finally { await release(r.supervisor, r.prover) }
+  }, 1_800_000)
+
+  it('a FAILURE closes only the verifier-owned sessions', async () => {
+    const r = await copyThenVerify({
+      targetDb: SCALE_B_DB,
+      mutateHandoff: h => ({ ...h, target: { ...h.target, database: SCALE_B_DB } }),
+    })
+    try {
+      expect(r.thrown).toBeInstanceOf(PostCommitVerificationFailed)
+      for (const rec of [...r.sourceStatements, ...r.targetStatements]) {
+        expect(rec.session?.alive()).toBe(false)
+        expect(rec.sql[rec.sql.length - 1]).toBe('ROLLBACK')
+      }
+      // The caller's supervisor and prover are still open and still usable.
+      expect(r.supervisor.alive()).toBe(true)
+      expect((await r.prover.must('SELECT 1'))[0][0]).toBe('1')
     } finally { await release(r.supervisor, r.prover) }
   }, 1_800_000)
 
@@ -535,11 +620,19 @@ describe('a committed copy, independently verified', () => {
     const r = await copyThenVerify({ killSupervisorBeforeVerify: true })
     try {
       expect(r.thrown).toBeInstanceOf(PostCommitVerificationFailed)
-      expect((r.thrown as PostCommitVerificationFailed).phase).toBe('V2-supervisor')
+      const e = r.thrown as PostCommitVerificationFailed
+      expect(e.phase).toBe('V2-supervisor')
       // NOTHING was opened; the failure costs no session.
       expect(r.sourceStatements.length).toBe(0)
       expect(r.targetStatements.length).toBe(0)
-      expect(String((r.thrown as Error).message)).toContain('NOT verified')
+      expect(e.message).toContain('NOT verified')
+      // AND IT DOES NOT CLAIM THE FENCE IS HELD. The supervisor is gone; its
+      // transaction went with it, and saying otherwise is how producers get
+      // restarted against a live source.
+      expect(e.fence).toBe('unproved')
+      expect(e.message).toContain('UNPROVED')
+      expect(e.message).toContain('MUTABLE')
+      expect(e.message).not.toContain('still held')
     } finally { await r.prover.close() }
   }, 1_800_000)
 })
@@ -575,9 +668,11 @@ describe('numeric scale, across two databases', () => {
 
   it('1.10 and 1.1 produce different FRAMES, batch digests, table digests and roots',
     async () => {
-      // 1. THE RAW FRAMES. `numeric_send` encodes the stored display scale, so
-      //    the two values do not even have the same length - and NOTHING here
-      //    trims it.
+      // 1. THE RAW FRAMES. `numeric_send` encodes the stored display scale in
+      //    its header, so the two values produce DIFFERENT BYTES at the SAME
+      //    LENGTH: both carry one digit group, and only the dscale field
+      //    differs. Nothing here trims it. A comparison that looked at sizes
+      //    rather than bytes would see nothing at all.
       const s = await openPsqlSession(TGT, SCALE_A_DB)
       try {
         const frames = await s.must(
@@ -688,6 +783,11 @@ describe('numeric scale, across two databases', () => {
       expect(f.phase).toBe('V8-content')
       expect(f.reason).toBe('the independently measured content does not match')
       expect(String(f.at)).toContain('portfolio.trade_log')
+      // THE FENCE IS PROVED, NOT ASSUMED. The content did not match and the
+      // source is still frozen - which is the one case where saying so is
+      // true, and it is said only because a proof was taken on the failure path.
+      expect(f.fence).toBe('held')
+      expect(f.message).toContain('PROVED still held')
       // NAMES A TABLE, AND NOTHING FROM A ROW.
       const text = surfaces(f)
       expect(text).not.toContain('1.10')
@@ -712,6 +812,9 @@ describe('numeric scale, across two databases', () => {
       expect(doc.complete).toBe(true)
       expect(doc.failure.phase).toBe('V8-content')
       expect(String(doc.failure.at)).toContain('portfolio.trade_log')
+      expect(doc.fence.disposition).toBe('held')
+      expect(doc.fence.after_proved_by).toBe('failure-path')
+      expect(doc.fence.after.ungranted).toBe(0)
     } finally { await release(r.supervisor, r.prover) }
   }, 1_800_000)
 })

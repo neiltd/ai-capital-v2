@@ -33,8 +33,9 @@
 import { join } from 'node:path'
 
 import {
-  DIGEST_FILE, REAL_EVIDENCE_OPS, evidenceNames, evidenceStamp, newRunId, publishEvidence,
-  type EvidenceOps, type PublishedEvidence,
+  DIGEST_FILE, EvidencePublicationUnknown, EvidencePublishedButUnverified, EvidenceRefused,
+  REAL_EVIDENCE_OPS, evidenceNames, evidenceStamp, newRunId, pathIsPresent, publishEvidence,
+  type EvidenceOps, type EvidencePhase, type PublishedEvidence, type PublishedPhase,
 } from './evidence.js'
 import {
   COPY_TABLES, REVIEWED_CONTRACT_DIGEST, SOURCE_V10_PROFILE, TARGET_V19_PROFILE,
@@ -132,6 +133,9 @@ export type VerifyReason =
   | 'the compatibility document does not match'
   | 'the complete source fence was not held after verification'
   | 'the verification evidence was not published'
+  | 'the verification evidence was built but not published'
+  | 'the verification evidence was published but not verified'
+  | 'the verification evidence publication outcome is unknown'
 
 /**
  * POST-COMMIT VERIFICATION FAILED. The target holds UNVERIFIED data.
@@ -165,41 +169,160 @@ export const PHASE_REASON: Readonly<Record<VerifyPhase, VerifyReason>> = Object.
   'V12-evidence': 'the verification evidence was not published',
 })
 
+/**
+ * WHAT IS KNOWN ABOUT THE SOURCE FENCE at the moment a failure is raised.
+ *
+ * A CLOSED SET, AND NOT A GUESS. The first version of this error said "the
+ * source fence is still held" in every message it could produce - including
+ * the one raised because the supervisor was gone, and the one raised because
+ * the fence proof had just refused. An operator reading that would conclude
+ * the source was frozen and act accordingly, which is the single most
+ * dangerous thing this module could get wrong: producers restarted against a
+ * source everyone believes is still.
+ *
+ *   `held`       a proof SUCCEEDED after the failure. The source is frozen.
+ *   `not-held`   a proof RAN and REFUSED. The source is mutable.
+ *   `unproved`   nobody knows. The verifier released nothing, but it cannot
+ *                say what the fence is doing, so the source must be treated as
+ *                mutable and producers must not be restored automatically.
+ *
+ * `unproved` is the default because it is the only one of the three that is
+ * safe to be wrong about.
+ */
+export type FenceDisposition = 'held' | 'not-held' | 'unproved'
+
+export const FENCE_DISPOSITION_SENTENCE: Readonly<Record<FenceDisposition, string>> =
+  Object.freeze({
+    held:
+      'The verifier released nothing, and the COMPLETE source fence was PROVED still held ' +
+      'after this failure.',
+    'not-held':
+      'THE COMPLETE SOURCE FENCE IS NOT HELD: a proof ran and refused. The verifier released ' +
+      'nothing, but the source must be treated as MUTABLE. Do not restore producers.',
+    unproved:
+      'The verifier did not release the source fence, but its current state is UNPROVED. ' +
+      'Treat the source as MUTABLE and do not restore producers automatically.',
+  })
+
 export class PostCommitVerificationFailed extends Error {
   constructor(
     readonly phase: VerifyPhase,
     readonly reason: VerifyReason,
     /** A reviewed table or property name, and never anything measured. */
     readonly at: string | null = null,
+    /** What is KNOWN about the fence. Never assumed; see `FenceDisposition`. */
+    readonly fence: FenceDisposition = 'unproved',
   ) {
     super(
       'POST-COMMIT VERIFICATION FAILED: the target has been committed and NOT verified. ' +
-      'It has not been cleaned, truncated, migrated or rolled back, the source fence is ' +
-      'still held, and nothing may be retried. ' +
+      'It has not been cleaned, truncated, migrated or rolled back, and nothing may be ' +
+      `retried. ${FENCE_DISPOSITION_SENTENCE[fence]} ` +
       `${reason} (phase ${phase}${at === null ? '' : ` at ${at}`})`)
     this.name = 'PostCommitVerificationFailed'
   }
 }
 
+export type VerificationOutcome = 'PASS' | 'FAIL'
+
+/** The primary verification failure, carried through a publication failure. */
+export interface PrimaryFailure {
+  readonly phase: VerifyPhase
+  readonly reason: VerifyReason
+  readonly at: string | null
+}
+
 /**
- * The verification ran, and its evidence could not be published.
+ * WHERE THE PUBLICATION STOPPED, and therefore what is on disk.
  *
- * A subclass, because a caller's answer to both is identical - hold everything,
- * change nothing, look - and because the distinction still matters: the
- * temporary directory named here is complete enough to diagnose from and is
- * deliberately left in place. Nothing removes it.
+ * These are not shades of the same thing. "Nothing was written" and "a complete
+ * bundle is published but unverified" call for opposite actions, and an earlier
+ * version of this module caught every publisher error and reported all of them
+ * as a retained temporary directory - naming a path that, for a collision or a
+ * bad root, had never been created. A person sent to look at it would find
+ * nothing and conclude the evidence had been lost.
  */
-export class VerificationEvidenceUnpublished extends PostCommitVerificationFailed {
+export type EvidenceDisposition =
+  /** Refused before or during construction. No final path; temporary may not exist. */
+  | 'refused'
+  /** Built, not published. No final path. The temporary directory IS there. */
+  | 'retained-temporary'
+  /** Published, then something after the rename failed. The FINAL path is there. */
+  | 'published-unverified'
+  /** The rename did not report and could not be resolved by looking. */
+  | 'unknown'
+
+/**
+ * The evidence was refused BEFORE the rename. Nothing is published.
+ *
+ * `temporaryPresent` is MEASURED, not inferred: a refusal at the root check or
+ * a name collision never creates the temporary directory, and claiming a
+ * diagnostic bundle exists when it does not is worse than saying nothing.
+ */
+export class VerificationEvidenceRefused extends PostCommitVerificationFailed {
+  readonly disposition: EvidenceDisposition
   constructor(
     readonly outcome: VerificationOutcome,
-    readonly temporaryPath: string,
+    readonly evidencePhase: EvidencePhase,
+    readonly temporaryPath: string | null,
+    readonly finalPath: string,
+    readonly verification: PrimaryFailure | null,
+    fence: FenceDisposition,
   ) {
-    super('V12-evidence', 'the verification evidence was not published')
-    this.name = 'VerificationEvidenceUnpublished'
+    super('V12-evidence',
+      temporaryPath === null
+        ? 'the verification evidence was not published'
+        : 'the verification evidence was built but not published',
+      temporaryPath === null ? 'no bundle was created' : 'a temporary bundle was retained',
+      fence)
+    this.disposition = temporaryPath === null ? 'refused' : 'retained-temporary'
+    this.name = 'VerificationEvidenceRefused'
   }
 }
 
-export type VerificationOutcome = 'PASS' | 'FAIL'
+/**
+ * The bundle IS published, and something after the rename failed.
+ *
+ * Saying "nothing was published" here would be false, and deleting it to tidy
+ * up would destroy the only durable record of what the verification concluded.
+ * The reviewed final name is reported so it can be examined; the phase says
+ * which step failed, because freezing, fsyncing and the outside verification
+ * are different problems with different answers.
+ */
+export class VerificationEvidencePublishedButUnverified extends PostCommitVerificationFailed {
+  readonly disposition: EvidenceDisposition = 'published-unverified'
+  constructor(
+    readonly outcome: VerificationOutcome,
+    readonly publishedPhase: PublishedPhase,
+    readonly finalPath: string,
+    readonly verification: PrimaryFailure | null,
+    fence: FenceDisposition,
+  ) {
+    super('V12-evidence', 'the verification evidence was published but not verified',
+      `the published bundle at ${publishedPhase}`, fence)
+    this.name = 'VerificationEvidencePublishedButUnverified'
+  }
+}
+
+/**
+ * The rename did not report and looking could not settle it.
+ *
+ * Both reviewed names are preserved exactly as they are. No retry, no cleanup,
+ * no overwrite, no repair, and neither name is ever reused.
+ */
+export class VerificationEvidenceOutcomeUnknown extends PostCommitVerificationFailed {
+  readonly disposition: EvidenceDisposition = 'unknown'
+  constructor(
+    readonly outcome: VerificationOutcome,
+    readonly finalPath: string,
+    readonly temporaryPath: string,
+    readonly verification: PrimaryFailure | null,
+    fence: FenceDisposition,
+  ) {
+    super('V12-evidence', 'the verification evidence publication outcome is unknown',
+      'neither name may be reused', fence)
+    this.name = 'VerificationEvidenceOutcomeUnknown'
+  }
+}
 
 // ---------------------------------------------------------------------------
 // THE HANDOFF
@@ -685,14 +808,15 @@ export function assertCompatibilityMatches(rebuilt: Canonical, stated: Canonical
  * raises, with the fence untouched.
  */
 export async function runVerification(i: VerifierInput): Promise<VerificationResult> {
-  // V1. Before a session exists.
-  const h = assertHandoff(i.handoff)
   const supervisor = borrowReadOnly(i.supervisor)
   const prover = borrowReadOnly(i.prover)
 
   const state: VerificationState = {
     outcome: 'FAIL',
     failure: null,
+    handoffAccepted: false,
+    fenceDisposition: 'unproved',
+    fenceAfterProvedBy: null,
     sourceContract: null,
     targetContract: null,
     source: null,
@@ -707,9 +831,21 @@ export async function runVerification(i: VerifierInput): Promise<VerificationRes
   let sourceSession: VerifyCloseable | null = null
   let targetSession: VerifyCloseable | null = null
   /** Where the run has reached. An unreviewed failure is reported HERE. */
-  let phase: VerifyPhase = 'V2-supervisor'
+  let phase: VerifyPhase = 'V1-handoff'
+  let h: VerifierHandoff = i.handoff
 
   try {
+    // V1. INSIDE THE RECORDED LIFECYCLE, and before any session exists.
+    //
+    // The Stage-2 target is already committed by the time this function is
+    // called, so a malformed handoff is not an argument error a caller can fix
+    // and re-run: it is a post-commit verification that did not happen, and it
+    // has to leave the same durable record as any other. Nothing is opened and
+    // nothing is sent to the supervisor or the prover to establish that.
+    h = assertHandoff(i.handoff)
+    state.handoffAccepted = true
+
+    phase = 'V2-supervisor'
     // V2. THE SAME LIVE BACKEND. A supervisor that died and was replaced would
     // answer every later question from a session holding nothing - and a
     // supervisor that is simply GONE cannot answer at all, which is the same
@@ -878,6 +1014,10 @@ export async function runVerification(i: VerifierInput): Promise<VerificationRes
     }
   }
 
+  // WHAT IS ACTUALLY KNOWN ABOUT THE FENCE, decided before anything is written
+  // or raised, and never by assumption. See `FenceDisposition`.
+  state.fenceDisposition = await settleFenceDisposition(prover, h, state)
+
   // EVIDENCE IS PUBLISHED FOR BOTH OUTCOMES, and says which one it was. A
   // failed verification publishes a complete FAIL record; it can never publish
   // PASS, because the outcome written here is the one the run actually reached.
@@ -886,7 +1026,8 @@ export async function runVerification(i: VerifierInput): Promise<VerificationRes
   if (state.outcome !== 'PASS' || state.failure !== null) {
     const f = state.failure
     throw new PostCommitVerificationFailed(
-      f?.phase ?? phase, f?.reason ?? PHASE_REASON[phase], f?.at ?? null)
+      f?.phase ?? phase, f?.reason ?? PHASE_REASON[phase], f?.at ?? null,
+      state.fenceDisposition)
   }
 
   return Object.freeze({
@@ -904,10 +1045,65 @@ export async function runVerification(i: VerifierInput): Promise<VerificationRes
   })
 }
 
+/**
+ * Decide what may honestly be said about the fence, and prove it if it can be.
+ *
+ * FOUR CASES, AND ONLY ONE OF THEM PROVES ANYTHING:
+ *
+ *   PASS - V11 already proved the complete fence after every read. `held`.
+ *
+ *   V1 or V2 failed - nothing was ever proved, and in V2's case the supervisor
+ *   did not answer at all. Sending the prover a question now would say nothing
+ *   about a fence whose holder is unaccounted for. `unproved`, and nothing is
+ *   sent. (A V1 failure has sent NOTHING to either borrowed session, and that
+ *   stays true here.)
+ *
+ *   A fence proof itself failed, at V3 or V11 - a proof RAN and REFUSED, which
+ *   is positive evidence. `not-held`.
+ *
+ *   Anything else, after V3 succeeded - the fence was held when this started
+ *   and the failure was about something else, so it is worth asking once more.
+ *   A BOUNDED, BEST-EFFORT reproof through the borrowed prover: success is the
+ *   only thing that earns `held`, and its failure - for any reason at all -
+ *   yields `unproved` rather than a second opinion about what went wrong.
+ *
+ * THE SECONDARY PROOF CANNOT MASK THE PRIMARY FAILURE. It returns a value, it
+ * never throws, and it never touches `state.failure`.
+ */
+export async function settleFenceDisposition(
+  prover: FenceExecutor, h: VerifierHandoff, state: VerificationState,
+): Promise<FenceDisposition> {
+  if (state.outcome === 'PASS') {
+    state.fenceAfterProvedBy = 'verification'
+    return 'held'
+  }
+  const at = state.failure?.phase ?? null
+  if (at === 'V1-handoff' || at === 'V2-supervisor') return 'unproved'
+  if (at === 'V3-fence-before' || at === 'V11-fence-after') return 'not-held'
+  if (!state.handoffAccepted || state.fenceBefore === null) return 'unproved'
+  try {
+    const facts = await proveCompleteFence(
+      prover, 'V11-fence-after', h.fence.supervisorPid, h.fence.mechanism)
+    state.fenceAfter = facts
+    state.fenceAfterProvedBy = 'failure-path'
+    return 'held'
+  } catch {
+    // Deliberately swallowed, and deliberately not recorded as a failure. The
+    // question asked here is "is the fence still there", and "I could not tell"
+    // is an answer, not a new problem to report instead of the real one.
+    return 'unproved'
+  }
+}
+
 /** Everything the run has established so far. Exported so the document builder is testable. */
 export interface VerificationState {
   outcome: VerificationOutcome
   failure: { phase: VerifyPhase; reason: VerifyReason; at: string | null } | null
+  /** Whether V1 accepted the handoff. While false, NO handoff field is recorded. */
+  handoffAccepted: boolean
+  fenceDisposition: FenceDisposition
+  /** Which proof produced `fenceAfter`: the verification itself, or the failure path. */
+  fenceAfterProvedBy: 'verification' | 'failure-path' | null
   sourceContract: ContractArtifact | null
   targetContract: ContractArtifact | null
   source: VerifiedIdentity | null
@@ -924,15 +1120,20 @@ export interface VerificationState {
 // ---------------------------------------------------------------------------
 
 const identityDocument = (
-  measured: VerifiedIdentity | null, stated: HandoffIdentity,
-): Canonical => ({
+  measured: VerifiedIdentity | null, stated: HandoffIdentity | null,
+): Canonical => (stated === null && measured === null ? {
+  // THE HANDOFF WAS REFUSED, so not one of its fields is reproduced - not even
+  // to say what it claimed. An unvalidated value copied into evidence is an
+  // unvalidated value that now looks like a finding.
+  system_identifier: null, database: null, role: null, measured: false,
+} : {
   // NOT A CONNECTION STRING. A system identifier, a database name and a role
   // name are the three facts that say WHICH database this was, and none of
   // them is a credential or a route to one. No host, port, socket directory,
   // password or passfile path appears anywhere in this document.
-  system_identifier: measured?.systemIdentifier ?? stated.systemIdentifier,
-  database: measured?.database ?? stated.database,
-  role: measured?.currentUser ?? stated.role,
+  system_identifier: measured?.systemIdentifier ?? stated?.systemIdentifier ?? null,
+  database: measured?.database ?? stated?.database ?? null,
+  role: measured?.currentUser ?? stated?.role ?? null,
   measured: measured !== null,
 })
 
@@ -967,6 +1168,24 @@ const fenceDocument = (f: FenceFacts | null): Canonical =>
   }
 
 /**
+ * What the record says about the fence, and where that came from.
+ *
+ * `disposition` is the claim; `after` is the evidence for it when there is any;
+ * `after_proved_by` says whether that proof was the verification's own final
+ * step or the bounded one taken on the failure path. A reader can therefore
+ * tell a fence proved still held at the end of a clean run from one proved
+ * still held after something else went wrong - and both from a fence nobody
+ * managed to ask about.
+ */
+const fenceSection = (state: VerificationState): Canonical => ({
+  disposition: state.fenceDisposition,
+  sentence: FENCE_DISPOSITION_SENTENCE[state.fenceDisposition],
+  before: fenceDocument(state.fenceBefore),
+  after: fenceDocument(state.fenceAfter),
+  after_proved_by: state.fenceAfterProvedBy,
+})
+
+/**
  * The verification manifest.
  *
  * `complete: true` is the publisher's own marker and is written unconditionally,
@@ -982,29 +1201,31 @@ export function verificationDocument(
     complete: true,
     outcome: state.outcome,
     run: { id: runId, stamp },
-    bundle: { name: h.bundleName },
+    bundle: { name: state.handoffAccepted ? h.bundleName : null },
     failure: state.failure === null ? null : {
       phase: state.failure.phase,
       reason: state.failure.reason,
       at: state.failure.at,
     },
     source: {
-      ...(identityDocument(state.source, h.source) as Record<string, Canonical>),
+      ...(identityDocument(
+        state.source, state.handoffAccepted ? h.source : null) as Record<string, Canonical>),
       contract_digest: state.sourceContract?.digest ?? null,
       recognition: state.sourceContract === null ? null : recognitionOf(state.sourceContract),
       root_digest: state.content?.source.rootDigest ?? null,
     },
     target: {
-      ...(identityDocument(state.target, h.target) as Record<string, Canonical>),
+      ...(identityDocument(
+        state.target, state.handoffAccepted ? h.target : null) as Record<string, Canonical>),
       contract_digest: state.targetContract?.digest ?? null,
       recognition: state.targetContract === null ? null : recognitionOf(state.targetContract),
       root_digest: state.content?.target.rootDigest ?? null,
     },
-    stage2: {
+    stage2: state.handoffAccepted ? {
       root_digest: h.rootDigest,
       source_contract_digest: h.sourceContractDigest,
       target_contract_digest: h.targetContractDigest,
-    },
+    } : { root_digest: null, source_contract_digest: null, target_contract_digest: null },
     tables: (state.content?.source.tables ?? []).map((s, n) => ({
       qname: s.qname,
       rows: s.rows,
@@ -1019,21 +1240,27 @@ export function verificationDocument(
       target_effective_next: s.targetEffectiveNext,
       matched: s.sourceEffectiveNext === s.targetEffectiveNext,
     })),
-    compatibility: state.compatibility ?? h.compatibility,
-    fence: {
-      before: fenceDocument(state.fenceBefore),
-      after: fenceDocument(state.fenceAfter),
-    },
+    compatibility: state.compatibility ?? (state.handoffAccepted ? h.compatibility : null),
+    fence: fenceSection(state),
   }
 }
 
 /**
- * Publish the record, whatever it says.
+ * Publish the record, whatever it says, and report EXACTLY where it stopped.
  *
- * A publication failure BEFORE the rename leaves the temporary directory
- * exactly as it is - complete enough to read the outcome out of - and this
- * reports its path so a person can. Nothing removes it, nothing retries it, and
- * the fence is not released on the way out.
+ * NOT ONE CATCH. The publisher already distinguishes a refusal from a bundle
+ * that was published and then failed its own verification, and from a rename
+ * that did not report - and those three call for opposite actions. Collapsing
+ * them into "a temporary directory was retained" names a path that a collision
+ * or a bad root never created, sends a person to look at nothing, and says
+ * "nothing was published" about a bundle that is sitting there.
+ *
+ * So each is preserved, and the filesystem is ASKED rather than assumed: the
+ * temporary path is probed with the reviewed `pathIsPresent`, which is
+ * fail-closed and treats only ENOENT as absent.
+ *
+ * Nothing here retries, cleans up, overwrites, repairs or reuses a name, and
+ * nothing releases the fence on the way out.
  */
 function publishOutcome(
   i: VerifierInput, h: VerifierHandoff, state: VerificationState,
@@ -1058,15 +1285,44 @@ function publishOutcome(
           `${canonicalJson(verificationDocument(h, state, runId, stamp))}\n`, 'utf-8'),
       },
     }, ops)
-  } catch {
-    // The publisher's own errors name paths and phases; none of that is
-    // repeated. What a person needs is where to look.
-    let temporaryPath = i.evidenceRoot
+  } catch (e) {
+    const primary: PrimaryFailure | null = state.failure
+    const fence = state.fenceDisposition
+
+    // The two reviewed names. Derived independently of the publisher, because
+    // the publisher may have refused before it computed them at all.
+    let finalPath = i.evidenceRoot
+    let temporaryPath: string | null = null
     try {
-      temporaryPath = join(
-        i.evidenceRoot, evidenceNames(VERIFICATION_PREFIX, stamp, runId).temporaryName)
-    } catch { /* the names themselves were refused; the root is what is left */ }
-    throw new VerificationEvidenceUnpublished(state.outcome, temporaryPath)
+      const names = evidenceNames(VERIFICATION_PREFIX, stamp, runId)
+      finalPath = join(i.evidenceRoot, names.finalName)
+      temporaryPath = join(i.evidenceRoot, names.temporaryName)
+    } catch { /* the names themselves were refused; the root is all there is */ }
+
+    // PAST THE RENAME. The bundle exists under its final name; the temporary
+    // one does not. Nothing may claim otherwise and nothing may remove it.
+    if (e instanceof EvidencePublishedButUnverified) {
+      throw new VerificationEvidencePublishedButUnverified(
+        state.outcome, e.phase, finalPath, primary, fence)
+    }
+
+    // THE RENAME DID NOT REPORT and looking could not settle it.
+    if (e instanceof EvidencePublicationUnknown) {
+      throw new VerificationEvidenceOutcomeUnknown(
+        state.outcome, finalPath, temporaryPath ?? i.evidenceRoot, primary, fence)
+    }
+
+    // BEFORE THE RENAME. Whether anything was built is a question about the
+    // filesystem, so it is asked there rather than guessed from the phase.
+    let retained: string | null = null
+    if (temporaryPath !== null) {
+      try {
+        if (pathIsPresent(temporaryPath, ops)) retained = temporaryPath
+      } catch { /* could not look; `retained` stays null and says so */ }
+    }
+    const phase: EvidencePhase = e instanceof EvidenceRefused ? e.phase : 'publish'
+    throw new VerificationEvidenceRefused(
+      state.outcome, phase, retained, finalPath, primary, fence)
   }
 }
 

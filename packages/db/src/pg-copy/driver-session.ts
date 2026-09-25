@@ -112,16 +112,100 @@ export function psqlShape(rows: readonly unknown[][]): string[][] {
   return rows.map(row => row.map(v => (v === null || v === undefined ? '' : String(v))))
 }
 
-export async function openDriverSession(t: DriverTarget): Promise<DriverSession> {
+/**
+ * How a client is CONSTRUCTED. A seam, and the only one.
+ *
+ * Production always uses `reviewedClientFactory`, which goes through the
+ * canonical factory. It is injectable for one reason: the claim "this session
+ * issues no SQL before BEGIN" can only be checked at the query boundary of the
+ * real client, and a recorder wrapped around an already-opened session is
+ * attached too late to see the statement it is looking for. That is not a
+ * hypothetical - the first version of this module ran a `pg_backend_pid()`
+ * SELECT inside its own opener, and the integration recorder could not see it.
+ */
+export type ClientFactory = (t: DriverTarget) => Client
+
+export const reviewedClientFactory: ClientFactory = (t: DriverTarget): Client =>
   // Through the canonical factory, which is the only place in this repository
   // allowed to construct one, and which refuses a protected destination.
-  const client: Client = createClientFromConfig({
+  createClientFromConfig({
     host: t.host,
     port: t.port,
     database: t.database,
     user: t.user,
     ...(t.password === undefined ? {} : { password: t.password }),
   })
+
+/**
+ * A session that has issued NO SQL, for a caller whose first statement matters.
+ *
+ * WHY THIS EXISTS BESIDE `openDriverSession`. That opener asks the server for
+ * its backend pid as part of becoming usable, which is harmless for Stage 2 -
+ * the pid is read before any transaction, and the transaction that follows
+ * still sees one snapshot. It is NOT harmless for the verifier, whose whole
+ * claim is that the transaction it measures in began before it looked at
+ * anything: a SELECT issued first runs in its own implicit transaction, in a
+ * snapshot nobody afterwards can account for.
+ *
+ * So the pid comes from the PROTOCOL instead. PostgreSQL sends BackendKeyData
+ * during startup, before any query, and the driver records it; reading it costs
+ * no statement. It is not taken on trust either - it is only a claim by the
+ * driver until `VERIFY_IDENTITY_SQL` asks the server, inside the transaction,
+ * which backend it actually is, and refuses if the two disagree. The identity
+ * check is therefore not weakened; it is moved to where it can be made without
+ * spending a statement first.
+ */
+export async function openSilentDriverSession(
+  t: DriverTarget, make: ClientFactory = reviewedClientFactory,
+): Promise<DriverSession> {
+  const client: Client = make(t)
+
+  let ended = false
+  const reap = async (): Promise<void> => {
+    if (ended) return
+    ended = true
+    try { await client.end() } catch { /* bounded: nothing to report */ }
+  }
+
+  try {
+    await client.connect()
+  } catch {
+    await reap()
+    throw new DriverSessionRefused('the session could not be opened')
+  }
+
+  // PROTOCOL METADATA, not a query. `processID` is set from BackendKeyData and
+  // is absent from the published typings, so it is read defensively and
+  // validated rather than asserted into existence.
+  const raw = (client as unknown as { processID?: unknown }).processID
+  const pid = typeof raw === 'number' || typeof raw === 'string' ? String(raw) : ''
+  if (!/^\d+$/.test(pid)) {
+    await reap()
+    throw new DriverSessionRefused('the session did not report a backend pid')
+  }
+
+  const run = async (sql: string): Promise<CommandOutcome> => {
+    if (ended) throw new DriverSessionRefused('the session refused a statement')
+    try {
+      const r = await client.query({ text: sql, rowMode: 'array' })
+      return { tag: String(r.command ?? ''), rows: psqlShape(r.rows as unknown[][]) }
+    } catch {
+      throw new DriverSessionRefused('the session refused a statement')
+    }
+  }
+
+  return Object.freeze({
+    pid,
+    client,
+    rows: async (sql: string): Promise<string[][]> => (await run(sql)).rows,
+    command: run,
+    end: reap,
+    alive: () => !ended,
+  })
+}
+
+export async function openDriverSession(t: DriverTarget): Promise<DriverSession> {
+  const client: Client = reviewedClientFactory(t)
 
   let ended = false
   const reap = async (): Promise<void> => {
