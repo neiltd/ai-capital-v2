@@ -864,13 +864,14 @@ describe('the release authority is bound and single-use', () => {
 
   it('stays consumed after a transport failure, and after a refusal', async () => {
     const root = makeRoot()
-    // The ROLLBACK is submitted and the connection dies: outcome unknown, and
-    // the authorization is spent regardless. A retry would be a second attempt
-    // nobody authorised, on a transaction nobody can ask about.
+    // The ROLLBACK is ATTEMPTED and the transport raises. Nothing is known
+    // about whether PostgreSQL applied it - and the authorization is spent
+    // regardless, because a retry would be a second attempt nobody authorised
+    // on a transaction nobody can ask about.
     const dying = supervisorStub({ releaseThrows: true })
     const a = await runReleaseGate(gateInput(root, { supervisor: dying }))
     expect(await releaseFence(dying, a))
-      .toEqual({ state: 'released-unproved', remainingLocks: null })
+      .toEqual({ state: 'release-unknown', remainingLocks: null })
     expect(isAuthorizationConsumed(a)).toBe(true)
     await expect(releaseFence(dying, a)).rejects.toThrow(/already been used/)
 
@@ -1008,10 +1009,10 @@ describe('a pre-commit failure never leaves a fence behind', () => {
       .toBe('not-released')
   })
 
-  it('never retries an UNKNOWN submission, and never calls it released', async () => {
+  it('never retries an UNKNOWN outcome, and never calls it released', async () => {
     const s = supervisorStub({ releaseThrows: true })
     expect(await rollbackAndProveReleased(s))
-      .toEqual({ state: 'released-unproved', remainingLocks: null })
+      .toEqual({ state: 'release-unknown', remainingLocks: null })
     // ONE attempt. A second ROLLBACK on a transaction that already ended is
     // meaningless, and on one that did not it is an attempt nobody decided on.
     expect(s.seen.filter(x => x === RELEASE_SQL).length).toBe(1)
@@ -1083,6 +1084,154 @@ describe('the adapter deadline', () => {
     const r = await restoreProducers(stuck, 25)
     expect(r.failedAt).toBe(RESTORE_ORDER[0])
     expect(r.restored).toEqual([])
+  })
+})
+
+describe('an unknown rollback outcome is not a release', () => {
+  /** A transport that applies the statement and then loses the response. */
+  function losesTheResponse(): Stub & { applied: string[] } {
+    const inner = supervisorStub()
+    const applied: string[] = []
+    return {
+      seen: inner.seen,
+      applied,
+      send: async (sql: string) => {
+        if (sql === RELEASE_SQL) {
+          // The server DID receive and apply it; the reply never came back.
+          applied.push(sql)
+          inner.seen.push(sql)
+          throw new Error('connection reset by peer')
+        }
+        return await inner.send(sql)
+      },
+    } as Stub & { applied: string[] }
+  }
+
+  it('a transport that throws BEFORE the server sees it is release-unknown', async () => {
+    const root = makeRoot()
+    const dying = supervisorStub({ releaseThrows: true })
+    const a = await runReleaseGate(gateInput(root, { supervisor: dying }))
+    expect(await releaseFence(dying, a))
+      .toEqual({ state: 'release-unknown', remainingLocks: null })
+    // NO CENSUS WAS ATTEMPTED. There is nothing it could settle, and asking
+    // would invite an answer about a transaction nobody can place.
+    expect(dying.seen.filter(x => x.includes('count(*)'))).toEqual([])
+  })
+
+  it('a transport that APPLIES it and loses the response is ALSO release-unknown', async () => {
+    // From the caller's side these two are indistinguishable, and that is the
+    // point: the same absence of an acknowledgement means the same absence of
+    // knowledge, whichever way it actually went on the server.
+    const root = makeRoot()
+    const lossy = losesTheResponse()
+    const a = await runReleaseGate(gateInput(root, { supervisor: lossy }))
+    expect(await releaseFence(lossy, a))
+      .toEqual({ state: 'release-unknown', remainingLocks: null })
+    expect(lossy.applied).toEqual([RELEASE_SQL])
+  })
+
+  it('CONSUMES the authorization, and refuses a second attempt', async () => {
+    const root = makeRoot()
+    for (const supervisor of [supervisorStub({ releaseThrows: true }), losesTheResponse()]) {
+      const a = await runReleaseGate(gateInput(root, { supervisor }))
+      expect((await releaseFence(supervisor, a)).state).toBe('release-unknown')
+      expect(isAuthorizationConsumed(a)).toBe(true)
+      await expect(releaseFence(supervisor, a)).rejects.toThrow(/already been used/)
+      // AND THE ROLLBACK WAS NOT RETRIED.
+      expect(supervisor.seen.filter(x => x === RELEASE_SQL).length).toBe(1)
+    }
+  })
+
+  it('RELEASED-UNPROVED is reachable ONLY after an acknowledged ROLLBACK', async () => {
+    const root = makeRoot()
+    // ACKNOWLEDGED, then a census that cannot confirm: the transaction ended,
+    // so the lease IS gone and the message may say so.
+    for (const over of [{ censusRows: null }, { censusThrows: true },
+                        { censusRows: [['3']] }, { censusRows: [['not a number']] }]) {
+      const supervisor = supervisorStub(over)
+      const a = await runReleaseGate(gateInput(root, { supervisor }))
+      expect((await releaseFence(supervisor, a)).state, JSON.stringify(over))
+        .toBe('released-unproved')
+    }
+    // NOT ACKNOWLEDGED: never released-unproved, however the census behaves.
+    for (const over of [{ releaseThrows: true, censusRows: null },
+                        { releaseThrows: true, censusRows: [['0']] },
+                        { releaseThrows: true, censusThrows: true }]) {
+      const supervisor = supervisorStub(over)
+      const a = await runReleaseGate(gateInput(root, { supervisor }))
+      expect((await releaseFence(supervisor, a)).state, JSON.stringify(over))
+        .toBe('release-unknown')
+    }
+    // ACKNOWLEDGED AND REFUSED: the transaction did not end at all.
+    const refusing = supervisorStub({ releaseError: true })
+    const b = await runReleaseGate(gateInput(root, { supervisor: refusing }))
+    await expect(releaseFence(refusing, b)).rejects.toThrow(/the rollback/)
+  })
+
+  it('the PRE-COMMIT cleanup makes the same distinction', async () => {
+    // A transport that raises, and one that answers and refuses, and one that
+    // answers and succeeds - three different things, three different names.
+    expect(await rollbackAndProveReleased(supervisorStub({ releaseThrows: true })))
+      .toEqual({ state: 'release-unknown', remainingLocks: null })
+    expect(await rollbackAndProveReleased(supervisorStub({ releaseError: true })))
+      .toBe('not-released')
+    expect(await rollbackAndProveReleased(supervisorStub()))
+      .toEqual({ state: 'released', remainingLocks: 0 })
+    expect(await rollbackAndProveReleased(supervisorStub({ censusRows: [['2']] })))
+      .toEqual({ state: 'released-unproved', remainingLocks: 2 })
+    // AND NO RETRY, on any of them.
+    const dying = supervisorStub({ releaseThrows: true })
+    await rollbackAndProveReleased(dying)
+    expect(dying.seen.filter(x => x === RELEASE_SQL).length).toBe(1)
+  })
+
+  it('the cleanup state PRESERVES an unknown outcome, and never renames it', () => {
+    const e = new LifecyclePreCommitCleanupRequired(
+      { phase: 'L3-copy', reason: 'the transactional copy did not complete', at: null },
+      'release-unknown', supervisorStub() as never)
+    expect(e.fence).toBe('release-unknown')
+    expect(e.committed).toBe(false)
+    expect(e.message).toContain('OUTCOME IS NOT KNOWN')
+    expect(e.message).not.toMatch(/has been released/i)
+    expect(e.message).toContain('DO NOT simply retry')
+  })
+
+  it('the recorded outcome names the exact state, and is not folded', () => {
+    for (const state of ['released', 'released-unproved', 'release-unknown'] as const) {
+      const doc = JSON.parse(canonicalJson(outcomeDocument(
+        HANDOFF(), state, { state, remainingLocks: null }, null, null,
+        { phase: state === 'release-unknown' ? 'L8-release' : 'L9-release-proof',
+          reason: state === 'release-unknown'
+            ? 'the fence release was not completed'
+            : 'the fence release could not be proved',
+          at: null },
+        RUN, STAMP))) as Record<string, never>
+      expect((doc.fence as Record<string, unknown>).state).toBe(state)
+      expect((doc.release as Record<string, unknown>).state).toBe(state)
+      expect((doc.fence as Record<string, unknown>).sentence)
+        .toBe(LIFECYCLE_FENCE_SENTENCE[state])
+      // L8 for an unknown outcome, L9 for a proof that failed. The record says
+      // which, so "release outcome unknown" and "released but unproved" are
+      // never the same finding.
+      expect((doc.failure as Record<string, unknown>).phase)
+        .toBe(state === 'release-unknown' ? 'L8-release' : 'L9-release-proof')
+    }
+    const actions = JSON.parse(canonicalJson(
+      actionsDocument({ state: 'release-unknown', remainingLocks: null }, null)))
+    expect(actions.release_state).toBe('release-unknown')
+    expect(actions.restored).toEqual([])
+    expect(actions.not_restored).toEqual([...RESTORE_ORDER])
+  })
+
+  it('no comment or message claims a rejected send proves anything', () => {
+    // A `send` that raised establishes nothing about the server, and an earlier
+    // version said "SUBMITTED" in exactly the two places it mattered.
+    // Read UNSTRIPPED: the claim lived in the commentary, which is exactly
+    // where a reader looking for the reason would find it.
+    const raw = read('src/pg-copy/lifecycle.ts')
+    expect(raw).not.toContain('SUBMITTED, OUTCOME UNKNOWN')
+    expect(raw.match(/ATTEMPTED, OUTCOME UNKNOWN/g)?.length).toBe(2)
+    expect(raw).not.toMatch(/the lease is gone[^.]*transport/i)
   })
 })
 
@@ -1162,14 +1311,14 @@ describe('the intervention state', () => {
 
   it('states the fence truthfully, and never claims a released fence is held', () => {
     const states: LifecycleFenceState[] =
-      ['held', 'not-held', 'unproved', 'released', 'released-unproved']
+      ['held', 'not-held', 'unproved', 'released', 'released-unproved', 'release-unknown']
     expect(Object.keys(LIFECYCLE_FENCE_SENTENCE).sort()).toEqual([...states].sort())
-    expect(new Set(Object.values(LIFECYCLE_FENCE_SENTENCE)).size).toBe(5)
+    expect(new Set(Object.values(LIFECYCLE_FENCE_SENTENCE)).size).toBe(6)
     for (const s of states) {
       const m = new LifecycleInterventionRequired(failure, s, supervisorStub() as never).message
       expect(m.includes('PROVED still held'), s).toBe(s === 'held')
       if (s === 'released' || s === 'released-unproved') {
-        expect(m, s).toContain('HAS BEEN RELEASED')
+        expect(m, s).toMatch(/has been released/i)
         expect(m, s).toContain('cannot be recovered')
         expect(m, s).not.toContain('still held')
       }
@@ -1179,6 +1328,25 @@ describe('the intervention state', () => {
       if (s === 'not-held' || s === 'unproved') {
         expect(m, s).toContain('MUTABLE')
       }
+    }
+
+    // THE UNKNOWN OUTCOME SAYS NONE OF THE FOUR THINGS IT CANNOT KNOW.
+    const unknown = LIFECYCLE_FENCE_SENTENCE['release-unknown']
+    expect(unknown).toContain('OUTCOME IS NOT KNOWN')
+    expect(unknown).toContain('may still be held, or may already be gone')
+    expect(unknown).toContain('NOT been retried')
+    expect(unknown).toContain('producers were NOT restored')
+    // It never claims a release, never claims the fence is held, never calls
+    // the source safely mutable, and never invites a retry.
+    expect(unknown).not.toMatch(/has been released/i)
+    expect(unknown).not.toMatch(/is still held/i)
+    expect(unknown).not.toMatch(/safely mutable/i)
+    expect(unknown).not.toMatch(/\bretry\b/i)
+    expect(unknown).not.toMatch(/may be retried/i)
+    // And only the two ACKNOWLEDGED states say the lease is gone.
+    for (const s of states) {
+      const says = /has been released/i.test(LIFECYCLE_FENCE_SENTENCE[s])
+      expect(says, s).toBe(s === 'released' || s === 'released-unproved')
     }
   })
 

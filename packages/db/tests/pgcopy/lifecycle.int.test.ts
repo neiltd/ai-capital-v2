@@ -324,6 +324,8 @@ async function lifecycle(opts: {
   /** Runs AFTER the reviewed-session snapshot, so what it opens is unreviewed. */
   afterSnapshot?: () => Promise<void>
   badConfirmation?: boolean
+  /** Make the supervisor's ROLLBACK raise, without the server ever seeing it. */
+  releaseTransportFails?: boolean
   /** Make the OWNED Stage-2 source refuse to close, after its snapshot ended. */
   stageEndThrows?: boolean
   ops?: EvidenceOps
@@ -363,8 +365,17 @@ async function lifecycle(opts: {
   let result: unknown = null
   let thrown: unknown = null
 
+  // A supervisor whose ROLLBACK never reaches the server. The lifecycle cannot
+  // tell that from one where it arrived and the reply was lost, and must say so.
+  const borrowed = opts.releaseTransportFails !== true ? supervisor : {
+    send: async (sql: string) => {
+      if (sql === 'ROLLBACK') throw new Error('injected: connection reset by peer')
+      return await supervisor.send(sql)
+    },
+  }
+
   const run = runLifecycle({
-    supervisor, prover,
+    supervisor: borrowed, prover,
     openStageSource: async () => {
       const s = await openDriverSession(sourceTarget())
       stageSessions.push(s)
@@ -758,6 +769,44 @@ describe('the outcome publication happens once', () => {
       // The release already happened and is described truthfully.
       expect(e.fence).toBe('released')
       expect(await fenceHeld(r.supervisor, r.prover)).toBe(false)
+    } finally { await closeBorrowed(r) }
+  }, 1_800_000)
+})
+
+describe('an unknown rollback outcome stops at L8', () => {
+  it('is never called released, restores nobody, and leaves the fence as it was', async () => {
+    const r = await lifecycle({ releaseTransportFails: true })
+    try {
+      expect(r.thrown).toBeInstanceOf(LifecycleInterventionRequired)
+      const e = r.thrown as LifecycleInterventionRequired
+      // L8, NOT L9. The release itself did not complete; there is no proof to
+      // have failed, because there is nothing established to prove.
+      expect(e.failure.phase).toBe('L8-release')
+      expect(e.failure.at).toBe('the rollback outcome is unknown')
+      expect(e.fence).toBe('release-unknown')
+      expect(e.message).toContain('OUTCOME IS NOT KNOWN')
+      expect(e.message).not.toMatch(/has been released/i)
+      expect(e.message).not.toMatch(/is still held/i)
+
+      // NOBODY WAS RESTORED.
+      expect(r.actions).toEqual([])
+      expect([...e.notRestored]).toEqual([...REVIEWED_PRODUCERS])
+
+      // THE AUTHORIZATION WAS PUBLISHED FIRST and is still there; the outcome
+      // record names the exact state rather than folding it into a release.
+      expect(e.releaseGateEvidence.verified).toBe(true)
+      const doc = JSON.parse(
+        readFileSync(join(e.lifecycleEvidence.publishedPath as string, LIFECYCLE_FILE), 'utf-8'))
+      expect(doc.outcome).toBe('STOPPED')
+      expect(doc.fence.state).toBe('release-unknown')
+      expect(doc.release.state).toBe('release-unknown')
+      expect(doc.failure.phase).toBe('L8-release')
+      expect(doc.restoration).toBeNull()
+
+      // AND THE SERVER NEVER SAW IT: the fence really is still held, which is
+      // one of the two possibilities the state refuses to choose between.
+      expect(await fenceHeld(r.supervisor, r.prover)).toBe(true)
+      expect(await writerBlocked()).toBe(true)
     } finally { await closeBorrowed(r) }
   }, 1_800_000)
 })

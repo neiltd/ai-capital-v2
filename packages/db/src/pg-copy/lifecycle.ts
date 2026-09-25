@@ -322,6 +322,7 @@ export type LifecycleFenceState =
   | FenceDisposition
   | 'released'
   | 'released-unproved'
+  | 'release-unknown'
 
 export const LIFECYCLE_FENCE_SENTENCE: Readonly<Record<LifecycleFenceState, string>> =
   Object.freeze({
@@ -339,9 +340,16 @@ export const LIFECYCLE_FENCE_SENTENCE: Readonly<Record<LifecycleFenceState, stri
       'THE FENCE HAS BEEN RELEASED and the release was PROVED: the supervisor backend holds ' +
       'none of the reviewed locks. The lease is gone and cannot be recovered.',
     'released-unproved':
-      'THE FENCE HAS BEEN RELEASED and the release was NOT PROVED. The lease is gone and ' +
-      'cannot be recovered; producers were NOT restored automatically. A person must ' +
-      'establish what the source is doing before anything is started.',
+      'THE ROLLBACK WAS ACKNOWLEDGED, so the fence has been released - and the release was ' +
+      'NOT PROVED. The lease is gone and cannot be recovered; producers were NOT restored ' +
+      'automatically. A person must establish what the source is doing before anything is ' +
+      'started.',
+    'release-unknown':
+      'THE ROLLBACK WAS ATTEMPTED AND ITS OUTCOME IS NOT KNOWN. The transport failed before ' +
+      'any acknowledgement came back, so PostgreSQL may have applied the statement or may ' +
+      'never have received it: the fence may still be held, or may already be gone. It has ' +
+      'NOT been retried and producers were NOT restored. A person must establish what that ' +
+      'backend is doing before anything is started or run again.',
   })
 
 // ---------------------------------------------------------------------------
@@ -1004,8 +1012,23 @@ async function sampleQueues(
 // ---------------------------------------------------------------------------
 
 /** What the release established. Three answers, and only one of them is proof. */
+/**
+ * WHAT THE RELEASE ESTABLISHED. Three answers, and only one of them is proof.
+ *
+ *   `released`          the ROLLBACK was ACKNOWLEDGED and a census on that same
+ *                       backend showed none of the reviewed locks. Proof.
+ *   `released-unproved` the ROLLBACK was ACKNOWLEDGED - so the transaction did
+ *                       end and the lease is gone - and the census that should
+ *                       have confirmed it did not come back, or did not say zero.
+ *   `release-unknown`   the transport failed before any acknowledgement. Nobody
+ *                       can say whether PostgreSQL applied the statement.
+ *
+ * THE THIRD IS NOT A WEAKER SECOND. An acknowledgement is what makes "the
+ * transaction ended" true; without one, "released" is a guess, and a guess in
+ * this direction reads as a lease that is safely gone.
+ */
 export interface ReleaseResult {
-  readonly state: 'released' | 'released-unproved'
+  readonly state: 'released' | 'released-unproved' | 'release-unknown'
   /** Reviewed locks still held by the supervisor backend. 0 when proved. */
   readonly remainingLocks: number | null
 }
@@ -1076,17 +1099,28 @@ export async function releaseFence(
   try {
     released = await supervisor.send(RELEASE_SQL)
   } catch {
-    // SUBMITTED, OUTCOME UNKNOWN. Not retried: a second ROLLBACK on a
-    // transaction that already ended is meaningless, and on one that did not it
-    // would be an attempt nobody authorised.
-    return { state: 'released-unproved', remainingLocks: null }
+    // ATTEMPTED, OUTCOME UNKNOWN - and that is ALL that is known.
+    //
+    // A transport that raises has told us nothing about the server. The bytes
+    // may have arrived and been applied with the reply lost on the way back;
+    // they may never have left. So this is not a release, and it is not a
+    // release that failed to prove: it is an attempt whose outcome nobody can
+    // state. NOT RETRIED - a second ROLLBACK would be meaningless on a
+    // transaction that already ended and an unauthorised attempt on one that
+    // did not, and either way it cannot turn an unknown into a fact.
+    return { state: 'release-unknown', remainingLocks: null }
   }
   if (released.error !== null) {
-    // The transaction did not end, so the fence is still held - and this is NOT
-    // a release that failed to prove. Raised as a plain refusal so the caller
-    // stays on the intervention path with the lease intact.
+    // ACKNOWLEDGED, AND REFUSED. The server answered and declined, so the
+    // transaction did NOT end and the fence is still held. Raised as a plain
+    // refusal so the caller stays on the intervention path with the lease
+    // intact.
     throw new ReleaseGateRefused('the complete source fence was not proved held', 'the rollback')
   }
+
+  // ACKNOWLEDGED AND APPLIED. From here the transaction has ended, so every
+  // outcome below is a RELEASED one; what is still open is whether it can be
+  // proved.
 
   // THE PROOF, on the supervisor's own backend - the only session that can
   // answer "do I still hold anything" about itself.
@@ -1342,10 +1376,11 @@ export {
  * END THE SUPERVISOR TRANSACTION AND PROVE THE REVIEWED LOCKS ARE GONE.
  *
  * Used on the PRE-COMMIT path only, where the target is untouched and the one
- * thing left to put right is the fence. Exactly one ROLLBACK: an unknown
- * submission outcome is not retried, because a second ROLLBACK on a transaction
- * that already ended is meaningless and on one that did not it is an attempt
- * nobody decided to make.
+ * thing left to put right is the fence. Exactly one ROLLBACK, and the same
+ * four-way reading of what came back as `releaseFence`: a transport that raised
+ * establishes nothing and is `release-unknown`; an acknowledged refusal means
+ * the transaction did not end; an acknowledgement plus a zero census is proof;
+ * an acknowledgement without one is a release nobody could confirm.
  */
 export async function rollbackAndProveReleased(
   supervisor: FenceExecutor,
@@ -1354,9 +1389,12 @@ export async function rollbackAndProveReleased(
   try {
     released = await supervisor.send(RELEASE_SQL)
   } catch {
-    // SUBMITTED, OUTCOME UNKNOWN. Not retried, and not describable as released.
-    return { state: 'released-unproved', remainingLocks: null }
+    // ATTEMPTED, OUTCOME UNKNOWN. Not retried, and not describable as released
+    // - see `releaseFence`, which makes the same distinction for the same
+    // reason.
+    return { state: 'release-unknown', remainingLocks: null }
   }
+  // ACKNOWLEDGED AND REFUSED: the transaction did not end.
   if (released.error !== null) return 'not-released'
   try {
     const census = await supervisor.send(
@@ -1540,9 +1578,12 @@ export async function runLifecycle(i: LifecycleInput): Promise<LifecycleResult> 
     if (outcome !== 'not-released' && outcome.state === 'released') {
       throw new LifecycleRefused(phase, reason, at)
     }
+    // EACH OUTCOME KEEPS ITS OWN NAME. Folding an unknown into
+    // `released-unproved` would tell an operator the lease is gone when the
+    // only thing established is that nobody can say.
     throw new LifecyclePreCommitCleanupRequired(
       { phase, reason, at },
-      outcome === 'not-released' ? 'unproved' : 'released-unproved',
+      outcome === 'not-released' ? 'unproved' : outcome.state,
       i.supervisor)
   }
 
@@ -1715,8 +1756,19 @@ export async function runLifecycle(i: LifecycleInput): Promise<LifecycleResult> 
       await stop('L8-release', 'the fence release was not completed',
                  e instanceof ReleaseGateRefused ? e.refusal : null)
     }
+    // TWO DIFFERENT FAILURES, AND THEY ARE NOT INTERCHANGEABLE.
+    //
+    // An unknown outcome is a failure of the RELEASE - nobody knows whether the
+    // statement was applied - and belongs at L8. An acknowledged release whose
+    // census did not confirm it is a failure of the PROOF, at L9: there the
+    // transaction provably ended. Routing the first through the second would
+    // record "released" about a run where that was never established.
+    if ((release as ReleaseResult).state === 'release-unknown') {
+      await stop('L8-release', 'the fence release was not completed',
+                 'the rollback outcome is unknown')
+    }
     if ((release as ReleaseResult).state !== 'released') {
-      // RELEASED, AND NOT PROVED. The lease is gone; producers stay down.
+      // ACKNOWLEDGED AND NOT PROVED. The lease is gone; producers stay down.
       await stop('L9-release-proof', 'the fence release could not be proved', null)
     }
 
