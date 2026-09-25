@@ -561,6 +561,75 @@ describe('the compatibility proof cannot be forged, reused or outrun', () => {
       .toThrow(/not one this module issued/)
   })
 
+  it('REFLECTING every key off a genuine proof does not produce another one', () => {
+    // THE FORGERY THE PREVIOUS DESIGN ALLOWED. A non-enumerable symbol brand
+    // survives neither spread nor JSON - which made the easy copies fail and
+    // concealed that a deliberate one did not. `Object.getOwnPropertySymbols`
+    // and `Reflect.ownKeys` return non-enumerable symbol keys, so the brand
+    // could be read off a genuine proof and defined on an object of one's own.
+    // Authentication is now object identity, which cannot be read or copied.
+    const a = v10ish()
+    const genuine = assertCopyCompatible(a, ARTIFACT)
+
+    // Every own key - strings AND symbols, enumerable or not - copied with its
+    // exact descriptor onto a fresh object.
+    const forged = {} as Record<PropertyKey, unknown>
+    for (const k of Reflect.ownKeys(genuine)) {
+      const d = Object.getOwnPropertyDescriptor(genuine, k)
+      if (d !== undefined) Object.defineProperty(forged, k, d)
+    }
+    expect(Reflect.ownKeys(forged).length).toBe(Reflect.ownKeys(genuine).length)
+    expect((forged as { sourceDigest: string }).sourceDigest).toBe(genuine.sourceDigest)
+    expect((forged as { targetDigest: string }).targetDigest).toBe(genuine.targetDigest)
+    expect(() => sourceTableCopySpec(a, 'graph.edges', forged as unknown as CompatibilityProof))
+      .toThrow(/not one this module issued/)
+
+    // And the same again taking the symbols explicitly, which is the exact
+    // shape of the attack the old brand permitted.
+    const bySymbol = { ...genuine } as Record<PropertyKey, unknown>
+    for (const sym of Object.getOwnPropertySymbols(genuine)) {
+      bySymbol[sym] = (genuine as unknown as Record<symbol, unknown>)[sym]
+    }
+    expect(() => sourceTableCopySpec(a, 'graph.edges', bySymbol as unknown as CompatibilityProof))
+      .toThrow(/not one this module issued/)
+
+    // There is nothing to steal in the first place: the runtime object carries
+    // no symbol keys at all, because the brand is type-only now.
+    expect(Object.getOwnPropertySymbols(genuine)).toEqual([])
+    expect(Object.isFrozen(genuine)).toBe(true)
+  })
+
+  it('a structuredClone of a genuine proof is rejected', () => {
+    const a = v10ish()
+    const genuine = assertCopyCompatible(a, ARTIFACT)
+    const cloned = structuredClone(genuine) as unknown as CompatibilityProof
+    expect(cloned.sourceDigest).toBe(genuine.sourceDigest)
+    expect(() => sourceTableCopySpec(a, 'graph.edges', cloned))
+      .toThrow(/not one this module issued/)
+  })
+
+  it('a forgery carrying BOTH correct digests is still rejected', () => {
+    // Every field an attacker could want is right: the reviewed target digest,
+    // and the recomputed digest of a source that was modified and resealed.
+    const a = v10ish()
+    const modified = clone(a)
+    ;(payload(modified).migrations as AnyRec).count = 10
+    columns(modified, 'graph.edges')[1].name = 'smuggled'
+    const resealed = reseal(modified)
+    const forged = {
+      sourceDigest: contractDigest(resealed.payload),
+      targetDigest: REVIEWED_CONTRACT_DIGEST,
+      report: {
+        sourceRecognition: 'CURRENT_V10', targetRecognition: 'CURRENT_V19',
+        targetOnlyIndexes: [], targetOnlyForeignKeys: [],
+      },
+    } as unknown as CompatibilityProof
+    expect(forged.sourceDigest).toBe(resealed.digest)
+    expect(forged.targetDigest).toBe(REVIEWED_CONTRACT_DIGEST)
+    expect(() => sourceTableCopySpec(resealed, 'graph.edges', forged))
+      .toThrow(/not one this module issued/)
+  })
+
   it('a SPREAD or SERIALIZED copy of a genuine proof is rejected', () => {
     const a = v10ish()
     const genuine = assertCopyCompatible(a, ARTIFACT)

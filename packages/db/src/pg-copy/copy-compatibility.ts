@@ -216,34 +216,47 @@ const payloadOf = (a: ContractArtifact): Payload => a.payload as unknown as Payl
  * copy was willing to accept.
  */
 /**
- * The brand. A REAL RUNTIME SYMBOL, module-private, and not merely a type.
+ * THE REGISTRY. Authentication is object IDENTITY, not possession of a token.
  *
- * `declare const ... : unique symbol` - what this was - exists only in the type
- * system. It made a forged proof a compile error and nothing more: an
- * `as unknown as CompatibilityProof` cast, a JSON round trip or a value
- * arriving from another module all satisfied every runtime check, because
- * there was no runtime check to satisfy. A capability that only holds while
- * everyone compiles is not a capability.
+ * WHY A PROPERTY BRAND WAS NOT ENOUGH, EVEN A NON-ENUMERABLE SYMBOL ONE.
+ * `Object.getOwnPropertySymbols` and `Reflect.ownKeys` return NON-ENUMERABLE
+ * symbol keys too. So the previous design handed every caller the means to
+ * forge: read the symbol off a genuine proof, define it on an object of your
+ * own, and the check passed. Spread and JSON lost the brand, which made the
+ * easy copies fail and hid the fact that the deliberate forgery did not.
  *
- * NON-ENUMERABLE, DELIBERATELY. Object spread and `JSON.stringify` copy own
- * ENUMERABLE properties, symbols included, so an enumerable brand would
- * survive `{ ...proof }` and a spread copy would be believed. Defined
- * non-enumerable, the brand is present on the genuine object and absent from
- * every copy of it - which is exactly the distinction that matters, because a
- * copy is what a caller makes when it wants to change a field.
+ * A brand is a BEARER token: anything that can be read can be copied. Identity
+ * cannot. This WeakSet holds the exact objects this module minted; membership
+ * is not a value, so there is nothing to extract, transfer or re-define. A
+ * clone of a genuine proof - by spread, by `JSON.parse`, by `structuredClone`,
+ * by `Object.defineProperties` over every reflected key - is a DIFFERENT
+ * object, and a different object is not in the set.
+ *
+ * WeakSet and not Set, so a proof does not outlive the run that made it.
+ * Never exported, never reachable: exposing it, or anything derived from it,
+ * would recreate the bearer token this replaces.
  */
-const COMPATIBILITY_PROOF: unique symbol = Symbol('pg-copy.compatibility-proof')
+const ISSUED_PROOFS = new WeakSet<object>()
 
 /**
- * Is this the object `assertCopyCompatible` actually returned?
+ * A TYPE-ONLY brand, for compile-time opacity, carrying no runtime authority.
+ *
+ * `declare const` means this symbol does not exist at runtime: it makes an
+ * object literal a compile error, which is a useful first line, and it is not
+ * consulted by `isCompatibilityProof`. Nothing about it can be read off a
+ * genuine proof, because there is nothing there to read.
+ */
+declare const COMPATIBILITY_PROOF: unique symbol
+
+/**
+ * Is this the exact object `assertCopyCompatible` returned?
  *
  * Checked BEFORE any digest or report field is read: a forged object's
- * `sourceDigest` is not evidence of anything, so there is no reason to look
- * at it.
+ * `sourceDigest` is not evidence of anything, so there is no reason to look at
+ * it - and reading it first would invite a check ordered the other way round.
  */
 function isCompatibilityProof(v: unknown): v is CompatibilityProof {
-  return typeof v === 'object' && v !== null &&
-    (v as Record<symbol, unknown>)[COMPATIBILITY_PROOF] === true
+  return typeof v === 'object' && v !== null && ISSUED_PROOFS.has(v)
 }
 
 /**
@@ -583,15 +596,14 @@ export function assertCopyCompatible(
     targetOnlyForeignKeys: Object.freeze(targetOnlyForeignKeys),
   })
 
-  // THE ONLY PLACE A PROOF IS MINTED. Both RECOMPUTED digests are recorded, so
-  // consuming it can check that the artifact in hand is still the artifact that
-  // passed - and the brand is defined non-enumerably, so no copy of this object
-  // carries the capability.
-  const proof = { sourceDigest, targetDigest, report }
-  Object.defineProperty(proof, COMPATIBILITY_PROOF, {
-    value: true, enumerable: false, writable: false, configurable: false,
-  })
-  return Object.freeze(proof) as CompatibilityProof
+  // THE ONLY PLACE A PROOF IS MINTED, and registration is the LAST thing that
+  // happens: both digests have been recomputed and validated, every
+  // compatibility property has been compared, and the object is finished and
+  // frozen before its identity is recorded. Nothing half-built is ever in the
+  // registry.
+  const proof = Object.freeze({ sourceDigest, targetDigest, report })
+  ISSUED_PROOFS.add(proof)
+  return proof as unknown as CompatibilityProof
 }
 
 /**

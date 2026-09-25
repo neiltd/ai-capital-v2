@@ -505,12 +505,26 @@ describe('the source copy path is gated by a proof', () => {
 
   it('the proof is minted in exactly one place', () => {
     expect(COMPAT.match(/as\s*\n?\s*CompatibilityProof/g)?.length ?? 0).toBe(1)
-    // A REAL runtime symbol, not a type-only declaration.
-    expect(COMPAT).toContain(
-      "const COMPATIBILITY_PROOF: unique symbol = Symbol('pg-copy.compatibility-proof')")
-    expect(COMPAT).not.toContain('declare const COMPATIBILITY_PROOF')
-    expect(COMPAT).toContain('Object.defineProperty(proof, COMPATIBILITY_PROOF')
-    expect(COMPAT).toContain('enumerable: false')
+    // AUTHENTICATION IS OBJECT IDENTITY, not possession of a token. A property
+    // brand - even a non-enumerable symbol one - is a bearer token, and
+    // `Reflect.ownKeys` hands it to anyone who asks.
+    expect(COMPAT).toContain('const ISSUED_PROOFS = new WeakSet<object>()')
+    expect(COMPAT).toContain('return typeof v === \'object\' && v !== null && ISSUED_PROOFS.has(v)')
+    expect(COMPAT).toContain('ISSUED_PROOFS.add(proof)')
+    // The registry is never exported and nothing derived from it is either.
+    expect(COMPAT).not.toMatch(/export\s+(const|function|type)\s+ISSUED_PROOFS/)
+    expect(COMPAT).not.toContain('export { ISSUED_PROOFS')
+    // The symbol brand survives for COMPILE-time opacity only.
+    expect(COMPAT).toContain('declare const COMPATIBILITY_PROOF: unique symbol')
+    expect(COMPAT).not.toContain('Object.defineProperty(proof, COMPATIBILITY_PROOF')
+    // Registered only AFTER the object is finished and frozen.
+    const mint = COMPAT.slice(COMPAT.indexOf('export function assertCopyCompatible'))
+    expect(mint.indexOf('Object.freeze({ sourceDigest, targetDigest, report })'))
+      .toBeLessThan(mint.indexOf('ISSUED_PROOFS.add(proof)'))
+    expect(mint.indexOf('const sourceDigest = contractDigest(source.payload)'))
+      .toBeLessThan(mint.indexOf('ISSUED_PROOFS.add(proof)'))
+    expect(mint.indexOf('const targetDigest = contractDigest(target.payload)'))
+      .toBeLessThan(mint.indexOf('ISSUED_PROOFS.add(proof)'))
   })
 
   it('A5 proves the reviewed target BEFORE the comparator and before any target client', () => {
@@ -552,7 +566,7 @@ describe('the source copy path is gated by a proof', () => {
     const mint = COMPAT.slice(COMPAT.indexOf('export function assertCopyCompatible'))
     expect(mint).toContain('const sourceDigest = contractDigest(source.payload)')
     expect(mint).toContain('const targetDigest = contractDigest(target.payload)')
-    expect(mint).toContain('const proof = { sourceDigest, targetDigest, report }')
+    expect(mint).toContain('Object.freeze({ sourceDigest, targetDigest, report })')
     // Never the artifacts' own fields.
     expect(mint).not.toContain('sourceDigest: source.digest')
     expect(mint).not.toContain('targetDigest: target.digest')
