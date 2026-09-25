@@ -45,11 +45,12 @@ import { dirname, isAbsolute, resolve } from 'node:path'
 import { fileURLToPath } from 'node:url'
 
 import { sha256Hex } from '../src/pg-copy/schema-contract.js'
-import { CommitOutcomeUnknown, Stage2Refused, readPublishedBundle, runApply, runInspect,
-  type PublishedManifest } from '../src/pg-copy/stage2.js'
+import { CommitOutcomeUnknown, Stage2Refused, loadReviewedTarget, readPublishedBundle,
+  runInspect, type PublishedManifest } from '../src/pg-copy/stage2.js'
 import { ConfirmationRefused } from '../src/pg-copy/confirmation.js'
 import { EXPORT_ROLE_NAME, parseCredentialUrl } from '../src/pg-copy/export-role.js'
 import { openDriverSession, type DriverSession } from '../src/pg-copy/driver-session.js'
+import { join } from 'node:path'
 import { EXPORT_BEGIN_SQL, type OperatorInput } from '../src/pg-copy/source-manifest.js'
 import { TARGET_OWNER_ROLE } from '../src/pg-copy/target-authority.js'
 import { openPsqlBackend, type PsqlBackend } from '../src/pg-copy/psql-backend.js'
@@ -268,6 +269,34 @@ export async function runCli(argv: readonly string[]): Promise<CliResult> {
 
     const stageInput = {
       supervisor, prover, source, operator, sourceBeginSql: EXPORT_BEGIN_SQL,
+      reviewedTarget: loadReviewedTarget(
+        join(PKG_ROOT, 'contracts', 'expected-target-v19.json'),
+        p => readFileSync(p, 'utf-8')),
+    }
+
+    // ================================================================
+    // THE STANDALONE --apply PATH IS REFUSED, AND REFUSED HERE.
+    //
+    // Stage 2 ends at COMMIT. The lifecycle does not: an independent verifier
+    // and a final release gate have to run while the SAME process still holds
+    // the supervisor's fence lease, because a fence released between COMMIT and
+    // verification is a window in which the source can move and nobody would
+    // ever know the copy was verified against something else.
+    //
+    // Neither of those exists yet. Until they do, an operator path that
+    // committed and then returned would release the fence on the way out - so
+    // this refuses BEFORE a target client is constructed, which is the last
+    // point at which refusing still costs nothing. The Stage-2 core remains a
+    // usable API for the caller that will own that longer lifecycle, and the
+    // disposable integration suite drives it directly.
+    // ================================================================
+    if (parsed.apply) {
+      say('REFUSED: the standalone --apply path is not available.')
+      say('Stage 2 commits, but the independent verifier and the final fence-release')
+      say('gate do not exist yet, and they must run while this process still holds the')
+      say('supervisor lease. Committing here would release the fence before either ran.')
+      say('No target connection was opened and nothing was modified.')
+      return { exitCode: EXIT_REFUSED, lines }
     }
 
     if (!parsed.apply) {
@@ -284,20 +313,11 @@ export async function runCli(argv: readonly string[]): Promise<CliResult> {
       return { exitCode: EXIT_OK, lines }
     }
 
-    const r = await runApply({
-      ...stageInput,
-      targetExpectation,
-      confirmation: a['--confirm'],
-      // Constructed ONLY when Stage 2 calls it, which is after A5.
-      openTarget: async () => await openDriverSession({
-        host: targetCred.host, port: Number(targetCred.port), database: targetCred.database,
-        user: targetCred.user, password: targetCred.password,
-      }),
-    }, published)
-
-    say(`COMMITTED. ${r.tablesCopied} tables copied from bundle ${r.bundleName}.`)
-    say(`content root digest ${r.rootDigest}`)
-    return { exitCode: EXIT_OK, lines }
+    // UNREACHABLE while the refusal above stands: `--apply` returns there and
+    // an inspect run returns in the branch above. Asserted unreachable by a
+    // test, so a future edit that re-enables apply without the verifier fails
+    // rather than quietly restoring the window this refusal exists to close.
+    throw new Error('unreachable: the standalone apply path is refused above')
   } catch (e) {
     const d = dispositionOf(e)
     for (const l of d.lines) say(l)

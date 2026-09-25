@@ -19,13 +19,16 @@
 // is a separate, later decision; a contract taken after it would describe a
 // database the copy can no longer be run against.
 
-import { execFile } from 'node:child_process'
+import { execFile, execFileSync } from 'node:child_process'
+import { createHash } from 'node:crypto'
+import { readFileSync } from 'node:fs'
 import { dirname, join, resolve } from 'node:path'
 import { fileURLToPath } from 'node:url'
 import { promisify } from 'node:util'
 
 import { PSQL, type DisposableCluster } from './disposable-cluster.js'
 import { reviewedTargetSettings } from './reviewed-settings.js'
+import { CURRENT_V10_MANIFEST } from '../src/pg-copy/schema-contract.js'
 
 const run = promisify(execFile)
 
@@ -92,4 +95,69 @@ export async function buildV19Database(c: DisposableCluster, database: string): 
     throw new Error(`expected 19 migrations applied, got: ${stdout.split('\n')[0]}`)
   }
   return url
+}
+
+/**
+ * A genuine CURRENT_V10 source on a disposable cluster.
+ *
+ * WHY IT DOES NOT USE `bin/migrate.ts`. The runner reads every `.sql` in the
+ * migrations directory and applies all of them; it has no "stop at ten". So
+ * this replays the runner's OWN per-file transaction shape - `BEGIN`,
+ * `SET LOCAL ROLE`, `SET LOCAL search_path`, the body, the ledger INSERT,
+ * `COMMIT` - for 001 through 010 only. The shape is copied deliberately: the
+ * ledger this produces has to be the ledger production has, and production's
+ * was written by that runner.
+ *
+ * THE LEDGER IS THE POINT. A V10 fixture that merely has the right TABLES
+ * would pass a shape comparison and fail recognition, which is exactly
+ * backwards - recognition is the thing under test.
+ */
+export async function buildV10Database(
+  c: DisposableCluster, database: string,
+): Promise<void> {
+  const psqlArgs = (db: string, extra: string[]): string[] => [
+    '--no-psqlrc', '-v', 'ON_ERROR_STOP=1', '-X', '-q',
+    '-h', c.socketDir, '-p', String(c.port), '-U', c.user, '-d', db, ...extra,
+  ]
+
+  const exists = await c.rows(
+    `SELECT pg_catalog.count(*)::pg_catalog.text FROM pg_catalog.pg_roles WHERE rolname = '${OWNER_ROLE}'`)
+  if (exists[0][0] === '0') {
+    await run(PSQL, psqlArgs('postgres', ['--single-transaction', '-f', ROLES_SQL]))
+  }
+  await run(CREATEDB, [
+    '-h', c.socketDir, '-p', String(c.port), '-U', c.user,
+    '-O', OWNER_ROLE, '-E', 'UTF8', '--locale=en_US.UTF-8', '-T', 'template0', database,
+  ])
+  // The SAME reviewed settings the target gets: `lc_collate`, `TimeZone` and
+  // `default_text_search_config` are equality-required by C1, so a source that
+  // differed on them would fail for a reason that is about this harness rather
+  // than about the schema.
+  for (const [k, v] of Object.entries(reviewedTargetSettings())) {
+    await run(PSQL, psqlArgs('postgres', ['-c', `ALTER DATABASE ${database} SET ${k} = '${v}'`]))
+  }
+  await run(PSQL, psqlArgs(database,
+    ['--single-transaction', '-v', `dbname=${database}`, '-f', BOOTSTRAP_SQL]))
+
+  for (const entry of CURRENT_V10_MANIFEST) {
+    const sql = readFileSync(join(PKG_ROOT, 'migrations', entry.filename), 'utf-8')
+    const hash = createHash('sha256').update(sql).digest('hex')
+    if (hash !== entry.sha256) {
+      throw new Error(
+        `migration ${entry.filename} no longer matches the reviewed CURRENT_V10 hash.`)
+    }
+    const body = [
+      'BEGIN;',
+      `SET LOCAL ROLE ${OWNER_ROLE};`,
+      'SET LOCAL search_path = pg_catalog, public;',
+      sql,
+      'RESET ROLE;',
+      `INSERT INTO db.schema_migrations(filename, sha256) VALUES ('${entry.filename}', '${hash}');`,
+      'COMMIT;',
+    ].join('\n')
+    // execFileSync, NOT the promisified execFile: only the sync form accepts
+    // `input`, and the async one would silently run psql with an empty stdin -
+    // producing a database with no migrations and a fixture that proves nothing.
+    execFileSync(PSQL, psqlArgs(database, ['-f', '-']), { input: body, stdio: ['pipe', 'ignore', 'pipe'] })
+  }
 }

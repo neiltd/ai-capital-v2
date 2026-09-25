@@ -60,9 +60,13 @@ import {
 import { copyTableBinary } from './binary-copy.js'
 import type { DriverSession } from './driver-session.js'
 import {
-  COPY_TABLES, REVIEWED_CONTRACT_DIGEST, canonicalJson, extractContractFromSession,
-  parseArtifact, type Canonical, type ContractArtifact,
+  COPY_TABLES, REVIEWED_CONTRACT_DIGEST, SOURCE_V10_PROFILE, TARGET_V19_PROFILE,
+  canonicalJson, extractContractFromSession, parseArtifact,
+  type Canonical, type ContractArtifact,
 } from './schema-contract.js'
+import {
+  assertCopyCompatible, compatibilityDocument, type CompatibilityReport,
+} from './copy-compatibility.js'
 import { applySequencePolicy } from './sequence-policy.js'
 import {
   MANIFEST_FILE, SOURCE_CONTRACT_FILE, hashAllTables, proveExportSession,
@@ -97,7 +101,7 @@ export type Stage2Phase =
   | 'A3-fence-proof'
   | 'A4-source-session'
   | 'A5-source-equality'
-  | 'A5-contract-anchor'
+  | 'A5-compatibility'
   | 'A6-target-session'
   | 'A7-target-identity'
   | 'A8-target-contract'
@@ -118,7 +122,7 @@ export type Stage2Reason =
   | 'the source fence could not be proved'
   | 'the source session could not be prepared'
   | 're-derivation does not match the published manifest'
-  | 'the source contract is not the reviewed expected-target contract'
+  | 'the source is not compatible with the reviewed target'
   | 'the target session could not be opened'
   | 'the target transaction could not be started'
   | 'the copy of a reviewed table did not complete'
@@ -209,6 +213,30 @@ export function readPublishedBundle(
   })
 }
 
+/**
+ * Load the COMMITTED expected-target artifact, anchored to its reviewed digest.
+ *
+ * Read from disk and then checked against the compile-time anchor, so an
+ * edited file cannot become its own authority - the same reasoning that put
+ * `REVIEWED_CONTRACT_DIGEST` in the source rather than in the JSON.
+ */
+export function loadReviewedTarget(
+  path: string, readFile: (p: string) => string,
+): ContractArtifact {
+  let artifact: ContractArtifact
+  try {
+    artifact = parseArtifact(readFile(path))
+  } catch {
+    throw new Stage2Refused(
+      'A5-compatibility', 'the source is not compatible with the reviewed target')
+  }
+  if (artifact.digest !== REVIEWED_CONTRACT_DIGEST) {
+    throw new Stage2Refused(
+      'A5-compatibility', 'the source is not compatible with the reviewed target')
+  }
+  return artifact
+}
+
 // ---------------------------------------------------------------------------
 // A5 — re-derivation must equal the published manifest, exactly
 // ---------------------------------------------------------------------------
@@ -294,11 +322,20 @@ export interface SourceStageInput {
   readonly source: DriverSession
   readonly operator: OperatorInput
   readonly sourceBeginSql: string
+  /**
+   * The COMMITTED expected-target artifact, for C1.
+   *
+   * Inspect never contacts a target, so the thing the source is compared
+   * against has to be the reviewed artifact on disk. C2 separately proves that
+   * the LIVE target is that same artifact, which is what closes the loop.
+   */
+  readonly reviewedTarget: ContractArtifact
 }
 
 export interface SourceStageResult {
   readonly fence: AcquiredFence
   readonly derivation: SourceDerivation
+  readonly compatibility: CompatibilityReport
 }
 
 /**
@@ -335,7 +372,7 @@ export async function runSourceStages(
   let contract: ContractArtifact
   let tables: readonly TableContent[]
   try {
-    contract = await extractContractFromSession(i.source, identity.pid)
+    contract = await extractContractFromSession(i.source, identity.pid, SOURCE_V10_PROFILE)
     tables = await hashAllTables(i.source, contract, typeContractFrom(contract))
   } catch {
     throw new Stage2Refused(
@@ -350,15 +387,22 @@ export async function runSourceStages(
   })
   assertSourceMatchesManifest(derivation, published)
 
-  // C1. The source schema IS the reviewed expected-target contract. Checked
-  // here as well as inside `tableCopySpec`, so inspect can refuse without ever
-  // reaching a copy.
-  if (contract.digest !== REVIEWED_CONTRACT_DIGEST) {
-    throw new Stage2Refused(
-      'A5-contract-anchor', 'the source contract is not the reviewed expected-target contract')
+  // C1. NOT digest equality - a CURRENT_V10 source and a CURRENT_V19 target
+  // can never share a digest, and equality would also refuse harmless target
+  // supersets while saying nothing about WHICH property diverged. The
+  // comparator answers property by property and names what it found.
+  let compatibility: CompatibilityReport
+  try {
+    compatibility = assertCopyCompatible(contract, i.reviewedTarget)
+  } catch (e) {
+    // The comparator's own message already names the category, the table and
+    // the column, and carries nothing from the data.
+    throw e instanceof Stage2Refused
+      ? e
+      : new Stage2Refused('A5-compatibility', 'the source is not compatible with the reviewed target')
   }
 
-  return Object.freeze({ fence, derivation })
+  return Object.freeze({ fence, derivation, compatibility })
 }
 
 /** The binding both modes compute, from the same inputs, independently. */
@@ -388,6 +432,7 @@ export function bindingFor(
 }
 
 export interface InspectResult {
+  readonly compatibility: CompatibilityReport
   readonly confirmation: string
   readonly rootDigest: string
   readonly contractDigest: string
@@ -400,9 +445,10 @@ export interface InspectResult {
 export async function runInspect(
   i: SourceStageInput, published: PublishedManifest, target: TargetExpectation,
 ): Promise<InspectResult> {
-  const { fence, derivation } = await runSourceStages(i, published)
+  const { fence, derivation, compatibility } = await runSourceStages(i, published)
   const binding = bindingFor(published, derivation, target, i.operator)
   return Object.freeze({
+    compatibility,
     confirmation: confirmationToken(binding),
     rootDigest: derivation.rootDigest,
     contractDigest: derivation.contract.digest,
@@ -440,7 +486,8 @@ export interface ApplyResult {
 export async function runApply(i: ApplyInput, published: PublishedManifest): Promise<ApplyResult> {
   // A2-A5, from scratch. Inspect-time state is not trusted, and is not even
   // available: this repeats the work rather than receiving its result.
-  const { fence, derivation } = await runSourceStages(i, published)
+  const { fence, derivation, compatibility } = await runSourceStages(i, published)
+  void compatibility
 
   // THE CONFIRMATION IS CHECKED BEFORE THE TARGET IS TOUCHED. A mismatch must
   // cost nothing, and constructing a client is not nothing.
@@ -483,7 +530,7 @@ export async function runApply(i: ApplyInput, published: PublishedManifest): Pro
       // will run as would also be checking a different thing from the one that
       // matters.
       await target.rows(SET_LOCAL_ROLE_SQL)
-      targetContract = await extractContractFromSession(target, target.pid)
+      targetContract = await extractContractFromSession(target, target.pid, TARGET_V19_PROFILE)
       assertTargetLedger(targetContract)
       assertTargetContract(targetContract, REVIEWED_CONTRACT_DIGEST)
     } finally {
@@ -510,7 +557,10 @@ export async function runApply(i: ApplyInput, published: PublishedManifest): Pro
     for (const qname of COPY_TABLES) {
       try {
         await copyTableBinary(i.source.client, target.client, {
-          artifact: derivation.contract, qname,
+          // THE SOURCE contract, which C1 has already verified against the
+          // reviewed target - so the anchor is that verification, not a digest
+          // the source can never carry.
+          artifact: derivation.contract, qname, anchorDigest: null,
         })
       } catch {
         throw new Stage2Refused(
@@ -667,5 +717,5 @@ export async function reproveSource(
 }
 
 /** Re-exported so a caller never has to name the canonicaliser itself. */
-export { canonicalJson }
+export { canonicalJson, compatibilityDocument }
 export type { Canonical, BatchSummary }

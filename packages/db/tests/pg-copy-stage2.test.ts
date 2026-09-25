@@ -357,3 +357,91 @@ describe('the Stage-2 CLI', () => {
     expect(fin.indexOf('prover.close()')).toBeLessThan(fin.indexOf('supervisor.close()'))
   })
 })
+
+// ---------------------------------------------------------------------------
+// CORRECTION C — the standalone operator path must not commit yet
+// ---------------------------------------------------------------------------
+
+describe('the standalone --apply path is refused until the verifier exists', () => {
+  it('refuses BEFORE any target client could be constructed', () => {
+    // The refusal sits after the bundle and the session setup and BEFORE the
+    // `runApply` call, so no target credential is ever used. Asserted on the
+    // source because the alternative is running a real copy to prove a refusal.
+    const refusal = CLI.indexOf('the standalone --apply path is not available')
+    expect(refusal).toBeGreaterThan(-1)
+    // THE GUARD ITSELF, not merely the presence of the sentence: a mutant that
+    // neutralises the condition leaves the text in place and the refusal dead.
+    const guard = CLI.indexOf('if (parsed.apply) {')
+    expect(guard).toBeGreaterThan(-1)
+    expect(guard).toBeLessThan(refusal)
+    expect(refusal - guard).toBeLessThan(200)
+    // And the CLI calls the applying core nowhere at all.
+    expect(CLI).not.toContain('runApply(')
+    // Nothing that opens a target appears after it.
+    const after = CLI.slice(refusal)
+    expect(after).not.toContain('openTarget:')
+    expect(after).not.toContain('runApply(')
+  })
+
+  it('never prints COMMITTED and never returns success from that path', () => {
+    expect(CLI).not.toContain('COMMITTED.')
+    const refusal = CLI.indexOf('the standalone --apply path is not available')
+    const block = CLI.slice(refusal, refusal + 900)
+    expect(block).toContain('EXIT_REFUSED')
+    expect(block).toContain('No target connection was opened')
+    expect(block).not.toContain('EXIT_OK')
+  })
+
+  it('keeps the Stage-2 core as an API whose CALLER owns the sessions', () => {
+    // `runApply` ends its own target session and nothing else: the supervisor,
+    // the prover and the source belong to the caller, so the fence lease can
+    // outlive the copy for the verifier that does not exist yet.
+    const applyBody = STAGE2.slice(
+      STAGE2.indexOf('export async function runApply'),
+      STAGE2.indexOf('export async function assertTargetHoldsSource'))
+    expect(applyBody).toContain('await target.end()')
+    expect(applyBody).not.toMatch(/i\.supervisor\.(close|end)\(/)
+    expect(applyBody).not.toMatch(/i\.prover\.(close|end)\(/)
+    expect(applyBody).not.toMatch(/i\.source\.(close|end)\(/)
+    // It rolls back its OWN target transaction and nothing else: the source
+    // transaction and the fence stay open for the caller.
+    expect(applyBody).toContain('TARGET_ROLLBACK_SQL')
+    expect(applyBody).not.toMatch(/i\.source\.rows\('ROLLBACK'\)/)
+    expect(applyBody).not.toContain('EXPORT_ROLLBACK_SQL')
+  })
+
+  it('the unreachable apply wiring is guarded, not merely unused', () => {
+    expect(CLI).toContain('unreachable: the standalone apply path is refused above')
+  })
+})
+
+// ---------------------------------------------------------------------------
+// C1 wiring — Stage 2 compares semantically, not by digest
+// ---------------------------------------------------------------------------
+
+describe('Stage 2 binds the source by compatibility, not by the target digest', () => {
+  it('runs the comparator at A5 and no digest equality', () => {
+    expect(STAGE2).toContain('assertCopyCompatible(contract, i.reviewedTarget)')
+    expect(STAGE2).not.toMatch(/contract\.digest !== REVIEWED_CONTRACT_DIGEST/)
+  })
+
+  it('derives the COPY columns from the SOURCE contract with no target anchor', () => {
+    expect(STAGE2).toContain('artifact: derivation.contract, qname, anchorDigest: null')
+  })
+
+  it('extracts each side under its own profile', () => {
+    expect(STAGE2).toContain('extractContractFromSession(i.source, identity.pid, SOURCE_V10_PROFILE)')
+    expect(STAGE2).toContain('extractContractFromSession(target, target.pid, TARGET_V19_PROFILE)')
+  })
+
+  it('C2 remains exact equality with the committed artifact', () => {
+    expect(STAGE2).toContain('assertTargetContract(targetContract, REVIEWED_CONTRACT_DIGEST)')
+    expect(REVIEWED_CONTRACT_DIGEST)
+      .toBe('59d4289f72a1027772fcfb2f907d311fe587d99cf8db09a911f53cec080bdc82')
+  })
+
+  it('the confirmation binds BOTH digests', () => {
+    expect(STAGE2).toContain('sourceContractDigest: d.contract.digest')
+    expect(STAGE2).toContain('expectedTargetContractDigest: REVIEWED_CONTRACT_DIGEST')
+  })
+})

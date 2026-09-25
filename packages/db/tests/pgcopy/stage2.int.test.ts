@@ -25,7 +25,10 @@ import { openDriverSession, type DriverSession } from '../../src/pg-copy/driver-
 import {
   COPY_TABLES, REVIEWED_CONTRACT_DIGEST,
 } from '../../src/pg-copy/schema-contract.js'
-import { FENCE_SEQUENCES } from '../../src/pg-copy/source-fence.js'
+import {
+  FENCE_PROOF_SQL, FENCE_SEQUENCES, FENCE_TABLES, assertFenceProof, fenceRelationArray,
+  parseLockRows,
+} from '../../src/pg-copy/source-fence.js'
 import {
   EXPORT_BEGIN_SQL, runStage1, type OperatorInput,
 } from '../../src/pg-copy/source-manifest.js'
@@ -34,6 +37,7 @@ import {
   type PublishedManifest,
 } from '../../src/pg-copy/stage2.js'
 import { sha256Hex } from '../../src/pg-copy/schema-contract.js'
+import { loadReviewedTarget } from '../../src/pg-copy/stage2.js'
 import { TARGET_OWNER_ROLE } from '../../src/pg-copy/target-authority.js'
 import {
   cleanSecretRoots, makeSecretRoot, provisionExportRole, readPublishedCredential,
@@ -46,7 +50,7 @@ import {
 import {
   closeAllPsqlSessions, openPsqlSession, openPsqlSessionCount, type PsqlSession,
 } from '../../testing/psql-session.js'
-import { buildV19Database } from '../../testing/v19-database.js'
+import { buildV10Database, buildV19Database } from '../../testing/v19-database.js'
 
 const SRC_DB = 'ai_capital_src'
 const TGT_DB = 'ai_capital_tgt'
@@ -148,7 +152,10 @@ const TARGET_EXPECTATION = (): {
 
 beforeAll(async () => {
   SRC = await startDisposableCluster()
-  await buildV19Database(SRC, SRC_DB)
+  // A GENUINE CURRENT_V10 SOURCE. Not a V19 standing in for one: recognition
+  // is by the exact ten-file ledger, and a V19 fixture would be recognised as
+  // the wrong thing - which is the case this whole milestone exists to handle.
+  await buildV10Database(SRC, SRC_DB)
   for (const sql of SEED) await write(SRC, SRC_DB, sql)
   await requireScramForExportRole(SRC)
   ROLE = await provisionExportRole(SRC, SRC_DB, makeSecretRoot())
@@ -208,6 +215,9 @@ const openTargetDriver = async (): Promise<DriverSession> => await openDriverSes
   user: TARGET_LOGIN, password: TARGET_PASSWORD,
 })
 
+const REVIEWED_TARGET = (): ReturnType<typeof loadReviewedTarget> => loadReviewedTarget(
+  join(process.cwd(), 'contracts', 'expected-target-v19.json'), p => readFileSync(p, 'utf-8'))
+
 function bundle(): PublishedManifest {
   return readPublishedBundle(BUNDLE, p => readFileSync(p, 'utf-8'), sha256Hex)
 }
@@ -217,6 +227,7 @@ async function withSessions<T>(
   body: (s: {
     supervisor: PsqlSession; prover: PsqlSession; source: DriverSession
     operator: OperatorInput; sourceBeginSql: string
+    reviewedTarget: ReturnType<typeof loadReviewedTarget>
   }) => Promise<T>,
 ): Promise<T> {
   const supervisor = await openPsqlSession(SRC, SRC_DB)
@@ -225,6 +236,7 @@ async function withSessions<T>(
   try {
     return await body({
       supervisor, prover, source, operator: OPERATOR(), sourceBeginSql: EXPORT_BEGIN_SQL,
+      reviewedTarget: REVIEWED_TARGET(),
     })
   } finally {
     try { await source.rows('ROLLBACK') } catch { /* bounded */ }
@@ -257,7 +269,13 @@ describe('inspect never reaches the target', () => {
   it('verifies, re-derives, agrees with the manifest and prints a token', async () => {
     const r = await withSessions(async s =>
       await runInspect(s, bundle(), TARGET_EXPECTATION()))
-    expect(r.contractDigest).toBe(REVIEWED_CONTRACT_DIGEST)
+    // THE SOURCE HAS ITS OWN DIGEST, and it is NOT the target's. A V10 source
+    // and a V19 target can never share one - which is exactly why C1 is a
+    // semantic comparator now and not a digest comparison.
+    expect(r.contractDigest).toMatch(/^[0-9a-f]{64}$/)
+    expect(r.contractDigest).not.toBe(REVIEWED_CONTRACT_DIGEST)
+    expect(r.compatibility.sourceRecognition).toBe('CURRENT_V10')
+    expect(r.compatibility.targetRecognition).toBe('CURRENT_V19')
     expect(r.rootDigest).toMatch(/^[0-9a-f]{64}$/)
     expect(r.confirmation).toMatch(/^PGCOPY-APPLY-[0-9a-f]{64}$/)
     expect(r.bundleName).toMatch(/^source-manifest-\d{8}T\d{6}Z-[0-9a-f]{8}$/)
@@ -278,7 +296,7 @@ describe('inspect never reaches the target', () => {
     try {
       await runInspect(
         { supervisor, prover: supervisor, source, operator: OPERATOR(),
-          sourceBeginSql: EXPORT_BEGIN_SQL },
+          sourceBeginSql: EXPORT_BEGIN_SQL, reviewedTarget: REVIEWED_TARGET() },
         bundle(), TARGET_EXPECTATION())
     } catch (e) { thrown = e } finally {
       try { await source.rows('ROLLBACK') } catch { /* bounded */ }
@@ -360,9 +378,13 @@ describe('apply', () => {
       // so this read needs the same authority the copy ran under.
       await t.rows(`SET LOCAL ROLE ${TARGET_OWNER_ROLE}`)
       const { hashAllTables, typeContractFrom } = await import('../../src/pg-copy/source-manifest.js')
-      const { extractContractFromSession } = await import('../../src/pg-copy/schema-contract.js')
       const { rootDigest } = await import('../../src/pg-copy/canonical.js')
-      const c = await extractContractFromSession(t, t.pid)
+      // DERIVED AGAINST THE SOURCE CONTRACT, because `tableDigest` folds the
+      // schema digest into every table digest - so a target derivation that
+      // used the TARGET's own contract would produce different values for
+      // identical rows. The copy's equality proof necessarily uses one schema
+      // digest on both sides, and the source's is the one the manifest carries.
+      const c = r.inspectR.derivation.contract
       const tables = await hashAllTables(t, c, typeContractFrom(c))
       const root = rootDigest(
         tables.map(x => ({ schema: x.schema, table: x.table, digest: x.digest })))
@@ -381,6 +403,55 @@ describe('apply', () => {
       expect(jb[0][0]).toBe('true')
       await t.rows('ROLLBACK')
     } finally { await t.end() }
+  }, 1_800_000)
+
+  it('leaves the SUPERVISOR alive and the FULL fence held after runApply returns', async () => {
+    // CORRECTION C, proved rather than asserted. Stage 2 ends at COMMIT, but
+    // the lifecycle does not: an independent verifier and a final release gate
+    // still have to run, and they must run while THIS process still holds the
+    // lease. So `runApply` must never close the supervisor or let the fence go
+    // - releasing it is the caller's explicit act, and here that is the
+    // `finally` below, not anything inside Stage 2.
+    await resetTarget()
+    const confirmation = await withSessions(
+      async s => (await runInspect(s, bundle(), TARGET_EXPECTATION())).confirmation)
+
+    const supervisor = await openPsqlSession(SRC, SRC_DB)
+    const prover = await openPsqlSession(SRC, SRC_DB)
+    const source = await openSourceDriver()
+    try {
+      const r = await runApply({
+        supervisor, prover, source, operator: OPERATOR(),
+        sourceBeginSql: EXPORT_BEGIN_SQL, reviewedTarget: REVIEWED_TARGET(),
+        targetExpectation: TARGET_EXPECTATION(), confirmation,
+        openTarget: openTargetDriver,
+      }, bundle())
+      expect(r.committed).toBe(true)
+
+      // THE SUPERVISOR IS STILL ALIVE.
+      expect(supervisor.alive()).toBe(true)
+      const stillThere = await supervisor.must('SELECT pg_catalog.pg_backend_pid()')
+      expect(stillThere[0][0]).toBe(supervisor.pid)
+
+      // AND THE WHOLE FENCE IS STILL HELD, proved from the PROVER - every
+      // reviewed table and sequence, nothing queued behind it.
+      const rows = await prover.must(
+        FENCE_PROOF_SQL.replace('$1', fenceRelationArray()))
+      const locks = parseLockRows(rows)
+      expect(() => assertFenceProof(locks, {
+        supervisorPid: supervisor.pid, provingPid: prover.pid,
+      })).not.toThrow()
+      expect(locks.filter(l => !l.granted)).toEqual([])
+      expect(locks.filter(l => l.kind === 'relation' && l.granted).length)
+        .toBeGreaterThanOrEqual(FENCE_TABLES.length + FENCE_SEQUENCES.length)
+    } finally {
+      // RELEASING IS THE CALLER'S EXPLICIT ACT. Nothing above did it.
+      try { await source.rows('ROLLBACK') } catch { /* bounded */ }
+      await source.end()
+      await prover.close()
+      try { await supervisor.send('ROLLBACK') } catch { /* bounded */ }
+      await supervisor.close()
+    }
   }, 1_800_000)
 
   it('an inserted DEFAULT on a clone receives the expected next value', async () => {
@@ -532,7 +603,7 @@ describe('every pre-COMMIT failure leaves the target empty and pristine', () => 
     try {
       await runApply({
         supervisor, prover, source, operator: OPERATOR(), sourceBeginSql: EXPORT_BEGIN_SQL,
-        targetExpectation: TARGET_EXPECTATION(), confirmation,
+        reviewedTarget: REVIEWED_TARGET(), targetExpectation: TARGET_EXPECTATION(), confirmation,
         openTarget: proxyTarget({
           onRows: async (sql: string) => {
             // The supervisor dies right before the final gates, which releases
@@ -592,7 +663,8 @@ describe('every pre-COMMIT failure leaves the target empty and pristine', () => 
     try {
       await runApply({
         supervisor: driftingSupervisor, prover, source, operator: OPERATOR(),
-        sourceBeginSql: EXPORT_BEGIN_SQL, targetExpectation: TARGET_EXPECTATION(),
+        sourceBeginSql: EXPORT_BEGIN_SQL, reviewedTarget: REVIEWED_TARGET(),
+        targetExpectation: TARGET_EXPECTATION(),
         confirmation,
         openTarget: proxyTarget({
           onRows: async (sql: string) => {

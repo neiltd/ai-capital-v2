@@ -34,7 +34,7 @@ import {
 } from '../../src/pg-copy/evidence.js'
 import { EXPORT_ROLE_NAME } from '../../src/pg-copy/export-role.js'
 import {
-  COPY_TABLES, extractContractFromSession, type ContractArtifact,
+  COPY_TABLES, SOURCE_V10_PROFILE, extractContractFromSession, type ContractArtifact,
 } from '../../src/pg-copy/schema-contract.js'
 import {
   FENCE_SEQUENCES, SEQUENCE_STATE_SQL, effectiveNext,
@@ -58,7 +58,7 @@ import {
 } from '../../testing/disposable-cluster.js'
 import { closeAllPsqlSessions, openPsqlSession, openPsqlSessionCount,
   type PsqlSession } from '../../testing/psql-session.js'
-import { buildV19Database } from '../../testing/v19-database.js'
+import { buildV10Database } from '../../testing/v19-database.js'
 
 const DB = 'ai_capital_src'
 
@@ -119,7 +119,10 @@ const OPERATOR = (runId: string): OperatorInput => ({
 
 beforeAll(async () => {
   C = await startDisposableCluster()
-  await buildV19Database(C, DB)
+  // A GENUINE CURRENT_V10 SOURCE. Stage 1's source is production, and
+  // production is CURRENT_V10 - a V19 fixture would be recognised as the wrong
+  // thing by the source profile and refused at the ledger.
+  await buildV10Database(C, DB)
   for (const sql of SEED) await write(sql)
   await requireScramForExportRole(C)
   ROLE = await provisionExportRole(C, DB, makeSecretRoot())
@@ -128,7 +131,7 @@ beforeAll(async () => {
 
   const s = await snapshot()
   try {
-    CONTRACT = await extractContractFromSession(s, s.pid)
+    CONTRACT = await extractContractFromSession(s, s.pid, SOURCE_V10_PROFILE)
     const sys = await s.must(
       'SELECT (pg_catalog.pg_control_system()).system_identifier::pg_catalog.text')
     SYSID = sys[0][0]

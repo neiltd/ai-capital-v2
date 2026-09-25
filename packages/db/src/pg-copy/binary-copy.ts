@@ -32,7 +32,10 @@ import {
 // connection module stays the only place that can.
 import type { ClientBase } from 'pg'
 
-import { COPY_TABLES, tableCopySpec, type ContractArtifact, type TableCopySpec } from './schema-contract.js'
+import {
+  COPY_TABLES, REVIEWED_CONTRACT_DIGEST, tableCopySpec,
+  type ContractArtifact, type TableCopySpec,
+} from './schema-contract.js'
 
 export class BinaryCopyRefused extends Error {
   constructor(message: string) {
@@ -147,6 +150,16 @@ export interface BinaryCopyRequest {
   readonly artifact: ContractArtifact
   readonly qname: string
   readonly signal?: AbortSignal
+  /**
+   * WHICH digest the artifact must carry, or `null` for a C1-verified source.
+   *
+   * Defaults to the reviewed expected-target digest, so every existing caller
+   * keeps the anchor it had. Stage 2 passes `null` because its artifact is the
+   * SOURCE contract - a CURRENT_V10 database with a digest of its own - and
+   * what stands in for the anchor there is C1, which has already proved
+   * property by property that this column list is one the target accepts.
+   */
+  readonly anchorDigest?: string | null
 }
 
 /**
@@ -180,7 +193,9 @@ export async function copyTableBinary(
   const { artifact, qname, signal } = request
   // DERIVED BEFORE EITHER SESSION IS TOUCHED. A refusal here must cost nothing:
   // no COPY has started, so there is no transaction to discard.
-  const spec: TableCopySpec = tableCopySpec(artifact, qname)
+  const spec: TableCopySpec = tableCopySpec(
+    artifact, qname,
+    request.anchorDigest === undefined ? REVIEWED_CONTRACT_DIGEST : request.anchorDigest)
   const columns = spec.columns
   assertReviewedTable(spec.qname)
   assertCopyColumns(spec.qname, columns)

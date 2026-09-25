@@ -53,8 +53,8 @@ import {
 } from './evidence.js'
 import { EXPORT_ROLE_NAME } from './export-role.js'
 import {
-  COPY_TABLES, REVIEWED_CONTRACT_DIGEST, SCHEMA_CONTRACT_VERSION, canonicalJson,
-  deriveCopyColumns, extractContractFromSession, serializeArtifact,
+  COPY_TABLES, REVIEWED_CONTRACT_DIGEST, SCHEMA_CONTRACT_VERSION, SOURCE_V10_PROFILE,
+  canonicalJson, deriveCopyColumns, extractContractFromSession, serializeArtifact,
   type Canonical, type ContractArtifact, type ContractQueryExecutor,
 } from './schema-contract.js'
 import {
@@ -970,7 +970,10 @@ export async function runStage1(i: Stage1Input): Promise<Stage1Result> {
   // 5. The schema contract, from that same backend and that same snapshot.
   let contract: ContractArtifact
   try {
-    contract = await extractContractFromSession(exp, identity.pid)
+    // THE SOURCE PROFILE, not the target's. The production source is
+    // CURRENT_V10; an extractor that recognises only CURRENT_V19 refuses it at
+    // the ledger and never reads a column.
+    contract = await extractContractFromSession(exp, identity.pid, SOURCE_V10_PROFILE)
   } catch (e) {
     throw e instanceof ManifestRefused
       ? e : new ManifestRefused('contract', 'the source contract could not be extracted')

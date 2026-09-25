@@ -31,7 +31,7 @@
 import { createHash } from 'node:crypto'
 
 import { recognizeManifest } from '../inventory-facts.js'
-import { CURRENT_V19_MANIFEST } from '../inventory-queries.js'
+import { CURRENT_V19_MANIFEST, type ManifestEntry } from '../inventory-queries.js'
 
 /**
  * Bumped when the contract's shape or digest domain changes.
@@ -95,6 +95,60 @@ export const COPY_SEQUENCES: readonly string[] = Object.freeze([
 /** The migration set a V19 target must recognise, exactly. */
 export const EXPECTED_MIGRATION_COUNT = 19
 export const EXPECTED_MIGRATION_RECOGNITION = 'CURRENT_V19'
+
+/**
+ * The reviewed production SOURCE ledger: CURRENT_V10, exactly these ten.
+ *
+ * WHY THE SOURCE NEEDS ITS OWN PROFILE. The source is not a V19 database and
+ * never was. An extractor that recognises only V19 cannot describe it at all -
+ * it refuses at the ledger before it reads a single column - so Stage 1 and
+ * Stage 2 would have nothing to derive a manifest from.
+ *
+ * RECOGNITION IS THE ORDERED FILENAME/HASH LEDGER, NEVER A COUNT OR A PREFIX.
+ * Ten rows is not CURRENT_V10; these ten filenames carrying these ten SHA-256s
+ * is. A count would accept ten of anything, and a prefix would accept a
+ * half-applied eleventh.
+ *
+ * AUTHORITY, recorded because a hash list is unreadable without it: a
+ * privileged read-only audit proved production's ten recorded hashes match
+ * repository migrations 001-010; D5.0.1 independently established that 5432 is
+ * CURRENT_V10; and Git proves these ten files are byte-identical from
+ * f19911cd684d7e7369cc81c40a54eedf73c9ad9e through HEAD.
+ */
+export const CURRENT_V10_MANIFEST: readonly ManifestEntry[] = Object.freeze([
+  { filename: '001_portfolio.sql', sha256: '326fe2c3d266f62a6a3f1525ec95b0489906bd44aec7c5628e026d049626b13d' },
+  { filename: '002_capital.sql', sha256: 'a41f43c8f3784dcc4c40b4de5d0da029c884517a8e9444bc41e1f8abeae46ec1' },
+  { filename: '003_thesis.sql', sha256: 'e5dae3cc3c9952190a3fb8e8008a8f27997a3695dd2fd1413e32cce55087befa' },
+  { filename: '004_briefing.sql', sha256: '8bd054743d2028ae9ef7e4492b8b9b9ebe009825327489bce0e927c9c5ed5d36' },
+  { filename: '005_graph.sql', sha256: '45d6f496fc24f21e7b9eb8cc76dbde439504cc4a350cb6cc38811be262073686' },
+  { filename: '006_vectors.sql', sha256: '948c04ee131362647b07bfe6313ca59a8f15c3d24b29cdd7f8013ffe9c6916cb' },
+  { filename: '007_trade.sql', sha256: '9f387f8016f1d8362ce3e8858a0aa8e468492d935357604e8c5a7ccd7277e2d3' },
+  { filename: '008_desk.sql', sha256: '70b1d380f6163bde19bf4e9896f7f5e54c5df861c3c760b82092f9db53e78db4' },
+  { filename: '009_claim_governance.sql', sha256: '3f8dfef4e9e1a3ba0a75121f3b4f58be4669c057681a7dcb275cf8488f9852eb' },
+  { filename: '010_correct_claim_history.sql', sha256: '52a23fe5e60c350c9c9cac4a7c5c081ac19ceb01095f6c5593a2c673b010f38f' },
+])
+
+/**
+ * WHICH database a contract is being extracted from, and what it must be.
+ *
+ * The two profiles are checked INDEPENDENTLY and are never compared with each
+ * other: a V10 source and a V19 target are supposed to have different ledgers,
+ * and requiring them to match would refuse every legitimate copy.
+ */
+export interface MigrationProfile {
+  readonly recognition: string
+  readonly manifest: readonly ManifestEntry[]
+}
+
+export const TARGET_V19_PROFILE: MigrationProfile = Object.freeze({
+  recognition: EXPECTED_MIGRATION_RECOGNITION,
+  manifest: CURRENT_V19_MANIFEST,
+})
+
+export const SOURCE_V10_PROFILE: MigrationProfile = Object.freeze({
+  recognition: 'CURRENT_V10',
+  manifest: CURRENT_V10_MANIFEST,
+})
 
 /** A refusal: the schema is not one this contract is willing to describe. */
 export class ContractRefused extends Error {
@@ -411,7 +465,9 @@ export interface ContractArtifact {
   readonly payload: Canonical
 }
 
-export function buildContract(raw: RawCatalog): ContractArtifact {
+export function buildContract(
+  raw: RawCatalog, profile: MigrationProfile = TARGET_V19_PROFILE,
+): ContractArtifact {
   // ---- platform -----------------------------------------------------------
   if (raw.platform.length !== 1) {
     throw new ContractRefused(`expected exactly one platform row, got ${raw.platform.length}.`)
@@ -448,25 +504,28 @@ export function buildContract(raw: RawCatalog): ContractArtifact {
     }
     seenMigration.add(row.filename)
   }
-  const manifestFacts = recognizeManifest(ledgerRows, CURRENT_V19_MANIFEST)
-  if (manifestFacts.recognition !== EXPECTED_MIGRATION_RECOGNITION) {
+  const manifestFacts = recognizeManifest(ledgerRows, profile.manifest)
+  // EXACTNESS IS READ FROM THE FACTS, NOT FROM THE LABEL. `recognizeManifest`
+  // returns the literal string 'CURRENT_V19' as its "matched" sentinel whatever
+  // manifest it was given, which is fine for the inventory that named it and
+  // wrong to build a second profile on. The four facts below say the same thing
+  // without depending on that word.
+  const exact =
+    manifestFacts.missing.length === 0 &&
+    manifestFacts.additional.length === 0 &&
+    manifestFacts.hash_mismatched.length === 0 &&
+    manifestFacts.recorded_count === profile.manifest.length
+  if (!exact) {
     throw new ContractRefused(
-      `the migration ledger is not ${EXPECTED_MIGRATION_RECOGNITION}: ` +
+      `the migration ledger is not ${profile.recognition}: ` +
       `${manifestFacts.recorded_count} recorded vs ${manifestFacts.expected_count} expected; ` +
       `missing [${manifestFacts.missing.join(', ')}]; ` +
       `unexpected [${manifestFacts.additional.join(', ')}]; ` +
       `hash-mismatched [${manifestFacts.hash_mismatched.map(h => h.filename).join(', ')}]. ` +
-      'A row count of 19 is not recognition - every filename and every SHA-256 must match.',
+      'A row count is not recognition - every filename and every SHA-256 must match.',
     )
   }
   const migrationCount = ledgerRows.length
-  if (migrationCount !== EXPECTED_MIGRATION_COUNT) {
-    // Unreachable while recognition holds; kept so the published count constant
-    // cannot silently disagree with the published manifest.
-    throw new ContractRefused(
-      `recognition passed but the ledger holds ${migrationCount} rows, not ${EXPECTED_MIGRATION_COUNT}.`,
-    )
-  }
 
   // ---- relations ----------------------------------------------------------
   const relByName = new Map<string, string[]>()
@@ -725,7 +784,7 @@ export function buildContract(raw: RawCatalog): ContractArtifact {
       extensions,
     },
     migrations: {
-      recognition: EXPECTED_MIGRATION_RECOGNITION,
+      recognition: profile.recognition,
       count: migrationCount,
       // The ordered ledger itself, plus its own digest. Carrying both lets a
       // reader see WHICH nineteen without recomputing, and lets a comparison
@@ -847,6 +906,7 @@ export const REQUIRED_TRANSACTION_ISOLATION = 'repeatable read'
 export async function extractContractFromSession(
   executor: ContractQueryExecutor,
   expectedPid: string,
+  profile: MigrationProfile = TARGET_V19_PROFILE,
 ): Promise<ContractArtifact> {
   if (!/^\d+$/.test(expectedPid)) {
     throw new ContractRefused(`the expected backend pid "${expectedPid}" is not a backend pid.`)
@@ -912,7 +972,7 @@ export async function extractContractFromSession(
       'would describe more than one session.')
   }
 
-  return buildContract(raw)
+  return buildContract(raw, profile)
 }
 
 // ---------------------------------------------------------------------------
@@ -967,7 +1027,10 @@ export const REVIEWED_CONTRACT_DIGEST =
  * from the fenced source and verified; asking the catalogue again would be a
  * third authority and a second moment.
  */
-export function tableCopySpec(artifact: ContractArtifact, qname: string): TableCopySpec {
+export function tableCopySpec(
+  artifact: ContractArtifact, qname: string,
+  anchorDigest: string | null = REVIEWED_CONTRACT_DIGEST,
+): TableCopySpec {
   if (artifact.pgcopy_schema_contract_version !== SCHEMA_CONTRACT_VERSION) {
     throw new ContractRefused(
       `artifact version ${String(artifact.pgcopy_schema_contract_version)} is not ` +
@@ -978,11 +1041,22 @@ export function tableCopySpec(artifact: ContractArtifact, qname: string): TableC
     throw new ContractRefused(
       `artifact digest ${artifact.digest} does not match its payload (recomputed ${recomputed}).`)
   }
-  // AND it must be the REVIEWED contract, not merely a self-consistent one.
-  if (artifact.digest !== REVIEWED_CONTRACT_DIGEST) {
+  // AND it must be the anchored contract, not merely a self-consistent one.
+  //
+  // THE ANCHOR IS A PARAMETER BECAUSE THE SOURCE HAS A DIFFERENT ONE. When the
+  // columns come from the V19 target artifact, the anchor is that artifact's
+  // digest and nothing else may be accepted. When they come from the SOURCE -
+  // a CURRENT_V10 database whose digest is its own - the anchor is `null`,
+  // because requiring the source to equal the target digest would refuse every
+  // legitimate V10 to V19 copy. What replaces the anchor on that path is C1:
+  // `assertCopyCompatible` has already proved, property by property, that the
+  // source's explicit column list is the one the target will accept. A caller
+  // that passes `null` without having run C1 is the thing to look for in
+  // review; there is exactly one such caller and it runs C1 first.
+  if (anchorDigest !== null && artifact.digest !== anchorDigest) {
     throw new ContractRefused(
-      `artifact digest ${artifact.digest} is not the reviewed expected-target digest ` +
-      `${REVIEWED_CONTRACT_DIGEST}; a self-consistent artifact still describes a schema ` +
+      `artifact digest ${artifact.digest} is not the anchored digest ` +
+      `${anchorDigest}; a self-consistent artifact still describes a schema ` +
       'nobody reviewed.')
   }
   if (!COPY_TABLES.includes(qname)) {
