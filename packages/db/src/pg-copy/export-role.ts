@@ -189,6 +189,56 @@ export function assertScramVerifier(verifier: string): string {
 // Lifecycle batches
 // ---------------------------------------------------------------------------
 
+/** Every connection component, taken from a published credential URL. */
+export interface ParsedCredential {
+  readonly user: string
+  readonly password: string
+  readonly database: string
+  readonly host: string
+  readonly port: string
+}
+
+/**
+ * Parse a published credential URL into its components.
+ *
+ * THE TEST PATH MUST GO THROUGH THIS. Authenticating with the secret the
+ * provisioner happens to still hold in memory proves the secret works, not that
+ * the published file does; if the URL were written for the wrong role, or
+ * written malformed, only reading it back would show it.
+ *
+ * PARSED EXPLICITLY, NOT WITH `new URL`. The reviewed credential is the libpq
+ * socket form - `postgresql://user:secret@/db?host=/path&port=N` - whose
+ * authority has credentials and an EMPTY host. The WHATWG parser rejects that
+ * outright ("Invalid URL"), so using it here would make a correctly written
+ * credential unreadable.
+ */
+export function parseCredentialUrl(url: string): ParsedCredential {
+  const PREFIX = 'postgresql://'
+  if (!url.startsWith(PREFIX)) {
+    throw new Error('the credential URL is not a postgresql URL.')
+  }
+  const [beforeQuery, query = ''] = url.slice(PREFIX.length).split('?')
+  const at = beforeQuery.lastIndexOf('@')
+  if (at < 0) throw new Error('the credential URL carries no credentials.')
+  const userinfo = beforeQuery.slice(0, at)
+  const hostAndPath = beforeQuery.slice(at + 1)
+  if (!hostAndPath.startsWith('/')) {
+    throw new Error('the credential URL is not the reviewed socket form.')
+  }
+  const colon = userinfo.indexOf(':')
+  if (colon < 0) throw new Error('the credential URL carries no password.')
+  const params = new URLSearchParams(query)
+  const host = params.get('host')
+  const port = params.get('port')
+  const database = decodeURIComponent(hostAndPath.slice(1))
+  const user = decodeURIComponent(userinfo.slice(0, colon))
+  const password = decodeURIComponent(userinfo.slice(colon + 1))
+  if (host === null || port === null || database === '' || user === '' || password === '') {
+    throw new Error('the credential URL is missing a required component.')
+  }
+  return { user, password, database, host, port }
+}
+
 /**
  * Silence transaction sampling BEFORE the transaction begins.
  *

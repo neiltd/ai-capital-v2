@@ -281,7 +281,11 @@ export async function runCli(argv: readonly string[]): Promise<CliResult> {
     return { exitCode: dispositionOf(e).exitCode, lines }
   } finally {
     // The fence is released HERE, after publication and rollback have both
-    // completed - or after a failure, where nothing was published at all.
+    // completed - or after a failure, which may STILL have left evidence under
+    // the final name: verified but with Stage 1 incomplete, unverified, or of
+    // an outcome nobody could determine. The disposition above says which.
+    // Releasing the fence is right either way; touching the evidence is not,
+    // and nothing in this block does.
     if (supervisor !== null) {
       try { await supervisor.send('ROLLBACK') } catch { /* the close below ends it anyway */ }
     }
