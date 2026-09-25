@@ -252,7 +252,27 @@ export const REAL_EVIDENCE_OPS: EvidenceOps = {
 // ---------------------------------------------------------------------------
 
 /** The only prefixes this repository publishes evidence under. */
-export const REVIEWED_PREFIXES: readonly string[] = Object.freeze(['source-manifest'])
+export const REVIEWED_PREFIXES: readonly string[] =
+  Object.freeze(['source-manifest', 'verification'])
+
+/**
+ * The temporary name each reviewed prefix builds under. A TABLE, not a formula.
+ *
+ * A uniform `.tmp-<prefix>-<runId>` rule would have been tidier to write and
+ * would have RENAMED something already reviewed: Stage 1 builds under
+ * `.tmp-<runId>`, and that name is what its reviewed tests and an operator
+ * looking for an abandoned directory both expect. Verification states its own
+ * name instead of inheriting one, so neither prefix's temporary name can be
+ * changed by an edit aimed at the other.
+ *
+ * Both are `.tmp`-prefixed, both carry the run identifier, and both live in the
+ * same parent as the bundle they will become - which is what the publication
+ * actually depends on.
+ */
+export const TEMPORARY_NAME_PREFIX: Readonly<Record<string, string>> = Object.freeze({
+  'source-manifest': '.tmp-',
+  verification: '.tmp-verification-',
+})
 
 const RUN_ID = /^[0-9a-f]{8}$/
 const STAMP = /^\d{8}T\d{6}Z$/
@@ -301,7 +321,7 @@ export function evidenceStamp(when: Date): string {
 export interface EvidenceNames {
   /** `<prefix>-<stamp>-<runId>`, the name the bundle is published under. */
   readonly finalName: string
-  /** `.tmp-<runId>`, the name it is built under, in the SAME parent. */
+  /** The prefix's reviewed temporary name, in the SAME parent. */
   readonly temporaryName: string
 }
 
@@ -322,7 +342,7 @@ export function evidenceNames(prefix: string, stamp: string, runId: string): Evi
   assertRunId(runId)
   return Object.freeze({
     finalName: `${prefix}-${stamp}-${runId}`,
-    temporaryName: `.tmp-${runId}`,
+    temporaryName: `${TEMPORARY_NAME_PREFIX[prefix]}${runId}`,
   })
 }
 

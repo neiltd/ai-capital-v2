@@ -82,8 +82,13 @@ import {
 import {
   SET_LOCAL_ROLE_SQL, TARGET_BEGIN_SQL, TARGET_COMMIT_SQL, TARGET_ROLLBACK_SQL,
   assertTargetContract, assertTargetLedger, proveTargetEmpty, proveTargetIdentity,
-  proveTargetSequencesPristine, type TargetExpectation,
+  proveTargetSequencesPristine, type TargetExpectation, type TargetIdentity,
 } from './target-authority.js'
+// TYPE ONLY, and deliberately one-directional. The verifier is an INDEPENDENT
+// implementation: it imports nothing from this file, and this file imports
+// nothing from it that survives compilation. What crosses is the SHAPE of the
+// handoff, so a field the verifier needs cannot be dropped here silently.
+import type { VerifierHandoff } from './verify.js'
 
 /**
  * What a sequence would ISSUE NEXT, as a decimal string.
@@ -516,6 +521,21 @@ export interface ApplyResult {
    * that no code here supports.
    */
   readonly compatibility: Canonical
+  /**
+   * EVERYTHING THE INDEPENDENT VERIFIER NEEDS, AND NOT ONE CREDENTIAL.
+   *
+   * The verifier runs after this function returns, while the caller still holds
+   * the fence, and it opens sessions of its own. What it cannot re-derive is
+   * what THIS run concluded: which artifact the source was, which root was
+   * committed, what each table and sequence ended at, and which backend holds
+   * the fence. Those are carried here so the verifier compares the measured
+   * world against the copy's own claims rather than against its own.
+   *
+   * Every field is public - digests, recognitions, database and role names, a
+   * backend pid. No host, port, socket directory, password or passfile path is
+   * present, which is what makes it safe to record into evidence whole.
+   */
+  readonly verification: VerifierHandoff
 }
 
 /**
@@ -548,9 +568,12 @@ export async function runApply(i: ApplyInput, published: PublishedManifest): Pro
 
   let began = false
   let commitSubmitted = false
+  // Captured for the verifier handoff, which is built only after COMMIT.
+  let targetIdentity: TargetIdentity | null = null
+  let targetContractDigest = ''
   try {
     // A7. Identity first, outside any transaction.
-    await proveTargetIdentity(target, i.targetExpectation)
+    targetIdentity = await proveTargetIdentity(target, i.targetExpectation)
 
     // A8. C2, IN ITS OWN READ-ONLY SNAPSHOT.
     //
@@ -590,6 +613,7 @@ export async function runApply(i: ApplyInput, published: PublishedManifest): Pro
         throw new Stage2Refused(
           'A8-target-contract', 'the live target is not the target C1 was run against')
       }
+      targetContractDigest = targetContract.digest
     } finally {
       await target.rows(TARGET_ROLLBACK_SQL)
     }
@@ -682,6 +706,56 @@ export async function runApply(i: ApplyInput, published: PublishedManifest): Pro
     // independent verifier needs to know what C1 tolerated; nothing publishes
     // it yet, and this does not claim otherwise.
     compatibility: compatibilityDocument(compatibility),
+    verification: verifierHandoff(
+      published, derivation, compatibility, fence, targetIdentity, targetContractDigest),
+  })
+}
+
+/**
+ * The handoff, assembled from what this run actually measured.
+ *
+ * Built here rather than by the caller, because the caller does not have most
+ * of it: the fence, the derivation and the target identity all live inside
+ * `runApply` and are gone by the time it returns.
+ */
+export function verifierHandoff(
+  published: PublishedManifest, d: SourceDerivation, compatibility: CompatibilityReport,
+  fence: AcquiredFence, targetIdentity: TargetIdentity | null, targetContractDigest: string,
+): VerifierHandoff {
+  if (targetIdentity === null) {
+    // Unreachable on the committed path: A7 runs before anything else touches
+    // the target and raises rather than returning nothing. Stated as a refusal
+    // instead of a non-null assertion so a future reordering fails loudly.
+    throw new Stage2Refused('A7-target-identity', 'the target session could not be opened')
+  }
+  return Object.freeze({
+    bundleName: published.bundleName,
+    rootDigest: d.rootDigest,
+    sourceContractDigest: d.contract.digest,
+    targetContractDigest,
+    sourceRecognition: compatibility.sourceRecognition,
+    targetRecognition: compatibility.targetRecognition,
+    tables: Object.freeze(d.tables.map(t => Object.freeze({
+      qname: t.qname, digest: t.digest, rows: t.rows,
+    }))),
+    sequences: Object.freeze(FENCE_SEQUENCES.map(q => Object.freeze({
+      qname: q, effectiveNext: effectiveNextOf(d.sequences[q], q),
+    }))),
+    compatibility: compatibilityDocument(compatibility),
+    source: Object.freeze({
+      systemIdentifier: d.identity.systemIdentifier,
+      database: d.identity.database,
+      role: d.identity.currentUser,
+    }),
+    target: Object.freeze({
+      systemIdentifier: targetIdentity.systemIdentifier,
+      database: targetIdentity.database,
+      role: targetIdentity.currentUser,
+    }),
+    fence: Object.freeze({
+      supervisorPid: fence.supervisorPid,
+      mechanism: fence.mechanism,
+    }),
   })
 }
 
