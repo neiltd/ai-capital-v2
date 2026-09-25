@@ -311,12 +311,19 @@ export type LifecycleReason =
 /**
  * WHAT IS KNOWN ABOUT THE FENCE at the moment the lifecycle stopped.
  *
- * The three pre-release states are the verifier's, unchanged. The two
- * post-release states exist because once the ROLLBACK has been issued the
- * question changes completely: `held` is no longer available as an answer, and
- * the honest alternatives are "released, and proved" or "released, and the
- * proof did not come back". Reporting a released fence as held - or as
- * recoverable - would send an operator to look for a lease that is gone.
+ * The three pre-release states are the verifier's, unchanged.
+ *
+ * `released` and `released-unproved` are the two POST-RELEASE states, and both
+ * of them require an ACKNOWLEDGED ROLLBACK: the server answered, so the
+ * transaction has ended and the lease is gone. They differ only in whether the
+ * census that should have confirmed it came back. Reporting either as held - or
+ * as recoverable - would send an operator to look for a lease that is not there.
+ *
+ * `release-unknown` is NOT a post-release state. It is what is left when the
+ * transport failed before any acknowledgement, so EXECUTION WAS NEVER
+ * ESTABLISHED: PostgreSQL may have applied the statement or may never have
+ * received it. The fence may still be held or may already be gone, and the one
+ * thing that must not happen is picking a side.
  */
 export type LifecycleFenceState =
   | FenceDisposition
@@ -498,7 +505,7 @@ interface AuthorizationRecord {
   readonly supervisor: FenceExecutor
   /** The backend that object reported at gate time. */
   readonly supervisorPid: string
-  /** Set BEFORE the ROLLBACK is submitted, and never cleared. */
+  /** Set BEFORE the ROLLBACK attempt, and never cleared. */
   consumed: boolean
 }
 
@@ -1042,10 +1049,19 @@ export interface ReleaseResult {
  * could assert its way past this could release a fence that nothing had
  * authorized.
  *
- * AFTER THE ROLLBACK THERE IS NO GOING BACK, and that shapes what may be said.
- * The lease is gone whether or not the proof comes back, so a failed proof is
- * `released-unproved` - never `unproved`, which would imply the fence might
- * still be this process's to hold, and never `held`, which would be false.
+ * WHAT MAY BE SAID DEPENDS ON WHAT CAME BACK, and on nothing else.
+ *
+ * THE LEASE IS KNOWN GONE ONLY ONCE THE ROLLBACK IS ACKNOWLEDGED. With an
+ * acknowledgement the transaction has ended, and the only question left is
+ * whether the census confirmed it: `released` when it did, `released-unproved`
+ * when it did not - never `unproved`, which would imply the fence might still
+ * be this process's to hold, and never `held`, which would then be false.
+ *
+ * WITHOUT AN ACKNOWLEDGEMENT NOTHING IS ESTABLISHED. A missing acknowledgement
+ * and a missing census proof are not degrees of the same thing: the second
+ * means the transaction provably ended and the confirmation is absent, while
+ * the first means nobody can say whether the statement ran at all. That is
+ * `release-unknown`, and it is not a weaker `released-unproved`.
  */
 export async function releaseFence(
   supervisor: FenceExecutor, authorization: ReleaseAuthorization,
@@ -1487,12 +1503,22 @@ export async function assertQuiescent(
  *
  * WHERE THE LINE IS. Before Stage 2 commits, a failure is an ordinary refusal:
  * nothing has moved and the caller can try again. From COMMIT until the release
- * is PROVED, every failure raises `LifecycleInterventionRequired` - the fence is
- * not released, no producer is restored, nothing is retried, and the primary
- * failure is preserved whatever else happens on the way out. After a proved
- * release the fence is gone and cannot be described as anything else, so a
- * restoration failure reports `released` with an exact boundary rather than
- * pretending the lease is still available.
+ * is PROVED, every failure raises `LifecycleInterventionRequired` - no producer
+ * is restored, nothing is retried, and the primary failure is preserved
+ * whatever else happens on the way out.
+ *
+ * WHAT THAT INTERVAL DOES NOT PROMISE IS THAT THE FENCE IS STILL HELD. Up to
+ * the release attempt it is, and the state says which of `held`, `not-held` or
+ * `unproved` was established; from the attempt onwards it may also be
+ * `release-unknown` - attempted, execution never established - or
+ * `released-unproved` - acknowledged, and the confirming census absent. Every
+ * failure in this interval records exactly one of those five, and every one of
+ * them needs a person.
+ *
+ * RESTORATION HAPPENS ONLY AFTER `released` IS PROVED. Past that point the
+ * lease is gone and cannot be described as anything else, so a restoration
+ * failure reports `released` with an exact boundary rather than pretending it
+ * is still available.
  *
  * WHY THE AUTHORIZATION IS PUBLISHED BEFORE THE RELEASE. The record has to be
  * durable while the thing it authorizes is still reversible. Publishing it
@@ -1819,16 +1845,24 @@ export async function runLifecycle(i: LifecycleInput): Promise<LifecycleResult> 
 }
 
 /**
- * THE COPY DID NOT COMMIT, AND THE FENCE COULD NOT BE PROVED GONE.
+ * THE COPY DID NOT COMMIT, AND THE RELEASE WAS NOT PROVED.
  *
  * WHY THIS IS NOT A REFUSAL. A refusal means a caller may fix the problem and
  * run again, and that is only true if the source is as it was. Stage 2 takes
  * the fence at A2 - and a refusal at A2 itself may have taken PART of it, since
  * acquisition is a sequence of statements - so every failure from that point on
- * leaves a transaction holding locks that this lifecycle must end. It ends it
- * with one ROLLBACK and proves the locks are gone. When that proof does not
- * come back, telling the caller "try again" would invite a second run into a
- * source the first one may still be holding.
+ * leaves a transaction holding locks that this lifecycle has to deal with.
+ *
+ * IT ATTEMPTS ROLLBACK EXACTLY ONCE, and what happens next is decided by what
+ * came back, not by what was hoped for. Only when the release is PROVED - an
+ * acknowledged ROLLBACK and a census showing none of the reviewed locks - does
+ * this become an ordinary `LifecycleRefused` that a caller may act on.
+ * Otherwise the exact state is preserved for a person: `unproved` when the
+ * server answered and REFUSED, so the transaction never ended; `release-unknown`
+ * when the transport failed and execution was never established;
+ * `released-unproved` when the ROLLBACK was acknowledged and the confirming
+ * census was not. Telling the caller "try again" in any of those three would
+ * invite a second run into a source the first one may still be holding.
  *
  * NOTHING IS RESTORED. This lifecycle did not stop the producers - they were
  * required to be stopped before it began - so starting them is not its
