@@ -35,7 +35,8 @@ import { join } from 'node:path'
 import {
   DIGEST_FILE, EvidencePublicationUnknown, EvidencePublishedButUnverified, EvidenceRefused,
   REAL_EVIDENCE_OPS, evidenceNames, evidenceStamp, newRunId, pathIsPresent, publishEvidence,
-  type EvidenceOps, type EvidencePhase, type PublishedEvidence, type PublishedPhase,
+  type EvidenceOps, type EvidencePhase, type EvidenceReason, type PublishedEvidence,
+  type PublishedPhase,
 } from './evidence.js'
 import {
   COPY_TABLES, REVIEWED_CONTRACT_DIGEST, SOURCE_V10_PROFILE, TARGET_V19_PROFILE,
@@ -46,8 +47,8 @@ import {
   assertCopyCompatible, compatibilityDocument,
 } from './copy-compatibility.js'
 import {
-  FENCE_PROOF_SQL, FENCE_SEQUENCES, SEQUENCE_STATE_SQL, assertFenceProof, effectiveNext,
-  fenceRelationArray, parseLockRows, parseSequenceState,
+  FENCE_PROOF_SQL, FENCE_SEQUENCES, SELECTED_SEQUENCE_FENCE, SEQUENCE_STATE_SQL,
+  assertFenceProof, effectiveNext, fenceRelationArray, parseLockRows, parseSequenceState,
   type FenceExecutor, type SequenceFenceId,
 } from './source-fence.js'
 import { SET_LOCAL_ROLE_SQL } from './target-authority.js'
@@ -136,6 +137,8 @@ export type VerifyReason =
   | 'the verification evidence was built but not published'
   | 'the verification evidence was published but not verified'
   | 'the verification evidence publication outcome is unknown'
+  | 'the verification evidence was not published and a path is already occupied'
+  | 'the verification evidence state on disk could not be examined'
 
 /**
  * POST-COMMIT VERIFICATION FAILED. The target holds UNVERIFIED data.
@@ -197,8 +200,9 @@ export const FENCE_DISPOSITION_SENTENCE: Readonly<Record<FenceDisposition, strin
       'The verifier released nothing, and the COMPLETE source fence was PROVED still held ' +
       'after this failure.',
     'not-held':
-      'THE COMPLETE SOURCE FENCE IS NOT HELD: a proof ran and refused. The verifier released ' +
-      'nothing, but the source must be treated as MUTABLE. Do not restore producers.',
+      'THE REQUIRED FENCE CONTRACT POSITIVELY FAILED: an independent lock census was taken and ' +
+      'read, and it shows a required lock missing or a conflicting request queued. The verifier ' +
+      'released nothing. Treat the source as MUTABLE and do not restore producers.',
     unproved:
       'The verifier did not release the source fence, but its current state is UNPROVED. ' +
       'Treat the source as MUTABLE and do not restore producers automatically.',
@@ -232,49 +236,75 @@ export interface PrimaryFailure {
 }
 
 /**
- * WHERE THE PUBLICATION STOPPED, and therefore what is on disk.
+ * WHAT WAS FOUND ON DISK after a pre-rename publication failure.
  *
- * These are not shades of the same thing. "Nothing was written" and "a complete
- * bundle is published but unverified" call for opposite actions, and an earlier
- * version of this module caught every publisher error and reported all of them
- * as a retained temporary directory - naming a path that, for a collision or a
- * bad root, had never been created. A person sent to look at it would find
- * nothing and conclude the evidence had been lost.
+ * Seven distinguishable situations, and the difference between them is what an
+ * operator does next. `evidenceReason` and `evidenceRelativePath` come from the
+ * publisher's own closed vocabulary, so an invalid root, a final-destination
+ * collision and a temporary-name collision stay distinguishable rather than
+ * being flattened into one sentence.
  */
 export type EvidenceDisposition =
-  /** Refused before or during construction. No final path; temporary may not exist. */
-  | 'refused'
-  /** Built, not published. No final path. The temporary directory IS there. */
+  /** Refused, and NOTHING was created. Both names looked at; neither is ours. */
+  | 'refused-nothing-created'
+  /** Built and not published. The temporary directory is there, and IS ours. */
   | 'retained-temporary'
+  /** A path is occupied by something THIS RUN DID NOT CREATE. */
+  | 'destination-occupied'
+  /** At least one name could not be examined. Nothing may be said about it. */
+  | 'state-unproved'
   /** Published, then something after the rename failed. The FINAL path is there. */
   | 'published-unverified'
   /** The rename did not report and could not be resolved by looking. */
   | 'unknown'
 
 /**
- * The evidence was refused BEFORE the rename. Nothing is published.
+ * The evidence was refused BEFORE the rename. Nothing was published by this run.
  *
- * `temporaryPresent` is MEASURED, not inferred: a refusal at the root check or
- * a name collision never creates the temporary directory, and claiming a
- * diagnostic bundle exists when it does not is worse than saying nothing.
+ * EVERY PRESENCE HERE IS OBSERVED, NOT INFERRED, and carries three states. A
+ * path nobody could examine is `unproved`, never `absent` - and a path that was
+ * already occupied when this run arrived is never described as a bundle this
+ * run produced, because `createdByThisRun` is derived from the publisher's own
+ * phase and the reviewed order in which it creates things.
  */
 export class VerificationEvidenceRefused extends PostCommitVerificationFailed {
   readonly disposition: EvidenceDisposition
+  /** The temporary path, and only when it is present AND ours. */
+  readonly temporaryPath: string | null
+  readonly createdByThisRun: boolean
   constructor(
     readonly outcome: VerificationOutcome,
     readonly evidencePhase: EvidencePhase,
-    readonly temporaryPath: string | null,
+    readonly evidenceReason: EvidenceReason | null,
+    readonly evidenceRelativePath: string | null,
     readonly finalPath: string,
+    readonly finalPathState: PathState,
+    readonly temporaryFullPath: string,
+    readonly temporaryPathState: PathState,
     readonly verification: PrimaryFailure | null,
     fence: FenceDisposition,
   ) {
+    const created = !PHASES_BEFORE_CREATION.includes(evidencePhase) &&
+                    temporaryPathState === 'present'
+    const disposition: EvidenceDisposition =
+      finalPathState === 'unproved' || temporaryPathState === 'unproved' ? 'state-unproved'
+        : created ? 'retained-temporary'
+          : finalPathState === 'present' || temporaryPathState === 'present'
+            ? 'destination-occupied'
+            : 'refused-nothing-created'
     super('V12-evidence',
-      temporaryPath === null
-        ? 'the verification evidence was not published'
-        : 'the verification evidence was built but not published',
-      temporaryPath === null ? 'no bundle was created' : 'a temporary bundle was retained',
+      disposition === 'retained-temporary'
+        ? 'the verification evidence was built but not published'
+        : disposition === 'state-unproved'
+          ? 'the verification evidence state on disk could not be examined'
+          : disposition === 'destination-occupied'
+            ? 'the verification evidence was not published and a path is already occupied'
+            : 'the verification evidence was not published',
+      `${disposition} (${evidenceReason ?? 'no reviewed reason'})`,
       fence)
-    this.disposition = temporaryPath === null ? 'refused' : 'retained-temporary'
+    this.disposition = disposition
+    this.createdByThisRun = created
+    this.temporaryPath = created ? temporaryFullPath : null
     this.name = 'VerificationEvidenceRefused'
   }
 }
@@ -469,41 +499,168 @@ export interface FenceFacts {
 }
 
 /**
- * The COMPLETE fence, proved from a DIFFERENT backend.
+ * WHAT A FENCE PROOF ESTABLISHED. A closed set, and the distinction that
+ * matters most in this module.
  *
- * `assertFenceProof` refuses a self-proof, a missing advisory lock, a missing
- * table or sequence lock, and - the case that matters most after a copy - any
- * request that is present but UNGRANTED, because a queued writer means someone
- * is waiting to change the source the moment the fence drops.
+ *   `held`     an INDEPENDENT backend returned a complete, readable lock
+ *              census, every required lock was granted, and nothing was queued.
+ *
+ *   `invalid`  a census RAN and was READ, and it positively shows a required
+ *              lock missing or a conflicting request queued. This is evidence.
+ *
+ *   `unproved` nothing was established: the prover could not be reached, it
+ *              refused the statement, what came back could not be read, or the
+ *              proof would not have been independent. This is the ABSENCE of
+ *              evidence, and it is not the same thing as evidence of absence.
+ *
+ * Collapsing the last two is how "the prover's connection dropped" becomes "the
+ * fence is gone" - a sentence with an operational consequence, asserted on the
+ * strength of nothing at all.
  */
-export async function proveCompleteFence(
-  prover: FenceExecutor, phase: VerifyPhase, supervisorPid: string, mechanism: SequenceFenceId,
-): Promise<FenceFacts> {
-  const fail = (): never => {
-    throw new PostCommitVerificationFailed(
-      phase,
-      phase === 'V11-fence-after'
-        ? 'the complete source fence was not held after verification'
-        : 'the complete source fence was not held before verification')
+export type ProofOutcome = 'held' | 'invalid' | 'unproved'
+
+/** WHY, from a closed reviewed set. Never the assertion's own lock listing. */
+export type ProofCause =
+  | 'the complete fence was proved held'
+  | 'a required fence lock is missing or a conflicting request is queued'
+  | 'the proving backend could not be reached'
+  | 'the proving backend refused a statement'
+  | 'the proving backend returned a result that could not be read'
+  | 'the proof would not have been independent'
+  | 'the proof does not name the reviewed sequence mechanism'
+
+export interface FenceProofResult {
+  readonly outcome: ProofOutcome
+  /** Only ever present when the outcome is `held`. */
+  readonly facts: FenceFacts | null
+  readonly cause: ProofCause
+}
+
+/** The operator-facing state each proof outcome justifies. */
+export function dispositionOf(o: ProofOutcome): FenceDisposition {
+  return o === 'held' ? 'held' : o === 'invalid' ? 'not-held' : 'unproved'
+}
+
+const proofResult = (
+  outcome: ProofOutcome, cause: ProofCause, facts: FenceFacts | null = null,
+): FenceProofResult => Object.freeze({ outcome, cause, facts })
+
+/**
+ * Take a fence proof and REPORT WHAT IT ESTABLISHED, without throwing.
+ *
+ * THE ORDER IS WHAT MAKES `invalid` MEAN SOMETHING. Everything that could stop
+ * a trustworthy census - transport, refusal, unreadable results, a proof taken
+ * on the supervisor's own backend, a mechanism that is not the reviewed one -
+ * is excluded FIRST and yields `unproved`. Only then is the reviewed
+ * `assertFenceProof` run, so a refusal from it at that point can only be about
+ * the lock census itself, which is the one thing that earns `invalid`.
+ */
+export async function attemptFenceProof(
+  prover: FenceExecutor, supervisorPid: string, mechanism: SequenceFenceId,
+): Promise<FenceProofResult> {
+  if (!/^\d+$/.test(supervisorPid)) {
+    return proofResult('unproved', 'the proof would not have been independent')
   }
-  const pidRes = await prover.send(SUPERVISOR_PID_SQL)
-  if (pidRes.error !== null) fail()
+  if (mechanism !== SELECTED_SEQUENCE_FENCE) {
+    return proofResult('unproved', 'the proof does not name the reviewed sequence mechanism')
+  }
+
+  let pidRes: { rows: string[][]; error: 'statement-refused' | null }
+  try {
+    pidRes = await prover.send(SUPERVISOR_PID_SQL)
+  } catch {
+    return proofResult('unproved', 'the proving backend could not be reached')
+  }
+  if (pidRes.error !== null) {
+    return proofResult('unproved', 'the proving backend refused a statement')
+  }
   const provingPid = pidRes.rows[0]?.[0] ?? ''
-  const proofRes = await prover.send(FENCE_PROOF_SQL.replace('$1', fenceRelationArray()))
-  if (proofRes.error !== null) fail()
-  const rows = parseLockRows(proofRes.rows)
+  if (!/^\d+$/.test(provingPid)) {
+    return proofResult('unproved', 'the proving backend returned a result that could not be read')
+  }
+  // A SESSION CAN ALWAYS SEE ITS OWN LOCKS. A self-proof establishes nothing,
+  // so it is excluded here rather than left to look like census evidence.
+  if (provingPid === supervisorPid) {
+    return proofResult('unproved', 'the proof would not have been independent')
+  }
+
+  let censusRes: { rows: string[][]; error: 'statement-refused' | null }
+  try {
+    censusRes = await prover.send(FENCE_PROOF_SQL.replace('$1', fenceRelationArray()))
+  } catch {
+    return proofResult('unproved', 'the proving backend could not be reached')
+  }
+  if (censusRes.error !== null) {
+    return proofResult('unproved', 'the proving backend refused a statement')
+  }
+
+  let rows: ReturnType<typeof parseLockRows>
+  try {
+    for (const row of censusRes.rows) {
+      if (!Array.isArray(row) || row.length !== 5) throw new Error('shape')
+    }
+    // `parseLockRows` raises on a boolean it cannot read, which is a result
+    // this module could not interpret - not a fence it observed to be gone.
+    rows = parseLockRows(censusRes.rows)
+  } catch {
+    return proofResult('unproved', 'the proving backend returned a result that could not be read')
+  }
+
   try {
     assertFenceProof(rows, { supervisorPid, provingPid, mechanism })
   } catch {
-    // The assertion's own message lists locks and pids. It stops here.
-    fail()
+    // Reached only after every non-census cause has been excluded above, so
+    // this is the lock census itself refusing. The assertion's own message
+    // lists locks and pids; it stops here.
+    return proofResult(
+      'invalid', 'a required fence lock is missing or a conflicting request is queued')
   }
-  return Object.freeze({
+
+  return proofResult('held', 'the complete fence was proved held', Object.freeze({
     provingPid,
     supervisorPid,
     relations: rows.filter(r => r.kind === 'relation').length,
     ungranted: rows.filter(r => !r.granted).length,
-  })
+  }))
+}
+
+/**
+ * The COMPLETE fence, proved from a DIFFERENT backend, or a refusal that says
+ * exactly what it established.
+ */
+export async function proveCompleteFence(
+  prover: FenceExecutor, phase: VerifyPhase, supervisorPid: string, mechanism: SequenceFenceId,
+): Promise<FenceFacts> {
+  const r = await attemptFenceProof(prover, supervisorPid, mechanism)
+  if (r.outcome !== 'held') {
+    throw new FenceProofFailed(
+      phase,
+      phase === 'V11-fence-after'
+        ? 'the complete source fence was not held after verification'
+        : 'the complete source fence was not held before verification',
+      r)
+  }
+  return r.facts as FenceFacts
+}
+
+/**
+ * A fence-proof failure that CARRIES its own verdict.
+ *
+ * The phase says where the proof was taken; it says nothing about what the
+ * proof found, and the two are not interchangeable. An earlier version derived
+ * the fence disposition from the phase alone, so a prover that died at V3 -
+ * having established nothing whatsoever - was reported as positive evidence
+ * that the fence had been lost.
+ */
+export class FenceProofFailed extends PostCommitVerificationFailed {
+  constructor(
+    phase: VerifyPhase,
+    reason: VerifyReason,
+    readonly proof: FenceProofResult,
+  ) {
+    super(phase, reason, proof.cause, dispositionOf(proof.outcome))
+    this.name = 'FenceProofFailed'
+  }
 }
 
 /** What a session reported about itself. Nothing here was supplied by a caller. */
@@ -817,6 +974,7 @@ export async function runVerification(i: VerifierInput): Promise<VerificationRes
     handoffAccepted: false,
     fenceDisposition: 'unproved',
     fenceAfterProvedBy: null,
+    proof: null,
     sourceContract: null,
     targetContract: null,
     source: null,
@@ -833,6 +991,27 @@ export async function runVerification(i: VerifierInput): Promise<VerificationRes
   /** Where the run has reached. An unreviewed failure is reported HERE. */
   let phase: VerifyPhase = 'V1-handoff'
   let h: VerifierHandoff = i.handoff
+
+  /**
+   * ONE proof path, and it RECORDS what it established before deciding.
+   *
+   * The result is kept whether the proof succeeded or not, because what the
+   * fence disposition is later derived from is this verdict - never the step
+   * the run happened to be on when it was taken.
+   */
+  const takeProof = async (at: VerifyPhase): Promise<FenceFacts> => {
+    const r = await attemptFenceProof(prover, h.fence.supervisorPid, h.fence.mechanism)
+    state.proof = r
+    if (r.outcome !== 'held') {
+      throw new FenceProofFailed(
+        at,
+        at === 'V11-fence-after'
+          ? 'the complete source fence was not held after verification'
+          : 'the complete source fence was not held before verification',
+        r)
+    }
+    return r.facts as FenceFacts
+  }
 
   try {
     // V1. INSIDE THE RECORDED LIFECYCLE, and before any session exists.
@@ -864,8 +1043,7 @@ export async function runVerification(i: VerifierInput): Promise<VerificationRes
 
     // V3.
     phase = 'V3-fence-before'
-    state.fenceBefore = await proveCompleteFence(
-      prover, 'V3-fence-before', h.fence.supervisorPid, h.fence.mechanism)
+    state.fenceBefore = await takeProof('V3-fence-before')
 
     phase = 'V4-source-session'
     // V4. A FRESH session, and BEGIN is its first statement.
@@ -993,8 +1171,7 @@ export async function runVerification(i: VerifierInput): Promise<VerificationRes
     phase = 'V11-fence-after'
     // V11. THE FENCE AGAIN, AFTER EVERY READ. Everything above describes a
     // source that was held for the whole of it, or it describes nothing.
-    state.fenceAfter = await proveCompleteFence(
-      prover, 'V11-fence-after', h.fence.supervisorPid, h.fence.mechanism)
+    state.fenceAfter = await takeProof('V11-fence-after')
 
     state.outcome = 'PASS'
   } catch (e) {
@@ -1046,29 +1223,21 @@ export async function runVerification(i: VerifierInput): Promise<VerificationRes
 }
 
 /**
- * Decide what may honestly be said about the fence, and prove it if it can be.
+ * Decide what may honestly be said about the fence, FROM WHAT THE PROOFS FOUND.
  *
- * FOUR CASES, AND ONLY ONE OF THEM PROVES ANYTHING:
+ * NOT FROM THE PHASE. An earlier version read the disposition off the step the
+ * run stopped on: every failure at V3 or V11 became `not-held`. That is right
+ * only when a census actually ran and refused, and wrong in every other way a
+ * proof can fail - a prover whose connection dropped, a refused statement, a
+ * result that could not be parsed, a proof that would not have been
+ * independent. All of those establish NOTHING, and reporting them as a lost
+ * fence is asserting an operational conclusion on the strength of no evidence.
  *
- *   PASS - V11 already proved the complete fence after every read. `held`.
- *
- *   V1 or V2 failed - nothing was ever proved, and in V2's case the supervisor
- *   did not answer at all. Sending the prover a question now would say nothing
- *   about a fence whose holder is unaccounted for. `unproved`, and nothing is
- *   sent. (A V1 failure has sent NOTHING to either borrowed session, and that
- *   stays true here.)
- *
- *   A fence proof itself failed, at V3 or V11 - a proof RAN and REFUSED, which
- *   is positive evidence. `not-held`.
- *
- *   Anything else, after V3 succeeded - the fence was held when this started
- *   and the failure was about something else, so it is worth asking once more.
- *   A BOUNDED, BEST-EFFORT reproof through the borrowed prover: success is the
- *   only thing that earns `held`, and its failure - for any reason at all -
- *   yields `unproved` rather than a second opinion about what went wrong.
- *
- * THE SECONDARY PROOF CANNOT MASK THE PRIMARY FAILURE. It returns a value, it
- * never throws, and it never touches `state.failure`.
+ * So `attemptFenceProof` returns a verdict and this reads it. Four cases:
+ * a clean run is `held` on V11's own proof; a run where no proof was ever taken
+ * is `unproved` and asks for none; a failed proof keeps its own verdict; and a
+ * failure after a proof that SUCCEEDED earns one bounded reproof, whose verdict
+ * is likewise taken as it comes.
  */
 export async function settleFenceDisposition(
   prover: FenceExecutor, h: VerifierHandoff, state: VerificationState,
@@ -1077,22 +1246,23 @@ export async function settleFenceDisposition(
     state.fenceAfterProvedBy = 'verification'
     return 'held'
   }
-  const at = state.failure?.phase ?? null
-  if (at === 'V1-handoff' || at === 'V2-supervisor') return 'unproved'
-  if (at === 'V3-fence-before' || at === 'V11-fence-after') return 'not-held'
-  if (!state.handoffAccepted || state.fenceBefore === null) return 'unproved'
-  try {
-    const facts = await proveCompleteFence(
-      prover, 'V11-fence-after', h.fence.supervisorPid, h.fence.mechanism)
-    state.fenceAfter = facts
+  // NO PROOF WAS EVER TAKEN - V1 refused the handoff, or V2 found the
+  // supervisor gone. Nothing has been sent to the prover and nothing will be:
+  // a lock census says nothing about a fence whose holder is unaccounted for.
+  if (state.proof === null) return 'unproved'
+  // A PROOF FAILED. Its own verdict stands, whatever step it was taken on.
+  if (state.proof.outcome !== 'held') return dispositionOf(state.proof.outcome)
+  // The fence was proved when this started and the failure was about something
+  // else, so it is worth asking once more. BOUNDED and BEST-EFFORT: this
+  // returns a verdict, never throws, and never touches `state.failure`.
+  if (!state.handoffAccepted) return 'unproved'
+  const again = await attemptFenceProof(prover, h.fence.supervisorPid, h.fence.mechanism)
+  state.proof = again
+  if (again.outcome === 'held') {
+    state.fenceAfter = again.facts
     state.fenceAfterProvedBy = 'failure-path'
-    return 'held'
-  } catch {
-    // Deliberately swallowed, and deliberately not recorded as a failure. The
-    // question asked here is "is the fence still there", and "I could not tell"
-    // is an answer, not a new problem to report instead of the real one.
-    return 'unproved'
   }
+  return dispositionOf(again.outcome)
 }
 
 /** Everything the run has established so far. Exported so the document builder is testable. */
@@ -1104,6 +1274,8 @@ export interface VerificationState {
   fenceDisposition: FenceDisposition
   /** Which proof produced `fenceAfter`: the verification itself, or the failure path. */
   fenceAfterProvedBy: 'verification' | 'failure-path' | null
+  /** The LAST fence proof attempted, whatever it established. Null if none was. */
+  proof: FenceProofResult | null
   sourceContract: ContractArtifact | null
   targetContract: ContractArtifact | null
   source: VerifiedIdentity | null
@@ -1183,6 +1355,13 @@ const fenceSection = (state: VerificationState): Canonical => ({
   before: fenceDocument(state.fenceBefore),
   after: fenceDocument(state.fenceAfter),
   after_proved_by: state.fenceAfterProvedBy,
+  // WHAT THE LAST PROOF ESTABLISHED, and why. A record that carried only the
+  // disposition could not distinguish a fence observed to be gone from one
+  // nobody could ask about, which is the distinction the disposition exists
+  // to preserve.
+  last_proof: state.proof === null
+    ? null
+    : { outcome: state.proof.outcome, cause: state.proof.cause },
 })
 
 /**
@@ -1244,6 +1423,39 @@ export function verificationDocument(
     fence: fenceSection(state),
   }
 }
+
+/**
+ * WHAT LOOKING AT A PATH ESTABLISHED. Three states, because there are three.
+ *
+ * `pathIsPresent` is already fail-closed - only ENOENT means absent, and every
+ * other failure raises rather than answering. That guarantee is worth nothing
+ * if the caller catches the raise and writes down "absent", which is what an
+ * earlier version of the recovery path did: a root whose permissions had
+ * changed produced "no bundle was created", and a person was sent to look for
+ * nothing when a complete bundle might have been sitting there.
+ */
+export type PathState = 'present' | 'absent' | 'unproved'
+
+export function observePath(path: string, ops: EvidenceOps): PathState {
+  try {
+    return pathIsPresent(path, ops) ? 'present' : 'absent'
+  } catch {
+    // COULD NOT LOOK. Not the same as looked and found nothing.
+    return 'unproved'
+  }
+}
+
+/**
+ * The publisher phases at which NOTHING has been created yet.
+ *
+ * Load-bearing, and derived from the reviewed publication order rather than
+ * guessed: the root check, the name derivation and the collision check all run
+ * before the temporary directory is made. Anything present at those phases was
+ * therefore put there by somebody else, and calling it a bundle this run
+ * produced would be false.
+ */
+export const PHASES_BEFORE_CREATION: readonly EvidencePhase[] =
+  Object.freeze(['root', 'name', 'collision'])
 
 /**
  * Publish the record, whatever it says, and report EXACTLY where it stopped.
@@ -1312,17 +1524,19 @@ function publishOutcome(
         state.outcome, finalPath, temporaryPath ?? i.evidenceRoot, primary, fence)
     }
 
-    // BEFORE THE RENAME. Whether anything was built is a question about the
-    // filesystem, so it is asked there rather than guessed from the phase.
-    let retained: string | null = null
-    if (temporaryPath !== null) {
-      try {
-        if (pathIsPresent(temporaryPath, ops)) retained = temporaryPath
-      } catch { /* could not look; `retained` stays null and says so */ }
-    }
+    // BEFORE THE RENAME. What is on disk is a question about the filesystem,
+    // so BOTH names are examined there - and each answer is one of three, so
+    // "I could not look" never turns into "nothing is there".
     const phase: EvidencePhase = e instanceof EvidenceRefused ? e.phase : 'publish'
+    const reason: EvidenceReason | null = e instanceof EvidenceRefused ? e.reason : null
+    const relative: string | null =
+      e instanceof EvidenceRefused ? e.relativePath : null
     throw new VerificationEvidenceRefused(
-      state.outcome, phase, retained, finalPath, primary, fence)
+      state.outcome, phase, reason, relative,
+      finalPath, observePath(finalPath, ops),
+      temporaryPath ?? i.evidenceRoot,
+      temporaryPath === null ? 'unproved' : observePath(temporaryPath, ops),
+      primary, fence)
   }
 }
 

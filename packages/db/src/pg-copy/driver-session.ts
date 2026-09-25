@@ -137,26 +137,39 @@ export const reviewedClientFactory: ClientFactory = (t: DriverTarget): Client =>
   })
 
 /**
- * A session that has issued NO SQL, for a caller whose first statement matters.
+ * WHERE THE BACKEND PID COMES FROM. The only thing the two openers disagree on.
  *
- * WHY THIS EXISTS BESIDE `openDriverSession`. That opener asks the server for
- * its backend pid as part of becoming usable, which is harmless for Stage 2 -
- * the pid is read before any transaction, and the transaction that follows
- * still sees one snapshot. It is NOT harmless for the verifier, whose whole
- * claim is that the transaction it measures in began before it looked at
- * anything: a SELECT issued first runs in its own implicit transaction, in a
- * snapshot nobody afterwards can account for.
+ *   `query`    ask the server: `SELECT pg_catalog.pg_backend_pid()`. One
+ *              statement, before any transaction. What Stage 2 has always done.
  *
- * So the pid comes from the PROTOCOL instead. PostgreSQL sends BackendKeyData
- * during startup, before any query, and the driver records it; reading it costs
- * no statement. It is not taken on trust either - it is only a claim by the
- * driver until `VERIFY_IDENTITY_SQL` asks the server, inside the transaction,
- * which backend it actually is, and refuses if the two disagree. The identity
- * check is therefore not weakened; it is moved to where it can be made without
- * spending a statement first.
+ *   `protocol` read BackendKeyData, which PostgreSQL sends during startup and
+ *              the driver records. Costs NO statement.
+ *
+ * WHY THE SECOND ONE EXISTS. A pid SELECT is harmless for Stage 2: it runs
+ * before the transaction, and the transaction that follows still sees one
+ * snapshot. It is NOT harmless for the verifier, whose whole claim is that the
+ * transaction it measures in began before it looked at anything - a SELECT
+ * issued first runs in its own implicit transaction, in a snapshot nobody
+ * afterwards can account for.
+ *
+ * NEITHER POLICY IS TRUSTED ON ITS OWN. Whatever this returns is a claim until
+ * the caller's own identity statement asks the server, inside its transaction,
+ * which backend it actually is - `extractContractFromSession` and the
+ * verifier's `VERIFY_IDENTITY_SQL` both refuse when the two disagree. The
+ * protocol policy moves that check to where it can be made without spending a
+ * statement first; it does not weaken it.
  */
-export async function openSilentDriverSession(
-  t: DriverTarget, make: ClientFactory = reviewedClientFactory,
+export type PidPolicy = 'query' | 'protocol'
+
+export const BACKEND_PID_SQL = 'SELECT pg_catalog.pg_backend_pid()::pg_catalog.text'
+
+/**
+ * THE ONE BUILDER. Both public openers are this function with one argument
+ * changed, so connection handling, reaping, the error boundary and the session
+ * shape exist once and cannot drift between them.
+ */
+async function openSession(
+  t: DriverTarget, make: ClientFactory, policy: PidPolicy,
 ): Promise<DriverSession> {
   const client: Client = make(t)
 
@@ -165,23 +178,6 @@ export async function openSilentDriverSession(
     if (ended) return
     ended = true
     try { await client.end() } catch { /* bounded: nothing to report */ }
-  }
-
-  try {
-    await client.connect()
-  } catch {
-    await reap()
-    throw new DriverSessionRefused('the session could not be opened')
-  }
-
-  // PROTOCOL METADATA, not a query. `processID` is set from BackendKeyData and
-  // is absent from the published typings, so it is read defensively and
-  // validated rather than asserted into existence.
-  const raw = (client as unknown as { processID?: unknown }).processID
-  const pid = typeof raw === 'number' || typeof raw === 'string' ? String(raw) : ''
-  if (!/^\d+$/.test(pid)) {
-    await reap()
-    throw new DriverSessionRefused('the session did not report a backend pid')
   }
 
   const run = async (sql: string): Promise<CommandOutcome> => {
@@ -194,6 +190,36 @@ export async function openSilentDriverSession(
     }
   }
 
+  try {
+    await client.connect()
+  } catch {
+    // A connection failure names the host, the user and sometimes the
+    // authentication method. None of it travels.
+    await reap()
+    throw new DriverSessionRefused('the session could not be opened')
+  }
+
+  let pid = ''
+  if (policy === 'query') {
+    try {
+      pid = (await run(BACKEND_PID_SQL)).rows[0]?.[0] ?? ''
+    } catch {
+      // EVERY failure between connect and a usable session reaps the client
+      // first. An unreaped one is a live backend nobody holds a handle to.
+      await reap()
+      throw new DriverSessionRefused('the session could not report its backend pid')
+    }
+  } else {
+    // `processID` is absent from the published typings, so it is read
+    // defensively and validated rather than asserted into existence.
+    const raw = (client as unknown as { processID?: unknown }).processID
+    pid = typeof raw === 'number' || typeof raw === 'string' ? String(raw) : ''
+  }
+  if (!/^\d+$/.test(pid)) {
+    await reap()
+    throw new DriverSessionRefused('the session did not report a backend pid')
+  }
+
   return Object.freeze({
     pid,
     client,
@@ -204,56 +230,21 @@ export async function openSilentDriverSession(
   })
 }
 
+/** The Stage-2 session. Asks the server for its pid, before any transaction. */
 export async function openDriverSession(t: DriverTarget): Promise<DriverSession> {
-  const client: Client = reviewedClientFactory(t)
+  return await openSession(t, reviewedClientFactory, 'query')
+}
 
-  let ended = false
-  const reap = async (): Promise<void> => {
-    if (ended) return
-    ended = true
-    try { await client.end() } catch { /* bounded: nothing to report */ }
-  }
-
-  try {
-    await client.connect()
-  } catch {
-    // A connection failure names the host, the user and sometimes the
-    // authentication method. None of it travels.
-    await reap()
-    throw new DriverSessionRefused('the session could not be opened')
-  }
-
-  const raw = async (sql: string): Promise<CommandOutcome> => {
-    if (ended) throw new DriverSessionRefused('the session refused a statement')
-    try {
-      const r = await client.query({ text: sql, rowMode: 'array' })
-      return { tag: String(r.command ?? ''), rows: psqlShape(r.rows as unknown[][]) }
-    } catch {
-      throw new DriverSessionRefused('the session refused a statement')
-    }
-  }
-
-  let pid: string
-  try {
-    const r = await raw('SELECT pg_catalog.pg_backend_pid()::pg_catalog.text')
-    pid = r.rows[0]?.[0] ?? ''
-  } catch {
-    // EVERY failure between connect and a usable session reaps the client
-    // first. An unreaped one is a live backend nobody holds a handle to.
-    await reap()
-    throw new DriverSessionRefused('the session could not report its backend pid')
-  }
-  if (!/^\d+$/.test(pid)) {
-    await reap()
-    throw new DriverSessionRefused('the session did not report a backend pid')
-  }
-
-  return Object.freeze({
-    pid,
-    client,
-    rows: async (sql: string): Promise<string[][]> => (await raw(sql)).rows,
-    command: raw,
-    end: reap,
-    alive: () => !ended,
-  })
+/**
+ * The VERIFIER session: no SQL of any kind before the caller's first statement.
+ *
+ * `make` is injectable for one reason: the claim "this session issues nothing
+ * before BEGIN" can only be checked at the query boundary of the real client,
+ * and a recorder wrapped around an already-opened session is attached too late
+ * to see the statement it is looking for.
+ */
+export async function openSilentDriverSession(
+  t: DriverTarget, make: ClientFactory = reviewedClientFactory,
+): Promise<DriverSession> {
+  return await openSession(t, make, 'protocol')
 }

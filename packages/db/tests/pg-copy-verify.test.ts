@@ -42,10 +42,10 @@ import {
   VerificationEvidencePublishedButUnverified, VerificationEvidenceRefused,
   assertCompatibilityMatches, assertContentMatches, assertHandoff, assertSequencesMatch,
   assertSourceArtifact, assertTargetArtifact, borrowReadOnly, proveCompleteFence,
-  recognitionOf, runVerification, settleFenceDisposition, verificationContentDocument,
-  verificationDocument,
-  type FenceDisposition, type SequencePair, type VerificationState, type VerifierHandoff,
-  type VerifyPhase,
+  FenceProofFailed, attemptFenceProof, dispositionOf, observePath, recognitionOf, runVerification,
+  settleFenceDisposition, verificationContentDocument, verificationDocument,
+  type FenceDisposition, type FenceProofResult, type ProofOutcome, type SequencePair,
+  type VerificationState, type VerifierHandoff, type VerifyPhase,
 } from '../src/pg-copy/verify.js'
 import {
   VERIFY_BATCH_ROWS, VERIFY_SEND, VerifyContentRefused, assertVerifiableColumns,
@@ -231,13 +231,13 @@ describe('the verifier is an INDEPENDENT implementation', () => {
     // for checks nothing runs.
     const calls = [
       'assertHandoff(i.handoff)',
-      "proveCompleteFence(\n      prover, 'V3-fence-before'",
+"takeProof('V3-fence-before')",
       'assertSourceArtifact(sourceContract, h, i.publishedDocument)',
       'assertTargetArtifact(targetContract, h)',
       'assertContentMatches(measuredSource, measuredTarget, h, i.publishedDocument)',
       'assertSequencesMatch(state.sequences, h)',
       'assertCompatibilityMatches(rebuilt, h.compatibility)',
-      "proveCompleteFence(\n      prover, 'V11-fence-after'",
+"takeProof('V11-fence-after')",
       'publishOutcome(i, h, state)',
     ]
     let at = -1
@@ -785,26 +785,38 @@ describe('the borrowed supervisor is never written through', () => {
     expect(VERIFY).toContain("state.outcome = 'FAIL'")
   })
 
-  it('the verifier session opener issues NO SQL, and takes its pid from the protocol', () => {
+  it('one session builder, two PID policies, and only one of them issues SQL', () => {
     const DRIVER = strip(read('src/pg-copy/driver-session.ts'))
-    const opener = DRIVER.slice(
-      DRIVER.indexOf('export async function openSilentDriverSession'),
-      DRIVER.indexOf('export async function openDriverSession'))
-    expect(opener.length).toBeGreaterThan(200)
-    // NOT ONE STATEMENT before the caller's first. A pid SELECT here runs in
-    // its own implicit transaction, in a snapshot nothing afterwards can
+    // ONE builder: connection handling, reaping and the error boundary exist
+    // once, so they cannot drift between the two openers.
+    expect(DRIVER.match(/client\.connect\(\)/g)?.length).toBe(1)
+    expect(DRIVER.match(/async function openSession\(/g)?.length).toBe(1)
+    expect(DRIVER).toContain("return await openSession(t, reviewedClientFactory, 'query')")
+    expect(DRIVER).toContain("return await openSession(t, make, 'protocol')")
+
+    // THE PID QUERY IS GUARDED BY THE POLICY, and the silent path reads
+    // BackendKeyData instead. A statement issued before the caller's BEGIN runs
+    // in its own implicit transaction, in a snapshot nothing afterwards can
     // account for - and a recorder attached around the returned session cannot
     // see it, which is exactly how it survived the first time.
-    expect(opener).not.toContain('pg_backend_pid')
-    expect(opener).not.toContain('SELECT')
-    expect(opener).not.toMatch(/\braw\(|\brun\(['"`]/)
-    // The pid comes from BackendKeyData, is validated, and refuses when absent.
-    expect(opener).toContain('processID')
-    expect(opener).toContain("!/^\\d+$/.test(pid)")
-    expect(opener).toContain("throw new DriverSessionRefused('the session did not report a backend pid')")
-    // Stage 2's opener is UNCHANGED and still asks; the two are separate.
-    expect(DRIVER.slice(DRIVER.indexOf('export async function openDriverSession')))
-      .toContain('pg_backend_pid')
+    const builder = DRIVER.slice(
+      DRIVER.indexOf('async function openSession('),
+      DRIVER.indexOf('export async function openDriverSession'))
+    expect(builder.length).toBeGreaterThan(200)
+    expect(builder).toContain("if (policy === 'query') {")
+    const queryBranch = builder.slice(
+      builder.indexOf("if (policy === 'query') {"), builder.indexOf('} else {'))
+    const protocolBranch = builder.slice(builder.indexOf('} else {'))
+    expect(queryBranch).toContain('BACKEND_PID_SQL')
+    expect(protocolBranch).not.toContain('BACKEND_PID_SQL')
+    expect(protocolBranch).toContain('processID')
+    // The pid is validated whichever policy produced it, and refuses when absent.
+    expect(builder).toContain("!/^\\d+$/.test(pid)")
+    expect(builder).toContain(
+      "throw new DriverSessionRefused('the session did not report a backend pid')")
+    // The query branch issues exactly ONE statement, and it is that pid query.
+    expect(queryBranch.match(/await run\(/g)?.length).toBe(1)
+    expect(queryBranch).toContain('await run(BACKEND_PID_SQL)')
   })
 
   it('the session transaction is READ ONLY REPEATABLE READ, as its first statement', () => {
@@ -848,6 +860,7 @@ const state = (over: Partial<VerificationState> = {}): VerificationState => ({
   handoffAccepted: true,
   fenceDisposition: 'held',
   fenceAfterProvedBy: 'verification',
+  proof: { outcome: 'held', cause: 'the complete fence was proved held', facts: null },
   sourceContract: artifact(HANDOFF().sourceContractDigest, 'CURRENT_V10'),
   targetContract: artifact(REVIEWED_CONTRACT_DIGEST, 'CURRENT_V19'),
   source: { pid: '11', systemIdentifier: '7689229024919775042', database: 'ai_capital',
@@ -1108,19 +1121,26 @@ describe('the published verification evidence', () => {
 
   it('a publication refusal that created NOTHING says so, and names no phantom path', () => {
     const e = new VerificationEvidenceRefused(
-      'FAIL', 'collision', null, '/evidence/verification-20260924T101530Z-a1b2c3d4',
-      null, 'held')
+      'FAIL', 'collision', 'a path is already present at the publication destination', null,
+      '/evidence/verification-20260924T101530Z-a1b2c3d4', 'absent',
+      '/evidence/.tmp-verification-a1b2c3d4', 'absent', null, 'held')
     expect(e).toBeInstanceOf(PostCommitVerificationFailed)
     expect(e.phase).toBe('V12-evidence')
-    expect(e.disposition).toBe('refused')
+    expect(e.disposition).toBe('refused-nothing-created')
     expect(e.temporaryPath).toBeNull()
     expect(e.reason).toBe('the verification evidence was not published')
-    expect(e.message).toContain('no bundle was created')
+    // The `at` names the disposition AND the publisher's own closed reason, so
+    // an invalid root, a final collision and a temporary collision stay
+    // distinguishable in the message rather than becoming one sentence.
+    expect(e.at).toBe(
+      'refused-nothing-created (a path is already present at the publication destination)')
+    expect(e.message).toContain('refused-nothing-created')
     expect(e.message).toContain('NOT verified')
     // A DIFFERENT outcome when something WAS built and retained.
     const r = new VerificationEvidenceRefused(
-      'FAIL', 'digest', '/evidence/.tmp-verification-a1b2c3d4',
-      '/evidence/verification-20260924T101530Z-a1b2c3d4', null, 'held')
+      'FAIL', 'digest', 'a filesystem operation did not complete', null,
+      '/evidence/verification-20260924T101530Z-a1b2c3d4', 'absent',
+      '/evidence/.tmp-verification-a1b2c3d4', 'present', null, 'held')
     expect(r.disposition).toBe('retained-temporary')
     expect(r.reason).toBe('the verification evidence was built but not published')
     expect(r.temporaryPath).toBe('/evidence/.tmp-verification-a1b2c3d4')
@@ -1155,7 +1175,9 @@ describe('the published verification evidence', () => {
     const primary = { phase: 'V8-content' as const, reason: PHASE_REASON['V8-content'],
                       at: COPY_TABLES[3] }
     for (const e of [
-      new VerificationEvidenceRefused('FAIL', 'digest', '/t', '/f', primary, 'held'),
+      new VerificationEvidenceRefused(
+        'FAIL', 'digest', 'a filesystem operation did not complete', null,
+        '/f', 'absent', '/t', 'present', primary, 'held'),
       new VerificationEvidencePublishedButUnverified('FAIL', 'verify', '/f', primary, 'held'),
       new VerificationEvidenceOutcomeUnknown('FAIL', '/f', '/t', primary, 'unproved'),
     ]) {
@@ -1200,6 +1222,32 @@ function borrowedStub(
   }
 }
 
+type FenceExecutorStub = {
+  send: (sql: string) => Promise<{ rows: string[][]; error: 'statement-refused' | null }>
+  seen: string[]
+}
+
+/** Answers the pid query, then dies on the census. */
+function diesOnCensus(pid: string): FenceExecutorStub {
+  const seen: string[] = []
+  return {
+    seen,
+    send: async (sql: string) => {
+      seen.push(sql)
+      if (sql === SUPERVISOR_PID_SQL) return { rows: [[pid]], error: null }
+      throw new Error('connection terminated unexpectedly')
+    },
+  }
+}
+
+function refusesEverything(): FenceExecutorStub {
+  const seen: string[] = []
+  return {
+    seen,
+    send: async (sql: string) => { seen.push(sql); return { rows: [], error: 'statement-refused' } },
+  }
+}
+
 const lockRow = (qname: string, mode: string, pid = '4242', granted = true): string[] =>
   [qname === 'advisory' ? 'advisory' : 'relation', qname, mode, String(granted), pid]
 
@@ -1210,11 +1258,122 @@ const wholeFence = (extra: string[][] = []): string[][] => [
   ...extra,
 ]
 
+describe('a fence proof reports what it ESTABLISHED, not where it was taken', () => {
+  /** Every way a proof can go, as a stub the census sees. */
+  const cases: Array<[string, () => FenceExecutorStub, ProofOutcome, string]> = [
+    ['a complete census', () => borrowedStub('99', wholeFence()), 'held',
+     'the complete fence was proved held'],
+    ['a missing TABLE lock',
+     () => borrowedStub('99', wholeFence().filter(r => r[1] !== FENCE_TABLES[4])), 'invalid',
+     'a required fence lock is missing or a conflicting request is queued'],
+    ['a missing SEQUENCE lock',
+     () => borrowedStub('99', wholeFence().filter(r => r[1] !== FENCE_SEQUENCES[1])), 'invalid',
+     'a required fence lock is missing or a conflicting request is queued'],
+    ['a missing ADVISORY lock',
+     () => borrowedStub('99', wholeFence().filter(r => r[0] !== 'advisory')), 'invalid',
+     'a required fence lock is missing or a conflicting request is queued'],
+    ['a QUEUED WRITER',
+     () => borrowedStub('99', wholeFence(
+       [lockRow(FENCE_TABLES[2], 'RowExclusiveLock', '777', false)])), 'invalid',
+     'a required fence lock is missing or a conflicting request is queued'],
+    ['a DEAD prover before the pid query', () => borrowedStub(null), 'unproved',
+     'the proving backend could not be reached'],
+    ['a prover that DIES before the lock query',
+     () => diesOnCensus('99'), 'unproved', 'the proving backend could not be reached'],
+    ['a STATEMENT-REFUSED result', () => refusesEverything(), 'unproved',
+     'the proving backend refused a statement'],
+    ['a MALFORMED pid row', () => borrowedStub('not-a-pid', wholeFence()), 'unproved',
+     'the proving backend returned a result that could not be read'],
+    ['a MALFORMED lock row', () => borrowedStub('99', [['relation', 'graph.nodes']]), 'unproved',
+     'the proving backend returned a result that could not be read'],
+    ['an UNREADABLE granted column',
+     () => borrowedStub('99', [['relation', 'graph.nodes', 'ShareLock', 'maybe', '4242']]),
+     'unproved', 'the proving backend returned a result that could not be read'],
+    ['a SELF-proof', () => borrowedStub('4242', wholeFence()), 'unproved',
+     'the proof would not have been independent'],
+  ]
+
+  it('classifies every outcome from the census, and only a census says invalid', async () => {
+    for (const [label, make, outcome, cause] of cases) {
+      const r = await attemptFenceProof(make(), '4242', 'S3')
+      expect(r.outcome, label).toBe(outcome)
+      expect(r.cause, label).toBe(cause)
+      // FACTS ONLY WHEN HELD. A verdict with no proof behind it carries none.
+      expect(r.facts === null, label).toBe(outcome !== 'held')
+    }
+    // TRANSPORT, SHAPE AND INDEPENDENCE ARE ALL `unproved` - never `invalid`.
+    const transportish = cases.filter(([, , o]) => o === 'unproved')
+    expect(transportish.length).toBe(7)
+    // ONLY a positive lock census earns `invalid`.
+    expect(cases.filter(([, , o]) => o === 'invalid').length).toBe(4)
+  })
+
+  it('a mechanism that is not the reviewed one establishes nothing', async () => {
+    const r = await attemptFenceProof(borrowedStub('99', wholeFence()), '4242', 'S1')
+    expect(r.outcome).toBe('unproved')
+    expect(r.cause).toBe('the proof does not name the reviewed sequence mechanism')
+  })
+
+  it('an unusable supervisor pid establishes nothing, and asks nothing', async () => {
+    const prover = borrowedStub('99', wholeFence())
+    const r = await attemptFenceProof(prover, 'not-a-pid', 'S3')
+    expect(r.outcome).toBe('unproved')
+    expect(prover.seen).toEqual([])
+  })
+
+  it('maps each outcome to exactly one operator-facing state', () => {
+    expect(dispositionOf('held')).toBe('held')
+    expect(dispositionOf('invalid')).toBe('not-held')
+    expect(dispositionOf('unproved')).toBe('unproved')
+  })
+
+  it('BOTH proof positions carry the verdict, and neither infers it from the phase',
+    async () => {
+      for (const phase of ['V3-fence-before', 'V11-fence-after'] as const) {
+        for (const [label, make, outcome, cause] of cases) {
+          if (outcome === 'held') {
+            await expect(proveCompleteFence(make(), phase, '4242', 'S3')).resolves.toBeDefined()
+            continue
+          }
+          const e = await proveCompleteFence(make(), phase, '4242', 'S3')
+            .then(() => null, (x: unknown) => x as FenceProofFailed)
+          expect(e, `${phase} ${label}`).toBeInstanceOf(FenceProofFailed)
+          expect(e?.phase, `${phase} ${label}`).toBe(phase)
+          expect(e?.proof.outcome, `${phase} ${label}`).toBe(outcome)
+          expect(e?.at, `${phase} ${label}`).toBe(cause)
+          // THE SAME PHASE, TWO DIFFERENT DISPOSITIONS, decided by the census.
+          expect(e?.fence, `${phase} ${label}`)
+            .toBe(outcome === 'invalid' ? 'not-held' : 'unproved')
+        }
+      }
+    })
+
+  it('never reproduces a lock listing, a pid or a queued writer', async () => {
+    const e = await proveCompleteFence(
+      borrowedStub('99', wholeFence([lockRow(FENCE_TABLES[2], 'RowExclusiveLock', '777', false)])),
+      'V3-fence-before', '4242', 'S3').then(() => null, (x: unknown) => x)
+    const text = surfaces(e)
+    expect(text).not.toContain('777')
+    expect(text).not.toContain('RowExclusiveLock')
+    expect(text).not.toContain(FENCE_TABLES[2])
+  })
+})
+
 describe('the fence disposition is proved, never asserted', () => {
-  const failed = (phase: VerifyPhase, over: Partial<VerificationState> = {}): VerificationState =>
+  /** A failed run. `proof` is what the LAST proof established - or null if none was taken. */
+  const failed = (
+    phase: VerifyPhase, proof: FenceProofResult | null, over: Partial<VerificationState> = {},
+  ): VerificationState =>
     state({ outcome: 'FAIL', fenceDisposition: 'unproved', fenceAfterProvedBy: null,
-            fenceAfter: null,
+            fenceAfter: null, proof,
             failure: { phase, reason: PHASE_REASON[phase], at: null }, ...over })
+
+  const PROVED = (o: ProofOutcome): FenceProofResult => ({
+    outcome: o, facts: null,
+    cause: o === 'held' ? 'the complete fence was proved held'
+      : o === 'invalid' ? 'a required fence lock is missing or a conflicting request is queued'
+        : 'the proving backend could not be reached',
+  })
 
   it('a clean run is HELD, on the strength of its own final proof', async () => {
     const st = state()
@@ -1227,7 +1386,7 @@ describe('the fence disposition is proved, never asserted', () => {
 
   it('a DEAD SUPERVISOR is UNPROVED, and nothing is sent to find out', async () => {
     const prover = borrowedStub('99', wholeFence())
-    expect(await settleFenceDisposition(prover, HANDOFF(), failed('V2-supervisor')))
+    expect(await settleFenceDisposition(prover, HANDOFF(), failed('V2-supervisor', null)))
       .toBe('unproved')
     // A fence whose holder is unaccounted for cannot be proved by asking about
     // locks, so nothing is asked.
@@ -1236,19 +1395,24 @@ describe('the fence disposition is proved, never asserted', () => {
 
   it('a MISSING INITIAL LOCK is NOT-HELD: a proof ran and refused', async () => {
     const prover = borrowedStub('99', wholeFence())
-    expect(await settleFenceDisposition(prover, HANDOFF(), failed('V3-fence-before')))
-      .toBe('not-held')
+    expect(await settleFenceDisposition(prover, HANDOFF(), failed('V3-fence-before',
+      PROVED('invalid')))).toBe('not-held')
+    // AND THE SAME PHASE WITH A TRANSPORT FAILURE IS UNPROVED, not not-held.
+    expect(await settleFenceDisposition(prover, HANDOFF(), failed('V3-fence-before',
+      PROVED('unproved')))).toBe('unproved')
     expect(prover.seen).toEqual([])
   })
 
   it('a LOST FINAL FENCE is NOT-HELD', async () => {
     const prover = borrowedStub('99', wholeFence())
-    expect(await settleFenceDisposition(prover, HANDOFF(), failed('V11-fence-after')))
-      .toBe('not-held')
+    expect(await settleFenceDisposition(prover, HANDOFF(), failed('V11-fence-after',
+      PROVED('invalid')))).toBe('not-held')
+    expect(await settleFenceDisposition(prover, HANDOFF(), failed('V11-fence-after',
+      PROVED('unproved')))).toBe('unproved')
   })
 
   it('a CONTENT MISMATCH with the fence still there is HELD, and proves it', async () => {
-    const st = failed('V8-content')
+    const st = failed('V8-content', PROVED('held'))
     const prover = borrowedStub('99', wholeFence())
     expect(await settleFenceDisposition(prover, HANDOFF(), st)).toBe('held')
     expect(st.fenceAfterProvedBy).toBe('failure-path')
@@ -1258,24 +1422,34 @@ describe('the fence disposition is proved, never asserted', () => {
     for (const sql of prover.seen) expect(BORROWED_STATEMENTS).toContain(sql)
   })
 
-  it('a CONTENT MISMATCH whose failure-path reproof FAILS is UNPROVED', async () => {
+  it('a failure-path reproof that CANNOT BE TAKEN is UNPROVED, never held', async () => {
+    // Transport, refusal, unreadable results and a self-proof all establish
+    // nothing. None of them may be reported as a fence observed to be gone.
     for (const prover of [
-      borrowedStub('99', wholeFence().filter(r => r[1] !== FENCE_TABLES[3])),
-      borrowedStub('99', wholeFence([lockRow(FENCE_TABLES[0], 'RowExclusiveLock', '777', false)])),
       borrowedStub(null),
+      diesOnCensus('99'),
+      refusesEverything(),
+      borrowedStub('99', [['relation', 'graph.nodes']]),
+      borrowedStub('4242', wholeFence()),
     ]) {
-      const st = failed('V8-content')
+      const st = failed('V8-content', PROVED('held'))
       expect(await settleFenceDisposition(prover, HANDOFF(), st)).toBe('unproved')
       expect(st.fenceAfterProvedBy).toBeNull()
       expect(st.fenceAfter).toBeNull()
     }
   })
 
-  it('a QUEUED WRITER on the failure path is UNPROVED, never held', async () => {
-    const st = failed('V9-sequences')
-    const queued = borrowedStub(
-      '99', wholeFence([lockRow(FENCE_SEQUENCES[0], 'ShareLock', '777', false)]))
-    expect(await settleFenceDisposition(queued, HANDOFF(), st)).toBe('unproved')
+  it('a failure-path CENSUS that refuses is NOT-HELD: that census is evidence', async () => {
+    for (const prover of [
+      borrowedStub('99', wholeFence().filter(r => r[1] !== FENCE_TABLES[3])),
+      borrowedStub('99', wholeFence([lockRow(FENCE_TABLES[0], 'RowExclusiveLock', '777', false)])),
+      borrowedStub('99', wholeFence([lockRow(FENCE_SEQUENCES[0], 'ShareLock', '777', false)])),
+    ]) {
+      const st = failed('V9-sequences', PROVED('held'))
+      expect(await settleFenceDisposition(prover, HANDOFF(), st)).toBe('not-held')
+      expect(st.fenceAfterProvedBy).toBeNull()
+      expect(st.proof?.outcome).toBe('invalid')
+    }
   })
 
   it('NEVER masks the primary failure - whether the reproof succeeds or fails', async () => {
@@ -1286,7 +1460,7 @@ describe('the fence disposition is proved, never asserted', () => {
     // content did not match" with "the fence moved" - the wrong problem, and
     // one that reads as if the copy were fine.
     for (const prover of [borrowedStub('99', wholeFence()), borrowedStub(null)]) {
-      const st = failed('V8-content', { failure: { ...primary } })
+      const st = failed('V8-content', PROVED('held'), { failure: { ...primary } })
       const d = await settleFenceDisposition(prover, HANDOFF(), st)
       expect(st.failure).toEqual(primary)
       expect(['held', 'unproved']).toContain(d)
@@ -1301,6 +1475,7 @@ describe('the fence disposition is proved, never asserted', () => {
       const m = new PostCommitVerificationFailed('V8-content', PHASE_REASON['V8-content'], null, d)
         .message
       expect(m.includes('PROVED still held'), d).toBe(d === 'held')
+      if (d === 'not-held') expect(m).toContain('POSITIVELY FAILED')
       if (d !== 'held') {
         expect(m, d).toContain('MUTABLE')
         expect(m, d).toContain('restore producers')
@@ -1433,7 +1608,7 @@ describe('runVerification, end to end, without a database', () => {
     const e = r.thrown as PostCommitVerificationFailed
     expect(e.phase).toBe('V3-fence-before')
     expect(e.fence).toBe('not-held')
-    expect(e.message).toContain('IS NOT HELD')
+    expect(e.message).toContain('POSITIVELY FAILED')
     expect(e.message).toContain('MUTABLE')
     expect(r.opened).toBe(0)
     expect((record(r).fence as Record<string, unknown>).disposition).toBe('not-held')
@@ -1471,6 +1646,27 @@ describe('the publication outcome is preserved exactly', () => {
   /** The root the currently-running case is publishing into. */
   let ROOT_UNDER_TEST = ''
 
+  /**
+   * An `lstat` that works for the publication and then goes blind.
+   *
+   * `skip` is how many calls still succeed - the publisher's own collision
+   * checks and root check - so the failure lands on the RECOVERY probe, which
+   * is the one under test. It throws EACCES rather than ENOENT, because only
+   * ENOENT means absent and everything else means the question was not
+   * answered.
+   */
+  function blindAfter(skip: number): typeof REAL_EVIDENCE_OPS.lstatSync {
+    let seen = 0
+    return ((path: string, opts?: unknown) => {
+      if (seen++ >= skip) {
+        const err = new Error('injected') as NodeJS.ErrnoException
+        err.code = 'EACCES'
+        throw err
+      }
+      return REAL_EVIDENCE_OPS.lstatSync(path, opts as never)
+    }) as typeof REAL_EVIDENCE_OPS.lstatSync
+  }
+
   const failingOn = (
     when: (op: string, path: string) => boolean, over: Partial<EvidenceOps> = {},
   ): EvidenceOps => ({
@@ -1500,9 +1696,16 @@ describe('the publication outcome is preserved exactly', () => {
     const e = await publishFailing(root, REAL_EVIDENCE_OPS)
     expect(e).toBeInstanceOf(VerificationEvidenceRefused)
     const r = e as VerificationEvidenceRefused
-    expect(r.disposition).toBe('refused')
+    // A PRE-EXISTING DESTINATION IS NOT EVIDENCE THIS RUN PRODUCED.
+    expect(r.disposition).toBe('destination-occupied')
+    expect(r.createdByThisRun).toBe(false)
     expect(r.temporaryPath).toBeNull()
     expect(r.evidencePhase).toBe('collision')
+    expect(r.evidenceReason).toBe('a path is already present at the publication destination')
+    expect(r.finalPathState).toBe('present')
+    expect(r.temporaryPathState).toBe('absent')
+    expect(r.reason)
+      .toBe('the verification evidence was not published and a path is already occupied')
     // AND THE FILESYSTEM AGREES: no temporary directory was ever created.
     expect(readdirSync(root).sort()).toEqual([FINAL])
   })
@@ -1595,6 +1798,68 @@ describe('the publication outcome is preserved exactly', () => {
       // NOTHING was cleaned up, retried or reused.
       expect(readdirSync(root).sort()).toEqual([`${TMP}-elsewhere`])
     })
+
+  it('a path that CANNOT BE EXAMINED is UNPROVED - never absent, never a bundle',
+    async () => {
+      // The recovery probe is the last thing that looks at the disk, and an
+      // earlier version caught its failure and wrote down "nothing was
+      // created". A root whose permissions changed therefore reported no
+      // bundle, and a person was sent to look for nothing while a complete one
+      // might have been sitting there.
+      const cases: Array<[string, (root: string) => EvidenceOps]> = [
+        // 1. Failure BEFORE the temporary directory exists.
+        ['before creation', () => ({
+          ...failingOn(op => op === 'write'),
+          lstatSync: blindAfter(1),
+        })],
+        // 2. Failure AFTER it exists and has been built.
+        ['after creation', () => ({
+          ...REAL_EVIDENCE_OPS,
+          renameNoReplace: () => 'unavailable',
+          lstatSync: blindAfter(1),
+        })],
+        // 3. A destination collision.
+        ['destination collision', (root: string) => {
+          writeFileSync(join(root, FINAL), 'squatter')
+          return { ...REAL_EVIDENCE_OPS, lstatSync: blindAfter(2) }
+        }],
+        // 4. A temporary-name collision.
+        ['temporary collision', (root: string) => {
+          writeFileSync(join(root, TMP), 'squatter')
+          return { ...REAL_EVIDENCE_OPS, lstatSync: blindAfter(2) }
+        }],
+      ]
+      for (const [label, make] of cases) {
+        const root = makeRoot()
+        const e = await publishFailing(root, make(root))
+        expect(e, label).toBeInstanceOf(VerificationEvidenceRefused)
+        const r = e as VerificationEvidenceRefused
+        // AT LEAST ONE name could not be examined, so nothing is claimed about it.
+        expect([r.finalPathState, r.temporaryPathState], label).toContain('unproved')
+        expect(r.disposition, label).toBe('state-unproved')
+        expect(r.reason, label)
+          .toBe('the verification evidence state on disk could not be examined')
+        // AND IT IS NOT DESCRIBED AS A RETAINED DIAGNOSTIC BUNDLE.
+        expect(r.temporaryPath, label).toBeNull()
+        expect(r.createdByThisRun, label).toBe(false)
+        // The primary failure and the fence disposition survive regardless.
+        expect(r.verification?.phase, label).toBe('V2-supervisor')
+        expect(r.fence, label).toBe('unproved')
+      }
+    })
+
+  it('observePath answers in three states, and never guesses', () => {
+    const root = makeRoot()
+    writeFileSync(join(root, 'there'), 'x')
+    expect(observePath(join(root, 'there'), REAL_EVIDENCE_OPS)).toBe('present')
+    expect(observePath(join(root, 'not-there'), REAL_EVIDENCE_OPS)).toBe('absent')
+    // A DANGLING SYMLINK IS PRESENT, because `lstat` sees the link itself.
+    symlinkSync(join(root, 'nowhere-at-all'), join(root, 'dangling'))
+    expect(observePath(join(root, 'dangling'), REAL_EVIDENCE_OPS)).toBe('present')
+    // AND A PROBE THAT CANNOT ANSWER SAYS SO.
+    expect(observePath(join(root, 'there'),
+      { ...REAL_EVIDENCE_OPS, lstatSync: blindAfter(0) })).toBe('unproved')
+  })
 
   it('no publication failure leaks an errno, a path outside the root, or a row', async () => {
     const root = makeRoot()
