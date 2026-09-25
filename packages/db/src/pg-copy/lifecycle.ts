@@ -36,6 +36,7 @@
 // mechanism, and it is why the disposable suites can drive the whole lifecycle
 // without a single production side effect.
 
+import { readFileSync } from 'node:fs'
 import { join } from 'node:path'
 
 import {
@@ -46,7 +47,7 @@ import {
   type PublishedPhase,
 } from './evidence.js'
 import {
-  COPY_TABLES, REVIEWED_CONTRACT_DIGEST, canonicalJson,
+  COPY_TABLES, REVIEWED_CONTRACT_DIGEST, canonicalJson, contractDigest, sha256Hex,
   type Canonical, type ContractArtifact,
 } from './schema-contract.js'
 import {
@@ -59,7 +60,7 @@ import {
   type VerificationResult, type VerifierHandoff,
 } from './verify.js'
 import {
-  CommitOutcomeUnknown, runApply,
+  CommitOutcomeUnknown, isVerifiedBundle, readPublishedBundle, runApply,
   type ApplyResult, type PublishedManifest,
 } from './stage2.js'
 import type { DriverSession } from './driver-session.js'
@@ -154,32 +155,127 @@ export interface ProducerState {
 }
 
 /**
+ * THE REVIEWED QUEUES, by name. Exactly these, and all of them.
+ *
+ * A sample is only evidence if it is evidence ABOUT SOMETHING. An adapter that
+ * returned `{}` - because it could not reach Redis, because a queue was renamed,
+ * because a bug swallowed the list - satisfied "every depth is zero" the way an
+ * empty room satisfies "everyone here is asleep", twice, and the gate read two
+ * empty objects as a quiet system. The set is named here, so a missing queue is
+ * a refusal rather than a pass.
+ */
+export const REVIEWED_QUEUES: readonly string[] = Object.freeze([
+  'ai-capital-daily',
+  'ai-capital-alerts',
+])
+
+/**
+ * HOW LONG ANY OPERATIONAL ADAPTER MAY TAKE.
+ *
+ * Every adapter here is somebody else's code reaching somebody else's daemon. A
+ * `launchctl` that never returns, a Redis connection that hangs mid-handshake -
+ * neither raises, and an `await` on either one stops the lifecycle forever WITH
+ * THE FENCE HELD. That is the worst outcome available: the source stays frozen,
+ * the producers stay down, and nothing ever reports why. A bounded refusal that
+ * names the adapter is strictly better than a process that is still waiting.
+ */
+export const ADAPTER_DEADLINE_MS = 30_000
+
+/** What every adapter call is given: a way to know it has been abandoned. */
+export interface AdapterContext {
+  readonly signal: AbortSignal
+}
+
+/**
  * READ-ONLY. Reports what the producers are doing and changes nothing.
  *
  * Separate from `ProducerAdapter` on purpose: the gate consults quiescence
- * repeatedly and must not be able to alter what it is measuring, and an
- * interface that could start something is an interface a gate could start
- * something with.
+ * repeatedly and must not be able to alter what it is measuring.
  */
 export interface QuiescenceAdapter {
-  report(): Promise<readonly ProducerState[]>
+  report(ctx: AdapterContext): Promise<readonly ProducerState[]>
 }
 
-/** One bounded observation of the queues. Depth per reviewed queue name. */
+/** One bounded observation of the queues. Depth per REVIEWED queue name. */
 export interface QueueSample {
   readonly depths: Readonly<Record<string, number>>
 }
 
 export interface QueueAdapter {
-  sample(): Promise<QueueSample>
+  sample(ctx: AdapterContext): Promise<QueueSample>
 }
 
 /** The only thing in this module that starts anything. */
 export interface ProducerAdapter {
-  restore(name: string): Promise<void>
+  restore(name: string, ctx: AdapterContext): Promise<void>
   /** Independently confirm it is running. A `restore` that returned is not proof. */
-  confirm(name: string): Promise<boolean>
+  confirm(name: string, ctx: AdapterContext): Promise<boolean>
 }
+
+/** An adapter call that did not finish in time. Never carries what it was doing. */
+export class AdapterDeadlineExceeded extends Error {
+  constructor(readonly adapter: string) {
+    super(`the ${adapter} adapter did not answer within the reviewed deadline`)
+    this.name = 'AdapterDeadlineExceeded'
+  }
+}
+
+/**
+ * Run one adapter call under a real deadline, and abandon it if it overruns.
+ *
+ * THE TIMER IS ALWAYS CLEARED. An un-cleared timer keeps the event loop alive,
+ * which turns "the lifecycle refused promptly" into "the process would not
+ * exit" - a different way of hanging, reached by the code that exists to stop
+ * hanging. The signal is aborted too, so an adapter that is listening can stop
+ * whatever it started rather than completing into a lifecycle that has gone.
+ */
+export async function withDeadline<T>(
+  adapter: string, ms: number, run: (ctx: AdapterContext) => Promise<T>,
+): Promise<T> {
+  const controller = new AbortController()
+  let timer: ReturnType<typeof setTimeout> | null = null
+  try {
+    return await Promise.race([
+      run({ signal: controller.signal }),
+      new Promise<never>((_resolve, reject) => {
+        timer = setTimeout(() => {
+          controller.abort()
+          reject(new AdapterDeadlineExceeded(adapter))
+        }, ms)
+      }),
+    ])
+  } finally {
+    if (timer !== null) clearTimeout(timer)
+  }
+}
+
+/**
+ * A REVIEWED SESSION: one backend, one role, both named.
+ *
+ * NOT A ROLE LIST. An allowlist of roles authorises a ROLE, and the copy's
+ * export role is exactly the role anything reading the source would be using -
+ * so a second connection as that role, opened by anyone for any reason, was
+ * indistinguishable from the lifecycle's own. What is actually reviewed is a
+ * specific backend, doing a specific job, under a specific role.
+ */
+export interface ReviewedSession {
+  readonly pid: string
+  readonly role: string
+}
+
+/**
+ * The backend types the server owns, accepted because they are not client
+ * sessions at all and cannot hold a client's locks or write a client's rows.
+ *
+ * A CLOSED LIST. "Anything that is not a client backend" would admit a type
+ * PostgreSQL adds in a future release, and the point of the census is that
+ * nothing unexamined is connected to the source.
+ */
+export const REVIEWED_BACKEND_TYPES: readonly string[] = Object.freeze([
+  'autovacuum launcher', 'autovacuum worker', 'background writer', 'checkpointer',
+  'logical replication launcher', 'walwriter', 'archiver', 'startup', 'walsender',
+  'walreceiver', 'slotsync worker', 'io worker', 'parallel worker',
+])
 
 // ---------------------------------------------------------------------------
 // PHASES AND REASONS
@@ -265,16 +361,56 @@ export interface LifecycleFailure {
   readonly at: string | null
 }
 
-/** What happened to a published bundle, truthfully. */
+/**
+ * WHAT HAPPENED TO A PUBLISHED BUNDLE, in full.
+ *
+ * A `note` naming the disposition threw away everything a person needs to act:
+ * which phase the publisher stopped at, its own reviewed reason, which paths
+ * exist and which could not be examined. Reducing "a complete bundle is
+ * retained at this path" to one word is how an operator ends up looking for
+ * nothing.
+ */
 export interface EvidenceState {
   readonly attempted: boolean
   readonly publishedPath: string | null
   readonly verified: boolean
   readonly note: string | null
+  readonly publication: LifecyclePublication | null
+  readonly evidencePhase: EvidencePhase | PublishedPhase | null
+  readonly evidenceReason: EvidenceReason | null
+  readonly finalPath: string | null
+  readonly finalPathState: PathState | null
+  readonly temporaryPath: string | null
+  readonly temporaryPathState: PathState | null
 }
 
-const NO_EVIDENCE: EvidenceState =
-  Object.freeze({ attempted: false, publishedPath: null, verified: false, note: null })
+const NO_EVIDENCE: EvidenceState = Object.freeze({
+  attempted: false, publishedPath: null, verified: false, note: null,
+  publication: null, evidencePhase: null, evidenceReason: null,
+  finalPath: null, finalPathState: null, temporaryPath: null, temporaryPathState: null,
+})
+
+/** Turn a publication failure into the state that keeps all of its findings. */
+function evidenceStateOf(e: unknown, fallback: string): EvidenceState {
+  if (!(e instanceof LifecycleEvidenceFailed)) {
+    return { ...NO_EVIDENCE, attempted: true, note: fallback }
+  }
+  return Object.freeze({
+    attempted: true,
+    // A bundle that IS published, and failed after the rename, has a path worth
+    // naming. One that was refused does not, and must not be given one.
+    publishedPath: e.publication === 'published-unverified' ? e.finalPath : null,
+    verified: false,
+    note: e.publication,
+    publication: e.publication,
+    evidencePhase: e.evidencePhase,
+    evidenceReason: e.evidenceReason,
+    finalPath: e.finalPath,
+    finalPathState: e.finalPathState,
+    temporaryPath: e.temporaryPath,
+    temporaryPathState: e.temporaryPathState,
+  })
+}
 
 /**
  * SOMETHING FAILED AFTER COMMIT AND BEFORE A PROVED RELEASE. A PERSON MUST LOOK.
@@ -338,8 +474,27 @@ export function isInterventionRequired(v: unknown): v is LifecycleInterventionRe
 // THE RELEASE GATE
 // ---------------------------------------------------------------------------
 
-/** Registered authorizations. See `isReleaseAuthorization`. */
-const ISSUED_AUTHORIZATIONS = new WeakSet<object>()
+/**
+ * WHAT EACH AUTHORIZATION IS BOUND TO. A permission, not a fact.
+ *
+ * A bare set membership said only "this module minted this object". That is
+ * three claims short of what a release needs: minted FOR WHICH SUPERVISOR,
+ * against WHICH BACKEND, and NOT ALREADY USED. Without the first, an
+ * authorization proved against one supervisor releases a fence held by
+ * another; without the second, a supervisor that died and reconnected on the
+ * same object releases whatever the new backend happens to hold; without the
+ * third, one gate run authorises every release anybody later asks for.
+ */
+interface AuthorizationRecord {
+  /** The exact object the gate proved against. Compared by identity. */
+  readonly supervisor: FenceExecutor
+  /** The backend that object reported at gate time. */
+  readonly supervisorPid: string
+  /** Set BEFORE the ROLLBACK is submitted, and never cleared. */
+  consumed: boolean
+}
+
+const AUTHORIZATIONS = new WeakMap<object, AuthorizationRecord>()
 
 /** A TYPE-ONLY brand, for compile-time opacity, carrying no runtime authority. */
 declare const RELEASE_AUTHORIZATION: unique symbol
@@ -372,7 +527,13 @@ export interface FenceFactsLike {
 }
 
 export function isReleaseAuthorization(v: unknown): v is ReleaseAuthorization {
-  return typeof v === 'object' && v !== null && ISSUED_AUTHORIZATIONS.has(v)
+  return typeof v === 'object' && v !== null && AUTHORIZATIONS.has(v)
+}
+
+/** Has this authorization been spent? An object nobody minted counts as spent. */
+export function isAuthorizationConsumed(v: unknown): boolean {
+  if (typeof v !== 'object' || v === null) return true
+  return AUTHORIZATIONS.get(v)?.consumed !== false
 }
 
 /** WHY the gate refused. A CLOSED union; never a measured value. */
@@ -397,17 +558,23 @@ export class ReleaseGateRefused extends Error {
 export interface ReleaseGateInput {
   readonly handoff: VerifierHandoff
   readonly verification: VerificationResult
-  /** The Stage-1 manifest document the copy was authorised against. */
-  readonly publishedDocument: Record<string, never>
+  /**
+   * The Stage-1 bundle, as `readPublishedBundle` MINTED it.
+   *
+   * The whole object rather than its document, and checked by identity: a
+   * document is a value anyone can write, and every comparison below would then
+   * be honest about the wrong thing.
+   */
+  readonly published: PublishedManifest
   readonly reviewedTarget: ContractArtifact
   /** BORROWED. Read through; never ended, never rolled back by the gate. */
   readonly supervisor: FenceExecutor
   readonly prover: FenceExecutor
   readonly quiescence: QuiescenceAdapter
   readonly queue: QueueAdapter
-  /** Backends that may legitimately be connected to the source right now. */
-  readonly allowlistedPids: readonly string[]
-  readonly allowlistedRoles: readonly string[]
+  /** EXACT pid+role pairs. Every client backend must match one of them. */
+  readonly reviewedSessions: readonly ReviewedSession[]
+  readonly deadlineMs?: number
   readonly ops?: EvidenceOps
 }
 
@@ -431,6 +598,7 @@ const IDENT = /^[a-z_][a-z0-9_]*$/
 export async function runReleaseGate(i: ReleaseGateInput): Promise<ReleaseAuthorization> {
   const h = i.handoff
   const ops = i.ops ?? REAL_EVIDENCE_OPS
+  const deadlineMs = i.deadlineMs ?? ADAPTER_DEADLINE_MS
 
   // 1. THE SAME LIVE BACKEND.
   let alive: { rows: string[][]; error: 'statement-refused' | null }
@@ -455,7 +623,15 @@ export async function runReleaseGate(i: ReleaseGateInput): Promise<ReleaseAuthor
     throw new ReleaseGateRefused('the independent verification did not pass')
   }
 
-  // 4. THE VERIFIER'S BUNDLE VERIFIES FROM DISK, and says PASS in its own bytes.
+  // 4. THE VERIFIER'S BUNDLE VERIFIES FROM DISK, AND DESCRIBES THIS RUN.
+  //
+  // `complete: true` and `outcome: "PASS"` say a verification succeeded. They
+  // do not say WHICH ONE. Every earlier run of this copy left a bundle that
+  // satisfies both, and an operator pointing the lifecycle at yesterday's
+  // evidence - or at a bundle from a different source entirely - would have
+  // been authorised by it. So the record is read out and bound, field by field,
+  // to the Stage-1 bundle, the Stage-2 result and the in-memory verification
+  // this run actually produced.
   const bundle = i.verification.evidence.finalPath
   let files: readonly string[]
   try {
@@ -466,16 +642,14 @@ export async function runReleaseGate(i: ReleaseGateInput): Promise<ReleaseAuthor
   if (!files.includes(VERIFICATION_FILE) || !files.includes(DIGEST_FILE)) {
     throw new ReleaseGateRefused('the verifier evidence bundle does not verify from disk')
   }
-  let recorded: { outcome?: unknown; complete?: unknown }
+  let recorded: RecordedVerification
   try {
     recorded = JSON.parse(
       ops.readFileSync(join(bundle, VERIFICATION_FILE), 'utf-8') as unknown as string) as never
   } catch {
     throw new ReleaseGateRefused('the verifier evidence bundle does not verify from disk')
   }
-  if (recorded.outcome !== 'PASS' || recorded.complete !== true) {
-    throw new ReleaseGateRefused('the verifier evidence bundle does not verify from disk')
-  }
+  assertRecordedVerificationIsThisRun(recorded, i)
 
   // 5. THE CHAIN AGREES: identities, contracts, root, table set, sequence set.
   assertChainAgrees(i)
@@ -503,7 +677,7 @@ export async function runReleaseGate(i: ReleaseGateInput): Promise<ReleaseAuthor
 
   // 7. QUIESCENCE, AGAIN. L2 said so before the copy; a producer restarted
   //    during it would have been writing to the source the whole time.
-  const producers = await reportProducers(i.quiescence)
+  const producers = await reportProducers(i.quiescence, deadlineMs)
 
   // 8. WHO IS CONNECTED TO THE SOURCE.
   const activity = await censusActivity(i)
@@ -511,7 +685,7 @@ export async function runReleaseGate(i: ReleaseGateInput): Promise<ReleaseAuthor
   // 9. TWO BOUNDED QUEUE SAMPLES, both empty and equal to each other. One
   //    sample cannot distinguish an empty queue from a queue caught between
   //    two jobs.
-  const queueSamples = await sampleQueues(i.queue)
+  const queueSamples = await sampleQueues(i.queue, deadlineMs)
 
   const authorization = Object.freeze({
     rootDigest: h.rootDigest,
@@ -525,9 +699,109 @@ export async function runReleaseGate(i: ReleaseGateInput): Promise<ReleaseAuthor
     verifierBundle: bundle,
   })
   // REGISTERED LAST, after every proof above has passed and the object is
-  // final. Nothing that failed can carry an identity this module minted.
-  ISSUED_AUTHORIZATIONS.add(authorization)
+  // final - and registered WITH what it was proved against, so the release can
+  // check it is about to end the same transaction the gate examined.
+  AUTHORIZATIONS.set(authorization, {
+    supervisor: i.supervisor, supervisorPid: h.fence.supervisorPid, consumed: false,
+  })
   return authorization as unknown as ReleaseAuthorization
+}
+
+/** The published verification manifest, as far as this module reads it. */
+interface RecordedVerification {
+  readonly outcome?: unknown
+  readonly complete?: unknown
+  readonly bundle?: { readonly name?: unknown }
+  readonly source?: {
+    readonly system_identifier?: unknown; readonly database?: unknown; readonly role?: unknown
+    readonly contract_digest?: unknown; readonly root_digest?: unknown
+  }
+  readonly target?: {
+    readonly system_identifier?: unknown; readonly database?: unknown; readonly role?: unknown
+    readonly contract_digest?: unknown; readonly root_digest?: unknown
+  }
+  readonly stage2?: {
+    readonly root_digest?: unknown
+    readonly source_contract_digest?: unknown
+    readonly target_contract_digest?: unknown
+  }
+  readonly tables?: ReadonlyArray<{
+    readonly qname?: unknown; readonly source_digest?: unknown
+    readonly target_digest?: unknown; readonly rows?: unknown
+  }>
+  readonly sequences?: ReadonlyArray<{
+    readonly qname?: unknown
+    readonly source_effective_next?: unknown; readonly target_effective_next?: unknown
+  }>
+}
+
+/**
+ * THE DURABLE RECORD MUST BE ABOUT THIS RUN, not merely about a good one.
+ *
+ * Everything compared here was written by the verifier into bytes its own
+ * DIGEST covers, and is compared against values that came from somewhere else
+ * entirely: the Stage-1 bundle read off disk, the Stage-2 handoff, and the
+ * `VerificationResult` still in memory. A bundle from an earlier run agrees
+ * with none of them.
+ */
+function assertRecordedVerificationIsThisRun(
+  r: RecordedVerification, i: ReleaseGateInput,
+): void {
+  const h = i.handoff
+  const v = i.verification
+  const fail = (at: string): never => {
+    throw new ReleaseGateRefused('the verifier evidence bundle does not verify from disk', at)
+  }
+  if (r.outcome !== 'PASS' || r.complete !== true) fail('the recorded outcome')
+
+  // WHICH STAGE-1 BUNDLE.
+  if (r.bundle?.name !== i.published.bundleName) fail('the recorded bundle name')
+  if (r.bundle?.name !== h.bundleName) fail('the recorded bundle name')
+
+  // WHICH DATABASES. Identity as the verifier MEASURED it, not as anyone says.
+  for (const [what, rec, stated] of [
+    ['source', r.source, h.source], ['target', r.target, h.target],
+  ] as const) {
+    if (rec?.system_identifier !== stated.systemIdentifier) fail(`the recorded ${what} cluster`)
+    if (rec?.database !== stated.database) fail(`the recorded ${what} database`)
+    if (rec?.role !== stated.role) fail(`the recorded ${what} role`)
+  }
+  if (r.source?.contract_digest !== h.sourceContractDigest) fail('the recorded source contract')
+  if (r.target?.contract_digest !== h.targetContractDigest) fail('the recorded target contract')
+  if (r.source?.root_digest !== v.sourceRootDigest) fail('the recorded source root')
+  if (r.target?.root_digest !== v.targetRootDigest) fail('the recorded target root')
+  if (r.stage2?.root_digest !== h.rootDigest) fail('the recorded Stage-2 root')
+  if (r.stage2?.source_contract_digest !== h.sourceContractDigest) {
+    fail('the recorded Stage-2 source contract')
+  }
+  if (r.stage2?.target_contract_digest !== h.targetContractDigest) {
+    fail('the recorded Stage-2 target contract')
+  }
+
+  // EVERY TABLE, in the reviewed order, by both digests and its row count.
+  const tables = Array.isArray(r.tables) ? r.tables : []
+  if (tables.length !== COPY_TABLES.length) fail('the recorded table set')
+  for (let n = 0; n < COPY_TABLES.length; n += 1) {
+    const q = COPY_TABLES[n]
+    if (tables[n].qname !== q) fail(`the recorded table set at ${q}`)
+    if (tables[n].source_digest !== h.tables[n].digest) fail(`${q} recorded source digest`)
+    if (tables[n].target_digest !== h.tables[n].digest) fail(`${q} recorded target digest`)
+    if (tables[n].rows !== h.tables[n].rows) fail(`${q} recorded row count`)
+  }
+
+  // EVERY SEQUENCE, by what each side would issue next.
+  const sequences = Array.isArray(r.sequences) ? r.sequences : []
+  if (sequences.length !== FENCE_SEQUENCES.length) fail('the recorded sequence set')
+  for (let n = 0; n < FENCE_SEQUENCES.length; n += 1) {
+    const q = FENCE_SEQUENCES[n]
+    if (sequences[n].qname !== q) fail(`the recorded sequence set at ${q}`)
+    if (sequences[n].source_effective_next !== h.sequences[n].effectiveNext) {
+      fail(`${q} recorded source position`)
+    }
+    if (sequences[n].target_effective_next !== h.sequences[n].effectiveNext) {
+      fail(`${q} recorded target position`)
+    }
+  }
 }
 
 /** Every claim in the chain, compared where it can be compared. */
@@ -542,7 +816,10 @@ function assertChainAgrees(i: ReleaseGateInput): void {
   if (v.sourceRootDigest !== h.rootDigest) fail('the source root')
   if (v.targetRootDigest !== h.rootDigest) fail('the target root')
 
-  const doc = i.publishedDocument as unknown as {
+  // THE STAGE-1 BUNDLE CAME THROUGH THE DISK VERIFIER. Checked by identity,
+  // because everything below is a comparison against what it says.
+  if (!isVerifiedBundle(i.published)) fail('the Stage-1 bundle provenance')
+  const doc = i.published.document as unknown as {
     content?: { root_digest?: unknown; tables?: Array<{ qname?: unknown; digest?: unknown }> }
     source_contract?: { digest?: unknown }
   }
@@ -602,12 +879,15 @@ async function readSequences(supervisor: FenceExecutor): Promise<SequencePositio
 }
 
 /** Every reviewed producer, and all of them stopped. */
-async function reportProducers(q: QuiescenceAdapter): Promise<readonly ProducerState[]> {
+async function reportProducers(
+  q: QuiescenceAdapter, deadlineMs: number = ADAPTER_DEADLINE_MS,
+): Promise<readonly ProducerState[]> {
   let report: readonly ProducerState[]
   try {
-    report = await q.report()
-  } catch {
-    throw new ReleaseGateRefused('a reviewed producer is not stopped')
+    report = await withDeadline('quiescence', deadlineMs, ctx => q.report(ctx))
+  } catch (e) {
+    throw new ReleaseGateRefused('a reviewed producer is not stopped',
+      e instanceof AdapterDeadlineExceeded ? 'the deadline' : null)
   }
   if (report.length !== REVIEWED_PRODUCERS.length) {
     throw new ReleaseGateRefused('a reviewed producer is not stopped')
@@ -630,58 +910,94 @@ async function reportProducers(q: QuiescenceAdapter): Promise<readonly ProducerS
 async function censusActivity(
   i: ReleaseGateInput,
 ): Promise<{ sessions: number; unreviewed: number }> {
+  const refuse = (at: string | null = null): never => {
+    throw new ReleaseGateRefused('the source carries sessions that are not reviewed', at)
+  }
+  // THE REVIEWED SET ITSELF MUST BE COHERENT. One pid claimed by two roles, or
+  // one pid listed twice, is an allowlist that cannot be checked against.
+  const byPid = new Map<string, string>()
+  for (const r of i.reviewedSessions) {
+    if (typeof r?.pid !== 'string' || !/^\d+$/.test(r.pid)) refuse('a reviewed session pid')
+    if (typeof r?.role !== 'string' || !IDENT.test(r.role)) refuse('a reviewed session role')
+    const seen = byPid.get(r.pid)
+    if (seen !== undefined) {
+      refuse(seen === r.role ? 'a duplicate reviewed session' : 'a conflicting reviewed session')
+    }
+    byPid.set(r.pid, r.role)
+  }
+  if (byPid.size === 0) refuse('an empty reviewed session set')
+
   let res: { rows: string[][]; error: 'statement-refused' | null }
   try {
     res = await i.prover.send(ACTIVITY_CENSUS_SQL)
   } catch {
-    throw new ReleaseGateRefused('the source carries sessions that are not reviewed')
+    return refuse('the census could not be taken')
   }
-  if (res.error !== null) {
-    throw new ReleaseGateRefused('the source carries sessions that are not reviewed')
-  }
+  if (res.error !== null) refuse('the census was refused')
+
   let unreviewed = 0
   for (const row of res.rows) {
-    if (row.length !== 3) {
-      throw new ReleaseGateRefused('the source carries sessions that are not reviewed')
-    }
+    if (!Array.isArray(row) || row.length !== 3) refuse('a malformed census row')
     const [pid, role, backendType] = row
-    // Background workers are the server's own and have no role.
-    if (backendType !== '' && backendType !== 'client backend') continue
-    if (i.allowlistedPids.includes(pid)) continue
-    if (i.allowlistedRoles.includes(role)) continue
-    unreviewed += 1
+    if (typeof pid !== 'string' || typeof role !== 'string' ||
+        typeof backendType !== 'string') {
+      refuse('a malformed census row')
+    }
+    // SERVER-OWNED BACKENDS, through a closed list and nothing wider.
+    if (backendType !== 'client backend') {
+      if (!REVIEWED_BACKEND_TYPES.includes(backendType)) refuse('an unreviewed backend type')
+      continue
+    }
+    // A CLIENT BACKEND MATCHES A PAIR, OR IT DOES NOT MATCH. A role on its own
+    // authorises nothing: the export role is exactly what a second reader would
+    // be using, which is the case this census exists to catch.
+    if (!/^\d+$/.test(pid)) refuse('a malformed census row')
+    if (byPid.get(pid) !== role) unreviewed += 1
   }
-  if (unreviewed > 0) {
-    throw new ReleaseGateRefused(
-      'the source carries sessions that are not reviewed', `${unreviewed} session(s)`)
-  }
+  if (unreviewed > 0) refuse(`${unreviewed} session(s)`)
   return { sessions: res.rows.length, unreviewed }
 }
 
-/** Two bounded samples. Both empty, and equal to each other. */
-async function sampleQueues(q: QueueAdapter): Promise<readonly QueueSample[]> {
+/**
+ * Two bounded samples: the REVIEWED queue set, all of it, all empty, and equal.
+ *
+ * `{}` twice used to pass. The set is named now, so a queue the adapter could
+ * not see is a refusal; and each call is deadline-bounded, so an adapter that
+ * never answers stops the lifecycle with a reason rather than stopping it
+ * forever with the fence held.
+ */
+async function sampleQueues(
+  q: QueueAdapter, deadlineMs: number,
+): Promise<readonly QueueSample[]> {
+  const refuse = (at: string | null = null): never => {
+    throw new ReleaseGateRefused('the queue samples are not empty and stable', at)
+  }
   const samples: QueueSample[] = []
   for (let n = 0; n < 2; n += 1) {
     try {
-      samples.push(await q.sample())
-    } catch {
-      throw new ReleaseGateRefused('the queue samples are not empty and stable')
+      samples.push(await withDeadline('queue', deadlineMs, ctx => q.sample(ctx)))
+    } catch (e) {
+      refuse(e instanceof AdapterDeadlineExceeded ? 'the deadline' : null)
     }
   }
   for (const s of samples) {
-    for (const [name, depth] of Object.entries(s.depths)) {
-      if (!Number.isSafeInteger(depth) || depth !== 0) {
-        throw new ReleaseGateRefused('the queue samples are not empty and stable', name)
-      }
+    const depths = s?.depths
+    if (depths === null || typeof depths !== 'object') refuse('a malformed sample')
+    // EXACTLY THE REVIEWED SET: nothing missing, nothing extra. Object keys are
+    // unique, so counting them and requiring each reviewed name covers both.
+    if (Object.keys(depths).length !== REVIEWED_QUEUES.length) refuse('the sampled queue set')
+    for (const name of REVIEWED_QUEUES) {
+      if (!Object.prototype.hasOwnProperty.call(depths, name)) refuse(name)
+      const depth = depths[name]
+      if (!Number.isSafeInteger(depth) || depth !== 0) refuse(name)
     }
   }
   if (canonicalJson(samples[0].depths as Canonical) !==
       canonicalJson(samples[1].depths as Canonical)) {
-    throw new ReleaseGateRefused('the queue samples are not empty and stable')
+    refuse('the two samples')
   }
   return Object.freeze(samples.map(s => Object.freeze({ depths: Object.freeze({ ...s.depths }) })))
 }
-
 
 // ---------------------------------------------------------------------------
 // RELEASE AND RESTORATION
@@ -711,22 +1027,69 @@ export interface ReleaseResult {
 export async function releaseFence(
   supervisor: FenceExecutor, authorization: ReleaseAuthorization,
 ): Promise<ReleaseResult> {
-  if (!isReleaseAuthorization(authorization)) {
-    throw new ReleaseGateRefused('the complete source fence was not proved held')
+  // THE THREE SYNCHRONOUS CHECKS, THEN THE CONSUMPTION, WITH NO `await` BETWEEN
+  // THEM. That ordering is the whole concurrency argument: JavaScript will not
+  // interleave these statements, so two callers racing on one authorization
+  // cannot both get past the `consumed` test - the first marks it and the
+  // second finds it marked. A PID query placed before the consumption would put
+  // an `await` in that window and hand both of them a release.
+  const record = AUTHORIZATIONS.get(authorization)
+  if (record === undefined) {
+    throw new ReleaseGateRefused('the complete source fence was not proved held',
+                                 'the authorization was not issued by this gate')
+  }
+  // THE SAME SUPERVISOR OBJECT. Not a matching pid, not an equivalent session:
+  // the transaction the gate proved against is the transaction being ended.
+  // Refused BEFORE consumption, so a misdirected attempt cannot spend the
+  // holder's authorization, and refused before a statement is sent anywhere.
+  if (record.supervisor !== supervisor) {
+    throw new ReleaseGateRefused('the complete source fence was not proved held',
+                                 'the authorization belongs to another supervisor')
+  }
+  if (record.consumed) {
+    throw new ReleaseGateRefused('the complete source fence was not proved held',
+                                 'the authorization has already been used')
+  }
+  // SPENT. From here it is spent whatever happens next - refused, timed out, or
+  // lost to a transport nobody can ask. A second attempt must run a second
+  // gate, because the first one's proofs are about a moment that has passed.
+  record.consumed = true
+
+  // AND THE BACKEND IS STILL THE ONE THAT WAS PROVED. A supervisor that died
+  // and reconnected on the same object holds none of the fence, and rolling it
+  // back would release nothing while reporting a release.
+  let alive: { rows: string[][]; error: 'statement-refused' | null }
+  try {
+    alive = await supervisor.send(SUPERVISOR_ALIVE_SQL)
+  } catch {
+    throw new ReleaseGateRefused('the complete source fence was not proved held',
+                                 'the supervisor could not be reached')
+  }
+  if (alive.error !== null || (alive.rows[0]?.[0] ?? '') !== record.supervisorPid) {
+    throw new ReleaseGateRefused('the complete source fence was not proved held',
+                                 'the supervisor is not the backend the gate proved')
   }
 
-  // THE RELEASE. One statement, on the supervisor, and this is the only place
-  // in this module that sends it.
-  const released = await supervisor.send(RELEASE_SQL)
+  // THE RELEASE. One statement, on the supervisor, and the only place in this
+  // module that sends it.
+  let released: { rows: string[][]; error: 'statement-refused' | null }
+  try {
+    released = await supervisor.send(RELEASE_SQL)
+  } catch {
+    // SUBMITTED, OUTCOME UNKNOWN. Not retried: a second ROLLBACK on a
+    // transaction that already ended is meaningless, and on one that did not it
+    // would be an attempt nobody authorised.
+    return { state: 'released-unproved', remainingLocks: null }
+  }
   if (released.error !== null) {
-    // The transaction did not end, so the fence is still held - and this is
-    // NOT a release that failed to prove. Reported as a plain refusal so the
-    // caller stays on the intervention path with the lease intact.
+    // The transaction did not end, so the fence is still held - and this is NOT
+    // a release that failed to prove. Raised as a plain refusal so the caller
+    // stays on the intervention path with the lease intact.
     throw new ReleaseGateRefused('the complete source fence was not proved held', 'the rollback')
   }
 
-  // THE PROOF, on the supervisor's own backend, which is the only session that
-  // can answer "do I still hold anything" about itself.
+  // THE PROOF, on the supervisor's own backend - the only session that can
+  // answer "do I still hold anything" about itself.
   try {
     const census = await supervisor.send(
       RELEASED_LOCK_CENSUS_SQL.replace('$1', fenceRelationArray()))
@@ -760,13 +1123,18 @@ export interface RestorationResult {
  * a launch command that exits zero and a job that is running are different
  * facts and the reviewed order depends on the second one.
  */
-export async function restoreProducers(a: ProducerAdapter): Promise<RestorationResult> {
+export async function restoreProducers(
+  a: ProducerAdapter, deadlineMs: number = ADAPTER_DEADLINE_MS,
+): Promise<RestorationResult> {
   const restored: string[] = []
   for (const name of RESTORE_ORDER) {
     let ok = false
     try {
-      await a.restore(name)
-      ok = await a.confirm(name) === true
+      // BOUNDED. A `launchctl` that never returns would otherwise leave the
+      // lifecycle waiting between two producers, with the fence already gone
+      // and nobody able to say which of them is running.
+      await withDeadline('producer', deadlineMs, ctx => a.restore(name, ctx))
+      ok = await withDeadline('producer', deadlineMs, ctx => a.confirm(name, ctx)) === true
     } catch {
       ok = false
     }
@@ -971,6 +1339,42 @@ export {
 // ---------------------------------------------------------------------------
 
 /**
+ * END THE SUPERVISOR TRANSACTION AND PROVE THE REVIEWED LOCKS ARE GONE.
+ *
+ * Used on the PRE-COMMIT path only, where the target is untouched and the one
+ * thing left to put right is the fence. Exactly one ROLLBACK: an unknown
+ * submission outcome is not retried, because a second ROLLBACK on a transaction
+ * that already ended is meaningless and on one that did not it is an attempt
+ * nobody decided to make.
+ */
+export async function rollbackAndProveReleased(
+  supervisor: FenceExecutor,
+): Promise<ReleaseResult | 'not-released'> {
+  let released: { rows: string[][]; error: 'statement-refused' | null }
+  try {
+    released = await supervisor.send(RELEASE_SQL)
+  } catch {
+    // SUBMITTED, OUTCOME UNKNOWN. Not retried, and not describable as released.
+    return { state: 'released-unproved', remainingLocks: null }
+  }
+  if (released.error !== null) return 'not-released'
+  try {
+    const census = await supervisor.send(
+      RELEASED_LOCK_CENSUS_SQL.replace('$1', fenceRelationArray()))
+    if (census.error !== null) return { state: 'released-unproved', remainingLocks: null }
+    const n = Number(census.rows[0]?.[0] ?? NaN)
+    if (!Number.isSafeInteger(n) || n < 0) {
+      return { state: 'released-unproved', remainingLocks: null }
+    }
+    return n === 0
+      ? { state: 'released', remainingLocks: 0 }
+      : { state: 'released-unproved', remainingLocks: n }
+  } catch {
+    return { state: 'released-unproved', remainingLocks: null }
+  }
+}
+
+/**
  * OWNERSHIP IS RECORDED, NOT REMEMBERED.
  *
  * The supervisor and the prover belong to the caller: the fence lives in the
@@ -991,7 +1395,16 @@ export interface LifecycleInput {
   readonly openVerifySource: () => Promise<VerifyCloseable>
   readonly openVerifyTarget: () => Promise<VerifyCloseable>
 
-  readonly published: PublishedManifest
+  /**
+   * The Stage-1 bundle DIRECTORY. Not a manifest object.
+   *
+   * The lifecycle verifies it here, through the reviewed disk verifier, rather
+   * than accepting somebody's word for what it said. A `PublishedManifest` is a
+   * claim that a DIGEST covered the bytes the fields came out of, and an
+   * ordinary interface is a claim anybody can make by writing an object literal.
+   */
+  readonly bundleDir: string
+  readonly readFile?: (path: string) => string
   readonly reviewedTarget: ContractArtifact
   readonly operator: OperatorInput
   readonly sourceBeginSql: string
@@ -1001,8 +1414,9 @@ export interface LifecycleInput {
   readonly quiescence: QuiescenceAdapter
   readonly queue: QueueAdapter
   readonly producers: ProducerAdapter
-  readonly allowlistedPids: readonly string[]
-  readonly allowlistedRoles: readonly string[]
+  /** EXACT pid+role pairs for every session legitimately on the source. */
+  readonly reviewedSessions: readonly ReviewedSession[]
+  readonly deadlineMs?: number
 
   readonly evidenceRoot: string
   readonly runIds?: { verification?: string; releaseGate?: string; lifecycle?: string }
@@ -1024,8 +1438,10 @@ export interface LifecycleResult {
  * L2 and the gate share ONE quiescence contract, so the reviewed producer list
  * is compared against what the adapter reports in exactly one place.
  */
-export async function assertQuiescent(q: QuiescenceAdapter): Promise<readonly ProducerState[]> {
-  return await reportProducers(q)
+export async function assertQuiescent(
+  q: QuiescenceAdapter, deadlineMs: number = ADAPTER_DEADLINE_MS,
+): Promise<readonly ProducerState[]> {
+  return await reportProducers(q, deadlineMs)
 }
 
 /**
@@ -1055,8 +1471,13 @@ export async function runLifecycle(i: LifecycleInput): Promise<LifecycleResult> 
   }
 
   let stageSource: DriverSession | null = null
+  /** SEPARATE FACTS. The snapshot's ROLLBACK is not the session's close, and a
+   *  `finally` that conflated them re-submitted a statement already sent. */
+  let snapshotEnded = false
   let gateEvidence: EvidenceState = NO_EVIDENCE
   let outcomeEvidence: EvidenceState = NO_EVIDENCE
+  /** Publication is attempted ONCE per run id, and its first result stands. */
+  let outcomeAttempted = false
   let committed = false
   let applied: ApplyResult | null = null
   let verification: VerificationResult | null = null
@@ -1068,10 +1489,19 @@ export async function runLifecycle(i: LifecycleInput): Promise<LifecycleResult> 
   const recordOutcome = (
     fence: LifecycleFenceState, failure: LifecycleFailure | null, gateBundle: string | null,
   ): EvidenceState => {
+    // ONCE PER RUN ID, AND THE FIRST RESULT STANDS.
+    //
+    // A second attempt under the same name can only collide with the first -
+    // and that collision would then be reported INSTEAD of what actually
+    // happened. A bundle published but unverified, or a temporary directory
+    // retained, is the finding; "a path is already present" is the noise a
+    // retry makes on top of it.
+    if (outcomeAttempted) return outcomeEvidence
+    outcomeAttempted = true
     const h = applied?.verification
     if (h === undefined) {
-      return { attempted: false, publishedPath: null, verified: false,
-               note: 'no Stage-2 result to describe' }
+      outcomeEvidence = { ...NO_EVIDENCE, note: 'no Stage-2 result to describe' }
+      return outcomeEvidence
     }
     try {
       const p = publishLifecycleBundle({
@@ -1082,16 +1512,38 @@ export async function runLifecycle(i: LifecycleInput): Promise<LifecycleResult> 
         detail: actionsDocument(release, restoration),
         ops,
       })
-      return { attempted: true, publishedPath: p.finalPath, verified: true, note: null }
-    } catch (e) {
-      const f = e instanceof LifecycleEvidenceFailed ? e : null
-      return {
-        attempted: true,
-        publishedPath: f?.publication === 'published-unverified' ? f.finalPath : null,
-        verified: false,
-        note: f === null ? 'the outcome bundle was not published' : f.publication,
+      outcomeEvidence = {
+        attempted: true, publishedPath: p.finalPath, verified: true, note: null,
+        publication: 'published', finalPath: p.finalPath, finalPathState: 'present',
+        temporaryPath: null, temporaryPathState: 'absent',
+        evidencePhase: null, evidenceReason: null,
       }
+      return outcomeEvidence
+    } catch (e) {
+      outcomeEvidence = evidenceStateOf(e, 'the outcome bundle was not published')
+      return outcomeEvidence
     }
+  }
+
+  /**
+   * Every PRE-COMMIT failure that may have left a fence funnels through here.
+   *
+   * One ROLLBACK, one proof. A proved release is an ordinary refusal - the
+   * caller may fix the problem and run again. Anything else is a state a person
+   * has to resolve, because "try again" against a source that may still be
+   * fenced is how two runs end up fighting over it.
+   */
+  const cleanUpPreCommit = async (
+    phase: LifecyclePhase, reason: LifecycleReason, at: string | null = null,
+  ): Promise<never> => {
+    const outcome = await rollbackAndProveReleased(i.supervisor)
+    if (outcome !== 'not-released' && outcome.state === 'released') {
+      throw new LifecycleRefused(phase, reason, at)
+    }
+    throw new LifecyclePreCommitCleanupRequired(
+      { phase, reason, at },
+      outcome === 'not-released' ? 'unproved' : 'released-unproved',
+      i.supervisor)
   }
 
   /** Every failure from COMMIT onwards funnels through here. */
@@ -1116,17 +1568,37 @@ export async function runLifecycle(i: LifecycleInput): Promise<LifecycleResult> 
   }
 
   try {
-    // L1. The bundle and the reviewed target, validated before anything opens.
-    if (i.published.contract.digest === '' ||
+    // L1. THE BUNDLE IS VERIFIED HERE, FROM DISK, BY THIS LIFECYCLE.
+    //
+    // Not accepted as an object. `readPublishedBundle` verifies the DIGEST over
+    // the published bytes and reads every field out of what that DIGEST covers;
+    // a `PublishedManifest` handed in instead is an object literal with the
+    // right field names, and every comparison the copy and the gate later make
+    // would be honest about it and worthless.
+    let bundleManifest: PublishedManifest
+    try {
+      bundleManifest = readPublishedBundle(
+        i.bundleDir, i.readFile ?? ((path: string) => readFileSync(path, 'utf-8')), sha256Hex,
+        ops)
+    } catch {
+      throw new LifecycleRefused(
+        'L1-bundle', 'the published bundle or reviewed target was not accepted',
+        'the Stage-1 bundle')
+    }
+    // AND THE REVIEWED TARGET IS RECOMPUTED, not read. A digest field is a
+    // claim by whoever wrote the file; the payload is the thing that was
+    // reviewed, and its digest is derivable from it.
+    if (contractDigest(i.reviewedTarget.payload) !== i.reviewedTarget.digest ||
         i.reviewedTarget.digest !== REVIEWED_CONTRACT_DIGEST) {
       throw new LifecycleRefused(
-        'L1-bundle', 'the published bundle or reviewed target was not accepted')
+        'L1-bundle', 'the published bundle or reviewed target was not accepted',
+        'the reviewed target artifact')
     }
 
     // L2. QUIESCENCE, before the fence is even taken. A producer still running
     // here would be writing to the source that Stage 2 is about to freeze.
     try {
-      await assertQuiescent(i.quiescence)
+      await assertQuiescent(i.quiescence, i.deadlineMs ?? ADAPTER_DEADLINE_MS)
     } catch (e) {
       throw new LifecycleRefused(
         'L2-quiescence', 'a reviewed producer is not stopped',
@@ -1135,21 +1607,30 @@ export async function runLifecycle(i: LifecycleInput): Promise<LifecycleResult> 
 
     // L3. STAGE 2. Takes the fence on the borrowed supervisor and holds it.
     stageSource = await i.openStageSource()
+    let appliedResult: ApplyResult
     try {
-      applied = await runApply({
+      appliedResult = await runApply({
         supervisor: i.supervisor, prover: i.prover, source: stageSource,
         operator: i.operator, sourceBeginSql: i.sourceBeginSql,
         reviewedTarget: i.reviewedTarget,
         targetExpectation: i.targetExpectation, confirmation: i.confirmation,
         openTarget: i.openStageTarget,
-      }, i.published)
+      }, bundleManifest)
     } catch (e) {
       if (e instanceof CommitOutcomeUnknown) {
         committed = true
         await stop('L3-copy', 'the transactional copy did not complete', 'the commit outcome')
       }
-      throw new LifecycleRefused('L3-copy', 'the transactional copy did not complete')
+      // PRE-COMMIT, AND THE FENCE MAY BE HELD. A2 takes the fence, and it takes
+      // it as a SEQUENCE of statements, so even a refusal at A2 itself can
+      // leave part of it. Everything from there to COMMIT - the confirmation,
+      // the target identity, the copy, the sequence policy, the final gates -
+      // fails with the supervisor still inside that transaction. The target is
+      // untouched, so this is not an intervention about data; it is a fence
+      // this lifecycle must end and prove ended before anyone runs again.
+      throw await cleanUpPreCommit('L3-copy', 'the transactional copy did not complete')
     }
+    applied = appliedResult
     committed = true
 
     // L4. THE STAGE-2 SNAPSHOT ENDS. THE FENCE DOES NOT. Ending the source
@@ -1157,17 +1638,22 @@ export async function runLifecycle(i: LifecycleInput): Promise<LifecycleResult> 
     // SUPERVISOR's transaction and is untouched by this.
     try {
       await stageSource.rows(RELEASE_SQL)
+      // SUBMITTED. Recorded before the close, so the `finally` below can never
+      // send it a second time - a retry of a statement that already ran is a
+      // statement nobody decided to send.
+      snapshotEnded = true
       await stageSource.end()
       stageSource = null
     } catch {
+      snapshotEnded = true
       await stop('L4-snapshot-end', 'the Stage-2 source snapshot could not be ended', null)
     }
 
     // L5. THE INDEPENDENT VERIFIER, on fresh sessions, fence still held.
     try {
       verification = await runVerification({
-        handoff: applied.verification,
-        publishedDocument: i.published.document,
+        handoff: appliedResult.verification,
+        publishedDocument: bundleManifest.document,
         supervisor: i.supervisor, prover: i.prover,
         openSource: i.openVerifySource, openTarget: i.openVerifyTarget,
         reviewedTarget: i.reviewedTarget,
@@ -1182,13 +1668,14 @@ export async function runLifecycle(i: LifecycleInput): Promise<LifecycleResult> 
     // L6. THE FINAL GATE, on the SAME supervisor transaction.
     try {
       authorization = await runReleaseGate({
-        handoff: applied.verification,
+        handoff: appliedResult.verification,
         verification: verification as VerificationResult,
-        publishedDocument: i.published.document,
+        published: bundleManifest,
         reviewedTarget: i.reviewedTarget,
         supervisor: i.supervisor, prover: i.prover,
         quiescence: i.quiescence, queue: i.queue,
-        allowlistedPids: i.allowlistedPids, allowlistedRoles: i.allowlistedRoles,
+        reviewedSessions: i.reviewedSessions,
+        deadlineMs: i.deadlineMs ?? ADAPTER_DEADLINE_MS,
         ops,
       })
     } catch (e) {
@@ -1202,23 +1689,22 @@ export async function runLifecycle(i: LifecycleInput): Promise<LifecycleResult> 
         root: i.evidenceRoot, prefix: RELEASE_GATE_PREFIX, stamp, runId: runIds.releaseGate,
         manifestFile: RELEASE_GATE_FILE, detailFile: GATE_DETAIL_FILE,
         manifest: authorizationDocument(
-          authorization as ReleaseAuthorization, applied.verification,
+          authorization as ReleaseAuthorization, appliedResult.verification,
           runIds.releaseGate, stamp),
         detail: gateDetailDocument(authorization as ReleaseAuthorization),
         ops,
       })
-      gateEvidence = { attempted: true, publishedPath: p.finalPath, verified: true, note: null }
-    } catch (e) {
-      const f = e instanceof LifecycleEvidenceFailed ? e : null
       gateEvidence = {
-        attempted: true,
-        publishedPath: f?.publication === 'published-unverified' ? f.finalPath : null,
-        verified: false,
-        note: f === null ? 'the authorization bundle was not published' : f.publication,
+        attempted: true, publishedPath: p.finalPath, verified: true, note: null,
+        publication: 'published', finalPath: p.finalPath, finalPathState: 'present',
+        temporaryPath: null, temporaryPathState: 'absent',
+        evidencePhase: null, evidenceReason: null,
       }
+    } catch (e) {
+      gateEvidence = evidenceStateOf(e, 'the authorization bundle was not published')
       await stop('L7-authorization-evidence',
                  'the release authorization evidence was not published and verified',
-                 f?.publication ?? null)
+                 gateEvidence.publication)
     }
 
     // L8/L9. THE RELEASE, AND ITS PROOF. One ROLLBACK, then a census on that
@@ -1235,22 +1721,26 @@ export async function runLifecycle(i: LifecycleInput): Promise<LifecycleResult> 
     }
 
     // L10. RESTORATION, and only now. Reviewed reverse order, each confirmed.
-    restoration = await restoreProducers(i.producers)
+    restoration = await restoreProducers(i.producers, i.deadlineMs ?? ADAPTER_DEADLINE_MS)
     if (restoration.failedAt !== null) {
       await stop('L10-restore', 'a reviewed producer was not restored', restoration.failedAt)
     }
 
     // L11. WHAT ACTUALLY HAPPENED, published separately from the authorization.
+    //
+    // If this fails, `stop` must NOT publish again: the first attempt's outcome
+    // is the finding, and a second one under the same name could only collide
+    // with it and report the collision instead.
     outcomeEvidence = recordOutcome('released', null, gateEvidence.publishedPath)
     if (!outcomeEvidence.verified) {
       await stop('L11-outcome-evidence',
                  'the lifecycle outcome evidence was not published and verified',
-                 outcomeEvidence.note)
+                 outcomeEvidence.publication)
     }
 
     return Object.freeze({
       outcome: 'COMPLETE',
-      rootDigest: applied.rootDigest,
+      rootDigest: appliedResult.rootDigest,
       verifierBundle: (verification as VerificationResult).evidence.finalPath,
       releaseGateBundle: gateEvidence.publishedPath as string,
       lifecycleBundle: outcomeEvidence.publishedPath as string,
@@ -1262,13 +1752,55 @@ export async function runLifecycle(i: LifecycleInput): Promise<LifecycleResult> 
     // is already gone; the verifier's sessions are its own and likewise. What
     // is left is the Stage-2 source, and only if it is still open.
     if (stageSource !== null) {
-      try { await stageSource.rows(RELEASE_SQL) } catch { /* bounded */ }
+      // ONLY IF IT WAS NEVER SUBMITTED. `snapshotEnded` is the record of that,
+      // and closing is a separate act from ending the transaction.
+      if (!snapshotEnded) {
+        try { await stageSource.rows(RELEASE_SQL) } catch { /* bounded */ }
+      }
       try { await stageSource.end() } catch { /* bounded */ }
     }
     // The supervisor and the prover are the CALLER'S. Not closed, not rolled
     // back - the release above is the one statement this module ever sends to
     // end that transaction, and it happens only with an authorization in hand.
     void committed
+  }
+}
+
+/**
+ * THE COPY DID NOT COMMIT, AND THE FENCE COULD NOT BE PROVED GONE.
+ *
+ * WHY THIS IS NOT A REFUSAL. A refusal means a caller may fix the problem and
+ * run again, and that is only true if the source is as it was. Stage 2 takes
+ * the fence at A2 - and a refusal at A2 itself may have taken PART of it, since
+ * acquisition is a sequence of statements - so every failure from that point on
+ * leaves a transaction holding locks that this lifecycle must end. It ends it
+ * with one ROLLBACK and proves the locks are gone. When that proof does not
+ * come back, telling the caller "try again" would invite a second run into a
+ * source the first one may still be holding.
+ *
+ * NOTHING IS RESTORED. This lifecycle did not stop the producers - they were
+ * required to be stopped before it began - so starting them is not its
+ * business, and doing it here would be starting writers against a source whose
+ * state nobody can state.
+ */
+export class LifecyclePreCommitCleanupRequired extends Error {
+  /** Stated, and stated as false. The target is not part of this problem. */
+  readonly committed = false
+  constructor(
+    readonly failure: LifecycleFailure,
+    readonly fence: LifecycleFenceState,
+    /** The caller's supervisor. RETAINED, never closed. */
+    readonly supervisor: FenceExecutor,
+  ) {
+    super(
+      'COPY LIFECYCLE STOPPED BEFORE COMMIT: INTERVENTION REQUIRED. The target was NOT ' +
+      'committed and holds nothing from this run. No producer was restored - this lifecycle ' +
+      'did not stop them. ' +
+      `${LIFECYCLE_FENCE_SENTENCE[fence]} ` +
+      'DO NOT simply retry: a second run would take a fence this one may still be holding. ' +
+      `${failure.reason} (phase ${failure.phase}` +
+      `${failure.at === null ? '' : ` at ${failure.at}`})`)
+    this.name = 'LifecyclePreCommitCleanupRequired'
   }
 }
 

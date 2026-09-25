@@ -28,20 +28,25 @@ import {
   publishEvidence, verifyPublishedEvidence, type EvidenceOps,
 } from '../src/pg-copy/evidence.js'
 import {
-  ACTIVITY_CENSUS_SQL, GATE_DETAIL_FILE, LIFECYCLE_DETAIL_FILE, LIFECYCLE_FENCE_SENTENCE,
-  LIFECYCLE_FILE, LIFECYCLE_PREFIX, LifecycleEvidenceFailed, LifecycleInterventionRequired,
-  RELEASED_LOCK_CENSUS_SQL, RELEASE_GATE_FILE, RELEASE_GATE_PREFIX,
-  RELEASE_SQL, RESTORE_ORDER, REVIEWED_PRODUCERS, ReleaseGateRefused, SUPERVISOR_ALIVE_SQL,
-  actionsDocument, assertQuiescent, authorizationDocument, gateDetailDocument,
-  isInterventionRequired, isReleaseAuthorization, outcomeDocument, publishLifecycleBundle,
-  releaseFence, restoreProducers, runReleaseGate,
-  type LifecycleFenceState, type ProducerAdapter, type ProducerState, type QueueAdapter,
-  type QueueSample, type QuiescenceAdapter, type ReleaseAuthorization,
+  ACTIVITY_CENSUS_SQL, ADAPTER_DEADLINE_MS, AdapterDeadlineExceeded, GATE_DETAIL_FILE,
+  LIFECYCLE_DETAIL_FILE, LIFECYCLE_FENCE_SENTENCE, LIFECYCLE_FILE, LIFECYCLE_PREFIX,
+  LifecycleEvidenceFailed, LifecycleInterventionRequired, LifecyclePreCommitCleanupRequired,
+  RELEASED_LOCK_CENSUS_SQL, RELEASE_GATE_FILE, RELEASE_GATE_PREFIX, RELEASE_SQL, RESTORE_ORDER,
+  REVIEWED_BACKEND_TYPES, REVIEWED_PRODUCERS, REVIEWED_QUEUES, ReleaseGateRefused,
+  SUPERVISOR_ALIVE_SQL, actionsDocument, assertQuiescent, authorizationDocument,
+  gateDetailDocument, isAuthorizationConsumed, isInterventionRequired, isReleaseAuthorization,
+  outcomeDocument, publishLifecycleBundle, releaseFence, restoreProducers,
+  rollbackAndProveReleased, runReleaseGate, withDeadline,
+  type AdapterContext, type LifecycleFenceState, type ProducerAdapter, type ProducerState,
+  type QueueAdapter, type QueueSample, type QuiescenceAdapter, type ReleaseAuthorization,
+  type ReviewedSession,
 } from '../src/pg-copy/lifecycle.js'
 import {
-  COPY_TABLES, REVIEWED_CONTRACT_DIGEST, canonicalJson, sha256Hex,
+  COPY_TABLES, REVIEWED_CONTRACT_DIGEST, canonicalJson, contractDigest, serializeArtifact,
+  sha256Hex,
   type Canonical, type ContractArtifact,
 } from '../src/pg-copy/schema-contract.js'
+import { readPublishedBundle, type PublishedManifest } from '../src/pg-copy/stage2.js'
 import {
   FENCE_SEQUENCES, FENCE_SEQUENCE_LOCK_MODE, FENCE_TABLES, FENCE_TABLE_LOCK_MODE,
   SEQUENCE_STATE_SQL,
@@ -83,6 +88,13 @@ afterEach(() => {
   }
 })
 
+/** The empty evidence state, for fixtures that predate a publication attempt. */
+const NO_EVIDENCE_FIXTURE = {
+  attempted: false, publishedPath: null, verified: false, note: null,
+  publication: null, evidencePhase: null, evidenceReason: null,
+  finalPath: null, finalPathState: null, temporaryPath: null, temporaryPathState: null,
+} as const
+
 const STAMP = '20260925T091500Z'
 const RUN = 'a1b2c3d4'
 const SUPERVISOR_PID = '4242'
@@ -90,10 +102,17 @@ const PROVING_PID = '99'
 
 const hex = (seed: string): string => sha256Hex(`lifecycle-fixture|${seed}`)
 
+/** The Stage-1 source contract, self-consistent by construction. */
+const SOURCE_CONTRACT: ContractArtifact = Object.freeze({
+  pgcopy_schema_contract_version: 2,
+  digest: contractDigest({ migrations: { recognition: 'CURRENT_V10' } } as Canonical),
+  payload: { migrations: { recognition: 'CURRENT_V10' } } as Canonical,
+})
+
 const HANDOFF = (over: Partial<VerifierHandoff> = {}): VerifierHandoff => ({
   bundleName: 'source-manifest-20260925T091500Z-a1b2c3d4',
   rootDigest: hex('root'),
-  sourceContractDigest: hex('source-contract'),
+  sourceContractDigest: SOURCE_CONTRACT.digest,
   targetContractDigest: REVIEWED_CONTRACT_DIGEST,
   sourceRecognition: 'CURRENT_V10',
   targetRecognition: 'CURRENT_V19',
@@ -109,14 +128,6 @@ const HANDOFF = (over: Partial<VerifierHandoff> = {}): VerifierHandoff => ({
   ...over,
 })
 
-const PUBLISHED = (): Record<string, never> => ({
-  source_contract: { digest: HANDOFF().sourceContractDigest },
-  content: {
-    root_digest: HANDOFF().rootDigest,
-    tables: COPY_TABLES.map(q => ({ qname: q, digest: hex(q) })),
-  },
-} as unknown as Record<string, never>)
-
 const REVIEWED_TARGET: ContractArtifact = {
   pgcopy_schema_contract_version: 2,
   digest: REVIEWED_CONTRACT_DIGEST,
@@ -125,15 +136,45 @@ const REVIEWED_TARGET: ContractArtifact = {
 
 /** A real published verifier bundle, so the gate can read one back from disk. */
 let verifierBundleSeq = 0
+
+/** The verification record this run would have written, as the gate re-reads it. */
+const verificationRecord = (
+  outcome: string, bundleName: string, over: Record<string, unknown> = {},
+): Record<string, unknown> => {
+  const h = HANDOFF()
+  return {
+    complete: true,
+    outcome,
+    bundle: { name: bundleName },
+    source: { system_identifier: h.source.systemIdentifier, database: h.source.database,
+              role: h.source.role, contract_digest: h.sourceContractDigest,
+              root_digest: h.rootDigest },
+    target: { system_identifier: h.target.systemIdentifier, database: h.target.database,
+              role: h.target.role, contract_digest: h.targetContractDigest,
+              root_digest: h.rootDigest },
+    stage2: { root_digest: h.rootDigest, source_contract_digest: h.sourceContractDigest,
+              target_contract_digest: h.targetContractDigest },
+    tables: h.tables.map(t => ({ qname: t.qname, source_digest: t.digest,
+                                 target_digest: t.digest, rows: t.rows })),
+    sequences: h.sequences.map(x => ({ qname: x.qname, source_effective_next: x.effectiveNext,
+                                       target_effective_next: x.effectiveNext })),
+    ...over,
+  }
+}
+
 function publishVerifierBundle(
-  root: string, outcome = 'PASS', runId = `bb${(verifierBundleSeq++).toString(16).padStart(6, '0')}`,
+  root: string, outcome = 'PASS',
+  runId = `bb${(verifierBundleSeq++).toString(16).padStart(6, '0')}`,
+  bundleName = 'source-manifest-20260925T091500Z-a1b2c3d4',
+  over: Record<string, unknown> = {},
 ): string {
   return publishEvidence({
     root, prefix: 'verification', stamp: STAMP, runId,
     artifacts: [{ path: 'content.json', bytes: Buffer.from('{"tables":[]}\n', 'utf-8') }],
     manifest: {
       path: VERIFICATION_FILE,
-      bytes: Buffer.from(`${JSON.stringify({ complete: true, outcome })}\n`, 'utf-8'),
+      bytes: Buffer.from(
+        `${JSON.stringify(verificationRecord(outcome, bundleName, over))}\n`, 'utf-8'),
     },
   }).finalPath
 }
@@ -182,6 +223,7 @@ function supervisorStub(over: {
   pid?: string | null
   sequences?: (q: string, n: number) => string[][]
   releaseError?: boolean
+  releaseThrows?: boolean
   censusRows?: string[][] | null
   censusThrows?: boolean
 } = {}): Stub {
@@ -195,6 +237,7 @@ function supervisorStub(over: {
         return { rows: [[over.pid ?? SUPERVISOR_PID]], error: null }
       }
       if (sql === RELEASE_SQL) {
+        if (over.releaseThrows === true) throw new Error('connection terminated')
         return { rows: [], error: over.releaseError === true ? 'statement-refused' : null }
       }
       if (sql.startsWith('\nSELECT pg_catalog.count(*)')) {
@@ -246,21 +289,67 @@ const stoppedProducers = (): QuiescenceAdapter => ({
   report: async () => REVIEWED_PRODUCERS.map(name => ({ name, stopped: true })),
 })
 
-const emptyQueues = (): QueueAdapter => ({ sample: async () => ({ depths: { daily: 0 } }) })
+const zeroDepths = (): Record<string, number> =>
+  Object.fromEntries(REVIEWED_QUEUES.map(q => [q, 0]))
 
-function gateInput(root: string, over: Record<string, unknown> = {}): Parameters<typeof runReleaseGate>[0] {
-  const bundle = (over.bundle as string | undefined) ?? publishVerifierBundle(root)
+const emptyQueues = (): QueueAdapter => ({ sample: async () => ({ depths: zeroDepths() }) })
+
+const REVIEWED_SESSIONS: readonly ReviewedSession[] = Object.freeze([
+  { pid: SUPERVISOR_PID, role: 'ai_capital_owner' },
+  { pid: PROVING_PID, role: 'ai_capital_owner' },
+])
+
+/**
+ * A REAL Stage-1 bundle on disk, published and then read back through the
+ * reviewed disk verifier - which is the only way to obtain a `PublishedManifest`
+ * the gate will accept.
+ */
+let stage1Seq = 0
+function stage1Bundle(
+  root: string, contentOver: Record<string, unknown> = {},
+): PublishedManifest {
+  const runId = `aa${(stage1Seq++).toString(16).padStart(6, '0')}`
+  const document = {
+    complete: true,
+    source_contract: { digest: HANDOFF().sourceContractDigest },
+    content: {
+      root_digest: HANDOFF().rootDigest,
+      tables: COPY_TABLES.map(q => ({ qname: q, digest: hex(q) })),
+      ...contentOver,
+    },
+  }
+  const dir = publishEvidence({
+    root, prefix: 'source-manifest', stamp: STAMP, runId,
+    artifacts: [{ path: 'source-contract.json',
+                  bytes: Buffer.from(`${serializeArtifact(SOURCE_CONTRACT)}\n`, 'utf-8') }],
+    manifest: { path: 'manifest.json',
+                bytes: Buffer.from(`${JSON.stringify(document)}\n`, 'utf-8') },
+  }).finalPath
+  return readPublishedBundle(dir, f => readFileSync(f, 'utf-8'), sha256Hex)
+}
+
+function gateInput(
+  root: string, over: Record<string, unknown> = {},
+): Parameters<typeof runReleaseGate>[0] {
+  const published = (over.published as PublishedManifest | undefined) ?? stage1Bundle(root)
+  // Each published bundle gets its own name, and the handoff names the bundle
+  // the copy was authorised against - so the fixture follows the real one.
+  const named = (over.published as PublishedManifest | undefined)?.bundleName ??
+    published.bundleName
+  const handoff = { ...((over.handoff as VerifierHandoff | undefined) ?? HANDOFF()),
+                    bundleName: named }
+  const bundle = (over.bundle as string | undefined) ??
+    publishVerifierBundle(root, 'PASS', undefined, named)
   return {
-    handoff: HANDOFF(),
+    handoff,
     verification: VERIFICATION(bundle),
-    publishedDocument: PUBLISHED(),
+    published,
     reviewedTarget: REVIEWED_TARGET,
     supervisor: supervisorStub(),
     prover: proverStub(),
     quiescence: stoppedProducers(),
     queue: emptyQueues(),
-    allowlistedPids: [SUPERVISOR_PID, PROVING_PID],
-    allowlistedRoles: ['ai_capital_owner', 'ai_capital_v3_export'],
+    reviewedSessions: REVIEWED_SESSIONS,
     ...over,
   } as Parameters<typeof runReleaseGate>[0]
 }
@@ -402,30 +491,54 @@ describe('the final release gate', () => {
 
   it('refuses when the chain disagrees anywhere', async () => {
     const root = makeRoot()
-    const bundle = publishVerifierBundle(root)
+    const published = stage1Bundle(root)
+    const bundle = publishVerifierBundle(root, 'PASS', undefined, published.bundleName)
+    // A VerificationResult that disagrees with the record on disk is caught by
+    // the bundle binding, which runs first and is the stronger check: the
+    // durable evidence, not the in-memory object, is what release rests on.
+    for (const over of [
+      { verification: VERIFICATION(bundle, { sourceRootDigest: hex('other') }) },
+      { verification: VERIFICATION(bundle, { targetRootDigest: hex('other') }) },
+    ]) {
+      const e = await refusedBy(
+        () => runReleaseGate(gateInput(root, { published, bundle, ...over })))
+      expect(e.refusal).toBe('the verifier evidence bundle does not verify from disk')
+    }
+
+    // WHAT THE RECORDED BUNDLE CANNOT SEE. The verification manifest carries
+    // nothing about the Stage-1 DOCUMENT or the reviewed target artifact, so
+    // these are the disagreements only the chain comparison can catch.
     const variants: Array<[string, Record<string, unknown>]> = [
-      ['a moved source root',
-       { verification: VERIFICATION(bundle, { sourceRootDigest: hex('other') }) }],
-      ['a moved target root',
-       { verification: VERIFICATION(bundle, { targetRootDigest: hex('other') }) }],
-      ['a different published root',
-       { publishedDocument: { ...PUBLISHED(), content: {
-           root_digest: hex('elsewhere'),
-           tables: COPY_TABLES.map(q => ({ qname: q, digest: hex(q) })) } } }],
-      ['a different published contract',
-       { publishedDocument: { ...PUBLISHED(), source_contract: { digest: hex('nope') } } }],
       ['a substitute reviewed target',
-       { reviewedTarget: { ...REVIEWED_TARGET, digest: hex('substitute') } }],
-      ['one table digest',
-       { handoff: HANDOFF({ tables: COPY_TABLES.map((q, n) => ({
-           qname: q, digest: n === 4 ? hex('moved') : hex(q), rows: 3 })) }) }],
-      ['the same cluster on both sides',
-       { handoff: HANDOFF({ target: { ...HANDOFF().target,
-           systemIdentifier: HANDOFF().source.systemIdentifier } }) }],
+       { published, bundle, reviewedTarget: { ...REVIEWED_TARGET, digest: hex('substitute') } }],
+      ['a different published root', (() => {
+        const other = stage1Bundle(root, { root_digest: hex('elsewhere') })
+        return { published: other,
+                 bundle: publishVerifierBundle(root, 'PASS', undefined, other.bundleName) }
+      })()],
+      ['a different published table digest', (() => {
+        const other = stage1Bundle(root, {
+          tables: COPY_TABLES.map((q, n) => ({
+            qname: q, digest: n === 4 ? hex('moved') : hex(q) })) })
+        return { published: other,
+                 bundle: publishVerifierBundle(root, 'PASS', undefined, other.bundleName) }
+      })()],
     ]
     for (const [label, over] of variants) {
-      const e = await refusedBy(() => runReleaseGate(gateInput(root, { bundle, ...over })))
+      const e = await refusedBy(() => runReleaseGate(gateInput(root, over)))
       expect(e.refusal, label).toBe('the verified chain does not agree with the Stage-2 result')
+    }
+
+    // AND THE TWO THE RECORD DOES SEE, caught earlier and just as hard.
+    for (const over of [
+      { handoff: HANDOFF({ tables: COPY_TABLES.map((q, n) => ({
+          qname: q, digest: n === 4 ? hex('moved') : hex(q), rows: 3 })) }) },
+      { handoff: HANDOFF({ target: { ...HANDOFF().target,
+          systemIdentifier: HANDOFF().source.systemIdentifier } }) },
+    ]) {
+      const e = await refusedBy(
+        () => runReleaseGate(gateInput(root, { published, bundle, ...over })))
+      expect(e.refusal).toBe('the verifier evidence bundle does not verify from disk')
     }
   })
 
@@ -462,25 +575,86 @@ describe('the final release gate', () => {
       await expect(runReleaseGate(gateInput(root, {
         prover: proverStub({ activity: [
           [SUPERVISOR_PID, 'ai_capital_owner', 'client backend'],
+          [PROVING_PID, 'ai_capital_owner', 'client backend'],
           ['12', '', 'autovacuum launcher'],
         ] }),
       }))).resolves.toBeDefined()
     })
 
+  it('a SECOND connection under a REVIEWED ROLE is still refused', async () => {
+    // THE CASE A ROLE LIST COULD NOT SEE. `ai_capital_owner` is exactly the role
+    // the lifecycle's own sessions use, so a role-only allowlist authorised any
+    // number of additional readers under it - which is the one thing the census
+    // exists to catch.
+    const root = makeRoot()
+    const e = await refusedBy(() => runReleaseGate(gateInput(root, {
+      prover: proverStub({ activity: [
+        [SUPERVISOR_PID, 'ai_capital_owner', 'client backend'],
+        [PROVING_PID, 'ai_capital_owner', 'client backend'],
+        ['7777', 'ai_capital_owner', 'client backend'],
+      ] }),
+    })))
+    expect(e.refusal).toBe('the source carries sessions that are not reviewed')
+    expect(e.at).toBe('1 session(s)')
+  })
+
+  it('a reviewed PID under the WRONG ROLE is refused', async () => {
+    const root = makeRoot()
+    const e = await refusedBy(() => runReleaseGate(gateInput(root, {
+      prover: proverStub({ activity: [
+        [SUPERVISOR_PID, 'somebody_else', 'client backend'],
+        [PROVING_PID, 'ai_capital_owner', 'client backend'],
+      ] }),
+    })))
+    expect(e.refusal).toBe('the source carries sessions that are not reviewed')
+  })
+
+  it('refuses an INCOHERENT reviewed set, and an unreviewed backend type', async () => {
+    const root = makeRoot()
+    const cases: Array<[string, Record<string, unknown>]> = [
+      ['duplicate', { reviewedSessions: [...REVIEWED_SESSIONS, REVIEWED_SESSIONS[0]] }],
+      ['conflicting', { reviewedSessions: [
+        ...REVIEWED_SESSIONS, { pid: SUPERVISOR_PID, role: 'another_role' }] }],
+      ['empty', { reviewedSessions: [] }],
+      ['bad pid', { reviewedSessions: [{ pid: 'x', role: 'ai_capital_owner' }] }],
+      ['bad role', { reviewedSessions: [{ pid: '1', role: 'Not An Ident' }] }],
+    ]
+    for (const [label, over] of cases) {
+      const e = await refusedBy(() => runReleaseGate(gateInput(root, over)))
+      expect(e.refusal, label).toBe('the source carries sessions that are not reviewed')
+    }
+    // A backend type nobody reviewed is not waved through as "not a client".
+    const e = await refusedBy(() => runReleaseGate(gateInput(root, {
+      prover: proverStub({ activity: [
+        [SUPERVISOR_PID, 'ai_capital_owner', 'client backend'],
+        [PROVING_PID, 'ai_capital_owner', 'client backend'],
+        ['13', '', 'some future worker'],
+      ] }),
+    })))
+    expect(e.at).toBe('an unreviewed backend type')
+    expect(REVIEWED_BACKEND_TYPES).toContain('autovacuum launcher')
+    // A malformed row is refused rather than skipped.
+    expect((await refusedBy(() => runReleaseGate(gateInput(root, {
+      prover: proverStub({ activity: [['only', 'two']] }),
+    })))).at).toBe('a malformed census row')
+  })
+
   it('refuses queues that are not empty, and queues that are not STABLE', async () => {
     const root = makeRoot()
     const e = await refusedBy(() => runReleaseGate(gateInput(root, {
-      queue: { sample: async () => ({ depths: { daily: 1 } }) } as QueueAdapter,
+      queue: {
+        sample: async () => ({ depths: { ...zeroDepths(), [REVIEWED_QUEUES[0]]: 1 } }),
+      } as QueueAdapter,
     })))
     expect(e.refusal).toBe('the queue samples are not empty and stable')
-    expect(e.at).toBe('daily')
+    expect(e.at).toBe(REVIEWED_QUEUES[0])
 
     // TWO samples, because one cannot tell an empty queue from a queue caught
-    // between two jobs. Here the SET of queues changes between them.
+    // between two jobs. Here one sample is short of a reviewed queue.
     let n = 0
     const unstable: QueueAdapter = {
       sample: async (): Promise<QueueSample> =>
-        (n++ === 0 ? { depths: { daily: 0 } } : { depths: { daily: 0, alerts: 0 } }),
+        (n++ === 0 ? { depths: zeroDepths() } : { depths: { [REVIEWED_QUEUES[0]]: 0 } }),
     }
     expect((await refusedBy(() => runReleaseGate(gateInput(root, { queue: unstable })))).refusal)
       .toBe('the queue samples are not empty and stable')
@@ -490,13 +664,65 @@ describe('the final release gate', () => {
     })))).refusal).toBe('the queue samples are not empty and stable')
   })
 
-  it('takes TWO queue samples, always', async () => {
+  it('takes TWO queue samples, always, over the REVIEWED SET', async () => {
     const root = makeRoot()
     let taken = 0
     await runReleaseGate(gateInput(root, {
-      queue: { sample: async () => { taken += 1; return { depths: {} } } } as QueueAdapter,
+      queue: {
+        sample: async () => { taken += 1; return { depths: zeroDepths() } },
+      } as QueueAdapter,
     }))
     expect(taken).toBe(2)
+  })
+
+  it('REFUSES two EMPTY samples: absence of queues is not absence of work', async () => {
+    // `{}` twice satisfied "every depth is zero" the way an empty room
+    // satisfies "everyone here is asleep". An adapter that lost its connection,
+    // or was pointed at a renamed queue, reported exactly that.
+    const root = makeRoot()
+    const e = await refusedBy(() => runReleaseGate(gateInput(root, {
+      queue: { sample: async () => ({ depths: {} }) } as QueueAdapter,
+    })))
+    expect(e.refusal).toBe('the queue samples are not empty and stable')
+    expect(e.at).toBe('the sampled queue set')
+
+    // A queue MISSING from an otherwise correct sample is refused by name.
+    const short = { ...zeroDepths() }
+    delete short[REVIEWED_QUEUES[1]]
+    expect((await refusedBy(() => runReleaseGate(gateInput(root, {
+      queue: { sample: async () => ({ depths: short }) } as QueueAdapter,
+    })))).at).toBe('the sampled queue set')
+
+    // An EXTRA queue is refused too: the set is exact in both directions.
+    expect((await refusedBy(() => runReleaseGate(gateInput(root, {
+      queue: {
+        sample: async () => ({ depths: { ...zeroDepths(), surprise: 0 } }),
+      } as QueueAdapter,
+    })))).at).toBe('the sampled queue set')
+  })
+
+  it('an adapter that NEVER ANSWERS is bounded, and the gate refuses', async () => {
+    // The worst outcome available is a lifecycle that waits forever WITH THE
+    // FENCE HELD: the source stays frozen, the producers stay down, and nothing
+    // ever says why.
+    const root = makeRoot()
+    const never = <T>(): Promise<T> => new Promise<T>(() => { /* never settles */ })
+
+    const q = await refusedBy(() => runReleaseGate(gateInput(root, {
+      deadlineMs: 25,
+      queue: { sample: async () => await never<QueueSample>() } as QueueAdapter,
+    })))
+    expect(q.refusal).toBe('the queue samples are not empty and stable')
+    expect(q.at).toBe('the deadline')
+
+    const p = await refusedBy(() => runReleaseGate(gateInput(root, {
+      deadlineMs: 25,
+      quiescence: {
+        report: async () => await never<readonly ProducerState[]>(),
+      } as QuiescenceAdapter,
+    })))
+    expect(p.refusal).toBe('a reviewed producer is not stopped')
+    expect(p.at).toBe('the deadline')
   })
 
   it('never sends a transaction-control statement to the borrowed sessions', async () => {
@@ -508,6 +734,155 @@ describe('the final release gate', () => {
       expect(sql).not.toMatch(/^\s*(COMMIT|ROLLBACK|BEGIN|END|ABORT)\b/i)
       expect(sql).not.toContain('advisory_unlock')
     }
+  })
+})
+
+describe('the verifier bundle must describe THIS run', () => {
+  it('refuses a valid PASS bundle from a different run', async () => {
+    const root = makeRoot()
+    const published = stage1Bundle(root)
+    // A bundle that verifies, says PASS, is complete - and is about some other
+    // copy. Every field below is one this run can contradict.
+    const cases: Array<[string, Record<string, unknown>]> = [
+      ['a different Stage-1 bundle',
+       { bundle: { name: 'source-manifest-20260101T000000Z-ffffffff' } }],
+      ['a different source cluster',
+       { source: { system_identifier: '1', database: 'ai_capital',
+                   role: 'ai_capital_v3_export',
+                   contract_digest: HANDOFF().sourceContractDigest,
+                   root_digest: HANDOFF().rootDigest } }],
+      ['a different contract digest',
+       { stage2: { root_digest: HANDOFF().rootDigest,
+                   source_contract_digest: hex('elsewhere'),
+                   target_contract_digest: REVIEWED_CONTRACT_DIGEST } }],
+      ['a different root', { target: { system_identifier: '7689229024919775999',
+                                       database: 'ai_capital_v3', role: 'ai_capital_migrator',
+                                       contract_digest: REVIEWED_CONTRACT_DIGEST,
+                                       root_digest: hex('other-root') } }],
+      ['a short table set', { tables: [] }],
+      ['a moved table digest',
+       { tables: COPY_TABLES.map((q, n) => ({
+           qname: q, source_digest: n === 3 ? hex('moved') : hex(q),
+           target_digest: hex(q), rows: 3 })) }],
+      ['a moved sequence',
+       { sequences: FENCE_SEQUENCES.map(q => ({
+           qname: q, source_effective_next: '999', target_effective_next: '999' })) }],
+    ]
+    for (const [label, over] of cases) {
+      const b = publishVerifierBundle(root, 'PASS', undefined, published.bundleName, over)
+      const e = await refusedBy(() => runReleaseGate(gateInput(root, {
+        published, bundle: b, verification: VERIFICATION(b),
+      })))
+      expect(e.refusal, label).toBe('the verifier evidence bundle does not verify from disk')
+      expect(e.at, label).not.toBeNull()
+    }
+  })
+
+  it('accepts only a bundle whose every recorded field is this run', async () => {
+    const root = makeRoot()
+    const published = stage1Bundle(root)
+    const b = publishVerifierBundle(root, 'PASS', undefined, published.bundleName)
+    await expect(runReleaseGate(gateInput(root, {
+      published, bundle: b, verification: VERIFICATION(b),
+    }))).resolves.toBeDefined()
+  })
+})
+
+describe('the Stage-1 bundle must have come through the disk verifier', () => {
+  it('refuses every forgery, however it was built', async () => {
+    const root = makeRoot()
+    const genuine = stage1Bundle(root)
+    const forgeries: unknown[] = [
+      { ...genuine },
+      JSON.parse(JSON.stringify(genuine)),
+      structuredClone(genuine),
+      { bundleName: genuine.bundleName, digestFileDigest: genuine.digestFileDigest,
+        document: genuine.document, contract: genuine.contract },
+    ]
+    const reflected: Record<string | symbol, unknown> = {}
+    for (const k of Reflect.ownKeys(genuine)) {
+      const d = Object.getOwnPropertyDescriptor(genuine, k)
+      if (d !== undefined) Object.defineProperty(reflected, k, d)
+    }
+    forgeries.push(reflected)
+
+    for (const f of forgeries) {
+      const e = await refusedBy(() => runReleaseGate(gateInput(root, {
+        published: f as PublishedManifest,
+      })))
+      expect(e.refusal).toBe('the verified chain does not agree with the Stage-2 result')
+      expect(e.at).toBe('the Stage-1 bundle provenance')
+    }
+    // And the genuine one is accepted.
+    await expect(runReleaseGate(gateInput(root, { published: genuine })))
+      .resolves.toBeDefined()
+  })
+})
+
+describe('the release authority is bound and single-use', () => {
+  it('refuses a genuine authorization offered with ANOTHER supervisor, sending nothing',
+    async () => {
+      const root = makeRoot()
+      const mine = supervisorStub()
+      const a = await runReleaseGate(gateInput(root, { supervisor: mine }))
+      const other = supervisorStub()
+      await expect(releaseFence(other, a)).rejects.toThrow(ReleaseGateRefused)
+      // NOT ONE STATEMENT reached the wrong supervisor.
+      expect(other.seen).toEqual([])
+      // AND THE AUTHORIZATION IS NOT SPENT: a misdirected attempt must not cost
+      // the holder its permission.
+      expect(isAuthorizationConsumed(a)).toBe(false)
+      await expect(releaseFence(mine, a)).resolves.toBeDefined()
+    })
+
+  it('refuses a SAME-PID lookalike supervisor', async () => {
+    const root = makeRoot()
+    const mine = supervisorStub()
+    const a = await runReleaseGate(gateInput(root, { supervisor: mine }))
+    // A different object reporting the same backend pid. Identity, not equality.
+    const lookalike = supervisorStub()
+    expect((await lookalike.send(SUPERVISOR_ALIVE_SQL)).rows[0][0]).toBe(SUPERVISOR_PID)
+    await expect(releaseFence(lookalike, a)).rejects.toThrow(/another supervisor/)
+  })
+
+  it('refuses a SECOND use, and a concurrent double use', async () => {
+    const root = makeRoot()
+    const s1 = supervisorStub()
+    const a = await runReleaseGate(gateInput(root, { supervisor: s1 }))
+    expect(await releaseFence(s1, a)).toEqual({ state: 'released', remainingLocks: 0 })
+    expect(isAuthorizationConsumed(a)).toBe(true)
+    await expect(releaseFence(s1, a)).rejects.toThrow(/already been used/)
+
+    // CONCURRENT. Both start before either finishes; exactly one may proceed.
+    const s2 = supervisorStub()
+    const b = await runReleaseGate(gateInput(root, { supervisor: s2 }))
+    const results = await Promise.allSettled([releaseFence(s2, b), releaseFence(s2, b)])
+    expect(results.filter(r => r.status === 'fulfilled').length).toBe(1)
+    expect(results.filter(r => r.status === 'rejected').length).toBe(1)
+    expect(s2.seen.filter(x => x === RELEASE_SQL).length).toBe(1)
+  })
+
+  it('stays consumed after a transport failure, and after a refusal', async () => {
+    const root = makeRoot()
+    // The ROLLBACK is submitted and the connection dies: outcome unknown, and
+    // the authorization is spent regardless. A retry would be a second attempt
+    // nobody authorised, on a transaction nobody can ask about.
+    const dying = supervisorStub({ releaseThrows: true })
+    const a = await runReleaseGate(gateInput(root, { supervisor: dying }))
+    expect(await releaseFence(dying, a))
+      .toEqual({ state: 'released-unproved', remainingLocks: null })
+    expect(isAuthorizationConsumed(a)).toBe(true)
+    await expect(releaseFence(dying, a)).rejects.toThrow(/already been used/)
+
+    // And a supervisor that moved to a different backend between the gate and
+    // the release is refused - after consumption, because the ROLLBACK window
+    // has already been entered.
+    const moved = supervisorStub()
+    const b = await runReleaseGate(gateInput(root, { supervisor: moved }))
+    const movedAgain = supervisorStub({ pid: '5555' })
+    ;(moved as unknown as { send: typeof movedAgain.send }).send = movedAgain.send
+    await expect(releaseFence(moved, b)).rejects.toThrow(/not the backend the gate proved/)
+    expect(isAuthorizationConsumed(b)).toBe(true)
   })
 })
 
@@ -550,7 +925,8 @@ describe('the authorization cannot be fabricated', () => {
     // Nothing was registered, so nothing can release. Proved by the only
     // observable the registry has: a release attempt.
     const fake = { rootDigest: HANDOFF().rootDigest } as unknown as ReleaseAuthorization
-    await expect(releaseFence(supervisorStub(), fake)).rejects.toThrow(ReleaseGateRefused)
+    await expect(releaseFence(supervisorStub(), fake))
+      .rejects.toThrow(/was not issued by this gate/)
   })
 })
 
@@ -558,12 +934,12 @@ describe('the release is one statement, and it is proved', () => {
   it('is exactly the supervisor ROLLBACK, and never a substitute', async () => {
     expect(RELEASE_SQL).toBe('ROLLBACK')
     const root = makeRoot()
-    const a = await runReleaseGate(gateInput(root))
     const supervisor = supervisorStub()
+    const a = await runReleaseGate(gateInput(root, { supervisor }))
     const r = await releaseFence(supervisor, a)
     expect(r.state).toBe('released')
     expect(r.remainingLocks).toBe(0)
-    expect(supervisor.seen.filter(s => s === RELEASE_SQL).length).toBe(1)
+    expect(supervisor.seen.filter(x => x === RELEASE_SQL).length).toBe(1)
     // NO COMMIT, NO UNLOCK, NO TERMINATION.
     for (const sql of supervisor.seen) {
       expect(sql).not.toMatch(/^\s*COMMIT\b/i)
@@ -575,13 +951,15 @@ describe('the release is one statement, and it is proved', () => {
     expect(LIFECYCLE).not.toContain('advisory_unlock')
     expect(LIFECYCLE).not.toContain('pg_terminate_backend')
     expect(LIFECYCLE).not.toMatch(/send\('COMMIT'\)/)
-    expect(LIFECYCLE.match(/send\(RELEASE_SQL\)/g)?.length).toBe(1)
+    // TWO call sites, and only two: the authorised release, and the pre-commit
+    // cleanup that ends a fence no copy ever committed behind.
+    expect(LIFECYCLE.match(/send\(RELEASE_SQL\)/g)?.length).toBe(2)
   })
 
   it('a ROLLBACK that was REFUSED leaves the fence held, and is not a release', async () => {
     const root = makeRoot()
-    const a = await runReleaseGate(gateInput(root))
     const supervisor = supervisorStub({ releaseError: true })
+    const a = await runReleaseGate(gateInput(root, { supervisor }))
     await expect(releaseFence(supervisor, a)).rejects.toThrow(ReleaseGateRefused)
     // AND NO PROOF WAS ATTEMPTED: there is nothing to prove, and asking would
     // invite a "released-unproved" answer about a fence that is still held.
@@ -591,17 +969,22 @@ describe('the release is one statement, and it is proved', () => {
   it('a release whose PROOF does not come back is RELEASED-UNPROVED, never unproved',
     async () => {
       const root = makeRoot()
-      const a = await runReleaseGate(gateInput(root))
       for (const over of [{ censusRows: null }, { censusThrows: true },
                           { censusRows: [['3']] }, { censusRows: [['not a number']] }]) {
-        const r = await releaseFence(supervisorStub(over), a)
+        // A FRESH authorization each time: one is single-use, and it is bound
+        // to the supervisor the gate proved it against.
+        const supervisor = supervisorStub(over)
+        const a = await runReleaseGate(gateInput(root, { supervisor }))
+        const r = await releaseFence(supervisor, a)
         expect(r.state, JSON.stringify(over)).toBe('released-unproved')
       }
       // Remaining locks are reported when they were actually counted.
-      expect((await releaseFence(supervisorStub({ censusRows: [['3']] }), a)).remainingLocks)
-        .toBe(3)
-      expect((await releaseFence(supervisorStub({ censusThrows: true }), a)).remainingLocks)
-        .toBeNull()
+      const counted = supervisorStub({ censusRows: [['3']] })
+      expect((await releaseFence(counted,
+        await runReleaseGate(gateInput(root, { supervisor: counted })))).remainingLocks).toBe(3)
+      const silent = supervisorStub({ censusThrows: true })
+      expect((await releaseFence(silent,
+        await runReleaseGate(gateInput(root, { supervisor: silent })))).remainingLocks).toBeNull()
     })
 
   it('the census asks only about the reviewed relations and the reviewed advisory key', () => {
@@ -609,6 +992,97 @@ describe('the release is one statement, and it is proved', () => {
     expect(RELEASED_LOCK_CENSUS_SQL).toContain("l.locktype = 'relation'")
     expect(RELEASED_LOCK_CENSUS_SQL).toContain("l.locktype = 'advisory'")
     expect(RELEASED_LOCK_CENSUS_SQL).toContain('count(*)')
+  })
+})
+
+describe('a pre-commit failure never leaves a fence behind', () => {
+  it('rolls back ONCE and proves the reviewed locks are gone', async () => {
+    const s = supervisorStub()
+    const r = await rollbackAndProveReleased(s)
+    expect(r).toEqual({ state: 'released', remainingLocks: 0 })
+    expect(s.seen.filter(x => x === RELEASE_SQL).length).toBe(1)
+  })
+
+  it('reports NOT-RELEASED when the rollback itself is refused', async () => {
+    expect(await rollbackAndProveReleased(supervisorStub({ releaseError: true })))
+      .toBe('not-released')
+  })
+
+  it('never retries an UNKNOWN submission, and never calls it released', async () => {
+    const s = supervisorStub({ releaseThrows: true })
+    expect(await rollbackAndProveReleased(s))
+      .toEqual({ state: 'released-unproved', remainingLocks: null })
+    // ONE attempt. A second ROLLBACK on a transaction that already ended is
+    // meaningless, and on one that did not it is an attempt nobody decided on.
+    expect(s.seen.filter(x => x === RELEASE_SQL).length).toBe(1)
+  })
+
+  it('reports RELEASED-UNPROVED when the census cannot answer or is not zero', async () => {
+    for (const over of [{ censusRows: null }, { censusThrows: true },
+                        { censusRows: [['7']] }, { censusRows: [['nope']] }]) {
+      const r = await rollbackAndProveReleased(supervisorStub(over))
+      expect(r, JSON.stringify(over)).toEqual(
+        expect.objectContaining({ state: 'released-unproved' }))
+    }
+    expect(await rollbackAndProveReleased(supervisorStub({ censusRows: [['7']] })))
+      .toEqual({ state: 'released-unproved', remainingLocks: 7 })
+  })
+
+  it('the cleanup state says the target did NOT commit, and forbids a plain retry', () => {
+    const e = new LifecyclePreCommitCleanupRequired(
+      { phase: 'L3-copy', reason: 'the transactional copy did not complete', at: null },
+      'released-unproved', supervisorStub() as never)
+    expect(e.committed).toBe(false)
+    expect(e.message).toContain('was NOT committed')
+    expect(e.message).toContain('DO NOT simply retry')
+    // NOTHING is restored: this lifecycle did not stop the producers.
+    expect(e.message).toContain('No producer was restored')
+    expect(e.message).not.toContain('has been committed')
+    for (const marker of ['password', 'postgres://', 'passfile']) {
+      expect(surfaces(e).toLowerCase()).not.toContain(marker)
+    }
+  })
+})
+
+describe('the adapter deadline', () => {
+  it('returns the value when the adapter answers in time', async () => {
+    expect(await withDeadline('queue', 1_000, async () => 7)).toBe(7)
+  })
+
+  it('gives the adapter a signal, and aborts it on overrun', async () => {
+    let seen: AdapterContext | null = null
+    let aborted = false
+    await expect(withDeadline('producer', 25, async (ctx: AdapterContext) => {
+      seen = ctx
+      ctx.signal.addEventListener('abort', () => { aborted = true })
+      return await new Promise<never>(() => { /* never settles */ })
+    })).rejects.toThrow(AdapterDeadlineExceeded)
+    expect(seen).not.toBeNull()
+    expect(aborted).toBe(true)
+  })
+
+  it('clears its timer, so a prompt refusal does not become a process that will not exit',
+    async () => {
+      // An un-cleared timer keeps the event loop alive - a different way of
+      // hanging, reached by the code that exists to stop hanging.
+      const before = process.getActiveResourcesInfo?.().filter(r => r === 'Timeout').length ?? 0
+      for (let n = 0; n < 5; n += 1) await withDeadline('queue', 60_000, async () => n)
+      const after = process.getActiveResourcesInfo?.().filter(r => r === 'Timeout').length ?? 0
+      expect(after).toBeLessThanOrEqual(before)
+    })
+
+  it('states a reviewed default', () => {
+    expect(ADAPTER_DEADLINE_MS).toBe(30_000)
+  })
+
+  it('bounds restoration too', async () => {
+    const stuck: ProducerAdapter = {
+      restore: async () => await new Promise<never>(() => { /* never settles */ }),
+      confirm: async () => true,
+    }
+    const r = await restoreProducers(stuck, 25)
+    expect(r.failedAt).toBe(RESTORE_ORDER[0])
+    expect(r.restored).toEqual([])
   })
 })
 
@@ -713,8 +1187,9 @@ describe('the intervention state', () => {
     const e = new LifecycleInterventionRequired(
       { phase: 'L9-release-proof', reason: 'the fence release could not be proved', at: null },
       'released-unproved', supervisor as never,
-      { attempted: true, publishedPath: '/ev/release-gate-x', verified: true, note: null },
-      { attempted: false, publishedPath: null, verified: false, note: null },
+      { ...NO_EVIDENCE_FIXTURE, attempted: true, publishedPath: '/ev/release-gate-x',
+        verified: true, publication: 'published' },
+      { ...NO_EVIDENCE_FIXTURE },
       [], REVIEWED_PRODUCERS)
     expect(e.supervisor).toBe(supervisor)
     expect(e.failure.phase).toBe('L9-release-proof')
@@ -1003,14 +1478,14 @@ describe('the reviewed order is the code', () => {
       return n
     }
     const order = [
-      'await assertQuiescent(i.quiescence)',
-      'applied = await runApply(',
+      'await assertQuiescent(i.quiescence,',
+      'appliedResult = await runApply(',
       'await stageSource.rows(RELEASE_SQL)',
       'verification = await runVerification(',
       'authorization = await runReleaseGate(',
       'prefix: RELEASE_GATE_PREFIX',
       'release = await releaseFence(',
-      'restoration = await restoreProducers(i.producers)',
+      'restoration = await restoreProducers(i.producers,',
     ]
     let previous = -1
     for (const step of order) {
@@ -1023,7 +1498,7 @@ describe('the reviewed order is the code', () => {
   it('restores only after the release is PROVED, never after released-unproved', () => {
     const body = LIFECYCLE.slice(LIFECYCLE.indexOf('export async function runLifecycle'))
     const guard = body.indexOf("if ((release as ReleaseResult).state !== 'released')")
-    const restore = body.indexOf('restoration = await restoreProducers(i.producers)')
+    const restore = body.indexOf('restoration = await restoreProducers(i.producers,')
     expect(guard).toBeGreaterThan(-1)
     expect(guard).toBeLessThan(restore)
     // The guard leaves through `stop`, which never returns.

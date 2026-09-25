@@ -182,6 +182,28 @@ export interface PublishedManifest {
 }
 
 /**
+ * The manifests this module MINTED, by identity.
+ *
+ * A `PublishedManifest` is a claim that a bundle on disk verified: its DIGEST
+ * covered its bytes, and the document and contract below were read out of
+ * those bytes. That claim is the root of everything the copy and the release
+ * gate later prove, and an ordinary interface is a claim anybody can make -
+ * an object literal with the right fields is structurally identical to one
+ * this function returned after doing the work.
+ *
+ * So membership is recorded here and asked for where it matters. A WeakMap key
+ * cannot be read, copied or transferred: a spread, a JSON round trip, a
+ * `structuredClone` and a descriptor-by-descriptor copy all produce a DIFFERENT
+ * object, and none of them is in the set.
+ */
+const VERIFIED_BUNDLES = new WeakSet<object>()
+
+/** Was this exact object produced by `readPublishedBundle`? */
+export function isVerifiedBundle(v: unknown): v is PublishedManifest {
+  return typeof v === 'object' && v !== null && VERIFIED_BUNDLES.has(v)
+}
+
+/**
  * Verify the bundle and read what it says.
  *
  * The DIGEST file is verified FIRST, through the reviewed verifier, so every
@@ -213,12 +235,16 @@ export function readPublishedBundle(
     throw new Stage2Refused('A1-bundle', 'the published bundle is not a complete Stage-1 manifest')
   }
   const bundleName = bundleDir.split('/').filter(s => s !== '').pop() ?? ''
-  return Object.freeze({
+  const manifest = Object.freeze({
     bundleName,
     digestFileDigest: sha(readFile(`${bundleDir}/${DIGEST_FILE}`)),
     document,
     contract,
   })
+  // REGISTERED LAST, after the bundle verified and every field came out of the
+  // bytes it covered. Nothing that failed above carries this identity.
+  VERIFIED_BUNDLES.add(manifest)
+  return manifest
 }
 
 /**
