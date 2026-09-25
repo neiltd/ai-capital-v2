@@ -277,24 +277,30 @@ export async function runCli(argv: readonly string[]): Promise<CliResult> {
     // ================================================================
     // THE STANDALONE --apply PATH IS REFUSED, AND REFUSED HERE.
     //
-    // Stage 2 ends at COMMIT. The lifecycle does not: an independent verifier
-    // and a final release gate have to run while the SAME process still holds
-    // the supervisor's fence lease, because a fence released between COMMIT and
-    // verification is a window in which the source can move and nobody would
-    // ever know the copy was verified against something else.
+    // WHAT CHANGED, AND WHAT DID NOT. The independent verifier and the final
+    // fence-release gate now exist: `runLifecycle` owns the whole sequence -
+    // quiescence, Stage 2, verification, the gate, the authorization bundle,
+    // the release, the release proof, restoration and the outcome bundle -
+    // while ONE process holds the supervisor's fence lease throughout. The
+    // disposable suites drive all of it end to end.
     //
-    // Neither of those exists yet. Until they do, an operator path that
-    // committed and then returned would release the fence on the way out - so
-    // this refuses BEFORE a target client is constructed, which is the last
-    // point at which refusing still costs nothing. The Stage-2 core remains a
-    // usable API for the caller that will own that longer lifecycle, and the
-    // disposable integration suite drives it directly.
+    // WHAT IS STILL MISSING IS NOT CODE. The lifecycle's operational effects -
+    // stopping and restoring producers, sampling the queues - are injected
+    // adapters, and the PRODUCTION implementations of those adapters have not
+    // been written, reviewed or rehearsed against the real launchd jobs and the
+    // real Redis. `--apply` here would be a live copy driven by adapters nobody
+    // has watched work, and the one thing this whole milestone is arranged
+    // around is that the fence must be released by something that has been
+    // watched. So it still refuses, and it still refuses BEFORE a target client
+    // is constructed, which is the last point at which refusing costs nothing.
     // ================================================================
     if (parsed.apply) {
       say('REFUSED: the standalone --apply path is not available.')
-      say('Stage 2 commits, but the independent verifier and the final fence-release')
-      say('gate do not exist yet, and they must run while this process still holds the')
-      say('supervisor lease. Committing here would release the fence before either ran.')
+      say('The core lifecycle EXISTS - Stage 2, the independent verifier, the final')
+      say('release gate, the authorization and outcome evidence, the fence release, its')
+      say('proof and producer restoration all run under one held fence - but it has NOT')
+      say('passed the production-adapter rehearsal: the quiescence, queue and producer')
+      say('adapters used here would be their first live run.')
       say('No target connection was opened and nothing was modified.')
       return { exitCode: EXIT_REFUSED, lines }
     }
@@ -317,21 +323,20 @@ export async function runCli(argv: readonly string[]): Promise<CliResult> {
       // TRUTHFUL, AND DELIBERATELY NOT AN INSTRUCTION. Telling an operator to
       // "re-run with --apply" when --apply refuses by design is an instruction
       // to go and hit a wall, and it reads as though the copy were one command
-      // away. It is not: the independent verifier and the final fence-release
-      // gate have to exist first.
+      // away. It is not: the production adapters have to be rehearsed first.
       say('This inspection did NOT copy anything, and nothing was published.')
       say('Standalone --apply is UNAVAILABLE and refuses before opening a target:')
-      say('the independent verifier and the final fence-release gate do not exist yet,')
-      say('and they must run while one process still holds the supervisor lease.')
-      say('The confirmation below binds this exact run, for when that lifecycle lands:')
+      say('the core lifecycle exists but has not passed the production-adapter rehearsal.')
+      say('The confirmation below binds this exact run, for when that rehearsal lands:')
       say(`  ${r.confirmation}`)
       return { exitCode: EXIT_OK, lines }
     }
 
     // UNREACHABLE while the refusal above stands: `--apply` returns there and
     // an inspect run returns in the branch above. Asserted unreachable by a
-    // test, so a future edit that re-enables apply without the verifier fails
-    // rather than quietly restoring the window this refusal exists to close.
+    // test, so a future edit that re-enables apply before the production
+    // adapters have been rehearsed fails rather than quietly restoring the
+    // window this refusal exists to close.
     throw new Error('unreachable: the standalone apply path is refused above')
   } catch (e) {
     const d = dispositionOf(e)

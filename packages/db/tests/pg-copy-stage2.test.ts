@@ -366,7 +366,7 @@ describe('the Stage-2 CLI', () => {
 // CORRECTION C — the standalone operator path must not commit yet
 // ---------------------------------------------------------------------------
 
-describe('the standalone --apply path is refused until the verifier exists', () => {
+describe('the standalone --apply path is refused until the adapters are rehearsed', () => {
   it('refuses BEFORE any target client could be constructed', () => {
     // The refusal sits after the bundle and the session setup and BEFORE the
     // `runApply` call, so no target credential is ever used. Asserted on the
@@ -398,8 +398,9 @@ describe('the standalone --apply path is refused until the verifier exists', () 
 
   it('keeps the Stage-2 core as an API whose CALLER owns the sessions', () => {
     // `runApply` ends its own target session and nothing else: the supervisor,
-    // the prover and the source belong to the caller, so the fence lease can
-    // outlive the copy for the verifier that does not exist yet.
+    // the prover and the source belong to the caller, so the fence lease
+    // outlives the copy for the verifier and the release gate that run after
+    // it - which is exactly what `runLifecycle` relies on.
     const applyBody = STAGE2.slice(
       STAGE2.indexOf('export async function runApply'),
       STAGE2.indexOf('export async function assertTargetHoldsSource'))
@@ -464,8 +465,14 @@ describe('inspect reports honestly and instructs nothing impossible', () => {
 
   it('states plainly that standalone apply is unavailable, and why', () => {
     expect(CLI).toContain('Standalone --apply is UNAVAILABLE')
-    expect(CLI).toContain('the independent verifier and the final fence-release gate do not exist')
+    expect(CLI).toContain('has not passed the production-adapter rehearsal')
     expect(CLI).toContain('This inspection did NOT copy anything, and nothing was published.')
+    // AND IT NO LONGER CLAIMS THE VERIFIER OR THE GATE ARE MISSING. They are
+    // not; what is missing is a rehearsed production adapter, and a refusal
+    // that names the wrong reason sends an operator to build the wrong thing.
+    expect(CLI).not.toContain('the final fence-release gate do not exist')
+    expect(CLI).not.toContain('the independent verifier and the final fence-release')
+    expect(CLI).toContain('The core lifecycle EXISTS')
   })
 
   it('claims no published compatibility evidence', () => {

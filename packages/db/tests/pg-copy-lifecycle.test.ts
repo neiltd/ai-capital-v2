@@ -1,0 +1,1063 @@
+// THE COPY LIFECYCLE — the parts that need no server.
+//
+// What is proved here is everything that is a property of the ORDER and of the
+// decisions: that the release gate refuses on every reviewed ground, that the
+// authorization it issues cannot be fabricated, that the fence is released by
+// exactly one statement and only with that authorization in hand, that the
+// release is proved before a single producer is restored, that restoration
+// stops at its first failure and says where, that a released fence is never
+// described as held or recoverable, and that the two evidence bundles are
+// separate, immutable and preserve their exact publication outcomes.
+//
+// What CANNOT be proved here is the lock lifetime itself. That needs two live
+// clusters and is proved in `tests/pgcopy/lifecycle.int.test.ts`.
+
+import { execFileSync } from 'node:child_process'
+import {
+  mkdtempSync, readFileSync, readdirSync, rmSync, statSync, writeFileSync,
+} from 'node:fs'
+import { tmpdir } from 'node:os'
+import { dirname, join, resolve } from 'node:path'
+import { fileURLToPath } from 'node:url'
+import { inspect } from 'node:util'
+
+import { afterEach, describe, expect, it } from 'vitest'
+
+import {
+  REAL_EVIDENCE_OPS, REVIEWED_PREFIXES, TEMPORARY_NAME_PREFIX, evidenceNames,
+  publishEvidence, verifyPublishedEvidence, type EvidenceOps,
+} from '../src/pg-copy/evidence.js'
+import {
+  ACTIVITY_CENSUS_SQL, GATE_DETAIL_FILE, LIFECYCLE_DETAIL_FILE, LIFECYCLE_FENCE_SENTENCE,
+  LIFECYCLE_FILE, LIFECYCLE_PREFIX, LifecycleEvidenceFailed, LifecycleInterventionRequired,
+  RELEASED_LOCK_CENSUS_SQL, RELEASE_GATE_FILE, RELEASE_GATE_PREFIX,
+  RELEASE_SQL, RESTORE_ORDER, REVIEWED_PRODUCERS, ReleaseGateRefused, SUPERVISOR_ALIVE_SQL,
+  actionsDocument, assertQuiescent, authorizationDocument, gateDetailDocument,
+  isInterventionRequired, isReleaseAuthorization, outcomeDocument, publishLifecycleBundle,
+  releaseFence, restoreProducers, runReleaseGate,
+  type LifecycleFenceState, type ProducerAdapter, type ProducerState, type QueueAdapter,
+  type QueueSample, type QuiescenceAdapter, type ReleaseAuthorization,
+} from '../src/pg-copy/lifecycle.js'
+import {
+  COPY_TABLES, REVIEWED_CONTRACT_DIGEST, canonicalJson, sha256Hex,
+  type Canonical, type ContractArtifact,
+} from '../src/pg-copy/schema-contract.js'
+import {
+  FENCE_SEQUENCES, FENCE_SEQUENCE_LOCK_MODE, FENCE_TABLES, FENCE_TABLE_LOCK_MODE,
+  SEQUENCE_STATE_SQL,
+} from '../src/pg-copy/source-fence.js'
+import { VERIFICATION_FILE, type VerificationResult, type VerifierHandoff }
+  from '../src/pg-copy/verify.js'
+
+const PKG_ROOT = resolve(dirname(fileURLToPath(import.meta.url)), '..')
+const strip = (text: string): string => text
+  .replace(/\/\*[\s\S]*?\*\//g, '')
+  .split('\n').filter(l => !/^\s*(\/\/|\*)/.test(l)).join('\n')
+const read = (rel: string): string => readFileSync(join(PKG_ROOT, rel), 'utf-8')
+const LIFECYCLE = strip(read('src/pg-copy/lifecycle.ts'))
+
+const surfaces = (e: unknown): string => {
+  const err = e as Error & Record<string, unknown>
+  let json = ''
+  try { json = JSON.stringify(err, Object.getOwnPropertyNames(err)) } catch { json = '' }
+  return [String(err.message), String(err.stack ?? ''),
+          Object.getOwnPropertyNames(err).join(','), json,
+          inspect(err, { depth: 8, showHidden: true })].join('\n')
+}
+
+// ---------------------------------------------------------------------------
+// FIXTURES
+// ---------------------------------------------------------------------------
+
+const ROOTS: string[] = []
+function makeRoot(): string {
+  const r = mkdtempSync(join(tmpdir(), 'pgcopy-lifecycle-'))
+  execFileSync('/bin/chmod', ['700', r])
+  ROOTS.push(r)
+  return r
+}
+afterEach(() => {
+  for (const r of ROOTS.splice(0)) {
+    try { execFileSync('/bin/chmod', ['-R', 'u+rwX', r]) } catch { /* gone */ }
+    rmSync(r, { recursive: true, force: true })
+  }
+})
+
+const STAMP = '20260925T091500Z'
+const RUN = 'a1b2c3d4'
+const SUPERVISOR_PID = '4242'
+const PROVING_PID = '99'
+
+const hex = (seed: string): string => sha256Hex(`lifecycle-fixture|${seed}`)
+
+const HANDOFF = (over: Partial<VerifierHandoff> = {}): VerifierHandoff => ({
+  bundleName: 'source-manifest-20260925T091500Z-a1b2c3d4',
+  rootDigest: hex('root'),
+  sourceContractDigest: hex('source-contract'),
+  targetContractDigest: REVIEWED_CONTRACT_DIGEST,
+  sourceRecognition: 'CURRENT_V10',
+  targetRecognition: 'CURRENT_V19',
+  tables: COPY_TABLES.map(q => ({ qname: q, digest: hex(q), rows: 3 })),
+  sequences: FENCE_SEQUENCES.map((q, n) => ({ qname: q, effectiveNext: String(n + 7) })),
+  compatibility: { source_recognition: 'CURRENT_V10', target_recognition: 'CURRENT_V19',
+                   target_only_indexes: [], target_only_foreign_keys: [] },
+  source: { systemIdentifier: '7689229024919775042', database: 'ai_capital',
+            role: 'ai_capital_v3_export' },
+  target: { systemIdentifier: '7689229024919775999', database: 'ai_capital_v3',
+            role: 'ai_capital_migrator' },
+  fence: { supervisorPid: SUPERVISOR_PID, mechanism: 'S3' },
+  ...over,
+})
+
+const PUBLISHED = (): Record<string, never> => ({
+  source_contract: { digest: HANDOFF().sourceContractDigest },
+  content: {
+    root_digest: HANDOFF().rootDigest,
+    tables: COPY_TABLES.map(q => ({ qname: q, digest: hex(q) })),
+  },
+} as unknown as Record<string, never>)
+
+const REVIEWED_TARGET: ContractArtifact = {
+  pgcopy_schema_contract_version: 2,
+  digest: REVIEWED_CONTRACT_DIGEST,
+  payload: { migrations: { recognition: 'CURRENT_V19' } } as Canonical,
+}
+
+/** A real published verifier bundle, so the gate can read one back from disk. */
+let verifierBundleSeq = 0
+function publishVerifierBundle(
+  root: string, outcome = 'PASS', runId = `bb${(verifierBundleSeq++).toString(16).padStart(6, '0')}`,
+): string {
+  return publishEvidence({
+    root, prefix: 'verification', stamp: STAMP, runId,
+    artifacts: [{ path: 'content.json', bytes: Buffer.from('{"tables":[]}\n', 'utf-8') }],
+    manifest: {
+      path: VERIFICATION_FILE,
+      bytes: Buffer.from(`${JSON.stringify({ complete: true, outcome })}\n`, 'utf-8'),
+    },
+  }).finalPath
+}
+
+const VERIFICATION = (bundlePath: string, over: Partial<VerificationResult> = {}):
+VerificationResult => ({
+  outcome: 'PASS',
+  sourceRootDigest: HANDOFF().rootDigest,
+  targetRootDigest: HANDOFF().rootDigest,
+  tables: COPY_TABLES.map(q => ({
+    qname: q, rows: 3, bytes: 90, sourceDigest: hex(q), targetDigest: hex(q),
+  })),
+  sequences: FENCE_SEQUENCES.map((q, n) => ({
+    qname: q, sourceEffectiveNext: String(n + 7), targetEffectiveNext: String(n + 7),
+  })),
+  fenceBefore: { provingPid: PROVING_PID, supervisorPid: SUPERVISOR_PID,
+                 relations: 24, ungranted: 0 },
+  fenceAfter: { provingPid: PROVING_PID, supervisorPid: SUPERVISOR_PID,
+                relations: 24, ungranted: 0 },
+  evidence: { finalPath: bundlePath, temporaryPath: '', files: [], digestFileDigest: hex('d') },
+  ...over,
+} as VerificationResult)
+
+const lockRow = (qname: string, mode: string, pid = SUPERVISOR_PID, granted = true): string[] =>
+  [qname === 'advisory' ? 'advisory' : 'relation', qname, mode, String(granted), pid]
+
+const wholeFence = (extra: string[][] = []): string[][] => [
+  lockRow('advisory', 'ExclusiveLock'),
+  ...FENCE_TABLES.map(q => lockRow(q, FENCE_TABLE_LOCK_MODE)),
+  ...FENCE_SEQUENCES.map(q => lockRow(q, FENCE_SEQUENCE_LOCK_MODE)),
+  ...extra,
+]
+
+/** One sequence-state row, in the shape `parseSequenceState` accepts. */
+const seqRows = (last: string, called: string): string[][] =>
+  [[last, called, '1', '1', '9223372036854775807', '1', '1', 'false', 'int8',
+    'portfolio.trade_log.id']]
+
+interface Stub {
+  send: (sql: string) => Promise<{ rows: string[][]; error: 'statement-refused' | null }>
+  seen: string[]
+}
+
+/** The supervisor: alive, fenced sequences, and a release census. */
+function supervisorStub(over: {
+  pid?: string | null
+  sequences?: (q: string, n: number) => string[][]
+  releaseError?: boolean
+  censusRows?: string[][] | null
+  censusThrows?: boolean
+} = {}): Stub {
+  const seen: string[] = []
+  return {
+    seen,
+    send: async (sql: string) => {
+      seen.push(sql)
+      if (sql === SUPERVISOR_ALIVE_SQL) {
+        if (over.pid === null) throw new Error('connection terminated unexpectedly')
+        return { rows: [[over.pid ?? SUPERVISOR_PID]], error: null }
+      }
+      if (sql === RELEASE_SQL) {
+        return { rows: [], error: over.releaseError === true ? 'statement-refused' : null }
+      }
+      if (sql.startsWith('\nSELECT pg_catalog.count(*)')) {
+        if (over.censusThrows === true) throw new Error('gone')
+        if (over.censusRows === null) return { rows: [], error: 'statement-refused' }
+        return { rows: over.censusRows ?? [['0']], error: null }
+      }
+      for (let n = 0; n < FENCE_SEQUENCES.length; n += 1) {
+        if (sql === SEQUENCE_STATE_SQL(FENCE_SEQUENCES[n])) {
+          const make = over.sequences ?? ((): string[][] => seqRows(String(n + 6), 't'))
+          return { rows: make(FENCE_SEQUENCES[n], n), error: null }
+        }
+      }
+      return { rows: [], error: null }
+    },
+  }
+}
+
+/** The prover: a pid, a lock census, and the activity census. */
+function proverStub(over: {
+  pid?: string | null
+  locks?: string[][]
+  activity?: string[][]
+  activityError?: boolean
+} = {}): Stub {
+  const seen: string[] = []
+  return {
+    seen,
+    send: async (sql: string) => {
+      seen.push(sql)
+      if (sql === ACTIVITY_CENSUS_SQL) {
+        if (over.activityError === true) return { rows: [], error: 'statement-refused' }
+        return {
+          rows: over.activity ?? [[SUPERVISOR_PID, 'ai_capital_owner', 'client backend'],
+                                  [PROVING_PID, 'ai_capital_owner', 'client backend']],
+          error: null,
+        }
+      }
+      if (sql === 'SELECT pg_catalog.pg_backend_pid()') {
+        if (over.pid === null) throw new Error('connection terminated unexpectedly')
+        return { rows: [[over.pid ?? PROVING_PID]], error: null }
+      }
+      return { rows: over.locks ?? wholeFence(), error: null }
+    },
+  }
+}
+
+const stoppedProducers = (): QuiescenceAdapter => ({
+  report: async () => REVIEWED_PRODUCERS.map(name => ({ name, stopped: true })),
+})
+
+const emptyQueues = (): QueueAdapter => ({ sample: async () => ({ depths: { daily: 0 } }) })
+
+function gateInput(root: string, over: Record<string, unknown> = {}): Parameters<typeof runReleaseGate>[0] {
+  const bundle = (over.bundle as string | undefined) ?? publishVerifierBundle(root)
+  return {
+    handoff: HANDOFF(),
+    verification: VERIFICATION(bundle),
+    publishedDocument: PUBLISHED(),
+    reviewedTarget: REVIEWED_TARGET,
+    supervisor: supervisorStub(),
+    prover: proverStub(),
+    quiescence: stoppedProducers(),
+    queue: emptyQueues(),
+    allowlistedPids: [SUPERVISOR_PID, PROVING_PID],
+    allowlistedRoles: ['ai_capital_owner', 'ai_capital_v3_export'],
+    ...over,
+  } as Parameters<typeof runReleaseGate>[0]
+}
+
+const refusedBy = async (fn: () => Promise<unknown>): Promise<ReleaseGateRefused> => {
+  try { await fn() } catch (e) {
+    expect(e).toBeInstanceOf(ReleaseGateRefused)
+    return e as ReleaseGateRefused
+  }
+  throw new Error('expected a refusal, and none was raised')
+}
+
+// ---------------------------------------------------------------------------
+
+describe('the reviewed producer order', () => {
+  it('restores in the REVERSE of the stop order, and says why', () => {
+    expect([...RESTORE_ORDER]).toEqual([...REVIEWED_PRODUCERS].reverse())
+    // The worker drains; the triggers fill. It comes back first.
+    expect(RESTORE_ORDER[0]).toBe('com.thanapol.ai-capital.worker')
+    expect(REVIEWED_PRODUCERS[0]).toBe('com.thanapol.ai-capital.daily')
+    expect(new Set(RESTORE_ORDER).size).toBe(REVIEWED_PRODUCERS.length)
+  })
+
+  it('refuses a quiescence report that is not the reviewed set, all stopped', async () => {
+    await expect(assertQuiescent(stoppedProducers())).resolves.toBeDefined()
+    const cases: Array<readonly ProducerState[]> = [
+      [],
+      REVIEWED_PRODUCERS.map(name => ({ name, stopped: false })),
+      REVIEWED_PRODUCERS.map((name, n) => ({ name, stopped: n !== 1 })),
+      [...REVIEWED_PRODUCERS].reverse().map(name => ({ name, stopped: true })),
+      REVIEWED_PRODUCERS.slice(0, 2).map(name => ({ name, stopped: true })),
+    ]
+    for (const report of cases) {
+      await expect(assertQuiescent({ report: async () => report })).rejects
+        .toThrow(ReleaseGateRefused)
+    }
+    // An adapter that throws is not a quiescent system either.
+    await expect(assertQuiescent({ report: async () => { throw new Error('launchctl') } }))
+      .rejects.toThrow(ReleaseGateRefused)
+  })
+})
+
+describe('the final release gate', () => {
+  it('authorizes a complete, proved, quiescent source', async () => {
+    const root = makeRoot()
+    const a = await runReleaseGate(gateInput(root))
+    expect(isReleaseAuthorization(a)).toBe(true)
+    expect(a.rootDigest).toBe(HANDOFF().rootDigest)
+    expect(a.fence.ungranted).toBe(0)
+    expect(a.sequences.map(s => s.effectiveNext)).toEqual(['7', '8', '9'])
+    expect(a.producers.every(p => p.stopped)).toBe(true)
+    expect(a.queueSamples.length).toBe(2)
+    expect(a.activity.unreviewed).toBe(0)
+  })
+
+  it('refuses a supervisor that is dead or is a different backend', async () => {
+    const root = makeRoot()
+    for (const over of [{ supervisor: supervisorStub({ pid: null }) },
+                        { supervisor: supervisorStub({ pid: '5555' }) }]) {
+      const e = await refusedBy(() => runReleaseGate(gateInput(root, over)))
+      expect(e.refusal).toBe('the supervisor is not the backend that held the fence')
+    }
+  })
+
+  it('refuses a MISSING table lock, a MISSING sequence lock and a QUEUED writer', async () => {
+    const root = makeRoot()
+    const cases: Array<[string, string[][]]> = [
+      ['table', wholeFence().filter(r => r[1] !== FENCE_TABLES[6])],
+      ['sequence', wholeFence().filter(r => r[1] !== FENCE_SEQUENCES[2])],
+      ['advisory', wholeFence().filter(r => r[0] !== 'advisory')],
+      ['queued', wholeFence([lockRow(FENCE_TABLES[0], 'RowExclusiveLock', '777', false)])],
+    ]
+    for (const [label, locks] of cases) {
+      const e = await refusedBy(
+        () => runReleaseGate(gateInput(root, { prover: proverStub({ locks }) })))
+      expect(e.refusal, label).toBe('the complete source fence was not proved held')
+      // A queued writer is CENSUS evidence; it is never reported as a
+      // transport problem, and no pid or lock mode is reproduced.
+      expect(surfaces(e), label).not.toContain('777')
+      expect(surfaces(e), label).not.toContain('RowExclusiveLock')
+    }
+  })
+
+  it('refuses a DEAD prover and a MALFORMED census as UNPROVED, not as a lost fence',
+    async () => {
+      const root = makeRoot()
+      for (const over of [{ prover: proverStub({ pid: null }) },
+                          { prover: proverStub({ locks: [['relation', 'graph.nodes']] }) },
+                          { prover: proverStub({ pid: 'not-a-pid' }) }]) {
+        const e = await refusedBy(() => runReleaseGate(gateInput(root, over)))
+        expect(e.refusal).toBe('the complete source fence was not proved held')
+        // The CAUSE distinguishes them, and never claims a census refused.
+        expect(e.at).not.toBe(
+          'a required fence lock is missing or a conflicting request is queued')
+      }
+    })
+
+  it('refuses SEQUENCE DRIFT, naming only the sequence', async () => {
+    const root = makeRoot()
+    const e = await refusedBy(() => runReleaseGate(gateInput(root, {
+      supervisor: supervisorStub({ sequences: (_q, n) => seqRows(String(n + 99), 't') }),
+    })))
+    expect(e.refusal).toBe('a source sequence has moved since the copy')
+    expect(FENCE_SEQUENCES).toContain(e.at)
+    // A sequence the supervisor will not report is drift too, not a pass.
+    const e2 = await refusedBy(() => runReleaseGate(gateInput(root, {
+      supervisor: supervisorStub({ sequences: () => [] }),
+    })))
+    expect(e2.refusal).toBe('a source sequence has moved since the copy')
+  })
+
+  it('refuses a verifier that did not PASS, and one whose bundle does not verify', async () => {
+    const root = makeRoot()
+    const bundle = publishVerifierBundle(root)
+    expect((await refusedBy(() => runReleaseGate(gateInput(root, {
+      bundle, verification: VERIFICATION(bundle, { outcome: 'FAIL' as never }),
+    })))).refusal).toBe('the independent verification did not pass')
+
+    // A bundle that is not there at all.
+    expect((await refusedBy(() => runReleaseGate(gateInput(root, {
+      bundle: join(root, 'verification-20260925T091500Z-ffffffff'),
+      verification: VERIFICATION(join(root, 'verification-20260925T091500Z-ffffffff')),
+    })))).refusal).toBe('the verifier evidence bundle does not verify from disk')
+
+    // A bundle whose BYTES were changed after publication.
+    const tampered = publishVerifierBundle(makeRoot(), 'PASS', 'c3d4e5f6')
+    execFileSync('/bin/chmod', ['-R', 'u+rwX', tampered])
+    writeFileSync(join(tampered, VERIFICATION_FILE), '{"complete":true,"outcome":"PASS"} ')
+    expect((await refusedBy(() => runReleaseGate(gateInput(root, {
+      bundle: tampered, verification: VERIFICATION(tampered),
+    })))).refusal).toBe('the verifier evidence bundle does not verify from disk')
+
+    // A bundle that verifies and says FAIL in its own bytes.
+    const failing = publishVerifierBundle(makeRoot(), 'FAIL', 'd4e5f6a7')
+    expect((await refusedBy(() => runReleaseGate(gateInput(root, {
+      bundle: failing, verification: VERIFICATION(failing),
+    })))).refusal).toBe('the verifier evidence bundle does not verify from disk')
+  })
+
+  it('refuses when the chain disagrees anywhere', async () => {
+    const root = makeRoot()
+    const bundle = publishVerifierBundle(root)
+    const variants: Array<[string, Record<string, unknown>]> = [
+      ['a moved source root',
+       { verification: VERIFICATION(bundle, { sourceRootDigest: hex('other') }) }],
+      ['a moved target root',
+       { verification: VERIFICATION(bundle, { targetRootDigest: hex('other') }) }],
+      ['a different published root',
+       { publishedDocument: { ...PUBLISHED(), content: {
+           root_digest: hex('elsewhere'),
+           tables: COPY_TABLES.map(q => ({ qname: q, digest: hex(q) })) } } }],
+      ['a different published contract',
+       { publishedDocument: { ...PUBLISHED(), source_contract: { digest: hex('nope') } } }],
+      ['a substitute reviewed target',
+       { reviewedTarget: { ...REVIEWED_TARGET, digest: hex('substitute') } }],
+      ['one table digest',
+       { handoff: HANDOFF({ tables: COPY_TABLES.map((q, n) => ({
+           qname: q, digest: n === 4 ? hex('moved') : hex(q), rows: 3 })) }) }],
+      ['the same cluster on both sides',
+       { handoff: HANDOFF({ target: { ...HANDOFF().target,
+           systemIdentifier: HANDOFF().source.systemIdentifier } }) }],
+    ]
+    for (const [label, over] of variants) {
+      const e = await refusedBy(() => runReleaseGate(gateInput(root, { bundle, ...over })))
+      expect(e.refusal, label).toBe('the verified chain does not agree with the Stage-2 result')
+    }
+  })
+
+  it('refuses QUIESCENCE DRIFT measured at the gate, not remembered from earlier', async () => {
+    const root = makeRoot()
+    // Stopped when the lifecycle started; running by the time the gate asks.
+    let calls = 0
+    const drifting: QuiescenceAdapter = {
+      report: async () => REVIEWED_PRODUCERS.map(name => ({
+        name, stopped: calls++ < REVIEWED_PRODUCERS.length,
+      })),
+    }
+    await expect(assertQuiescent(drifting)).resolves.toBeDefined()
+    const e = await refusedBy(() => runReleaseGate(gateInput(root, { quiescence: drifting })))
+    expect(e.refusal).toBe('a reviewed producer is not stopped')
+  })
+
+  it('refuses a source carrying sessions nobody reviewed, and counts rather than lists',
+    async () => {
+      const root = makeRoot()
+      const e = await refusedBy(() => runReleaseGate(gateInput(root, {
+        prover: proverStub({ activity: [
+          [SUPERVISOR_PID, 'ai_capital_owner', 'client backend'],
+          ['8888', 'some_other_role', 'client backend'],
+        ] }),
+      })))
+      expect(e.refusal).toBe('the source carries sessions that are not reviewed')
+      expect(e.at).toBe('1 session(s)')
+      expect(surfaces(e)).not.toContain('some_other_role')
+      expect(surfaces(e)).not.toContain('8888')
+      // The census asks for no `query` column at all.
+      expect(ACTIVITY_CENSUS_SQL).not.toContain('query')
+      // Background workers are the server's own and are not counted against it.
+      await expect(runReleaseGate(gateInput(root, {
+        prover: proverStub({ activity: [
+          [SUPERVISOR_PID, 'ai_capital_owner', 'client backend'],
+          ['12', '', 'autovacuum launcher'],
+        ] }),
+      }))).resolves.toBeDefined()
+    })
+
+  it('refuses queues that are not empty, and queues that are not STABLE', async () => {
+    const root = makeRoot()
+    const e = await refusedBy(() => runReleaseGate(gateInput(root, {
+      queue: { sample: async () => ({ depths: { daily: 1 } }) } as QueueAdapter,
+    })))
+    expect(e.refusal).toBe('the queue samples are not empty and stable')
+    expect(e.at).toBe('daily')
+
+    // TWO samples, because one cannot tell an empty queue from a queue caught
+    // between two jobs. Here the SET of queues changes between them.
+    let n = 0
+    const unstable: QueueAdapter = {
+      sample: async (): Promise<QueueSample> =>
+        (n++ === 0 ? { depths: { daily: 0 } } : { depths: { daily: 0, alerts: 0 } }),
+    }
+    expect((await refusedBy(() => runReleaseGate(gateInput(root, { queue: unstable })))).refusal)
+      .toBe('the queue samples are not empty and stable')
+    // And an adapter that throws is not an empty queue.
+    expect((await refusedBy(() => runReleaseGate(gateInput(root, {
+      queue: { sample: async () => { throw new Error('redis') } } as QueueAdapter,
+    })))).refusal).toBe('the queue samples are not empty and stable')
+  })
+
+  it('takes TWO queue samples, always', async () => {
+    const root = makeRoot()
+    let taken = 0
+    await runReleaseGate(gateInput(root, {
+      queue: { sample: async () => { taken += 1; return { depths: {} } } } as QueueAdapter,
+    }))
+    expect(taken).toBe(2)
+  })
+
+  it('never sends a transaction-control statement to the borrowed sessions', async () => {
+    const root = makeRoot()
+    const supervisor = supervisorStub()
+    const prover = proverStub()
+    await runReleaseGate(gateInput(root, { supervisor, prover }))
+    for (const sql of [...supervisor.seen, ...prover.seen]) {
+      expect(sql).not.toMatch(/^\s*(COMMIT|ROLLBACK|BEGIN|END|ABORT)\b/i)
+      expect(sql).not.toContain('advisory_unlock')
+    }
+  })
+})
+
+describe('the authorization cannot be fabricated', () => {
+  it('rejects every look-alike, however it was built', async () => {
+    const root = makeRoot()
+    const genuine = await runReleaseGate(gateInput(root))
+    expect(isReleaseAuthorization(genuine)).toBe(true)
+
+    const forgeries: unknown[] = [
+      { ...genuine },
+      JSON.parse(JSON.stringify(genuine)),
+      structuredClone(genuine),
+      Object.create(Object.getPrototypeOf(genuine) as object),
+      null, undefined, true, 'authorized', 42, {},
+    ]
+    // Every own key, descriptor for descriptor, onto an object of our own.
+    const reflected: Record<string | symbol, unknown> = {}
+    for (const k of Reflect.ownKeys(genuine)) {
+      const d = Object.getOwnPropertyDescriptor(genuine, k)
+      if (d !== undefined) Object.defineProperty(reflected, k, d)
+    }
+    forgeries.push(reflected)
+
+    for (const f of forgeries) {
+      expect(isReleaseAuthorization(f), inspect(f).slice(0, 60)).toBe(false)
+      await expect(releaseFence(supervisorStub(), f as ReleaseAuthorization))
+        .rejects.toThrow(ReleaseGateRefused)
+    }
+    // There is no runtime brand to copy in the first place.
+    expect(Object.getOwnPropertySymbols(genuine)).toEqual([])
+    expect(Object.isFrozen(genuine)).toBe(true)
+  })
+
+  it('a REFUSED gate mints nothing', async () => {
+    const root = makeRoot()
+    await refusedBy(() => runReleaseGate(gateInput(root, {
+      prover: proverStub({ locks: wholeFence().filter(r => r[0] !== 'advisory') }),
+    })))
+    // Nothing was registered, so nothing can release. Proved by the only
+    // observable the registry has: a release attempt.
+    const fake = { rootDigest: HANDOFF().rootDigest } as unknown as ReleaseAuthorization
+    await expect(releaseFence(supervisorStub(), fake)).rejects.toThrow(ReleaseGateRefused)
+  })
+})
+
+describe('the release is one statement, and it is proved', () => {
+  it('is exactly the supervisor ROLLBACK, and never a substitute', async () => {
+    expect(RELEASE_SQL).toBe('ROLLBACK')
+    const root = makeRoot()
+    const a = await runReleaseGate(gateInput(root))
+    const supervisor = supervisorStub()
+    const r = await releaseFence(supervisor, a)
+    expect(r.state).toBe('released')
+    expect(r.remainingLocks).toBe(0)
+    expect(supervisor.seen.filter(s => s === RELEASE_SQL).length).toBe(1)
+    // NO COMMIT, NO UNLOCK, NO TERMINATION.
+    for (const sql of supervisor.seen) {
+      expect(sql).not.toMatch(/^\s*COMMIT\b/i)
+      expect(sql).not.toContain('advisory_unlock')
+      expect(sql).not.toContain('pg_terminate_backend')
+      expect(sql).not.toContain('pg_cancel_backend')
+    }
+    // The module contains no substitute anywhere.
+    expect(LIFECYCLE).not.toContain('advisory_unlock')
+    expect(LIFECYCLE).not.toContain('pg_terminate_backend')
+    expect(LIFECYCLE).not.toMatch(/send\('COMMIT'\)/)
+    expect(LIFECYCLE.match(/send\(RELEASE_SQL\)/g)?.length).toBe(1)
+  })
+
+  it('a ROLLBACK that was REFUSED leaves the fence held, and is not a release', async () => {
+    const root = makeRoot()
+    const a = await runReleaseGate(gateInput(root))
+    const supervisor = supervisorStub({ releaseError: true })
+    await expect(releaseFence(supervisor, a)).rejects.toThrow(ReleaseGateRefused)
+    // AND NO PROOF WAS ATTEMPTED: there is nothing to prove, and asking would
+    // invite a "released-unproved" answer about a fence that is still held.
+    expect(supervisor.seen.filter(s => s.includes('count(*)'))).toEqual([])
+  })
+
+  it('a release whose PROOF does not come back is RELEASED-UNPROVED, never unproved',
+    async () => {
+      const root = makeRoot()
+      const a = await runReleaseGate(gateInput(root))
+      for (const over of [{ censusRows: null }, { censusThrows: true },
+                          { censusRows: [['3']] }, { censusRows: [['not a number']] }]) {
+        const r = await releaseFence(supervisorStub(over), a)
+        expect(r.state, JSON.stringify(over)).toBe('released-unproved')
+      }
+      // Remaining locks are reported when they were actually counted.
+      expect((await releaseFence(supervisorStub({ censusRows: [['3']] }), a)).remainingLocks)
+        .toBe(3)
+      expect((await releaseFence(supervisorStub({ censusThrows: true }), a)).remainingLocks)
+        .toBeNull()
+    })
+
+  it('the census asks only about the reviewed relations and the reviewed advisory key', () => {
+    expect(RELEASED_LOCK_CENSUS_SQL).toContain('pg_catalog.pg_backend_pid()')
+    expect(RELEASED_LOCK_CENSUS_SQL).toContain("l.locktype = 'relation'")
+    expect(RELEASED_LOCK_CENSUS_SQL).toContain("l.locktype = 'advisory'")
+    expect(RELEASED_LOCK_CENSUS_SQL).toContain('count(*)')
+  })
+})
+
+describe('restoration', () => {
+  const adapter = (over: Partial<ProducerAdapter> = {}): ProducerAdapter & { log: string[] } => {
+    const log: string[] = []
+    return {
+      log,
+      restore: async (n: string) => { log.push(`restore ${n}`) },
+      confirm: async (n: string) => { log.push(`confirm ${n}`); return true },
+      ...over,
+    } as ProducerAdapter & { log: string[] }
+  }
+
+  it('restores in the reviewed reverse order, confirming each before the next', async () => {
+    const a = adapter()
+    const r = await restoreProducers(a)
+    expect(r.failedAt).toBeNull()
+    expect([...r.restored]).toEqual([...RESTORE_ORDER])
+    expect(r.notRestored).toEqual([])
+    expect(a.log).toEqual(RESTORE_ORDER.flatMap(n => [`restore ${n}`, `confirm ${n}`]))
+  })
+
+  it('STOPS at the first failure and reports the exact boundary', async () => {
+    for (const failing of RESTORE_ORDER) {
+      const a = adapter({ confirm: async (n: string) => n !== failing })
+      const r = await restoreProducers(a)
+      expect(r.failedAt, failing).toBe(failing)
+      const upTo = RESTORE_ORDER.slice(0, RESTORE_ORDER.indexOf(failing))
+      expect([...r.restored], failing).toEqual(upTo)
+      expect([...r.notRestored], failing)
+        .toEqual(RESTORE_ORDER.filter(n => !upTo.includes(n)))
+    }
+  })
+
+  it('never retries, and never starts the rest anyway', async () => {
+    const attempts: string[] = []
+    const a = adapter({ restore: async (n: string) => {
+      attempts.push(n)
+      if (n === RESTORE_ORDER[1]) throw new Error('launchctl bootstrap failed')
+    } })
+    const r = await restoreProducers(a)
+    expect(r.failedAt).toBe(RESTORE_ORDER[1])
+    // The failing producer was tried ONCE, and the third was never touched.
+    expect(attempts).toEqual([RESTORE_ORDER[0], RESTORE_ORDER[1]])
+    expect(attempts.filter(n => n === RESTORE_ORDER[1]).length).toBe(1)
+    expect(attempts).not.toContain(RESTORE_ORDER[2])
+    // Nothing the adapter said travels.
+    expect(surfaces(r)).not.toContain('launchctl')
+  })
+
+  it('a restore that returns is not a confirmation', async () => {
+    const a = adapter({ confirm: async () => false })
+    const r = await restoreProducers(a)
+    expect(r.failedAt).toBe(RESTORE_ORDER[0])
+    expect(r.restored).toEqual([])
+    // It DID call restore; it simply did not believe it.
+    expect(a.log).toContain(`restore ${RESTORE_ORDER[0]}`)
+  })
+})
+
+describe('the intervention state', () => {
+  const failure = { phase: 'L6-release-gate' as const,
+                    reason: 'the final release gate refused' as const, at: null }
+
+  it('is non-forgeable by identity, not by a property', () => {
+    const genuine = new LifecycleInterventionRequired(
+      failure, 'held', supervisorStub() as never)
+    // A directly constructed one is NOT registered: only the lifecycle mints.
+    expect(isInterventionRequired(genuine)).toBe(false)
+    expect(isInterventionRequired({ ...genuine })).toBe(false)
+    expect(isInterventionRequired(null)).toBe(false)
+    expect(LIFECYCLE).toContain('const LIVE_INTERVENTIONS = new WeakSet<object>()')
+    expect(LIFECYCLE).toContain('LIVE_INTERVENTIONS.has(v)')
+    expect(LIFECYCLE).not.toMatch(/export\s+(const|function|type)\s+LIVE_INTERVENTIONS/)
+  })
+
+  it('states the fence truthfully, and never claims a released fence is held', () => {
+    const states: LifecycleFenceState[] =
+      ['held', 'not-held', 'unproved', 'released', 'released-unproved']
+    expect(Object.keys(LIFECYCLE_FENCE_SENTENCE).sort()).toEqual([...states].sort())
+    expect(new Set(Object.values(LIFECYCLE_FENCE_SENTENCE)).size).toBe(5)
+    for (const s of states) {
+      const m = new LifecycleInterventionRequired(failure, s, supervisorStub() as never).message
+      expect(m.includes('PROVED still held'), s).toBe(s === 'held')
+      if (s === 'released' || s === 'released-unproved') {
+        expect(m, s).toContain('HAS BEEN RELEASED')
+        expect(m, s).toContain('cannot be recovered')
+        expect(m, s).not.toContain('still held')
+      }
+      if (s === 'released-unproved') {
+        expect(m).toContain('NOT restored')
+      }
+      if (s === 'not-held' || s === 'unproved') {
+        expect(m, s).toContain('MUTABLE')
+      }
+    }
+  })
+
+  it('retains the supervisor handle, preserves the primary failure, and leaks nothing', () => {
+    const supervisor = supervisorStub()
+    const e = new LifecycleInterventionRequired(
+      { phase: 'L9-release-proof', reason: 'the fence release could not be proved', at: null },
+      'released-unproved', supervisor as never,
+      { attempted: true, publishedPath: '/ev/release-gate-x', verified: true, note: null },
+      { attempted: false, publishedPath: null, verified: false, note: null },
+      [], REVIEWED_PRODUCERS)
+    expect(e.supervisor).toBe(supervisor)
+    expect(e.failure.phase).toBe('L9-release-proof')
+    expect(e.releaseGateEvidence.verified).toBe(true)
+    expect(e.lifecycleEvidence.attempted).toBe(false)
+    expect([...e.notRestored]).toEqual([...REVIEWED_PRODUCERS])
+    expect(e.message).toContain('INTERVENTION REQUIRED')
+    expect(e.message).toContain('Nothing has been cleaned')
+    const text = surfaces(e)
+    for (const marker of ['password', 'postgres://', 'PGPASSWORD', 'passfile', 'Alpha Corp']) {
+      expect(text.toLowerCase()).not.toContain(marker.toLowerCase())
+    }
+  })
+})
+
+describe('the two bundles are two bundles', () => {
+  const AUTH = async (root: string): Promise<ReleaseAuthorization> =>
+    await runReleaseGate(gateInput(root))
+
+  const publishGate = (root: string, a: ReleaseAuthorization, runId = RUN,
+                       ops?: EvidenceOps): ReturnType<typeof publishLifecycleBundle> =>
+    publishLifecycleBundle({
+      root, prefix: RELEASE_GATE_PREFIX, stamp: STAMP, runId,
+      manifestFile: RELEASE_GATE_FILE, detailFile: GATE_DETAIL_FILE,
+      manifest: authorizationDocument(a, HANDOFF(), runId, STAMP),
+      detail: gateDetailDocument(a),
+      ...(ops === undefined ? {} : { ops }),
+    })
+
+  const publishOutcome = (root: string, runId = 'e5f6a7b8',
+                          ops?: EvidenceOps): ReturnType<typeof publishLifecycleBundle> =>
+    publishLifecycleBundle({
+      root, prefix: LIFECYCLE_PREFIX, stamp: STAMP, runId,
+      manifestFile: LIFECYCLE_FILE, detailFile: LIFECYCLE_DETAIL_FILE,
+      manifest: outcomeDocument(
+        HANDOFF(), 'released', { state: 'released', remainingLocks: 0 },
+        { restored: RESTORE_ORDER, notRestored: [], failedAt: null },
+        `/ev/release-gate-${STAMP}-${RUN}`, null, runId, STAMP),
+      detail: actionsDocument({ state: 'released', remainingLocks: 0 },
+                              { restored: RESTORE_ORDER, notRestored: [], failedAt: null }),
+      ...(ops === undefined ? {} : { ops }),
+    })
+
+  it('are separate, differently named, and both immutable', async () => {
+    const root = makeRoot()
+    const gate = publishGate(root, await AUTH(root))
+    const outcome = publishOutcome(root)
+    expect(gate.finalPath).not.toBe(outcome.finalPath)
+    expect(readdirSync(root).filter(n => n.startsWith('release-gate-')).length).toBe(1)
+    expect(readdirSync(root).filter(n => n.startsWith('copy-lifecycle-')).length).toBe(1)
+    for (const p of [gate, outcome]) {
+      expect(statSync(p.finalPath).mode & 0o777).toBe(0o500)
+      for (const f of p.files) expect(statSync(join(p.finalPath, f)).mode & 0o777).toBe(0o400)
+      expect([...verifyPublishedEvidence(p.finalPath)].sort()).toEqual([...p.files].sort())
+      // Frozen: the normal writer cannot create, truncate, append or replace.
+      const target = join(p.finalPath, readdirSync(p.finalPath)[0])
+      expect(() => writeFileSync(target, 'x')).toThrow()
+      expect(() => writeFileSync(target, 'x', { flag: 'a' })).toThrow()
+      expect(() => writeFileSync(join(p.finalPath, 'extra'), 'x')).toThrow()
+    }
+  })
+
+  it('the AUTHORIZATION never claims the release or the restoration happened', async () => {
+    const root = makeRoot()
+    const gate = publishGate(root, await AUTH(root))
+    const doc = JSON.parse(readFileSync(join(gate.finalPath, RELEASE_GATE_FILE), 'utf-8'))
+    expect(doc.record).toBe('authorization-to-release')
+    expect(doc.authorized).toBe(true)
+    // THE TWO FIELDS THAT MATTER. An authorization is permission, and a reader
+    // who found only this bundle must not conclude the lifecycle finished.
+    expect(doc.released).toBeNull()
+    expect(doc.producers_restored).toBeNull()
+    expect(doc.complete).toBe(true)
+    expect(doc.fence.disposition).toBe('held')
+
+    const outcome = publishOutcome(root)
+    const odoc = JSON.parse(readFileSync(join(outcome.finalPath, LIFECYCLE_FILE), 'utf-8'))
+    expect(odoc.record).toBe('lifecycle-outcome')
+    expect(odoc.outcome).toBe('COMPLETE')
+    expect(odoc.release.state).toBe('released')
+    expect(odoc.restoration.restored).toEqual([...RESTORE_ORDER])
+    expect(odoc.fence.state).toBe('released')
+  })
+
+  it('never overwrites a published destination', async () => {
+    const root = makeRoot()
+    const a = await AUTH(root)
+    const first = publishGate(root, a)
+    const before = readFileSync(join(first.finalPath, RELEASE_GATE_FILE), 'utf-8')
+    let thrown: unknown = null
+    try { publishGate(root, a) } catch (e) { thrown = e }
+    expect(thrown).toBeInstanceOf(LifecycleEvidenceFailed)
+    // Refused at the COLLISION check, before a byte was written: the
+    // destination is occupied by something this run did not create.
+    const e = thrown as LifecycleEvidenceFailed
+    expect(e.publication).toBe('destination-occupied')
+    expect(e.evidencePhase).toBe('collision')
+    expect(e.temporaryPath).toBeNull()
+    expect(readFileSync(join(first.finalPath, RELEASE_GATE_FILE), 'utf-8')).toBe(before)
+  })
+
+  it('publishes by NO-REPLACE RENAME, not merely by checking first', async () => {
+    // THE COLLISION CHECK IS NOT THE GUARANTEE. `publishEvidence` looks for the
+    // destination before it builds, and that check would hide a rename that
+    // overwrites: nothing in the ordinary path ever reaches the rename with the
+    // destination occupied. So the check is made to LIE - it reports the final
+    // name absent while the bundle is really there - and the rename is left as
+    // the only thing standing between a second run and the first one's bytes.
+    const root = makeRoot()
+    const a = await AUTH(root)
+    const first = publishGate(root, a)
+    const before = readFileSync(join(first.finalPath, RELEASE_GATE_FILE), 'utf-8')
+
+    // The lie is told ONCE, to the collision check, and the truth is told
+    // afterwards - so the publication's own outside verification still works
+    // and an overwriting rename would report a clean success rather than
+    // failing for some unrelated reason.
+    let lied = false
+    const blindOnce: EvidenceOps = {
+      ...REAL_EVIDENCE_OPS,
+      lstatSync: ((path: string, opts?: unknown) => {
+        if (String(path) === first.finalPath && !lied) {
+          lied = true
+          const err = new Error('injected') as NodeJS.ErrnoException
+          err.code = 'ENOENT'
+          throw err
+        }
+        return REAL_EVIDENCE_OPS.lstatSync(path, opts as never)
+      }) as typeof REAL_EVIDENCE_OPS.lstatSync,
+    }
+    const inodeBefore = statSync(first.finalPath).ino
+    let thrown: unknown = null
+    try { publishGate(root, a, RUN, blindOnce) } catch (e) { thrown = e }
+    expect(lied).toBe(true)
+    expect(thrown).toBeInstanceOf(LifecycleEvidenceFailed)
+    // THE RENAME REFUSED, with the collision check already fooled. Both facts
+    // are true here - a temporary bundle was built AND the destination is
+    // occupied - and the classifier names the actionable one, carrying the
+    // publisher's own reason beside it so the cause is not lost.
+    const e = thrown as LifecycleEvidenceFailed
+    expect(e.publication).toBe('retained-temporary')
+    expect(e.evidencePhase).toBe('publish')
+    expect(e.evidenceReason).toBe('a path is already present at the publication destination')
+    // THE FIRST BUNDLE IS THE SAME DIRECTORY OBJECT, with the same bytes.
+    expect(statSync(first.finalPath).ino).toBe(inodeBefore)
+    expect(readFileSync(join(first.finalPath, RELEASE_GATE_FILE), 'utf-8')).toBe(before)
+    expect([...verifyPublishedEvidence(first.finalPath)].sort())
+      .toEqual([...first.files].sort())
+  })
+
+  it('preserves EVERY publication outcome class, for both prefixes', async () => {
+    const root0 = makeRoot()
+    const a = await AUTH(root0)
+    const failingOn = (when: (op: string, p: string) => boolean): EvidenceOps => ({
+      ...REAL_EVIDENCE_OPS,
+      writeSync: ((fd: number, b: Buffer) => {
+        if (when('write', '')) throw new Error('injected')
+        return REAL_EVIDENCE_OPS.writeSync(fd, b as never)
+      }) as typeof REAL_EVIDENCE_OPS.writeSync,
+      chmodSync: ((p: string, m: number) => {
+        if (when('chmod', String(p))) throw new Error('injected')
+        return REAL_EVIDENCE_OPS.chmodSync(p, m)
+      }) as typeof REAL_EVIDENCE_OPS.chmodSync,
+    })
+
+    for (const [prefix, publish, finalName] of [
+      [RELEASE_GATE_PREFIX, (r: string, o?: EvidenceOps) => publishGate(r, a, RUN, o),
+       `release-gate-${STAMP}-${RUN}`],
+      [LIFECYCLE_PREFIX, (r: string, o?: EvidenceOps) => publishOutcome(r, 'e5f6a7b8', o),
+       `copy-lifecycle-${STAMP}-e5f6a7b8`],
+    ] as const) {
+      // 1. REFUSED, nothing created.
+      const r1 = makeRoot()
+      writeFileSync(join(r1, finalName), 'squatter')
+      let e = ((): LifecycleEvidenceFailed => {
+        try { publish(r1) } catch (x) { return x as LifecycleEvidenceFailed }
+        throw new Error('expected a refusal')
+      })()
+      expect(e.publication, prefix).toBe('destination-occupied')
+      expect(e.temporaryPath, prefix).toBeNull()
+
+      // 2. RETAINED TEMPORARY.
+      const r2 = makeRoot()
+      let writes = 0
+      e = ((): LifecycleEvidenceFailed => {
+        try { publish(r2, failingOn(op => op === 'write' && ++writes === 2)) }
+        catch (x) { return x as LifecycleEvidenceFailed }
+        throw new Error('expected a refusal')
+      })()
+      expect(e.publication, prefix).toBe('retained-temporary')
+      expect(e.temporaryPath, prefix)
+        .toBe(join(r2, evidenceNames(prefix, STAMP, e.temporaryPath!.slice(-8)).temporaryName))
+
+      // 3. UNAVAILABLE atomic rename -> still a retained temporary.
+      const r3 = makeRoot()
+      e = ((): LifecycleEvidenceFailed => {
+        try { publish(r3, { ...REAL_EVIDENCE_OPS, renameNoReplace: () => 'unavailable' }) }
+        catch (x) { return x as LifecycleEvidenceFailed }
+        throw new Error('expected a refusal')
+      })()
+      expect(e.publication, prefix).toBe('retained-temporary')
+
+      // 4. PUBLISHED BUT UNVERIFIED.
+      const r4 = makeRoot()
+      e = ((): LifecycleEvidenceFailed => {
+        try { publish(r4, failingOn((op, p) => op === 'chmod' && p.endsWith(finalName))) }
+        catch (x) { return x as LifecycleEvidenceFailed }
+        throw new Error('expected a refusal')
+      })()
+      expect(e.publication, prefix).toBe('published-unverified')
+      expect(e.finalPath, prefix).toBe(join(r4, finalName))
+      expect(readdirSync(r4), prefix).toEqual([finalName])
+
+      // 5. UNKNOWN rename outcome.
+      const r5 = makeRoot()
+      e = ((): LifecycleEvidenceFailed => {
+        try {
+          publish(r5, { ...REAL_EVIDENCE_OPS, renameNoReplace: (from: string) => {
+            rmSync(from, { recursive: true, force: true })
+            return 'indeterminate'
+          } })
+        } catch (x) { return x as LifecycleEvidenceFailed }
+        throw new Error('expected a refusal')
+      })()
+      expect(e.publication, prefix).toBe('unknown')
+
+      // 6. STATE UNPROVED: the recovery probe itself could not answer.
+      const r6 = makeRoot()
+      let seen = 0
+      e = ((): LifecycleEvidenceFailed => {
+        try {
+          publish(r6, {
+            ...failingOn(op => op === 'write'),
+            lstatSync: ((p: string, o?: unknown) => {
+              if (seen++ >= 1) {
+                const err = new Error('injected') as NodeJS.ErrnoException
+                err.code = 'EACCES'
+                throw err
+              }
+              return REAL_EVIDENCE_OPS.lstatSync(p, o as never)
+            }) as typeof REAL_EVIDENCE_OPS.lstatSync,
+          })
+        } catch (x) { return x as LifecycleEvidenceFailed }
+        throw new Error('expected a refusal')
+      })()
+      expect(e.publication, prefix).toBe('state-unproved')
+      expect(e.temporaryPath, prefix).toBeNull()
+    }
+  })
+
+  it('registers both prefixes with their own temporary names', () => {
+    expect([...REVIEWED_PREFIXES].sort())
+      .toEqual(['copy-lifecycle', 'release-gate', 'source-manifest', 'verification'])
+    expect(TEMPORARY_NAME_PREFIX[RELEASE_GATE_PREFIX]).toBe('.tmp-release-gate-')
+    expect(TEMPORARY_NAME_PREFIX[LIFECYCLE_PREFIX]).toBe('.tmp-copy-lifecycle-')
+    expect(evidenceNames(RELEASE_GATE_PREFIX, STAMP, RUN).finalName)
+      .toBe(`release-gate-${STAMP}-${RUN}`)
+    expect(evidenceNames(LIFECYCLE_PREFIX, STAMP, RUN).finalName)
+      .toBe(`copy-lifecycle-${STAMP}-${RUN}`)
+  })
+
+  it('carries no credential component in either document', async () => {
+    const root = makeRoot()
+    const a = await AUTH(root)
+    const text = [
+      canonicalJson(authorizationDocument(a, HANDOFF(), RUN, STAMP)),
+      canonicalJson(gateDetailDocument(a)),
+      canonicalJson(outcomeDocument(HANDOFF(), 'released',
+        { state: 'released', remainingLocks: 0 },
+        { restored: RESTORE_ORDER, notRestored: [], failedAt: null }, null, null, RUN, STAMP)),
+      canonicalJson(actionsDocument({ state: 'released', remainingLocks: 0 }, null)),
+    ].join('\n').toLowerCase()
+    for (const marker of ['password', 'passfile', 'pgpass', 'postgres://', 'host=',
+                          'sslmode', 'secret', '/tmp/']) {
+      expect(text, marker).not.toContain(marker)
+    }
+  })
+})
+
+describe('the reviewed order is the code', () => {
+  it('releases only AFTER the authorization evidence is published and verified', () => {
+    const body = LIFECYCLE.slice(LIFECYCLE.indexOf('export async function runLifecycle'))
+    const at = (needle: string): number => {
+      const n = body.indexOf(needle)
+      expect(n, needle).toBeGreaterThan(-1)
+      return n
+    }
+    const order = [
+      'await assertQuiescent(i.quiescence)',
+      'applied = await runApply(',
+      'await stageSource.rows(RELEASE_SQL)',
+      'verification = await runVerification(',
+      'authorization = await runReleaseGate(',
+      'prefix: RELEASE_GATE_PREFIX',
+      'release = await releaseFence(',
+      'restoration = await restoreProducers(i.producers)',
+    ]
+    let previous = -1
+    for (const step of order) {
+      const n = at(step)
+      expect(n, step).toBeGreaterThan(previous)
+      previous = n
+    }
+  })
+
+  it('restores only after the release is PROVED, never after released-unproved', () => {
+    const body = LIFECYCLE.slice(LIFECYCLE.indexOf('export async function runLifecycle'))
+    const guard = body.indexOf("if ((release as ReleaseResult).state !== 'released')")
+    const restore = body.indexOf('restoration = await restoreProducers(i.producers)')
+    expect(guard).toBeGreaterThan(-1)
+    expect(guard).toBeLessThan(restore)
+    // The guard leaves through `stop`, which never returns.
+    expect(body.slice(guard, restore)).toContain("'L9-release-proof'")
+  })
+
+  it('closes what it owns and never the caller sessions', () => {
+    expect(LIFECYCLE).toContain('await stageSource.end()')
+    expect(LIFECYCLE).not.toMatch(/i\.supervisor\.(end|close)\(/)
+    expect(LIFECYCLE).not.toMatch(/i\.prover\.(end|close)\(/)
+    // The one statement it ever sends to the supervisor to end a transaction.
+    expect(LIFECYCLE.match(/i\.supervisor/g)?.length).toBeGreaterThan(0)
+    expect(LIFECYCLE).not.toContain('i.supervisor.send(RELEASE_SQL)')
+  })
+
+  it('the standalone --apply path is STILL refused, and says why truthfully', () => {
+    const cli = strip(read('bin/pg-copy.ts'))
+    expect(cli).toContain('if (parsed.apply) {')
+    expect(cli).toContain("say('REFUSED: the standalone --apply path is not available.')")
+    expect(cli).toContain('The core lifecycle EXISTS')
+    expect(cli).toContain('production-adapter rehearsal')
+    expect(cli).not.toContain('runApply(')
+    expect(cli).not.toContain('runLifecycle(')
+    expect(cli).not.toContain('runReleaseGate(')
+    expect(cli).not.toContain('releaseFence(')
+    // No standalone verifier or release command was added beside it.
+    expect(cli).not.toContain('--verify')
+    expect(cli).not.toContain('--release')
+  })
+
+  it('touches no operational mechanism directly', () => {
+    for (const forbidden of ['launchctl', 'redis', 'ioredis', 'child_process', 'execFile',
+                             'spawn(', '090', 'bullmq']) {
+      expect(LIFECYCLE.toLowerCase(), forbidden).not.toContain(forbidden.toLowerCase())
+    }
+  })
+})

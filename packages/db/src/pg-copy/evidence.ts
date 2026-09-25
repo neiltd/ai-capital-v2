@@ -253,7 +253,7 @@ export const REAL_EVIDENCE_OPS: EvidenceOps = {
 
 /** The only prefixes this repository publishes evidence under. */
 export const REVIEWED_PREFIXES: readonly string[] =
-  Object.freeze(['source-manifest', 'verification'])
+  Object.freeze(['source-manifest', 'verification', 'release-gate', 'copy-lifecycle'])
 
 /**
  * The temporary name each reviewed prefix builds under. A TABLE, not a formula.
@@ -272,6 +272,8 @@ export const REVIEWED_PREFIXES: readonly string[] =
 export const TEMPORARY_NAME_PREFIX: Readonly<Record<string, string>> = Object.freeze({
   'source-manifest': '.tmp-',
   verification: '.tmp-verification-',
+  'release-gate': '.tmp-release-gate-',
+  'copy-lifecycle': '.tmp-copy-lifecycle-',
 })
 
 const RUN_ID = /^[0-9a-f]{8}$/

@@ -980,7 +980,12 @@ describe('the published verification evidence', () => {
     expect(n.finalName).toMatch(/^verification-\d{8}T\d{6}Z-[0-9a-f]{8}$/)
     // Stage 1's name is UNCHANGED by the addition.
     expect(evidenceNames('source-manifest', STAMP, RUN).temporaryName).toBe(`.tmp-${RUN}`)
-    expect(Object.keys(TEMPORARY_NAME_PREFIX).sort()).toEqual(['source-manifest', 'verification'])
+    // Each reviewed prefix STATES its own temporary name rather than inheriting
+    // a formula, so a prefix added later cannot rename an existing one.
+    expect(TEMPORARY_NAME_PREFIX.verification).toBe('.tmp-verification-')
+    expect(TEMPORARY_NAME_PREFIX['source-manifest']).toBe('.tmp-')
+    expect(Object.keys(TEMPORARY_NAME_PREFIX)).toContain('verification')
+    expect(Object.keys(TEMPORARY_NAME_PREFIX)).toContain('source-manifest')
   })
 
   it('publishes ONE frozen, digested, fsynced bundle', () => {
