@@ -48,8 +48,8 @@ import {
   type BatchSummary, type ColumnSpec, type TypeContract,
 } from './canonical.js'
 import {
-  DIGEST_FILE, evidenceStamp, publishEvidence, type EvidenceArtifact, type EvidenceOps,
-  type PublishedEvidence,
+  DIGEST_FILE, evidenceNames, evidenceStamp, publishEvidence,
+  type EvidenceArtifact, type EvidenceOps, type PublishedEvidence,
 } from './evidence.js'
 import { EXPORT_ROLE_NAME } from './export-role.js'
 import {
@@ -207,6 +207,63 @@ export class ManifestRefused extends Error {
   ) {
     super(`${reason} (phase ${phase}${qname === null ? '' : ` for ${qname}`})`)
     this.name = 'ManifestRefused'
+  }
+}
+
+/**
+ * The three things Stage 1 still has to do AFTER the bundle is published.
+ *
+ * A closed union, because the whole point of the class below is that a caller
+ * can tell which of them stopped - and there are exactly three.
+ */
+export type Stage1PublishedPhase =
+  | 'fence-proof-after-publication'
+  | 'export-rollback'
+  | 'fence-proof-after-rollback'
+
+export type Stage1PublishedReason =
+  | 'the fence could not be proved still held after publication'
+  | 'the export transaction could not be rolled back'
+  | 'the fence could not be proved still held after the source rollback'
+
+/**
+ * THE BUNDLE IS PUBLISHED AND VERIFIED. Stage 1 did not finish.
+ *
+ * WHY THIS IS NOT `EvidencePublishedButUnverified`. That class means the
+ * EVIDENCE is in doubt: the bundle reached its final name but could not be
+ * frozen, synced or verified, so nobody knows whether the bytes on disk are
+ * the bytes that were meant. This class means the opposite about the evidence
+ * and something else entirely about the run: `publishEvidence` returned, which
+ * means the bundle was frozen, fsynced and verified from the outside - and
+ * then the ORCHESTRATION around it stopped. Collapsing the two would tell an
+ * operator their evidence failed verification when it passed.
+ *
+ * WHY IT IS NOT A REFUSAL EITHER. A refusal means nothing reached the final
+ * name and a retry is safe. Here the final name is taken by a bundle that is
+ * good, so a blind retry would publish a second bundle describing the same
+ * moment, and a "cleanup" would delete verified evidence. Neither is allowed.
+ *
+ * WHAT IS UNKNOWN is narrower than it looks: the manifest describes a source
+ * that was fenced and proved throughout its derivation. What did not complete
+ * is the proof that the fence was STILL held afterwards, or the orderly end of
+ * the read-only export transaction. A person has to decide whether that is
+ * acceptable for this run; this class refuses to decide it for them.
+ *
+ * Carries the two generated NAMES, never absolute paths, and nothing from the
+ * failure it replaced - no statement, no row, no server text, no cause.
+ */
+export class Stage1PublishedButIncomplete extends Error {
+  constructor(
+    readonly phase: Stage1PublishedPhase,
+    readonly reason: Stage1PublishedReason,
+    readonly publishedName: string,
+    readonly temporaryName: string,
+  ) {
+    super(
+      `the manifest was published and verified, but Stage 1 did not complete during ` +
+      `"${phase}": ${reason}. Nothing has been removed or repaired. ` +
+      `published=${publishedName} temporary=${temporaryName}`)
+    this.name = 'Stage1PublishedButIncomplete'
   }
 }
 
@@ -883,11 +940,13 @@ export async function runStage1(i: Stage1Input): Promise<Stage1Result> {
 
   // 1-2. The whole fence, then an INDEPENDENT proof, before anything else.
   //
-  // The reviewed fence and contract primitives raise errors that name the
-  // failing STATEMENT and, for the fence, carry psql's stderr. Both are
-  // appropriate inside their own modules and neither may cross Stage 1's
-  // boundary, where the result is about to be reported and logged - so each is
-  // re-raised as a bounded reason here.
+  // The reviewed fence and contract primitives raise errors of their own
+  // classes, which name the failing statement - by ordinal for the fence, by
+  // first line for the contract. Neither carries psql's stderr any more: the
+  // transport exports only a fixed refusal token, so raw server prose stops
+  // inside its framing implementation and never reaches these modules. What is
+  // re-raised here is the CLASS, not the text: a Stage-1 caller should have to
+  // handle one bounded error type, not four.
   let fence: AcquiredFence
   try {
     fence = await acquireSourceFence(i.supervisor)
@@ -952,10 +1011,11 @@ export async function runStage1(i: Stage1Input): Promise<Stage1Result> {
     path: SOURCE_CONTRACT_FILE,
     bytes: Buffer.from(`${serializeArtifact(contract)}\n`, 'utf-8'),
   }]
+  const stamp = evidenceStamp(new Date(operator.generatedAtUtc))
   const published = publishEvidence({
     root: i.evidenceRoot,
     prefix: MANIFEST_PREFIX,
-    stamp: evidenceStamp(new Date(operator.generatedAtUtc)),
+    stamp,
     runId: operator.runId,
     artifacts,
     manifest: {
@@ -964,13 +1024,55 @@ export async function runStage1(i: Stage1Input): Promise<Stage1Result> {
     },
   }, i.ops)
   timeline.push('published')
-  await proveFence(i.prover, fence)
+
+  // =====================================================================
+  // EVERYTHING BELOW THIS LINE RUNS WITH THE BUNDLE ALREADY PUBLISHED.
+  //
+  // `publishEvidence` has RETURNED, which means the bundle reached its final
+  // name and was frozen, fsynced and verified from the outside. Three things
+  // remain, and each can still fail - a prover that died, an export session
+  // that went away before its ROLLBACK, a fence released underneath us. Until
+  // this block existed those failures fell through to a generic handler that
+  // told the operator "No manifest was published under the final name", which
+  // was simply false: the manifest was published, and verified.
+  //
+  // The wrapper starts HERE, after publication, which is what keeps the three
+  // pre-publication outcomes intact: an `EvidenceRefused`, an
+  // `EvidencePublicationUnknown` and an `EvidencePublishedButUnverified` are
+  // all raised INSIDE `publishEvidence`, above this line, and none of them can
+  // reach this catch. That is a property of position, not of a type test.
+  // =====================================================================
+  const names = evidenceNames(MANIFEST_PREFIX, stamp, operator.runId)
+  const afterPublication = async <T>(
+    phase: Stage1PublishedPhase, reason: Stage1PublishedReason, body: () => Promise<T>,
+  ): Promise<T> => {
+    try {
+      return await body()
+    } catch {
+      // The original is DISCARDED, not wrapped: it may be a fence proof naming
+      // reviewed relations, a transport refusal, or something unforeseen.
+      throw new Stage1PublishedButIncomplete(
+        phase, reason, names.finalName, names.temporaryName)
+    }
+  }
+
+  await afterPublication(
+    'fence-proof-after-publication',
+    'the fence could not be proved still held after publication',
+    () => proveFence(i.prover, fence))
   timeline.push('fence-held-at-publication')
 
   // 10. End the source transaction. Nothing is committed: it read only.
-  await exp.rows(EXPORT_ROLLBACK_SQL)
+  await afterPublication(
+    'export-rollback',
+    'the export transaction could not be rolled back',
+    () => exp.rows(EXPORT_ROLLBACK_SQL))
   timeline.push('source-rolled-back')
-  await proveFence(i.prover, fence)
+
+  await afterPublication(
+    'fence-proof-after-rollback',
+    'the fence could not be proved still held after the source rollback',
+    () => proveFence(i.prover, fence))
   timeline.push('fence-held-at-rollback')
 
   // 11. The caller releases the fence, now that both have completed.

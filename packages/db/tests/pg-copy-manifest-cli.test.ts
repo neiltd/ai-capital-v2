@@ -20,14 +20,16 @@ import { afterEach, describe, expect, it } from 'vitest'
 
 import {
   CliRefused, DEFAULT_PSQL, EXIT_FAILED, EXIT_OK, EXIT_PUBLICATION_UNKNOWN,
-  EXIT_PUBLISHED_UNVERIFIED, EXIT_REFUSED,
+  EXIT_PUBLISHED_INCOMPLETE, EXIT_PUBLISHED_UNVERIFIED, EXIT_REFUSED,
   GIT, INGESTION_SUBMODULE, OPTIONS, REQUIRED, dispositionOf, isDirectEntrypoint, parseArgs,
   repositoryProvenance,
 } from '../bin/pg-copy-manifest.js'
 import {
   EvidencePublicationUnknown, EvidencePublishedButUnverified, EvidenceRefused,
 } from '../src/pg-copy/evidence.js'
-import { ManifestRefused } from '../src/pg-copy/source-manifest.js'
+import {
+  ManifestRefused, Stage1PublishedButIncomplete, type Stage1PublishedPhase,
+} from '../src/pg-copy/source-manifest.js'
 import { FORBIDDEN_PSQL_ARGS, sterileBatchEnv } from '../src/pg-copy/export-role.js'
 import {
   FIELD_SEP, PsqlBackendRefused, closeAllPsqlBackends, openPsqlBackend,
@@ -530,13 +532,59 @@ describe('the CLI tells the truth about what is on disk', () => {
     expect(text).not.toContain('No manifest was published')
   })
 
-  it('the absence claim is unreachable for both published and unknown outcomes', () => {
+  it('the absence claim is unreachable for every outcome in which a bundle exists', () => {
     // Asserted on the source too, so the ordering that makes it unreachable
-    // cannot be quietly rearranged.
-    expect(CLI.indexOf('EXIT_PUBLICATION_UNKNOWN, lines'))
-      .toBeLessThan(CLI.indexOf('EXIT_PUBLISHED_UNVERIFIED, lines'))
-    expect(CLI.indexOf('EXIT_PUBLISHED_UNVERIFIED, lines'))
-      .toBeLessThan(CLI.indexOf('No manifest was published under the final name'))
+    // cannot be quietly rearranged. All THREE such branches return first.
+    const absence = CLI.indexOf('No manifest was published under the final name')
+    expect(absence).toBeGreaterThan(-1)
+    for (const marker of ['EXIT_PUBLICATION_UNKNOWN, lines',
+                          'EvidencePublishedButUnverified',
+                          'Stage1PublishedButIncomplete']) {
+      expect(CLI.indexOf(marker), marker).toBeGreaterThan(-1)
+      expect(CLI.indexOf(marker), marker).toBeLessThan(absence)
+    }
+  })
+
+  it('a published-but-INCOMPLETE Stage 1 keeps its own meaning, and exits 3', () => {
+    const phases: Array<[Stage1PublishedPhase, string]> = [
+      ['fence-proof-after-publication',
+       'the fence could not be proved still held after publication'],
+      ['export-rollback', 'the export transaction could not be rolled back'],
+      ['fence-proof-after-rollback',
+       'the fence could not be proved still held after the source rollback'],
+    ]
+    for (const [phase, reason] of phases) {
+      const d = dispositionOf(new Stage1PublishedButIncomplete(
+        phase, reason as never, 'source-manifest-20260924T101530Z-a1b2c3d4', '.tmp-a1b2c3d4'))
+      const text = d.lines.join('\n')
+      expect(d.exitCode, phase).toBe(EXIT_PUBLISHED_INCOMPLETE)
+      expect(text, phase).toContain('PASSED evidence verification')
+      expect(text, phase).toContain('Stage 1 did NOT complete')
+      expect(text, phase).toContain('Nothing was removed or repaired')
+      expect(text, phase).toContain('Do not retry, reuse, delete or repair it')
+      expect(text, phase).toContain('source-manifest-20260924T101530Z-a1b2c3d4')
+      expect(text, phase).toContain(phase)
+      expect(text, phase).toContain(reason)
+      expect(text, phase).not.toContain('No manifest was published')
+      // It is NOT the evidence-verification failure, and must not read as one.
+      expect(text, phase).not.toContain('INCOMPLETE or UNVERIFIED')
+    }
+  })
+
+  it('the two published dispositions share a status but not a meaning', () => {
+    const unverified = dispositionOf(new EvidencePublishedButUnverified(
+      'verify', 'the published digest does not describe the published bytes',
+      'source-manifest-20260924T101530Z-a1b2c3d4', '.tmp-a1b2c3d4'))
+    const incomplete = dispositionOf(new Stage1PublishedButIncomplete(
+      'export-rollback', 'the export transaction could not be rolled back',
+      'source-manifest-20260924T101530Z-a1b2c3d4', '.tmp-a1b2c3d4'))
+    expect(unverified.exitCode).toBe(EXIT_PUBLISHED_INCOMPLETE)
+    expect(incomplete.exitCode).toBe(EXIT_PUBLISHED_INCOMPLETE)
+    expect(EXIT_PUBLISHED_UNVERIFIED).toBe(EXIT_PUBLISHED_INCOMPLETE)
+    // The EVIDENCE case says verification is in doubt; the STAGE case says it
+    // passed. Neither sentence may appear in the other.
+    expect(unverified.lines.join('\n')).not.toContain('PASSED evidence verification')
+    expect(incomplete.lines.join('\n')).not.toContain('could not be completed or verified')
   })
 
   it('says NOTHING was published for a pre-rename refusal, and exits 2', () => {

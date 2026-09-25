@@ -47,20 +47,27 @@ import {
   EvidencePublicationUnknown, EvidencePublishedButUnverified, newRunId,
 } from '../src/pg-copy/evidence.js'
 import {
-  MANIFEST_FILE, runStage1, type OperatorInput,
+  MANIFEST_FILE, Stage1PublishedButIncomplete, runStage1, type OperatorInput,
 } from '../src/pg-copy/source-manifest.js'
 
 export const EXIT_OK = 0
 export const EXIT_FAILED = 1
 export const EXIT_REFUSED = 2
 /**
- * The bundle EXISTS but could not be completed or verified.
+ * A bundle EXISTS under the final name, and something after that did not.
  *
- * Its own code, because it is the one outcome an operator must not read as
- * either success or "nothing happened": the final name is taken, by evidence
- * that has not been proved good, and it is being kept deliberately.
+ * ONE CODE, TWO DISPOSITIONS, deliberately not split: either the EVIDENCE
+ * could not be completed or verified (`EvidencePublishedButUnverified`), or
+ * the evidence is good and STAGE 1's post-publication protocol stopped
+ * (`Stage1PublishedButIncomplete`). The operator's next action is identical
+ * for both - look at the bundle, do not retry, do not delete, do not repair -
+ * so they share a status while the printed lines say which one happened.
+ *
+ * What neither may be read as is success or "nothing happened".
  */
-export const EXIT_PUBLISHED_UNVERIFIED = 3
+export const EXIT_PUBLISHED_INCOMPLETE = 3
+/** The name this status had when it covered only the evidence case. */
+export const EXIT_PUBLISHED_UNVERIFIED = EXIT_PUBLISHED_INCOMPLETE
 /**
  * The publication outcome is UNKNOWN and a retry is not safe.
  *
@@ -192,12 +199,15 @@ export interface CliResult {
  * returned or thrown.
  *
  * RELEASING IT ON THE FAILURE PATH IS CORRECT, AND NOT BECAUSE "nothing was
- * published". That was the earlier claim and it is not true of every failure:
- * a bundle may exist unverified, and an unknown outcome may have published
- * one. It is correct because the fence's job - holding the source still while
- * it is READ - is over either way once Stage 1 has stopped reading, and
- * holding it longer would block the source for no benefit. What must not be
- * tidied is the EVIDENCE, and no failure path here touches it.
+ * published". That was the earlier claim and it is false of three failures: a
+ * bundle may exist unverified, an unknown outcome may have published one, and
+ * a published-but-incomplete run definitely did - its evidence is on disk and
+ * verified, and only the protocol after it stopped. Releasing is correct
+ * because the fence's job - holding the source still while it is READ - is
+ * over either way once Stage 1 has stopped reading, and holding it longer
+ * would block the source for no benefit. What must not be tidied is the
+ * EVIDENCE, and nothing here touches it: this block ends sessions, and no
+ * statement in it names the evidence root.
  */
 export async function runCli(argv: readonly string[]): Promise<CliResult> {
   const lines: string[] = []
@@ -302,14 +312,28 @@ export function dispositionOf(e: unknown): CliResult {
     return { exitCode: EXIT_PUBLICATION_UNKNOWN, lines }
   }
 
-  // THE BUNDLE EXISTS. Reported next and separately, because saying "nothing
-  // was published" here would be false, and because the operator has to know a
-  // final name is now taken by evidence nobody has verified.
+  // THE BUNDLE EXISTS, AND THE EVIDENCE ITSELF IS IN DOUBT. Reported next and
+  // separately, because saying "nothing was published" here would be false,
+  // and because the operator has to know a final name is now taken by evidence
+  // nobody has verified.
   if (e instanceof EvidencePublishedButUnverified) {
     lines.push(e.message)
     lines.push('Publication is INCOMPLETE or UNVERIFIED: a bundle EXISTS under the final name.')
     lines.push('It has been preserved exactly as it is. Do not delete, reuse or repair it.')
-    return { exitCode: EXIT_PUBLISHED_UNVERIFIED, lines }
+    return { exitCode: EXIT_PUBLISHED_INCOMPLETE, lines }
+  }
+
+  // THE BUNDLE EXISTS AND IS VERIFIED; STAGE 1 DID NOT FINISH. A different
+  // fact from the one above, and it must not be reported as that one: the
+  // evidence PASSED verification, and what stopped was the protocol around it
+  // - the fence proof after publication, the export rollback, or the second
+  // fence proof.
+  if (e instanceof Stage1PublishedButIncomplete) {
+    lines.push(e.message)
+    lines.push('A bundle EXISTS under the final name and PASSED evidence verification.')
+    lines.push('Stage 1 did NOT complete: its post-publication protocol stopped.')
+    lines.push('Nothing was removed or repaired. Do not retry, reuse, delete or repair it.')
+    return { exitCode: EXIT_PUBLISHED_INCOMPLETE, lines }
   }
 
   // BOUNDED. Stage-1 and evidence errors are already closed unions of reviewed
@@ -321,11 +345,18 @@ export function dispositionOf(e: unknown): CliResult {
   const bounded = name === 'ManifestRefused' || name === 'EvidenceRefused' ||
                   name === 'CliRefused'
   lines.push(bounded && e instanceof Error ? e.message : `stage 1 failed (${name}).`)
-  // TRUE ON THIS PATH ONLY, AND BOTH EXCEPTIONS HAVE ALREADY RETURNED ABOVE.
-  // A published-but-unverified bundle EXISTS, and an unknown outcome MAY have
-  // published one; each is reported as such and neither reaches this line.
-  // Everything that does reach it was raised BEFORE the atomic publication, so
-  // the absence of the final name is proved rather than assumed.
+  // WHAT MAKES THIS LINE TRUE, STRUCTURALLY. Every outcome in which a final
+  // name can exist has already returned above: unknown (it may exist),
+  // published-but-unverified (it does), published-but-incomplete (it does, and
+  // is verified). What remains is reachable only from code that runs BEFORE
+  // `publishEvidence` returns - because everything `runStage1` does after that
+  // point is inside its `afterPublication` wrapper, and therefore arrives here
+  // as `Stage1PublishedButIncomplete` rather than as itself.
+  //
+  // That is a claim about the code's SHAPE, so it is asserted as one: a test
+  // checks that the wrapper is the only thing between publication and the
+  // return. An unwrapped await added after publication fails that test rather
+  // than quietly making this line false again.
   lines.push('No manifest was published under the final name.')
   return { exitCode: bounded ? EXIT_REFUSED : EXIT_FAILED, lines }
 }

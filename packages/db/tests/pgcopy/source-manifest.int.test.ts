@@ -24,6 +24,7 @@ import { execFileSync } from 'node:child_process'
 import { mkdtempSync, readFileSync, readdirSync, rmSync, lstatSync } from 'node:fs'
 import { tmpdir } from 'node:os'
 import { join } from 'node:path'
+import { inspect } from 'node:util'
 
 import { afterAll, beforeAll, describe, expect, it } from 'vitest'
 
@@ -39,9 +40,13 @@ import {
   FENCE_SEQUENCES, SEQUENCE_STATE_SQL, effectiveNext,
 } from '../../src/pg-copy/source-fence.js'
 import {
-  EXPORT_BEGIN_SQL, MANIFEST_FILE, SOURCE_CONTRACT_FILE, hashTable, proveExportSession,
-  runStage1, sqlWithoutComments, typeContractFrom, type OperatorInput,
+  EXPORT_BEGIN_SQL, MANIFEST_FILE, SOURCE_CONTRACT_FILE, Stage1PublishedButIncomplete,
+  hashTable, proveExportSession, runStage1, sqlWithoutComments, typeContractFrom,
+  type OperatorInput, type Stage1PublishedPhase,
 } from '../../src/pg-copy/source-manifest.js'
+import {
+  EXIT_PUBLISHED_INCOMPLETE, dispositionOf,
+} from '../../bin/pg-copy-manifest.js'
 import {
   cleanSecretRoots, makeSecretRoot, openExportSession,
   provisionExportRole, readPublishedCredential, requireScramForExportRole,
@@ -499,6 +504,151 @@ describe('Stage 1, end to end, under a held fence', () => {
       await supervisor.send('ROLLBACK')
       for (const s of [exportSession, prover, supervisor]) await s.close()
     }
+  }, 900_000)
+})
+
+/** Every surface an error could carry something across. */
+const surfaces = (e: unknown): string => {
+  const err = e as Error & Record<string, unknown>
+  let json = ''
+  try { json = JSON.stringify(err, Object.getOwnPropertyNames(err)) } catch { json = '' }
+  const syms = Object.getOwnPropertySymbols(err)
+    .map(s => `${String(s)}=${String((err as unknown as Record<symbol, unknown>)[s])}`)
+  return [String(err.message), String(err.stack ?? ''),
+          Object.getOwnPropertyNames(err).join(','), json, syms.join(','),
+          inspect(err, { depth: 8, showHidden: true })].join('\n')
+}
+
+describe('a failure AFTER publication never reports the manifest as absent', () => {
+  const ROLLBACK_CANARY =
+    'injected: SELECT pw FROM vault.secrets; postgresql://u:pw_STAGECANARY@h/db; ' +
+    '/Users/someone/ai-capital-secrets/export.pgpass'
+
+  /**
+   * Run Stage 1 for real, and break exactly one post-publication step.
+   *
+   * The injection keys off the bundle being ON DISK rather than off a call
+   * count, so it cannot drift if the number of fence proofs ever changes: a
+   * proof taken while the final name exists is, by definition, one of the two
+   * post-publication proofs.
+   */
+  async function runBroken(inject: {
+    failProofAfterPublication?: boolean
+    failRollback?: boolean
+    failProofAfterRollback?: boolean
+  }): Promise<{ thrown: unknown; root: string; runId: string }> {
+    const root = evidenceRoot()
+    const supervisor = await openPsqlSession(C, DB)
+    const prover = await openPsqlSession(C, DB)
+    const exportSession = await openExportSession(C, DB, PASSFILE)
+    const runId = newRunId()
+    let rolledBack = false
+    const bundleOnDisk = (): boolean =>
+      readdirSync(root).some(n => n.startsWith('source-manifest-'))
+
+    const proverProxy = {
+      send: async (sql: string) => {
+        if (sql.includes('pg_locks') && bundleOnDisk()) {
+          if (inject.failProofAfterPublication === true && !rolledBack) {
+            return { rows: [] as string[][], error: 'statement-refused' as const }
+          }
+          if (inject.failProofAfterRollback === true && rolledBack) {
+            return { rows: [] as string[][], error: 'statement-refused' as const }
+          }
+        }
+        return await prover.send(sql)
+      },
+    }
+    const exportProxy = {
+      pid: exportSession.pid,
+      rows: async (sql: string) => {
+        if (sql.trim() === 'ROLLBACK') {
+          rolledBack = true
+          if (inject.failRollback === true) throw new Error(ROLLBACK_CANARY)
+        }
+        return await exportSession.rows(sql)
+      },
+    }
+
+    let thrown: unknown = null
+    try {
+      await runStage1({
+        supervisor, prover: proverProxy, exportSession: exportProxy,
+        operator: OPERATOR(runId), evidenceRoot: root,
+      })
+    } catch (e) { thrown = e }
+    finally {
+      await supervisor.send('ROLLBACK')
+      for (const s of [exportSession, prover, supervisor]) await s.close()
+    }
+    return { thrown, root, runId }
+  }
+
+  /** Everything that must be true of all three, asserted once. */
+  function assertPublishedButIncomplete(
+    thrown: unknown, root: string, runId: string, phase: Stage1PublishedPhase,
+  ): void {
+    // PUBLICATION COMPLETED FIRST.
+    const names = readdirSync(root).filter(n => n.startsWith('source-manifest-'))
+    expect(names.length, 'exactly one published bundle').toBe(1)
+    const finalPath = join(root, names[0])
+    expect(names[0].endsWith(`-${runId}`)).toBe(true)
+    expect(pathIsPresent(finalPath)).toBe(true)
+    expect(pathIsPresent(join(root, `.tmp-${runId}`))).toBe(false)
+    // AND IT IS GOOD: the evidence verifies from the outside.
+    expect(verifyPublishedEvidence(finalPath))
+      .toEqual([MANIFEST_FILE, SOURCE_CONTRACT_FILE, DIGEST_FILE])
+    expect(JSON.parse(readFileSync(join(finalPath, MANIFEST_FILE), 'utf-8')).complete).toBe(true)
+
+    // THE BOUNDED OUTCOME, WITH THE EXACT PHASE.
+    expect(thrown).toBeInstanceOf(Stage1PublishedButIncomplete)
+    const e = thrown as Stage1PublishedButIncomplete
+    expect(e.phase).toBe(phase)
+    expect(e.publishedName).toBe(names[0])
+    expect(e.temporaryName).toBe(`.tmp-${runId}`)
+
+    // THE DISPOSITION.
+    const d = dispositionOf(thrown)
+    const text = d.lines.join('\n')
+    expect(d.exitCode).toBe(EXIT_PUBLISHED_INCOMPLETE)
+    expect(text).toContain('A bundle EXISTS under the final name and PASSED evidence verification.')
+    expect(text).toContain('Stage 1 did NOT complete')
+    expect(text).toContain('Nothing was removed or repaired')
+    expect(text).toContain('Do not retry, reuse, delete or repair it')
+    expect(text).not.toContain('No manifest was published')
+
+    // NOTHING CROSSED THE BOUNDARY.
+    const seen = `${surfaces(thrown)}\n${text}`
+    for (const canary of ['pw_STAGECANARY', 'postgresql://', 'vault.secrets', 'SELECT pw',
+                          '/Users/someone', 'ai-capital-secrets', root, '/var/folders',
+                          'pg_locks', 'statement-refused', 'ROLLBACK']) {
+      expect(seen, canary).not.toContain(canary)
+    }
+    expect((e as unknown as { cause?: unknown }).cause).toBeUndefined()
+  }
+
+  it('the POST-PUBLICATION fence proof failing is published-but-incomplete', async () => {
+    const { thrown, root, runId } = await runBroken({ failProofAfterPublication: true })
+    assertPublishedButIncomplete(thrown, root, runId, 'fence-proof-after-publication')
+  }, 900_000)
+
+  it('the EXPORT ROLLBACK failing is published-but-incomplete', async () => {
+    const { thrown, root, runId } = await runBroken({ failRollback: true })
+    assertPublishedButIncomplete(thrown, root, runId, 'export-rollback')
+  }, 900_000)
+
+  it('the POST-ROLLBACK fence proof failing is published-but-incomplete', async () => {
+    const { thrown, root, runId } = await runBroken({ failProofAfterRollback: true })
+    assertPublishedButIncomplete(thrown, root, runId, 'fence-proof-after-rollback')
+  }, 900_000)
+
+  it('a SUCCESSFUL Stage 1 is unchanged by any of this', async () => {
+    const { thrown, root, runId } = await runBroken({})
+    expect(thrown).toBeNull()
+    const names = readdirSync(root).filter(n => n.startsWith('source-manifest-'))
+    expect(names.length).toBe(1)
+    expect(names[0].endsWith(`-${runId}`)).toBe(true)
+    expect(verifyPublishedEvidence(join(root, names[0]))).toBeTruthy()
   }, 900_000)
 })
 

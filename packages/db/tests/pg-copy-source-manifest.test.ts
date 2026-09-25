@@ -744,3 +744,61 @@ function guardedBegun(inner: ExportSession & { issued: string[] }): ExportSessio
   void g.rows(EXPORT_BEGIN_SQL)
   return { pid: g.pid, rows: g.rows, issued: inner.issued }
 }
+
+// ---------------------------------------------------------------------------
+// The absence claim downstream rests on this SHAPE, so the shape is asserted
+// ---------------------------------------------------------------------------
+
+describe('nothing after publication escapes unclassified', () => {
+  /** The span between `publishEvidence` returning and `runStage1` returning. */
+  const span = (() => {
+    const start = CODE.indexOf("timeline.push('published')")
+    const end = CODE.indexOf('return Object.freeze({', start)
+    expect(start).toBeGreaterThan(-1)
+    expect(end).toBeGreaterThan(start)
+    return CODE.slice(start, end)
+  })()
+
+  it('every await after publication goes through the classifier', () => {
+    const awaits = span.match(/await\s+[A-Za-z_$][\w$.]*/g) ?? []
+    // NON-VACUOUS: there really are awaits in this span.
+    expect(awaits.length).toBeGreaterThanOrEqual(3)
+    for (const a of awaits) {
+      expect(a, `unclassified await after publication: ${a}`)
+        .toMatch(/^await\s+(afterPublication|body)$/)
+    }
+  })
+
+  it('classifies exactly the three reviewed post-publication phases, once each', () => {
+    const phases = [...span.matchAll(/'(fence-proof-after-publication|export-rollback|fence-proof-after-rollback)'/g)]
+      .map(m => m[1])
+    expect(phases).toEqual([
+      'fence-proof-after-publication', 'export-rollback', 'fence-proof-after-rollback',
+    ])
+  })
+
+  it('the classifier discards the original rather than wrapping it', () => {
+    expect(CODE).toContain('throw new Stage1PublishedButIncomplete(')
+    // No cause, no message, no re-raise of whatever it caught.
+    expect(CODE).not.toMatch(/Stage1PublishedButIncomplete\([\s\S]{0,200}cause/)
+    expect(CODE).not.toMatch(/catch \(e\) \{[\s\S]{0,120}Stage1PublishedButIncomplete/)
+  })
+
+  it('the classifier begins AFTER publishEvidence, so pre-publication outcomes are untouched', () => {
+    const publish = CODE.indexOf('publishEvidence({')
+    const classifier = CODE.indexOf('const afterPublication =')
+    expect(publish).toBeGreaterThan(-1)
+    expect(classifier).toBeGreaterThan(publish)
+    // And it is a property of POSITION, not of a type test: the classifier
+    // must not be inspecting what it caught in order to decide.
+    expect(span).not.toContain('instanceof EvidenceRefused')
+    expect(span).not.toContain('instanceof EvidencePublicationUnknown')
+    expect(span).not.toContain('instanceof EvidencePublishedButUnverified')
+  })
+
+  it('carries names, never absolute paths or a root', () => {
+    expect(CODE).toContain('names.finalName, names.temporaryName')
+    expect(CODE).not.toMatch(/Stage1PublishedButIncomplete\([^)]*finalPath/)
+    expect(CODE).not.toMatch(/Stage1PublishedButIncomplete\([^)]*evidenceRoot/)
+  })
+})
