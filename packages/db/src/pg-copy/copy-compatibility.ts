@@ -42,8 +42,8 @@
 // seeing it happen.
 
 import {
-  COPY_SEQUENCES, COPY_TABLES, ContractRefused, contractDigest, deriveCopyColumns,
-  type Canonical, type ContractArtifact, type TableCopySpec,
+  COPY_SEQUENCES, COPY_TABLES, ContractRefused, REVIEWED_CONTRACT_DIGEST, contractDigest,
+  deriveCopyColumns, type Canonical, type ContractArtifact, type TableCopySpec,
 } from './schema-contract.js'
 
 /** WHICH property diverged. A closed set, so a refusal is always specific. */
@@ -216,14 +216,35 @@ const payloadOf = (a: ContractArtifact): Payload => a.payload as unknown as Payl
  * copy was willing to accept.
  */
 /**
- * The brand. MODULE-PRIVATE, so nothing outside this file can mint a proof.
+ * The brand. A REAL RUNTIME SYMBOL, module-private, and not merely a type.
  *
- * `unique symbol` and not a string field: a string could be written by any
- * caller with an object literal, which is precisely the authority this
- * replaces. The old design let a caller say `anchorDigest: null` and be
- * believed - a review convention wearing the costume of a type.
+ * `declare const ... : unique symbol` - what this was - exists only in the type
+ * system. It made a forged proof a compile error and nothing more: an
+ * `as unknown as CompatibilityProof` cast, a JSON round trip or a value
+ * arriving from another module all satisfied every runtime check, because
+ * there was no runtime check to satisfy. A capability that only holds while
+ * everyone compiles is not a capability.
+ *
+ * NON-ENUMERABLE, DELIBERATELY. Object spread and `JSON.stringify` copy own
+ * ENUMERABLE properties, symbols included, so an enumerable brand would
+ * survive `{ ...proof }` and a spread copy would be believed. Defined
+ * non-enumerable, the brand is present on the genuine object and absent from
+ * every copy of it - which is exactly the distinction that matters, because a
+ * copy is what a caller makes when it wants to change a field.
  */
-declare const COMPATIBILITY_PROOF: unique symbol
+const COMPATIBILITY_PROOF: unique symbol = Symbol('pg-copy.compatibility-proof')
+
+/**
+ * Is this the object `assertCopyCompatible` actually returned?
+ *
+ * Checked BEFORE any digest or report field is read: a forged object's
+ * `sourceDigest` is not evidence of anything, so there is no reason to look
+ * at it.
+ */
+function isCompatibilityProof(v: unknown): v is CompatibilityProof {
+  return typeof v === 'object' && v !== null &&
+    (v as Record<symbol, unknown>)[COMPATIBILITY_PROOF] === true
+}
 
 /**
  * EVIDENCE that C1 passed, for this source against this target.
@@ -235,7 +256,9 @@ declare const COMPATIBILITY_PROOF: unique symbol
  */
 export interface CompatibilityProof {
   readonly [COMPATIBILITY_PROOF]: true
+  /** RECOMPUTED from the payload at mint time, never the artifact's own field. */
   readonly sourceDigest: string
+  /** RECOMPUTED from the payload at mint time, never the artifact's own field. */
   readonly targetDigest: string
   readonly report: CompatibilityReport
 }
@@ -333,6 +356,27 @@ export function assertCopyDomainSafe(artifact: ContractArtifact): void {
 export function assertCopyCompatible(
   source: ContractArtifact, target: ContractArtifact,
 ): CompatibilityProof {
+  // BOTH ARTIFACTS ARE INTERNALLY CONSISTENT, PROVED BEFORE ANYTHING IS READ.
+  //
+  // A digest field is a claim; the payload is the thing. An artifact whose
+  // payload was edited and whose digest field was left alone - or edited to
+  // something else - describes a schema nobody verified, and every property
+  // this function goes on to compare would be read out of that payload. So the
+  // digests are RE-DERIVED here and the recomputed values are what the proof
+  // records; the artifacts' own fields are never trusted and never stored.
+  const sourceDigest = contractDigest(source.payload)
+  if (sourceDigest !== source.digest) {
+    throw new ContractRefused(
+      `source artifact digest ${source.digest} does not match its payload ` +
+      `(recomputed ${sourceDigest}).`)
+  }
+  const targetDigest = contractDigest(target.payload)
+  if (targetDigest !== target.digest) {
+    throw new ContractRefused(
+      `target artifact digest ${target.digest} does not match its payload ` +
+      `(recomputed ${targetDigest}).`)
+  }
+
   assertCopyDomainSafe(source)
   assertCopyDomainSafe(target)
 
@@ -539,10 +583,15 @@ export function assertCopyCompatible(
     targetOnlyForeignKeys: Object.freeze(targetOnlyForeignKeys),
   })
 
-  // THE ONLY PLACE A PROOF IS MINTED. Both digests are recorded so consuming
-  // it can check that the artifact in hand is still the artifact that passed.
-  return Object.freeze({ sourceDigest: source.digest, targetDigest: target.digest, report }) as
-    CompatibilityProof
+  // THE ONLY PLACE A PROOF IS MINTED. Both RECOMPUTED digests are recorded, so
+  // consuming it can check that the artifact in hand is still the artifact that
+  // passed - and the brand is defined non-enumerably, so no copy of this object
+  // carries the capability.
+  const proof = { sourceDigest, targetDigest, report }
+  Object.defineProperty(proof, COMPATIBILITY_PROOF, {
+    value: true, enumerable: false, writable: false, configurable: false,
+  })
+  return Object.freeze(proof) as CompatibilityProof
 }
 
 /**
@@ -558,6 +607,20 @@ export function assertCopyCompatible(
 export function sourceTableCopySpec(
   artifact: ContractArtifact, qname: string, proof: CompatibilityProof,
 ): TableCopySpec {
+  // THE CAPABILITY FIRST. A forged object's fields are not evidence, so they
+  // are not read: this refuses a plain object, a JSON round trip, a spread
+  // copy and anything cast into position, none of which carry the brand.
+  if (!isCompatibilityProof(proof)) {
+    throw new ContractRefused(
+      'the compatibility proof is not one this module issued.')
+  }
+  // AND IT MUST BE A PROOF AGAINST THE REVIEWED TARGET. A proof is evidence
+  // about a PAIR; one issued against some other target says nothing about
+  // whether these columns may be written into the reviewed one.
+  if (proof.targetDigest !== REVIEWED_CONTRACT_DIGEST) {
+    throw new ContractRefused(
+      'the compatibility proof was not issued against the reviewed expected-target contract.')
+  }
   const recomputed = contractDigest(artifact.payload)
   if (recomputed !== artifact.digest) {
     throw new ContractRefused(

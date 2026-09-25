@@ -61,7 +61,7 @@ import { copyTableBinary } from './binary-copy.js'
 import type { DriverSession } from './driver-session.js'
 import {
   COPY_TABLES, REVIEWED_CONTRACT_DIGEST, SOURCE_V10_PROFILE, TARGET_V19_PROFILE,
-  canonicalJson, extractContractFromSession, parseArtifact,
+  canonicalJson, contractDigest, extractContractFromSession, parseArtifact,
   type Canonical, type ContractArtifact,
 } from './schema-contract.js'
 import {
@@ -124,6 +124,8 @@ export type Stage2Reason =
   | 'the source session could not be prepared'
   | 're-derivation does not match the published manifest'
   | 'the source is not compatible with the reviewed target'
+  | 'the target C1 was run against is not the reviewed expected-target contract'
+  | 'the live target is not the target C1 was run against'
   | 'the target session could not be opened'
   | 'the target transaction could not be started'
   | 'the copy of a reviewed table did not complete'
@@ -400,6 +402,25 @@ export async function runSourceStages(
   // can never share a digest, and equality would also refuse harmless target
   // supersets while saying nothing about WHICH property diverged. The
   // comparator answers property by property and names what it found.
+  // THE TARGET C1 IS RUN AGAINST MUST BE THE REVIEWED ONE, PROVED HERE.
+  //
+  // `reviewedTarget` arrives through the public core API, so a caller could
+  // hand over a self-consistent artifact of its own choosing and C1 would
+  // dutifully compare the source against THAT. The comparison would be honest
+  // and the conclusion worthless. Checked before the comparator runs and
+  // therefore long before `openTarget` is called, so a substitute costs a
+  // refusal and not a connection.
+  if (contractDigest(i.reviewedTarget.payload) !== i.reviewedTarget.digest) {
+    throw new Stage2Refused(
+      'A5-compatibility',
+      'the target C1 was run against is not the reviewed expected-target contract')
+  }
+  if (i.reviewedTarget.digest !== REVIEWED_CONTRACT_DIGEST) {
+    throw new Stage2Refused(
+      'A5-compatibility',
+      'the target C1 was run against is not the reviewed expected-target contract')
+  }
+
   let proof: CompatibilityProof
   try {
     proof = assertCopyCompatible(contract, i.reviewedTarget)
@@ -552,6 +573,23 @@ export async function runApply(i: ApplyInput, published: PublishedManifest): Pro
       targetContract = await extractContractFromSession(target, target.pid, TARGET_V19_PROFILE)
       assertTargetLedger(targetContract)
       assertTargetContract(targetContract, REVIEWED_CONTRACT_DIGEST)
+      // AND THE LIVE TARGET IS THE TARGET C1 WAS RUN AGAINST.
+      //
+      // The anchor above says the live target is the reviewed artifact; this
+      // says the proof authorising the copy was issued against that same
+      // value, derived independently from a live catalogue. Together they
+      // close the chain the copy's authority actually rests on:
+      //
+      //   source artifact -> C1 proof vs the committed reviewed target
+      //                   -> the same digest derived from the LIVE target
+      //                   -> binary copy
+      //
+      // Without this the two ends could be about different targets and each
+      // check would still pass on its own.
+      if (targetContract.digest !== proof.targetDigest) {
+        throw new Stage2Refused(
+          'A8-target-contract', 'the live target is not the target C1 was run against')
+      }
     } finally {
       await target.rows(TARGET_ROLLBACK_SQL)
     }

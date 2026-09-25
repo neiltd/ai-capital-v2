@@ -35,7 +35,8 @@ import {
   type PublishedManifest,
 } from '../../src/pg-copy/stage2.js'
 import {
-  REVIEWED_CONTRACT_DIGEST, SOURCE_V10_PROFILE, extractContractFromSession, sha256Hex,
+  REVIEWED_CONTRACT_DIGEST, SOURCE_V10_PROFILE, contractDigest, extractContractFromSession,
+  sha256Hex,
 } from '../../src/pg-copy/schema-contract.js'
 import { loadReviewedTarget } from '../../src/pg-copy/stage2.js'
 import { TARGET_OWNER_ROLE } from '../../src/pg-copy/target-authority.js'
@@ -340,6 +341,47 @@ describe('inspect never reaches the target', () => {
         'SELECT extname FROM pg_catalog.pg_extension ORDER BY 1')).map(r => r[0])
       expect(ext).toContain('btree_gist')
     } finally { await tgt.close() }
+  }, 1_800_000)
+
+  it('a SUBSTITUTE reviewed target refuses at A5, before any target is opened', async () => {
+    // `reviewedTarget` arrives through the public core API. A caller that hands
+    // over a self-consistent artifact of its own choosing would get an honest
+    // comparison against the wrong thing - so the core proves it is the
+    // reviewed artifact before the comparator runs, and therefore long before
+    // `openTarget` could be called.
+    const substitute = (() => {
+      const a = JSON.parse(JSON.stringify(REVIEWED_TARGET())) as typeof REVIEWED_TARGET extends
+        () => infer R ? R : never
+      const m = (a.payload as unknown as { migrations: Record<string, unknown> }).migrations
+      m.recognition = 'CURRENT_V21'
+      m.count = 21
+      // Re-digested THROUGH `contractDigest`, so it is perfectly
+      // self-consistent - exactly the artifact an internal-consistency check
+      // alone would wave through, which leaves the reviewed-digest anchor as
+      // the only thing that can refuse it.
+      return { ...a, digest: contractDigest(a.payload) }
+    })()
+    expect(substitute.digest).not.toBe(REVIEWED_CONTRACT_DIGEST)
+
+    let opened = 0
+    const thrown = await withSessions(async s => {
+      try {
+        await runApply({
+          ...s, reviewedTarget: substitute,
+          targetExpectation: TARGET_EXPECTATION(),
+          confirmation: `PGCOPY-APPLY-${'0'.repeat(64)}`,
+          openTarget: async () => { opened += 1; return await openTargetDriver() },
+        }, bundle())
+        return null
+      } catch (e) { return e }
+    })
+    expect(thrown).toBeInstanceOf(Stage2Refused)
+    expect((thrown as Stage2Refused).phase).toBe('A5-compatibility')
+    expect(String((thrown as Error).message))
+      .toContain('not the reviewed expected-target contract')
+    // NO TARGET WAS OPENED, and the target is untouched.
+    expect(opened).toBe(0)
+    expect((await targetState()).rows).toBe(0)
   }, 1_800_000)
 
   it('a C1 refusal happens on the SOURCE, before any target could be reached', async () => {

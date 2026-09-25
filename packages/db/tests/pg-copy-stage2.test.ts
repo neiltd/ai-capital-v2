@@ -505,7 +505,57 @@ describe('the source copy path is gated by a proof', () => {
 
   it('the proof is minted in exactly one place', () => {
     expect(COMPAT.match(/as\s*\n?\s*CompatibilityProof/g)?.length ?? 0).toBe(1)
-    expect(COMPAT).toContain('declare const COMPATIBILITY_PROOF: unique symbol')
+    // A REAL runtime symbol, not a type-only declaration.
+    expect(COMPAT).toContain(
+      "const COMPATIBILITY_PROOF: unique symbol = Symbol('pg-copy.compatibility-proof')")
+    expect(COMPAT).not.toContain('declare const COMPATIBILITY_PROOF')
+    expect(COMPAT).toContain('Object.defineProperty(proof, COMPATIBILITY_PROOF')
+    expect(COMPAT).toContain('enumerable: false')
+  })
+
+  it('A5 proves the reviewed target BEFORE the comparator and before any target client', () => {
+    const body = STAGE2.slice(STAGE2.indexOf('export async function runSourceStages'))
+    const selfCheck = body.indexOf('contractDigest(i.reviewedTarget.payload) !== i.reviewedTarget.digest')
+    const anchor = body.indexOf('i.reviewedTarget.digest !== REVIEWED_CONTRACT_DIGEST')
+    const compare = body.indexOf('assertCopyCompatible(contract, i.reviewedTarget)')
+    expect(selfCheck).toBeGreaterThan(-1)
+    expect(anchor).toBeGreaterThan(selfCheck)
+    expect(compare).toBeGreaterThan(anchor)
+    // `runSourceStages` cannot open a target at all - it has no such input.
+    expect(body.slice(0, body.indexOf('export '))).not.toContain('openTarget')
+  })
+
+  it('A8 requires the LIVE target to be the target the proof was issued against', () => {
+    // Defence in depth behind the A5 anchor: with A5 intact this cannot fire,
+    // so it is asserted structurally - including that it sits before the write
+    // transaction and therefore before any row moves.
+    // Scoped to runApply: `TARGET_BEGIN_SQL` also appears in the import list
+    // at the top of the file, which is before everything.
+    const body = STAGE2.slice(STAGE2.indexOf('export async function runApply'))
+    const check = body.indexOf('targetContract.digest !== proof.targetDigest')
+    expect(check).toBeGreaterThan(-1)
+    expect(check).toBeLessThan(body.indexOf('await target.rows(TARGET_BEGIN_SQL)'))
+    expect(check).toBeLessThan(body.indexOf('copyTableBinary'))
+    expect(STAGE2).toContain("'the live target is not the target C1 was run against'")
+  })
+
+  it('the proof requires the reviewed target digest before any field is trusted', () => {
+    const brand = COMPAT.indexOf('if (!isCompatibilityProof(proof))')
+    const target = COMPAT.indexOf('proof.targetDigest !== REVIEWED_CONTRACT_DIGEST')
+    const recompute = COMPAT.indexOf('const recomputed = contractDigest(artifact.payload)')
+    expect(brand).toBeGreaterThan(-1)
+    expect(target).toBeGreaterThan(brand)
+    expect(recompute).toBeGreaterThan(target)
+  })
+
+  it('minting recomputes BOTH payload digests and records those', () => {
+    const mint = COMPAT.slice(COMPAT.indexOf('export function assertCopyCompatible'))
+    expect(mint).toContain('const sourceDigest = contractDigest(source.payload)')
+    expect(mint).toContain('const targetDigest = contractDigest(target.payload)')
+    expect(mint).toContain('const proof = { sourceDigest, targetDigest, report }')
+    // Never the artifacts' own fields.
+    expect(mint).not.toContain('sourceDigest: source.digest')
+    expect(mint).not.toContain('targetDigest: target.digest')
   })
 
   it('consuming the proof recomputes the source digest from the payload', () => {

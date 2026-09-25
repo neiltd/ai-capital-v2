@@ -56,6 +56,24 @@ const columns = (a: ContractArtifact, q: string): AnyRec[] => table(a, q).column
 const pair = (): { s: ContractArtifact; t: ContractArtifact } =>
   ({ s: clone(ARTIFACT), t: clone(ARTIFACT) })
 
+/**
+ * Re-digest a deliberately mutated fixture.
+ *
+ * The proof-minting path refuses an artifact whose digest does not match its
+ * payload, which is exactly right for production and useless for a POLICY
+ * test: mutating a column to reach the `column-type` branch necessarily
+ * invalidates the digest, and without resealing every one of these would
+ * refuse for the wrong reason and prove nothing about the policy.
+ *
+ * The proof-integrity tests below deliberately do NOT use this.
+ */
+const reseal = (a: ContractArtifact): ContractArtifact =>
+  ({ ...a, digest: contractDigest(a.payload) })
+
+/** Compare two POLICY fixtures, each resealed so the mint check is satisfied. */
+const compat = (s: ContractArtifact, t2: ContractArtifact): ReturnType<typeof assertCopyCompatible> =>
+  assertCopyCompatible(reseal(s), reseal(t2))
+
 const refusal = (fn: () => unknown): CopyIncompatible => {
   let thrown: unknown = null
   try { fn() } catch (e) { thrown = e }
@@ -66,7 +84,7 @@ const refusal = (fn: () => unknown): CopyIncompatible => {
 describe('an identical pair is compatible', () => {
   it('accepts, and reports both recognitions without comparing them', () => {
     const { s, t } = pair()
-    const proof = assertCopyCompatible(s, t)
+    const proof = compat(s, t)
     expect(proof.sourceDigest).toBe(s.digest)
     expect(proof.targetDigest).toBe(t.digest)
     const r = proof.report
@@ -83,7 +101,7 @@ describe('an identical pair is compatible', () => {
     ;(payload(s).migrations as AnyRec).recognition = 'CURRENT_V10'
     ;(payload(s).migrations as AnyRec).count = 10
     ;(payload(s).migrations as AnyRec).ledger = CURRENT_V10_MANIFEST
-    const r = assertCopyCompatible(s, t).report
+    const r = compat(s, t).report
     expect(r.sourceRecognition).toBe('CURRENT_V10')
     expect(r.targetRecognition).toBe('CURRENT_V19')
   })
@@ -92,7 +110,7 @@ describe('an identical pair is compatible', () => {
     const { s, t } = pair()
     for (const x of tables(s)) x.owner = 'thanapold'
     for (const x of tables(t)) x.owner = 'ai_capital_owner'
-    expect(() => assertCopyCompatible(s, t)).not.toThrow()
+    expect(() => compat(s, t)).not.toThrow()
   })
 
   it('does NOT require the source to carry a target-only extension', () => {
@@ -103,13 +121,13 @@ describe('an identical pair is compatible', () => {
       ext(s).filter(e => e.name !== 'btree_gist')
     expect(ext(s).some(e => e.name === 'btree_gist')).toBe(false)
     expect(ext(t).some(e => e.name === 'btree_gist')).toBe(true)
-    expect(() => assertCopyCompatible(s, t)).not.toThrow()
+    expect(() => compat(s, t)).not.toThrow()
   })
 
   it('does NOT compare dropped-column counts', () => {
     const { s, t } = pair()
     table(s, 'graph.edges').dropped_column_count = 3
-    expect(() => assertCopyCompatible(s, t)).not.toThrow()
+    expect(() => compat(s, t)).not.toThrow()
   })
 })
 
@@ -194,7 +212,7 @@ describe('every equality-required category refuses', () => {
     it(`refuses ${label} (${category})`, () => {
       const p = pair()
       mutate(p)
-      const e = refusal(() => assertCopyCompatible(p.s, p.t))
+      const e = refusal(() => compat(p.s, p.t))
       expect(e.category, label).toBe(category)
       // A refusal names the property and the relation, and carries no data.
       expect(surfaces(e)).not.toMatch(/password|postgresql:\/\//i)
@@ -203,7 +221,7 @@ describe('every equality-required category refuses', () => {
 
   it('is NON-VACUOUS: the unmutated pair passes every one of those', () => {
     const p = pair()
-    expect(() => assertCopyCompatible(p.s, p.t)).not.toThrow()
+    expect(() => compat(p.s, p.t)).not.toThrow()
   })
 })
 
@@ -227,7 +245,7 @@ describe('the two allowed target supersets, and their boundaries', () => {
   it('ALLOWS a target-only non-identity index, and records its full definition', () => {
     const { s, t } = pair()
     extraIndex(t)
-    const r = assertCopyCompatible(s, t).report
+    const r = compat(s, t).report
     expect(r.targetOnlyIndexes.length).toBe(1)
     const i = r.targetOnlyIndexes[0]
     expect(i.qname).toBe('graph.edges')
@@ -251,7 +269,7 @@ describe('the two allowed target supersets, and their boundaries', () => {
     for (const over of [{ is_unique: true }, { is_primary: true }]) {
       const { s, t } = pair()
       extraIndex(t, over)
-      const e = refusal(() => assertCopyCompatible(s, t))
+      const e = refusal(() => compat(s, t))
       expect(e.category, JSON.stringify(over)).toBe('identity-indexes')
       expect(e.qname).toBe('graph.edges')
     }
@@ -262,7 +280,7 @@ describe('the two allowed target supersets, and their boundaries', () => {
       const { s, t } = pair()
       const pk = (table(t, 'graph.edges').indexes as AnyRec[]).find(i => i.is_primary === true)
       pk![k] = false
-      const e = refusal(() => assertCopyCompatible(s, t))
+      const e = refusal(() => compat(s, t))
       expect(e.category, k).toBe('identity-indexes')
     }
   })
@@ -270,7 +288,7 @@ describe('the two allowed target supersets, and their boundaries', () => {
   it('ALLOWS a validated, non-deferrable, non-deferred target-only FK', () => {
     const { s, t } = pair()
     extraFk(t)
-    const r = assertCopyCompatible(s, t).report
+    const r = compat(s, t).report
     expect(r.targetOnlyForeignKeys.length).toBe(1)
     expect(r.targetOnlyForeignKeys[0].name).toBe('edges_extra_fkey')
     expect(r.targetOnlyForeignKeys[0].definition).toContain('REFERENCES graph.nodes')
@@ -280,7 +298,7 @@ describe('the two allowed target supersets, and their boundaries', () => {
     for (const over of [{ validated: false }, { deferrable: true }, { deferred: true }]) {
       const { s, t } = pair()
       extraFk(t, over)
-      const e = refusal(() => assertCopyCompatible(s, t))
+      const e = refusal(() => compat(s, t))
       expect(e.category, JSON.stringify(over)).toBe('foreign-keys')
       expect(e.message).toContain('not validated, non-deferrable and non-deferred')
     }
@@ -289,7 +307,7 @@ describe('the two allowed target supersets, and their boundaries', () => {
   it('a SOURCE-only index or FK is not a target superset and still refuses', () => {
     const { s, t } = pair()
     extraFk(s)
-    expect(refusal(() => assertCopyCompatible(s, t)).category).toBe('foreign-keys')
+    expect(refusal(() => compat(s, t)).category).toBe('foreign-keys')
   })
 })
 
@@ -299,7 +317,7 @@ describe('what neither side may carry', () => {
       for (const flag of ['row_security', 'force_row_security']) {
         const p = pair()
         table(p[side], 'graph.edges')[flag] = true
-        const e = refusal(() => assertCopyCompatible(p.s, p.t))
+        const e = refusal(() => compat(p.s, p.t))
         expect(e.category, `${side}.${flag}`).toBe('row-security')
       }
     }
@@ -309,25 +327,25 @@ describe('what neither side may carry', () => {
     for (const side of ['s', 't'] as const) {
       const g = pair()
       columns(g[side], 'graph.edges')[1].generated = 's'
-      expect(refusal(() => assertCopyCompatible(g.s, g.t)).category).toBe('column-generated')
+      expect(refusal(() => compat(g.s, g.t)).category).toBe('column-generated')
 
       const i = pair()
       columns(i[side], 'graph.edges')[1].identity = 'a'
-      expect(refusal(() => assertCopyCompatible(i.s, i.t)).category).toBe('column-identity')
+      expect(refusal(() => compat(i.s, i.t)).category).toBe('column-identity')
     }
   })
 
   it('refuses a nondeterministic collation and a drifted one', () => {
     const nd = pair()
     ;(columns(nd.t, 'graph.edges')[1].collation as AnyRec).deterministic = false
-    expect(refusal(() => assertCopyCompatible(nd.s, nd.t)).message)
+    expect(refusal(() => compat(nd.s, nd.t)).message)
       .toContain('nondeterministic')
 
     const drift = pair()
     const col = columns(drift.s, 'graph.edges')[1].collation as AnyRec
     col.version = '1.0'
     col.actual_version = '2.0'
-    expect(refusal(() => assertCopyCompatible(drift.s, drift.t)).message)
+    expect(refusal(() => compat(drift.s, drift.t)).message)
       .toContain('drifted')
   })
 
@@ -425,7 +443,7 @@ describe('collation identity includes both version fields', () => {
     coll(s).actual_version = 'X'
     coll(t).version = 'Y'
     coll(t).actual_version = 'Y'
-    const e = refusal(() => assertCopyCompatible(s, t))
+    const e = refusal(() => compat(s, t))
     expect(e.category).toBe('column-collation')
     expect(e.message).toContain('a column collation differs')
     expect(e.message).not.toContain('drifted')
@@ -445,7 +463,7 @@ describe('collation identity includes both version fields', () => {
       coll(t)[field] = 'Y'
       coll(t)[field === 'version' ? 'actual_version' : 'version'] = 'Y'
       coll(s)[field === 'version' ? 'actual_version' : 'version'] = 'X'
-      expect(refusal(() => assertCopyCompatible(s, t)).category, field)
+      expect(refusal(() => compat(s, t)).category, field)
         .toBe('column-collation')
     }
   })
@@ -459,7 +477,7 @@ describe('collation identity includes both version fields', () => {
     coll(s).actual_version = null
     coll(t).version = 'Y'
     coll(t).actual_version = null
-    const e = refusal(() => assertCopyCompatible(s, t))
+    const e = refusal(() => compat(s, t))
     expect(e.category).toBe('column-collation')
     expect(e.message).toContain('a column collation differs')
     expect(e.message).not.toContain('drifted')
@@ -472,7 +490,7 @@ describe('collation identity includes both version fields', () => {
     coll(s).actual_version = 'X'
     coll(t).version = null
     coll(t).actual_version = 'Y'
-    const e = refusal(() => assertCopyCompatible(s, t))
+    const e = refusal(() => compat(s, t))
     expect(e.category).toBe('column-collation')
     expect(e.message).not.toContain('drifted')
   })
@@ -483,7 +501,7 @@ describe('collation identity includes both version fields', () => {
       coll(a).version = null
       coll(a).actual_version = null
     }
-    expect(() => assertCopyCompatible(s, t)).not.toThrow()
+    expect(() => compat(s, t)).not.toThrow()
   })
 
   it('still refuses a side that has drifted from itself', () => {
@@ -493,7 +511,7 @@ describe('collation identity includes both version fields', () => {
     coll(t).version = 'X'
     coll(t).actual_version = 'Y'
     // Identical across the sides, so only the per-side check can catch it.
-    expect(refusal(() => assertCopyCompatible(s, t)).message).toContain('drifted')
+    expect(refusal(() => compat(s, t)).message).toContain('drifted')
   })
 })
 
@@ -521,20 +539,105 @@ describe('the compatibility proof cannot be forged, reused or outrun', () => {
       .toThrow(/is not the reviewed expected-target digest/)
   })
 
-  it('the unanchored path REQUIRES a proof, and the proof has no public shape', () => {
+  it('a forged proof is rejected at COMPILE time and at RUN time', () => {
     const a = v10ish()
-    // There is no object literal that satisfies `CompatibilityProof`: the
-    // brand is a module-private unique symbol. Asserted at COMPILE time.
-    // @ts-expect-error a proof cannot be constructed outside the comparator
-    const forged: CompatibilityProof = {
+    const shape = {
       sourceDigest: a.digest, targetDigest: ARTIFACT.digest,
       report: {
         sourceRecognition: 'CURRENT_V10', targetRecognition: 'CURRENT_V19',
         targetOnlyIndexes: [], targetOnlyForeignKeys: [],
       },
     }
-    // And at RUN time the recomputation still governs what it can be used for.
-    expect(() => sourceTableCopySpec(a, 'graph.edges', forged)).not.toThrow()
+    // COMPILE TIME: no object literal satisfies the branded type.
+    // @ts-expect-error a proof cannot be constructed outside the comparator
+    const typed: CompatibilityProof = shape
+    void typed
+
+    // RUN TIME: and casting past the type system does not help, because the
+    // brand is a real symbol this module owns. Every field is right; the
+    // capability is missing, and the capability is the whole point.
+    const forged = shape as unknown as CompatibilityProof
+    expect(() => sourceTableCopySpec(a, 'graph.edges', forged))
+      .toThrow(/not one this module issued/)
+  })
+
+  it('a SPREAD or SERIALIZED copy of a genuine proof is rejected', () => {
+    const a = v10ish()
+    const genuine = assertCopyCompatible(a, ARTIFACT)
+    // The genuine article works.
+    expect(() => sourceTableCopySpec(a, 'graph.edges', genuine)).not.toThrow()
+
+    // A spread copies own ENUMERABLE properties; the brand is not one, so the
+    // copy has every field and none of the authority.
+    const spread = { ...genuine } as unknown as CompatibilityProof
+    expect(spread.sourceDigest).toBe(genuine.sourceDigest)
+    expect(spread.targetDigest).toBe(genuine.targetDigest)
+    expect(() => sourceTableCopySpec(a, 'graph.edges', spread))
+      .toThrow(/not one this module issued/)
+
+    // A JSON round trip loses it too - and symbols cannot survive one at all.
+    const serialized = JSON.parse(JSON.stringify(genuine)) as CompatibilityProof
+    expect(() => sourceTableCopySpec(a, 'graph.edges', serialized))
+      .toThrow(/not one this module issued/)
+
+    // Nothing about the genuine proof was disturbed by any of that.
+    expect(() => sourceTableCopySpec(a, 'graph.edges', genuine)).not.toThrow()
+  })
+
+  it('null, undefined and primitives are rejected before any field is read', () => {
+    const a = v10ish()
+    for (const bad of [null, undefined, 0, 'proof', [], { sourceDigest: a.digest }]) {
+      expect(() => sourceTableCopySpec(a, 'graph.edges', bad as unknown as CompatibilityProof),
+             String(bad)).toThrow(/not one this module issued/)
+    }
+  })
+
+  it('MINTING refuses an internally inconsistent SOURCE', () => {
+    const a = v10ish()
+    const lying = { ...a, digest: 'f'.repeat(64) }
+    expect(() => assertCopyCompatible(lying, ARTIFACT))
+      .toThrow(/source artifact digest .* does not match its payload/)
+    // And an edited payload with an untouched digest.
+    const edited = clone(a)
+    columns(edited, 'graph.edges')[1].name = 'smuggled'
+    expect(() => assertCopyCompatible(edited, ARTIFACT))
+      .toThrow(/source artifact digest .* does not match its payload/)
+  })
+
+  it('MINTING refuses an internally inconsistent TARGET', () => {
+    const a = v10ish()
+    const lying = { ...ARTIFACT, digest: 'f'.repeat(64) }
+    expect(() => assertCopyCompatible(a, lying))
+      .toThrow(/target artifact digest .* does not match its payload/)
+    const edited = clone(ARTIFACT)
+    columns(edited, 'graph.edges')[1].name = 'smuggled'
+    expect(() => assertCopyCompatible(a, edited))
+      .toThrow(/target artifact digest .* does not match its payload/)
+  })
+
+  it('records the RECOMPUTED digests, not the artifacts own fields', () => {
+    const a = v10ish()
+    const proof = assertCopyCompatible(a, ARTIFACT)
+    expect(proof.sourceDigest).toBe(contractDigest(a.payload))
+    expect(proof.targetDigest).toBe(contractDigest(ARTIFACT.payload))
+    expect(proof.targetDigest).toBe(REVIEWED_CONTRACT_DIGEST)
+  })
+
+  it('a proof issued against a DIFFERENT TARGET never unlocks the source copy', () => {
+    // A target that is compatible with the source but is NOT the reviewed
+    // artifact: only its ledger differs, and ledgers are deliberately not
+    // compared - so C1 passes and the digest is somebody else's.
+    const a = v10ish()
+    const otherTarget = clone(ARTIFACT)
+    ;(payload(otherTarget).migrations as AnyRec).recognition = 'CURRENT_V21'
+    ;(payload(otherTarget).migrations as AnyRec).count = 21
+    const sealedOther = reseal(otherTarget)
+    expect(sealedOther.digest).not.toBe(REVIEWED_CONTRACT_DIGEST)
+
+    const proof = assertCopyCompatible(a, sealedOther)
+    expect(proof.sourceDigest).toBe(a.digest)          // the SOURCE matches
+    expect(() => sourceTableCopySpec(a, 'graph.edges', proof))
+      .toThrow(/not issued against the reviewed expected-target contract/)
   })
 
   it('a real proof unlocks the source path', () => {
