@@ -28,7 +28,8 @@ import {
   LIFECYCLE_FILE, LifecycleInterventionRequired, LifecycleRefused, RELEASE_GATE_FILE,
   RESTORE_ORDER,
   REVIEWED_PRODUCERS, REVIEWED_QUEUES, isInterventionRequired, runLifecycle,
-  type ProducerAdapter, type QueueAdapter, type QuiescenceAdapter, type ReviewedSession,
+  type DestinationCensusAdapter, type ProducerAdapter, type ProducerCensusRow,
+  type QueueAdapter, type QuiescenceAdapter, type ReviewedSession,
 } from '../../src/pg-copy/lifecycle.js'
 import { COPY_TABLES, sha256Hex } from '../../src/pg-copy/schema-contract.js'
 import {
@@ -219,13 +220,14 @@ const REVIEWED_TARGET = (): ReturnType<typeof loadReviewedTarget> => loadReviewe
   join(process.cwd(), 'contracts', 'expected-target-v19.json'), p => readFileSync(p, 'utf-8'))
 
 /**
- * EXACT pid+role pairs for every session this suite legitimately has open.
+ * Every client backend on the source right now, for assertions ABOUT the
+ * census - never as input to it.
  *
- * The lifecycle's own three - supervisor, prover and the Stage-2 source - plus
- * the verifier's two, which come and go. Sampled live rather than listed,
- * because pids are assigned by the server.
+ * The gate derives its own allowlist by asking each session it holds who it
+ * is. This helper exists so a test can check that what the gate derived
+ * matches what is actually connected.
  */
-async function reviewedSessions(): Promise<ReviewedSession[]> {
+async function liveClientBackends(): Promise<ReviewedSession[]> {
   const s = await openPsqlSession(SRC, SRC_DB)
   try {
     const rows = await s.must(`
@@ -234,7 +236,7 @@ async function reviewedSessions(): Promise<ReviewedSession[]> {
        WHERE datname = pg_catalog.current_database()
          AND backend_type = 'client backend'
        ORDER BY 1`)
-    // This probe's own backend is about to close, so it is not reviewed.
+    // This probe's own backend is about to close, so it is not counted.
     return rows.filter(r => r[0] !== s.pid).map(r => ({ pid: r[0], role: r[1] }))
   } finally { await s.close() }
 }
@@ -249,13 +251,19 @@ function adapters(over: {
   confirm?: (n: string) => boolean
   /** Runs INSIDE the gate, between verification and authorization. */
   onSample?: () => Promise<void>
+  /** A fenced census that DISAGREES with the pre-fence one. */
+  driftedCensus?: readonly ProducerCensusRow[]
 } = {}): {
   quiescence: QuiescenceAdapter; queue: QueueAdapter; producers: ProducerAdapter
+  destinations: DestinationCensusAdapter
   actions: string[]
 } {
   const actions: string[] = []
   return {
     actions,
+    destinations: {
+      measure: async () => over.driftedCensus ?? CENSUS_ROWS,
+    },
     quiescence: {
       report: async () => REVIEWED_PRODUCERS.map(name => ({
         name, stopped: over.stopped === undefined ? true : over.stopped(),
@@ -279,6 +287,29 @@ function adapters(over: {
     },
   }
 }
+
+/**
+ * The producer census this suite runs its gates against.
+ *
+ * IN-MEMORY, like every other adapter here. Nothing in this file touches
+ * launchd; what is being proved is that the gate re-measures and compares, not
+ * what a real `launchctl` would have said.
+ */
+const CENSUS_ROWS: readonly ProducerCensusRow[] = Object.freeze(
+  REVIEWED_PRODUCERS.map(label => Object.freeze({
+    label,
+    plistPath: `/Users/x/Library/LaunchAgents/${label}.plist`,
+    plistSha256: 'a'.repeat(64),
+    plistDeviceInode: '16777234:4242',
+    servedCheckout: '/Users/x/checkout',
+    installation: 'installed-disabled',
+    credentialPath: '/Users/x/.secrets/pipeline.url',
+    credentialDeviceInode: '16777234:12345',
+    databaseHost: '/tmp/socket',
+    databasePort: '5432',
+    databaseName: 'ai_capital',
+    disposition: 'writes-copy-source',
+  })))
 
 /** Is the whole reviewed fence held by this supervisor, right now? */
 async function fenceHeld(supervisor: PsqlSession, prover: PsqlSession): Promise<boolean> {
@@ -321,8 +352,10 @@ async function lifecycle(opts: {
   confirm?: (n: string) => boolean
   duringRun?: (s: { supervisor: PsqlSession; prover: PsqlSession }) => Promise<void>
   onSample?: () => Promise<void>
-  /** Runs AFTER the reviewed-session snapshot, so what it opens is unreviewed. */
+  /** Runs BEFORE the gate, so what it opens is outside the derived census. */
   afterSnapshot?: () => Promise<void>
+  /** A fenced producer census that DISAGREES with the pre-fence one. */
+  driftedCensus?: readonly ProducerCensusRow[]
   badConfirmation?: boolean
   /** Make the supervisor's ROLLBACK raise, without the server ever seeing it. */
   releaseTransportFails?: boolean
@@ -357,7 +390,9 @@ async function lifecycle(opts: {
   // THE REVIEWED SET, snapshot from the live server. Whatever is connected at
   // this instant is what this suite has open and is prepared to declare;
   // anything that arrives afterwards is, by construction, unreviewed.
-  const snapshot = await reviewedSessions()
+  // Every source session this harness holds beyond the supervisor and the
+  // prover. They are asked who they are at gate time; nothing is declared.
+  const verifySessions: Array<{ rows(sql: string): Promise<string[][]> }> = []
   if (opts.afterSnapshot !== undefined) await opts.afterSnapshot()
   const a = adapters(opts)
   const stageSessions: DriverSession[] = []
@@ -377,6 +412,7 @@ async function lifecycle(opts: {
   const run = runLifecycle({
     supervisor: borrowed, prover,
     openStageSource: async () => {
+      // NOTE: the lifecycle adds its own stage-source session to the census.
       const s = await openDriverSession(sourceTarget())
       stageSessions.push(s)
       let refusedOnce = false
@@ -406,7 +442,13 @@ async function lifecycle(opts: {
     confirmation: opts.badConfirmation === true
       ? `PGCOPY-APPLY-${'0'.repeat(64)}` : confirmation,
     quiescence: a.quiescence, queue: a.queue, producers: a.producers,
-    reviewedSessions: snapshot,
+    // THE CENSUS DERIVES ITS OWN ALLOWLIST. What it is given is the SESSIONS
+    // this harness is holding, each asked who it is; an earlier revision
+    // handed it a snapshot of pids, which is a list a person could extend by
+    // one line to license the exact connection the census exists to find.
+    ownedSessions: verifySessions,
+    destinations: a.destinations,
+    expectedProducers: CENSUS_ROWS,
     evidenceRoot: root,
     ...(opts.ops === undefined ? {} : { ops: opts.ops }),
   })
@@ -654,6 +696,43 @@ describe('nothing is released when something is wrong', () => {
     } finally { if (intruder !== null) await (intruder as PsqlSession).close() }
   }, 1_800_000)
 
+  it('the derived census covers exactly the backends this harness holds', async () => {
+    // K1.1. The gate derives its allowlist by asking each session it holds who
+    // it is. What is asserted here is that the derivation is COMPLETE against
+    // the live server: a session the gate did not account for would have made
+    // the census refuse, and one it invented would not be connected.
+    const r = await lifecycle()
+    try {
+      expect(r.thrown).toBeNull()
+      const live = await liveClientBackends()
+      // The supervisor and the prover are still open; everything the lifecycle
+      // owned has been closed, so what remains is exactly this harness's two.
+      expect(live.map(x => x.pid).sort())
+        .toEqual([r.supervisor.pid, r.prover.pid].sort())
+    } finally { await closeBorrowed(r) }
+  }, 1_800_000)
+
+  it('refuses when the fenced producer census disagrees with the pre-fence one',
+    async () => {
+      // K1.1-M03, end to end: a producer repointed between the two censuses
+      // stops the gate, and the fence is rolled back rather than released.
+      const r = await lifecycle({
+        driftedCensus: CENSUS_ROWS.map((p, n) => n === 0
+          ? { ...p, credentialDeviceInode: '16777234:99999' } : p),
+      })
+      try {
+        // THE COPY HAS COMMITTED BY THE TIME THE GATE RUNS, so a gate refusal
+        // here is an intervention with the fence still held - not a clean
+        // pre-commit refusal. Nothing is released and nobody is restored.
+        const e = await expectIntervention(r, 'L6-release-gate')
+        expect(e.failure.at).toBe(
+          'the fenced producer census does not agree with the pre-fence one')
+        expect(e.fence).toBe('held')
+        expect(await fenceHeld(r.supervisor, r.prover)).toBe(true)
+        expect(r.actions).toEqual([])
+      } finally { await closeBorrowed(r) }
+    }, 1_800_000)
+
   it('a RESTORATION failure reports its exact boundary, after a proved release', async () => {
     const r = await lifecycle({ confirm: (n: string) => n !== RESTORE_ORDER[1] })
     try {
@@ -666,7 +745,9 @@ describe('nothing is released when something is wrong', () => {
       expect(await fenceHeld(r.supervisor, r.prover)).toBe(false)
       // EXACTLY ONE producer came back, and the third was never touched.
       expect([...e.restored]).toEqual([RESTORE_ORDER[0]])
-      expect([...e.notRestored]).toEqual([RESTORE_ORDER[1], RESTORE_ORDER[2]])
+      // EVERY PRODUCER AFTER THE FAILURE, derived rather than counted out, so
+      // the assertion still means what it says when the reviewed set changes.
+      expect([...e.notRestored]).toEqual([...RESTORE_ORDER].slice(1))
       expect(r.actions).not.toContain(`restore ${RESTORE_ORDER[2]}`)
       // The authorization was published BEFORE the release and is still there.
       expect(e.releaseGateEvidence.verified).toBe(true)

@@ -37,11 +37,12 @@
 // without a single production side effect.
 
 import { readFileSync } from 'node:fs'
-import { join } from 'node:path'
+import { basename, join } from 'node:path'
 
 import {
   DIGEST_FILE, EvidencePublicationUnknown, EvidencePublishedButUnverified, EvidenceRefused,
   REAL_EVIDENCE_OPS, evidenceNames, evidenceStamp, newRunId, publishEvidence,
+  publishRetainedScratch,
   verifyPublishedEvidence,
   type EvidenceOps, type EvidencePhase, type EvidenceReason, type PublishedEvidence,
   type PublishedPhase,
@@ -51,8 +52,9 @@ import {
   type Canonical, type ContractArtifact,
 } from './schema-contract.js'
 import {
-  FENCE_SEQUENCES, SEQUENCE_STATE_SQL, effectiveNext, fenceRelationArray, parseSequenceState,
-  type FenceExecutor,
+  FENCE_SEQUENCES, FENCE_TABLES, SEQUENCE_STATE_SQL, effectiveNext, fenceRelationArray,
+  parseSequenceState,
+  type FenceExecutor, type SequenceFenceId,
 } from './source-fence.js'
 import {
   VERIFICATION_FILE, attemptFenceProof, observePath, runVerification,
@@ -63,6 +65,11 @@ import {
   CommitOutcomeUnknown, isVerifiedBundle, readPublishedBundle, runApply,
   type ApplyResult, type PublishedManifest,
 } from './stage2.js'
+import {
+  COMMIT_DISPOSITION_PREFIX, classifyTargetDisposition,
+  type CommitUnknownHandoff, type DispositionInput, type DispositionResult,
+  type TargetDisposition,
+} from './commit-disposition.js'
 import type { DriverSession } from './driver-session.js'
 import type { OperatorInput } from './source-manifest.js'
 import type { TargetExpectation } from './target-authority.js'
@@ -71,6 +78,9 @@ import type { TargetExpectation } from './target-authority.js'
 export const LIFECYCLE_DOCUMENT_VERSION = 1
 
 export const RELEASE_GATE_PREFIX = 'release-gate'
+
+/** The post-release record a NOT_COMMITTED_PRISTINE run leaves behind. */
+export const PRISTINE_RELEASE_PREFIX = 'pristine-release'
 export const LIFECYCLE_PREFIX = 'copy-lifecycle'
 export const RELEASE_GATE_FILE = 'release-gate.json'
 export const LIFECYCLE_FILE = 'lifecycle.json'
@@ -94,6 +104,44 @@ export const RELEASE_SQL = 'ROLLBACK'
 export const SUPERVISOR_ALIVE_SQL = 'SELECT pg_catalog.pg_backend_pid()'
 
 /**
+ * WHO A SESSION IS, ASKED OF THAT SESSION.
+ *
+ * pid, role and backend start, in one statement. This is what replaced the
+ * operator-supplied session attestation: an allowlist a person typed is an
+ * allowlist a person can extend, and an operator who added one pid to it could
+ * license exactly the unreviewed connection the census exists to find. A
+ * session's own answer to "who are you" cannot be forged by whoever is holding
+ * the terminal.
+ */
+export const SESSION_IDENTITY_SQL =
+  // CURRENT_USER, not \`pg_catalog.current_user\`: it is a reserved special
+  // expression rather than a schema-qualified function, and the qualified
+  // spelling is a syntax error every real server rejects - which a stub that
+  // matched the string by equality could never have told us.
+  'SELECT pg_catalog.pg_backend_pid(), CURRENT_USER::pg_catalog.text, ' +
+  '(SELECT a.backend_start FROM pg_catalog.pg_stat_activity a ' +
+  'WHERE a.pid = pg_catalog.pg_backend_pid())'
+
+/** When a NAMED backend started, asked of an INDEPENDENT session. */
+export const BACKEND_START_SQL = (pid: string): string =>
+  'SELECT a.backend_start FROM pg_catalog.pg_stat_activity a ' +
+  `WHERE a.pid = ${pid}`
+
+/** A timestamp psql rendered. Shape-checked, never parsed into a local clock. */
+export const BACKEND_START_SHAPE =
+  /^\d{4}-\d{2}-\d{2} \d{2}:\d{2}:\d{2}(\.\d{1,6})?[+-]\d{2}(:\d{2})?$/
+
+/**
+ * HOW LONG BETWEEN THE TWO QUEUE SAMPLES.
+ *
+ * Two samples taken in the same millisecond are one sample written down twice.
+ * What the pair is meant to establish is that the queues are not merely empty
+ * but STAYING empty - that no producer nobody stopped is about to enqueue - and
+ * that takes elapsed time in which something could have arrived.
+ */
+export const QUEUE_SAMPLE_INTERVAL_MS = 2_000
+
+/**
  * Every lock the reviewed fence covers, as held by ONE pid, counted.
  *
  * Used AFTER the release, where the question is the opposite of the one the
@@ -110,6 +158,47 @@ SELECT pg_catalog.count(*)::pg_catalog.text
  WHERE l.pid = pg_catalog.pg_backend_pid()
    AND ((l.locktype = 'relation' AND n.nspname || '.' || c.relname = ANY ($1))
      OR (l.locktype = 'advisory'))`
+
+/**
+ * THE SAME CENSUS, ASKED OF A NAMED BACKEND FROM AN INDEPENDENT SESSION.
+ *
+ * WHY A SECOND FORM EXISTS. The one above counts the locks of the session that
+ * runs it, which is right for a supervisor proving its own release and useless
+ * for anybody else. An intervention hold has to ask "does THAT backend still
+ * hold reviewed locks" from a session that is not it - the supervisor may be
+ * unreachable, mid-statement, or gone - so the pid becomes a parameter.
+ *
+ * COUNTS, NEVER A COMPLETENESS TEST. "Holds the complete fence" and "holds no
+ * reviewed lock at all" are different questions and the space between them is
+ * a PARTIAL fence, which is the state an earlier revision silently reported as
+ * released. This returns a number so the caller can tell the three apart.
+ */
+export function releasedLockCensusSqlFor(pid: string): string {
+  if (!/^\d{1,10}$/.test(pid)) {
+    // NOT INTERPOLATED UNCHECKED. The pid reaches this function from a proof,
+    // not from a person, but the shape is asserted anyway - a value that could
+    // carry anything else has no business being spliced into a statement.
+    throw new ReleaseGateRefused('the complete source fence was not proved held',
+                                 'the backend pid is not in the reviewed form')
+  }
+  return `
+SELECT pg_catalog.count(*)::pg_catalog.text
+  FROM pg_catalog.pg_locks l
+  LEFT JOIN pg_catalog.pg_class c ON c.oid = l.relation
+  LEFT JOIN pg_catalog.pg_namespace n ON n.oid = c.relnamespace
+ WHERE l.pid = ${pid}
+   AND ((l.locktype = 'relation' AND n.nspname || '.' || c.relname = ANY ($1))
+     OR (l.locktype = 'advisory'))`
+}
+
+/**
+ * How many reviewed locks a complete fence holds.
+ *
+ * Derived from the reviewed sets rather than written down: 21 tables, 3
+ * sequences and the one advisory lock. A constant typed by hand would be a
+ * second place the fence's size is stated, and the two would eventually differ.
+ */
+export const COMPLETE_FENCE_LOCKS = FENCE_TABLES.length + FENCE_SEQUENCES.length + 1
 
 /**
  * WHO IS CONNECTED TO THE SOURCE. Reviewed columns only, and never a query text.
@@ -137,8 +226,18 @@ SELECT pid::pg_catalog.text,
  * nothing behind it.
  */
 export const REVIEWED_PRODUCERS: readonly string[] = Object.freeze([
+  // ALL FIVE DECLARED AGENTS, not the three an earlier revision listed. Two of
+  // the missing ones matter: `structured-worker` CONSUMES a queue whose jobs
+  // write PostgreSQL, and `watchdog` can put work into one. A reviewed set that
+  // omits a writer is a fence with a door in it.
+  //
+  // `structured-worker` is currently declared and templated but NOT installed.
+  // That is not a reason to drop it: its reviewed disposition is `absent`, and
+  // absence is something to be PROVED, not assumed by leaving it off the list.
   'com.thanapol.ai-capital.daily',
+  'com.thanapol.ai-capital.watchdog',
   'com.thanapol.ai-capital.alerts',
+  'com.thanapol.ai-capital.structured-worker',
   'com.thanapol.ai-capital.worker',
 ])
 
@@ -155,6 +254,35 @@ export interface ProducerState {
 }
 
 /**
+ * THE WHOLE QUIESCENCE MEASUREMENT FOR ONE PRODUCER, not just its verdict.
+ *
+ * WHY THE VERDICT ALONE IS NOT ENOUGH IN EVIDENCE. `{name, stopped}` records
+ * the conclusion and throws away everything that produced it: whether launchd
+ * had the label at all, whether it was disabled, whether a process was found
+ * and which pattern found it. An operator reading that bundle a month later
+ * cannot tell a producer that was absent from one that was disabled-and-idle
+ * from one that was never looked for - and those are three different stories
+ * about the same word.
+ *
+ * THE ADAPTER RETURNS THIS AND THE GATE CARRIES IT. A `ProducerState` is what
+ * the gate COMPARES; this is what the evidence RECORDS, and the two cannot
+ * drift because the first is derived from the second.
+ */
+export interface ProducerQuiescenceMeasurement {
+  readonly name: string
+  readonly stopped: boolean
+  /** `absent` or `loaded`, as launchd answered. */
+  readonly presence: string
+  readonly disabled: boolean
+  readonly running: boolean
+  readonly launchdPid: string | null
+  /** The reviewed command pattern the process census matched on. */
+  readonly processPattern: string
+  /** Every process matching it, whoever started them. */
+  readonly processPids: readonly string[]
+}
+
+/**
  * THE REVIEWED QUEUES, by name. Exactly these, and all of them.
  *
  * A sample is only evidence if it is evidence ABOUT SOMETHING. An adapter that
@@ -165,8 +293,12 @@ export interface ProducerState {
  * a refusal rather than a pass.
  */
 export const REVIEWED_QUEUES: readonly string[] = Object.freeze([
-  'ai-capital-daily',
-  'ai-capital-alerts',
+  // THE AUTHORITATIVE NAMES, from `@common/queue`'s own constants. An earlier
+  // revision invented `ai-capital-daily`/`ai-capital-alerts`, which exist
+  // nowhere: every sample would have refused, which fails safe and for entirely
+  // the wrong reason.
+  'daily-pipeline',
+  'structured-ingestion',
 ])
 
 /**
@@ -193,6 +325,14 @@ export interface AdapterContext {
  * repeatedly and must not be able to alter what it is measuring.
  */
 export interface QuiescenceAdapter {
+  /**
+   * The FULL measurement, for the evidence.
+   *
+   * Optional only so a test double that cares about nothing but the verdict
+   * stays short; the reviewed adapter supplies it, and the gate records
+   * whatever it gets rather than reducing it.
+   */
+  measure?(ctx: AdapterContext): Promise<readonly ProducerQuiescenceMeasurement[]>
   report(ctx: AdapterContext): Promise<readonly ProducerState[]>
 }
 
@@ -298,6 +438,7 @@ export type LifecyclePhase =
 export type LifecycleReason =
   | 'the published bundle or reviewed target was not accepted'
   | 'a reviewed producer is not stopped'
+  | 'the fenced producer census does not agree with the pre-fence one'
   | 'the transactional copy did not complete'
   | 'the Stage-2 source snapshot could not be ended'
   | 'the independent verification did not pass'
@@ -505,6 +646,14 @@ interface AuthorizationRecord {
   readonly supervisor: FenceExecutor
   /** The backend that object reported at gate time. */
   readonly supervisorPid: string
+  /**
+   * AND WHEN THAT BACKEND STARTED. The pid alone was one recycled number away
+   * from authorising a release against somebody else's session: a supervisor
+   * that died and reconnected can report the same pid, and the release would
+   * then roll back a transaction that holds none of the fence while reporting
+   * that the fence was released.
+   */
+  readonly supervisorBackendStart: string
   /** Set BEFORE the ROLLBACK attempt, and never cleared. */
   consumed: boolean
 }
@@ -536,6 +685,18 @@ export interface ReleaseAuthorization {
 
 export interface FenceFactsLike {
   readonly supervisorPid: string
+  /**
+   * WHEN THE SUPERVISOR BACKEND STARTED, read by the INDEPENDENT prover.
+   *
+   * A pid identifies a backend only for as long as that backend lives, and an
+   * intervention hold can outlast it. The pair is unique for the cluster's
+   * lifetime, so the pair is what the proof carries, what the authorization is
+   * registered against, what the release re-checks and what the evidence
+   * records. Read by the prover rather than by the supervisor, because a
+   * supervisor that died and reconnected would cheerfully report the NEW
+   * backend's start as though it were the one that took the fence.
+   */
+  readonly supervisorBackendStart: string
   readonly provingPid: string
   readonly relations: number
   readonly ungranted: number
@@ -560,6 +721,7 @@ export type GateRefusal =
   | 'the verifier evidence bundle does not verify from disk'
   | 'the verified chain does not agree with the Stage-2 result'
   | 'a reviewed producer is not stopped'
+  | 'the fenced producer census does not agree with the pre-fence one'
   | 'the source carries sessions that are not reviewed'
   | 'the queue samples are not empty and stable'
 
@@ -572,7 +734,18 @@ export class ReleaseGateRefused extends Error {
 
 export interface ReleaseGateInput {
   readonly handoff: VerifierHandoff
+  /** Re-measured WHILE FENCED and compared with `expectedProducers`. */
+  readonly destinations: DestinationCensusAdapter
+  readonly expectedProducers: readonly ProducerCensusRow[]
+  /** Other live sessions this process owns. Each is asked who it is. */
+  readonly ownedSessions?: readonly IdentifiableSession[]
+  /** Recorded into the evidence. Never a source of census values. */
+  readonly attestation?: QuiescenceAttestation
+  /** TEST-ONLY seam for the reviewed inter-sample interval. */
+  readonly __sleep?: (ms: number) => Promise<void>
   readonly verification: VerificationResult
+  /** Additional caller-owned sessions, merged with the lifecycle's own. */
+  readonly callerSessions?: readonly IdentifiableSession[]
   /**
    * The Stage-1 bundle, as `readPublishedBundle` MINTED it.
    *
@@ -587,13 +760,340 @@ export interface ReleaseGateInput {
   readonly prover: FenceExecutor
   readonly quiescence: QuiescenceAdapter
   readonly queue: QueueAdapter
-  /** EXACT pid+role pairs. Every client backend must match one of them. */
-  readonly reviewedSessions: readonly ReviewedSession[]
   readonly deadlineMs?: number
   readonly ops?: EvidenceOps
 }
 
 const IDENT = /^[a-z_][a-z0-9_]*$/
+
+/**
+ * WHAT THE OPERATIONAL HALF OF THE GATE NEEDS, and nothing about a copy.
+ *
+ * The prerequisite rehearsal proves the production adapters against a live
+ * source and never touches a target, so it has no verifier result, no Stage-2
+ * handoff and no published bundle to offer. Requiring those would have made the
+ * rehearsal impossible to write - which is how the first design ended up
+ * proposing a rehearsal that ran the whole copy, and could then never be
+ * followed by an apply, because Stage 2 requires an EMPTY target.
+ */
+/**
+ * A FENCED RE-MEASUREMENT OF WHERE THE PRODUCERS WRITE.
+ *
+ * The pre-fence census answers "where do these agents write" at a moment when
+ * they could still be running. The fenced one answers it again with the source
+ * frozen, and the two are compared: a plist swapped, a credential repointed or
+ * an agent reinstalled in between is a producer whose stopping the operator
+ * justified against a world that no longer exists.
+ */
+export interface DestinationCensusAdapter {
+  measure(ctx: AdapterContext): Promise<readonly ProducerCensusRow[]>
+}
+
+/**
+ * One producer as the census sees it. Structurally the binding's own record,
+ * declared here so `@common/db` does not depend on the queue package.
+ */
+export interface ProducerCensusRow {
+  readonly label: string
+  readonly plistPath: string | null
+  readonly plistSha256: string | null
+  readonly plistDeviceInode: string | null
+  readonly servedCheckout: string | null
+  readonly installation: string
+  readonly credentialPath: string | null
+  readonly credentialDeviceInode: string | null
+  readonly databaseHost: string | null
+  readonly databasePort: string | null
+  readonly databaseName: string | null
+  readonly disposition: string
+}
+
+/**
+ * The manual procedure an operator carried out, RECORDED and not trusted.
+ *
+ * This is what remains of the quiescence attestation. It authorizes the A-G
+ * stop procedure and stamps when a person did it, which belongs in the
+ * evidence; it supplies no pid, no role and no census value, because a number
+ * an operator typed is a number an operator can choose.
+ */
+export interface QuiescenceAttestation {
+  readonly authorizedBy: string
+  readonly authorizedAt: string
+  readonly procedure: string
+}
+
+export interface OperationalGateInput {
+  /** The fence this gate is about: which backend, under which mechanism. */
+  readonly fence: {
+    readonly supervisorPid: string
+    readonly backendStart: string
+    readonly mechanism: SequenceFenceId
+  }
+  /** BORROWED. Read through; never ended, never rolled back by the gate. */
+  readonly supervisor: FenceExecutor
+  readonly prover: FenceExecutor
+  readonly quiescence: QuiescenceAdapter
+  readonly queue: QueueAdapter
+  /** Re-measured WHILE FENCED and compared with `expectedProducers`. */
+  readonly destinations: DestinationCensusAdapter
+  readonly expectedProducers: readonly ProducerCensusRow[]
+  /**
+   * OTHER SESSIONS THIS PROCESS OWNS AND IS STILL HOLDING.
+   *
+   * The supervisor and the prover are not always the whole story: during a real
+   * copy the lifecycle also holds Stage 2's source snapshot and, while a
+   * verification is running, the verifier's own sessions. Those are legitimate
+   * and they are on the source, so the census has to know about them - but it
+   * learns about them by ASKING EACH ONE WHO IT IS, not by being handed a list.
+   * A caller can only put a session in here that it actually has open, and the
+   * session's own answer to `SESSION_IDENTITY_SQL` is what gets recorded.
+   */
+  readonly ownedSessions?: readonly IdentifiableSession[]
+  /** Recorded into the evidence. Never a source of census values. */
+  readonly attestation?: QuiescenceAttestation
+  readonly deadlineMs?: number
+  /** TEST-ONLY seam for the reviewed inter-sample interval. */
+  readonly __sleep?: (ms: number) => Promise<void>
+}
+
+/**
+ * Anything that can be asked who it is. A live session, never a record.
+ *
+ * Either shape answers: `send` is what a `FenceExecutor` offers and `rows` is
+ * what a `DriverSession` offers. The census needs one statement's worth of
+ * answer, not a particular interface.
+ */
+export interface IdentifiableSession {
+  send?(sql: string): Promise<{ rows: string[][]; error: 'statement-refused' | null }>
+  rows?(sql: string): Promise<string[][]>
+}
+
+/** What the operational half established. Shared by both gates. */
+export interface OperationalFindings {
+  readonly fence: FenceFactsLike
+  readonly producers: readonly ProducerState[]
+  /** The full per-producer measurement, when the adapter supplied one. */
+  readonly producerMeasurements: readonly ProducerQuiescenceMeasurement[]
+  readonly queueSamples: readonly QueueSample[]
+  readonly activity: { readonly sessions: number; readonly unreviewed: number }
+  /** The pid+role pairs the gate DERIVED, not any it was handed. */
+  readonly derivedSessions: readonly ReviewedSession[]
+  /** The fenced producer census, which agreed with the pre-fence one. */
+  readonly fencedProducers: readonly ProducerCensusRow[]
+}
+
+/**
+ * THE OPERATIONAL PROOFS, run identically by both gates.
+ *
+ * Supervisor identity, the complete fence from an independent backend with
+ * nothing queued, quiescence measured again rather than remembered, the source
+ * activity census, and two bounded queue samples. Nothing here knows what a
+ * copy is, which is precisely why a rehearsal can run it.
+ */
+export async function proveOperationalState(
+  i: OperationalGateInput,
+): Promise<OperationalFindings> {
+  const deadlineMs = i.deadlineMs ?? ADAPTER_DEADLINE_MS
+
+  // 1. WHO EACH SESSION IS, ASKED OF EACH SESSION. The supervisor must still
+  //    be the backend that took the fence - the same pid AND the same start -
+  //    and the prover must be somebody else.
+  const supervisor = await sessionIdentity(i.supervisor, 'supervisor')
+  if (supervisor.pid !== i.fence.supervisorPid ||
+      supervisor.backendStart !== i.fence.backendStart) {
+    throw new ReleaseGateRefused('the supervisor is not the backend that held the fence')
+  }
+  const prover = await sessionIdentity(i.prover, 'prover')
+  if (prover.pid === supervisor.pid) {
+    throw new ReleaseGateRefused('the complete source fence was not proved held',
+                                 'the prover is the supervisor')
+  }
+
+  // 2. THE COMPLETE FENCE, from that independent backend.
+  const proof: FenceProofResult =
+    await attemptFenceProof(i.prover, i.fence.supervisorPid, i.fence.mechanism)
+  if (proof.outcome !== 'held' || proof.facts === null) {
+    throw new ReleaseGateRefused('the complete source fence was not proved held', proof.cause)
+  }
+
+  // 3. AND THE PROVER AGREES ABOUT WHEN THE SUPERVISOR STARTED. Read from the
+  //    independent side, so a supervisor that died and reconnected cannot
+  //    report its NEW backend's start as though it were the one that fenced.
+  const observed = await observedBackendStart(i.prover, i.fence.supervisorPid)
+  if (observed === null || observed !== i.fence.backendStart) {
+    throw new ReleaseGateRefused('the supervisor is not the backend that held the fence',
+                                 'the backend start does not match')
+  }
+
+  const producers = await reportProducers(i.quiescence, deadlineMs)
+  // THE FULL MEASUREMENT TOO, when the adapter has one. The verdicts above are
+  // what the gate compares; these are what the evidence records.
+  const producerMeasurements = await measureProducers(i.quiescence, deadlineMs)
+  const owned: ReviewedSession[] = [
+    Object.freeze({ pid: supervisor.pid, role: supervisor.role }),
+    Object.freeze({ pid: prover.pid, role: prover.role }),
+  ]
+  for (const extra of i.ownedSessions ?? []) {
+    // ASKED, NOT DECLARED. A caller can only list a session it is holding, and
+    // what goes in the census is that session's own answer.
+    const who = await sessionIdentity(extra, 'owned')
+    owned.push(Object.freeze({ pid: who.pid, role: who.role }))
+  }
+  const derivedSessions: readonly ReviewedSession[] = Object.freeze(owned)
+  const activity = await censusActivity(i, derivedSessions)
+
+  // 4. THE FENCED PRODUCER CENSUS, compared with the pre-fence one.
+  const fencedProducers = await remeasureDestinations(i, deadlineMs)
+
+  const queueSamples = await sampleQueues(i.queue, deadlineMs, i.__sleep)
+
+  return Object.freeze({
+    fence: Object.freeze({ ...proof.facts, supervisorBackendStart: observed }),
+    producers: Object.freeze(producers.map(p => Object.freeze({ ...p }))),
+    producerMeasurements,
+    queueSamples,
+    activity,
+    derivedSessions,
+    fencedProducers,
+  })
+}
+
+/**
+ * Ask one session who it is. Every field is that session's own answer.
+ *
+ * THE REFUSAL NAMES WHAT IS ACTUALLY WRONG. A supervisor that will not answer
+ * is a supervisor nobody can show still holds the fence; a prover that will not
+ * answer leaves the fence unproved; an owned session that will not answer is a
+ * connection on the source nobody accounted for. Three different problems, and
+ * an operator reading one refusal for all three would look in the wrong place.
+ */
+async function sessionIdentity(
+  x: IdentifiableSession, which: 'supervisor' | 'prover' | 'owned',
+): Promise<{ pid: string; role: string; backendStart: string }> {
+  const refusal: GateRefusal = which === 'supervisor'
+    ? 'the supervisor is not the backend that held the fence'
+    : which === 'prover'
+      ? 'the complete source fence was not proved held'
+      : 'the source carries sessions that are not reviewed'
+  let r: { rows: string[][]; error: 'statement-refused' | null }
+  try {
+    r = typeof x.send === 'function'
+      ? await x.send(SESSION_IDENTITY_SQL)
+      : { rows: await (x.rows as (sql: string) => Promise<string[][]>)(SESSION_IDENTITY_SQL),
+          error: null }
+  } catch {
+    throw new ReleaseGateRefused(refusal, `the ${which} did not answer`)
+  }
+  if (r.error !== null) {
+    throw new ReleaseGateRefused(refusal, `the ${which} refused to identify itself`)
+  }
+  const [pid, role, start] = r.rows[0] ?? []
+  if (typeof pid !== 'string' || !/^\d+$/.test(pid) ||
+      typeof role !== 'string' || !IDENT.test(role) ||
+      typeof start !== 'string' || !BACKEND_START_SHAPE.test(start)) {
+    throw new ReleaseGateRefused(refusal, `the ${which} identity is not in the reviewed form`)
+  }
+  return { pid, role, backendStart: start }
+}
+
+/** When a named backend started, as an INDEPENDENT session sees it. */
+async function observedBackendStart(
+  prover: FenceExecutor, pid: string,
+): Promise<string | null> {
+  let r: { rows: string[][]; error: 'statement-refused' | null }
+  try {
+    r = await prover.send(BACKEND_START_SQL(pid))
+  } catch {
+    return null
+  }
+  if (r.error !== null) return null
+  const v = r.rows[0]?.[0] ?? ''
+  return BACKEND_START_SHAPE.test(v) ? v : null
+}
+
+/**
+ * Re-measure the producers WHILE FENCED and refuse any drift.
+ *
+ * Compared field by field through the canonical serializer rather than by
+ * eyeballing a digest, so the refusal can say which label moved.
+ */
+async function remeasureDestinations(
+  i: OperationalGateInput, deadlineMs: number,
+): Promise<readonly ProducerCensusRow[]> {
+  let fenced: readonly ProducerCensusRow[]
+  try {
+    fenced = await withDeadline('quiescence', deadlineMs, ctx => i.destinations.measure(ctx))
+  } catch (e) {
+    throw new ReleaseGateRefused(
+      'the fenced producer census does not agree with the pre-fence one',
+      e instanceof AdapterDeadlineExceeded ? 'the fenced census deadline' : 'the fenced census')
+  }
+  if (fenced.length !== i.expectedProducers.length) {
+    throw new ReleaseGateRefused(
+      'the fenced producer census does not agree with the pre-fence one',
+      'the fenced census covers a different set')
+  }
+  for (let n = 0; n < fenced.length; n += 1) {
+    const before = i.expectedProducers[n] as ProducerCensusRow
+    const after = fenced[n] as ProducerCensusRow
+    if (canonicalJson({ ...before } as unknown as Canonical) !==
+        canonicalJson({ ...after } as unknown as Canonical)) {
+      throw new ReleaseGateRefused(
+        'the fenced producer census does not agree with the pre-fence one',
+        `${before.label} changed under the fence`)
+    }
+  }
+  return Object.freeze(fenced.map(p => Object.freeze({ ...p })))
+}
+
+/** The rehearsal's authorization. Same registry, same single-use semantics. */
+export interface OperationalReleaseAuthorization {
+  readonly [RELEASE_AUTHORIZATION]: true
+  readonly kind: 'operational'
+  readonly fence: FenceFactsLike
+  readonly producers: readonly ProducerState[]
+  /** The full per-producer measurement, carried into the evidence. */
+  readonly producerMeasurements: readonly ProducerQuiescenceMeasurement[]
+  readonly queueSamples: readonly QueueSample[]
+  readonly activity: { readonly sessions: number; readonly unreviewed: number }
+  /** The pid+role pairs the gate DERIVED. Carried into the evidence. */
+  readonly derivedSessions: readonly ReviewedSession[]
+  /** The fenced producer census that agreed with the pre-fence one. */
+  readonly fencedProducers: readonly ProducerCensusRow[]
+}
+
+/**
+ * THE OPERATIONAL RELEASE GATE - everything the copy gate proves about the
+ * WORLD, and nothing it proves about a copy.
+ *
+ * Used by the non-mutating operational rehearsal, and by the pre-COMMIT and
+ * NOT_COMMITTED_PRISTINE paths, where there is no successful verifier to point
+ * at and requiring one would leave the fence unreleasable.
+ */
+export async function runOperationalGate(
+  i: OperationalGateInput,
+): Promise<OperationalReleaseAuthorization> {
+  const found = await proveOperationalState(i)
+  const authorization = Object.freeze({
+    kind: 'operational' as const,
+    fence: found.fence,
+    producers: found.producers,
+    producerMeasurements: found.producerMeasurements,
+    queueSamples: found.queueSamples,
+    activity: found.activity,
+    derivedSessions: found.derivedSessions,
+    fencedProducers: found.fencedProducers,
+  })
+  // ONE REGISTRY for both gates, so consume-before-await and non-replay are the
+  // same property here as they are for a copy release.
+  AUTHORIZATIONS.set(authorization, {
+    supervisor: i.supervisor,
+    supervisorPid: found.fence.supervisorPid,
+    supervisorBackendStart: found.fence.supervisorBackendStart,
+    consumed: false,
+  })
+  return authorization as unknown as OperationalReleaseAuthorization
+}
 
 /**
  * THE FINAL RELEASE GATE. Everything, proved again, immediately before release.
@@ -613,25 +1113,17 @@ const IDENT = /^[a-z_][a-z0-9_]*$/
 export async function runReleaseGate(i: ReleaseGateInput): Promise<ReleaseAuthorization> {
   const h = i.handoff
   const ops = i.ops ?? REAL_EVIDENCE_OPS
-  const deadlineMs = i.deadlineMs ?? ADAPTER_DEADLINE_MS
 
-  // 1. THE SAME LIVE BACKEND.
-  let alive: { rows: string[][]; error: 'statement-refused' | null }
-  try {
-    alive = await i.supervisor.send(SUPERVISOR_ALIVE_SQL)
-  } catch {
-    throw new ReleaseGateRefused('the supervisor is not the backend that held the fence')
-  }
-  if (alive.error !== null || (alive.rows[0]?.[0] ?? '') !== h.fence.supervisorPid) {
-    throw new ReleaseGateRefused('the supervisor is not the backend that held the fence')
-  }
-
-  // 2. THE COMPLETE FENCE, from an independent backend, nothing queued.
-  const proof: FenceProofResult =
-    await attemptFenceProof(i.prover, h.fence.supervisorPid, h.fence.mechanism)
-  if (proof.outcome !== 'held' || proof.facts === null) {
-    throw new ReleaseGateRefused('the complete source fence was not proved held', proof.cause)
-  }
+  // 1-2 AND 7-9. THE OPERATIONAL HALF, identical to the rehearsal's.
+  const found = await proveOperationalState({
+    fence: h.fence, supervisor: i.supervisor, prover: i.prover,
+    quiescence: i.quiescence, queue: i.queue,
+    destinations: i.destinations, expectedProducers: i.expectedProducers,
+    ...(i.ownedSessions === undefined ? {} : { ownedSessions: i.ownedSessions }),
+    ...(i.attestation === undefined ? {} : { attestation: i.attestation }),
+    ...(i.deadlineMs === undefined ? {} : { deadlineMs: i.deadlineMs }),
+    ...(i.__sleep === undefined ? {} : { __sleep: i.__sleep }),
+  })
 
   // 3. THE VERIFIER PASSED, and its own numbers agree with Stage 2's.
   if (i.verification.outcome !== 'PASS') {
@@ -690,34 +1182,25 @@ export async function runReleaseGate(i: ReleaseGateInput): Promise<ReleaseAuthor
     }
   }
 
-  // 7. QUIESCENCE, AGAIN. L2 said so before the copy; a producer restarted
-  //    during it would have been writing to the source the whole time.
-  const producers = await reportProducers(i.quiescence, deadlineMs)
-
-  // 8. WHO IS CONNECTED TO THE SOURCE.
-  const activity = await censusActivity(i)
-
-  // 9. TWO BOUNDED QUEUE SAMPLES, both empty and equal to each other. One
-  //    sample cannot distinguish an empty queue from a queue caught between
-  //    two jobs.
-  const queueSamples = await sampleQueues(i.queue, deadlineMs)
-
   const authorization = Object.freeze({
     rootDigest: h.rootDigest,
     sourceContractDigest: h.sourceContractDigest,
     targetContractDigest: h.targetContractDigest,
     sequences: Object.freeze(sequences.map(s => Object.freeze({ ...s }))),
-    fence: Object.freeze({ ...proof.facts }),
-    producers: Object.freeze(producers.map(p => Object.freeze({ ...p }))),
-    queueSamples: Object.freeze(queueSamples),
-    activity,
+    fence: found.fence,
+    producers: found.producers,
+    queueSamples: found.queueSamples,
+    activity: found.activity,
     verifierBundle: bundle,
   })
   // REGISTERED LAST, after every proof above has passed and the object is
   // final - and registered WITH what it was proved against, so the release can
   // check it is about to end the same transaction the gate examined.
   AUTHORIZATIONS.set(authorization, {
-    supervisor: i.supervisor, supervisorPid: h.fence.supervisorPid, consumed: false,
+    supervisor: i.supervisor,
+    supervisorPid: found.fence.supervisorPid,
+    supervisorBackendStart: found.fence.supervisorBackendStart,
+    consumed: false,
   })
   return authorization as unknown as ReleaseAuthorization
 }
@@ -923,7 +1406,7 @@ async function reportProducers(
  * refusing on, and its application name is arbitrary operator-supplied text.
  */
 async function censusActivity(
-  i: ReleaseGateInput,
+  i: OperationalGateInput, reviewedSessions: readonly ReviewedSession[],
 ): Promise<{ sessions: number; unreviewed: number }> {
   const refuse = (at: string | null = null): never => {
     throw new ReleaseGateRefused('the source carries sessions that are not reviewed', at)
@@ -931,7 +1414,7 @@ async function censusActivity(
   // THE REVIEWED SET ITSELF MUST BE COHERENT. One pid claimed by two roles, or
   // one pid listed twice, is an allowlist that cannot be checked against.
   const byPid = new Map<string, string>()
-  for (const r of i.reviewedSessions) {
+  for (const r of reviewedSessions) {
     if (typeof r?.pid !== 'string' || !/^\d+$/.test(r.pid)) refuse('a reviewed session pid')
     if (typeof r?.role !== 'string' || !IDENT.test(r.role)) refuse('a reviewed session role')
     const seen = byPid.get(r.pid)
@@ -981,14 +1464,39 @@ async function censusActivity(
  * never answers stops the lifecycle with a reason rather than stopping it
  * forever with the fence held.
  */
+/** The full per-producer measurement, when the adapter offers one. */
+async function measureProducers(
+  q: QuiescenceAdapter, deadlineMs: number,
+): Promise<readonly ProducerQuiescenceMeasurement[]> {
+  if (typeof q.measure !== 'function') return Object.freeze([])
+  try {
+    const rows = await withDeadline('quiescence', deadlineMs,
+                                    ctx => (q.measure as NonNullable<typeof q.measure>)(ctx))
+    return Object.freeze(rows.map(r => Object.freeze({
+      ...r, processPids: Object.freeze([...r.processPids]),
+    })))
+  } catch (e) {
+    throw new ReleaseGateRefused('a reviewed producer is not stopped',
+                                 e instanceof AdapterDeadlineExceeded
+                                   ? 'the measurement deadline' : 'the measurement')
+  }
+}
+
 async function sampleQueues(
   q: QueueAdapter, deadlineMs: number,
+  sleep: ((ms: number) => Promise<void>) | undefined,
 ): Promise<readonly QueueSample[]> {
   const refuse = (at: string | null = null): never => {
     throw new ReleaseGateRefused('the queue samples are not empty and stable', at)
   }
+  const wait = sleep ?? ((ms: number) => new Promise<void>(r => { setTimeout(r, ms) }))
   const samples: QueueSample[] = []
   for (let n = 0; n < 2; n += 1) {
+    // THE REVIEWED INTERVAL BETWEEN THEM. Two samples taken in the same
+    // millisecond are one sample written down twice, and the pair exists to
+    // establish that the queues are STAYING empty rather than merely being
+    // empty at an instant nobody chose.
+    if (n > 0) await wait(QUEUE_SAMPLE_INTERVAL_MS)
     try {
       samples.push(await withDeadline('queue', deadlineMs, ctx => q.sample(ctx)))
     } catch (e) {
@@ -1064,7 +1572,8 @@ export interface ReleaseResult {
  * `release-unknown`, and it is not a weaker `released-unproved`.
  */
 export async function releaseFence(
-  supervisor: FenceExecutor, authorization: ReleaseAuthorization,
+  supervisor: FenceExecutor,
+  authorization: ReleaseAuthorization | OperationalReleaseAuthorization,
 ): Promise<ReleaseResult> {
   // THE THREE SYNCHRONOUS CHECKS, THEN THE CONSUMPTION, WITH NO `await` BETWEEN
   // THEM. That ordering is the whole concurrency argument: JavaScript will not
@@ -1072,7 +1581,7 @@ export async function releaseFence(
   // cannot both get past the `consumed` test - the first marks it and the
   // second finds it marked. A PID query placed before the consumption would put
   // an `await` in that window and hand both of them a release.
-  const record = AUTHORIZATIONS.get(authorization)
+  const record = AUTHORIZATIONS.get(authorization as object)
   if (record === undefined) {
     throw new ReleaseGateRefused('the complete source fence was not proved held',
                                  'the authorization was not issued by this gate')
@@ -1099,12 +1608,17 @@ export async function releaseFence(
   // back would release nothing while reporting a release.
   let alive: { rows: string[][]; error: 'statement-refused' | null }
   try {
-    alive = await supervisor.send(SUPERVISOR_ALIVE_SQL)
+    alive = await supervisor.send(SESSION_IDENTITY_SQL)
   } catch {
     throw new ReleaseGateRefused('the complete source fence was not proved held',
                                  'the supervisor could not be reached')
   }
-  if (alive.error !== null || (alive.rows[0]?.[0] ?? '') !== record.supervisorPid) {
+  // PID AND BACKEND START. A supervisor that died and reconnected can come
+  // back on the same pid holding none of the fence, and rolling THAT back
+  // would release nothing while reporting a release.
+  if (alive.error !== null ||
+      (alive.rows[0]?.[0] ?? '') !== record.supervisorPid ||
+      (alive.rows[0]?.[2] ?? '') !== record.supervisorBackendStart) {
     throw new ReleaseGateRefused('the complete source fence was not proved held',
                                  'the supervisor is not the backend the gate proved')
   }
@@ -1226,6 +1740,15 @@ export class LifecycleEvidenceFailed extends Error {
     readonly finalPathState: PathState,
     readonly temporaryPath: string | null,
     readonly temporaryPathState: PathState,
+    /**
+     * THE `device:inode` OF A TEMPORARY DIRECTORY THIS PUBLICATION CREATED.
+     *
+     * Carried through from `EvidenceRefused.createdIdentity` unchanged - null when
+     * the failure happened before the publisher's own `mkdir`, EEXIST included. A
+     * caller may treat a non-null value as permission to clear that exact object,
+     * and nothing else as permission at all.
+     */
+    readonly creationReceipt: string | null = null,
   ) {
     super(
       `${prefix} evidence: ${publication} (${evidenceReason ?? 'no reviewed reason'}) ` +
@@ -1244,6 +1767,39 @@ export interface LifecycleBundleInput {
   readonly manifest: Canonical
   readonly detail: Canonical
   readonly ops?: EvidenceOps
+  /**
+   * THE ALREADY-SERIALIZED BYTES, when the caller has to know them.
+   *
+   * WHY THIS EXISTS. A caller that republishes one record after a transient
+   * failure has to be able to say that the second attempt wrote the same bytes
+   * as the first, and comparing two documents it serialized separately proves
+   * nothing about what this function serialized. So a caller that must make
+   * that claim serializes ONCE, keeps the bytes, and hands them here; the
+   * bytes it retries with and the bytes it compares an occupied destination
+   * against are then the same object, not two hopefully-equal derivations.
+   *
+   * WHEN OMITTED the document is serialized here, exactly as before. Supplying
+   * bytes that do not correspond to `manifest`/`detail` is not detectable and
+   * is not meant to be: these are two spellings of one value, and the caller
+   * that chooses to supply the bytes owns that correspondence.
+   */
+  readonly manifestBytes?: Buffer
+  readonly detailBytes?: Buffer
+  /** Names the retry scratch directory. See `evidenceNames`. */
+  readonly temporaryTag?: string
+  /**
+   * BUILD THE BUNDLE, OR PUBLISH ONE THAT IS ALREADY BUILT.
+   *
+   * `retained` skips straight to the rename, for a scratch directory the caller
+   * has already proved holds exactly the frozen record - see `inspectScratch`.
+   * Rebuilding one of those would mean unfreezing files that are already 0400
+   * and one syscall away from being evidence, for no gain: the bytes on disk are
+   * the bytes we would write.
+   *
+   * The outcome classification is identical either way, which is why this is a
+   * field here rather than a second function with its own error handling.
+   */
+  readonly reuse?: 'build' | 'retained'
 }
 
 /**
@@ -1258,29 +1814,40 @@ export interface LifecycleBundleInput {
 export function publishLifecycleBundle(i: LifecycleBundleInput): PublishedEvidence {
   const ops = i.ops ?? REAL_EVIDENCE_OPS
   const bytes = (v: Canonical): Buffer => Buffer.from(`${canonicalJson(v)}\n`, 'utf-8')
+  const input = {
+    root: i.root, prefix: i.prefix, stamp: i.stamp, runId: i.runId,
+    artifacts: [{ path: i.detailFile, bytes: i.detailBytes ?? bytes(i.detail) }],
+    manifest: { path: i.manifestFile, bytes: i.manifestBytes ?? bytes(i.manifest) },
+    ...(i.temporaryTag === undefined ? {} : { temporaryTag: i.temporaryTag }),
+  }
   try {
-    return publishEvidence({
-      root: i.root, prefix: i.prefix, stamp: i.stamp, runId: i.runId,
-      artifacts: [{ path: i.detailFile, bytes: bytes(i.detail) }],
-      manifest: { path: i.manifestFile, bytes: bytes(i.manifest) },
-    }, ops)
+    return i.reuse === 'retained'
+      ? publishRetainedScratch(input, ops)
+      : publishEvidence(input, ops)
   } catch (e) {
     let finalPath = i.root
     let temporaryPath: string | null = null
     try {
-      const names = evidenceNames(i.prefix, i.stamp, i.runId)
+      const names = evidenceNames(i.prefix, i.stamp, i.runId, i.temporaryTag)
       finalPath = join(i.root, names.finalName)
       temporaryPath = join(i.root, names.temporaryName)
     } catch { /* the names themselves were refused; the root is all there is */ }
 
+    // THE RECEIPT, READ FROM THE ERROR AND NEVER RE-DERIVED. Only the publisher
+    // knows whether its own `mkdir` ran.
+    const receipt = (e instanceof EvidenceRefused ||
+                     e instanceof EvidencePublishedButUnverified ||
+                     e instanceof EvidencePublicationUnknown)
+      ? e.createdIdentity : null
     if (e instanceof EvidencePublishedButUnverified) {
       throw new LifecycleEvidenceFailed(
-        i.prefix, 'published-unverified', e.phase, null, finalPath, 'present', null, 'absent')
+        i.prefix, 'published-unverified', e.phase, null, finalPath, 'present', null, 'absent',
+        receipt)
     }
     if (e instanceof EvidencePublicationUnknown) {
       throw new LifecycleEvidenceFailed(
         i.prefix, 'unknown', 'publish', null,
-        finalPath, 'unproved', temporaryPath, 'unproved')
+        finalPath, 'unproved', temporaryPath, 'unproved', receipt)
     }
     const phase: EvidencePhase = e instanceof EvidenceRefused ? e.phase : 'publish'
     const reason: EvidenceReason | null = e instanceof EvidenceRefused ? e.reason : null
@@ -1295,7 +1862,7 @@ export function publishLifecycleBundle(i: LifecycleBundleInput): PublishedEviden
             : 'refused-nothing-created'
     throw new LifecycleEvidenceFailed(
       i.prefix, publication, phase, reason,
-      finalPath, finalState, created ? temporaryPath : null, tempState)
+      finalPath, finalState, created ? temporaryPath : null, tempState, receipt)
   }
 }
 
@@ -1468,9 +2035,36 @@ export interface LifecycleInput {
   readonly quiescence: QuiescenceAdapter
   readonly queue: QueueAdapter
   readonly producers: ProducerAdapter
-  /** EXACT pid+role pairs for every session legitimately on the source. */
-  readonly reviewedSessions: readonly ReviewedSession[]
+  /**
+   * Re-measured WHILE FENCED and compared with `expectedProducers`.
+   *
+   * THE SESSION ALLOWLIST IS GONE FROM HERE. It used to be
+   * `reviewedSessions` - exact pid+role pairs an operator supplied - and an
+   * allowlist a person types is an allowlist a person can extend by one line
+   * to license exactly the connection the census exists to find. The gate now
+   * asks the supervisor and the prover who they are and accepts nobody else.
+   */
+  readonly destinations: DestinationCensusAdapter
+  readonly expectedProducers: readonly ProducerCensusRow[]
+  /**
+   * OTHER LIVE SOURCE SESSIONS THE CALLER OWNS.
+   *
+   * Merged with the lifecycle's own stage-source session at gate time, and
+   * each one is ASKED who it is. A caller can only list a session it actually
+   * holds; nothing here is a pid somebody typed.
+   */
+  readonly ownedSessions?: readonly IdentifiableSession[]
+  /** Recorded into the evidence. Never a source of census values. */
+  readonly attestation?: QuiescenceAttestation
   readonly deadlineMs?: number
+  /** TEST-ONLY seam for the reviewed inter-sample interval. */
+  readonly __sleep?: (ms: number) => Promise<void>
+  /**
+   * How an unanswered COMMIT is classified. Injected so a suite can exercise
+   * all three continuations without two live clusters; production gets the
+   * reviewed `classifyTargetDisposition`.
+   */
+  readonly classifyDisposition?: (i: DispositionInput) => Promise<DispositionResult>
 
   readonly evidenceRoot: string
   readonly runIds?: { verification?: string; releaseGate?: string; lifecycle?: string }
@@ -1543,6 +2137,14 @@ export async function runLifecycle(i: LifecycleInput): Promise<LifecycleResult> 
   /** Publication is attempted ONCE per run id, and its first result stands. */
   let outcomeAttempted = false
   let committed = false
+  /** Set only when a MEASUREMENT settled an unanswered COMMIT. */
+  let commitUnknownResolved: TargetDisposition | null = null
+  let dispositionEvidence: EvidenceState = NO_EVIDENCE
+  let pristineEvidence: EvidenceState = NO_EVIDENCE
+  let commitUnknownPath: {
+    continue: 'verify' | 'release-operational'
+    handoff: CommitUnknownHandoff
+  } | null = null
   let applied: ApplyResult | null = null
   let verification: VerificationResult | null = null
   let authorization: ReleaseAuthorization | null = null
@@ -1634,6 +2236,273 @@ export async function runLifecycle(i: LifecycleInput): Promise<LifecycleResult> 
       restoration?.restored ?? [], restoration?.notRestored ?? REVIEWED_PRODUCERS)
   }
 
+  /**
+   * L3b. THE COMMIT WENT UNANSWERED. CLASSIFY THE TARGET, THEN DECIDE.
+   *
+   * THREE CONTINUATIONS, AND ONLY ONE OF THEM IS "CARRY ON".
+   *
+   *   COMMITTED_EXACT         the target measurably holds the copy. The run
+   *                           continues into independent verification and the
+   *                           normal release, which is what it would have done
+   *                           had the acknowledgement arrived.
+   *   NOT_COMMITTED_PRISTINE  the target is measurably untouched. Nothing was
+   *                           written, so there is nothing to clean up; the
+   *                           fence is released through a FRESH operational
+   *                           gate - not the copy gate, which would demand a
+   *                           verifier PASS that cannot exist - and a retry
+   *                           becomes permissible only once that outcome is
+   *                           durable on disk.
+   *   INDETERMINATE           nobody can say. Intervention. No retry, no
+   *                           cleanup, no migration, no truncation.
+   *
+   * AND EVERY UNAVAILABLE PROOF IS INDETERMINATE. A target that could not be
+   * opened, a contract that would not re-derive, an identity that did not
+   * match - each of those is "could not establish", and `classifyTargetDisposition`
+   * returns INDETERMINATE for all of them rather than guessing.
+   */
+  const onCommitUnknown = async (e: CommitOutcomeUnknown): Promise<{
+    continue: 'verify' | 'release-operational'
+    handoff: CommitUnknownHandoff
+  }> => {
+    // THE HANDOFF MUST HAVE BEEN MINTED BEFORE THE COMMIT WAS SUBMITTED.
+    // Without it there is nothing to compare the target against, and building
+    // one now would be a second chance to describe the hoped-for answer.
+    if (e.commitHandoff === null) {
+      await stop('L3-copy', 'the transactional copy did not complete', 'the commit outcome')
+    }
+    const handoff = e.commitHandoff as CommitUnknownHandoff
+    const classify = i.classifyDisposition ?? classifyTargetDisposition
+
+    let disposition: DispositionResult
+    try {
+      disposition = await classify({
+        handoff,
+        openSource: i.openVerifySource,
+        openTarget: i.openVerifyTarget,
+      })
+    } catch {
+      // A CLASSIFIER THAT THREW ESTABLISHED NOTHING.
+      disposition = Object.freeze({
+        disposition: 'INDETERMINATE' as const,
+        cause: 'the target could not be classified',
+        tables: [], sequences: [], rootDigest: null,
+      })
+    }
+
+    // PUBLISHED AND VERIFIED BEFORE ANYTHING ACTS ON IT. If this process dies
+    // next, what is on disk is the classification somebody would otherwise
+    // have to take on trust from a terminal that is no longer there.
+    dispositionEvidence = publishDisposition(disposition, handoff)
+    commitUnknownResolved = disposition.disposition
+
+    // THE EVIDENCE MUST BE DURABLE BEFORE ANY CONTINUATION IS TAKEN. A
+    // classification nobody can read afterwards is a decision taken in a
+    // terminal that is no longer there - and NOT_COMMITTED_PRISTINE in
+    // particular is what later licenses a retry.
+    if (!dispositionEvidence.verified) {
+      await stop('L3-copy', 'the transactional copy did not complete', 'the commit outcome')
+    }
+
+    if (disposition.disposition === 'COMMITTED_EXACT') {
+      // MEASURABLY COMMITTED. The run continues exactly as it would have.
+      committed = true
+      return { continue: 'verify' as const, handoff }
+    }
+    if (disposition.disposition === 'NOT_COMMITTED_PRISTINE') {
+      // MEASURABLY UNTOUCHED. Nothing was written, so there is nothing to
+      // clean up, and the fence is released through a FRESH operational gate -
+      // never the copy gate, which would demand a verifier PASS that cannot
+      // exist for a copy that did not land.
+      return { continue: 'release-operational' as const, handoff }
+    }
+    // INDETERMINATE. Intervention: no retry, no cleanup, no migration, no
+    // truncation, and the fence state is whatever `stop` can actually prove.
+    await stop('L3-copy', 'the transactional copy did not complete', 'the commit outcome')
+    throw new Error('unreachable')
+  }
+
+  /**
+   * NOT_COMMITTED_PRISTINE: take the fence off through a FRESH operational gate.
+   *
+   * NOT THE COPY GATE. That one requires a verifier PASS bound to a published
+   * verification bundle, and a copy that measurably did not land has neither -
+   * so requiring it would leave the fence unreleasable and turn "nothing
+   * happened" into an intervention. The operational gate proves everything
+   * about the WORLD that the copy gate proves, and nothing about a copy.
+   *
+   * AND A RETRY IS PERMISSIBLE ONLY AFTER THIS IS DURABLE. The refusal thrown
+   * at the end names the disposition bundle, so whoever runs again is running
+   * against a record on disk rather than against a memory of what a terminal
+   * said an hour ago.
+   */
+  const releaseAfterPristine = async (): Promise<never> => {
+    const handoff = (commitUnknownPath as { handoff: CommitUnknownHandoff }).handoff
+    let operational: OperationalReleaseAuthorization
+    try {
+      operational = await runOperationalGate({
+        fence: {
+          supervisorPid: handoff.verifierHandoff.fence.supervisorPid,
+          backendStart: handoff.verifierHandoff.fence.backendStart,
+          mechanism: handoff.verifierHandoff.fence.mechanism,
+        },
+        supervisor: i.supervisor, prover: i.prover,
+        quiescence: i.quiescence, queue: i.queue,
+        destinations: i.destinations, expectedProducers: i.expectedProducers,
+        ownedSessions: [...(stageSource === null ? [] : [stageSource]),
+                        ...(i.ownedSessions ?? [])],
+        ...(i.attestation === undefined ? {} : { attestation: i.attestation }),
+        ...(i.__sleep === undefined ? {} : { __sleep: i.__sleep }),
+        deadlineMs: i.deadlineMs ?? ADAPTER_DEADLINE_MS,
+      })
+    } catch (e) {
+      // THE GATE REFUSED, SO THE FENCE STAYS. Not released on a hope.
+      await stop('L6-release-gate', 'the final release gate refused',
+                 e instanceof ReleaseGateRefused ? e.refusal : null)
+      throw new Error('unreachable')
+    }
+    release = await releaseFence(i.supervisor, operational)
+    if (release.state !== 'released') {
+      await stop('L9-release-proof', 'the fence release could not be proved', release.state)
+    }
+    // THE DURABLE POST-RELEASE RECORD FOR THIS PATH, AND ITS OWN BUNDLE.
+    //
+    // `recordOutcome` cannot describe this run: it reads `applied`, which is
+    // null here because `runApply` threw before it returned anything, and it
+    // therefore publishes "no Stage-2 result to describe". The consequence was
+    // that a NOT_COMMITTED_PRISTINE run - a fence taken, a copy that
+    // measurably did not land, a release proved with a zero-lock census -
+    // left NOTHING on disk saying the fence came off. The refusal message said
+    // so, and a message is not evidence.
+    pristineEvidence = publishPristineRelease(release)
+    if (!pristineEvidence.verified) {
+      // NOT PUBLISHED MEANS NOT PERMITTED. A retry is licensed by this record;
+      // without it on disk there is nothing for a later run to have read.
+      await stop('L11-outcome-evidence',
+                 'the lifecycle outcome evidence was not published and verified', null)
+    }
+    throw new LifecycleRefused(
+      'L3-copy', 'the transactional copy did not complete',
+      `NOT_COMMITTED_PRISTINE; the target is measurably untouched and the fence is ` +
+      `released and proved. The classification is at ` +
+      `${dispositionEvidence.publishedPath ?? 'no path'} and the post-release record ` +
+      `at ${pristineEvidence.publishedPath ?? 'no path'}.`)
+  }
+
+  /**
+   * The `pristine-release-*` record. Everything a later run needs, on disk.
+   *
+   * RETRY PERMISSION AND ITS BASIS, TOGETHER. "A retry is allowed" on its own
+   * is an instruction; what makes it checkable is the measurement it rests on -
+   * the disposition bundle that proved the target untouched, and the zero-lock
+   * census that proved the fence gone. Both are named here, by basename and by
+   * the digest of their DIGEST file.
+   */
+  const publishPristineRelease = (released: ReleaseResult): EvidenceState => {
+    const handoff = (commitUnknownPath as { handoff: CommitUnknownHandoff }).handoff
+    const dispositionPath = dispositionEvidence.publishedPath
+    const retryAllowed = released.state === 'released' && dispositionPath !== null
+    try {
+      const published = publishLifecycleBundle({
+        root: i.evidenceRoot, prefix: PRISTINE_RELEASE_PREFIX, stamp,
+        runId: i.runIds?.lifecycle ?? newRunId(),
+        manifestFile: 'pristine-release.json', detailFile: 'proof.json',
+        manifest: {
+          record: PRISTINE_RELEASE_PREFIX,
+          complete: true,
+          disposition: commitUnknownResolved,
+          commit_disposition: dispositionPath === null ? null : {
+            name: basename(dispositionPath),
+            digest_file_digest: digestOfDigestFile(dispositionPath, ops),
+          },
+          fence: {
+            supervisor_pid: handoff.verifierHandoff.fence.supervisorPid,
+            backend_start: handoff.verifierHandoff.fence.backendStart,
+            mechanism: handoff.verifierHandoff.fence.mechanism,
+          },
+          // THE ACKNOWLEDGEMENT AND THE PROOF ARE TWO FACTS, not one.
+          release_acknowledged: released.state !== 'release-unknown',
+          release_state: released.state,
+          remaining_reviewed_locks: released.remainingLocks,
+          zero_lock_release_proved: released.state === 'released' &&
+            released.remainingLocks === 0,
+          retry_permitted: retryAllowed,
+          retry_basis: retryAllowed
+            ? 'the target is measurably untouched and the fence is proved released'
+            : 'no retry is permitted; the basis for one was not established',
+          bundle_name: handoff.bundleName,
+        },
+        detail: {
+          target: {
+            system_identifier: handoff.target.systemIdentifier,
+            database: handoff.target.database,
+            role: handoff.target.role,
+          },
+        },
+        ops,
+      })
+      return Object.freeze({
+        attempted: true, publishedPath: published.finalPath, verified: true, note: null,
+        publication: null, evidencePhase: null, evidenceReason: null,
+        finalPath: published.finalPath, finalPathState: 'present' as const,
+        temporaryPath: null, temporaryPathState: 'absent' as const,
+      })
+    } catch (e) {
+      return evidenceStateOf(e, 'the pristine-release record was not published')
+    }
+  }
+
+  /**
+ * The SHA-256 of a published bundle's DIGEST file.
+ *
+ * What makes a cross-bundle reference checkable: the basename says WHICH
+ * directory and this says which CONTENTS, so a bundle replaced under the same
+ * name no longer satisfies the record that pointed at it.
+ */
+const digestOfDigestFile = (dir: string, ops: EvidenceOps): string =>
+  sha256Hex(ops.readFileSync(join(dir, DIGEST_FILE), 'utf-8'))
+
+/** Publish the `commit-disposition-*` record. Best effort, never silent. */
+  const publishDisposition = (
+    d: DispositionResult, handoff: CommitUnknownHandoff,
+  ): EvidenceState => {
+    try {
+      const published = publishLifecycleBundle({
+        root: i.evidenceRoot, prefix: COMMIT_DISPOSITION_PREFIX, stamp,
+        runId: i.runIds?.lifecycle ?? newRunId(),
+        manifestFile: 'disposition.json', detailFile: 'measurements.json',
+        manifest: {
+          record: COMMIT_DISPOSITION_PREFIX,
+          complete: true,
+          disposition: d.disposition,
+          cause: d.cause,
+          bundle_name: handoff.bundleName,
+          target: {
+            system_identifier: handoff.target.systemIdentifier,
+            database: handoff.target.database,
+            role: handoff.target.role,
+          },
+          root_digest: d.rootDigest,
+        },
+        detail: {
+          tables: d.tables.map(t => ({ ...t })),
+          sequences: d.sequences.map(x => ({ ...x })),
+        },
+        ops,
+      })
+      return Object.freeze({
+        attempted: true, publishedPath: published.finalPath, verified: true, note: null,
+        publication: null, evidencePhase: null, evidenceReason: null,
+        finalPath: published.finalPath, finalPathState: 'present' as const,
+        temporaryPath: null, temporaryPathState: 'absent' as const,
+      })
+    } catch (e) {
+      // THE FAILURE IS THE FINDING, and it is carried in the same three-state
+      // shape every other bundle's failure uses: "could not examine" never
+      // becomes "absent".
+      return evidenceStateOf(e, 'the commit disposition record was not published')
+    }
+  }
+
   try {
     // L1. THE BUNDLE IS VERIFIED HERE, FROM DISK, BY THIS LIFECYCLE.
     //
@@ -1674,7 +2543,7 @@ export async function runLifecycle(i: LifecycleInput): Promise<LifecycleResult> 
 
     // L3. STAGE 2. Takes the fence on the borrowed supervisor and holds it.
     stageSource = await i.openStageSource()
-    let appliedResult: ApplyResult
+    let appliedResult: ApplyResult | null = null
     try {
       appliedResult = await runApply({
         supervisor: i.supervisor, prover: i.prover, source: stageSource,
@@ -1685,9 +2554,20 @@ export async function runLifecycle(i: LifecycleInput): Promise<LifecycleResult> 
       }, bundleManifest)
     } catch (e) {
       if (e instanceof CommitOutcomeUnknown) {
-        committed = true
-        await stop('L3-copy', 'the transactional copy did not complete', 'the commit outcome')
-      }
+        // NOT `committed = true`.
+        //
+        // That single line was the defect. "The COMMIT was submitted and no
+        // acknowledgement came back" is the one state in this whole lifecycle
+        // where nobody knows whether the target holds the copy - and recording
+        // it as committed answered that question in the direction that happens
+        // to be convenient, with no measurement behind it. The rest of the
+        // lifecycle then reasoned about a committed target: the release-gate
+        // path, the restoration, the outcome sentence in the evidence.
+        //
+        // What replaces it is a read-only classification of the actual target,
+        // published as its own bundle, and three different continuations.
+        commitUnknownPath = await onCommitUnknown(e)
+      } else {
       // PRE-COMMIT, AND THE FENCE MAY BE HELD. A2 takes the fence, and it takes
       // it as a SEQUENCE of statements, so even a refusal at A2 itself can
       // leave part of it. Everything from there to COMMIT - the confirmation,
@@ -1695,9 +2575,32 @@ export async function runLifecycle(i: LifecycleInput): Promise<LifecycleResult> 
       // fails with the supervisor still inside that transaction. The target is
       // untouched, so this is not an intervention about data; it is a fence
       // this lifecycle must end and prove ended before anyone runs again.
-      throw await cleanUpPreCommit('L3-copy', 'the transactional copy did not complete')
+        throw await cleanUpPreCommit('L3-copy', 'the transactional copy did not complete')
+      }
     }
-    applied = appliedResult
+
+    // THE UNANSWERED-COMMIT CONTINUATIONS. `commitUnknownPath` is set only by
+    // a MEASUREMENT of the live target, never by the absence of one.
+    if (commitUnknownPath !== null) {
+      if (commitUnknownPath.continue === 'release-operational') {
+        // NOTHING WAS WRITTEN. There is no verifier PASS to point at and
+        // requiring one would leave the fence unreleasable, so the fence comes
+        // off through the operational gate and the run stops with a durable
+        // record rather than pretending a copy happened.
+        return await releaseAfterPristine()
+      }
+      // COMMITTED_EXACT. The handoff the copy fixed before the doubt existed
+      // is what verification runs against - not one reassembled afterwards
+      // from a target whose contents were in question.
+      appliedResult = Object.freeze({
+        verification: commitUnknownPath.handoff.verifierHandoff,
+      }) as unknown as ApplyResult
+    }
+    // NON-NULL FROM HERE. Either `runApply` returned, or an unanswered COMMIT
+    // was MEASURED as COMMITTED_EXACT and the handoff it fixed beforehand
+    // stands in for the result it never got to return.
+    const applyResult: ApplyResult = appliedResult as ApplyResult
+    applied = applyResult
     committed = true
 
     // L4. THE STAGE-2 SNAPSHOT ENDS. THE FENCE DOES NOT. Ending the source
@@ -1719,7 +2622,7 @@ export async function runLifecycle(i: LifecycleInput): Promise<LifecycleResult> 
     // L5. THE INDEPENDENT VERIFIER, on fresh sessions, fence still held.
     try {
       verification = await runVerification({
-        handoff: appliedResult.verification,
+        handoff: applyResult.verification,
         publishedDocument: bundleManifest.document,
         supervisor: i.supervisor, prover: i.prover,
         openSource: i.openVerifySource, openTarget: i.openVerifyTarget,
@@ -1735,13 +2638,22 @@ export async function runLifecycle(i: LifecycleInput): Promise<LifecycleResult> 
     // L6. THE FINAL GATE, on the SAME supervisor transaction.
     try {
       authorization = await runReleaseGate({
-        handoff: appliedResult.verification,
+        handoff: applyResult.verification,
         verification: verification as VerificationResult,
         published: bundleManifest,
         reviewedTarget: i.reviewedTarget,
         supervisor: i.supervisor, prover: i.prover,
         quiescence: i.quiescence, queue: i.queue,
-        reviewedSessions: i.reviewedSessions,
+        destinations: i.destinations, expectedProducers: i.expectedProducers,
+        // THE SESSIONS THIS LIFECYCLE IS STILL HOLDING, asked rather than
+        // declared. Stage 2's source snapshot is alive at L6; the verifier's
+        // have been closed by then and are not offered.
+        ownedSessions: [
+          ...(stageSource === null ? [] : [stageSource]),
+          ...(i.ownedSessions ?? []),
+        ],
+        ...(i.attestation === undefined ? {} : { attestation: i.attestation }),
+        ...(i.__sleep === undefined ? {} : { __sleep: i.__sleep }),
         deadlineMs: i.deadlineMs ?? ADAPTER_DEADLINE_MS,
         ops,
       })
@@ -1756,7 +2668,7 @@ export async function runLifecycle(i: LifecycleInput): Promise<LifecycleResult> 
         root: i.evidenceRoot, prefix: RELEASE_GATE_PREFIX, stamp, runId: runIds.releaseGate,
         manifestFile: RELEASE_GATE_FILE, detailFile: GATE_DETAIL_FILE,
         manifest: authorizationDocument(
-          authorization as ReleaseAuthorization, appliedResult.verification,
+          authorization as ReleaseAuthorization, applyResult.verification,
           runIds.releaseGate, stamp),
         detail: gateDetailDocument(authorization as ReleaseAuthorization),
         ops,
@@ -1818,7 +2730,7 @@ export async function runLifecycle(i: LifecycleInput): Promise<LifecycleResult> 
 
     return Object.freeze({
       outcome: 'COMPLETE',
-      rootDigest: appliedResult.rootDigest,
+      rootDigest: applyResult.rootDigest,
       verifierBundle: (verification as VerificationResult).evidence.finalPath,
       releaseGateBundle: gateEvidence.publishedPath as string,
       lifecycleBundle: outcomeEvidence.publishedPath as string,

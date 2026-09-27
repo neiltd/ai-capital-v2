@@ -1,5 +1,5 @@
 import { describe, it, expect } from 'vitest'
-import { readFileSync, writeFileSync, mkdtempSync, rmSync } from 'node:fs'
+import { existsSync, readFileSync, writeFileSync, mkdtempSync, rmSync } from 'node:fs'
 import { execFileSync, spawnSync } from 'node:child_process'
 import { tmpdir } from 'node:os'
 import { join, resolve } from 'node:path'
@@ -247,36 +247,93 @@ describe('daily-run-status --logical-date', () => {
   const STATUS = resolve(REPO, 'packages', 'pipeline-runs', 'bin', 'daily-run-status.ts')
   const TSX = resolve(REPO, 'node_modules', '.bin', 'tsx')
 
-  const cli = (args: string[], dbPath: string) => {
+  /**
+   * THE SPAWNED CLI IS GIVEN ITS OWN HEARTBEAT FILE, IN THIS TEST'S DIRECTORY.
+   *
+   * WHAT WENT WRONG WITHOUT IT. `daily-run-status` resolves its heartbeat log to
+   * `$HOME/Desktop/Projects.nosync/data/scheduler-heartbeat.log` when nothing says
+   * otherwise - a path in a DIFFERENT checkout, outside this repository, owned by
+   * a live scheduler. On this machine that file is not readable by a test process
+   * and `readHeartbeats` raised `EPERM: operation not permitted`, so the CLI
+   * exited 1 and this test failed for a reason that had nothing to do with the
+   * date it was asserting about. It was not a wall-clock failure and it was not
+   * relative to the working directory: the default is an absolute path under
+   * `$HOME`, so no choice of cwd changed it.
+   *
+   * `SCHEDULER_HEARTBEAT_FILE` is the CLI's own documented override, so pointing
+   * it into this test's temporary directory needs no production change. The test
+   * now depends on nothing outside the directory it created, and the assertion is
+   * about the date again.
+   */
+  const cli = (args: string[], dbPath: string, heartbeat: string) => {
     try {
       return { code: 0, out: execFileSync(TSX, [STATUS, ...args],
-        { encoding: 'utf-8', timeout: 90_000, env: { ...process.env, PIPELINE_RUNS_DB: dbPath } }) }
+        { encoding: 'utf-8', timeout: 90_000,
+          env: { ...process.env, PIPELINE_RUNS_DB: dbPath,
+                 SCHEDULER_HEARTBEAT_FILE: heartbeat } }) }
     } catch (e: any) {
       return { code: e.status as number, out: `${e.stdout ?? ''}${e.stderr ?? ''}` }
     }
   }
 
+  /** A database and a heartbeat path, both inside one temporary directory. */
+  const world = (label: string): { dir: string; dbPath: string; heartbeat: string } => {
+    const dir = mkdtempSync(join(tmpdir(), label))
+    const dbPath = join(dir, 'runs.db')
+    openDb(dbPath).close(); closeDb()
+    // ABSENT, DELIBERATELY. `readHeartbeats` returns an empty list for a path that
+    // does not exist, which is the state a fresh machine is in, and nothing about
+    // the date assertion depends on what heartbeats say.
+    return { dir, dbPath, heartbeat: join(dir, 'scheduler-heartbeat.log') }
+  }
+
   it('assesses the requested date and echoes it back', () => {
-    const dir = mkdtempSync(join(tmpdir(), 'status-date-'))
+    const w = world('status-date-')
     try {
-      const dbPath = join(dir, 'runs.db')
-      openDb(dbPath).close(); closeDb()
-      const r = cli(['--json', '--logical-date', '2026-08-29'], dbPath)
-      expect(r.code).toBe(0)
+      expect(existsSync(w.heartbeat)).toBe(false)
+      const r = cli(['--json', '--logical-date', '2026-08-29'], w.dbPath, w.heartbeat)
+      expect(r.code, r.out).toBe(0)
       expect(JSON.parse(r.out).logicalDate).toBe('2026-08-29')
-    } finally { rmSync(dir, { recursive: true, force: true }) }
+    } finally { rmSync(w.dir, { recursive: true, force: true }) }
+  })
+
+  it('assesses the same date whatever the live heartbeat log says', () => {
+    // HERMETIC, PROVED RATHER THAN ASSERTED. The same invocation is made twice
+    // against two different test-owned heartbeat files - one absent, one holding
+    // heartbeats this test wrote - and the answer is identical. A CLI still
+    // reading the live log outside this repository could not produce that, because
+    // neither of these files would be the one it read.
+    const w = world('status-date-hermetic-')
+    try {
+      const absent = cli(['--json', '--logical-date', '2026-08-29'], w.dbPath, w.heartbeat)
+      const owned = join(w.dir, 'owned-heartbeat.log')
+      writeFileSync(owned, '2026-08-29T07:00:00.000Z\n2026-08-29T07:15:00.000Z\n')
+      const present = cli(['--json', '--logical-date', '2026-08-29'], w.dbPath, owned)
+      expect(absent.code, absent.out).toBe(0)
+      expect(present.code, present.out).toBe(0)
+      expect(JSON.parse(absent.out).logicalDate).toBe('2026-08-29')
+      expect(JSON.parse(present.out).logicalDate).toBe('2026-08-29')
+      // AND THE FILE IT WAS GIVEN IS THE ONE IT READ: the heartbeat it reports
+      // back is the one this test wrote, not whatever the live scheduler last
+      // recorded.
+      expect(String(JSON.parse(present.out).lastHeartbeat ?? ''))
+        .toContain('2026-08-29T07:15:00')
+      // NOTHING OUTSIDE THIS DIRECTORY WAS NEEDED, and the live path was never
+      // consulted - asserted on the CLI's own contract rather than on the state of
+      // a file this test must not touch.
+      expect(readFileSync(STATUS, 'utf-8')).toContain('process.env.SCHEDULER_HEARTBEAT_FILE')
+    } finally { rmSync(w.dir, { recursive: true, force: true }) }
   })
 
   it('rejects a malformed date instead of assessing some other day', () => {
-    const dir = mkdtempSync(join(tmpdir(), 'status-date-bad-'))
+    const w = world('status-date-bad-')
     try {
-      const dbPath = join(dir, 'runs.db')
-      openDb(dbPath).close(); closeDb()
       for (const bad of ['2026-13-40', 'today', '20260829']) {
-        expect(cli(['--json', '--logical-date', bad], dbPath).code, `accepted ${bad}`).toBe(2)
+        expect(cli(['--json', '--logical-date', bad], w.dbPath, w.heartbeat).code,
+               `accepted ${bad}`).toBe(2)
       }
-      expect(cli(['--json', '--logical-date'], dbPath).code).toBe(2)
-      expect(cli(['--json', '--logical-date', '--exit-code'], dbPath).code).toBe(2)
-    } finally { rmSync(dir, { recursive: true, force: true }) }
+      expect(cli(['--json', '--logical-date'], w.dbPath, w.heartbeat).code).toBe(2)
+      expect(cli(['--json', '--logical-date', '--exit-code'], w.dbPath, w.heartbeat).code).toBe(2)
+    } finally { rmSync(w.dir, { recursive: true, force: true }) }
   })
 }, 120_000)

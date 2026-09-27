@@ -666,7 +666,7 @@ describe('the fenced state is the only state later slices may use', () => {
         await sup.must(sequenceFenceSql(SELECTED_SEQUENCE_FENCE, q, await stateOf(sup, q)))
       }
       const fence = {
-        supervisorPid: sup.pid, mechanism: SELECTED_SEQUENCE_FENCE,
+        supervisorPid: sup.pid, backendStart: '2026-09-25 09:14:00+00', mechanism: SELECTED_SEQUENCE_FENCE,
         tables: FENCE_TABLES, sequences: FENCE_SEQUENCES,
         candidateInputs: {}, statements: [],
       }

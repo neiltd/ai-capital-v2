@@ -46,6 +46,19 @@ import { assertBatchArgs, sterileBatchEnv } from './export-role.js'
  */
 export const FIELD_SEP = '\x1f'
 
+/**
+ * Where a child sees its inherited descriptors.
+ *
+ * `/dev/fd` on macOS and BSD; `/proc/self/fd` on Linux, which `/dev/fd` is a
+ * symlink to. Named as a constant because it is part of what PGPASSFILE will
+ * say, and a platform that had neither would have to be noticed here rather
+ * than discovered as an authentication failure.
+ */
+export const INHERITED_FD_DIR = '/dev/fd'
+
+/** The stdio slot a passfile descriptor is inherited at: after 0, 1 and 2. */
+export const PASSFILE_CHILD_FD = 3
+
 /** How long one statement may take before the session is declared wedged. */
 export const STATEMENT_TIMEOUT_MS = 120_000
 /** How long a close waits for a graceful exit before killing the client. */
@@ -155,8 +168,31 @@ export interface PsqlBackendOptions {
    *
    * A PATH in the environment, never the password itself: `PGPASSWORD` would
    * put the secret in the child's environment, where `ps -E` can read it.
+   *
+   * SEE `passfileFd`. When a caller has already opened and validated the file,
+   * it should pass the DESCRIPTOR instead - a path validated and then reopened
+   * by the child is a path that can be swapped in between.
    */
   readonly passfile?: string
+  /**
+   * AN ALREADY-VALIDATED DESCRIPTOR FOR THE PGPASS FILE.
+   *
+   * WHY A DESCRIPTOR AND NOT A PATH. Validating a pathname - canonical, no
+   * symlink, regular, owned, 0600, one link - and then handing that PATHNAME
+   * to psql leaves a window: everything proved was proved about the file that
+   * WAS there, and the child opens whatever is there when it starts. Anyone
+   * who can create a file in that directory can replace it in between, and the
+   * checks say nothing about what the child then reads.
+   *
+   * An open descriptor cannot be redirected. It is inherited by the child and
+   * named to it as `/dev/fd/N`, so "the file I validated" and "the file psql
+   * authenticates with" are the same object rather than the same name.
+   *
+   * THE BYTES STILL NEVER ENTER THIS PROCESS. Nothing here reads the
+   * descriptor; it is opened, `fstat`ed, inherited and closed. psql reads it
+   * during authentication, which is the whole point of PGPASSFILE existing.
+   */
+  readonly passfileFd?: number
 }
 
 /**
@@ -190,9 +226,20 @@ export async function openPsqlBackend(o: PsqlBackendOptions): Promise<PsqlBacken
   const closeGraceMs = o.__closeGraceMs ?? CLOSE_GRACE_MS
   // The caller cannot hand us an environment to forward: it is constructed from
   // an allow-list, and only the PASSFILE PATH may enter it.
-  const env = sterileBatchEnv(o.passfile)
+  // THE DESCRIPTOR IS INHERITED AT A KNOWN SLOT, and PGPASSFILE names that
+  // slot rather than a path the child would have to open for itself.
+  //
+  // `stdio` positions 0-2 are the pipes; the passfile descriptor goes at 3, so
+  // the child sees it as `/dev/fd/3`. Node dups the descriptor into the child
+  // at spawn, which means this process may close its own copy as soon as
+  // `spawn` returns - the child's copy is independent and already acquired.
+  const inherited = o.passfileFd !== undefined
+  const env = sterileBatchEnv(
+    inherited ? `${INHERITED_FD_DIR}/${String(PASSFILE_CHILD_FD)}` : o.passfile)
+  const stdio: Array<'pipe' | number> = ['pipe', 'pipe', 'pipe']
+  if (inherited) stdio.push(o.passfileFd as number)
   const child: ChildProcessWithoutNullStreams =
-    spawn(o.psqlPath, [...args], { stdio: ['pipe', 'pipe', 'pipe'], env })
+    spawn(o.psqlPath, [...args], { stdio, env }) as ChildProcessWithoutNullStreams
 
   let out = ''
   let err = ''

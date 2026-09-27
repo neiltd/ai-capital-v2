@@ -31,13 +31,18 @@ import {
   ACTIVITY_CENSUS_SQL, ADAPTER_DEADLINE_MS, AdapterDeadlineExceeded, GATE_DETAIL_FILE,
   LIFECYCLE_DETAIL_FILE, LIFECYCLE_FENCE_SENTENCE, LIFECYCLE_FILE, LIFECYCLE_PREFIX,
   LifecycleEvidenceFailed, LifecycleInterventionRequired, LifecyclePreCommitCleanupRequired,
+  BACKEND_START_SQL, COMPLETE_FENCE_LOCKS, PRISTINE_RELEASE_PREFIX,
+  QUEUE_SAMPLE_INTERVAL_MS, releasedLockCensusSqlFor,
   RELEASED_LOCK_CENSUS_SQL, RELEASE_GATE_FILE, RELEASE_GATE_PREFIX, RELEASE_SQL, RESTORE_ORDER,
+  SESSION_IDENTITY_SQL,
   REVIEWED_BACKEND_TYPES, REVIEWED_PRODUCERS, REVIEWED_QUEUES, ReleaseGateRefused,
   SUPERVISOR_ALIVE_SQL, actionsDocument, assertQuiescent, authorizationDocument,
   gateDetailDocument, isAuthorizationConsumed, isInterventionRequired, isReleaseAuthorization,
-  outcomeDocument, publishLifecycleBundle, releaseFence, restoreProducers,
+  outcomeDocument, proveOperationalState, publishLifecycleBundle, releaseFence,
+  restoreProducers,
   rollbackAndProveReleased, runReleaseGate, withDeadline,
   type AdapterContext, type LifecycleFenceState, type ProducerAdapter, type ProducerState,
+  type DestinationCensusAdapter, type ProducerCensusRow,
   type QueueAdapter, type QueueSample, type QuiescenceAdapter, type ReleaseAuthorization,
   type ReviewedSession,
 } from '../src/pg-copy/lifecycle.js'
@@ -46,13 +51,20 @@ import {
   sha256Hex,
   type Canonical, type ContractArtifact,
 } from '../src/pg-copy/schema-contract.js'
-import { readPublishedBundle, type PublishedManifest } from '../src/pg-copy/stage2.js'
+import {
+  isVerifiedBundle, readPublishedBundle, type PublishedManifest,
+} from '../src/pg-copy/stage2.js'
 import {
   FENCE_SEQUENCES, FENCE_SEQUENCE_LOCK_MODE, FENCE_TABLES, FENCE_TABLE_LOCK_MODE,
   SEQUENCE_STATE_SQL,
 } from '../src/pg-copy/source-fence.js'
-import { VERIFICATION_FILE, type VerificationResult, type VerifierHandoff }
-  from '../src/pg-copy/verify.js'
+import {
+  VERIFICATION_FILE, attemptFenceProof,
+  type VerificationResult, type VerifierHandoff,
+} from '../src/pg-copy/verify.js'
+
+/** One reviewed `backend_start` rendering. pid+start identifies a backend. */
+const BACKEND_START = '2026-09-25 09:14:00+00'
 
 const PKG_ROOT = resolve(dirname(fileURLToPath(import.meta.url)), '..')
 const strip = (text: string): string => text
@@ -124,7 +136,7 @@ const HANDOFF = (over: Partial<VerifierHandoff> = {}): VerifierHandoff => ({
             role: 'ai_capital_v3_export' },
   target: { systemIdentifier: '7689229024919775999', database: 'ai_capital_v3',
             role: 'ai_capital_migrator' },
-  fence: { supervisorPid: SUPERVISOR_PID, mechanism: 'S3' },
+  fence: { supervisorPid: SUPERVISOR_PID, backendStart: BACKEND_START, mechanism: 'S3' },
   ...over,
 })
 
@@ -215,12 +227,14 @@ const seqRows = (last: string, called: string): string[][] =>
 
 interface Stub {
   send: (sql: string) => Promise<{ rows: string[][]; error: 'statement-refused' | null }>
-  seen: string[]
+  readonly seen: string[]
 }
 
 /** The supervisor: alive, fenced sequences, and a release census. */
 function supervisorStub(over: {
   pid?: string | null
+  role?: string
+  backendStart?: string
   sequences?: (q: string, n: number) => string[][]
   releaseError?: boolean
   releaseThrows?: boolean
@@ -235,6 +249,14 @@ function supervisorStub(over: {
       if (sql === SUPERVISOR_ALIVE_SQL) {
         if (over.pid === null) throw new Error('connection terminated unexpectedly')
         return { rows: [[over.pid ?? SUPERVISOR_PID]], error: null }
+      }
+      if (sql === SESSION_IDENTITY_SQL) {
+        if (over.pid === null) throw new Error('connection terminated unexpectedly')
+        return {
+          rows: [[over.pid ?? SUPERVISOR_PID, over.role ?? 'ai_capital_owner',
+                  over.backendStart ?? BACKEND_START]],
+          error: null,
+        }
       }
       if (sql === RELEASE_SQL) {
         if (over.releaseThrows === true) throw new Error('connection terminated')
@@ -259,6 +281,9 @@ function supervisorStub(over: {
 /** The prover: a pid, a lock census, and the activity census. */
 function proverStub(over: {
   pid?: string | null
+  role?: string
+  proverStart?: string
+  observedStart?: string | null
   locks?: string[][]
   activity?: string[][]
   activityError?: boolean
@@ -280,6 +305,18 @@ function proverStub(over: {
         if (over.pid === null) throw new Error('connection terminated unexpectedly')
         return { rows: [[over.pid ?? PROVING_PID]], error: null }
       }
+      if (sql === SESSION_IDENTITY_SQL) {
+        if (over.pid === null) throw new Error('connection terminated unexpectedly')
+        return {
+          rows: [[over.pid ?? PROVING_PID, over.role ?? 'ai_capital_owner',
+                  over.proverStart ?? BACKEND_START]],
+          error: null,
+        }
+      }
+      if (sql === BACKEND_START_SQL(SUPERVISOR_PID) || sql.startsWith('SELECT a.backend_start')) {
+        if (over.observedStart === null) return { rows: [], error: null }
+        return { rows: [[over.observedStart ?? BACKEND_START]], error: null }
+      }
       return { rows: over.locks ?? wholeFence(), error: null }
     },
   }
@@ -294,7 +331,35 @@ const zeroDepths = (): Record<string, number> =>
 
 const emptyQueues = (): QueueAdapter => ({ sample: async () => ({ depths: zeroDepths() }) })
 
-const REVIEWED_SESSIONS: readonly ReviewedSession[] = Object.freeze([
+/** The pre-fence producer census this suite's gates are run against. */
+const CENSUS = (over: Record<string, unknown> = {}): readonly ProducerCensusRow[] =>
+  Object.freeze(REVIEWED_PRODUCERS.map(label => Object.freeze({
+    label,
+    plistPath: `/Users/x/Library/LaunchAgents/${label}.plist`,
+    plistSha256: hex(label),
+    plistDeviceInode: '16777234:4242',
+    servedCheckout: '/Users/x/checkout',
+    installation: 'installed-disabled',
+    credentialPath: '/Users/x/.secrets/pipeline.url',
+    credentialDeviceInode: '16777234:12345',
+    databaseHost: '/tmp/socket',
+    databasePort: '5432',
+    databaseName: 'ai_capital',
+    disposition: 'writes-copy-source',
+    ...over,
+  })))
+
+/** A fenced census that agrees with the pre-fence one. */
+const steadyDestinations = (rows: readonly ProducerCensusRow[] = CENSUS()):
+  DestinationCensusAdapter => ({ measure: async () => rows })
+
+/**
+ * The pid+role pairs the gate is EXPECTED to derive for itself.
+ *
+ * Asserted against, never supplied: the gate asks the supervisor and the prover
+ * who they are, and this is what those two answer.
+ */
+const EXPECTED_DERIVED: readonly ReviewedSession[] = Object.freeze([
   { pid: SUPERVISOR_PID, role: 'ai_capital_owner' },
   { pid: PROVING_PID, role: 'ai_capital_owner' },
 ])
@@ -349,7 +414,9 @@ function gateInput(
     prover: proverStub(),
     quiescence: stoppedProducers(),
     queue: emptyQueues(),
-    reviewedSessions: REVIEWED_SESSIONS,
+    destinations: steadyDestinations(),
+    expectedProducers: CENSUS(),
+    __sleep: async () => undefined,
     ...over,
   } as Parameters<typeof runReleaseGate>[0]
 }
@@ -609,15 +676,20 @@ describe('the final release gate', () => {
     expect(e.refusal).toBe('the source carries sessions that are not reviewed')
   })
 
-  it('refuses an INCOHERENT reviewed set, and an unreviewed backend type', async () => {
+  it('refuses an INCOHERENT derived set, and an unreviewed backend type', async () => {
     const root = makeRoot()
+    // THE COHERENCE CHECK NOW GUARDS THE DERIVED SET. It can no longer be fed
+    // a bad allowlist - there is nowhere to put one - so what can still go
+    // wrong is an OWNED session that answers with somebody else's identity, or
+    // with an answer that is not an identity at all.
+    const says = (rows: string[][]): { rows(sql: string): Promise<string[][]> } =>
+      ({ rows: async () => rows })
     const cases: Array<[string, Record<string, unknown>]> = [
-      ['duplicate', { reviewedSessions: [...REVIEWED_SESSIONS, REVIEWED_SESSIONS[0]] }],
-      ['conflicting', { reviewedSessions: [
-        ...REVIEWED_SESSIONS, { pid: SUPERVISOR_PID, role: 'another_role' }] }],
-      ['empty', { reviewedSessions: [] }],
-      ['bad pid', { reviewedSessions: [{ pid: 'x', role: 'ai_capital_owner' }] }],
-      ['bad role', { reviewedSessions: [{ pid: '1', role: 'Not An Ident' }] }],
+      ['duplicate', { ownedSessions: [says([[SUPERVISOR_PID, 'ai_capital_owner', BACKEND_START]])] }],
+      ['conflicting', { ownedSessions: [says([[SUPERVISOR_PID, 'another_role', BACKEND_START]])] }],
+      ['bad pid', { ownedSessions: [says([['x', 'ai_capital_owner', BACKEND_START]])] }],
+      ['bad role', { ownedSessions: [says([['1', 'Not An Ident', BACKEND_START]])] }],
+      ['no start', { ownedSessions: [says([['1', 'ai_capital_owner', '']])] }],
     ]
     for (const [label, over] of cases) {
       const e = await refusedBy(() => runReleaseGate(gateInput(root, over)))
@@ -1609,8 +1681,16 @@ describe('the two bundles are two bundles', () => {
   })
 
   it('registers both prefixes with their own temporary names', () => {
-    expect([...REVIEWED_PREFIXES].sort())
-      .toEqual(['copy-lifecycle', 'release-gate', 'source-manifest', 'verification'])
+    // Each prefix STATES its own temporary name, so a prefix added later cannot
+    // rename an existing one.
+    for (const p of ['source-manifest', 'verification', 'release-gate', 'copy-lifecycle',
+                     'operational-rehearsal', 'producer-restoration', 'rehearsal-review',
+                     'intervention-intent', 'intervention-outcome', 'commit-disposition']) {
+      expect(REVIEWED_PREFIXES, p).toContain(p)
+      expect(TEMPORARY_NAME_PREFIX[p], p).toMatch(/^\.tmp-/)
+    }
+    expect(new Set(Object.values(TEMPORARY_NAME_PREFIX)).size)
+      .toBe(REVIEWED_PREFIXES.length)
     expect(TEMPORARY_NAME_PREFIX[RELEASE_GATE_PREFIX]).toBe('.tmp-release-gate-')
     expect(TEMPORARY_NAME_PREFIX[LIFECYCLE_PREFIX]).toBe('.tmp-copy-lifecycle-')
     expect(evidenceNames(RELEASE_GATE_PREFIX, STAMP, RUN).finalName)
@@ -1639,7 +1719,13 @@ describe('the two bundles are two bundles', () => {
 
 describe('the reviewed order is the code', () => {
   it('releases only AFTER the authorization evidence is published and verified', () => {
-    const body = LIFECYCLE.slice(LIFECYCLE.indexOf('export async function runLifecycle'))
+    // THE MAIN PATH ONLY. `releaseAfterPristine` is a SECOND release site -
+    // the NOT_COMMITTED_PRISTINE continuation - and it is declared above the
+    // main flow, so scanning from the top would compare two different
+    // sequences. Its own ordering is asserted in the test below.
+    const whole = LIFECYCLE.slice(LIFECYCLE.indexOf('export async function runLifecycle'))
+    // `LIFECYCLE` is the STRIPPED source, so the anchor has to be code.
+    const body = whole.slice(whole.indexOf('bundleManifest = readPublishedBundle('))
     const at = (needle: string): number => {
       const n = body.indexOf(needle)
       expect(n, needle).toBeGreaterThan(-1)
@@ -1702,5 +1788,376 @@ describe('the reviewed order is the code', () => {
                              'spawn(', '090', 'bullmq']) {
       expect(LIFECYCLE.toLowerCase(), forbidden).not.toContain(forbidden.toLowerCase())
     }
+  })
+})
+
+// ---------------------------------------------------------------------------
+
+describe('the reviewed sets are the real ones', () => {
+  it('names every launchd agent that can write the source, and no other', () => {
+    // M11. A set that quietly lost an agent would let the gate certify a
+    // quiescent source while that agent was still writing to it. The names are
+    // the LAUNCHD LABELS, which is what the census can actually ask about.
+    expect([...REVIEWED_PRODUCERS]).toEqual([
+      'com.thanapol.ai-capital.daily',
+      'com.thanapol.ai-capital.watchdog',
+      'com.thanapol.ai-capital.alerts',
+      'com.thanapol.ai-capital.structured-worker',
+      'com.thanapol.ai-capital.worker',
+    ])
+    // THE WORKER IS LAST TO STOP AND FIRST TO COME BACK: it drains what the
+    // triggers fill, so stopping it first would strand in-flight work.
+    expect(REVIEWED_PRODUCERS[REVIEWED_PRODUCERS.length - 1])
+      .toBe('com.thanapol.ai-capital.worker')
+    expect(RESTORE_ORDER[0]).toBe('com.thanapol.ai-capital.worker')
+  })
+
+  it('names the queues BullMQ actually has', () => {
+    // M12. An earlier revision invented `ai-capital-daily`/`ai-capital-alerts`,
+    // which exist nowhere: every sample refused, safely and for entirely the
+    // wrong reason. These two are the names in `@common/queue`'s own constants.
+    expect([...REVIEWED_QUEUES]).toEqual(['daily-pipeline', 'structured-ingestion'])
+  })
+})
+
+describe('a fence proof carries facts ONLY when it proved the fence held', () => {
+  it('is the invariant the gate depends on', async () => {
+    // M14. `runReleaseGate` refuses on `outcome !== 'held' || facts === null`.
+    // The first disjunct is redundant ONLY because of this invariant, so the
+    // invariant is asserted here rather than left implicit in a doc comment.
+    for (const locks of [[], [lockRow('advisory', 'ExclusiveLock')],
+                         wholeFence([lockRow('advisory', 'ExclusiveLock', PROVING_PID)])]) {
+      const proof = await attemptFenceProof(
+        proverStub({ locks }) as never, SUPERVISOR_PID, 'S3')
+      if (proof.outcome !== 'held') expect(proof.facts, proof.cause ?? '').toBeNull()
+      else expect(proof.facts).not.toBeNull()
+    }
+  })
+})
+
+describe('the Stage-1 bundle the gate is handed is the one it read from disk', () => {
+  it('refuses a structurally identical copy of a real bundle', async () => {
+    // M20. `PublishedManifest` is an ordinary interface, so an object literal
+    // with the right fields is indistinguishable from one `readPublishedBundle`
+    // returned after verifying every digest on disk. Membership of a
+    // module-private WeakSet is what separates them, and it survives none of
+    // the ways an object gets duplicated.
+    const root = makeRoot()
+    const real = stage1Bundle(root)
+    expect(isVerifiedBundle(real)).toBe(true)
+    for (const fake of [{ ...real }, JSON.parse(JSON.stringify(real)) as object,
+                        structuredClone(real) as object,
+                        Object.defineProperties({}, Object.getOwnPropertyDescriptors(real))]) {
+      expect(isVerifiedBundle(fake)).toBe(false)
+      const e = await refusedBy(() => runReleaseGate(gateInput(root, { published: fake })))
+      expect(e.message).toContain('Stage-1 bundle provenance')
+    }
+  })
+})
+
+// ---------------------------------------------------------------------------
+// K1.1: THE GATE PROVES THE REAL FENCED WORLD
+// ---------------------------------------------------------------------------
+
+describe('the reviewed session set is DERIVED, never supplied', () => {
+  it('takes no operator allowlist at all', () => {
+    // K1.1-M01. An allowlist a person types is an allowlist a person can
+    // extend by one line, and that one line would license exactly the
+    // unreviewed connection the census exists to find. The input shape is the
+    // control: there is nowhere to put one.
+    const input = gateInput(makeRoot()) as unknown as Record<string, unknown>
+    expect('reviewedSessions' in input).toBe(false)
+    expect(strip(read('src/pg-copy/lifecycle.ts'))).not.toContain('readonly reviewedSessions')
+  })
+
+  it('asks the supervisor and the prover who they are, and accepts nobody else',
+    async () => {
+      const root = makeRoot()
+      // A third client backend nobody owns. The census sees it and refuses.
+      const e = await refusedBy(() => runReleaseGate(gateInput(root, {
+        prover: proverStub({
+          activity: [[SUPERVISOR_PID, 'ai_capital_owner', 'client backend'],
+                     [PROVING_PID, 'ai_capital_owner', 'client backend'],
+                     ['99999', 'somebody_else', 'client backend']],
+        }),
+      })))
+      expect(e.refusal).toBe('the source carries sessions that are not reviewed')
+    })
+
+  it('refuses a supervisor that will not identify itself, and says so', async () => {
+    // THE REFUSAL NAMES THE RIGHT PROBLEM. A supervisor that will not answer is
+    // a supervisor nobody can show still holds the fence - not an unreviewed
+    // connection somewhere on the source, which is where a single shared
+    // refusal would have sent the operator looking.
+    const root = makeRoot()
+    const e = await refusedBy(() => runReleaseGate(gateInput(root, {
+      supervisor: supervisorStub({ role: 'Not An Identifier' }),
+    })))
+    expect(e.refusal).toBe('the supervisor is not the backend that held the fence')
+    expect(e.at).toContain('supervisor')
+  })
+
+  it('refuses a prover that is the supervisor', async () => {
+    const root = makeRoot()
+    const e = await refusedBy(() => runReleaseGate(gateInput(root, {
+      prover: proverStub({ pid: SUPERVISOR_PID }),
+    })))
+    expect(e.refusal).toBe('the complete source fence was not proved held')
+  })
+})
+
+describe('pid AND backend start, everywhere the fence is identified', () => {
+  it('refuses a supervisor whose backend start does not match the fence',
+    async () => {
+      // K1.1-M02. A supervisor that died and reconnected can come back on the
+      // same pid holding none of the fence. Rolling THAT back would release
+      // nothing while reporting a release.
+      const root = makeRoot()
+      const e = await refusedBy(() => runReleaseGate(gateInput(root, {
+        supervisor: supervisorStub({ backendStart: '2026-09-25 11:00:00+00' }),
+      })))
+      expect(e.refusal).toBe('the supervisor is not the backend that held the fence')
+    })
+
+  it('refuses when the INDEPENDENT prover cannot confirm the backend start',
+    async () => {
+      const root = makeRoot()
+      for (const observedStart of [null, '2026-09-25 11:00:00+00']) {
+        const e = await refusedBy(() => runReleaseGate(gateInput(root, {
+          prover: proverStub({ observedStart }),
+        })))
+        expect(e.refusal, String(observedStart))
+          .toBe('the supervisor is not the backend that held the fence')
+      }
+    })
+
+  it('carries the pair into the authorization, and the release re-checks it',
+    async () => {
+      const root = makeRoot()
+      const supervisor = supervisorStub()
+      const a = await runReleaseGate(gateInput(root, { supervisor }))
+      expect(a.fence.supervisorBackendStart).toBe(BACKEND_START)
+      // The release asks again, and the supervisor's answer must still match.
+      expect((await releaseFence(supervisor as never, a)).state).toBe('released')
+    })
+
+  it('refuses a release whose supervisor came back on the same pid', async () => {
+    // K1.1-K22. THE SAME OBJECT, THE SAME PID, A NEW BACKEND. A supervisor
+    // that died and reconnected can come back on the same pid holding none of
+    // the fence, and rolling THAT back would release nothing while reporting a
+    // release. Only the start separates them, which is why the start is in the
+    // authorization record and is re-checked at release time.
+    //
+    // MUTATED IN PLACE, on purpose. A wrapper object would be refused one step
+    // earlier - the authorization is bound to the exact supervisor OBJECT - and
+    // the test would then pass without ever reaching the check it is about.
+    const root = makeRoot()
+    let backendStart = BACKEND_START
+    const supervisor = supervisorStub()
+    const original = supervisor.send
+    supervisor.send = async (sql: string) => {
+      if (sql === SESSION_IDENTITY_SQL) {
+        return { rows: [[SUPERVISOR_PID, 'ai_capital_owner', backendStart]], error: null }
+      }
+      return await original(sql)
+    }
+    const a = await runReleaseGate(gateInput(root, { supervisor }))
+    backendStart = '2026-09-25 12:00:00+00'
+    const e = await refusedBy(() => releaseFence(supervisor as never, a))
+    expect(e.at).toBe('the supervisor is not the backend the gate proved')
+    // AND NOTHING WAS SENT TO IT.
+    expect(supervisor.seen).not.toContain(RELEASE_SQL)
+  })
+})
+
+describe('the producers are re-measured WHILE FENCED', () => {
+  it('refuses a producer that changed between the two censuses', async () => {
+    // K1.1-M03. The pre-fence census answers "where do these agents write" at a
+    // moment when they could still be running; the fenced one answers it with
+    // the source frozen. A plist swapped in between is a producer whose
+    // stopping the operator justified against a world that no longer exists.
+    const root = makeRoot()
+    const drifted = CENSUS().map((p, n) => n === 2
+      ? { ...p, credentialDeviceInode: '16777234:99999' } : p)
+    const e = await refusedBy(() => runReleaseGate(gateInput(root, {
+      destinations: steadyDestinations(drifted),
+    })))
+    expect(e.refusal).toBe('the fenced producer census does not agree with the pre-fence one')
+    expect(e.at).toContain(REVIEWED_PRODUCERS[2])
+  })
+
+  it('refuses a fenced census that covers a different set', async () => {
+    const root = makeRoot()
+    const e = await refusedBy(() => runReleaseGate(gateInput(root, {
+      destinations: steadyDestinations(CENSUS().slice(1)),
+    })))
+    expect(e.refusal).toBe('the fenced producer census does not agree with the pre-fence one')
+  })
+
+  it('records the fenced census it agreed with', async () => {
+    const found = await proveOperationalState({
+      fence: { supervisorPid: SUPERVISOR_PID, backendStart: BACKEND_START, mechanism: 'S3' },
+      supervisor: supervisorStub() as never, prover: proverStub() as never,
+      quiescence: stoppedProducers(), queue: emptyQueues(),
+      destinations: steadyDestinations(), expectedProducers: CENSUS(),
+      __sleep: async () => undefined,
+    })
+    expect(found.fencedProducers.length).toBe(REVIEWED_PRODUCERS.length)
+    expect([...found.derivedSessions]).toEqual([...EXPECTED_DERIVED])
+  })
+})
+
+describe('the two queue samples are separated in time', () => {
+  it('waits the reviewed interval between them', async () => {
+    // K1.1-M04. Two samples taken in the same millisecond are one sample
+    // written down twice, and the pair exists to establish that the queues are
+    // STAYING empty rather than being empty at an instant nobody chose.
+    const waited: number[] = []
+    let samples = 0
+    await proveOperationalState({
+      fence: { supervisorPid: SUPERVISOR_PID, backendStart: BACKEND_START, mechanism: 'S3' },
+      supervisor: supervisorStub() as never, prover: proverStub() as never,
+      quiescence: stoppedProducers(),
+      queue: { sample: async () => { samples += 1; return { depths: zeroDepths() } } },
+      destinations: steadyDestinations(), expectedProducers: CENSUS(),
+      __sleep: async (ms: number) => { waited.push(ms) },
+    })
+    expect(samples).toBe(2)
+    expect(waited).toEqual([QUEUE_SAMPLE_INTERVAL_MS])
+    expect(QUEUE_SAMPLE_INTERVAL_MS).toBeGreaterThanOrEqual(1_000)
+  })
+})
+
+describe('the NOT_COMMITTED_PRISTINE release is gated too', () => {
+  it('runs a FRESH operational gate before it releases, and never the copy gate', () => {
+    const body = LIFECYCLE.slice(
+      LIFECYCLE.indexOf('const releaseAfterPristine'),
+      LIFECYCLE.indexOf('const publishDisposition'))
+    expect(body.length).toBeGreaterThan(200)
+    // THE OPERATIONAL GATE, not the copy gate. A copy that measurably did not
+    // land has no verifier PASS to point at, and requiring one would leave the
+    // fence unreleasable - which turns "nothing happened" into an intervention.
+    expect(body).toContain('await runOperationalGate(')
+    expect(body).not.toContain('runReleaseGate(')
+    expect(body.indexOf('await runOperationalGate('))
+      .toBeLessThan(body.indexOf('await releaseFence('))
+    // AND NOTHING IS CLEANED UP. No truncate, no delete, no migration, no retry.
+    for (const forbidden of ['TRUNCATE', 'DELETE', 'runApply', 'migrate']) {
+      expect(body, forbidden).not.toContain(forbidden)
+    }
+  })
+})
+
+describe('an unanswered COMMIT is never recorded as committed', () => {
+  it('sets nothing about the target until a MEASUREMENT settles it', () => {
+    // K1.1-M05. The old path was one line: `committed = true` on
+    // `CommitOutcomeUnknown`. That answered the one question in this whole
+    // lifecycle that nobody knows the answer to - and answered it in the
+    // convenient direction, with no measurement behind it. Everything
+    // downstream then reasoned about a committed target.
+    const body = LIFECYCLE.slice(LIFECYCLE.indexOf('export async function runLifecycle'))
+    const handler = body.slice(body.indexOf('if (e instanceof CommitOutcomeUnknown)'))
+    const nextBrace = handler.slice(0, handler.indexOf('} else {'))
+    expect(nextBrace).not.toContain('committed = true')
+    expect(nextBrace).toContain('onCommitUnknown(e)')
+  })
+
+  it('requires the handoff minted BEFORE the commit was submitted', () => {
+    const body = LIFECYCLE.slice(LIFECYCLE.indexOf('const onCommitUnknown'))
+    const fn = body.slice(0, body.indexOf('const releaseAfterPristine'))
+    // Without it there is nothing to compare the target against, and building
+    // one now would be a second chance to describe the hoped-for answer.
+    expect(fn).toContain('e.commitHandoff === null')
+    expect(fn.indexOf('e.commitHandoff === null')).toBeLessThan(fn.indexOf('await classify('))
+  })
+
+  it('publishes and VERIFIES the disposition before any continuation', () => {
+    const body = LIFECYCLE.slice(LIFECYCLE.indexOf('const onCommitUnknown'))
+    const fn = body.slice(0, body.indexOf('const releaseAfterPristine'))
+    expect(fn.indexOf('publishDisposition(')).toBeLessThan(fn.indexOf("=== 'COMMITTED_EXACT'"))
+    expect(fn).toContain('!dispositionEvidence.verified')
+    expect(fn.indexOf('!dispositionEvidence.verified'))
+      .toBeLessThan(fn.indexOf("=== 'COMMITTED_EXACT'"))
+  })
+
+  it('treats a classifier that threw as INDETERMINATE, never as a result', () => {
+    const body = LIFECYCLE.slice(LIFECYCLE.indexOf('const onCommitUnknown'))
+    const fn = body.slice(0, body.indexOf('const releaseAfterPristine'))
+    const caught = fn.slice(fn.indexOf('} catch {'), fn.indexOf('dispositionEvidence ='))
+    expect(caught).toContain("'INDETERMINATE'")
+    expect(caught).not.toContain("'COMMITTED_EXACT'")
+    expect(caught).not.toContain("'NOT_COMMITTED_PRISTINE'")
+  })
+})
+
+describe('a NOT_COMMITTED_PRISTINE run leaves a durable post-release record', () => {
+  it('publishes its own bundle, because recordOutcome cannot describe this run', () => {
+    // K1.2-9. `recordOutcome` reads `applied`, which is null on this path -
+    // `runApply` threw before it returned anything - so it published "no
+    // Stage-2 result to describe". The consequence was that a run which took a
+    // fence, measured the target untouched and proved the release left NOTHING
+    // on disk saying the fence came off. The refusal message said so, and a
+    // message is not evidence.
+    const body = LIFECYCLE.slice(LIFECYCLE.indexOf('const releaseAfterPristine'),
+                                 LIFECYCLE.indexOf('const publishDisposition'))
+    expect(body).toContain('publishPristineRelease(release)')
+    // PUBLISHED AND VERIFIED BEFORE THE REFUSAL IS THROWN.
+    expect(body.indexOf('publishPristineRelease(release)'))
+      .toBeLessThan(body.indexOf('throw new LifecycleRefused'))
+    expect(body).toContain('!pristineEvidence.verified')
+    expect(body.indexOf('!pristineEvidence.verified'))
+      .toBeLessThan(body.indexOf('throw new LifecycleRefused'))
+  })
+
+  it('records the disposition bundle, the fence, the proof and the retry basis', () => {
+    const body = LIFECYCLE.slice(LIFECYCLE.indexOf('const publishPristineRelease'),
+                                 LIFECYCLE.indexOf('const publishDisposition'))
+    // THE COMMIT-DISPOSITION BUNDLE, BY BASENAME AND DIGEST.
+    expect(body).toContain('basename(dispositionPath)')
+    expect(body).toContain('digestOfDigestFile(dispositionPath, ops)')
+    // THE FENCE AND BACKEND IDENTITY.
+    expect(body).toContain('supervisor_pid')
+    expect(body).toContain('backend_start')
+    // THE ACKNOWLEDGEMENT AND THE ZERO-LOCK PROOF, as separate facts.
+    expect(body).toContain('release_acknowledged')
+    expect(body).toContain('zero_lock_release_proved')
+    expect(body).toContain('remaining_reviewed_locks')
+    // AND THE RETRY PERMISSION WITH ITS BASIS.
+    expect(body).toContain('retry_permitted')
+    expect(body).toContain('retry_basis')
+    // PERMISSION FOLLOWS THE PROOF, never the other way round.
+    expect(body).toContain("released.state === 'released' && dispositionPath !== null")
+  })
+
+  it('publishes under its own reviewed prefix', () => {
+    expect(PRISTINE_RELEASE_PREFIX).toBe('pristine-release')
+    expect([...REVIEWED_PREFIXES]).toContain(PRISTINE_RELEASE_PREFIX)
+    expect(TEMPORARY_NAME_PREFIX[PRISTINE_RELEASE_PREFIX])
+      .toBe(`.tmp-${PRISTINE_RELEASE_PREFIX}-`)
+  })
+})
+
+describe('the pid-parameterized lock census', () => {
+  it('counts a NAMED backend, not the session that runs it', () => {
+    // K1.2-F. The self-census counts the locks of whoever runs it, which is
+    // right for a supervisor proving its own release and useless for anybody
+    // else. A hold has to ask "does THAT backend still hold reviewed locks"
+    // from a session that is not it.
+    const sql = releasedLockCensusSqlFor('41512')
+    expect(sql).toContain('l.pid = 41512')
+    expect(sql).not.toContain('pg_backend_pid()')
+    expect(sql).toContain('pg_catalog.count(*)')
+    // THE SHAPE IS ASSERTED, so nothing else can be spliced into a statement.
+    for (const bad of ['', 'x', '1; DROP TABLE t', '-1', '1 OR 1=1', '12345678901']) {
+      expect(() => releasedLockCensusSqlFor(bad), JSON.stringify(bad))
+        .toThrow(ReleaseGateRefused)
+    }
+  })
+
+  it('derives the complete-fence count from the reviewed sets', () => {
+    // A hand-typed constant would be a second place the fence's size is
+    // stated, and the two would eventually differ.
+    expect(COMPLETE_FENCE_LOCKS).toBe(FENCE_TABLES.length + FENCE_SEQUENCES.length + 1)
+    expect(COMPLETE_FENCE_LOCKS).toBe(25)
   })
 })

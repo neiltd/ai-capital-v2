@@ -399,6 +399,22 @@ export type FencedSequenceState = SequenceState & {
 
 export interface AcquiredFence {
   readonly supervisorPid: string
+  /**
+   * WHEN THAT BACKEND STARTED, so a recycled pid cannot impersonate it.
+   *
+   * A pid alone identifies a backend only for as long as the backend lives.
+   * An intervention hold can outlast that: an operator comes back an hour
+   * later, and by then `pid = 41512` may belong to something else entirely,
+   * which would answer "yes, that backend is alive" to a question nobody meant
+   * to ask about it. `pid` plus `backend_start` is unique for the cluster's
+   * lifetime, so the pair is what gets recorded and compared.
+   *
+   * ACQUISITION REFUSES when `pg_stat_activity` will not answer, so this is
+   * never a fabricated stamp and never a pid-only fallback wearing the pair's
+   * name. Structures that describe a fence somebody else took - a proof, a
+   * census - keep it nullable, because there the absence is a finding.
+   */
+  readonly backendStart: string
   readonly mechanism: SequenceFenceId
   readonly tables: readonly string[]
   readonly sequences: readonly string[]
@@ -419,6 +435,15 @@ export interface AcquiredFence {
  * left for the caller to roll back - releasing a partial fence here would race
  * with a caller that wanted to inspect it.
  */
+/** The supervisor's own identity: which backend, and since when. */
+export const IDENTITY_SQL =
+  'SELECT pg_catalog.pg_backend_pid(), ' +
+  '(SELECT a.backend_start FROM pg_catalog.pg_stat_activity a ' +
+  'WHERE a.pid = pg_catalog.pg_backend_pid())'
+
+/** A timestamp psql rendered. Shape-checked, never parsed into a local clock. */
+const BACKEND_START = /^\d{4}-\d{2}-\d{2} \d{2}:\d{2}:\d{2}(\.\d{1,6})?[+-]\d{2}(:\d{2})?$/
+
 export async function acquireSourceFence(x: FenceExecutor): Promise<AcquiredFence> {
   const statements: string[] = []
   // BOUNDED. The reviewed sequence is deterministic, so its ORDINAL says which
@@ -435,10 +460,30 @@ export async function acquireSourceFence(x: FenceExecutor): Promise<AcquiredFenc
     return r.rows
   }
 
-  const pidRows = await one('SELECT pg_catalog.pg_backend_pid()')
+  // ONE STATEMENT, TWO COLUMNS. Folded together rather than issued as a second
+  // statement so the reviewed sequence - and every ordinal a refusal reports
+  // against it - is exactly what it was.
+  const pidRows = await one(IDENTITY_SQL)
   const supervisorPid = pidRows[0]?.[0] ?? ''
   if (!/^\d+$/.test(supervisorPid)) {
     throw new FenceRefused(`could not read the supervisor backend pid, got "${supervisorPid}".`)
+  }
+  // ABSENT RATHER THAN GUESSED, AND THEN REFUSED.
+  //
+  // A row that did not come back leaves the pair incomplete, and an incomplete
+  // pair must read as incomplete - so the shape is checked rather than the
+  // string taken. But `null` may not then be quietly carried onward either: an
+  // intervention hold can outlast the backend, and a pid alone cannot tell an
+  // operator an hour later whether `41512` is still the supervisor or is now
+  // somebody's text editor. Acquisition therefore REFUSES rather than
+  // continuing with pid-only identity; the caller can decide to look into why
+  // `pg_stat_activity` will not answer, which is a question worth asking.
+  const raw = pidRows[0]?.[1] ?? ''
+  const backendStart = BACKEND_START.test(raw) ? raw : null
+  if (backendStart === null) {
+    throw new FenceRefused(
+      'the supervisor backend start could not be read, so the backend cannot be ' +
+      'identified beyond a pid that may be recycled.')
   }
 
   await one(FENCE_BEGIN_SQL)
@@ -456,6 +501,7 @@ export async function acquireSourceFence(x: FenceExecutor): Promise<AcquiredFenc
 
   return {
     supervisorPid,
+    backendStart,
     mechanism: SELECTED_SEQUENCE_FENCE,
     tables: FENCE_TABLES,
     sequences: FENCE_SEQUENCES,

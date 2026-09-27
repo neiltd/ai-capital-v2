@@ -399,9 +399,18 @@ export interface VerifierHandoff {
   readonly compatibility: Canonical
   readonly source: HandoffIdentity
   readonly target: HandoffIdentity
-  /** Which backend holds the fence, and under which reviewed mechanism. */
+  /**
+   * Which backend holds the fence, and under which reviewed mechanism.
+   *
+   * PID AND BACKEND START TOGETHER. A pid identifies a backend only while that
+   * backend lives, and every consumer of this handoff - the gate, the release,
+   * an intervention that comes back an hour later - is asking whether THAT
+   * backend still holds the fence, not whether something with that number is
+   * connected now.
+   */
   readonly fence: {
     readonly supervisorPid: string
+    readonly backendStart: string
     readonly mechanism: SequenceFenceId
   }
 }

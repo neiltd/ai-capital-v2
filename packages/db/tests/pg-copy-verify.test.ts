@@ -53,6 +53,9 @@ import {
   verifyVectorFrom, type VerifyBatch, type VerifyColumn, type VerifyVector,
 } from '../src/pg-copy/verify-content.js'
 
+/** One reviewed `backend_start` rendering. pid+start identifies a backend. */
+const BACKEND_START = '2026-09-25 09:14:00+00'
+
 const PKG_ROOT = resolve(dirname(fileURLToPath(import.meta.url)), '..')
 const strip = (text: string): string => text
   .replace(/\/\*[\s\S]*?\*\//g, '')
@@ -149,7 +152,7 @@ const HANDOFF = (over: Partial<VerifierHandoff> = {}): VerifierHandoff => {
     compatibility: COMPAT_DOC,
     source: { systemIdentifier: '7689229024919775042', database: 'ai_capital', role: 'ai_capital_v3_export' },
     target: { systemIdentifier: '7689229024919775999', database: 'ai_capital_v3', role: 'ai_capital_migrator' },
-    fence: { supervisorPid: '4242', mechanism: 'S3' },
+    fence: { supervisorPid: '4242', backendStart: BACKEND_START, mechanism: 'S3' },
     ...over,
   }
 }
@@ -459,7 +462,7 @@ describe('the handoff is checked, not trusted', () => {
       { bundleName: 'not-a-bundle' },
       { source: { systemIdentifier: '0', database: 'ai_capital', role: 'r' } },
       { source: { systemIdentifier: '1', database: 'Bad Name', role: 'r' } },
-      { fence: { supervisorPid: 'x', mechanism: 'S3' } },
+      { fence: { supervisorPid: 'x', backendStart: BACKEND_START, mechanism: 'S3' } },
       { tables: [] },
       { tables: HANDOFF().tables.slice(0, 20) },
       { tables: [...HANDOFF().tables].reverse() },
@@ -1573,7 +1576,7 @@ describe('runVerification, end to end, without a database', () => {
       { tables: [...HANDOFF().tables].reverse() },
       { sequences: HANDOFF().sequences.map(s => ({ ...s, effectiveNext: poison })) },
       { source: { systemIdentifier: poison, database: poison, role: poison } },
-      { fence: { supervisorPid: poison, mechanism: 'S3' } },
+      { fence: { supervisorPid: poison, backendStart: BACKEND_START, mechanism: 'S3' } },
     ]
     for (const v of variants) {
       const r = await run({ handoff: HANDOFF(v) })

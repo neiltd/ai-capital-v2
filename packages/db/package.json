@@ -21,6 +21,10 @@
     "./credential-url": {
       "types": "./src/credential-url.ts",
       "import": "./src/credential-url.ts"
+    },
+    "./pg-copy": {
+      "types": "./src/pg-copy/index.ts",
+      "import": "./src/pg-copy/index.ts"
     }
   },
   "bin": {

@@ -12,7 +12,8 @@ import {
   FENCE_ADVISORY_CLASSID, FENCE_ADVISORY_OBJID, FENCE_ADVISORY_SQL, FENCE_BEGIN_SQL,
   FENCE_LOCK_TIMEOUT_MS, FENCE_LOCK_TIMEOUT_SQL, FENCE_PROOF_SQL, FENCE_SEQUENCES,
   FENCE_SEQUENCE_LOCK_MODE, FENCE_TABLES, FENCE_TABLE_LOCK_MODE, FenceRefused,
-  RESTATES_POSITION, SELECTED_SEQUENCE_FENCE, SEQUENCE_LAST_VALUE_SQL, SEQUENCE_STATE_SQL,
+  IDENTITY_SQL, RESTATES_POSITION, SELECTED_SEQUENCE_FENCE, SEQUENCE_LAST_VALUE_SQL,
+  SEQUENCE_STATE_SQL,
   acquireSourceFence, assertFenceProof, assertNoReissue, assertQName, candidateQualifies,
   effectiveNext, fenceRelationArray, parseLockRows, parseSequenceState, pgBool,
   readFencedSequenceState, reflectsIssuedValue, selectSequenceFence, sequenceFenceSql,
@@ -110,7 +111,10 @@ describe('the statements the supervisor issues', () => {
       send: async (sql: string) => {
         sent.push(sql)
         if (sql.startsWith('SELECT pg_catalog.pg_backend_pid')) {
-          return { rows: [[SUP]], error: null }
+          // PID AND BACKEND START. Acquisition refuses a backend whose start it
+          // cannot read, because a pid alone identifies a backend only while
+          // that backend lives.
+          return { rows: [[SUP, '2026-09-25 09:14:00+00']], error: null }
         }
         if (sql.includes('CROSS JOIN pg_catalog.pg_sequence')) {
           const s = state()
@@ -136,7 +140,7 @@ describe('the statements the supervisor issues', () => {
     await expect(acquireSourceFence({
       send: async (sql: string) => {
         sent.push(sql)
-        if (sql.startsWith('SELECT pg_catalog.pg_backend_pid')) return { rows: [[SUP]], error: null }
+        if (sql.startsWith('SELECT pg_catalog.pg_backend_pid')) return { rows: [[SUP, '2026-09-25 09:14:00+00']], error: null }
         // The transport reports a FIXED token; PostgreSQL's prose never
         // reaches this module, so the fake cannot supply any either.
         if (sql === failing) return { rows: [], error: 'statement-refused' as const }
@@ -382,7 +386,7 @@ describe('acquisition safety decides the selection', () => {
 
 describe('pre-lock inputs are not fenced state', () => {
   const fakeSend = (pid: string) => async (sql: string) => {
-    if (sql.startsWith('SELECT pg_catalog.pg_backend_pid')) return { rows: [[pid]], error: null }
+    if (sql.startsWith('SELECT pg_catalog.pg_backend_pid')) return { rows: [[pid, '2026-09-25 09:14:00+00']], error: null }
     if (sql.includes('CROSS JOIN pg_catalog.pg_sequence')) {
       const s = state()
       return {
@@ -514,5 +518,64 @@ describe('the state type barrier is enforced by the compiler', () => {
     // the two from drifting apart silently.
     expect(SRC).not.toContain('export declare const FENCED_SEQUENCE_STATE')
     expect(SRC).not.toContain("export type UnfencedSequenceInput = SequenceState &")
+  })
+})
+
+// ---------------------------------------------------------------------------
+
+describe('the supervisor records WHICH backend, and since when', () => {
+  /** A supervisor that answers the reviewed sequence and nothing else. */
+  const executor = (backendStart: string | null) => {
+    const seen: string[] = []
+    return {
+      seen,
+      send: async (sql: string) => {
+        seen.push(sql)
+        if (sql === IDENTITY_SQL) {
+          return { rows: [['41512', backendStart ?? '']], error: null as null }
+        }
+        for (const q of FENCE_SEQUENCES) {
+          if (sql === SEQUENCE_STATE_SQL(q)) {
+            return {
+              rows: [['6', 't', '1', '1', '9223372036854775807', '1', '1', 'false', 'int8', q]],
+              error: null as null,
+            }
+          }
+        }
+        return { rows: [] as string[][], error: null as null }
+      },
+    }
+  }
+
+  it('captures pid AND backend start, so a recycled pid cannot impersonate it',
+    async () => {
+      const x = executor('2026-09-25 10:14:00.123456+00')
+      const fence = await acquireSourceFence(x)
+      expect(fence.supervisorPid).toBe('41512')
+      expect(fence.backendStart).toBe('2026-09-25 10:14:00.123456+00')
+    })
+
+  it('REFUSES an unreadable backend start rather than falling back to a pid',
+    async () => {
+      // M10. `pg_stat_activity` may answer with nothing - a restricted role, a
+      // row that has gone. A pid alone identifies a backend only while that
+      // backend lives, and an intervention hold can outlast it; continuing
+      // with pid-only identity would let a recycled pid answer the question
+      // "is that backend still alive" about something else entirely.
+      for (const raw of [null, 'unknown', 'now()', '2026-09-25', '']) {
+        await expect(acquireSourceFence(executor(raw)), String(raw))
+          .rejects.toThrow(/backend start could not be read/)
+      }
+    })
+
+  it('adds no statement to the reviewed sequence', async () => {
+    // The identity is folded into the FIRST statement rather than issued as a
+    // second one, so every ordinal a refusal reports is exactly what it was.
+    const x = executor('2026-09-25 10:14:00+00')
+    const fence = await acquireSourceFence(x)
+    expect(fence.statements[0]).toBe(IDENTITY_SQL)
+    expect(fence.statements[1]).toBe(FENCE_BEGIN_SQL)
+    expect(fence.statements.length)
+      .toBe(4 + FENCE_TABLES.length + FENCE_SEQUENCES.length * 2)
   })
 })

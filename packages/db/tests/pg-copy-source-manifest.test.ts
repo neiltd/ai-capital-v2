@@ -193,7 +193,7 @@ const allFenced = (): Record<string, FencedSequenceState> =>
   Object.fromEntries(FENCE_SEQUENCES.map(q => [q, fenced(q)]))
 
 const FENCE = Object.freeze({
-  supervisorPid: '111', mechanism: 'S3' as const,
+  supervisorPid: '111', backendStart: '2026-09-25 09:14:00+00', mechanism: 'S3' as const,
   tables: COPY_TABLES, sequences: FENCE_SEQUENCES,
   candidateInputs: {}, statements: [],
 })

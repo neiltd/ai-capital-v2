@@ -89,6 +89,9 @@ import {
 // nothing from it that survives compilation. What crosses is the SHAPE of the
 // handoff, so a field the verifier needs cannot be dropped here silently.
 import type { VerifierHandoff } from './verify.js'
+import {
+  mintCommitUnknownHandoff, type CommitUnknownHandoff,
+} from './commit-disposition.js'
 
 /**
  * What a sequence would ISSUE NEXT, as a decimal string.
@@ -160,7 +163,18 @@ export class Stage2Refused extends Error {
  * already gone. Either way the instruction is the same - look, do not act.
  */
 export class CommitOutcomeUnknown extends Error {
-  constructor(readonly targetDatabase: string) {
+  constructor(
+    readonly targetDatabase: string,
+    /**
+     * WHAT THE COPY WAS ABOUT TO COMMIT, minted before the doubt existed.
+     *
+     * Null only where the uncertainty arose before the handoff could be built,
+     * which is itself a fact worth carrying: without it the target cannot be
+     * classified at all, and reconstructing it afterwards from operator input
+     * would be a second chance to describe the hoped-for answer.
+     */
+    readonly commitHandoff: CommitUnknownHandoff | null = null,
+  ) {
     super(
       'COMMIT OUTCOME UNKNOWN: the target transaction was submitted for commit and no ' +
       'usable acknowledgement was received. The target may or may not now hold the copy. ' +
@@ -597,6 +611,7 @@ export async function runApply(i: ApplyInput, published: PublishedManifest): Pro
   // Captured for the verifier handoff, which is built only after COMMIT.
   let targetIdentity: TargetIdentity | null = null
   let targetContractDigest = ''
+  let commitHandoff: CommitUnknownHandoff | null = null
   try {
     // A7. Identity first, outside any transaction.
     targetIdentity = await proveTargetIdentity(target, i.targetExpectation)
@@ -691,6 +706,32 @@ export async function runApply(i: ApplyInput, published: PublishedManifest): Pro
     // COMMIT is as small as it can be made.
     await reproveSource(i, fence, derivation, published)
 
+    // WHAT THE COPY IS ABOUT TO COMMIT, fixed NOW - while it is still known -
+    // so an uncertain outcome can be classified against something that was not
+    // assembled after the fact.
+    commitHandoff = mintCommitUnknownHandoff({
+      sourceContract: derivation.contract,
+      sourceContractDigest: derivation.contract.digest,
+      targetContractDigest,
+      rootDigest: derivation.rootDigest,
+      tables: derivation.tables.map(t => ({ qname: t.qname, digest: t.digest, rows: t.rows })),
+      sequences: FENCE_SEQUENCES.map(q => ({
+        qname: q, effectiveNext: effectiveNextOf(derivation.sequences[q], q),
+      })),
+      target: {
+        systemIdentifier: targetIdentity?.systemIdentifier ?? '',
+        database: targetIdentity?.database ?? '',
+        role: targetIdentity?.currentUser ?? '',
+      },
+      bundleName: published.bundleName,
+      // THE SAME HANDOFF THE VERIFIER WOULD HAVE BEEN GIVEN, built by the same
+      // function at the same instant. A COMMITTED_EXACT classification can then
+      // continue into verification without assembling a description of the
+      // copy after the copy became uncertain.
+      verifierHandoff: verifierHandoff(
+        published, derivation, compatibility, fence, targetIdentity, targetContractDigest),
+    })
+
     // A14. `began` is cleared BEFORE the submission, so nothing downstream can
     // conclude there is still a transaction to roll back.
     began = false
@@ -701,14 +742,14 @@ export async function runApply(i: ApplyInput, published: PublishedManifest): Pro
       // A COMMIT on an already-aborted transaction replies with the tag
       // ROLLBACK and does not raise. Counting that as success is the one
       // mistake that would report a copy that never happened.
-      throw new CommitOutcomeUnknown(i.targetExpectation.database)
+      throw new CommitOutcomeUnknown(i.targetExpectation.database, commitHandoff)
     }
   } catch (e) {
     if (commitSubmitted) {
       // Past the point of certainty. NO ROLLBACK, NO RETRY, and nothing said
       // about what the target now holds.
       throw e instanceof CommitOutcomeUnknown
-        ? e : new CommitOutcomeUnknown(i.targetExpectation.database)
+        ? e : new CommitOutcomeUnknown(i.targetExpectation.database, commitHandoff)
     }
     // Before the submission: roll back, and ONLY while a transaction is open.
     if (began) {
@@ -780,6 +821,7 @@ export function verifierHandoff(
     }),
     fence: Object.freeze({
       supervisorPid: fence.supervisorPid,
+      backendStart: fence.backendStart,
       mechanism: fence.mechanism,
     }),
   })
