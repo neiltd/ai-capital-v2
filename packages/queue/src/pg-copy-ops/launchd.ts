@@ -34,6 +34,8 @@
 // not.
 
 import { spawn } from 'node:child_process'
+import { lstatSync } from 'node:fs'
+import { join } from 'node:path'
 
 import type {
   AdapterContext, ProducerQuiescenceMeasurement, ProducerState,
@@ -136,8 +138,101 @@ export const REAL_COMMANDS: CommandRunner = Object.freeze({
   openPlist: openReviewedPlist,
 })
 
-/** Loaded, or not there at all. There is no third reading of this question. */
+/**
+ * WHAT LAUNCHCTL SAYS, AND NOTHING MORE.
+ *
+ * Deliberately still two-valued after `installed-unloaded` was added. This type
+ * answers one question - does launchd hold this label - and an installed plist
+ * does not change that answer. Widening it would have made every reader of
+ * `presence` responsible for remembering that one of its values no longer meant
+ * "launchd is not running this", which is precisely the conflation the new
+ * installation state exists to undo. The plist is reported alongside, in
+ * `installedUnloaded`, so the two facts stay separable.
+ */
 export type LabelPresence = 'absent' | 'loaded'
+
+/**
+ * THE ONE FILENAME A REVIEWED AGENT'S PLIST MAY HAVE.
+ *
+ * `<agents-dir>/<label>.plist`, and nothing else is looked at. The directory is
+ * NOT scanned: a scan would let an unrelated file whose name happened to match
+ * some pattern become the evidence for a reviewed agent, and it would make the
+ * set of files consulted depend on directory contents rather than on the
+ * reviewed label list. An alternate path is not accepted either - there is no
+ * argument, plist key or environment variable that redirects this - because the
+ * whole value of the check is that the file it measures is the file launchd
+ * would load.
+ */
+export function reviewedPlistPath(label: string, agentsDir: string): string {
+  if (!agentsDir.startsWith('/')) {
+    throw new LaunchdInspectionRefused('the reviewed agents directory is not absolute')
+  }
+  if (!/^[A-Za-z0-9][A-Za-z0-9._-]*$/.test(label) || label.includes('..')) {
+    throw new LaunchdInspectionRefused('the label is not a reviewed label name', label)
+  }
+  return join(agentsDir, `${label}.plist`)
+}
+
+/**
+ * Is the exact reviewed plist there, and is it SAFE to treat as evidence?
+ *
+ * Three outcomes, and the middle one is the point:
+ *
+ *   'absent'   - nothing at that name at all, not even a dangling symlink. This
+ *                is the only shape that may become `expected-absent`.
+ *   'present'  - a regular file that passed every reviewed safety check.
+ *   a throw    - anything else. A symlink (the file launchd loads would then be
+ *                chosen by whoever controls the link), a DANGLING symlink (which
+ *                `existsSync` reports as absent and which would therefore have
+ *                been misread as "not installed"), a file this user does not
+ *                own, a group- or world-writable mode, a link count above one, a
+ *                file that cannot be read, or a file that changed under the
+ *                descriptor. None of those is an absence and none is a safe
+ *                measurement, so neither answer may be given for them.
+ */
+export type ReviewedPlistProbe =
+  | { readonly state: 'absent' }
+  | { readonly state: 'present'; readonly opened: OpenedPlist }
+
+export function probeReviewedPlist(
+  label: string, agentsDir: string, commands: CommandRunner,
+): ReviewedPlistProbe {
+  const path = reviewedPlistPath(label, agentsDir)
+
+  // LSTAT, NOT STAT AND NOT existsSync. `existsSync` follows links, so a
+  // dangling symlink reads as absent - and "absent" is the one answer that
+  // downgrades an agent to expected-absent and drops its whole identity from
+  // the binding. A link at this name means somebody else decides what launchd
+  // loads, and that is a refusal whether the target exists or not.
+  let st: ReturnType<typeof lstatSync>
+  try {
+    st = lstatSync(path)
+  } catch (e) {
+    if ((e as NodeJS.ErrnoException).code === 'ENOENT') return Object.freeze({ state: 'absent' as const })
+    // EACCES, ELOOP, ENOTDIR and anything else mean we could not tell. "I was
+    // not allowed to look" is not "there is nothing there".
+    throw new LaunchdInspectionRefused(
+      'the reviewed plist path could not be examined and its state is unknown', label)
+  }
+  if (st.isSymbolicLink()) {
+    throw new LaunchdInspectionRefused('the reviewed plist path is a symbolic link', label)
+  }
+  if (!st.isFile()) {
+    throw new LaunchdInspectionRefused('the reviewed plist path is not a regular file', label)
+  }
+
+  // AND THE SAFETY CHECKS ARE THE SAME ONES A LOADED PLIST GETS. Owner, mode,
+  // link count, size, no-follow open, and a re-stat of the descriptor. Sharing
+  // `openReviewedPlist` is deliberate: two policies would eventually disagree,
+  // and the unloaded path is the one nobody watches.
+  let opened: OpenedPlist
+  try {
+    opened = commands.openPlist(path)
+  } catch {
+    throw new LaunchdInspectionRefused('the reviewed plist could not be opened safely', label)
+  }
+  return Object.freeze({ state: 'present' as const, opened })
+}
 
 /**
  * What a reviewed label looks like on this machine, right now.
@@ -150,6 +245,14 @@ export type LabelPresence = 'absent' | 'loaded'
 export interface LabelInspection {
   readonly label: string
   readonly presence: LabelPresence
+  /**
+   * The exact reviewed plist is installed while launchd holds no label.
+   *
+   * ONLY EVER TRUE WHEN `presence` IS 'absent'. It does not soften absence and
+   * it never implies loaded, disabled or running: it says a file is on disk,
+   * which is a statement about the filesystem, not about launchd.
+   */
+  readonly installedUnloaded: boolean
   /** Whether launchd has this label disabled. Read separately from `print`. */
   readonly disabled: boolean
   /** Only ever true for a loaded label. */
@@ -262,7 +365,17 @@ export function credentialPathOf(parsed: Record<string, unknown>): string | null
 
 export interface LaunchdOptions {
   readonly uid: string
-  /** Where installed agents live. Recorded, never used to invent a path. */
+  /**
+   * Where installed agents live.
+   *
+   * AUTHORITATIVE, AND THIS COMMENT USED TO SAY THE OPPOSITE. It previously
+   * read "recorded, never used to invent a path", which was true of the
+   * three-state vocabulary and is no longer true: detecting an installed but
+   * unloaded agent means looking for exactly one filename under this directory,
+   * so it IS used to derive a path. That derivation is `reviewedPlistPath`, it
+   * is the single exact convention `<agents-dir>/<label>.plist`, the directory
+   * is never scanned, and no alternate path is accepted.
+   */
   readonly agentsDir: string
   /** Injected for tests; production gets `REAL_COMMANDS`. */
   readonly commands?: CommandRunner
@@ -314,19 +427,57 @@ export async function inspectLabel(
       throw new LaunchdInspectionRefused(
         'the label could not be inspected and its state is unknown', label)
     }
+    // LAUNCHD HAS NO LABEL. That is not yet the whole answer: the plist may
+    // still be installed, which is exactly the state a runtime cutover leaves
+    // behind. Measure it from ONE safe open and bind what it says.
+    const probe = probeReviewedPlist(label, o.agentsDir, commands)
+    if (probe.state === 'absent') {
+      return Object.freeze({
+        label,
+        presence: 'absent' as const,
+        installedUnloaded: false,
+        disabled: isDisabled,
+        running: false,
+        pid: null,
+        lastExitCode: null,
+        plistPath: null,
+        plistSha256: null,
+        plistDeviceInode: null,
+        servedCheckout: null,
+        credentialPath: null,
+        plist: null,
+      })
+    }
+
+    const unloadedParsed = await parsePlistBytes(probe.opened.text, commands, ctx)
+
+    // THE PLIST MUST AGREE THAT IT IS THIS AGENT'S. The path was DERIVED from
+    // the label, so unlike the loaded case there is no launchctl statement
+    // tying the two together; the document's own `Label` is that statement. A
+    // file that claims another label at this name is a misinstallation, and
+    // binding it would attribute one agent's destination to another.
+    const declaredLabel = unloadedParsed.Label
+    if (typeof declaredLabel !== 'string' || declaredLabel !== label) {
+      throw new LaunchdInspectionRefused(
+        'the installed plist does not declare the reviewed label', label)
+    }
+
     return Object.freeze({
       label,
       presence: 'absent' as const,
+      installedUnloaded: true,
       disabled: isDisabled,
+      // INSTALLED IS NOT RUNNING. No pid, no exit code, not running - launchd
+      // told us it has no such service, and a file on disk cannot contradict it.
       running: false,
       pid: null,
       lastExitCode: null,
-      plistPath: null,
-      plistSha256: null,
-      plistDeviceInode: null,
-      servedCheckout: null,
-      credentialPath: null,
-      plist: null,
+      plistPath: probe.opened.identity.path,
+      plistSha256: probe.opened.sha256,
+      plistDeviceInode: probe.opened.identity.deviceInode,
+      servedCheckout: servedCheckoutOf(unloadedParsed),
+      credentialPath: credentialPathOf(unloadedParsed),
+      plist: Object.freeze(unloadedParsed),
     })
   }
 
@@ -352,6 +503,7 @@ export async function inspectLabel(
   return Object.freeze({
     label,
     presence: 'loaded' as const,
+    installedUnloaded: false,
     disabled: isDisabled,
     running: state === 'running' || (pid !== null && /^\d+$/.test(pid)),
     pid: pid !== null && /^\d+$/.test(pid) ? pid : null,
@@ -380,6 +532,14 @@ export async function remeasureLabel(
   if (again.presence !== seen.presence) {
     throw new LaunchdInspectionRefused('the label changed presence during the census', seen.label)
   }
+  // A PLIST THAT APPEARED OR VANISHED IS A CHANGED INSTALLATION, even though
+  // launchctl said "absent" both times. Without this, a reviewed plist could be
+  // installed or removed inside the fence window and the census would report
+  // the same presence on both sides.
+  if (again.installedUnloaded !== seen.installedUnloaded) {
+    throw new LaunchdInspectionRefused(
+      'the installed plist appeared or was removed during the census', seen.label)
+  }
   if (again.plistSha256 !== seen.plistSha256 ||
       again.plistPath !== seen.plistPath ||
       again.plistDeviceInode !== seen.plistDeviceInode) {
@@ -387,6 +547,24 @@ export async function remeasureLabel(
   }
   if (again.servedCheckout !== seen.servedCheckout) {
     throw new LaunchdInspectionRefused('the served checkout changed during the census', seen.label)
+  }
+  // AND THE CREDENTIAL CONTAINER IT NAMES.
+  //
+  // MEASURED AND RECORDED AS AN EQUIVALENT GUARD, not as an observable one.
+  // `credentialPathOf` is a pure function of the parsed plist, and the parsed
+  // plist comes from exactly the bytes whose digest was compared three lines
+  // above - so no input can make this comparison fire while that one passes, and
+  // a mutation that deletes this check is not detectable by any test. It is kept
+  // because this function's field list is what a reader compares against the
+  // fenced census's field list, and a missing line there reads as a gap.
+  //
+  // THE REACHABLE CASE IS ELSEWHERE, and it is covered elsewhere: the container
+  // can be REPLACED while the plist still names the same path, which changes its
+  // `device:inode` and not this string. That is caught by `compareProducerSets`,
+  // which compares `credentialDeviceInode` from a fresh open of the container.
+  if (again.credentialPath !== seen.credentialPath) {
+    throw new LaunchdInspectionRefused(
+      'the credential container changed during the census', seen.label)
   }
   return again
 }
@@ -496,6 +674,14 @@ export type ProducerQuiescence = ProducerQuiescenceMeasurement & {
  * WHY ABSENCE ALONE WAS WRONG. A label launchd does not have tells you nothing
  * about a producer somebody started by hand, which is exactly what an operator
  * does when a scheduled run fails and they re-run it from a terminal.
+ *
+ * AN INSTALLED-UNLOADED AGENT IS QUIESCENT HERE, AND FOR THE ORIGINAL REASON.
+ * `presence` is 'absent' because launchd holds no label, so launchd will not
+ * fire it; the plist on disk is inert until somebody bootstraps it. What does
+ * NOT change is the process half: a matching process still defeats quiescence
+ * for an installed-unloaded agent exactly as it does for an absent one, which is
+ * the case that matters after a cutover - the plists are installed, the labels
+ * are out, and a producer left running by hand is still writing to the source.
  */
 export function launchdQuiescenceAdapter(
   labels: readonly string[], o: LaunchdOptions,

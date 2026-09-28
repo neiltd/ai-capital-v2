@@ -10,9 +10,15 @@
 // fails its checks, and a URL that will not parse all land, and it STOPS
 // inspection, rehearsal and apply - a producer whose destination nobody
 // established is a producer whose stopping nobody can justify either way.
-// "Expected absent" is a label launchd does not have, whose evidence fields are
-// all null because none of them was measured, and which may never be recorded
-// as writing anywhere.
+// "Expected absent" is a label launchd does not have AND whose reviewed plist is
+// not installed, whose evidence fields are all null because none of them was
+// measured, and which may never be recorded as writing anywhere.
+//
+// AN UNLOADED LABEL WITH AN INSTALLED PLIST IS NOT THAT CASE. It classifies like
+// any other installed agent - its plist is measured, its credential container is
+// opened once, and its endpoint is compared with the copy source - because all
+// of those things exist. Treating it as expected-absent is what dropped the
+// four cutover agents' identities out of the binding entirely.
 //
 // ONE OPEN PER CREDENTIAL. The identity and the endpoint come from the SAME
 // `OpenedContainer`. An earlier revision opened the file once for its
@@ -140,9 +146,21 @@ export function classifyContainer(path: string): SanitizedDestination {
   return classifyOpened(openReviewedContainer(path))
 }
 
-/** The installation state a label's inspection establishes. */
+/**
+ * The installation state a label's inspection establishes.
+ *
+ * ABSENCE FROM LAUNCHD IS TWO DIFFERENT STATES, and collapsing them was the
+ * defect. `expected-absent` is reserved for an agent that is not installed at
+ * all - no label AND no reviewed plist - because that state's contract is that
+ * every evidence field is null. An agent whose exact reviewed plist IS installed
+ * has a path, bytes, a served checkout, a credential container and an endpoint;
+ * calling that `expected-absent` threw all of them away and left a plist that
+ * could be replaced without moving the confirmation token.
+ */
 export function installationOf(seen: LabelInspection): InstallationState {
-  if (seen.presence === 'absent') return 'expected-absent'
+  if (seen.presence === 'absent') {
+    return seen.installedUnloaded ? 'installed-unloaded' : 'expected-absent'
+  }
   return seen.disabled ? 'installed-disabled' : 'installed-loaded'
 }
 
@@ -178,6 +196,9 @@ export async function proveDestinations(
         'a reviewed label is not in its declared installation state', label)
     }
 
+    // ONLY `expected-absent` TAKES THE NULL-EVIDENCE PATH. An installed-unloaded
+    // agent falls through to the measurement below, because there is a real file
+    // to name, real bytes to hash and a real destination to prove.
     if (installation === 'expected-absent') {
       if (entry.expected !== 'expected-absent') {
         throw new DestinationRefused(
@@ -196,11 +217,13 @@ export async function proveDestinations(
       continue
     }
 
-    // A PRESENT LABEL MAY NOT BE DECLARED ABSENT EITHER, and `installation`
-    // already caught that; this is the destination half of the same rule.
+    // AN INSTALLED LABEL MAY NOT BE DECLARED ABSENT EITHER, and `installation`
+    // already caught that; this is the destination half of the same rule. It
+    // covers installed-unloaded as well: an installed plist is something, and
+    // "writes nowhere, nothing measured" is not an answer available to it.
     if (entry.expected === 'expected-absent') {
       throw new DestinationRefused(
-        'a present label may not be declared absent', label)
+        'an installed label may not be declared absent', label)
     }
 
     let disposition: DestinationDisposition = 'destination-unproved'
@@ -211,9 +234,11 @@ export async function proveDestinations(
       // THE PLIST `inspectLabel` ALREADY OPENED, HASHED AND PARSED. Re-reading
       // the path here would be a second open of a name, and the digest
       // recorded above would stop describing the document classified below.
+      // This holds for installed-unloaded too: that path is measured from ONE
+      // safe open in `probeReviewedPlist`, and this is the same document.
       const parsed = seen.plist
       if (parsed === null) {
-        throw new DestinationRefused('a loaded label produced no parsed plist', label)
+        throw new DestinationRefused('an installed label produced no parsed plist', label)
       }
       assertNoInlineCredential(parsed)
       credentialPath = credentialPathOf(parsed)
@@ -250,6 +275,16 @@ export async function proveDestinations(
     }
     if (disposition === 'destination-unproved') {
       throw new DestinationRefused('a reviewed label has an unproved destination', label)
+    }
+
+    // AND AN INSTALLED-UNLOADED AGENT MUST HAVE BOUND A COMPLETE IDENTITY.
+    // The binding validator requires these fields for this state; refusing here
+    // as well means the refusal names the label and happens during the census,
+    // rather than surfacing later as a document that will not validate.
+    if (installation === 'installed-unloaded' &&
+        (credentialPath === null || credentialDeviceInode === null || sanitized === null)) {
+      throw new DestinationRefused(
+        'an installed-unloaded label bound no credential container or endpoint', label)
     }
 
     out.push(Object.freeze({

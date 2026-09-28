@@ -1,0 +1,60 @@
+{
+  "_comment": [
+    "THE REVIEWED DESTINATION POLICY for the PostgreSQL copy fence.",
+    "",
+    "Read by pg-copy-ops.ts via --destination-policy. Every reviewed label must",
+    "appear exactly once, in the reviewed order, and each entry DECLARES two",
+    "separate facts that the census then COMPARES against what it measured:",
+    "",
+    "  installation - whether the agent is installed, and how launchd holds it",
+    "  expected     - which database it writes to, if any",
+    "",
+    "Neither is inferred. A census that measured something the policy did not",
+    "declare refuses, in both directions: an agent found loaded when the policy",
+    "says unloaded, and an agent found unloaded when the policy says loaded.",
+    "",
+    "CURRENT STATE, after the S4F-D5-K5 runtime cutover: the four production",
+    "plists are installed under ~/Library/LaunchAgents while their labels are",
+    "booted out, so each is 'installed-unloaded'. They name the pipeline",
+    "credential container, which points at the copy source, so each is",
+    "'writes-copy-source'. The structured worker is not installed on this",
+    "machine at all - no label and no plist - so it is 'expected-absent' in both",
+    "columns, and every one of its evidence fields is null by contract.",
+    "",
+    "'installed-unloaded' is NOT 'expected-absent'. The first binds a complete",
+    "identity - plist path, plist digest, plist device:inode, served checkout,",
+    "credential container identity and sanitized endpoint - because all of those",
+    "exist and were measured. The second binds nothing, because there is nothing",
+    "to measure. Collapsing the first onto the second is the defect S4F-D5-K5.2",
+    "closed: it dropped four installed plists out of the operational binding, so",
+    "one could be replaced between two censuses without moving the confirmation",
+    "token."
+  ],
+  "producers": [
+    {
+      "label": "com.thanapol.ai-capital.daily",
+      "installation": "installed-unloaded",
+      "expected": "writes-copy-source"
+    },
+    {
+      "label": "com.thanapol.ai-capital.watchdog",
+      "installation": "installed-unloaded",
+      "expected": "writes-copy-source"
+    },
+    {
+      "label": "com.thanapol.ai-capital.alerts",
+      "installation": "installed-unloaded",
+      "expected": "writes-copy-source"
+    },
+    {
+      "label": "com.thanapol.ai-capital.structured-worker",
+      "installation": "expected-absent",
+      "expected": "expected-absent"
+    },
+    {
+      "label": "com.thanapol.ai-capital.worker",
+      "installation": "installed-unloaded",
+      "expected": "writes-copy-source"
+    }
+  ]
+}

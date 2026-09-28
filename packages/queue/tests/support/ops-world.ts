@@ -261,6 +261,19 @@ export function world(over: {
   structuredAbsent?: boolean
   /** Put every installed label in `print-disabled`. Needed for a real census. */
   disabled?: boolean
+  /**
+   * THE CUTOVER WORLD: the plists are installed and launchd holds no label.
+   *
+   * `launchctl print` answers 113 for every reviewed label, exactly as it does
+   * after a bootout, while the four reviewed plist files stay on disk. This is
+   * the state the machine is actually in after K5, and the state the
+   * three-state vocabulary reported as expected-absent.
+   */
+  unloaded?: boolean
+  /** Write the plists at this mode instead of 0644. Drives the safety refusals. */
+  plistMode?: number
+  /** Give the installed plists a Label key that disagrees with their filename. */
+  wrongLabel?: boolean
 } = {}): World {
   // THE CANONICAL PATH. Every reviewed container check compares the supplied
   // name with its own realpath, and macOS `/var` is a symlink to `/private/var`.
@@ -285,14 +298,19 @@ export function world(over: {
 
   for (const label of installed) {
     const p = join(agents, `${label}.plist`)
+    // A REAL PLIST DECLARES ITS OWN LABEL, and the installed-unloaded path
+    // requires it: that path DERIVES the filename from the label, so the
+    // document's own `Label` is the only thing tying the two together.
+    const declared = over.wrongLabel === true ? `${label}.not-this-agent` : label
     writeFileSync(p, `<?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0"><dict>
+<key>Label</key><string>${declared}</string>
 <key>WorkingDirectory</key><string>${dir}</string>
 <key>EnvironmentVariables</key><dict>
 <key>PIPELINE_CREDENTIAL_FILE</key><string>${cred}</string>
 </dict></dict></plist>`)
-    chmodSync(p, 0o644)
+    chmodSync(p, over.plistMode ?? 0o644)
   }
 
   const state = over.loaded === false ? 'not running' : 'running'
@@ -304,12 +322,17 @@ export function world(over: {
         ? installed.map(l => `\t"${l}" => true\n`).join('') : '',
     },
   }
-  for (const label of installed) {
-    answers[`print gui/501/${label}`] = {
-      code: 0,
-      stdout: `\tpath = ${join(agents, `${label}.plist`)}\n\tstate = ${state}\n` +
-        `${pid === undefined ? '' : `\tpid = ${pid}\n`}` +
-        `\tlast exit code = ${over.lastExit ?? '0'}\n`,
+  // THE CUTOVER WORLD ANSWERS NOTHING. With no `print` entry the runner's
+  // default reply is exit 113 "Could not find service" - the one spelling of
+  // absence - for every reviewed label, while the plists remain on disk.
+  if (over.unloaded !== true) {
+    for (const label of installed) {
+      answers[`print gui/501/${label}`] = {
+        code: 0,
+        stdout: `\tpath = ${join(agents, `${label}.plist`)}\n\tstate = ${state}\n` +
+          `${pid === undefined ? '' : `\tpid = ${pid}\n`}` +
+          `\tlast exit code = ${over.lastExit ?? '0'}\n`,
+      }
     }
   }
 
@@ -317,14 +340,20 @@ export function world(over: {
     openPlist: openReviewedPlist,
     run: async (file, args) => {
       if (file.endsWith('plutil')) {
+        // THE BYTES GO ON STDIN, exactly as the production runner sends them.
+        //
+        // This used to mkdtemp a directory per call and write the plist into it,
+        // and it never removed any of them: one full suite run leaked a temp
+        // directory for every plist parsed, and the machine had accumulated
+        // 820,101 of them (about 4 GiB) by the time this was measured. Passing
+        // the bytes on stdin removes the file, the directory and the leak
+        // together, and is closer to what `parsePlistBytes` actually does.
         const text = args[args.length - 1] as string
-        const tmp = join(mkdtempSync(join(tmpdir(), 'plutil-')), 'x.plist')
-        writeFileSync(tmp, text)
         try {
           return {
             code: 0, stderr: '',
-            stdout: execFileSync('/usr/bin/plutil', ['-convert', 'json', '-o', '-', tmp],
-                                 { encoding: 'utf-8' }),
+            stdout: execFileSync('/usr/bin/plutil', ['-convert', 'json', '-o', '-', '-'],
+                                 { encoding: 'utf-8', input: text }),
           }
         } catch { return { code: 1, stdout: '', stderr: '' } }
       }
@@ -345,8 +374,9 @@ export function world(over: {
   // THE POLICY DECLARES WHAT THIS WORLD ACTUALLY IS. Installation is compared,
   // never inferred, so a world whose agents are disabled must be declared that
   // way or the census refuses before it can be examined.
-  const declaredInstallation = over.disabled === true
-    ? 'installed-disabled' : 'installed-loaded'
+  const declaredInstallation = over.unloaded === true ? 'installed-unloaded'
+    : over.disabled === true ? 'installed-disabled'
+    : 'installed-loaded'
   writeFileSync(destinationPolicy, JSON.stringify({
     producers: REVIEWED_PRODUCERS.map(label => installed.includes(label)
       ? { label, expected: 'writes-copy-source', installation: declaredInstallation }

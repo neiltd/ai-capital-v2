@@ -2927,18 +2927,47 @@ interface RestorationRow {
   readonly matched: boolean
 }
 
-/** Did this label come back as the SAME installation the binding recorded? */
-function compareIdentity(
+/**
+ * Did this label come back as the SAME installation the binding recorded?
+ *
+ * FOUR STATES NOW, AND `presence` NO LONGER DECIDES ON ITS OWN. Both
+ * `expected-absent` and `installed-unloaded` report `presence === 'absent'`, so
+ * a comparison written against presence alone would accept a plist appearing
+ * under a previously-uninstalled label, and would reject an installed-unloaded
+ * agent that had not changed at all. The installation state recorded in the
+ * binding is compared against the state remeasured now, and every field that
+ * state binds is compared with it.
+ */
+export function compareIdentity(
   before: ProducerIdentity | undefined, now: LabelInspection,
 ): string | null {
   if (before === undefined) return 'the label is not in the operational binding'
+
   if (before.installation === 'expected-absent') {
-    return now.presence === 'absent' ? null : 'an expected-absent label is now loaded'
+    if (now.presence !== 'absent') return 'an expected-absent label is now loaded'
+    // A PLIST WHERE THERE WAS NONE. launchd still holds no label, so presence is
+    // unchanged and the old check passed; what changed is that the agent is now
+    // installed and one bootstrap away from running.
+    if (now.installedUnloaded) return 'an expected-absent label is now installed'
+    return null
   }
-  if (now.presence === 'absent') return 'a loaded label is now absent'
+
+  if (before.installation === 'installed-unloaded') {
+    // A LABEL THAT APPEARED IS A DIFFERENT INSTALLATION, and it is the dangerous
+    // direction: the plists are on disk, so a bootstrap is all it takes.
+    if (now.presence !== 'absent') return 'an installed-unloaded label is now loaded'
+    if (!now.installedUnloaded) return 'an installed-unloaded plist has been removed'
+  } else if (now.presence === 'absent') {
+    return now.installedUnloaded
+      ? 'a loaded label is now installed-unloaded'
+      : 'a loaded label is now absent'
+  }
+
   if (before.plistSha256 !== now.plistSha256) return 'the plist is not the one measured'
   if (before.plistPath !== now.plistPath) return 'the plist path has moved'
+  if (before.plistDeviceInode !== now.plistDeviceInode) return 'the plist has been replaced'
   if (before.servedCheckout !== now.servedCheckout) return 'the served checkout has changed'
+  if (before.credentialPath !== now.credentialPath) return 'the credential container has changed'
   return null
 }
 
@@ -3076,7 +3105,7 @@ export function verifyGateLink(
 }
 
 /** Did every producer come back pointing where the fenced census said? */
-function compareProducerSets(
+export function compareProducerSets(
   before: readonly ProducerIdentity[], now: readonly ProducerIdentity[],
 ): string | null {
   if (before.length !== now.length) return 'the producer set has a different size'
@@ -3084,7 +3113,14 @@ function compareProducerSets(
     const a = before[n] as ProducerIdentity
     const b = now[n] as ProducerIdentity
     if (a.label !== b.label) return `the producer order changed at ${a.label}`
-    for (const k of ['disposition', 'installation', 'credentialDeviceInode',
+    // EVERY BOUND FIELD, not a chosen subset. The plist identity and the served
+    // checkout were previously left out of this comparison, which was harmless
+    // only while no reviewed agent bound them outside the loaded state. An
+    // installed-unloaded agent binds all of them, so a plist replaced between
+    // the fenced census and the restoration would otherwise compare equal.
+    for (const k of ['disposition', 'installation',
+                     'plistPath', 'plistSha256', 'plistDeviceInode', 'servedCheckout',
+                     'credentialPath', 'credentialDeviceInode',
                      'databaseHost', 'databasePort', 'databaseName'] as const) {
       if (a[k] !== b[k]) return `${a.label} came back with a different ${k}`
     }

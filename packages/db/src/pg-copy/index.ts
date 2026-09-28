@@ -18,7 +18,7 @@
 export {
   BINDING_VERSION, APPLY_PREFIX, REHEARSE_PREFIX, TOKEN_PATTERN, TOKEN_PREFIX,
   BindingRefused, COPY_BINDING_SHAPE_VERSION, DESTINATION_DISPOSITIONS,
-  INSTALLATION_STATES,
+  INSTALLATION_STATES, INSTALLED_STATES,
   MEASURED_DESTINATIONS,
   assertConfirmationMatches, assertOperationalBindingUnchanged,
   confirmationToken, copyBindingDigest, copyBindingDocument, copySetDigest,

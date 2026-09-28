@@ -242,11 +242,39 @@ export const MEASURED_DESTINATIONS: readonly DestinationDisposition[] =
  * reusing its DATABASE disposition to say so conflated "writes nowhere we
  * proved" with "is not there". The first is a refusal; the second is the
  * reviewed answer.
+ *
+ * `installed-unloaded` IS THE FOURTH STATE, AND IT WAS A REAL GAP. After a
+ * runtime cutover the four reviewed plists sit installed on disk while their
+ * labels are booted out. Asking launchctl alone yields "absent", and the
+ * earlier three-state vocabulary collapsed that onto `expected-absent` - the
+ * state reserved for an agent that is NOT THERE. The consequences were not
+ * cosmetic: `expected-absent` nulls every evidence field by contract, so the
+ * installed plist's path and digest, the checkout it serves, the credential
+ * container it names and the database it would write to all dropped out of the
+ * operational binding. A plist could then be replaced between two censuses
+ * without moving the confirmation token, because nothing about it was bound.
+ *
+ * The distinction is therefore: `expected-absent` means launchd has no label
+ * AND no reviewed plist exists; `installed-unloaded` means launchd has no label
+ * but the exact reviewed plist IS present and was safely measured. Both are
+ * quiescent with respect to launchd; only the second has anything to bind.
  */
-export type InstallationState = 'installed-loaded' | 'installed-disabled' | 'expected-absent'
+export type InstallationState =
+  | 'installed-loaded'
+  | 'installed-disabled'
+  | 'installed-unloaded'
+  | 'expected-absent'
 
 export const INSTALLATION_STATES: readonly InstallationState[] =
-  Object.freeze(['installed-loaded', 'installed-disabled', 'expected-absent'])
+  Object.freeze(['installed-loaded', 'installed-disabled', 'installed-unloaded',
+                 'expected-absent'])
+
+/**
+ * The installation states that carry a MEASURED plist, and therefore a complete
+ * identity in the binding. Only `expected-absent` is outside this set.
+ */
+export const INSTALLED_STATES: readonly InstallationState[] =
+  Object.freeze(['installed-loaded', 'installed-disabled', 'installed-unloaded'])
 
 /** What an inspected label is, as far as the binding is concerned. NEVER a secret. */
 export interface ProducerIdentity {
@@ -263,7 +291,12 @@ export interface ProducerIdentity {
   readonly plistDeviceInode: string | null
   /** The checkout that plist serves, read FROM the plist and never assumed. */
   readonly servedCheckout: string | null
-  /** Installed and loaded, installed and disabled, or not installed at all. */
+  /**
+   * Installed and loaded, installed and disabled, installed but with its label
+   * unloaded, or not installed at all. The last is the ONLY one whose evidence
+   * fields are null; `installed-unloaded` binds a full identity like any other
+   * installed state, because there is a real file to name and real bytes to hash.
+   */
   readonly installation: InstallationState
   /**
    * The credential CONTAINER, by identity only.
@@ -380,6 +413,28 @@ export function operationalBindingDocument(b: OperationalAdapterBinding): Canoni
            `producers[${n}].servedCheckout`)
       // AND A PRESENT LABEL MAY NOT BORROW THE ABSENT STATE'S DISPOSITION.
       need(p.disposition !== 'expected-absent', `producers[${n}].disposition`)
+      need(INSTALLED_STATES.includes(p.installation), `producers[${n}].installation`)
+
+      // AN INSTALLED-UNLOADED AGENT BINDS A **COMPLETE** IDENTITY.
+      //
+      // This is the whole reason the state exists. The defect it closes was not
+      // that the binding said the wrong word; it was that the word it said
+      // carried a contract of all-nulls, so the installed plist, the checkout it
+      // serves, the credential container it names and the endpoint it would
+      // write to were absent from the document the confirmation token covers.
+      // Requiring every one of them here is what makes a plist swap, a checkout
+      // change, a credential-container replacement or an endpoint change move
+      // the token instead of passing unnoticed.
+      if (p.installation === 'installed-unloaded') {
+        need(p.credentialPath !== null, `producers[${n}].credentialPath`)
+        need(p.credentialDeviceInode !== null, `producers[${n}].credentialDeviceInode`)
+        need(p.databaseHost !== null, `producers[${n}].databaseHost`)
+        need(p.databasePort !== null, `producers[${n}].databasePort`)
+        need(p.databaseName !== null, `producers[${n}].databaseName`)
+        // An installed-but-unloaded agent has been measured, so its destination
+        // is a measured one. `destination-unproved` may not hide here.
+        need(MEASURED_DESTINATIONS.includes(p.disposition), `producers[${n}].disposition`)
+      }
     }
     if (p.credentialPath !== null) {
       need(ABS_PATH.test(p.credentialPath), `producers[${n}].credentialPath`)

@@ -70,11 +70,13 @@ const fakeCommands = (
     if (file.endsWith('plutil')) {
       // The bytes travel as the last argument in the injected form.
       const text = args[args.length - 1] as string
-      const tmp = join(mkdtempSync(join(tmpdir(), 'plutil-')), 'x.plist')
-      writeFileSync(tmp, text)
+      // BYTES ON STDIN, so this stub leaves nothing behind. It used to mkdtemp a
+      // directory per call and never remove it — the same leak ops-world.ts
+      // carried, and between them the machine had accumulated 820,101 orphaned
+      // temp directories (about 4 GiB) by the time it was measured.
       try {
         const out = execFileSync('/usr/bin/plutil',
-          ['-convert', 'json', '-o', '-', tmp], { encoding: 'utf-8' })
+          ['-convert', 'json', '-o', '-', '-'], { encoding: 'utf-8', input: text })
         return { code: 0, stdout: out, stderr: '' }
       } catch {
         return { code: 1, stdout: '', stderr: '' }
@@ -261,9 +263,14 @@ describe('the launchd adapter is read-only by construction', () => {
       execFileSync('/bin/mkdir', ['-p', agents])
       const label = 'com.thanapol.ai-capital.worker'
       const plist = join(agents, `${label}.plist`)
+      // A WELL-FORMED INSTALLATION: the plist declares its own label. It has to,
+      // because the `absent` cases below now exercise `installed-unloaded` —
+      // launchctl holds no label while this exact file sits in the agents
+      // directory, which is the state a runtime cutover leaves behind.
       writeFileSync(plist, `<?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
-<plist version="1.0"><dict><key>WorkingDirectory</key><string>/Users/x</string></dict></plist>`)
+<plist version="1.0"><dict><key>Label</key><string>${label}</string>
+<key>WorkingDirectory</key><string>/Users/x</string></dict></plist>`)
       chmodSync(plist, 0o644)
 
       const idle = printed(plist, { state: 'not running' })
@@ -298,9 +305,13 @@ describe('the launchd adapter is read-only by construction', () => {
       expect(await ask(idle, DISABLED, noProcess)).toBe(true)
       // LOADED AND ENABLED, even while idle: launchd owns its schedule.
       expect(await ask(idle, '', noProcess)).toBe(false)
-      // ABSENT WITH NO PROCESS: stopped.
+      // ABSENT WITH NO PROCESS: stopped. The plist IS installed here, so this is
+      // the `installed-unloaded` case — launchd will not fire what it does not
+      // hold, and an inert file on disk cannot start itself.
       expect(await ask(null, '', noProcess)).toBe(true)
-      // ABSENT WITH A MATCHING MANUAL PROCESS: NOT stopped.
+      // INSTALLED-UNLOADED WITH A MATCHING MANUAL PROCESS: NOT stopped. This is
+      // the post-cutover shape exactly: plists installed, labels out, and a
+      // producer somebody left running is still writing to the source.
       expect(await ask(null, '', manual)).toBe(false)
       // AND DISABLED-AND-IDLE WITH A MANUAL PROCESS is not stopped either.
       expect(await ask(idle, DISABLED, manual)).toBe(false)
