@@ -40,7 +40,14 @@ describe('A. the scheduler harness runs fully isolated and passes', () => {
   const r = spawnSync('/bin/bash', [HARNESS_ABS], {
     cwd: REPO,
     env: (() => {
-      const e: NodeJS.ProcessEnv = { ...process.env, CI: '1' }
+      // A HOSTILE PARENT CLOCK. The harness must own its own instant; if any of
+      // it were inherited, this value would move every fixture and the matrix
+      // would report differently. It is set deliberately to a time BEFORE the
+      // 07:00 opportunity, which is precisely the window in which the old
+      // host-clock harness failed.
+      const e: NodeJS.ProcessEnv = {
+        ...process.env, CI: '1', SCHEDULER_TEST_NOW: '2026-08-29T09:00:00.000Z',
+      }
       for (const k of STRIP) delete e[k]
       return e
     })(),
@@ -61,6 +68,21 @@ describe('A. the scheduler harness runs fully isolated and passes', () => {
   it('never hits the partial-isolation refusal', () => {
     expect(out, report).not.toContain('PARTIALLY isolated')
     expect(out, report).not.toContain('REFUSING TO RUN')
+  })
+
+  it('the harness OWNS and supplies its own fixed SCHEDULER_TEST_NOW', () => {
+    // It announces the instant it fixed, and that instant is the reviewed one —
+    // not the hostile value this test put in its environment.
+    expect(out, report).toMatch(/fixed clock: 2026-08-29T16:00:00\.000Z/)
+    expect(out, report).toMatch(/2026-08-29 09:00 America\/Los_Angeles/)
+  })
+
+  it('a hostile parent SCHEDULER_TEST_NOW cannot change the result', () => {
+    // The parent supplied 09:00Z (02:00 Los Angeles, BEFORE the opportunity).
+    // If it won, Cases A, E and F would report not_due and the matrix would
+    // fail — which is exactly what used to happen on the host clock.
+    expect(out, report).not.toContain('2026-08-29T09:00:00.000Z')
+    expect(out, report).toMatch(/^PASS=12 FAIL=0$/m)
   })
 
   it('performs no production Redis, database or pipeline action', () => {
@@ -103,6 +125,39 @@ describe('B. the harness cannot pass vacuously — structural contract', () => {
   it('checks the captured exit status for all four real cases before awarding PASS', () => {
     const checks = src.match(/if \[ "\$ISO_RC" -ne 0 \]; then/g) ?? []
     expect(checks.length, `expected 4 exit-status guards, found ${checks.length}`).toBe(4)
+  })
+
+  it('supplies the fixed clock to every status check and real dry run', () => {
+    // THREE PLACES, ALL REQUIRED: the helper that runs the real scripts, the
+    // status check, and the declaration itself. A fixed clock supplied to only
+    // some of them leaves the rest on the host clock.
+    expect(src).toContain("readonly FIXED_NOW='2026-08-29T16:00:00.000Z'")
+    const helper = src.slice(src.indexOf('run_isolated() {'), src.indexOf('sqlite3 "$DB"'))
+    expect(helper).toContain('SCHEDULER_TEST_NOW="$FIXED_NOW"')
+    const check = src.slice(src.indexOf('check() {'), src.indexOf('NOW_H='))
+    expect(check).toContain('SCHEDULER_TEST_NOW="$FIXED_NOW"')
+    // And an inherited value is discarded rather than trusted.
+    expect(src).toContain('unset SCHEDULER_TEST_NOW')
+  })
+
+  it('leaves no real-time fallback in fixture construction', () => {
+    // EXECUTABLE TEXT ONLY, so the comments explaining the defect do not count
+    // as the defect. Every fixture is built from FIXED_NOW in the business zone.
+    const code = src.split('\n').filter(l => !/^\s*#/.test(l)).join('\n')
+    for (const forbidden of ['date +%H', "date '+%H'", "date '+%Y-%m-%d'",
+                             'datetime.now(', 'Date.now(']) {
+      expect(code, forbidden).not.toContain(forbidden)
+    }
+    // Non-vacuity: the stripped text really is still the harness body.
+    expect(code).toContain('run_isolated')
+    expect(code).toContain('FIXED_NOW')
+    expect(code).toContain("BUSINESS_TZ='America/Los_Angeles'")
+  })
+
+  it('every real scheduler/watchdog invocation remains dry-run only', () => {
+    const calls = [...src.matchAll(/run_isolated \.\/scripts\/[a-z-]+\.sh([^\n]*)/g)]
+    expect(calls.length).toBeGreaterThan(0)
+    for (const c of calls) expect(c[1]).toContain('--dry-run')
   })
 
   it('uses a disposable root and a non-production Redis endpoint', () => {

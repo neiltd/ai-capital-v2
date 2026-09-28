@@ -322,27 +322,72 @@ describe('isolation defaults and fail-closed semantics', () => {
 describe('the four relocated scripts derive ROOT from their own location', () => {
   const SCRIPTS = ['run-alerts.sh', 'refresh-prices.sh', 'daily-catchup.sh', 'dep-graph-scan.sh'] as const
 
-  /** Copy one script into <work>/fake-root/scripts/ and echo its derived ROOT. */
+  /**
+   * The EXACT assignment lines, and nothing else.
+   *
+   * WHY NOT A PROLOGUE. This used to copy every line up to the first one that
+   * "would do something", guessed with a regex over `exec|cd |npm |npx |"$ROOT`.
+   * That guess is wrong for any script whose prologue ACTS: `daily-catchup.sh`
+   * opens with `if [ "$(date +%H)" -lt 7 ]; then exit 0; fi`, so before 07:00
+   * local the probe executed that gate, exited 0, printed nothing, and the
+   * assertion compared an empty string. The same file passed after 07:00 and
+   * failed before it — a wall-clock-dependent test of a property that has
+   * nothing to do with the clock. Measured at 01:58 PDT and again at 09:13 PDT.
+   *
+   * So the reviewed assignment lines are extracted by their exact form and are
+   * the ONLY statements executed. Nothing else in the script runs: no date gate,
+   * no mkdir, no exit, no npx.
+   */
+  const ROOT_ASSIGNMENT = 'ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"'
+  const DATA_ROOT_ASSIGNMENT = 'export DATA_ROOT="$ROOT/apps"'
+
   function derivedRoot(script: string): { root: string; dataRoot: string } {
     const fakeRoot = join(work, 'fake-root')
     mkdirSync(join(fakeRoot, 'scripts'), { recursive: true })
     const dst = join(fakeRoot, 'scripts', script)
     copyFileSync(join(REPO, 'scripts', script), dst)
     chmodSync(dst, 0o755)
-    // Source only the prologue — up to the first line that would DO something —
-    // so nothing executes: no npx, no network, no pipeline.
-    const body = readFileSync(dst, 'utf-8')
-    const cut = body.split('\n').findIndex(l => /^(exec|cd |npm |npx |"\$ROOT)/.test(l.trim()))
-    const prologue = body.split('\n').slice(0, cut > 0 ? cut : undefined).join('\n')
+
+    const lines = readFileSync(dst, 'utf-8').split('\n')
+    // REFUSE UNLESS THERE IS EXACTLY ONE, IN THE REVIEWED FORM. Absent means the
+    // derivation is gone; duplicated means the probe would not know which one
+    // the script actually uses.
+    const rootLines = lines.filter(l => l.trim() === ROOT_ASSIGNMENT)
+    expect(rootLines.length, `${script}: reviewed ROOT assignment`).toBe(1)
+
+    const taken = [ROOT_ASSIGNMENT]
+    // DATA_ROOT ONLY WHERE THE SCRIPT ACTUALLY HAS IT.
+    const dataLines = lines.filter(l => l.trim() === DATA_ROOT_ASSIGNMENT)
+    expect(dataLines.length, `${script}: reviewed DATA_ROOT assignment`).toBeLessThanOrEqual(1)
+    if (dataLines.length === 1) taken.push(DATA_ROOT_ASSIGNMENT)
+
     // The probe MUST live where the real script lives: BASH_SOURCE[0] is the
     // executing file, so a probe written elsewhere would derive that other
     // directory — which is exactly the property under test.
     const probe = join(fakeRoot, 'scripts', `probe-${script}`)
     writeFileSync(probe,
-      `${prologue}\nprintf '%s\\n%s\\n' "\${ROOT:-}" "\${DATA_ROOT:-}"\n`, { mode: 0o755 })
+      `#!/bin/bash\nset -u\n${taken.join('\n')}\n` +
+      `printf '%s\\n%s\\n' "\${ROOT:-}" "\${DATA_ROOT:-}"\n`, { mode: 0o755 })
     const out = execFileSync('bash', [probe], { encoding: 'utf-8', timeout: 20_000 }).split('\n')
     return { root: out[0] ?? '', dataRoot: out[1] ?? '' }
   }
+
+  it.each(SCRIPTS)('%s carries exactly one reviewed ROOT assignment', (script) => {
+    // The refusal above is only meaningful if it is reachable, so the shape it
+    // requires is asserted here in its own right.
+    const lines = readFileSync(join(REPO, 'scripts', script), 'utf-8').split('\n')
+    expect(lines.filter(l => l.trim() === ROOT_ASSIGNMENT).length).toBe(1)
+  })
+
+  it('the probe executes the assignments ONLY, never a surrounding statement', () => {
+    // NON-VACUITY FOR THE WHOLE APPROACH. `daily-catchup.sh` is the script whose
+    // prologue acts: it contains a date gate that exits. The probe must not
+    // contain it, and must still produce a ROOT.
+    const src = readFileSync(join(REPO, 'scripts', 'daily-catchup.sh'), 'utf-8')
+    expect(src).toContain('-lt 7')          // the gate really is there,
+    const { root } = derivedRoot('daily-catchup.sh')
+    expect(root).not.toBe('')               // and the probe is unaffected by it.
+  })
 
   it.each(SCRIPTS)('%s derives ROOT from its own location', (script) => {
     const { root } = derivedRoot(script)

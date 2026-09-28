@@ -21,6 +21,36 @@ set -uo pipefail
 # behind. The script's own path is the one thing that always describes the
 # checkout it belongs to.
 ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
+# THE CLOCK IS FIXED HERE, AND THE HARNESS OWNS IT.
+#
+# This matrix used to derive every fixture from the HOST CLOCK: `date +%H`,
+# `datetime.now()`, and a status CLI invoked with no override at all. That made
+# the suite wall-clock dependent in the worst way - it PASSED after 07:00 local
+# and FAILED before it, on byte-identical files. Measured: 3 failures at 01:58
+# PDT and 73/73 at 09:13 PDT, same commit.
+#
+# `SCHEDULER_TEST_NOW` is the EXISTING reviewed dry-run seam - no new production
+# clock hook is introduced. It is honoured by `daily-run-status.ts`, and both
+# `daily-scheduler.sh` and `pipeline-watchdog.sh` REFUSE to run for real while it
+# is set, so a fixed clock can never cause a real submission.
+#
+# 16:00Z on 2026-08-29 is 09:00 in America/Los_Angeles: after the 07:00
+# opportunity and its 30-minute grace, which is what Cases A, E and F need.
+readonly FIXED_NOW='2026-08-29T16:00:00.000Z'
+
+# THE BUSINESS ZONE, NOT THE HOST'S. `daily-run-state.ts` defines logical dates
+# and the due hour in `BUSINESS_TIMEZONE = America/Los_Angeles` precisely so the
+# verdict does not depend on where the machine is. Every fixture below is built
+# in that same zone, so this harness gives identical results under TZ=UTC,
+# TZ=Pacific/Honolulu or anything else - which is the property the old
+# host-clock fixtures did not have.
+readonly BUSINESS_TZ='America/Los_Angeles'
+
+# A CALLER-SUPPLIED VALUE IS NOT TRUSTED. The harness exports its own on every
+# invocation; anything inherited is discarded here so it cannot leak into a
+# child through the environment.
+unset SCHEDULER_TEST_NOW
+
 TMP=$(mktemp -d)
 trap 'rm -rf "$TMP"' EXIT
 DB="$TMP/pipeline-runs.db"
@@ -50,6 +80,7 @@ run_isolated() {
     REDIS_URL="$ISO_REDIS" \
     PIPELINE_RUNS_DB="$DB" \
     SCHEDULER_HEARTBEAT_FILE="$HB" \
+    SCHEDULER_TEST_NOW="$FIXED_NOW" \
     "$@" 2>&1)
   ISO_RC=$?
 }
@@ -60,27 +91,40 @@ sqlite3 "$DB" "CREATE TABLE pipeline_runs (
   doc_count INTEGER, chunk_count INTEGER, ticker_count INTEGER,
   error_message TEXT, error_stack TEXT, metadata_json TEXT);"
 
-TODAY=$(date '+%Y-%m-%d')
+# THE BUSINESS-ZONE DATE OF THE FIXED INSTANT. Never `date`.
+TODAY=$(python3 -c "
+import datetime,sys
+from zoneinfo import ZoneInfo
+now = datetime.datetime.fromisoformat(sys.argv[1].replace('Z','+00:00'))
+print(now.astimezone(ZoneInfo(sys.argv[2])).strftime('%Y-%m-%d'))" "$FIXED_NOW" "$BUSINESS_TZ")
 reset() { sqlite3 "$DB" "DELETE FROM pipeline_runs;"; : > "$HB"; }
-# local time -> stored UTC ISO, the way the pipeline records it
+# A business-zone wall-clock time on the fixed instant's day -> stored UTC ISO,
+# the way the pipeline records it. Anchored to FIXED_NOW and BUSINESS_TZ, so the
+# host's clock and the host's zone change nothing.
 utc()  { python3 -c "
 import datetime,sys
+from zoneinfo import ZoneInfo
 h,m = sys.argv[1].split(':')
-d = datetime.datetime.now().replace(hour=int(h),minute=int(m),second=0,microsecond=0)
-print(d.astimezone(datetime.timezone.utc).strftime('%Y-%m-%dT%H:%M:%S.000Z'))" "$1"; }
+now = datetime.datetime.fromisoformat(sys.argv[2].replace('Z','+00:00'))
+local = now.astimezone(ZoneInfo(sys.argv[3]))
+d = local.replace(hour=int(h),minute=int(m),second=0,microsecond=0)
+print(d.astimezone(datetime.timezone.utc).strftime('%Y-%m-%dT%H:%M:%S.000Z'))" "$1" "$FIXED_NOW" "$BUSINESS_TZ"; }
 add_run()  { sqlite3 "$DB" "INSERT INTO pipeline_runs (id,stage,started_at,ended_at,status)
              VALUES ('t-$2-$1','daily-pipeline','$(utc "$1")',$( [ -n "${3:-}" ] && echo "'$(utc "$3")'" || echo NULL ),'$2');"; }
 beat() { utc "$1" >> "$HB"; }
-# "the machine woke N minutes ago" — the Case B shape. Anchored to NOW, not to a
-# wall-clock hour, so the test means the same thing whatever time it runs.
+# "the machine woke N minutes ago" — the Case B shape. Anchored to the FIXED
+# instant, not to the host clock, so the test means the same thing whenever and
+# wherever it runs.
 beat_ago() { python3 -c "
 import datetime,sys
-d = datetime.datetime.now(datetime.timezone.utc) - datetime.timedelta(minutes=int(sys.argv[1]))
-print(d.strftime('%Y-%m-%dT%H:%M:%S.000Z'))" "$1" >> "$HB"; }
+now = datetime.datetime.fromisoformat(sys.argv[2].replace('Z','+00:00'))
+d = now - datetime.timedelta(minutes=int(sys.argv[1]))
+print(d.astimezone(datetime.timezone.utc).strftime('%Y-%m-%dT%H:%M:%S.000Z'))" "$1" "$FIXED_NOW" >> "$HB"; }
 
 check() { # name expected_state expected_eligible expected_alert
   local out state elig alert
   out=$(cd "$ROOT" && PIPELINE_RUNS_DB="$DB" SCHEDULER_HEARTBEAT_FILE="$HB" \
+        SCHEDULER_TEST_NOW="$FIXED_NOW" \
         npx tsx packages/pipeline-runs/bin/daily-run-status.ts --json 2>/dev/null)
   state=$(echo "$out" | python3 -c 'import json,sys;print(json.load(sys.stdin)["state"])')
   elig=$(echo  "$out" | python3 -c 'import json,sys;print(str(json.load(sys.stdin)["eligibleToRun"]).lower())')
@@ -92,8 +136,13 @@ check() { # name expected_state expected_eligible expected_alert
   fi
 }
 
-NOW_H=$(date '+%H')
-echo "Scheduler case matrix (throwaway DB, dry-run only) — local hour now: $NOW_H"
+NOW_H=$(python3 -c "
+import datetime,sys
+from zoneinfo import ZoneInfo
+now = datetime.datetime.fromisoformat(sys.argv[1].replace('Z','+00:00'))
+print(now.astimezone(ZoneInfo(sys.argv[2])).strftime('%H'))" "$FIXED_NOW" "$BUSINESS_TZ")
+echo "Scheduler case matrix (throwaway DB, dry-run only)"
+echo "fixed clock: $FIXED_NOW  ==  $TODAY $NOW_H:00 $BUSINESS_TZ  (host clock unused)"
 echo
 
 reset; beat "07:05"
