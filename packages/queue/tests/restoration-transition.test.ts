@@ -166,6 +166,82 @@ describe('a proved rehearsal can walk through restoration to review and apply', 
   })
 })
 
+describe('the confirmation binds the launchd observation', () => {
+  /** The same world, answering as if every reviewed label were loaded. */
+  const asLoaded = (w: World) => ({
+    openPlist: w.commands.openPlist,
+    run: async (file: string, args: readonly string[], c: never) => {
+      if (file.endsWith('launchctl') && args[0] === 'print') {
+        const label = String(args[1]).split('/').pop() as string
+        if (label !== STRUCTURED) {
+          return { code: 0, stderr: '',
+            stdout: `\tpath = ${join(w.agents, `${label}.plist`)}\n` +
+                    '\tstate = running\n\tpid = 4242\n\tlast exit code = 0\n' }
+        }
+      }
+      return await w.commands.run(file, args, c)
+    },
+  })
+
+  it('a changed observed state REFUSES the confirmation, before any supervisor', async () => {
+    // THE HOLE THIS CLOSES. The stable binding is invariant across
+    // installed-unloaded -> installed-loaded, by design — that invariance is
+    // what lets a rehearsal survive the restoration. Without the observation in
+    // the execution binding, an operator could inspect a quiescent world, take
+    // the token, watch every producer come back up, and paste the same token
+    // into a rehearsal: nothing the token covered had changed. Measured before
+    // this was bound: the two tokens were byte-identical.
+    const w = await ready({ restorable: true })
+    const token = await tokenFor(w, 'rehearse', deps(w))
+
+    const loaded = { ...w, commands: asLoaded(w) }
+    // THE SUPERVISOR IS COUNTED AND THEN REFUSED, so this case can never reach a
+    // fence or an intervention hold in the parent worker. A hold is unbounded by
+    // design; if a regression ever made this confirmation match, an
+    // in-worker hold would hang the suite and be stopped only by a matrix-level
+    // ceiling — which is exactly how the K5.3 chain lost 5 GiB once already.
+    // Refusing here turns that regression into a fast, bounded failure.
+    let supervisorsOpened = 0
+    const d = deps(loaded, {
+      openSupervisor: async () => {
+        supervisorsOpened += 1
+        throw new Error('the confirmation should have been refused before this')
+      },
+    })
+    const r = await runOpsCli(rehearseArgs(loaded, token), d)
+
+    expect(r.exitCode, r.lines.join('\n')).not.toBe(EXIT_OK)
+    expect(r.exitCode).not.toBe(EXIT_ACTION_REQUIRED)
+    expect(r.lines.join('\n')).toMatch(/confirmation does not match/)
+    // AND IT REFUSED EARLY: no supervisor session, so no fence could be taken.
+    expect(supervisorsOpened).toBe(0)
+  })
+
+  it('the SAME observed states accept the confirmation', async () => {
+    // NON-VACUITY. The refusal above must be about the observation, not about
+    // the token being unusable in general.
+    const w = await ready({ restorable: true })
+    const token = await tokenFor(w, 'rehearse', deps(w))
+    expect((await runOpsCli(rehearseArgs(w, token), deps(w))).exitCode)
+      .toBe(EXIT_ACTION_REQUIRED)
+  })
+
+  it('the inspection prints the observation digest beside the stable one', async () => {
+    const w = await ready({ restorable: true })
+    const r = await runOpsCli(base(w, ['--for=rehearse', '--inspect',
+      `--rehearsal-authorization=${w.authorization}`]), deps(w))
+    expect(r.exitCode, r.lines.join('\n')).toBe(EXIT_OK)
+    const stable = r.lines.find(l => l.startsWith('operational adapter binding '))
+    const observed = r.lines.find(l => l.startsWith('launchd observation '))
+    expect(stable).toBeDefined()
+    expect(observed).toBeDefined()
+    expect((observed as string).trim().split(/\s+/).pop()).toMatch(/^[0-9a-f]{64}$/)
+    // TWO DIFFERENT DIGESTS, so neither is a restatement of the other.
+    expect((stable as string).trim().split(/\s+/).pop())
+      .not.toBe((observed as string).trim().split(/\s+/).pop())
+  })
+})
+
 describe('the transition is permitted; drift inside it is not', () => {
   const chainTo = async (w: World): Promise<void> => {
     const d = deps(w)

@@ -5,6 +5,7 @@
 // nothing that could carry a credential can reach an operational binding.
 
 import { describe, expect, it } from 'vitest'
+import { readFileSync } from 'node:fs'
 
 import {
   APPLY_PREFIX, BindingRefused, COPY_BINDING_SHAPE_VERSION, REHEARSE_PREFIX, TOKEN_PATTERN,
@@ -87,6 +88,8 @@ const OPS = (over: Partial<OperationalAdapterBinding> = {}): OperationalAdapterB
 const EXEC = (over: Partial<ExecutionBinding> = {}): ExecutionBinding => ({
   copyBindingDigest: null,
   operationalAdapterBindingDigest: operationalBindingDigest(OPS()),
+  modeObservationDigest: modeObservationDigest(
+    REVIEWED_PRODUCERS.map(label => ({ label, installation: 'installed-unloaded' as const }))),
   mode: 'rehearse',
   runId: 'a1b2c3d4',
   stamp: '20260925T091500Z',
@@ -264,7 +267,9 @@ describe('OperationalAdapterBinding', () => {
 
   it('the OBSERVATION digest moves where the stable digest deliberately does not', () => {
     // Requirement: confirmation integrity must not be weakened by making the
-    // stable binding invariant. The observation is pinned separately instead.
+    // stable binding invariant. The observation is pinned in the EXECUTION
+    // binding instead, where every mode confirmation carries it — see
+    // 'the CONFIRMATION moves when the observation moves' below for the live path.
     const unloaded = REVIEWED_PRODUCERS.map(
       label => ({ label, installation: 'installed-unloaded' as const }))
     const loaded = REVIEWED_PRODUCERS.map(
@@ -290,6 +295,61 @@ describe('OperationalAdapterBinding', () => {
   it('stableInstallationOf is total over the four observed states', () => {
     expect(INSTALLATION_STATES.map(stableInstallationOf))
       .toEqual(['installed', 'installed', 'installed', 'expected-absent'])
+  })
+
+  it('the CONFIRMATION moves when the observation moves, and the stable digest does not', () => {
+    // THE HOLE THIS CLOSES. The stable binding is invariant across
+    // installed-unloaded -> installed-loaded, by design. Without the observation
+    // in the execution binding, an operator could inspect a quiescent world,
+    // take the token, watch every producer come back, and paste the same token
+    // into a rehearsal. Measured before this change: byte-identical tokens.
+    const unloaded = REVIEWED_PRODUCERS.map(
+      label => ({ label, installation: 'installed-unloaded' as const }))
+    const loaded = REVIEWED_PRODUCERS.map(
+      label => ({ label, installation: 'installed-loaded' as const }))
+    const a = EXEC({ modeObservationDigest: modeObservationDigest(unloaded) })
+    const b = EXEC({ modeObservationDigest: modeObservationDigest(loaded) })
+
+    expect(confirmationToken(a)).not.toBe(confirmationToken(b))
+    // AND THE STABLE DIGEST IS UNMOVED, which is the property that lets a
+    // rehearsal survive the restoration.
+    expect(a.operationalAdapterBindingDigest).toBe(b.operationalAdapterBindingDigest)
+  })
+
+  it('ONE changed observed state is enough to move the confirmation', () => {
+    const base = REVIEWED_PRODUCERS.map(
+      label => ({ label, installation: 'installed-unloaded' as const }))
+    const one = base.map((o, n) => n === 0
+      ? { ...o, installation: 'installed-loaded' as const } : o)
+    expect(confirmationToken(EXEC({ modeObservationDigest: modeObservationDigest(base) })))
+      .not.toBe(confirmationToken(EXEC({ modeObservationDigest: modeObservationDigest(one) })))
+  })
+
+  it('the observation digest is a REQUIRED field of ExecutionBinding', () => {
+    // STRUCTURAL, AND IT HAS TO BE. Making the field optional
+    // (`modeObservationDigest?: string`) changes nothing a runtime test can see:
+    // every fixture still supplies it, and the validator still throws on
+    // undefined. What optionality actually does is let a FUTURE caller omit it
+    // and compile — which is the whole hole this field closes. Measured: the
+    // mutation survived every behavioural control.
+    const src = readFileSync(
+      new URL('../src/pg-copy/bindings.ts', import.meta.url), 'utf-8')
+    const iface = src.slice(src.indexOf('export interface ExecutionBinding'),
+                            src.indexOf('export function executionBindingDocument'))
+    expect(iface).toContain('readonly modeObservationDigest: string')
+    expect(iface).not.toContain('modeObservationDigest?')
+    // Non-vacuity: the slice really is the interface.
+    expect(iface).toContain('readonly operationalAdapterBindingDigest: string')
+  })
+
+  it('the execution document CARRIES the observation digest and validates it', () => {
+    const doc = JSON.parse(canonicalJson(executionBindingDocument(EXEC()))) as
+      Record<string, unknown>
+    expect(doc.mode_observation_digest).toMatch(/^[0-9a-f]{64}$/)
+    expect(doc.binding_version).toBe(3)
+    for (const bad of ['', 'nothex', 'a'.repeat(63), 'A'.repeat(64)]) {
+      expect(() => executionBindingDocument(EXEC({ modeObservationDigest: bad })), bad).toThrow()
+    }
   })
 
   it('binds the post-restoration policy by PATH AND HASH, not by mention', () => {

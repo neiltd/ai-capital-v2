@@ -51,7 +51,8 @@ import {
   acquireSourceFence, copyBindingDigest, copySetDigest, evidenceStamp, newRunId,
   openPsqlBackend, readPublishedBundle,
   REVIEWED_PRODUCERS, REVIEWED_QUEUES, assertConfirmationMatches,
-  assertOperationalBindingUnchanged, confirmationToken, operationalBindingDigest,
+  assertOperationalBindingUnchanged, confirmationToken, modeObservationDigest,
+  operationalBindingDigest,
   BindingRefused, DIGEST_FILE, EVIDENCE_RETRY_SCRATCH, EvidenceRefused,
   LifecycleEvidenceFailed, REAL_EVIDENCE_OPS, ReleaseGateRefused,
   discardScratch, inspectScratch,
@@ -816,19 +817,39 @@ const defaultMeasureRepository = async (
       })
     }))
 
-/** The execution binding for one invocation, and its mode-bound token. */
+/**
+ * The execution binding for one invocation, and its mode-bound token.
+ *
+ * `observationDigest` IS REQUIRED and is not defaulted. A default would be a
+ * value nobody measured, shared by every caller that forgot to pass one - which
+ * is exactly the shape of the hole this argument closes.
+ */
 export function executionBindingFor(
-  mode: CopyMode, operationalDigest: string, copyDigest: string | null,
+  mode: CopyMode, operationalDigest: string, observationDigest: string,
+  copyDigest: string | null,
   runId: string, stamp: string, authorizationDigest: string,
 ): ExecutionBinding {
   return {
     copyBindingDigest: copyDigest,
     operationalAdapterBindingDigest: operationalDigest,
+    modeObservationDigest: observationDigest,
     mode,
     runId,
     stamp,
     modeAuthorizationDigest: authorizationDigest,
   }
+}
+
+/**
+ * THE ORDERED OBSERVATION A BINDING WAS DERIVED AGAINST.
+ *
+ * Taken from the producers in the binding itself, so it describes the same
+ * measurement pass rather than a second, later look at launchd. Ordered, because
+ * the producer order is part of the stop sequence.
+ */
+export function observationOf(binding: OperationalAdapterBinding): string {
+  return modeObservationDigest(
+    binding.producers.map(({ label, installation }) => ({ label, installation })))
 }
 
 export { assertConfirmationMatches, confirmationToken, operationalBindingDigest }
@@ -1193,6 +1214,8 @@ export interface HoldInputs {
    */
   readonly outerRunId: string
   readonly operationalDigest: string
+  /** The observation the confirmation is bound to. Compared, never re-derived. */
+  readonly observationDigest: string
   readonly fenceState: HoldFenceState
   readonly supervisorPid: string
   readonly backendStart: string
@@ -2089,6 +2112,8 @@ export interface ModeInputs {
   readonly scope: ScopeInputs
   readonly binding: OperationalAdapterBinding
   readonly operationalDigest: string
+  /** The observation the confirmation is bound to. Compared, never re-derived. */
+  readonly observationDigest: string
   readonly deps: OpsDeps
   readonly deadlineMs: number
   readonly say: (l: string) => void
@@ -2137,7 +2162,8 @@ export async function runRehearsal(i: ModeInputs): Promise<CliResult> {
     .digest('hex')
   assertConfirmationMatches(
     required(v, '--confirm'),
-    executionBindingFor('rehearse', i.operationalDigest, null, runId, stamp, authorizationDigest),
+    executionBindingFor('rehearse', i.operationalDigest, i.observationDigest,
+                        null, runId, stamp, authorizationDigest),
     'rehearse')
 
   const attestation = readAttestation(required(v, '--quiescence-attestation'))
@@ -2184,6 +2210,7 @@ export async function runRehearsal(i: ModeInputs): Promise<CliResult> {
       root: i.scope.evidenceRoot, stamp, newRunId: deps.newRunId, mode: 'rehearse',
       outerRunId: runId,
       operationalDigest: i.operationalDigest,
+      observationDigest: i.observationDigest,
       fenceState: state,
       supervisorPid: f.supervisorPid, backendStart: f.backendStart,
       reason, priorBundles,
@@ -2238,6 +2265,11 @@ export async function runRehearsal(i: ModeInputs): Promise<CliResult> {
         outcome: PRE_RELEASE_OUTCOME,
         mode: 'rehearse',
         operational_adapter_binding_digest: i.operationalDigest,
+        // THE OBSERVATION THIS RUN'S CONFIRMATION WAS BOUND TO. Recorded so the
+        // record says which launchd states the operator actually confirmed. It is
+        // NOT compared across phases: a restoration observes different states by
+        // design, and cross-phase equality uses the stable operational digest.
+        mode_observation_digest: i.observationDigest,
         run: { id: runId, stamp },
         fence: { ...authorization.fence },
         fenced_backend: {
@@ -2313,6 +2345,11 @@ export async function runRehearsal(i: ModeInputs): Promise<CliResult> {
         outcome: REHEARSAL_OUTCOME,
         mode: 'rehearse',
         operational_adapter_binding_digest: i.operationalDigest,
+        // THE OBSERVATION THIS RUN'S CONFIRMATION WAS BOUND TO. Recorded so the
+        // record says which launchd states the operator actually confirmed. It is
+        // NOT compared across phases: a restoration observes different states by
+        // design, and cross-phase equality uses the stable operational digest.
+        mode_observation_digest: i.observationDigest,
         run: { id: runId, stamp },
         // THE RELEASE IS PROVED, and the record says so in its own fields.
         fence_state: 'released',
@@ -3338,6 +3375,9 @@ export async function runOpsCli(argv: readonly string[], deps: OpsDeps): Promise
 
     const binding = await deriveOperationalBinding(scope, deadlineMs)
     const operationalDigest = operationalBindingDigest(binding)
+    // THE OBSERVATION, FROM THE SAME MEASUREMENT PASS. Derived here, next to the
+    // stable digest, so every mode that mints or checks a confirmation carries it.
+    const observationDigest = observationOf(binding)
 
     // ----- INSPECT -----------------------------------------------------
     if (parsed.mode === '--inspect') {
@@ -3369,9 +3409,13 @@ export async function runOpsCli(argv: readonly string[], deps: OpsDeps): Promise
       // EXACTLY ONE TOKEN, for the named mode. Printing both would be the
       // ambiguity the two prefixes exist to remove.
       const token = confirmationToken(executionBindingFor(
-        forMode, operationalDigest, copyDigest, runId, stamp, authorizationDigest))
+        forMode, operationalDigest, observationDigest,
+        copyDigest, runId, stamp, authorizationDigest))
       say(`mode ${forMode}`)
       say(`operational adapter binding ${operationalDigest}`)
+      // BOTH, AND LABELLED. The stable digest is what survives a restoration;
+      // the observation digest is what this token is specific to.
+      say(`launchd observation       ${observationDigest}`)
       say(`run ${runId} ${stamp}`)
       say(`confirmation ${token}`)
       // TRUTHFULLY, AND THE TWO MODES DIFFER.
@@ -3424,7 +3468,7 @@ export async function runOpsCli(argv: readonly string[], deps: OpsDeps): Promise
     }
 
     const modeInputs: ModeInputs = {
-      v, scope, binding, operationalDigest, deps, deadlineMs, say,
+      v, scope, binding, operationalDigest, observationDigest, deps, deadlineMs, say,
     }
     if (parsed.mode === '--rehearse') {
       const r = await runRehearsal(modeInputs)

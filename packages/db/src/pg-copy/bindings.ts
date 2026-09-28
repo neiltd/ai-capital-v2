@@ -47,12 +47,22 @@ export const TOKEN_PATTERN: Readonly<Record<CopyMode, RegExp>> = Object.freeze({
 
 /** Bumped when any binding changes shape, so an old token cannot match a new one. */
 /**
- * 2 since S4F-D5-K5.3, which moved the TRANSIENT launchd load state out of the
- * operational binding document and replaced it with the STABLE topology. A
- * document at version 1 and one at version 2 describe the same world with
- * different fields, so the digest must not be comparable across the change.
+ * 3 since S4F-D5-K5.3.5, which binds the TRANSIENT launchd observation into the
+ * mode confirmation.
+ *
+ * 2 had moved that observation out of the operational binding document and
+ * replaced it with the STABLE topology - correct, and necessary for a rehearsal
+ * to survive a restoration. What 2 did NOT do was put the observation anywhere a
+ * confirmation could see it: `modeObservationDigest` existed, was exported and
+ * was tested, and had ZERO production call sites. Two inspections of the same
+ * world, one with the labels unloaded and one with them loaded, therefore minted
+ * the IDENTICAL confirmation token - measured, before this change.
+ *
+ * So the execution binding now carries the observation digest as a required
+ * field and serializes it. The confirmation document's shape changes, so the
+ * version moves: a token minted under 2 must not verify under 3.
  */
-export const BINDING_VERSION = 2
+export const BINDING_VERSION = 3
 
 export class BindingRefused extends Error {
   constructor(readonly reason: BindingReason, readonly at: string | null = null) {
@@ -312,8 +322,9 @@ export const INSTALLED_STATES: readonly InstallationState[] =
  *
  * The observation is NOT erased. It is measured freshly at every phase, carried
  * on the same `ProducerIdentity`, published in evidence, compared against the
- * post-restoration policy, and - if a mode wants to pin it - digested separately
- * through `modeObservationDigest`.
+ * post-restoration policy, and digested separately through
+ * `modeObservationDigest` - which every mode confirmation now carries as a
+ * required field, so a changed observation refuses the token.
  */
 export type StableInstallation = 'installed' | 'expected-absent'
 
@@ -541,8 +552,10 @@ export function operationalBindingDocument(b: OperationalAdapterBinding): Canoni
       label: p.label,
       // THE STABLE TOPOLOGY ONLY. The observed launchd state is deliberately NOT
       // serialized here: including it is what made the binding digest move when
-      // an operator bootstrapped a label, which is the defect this version fixes.
-      // A mode that needs to pin what it observed uses `modeObservationDigest`.
+      // an operator bootstrapped a label, which is the defect version 2 fixed.
+      // The observation is bound instead to the EXECUTION binding, as
+      // `mode_observation_digest`, so the confirmation is specific to what was
+      // observed while the stable digest stays comparable across phases.
       stable_installation: p.stableInstallation,
       plist: p.plistPath === null ? null
         : { path: p.plistPath, sha256: p.plistSha256, device_inode: p.plistDeviceInode },
@@ -626,6 +639,22 @@ export interface ExecutionBinding {
   /** Absent for a rehearsal: there is no copy to bind. */
   readonly copyBindingDigest: string | null
   readonly operationalAdapterBindingDigest: string
+  /**
+   * THE TRANSIENT LAUNCHD OBSERVATION, BOUND TO THIS ONE INVOCATION.
+   *
+   * REQUIRED, not optional. The stable operational binding is deliberately
+   * invariant across `installed-unloaded -> installed-loaded`, because a
+   * rehearsal has to survive the restoration it exists to exercise. That
+   * invariance is correct and it is also a hole: without this field, an operator
+   * could inspect a quiescent world, receive a token, watch every producer come
+   * back up, and paste the same token into a rehearsal - because nothing the
+   * token covered had changed.
+   *
+   * It is a SEPARATE digest, not a field of the operational document, so the
+   * stable digest stays comparable across phases while the confirmation stays
+   * specific to what was actually observed when it was minted.
+   */
+  readonly modeObservationDigest: string
   readonly mode: CopyMode
   readonly runId: string
   readonly stamp: string
@@ -639,6 +668,7 @@ export function executionBindingDocument(b: ExecutionBinding): Canonical {
   // the thing being copied unnamed.
   need(b.mode !== 'apply' || b.copyBindingDigest !== null, 'copyBindingDigest')
   need(HEX64.test(b.operationalAdapterBindingDigest), 'operationalAdapterBindingDigest')
+  need(HEX64.test(b.modeObservationDigest), 'modeObservationDigest')
   need(HEX64.test(b.modeAuthorizationDigest), 'modeAuthorizationDigest')
   need(/^[0-9a-f]{8}$/.test(b.runId), 'runId')
   need(/^\d{8}T\d{6}Z$/.test(b.stamp), 'stamp')
@@ -646,6 +676,7 @@ export function executionBindingDocument(b: ExecutionBinding): Canonical {
     binding_version: BINDING_VERSION,
     copy_binding_digest: b.copyBindingDigest,
     operational_adapter_binding_digest: b.operationalAdapterBindingDigest,
+    mode_observation_digest: b.modeObservationDigest,
     mode: b.mode,
     run: { id: b.runId, stamp: b.stamp },
     mode_authorization_digest: b.modeAuthorizationDigest,

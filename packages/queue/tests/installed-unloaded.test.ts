@@ -530,8 +530,12 @@ describe('every field installed-unloaded binds changes the operational binding',
   })
 
   it('the OBSERVATION digest moves across that same transition', async () => {
-    // Confirmation integrity is preserved by pinning the observation separately,
-    // not by putting it back into the stable topology.
+    // Confirmation integrity is preserved by binding the observation into the
+    // EXECUTION binding, not by putting it back into the stable topology. That
+    // is a live path, not an available helper: `modeObservationDigest` is a
+    // required field of `ExecutionBinding`, so a changed observed state refuses
+    // the confirmation. See restoration-transition.test.ts >
+    // 'a changed observed state REFUSES the confirmation, before any supervisor'.
     const unloaded = REVIEWED_PRODUCERS.map(label => ({
       label, installation: (label === STRUCTURED ? 'expected-absent' : 'installed-unloaded') as never }))
     const loaded = REVIEWED_PRODUCERS.map(label => ({

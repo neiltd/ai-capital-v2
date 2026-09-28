@@ -31,8 +31,26 @@ unloading, which is the property the whole sequence depends on.
 
 This is **not** erased or normalised. It is measured freshly at every phase,
 recorded on the same producer record, published in evidence, compared against the
-post-restoration policy, and can be pinned on its own through
-`modeObservationDigest`.
+post-restoration policy, and digested through `modeObservationDigest` — which
+every mode confirmation now carries as a **required** field.
+
+That last part was a claim before it was a mechanism. `modeObservationDigest`
+existed, was exported and was tested, and had **zero production call sites**: two
+inspections of the same world, one with the labels unloaded and one with them
+loaded, minted byte-identical confirmation tokens. An operator could inspect a
+quiescent world, take the token, watch every producer come back up, and paste the
+same token into a rehearsal, because nothing the token covered had changed. The
+observation is now bound into `ExecutionBinding` and serialized as
+`mode_observation_digest`, so a changed observed state refuses the confirmation
+**before** a supervisor session is opened or a fence is taken. `BINDING_VERSION`
+is `3` for that shape change.
+
+The two digests are deliberately separate: the stable one stays comparable across
+phases, the observation one makes each confirmation specific to what was actually
+seen. The observation digest is **never** compared across rehearsal and
+restoration — those phases observe different launchd states on purpose, and
+cross-phase equality uses the stable operational digest and the independently
+measured post-restoration policy.
 
 ## Why the split exists
 
@@ -60,8 +78,9 @@ sanitized host/port/database, disposition, queue and blocking policy, process
 policy, Redis identity, evidence-root identity, restoration-policy identity and
 implementation identity. Drift in any of those still refuses.
 
-`BINDING_VERSION` is `2` because the document shape changed; a version-1 digest
-and a version-2 digest are not comparable, which is the intended signal.
+`BINDING_VERSION` is `3`: version 2 moved the observation out of the operational
+document, and version 3 bound it into the confirmation. Digests are not
+comparable across those versions, which is the intended signal.
 
 ## Who owns which phase-specific fact
 

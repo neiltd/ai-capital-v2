@@ -348,18 +348,39 @@ describe('the four relocated scripts derive ROOT from their own location', () =>
     copyFileSync(join(REPO, 'scripts', script), dst)
     chmodSync(dst, 0o755)
 
+    // EVERY EXECUTABLE ASSIGNMENT, THEN EXACTLY ONE, THEN THE REVIEWED FORM.
+    //
+    // Matching only lines EQUAL to the expected string was the subtler mistake:
+    // a script that gained a second, different `ROOT=` line would still show
+    // exactly one match of the expected text, so the probe would execute the
+    // reviewed assignment and never notice the other one — while the real script
+    // ran both and used the last. The set is therefore built from every
+    // non-comment executable `ROOT=` line, its size is checked, and only then is
+    // its content compared with the reviewed form.
+    //
+    // And what is EXECUTED is the line taken from the script, not a hard-coded
+    // replacement: a probe that runs its own copy of the text proves that text
+    // works, not that the script contains it.
     const lines = readFileSync(dst, 'utf-8').split('\n')
-    // REFUSE UNLESS THERE IS EXACTLY ONE, IN THE REVIEWED FORM. Absent means the
-    // derivation is gone; duplicated means the probe would not know which one
-    // the script actually uses.
-    const rootLines = lines.filter(l => l.trim() === ROOT_ASSIGNMENT)
-    expect(rootLines.length, `${script}: reviewed ROOT assignment`).toBe(1)
+    const executable = lines.filter(l => !/^\s*#/.test(l) && l.trim() !== '')
+    const isAssignment = (l: string, name: string): boolean =>
+      new RegExp(`^(export\\s+)?${name}=`).test(l.trim())
 
-    const taken = [ROOT_ASSIGNMENT]
-    // DATA_ROOT ONLY WHERE THE SCRIPT ACTUALLY HAS IT.
-    const dataLines = lines.filter(l => l.trim() === DATA_ROOT_ASSIGNMENT)
-    expect(dataLines.length, `${script}: reviewed DATA_ROOT assignment`).toBeLessThanOrEqual(1)
-    if (dataLines.length === 1) taken.push(DATA_ROOT_ASSIGNMENT)
+    const rootLines = executable.filter(l => isAssignment(l, 'ROOT'))
+    expect(rootLines.length, `${script}: executable ROOT assignments`).toBe(1)
+    expect(rootLines[0]?.trim(), `${script}: ROOT assignment form`).toBe(ROOT_ASSIGNMENT)
+
+    const taken = [rootLines[0] as string]
+
+    // DATA_ROOT ONLY WHERE THE SCRIPT ACTUALLY HAS IT, and by the same rule.
+    const dataLines = executable.filter(l => isAssignment(l, 'DATA_ROOT'))
+    expect(dataLines.length, `${script}: executable DATA_ROOT assignments`)
+      .toBeLessThanOrEqual(1)
+    if (dataLines.length === 1) {
+      expect(dataLines[0]?.trim(), `${script}: DATA_ROOT assignment form`)
+        .toBe(DATA_ROOT_ASSIGNMENT)
+      taken.push(dataLines[0] as string)
+    }
 
     // The probe MUST live where the real script lives: BASH_SOURCE[0] is the
     // executing file, so a probe written elsewhere would derive that other
@@ -377,6 +398,30 @@ describe('the four relocated scripts derive ROOT from their own location', () =>
     // requires is asserted here in its own right.
     const lines = readFileSync(join(REPO, 'scripts', script), 'utf-8').split('\n')
     expect(lines.filter(l => l.trim() === ROOT_ASSIGNMENT).length).toBe(1)
+  })
+
+  it('a SECOND executable ROOT assignment is refused', () => {
+    // NON-VACUITY FOR THE COUNT. `ROOT=/wrong` appended to a copy is exactly the
+    // shape the old equality-only filter could not see: the reviewed line is
+    // still present exactly once, so a filter matching only that text finds one
+    // and proceeds — while the script itself would run both and end up at
+    // /wrong. Test-only: the real scripts are never modified.
+    const fakeRoot = join(work, 'second-assignment')
+    mkdirSync(join(fakeRoot, 'scripts'), { recursive: true })
+    const dst = join(fakeRoot, 'scripts', 'run-alerts.sh')
+    copyFileSync(join(REPO, 'scripts', 'run-alerts.sh'), dst)
+    writeFileSync(dst, `${readFileSync(dst, 'utf-8')}\nROOT=/wrong\n`)
+    chmodSync(dst, 0o755)
+
+    const lines = readFileSync(dst, 'utf-8').split('\n')
+    const executable = lines.filter(l => !/^\s*#/.test(l) && l.trim() !== '')
+    const rootLines = executable.filter(l => /^(export\s+)?ROOT=/.test(l.trim()))
+    // TWO now, and the reviewed text is still present exactly once — which is
+    // precisely why counting only the reviewed text was not enough.
+    expect(rootLines.length).toBe(2)
+    expect(rootLines.filter(l => l.trim() === ROOT_ASSIGNMENT).length).toBe(1)
+    // The rule the probe applies rejects this script.
+    expect(rootLines.length).not.toBe(1)
   })
 
   it('the probe executes the assignments ONLY, never a surrounding statement', () => {
