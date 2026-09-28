@@ -50,6 +50,7 @@ import {
   observeUnscriptedHold, proverStub, ready, rehearseArgs, supervisorStub,
   takeUnscriptedHold, tokenFor,
 } from './ops-world.js'
+import { installSelfLimit } from './self-limit.js'
 import type { HoldSpec } from './hold-spec.js'
 
 const [specPath, outDir] = process.argv.slice(2)
@@ -78,6 +79,50 @@ const flushRoots = (): void => {
   writeFileSync(rootsFile, `${text}\n`)
 }
 setInterval(flushRoots, 25).unref()
+
+// ---------------------------------------------------------------------------
+// THE CHILD'S OWN CEILINGS, WHICH DO NOT NEED A PARENT
+// ---------------------------------------------------------------------------
+
+// ARMED BEFORE ANYTHING ELSE. See `self-limit.ts` for why this exists on the
+// child side at all when `contained.ts` already polices the same three ceilings:
+// the short answer is that the parent can stop existing, and a detached child
+// reparented to PPID 1 publishes into a root nobody is left to remove.
+const SELF = installSelfLimit(outDir)
+
+/**
+ * EVERY EVIDENCE OPERATION, CHECKED FIRST.
+ *
+ * WHY NOT ONLY A TIMER. Because a timer never runs. The retry cycle pauses through
+ * an injected `sleep` that resolves at once, so the whole thing is a chain of
+ * microtasks and the event loop never reaches a `setInterval` - measured, not
+ * assumed: a timer-driven census recorded zero samples across twenty-eight
+ * thousand cycles. A ceiling that can only be enforced by a timer is therefore no
+ * ceiling at all against precisely the runaway it exists to stop. So the check is
+ * called synchronously from the operations that create and publish, and the timer
+ * inside `installSelfLimit` is the defence in depth rather than the mechanism.
+ *
+ * INSTALLED ALWAYS, around whatever the spec asked for, so no case can opt out of
+ * the ceilings by not injecting failing operations. It delegates everything: the
+ * only difference an unmutated run can observe is that a runaway stops.
+ */
+function guarded(base: EvidenceOps): EvidenceOps {
+  return {
+    ...base,
+    mkdirSync: ((path: never, opts?: never) => {
+      SELF.check()
+      return base.mkdirSync(path, opts)
+    }) as typeof base.mkdirSync,
+    openSync: ((path: never, flags: never, mode?: never) => {
+      SELF.check()
+      return base.openSync(path, flags, mode)
+    }) as typeof base.openSync,
+    renameNoReplace: (from: string, to: string) => {
+      SELF.check()
+      return base.renameNoReplace(from, to)
+    },
+  }
+}
 
 // ---------------------------------------------------------------------------
 // THE REPORT, WRITTEN AS IT HAPPENS
@@ -139,6 +184,9 @@ const spec = JSON.parse(readFileSync(specPath, 'utf-8')) as HoldSpec
 const w = await ready(spec.world ?? {})
 report.root = w.dir
 report.evidence = w.evidence
+// THE CEILINGS NOW HAVE SOMETHING TO MEASURE. Set before anything is published,
+// so there is no window in which this process can grow a root unwatched.
+SELF.watch(w.dir, w.evidence)
 flush()
 flushRoots()
 const token = await tokenFor(w, 'rehearse')
@@ -463,7 +511,8 @@ const fsyncTargets = new Set<number>()
 
 
 const held = resolver()
-const ops = failingOps()
+// ALWAYS GUARDED, whether or not this case injects failing operations.
+const ops = guarded(failingOps() ?? REAL_EVIDENCE_OPS)
 let runIdSeq = 0
 
 const r = await runOpsCli(rehearseArgs(w, token, spec.rehearseExtra ?? []), deps(w, {
@@ -478,7 +527,7 @@ const r = await runOpsCli(rehearseArgs(w, token, spec.rehearseExtra ?? []), deps
       },
     }
     : {}),
-  ...(ops === undefined ? {} : { ops }),
+  ops,
   ...(spec.runIdMinterThrows === true
     ? {
       newRunId: () => {

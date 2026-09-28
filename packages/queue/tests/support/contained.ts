@@ -30,15 +30,15 @@
 // reports them before it publishes anything into them. Nothing else on the
 // machine is touched.
 
-import { spawn, execFileSync } from 'node:child_process'
-import { existsSync, mkdirSync, mkdtempSync, readFileSync, readdirSync, rmSync,
+import { spawn } from 'node:child_process'
+import { existsSync, mkdirSync, mkdtempSync, readFileSync, readdirSync,
          statSync } from 'node:fs'
-import { tmpdir } from 'node:os'
 import { dirname, join } from 'node:path'
 import { fileURLToPath } from 'node:url'
 import { writeFileSync } from 'node:fs'
 
 import { ROOTS, ROOT_PREFIX } from './ops-world.js'
+import { realTmp, removeProvedRoot } from './roots.js'
 import type { HoldReport, HoldSpec } from './hold-spec.js'
 
 const HERE = dirname(fileURLToPath(import.meta.url))
@@ -209,6 +209,13 @@ const readReport = (file: string): HoldReport => {
  * Published evidence is frozen 0500/0400 on purpose, so a plain recursive remove
  * cannot descend into it. The freeze is the property under test, not an obstacle:
  * what created these directories unfreezes them, and nothing else is touched.
+ *
+ * TWO GUARDS, NOT ONE. The prefix check says the path is something THIS container
+ * handed to THIS child, which nothing else on the machine can have created; and
+ * `removeProvedRoot` then re-proves, independently, that the path is a real
+ * directory directly beneath the real temporary directory, under the reviewed
+ * name, owned by this user. The second is what makes a substituted or symlinked
+ * path a refusal rather than a deletion, and the unfreeze happens only after it.
  */
 function removeRoots(roots: readonly string[]): void {
   for (const r of roots) {
@@ -216,15 +223,8 @@ function removeRoots(roots: readonly string[]): void {
       throw new Error(`a contained child reported a root outside its own prefix: ${r}`)
     }
     if (!existsSync(r)) continue
-    execFileSync('/bin/chmod', ['-R', 'u+rwX', r])
-    rmSync(r, { recursive: true, force: true })
+    removeProvedRoot(r)
   }
-}
-
-let cachedTmp: string | null = null
-const realTmp = (): string => {
-  if (cachedTmp === null) cachedTmp = execFileSync('/bin/pwd', { cwd: tmpdir(), encoding: 'utf-8' }).trim()
-  return cachedTmp
 }
 
 /**
@@ -264,7 +264,21 @@ export async function runContained(spec: HoldSpec, over: {
     // child and anything it started", and nothing else.
     detached: true,
     stdio: ['ignore', 'pipe', 'pipe'],
-    env: { ...process.env, PGCOPY_MODES_ROOT_PREFIX: childPrefix },
+    env: {
+      ...process.env,
+      PGCOPY_MODES_ROOT_PREFIX: childPrefix,
+      // THE CHILD'S OWN CEILINGS, DERIVED FROM THESE AND DELIBERATELY HIGHER.
+      //
+      // The parent is the primary enforcement and must keep winning, so that an
+      // ordinary contained run is still killed here and still reports which
+      // ceiling it breached - the verdict every case asserts on. The child's are
+      // the backstop for the run where this process no longer exists to enforce
+      // anything, so they only have to be finite, and being looser makes them
+      // invisible whenever a parent survives.
+      PGCOPY_MODES_CHILD_WALL_CLOCK_MS: String(wallClockMs * 2 + 60_000),
+      PGCOPY_MODES_CHILD_MAX_BUNDLES: String(maxBundles * 2),
+      PGCOPY_MODES_CHILD_MAX_BYTES: String(maxBytes * 2),
+    },
   })
   const pid = child.pid as number
   LIVE_CHILDREN.set(pid, { control, prefix: childPrefix })

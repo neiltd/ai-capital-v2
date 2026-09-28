@@ -39,6 +39,7 @@ import {
 import { openReviewedPlist } from '../../src/pg-copy-ops/secure-file.js'
 import { resolveRedis } from '../../src/pg-copy-ops/redis-config.js'
 import type { CommandRunner } from '../../src/pg-copy-ops/launchd.js'
+import { ROOT_PREFIX_FOR, RUN_NONCE } from './roots.js'
 
 export const SUPERVISOR_PID = '41512'
 export const PROVING_PID = '41513'
@@ -68,18 +69,31 @@ export const MAX_BUNDLES_PER_WORLD = 60
  * mid-run. The pid makes the check about what this process left behind, which
  * is the only thing it can be responsible for.
  *
+ * AND THE INVOCATION NONCE MAKES IT ANSWERABLE AFTER THE FACT. A pid says which
+ * process, but only while that process exists: once the outer command is
+ * interrupted, every pid in the name is meaningless and pids are reused. The
+ * nonce is minted once per invocation and inherited through the environment, so
+ * a LATER process can still sort "this run's roots", which must be removed, from
+ * "an interrupted earlier run's roots", which may only be removed after proving
+ * nothing live still references them. That is the whole basis of the reaper.
+ *
  * AND A CONTAINED CHILD IS GIVEN ITS PARENT'S PREFIX, extended. A child has its
  * own pid, so a child that derived its own prefix would create roots the parent
  * could neither police while the child ran nor recognise as residue afterwards -
  * and policing a killed child's roots is the entire point of the container. The
- * value is validated rather than trusted: it must still begin with the reviewed
- * prefix, so an unexpected environment cannot redirect these directories.
+ * value is validated rather than trusted: it must be in the reviewed form AND
+ * carry this invocation's nonce, so an unexpected environment can neither
+ * redirect these directories nor disown them.
  */
 const SUPPLIED_PREFIX = process.env.PGCOPY_MODES_ROOT_PREFIX
 export const ROOT_PREFIX = ((): string => {
-  if (SUPPLIED_PREFIX === undefined) return `pgcopy-modes-${process.pid}-`
-  if (!/^pgcopy-modes-[0-9]{1,10}-[a-z0-9]{1,16}-$/.test(SUPPLIED_PREFIX)) {
+  if (SUPPLIED_PREFIX === undefined) return ROOT_PREFIX_FOR(RUN_NONCE, process.pid)
+  const m = /^pgcopy-modes-([0-9a-f]{16})-[0-9]{1,10}-c[0-9]{1,4}-$/.exec(SUPPLIED_PREFIX)
+  if (m === null) {
     throw new Error(`the supplied root prefix is not in the reviewed form: ${SUPPLIED_PREFIX}`)
+  }
+  if (m[1] !== RUN_NONCE) {
+    throw new Error(`the supplied root prefix carries another invocation's nonce: ${SUPPLIED_PREFIX}`)
   }
   return SUPPLIED_PREFIX
 })()

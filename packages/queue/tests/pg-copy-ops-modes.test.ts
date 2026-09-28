@@ -82,6 +82,9 @@ import {
 import {
   killContainedChildren, runContained, type ContainedResult,
 } from './support/contained.js'
+import {
+  removeProvedRoot, unfreezeProvedRoot,
+} from './support/roots.js'
 import type { HoldSpec } from './support/hold-spec.js'
 
 /**
@@ -130,7 +133,16 @@ afterEach(() => {
     // PUBLISHED EVIDENCE IS FROZEN 0500/0400 ON PURPOSE, so a plain recursive
     // remove cannot descend into it. The suite unfreezes what it created; the
     // freeze itself is the property under test, not an obstacle to work around.
-    execFileSync('/bin/chmod', ['-R', 'u+rwX', r])
+    //
+    // AND THE UNFREEZE HAPPENS ONLY INSIDE A PROVED ROOT. Lifting permissions is
+    // the most destructive thing this guard does, so the path is first proved to
+    // be a real directory, directly beneath the real temporary directory, under
+    // the reviewed name, owned by this user - a substituted or symlinked path is
+    // refused here rather than chmod-ed and removed.
+    try { unfreezeProvedRoot(r) } catch (e) {
+      violations.push(`refused to clean up ${r}: ${(e as Error).message}`)
+      continue
+    }
     const evidence = join(r, 'evidence')
     let published = 0
     try { published = readdirSync(evidence).length } catch { published = 0 }
@@ -138,7 +150,7 @@ afterEach(() => {
       violations.push(
         `a world published ${published} bundles, over the ${MAX_BUNDLES_PER_WORLD} ceiling`)
     }
-    rmSync(r, { recursive: true, force: true })
+    removeProvedRoot(r)
   }
   // ZERO RESIDUE, ALWAYS - after a success AND after a failure. Checked here
   // rather than at the end of the file, so the test that left something behind is
@@ -1915,7 +1927,7 @@ describe('PGPASSFILE is proved, never read', () => {
   })
 
   it('proves the same identity checks a credential gets', () => {
-    const d = realpathSync(mkdtempSync(join(tmpdir(), 'pgcopy-pass-')))
+    const d = realpathSync(mkdtempSync(join(tmpdir(), ROOT_PREFIX)))
     ROOTS.push(d)
     const good = join(d, 'pgpass')
     writeFileSync(good, 'localhost:5432:ai_capital:me:secret\n')
@@ -2679,7 +2691,7 @@ describe('the passfile object is pinned across psql startup', () => {
   it('what the child receives cannot change when the pathname is replaced', () => {
     // THE OBJECT, NOT THE NAME. After validation the pathname is repointed at
     // a different file; the held descriptor still refers to the original inode.
-    const d = realpathSync(mkdtempSync(join(tmpdir(), 'pgcopy-pin-')))
+    const d = realpathSync(mkdtempSync(join(tmpdir(), ROOT_PREFIX)))
     ROOTS.push(d)
     const path = join(d, 'pgpass')
     writeFileSync(path, 'original\n')
@@ -3101,7 +3113,7 @@ describe('the passfile descriptor is not leaked and reaches the child', () => {
   it('closes the descriptor on every refusal', () => {
     // K1.3-N30. Only a descriptor that passed every check is handed back; a
     // refusal that leaked one would exhaust the process's fd table over a run.
-    const d = realpathSync(mkdtempSync(join(tmpdir(), 'pgcopy-fd-')))
+    const d = realpathSync(mkdtempSync(join(tmpdir(), ROOT_PREFIX)))
     ROOTS.push(d)
     const wide = join(d, 'wide')
     writeFileSync(wide, 'x')
