@@ -24,8 +24,9 @@ import { basename, join } from 'node:path'
 import { afterEach, describe, expect, it } from 'vitest'
 
 import {
-  NONCE_ENV, NotOurRoot, ROOT_PREFIX_FOR, mintNonce, parseRootName, provenLease,
-  provenRoot, realTmp, removeProvedRoot,
+  LSOF_ENV, NONCE_ENV, NotOurRoot, ROOT_PREFIX_FOR, leasePresence, mintNonce,
+  nothingReferences, parseRootName, probePath, provenLease, provenRoot, realTmp,
+  removeProvedRoot,
 } from './support/roots.js'
 
 const HERE = new URL('.', import.meta.url).pathname
@@ -101,7 +102,7 @@ function runner(mode: string, dir: string = box(), over: Record<string, string> 
 } {
   // ITS OWN NONCE, NOT THIS ONE'S. Inheriting the nonce is what made a nested
   // runner believe a sibling worker's directories were its own.
-  const env = { ...process.env, TMPDIR: dir, ...over }
+  const env: NodeJS.ProcessEnv = { ...process.env, TMPDIR: dir, ...over }
   delete env[NONCE_ENV]
   const child = spawn(process.execPath,
     asNode(RUNNER, ['--', process.execPath, ...asNode(STUB, [mode])]), {
@@ -183,7 +184,7 @@ const bundles = (root: string): number => {
 function owner(mode: string, dir: string, over: Record<string, string> = {}): {
   pid: number; ended: Promise<void>; stdout: () => string
 } {
-  const env = { ...process.env, TMPDIR: dir, ...over }
+  const env: NodeJS.ProcessEnv = { ...process.env, TMPDIR: dir, ...over }
   delete env[NONCE_ENV]
   const child = spawn(process.execPath, asNode(STUB, [mode]),
     { cwd: QUEUE_PKG, stdio: ['ignore', 'pipe', 'pipe'], env })
@@ -469,6 +470,189 @@ describe('a lease is believed only when it can be proved', () => {
   })
 })
 
+describe('a probe that cannot be completed is never read as permission', () => {
+  /**
+   * THE REMAINING FAIL-OPEN DEFECT, CLOSED.
+   *
+   * `lsof` exits 1 when nothing matches, so both callers used to wrap it in a `try` and
+   * read the exception as "nothing holds this". An exception is not an answer. `lsof`
+   * also fails when it cannot be started, when it is killed by a signal, when it runs
+   * out of descriptors, and when it warns that part of the system was unreadable - and
+   * every one of those reached the same `catch` and became permission to delete. The
+   * same was true of `lstat`: any error at all, not just ENOENT, was read as "there is
+   * no lease", which is exactly the sentence that unprotects a live invocation.
+   *
+   * These cases drive each failure for real, through an executable standing in for
+   * `lsof`, and assert the fail-CLOSED outcome: the roots stay.
+   */
+
+  /** A stand-in for lsof, written for one exact failure. */
+  const fakeLsof = (dir: string, body: string): string => {
+    const bin = join(dir, 'fake-lsof')
+    writeFileSync(bin, `#!/bin/sh\n${body}\n`, { mode: 0o700 })
+    return bin
+  }
+
+  /** A dead invocation's lease and one root, ready to be reaped - or not. */
+  const staleWithLease = (dir: string): { root: string; lease: string } => {
+    const dead = mintNonce()
+    const lease = join(dir, `pgcopy-modes-lease-${dead}`)
+    writeFileSync(lease, '', { mode: 0o600 })
+    const root = mkdtempSync(join(dir, ROOT_PREFIX_FOR(dead, 6100)))
+    mkdirSync(join(root, 'evidence'), { mode: 0o700 })
+    return { root, lease }
+  }
+
+  it('the ordinary no-match answer still permits cleanup', () => {
+    const f = join(realTmp(), `k5362-plain-${mintNonce()}`)
+    writeFileSync(f, '', { mode: 0o600 })
+    MADE.push(f)
+    const p = probePath(f)
+    expect(p.state, 'nothing holds a file nobody opened').toBe('free')
+    expect(nothingReferences(f), 'so cleanup is permitted').toBe(true)
+  })
+
+  it('a live descriptor is reported as held, with a count', async () => {
+    const dir = box()
+    const a = owner('idle', dir)
+    const root = await ownerRoot(a)
+    const p = probePath(join(dir, `pgcopy-modes-lease-${nonceOf(root)}`))
+    expect(p.state).toBe('held')
+    expect(p.holders, 'and says how many').toBeGreaterThanOrEqual(1)
+  }, 45_000)
+
+  /**
+   * EVERY OTHER `lstat` ERRNO IS A REFUSAL.
+   *
+   * EACCES is produced for real, by making the directory holding the lease unsearchable;
+   * ENOTDIR by putting a file where a directory would have to be. EIO cannot be produced
+   * without a failing device and a test must not try, but it takes this same branch: the
+   * code asks only whether the errno IS ENOENT, and these two prove that the answer for
+   * anything else is `unprovable` rather than `absent`.
+   */
+  it('an unsearchable directory makes the lease unprovable, not absent', () => {
+    const dir = box()
+    const shut = join(dir, 'shut')
+    mkdirSync(shut)
+    const lease = join(shut, `pgcopy-modes-lease-${mintNonce()}`)
+    writeFileSync(lease, '', { mode: 0o600 })
+    chmodSync(shut, 0o000)
+    try {
+      const r = leasePresence(lease)
+      expect(r.state, 'EACCES is not an absence').toBe('unprovable')
+      expect(r.why).toContain('EACCES')
+    } finally {
+      chmodSync(shut, 0o700)
+    }
+  })
+
+  it('a path component that is not a directory is unprovable, not absent', () => {
+    const dir = box()
+    const file = join(dir, 'a-file')
+    writeFileSync(file, '', { mode: 0o600 })
+    const r = leasePresence(join(file, `pgcopy-modes-lease-${mintNonce()}`))
+    expect(r.state).toBe('unprovable')
+    expect(r.why).toContain('ENOTDIR')
+  })
+
+  it('a missing lease really is absent', () => {
+    const dir = box()
+    const r = leasePresence(join(dir, `pgcopy-modes-lease-${mintNonce()}`))
+    expect(r.state).toBe('absent')
+  })
+
+  /** And each way the probe itself can fail, driven for real. */
+  for (const [what, body, expected] of [
+    ['an abnormal exit status', 'exit 2', 'lsof exited 2'],
+    ['a warning on stderr beside a status we understand',
+      'echo "lsof: WARNING: cannot read /dev" >&2; exit 1', 'lsof exited 1'],
+    ['a warning on stderr beside success', 'echo 4242; echo "lsof: WARNING" >&2; exit 0',
+      'lsof reported a problem'],
+    ['termination by a signal', 'kill -TERM $$', 'was killed by SIGTERM'],
+    ['success that names nobody', 'exit 0', 'named no process'],
+  ] as const) {
+    it(`treats ${what} as unprovable`, () => {
+      const dir = box()
+      const bin = fakeLsof(dir, body)
+      const before = process.env[LSOF_ENV]
+      process.env[LSOF_ENV] = bin
+      try {
+        const p = probePath(join(dir, 'anything'))
+        expect(p.state, what).toBe('unprovable')
+        expect(p.why).toContain(expected)
+        // AND THE CALLER THAT ASKS "MAY I DELETE THIS" IS TOLD NO.
+        expect(nothingReferences(join(dir, 'anything')),
+          'nothingReferences refuses under the same failure').toBe(false)
+      } finally {
+        if (before === undefined) delete process.env[LSOF_ENV]
+        else process.env[LSOF_ENV] = before
+      }
+    })
+  }
+
+  it('treats a probe that cannot be started at all as unprovable', () => {
+    const dir = box()
+    const before = process.env[LSOF_ENV]
+    process.env[LSOF_ENV] = join(dir, 'no-such-binary')
+    try {
+      const p = probePath(join(dir, 'anything'))
+      expect(p.state).toBe('unprovable')
+      expect(p.why).toContain('could not be run')
+      expect(nothingReferences(join(dir, 'anything'))).toBe(false)
+    } finally {
+      if (before === undefined) delete process.env[LSOF_ENV]
+      else process.env[LSOF_ENV] = before
+    }
+  })
+
+  it('refuses an lsof override that is not an absolute path', () => {
+    const before = process.env[LSOF_ENV]
+    process.env[LSOF_ENV] = 'lsof'
+    try {
+      expect(() => probePath('/tmp')).toThrow(/not an absolute path/)
+    } finally {
+      if (before === undefined) delete process.env[LSOF_ENV]
+      else process.env[LSOF_ENV] = before
+    }
+  })
+
+  /**
+   * AND NOTHING INJECTED HERE ESCAPES THE RUNNER.
+   *
+   * The unit-level cases above prove the decision; this one proves it is the decision the
+   * runner acts on. A whole invocation is given a broken probe and pointed at a stale
+   * root with a dead lease - the very thing it exists to clean up - and it must come back
+   * having removed nothing, and having said why.
+   */
+  for (const [what, body] of [
+    ['an abnormal status', 'exit 2'],
+    ['a stderr warning', 'echo "lsof: WARNING" >&2; exit 1'],
+    ['a signal', 'kill -TERM $$'],
+  ] as const) {
+    it(`the runner reaps nothing when its probe fails with ${what}`, async () => {
+      const dir = box()
+      const bin = fakeLsof(dir, body)
+      const { root, lease } = staleWithLease(dir)
+
+      const b = runner('pass', dir, { [LSOF_ENV]: bin })
+      expect((await b.ended).code, 'the run itself still succeeds').toBe(0)
+      expect(b.stderr(), 'and it said it could not tell').toMatch(/spared .*(lsof|killed)/)
+      expect(existsSync(root), 'the stale root was NOT removed').toBe(true)
+      expect(existsSync(lease), 'nor its lease').toBe(true)
+    }, 45_000)
+  }
+
+  /** The same invocation with a working probe does clean it up - so the above is not vacuous. */
+  it('and reaps it once the probe works again', async () => {
+    const dir = box()
+    const { root, lease } = staleWithLease(dir)
+    const b = runner('pass', dir)
+    expect((await b.ended).code).toBe(0)
+    expect(existsSync(root), 'removed with a working probe').toBe(false)
+    expect(existsSync(lease), 'lease removed too').toBe(false)
+  }, 45_000)
+})
+
 describe('two concurrent invocations leave each other alone', () => {
   /**
    * THE SYMMETRIC CASE, WHICH ONE-SIDED PROTECTION WOULD PASS.
@@ -504,8 +688,8 @@ describe('two concurrent invocations leave each other alone', () => {
     expect(existsSync(aRoot) && existsSync(bRoot), 'both are there').toBe(true)
     expect(nonceOf(aRoot)).not.toBe(nonceOf(bRoot))
     // AND BOTH ARE REALLY STILL RUNNING at the moment the first one is signalled.
-    for (const [who, r] of [['A', a], ['B', b]] as const) {
-      expect(heldOpen(join(dir, `pgcopy-modes-lease-${nonceOf(who === 'A' ? aRoot : bRoot)}`)),
+    for (const [who, root] of [['A', aRoot], ['B', bRoot]] as const) {
+      expect(heldOpen(join(dir, `pgcopy-modes-lease-${nonceOf(root)}`)),
         `${who} is still live`).toBe(true)
     }
 
@@ -687,7 +871,7 @@ describe('a child that is orphaned at birth stops without being told', () => {
    */
   it('publishes nothing and is gone, with no runner to ask about', async () => {
     const dir = box()
-    const env = {
+    const env: NodeJS.ProcessEnv = {
       ...process.env,
       TMPDIR: dir,
       // THE OTHER CEILINGS LIFTED OUT OF THE WAY, DELIBERATELY.
@@ -759,7 +943,7 @@ describe('a child whose runner died stops even with its own parent alive', () =>
     const dir = box()
     // THE STAND-IN RUNNER. It only has to exist and then not exist.
     const standIn = spawn('/bin/sleep', ['300'], { stdio: 'ignore' })
-    const env = {
+    const env: NodeJS.ProcessEnv = {
       ...process.env,
       TMPDIR: dir,
       PGCOPY_MODES_RUNNER_PID: String(standIn.pid),

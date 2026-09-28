@@ -35,7 +35,7 @@
 // merely LOOKS related - a foreign sentinel, somebody else's run, a symlink
 // pointing at something precious - is refused, not removed.
 
-import { execFileSync } from 'node:child_process'
+import { execFileSync, spawnSync } from 'node:child_process'
 import { randomBytes } from 'node:crypto'
 import {
   closeSync, constants, existsSync, fstatSync, lstatSync, openSync, readdirSync,
@@ -261,25 +261,11 @@ export function nothingReferences(path: string): boolean {
     if (Number(m[1]) === self) continue
     if ((m[2] as string).includes(path)) return false
   }
-  try {
-    const open = execFileSync('/usr/sbin/lsof', ['-w', '--', path],
-      { encoding: 'utf-8', stdio: ['ignore', 'pipe', 'ignore'] })
-    if (open.trim().length > 0) return false
-  } catch {
-    // lsof EXITS NONZERO WHEN NOTHING HOLDS THE PATH, which is the answer we
-    // wanted. A missing lsof is a different matter and is treated as "cannot
-    // prove it is free", so nothing is removed on a guess.
-    if (!existsLsof()) return false
-  }
-  return true
-}
-
-let lsofPresent: boolean | null = null
-function existsLsof(): boolean {
-  if (lsofPresent === null) {
-    try { lsofPresent = lstatSync('/usr/sbin/lsof').isFile() } catch { lsofPresent = false }
-  }
-  return lsofPresent
+  // THE SAME PROBE THE LEASE USES, AND THE SAME FAIL-CLOSED READING OF IT. Only an
+  // `lsof` run that completed and found nothing means the path is free; a probe that
+  // could not be completed is a refusal, because the alternative is deleting a
+  // directory precisely when we cannot see who is using it.
+  return probePath(path).state === 'free'
 }
 
 // ---------------------------------------------------------------------------
@@ -408,26 +394,19 @@ export type Liveness = 'live' | 'ended' | 'unprovable'
  */
 export function leaseLiveness(nonce: string): { state: Liveness; why: string } {
   const path = leasePathFor(nonce)
-  let st
-  try { st = lstatSync(path) } catch {
-    return { state: 'ended', why: 'no lease file' }
-  }
-  void st
+  const there = leasePresence(path)
+  if (there.state === 'unprovable') return { state: 'unprovable', why: there.why }
+  if (there.state === 'absent') return { state: 'ended', why: there.why }
   try { provenLease(path) } catch (e) {
     return { state: 'unprovable', why: (e as Error).message }
   }
-  if (!existsLsof()) return { state: 'unprovable', why: 'lsof is unavailable' }
-  let holders = ''
-  try {
-    holders = execFileSync('/usr/sbin/lsof', ['-w', '-t', '--', path],
-      { encoding: 'utf-8', stdio: ['ignore', 'pipe', 'ignore'] })
-  } catch {
-    // lsof EXITS NONZERO WHEN NOTHING HOLDS THE FILE, which is the answer.
-    return { state: 'ended', why: 'no process holds the lease open' }
-  }
-  const pids = holders.split('\n').map(l => l.trim()).filter(l => l.length > 0)
-  if (pids.length > 0) {
-    return { state: 'live', why: `the lease for this nonce is held open by ${String(pids.length)} process(es)` }
+  const probe = probePath(path)
+  if (probe.state === 'unprovable') return { state: 'unprovable', why: probe.why }
+  if (probe.state === 'held') {
+    return {
+      state: 'live',
+      why: `the lease for this nonce is held open by ${String(probe.holders)} process(es)`,
+    }
   }
   return { state: 'ended', why: 'no process holds the lease open' }
 }
@@ -469,6 +448,114 @@ export function leaseInventory(): readonly { path: string; nonce: string }[] {
     found.push({ path: join(realTmp(), n), nonce: m[1] as string })
   }
   return found
+}
+
+/**
+ * THE ONE PLACE THAT ASKS THE OPERATING SYSTEM WHETHER A PATH IS HELD.
+ *
+ * WHAT WAS WRONG WITH THE PREVIOUS VERSION, AND WHY IT WAS THE SAME BUG TWICE.
+ * `lsof` exits 1 when nothing matches, so both callers wrapped it in a `try` and read
+ * the exception as "nothing holds it". But an exception is not an answer. `lsof` also
+ * fails when it cannot be started at all, when the process table is momentarily
+ * unreadable, when descriptors run out, and when it is killed by a signal - and every
+ * one of those arrived at the same `catch` and was read as permission to delete. A
+ * probe that cannot distinguish "I looked and found nothing" from "I could not look"
+ * fails OPEN, which for a remover means it deletes exactly when it understands least.
+ *
+ * SO THE ANSWER IS THREE-VALUED, AND ONLY ONE EXACT SHAPE MEANS FREE:
+ *   `held`       - status 0, no signal, no spawn error, at least one pid on stdout;
+ *   `free`       - status 1, no signal, no spawn error, EMPTY stdout AND EMPTY stderr;
+ *   `unprovable` - everything else, without exception.
+ *
+ * Nothing on stderr is tolerated even beside a status this code otherwise understands:
+ * a warning is `lsof` telling us it could not see part of the system, which is the one
+ * thing that would make an empty result a lie.
+ *
+ * `spawnSync` RATHER THAN `execFileSync` because the distinction lives in fields
+ * `execFileSync` throws away: the status when nonzero, the terminating signal, and the
+ * spawn error, each of which has to be inspected separately rather than collapsed into
+ * one exception.
+ */
+export type ProbeState = 'held' | 'free' | 'unprovable'
+
+export interface Probe {
+  readonly state: ProbeState
+  readonly why: string
+  /** How many processes hold it. Meaningful only for `held`. */
+  readonly holders: number
+}
+
+/**
+ * THE BINARY, OVERRIDABLE FOR TESTS ONLY.
+ *
+ * The failure modes above cannot be provoked with the real `lsof`: a test cannot make
+ * the machine run out of descriptors on demand, and it must not try. So the path may be
+ * replaced by an executable that produces one exact failure, and the override is
+ * validated as an absolute path so a stray value cannot turn this into an arbitrary
+ * command. Unset - every real invocation - it is the reviewed binary and nothing else.
+ */
+export const LSOF = '/usr/sbin/lsof'
+export const LSOF_ENV = 'PGCOPY_MODES_TEST_LSOF'
+
+function lsofBinary(): string {
+  const override = process.env[LSOF_ENV]
+  if (override === undefined) return LSOF
+  if (!override.startsWith('/')) {
+    throw new Error(`the lsof override is not an absolute path: ${override}`)
+  }
+  return override
+}
+
+export function probePath(path: string): Probe {
+  const r = spawnSync(lsofBinary(), ['-w', '-t', '--', path], { encoding: 'utf-8' })
+  if (r.error !== undefined && r.error !== null) {
+    return { state: 'unprovable', why: `lsof could not be run: ${r.error.message}`, holders: 0 }
+  }
+  if (r.signal !== null) {
+    return { state: 'unprovable', why: `lsof was killed by ${r.signal}`, holders: 0 }
+  }
+  const out = (r.stdout ?? '').trim()
+  const err = (r.stderr ?? '').trim()
+  if (r.status === 0) {
+    if (err.length > 0) {
+      return { state: 'unprovable', why: `lsof reported a problem: ${err.split('\n')[0] ?? ''}`, holders: 0 }
+    }
+    const pids = out.split('\n').map(l => l.trim()).filter(l => /^[0-9]+$/.test(l))
+    if (pids.length === 0) {
+      return { state: 'unprovable', why: 'lsof succeeded but named no process', holders: 0 }
+    }
+    return { state: 'held', why: `held open by ${String(pids.length)} process(es)`, holders: pids.length }
+  }
+  if (r.status === 1 && out.length === 0 && err.length === 0) {
+    return { state: 'free', why: 'nothing holds it', holders: 0 }
+  }
+  return {
+    state: 'unprovable',
+    why: `lsof exited ${String(r.status)}${err.length > 0 ? ` with output: ${err.split('\n')[0] ?? ''}` : ''}`,
+    holders: 0,
+  }
+}
+
+/**
+ * IS THE LEASE FILE THERE, AND IF NOT, WHY NOT?
+ *
+ * ENOENT IS THE ONLY ABSENCE. Every other `lstat` failure means the question could not
+ * be answered - a directory that cannot be searched, a device that failed, a path
+ * component that is not a directory - and answering "there is no lease" to any of them
+ * hands a live invocation's roots to the reaper. Separated into its own function because
+ * that distinction is the whole decision and has to be reachable by a test on its own.
+ */
+export type Presence = 'present' | 'absent' | 'unprovable'
+
+export function leasePresence(path: string): { state: Presence; why: string } {
+  try {
+    lstatSync(path)
+    return { state: 'present', why: 'the lease file is there' }
+  } catch (e) {
+    const code = (e as NodeJS.ErrnoException).code
+    if (code === 'ENOENT') return { state: 'absent', why: 'no lease file' }
+    return { state: 'unprovable', why: `the lease cannot be examined: ${String(code)}` }
+  }
 }
 
 export interface ReapOutcome {
