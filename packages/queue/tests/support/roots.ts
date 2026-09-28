@@ -14,6 +14,20 @@
 // filesystem alone, with no surviving parent and no registry - which is exactly
 // the situation an interrupt leaves behind.
 //
+// AND LIVENESS IS PROVED POSITIVELY, NOT INFERRED FROM ABSENCE. The first version
+// of this file asked whether any process NAMED a root in its command line or held a
+// descriptor ON that directory, and treated "no" as proof the root was abandoned.
+// That is not a proof. A live Vitest worker holds its root path in JavaScript
+// memory and nowhere else: its argv is `vitest --run …`, and it keeps no open
+// descriptor on the directory itself, only on files inside it, and only for as long
+// as each write takes. Reproduced: a live owner's root was reaped by a second
+// runner, which reported `reaped 1 stale root(s)` and exited 0 while the owner went
+// on running. So every invocation now holds an open descriptor on a LEASE FILE named
+// after its nonce, for the whole life of every process that can create one of its
+// roots, and a reaper must find that descriptor gone before it considers anything.
+// The kernel's open-file table is the evidence; a pid is not, because pids are
+// reused and a reused pid is not the same invocation.
+//
 // AND REMOVAL IS BY EXACT VALIDATED PATH, NEVER BY PATTERN. Nothing here takes a
 // glob, walks the temporary directory recursively, or removes a path it has not
 // first proved is a real directory, directly beneath the real temporary
@@ -23,12 +37,17 @@
 
 import { execFileSync } from 'node:child_process'
 import { randomBytes } from 'node:crypto'
-import { lstatSync, readdirSync, realpathSync, rmSync } from 'node:fs'
+import {
+  closeSync, constants, existsSync, fstatSync, lstatSync, openSync, readdirSync,
+  realpathSync, rmSync,
+} from 'node:fs'
 import { tmpdir } from 'node:os'
 import { basename, dirname, join } from 'node:path'
 
 /** The reviewed leading component. Nothing outside it is ever considered. */
 export const ROOT_FAMILY = 'pgcopy-modes-'
+
+const { O_CREAT, O_NOFOLLOW, O_RDWR } = constants
 
 /**
  * THE INVOCATION NONCE, AND WHY A PID IS NOT ENOUGH.
@@ -263,6 +282,195 @@ function existsLsof(): boolean {
   return lsofPresent
 }
 
+// ---------------------------------------------------------------------------
+// THE LEASE: POSITIVE PROOF THAT AN INVOCATION IS STILL RUNNING
+// ---------------------------------------------------------------------------
+
+/**
+ * ONE FILE PER INVOCATION, HELD OPEN BY EVERY PROCESS THAT CAN CREATE ITS ROOTS.
+ *
+ * WHY A DESCRIPTOR AND NOT A PID FILE. A pid file answers "did a process with this
+ * number exist when this was written", and the operating system reuses numbers, so a
+ * later unrelated process makes a dead invocation look alive and a recycled number
+ * makes a live one look dead. An open descriptor is not a claim about a number: while
+ * ANY process holds this file open the invocation has at least one live member, and
+ * when the last member exits - by return, by exception, by SIGKILL, or because the
+ * machine lost power and the file system came back without it - the kernel closes it.
+ * There is nothing to clean up and nothing to trust.
+ *
+ * THE NAME IS DELIBERATELY NOT A ROOT NAME. `pgcopy-modes-lease-<nonce>` cannot match
+ * `REVIEWED_ROOT`, which requires sixteen hex characters where `lease` stands, so the
+ * reaper can never mistake a lease for something to remove as a root.
+ */
+export const REVIEWED_LEASE = /^pgcopy-modes-lease-([0-9a-f]{16})$/
+
+export const leasePathFor = (nonce: string): string =>
+  join(realTmp(), `${ROOT_FAMILY}lease-${nonce}`)
+
+export class NotOurLease extends Error {}
+
+/**
+ * PROVE A PATH IS A LEASE THIS HARNESS MAY BELIEVE, or refuse it.
+ *
+ * The same four questions `provenRoot` asks, for the same reason: a lease is
+ * load-bearing in the other direction - believing a forged one makes cleanup
+ * impossible, and OPENING a forged one could write through a symlink into something
+ * that is not ours at all. `uid` is a parameter rather than read inline so that the
+ * ownership comparison is reachable by a test; production callers never pass it.
+ */
+export function provenLease(path: string, uid: number | undefined = process.getuid?.()):
+  { readonly nonce: string } {
+  const name = basename(path)
+  const m = REVIEWED_LEASE.exec(name)
+  if (m === null) throw new NotOurLease(`not a reviewed lease name: ${name}`)
+  let parent: string
+  try { parent = realpathSync(dirname(path)) } catch {
+    throw new NotOurLease(`the parent of ${path} cannot be resolved`)
+  }
+  if (parent !== realTmp()) {
+    throw new NotOurLease(`not directly beneath the real temporary directory: ${path}`)
+  }
+  let st
+  try { st = lstatSync(path) } catch { throw new NotOurLease(`no such lease: ${path}`) }
+  if (st.isSymbolicLink()) throw new NotOurLease(`a symlink is never a lease: ${path}`)
+  if (!st.isFile()) throw new NotOurLease(`not a regular file: ${path}`)
+  if (st.uid !== uid) {
+    throw new NotOurLease(`owned by uid ${String(st.uid)}, not this user: ${path}`)
+  }
+  return Object.freeze({ nonce: m[1] as string })
+}
+
+/**
+ * OPEN THIS INVOCATION'S LEASE AND NEVER CLOSE IT.
+ *
+ * WHEN. At module load, before this process can possibly have created a root, because
+ * a root that exists before its lease does is a root a concurrent reaper could see
+ * with no liveness evidence behind it. Every process that can create a root for this
+ * nonce imports this module, so there is no member of an invocation that is not
+ * covered and no ordering to remember at each call site.
+ *
+ * `O_NOFOLLOW` IS THE POINT OF THE FLAG. A symlink planted at this path would
+ * otherwise be followed and written through. With the flag the open fails outright,
+ * and the descriptor is then re-examined with `fstat` rather than the path with
+ * `lstat`: what was opened is what is checked, so nothing can be swapped in between
+ * the two. The descriptor is kept in a module-level binding for its whole life -
+ * closing it would tell every reaper on the machine that this invocation had ended.
+ */
+let LEASE_FD: number | null = null
+
+export function leaseDescriptor(): number {
+  if (LEASE_FD !== null) return LEASE_FD
+  const path = leasePathFor(RUN_NONCE)
+  const fd = openSync(path, O_RDWR | O_CREAT | O_NOFOLLOW, 0o600)
+  let st
+  try { st = fstatSync(fd) } catch {
+    closeSync(fd)
+    throw new NotOurLease(`the lease descriptor cannot be examined: ${path}`)
+  }
+  if (!st.isFile() || st.uid !== process.getuid?.()) {
+    closeSync(fd)
+    throw new NotOurLease(`what was opened is not our regular file: ${path}`)
+  }
+  LEASE_FD = fd
+  return fd
+}
+
+/**
+ * ACQUIRED AT MODULE LOAD, UNCONDITIONALLY.
+ *
+ * WHY HERE AND NOT AT EACH CALL SITE. The invariant is "no root exists for this nonce
+ * without a live descriptor behind it", and a rule that has to be remembered at four
+ * call sites - the world fixture, the container, the runner, the stub - is a rule that
+ * will be forgotten at the fifth. Importing this module is the one thing every process
+ * that can create a root already does, so the acquisition happens exactly once, before
+ * any of them has run a line of its own.
+ *
+ * A FAILURE HERE IS FATAL ON PURPOSE. If the lease cannot be opened - a symlink is
+ * standing at its path, or the file belongs to somebody else - then this invocation
+ * cannot prove its own liveness to anybody, and a run that cannot be protected from a
+ * concurrent reaper must not start.
+ */
+export const LEASE_PATH = leasePathFor(RUN_NONCE)
+leaseDescriptor()
+
+export type Liveness = 'live' | 'ended' | 'unprovable'
+
+/**
+ * IS ANY PROCESS STILL HOLDING THIS NONCE'S LEASE?
+ *
+ * `live`       - at least one descriptor is open on it. Its roots are untouchable.
+ * `ended`      - the lease exists and nothing holds it, or it never existed at all.
+ * `unprovable` - the lease is there but is not something this harness may believe, or
+ *                the question cannot be asked. NOT the same as `ended`: an answer
+ *                that cannot be obtained is never read as permission to delete, so a
+ *                machine without `lsof`, or a temporary directory somebody has
+ *                tampered with, loses cleanup rather than data.
+ */
+export function leaseLiveness(nonce: string): { state: Liveness; why: string } {
+  const path = leasePathFor(nonce)
+  let st
+  try { st = lstatSync(path) } catch {
+    return { state: 'ended', why: 'no lease file' }
+  }
+  void st
+  try { provenLease(path) } catch (e) {
+    return { state: 'unprovable', why: (e as Error).message }
+  }
+  if (!existsLsof()) return { state: 'unprovable', why: 'lsof is unavailable' }
+  let holders = ''
+  try {
+    holders = execFileSync('/usr/sbin/lsof', ['-w', '-t', '--', path],
+      { encoding: 'utf-8', stdio: ['ignore', 'pipe', 'ignore'] })
+  } catch {
+    // lsof EXITS NONZERO WHEN NOTHING HOLDS THE FILE, which is the answer.
+    return { state: 'ended', why: 'no process holds the lease open' }
+  }
+  const pids = holders.split('\n').map(l => l.trim()).filter(l => l.length > 0)
+  if (pids.length > 0) {
+    return { state: 'live', why: `the lease for this nonce is held open by ${String(pids.length)} process(es)` }
+  }
+  return { state: 'ended', why: 'no process holds the lease open' }
+}
+
+/** Remove one dead invocation's lease, by exact validated path. */
+export function removeProvenLease(nonce: string): boolean {
+  const path = leasePathFor(nonce)
+  try { provenLease(path) } catch { return false }
+  rmSync(path, { force: true })
+  return !existsSync(path)
+}
+
+/**
+ * DROP THIS INVOCATION'S OWN LEASE, LAST.
+ *
+ * Called by the runner after it has killed its command group and removed its roots, so
+ * that an ordinary run leaves no trace at all rather than one file for the next
+ * invocation to sweep. The descriptor stays open - unlinking a file nobody can reach
+ * any more is enough, and closing it would be a second thing to get wrong.
+ *
+ * ORDER MATTERS AND IS THE CALLER'S RESPONSIBILITY: the lease is what protects this
+ * invocation's roots from a concurrent reaper, so dropping it before those roots are
+ * gone would hand them to somebody else mid-run.
+ */
+export function releaseOwnLease(): boolean {
+  try { provenLease(LEASE_PATH) } catch { return false }
+  rmSync(LEASE_PATH, { force: true })
+  return !existsSync(LEASE_PATH)
+}
+
+/** Every lease file present, whichever invocation it belongs to. */
+export function leaseInventory(): readonly { path: string; nonce: string }[] {
+  let names: string[] = []
+  try { names = readdirSync(realTmp()) } catch { return [] }
+  const found: { path: string; nonce: string }[] = []
+  for (const n of names) {
+    const m = REVIEWED_LEASE.exec(n)
+    if (m === null) continue
+    found.push({ path: join(realTmp(), n), nonce: m[1] as string })
+  }
+  return found
+}
+
 export interface ReapOutcome {
   readonly reaped: readonly string[]
   /** Paths left alone, each with the reason, so a spared root is never silent. */
@@ -282,13 +490,61 @@ export interface ReapOutcome {
 export function reapStaleRoots(nonce: string = RUN_NONCE): ReapOutcome {
   const reaped: string[] = []
   const spared: { path: string; why: string }[] = []
+
+  // ONE QUESTION PER INVOCATION, ASKED BEFORE ANY QUESTION ABOUT A PATH.
+  //
+  // Grouping by nonce is not an optimisation: liveness is a property of an
+  // INVOCATION, and asking it per root would let one root of a live invocation be
+  // spared while another was removed. The lease is asked once and the whole group
+  // follows the answer.
+  const byNonce = new Map<string, string[]>()
   for (const { path, name } of inventory()) {
-    if (name.nonce === nonce) { spared.push({ path, why: 'this invocation' }); continue }
-    if (!nothingReferences(path)) { spared.push({ path, why: 'still referenced' }); continue }
-    try { removeProvedRoot(path); reaped.push(path) } catch (e) {
-      spared.push({ path, why: (e as Error).message })
-    }
+    const list = byNonce.get(name.nonce) ?? []
+    list.push(path)
+    byNonce.set(name.nonce, list)
   }
+
+  for (const [n, paths] of byNonce) {
+    if (n === nonce) {
+      for (const path of paths) spared.push({ path, why: 'this invocation' })
+      continue
+    }
+    const { state, why } = leaseLiveness(n)
+    if (state !== 'ended') {
+      // A LIVE OR UNPROVABLE INVOCATION KEEPS EVERY ROOT IT HAS. This is the whole
+      // correction: a live Vitest worker names its root nowhere and holds no
+      // descriptor on it, so the per-path checks below cannot see it at all.
+      for (const path of paths) spared.push({ path, why })
+      continue
+    }
+    let removedAll = true
+    for (const path of paths) {
+      // ONLY NOW ARE THE PER-ROOT CHECKS EVIDENCE. They are kept as defence in
+      // depth for the window in which a process is still finishing with a path
+      // whose invocation has otherwise ended - never as the primary proof.
+      if (!nothingReferences(path)) {
+        spared.push({ path, why: 'still referenced' }); removedAll = false; continue
+      }
+      try { removeProvedRoot(path); reaped.push(path) } catch (e) {
+        spared.push({ path, why: (e as Error).message }); removedAll = false
+      }
+    }
+    // AND THE LEASE GOES LAST, AFTER ITS ROOTS AND ONLY IF THEY ALL WENT. Removing
+    // it first would erase the only record of which invocation those roots belonged
+    // to, so a run interrupted halfway through this loop would leave roots that no
+    // later reaper could reason about.
+    if (removedAll) removeProvenLease(n)
+  }
+
+  // AND AN ABANDONED LEASE WITH NOTHING BEHIND IT IS NOT ALLOWED TO ACCUMULATE.
+  // A lease whose roots are already gone, held by nobody, is a dead invocation's
+  // last trace; leaving it would slowly fill the temporary directory with files
+  // that make every future reap do more work and prove nothing.
+  for (const { nonce: n } of leaseInventory()) {
+    if (n === nonce || byNonce.has(n)) continue
+    if (leaseLiveness(n).state === 'ended') removeProvenLease(n)
+  }
+
   return Object.freeze({ reaped: Object.freeze(reaped), spared: Object.freeze(spared) })
 }
 

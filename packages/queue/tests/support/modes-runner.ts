@@ -26,7 +26,8 @@ import { dirname, join } from 'node:path'
 import { fileURLToPath } from 'node:url'
 
 import {
-  NONCE_ENV, RUN_NONCE, ownedRoots, reapStaleRoots, removeOwnedRoots,
+  NONCE_ENV, RUN_NONCE, leaseInventory, ownedRoots, reapStaleRoots,
+  releaseOwnLease, removeOwnedRoots,
 } from './roots.js'
 
 const HERE = dirname(fileURLToPath(import.meta.url))
@@ -79,13 +80,56 @@ const group = child.pid as number
  * what would release the fence. The signal that cannot be held is the only one
  * that ends it.
  */
+/**
+ * A DELIBERATE PAUSE AT THE ONE MOMENT THE ORDER MATTERS, FOR THE TESTS ONLY.
+ *
+ * WHY A SEAM EXISTS HERE AT ALL. The rule below - roots first, lease last - protects a
+ * window that is microseconds wide in practice, so a case that simply runs two runners
+ * cannot land inside it and the mutant that reverses the order survives every
+ * behavioural test. Measured: it did. Widening the window on request makes the rule
+ * observable: a reaper that arrives while this runner is between "about to remove its
+ * roots" and "done" must still be told the lease is live.
+ *
+ * IT CHANGES NOTHING WHEN UNSET, which is every real invocation, and it cannot skip or
+ * reorder anything - it only waits. The wait is synchronous because this runs inside a
+ * signal handler, where an `await` would hand control back and let the process exit
+ * first.
+ */
+function testPause(): void {
+  const raw = process.env.PGCOPY_MODES_TEST_CLEANUP_PAUSE_MS
+  if (raw === undefined || !/^[0-9]{1,6}$/.test(raw) || raw === '0') return
+  say('pausing before root cleanup')
+  Atomics.wait(new Int32Array(new SharedArrayBuffer(4)), 0, 0, Number(raw))
+}
+
+/**
+ * REMOVE WHAT THIS INVOCATION OWNS, IN THE ONLY ORDER THAT IS SAFE.
+ *
+ * THE ROOTS FIRST AND THE LEASE LAST. The lease is the only thing telling a concurrent
+ * reaper that these roots belong to somebody; drop it first and there is a window in
+ * which they are ownerless and still there, which is precisely the state this whole
+ * mechanism exists to make impossible. One function, used by both the signal path and
+ * the ordinary exit path, so there is one place for that order to be right.
+ */
+function cleanupOwned(): number {
+  const removed = removeOwnedRoots()
+  // THE SEAM SITS BETWEEN THE TWO STEPS, which is the only place it says anything: a
+  // pause BEFORE both leaves the lease held whichever order follows, so both orders
+  // look identical from outside and the reversed one survives. Here, correct code has
+  // already removed its roots and still holds its lease, and the reversed code has
+  // dropped its lease with its roots still on disk - which is a reaper's opportunity.
+  testPause()
+  releaseOwnLease()
+  return removed.length
+}
+
 let settled = false
 function endEverything(why: string): void {
   if (settled) return
   settled = true
   try { process.kill(-group, 'SIGKILL') } catch { /* already gone */ }
-  const removed = removeOwnedRoots()
-  say(`${why}: killed the command group, removed ${removed.length} owned root(s)`)
+  const removed = cleanupOwned()
+  say(`${why}: killed the command group, removed ${String(removed)} owned root(s)`)
 }
 
 /**
@@ -128,13 +172,18 @@ child.on('exit', (code, signal) => {
   if (!settled) {
     settled = true
     try { process.kill(-group, 'SIGKILL') } catch { /* already gone */ }
-    const removed = removeOwnedRoots()
-    if (removed.length > 0) say(`removed ${removed.length} owned root(s) after exit`)
+    const removed = cleanupOwned()
+    if (removed > 0) say(`removed ${String(removed)} owned root(s) after exit`)
   }
   const left = ownedRoots()
   if (left.length > 0) {
     say(`RESIDUE: ${String(left.length)} owned root(s) survived cleanup`)
     for (const p of left) say(`  ${p}`)
+    process.exit(70)
+  }
+  const leases = leaseInventory().filter(l => l.nonce === RUN_NONCE)
+  if (leases.length > 0) {
+    say(`RESIDUE: this invocation's lease survived cleanup`)
     process.exit(70)
   }
   process.exit(signal === null ? (code ?? 0) : 128)

@@ -16,6 +16,12 @@
 //   fail          make an owned root, exit 1
 //   hold          make an owned root and publish into it until something stops
 //                 this process - which is the runaway the ceilings exist for
+//   idle          make an owned root, write one marker file, and then do NOTHING:
+//                 no publishing, no open descriptor on the root, and a command line
+//                 that does not contain its path. This is what a live Vitest worker
+//                 looks like to an outside observer, and it is the shape that got a
+//                 live invocation's root deleted - so a case needs to be able to
+//                 produce it exactly.
 
 import { mkdirSync, mkdtempSync, writeFileSync } from 'node:fs'
 import { join } from 'node:path'
@@ -36,10 +42,22 @@ process.stdout.write(`${String(process.pid)} ${root}\n`)
 
 if (mode === 'pass') process.exit(0)
 if (mode === 'fail') process.exit(1)
-if (mode !== 'hold') {
+if (mode !== 'hold' && mode !== 'idle') {
   process.stderr.write(`unknown mode: ${String(mode)}\n`)
   process.exit(2)
 }
+
+if (mode === 'idle') {
+  // ONE MARKER, WRITTEN AND CLOSED. `writeFileSync` opens and closes, so after this
+  // line nothing holds a descriptor anywhere inside the root - which is the point of
+  // this mode, and the reason it must NOT fall through into the publishing loop
+  // below: a process that publishes would eventually be stopped by a ceiling, and a
+  // case about protecting a live invocation would then be measuring the ceiling.
+  writeFileSync(join(evidence, 'marker.json'), '{"owner":"invocation A"}\n', { mode: 0o600 })
+  setInterval(() => undefined, 1_000)
+  // NOTHING ELSE. No signal handlers and no self-limit either: this process exists to
+  // be a live owner, and a case that needs it gone kills it.
+} else {
 
 // THE RUNAWAY, IN MINIATURE. The real one is `holdForIntervention` publishing an
 // intent and an outcome per iteration; what matters to the containment contract
@@ -67,3 +85,4 @@ const publish = (): void => {
   } catch { /* the volume filling is the incident, not an error to report */ }
 }
 setInterval(publish, 5)
+}
