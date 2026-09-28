@@ -46,7 +46,13 @@ export const TOKEN_PATTERN: Readonly<Record<CopyMode, RegExp>> = Object.freeze({
 })
 
 /** Bumped when any binding changes shape, so an old token cannot match a new one. */
-export const BINDING_VERSION = 1
+/**
+ * 2 since S4F-D5-K5.3, which moved the TRANSIENT launchd load state out of the
+ * operational binding document and replaced it with the STABLE topology. A
+ * document at version 1 and one at version 2 describe the same world with
+ * different fields, so the digest must not be comparable across the change.
+ */
+export const BINDING_VERSION = 2
 
 export class BindingRefused extends Error {
   constructor(readonly reason: BindingReason, readonly at: string | null = null) {
@@ -276,6 +282,62 @@ export const INSTALLATION_STATES: readonly InstallationState[] =
 export const INSTALLED_STATES: readonly InstallationState[] =
   Object.freeze(['installed-loaded', 'installed-disabled', 'installed-unloaded'])
 
+/**
+ * THE STABLE INSTALLATION TOPOLOGY, which is what the operational binding binds.
+ *
+ * WHY THIS IS A SEPARATE VOCABULARY. K5.2 put the four-state observation into the
+ * binding, and the binding is derived by EVERY CLI mode before dispatch. That
+ * made a successful rehearsal impossible to finish:
+ *
+ *   - the reviewed policy required `installed-unloaded`, which is true before
+ *     restoration and false after it;
+ *   - leaving the policy alone made `deriveOperationalBinding` refuse before
+ *     `--verify-restoration` could run at all;
+ *   - changing it to `installed-loaded` changed the binding digest, and
+ *     `runVerifyRestoration` then rejected it as a different world from the one
+ *     the rehearsal was taken against.
+ *
+ * So the operator could not get from a proved rehearsal, through the manual
+ * restoration the rehearsal exists to exercise, to the review that authorises an
+ * apply - without falsifying the measured state or accepting two unrelated
+ * binding digests. Neither is acceptable.
+ *
+ * The resolution is that `loaded`, `disabled` and `unloaded` are OBSERVATIONS
+ * ABOUT LAUNCHD, not different installation topologies. What the binding agrees
+ * to is whether the agent is installed at all, and - when it is - the full
+ * identity of the file that is installed, the checkout it serves, the credential
+ * container it names and the endpoint it reaches. None of those changes when an
+ * operator bootstraps a label, which is exactly why they are what a binding that
+ * must survive the restoration can safely contain.
+ *
+ * The observation is NOT erased. It is measured freshly at every phase, carried
+ * on the same `ProducerIdentity`, published in evidence, compared against the
+ * post-restoration policy, and - if a mode wants to pin it - digested separately
+ * through `modeObservationDigest`.
+ */
+export type StableInstallation = 'installed' | 'expected-absent'
+
+export const STABLE_INSTALLATIONS: readonly StableInstallation[] =
+  Object.freeze(['installed', 'expected-absent'])
+
+/**
+ * The stable topology a transient observation implies.
+ *
+ * TOTAL OVER THE FOUR OBSERVED STATES, and deliberately not a default: a new
+ * observed state added later must be classified here explicitly rather than
+ * falling into `installed` because that is the larger bucket.
+ */
+export function stableInstallationOf(observed: InstallationState): StableInstallation {
+  switch (observed) {
+    case 'installed-loaded':
+    case 'installed-disabled':
+    case 'installed-unloaded':
+      return 'installed'
+    case 'expected-absent':
+      return 'expected-absent'
+  }
+}
+
 /** What an inspected label is, as far as the binding is concerned. NEVER a secret. */
 export interface ProducerIdentity {
   readonly label: string
@@ -292,12 +354,26 @@ export interface ProducerIdentity {
   /** The checkout that plist serves, read FROM the plist and never assumed. */
   readonly servedCheckout: string | null
   /**
-   * Installed and loaded, installed and disabled, installed but with its label
-   * unloaded, or not installed at all. The last is the ONLY one whose evidence
-   * fields are null; `installed-unloaded` binds a full identity like any other
-   * installed state, because there is a real file to name and real bytes to hash.
+   * THE OBSERVED launchd state, measured freshly at each phase.
+   *
+   * NOT PART OF THE BINDING DOCUMENT. It is the transient half: an operator
+   * bootstrapping a label moves it from `installed-unloaded` to
+   * `installed-loaded` without changing anything the binding agrees to. It is
+   * still recorded here, published in evidence, and compared against the
+   * post-restoration policy - `stableInstallation` replaces it in the binding,
+   * it does not replace it in the truth.
    */
   readonly installation: InstallationState
+  /**
+   * THE STABLE TOPOLOGY, which IS what the binding document carries.
+   *
+   * `installed` when an exact reviewed plist exists and its full identity was
+   * measured; `expected-absent` when there is no label and no plist. Invariant
+   * with respect to loading, disabling and unloading, so the one intended
+   * transition - `installed-unloaded` to `installed-loaded` across a manual
+   * restoration - leaves the binding digest untouched.
+   */
+  readonly stableInstallation: StableInstallation
   /**
    * The credential CONTAINER, by identity only.
    *
@@ -336,13 +412,15 @@ export interface OperationalAdapterBinding {
    */
   readonly producerProcessPolicy: readonly { label: string; pattern: string }[]
   /**
-   * The structured worker's INSTALLATION state, not its database destination.
+   * The structured worker's STABLE INSTALLATION, not its database destination and
+   * not its current launchd state.
    *
-   * These are two different facts and the binding needs the first: whether that
-   * agent exists on this machine at all is what decides whether its absence
-   * from a quiescence census is expected or alarming.
+   * These are different facts and the binding needs the stable one: whether that
+   * agent exists on this machine at all is what decides whether its absence from
+   * a quiescence census is expected or alarming, and that answer does not change
+   * when other agents are loaded or unloaded around it.
    */
-  readonly structuredWorkerInstallation: InstallationState
+  readonly structuredWorkerInstallation: StableInstallation
   readonly redisHost: string
   readonly redisPort: string
   readonly redisDatabase: string
@@ -362,7 +440,7 @@ export function operationalBindingDocument(b: OperationalAdapterBinding): Canoni
   need(b.blockingStates.length > 0, 'blockingStates')
   need(typeof b.pausedIsBlocking === 'boolean', 'pausedIsBlocking')
   need(LABEL.test(b.producerAuthority), 'producerAuthority')
-  need(INSTALLATION_STATES.includes(b.structuredWorkerInstallation),
+  need(STABLE_INSTALLATIONS.includes(b.structuredWorkerInstallation),
        'structuredWorkerInstallation')
   need(b.producerProcessPolicy.length === b.producers.length, 'producerProcessPolicy')
   b.producerProcessPolicy.forEach((e, n) => {
@@ -386,12 +464,22 @@ export function operationalBindingDocument(b: OperationalAdapterBinding): Canoni
     need(!seen.has(p.label), `producers[${n}].label duplicated`)
     seen.add(p.label)
     need(INSTALLATION_STATES.includes(p.installation), `producers[${n}].installation`)
+    need(STABLE_INSTALLATIONS.includes(p.stableInstallation), `producers[${n}].stableInstallation`)
     need(DESTINATION_DISPOSITIONS.includes(p.disposition), `producers[${n}].disposition`)
+
+    // THE OBSERVED STATE AND THE STABLE TOPOLOGY MUST AGREE. They are two
+    // records of one world; a producer that claims to be installed-loaded while
+    // its stable topology says expected-absent has had one of the two written by
+    // something other than measurement.
+    need(stableInstallationOf(p.installation) === p.stableInstallation,
+         `producers[${n}].stableInstallation`)
 
     // AN ABSENT LABEL HAS NOTHING MEASURED AND SAYS SO. Every evidence field
     // must be null together: a half-filled record is a record that claims one
     // measurement was taken and another was not, for a label nobody looked at.
-    const absent = p.installation === 'expected-absent'
+    //
+    // KEYED OFF THE STABLE VALUE, because that is what the document carries.
+    const absent = p.stableInstallation === 'expected-absent'
     need(absent === (p.disposition === 'expected-absent'), `producers[${n}].disposition`)
     if (absent) {
       for (const [k, v] of [['plistPath', p.plistPath], ['plistSha256', p.plistSha256],
@@ -414,8 +502,9 @@ export function operationalBindingDocument(b: OperationalAdapterBinding): Canoni
       // AND A PRESENT LABEL MAY NOT BORROW THE ABSENT STATE'S DISPOSITION.
       need(p.disposition !== 'expected-absent', `producers[${n}].disposition`)
       need(INSTALLED_STATES.includes(p.installation), `producers[${n}].installation`)
+      need(p.stableInstallation === 'installed', `producers[${n}].stableInstallation`)
 
-      // AN INSTALLED-UNLOADED AGENT BINDS A **COMPLETE** IDENTITY.
+      // AN INSTALLED AGENT BINDS A **COMPLETE** IDENTITY.
       //
       // This is the whole reason the state exists. The defect it closes was not
       // that the binding said the wrong word; it was that the word it said
@@ -425,7 +514,7 @@ export function operationalBindingDocument(b: OperationalAdapterBinding): Canoni
       // Requiring every one of them here is what makes a plist swap, a checkout
       // change, a credential-container replacement or an endpoint change move
       // the token instead of passing unnoticed.
-      if (p.installation === 'installed-unloaded') {
+      if (p.stableInstallation === 'installed') {
         need(p.credentialPath !== null, `producers[${n}].credentialPath`)
         need(p.credentialDeviceInode !== null, `producers[${n}].credentialDeviceInode`)
         need(p.databaseHost !== null, `producers[${n}].databaseHost`)
@@ -450,7 +539,11 @@ export function operationalBindingDocument(b: OperationalAdapterBinding): Canoni
     }
     return {
       label: p.label,
-      installation: p.installation,
+      // THE STABLE TOPOLOGY ONLY. The observed launchd state is deliberately NOT
+      // serialized here: including it is what made the binding digest move when
+      // an operator bootstrapped a label, which is the defect this version fixes.
+      // A mode that needs to pin what it observed uses `modeObservationDigest`.
+      stable_installation: p.stableInstallation,
       plist: p.plistPath === null ? null
         : { path: p.plistPath, sha256: p.plistSha256, device_inode: p.plistDeviceInode },
       served_checkout: p.servedCheckout,
@@ -487,6 +580,43 @@ export function operationalBindingDocument(b: OperationalAdapterBinding): Canoni
 
 export const operationalBindingDigest = (b: OperationalAdapterBinding): string =>
   sha256Hex(canonicalJson(operationalBindingDocument(b)))
+
+/**
+ * THE TRANSIENT OBSERVATION, PINNED SEPARATELY.
+ *
+ * Requirement: confirmation integrity must not be weakened by moving the launchd
+ * state out of the stable binding. So the observation is not dropped, it is
+ * digested on its own. A mode that wants its token to cover "and these are the
+ * states I actually saw" mixes this digest in; the STABLE binding digest stays
+ * invariant across the loaded/unloaded transition either way.
+ *
+ * ORDERED, and the order is the reviewed producer order, so a reordered census
+ * is a different observation rather than the same one shuffled.
+ */
+export interface ObservedProducerState {
+  readonly label: string
+  readonly installation: InstallationState
+}
+
+export function modeObservationDocument(
+  observed: readonly ObservedProducerState[],
+): Canonical {
+  need(observed.length > 0, 'observed')
+  const seen = new Set<string>()
+  return {
+    binding_version: BINDING_VERSION,
+    observed: observed.map((o, n) => {
+      need(LABEL.test(o.label), `observed[${n}].label`)
+      need(!seen.has(o.label), `observed[${n}].label duplicated`)
+      seen.add(o.label)
+      need(INSTALLATION_STATES.includes(o.installation), `observed[${n}].installation`)
+      return { label: o.label, installation: o.installation }
+    }),
+  }
+}
+
+export const modeObservationDigest = (observed: readonly ObservedProducerState[]): string =>
+  sha256Hex(canonicalJson(modeObservationDocument(observed)))
 
 // ---------------------------------------------------------------------------
 // C. ExecutionBinding — ONE invocation

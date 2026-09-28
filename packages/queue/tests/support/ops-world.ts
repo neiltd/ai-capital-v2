@@ -235,6 +235,20 @@ export function goneWhen(gone: () => boolean): FenceLike {
 export const goneProver = (): FenceLike => goneWhen(() => true)
 
 export interface World {
+  /**
+   * SIMULATE THE MANUAL RESTORATION, without touching a single file.
+   *
+   * After this, `launchctl print` answers for the four installed labels as a
+   * restored world does — daily/watchdog/alerts loaded and scheduled with a
+   * successful last exit, worker running — while every plist, its digest, its
+   * device:inode, the checkout it serves and the credential container it names
+   * stay exactly as they were. That is precisely what an operator bootstrapping
+   * the agents changes and all that they change, so it is the only thing this
+   * simulation changes.
+   *
+   * Only meaningful for a world built with `restorable: true`; a no-op otherwise.
+   */
+  restore(): void
   readonly dir: string
   readonly evidence: string
   readonly agents: string
@@ -274,6 +288,14 @@ export function world(over: {
   plistMode?: number
   /** Give the installed plists a Label key that disagrees with their filename. */
   wrongLabel?: boolean
+  /**
+   * A world that starts UNLOADED and can be restored in place by `w.restore()`.
+   *
+   * Implies `unloaded`, and writes the reviewed post-restoration policy:
+   * daily/watchdog/alerts loaded-scheduled-healthy, worker running,
+   * structured-worker absent.
+   */
+  restorable?: boolean
 } = {}): World {
   // THE CANONICAL PATH. Every reviewed container check compares the supplied
   // name with its own realpath, and macOS `/var` is a symlink to `/private/var`.
@@ -313,6 +335,11 @@ export function world(over: {
     chmodSync(p, over.plistMode ?? 0o644)
   }
 
+  const restorable = over.restorable === true
+  const startsUnloaded = over.unloaded === true || restorable
+  // `restored` flips only what launchctl ANSWERS. No file is written, renamed,
+  // chmod-ed or re-hashed, so every stable identity field is untouched by it.
+  let restored = false
   const state = over.loaded === false ? 'not running' : 'running'
   const pid = over.loaded === false ? undefined : '4242'
   const answers: Record<string, { code: number; stdout?: string; stderr?: string }> = {
@@ -325,7 +352,7 @@ export function world(over: {
   // THE CUTOVER WORLD ANSWERS NOTHING. With no `print` entry the runner's
   // default reply is exit 113 "Could not find service" - the one spelling of
   // absence - for every reviewed label, while the plists remain on disk.
-  if (over.unloaded !== true) {
+  if (!startsUnloaded) {
     for (const label of installed) {
       answers[`print gui/501/${label}`] = {
         code: 0,
@@ -365,18 +392,34 @@ export function world(over: {
         return { code: a.code, stdout: a.stdout ?? '', stderr: a.stderr ?? '' }
       }
       const key = `${args[0]} ${args[1] ?? ''}`.trim()
+      // A RESTORED WORLD ANSWERS FOR THE FOUR INSTALLED LABELS. The scheduled
+      // agents are loaded and idle with a successful last exit — which is what a
+      // healthy calendar job looks like between runs — and the worker is running.
+      if (restored && args[0] === 'print') {
+        const label = String(args[1]).split('/').pop() as string
+        if (installed.includes(label)) {
+          const isWorker = label.endsWith('.worker')
+          return {
+            code: 0, stderr: '',
+            stdout: `\tpath = ${join(agents, `${label}.plist`)}\n` +
+              `\tstate = ${isWorker ? 'running' : 'not running'}\n` +
+              `${isWorker ? '\tpid = 4242\n' : ''}` +
+              '\tlast exit code = 0\n',
+          }
+        }
+      }
       const a = answers[key] ?? { code: 113, stderr: 'Could not find service\n' }
       return { code: a.code, stdout: a.stdout ?? '', stderr: a.stderr ?? '' }
     },
   }
 
   const destinationPolicy = join(dir, 'destinations.json')
-  // THE POLICY DECLARES WHAT THIS WORLD ACTUALLY IS. Installation is compared,
-  // never inferred, so a world whose agents are disabled must be declared that
-  // way or the census refuses before it can be examined.
-  const declaredInstallation = over.unloaded === true ? 'installed-unloaded'
-    : over.disabled === true ? 'installed-disabled'
-    : 'installed-loaded'
+  // THE POLICY DECLARES THE STABLE TOPOLOGY, which is the same in every one of
+  // these worlds: the plists are installed. Whether the labels are loaded,
+  // disabled or unloaded is a phase-specific observation the quiescence and
+  // post-restoration policies own, and declaring it here is exactly what made a
+  // single policy unable to hold across a restoration.
+  const declaredInstallation = 'installed'
   writeFileSync(destinationPolicy, JSON.stringify({
     producers: REVIEWED_PRODUCERS.map(label => installed.includes(label)
       ? { label, expected: 'writes-copy-source', installation: declaredInstallation }
@@ -386,7 +429,11 @@ export function world(over: {
   writeFileSync(restorationPolicy, JSON.stringify({
     producers: REVIEWED_PRODUCERS.map(label => ({
       label,
-      required: installed.includes(label) ? (over.restorationRequired ?? 'running') : 'absent',
+      required: !installed.includes(label) ? 'absent'
+        // THE REVIEWED POST-RESTORATION POLICY: the three scheduled agents come
+        // back loaded and healthy, and the worker comes back running.
+        : restorable ? (label.endsWith('.worker') ? 'running' : 'loaded-scheduled-healthy')
+        : (over.restorationRequired ?? 'running'),
     })),
   }))
   const attestation = join(dir, 'attestation.json')
@@ -401,7 +448,8 @@ export function world(over: {
   chmodSync(authorization, 0o600)
 
   return { dir, evidence, agents, destinationPolicy, restorationPolicy,
-           attestation, authorization, commands, credential: cred }
+           attestation, authorization, commands, credential: cred,
+           restore: () => { restored = true } }
 }
 
 export function base(w: World, extra: readonly string[] = []): string[] {

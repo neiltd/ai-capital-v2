@@ -44,7 +44,7 @@ import { createInterface, type Interface } from 'node:readline'
 import { fileURLToPath } from 'node:url'
 
 import {
-  BACKEND_START_SQL, COMPLETE_FENCE_LOCKS, INSTALLATION_STATES,
+  BACKEND_START_SQL, COMPLETE_FENCE_LOCKS, STABLE_INSTALLATIONS, stableInstallationOf,
   QUEUE_SAMPLE_INTERVAL_MS, RELEASE_GATE_PREFIX, REVIEWED_CONTRACT_DIGEST,
   COPY_BINDING_SHAPE_VERSION, canonicalJson, fenceRelationArray,
   releasedLockCensusSqlFor,
@@ -59,7 +59,7 @@ import {
   withDeadline,
   type AdapterContext, type CopyBinding, type CopyMode, type DestinationCensusAdapter,
   type EvidenceOps, type ScratchInput,
-  type InstallationState,
+  type InstallationState, type StableInstallation,
   type ExecutionBinding, type FenceExecutor, type OperationalAdapterBinding,
   type ProducerCensusRow, type ProducerIdentity, type QueueAdapter,
   type QuiescenceAdapter, type QuiescenceAttestation,
@@ -67,7 +67,7 @@ import {
 
 import { BLOCKING_STATES, PAUSED_IS_BLOCKING, bullmqQueueAdapter } from '../src/pg-copy-ops/bullmq.js'
 import {
-  DestinationRefused, installationOf, proveDestinations,
+  DestinationRefused, installationOf, proveDestinations, stableInstallationFor,
   type DestinationPolicyEntry, type ReviewedSourceEndpoint,
 } from '../src/pg-copy-ops/destination.js'
 import {
@@ -211,9 +211,13 @@ export function readDestinationPolicy(path: string): readonly DestinationPolicyE
     // "this agent is not installed on this machine" is a reviewed answer, and
     // "this agent writes nowhere we could prove" is a refusal. A policy that
     // named only the second could not distinguish them.
+    // THE STABLE TOPOLOGY, not the launchd state. A policy naming
+    // `installed-loaded` or `installed-unloaded` is refused here rather than
+    // silently accepted and then compared against something it cannot match
+    // across a restoration.
     if (typeof r.installation !== 'string' ||
-        !INSTALLATION_STATES.includes(r.installation as never)) {
-      throw new OpsRefused('a destination policy entry has no reviewed installation state',
+        !STABLE_INSTALLATIONS.includes(r.installation as never)) {
+      throw new OpsRefused('a destination policy entry has no reviewed installation topology',
                            String(r.label))
     }
     return {
@@ -297,7 +301,7 @@ export async function deriveOperationalBinding(
     // exists on this machine at all is what decides whether its absence from a
     // quiescence census is expected or alarming; where it would write if it
     // were installed answers a different question entirely.
-    structuredWorkerInstallation: structured.installation,
+    structuredWorkerInstallation: structured.stableInstallation,
     // THE PATTERNS THE PROCESS CENSUS MATCHES ON, in producer order. Part of
     // what "quiescent" means, so part of what is agreed to.
     producerProcessPolicy: producers.map(p => ({
@@ -2770,7 +2774,7 @@ export async function runVerifyRestoration(i: ModeInputs): Promise<CliResult> {
   // the REVIEWED POLICY declares - and the policy is a separate document.
   const structuredLabel = REVIEWED_PRODUCERS.find(l => l.endsWith('.structured-worker'))
   let structuredActual: InstallationState | null = null
-  let structuredExpected: InstallationState | null = null
+  let structuredExpected: StableInstallation | null = null
   let structuredDrift: string | null = null
   if (structuredLabel === undefined) {
     structuredDrift = 'the reviewed producer set has no structured worker'
@@ -2785,8 +2789,11 @@ export async function runVerifyRestoration(i: ModeInputs): Promise<CliResult> {
     // to come back to.
     const recordedStructured = readFencedCensus(rehearsalDir)
       .find(p => p.label === structuredLabel)
-    structuredExpected = (recordedStructured?.installation as InstallationState | undefined)
-      ?? null
+    // THE STABLE TOPOLOGY the rehearsal recorded. Comparing the OBSERVED state
+    // here is what stopped a restoration closing: the rehearsal necessarily saw
+    // the producers stopped, and the restoration necessarily sees them back.
+    structuredExpected =
+      (recordedStructured?.stableInstallation as StableInstallation | undefined) ?? null
     const declared = readDestinationPolicy(i.scope.destinationPolicyPath)
       .find(e => e.label === structuredLabel)?.installation ?? null
     if (structuredExpected !== declared) {
@@ -2803,9 +2810,13 @@ export async function runVerifyRestoration(i: ModeInputs): Promise<CliResult> {
       structuredDrift = e instanceof Error ? e.message
         : 'the structured worker could not be inspected'
     }
-    if (structuredDrift === null && structuredActual !== structuredExpected) {
+    // COMPARED ON THE TOPOLOGY, REPORTED AS OBSERVED. The manifest publishes
+    // `structuredActual` verbatim, so the record says what was actually seen.
+    if (structuredDrift === null &&
+        (structuredActual === null ||
+         stableInstallationOf(structuredActual) !== structuredExpected)) {
       structuredDrift = `the structured worker is ${String(structuredActual)}, ` +
-        `and the reviewed policy expects ${String(structuredExpected)}`
+        `and the reviewed policy expects the ${String(structuredExpected)} topology`
     }
   }
 
@@ -2943,25 +2954,23 @@ export function compareIdentity(
 ): string | null {
   if (before === undefined) return 'the label is not in the operational binding'
 
-  if (before.installation === 'expected-absent') {
-    if (now.presence !== 'absent') return 'an expected-absent label is now loaded'
-    // A PLIST WHERE THERE WAS NONE. launchd still holds no label, so presence is
-    // unchanged and the old check passed; what changed is that the agent is now
-    // installed and one bootstrap away from running.
-    if (now.installedUnloaded) return 'an expected-absent label is now installed'
+  // COMPARED ON THE STABLE TOPOLOGY. Loading, disabling and unloading are what
+  // the operator DOES between the rehearsal and the restoration, so treating any
+  // of them as drift made the intended sequence unreachable. What may not change
+  // is whether the agent is installed at all, and the identity of what is
+  // installed - every field below.
+  const nowStable = stableInstallationFor(now)
+
+  if (before.stableInstallation === 'expected-absent') {
+    // A PLIST WHERE THERE WAS NONE, in either shape: a label that appeared, or a
+    // file that appeared while launchd still holds no label. Both mean an agent
+    // that was not installed now is, which is the dangerous direction.
+    if (nowStable !== 'expected-absent') return 'an expected-absent label is now installed'
     return null
   }
 
-  if (before.installation === 'installed-unloaded') {
-    // A LABEL THAT APPEARED IS A DIFFERENT INSTALLATION, and it is the dangerous
-    // direction: the plists are on disk, so a bootstrap is all it takes.
-    if (now.presence !== 'absent') return 'an installed-unloaded label is now loaded'
-    if (!now.installedUnloaded) return 'an installed-unloaded plist has been removed'
-  } else if (now.presence === 'absent') {
-    return now.installedUnloaded
-      ? 'a loaded label is now installed-unloaded'
-      : 'a loaded label is now absent'
-  }
+  // AN INSTALLED AGENT MAY NOT HAVE BECOME UNINSTALLED.
+  if (nowStable !== 'installed') return 'an installed label is no longer installed'
 
   if (before.plistSha256 !== now.plistSha256) return 'the plist is not the one measured'
   if (before.plistPath !== now.plistPath) return 'the plist path has moved'
@@ -3083,7 +3092,7 @@ export function verifyGateLink(
     if (row.label !== REVIEWED_PRODUCERS[n]) {
       throw new OpsRefused('the fenced producer census is not in the reviewed order', String(n))
     }
-    for (const k of ['installation', 'disposition']) {
+    for (const k of ['installation', 'stableInstallation', 'disposition']) {
       if (typeof row[k] !== 'string') {
         throw new OpsRefused('a fenced producer census row is incomplete', `${String(row.label)}.${k}`)
       }
@@ -3118,7 +3127,12 @@ export function compareProducerSets(
     // only while no reviewed agent bound them outside the loaded state. An
     // installed-unloaded agent binds all of them, so a plist replaced between
     // the fenced census and the restoration would otherwise compare equal.
-    for (const k of ['disposition', 'installation',
+    // `installation` IS DELIBERATELY ABSENT from this list and
+    // `stableInstallation` is in its place. The fenced census is taken with the
+    // producers stopped and the restoration census with them running; requiring
+    // the transient state to match across that boundary is requiring the
+    // restoration never to have happened.
+    for (const k of ['disposition', 'stableInstallation',
                      'plistPath', 'plistSha256', 'plistDeviceInode', 'servedCheckout',
                      'credentialPath', 'credentialDeviceInode',
                      'databaseHost', 'databasePort', 'databaseName'] as const) {

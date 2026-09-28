@@ -7,7 +7,7 @@
 
 import { execFileSync } from 'node:child_process'
 import {
-  chmodSync, mkdirSync, mkdtempSync, readFileSync, readdirSync, realpathSync, rmSync,
+  chmodSync, closeSync, mkdirSync, mkdtempSync, readFileSync, readdirSync, realpathSync, rmSync,
   symlinkSync, writeFileSync,
 } from 'node:fs'
 import { tmpdir } from 'node:os'
@@ -98,7 +98,7 @@ const fakeCommands = (
 /** A reviewed policy entry for a label that is installed and loaded. */
 const LOADED = (label: string, expected: string): {
   label: string; expected: never; installation: never
-} => ({ label, expected: expected as never, installation: 'installed-loaded' as never })
+} => ({ label, expected: expected as never, installation: 'installed' as never })
 
 /** The reply `launchctl print` gives for a loaded label. */
 const printed = (plist: string, over: {
@@ -847,6 +847,34 @@ describe('the bytes come from the descriptor that was checked', () => {
       .toThrow(/does not resolve to itself/)
   })
 
+  it('openReviewedFileDescriptor REFUSES an ancestor symlink, independently of openChecked', () => {
+    // THE SECOND OPEN BOUNDARY NEEDS ITS OWN CONTROL. The case above exercises
+    // `openReviewedContainer`, which goes through `openChecked`; the descriptor
+    // path is a separate function with its own copy of the canonical-path rule,
+    // and a mutation that removes the rule from only that copy left every
+    // assertion here passing. Measured: that is how K07b survived.
+    //
+    // BEHAVIOURAL, not structural, because an ancestor symlink is deterministic:
+    // `realpath` of a path reached through a symlinked directory never equals
+    // the caller's own spelling, so no race is needed to provoke it.
+    const d = root()
+    const real = join(d, 'fd-real')
+    execFileSync('/bin/mkdir', ['-p', real])
+    const p = container(real, 'fd-cred.url', 'postgres:///ai_capital\n')
+    const link = join(d, 'fd-via')
+    symlinkSync(real, link)
+
+    // NON-VACUITY: the canonical spelling is accepted, and its descriptor is
+    // closed here so the assertion cannot leak one.
+    const held = openReviewedFileDescriptor(p)
+    expect(held.identity.path).toBe(p)
+    closeSync(held.fd)
+
+    // AND THE SYMLINKED ANCESTOR IS REFUSED.
+    expect(() => openReviewedFileDescriptor(join(link, 'fd-cred.url')))
+      .toThrow(/does not resolve to itself/)
+  })
+
   it('accepts a plist only in the reviewed mode set', () => {
     // K1.1-K09. A plist is not a secret - `launchctl print` shows an agent's
     // environment to the whole session - but it may NOT be group- or
@@ -944,9 +972,11 @@ describe('the destination census does not fabricate or assume', () => {
       .rejects.toThrow(/may not be declared a writer/)
   })
 
-  it('refuses a label that is not in its declared installation state', async () => {
+  it('refuses a label that is not in its declared installation TOPOLOGY', async () => {
     // K1.1-K16. "This agent is not installed" and "this agent writes nowhere
     // we proved" are different facts, and only the first can be declared.
+    // Compared on the stable topology since K5.3: an installed agent declared
+    // expected-absent is refused whether its label is loaded or not.
     const d = root()
     const cred = container(d, 'p.url', 'postgres://u:p@%2Ftmp%2Fs/ai_capital\n')
     const { o } = oneLabel(d, cred, true)
@@ -954,7 +984,7 @@ describe('the destination census does not fabricate or assume', () => {
       ['com.test.one'], { host: '/tmp/s', port: '5432', database: 'ai_capital' },
       [{ label: 'com.test.one', expected: 'expected-absent' as never,
          installation: 'expected-absent' as never }], o, ctx()))
-      .rejects.toThrow(/not in its declared installation state/)
+      .rejects.toThrow(/not in its declared installation topology/)
   })
 
   it('records an absent label with NOTHING filled in', async () => {
@@ -1002,6 +1032,80 @@ describe('the symlink defences are two, not one', () => {
       new URL('../src/pg-copy-ops/secure-file.ts', import.meta.url), 'utf-8'))
     expect(src).toContain('constants.O_RDONLY | constants.O_NOFOLLOW')
     expect(src.indexOf('realpathSync(path)')).toBeLessThan(src.indexOf('O_NOFOLLOW'))
+  })
+
+  /**
+   * THE BODY OF ONE FUNCTION, comments stripped.
+   *
+   * Sliced from the declaration to the next top-level declaration. Crude on
+   * purpose: the alternative is a parser, and what these assertions need is
+   * "which open call sits inside which function", which the text answers.
+   */
+  const bodyOf = (decl: string): string => {
+    const src = readFileSync(
+      new URL('../src/pg-copy-ops/secure-file.ts', import.meta.url), 'utf-8')
+    const i = src.indexOf(decl)
+    expect(i, `${decl} not found`).toBeGreaterThanOrEqual(0)
+    const rest = src.slice(i + decl.length)
+    const m = /\n(?:export )?(?:function|const|interface|type|class) /.exec(rest)
+    return strip(decl + (m === null ? rest : rest.slice(0, m.index)))
+  }
+
+  // THE INVARIANT IS PER FUNCTION, AND THE TEST ABOVE IS NOT.
+  //
+  // `expect(src).toContain(...)` is satisfied by ONE occurrence anywhere in the
+  // file, and there are two independent no-follow opens: `openChecked`, which
+  // reads bytes, and `openReviewedFileDescriptor`, which hands a descriptor to a
+  // child. Removing the flag from either one leaves the other's occurrence
+  // standing, so the whole-file assertion passes and the defence is gone from
+  // half the surface. Measured: that is exactly how mutant M25 survived.
+  //
+  // WHY STRUCTURAL RATHER THAN BEHAVIOURAL. The property is a TOCTOU window —
+  // `realpathSync` proves the name canonical, then `openSync` opens it, and
+  // between those two calls another process can replace the regular file with a
+  // symlink. Node exposes no `openat(2)`, so the window is real and `O_NOFOLLOW`
+  // is what closes it. Provoking it deterministically would mean winning a race
+  // against the code under test from another process on every run, on every
+  // machine, which is not a reliable unit-test seam; a flaky control on a
+  // security boundary is worse than a structural one. So each open boundary is
+  // asserted where it lives.
+  for (const [label, decl] of [
+    ['openChecked', 'function openChecked(path: string, policy: Policy): OpenedContainer {'],
+    ['openReviewedFileDescriptor',
+     'export function openReviewedFileDescriptor(path: string): HeldDescriptor {'],
+  ] as [string, string][]) {
+    it(`${label} opens with O_RDONLY | O_NOFOLLOW, independently of the other`, () => {
+      const body = bodyOf(decl)
+
+      // NON-VACUITY: the slice really is this function and really does open.
+      expect(body, label).toContain('openSync(')
+      expect(body, label).toContain('realpathSync(path)')
+
+      // THE FLAG IS HERE, in this function, on its own open.
+      expect(body, label).toContain('constants.O_RDONLY | constants.O_NOFOLLOW')
+
+      // AND EVERY open IN THIS FUNCTION CARRIES IT. A second, unflagged open
+      // added beside the flagged one would satisfy `toContain` and reopen the
+      // window, so the counts are compared rather than the presence.
+      const opens = (body.match(/openSync\(/g) ?? []).length
+      const noFollow = (body.match(/constants\.O_RDONLY \| constants\.O_NOFOLLOW/g) ?? []).length
+      expect(noFollow, `${label}: ${String(opens)} open(s), ${String(noFollow)} flagged`)
+        .toBe(opens)
+
+      // AND THE ORDER IS THE POINT: the resolve comes first, the flagged open
+      // second, which is what makes the flag the guard for the window between them.
+      expect(body.indexOf('realpathSync(path)'), label)
+        .toBeLessThan(body.indexOf('O_NOFOLLOW'))
+    })
+  }
+
+  it('the two no-follow opens are two, and neither stands in for the other', () => {
+    const whole = strip(readFileSync(
+      new URL('../src/pg-copy-ops/secure-file.ts', import.meta.url), 'utf-8'))
+    // EXACTLY TWO, so a future third open cannot be added unnoticed and the two
+    // per-function assertions above between them cover every one that exists.
+    expect((whole.match(/openSync\(/g) ?? []).length).toBe(2)
+    expect((whole.match(/constants\.O_RDONLY \| constants\.O_NOFOLLOW/g) ?? []).length).toBe(2)
   })
 })
 

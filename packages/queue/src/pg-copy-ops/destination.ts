@@ -32,8 +32,10 @@
 // device:inode - and the sanitized host, port and database. There is no "just
 // the hash" concession: a digest of a credential is still an oracle for it.
 
-import type {
-  AdapterContext, DestinationDisposition, InstallationState, ProducerIdentity,
+import {
+  stableInstallationOf,
+  type AdapterContext, type DestinationDisposition, type InstallationState,
+  type ProducerIdentity, type StableInstallation,
 } from '@common/db/pg-copy'
 
 import {
@@ -64,8 +66,22 @@ export interface ReviewedSourceEndpoint {
 export interface DestinationPolicyEntry {
   readonly label: string
   readonly expected: DestinationDisposition
-  /** The installation state the policy expects. Compared, never inferred. */
-  readonly installation: InstallationState
+  /**
+   * The STABLE installation topology the policy expects. Compared, never inferred.
+   *
+   * DELIBERATELY NOT THE LAUNCHD STATE. The destination policy answers "is this
+   * agent installed, and where does it write" - questions whose answers hold
+   * across a restoration. Whether an installed agent is currently loaded,
+   * disabled or unloaded is phase-specific, and the quiescence and
+   * post-restoration policies own it: the rehearsal needs every producer STOPPED,
+   * the restoration needs them BACK, and one document cannot require both.
+   *
+   * This was the whole blocker. A destination policy that named
+   * `installed-unloaded` refused after the operator restored the agents, and one
+   * that named `installed-loaded` refused before - with the binding digest moving
+   * either way, so no single policy let a proved rehearsal reach its own review.
+   */
+  readonly installation: StableInstallation
 }
 
 /**
@@ -147,21 +163,30 @@ export function classifyContainer(path: string): SanitizedDestination {
 }
 
 /**
- * The installation state a label's inspection establishes.
+ * The OBSERVED installation state a label's inspection establishes.
  *
  * ABSENCE FROM LAUNCHD IS TWO DIFFERENT STATES, and collapsing them was the
- * defect. `expected-absent` is reserved for an agent that is not installed at
- * all - no label AND no reviewed plist - because that state's contract is that
- * every evidence field is null. An agent whose exact reviewed plist IS installed
- * has a path, bytes, a served checkout, a credential container and an endpoint;
- * calling that `expected-absent` threw all of them away and left a plist that
- * could be replaced without moving the confirmation token.
+ * defect K5.2 fixed. `expected-absent` is reserved for an agent that is not
+ * installed at all - no label AND no reviewed plist - because that state's
+ * contract is that every evidence field is null. An agent whose exact reviewed
+ * plist IS installed has a path, bytes, a served checkout, a credential container
+ * and an endpoint; calling that `expected-absent` threw all of them away and left
+ * a plist that could be replaced without moving the confirmation token.
+ *
+ * THIS IS THE TRANSIENT ANSWER. `stableInstallationOf` reduces it to the topology
+ * the binding agrees to, and both are recorded: the observation is what evidence
+ * and the post-restoration policy compare, the topology is what the digest covers.
  */
 export function installationOf(seen: LabelInspection): InstallationState {
   if (seen.presence === 'absent') {
     return seen.installedUnloaded ? 'installed-unloaded' : 'expected-absent'
   }
   return seen.disabled ? 'installed-disabled' : 'installed-loaded'
+}
+
+/** The STABLE topology a label's inspection establishes. */
+export function stableInstallationFor(seen: LabelInspection): StableInstallation {
+  return stableInstallationOf(installationOf(seen))
 }
 
 /**
@@ -187,19 +212,25 @@ export async function proveDestinations(
     }
     const seen = await inspectLabel(label, o, ctx, disabled)
     const installation = installationOf(seen)
+    const stableInstallation = stableInstallationOf(installation)
 
-    // THE POLICY MUST HAVE SAID WHAT WAS FOUND. Installation first, because
-    // "this agent is not installed" and "this agent writes nowhere we proved"
-    // are different facts and only the first can be declared in advance.
-    if (installation !== entry.installation) {
+    // THE POLICY MUST HAVE SAID WHAT WAS FOUND. Topology first, because "this
+    // agent is not installed" and "this agent writes nowhere we proved" are
+    // different facts and only the first can be declared in advance.
+    //
+    // COMPARED ON THE STABLE VALUE. Comparing the observed state here is what
+    // made the policy unsatisfiable across a restoration: the same reviewed
+    // policy has to hold while the producers are stopped for the fence AND after
+    // the operator brings them back.
+    if (stableInstallation !== entry.installation) {
       throw new DestinationRefused(
-        'a reviewed label is not in its declared installation state', label)
+        'a reviewed label is not in its declared installation topology', label)
     }
 
     // ONLY `expected-absent` TAKES THE NULL-EVIDENCE PATH. An installed-unloaded
     // agent falls through to the measurement below, because there is a real file
     // to name, real bytes to hash and a real destination to prove.
-    if (installation === 'expected-absent') {
+    if (stableInstallation === 'expected-absent') {
       if (entry.expected !== 'expected-absent') {
         throw new DestinationRefused(
           'an absent label may not be declared a writer to any database', label)
@@ -209,7 +240,7 @@ export async function proveDestinations(
         label,
         plistPath: null, plistSha256: null, plistDeviceInode: null,
         servedCheckout: null,
-        installation,
+        installation, stableInstallation,
         credentialPath: null, credentialDeviceInode: null,
         databaseHost: null, databasePort: null, databaseName: null,
         disposition: 'expected-absent' as const,
@@ -281,10 +312,10 @@ export async function proveDestinations(
     // The binding validator requires these fields for this state; refusing here
     // as well means the refusal names the label and happens during the census,
     // rather than surfacing later as a document that will not validate.
-    if (installation === 'installed-unloaded' &&
+    if (stableInstallation === 'installed' &&
         (credentialPath === null || credentialDeviceInode === null || sanitized === null)) {
       throw new DestinationRefused(
-        'an installed-unloaded label bound no credential container or endpoint', label)
+        'an installed label bound no credential container or endpoint', label)
     }
 
     out.push(Object.freeze({
@@ -293,7 +324,7 @@ export async function proveDestinations(
       plistSha256: seen.plistSha256,
       plistDeviceInode: seen.plistDeviceInode,
       servedCheckout: seen.servedCheckout ?? null,
-      installation,
+      installation, stableInstallation,
       credentialPath,
       credentialDeviceInode,
       databaseHost: sanitized?.host ?? null,

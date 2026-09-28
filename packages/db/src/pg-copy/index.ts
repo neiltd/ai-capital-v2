@@ -18,13 +18,15 @@
 export {
   BINDING_VERSION, APPLY_PREFIX, REHEARSE_PREFIX, TOKEN_PATTERN, TOKEN_PREFIX,
   BindingRefused, COPY_BINDING_SHAPE_VERSION, DESTINATION_DISPOSITIONS,
-  INSTALLATION_STATES, INSTALLED_STATES,
+  INSTALLATION_STATES, INSTALLED_STATES, STABLE_INSTALLATIONS, stableInstallationOf,
+  modeObservationDocument, modeObservationDigest,
   MEASURED_DESTINATIONS,
   assertConfirmationMatches, assertOperationalBindingUnchanged,
   confirmationToken, copyBindingDigest, copyBindingDocument, copySetDigest,
   executionBindingDocument, operationalBindingDigest, operationalBindingDocument,
   type BindingReason, type CopyBinding, type CopyMode, type DestinationDisposition,
-  type ExecutionBinding, type InstallationState, type OperationalAdapterBinding,
+  type ExecutionBinding, type InstallationState, type StableInstallation,
+  type ObservedProducerState, type OperationalAdapterBinding,
   type ProducerIdentity,
 } from './bindings.js'
 

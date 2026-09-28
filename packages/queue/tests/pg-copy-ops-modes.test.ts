@@ -31,7 +31,7 @@ import {
   COPY_BINDING_SHAPE_VERSION, COPY_TABLES, INHERITED_FD_DIR, PASSFILE_CHILD_FD,
   QUEUE_SAMPLE_INTERVAL_MS, canonicalJson,
   assertCompletionMarker, contractDigest,
-  publishEvidence, serializeArtifact, verifyPublishedEvidence,
+  publishEvidence, serializeArtifact, sha256Hex, verifyPublishedEvidence,
 } from '@common/db/pg-copy'
 import { afterEach, describe, expect, it } from 'vitest'
 
@@ -294,28 +294,54 @@ describe('--inspect', () => {
 describe('--rehearse', () => {
   it('proves the world, publishes IN ORDER, releases, and stops short of finished',
     async () => {
-      const w = await ready()
-      const token = await tokenFor(w, 'rehearse')
-      const sup = supervisorStub()
-      const prv = proverStub()
-      const r = await runOpsCli(rehearseArgs(w, token), deps(w, {
-        openSupervisor: async () => sup, openProver: async () => prv,
-      }))
+      // CONTAINED, THOUGH THE HAPPY PATH REACHES NO HOLD.
+      //
+      // This case used to call `runOpsCli` directly in the Vitest worker, and that
+      // is safe only while the release SUCCEEDS. It is a mutation target: removing
+      // the `AUTHORIZATIONS.set` registration from `runOperationalGate` makes
+      // `releaseFence` refuse the authorization as unregistered, `runRehearsal`
+      // catches that WHILE THE FENCE IS HELD, and it enters the intervention hold
+      // — which is unbounded by design and holds SIGTERM. In-worker, the test then
+      // never returns, so `afterEach` never runs, nothing enforces a ceiling, and
+      // the only thing left to stop it is the matrix-level supervisor killing the
+      // whole process group. That is what happened: the K1 matrix reached exactly
+      // this mutant and was terminated on its 5 GiB TMPDIR ceiling.
+      //
+      // Running it through the existing process boundary makes the mutant fail
+      // HERE, by the container's own named assertion, in seconds and in kilobytes.
+      // Nothing about the happy path changes: no hold is entered, so the limits
+      // below are never approached.
+      //
+      // THE LIMITS ARE DELIBERATELY TIGHT. The success path publishes exactly two
+      // bundles and finishes in a few seconds; a hold publishes an intent and an
+      // outcome per iteration, for ever. Six bundles and 8 MiB leave the reviewed
+      // path ample room and give a runaway almost none. The wall clock counts from
+      // `spawn` here — `holdStartedAt` stays null when no hold is entered — so it
+      // bounds the whole run, and it restarts from the hold if one ever begins.
+      const r = await contained({}, {
+        wallClockMs: 30_000,
+        maxBundles: 6,
+        maxBytes: 8 * 1024 * 1024,
+      })
+      const evidence = evidenceOf(r)
 
-      expect(r.exitCode, r.lines.join('\n')).toBe(EXIT_ACTION_REQUIRED)
-      expect(r.lines.join('\n')).toContain(REHEARSAL_OUTCOME)
-      expect(sup.seen).toContain(RELEASE_SQL)
-      expect(sup.closed()).toBe(1)
-      expect(prv.closed()).toBe(1)
+      expect(r.report.exitCode, r.report.lines.join('\n')).toBe(EXIT_ACTION_REQUIRED)
+      expect(r.report.lines.join('\n')).toContain(REHEARSAL_OUTCOME)
+      expect(r.report.supervisorSql).toContain(RELEASE_SQL)
+      expect(r.report.supervisorClosed).toBe(1)
+      expect(r.report.proverClosed).toBe(1)
+      // AND NO HOLD WAS ENTERED AT ALL on the reviewed path.
+      expect(r.report.holdStartedAt).toBeNull()
+      expect(r.report.unscripted).toBeNull()
 
       // BOTH BUNDLES, AND THE PRE-RELEASE ONE CLAIMS NO SUCCESS.
-      const gateDir = join(w.evidence, `${RELEASE_GATE_PREFIX}-${STAMP}-${RUN_ID}`)
+      const gateDir = join(evidence, `${RELEASE_GATE_PREFIX}-${STAMP}-${RUN_ID}`)
       const gate = manifestOf(gateDir, 'release-gate.json')
       expect(gate.outcome).toBe(PRE_RELEASE_OUTCOME)
       expect(gate.outcome).not.toBe(REHEARSAL_OUTCOME)
       expect(verifyPublishedEvidence(gateDir).length).toBeGreaterThan(0)
 
-      const dir = join(w.evidence, `${REHEARSAL_PREFIX}-${STAMP}-${RUN_ID}`)
+      const dir = join(evidence, `${REHEARSAL_PREFIX}-${STAMP}-${RUN_ID}`)
       const m = manifestOf(dir, 'rehearsal.json')
       expect(m.outcome).toBe(REHEARSAL_OUTCOME)
       expect(m.fence_state).toBe('released')
@@ -323,7 +349,10 @@ describe('--rehearse', () => {
       expect(m.target_sessions_opened).toBe(0)
       // AND IT NAMES THE PRE-RELEASE RECORD BY DIGEST.
       expect((m.release_gate_bundle as { name: string }).name).toBe(basename(gateDir))
-    })
+      // EXACTLY TWO BUNDLES: the ceiling above is generous, not load-bearing here.
+      expect(bundles(evidence, RELEASE_GATE_PREFIX).length).toBe(1)
+      expect(bundles(evidence, REHEARSAL_PREFIX).length).toBe(1)
+    }, 180_000)
 
   it('publishes NO success bundle when the release is not proved', async () => {
     // K1.1-M11. This is the defect the ordering exists to fix. A success bundle
@@ -1257,6 +1286,103 @@ describe('a bundle can be real and still be wrong', () => {
     }).finalPath
   }
 
+  /**
+   * A REAL, DIGEST-VALID BUNDLE THAT ADMITS IT IS NOT COMPLETE.
+   *
+   * `publishEvidence` CANNOT BUILD THIS, and that is itself part of the picture:
+   * its `assertCompletionMarker` refuses a manifest whose `complete` is not
+   * `true`, so the reviewed writer never emits an incomplete record. The tree is
+   * therefore assembled directly — the same shape the publisher produces, frozen
+   * to the same modes, with a DIGEST that genuinely covers the bytes — because
+   * `verifyReferencedBundle` is a check on A DIRECTORY ON DISK, whoever put it
+   * there. An operator assembling one by hand, an older writer, or a partially
+   * written record recovered from elsewhere all reach it, and none of them is
+   * obliged to have gone through `publishEvidence`.
+   */
+  function forgeIncomplete(
+    w: World, prefix: string, manifestFile: string, manifest: Record<string, unknown>,
+    runId: string,
+  ): string {
+    const dir = join(w.evidence, `${prefix}-${STAMP}-${runId}`)
+    mkdirSync(dir, { mode: 0o700 })
+    // TEXT, NOT BYTES, AND THE SAME TEXT FOR BOTH. `sha256Hex` hashes the UTF-8
+    // encoding of a string, and the file is written from that same string, so the
+    // digest describes exactly the bytes on disk by construction rather than by
+    // two encodings happening to agree.
+    const files: [string, string][] = [
+      [manifestFile, `${JSON.stringify(manifest)}\n`],
+      ['actions.json', '{}\n'],
+    ]
+    for (const [rel, text] of files) writeFileSync(join(dir, rel), text, 'utf-8')
+    // THE DIGEST IS REAL: the reviewed helper, sorted by path, the reviewed
+    // "<digest>  <path>" spelling, trailing newline.
+    const body = files
+      .map(([rel, text]) => ({ rel, d: sha256Hex(text) }))
+      .sort((a, b) => (a.rel < b.rel ? -1 : 1))
+      .map(e => `${e.d}  ${e.rel}`)
+      .join('\n')
+    writeFileSync(join(dir, 'DIGEST'), `${body}\n`, 'utf-8')
+    // FROZEN EXACTLY AS PUBLICATION FREEZES: files 0400, root 0500, last.
+    for (const rel of [...files.map(([r]) => r), 'DIGEST']) chmodSync(join(dir, rel), 0o400)
+    chmodSync(dir, 0o500)
+    return dir
+  }
+
+  it('M37 CONTROL: refuses a referenced bundle that is not complete', async () => {
+    // THE M37 CONTROL. `verifyReferencedBundle` reads three things out of a
+    // bundle it has already verified on disk: that the named manifest is there,
+    // that `record` is the record it is being used as, and that `complete` is
+    // true. The first two had controls; the third did not, so deleting the
+    // completeness guard changed nothing any test could see.
+    //
+    // WHY THE DIGEST CANNOT CATCH THIS. A bundle whose manifest says
+    // `complete: false` is a structurally perfect bundle: its DIGEST covers
+    // exactly the bytes that are there, every file is frozen, and the tree
+    // verifies. `complete` is a CLAIM THE WRITER MAKES ABOUT ITSELF — that it
+    // finished — and the only way to catch a record admitting it did not is to
+    // read the field.
+    const w = await ready()
+
+    for (const [label, manifest, runId] of [
+      ['explicitly false', { record: REHEARSAL_PREFIX, complete: false,
+                             outcome: REHEARSAL_OUTCOME }, 'd0000001'],
+      // MISSING IS NOT TRUE. `!== true` is the reviewed spelling precisely so an
+      // absent field fails closed rather than reading as absent-means-fine.
+      ['missing entirely', { record: REHEARSAL_PREFIX,
+                             outcome: REHEARSAL_OUTCOME }, 'd0000002'],
+      // AND NEITHER IS A TRUTHY NON-BOOLEAN.
+      ['the string "true"', { record: REHEARSAL_PREFIX, complete: 'true',
+                              outcome: REHEARSAL_OUTCOME }, 'd0000003'],
+    ] as [string, Record<string, unknown>, string][]) {
+      const dir = forgeIncomplete(w, REHEARSAL_PREFIX, 'rehearsal.json', manifest, runId)
+
+      // NON-VACUITY, FIRST. This is a REAL published-shaped bundle: it VERIFIES
+      // on disk and carries the manifest under the expected name. Were this to
+      // fail, the refusal below would prove nothing about completeness.
+      const files = verifyPublishedEvidence(dir)
+      expect(files, label).toContain('rehearsal.json')
+      expect(files, label).toContain('DIGEST')
+
+      // AND THE RECORD IS THE EXPECTED ONE, so the refusal cannot be the record
+      // check firing instead.
+      expect(manifestOf(dir, 'rehearsal.json').record, label).toBe(REHEARSAL_PREFIX)
+
+      // THE REFUSAL, AND SPECIFICALLY THIS ONE.
+      expect(() => verifyReferencedBundle(dir, REHEARSAL_PREFIX, 'rehearsal.json'), label)
+        .toThrow(/a referenced bundle is not complete/)
+    }
+
+    // NON-VACUITY, THE OTHER DIRECTION: the identical hand-built tree with
+    // `complete: true` is ACCEPTED, so the three refusals above turn on that one
+    // field and on nothing about how the tree was assembled.
+    const good = forgeIncomplete(w, REHEARSAL_PREFIX, 'rehearsal.json',
+                                 { record: REHEARSAL_PREFIX, complete: true,
+                                   outcome: REHEARSAL_OUTCOME }, 'd0000004')
+    expect(verifyPublishedEvidence(good)).toContain('rehearsal.json')
+    expect(() => verifyReferencedBundle(good, REHEARSAL_PREFIX, 'rehearsal.json'))
+      .not.toThrow()
+  })
+
   it('refuses a rehearsal that does not record a proved release', async () => {
     // K1.1-K37, without editing anything. A published bundle whose DIGEST
     // covers its own bytes, complete, the right record - and its fence_state
@@ -1846,7 +1972,7 @@ describe('the structured worker is measured, not restated', () => {
       },
     }))
     expect(r.exitCode).not.toBe(EXIT_OK)
-    expect(r.lines.join('\n')).toMatch(/structured worker|declared installation state/)
+    expect(r.lines.join('\n')).toMatch(/structured worker|declared installation topology/)
   })
 })
 
@@ -1921,7 +2047,8 @@ describe('the gate link cannot be substituted', () => {
 
   const CENSUS = (over: Record<string, unknown> = {}): Array<Record<string, unknown>> =>
     REVIEWED_PRODUCERS.map(label => ({
-      label, installation: 'installed-loaded', disposition: 'writes-copy-source',
+      label, installation: 'installed-loaded', stableInstallation: 'installed',
+      disposition: 'writes-copy-source',
       plistPath: '/a', plistSha256: 'b', plistDeviceInode: '1:2', servedCheckout: '/c',
       credentialPath: '/d', credentialDeviceInode: '3:4',
       databaseHost: '/tmp/s', databasePort: '5432', databaseName: 'ai_capital',
@@ -2115,7 +2242,7 @@ describe('the structured worker comes back to the state the rehearsal recorded',
         producers: Array<{ label: string; expected: string; installation: string }>
       }
       for (const e of policy.producers) {
-        if (e.label.endsWith('.structured-worker')) e.installation = 'installed-loaded'
+        if (e.label.endsWith('.structured-worker')) e.installation = 'installed'
       }
       writeFileSync(w.destinationPolicy, JSON.stringify(policy))
       const r = await runOpsCli(restoreArgs(w), deps(w))

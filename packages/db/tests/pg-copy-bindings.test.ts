@@ -10,7 +10,8 @@ import {
   APPLY_PREFIX, BindingRefused, COPY_BINDING_SHAPE_VERSION, REHEARSE_PREFIX, TOKEN_PATTERN,
   assertConfirmationMatches, assertOperationalBindingUnchanged, confirmationToken,
   copyBindingDigest, copyBindingDocument, executionBindingDocument, operationalBindingDigest,
-  operationalBindingDocument,
+  operationalBindingDocument, modeObservationDigest, modeObservationDocument,
+  stableInstallationOf, INSTALLATION_STATES,
   type CopyBinding, type ExecutionBinding, type OperationalAdapterBinding,
   type ProducerIdentity,
 } from '../src/pg-copy/bindings.js'
@@ -50,6 +51,7 @@ const producer = (label: string, over: Partial<ProducerIdentity> = {}): Producer
   plistDeviceInode: '16777234:54321',
   servedCheckout: '/Users/x/checkout',
   installation: 'installed-loaded',
+  stableInstallation: 'installed',
   credentialPath: '/Users/x/.secrets/pipeline.url',
   credentialDeviceInode: '16777234:12345',
   databaseHost: '/tmp/socket',
@@ -164,7 +166,7 @@ describe('OperationalAdapterBinding', () => {
       { blockingStates: ['active', 'wait', 'delayed', 'prioritized'] },
       { pausedIsBlocking: false },
       { producerAuthority: 'stop-and-restore' },
-      { structuredWorkerInstallation: 'installed-loaded' },
+      { structuredWorkerInstallation: 'installed' },
       { redisHost: 'other-host' },
       { redisPort: '6380' },
       { redisDatabase: '1' },
@@ -177,6 +179,117 @@ describe('OperationalAdapterBinding', () => {
     const seen = new Set([base])
     for (const v of variants) seen.add(operationalBindingDigest(OPS(v)))
     expect(seen.size).toBe(variants.length + 1)
+  })
+
+  it('is INVARIANT across the one intended transition: installed-unloaded -> installed-loaded', () => {
+    // THE DEFECT K5.3 CLOSES. Before this, the observed launchd state sat in the
+    // binding document, so bootstrapping a label moved the digest — and
+    // runVerifyRestoration then rejected the restored world as a different one
+    // from the world the rehearsal was taken against. A proved rehearsal could
+    // not reach its own review.
+    const unloaded = OPS({ producers: REVIEWED_PRODUCERS.map(
+      l => producer(l, { installation: 'installed-unloaded' })) })
+    const loaded = OPS({ producers: REVIEWED_PRODUCERS.map(
+      l => producer(l, { installation: 'installed-loaded' })) })
+    const disabled = OPS({ producers: REVIEWED_PRODUCERS.map(
+      l => producer(l, { installation: 'installed-disabled' })) })
+    expect(operationalBindingDigest(loaded)).toBe(operationalBindingDigest(unloaded))
+    expect(operationalBindingDigest(disabled)).toBe(operationalBindingDigest(unloaded))
+  })
+
+  it('carries the STABLE topology and not the observed launchd state', () => {
+    const doc = JSON.parse(canonicalJson(operationalBindingDocument(OPS()))) as
+      { producers: Record<string, unknown>[] }
+    for (const row of doc.producers) {
+      expect(row.stable_installation).toBe('installed')
+      // The transient field must not appear in the document at all.
+      expect(Object.keys(row)).not.toContain('installation')
+    }
+    expect(canonicalJson(operationalBindingDocument(OPS())))
+      .not.toMatch(/installed-loaded|installed-unloaded|installed-disabled/)
+  })
+
+  it('STILL refuses a stable topology that disagrees with the observed state', () => {
+    expect(() => operationalBindingDocument(OPS({
+      producers: REVIEWED_PRODUCERS.map((l, n) => producer(l, n === 0
+        ? { installation: 'expected-absent' } : {})),
+    }))).toThrow()
+    expect(() => operationalBindingDocument(OPS({
+      producers: REVIEWED_PRODUCERS.map((l, n) => producer(l, n === 0
+        ? { stableInstallation: 'expected-absent' } : {})),
+    }))).toThrow()
+  })
+
+  it('refuses an ALL-NULL record that still claims a loaded launchd label', () => {
+    // THE ONE INPUT THE AGREEMENT CHECK ALONE CATCHES. A record whose stable
+    // topology is expected-absent takes the null-evidence path, so the
+    // installed-state rules never run; without the observed/stable agreement
+    // check, a row could say "nothing is installed and nothing was measured"
+    // while also saying "launchd has this label loaded". Every other disagreement
+    // is caught by the null-evidence contract or by INSTALLED_STATES, so this is
+    // the case that makes that check observable.
+    expect(() => operationalBindingDocument(OPS({
+      producers: REVIEWED_PRODUCERS.map((l, n) => (n === 0 ? {
+        label: l, plistPath: null, plistSha256: null, plistDeviceInode: null,
+        servedCheckout: null,
+        installation: 'installed-loaded' as const,
+        stableInstallation: 'expected-absent' as const,
+        credentialPath: null, credentialDeviceInode: null,
+        databaseHost: null, databasePort: null, databaseName: null,
+        disposition: 'expected-absent' as const,
+      } : producer(l))),
+    }))).toThrow()
+    // NON-VACUITY: the same all-null record with a consistent observed state is
+    // a perfectly ordinary expected-absent producer and validates.
+    expect(() => operationalBindingDocument(OPS({
+      producers: REVIEWED_PRODUCERS.map((l, n) => (n === 0 ? {
+        label: l, plistPath: null, plistSha256: null, plistDeviceInode: null,
+        servedCheckout: null,
+        installation: 'expected-absent' as const,
+        stableInstallation: 'expected-absent' as const,
+        credentialPath: null, credentialDeviceInode: null,
+        databaseHost: null, databasePort: null, databaseName: null,
+        disposition: 'expected-absent' as const,
+      } : producer(l))),
+    }))).not.toThrow()
+  })
+
+  it('an installed agent may not be recorded with a null identity', () => {
+    expect(() => operationalBindingDocument(OPS({
+      producers: REVIEWED_PRODUCERS.map((l, n) => producer(l, n === 0
+        ? { credentialPath: null, credentialDeviceInode: null,
+            databaseHost: null, databasePort: null, databaseName: null } : {})),
+    }))).toThrow()
+  })
+
+  it('the OBSERVATION digest moves where the stable digest deliberately does not', () => {
+    // Requirement: confirmation integrity must not be weakened by making the
+    // stable binding invariant. The observation is pinned separately instead.
+    const unloaded = REVIEWED_PRODUCERS.map(
+      label => ({ label, installation: 'installed-unloaded' as const }))
+    const loaded = REVIEWED_PRODUCERS.map(
+      label => ({ label, installation: 'installed-loaded' as const }))
+    expect(modeObservationDigest(loaded)).not.toBe(modeObservationDigest(unloaded))
+    expect(modeObservationDigest(unloaded)).toBe(modeObservationDigest([...unloaded]))
+    // ORDERED: a reordered census is a different observation.
+    expect(modeObservationDigest([...unloaded].reverse()))
+      .not.toBe(modeObservationDigest(unloaded))
+  })
+
+  it('the observation document refuses a duplicate label, an empty set and an unknown state', () => {
+    expect(() => modeObservationDocument([])).toThrow()
+    expect(() => modeObservationDocument([
+      { label: REVIEWED_PRODUCERS[0] as string, installation: 'installed-loaded' },
+      { label: REVIEWED_PRODUCERS[0] as string, installation: 'installed-loaded' },
+    ])).toThrow()
+    expect(() => modeObservationDocument([
+      { label: REVIEWED_PRODUCERS[0] as string, installation: 'installed' as never },
+    ])).toThrow()
+  })
+
+  it('stableInstallationOf is total over the four observed states', () => {
+    expect(INSTALLATION_STATES.map(stableInstallationOf))
+      .toEqual(['installed', 'installed', 'installed', 'expected-absent'])
   })
 
   it('binds the post-restoration policy by PATH AND HASH, not by mention', () => {

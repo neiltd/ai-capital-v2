@@ -24,7 +24,7 @@ import { join } from 'node:path'
 
 import {
   REVIEWED_PRODUCERS, operationalBindingDocument, INSTALLATION_STATES, INSTALLED_STATES,
-  canonicalJson,
+  canonicalJson, modeObservationDigest,
 }
   from '@common/db/pg-copy'
 
@@ -60,7 +60,7 @@ const policyFor = (over: Record<string, { expected: string; installation: string
     label,
     ...(over[label] ?? (label === STRUCTURED
       ? { expected: 'expected-absent', installation: 'expected-absent' }
-      : { expected: 'writes-copy-source', installation: 'installed-unloaded' })),
+      : { expected: 'writes-copy-source', installation: 'installed' })),
   })) as never
 
 afterAll(() => {
@@ -103,7 +103,9 @@ describe('an absent label whose exact reviewed plist is safely present is instal
     const rows = await proveDestinations(
       REVIEWED_PRODUCERS, SOURCE, policyFor(), opts(w), ctx())
     const daily = rows.find(r => r.label === DAILY)
+    // BOTH ARE RECORDED: the observation is not erased by the stable topology.
     expect(daily?.installation).toBe('installed-unloaded')
+    expect(daily?.stableInstallation).toBe('installed')
     expect(daily?.disposition).toBe('writes-copy-source')
     expect(daily?.plistPath).toBe(join(w.agents, `${DAILY}.plist`))
     expect(daily?.plistSha256).toMatch(/^[0-9a-f]{64}$/)
@@ -121,8 +123,8 @@ describe('an absent label whose exact reviewed plist is safely present is instal
     const rows = await proveDestinations(
       REVIEWED_PRODUCERS, SOURCE, policyFor(), opts(w), ctx())
     for (const row of rows.filter(r => r.label !== STRUCTURED)) {
-      expect([row.label, row.installation, row.disposition])
-        .toEqual([row.label, 'installed-unloaded', 'writes-copy-source'])
+      expect([row.label, row.installation, row.stableInstallation, row.disposition])
+        .toEqual([row.label, 'installed-unloaded', 'installed', 'writes-copy-source'])
     }
   })
 })
@@ -148,6 +150,7 @@ describe('an absent label with no reviewed plist is expected-absent', () => {
       REVIEWED_PRODUCERS, SOURCE, policyFor(), opts(w), ctx())
     const s = rows.find(r => r.label === STRUCTURED)
     expect(s?.installation).toBe('expected-absent')
+    expect(s?.stableInstallation).toBe('expected-absent')
     expect(s?.disposition).toBe('expected-absent')
     expect(s?.plistPath).toBeNull()
     expect(s?.credentialPath).toBeNull()
@@ -303,49 +306,60 @@ describe('an unsafe or malformed installed plist refuses, and is never read as a
 
 // ── 5. Policy disagreement refuses ─────────────────────────────────────────
 
-describe('the reviewed policy must have declared what was measured', () => {
-  it('declaring an installed-unloaded agent expected-absent refuses', async () => {
+describe('the reviewed policy must have declared the stable topology that was measured', () => {
+  it('declaring an INSTALLED agent expected-absent refuses', async () => {
     const w = world({ unloaded: true })
     await expect(proveDestinations(REVIEWED_PRODUCERS, SOURCE,
       policyFor({ [DAILY]: { expected: 'expected-absent', installation: 'expected-absent' } }),
-      opts(w), ctx())).rejects.toThrow(/not in its declared installation state/)
+      opts(w), ctx())).rejects.toThrow(/not in its declared installation topology/)
   })
 
-  it('declaring it installed-loaded refuses', async () => {
+  it('declaring the structured worker INSTALLED refuses when no plist exists', async () => {
     const w = world({ unloaded: true })
     await expect(proveDestinations(REVIEWED_PRODUCERS, SOURCE,
-      policyFor({ [DAILY]: { expected: 'writes-copy-source', installation: 'installed-loaded' } }),
-      opts(w), ctx())).rejects.toThrow(/not in its declared installation state/)
+      policyFor({ [STRUCTURED]: { expected: 'writes-copy-source', installation: 'installed' } }),
+      opts(w), ctx())).rejects.toThrow(/not in its declared installation topology/)
   })
 
-  it('declaring it installed-disabled refuses', async () => {
-    const w = world({ unloaded: true })
-    await expect(proveDestinations(REVIEWED_PRODUCERS, SOURCE,
-      policyFor({ [DAILY]: { expected: 'writes-copy-source', installation: 'installed-disabled' } }),
-      opts(w), ctx())).rejects.toThrow(/not in its declared installation state/)
-  })
-
-  it('declaring the WRONG DESTINATION for an installed-unloaded agent refuses', async () => {
+  it('declaring the WRONG DESTINATION for an installed agent refuses', async () => {
     const w = world({ unloaded: true })
     await expect(proveDestinations(REVIEWED_PRODUCERS, SOURCE,
       policyFor({ [DAILY]: {
-        expected: 'writes-another-reviewed-database', installation: 'installed-unloaded' } }),
+        expected: 'writes-another-reviewed-database', installation: 'installed' } }),
       opts(w), ctx())).rejects.toThrow(/does not match its declared disposition/)
   })
 
-  it('declaring the structured worker installed-unloaded refuses when no plist exists', async () => {
-    const w = world({ unloaded: true })
-    await expect(proveDestinations(REVIEWED_PRODUCERS, SOURCE,
-      policyFor({ [STRUCTURED]: {
-        expected: 'writes-copy-source', installation: 'installed-unloaded' } }),
-      opts(w), ctx())).rejects.toThrow(/not in its declared installation state/)
+  it('THE SAME POLICY holds whether the labels are unloaded, loaded or disabled', async () => {
+    // THE WHOLE POINT OF K5.3. One reviewed destination policy has to be
+    // satisfiable before the fence (producers stopped) and after the restoration
+    // (producers back), because every CLI mode derives the binding from it.
+    for (const w of [world({ unloaded: true }), world(), world({ disabled: true })]) {
+      const rows = await proveDestinations(REVIEWED_PRODUCERS, SOURCE, policyFor(), opts(w), ctx())
+      expect(rows.filter(r => r.label !== STRUCTURED).map(r => r.stableInstallation))
+        .toEqual(['installed', 'installed', 'installed', 'installed'])
+    }
   })
 
-  it('a loaded world may not be declared installed-unloaded', async () => {
-    const w = world()
-    await expect(proveDestinations(REVIEWED_PRODUCERS, SOURCE,
-      policyFor({ [DAILY]: { expected: 'writes-copy-source', installation: 'installed-unloaded' } }),
-      opts(w), ctx())).rejects.toThrow(/not in its declared installation state/)
+  it('the three worlds report DIFFERENT observed states under that one policy', async () => {
+    const observed = []
+    for (const w of [world({ unloaded: true }), world(), world({ disabled: true })]) {
+      const rows = await proveDestinations(REVIEWED_PRODUCERS, SOURCE, policyFor(), opts(w), ctx())
+      observed.push(rows.find(r => r.label === DAILY)?.installation)
+    }
+    expect(observed).toEqual(['installed-unloaded', 'installed-loaded', 'installed-disabled'])
+  })
+
+  it('a policy naming a TRANSIENT launchd state is refused by the reader', () => {
+    const w = world({ unloaded: true })
+    const bad = join(w.dir, 'transient-policy.json')
+    for (const transient of ['installed-loaded', 'installed-disabled', 'installed-unloaded']) {
+      writeFileSync(bad, JSON.stringify({
+        producers: REVIEWED_PRODUCERS.map(label => ({
+          label, expected: 'writes-copy-source', installation: transient })),
+      }))
+      expect(() => readDestinationPolicy(bad))
+        .toThrow(/no reviewed installation topology/)
+    }
   })
 })
 
@@ -458,7 +472,7 @@ describe('every field installed-unloaded binds changes the operational binding',
       .update(canonicalJson(operationalBindingDocument(binding))).digest('hex')
   }
 
-  it('the binding records installed-unloaded rather than expected-absent', async () => {
+  it('the binding records the stable topology, not expected-absent and not the launchd state', async () => {
     const w = world({ unloaded: true })
     const doc = operationalBindingDocument(await deriveOperationalBinding({
       source: SOURCE, sourceSystemIdentifier: '7300000000000000001',
@@ -466,9 +480,63 @@ describe('every field installed-unloaded binds changes the operational binding',
       destinationPolicyPath: w.destinationPolicy, implementationHead: '0'.repeat(40),
       launchd: { uid: '501', agentsDir: w.agents, commands: w.commands },
       redis: resolveRedis({ host: '127.0.0.1', port: '6379', db: '0' }),
-    }, 5_000)) as unknown as { producers: { label: string; installation: string }[] }
+    }, 5_000)) as unknown as {
+      producers: { label: string; stable_installation: string; installation?: string }[] }
     const daily = doc.producers.find(p => p.label === DAILY)
-    expect(daily?.installation).toBe('installed-unloaded')
+    expect(daily?.stable_installation).toBe('installed')
+    // THE TRANSIENT STATE IS NOT IN THE DOCUMENT. That is what makes the digest
+    // survive the restoration.
+    expect(daily?.installation).toBeUndefined()
+  })
+
+  it('the binding digest is IDENTICAL before and after the labels are loaded', async () => {
+    // ONE WORLD, ONE SET OF FILES. Only what launchctl ANSWERS changes — which is
+    // exactly what a manual restoration changes and nothing else. Separate
+    // worlds would differ in temp paths, inodes and digests and would prove
+    // nothing, so the same world is re-derived with a runner that reports the
+    // labels loaded.
+    //
+    // Before K5.3 these two digests differed, and that difference is what made
+    // --verify-restoration reject the restored world as a different one.
+    const w = world({ unloaded: true })
+    const unloadedDigest = await derive(w)
+
+    const loaded: typeof w.commands = {
+      openPlist: w.commands.openPlist,
+      run: async (file, args, c) => {
+        if (file.endsWith('launchctl') && args[0] === 'print') {
+          const label = String(args[1]).split('/').pop() as string
+          if (label !== STRUCTURED) {
+            return { code: 0, stderr: '',
+              stdout: `\tpath = ${join(w.agents, `${label}.plist`)}\n` +
+                      '\tstate = running\n\tpid = 4242\n\tlast exit code = 0\n' }
+          }
+        }
+        return await w.commands.run(file, args, c)
+      },
+    }
+    const loadedDigest = await derive({ ...w, commands: loaded })
+    expect(loadedDigest).toBe(unloadedDigest)
+
+    // NON-VACUITY: the two derivations really did observe different launchd
+    // states, so the equality above is invariance and not a no-op.
+    const before = await proveDestinations(REVIEWED_PRODUCERS, SOURCE, policyFor(), opts(w), ctx())
+    const after = await proveDestinations(
+      REVIEWED_PRODUCERS, SOURCE, policyFor(), { ...opts(w), commands: loaded }, ctx())
+    expect(before.find(r => r.label === DAILY)?.installation).toBe('installed-unloaded')
+    expect(after.find(r => r.label === DAILY)?.installation).toBe('installed-loaded')
+    expect(before.find(r => r.label === DAILY)?.stableInstallation).toBe('installed')
+    expect(after.find(r => r.label === DAILY)?.stableInstallation).toBe('installed')
+  })
+
+  it('the OBSERVATION digest moves across that same transition', async () => {
+    // Confirmation integrity is preserved by pinning the observation separately,
+    // not by putting it back into the stable topology.
+    const unloaded = REVIEWED_PRODUCERS.map(label => ({
+      label, installation: (label === STRUCTURED ? 'expected-absent' : 'installed-unloaded') as never }))
+    const loaded = REVIEWED_PRODUCERS.map(label => ({
+      label, installation: (label === STRUCTURED ? 'expected-absent' : 'installed-loaded') as never }))
+    expect(modeObservationDigest(loaded)).not.toBe(modeObservationDigest(unloaded))
   })
 
   it('a changed plist digest changes the binding digest', async () => {
@@ -623,6 +691,7 @@ describe('the collapse this remediation removed cannot come back', () => {
       label: DAILY, plistPath: '/Users/x/Library/LaunchAgents/a.plist',
       plistSha256: 'a'.repeat(64), plistDeviceInode: '1:2',
       servedCheckout: '/Users/x/checkout', installation: 'expected-absent' as const,
+      stableInstallation: 'expected-absent' as const,
       credentialPath: '/Users/x/c.url', credentialDeviceInode: '1:3',
       databaseHost: '/tmp/s', databasePort: '5432', databaseName: 'ai_capital',
       disposition: 'writes-copy-source' as const,
@@ -645,6 +714,7 @@ describe('the collapse this remediation removed cannot come back', () => {
     const hollow = {
       label: DAILY, plistPath: null, plistSha256: null, plistDeviceInode: null,
       servedCheckout: null, installation: 'installed-unloaded' as const,
+      stableInstallation: 'installed' as const,
       credentialPath: null, credentialDeviceInode: null,
       databaseHost: null, databasePort: null, databaseName: null,
       disposition: 'writes-copy-source' as const,
@@ -663,7 +733,7 @@ describe('the collapse this remediation removed cannot come back', () => {
     })).toThrow()
   })
 
-  it('MUTANT: installed-unloaded with a MEASURED plist but no credential identity is rejected', () => {
+  it('MUTANT: an INSTALLED agent with a measured plist but no credential identity is rejected', () => {
     // ISOLATES THE NEW BLOCK. The generic present-label rules already require a
     // plist path, digest, device:inode and served checkout, so a producer with
     // everything null fails on those and proves nothing about the completeness
@@ -674,6 +744,7 @@ describe('the collapse this remediation removed cannot come back', () => {
       label: DAILY, plistPath: '/Users/x/Library/LaunchAgents/a.plist',
       plistSha256: 'a'.repeat(64), plistDeviceInode: '1:2',
       servedCheckout: '/Users/x/checkout', installation: 'installed-unloaded' as const,
+      stableInstallation: 'installed' as const,
       credentialPath: null, credentialDeviceInode: null,
       databaseHost: null, databasePort: null, databaseName: null,
       disposition: 'writes-copy-source' as const,
@@ -719,7 +790,7 @@ describe('the fenced census comparison compares every bound field', () => {
   const row = (over: Record<string, unknown> = {}) => ({
     label: DAILY, plistPath: '/a/x.plist', plistSha256: 'a'.repeat(64),
     plistDeviceInode: '1:2', servedCheckout: '/checkout',
-    installation: 'installed-unloaded' as const,
+    installation: 'installed-unloaded' as const, stableInstallation: 'installed' as const,
     credentialPath: '/c.url', credentialDeviceInode: '1:3',
     databaseHost: '/tmp/s', databasePort: '5432', databaseName: 'ai_capital',
     disposition: 'writes-copy-source' as const, ...over,
@@ -739,7 +810,7 @@ describe('the fenced census comparison compares every bound field', () => {
     ['databaseHost', '/tmp/other'],
     ['databasePort', '5433'],
     ['databaseName', 'other_database'],
-    ['installation', 'installed-loaded'],
+    ['stableInstallation', 'expected-absent'],
     ['disposition', 'writes-another-reviewed-database'],
   ])('a changed %s is reported', (field, value) => {
     const msg = compareProducerSets([row()], [row({ [field]: value })])
@@ -753,10 +824,10 @@ describe('the fenced census comparison compares every bound field', () => {
   })
 })
 
-describe('the identity comparison distinguishes the two absences', () => {
-  const bound = (installation: string) => ({
+describe('the identity comparison compares the stable topology, not the launchd state', () => {
+  const bound = (stableInstallation: string, installation = 'installed-unloaded') => ({
     label: DAILY, plistPath: '/a/x.plist', plistSha256: 'a'.repeat(64),
-    plistDeviceInode: '1:2', servedCheckout: '/checkout', installation,
+    plistDeviceInode: '1:2', servedCheckout: '/checkout', installation, stableInstallation,
     credentialPath: '/c.url', credentialDeviceInode: '1:3',
     databaseHost: '/tmp/s', databasePort: '5432', databaseName: 'ai_capital',
     disposition: 'writes-copy-source',
@@ -768,37 +839,45 @@ describe('the identity comparison distinguishes the two absences', () => {
     servedCheckout: '/checkout', credentialPath: '/c.url', plist: {}, ...over,
   }) as never
 
-  it('an unchanged installed-unloaded label compares equal', () => {
-    expect(compareIdentity(bound('installed-unloaded'), now())).toBeNull()
+  it('an unchanged installed agent compares equal', () => {
+    expect(compareIdentity(bound('installed'), now())).toBeNull()
   })
 
-  it('an installed-unloaded label that is now LOADED is reported', () => {
-    expect(compareIdentity(bound('installed-unloaded'),
-      now({ presence: 'loaded', installedUnloaded: false })))
-      .toBe('an installed-unloaded label is now loaded')
+  it('THE INTENDED TRANSITION IS NOT DRIFT: installed-unloaded -> installed-loaded', () => {
+    // The restoration the rehearsal exists to exercise. Before K5.3 this returned
+    // 'an installed-unloaded label is now loaded' and stopped the chain dead.
+    expect(compareIdentity(bound('installed'),
+      now({ presence: 'loaded', installedUnloaded: false, running: true, pid: '42',
+            lastExitCode: '0' }))).toBeNull()
   })
 
-  it('an installed-unloaded plist that was REMOVED is reported', () => {
-    expect(compareIdentity(bound('installed-unloaded'),
+  it('installed-unloaded -> installed-disabled is not drift either', () => {
+    expect(compareIdentity(bound('installed'),
+      now({ presence: 'loaded', installedUnloaded: false, disabled: true }))).toBeNull()
+  })
+
+  it('an installed agent whose plist was REMOVED is reported', () => {
+    expect(compareIdentity(bound('installed'),
       now({ installedUnloaded: false, plistPath: null, plistSha256: null })))
-      .toBe('an installed-unloaded plist has been removed')
+      .toBe('an installed label is no longer installed')
   })
 
   it('an expected-absent label that is now INSTALLED is reported', () => {
-    // The dangerous direction, and the one presence alone cannot see: launchd
-    // still holds no label, so presence is unchanged on both sides.
-    expect(compareIdentity(bound('expected-absent'), now()))
+    // The dangerous direction, and the one launchctl presence alone cannot see:
+    // launchd still holds no label, so presence is unchanged on both sides.
+    expect(compareIdentity(bound('expected-absent', 'expected-absent'), now()))
+      .toBe('an expected-absent label is now installed')
+  })
+
+  it('an expected-absent label that is now LOADED is reported', () => {
+    expect(compareIdentity(bound('expected-absent', 'expected-absent'),
+      now({ presence: 'loaded', installedUnloaded: false })))
       .toBe('an expected-absent label is now installed')
   })
 
   it('an expected-absent label that is still absent compares equal', () => {
-    expect(compareIdentity(bound('expected-absent'),
-      now({ installedUnloaded: false }))).toBeNull()
-  })
-
-  it('a loaded label that is now installed-unloaded is reported as that, not as absent', () => {
-    expect(compareIdentity(bound('installed-loaded'), now()))
-      .toBe('a loaded label is now installed-unloaded')
+    expect(compareIdentity(bound('expected-absent', 'expected-absent'),
+      now({ installedUnloaded: false, plistPath: null, plistSha256: null }))).toBeNull()
   })
 
   it.each([
@@ -807,12 +886,19 @@ describe('the identity comparison distinguishes the two absences', () => {
     ['plistDeviceInode', 'the plist has been replaced'],
     ['servedCheckout', 'the served checkout has changed'],
     ['credentialPath', 'the credential container has changed'],
-  ])('a changed %s on an installed-unloaded label is reported', (field, message) => {
-    expect(compareIdentity(bound('installed-unloaded'),
-      now({ [field]: field === 'plistSha256' ? 'b'.repeat(64) : '/changed' }))).toBe(message)
+  ])('a changed %s is STILL reported across the transition', (field, message) => {
+    // The transition is allowed; drift in the stable identity is not — including
+    // when it arrives together with a legitimate load.
+    expect(compareIdentity(bound('installed'),
+      now({ presence: 'loaded', installedUnloaded: false,
+            [field]: field === 'plistSha256' ? 'b'.repeat(64) : '/changed' }))).toBe(message)
+  })
+
+  it('a label absent from the binding is reported', () => {
+    expect(compareIdentity(undefined, now()))
+      .toBe('the label is not in the operational binding')
   })
 })
-
 
 // ── 12. The SHIPPED reviewed policy says what the current machine is ────────
 
@@ -824,11 +910,11 @@ describe('the reviewed destination policy on disk declares the post-cutover stat
     expect(rows.map(r => r.label)).toEqual([...REVIEWED_PRODUCERS])
   })
 
-  it('declares the four cutover agents installed-unloaded and writing the copy source', () => {
+  it('declares the four agents INSTALLED and writing the copy source', () => {
     const rows = readDestinationPolicy(POLICY)
     for (const r of rows.filter(r => r.label !== STRUCTURED)) {
       expect([r.label, r.installation, r.expected])
-        .toEqual([r.label, 'installed-unloaded', 'writes-copy-source'])
+        .toEqual([r.label, 'installed', 'writes-copy-source'])
     }
   })
 
@@ -837,10 +923,12 @@ describe('the reviewed destination policy on disk declares the post-cutover stat
     expect([s?.installation, s?.expected]).toEqual(['expected-absent', 'expected-absent'])
   })
 
-  it('declares no agent loaded or disabled: the labels are booted out', () => {
+  it('prescribes NO launchd state: those are phase-specific and owned elsewhere', () => {
     for (const r of readDestinationPolicy(POLICY)) {
-      expect(r.installation).not.toBe('installed-loaded')
-      expect(r.installation).not.toBe('installed-disabled')
+      expect(['installed', 'expected-absent']).toContain(r.installation)
+      for (const transient of ['installed-loaded', 'installed-disabled', 'installed-unloaded']) {
+        expect(r.installation).not.toBe(transient)
+      }
     }
   })
 })
