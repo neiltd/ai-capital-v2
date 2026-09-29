@@ -19,7 +19,7 @@
 // These tests write .env fixtures into a temporary directory. None of them
 // touches the repository's real .env, and none opens a connection.
 import { describe, it, expect, beforeEach, afterEach } from 'vitest'
-import { mkdtempSync, mkdirSync, writeFileSync, rmSync, readFileSync as readFileSyncRaw } from 'node:fs'
+import { chmodSync, mkdtempSync, mkdirSync, writeFileSync, rmSync, readFileSync as readFileSyncRaw } from 'node:fs'
 import { tmpdir } from 'node:os'
 import { join } from 'node:path'
 import { fileURLToPath } from 'node:url'
@@ -34,7 +34,13 @@ beforeEach(() => { root = mkdtempSync(join(tmpdir(), 'queue-env-')) })
 afterEach(() => { rmSync(root, { recursive: true, force: true }) })
 
 function writeDotEnv(body: string): void {
-  writeFileSync(join(root, '.env'), body, 'utf-8')
+  // 0600 BECAUSE THE READER NOW REQUIRES IT. The root .env holds API keys, and
+  // `root-env-container.ts` asserts mode, owner, type and link count on the OPEN
+  // DESCRIPTOR before any byte is read. A fixture at the default 0644 is a file
+  // this loader deliberately refuses, so writing one here would test the refusal
+  // rather than the selective copy each case below is about.
+  writeFileSync(join(root, '.env'), body, { encoding: 'utf-8', mode: 0o600 })
+  chmodSync(join(root, '.env'), 0o600)
 }
 
 describe('loadApprovedRootEnv', () => {
@@ -111,7 +117,7 @@ describe('loadApprovedRootEnv', () => {
     expect(code).not.toBe('READABLE')
     expect(code).not.toBe('ENOENT')
 
-    expect(() => loadApprovedRootEnv(root, {})).toThrow(/could not read/)
+    expect(() => loadApprovedRootEnv(root, {})).toThrow(/is not a regular file|could not be opened/)
   })
 
   it('names the path and a safe error classification, and no values, when it throws', () => {
@@ -136,7 +142,7 @@ describe('loadApprovedRootEnv', () => {
 
     expect(threw, 'loadApprovedRootEnv did not throw').toBe(true)
     expect(message).toContain(join(root, '.env'))
-    expect(message).toMatch(/EISDIR|EACCES|EPERM|EIO|unknown error/)
+    expect(message).toMatch(/is not a regular file|EISDIR|EACCES|EPERM|EIO|unknown error/)
     for (const secret of ['super-secret-value', 'another-secret']) {
       expect(message).not.toContain(secret)
     }
@@ -226,10 +232,18 @@ describe('env.ts reaches the file the only way that can be selective', () => {
   })
 
   it('swallows no read failure', () => {
+    // THE ENOENT NO-OP MOVED, so the assertion follows it rather than passing
+    // vacuously. `env.ts` now delegates the whole read to the secret-container
+    // reader; that module owns the single benign code and refuses every other.
     const code = src().split('\n').filter(l => !/^\s*(\/\/|\*|\/\*)/.test(l)).join('\n')
-    // Every catch either re-throws or returns for the one benign code.
-    expect(code).toMatch(/code === 'ENOENT'/)
-    expect(code).toMatch(/throw new Error\(/)
+    expect(code).toMatch(/readRootEnvContainer\(/)
+    expect(code).toMatch(/contents === null/)
+    const container = readFileSyncRaw(
+      fileURLToPath(new URL('../src/root-env-container.ts', import.meta.url)), 'utf-8')
+    const containerCode = container.split('\n')
+      .filter(l => !/^\s*(\/\/|\*|\/\*)/.test(l)).join('\n')
+    expect(containerCode).toMatch(/code === 'ENOENT'/)
+    expect(containerCode).toMatch(/refuse\(/)
   })
 
   it('never CALLS the whole-file loader', () => {

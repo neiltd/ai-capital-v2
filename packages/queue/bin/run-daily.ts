@@ -6,7 +6,7 @@
 // Requires a worker to be running separately (`pnpm -F @common/queue worker`)
 // or launchd-managed via the worker plist.
 
-import { ensurePipelineEnv } from '../src/env.js'
+import { ensurePipelineEnv, requireSubmissionKeys } from '../src/env.js'
 ensurePipelineEnv()
 
 import { submitDailyPipeline } from '../src/submit.js'
@@ -25,6 +25,20 @@ import { closeAll } from '../src/queue.js'
 // `pnpm -F @common/queue submit` (the original submitAndWait path).
 
 async function main() {
+  // BEFORE ANYTHING IS RECORDED OR ENQUEUED.
+  //
+  // A scheduled run that cannot possibly finish must not create a 23-job flow and
+  // a failed `pipeline_runs` row on its way to finding that out. On 2026-09-28 one
+  // did: it ran 100 jobs, failed terminally on a missing ANTHROPIC_API_KEY, and
+  // left eleven parents blocked behind it. This refuses in a millisecond instead,
+  // and names only the key. See requireSubmissionKeys.
+  try {
+    requireSubmissionKeys(process.env)
+  } catch (err) {
+    console.error(`[run-daily] ${(err as Error).message}`)
+    process.exit(2)
+  }
+
   console.log(`[run-daily] submitting daily pipeline at ${new Date().toISOString()}`)
   // A SCHEDULED submission claims the business logical date, so the partial
   // unique index structurally prevents two non-superseded scheduled runs for

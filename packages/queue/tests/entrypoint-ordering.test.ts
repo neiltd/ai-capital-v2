@@ -33,7 +33,12 @@ const read = (rel: string) => readFileSync(fileURLToPath(new URL(rel, import.met
 
 /** Every `import … from '…'` that is NOT inside an `await import()`. */
 function staticImports(src: string): string[] {
-  return [...src.matchAll(/^import\s+(?:type\s+)?[^'\n]*from\s+'([^']+)'/gm)].map(m => m[1])
+  // THE `\n` USED TO BE EXCLUDED FROM THE SPECIFIER CLASS, so an import whose
+  // clause wrapped onto a second line was INVISIBLE to this scanner — a blind spot
+  // in the very check that enumerates what an entry point pulls in. Measured: a
+  // newly added two-line import went unseen. Newlines are allowed inside the clause
+  // now, and the match still stops at the quoted specifier.
+  return [...src.matchAll(/^import\s+(?:type\s+)?[^']*?from\s+'([^']+)'/gm)].map(m => m[1])
 }
 
 describe.each(ENTRYPOINTS)('%s', (rel) => {
@@ -84,7 +89,6 @@ describe('the shared env module is itself inert at import time', () => {
     expect(imports).toEqual([
       'path',
       'url',
-      'fs',
       // dotenv's PURE parser — never 'dotenv/config', which writes into
       // process.env, and never node:util, whose parseEnv needs Node 20.12 while
       // engines.node is ">=20".
@@ -93,6 +97,11 @@ describe('the shared env module is itself inert at import time', () => {
       // The credential-file reader. Importing it is inert — it opens nothing
       // until requirePipelineCredential() selects file mode.
       './credential-file.js',
+      // The root-.env secret container reader. `fs` LEFT this list when the
+      // direct `readFileSync` did: env.ts no longer opens anything itself, and
+      // the descriptor discipline lives in one module that is equally inert
+      // until loadApprovedRootEnv() actually reads.
+      './root-env-container.js',
     ])
   })
 })

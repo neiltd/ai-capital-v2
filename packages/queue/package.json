@@ -33,6 +33,7 @@
     "health": "tsx bin/queue-health.ts",
     "structured-worker": "tsx bin/structured-worker.ts",
     "pg-copy-ops": "tsx bin/pg-copy-ops.ts",
+    "retire-failed-flow": "tsx bin/retire-failed-flow.ts",
     "render-plist": "tsx bin/render-launchd-plist.ts",
     "install-credential": "tsx bin/install-pipeline-credential.ts",
     "inspect-plist": "tsx bin/inspect-launchd-plist.ts"

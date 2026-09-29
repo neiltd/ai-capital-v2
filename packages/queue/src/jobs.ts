@@ -134,10 +134,25 @@ export const DAILY_PIPELINE: JobSpec[] = [
     cwd:  'apps/scenario-simulator',
   },
   {
+    // WAITS FOR THE ANALYSIS ARTEFACT IT READS, not only for the refresh.
+    //
+    // `simulate` opens apps/ai-analysis-engine/data/analysis.json. It used to
+    // depend on `scenario-refresh` alone, so nothing ordered it after the job
+    // that WRITES that file, and on a run where the analysis stage had not
+    // finished it failed with ENOENT. Reproduced in production on 2026-09-28:
+    // three attempts, then terminal failure, and eleven parent jobs blocked
+    // behind it for ever.
+    //
+    // AND `investment-brief` GIVES UP ITS DIRECT EDGE TO ai-analysis-engine so
+    // that this one can exist. A BullMQ flow is a TREE: each job has one parent,
+    // so a job may be depended on only once. The brief still waits for the
+    // analysis, transitively — risk-metrics -> tax-harvest -> briefing-backtest
+    // -> (Sunday chain) -> scenario-simulate -> ai-analysis-engine — which is a
+    // stronger ordering than it had before, not a weaker one.
     name: 'scenario-simulate',
     cmd:  ['npm', 'run', 'simulate'],
     cwd:  'apps/scenario-simulator',
-    dependsOn: 'scenario-refresh',
+    dependsOn: ['scenario-refresh', 'ai-analysis-engine'],
     timeoutMs: 15 * 60 * 1000,
   },
   {
@@ -187,10 +202,17 @@ export const DAILY_PIPELINE: JobSpec[] = [
     dependsOn: 'tax-harvest',
   },
   {
+    // `ai-analysis-engine` IS NO LONGER A DIRECT DEPENDENCY, deliberately.
+    //
+    // It moved to `scenario-simulate`, which actually reads the analysis file.
+    // Keeping both edges would give that job two parents, which a BullMQ flow
+    // tree cannot express, and `buildDAGTree` refuses. The ordering is preserved
+    // transitively through risk-metrics, so the brief still cannot run before the
+    // analysis — it now also cannot run before the SIMULATION that consumes it.
     name: 'investment-brief',
     cmd:  ['npm', 'run', 'brief'],
     cwd:  'apps/investment-analyst-agents',
-    dependsOn: ['ai-analysis-engine', 'risk-metrics', 'wave-analyzer'],
+    dependsOn: ['risk-metrics', 'wave-analyzer'],
     timeoutMs: 15 * 60 * 1000,
   },
   {

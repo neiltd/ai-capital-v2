@@ -330,6 +330,12 @@ export const REVIEWED_PREFIXES: readonly string[] = Object.freeze([
   'operational-rehearsal', 'producer-restoration', 'rehearsal-review',
   'intervention-intent', 'intervention-outcome', 'commit-disposition',
   'pristine-release',
+  // The failed-flow retirement family. A retirement is an irreversible removal of
+  // production queue state, so it publishes its INTENT before the first mutation
+  // and its OUTCOME afterwards: two bundles, because one written at the end could
+  // not distinguish "nothing happened" from "something happened and was not
+  // recorded".
+  'queue-flow-retirement-intent', 'queue-flow-retirement-outcome',
 ])
 
 /**
@@ -358,6 +364,8 @@ export const TEMPORARY_NAME_PREFIX: Readonly<Record<string, string>> = Object.fr
   'intervention-outcome': '.tmp-intervention-outcome-',
   'commit-disposition': '.tmp-commit-disposition-',
   'pristine-release': '.tmp-pristine-release-',
+  'queue-flow-retirement-intent': '.tmp-queue-flow-retirement-intent-',
+  'queue-flow-retirement-outcome': '.tmp-queue-flow-retirement-outcome-',
 })
 
 const RUN_ID = /^[0-9a-f]{8}$/

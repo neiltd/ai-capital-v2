@@ -9,12 +9,12 @@
 
 import { dirname, join, resolve } from 'path'
 import { fileURLToPath } from 'url'
-import { readFileSync } from 'fs'
 import { parse as parseDotenv } from 'dotenv'
 
 import { requireExplicitPostgresUrl } from '@common/db/credential-url'
 
 import { readCredentialFile } from './credential-file.js'
+import { defaultRootEnvSeam, readRootEnvContainer, type RootEnvSeam } from './root-env-container.js'
 
 /** Absolute path to the monorepo root (the dir that holds pnpm-workspace.yaml). */
 export function workspaceRoot(): string {
@@ -75,21 +75,19 @@ export function loadApprovedRootEnv(
   root: string,
   target: NodeJS.ProcessEnv,
   allowed: readonly string[] = APPROVED_ROOT_ENV_KEYS,
+  seam: RootEnvSeam = defaultRootEnvSeam,
 ): void {
   const envPath = join(root, '.env')
 
-  let contents: string
-  try {
-    contents = readFileSync(envPath, 'utf-8')
-  } catch (e) {
-    // ENOENT is the ordinary "there is no root .env here" case — for example a
-    // fresh clone, or a machine where every value arrives from launchd.
-    if ((e as NodeJS.ErrnoException).code === 'ENOENT') return
-    throw new Error(
-      `@common/queue: could not read ${envPath} (${(e as NodeJS.ErrnoException).code ?? 'unknown error'}). ` +
-      'Fix the file or remove it; its contents are never reported.',
-    )
-  }
+  // DESCRIPTOR-FIRST, NOT A READ OF A NAME. `readFileSync(envPath)` opened
+  // whatever the path pointed at and examined nothing: a symlink, a
+  // group-readable file or a second hard link to the same bytes were all
+  // accepted. This file holds API keys, and `credential-file.ts` already reads a
+  // credential path with descriptor discipline; see `root-env-container.ts` for
+  // what is now asserted on the open fd and for the stated ancestor-directory
+  // limit. ENOENT is still the ordinary "no root .env here" no-op.
+  const contents = readRootEnvContainer(envPath, seam)
+  if (contents === null) return
 
   let parsed: Record<string, string>
   try {
@@ -132,6 +130,58 @@ export function ensurePipelineEnv(): void {
   }
   if (!process.env.DATA_ROOT) {
     process.env.DATA_ROOT = join(root, 'apps')
+  }
+}
+
+/**
+ * THE KEYS A SCHEDULED SUBMISSION MAY NOT PROCEED WITHOUT.
+ *
+ * WHY THIS EXISTS AT SUBMISSION TIME. On 2026-09-28 a scheduled run submitted a
+ * 23-job flow, ran 100 jobs, and then failed terminally in `world-intel-report`
+ * with `reporter-agent requires ANTHROPIC_API_KEY to be set in .env`. Eleven
+ * parent jobs were left blocked behind it for ever and a `pipeline_runs` row was
+ * recorded as failed. Every one of those consequences was created by a submission
+ * that could have been refused in a millisecond: the key was absent before the
+ * first job existed.
+ *
+ * SO THE CHECK RUNS BEFORE ANYTHING IS RECORDED OR ENQUEUED. Refusing early costs
+ * a scheduled run; discovering it late costs a queue that has to be retired by
+ * hand, which is the work this milestone also had to build.
+ *
+ * WHAT IT READS. The already-loaded, selectively-allowlisted environment — so the
+ * real process environment still wins over the file, exactly as before, and no
+ * database credential is consulted, required or touched on this path.
+ */
+export const REQUIRED_SUBMISSION_KEYS: readonly string[] = Object.freeze([
+  'ANTHROPIC_API_KEY',
+])
+
+export class SubmissionPreflightRefused extends Error {}
+
+/**
+ * Refuse unless every required key is present and non-empty.
+ *
+ * THE VALUE NEVER LEAVES THIS FUNCTION. The error names the KEY and says where to
+ * put it. It does not report the value, its length, its prefix, its shape or any
+ * digest of it — a length alone narrows a secret, and an error string reaches
+ * logs, launchd, evidence and crash dumps.
+ */
+export function requireSubmissionKeys(
+  env: NodeJS.ProcessEnv = process.env,
+  required: readonly string[] = REQUIRED_SUBMISSION_KEYS,
+): void {
+  const missing: string[] = []
+  for (const key of required) {
+    const value = env[key]
+    if (typeof value !== 'string' || value.length === 0) missing.push(key)
+  }
+  if (missing.length > 0) {
+    throw new SubmissionPreflightRefused(
+      `@common/queue: refusing to submit the daily pipeline — ${missing.join(', ')} ` +
+      'is missing or empty in the approved environment. Set it in the root .env or ' +
+      'in the agent environment. No job was enqueued and no run was recorded. ' +
+      'The value is never read into this message.',
+    )
   }
 }
 
