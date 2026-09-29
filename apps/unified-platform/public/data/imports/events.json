@@ -1,8 +1,8 @@
 {
   "schemaVersion": "1.0.0",
-  "generatedAt": "2026-09-29T21:26:17.257Z",
+  "generatedAt": "2026-09-29T23:23:41.021Z",
   "source": "world-intelligence-hub",
-  "eventCount": 54,
+  "eventCount": 63,
   "dateRange": {
     "from": "2026-09-25",
     "to": "2026-09-29"
@@ -346,28 +346,6 @@
       ],
       "geopoliticalScore": 6,
       "economicImpactScore": 3
-    },
-    {
-      "id": "bba264d84d474b8d75271c5a",
-      "source": "rss_intelligence",
-      "eventDate": "2026-09-29",
-      "iso3": [
-        "UKR",
-        "RUS"
-      ],
-      "eventType": "conflict.armed",
-      "headline": "Russian jet-powered drone strikes Ukraine's National Academy of Sciences in Kyiv, sparks fire",
-      "summary": "A Russian jet-powered drone struck Ukraine's National Academy of Sciences in Kyiv's city center, causing a fire. The Academy is described as the source of almost all of Ukraine's major scientific discoveries.",
-      "confidenceScore": 0.8,
-      "confidenceLabel": "high",
-      "coordinateQuality": "missing",
-      "tier": 2,
-      "tags": [
-        "nytimes-world",
-        "storyline:fba7c82c"
-      ],
-      "geopoliticalScore": 5,
-      "economicImpactScore": 1
     },
     {
       "id": "74e11dfbd59cce1c3db04011",
@@ -809,30 +787,6 @@
       "economicImpactScore": 0.5
     },
     {
-      "id": "8c5fd0b86139b01b9a2938f2",
-      "source": "rss_intelligence",
-      "eventDate": "2026-09-29",
-      "iso3": [
-        "ISR",
-        "PSE"
-      ],
-      "eventType": "conflict.protest",
-      "headline": "Israeli settlers attack West Bank village, set homes on fire blocking Palestinian family's return",
-      "summary": "Israeli settlers attacked a village in the West Bank, setting fire to two homes belonging to the al-Tubasi family and blocking their return. Israeli security forces were also targeted by the settlers during the incident.",
-      "confidenceScore": 0.75,
-      "confidenceLabel": "high",
-      "coordinateQuality": "missing",
-      "tier": 2,
-      "tags": [
-        "bbc-world",
-        "france24-english",
-        "nytimes-world",
-        "storyline:f2a58b14"
-      ],
-      "geopoliticalScore": 5,
-      "economicImpactScore": 1
-    },
-    {
       "id": "fe21764dbe74b7702e7169d6",
       "source": "rss_intelligence",
       "eventDate": "2026-09-29",
@@ -1122,28 +1076,6 @@
       "economicImpactScore": 0.5
     },
     {
-      "id": "16a9517e9583eac7a8b4f5ba",
-      "source": "rss_intelligence",
-      "eventDate": "2026-09-29",
-      "iso3": [
-        "USA",
-        "CAN"
-      ],
-      "eventType": "economic.trade",
-      "headline": "US ban on Canadian alcohol and dairy imports takes effect amid escalating trade war",
-      "summary": "A US ban on Canadian alcohol and dairy products came into effect, marking the latest escalation in the Canada-US trade war after negotiations collapsed in late August with no timeline for resumed talks.",
-      "confidenceScore": 0.85,
-      "confidenceLabel": "high",
-      "coordinateQuality": "missing",
-      "tier": 2,
-      "tags": [
-        "bbc-world",
-        "storyline:358ba15a"
-      ],
-      "geopoliticalScore": 4,
-      "economicImpactScore": 6
-    },
-    {
       "id": "fd4be4d09ddcb75806deda87",
       "source": "rss_intelligence",
       "eventDate": "2026-09-29",
@@ -1164,6 +1096,276 @@
       ],
       "geopoliticalScore": 6,
       "economicImpactScore": 9
+    },
+    {
+      "id": "20425cf23536968f5c1db50e",
+      "source": "rss_intelligence",
+      "eventDate": "2026-09-29",
+      "iso3": [
+        "RUS",
+        "UKR"
+      ],
+      "eventType": "conflict.armed",
+      "headline": "Putin orders 15,000 additional soldiers, fourth Russian military expansion this year amid Ukraine war stalemate",
+      "summary": "Russian President Vladimir Putin has added 15,000 new soldiers to the army, marking the fourth military expansion this year as the war in Ukraine appears stalled.",
+      "confidenceScore": 0.7,
+      "confidenceLabel": "medium",
+      "coordinateQuality": "missing",
+      "tier": 2,
+      "tags": [
+        "aljazeera-english",
+        "storyline:fba7c82c"
+      ],
+      "geopoliticalScore": 6,
+      "economicImpactScore": 2
+    },
+    {
+      "id": "5dffc249819a5acde27d6f2d",
+      "source": "rss_intelligence",
+      "eventDate": "2026-09-29",
+      "iso3": [
+        "QAT",
+        "ISR"
+      ],
+      "eventType": "diplomatic.dispute",
+      "headline": "Qatar's PM accuses Netanyahu of war crimes, says Israel targets Qatar to deflect from Gaza war",
+      "summary": "In an interview with broadcaster Piers Morgan, Qatar's prime minister accused Israeli Prime Minister Netanyahu of war crimes and said Israel is targeting Qatar to deflect attention from the Gaza war.",
+      "confidenceScore": 0.55,
+      "confidenceLabel": "medium",
+      "coordinateQuality": "missing",
+      "tier": 3,
+      "tags": [
+        "aljazeera-english",
+        "storyline:f2a58b14"
+      ],
+      "geopoliticalScore": 5,
+      "economicImpactScore": 1
+    },
+    {
+      "id": "62f89b99a228ab6f81cb46b6",
+      "source": "rss_intelligence",
+      "eventDate": "2026-09-29",
+      "iso3": [
+        "ISR",
+        "PSE"
+      ],
+      "eventType": "other",
+      "headline": "Israeli settlers attack West Bank village, set fire to homes, block Palestinian family's return",
+      "summary": "Israeli settlers attacked a West Bank village, setting fire to two homes belonging to the al-Tubasi family and blocking their return home. Israeli security forces were also targeted by the settlers.",
+      "confidenceScore": 0.7,
+      "confidenceLabel": "medium",
+      "coordinateQuality": "missing",
+      "tier": 3,
+      "tags": [
+        "bbc-world",
+        "storyline:f2a58b14"
+      ],
+      "geopoliticalScore": 3.5,
+      "economicImpactScore": 0.5
+    },
+    {
+      "id": "0aab86726d89cb792feb1e1a",
+      "source": "rss_intelligence",
+      "eventDate": "2026-09-29",
+      "iso3": [
+        "SAU",
+        "IRN",
+        "USA"
+      ],
+      "eventType": "energy.disruption",
+      "headline": "Saudi Arabia resumes pipeline flows bypassing Hormuz, easing oil supply fears",
+      "summary": "Oil prices steadied after their biggest drop in more than a week following signs that Middle East supply has risen to near pre-war levels. Saudi Arabia resumed flows through a pipeline that avoids the Strait of Hormuz, easing market concerns over the ongoing US-Iran stalemate.",
+      "confidenceScore": 0.75,
+      "confidenceLabel": "high",
+      "coordinateQuality": "missing",
+      "tier": 2,
+      "tags": [
+        "bloomberg-markets",
+        "storyline:358ba15a"
+      ],
+      "geopoliticalScore": 6,
+      "economicImpactScore": 9
+    },
+    {
+      "id": "069b9a9ecd223f7aa0b90427",
+      "source": "rss_intelligence",
+      "eventDate": "2026-09-29",
+      "iso3": [
+        "MMR"
+      ],
+      "eventType": "conflict.armed",
+      "headline": "Myanmar military uses paragliders and gyrocopters to bomb rebel-held towns",
+      "summary": "Years after a coup, Myanmar's military is increasingly using motorized paragliders and gyrocopters to bomb towns and villages in rebel-held territory.",
+      "confidenceScore": 0.65,
+      "confidenceLabel": "medium",
+      "coordinateQuality": "missing",
+      "tier": 2,
+      "tags": [
+        "nytimes-world",
+        "storyline:d2eedf71"
+      ],
+      "geopoliticalScore": 3,
+      "economicImpactScore": 0.5
+    },
+    {
+      "id": "376c6efa881e4a0abf44baba",
+      "source": "rss_intelligence",
+      "eventDate": "2026-09-29",
+      "iso3": [
+        "TUR",
+        "USA",
+        "IRN",
+        "ISR"
+      ],
+      "eventType": "other",
+      "headline": "Turkey positions to expand regional influence as U.S. reduces Middle East footprint",
+      "summary": "Turkey is seeking to expand its regional influence in the Middle East as the United States signals a reduced footprint in the region, amid ongoing shocks from the 2023 Hamas-led attack on Israel and a seven-month war on Iran.",
+      "confidenceScore": 0.6,
+      "confidenceLabel": "medium",
+      "coordinateQuality": "missing",
+      "tier": 3,
+      "tags": [
+        "npr-news",
+        "storyline:f2a58b14"
+      ],
+      "geopoliticalScore": 5,
+      "economicImpactScore": 1
+    },
+    {
+      "id": "cd68b454f235287b5343c1c3",
+      "source": "rss_intelligence",
+      "eventDate": "2026-09-29",
+      "iso3": [
+        "UKR",
+        "RUS"
+      ],
+      "eventType": "economic.trade",
+      "headline": "Russian strikes inflict billions in economic damage on Ukraine",
+      "summary": "Russian strikes on Ukraine are causing billions of dollars in economic damage through lost sales, disrupted workdays, and logistical disruptions, as Russia wages what is described as a 'total war' on Ukraine's economy amid a stalled battlefield.",
+      "confidenceScore": 0.75,
+      "confidenceLabel": "high",
+      "coordinateQuality": "missing",
+      "tier": 2,
+      "tags": [
+        "nytimes-world",
+        "storyline:92143166"
+      ],
+      "geopoliticalScore": 5.5,
+      "economicImpactScore": 4
+    },
+    {
+      "id": "89e9516b3af0153b65c114e7",
+      "source": "rss_intelligence",
+      "eventDate": "2026-09-29",
+      "iso3": [
+        "EST",
+        "RUS"
+      ],
+      "eventType": "conflict.armed",
+      "headline": "Estonia says arson at drone maker Milrem Robotics was deliberate Russian attack",
+      "summary": "Estonian authorities said a fire that broke out in August at Milrem Robotics, a company manufacturing unmanned vehicles for Ukraine, was a deliberate act of sabotage orchestrated by Russia.",
+      "confidenceScore": 0.75,
+      "confidenceLabel": "high",
+      "coordinateQuality": "missing",
+      "tier": 2,
+      "tags": [
+        "nytimes-world",
+        "storyline:fba7c82c"
+      ],
+      "geopoliticalScore": 5,
+      "economicImpactScore": 2
+    },
+    {
+      "id": "26a5f50ab805982abd5d783e",
+      "source": "rss_intelligence",
+      "eventDate": "2026-09-29",
+      "iso3": [
+        "EST",
+        "RUS",
+        "UKR"
+      ],
+      "eventType": "conflict.armed",
+      "headline": "Estonia blames Russian security services for arson attack on Ukraine-supplying defense firm",
+      "summary": "Estonian authorities concluded that a mid-August arson attack on a defence company supplying military vehicles to Ukraine was sabotage commissioned by Russian security services. Foreign Minister Margus Tsahkna called the actions unacceptable and summoned Russia's charge d'affaires in Tallinn.",
+      "confidenceScore": 0.75,
+      "confidenceLabel": "high",
+      "coordinateQuality": "missing",
+      "tier": 2,
+      "tags": [
+        "scmp-china",
+        "storyline:fba7c82c"
+      ],
+      "geopoliticalScore": 6,
+      "economicImpactScore": 2
+    },
+    {
+      "id": "bba264d84d474b8d75271c5a",
+      "source": "rss_intelligence",
+      "eventDate": "2026-09-29",
+      "iso3": [
+        "UKR",
+        "RUS"
+      ],
+      "eventType": "conflict.armed",
+      "headline": "Russian jet-powered drone strikes Ukraine's National Academy of Sciences in Kyiv, sparks fire",
+      "summary": "A Russian jet-powered drone struck Ukraine's National Academy of Sciences in Kyiv's city center, causing a fire. The Academy is described as the source of almost all of Ukraine's major scientific discoveries.",
+      "confidenceScore": 0.8,
+      "confidenceLabel": "high",
+      "coordinateQuality": "missing",
+      "tier": 2,
+      "tags": [
+        "nytimes-world",
+        "france24-english",
+        "storyline:fba7c82c"
+      ],
+      "geopoliticalScore": 5,
+      "economicImpactScore": 3
+    },
+    {
+      "id": "8c5fd0b86139b01b9a2938f2",
+      "source": "rss_intelligence",
+      "eventDate": "2026-09-29",
+      "iso3": [
+        "ISR",
+        "PSE"
+      ],
+      "eventType": "conflict.protest",
+      "headline": "Israeli settlers attack West Bank village, set homes on fire blocking Palestinian family's return",
+      "summary": "Israeli settlers attacked a village in the West Bank, setting fire to two homes belonging to the al-Tubasi family and blocking their return. Israeli security forces were also targeted by the settlers during the incident.",
+      "confidenceScore": 0.75,
+      "confidenceLabel": "high",
+      "coordinateQuality": "missing",
+      "tier": 2,
+      "tags": [
+        "bbc-world",
+        "france24-english",
+        "nytimes-world",
+        "storyline:f2a58b14"
+      ],
+      "geopoliticalScore": 5,
+      "economicImpactScore": 1
+    },
+    {
+      "id": "16a9517e9583eac7a8b4f5ba",
+      "source": "rss_intelligence",
+      "eventDate": "2026-09-29",
+      "iso3": [
+        "USA",
+        "CAN"
+      ],
+      "eventType": "economic.trade",
+      "headline": "US ban on Canadian alcohol and dairy imports takes effect amid escalating trade war",
+      "summary": "A US ban on Canadian alcohol and dairy products came into effect, marking the latest escalation in the Canada-US trade war after negotiations collapsed in late August with no timeline for resumed talks.",
+      "confidenceScore": 0.85,
+      "confidenceLabel": "high",
+      "coordinateQuality": "missing",
+      "tier": 2,
+      "tags": [
+        "bbc-world",
+        "storyline:358ba15a"
+      ],
+      "geopoliticalScore": 5,
+      "economicImpactScore": 6
     },
     {
       "id": "d773d7a5a10f653e59c647fa",
@@ -1193,7 +1395,8 @@
       "source": "rss_intelligence",
       "eventDate": "2026-09-29",
       "iso3": [
-        "USA"
+        "USA",
+        "IRN"
       ],
       "eventType": "economic.trade",
       "headline": "Stocks fall as long-term yields hit 24-year high amid energy-driven inflation fears",
@@ -1206,8 +1409,8 @@
         "bloomberg-markets",
         "storyline:358ba15a"
       ],
-      "geopoliticalScore": 3,
-      "economicImpactScore": 8
+      "geopoliticalScore": 5,
+      "economicImpactScore": 9
     }
   ]
 }
