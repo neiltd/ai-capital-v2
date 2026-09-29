@@ -61,8 +61,15 @@ export const TOKEN_PATTERN: Readonly<Record<CopyMode, RegExp>> = Object.freeze({
  * So the execution binding now carries the observation digest as a required
  * field and serializes it. The confirmation document's shape changes, so the
  * version moves: a token minted under 2 must not verify under 3.
+ *
+ * 4 WIDENS THE DISPOSITION DOMAIN. `no-postgresql-route` is a value that did not
+ * exist under 3, and a producer record carrying it has all five credential and
+ * endpoint fields null where 3 required them non-null for an installed agent. Both
+ * documents therefore mean something different than they did, in a way no reader
+ * could detect from the bytes alone - so the version moves rather than leaving a
+ * version-3 verifier to accept a shape it was never checked against.
  */
-export const BINDING_VERSION = 3
+export const BINDING_VERSION = 4
 
 export class BindingRefused extends Error {
   constructor(readonly reason: BindingReason, readonly at: string | null = null) {
@@ -238,16 +245,42 @@ export const copyBindingDigest = (b: CopyBinding): string =>
 export type DestinationDisposition =
   | 'writes-copy-source'
   | 'writes-another-reviewed-database'
+  | 'no-postgresql-route'
   | 'destination-unproved'
   | 'expected-absent'
 
 export const DESTINATION_DISPOSITIONS: readonly DestinationDisposition[] =
   Object.freeze(['writes-copy-source', 'writes-another-reviewed-database',
-                 'destination-unproved', 'expected-absent'])
+                 'no-postgresql-route', 'destination-unproved', 'expected-absent'])
 
 /** The two dispositions that assert a producer writes somewhere. */
 export const MEASURED_DESTINATIONS: readonly DestinationDisposition[] =
   Object.freeze(['writes-copy-source', 'writes-another-reviewed-database'])
+
+/**
+ * WHAT AN INSTALLED PRODUCER'S DISPOSITION MAY BE.
+ *
+ * `no-postgresql-route` IS A MEASURED ANSWER, NOT AN EXCUSE. Two reviewed agents -
+ * `daily` and `watchdog` - are shell scripts that orchestrate the pipeline and
+ * hold no database credential of their own: their plists bind no
+ * `PIPELINE_CREDENTIAL_FILE`, no forbidden database key and no inline URL. Before
+ * this state existed the census had no way to say that. Declaring them
+ * `writes-copy-source` made the completeness rule refuse, because there was no
+ * container or endpoint to bind; declaring them `destination-unproved` was worse,
+ * because that word means "something is wrong here" and nothing was.
+ *
+ * WHAT IT DOES NOT MEAN. It says nothing about quiescence. Both of these agents
+ * can put work into a queue whose consumer writes the copy source, so both stay
+ * in the reviewed stop order, the process census and the queue census. "Holds no
+ * credential" and "cannot cause a write" are different claims, and only the first
+ * is being made.
+ *
+ * AND IT IS NOT A WEAKER `destination-unproved`. That state remains, for a plist
+ * that is malformed, unreadable or ambiguous, and it remains invalid in a binding.
+ */
+export const INSTALLED_DISPOSITIONS: readonly DestinationDisposition[] =
+  Object.freeze(['writes-copy-source', 'writes-another-reviewed-database',
+                 'no-postgresql-route'])
 
 /**
  * Whether a reviewed agent is INSTALLED, which is a different question from
@@ -526,14 +559,32 @@ export function operationalBindingDocument(b: OperationalAdapterBinding): Canoni
       // change, a credential-container replacement or an endpoint change move
       // the token instead of passing unnoticed.
       if (p.stableInstallation === 'installed') {
-        need(p.credentialPath !== null, `producers[${n}].credentialPath`)
-        need(p.credentialDeviceInode !== null, `producers[${n}].credentialDeviceInode`)
-        need(p.databaseHost !== null, `producers[${n}].databaseHost`)
-        need(p.databasePort !== null, `producers[${n}].databasePort`)
-        need(p.databaseName !== null, `producers[${n}].databaseName`)
-        // An installed-but-unloaded agent has been measured, so its destination
-        // is a measured one. `destination-unproved` may not hide here.
-        need(MEASURED_DESTINATIONS.includes(p.disposition), `producers[${n}].disposition`)
+        // An installed-but-unloaded agent has been measured, so its destination is
+        // a measured one. `destination-unproved` may not hide here, and neither may
+        // `expected-absent`.
+        need(INSTALLED_DISPOSITIONS.includes(p.disposition), `producers[${n}].disposition`)
+        if (p.disposition === 'no-postgresql-route') {
+          // A PRODUCER WITH NO ROUTE HAS NO ROUTE TO RECORD, AND SAYS SO.
+          //
+          // The mirror of the rule above, and load-bearing in the same way: a
+          // record claiming this state while carrying a container path or an
+          // endpoint is a record where one of the two was not measured. Its plist,
+          // checkout and topology are still bound - those were measured - so a
+          // plist swap on a no-route agent still moves the digest.
+          for (const [k, v] of [['credentialPath', p.credentialPath],
+                                ['credentialDeviceInode', p.credentialDeviceInode],
+                                ['databaseHost', p.databaseHost],
+                                ['databasePort', p.databasePort],
+                                ['databaseName', p.databaseName]] as const) {
+            need(v === null, `producers[${n}].${k}`)
+          }
+        } else {
+          need(p.credentialPath !== null, `producers[${n}].credentialPath`)
+          need(p.credentialDeviceInode !== null, `producers[${n}].credentialDeviceInode`)
+          need(p.databaseHost !== null, `producers[${n}].databaseHost`)
+          need(p.databasePort !== null, `producers[${n}].databasePort`)
+          need(p.databaseName !== null, `producers[${n}].databaseName`)
+        }
       }
     }
     if (p.credentialPath !== null) {

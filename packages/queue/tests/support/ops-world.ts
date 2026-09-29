@@ -290,6 +290,22 @@ export function world(over: {
   /** Put every installed label in `print-disabled`. Needed for a real census. */
   disabled?: boolean
   /**
+   * LABELS WHOSE PLIST BINDS NO CREDENTIAL CONTAINER — the daily/watchdog shape.
+   *
+   * Two reviewed agents are shell scripts that orchestrate the pipeline and hold no
+   * database credential of their own. Their plists declare `AI_CAPITAL_ROOT`,
+   * `DATA_ROOT`, `REDIS_URL` and friends and NO `PIPELINE_CREDENTIAL_FILE`, so the
+   * census must classify them `no-postgresql-route`. Without this option the
+   * fixture could only build writers, and the state would be untestable.
+   *
+   * The policy written for this world follows the same list, so a world is
+   * internally consistent by default; a case that wants a DISAGREEMENT overrides
+   * one side with `policyRoute`.
+   */
+  noRoute?: readonly string[]
+  /** Declare these labels `no-postgresql-route` in the POLICY, whatever the plist says. */
+  policyRoute?: readonly string[]
+  /**
    * THE CUTOVER WORLD: the plists are installed and launchd holds no label.
    *
    * `launchctl print` answers 113 for every reviewed label, exactly as it does
@@ -338,13 +354,21 @@ export function world(over: {
     // requires it: that path DERIVES the filename from the label, so the
     // document's own `Label` is the only thing tying the two together.
     const declared = over.wrongLabel === true ? `${label}.not-this-agent` : label
+    // THE ONE DIFFERENCE A NO-ROUTE AGENT HAS: no credential key. Everything else
+    // about the document - its own Label, its working directory, its mode - is
+    // identical, so a case asserting the classification is asserting on that one
+    // fact and not on some other difference.
+    const env = (over.noRoute ?? []).includes(label)
+      ? `<key>AI_CAPITAL_ROOT</key><string>${dir}</string>
+<key>SCHEDULER_HEARTBEAT_FILE</key><string>${join(dir, 'heartbeat.log')}</string>`
+      : `<key>PIPELINE_CREDENTIAL_FILE</key><string>${cred}</string>`
     writeFileSync(p, `<?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0"><dict>
 <key>Label</key><string>${declared}</string>
 <key>WorkingDirectory</key><string>${dir}</string>
 <key>EnvironmentVariables</key><dict>
-<key>PIPELINE_CREDENTIAL_FILE</key><string>${cred}</string>
+${env}
 </dict></dict></plist>`)
     chmodSync(p, over.plistMode ?? 0o644)
   }
@@ -434,9 +458,14 @@ export function world(over: {
   // post-restoration policies own, and declaring it here is exactly what made a
   // single policy unable to hold across a restoration.
   const declaredInstallation = 'installed'
+  const policyNoRoute = over.policyRoute ?? over.noRoute ?? []
   writeFileSync(destinationPolicy, JSON.stringify({
     producers: REVIEWED_PRODUCERS.map(label => installed.includes(label)
-      ? { label, expected: 'writes-copy-source', installation: declaredInstallation }
+      ? {
+        label,
+        expected: policyNoRoute.includes(label) ? 'no-postgresql-route' : 'writes-copy-source',
+        installation: declaredInstallation,
+      }
       : { label, expected: 'expected-absent', installation: 'expected-absent' }),
   }))
   const restorationPolicy = join(dir, 'restoration.json')

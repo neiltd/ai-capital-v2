@@ -274,9 +274,22 @@ export async function proveDestinations(
       assertNoInlineCredential(parsed)
       credentialPath = credentialPathOf(parsed)
       if (credentialPath === null) {
-        // No PostgreSQL route at all. Its disposition is whatever the reviewed
-        // policy declared, and it is compared below rather than assumed here.
-        disposition = entry.expected
+        // NO POSTGRESQL ROUTE, MEASURED - not accepted from the policy.
+        //
+        // This line used to read `disposition = entry.expected`, which made the
+        // comparison below compare the policy with itself: whatever the operator
+        // declared became what was "measured", so a plist that bound nothing
+        // satisfied `writes-copy-source` and the refusal only surfaced later, as a
+        // completeness check that could name no container. A measurement that
+        // copies the expectation is not a measurement.
+        //
+        // WHAT THIS STATE ASSERTS, EXACTLY: this plist names no credential
+        // container. `assertNoInlineCredential` has already refused an inline URL,
+        // inline userinfo or a forbidden database key, so the absence is a real
+        // absence and not an unexamined one. It asserts nothing about whether the
+        // agent can cause a write - it can, by enqueueing - which is why it stays
+        // in the stop order and both censuses.
+        disposition = 'no-postgresql-route'
       } else {
         // ONE OPEN. Identity and endpoint from the same descriptor.
         const opened = openReviewedContainer(credentialPath)
@@ -308,14 +321,25 @@ export async function proveDestinations(
       throw new DestinationRefused('a reviewed label has an unproved destination', label)
     }
 
-    // AND AN INSTALLED-UNLOADED AGENT MUST HAVE BOUND A COMPLETE IDENTITY.
-    // The binding validator requires these fields for this state; refusing here
-    // as well means the refusal names the label and happens during the census,
-    // rather than surfacing later as a document that will not validate.
-    if (stableInstallation === 'installed' &&
-        (credentialPath === null || credentialDeviceInode === null || sanitized === null)) {
-      throw new DestinationRefused(
-        'an installed label bound no credential container or endpoint', label)
+    // AND AN INSTALLED AGENT'S RECORD MUST BE COMPLETE **FOR ITS DISPOSITION**.
+    // The binding validator requires exactly this shape; refusing here as well
+    // means the refusal names the label and happens during the census, rather than
+    // surfacing later as a document that will not validate.
+    //
+    // TWO SHAPES, AND EACH IS CHECKED AGAINST THE OTHER'S MISTAKE. A writer with
+    // no container is the defect that stopped K6-A1; a no-route agent that somehow
+    // bound one would mean the absence above was not real.
+    if (stableInstallation === 'installed') {
+      if (disposition === 'no-postgresql-route') {
+        if (credentialPath !== null || credentialDeviceInode !== null || sanitized !== null) {
+          throw new DestinationRefused(
+            'a label with no PostgreSQL route bound a credential container', label)
+        }
+      } else if (credentialPath === null || credentialDeviceInode === null ||
+                 sanitized === null) {
+        throw new DestinationRefused(
+          'an installed label bound no credential container or endpoint', label)
+      }
     }
 
     out.push(Object.freeze({

@@ -78,9 +78,12 @@ sanitized host/port/database, disposition, queue and blocking policy, process
 policy, Redis identity, evidence-root identity, restoration-policy identity and
 implementation identity. Drift in any of those still refuses.
 
-`BINDING_VERSION` is `3`: version 2 moved the observation out of the operational
-document, and version 3 bound it into the confirmation. Digests are not
-comparable across those versions, which is the intended signal.
+`BINDING_VERSION` is `4`: version 2 moved the observation out of the operational
+document, version 3 bound it into the confirmation, and version 4 widened the
+disposition domain with `no-postgresql-route` — under which an installed producer
+carries five null credential and endpoint fields where version 3 required them
+non-null. Digests are not comparable across those versions, which is the intended
+signal.
 
 ## Who owns which phase-specific fact
 
@@ -131,12 +134,50 @@ that name at all. Each of these **refuses** instead:
   launchctl statement tying the two together — the document's own `Label` is that
   statement, and a file claiming another label at this name is a misinstallation.
 
+## Destinations — what plist inspection does and does not prove
+
+| value | meaning |
+|---|---|
+| `writes-copy-source` | the plist names a credential container whose measured endpoint IS the copy source |
+| `writes-another-reviewed-database` | it names one, and the endpoint is a different reviewed database |
+| `no-postgresql-route` | the plist names **no** credential container, no forbidden database key and no inline URL |
+| `destination-unproved` | the configuration is malformed, unreadable or ambiguous — a refusal, not a state |
+| `expected-absent` | there is no label and no plist, so there is nothing to classify |
+
+`no-postgresql-route` exists because two reviewed agents genuinely have no route.
+`daily` and `watchdog` are shell scripts that orchestrate the pipeline; their
+plists bind `AI_CAPITAL_ROOT`, `DATA_ROOT`, `REDIS_URL`, `PATH`,
+`PIPELINE_RUNS_DB` and `SCHEDULER_HEARTBEAT_FILE`, and no
+`PIPELINE_CREDENTIAL_FILE`. Declaring them `writes-copy-source` refused the first
+K6 inspection, and correctly: the completeness rule requires a container path, a
+container device:inode and a sanitized host/port/database, and none of those
+exists for an agent that holds no credential.
+
+**What the state claims is narrow, deliberately.** It says: this plist names no
+PostgreSQL credential container, and the inline checks found no URL, no userinfo
+and no forbidden database key. It does **not** claim the agent cannot cause a
+write. Both of these agents can put work into a queue whose consumer writes the
+copy source, so both stay in the reviewed stop order, the process census and the
+queue census. It also does not claim anything about what the scripts do at
+runtime: a plist is a static document, and reading one proves what launchd will
+put in the environment, nothing more.
+
+`destination-unproved` is untouched and still invalid in a binding. The two
+states are not interchangeable: one says nothing is there, the other says
+something is there and could not be understood.
+
+The measured value is never copied from the policy. That line used to read
+`disposition = entry.expected`, which made the comparison compare the policy with
+itself — a plist binding nothing satisfied `writes-copy-source`, and the
+contradiction only surfaced later as a completeness check that could name no
+container.
+
 ## Current policy
 
 | label | installation | destination |
 |---|---|---|
-| `com.thanapol.ai-capital.daily` | `installed` | `writes-copy-source` |
-| `com.thanapol.ai-capital.watchdog` | `installed` | `writes-copy-source` |
+| `com.thanapol.ai-capital.daily` | `installed` | `no-postgresql-route` |
+| `com.thanapol.ai-capital.watchdog` | `installed` | `no-postgresql-route` |
 | `com.thanapol.ai-capital.alerts` | `installed` | `writes-copy-source` |
 | `com.thanapol.ai-capital.structured-worker` | `expected-absent` | `expected-absent` |
 | `com.thanapol.ai-capital.worker` | `installed` | `writes-copy-source` |

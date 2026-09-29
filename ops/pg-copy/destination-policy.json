@@ -30,22 +30,34 @@
     "and worker running afterwards.",
     "",
     "CURRENT STATE: the four production plists are installed under",
-    "~/Library/LaunchAgents, so each declares `installed` and, because each names",
-    "the pipeline credential container, `writes-copy-source`. The structured worker",
-    "is not installed on this machine at all - no label and no plist - so it is",
-    "`expected-absent` in both columns, and every one of its evidence fields is",
-    "null by contract."
+    "~/Library/LaunchAgents, so each declares `installed`. They do NOT all write to",
+    "PostgreSQL. `alerts` and `worker` name the pipeline credential container, so",
+    "they are `writes-copy-source`. `daily` and `watchdog` are shell scripts that",
+    "orchestrate the pipeline: their plists bind no PIPELINE_CREDENTIAL_FILE, no",
+    "forbidden database key and no inline URL, so they are `no-postgresql-route` -",
+    "a MEASURED answer, not a waiver. Declaring them `writes-copy-source` is what",
+    "refused the first K6 inspection: there was no container or endpoint to bind,",
+    "and the completeness rule is right to insist on one.",
+    "",
+    "`no-postgresql-route` REMOVES NOTHING FROM QUIESCENCE. Both agents can put",
+    "work into a queue whose consumer writes the copy source, so both remain in the",
+    "reviewed stop order, the process census and the queue census. Holding no",
+    "credential and being unable to cause a write are different claims.",
+    "",
+    "The structured worker is not installed on this machine at all - no label and",
+    "no plist - so it is `expected-absent` in both columns, and every one of its",
+    "evidence fields is null by contract."
   ],
   "producers": [
     {
       "label": "com.thanapol.ai-capital.daily",
       "installation": "installed",
-      "expected": "writes-copy-source"
+      "expected": "no-postgresql-route"
     },
     {
       "label": "com.thanapol.ai-capital.watchdog",
       "installation": "installed",
-      "expected": "writes-copy-source"
+      "expected": "no-postgresql-route"
     },
     {
       "label": "com.thanapol.ai-capital.alerts",

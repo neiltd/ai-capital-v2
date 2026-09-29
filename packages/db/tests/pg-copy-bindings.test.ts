@@ -8,6 +8,10 @@ import { describe, expect, it } from 'vitest'
 import { readFileSync } from 'node:fs'
 
 import {
+  BINDING_VERSION,
+  MEASURED_DESTINATIONS,
+  INSTALLED_DISPOSITIONS,
+  DESTINATION_DISPOSITIONS,
   APPLY_PREFIX, BindingRefused, COPY_BINDING_SHAPE_VERSION, REHEARSE_PREFIX, TOKEN_PATTERN,
   assertConfirmationMatches, assertOperationalBindingUnchanged, confirmationToken,
   copyBindingDigest, copyBindingDocument, executionBindingDocument, operationalBindingDigest,
@@ -133,6 +137,107 @@ describe('CopyBinding', () => {
                      { sourceSystemIdentifier: '0' }] as Array<Partial<CopyBinding>>) {
       expect(() => copyBindingDigest(COPY(v)), JSON.stringify(v)).toThrow(BindingRefused)
     }
+  })
+})
+
+describe('a producer with no PostgreSQL route', () => {
+  /** The daily/watchdog shape: installed, measured, and holding no credential. */
+  const noRoute = (label: string): ProducerIdentity => producer(label, {
+    disposition: 'no-postgresql-route',
+    credentialPath: null,
+    credentialDeviceInode: null,
+    databaseHost: null,
+    databasePort: null,
+    databaseName: null,
+  })
+
+  /** One producer, with the process policy the validator requires to match it. */
+  const solo = (pr: ProducerIdentity): OperationalAdapterBinding => OPS({
+    producers: [pr],
+    producerProcessPolicy: [{ label: pr.label, pattern: `pattern-for-${pr.label}` }],
+  })
+
+  it('is a REVIEWED disposition, and is accepted for an installed agent', () => {
+    expect(DESTINATION_DISPOSITIONS).toContain('no-postgresql-route')
+    expect(INSTALLED_DISPOSITIONS).toContain('no-postgresql-route')
+    // AND IT IS NOT A WRITER. The set that means "writes somewhere" must not have
+    // grown: every caller that asks "does this producer write" would otherwise get
+    // a yes for an agent that holds no credential at all.
+    expect(MEASURED_DESTINATIONS).not.toContain('no-postgresql-route')
+    const b = OPS({ producers: REVIEWED_PRODUCERS.map((l, n) =>
+      n < 2 ? noRoute(l) : n === 3
+        ? producer(l, {
+          installation: 'expected-absent', stableInstallation: 'expected-absent',
+          disposition: 'expected-absent', plistPath: null, plistSha256: null,
+          plistDeviceInode: null, servedCheckout: null, credentialPath: null,
+          credentialDeviceInode: null, databaseHost: null, databasePort: null,
+          databaseName: null,
+        })
+        : producer(l)) })
+    expect(() => operationalBindingDocument(b)).not.toThrow()
+  })
+
+  /**
+   * ITS PLIST AND TOPOLOGY ARE STILL BOUND.
+   *
+   * The whole danger of a state whose evidence fields are null is that it becomes a
+   * place to hide: `expected-absent` was exactly that before it was pinned down. A
+   * no-route agent has been measured, so a plist swap on it must still move the
+   * digest.
+   */
+  it('still binds its plist, its identity and its served checkout', () => {
+    const one = noRoute('a.b')
+    expect(one.plistPath).not.toBeNull()
+    expect(one.plistSha256).not.toBeNull()
+    expect(one.plistDeviceInode).not.toBeNull()
+    expect(one.servedCheckout).not.toBeNull()
+    const base = solo(one)
+    const moved = solo({ ...one, plistSha256: hex('different') })
+    expect(operationalBindingDigest(base)).not.toBe(operationalBindingDigest(moved))
+  })
+
+  it('REFUSES a no-route record that carries any credential or endpoint field', () => {
+    for (const field of ['credentialPath', 'credentialDeviceInode',
+                         'databaseHost', 'databasePort', 'databaseName'] as const) {
+      const value = field === 'credentialPath' ? '/Users/x/.secrets/pipeline.url'
+        : field === 'credentialDeviceInode' ? '16777234:12345'
+          : field === 'databaseHost' ? '/tmp/socket'
+            : field === 'databasePort' ? '5432' : 'ai_capital'
+      const b = solo({ ...noRoute('a.b'), [field]: value })
+      expect(() => operationalBindingDocument(b), field).toThrow(BindingRefused)
+    }
+  })
+
+  /**
+   * AND A FULLY POPULATED NO-ROUTE RECORD IS THE ONE THAT MATTERS.
+   *
+   * Setting ONE field is not enough to prove the branch exists: with the no-route
+   * arm deleted, such a record falls into the writer arm, which requires all five
+   * and refuses anyway - so the mutant survived. Measured. A record with every field
+   * populated is accepted by the writer arm and must be refused by this one.
+   */
+  it('REFUSES a no-route record that carries a COMPLETE credential identity', () => {
+    const b = solo({ ...producer('a.b'), disposition: 'no-postgresql-route' })
+    expect(() => operationalBindingDocument(b)).toThrow(BindingRefused)
+  })
+
+  it('REFUSES a writer record that is missing any credential or endpoint field', () => {
+    for (const field of ['credentialPath', 'credentialDeviceInode',
+                         'databaseHost', 'databasePort', 'databaseName'] as const) {
+      const b = solo({ ...producer('a.b'), [field]: null })
+      expect(() => operationalBindingDocument(b), field).toThrow(BindingRefused)
+    }
+  })
+
+  it('REFUSES destination-unproved and expected-absent for an installed agent', () => {
+    for (const d of ['destination-unproved', 'expected-absent'] as const) {
+      const b = solo(producer('a.b', { disposition: d }))
+      expect(() => operationalBindingDocument(b), d).toThrow(BindingRefused)
+    }
+  })
+
+  it('the version moved, because the serialized domain changed', () => {
+    expect(BINDING_VERSION).toBe(4)
   })
 })
 
@@ -346,7 +451,7 @@ describe('OperationalAdapterBinding', () => {
     const doc = JSON.parse(canonicalJson(executionBindingDocument(EXEC()))) as
       Record<string, unknown>
     expect(doc.mode_observation_digest).toMatch(/^[0-9a-f]{64}$/)
-    expect(doc.binding_version).toBe(3)
+    expect(doc.binding_version).toBe(4)
     for (const bad of ['', 'nothex', 'a'.repeat(63), 'A'.repeat(64)]) {
       expect(() => executionBindingDocument(EXEC({ modeObservationDigest: bad })), bad).toThrow()
     }

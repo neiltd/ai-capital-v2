@@ -20,6 +20,7 @@ export {
   BindingRefused, COPY_BINDING_SHAPE_VERSION, DESTINATION_DISPOSITIONS,
   INSTALLATION_STATES, INSTALLED_STATES, STABLE_INSTALLATIONS, stableInstallationOf,
   modeObservationDocument, modeObservationDigest,
+  INSTALLED_DISPOSITIONS,
   MEASURED_DESTINATIONS,
   assertConfirmationMatches, assertOperationalBindingUnchanged,
   confirmationToken, copyBindingDigest, copyBindingDocument, copySetDigest,

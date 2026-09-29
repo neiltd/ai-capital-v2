@@ -44,7 +44,8 @@ import { createInterface, type Interface } from 'node:readline'
 import { fileURLToPath } from 'node:url'
 
 import {
-  BACKEND_START_SQL, COMPLETE_FENCE_LOCKS, STABLE_INSTALLATIONS, stableInstallationOf,
+  BACKEND_START_SQL, COMPLETE_FENCE_LOCKS, DESTINATION_DISPOSITIONS, STABLE_INSTALLATIONS,
+  stableInstallationOf,
   QUEUE_SAMPLE_INTERVAL_MS, RELEASE_GATE_PREFIX, REVIEWED_CONTRACT_DIGEST,
   COPY_BINDING_SHAPE_VERSION, canonicalJson, fenceRelationArray,
   releasedLockCensusSqlFor,
@@ -204,8 +205,16 @@ export function readDestinationPolicy(path: string): readonly DestinationPolicyE
     if (r.label !== REVIEWED_PRODUCERS[n]) {
       throw new OpsRefused('the destination policy is not in the reviewed order', String(n))
     }
-    if (typeof r.expected !== 'string') {
-      throw new OpsRefused('a destination policy entry has no expected disposition',
+    // AGAINST THE CLOSED SET, NOT MERELY "IS A STRING".
+    //
+    // A typo used to pass this reader and then be compared against a measured
+    // disposition it could never equal, so the refusal named the label rather than
+    // the misspelling and pointed at the world instead of the document. And with
+    // the domain now wider - `no-postgresql-route` joined it - the set is exactly
+    // what a reviewer has to be able to see enumerated in one place.
+    if (typeof r.expected !== 'string' ||
+        !DESTINATION_DISPOSITIONS.includes(r.expected as never)) {
+      throw new OpsRefused('a destination policy entry has no reviewed expected disposition',
                            String(r.label))
     }
     // AND WHAT STATE IT IS EXPECTED TO BE INSTALLED IN. Two different facts:

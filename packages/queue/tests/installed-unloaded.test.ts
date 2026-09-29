@@ -23,8 +23,8 @@ import {
 import { join } from 'node:path'
 
 import {
-  REVIEWED_PRODUCERS, operationalBindingDocument, INSTALLATION_STATES, INSTALLED_STATES,
-  canonicalJson, modeObservationDigest,
+  BINDING_VERSION, REVIEWED_PRODUCERS, RESTORE_ORDER, operationalBindingDocument,
+  INSTALLATION_STATES, INSTALLED_STATES, canonicalJson, modeObservationDigest,
 }
   from '@common/db/pg-copy'
 
@@ -914,11 +914,22 @@ describe('the reviewed destination policy on disk declares the post-cutover stat
     expect(rows.map(r => r.label)).toEqual([...REVIEWED_PRODUCERS])
   })
 
-  it('declares the four agents INSTALLED and writing the copy source', () => {
+  it('declares the four agents INSTALLED, and only two of them writers', () => {
+    // CORRECTED FOR WHAT THE PLISTS ACTUALLY BIND. All four are installed, but
+    // `daily` and `watchdog` name no credential container - they are shell scripts
+    // that orchestrate - so calling them writers was the declaration that refused the
+    // first K6 inspection. Installation and destination are separate columns exactly
+    // so this case can be stated.
     const rows = readDestinationPolicy(POLICY)
+    const expected = new Map([
+      ['com.thanapol.ai-capital.daily', 'no-postgresql-route'],
+      ['com.thanapol.ai-capital.watchdog', 'no-postgresql-route'],
+      ['com.thanapol.ai-capital.alerts', 'writes-copy-source'],
+      ['com.thanapol.ai-capital.worker', 'writes-copy-source'],
+    ])
     for (const r of rows.filter(r => r.label !== STRUCTURED)) {
       expect([r.label, r.installation, r.expected])
-        .toEqual([r.label, 'installed', 'writes-copy-source'])
+        .toEqual([r.label, 'installed', expected.get(r.label)])
     }
   })
 
@@ -934,5 +945,148 @@ describe('the reviewed destination policy on disk declares the post-cutover stat
         expect(r.installation).not.toBe(transient)
       }
     }
+  })
+})
+
+// ── 8. A producer with no PostgreSQL route ─────────────────────────────────
+
+describe('a producer with no PostgreSQL route is classified, not excused', () => {
+  const WATCHDOG = 'com.thanapol.ai-capital.watchdog'
+  const ALERTS = 'com.thanapol.ai-capital.alerts'
+  const WORKER = 'com.thanapol.ai-capital.worker'
+  const ABSENT = 'com.thanapol.ai-capital.structured-worker'
+
+  const bind = async (w: ReturnType<typeof world>) => await deriveOperationalBinding({
+    source: SOURCE,
+    sourceSystemIdentifier: '7300000000000000001',
+    evidenceRoot: w.evidence,
+    postRestorationPolicyPath: w.restorationPolicy,
+    destinationPolicyPath: w.destinationPolicy,
+    implementationHead: '0'.repeat(40),
+    launchd: { uid: '501', agentsDir: w.agents, commands: w.commands },
+    redis: resolveRedis({ host: '127.0.0.1', port: '6379', db: '0' }),
+  }, 5_000)
+
+  /**
+   * THE K6-A1 REFUSAL, AS A CASE.
+   *
+   * The live `daily` and `watchdog` plists bind no `PIPELINE_CREDENTIAL_FILE`: they
+   * are shell scripts that orchestrate the pipeline and hold no database credential
+   * of their own. Declared `writes-copy-source`, the census refused with "an
+   * installed label bound no credential container or endpoint" - correctly, because
+   * there was nothing to bind - and an operational inspection could not complete.
+   */
+  it('classifies a plist with no credential container as no-postgresql-route', async () => {
+    const b = await bind(world({ noRoute: [DAILY, WATCHDOG] }))
+    const by = new Map(b.producers.map(p => [p.label, p]))
+    for (const l of [DAILY, WATCHDOG]) {
+      const p = by.get(l)
+      expect(p?.disposition, l).toBe('no-postgresql-route')
+      // ALL FIVE FIELDS NULL, because none of them was measured.
+      for (const [k, v] of [['credentialPath', p?.credentialPath],
+                            ['credentialDeviceInode', p?.credentialDeviceInode],
+                            ['databaseHost', p?.databaseHost],
+                            ['databasePort', p?.databasePort],
+                            ['databaseName', p?.databaseName]] as const) {
+        expect(v, `${l}.${k}`).toBeNull()
+      }
+      // AND ITS PLIST IDENTITY AND TOPOLOGY ARE STILL BOUND.
+      expect(p?.stableInstallation, l).toBe('installed')
+      expect(p?.plistPath, l).not.toBeNull()
+      expect(p?.plistSha256, l).not.toBeNull()
+      expect(p?.plistDeviceInode, l).not.toBeNull()
+    }
+    // AND THE WRITERS ARE STILL WRITERS.
+    for (const l of [ALERTS, WORKER]) {
+      expect(by.get(l)?.disposition, l).toBe('writes-copy-source')
+      expect(by.get(l)?.credentialPath, l).not.toBeNull()
+    }
+    expect(by.get(ABSENT)?.disposition).toBe('expected-absent')
+  })
+
+  /**
+   * AND IT IS STILL A PRODUCER THAT HAS TO BE STOPPED.
+   *
+   * The claim most easily lost. "Holds no credential" is not "cannot cause a write":
+   * both agents can put work into a queue whose consumer writes the copy source. So a
+   * no-route label stays in the reviewed producer set, keeps the process pattern the
+   * binding pins, and stays in the stop order.
+   */
+  it('remains in the reviewed producer, process-policy and stop censuses', async () => {
+    const b = await bind(world({ noRoute: [DAILY, WATCHDOG] }))
+    expect(b.producers.map(p => p.label)).toEqual([...REVIEWED_PRODUCERS])
+    expect(b.producerProcessPolicy.map(e => e.label)).toEqual([...REVIEWED_PRODUCERS])
+    for (const l of [DAILY, WATCHDOG]) {
+      expect(b.producerProcessPolicy.find(e => e.label === l)?.pattern, l).toBeTruthy()
+      expect(RESTORE_ORDER, l).toContain(l)
+    }
+  })
+
+  it('REFUSES a policy that calls a routeless producer a writer', async () => {
+    await expect(bind(world({ noRoute: [DAILY], policyRoute: [] })))
+      .rejects.toThrow(/does not match its declared disposition/)
+  })
+
+  it('REFUSES a policy that calls a credential-bearing producer routeless', async () => {
+    await expect(bind(world({ noRoute: [], policyRoute: [DAILY] })))
+      .rejects.toThrow(/does not match its declared disposition/)
+  })
+
+  it('REFUSES an unknown disposition, and one that is not a string', () => {
+    for (const bad of ['writes-somewhere-else', 42] as const) {
+      const w = world({})
+      const raw = JSON.parse(readFileSync(w.destinationPolicy, 'utf-8')) as {
+        producers: Record<string, unknown>[]
+      }
+      raw.producers[0] = { ...(raw.producers[0] as Record<string, unknown>), expected: bad }
+      writeFileSync(w.destinationPolicy, JSON.stringify(raw))
+      expect(() => readDestinationPolicy(w.destinationPolicy), String(bad))
+        .toThrow(/no reviewed expected disposition/)
+    }
+  })
+
+  /**
+   * THE INLINE CHECKS ARE UNTOUCHED, AND THEY RUN FIRST.
+   *
+   * A plist carrying a URL, inline userinfo or a forbidden database key must still
+   * refuse outright rather than becoming a comfortable `no-postgresql-route`: the
+   * absence of a credential KEY only means anything once those are ruled out.
+   */
+  it('still refuses an inline URL, inline userinfo and a forbidden key', async () => {
+    // EACH INJECTION USES ITS OWN KEY, AND EACH REACHES A DIFFERENT BRANCH.
+    //
+    // A first attempt injected a second `AI_CAPITAL_ROOT`, and a plist dictionary
+    // keeps the LAST value for a repeated key - so the URL was silently discarded by
+    // the parser and the case passed while proving nothing. Measured: it resolved
+    // instead of rejecting. The URL case also deliberately uses a key the forbidden
+    // set does NOT match, so it exercises the value check rather than the key check.
+    for (const [what, inject] of [
+      ['a database URL in a value', '<key>AI_CAPITAL_DSN</key><string>postgres://h/db</string>'],
+      ['inline userinfo', '<key>AI_CAPITAL_LINK</key><string>https://u:p@h/db</string>'],
+      ['a forbidden key', '<key>PGPASSWORD</key><string>x</string>'],
+    ] as const) {
+      const w = world({ noRoute: [DAILY] })
+      const path = join(w.agents, `${DAILY}.plist`)
+      writeFileSync(path, readFileSync(path, 'utf-8')
+        .replace('<key>AI_CAPITAL_ROOT</key>', `${inject}\n<key>AI_CAPITAL_ROOT</key>`))
+      await expect(bind(w), what).rejects.toThrow()
+    }
+  })
+
+  /** The real, checked-in policy must parse to exactly the reviewed five rows. */
+  it('the repository destination policy is the five-row reviewed contract', () => {
+    const rows = readDestinationPolicy(
+      join(import.meta.dirname, '..', '..', '..', 'ops', 'pg-copy', 'destination-policy.json'))
+    expect(rows.map(r => [r.label, r.installation, r.expected])).toEqual([
+      [DAILY, 'installed', 'no-postgresql-route'],
+      [WATCHDOG, 'installed', 'no-postgresql-route'],
+      [ALERTS, 'installed', 'writes-copy-source'],
+      [ABSENT, 'expected-absent', 'expected-absent'],
+      [WORKER, 'installed', 'writes-copy-source'],
+    ])
+  })
+
+  it('the binding version is 4', () => {
+    expect(BINDING_VERSION).toBe(4)
   })
 })
