@@ -33,9 +33,10 @@
 // same ones the in-process tests use, imported from `ops-world.ts`.
 
 import {
-  chmodSync, mkdirSync, readFileSync, readdirSync, renameSync, statSync, writeFileSync,
+  chmodSync, mkdirSync, readFileSync, readdirSync, statSync, writeFileSync,
 } from 'node:fs'
 import { join } from 'node:path'
+import { publishAtomically } from './publish.js'
 
 import {
   INTENT_PREFIX, OUTCOME_PREFIX, OpsRefused, runOpsCli,
@@ -76,7 +77,7 @@ const flushRoots = (): void => {
   const text = ROOTS.join('\n')
   if (text === lastRoots) return
   lastRoots = text
-  writeFileSync(rootsFile, `${text}\n`)
+  publishAtomically(rootsFile, `${text}\n`)
 }
 setInterval(flushRoots, 25).unref()
 
@@ -164,7 +165,7 @@ const report: {
   scratchCensus: [], evidenceEntries: [], publishAttempts: 0,
 }
 
-const flush = (): void => { writeFileSync(progressFile, `${JSON.stringify(report)}\n`) }
+const flush = (): void => { publishAtomically(progressFile, `${JSON.stringify(report)}\n`) }
 
 // RECORDED AS IT HAPPENS. A contained run that reaches an unscripted hold never
 // returns, so the fact has to be on disk before the parent kills the process.
@@ -555,7 +556,4 @@ flushRoots()
 
 // WRITTEN ATOMICALLY, so the parent never reads half a result and concludes the
 // child finished when it had not.
-const tmp = `${resultFile}.partial`
-writeFileSync(tmp, `${JSON.stringify(report)}\n`)
-chmodSync(tmp, 0o600)
-renameSync(tmp, resultFile)
+publishAtomically(resultFile, `${JSON.stringify(report)}\n`)

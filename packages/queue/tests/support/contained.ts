@@ -197,11 +197,42 @@ const readRoots = (file: string): string[] => {
   } catch { return [] }
 }
 
+/**
+ * ABSENT IS NOT THE SAME AS UNREADABLE, and only one of them means "nothing
+ * was observed".
+ *
+ * A file that is not there yet is an ordinary state: the child has not reached
+ * its first publication, and `NOTHING_OBSERVED` is the truthful answer. A file
+ * that IS there and cannot be parsed is not an observation of nothing - it is a
+ * failure to observe, and answering it with an empty report silently converts
+ * every verdict drawn from that report into a wrong one. It reads as a hold that
+ * recorded no request and performed no operation, which is precisely the claim
+ * these cases exist to test, so the container must not be able to manufacture it.
+ *
+ * With publication made atomic on the child side this is now unreachable; that
+ * is the reason to fail closed on it rather than the reason to keep tolerating
+ * it, since anything that reaches here again is a defect in the container and
+ * must say so rather than be absorbed into a plausible-looking result.
+ */
 const readReport = (file: string): HoldReport => {
+  let raw: string
   try {
-    return JSON.parse(readFileSync(file, 'utf-8')) as HoldReport
-  } catch { return NOTHING_OBSERVED }
+    raw = readFileSync(file, 'utf-8')
+  } catch (e) {
+    if ((e as NodeJS.ErrnoException).code === 'ENOENT') return NOTHING_OBSERVED
+    throw e
+  }
+  try {
+    return JSON.parse(raw) as HoldReport
+  } catch {
+    throw new Error(
+      `a contained child's report exists but could not be read as one: ${file} (${raw.length} bytes)`,
+    )
+  }
 }
+
+/** The same reader the container uses, exposed so its refusal can be proved. */
+export const readReportForTest = readReport
 
 /**
  * UNFREEZE AND REMOVE, and only these paths.
