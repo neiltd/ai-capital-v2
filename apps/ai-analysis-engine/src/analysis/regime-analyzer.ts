@@ -137,11 +137,31 @@ describe it qualitatively in your rationale too — do not invent a
 specific-sounding number to make it read as more precise than the source
 data supports.`
 
+/**
+ * STRICT TOOL USE, so the decoder cannot emit a shape this code rejects.
+ *
+ * The runtime validator below caught a response whose `keyIndicators` was not an
+ * array at all, three times in a row, and correctly refused each one - which
+ * turned a silent corruption into a stalled pipeline. Refusing is right, but the
+ * real fix is upstream: `strict: true` makes the API constrain decoding to this
+ * schema, so `keyIndicators` arrives as an array of strings or the request fails
+ * before any content is produced.
+ *
+ * `additionalProperties: false` is required by strict mode and is also the point:
+ * an unexpected key is a schema the model invented, not data to keep.
+ *
+ * THE VALIDATOR STAYS. Strict mode is a property of the live API, and this module
+ * is also driven by test doubles, by any future client wrapper, and by whatever a
+ * proxy or replay layer returns. Defence at the boundary does not become
+ * unnecessary because the server promises to behave.
+ */
 const CLASSIFY_TOOL: Anthropic.Tool = {
   name: 'classify_macro_regime',
   description: 'Classify the current macro technology investment regime based on company health signals',
+  strict: true,
   input_schema: {
     type: 'object',
+    additionalProperties: false,
     properties: {
       regime:          { type: 'string', description: 'Short label, e.g. AI Acceleration' },
       confidence:      { type: 'string', enum: ['high', 'medium', 'low'] },

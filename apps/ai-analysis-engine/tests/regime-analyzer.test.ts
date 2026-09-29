@@ -200,3 +200,75 @@ describe('analyzeRegime with govFlowContext', () => {
     expect(result.regime).toBe('Defense Spending Surge')
   })
 })
+
+// ── E1: the strict tool contract, inspected on the actual request ─────────────
+//
+// The K6-E run was stopped three times by the runtime validator refusing a
+// `keyIndicators` that was not an array. Refusing was correct; the upstream fix is
+// `strict: true`, which makes the API constrain decoding to this schema instead of
+// leaving the shape to chance. These cases read the request that was really passed
+// to `messages.create`, so they fail if the flags are dropped from the definition.
+describe('E1: classify_macro_regime strict tool contract', () => {
+  const VALID_INPUT = {
+    regime: 'AI Acceleration',
+    confidence: 'high',
+    rationale: 'GPU demand is strong across the board.',
+    keyIndicators: ['NVDA revenue up 60%'],
+    affectedTickers: ['NVDA'],
+    thailandRead: 'SET flows mildly negative.',
+  }
+  const clientFor = (input: unknown) => ({
+    messages: {
+      create: vi.fn().mockResolvedValue({
+        content: [{ type: 'tool_use', name: 'classify_macro_regime', input }],
+      }),
+    },
+  })
+
+  it('sends strict: true and additionalProperties: false on the classifier tool', async () => {
+    const c = clientFor(VALID_INPUT)
+    await analyzeRegime(mockHealth, { client: c as any })
+    const req = c.messages.create.mock.calls[0][0] as any
+    const tool = req.tools.find((t: any) => t.name === 'classify_macro_regime')
+    expect(tool).toBeDefined()
+    expect(tool.strict).toBe(true)
+    expect(tool.input_schema.additionalProperties).toBe(false)
+  })
+
+  it('keeps both classifier arrays typed as arrays of strings', async () => {
+    const c = clientFor(VALID_INPUT)
+    await analyzeRegime(mockHealth, { client: c as any })
+    const props = (c.messages.create.mock.calls[0][0] as any)
+      .tools.find((t: any) => t.name === 'classify_macro_regime').input_schema.properties
+    for (const field of ['keyIndicators', 'affectedTickers']) {
+      expect(props[field].type).toBe('array')
+      expect(props[field].items.type).toBe('string')
+    }
+  })
+
+  it('keeps every reviewed field required', async () => {
+    const c = clientFor(VALID_INPUT)
+    await analyzeRegime(mockHealth, { client: c as any })
+    const req = (c.messages.create.mock.calls[0][0] as any)
+      .tools.find((t: any) => t.name === 'classify_macro_regime').input_schema.required
+    expect([...req].sort()).toEqual(
+      ['affectedTickers', 'confidence', 'keyIndicators', 'rationale', 'regime', 'thailandRead'])
+  })
+
+  it('STILL REJECTS a malformed response that bypasses the constrained decoder', async () => {
+    // A test double, a replay layer or a proxy is not bound by strict mode, so the
+    // runtime validator remains the last line and must still refuse.
+    const c = clientFor({ ...VALID_INPUT, keyIndicators: 'NVDA revenue up 60%' })
+    await expect(analyzeRegime(mockHealth, { client: c as any }))
+      .rejects.toThrow(/keyIndicators that is not an array of strings/)
+  })
+
+  it('calls messages.create exactly once — no hidden corrective re-ask', async () => {
+    const c = clientFor({ ...VALID_INPUT, keyIndicators: 42 })
+    await analyzeRegime(mockHealth, { client: c as any }).catch(() => undefined)
+    expect(c.messages.create).toHaveBeenCalledTimes(1)
+    const ok = clientFor(VALID_INPUT)
+    await analyzeRegime(mockHealth, { client: ok as any })
+    expect(ok.messages.create).toHaveBeenCalledTimes(1)
+  })
+})
