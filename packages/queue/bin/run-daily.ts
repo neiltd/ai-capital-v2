@@ -10,6 +10,7 @@ import { ensurePipelineEnv, requireSubmissionKeys } from '../src/env.js'
 ensurePipelineEnv()
 
 import { submitDailyPipeline } from '../src/submit.js'
+import { requireDailySeedArtifacts } from '../src/seed-artifacts.js'
 import { logicalRunDate } from '@common/pipeline-runs'
 import { resolveLogicalDateArg } from '../src/logical-date-arg.js'
 import { submitScheduledStructuredIngestion, structuredIngestionScheduled, STRUCTURED_INGESTION_SCHEDULE_ENV } from '../src/structured-scheduling.js'
@@ -34,6 +35,10 @@ async function main() {
   // and names only the key. See requireSubmissionKeys.
   try {
     requireSubmissionKeys(process.env)
+    // AND THE REQUIRED UNTRACKED SEED, in the same breath and before the same
+    // line. A missing `graph.json` is exactly as terminal as a missing key -
+    // 2026-09-29 proved it twice - and is just as knowable in a millisecond.
+    requireDailySeedArtifacts()
   } catch (err) {
     console.error(`[run-daily] ${(err as Error).message}`)
     process.exit(2)

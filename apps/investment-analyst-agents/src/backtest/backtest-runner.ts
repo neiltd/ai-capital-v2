@@ -1,6 +1,15 @@
 // Backtest the briefing agent's recommendations against actual price action.
 //
-// For each archived prediction in archive/predictions.jsonl:
+// WHERE THE HISTORY COMES FROM. `cli-brief` writes every prediction to
+// `briefing.predictions` whenever `DATABASE_URL` is set, so in production that
+// table IS the corpus and `archive/predictions.jsonl` is a legacy file that
+// stops being written the moment Postgres is configured. Reading the JSONL in
+// production therefore scored a frozen snapshot, and on a checkout without the
+// ignored file it exited 1 before scoring anything. Postgres is now the source
+// of record whenever it is selected, and the JSONL remains only for the
+// offline/legacy path where no `DATABASE_URL` exists.
+//
+// For each archived prediction:
 //   1. For each action (buy/trim/hold/exit) at conviction (high/medium/low)
 //   2. Look up actual price N days later (7d, 30d, 90d windows)
 //   3. Score whether the action's directional bet was correct
@@ -12,6 +21,7 @@
 import 'dotenv/config'
 import { join } from 'path'
 import { readFileSync, writeFileSync, mkdirSync, existsSync } from 'fs'
+import { closePool, getPool, usePostgres } from '@common/db'
 import { formatReport } from './backtest-report.js'
 
 interface ActionRecord {
@@ -113,17 +123,124 @@ function scoreAction(action: string, returnPct: number): boolean | null {
   return null  // unknown action
 }
 
+// ── WHERE THE PREDICTION CORPUS COMES FROM ──────────────────────────────────
+
+/**
+ * ONE RECORD, VALIDATED AT THE BOUNDARY.
+ *
+ * Both sources are outside this module's control: a JSONB column somebody else
+ * wrote and a legacy file on disk. The scorer reads `date` and, per action,
+ * `ticker`, `scenarioType`, `action`, `conviction` and `allocationChangePct`, so
+ * every one of those is checked here rather than trusted and crashed on later.
+ *
+ * ERRORS NAME THE FIELD, NEVER THE VALUE. These rows carry portfolio positions
+ * and model reasoning; an exception that pasted the record into a log or a CI
+ * transcript would leak them. The location plus the expected shape is enough to
+ * fix the data, and is all that is said.
+ */
+function validatedPrediction(raw: unknown, where: string): PredictionRecord {
+  const bad = (field: string, expected: string): never => {
+    throw new Error(`${where}: ${field} is not ${expected}`)
+  }
+  if (typeof raw !== 'object' || raw === null || Array.isArray(raw)) {
+    return bad('the record', 'an object')
+  }
+  const r = raw as Record<string, unknown>
+  if (typeof r.date !== 'string' || r.date === '') bad('date', 'a non-empty string')
+  if (typeof r.regime !== 'string') bad('regime', 'a string')
+  if (typeof r.confidence !== 'string') bad('confidence', 'a string')
+  if (!Array.isArray(r.actions)) bad('actions', 'an array')
+
+  const actions = (r.actions as unknown[]).map((a, i): ActionRecord => {
+    const at = (field: string, expected: string): never =>
+      bad(`actions[${String(i)}].${field}`, expected)
+    if (typeof a !== 'object' || a === null || Array.isArray(a)) {
+      return at('', 'an object') as never
+    }
+    const o = a as Record<string, unknown>
+    if (typeof o.ticker !== 'string' || o.ticker === '') at('ticker', 'a non-empty string')
+    if (typeof o.scenarioType !== 'string') at('scenarioType', 'a string')
+    if (typeof o.action !== 'string') at('action', 'a string')
+    if (o.conviction !== 'high' && o.conviction !== 'medium' && o.conviction !== 'low') {
+      at('conviction', 'one of high, medium, low')
+    }
+    if (typeof o.allocationChangePct !== 'number' || !Number.isFinite(o.allocationChangePct)) {
+      at('allocationChangePct', 'a finite number')
+    }
+    return {
+      ticker: o.ticker as string,
+      scenarioType: o.scenarioType as string,
+      action: o.action as string,
+      conviction: o.conviction as ActionRecord['conviction'],
+      allocationChangePct: o.allocationChangePct as number,
+    }
+  })
+
+  return {
+    date: r.date as string,
+    regime: r.regime as string,
+    confidence: r.confidence as string,
+    actions,
+  }
+}
+
+/**
+ * THE CORPUS, FROM WHICHEVER STORE IS ACTUALLY IN USE.
+ *
+ * FAIL CLOSED ONCE POSTGRES IS CHOSEN. `usePostgres()` selects the store before
+ * a single row is read, and a query or validation failure from then on is
+ * reported as itself. Falling back to the JSONL here would silently score a
+ * stale snapshot and call it today's calibration - a wrong answer presented as
+ * a right one, which is worse than no report at all.
+ *
+ * `date::text` because the scorer does its own date arithmetic on `YYYY-MM-DD`;
+ * letting the driver hand back a `Date` would re-introduce a local-timezone
+ * shift. `actions` is read as the JSONB value the writer stored, not re-parsed.
+ */
+export async function loadPredictions(archivePath: string): Promise<PredictionRecord[]> {
+  if (usePostgres()) {
+    try {
+      const { rows } = await getPool().query<{
+        date: string; regime: string; confidence: string; actions: unknown
+      }>(
+        `SELECT date::text AS date, regime, confidence, actions
+           FROM briefing.predictions
+          ORDER BY date`,
+      )
+      return rows.map((row, i) => validatedPrediction(row, `briefing.predictions row ${String(i + 1)}`))
+    } finally {
+      // OWNED HERE, SO CLOSED HERE, on the way out either way. Nothing else in
+      // this command touches Postgres - the price lookups are HTTP.
+      await closePool()
+    }
+  }
+
+  // THE OFFLINE/LEGACY PATH, unchanged: only reachable when no DATABASE_URL is
+  // configured, and only then is a missing file a reason to refuse.
+  if (!existsSync(archivePath)) {
+    throw new Error(`No predictions archive at ${archivePath}`)
+  }
+  const lines = readFileSync(archivePath, 'utf-8').split('\n').filter(Boolean)
+  return lines.map((line, i) => {
+    const where = `${archivePath} line ${String(i + 1)}`
+    let parsed: unknown
+    try {
+      parsed = JSON.parse(line)
+    } catch {
+      throw new Error(`${where}: the line is not JSON`)
+    }
+    return validatedPrediction(parsed, where)
+  })
+}
+
 // ── Main backtest loop ───────────────────────────────────────────────────────
 
 async function run() {
-  if (!existsSync(ARCHIVE_PATH)) {
-    console.error(`No predictions archive at ${ARCHIVE_PATH}`)
-    process.exit(1)
-  }
-
-  const lines = readFileSync(ARCHIVE_PATH, 'utf-8').split('\n').filter(Boolean)
-  const predictions: PredictionRecord[] = lines.map(line => JSON.parse(line))
-  console.log(`[backtest] Loaded ${predictions.length} prediction record(s)`)
+  const predictions = await loadPredictions(ARCHIVE_PATH)
+  console.log(
+    `[backtest] Loaded ${predictions.length} prediction record(s) from ` +
+    `${usePostgres() ? 'briefing.predictions' : ARCHIVE_PATH}`,
+  )
 
   const rows: BacktestRow[] = []
   const today = Date.now()

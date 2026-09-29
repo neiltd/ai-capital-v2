@@ -352,6 +352,75 @@ export function formatLiquidity(liq: LiquidityContext): string {
   return `## Global Liquidity Conditions (as of ${liq.asOf})\n${lines.join('\n')}\n${summary}`
 }
 
+/**
+ * THE TOOL SCHEMA IS A REQUEST, NOT A GUARANTEE.
+ *
+ * `input_schema` declares `keyIndicators` as `string[]`, and this function used
+ * to cast the tool input straight to that shape. A run returned the field as a
+ * single string instead; the cast made TypeScript believe otherwise, the value
+ * was written into the regime, and the failure surfaced two stages later as
+ * `regime.keyIndicators.join is not a function` inside the propagation
+ * analyzer - after `insertRegime` had already persisted the malformed row.
+ *
+ * So the check belongs HERE, at the boundary where untrusted model output
+ * becomes a `MacroRegime`, and it rejects rather than repairs: coercing with
+ * `String()` or tolerating a non-array in the consumer would turn a model that
+ * ignored its schema into a silently degraded analysis, which is the outcome
+ * this whole stage exists to avoid.
+ *
+ * NO RAW RESPONSE IN THE MESSAGE. The model's text reasons over the portfolio
+ * and the macro picture; an error that echoed it would copy that into logs and
+ * pipeline_runs rows. The field name and the expected shape are enough to act
+ * on.
+ */
+export function validatedRegimeInput(raw: unknown): {
+  regime: string; confidence: RegimeConfidence; rationale: string
+  keyIndicators: string[]; affectedTickers: string[]; thailandRead?: string
+} {
+  const bad = (field: string, expected: string): never => {
+    throw new Error(`classify_macro_regime returned ${field} that is not ${expected}`)
+  }
+  if (typeof raw !== 'object' || raw === null || Array.isArray(raw)) {
+    return bad('a tool input', 'an object')
+  }
+  const r = raw as Record<string, unknown>
+
+  if (typeof r.regime !== 'string' || r.regime === '') bad('regime', 'a non-empty string')
+  if (r.confidence !== 'high' && r.confidence !== 'medium' && r.confidence !== 'low') {
+    bad('confidence', 'one of high, medium, low')
+  }
+  if (typeof r.rationale !== 'string' || r.rationale === '') bad('rationale', 'a non-empty string')
+
+  const stringArray = (field: string): string[] => {
+    const v = r[field]
+    if (!Array.isArray(v)) bad(field, 'an array of strings')
+    const arr = v as unknown[]
+    // EVERY MEMBER, not just the container. A list with one number in it fails
+    // exactly the same way downstream as a bare string does.
+    arr.forEach((m, i) => {
+      if (typeof m !== 'string') bad(`${field}[${String(i)}]`, 'a string')
+    })
+    return arr as string[]
+  }
+  const keyIndicators = stringArray('keyIndicators')
+  const affectedTickers = stringArray('affectedTickers')
+
+  if (r.thailandRead !== undefined && typeof r.thailandRead !== 'string') {
+    bad('thailandRead', 'a string when present')
+  }
+
+  // Asserted above, one field at a time; the casts carry that proof to the type
+  // level rather than standing in for it.
+  return {
+    regime: r.regime as string,
+    confidence: r.confidence as RegimeConfidence,
+    rationale: r.rationale as string,
+    keyIndicators,
+    affectedTickers,
+    thailandRead: r.thailandRead as string | undefined,
+  }
+}
+
 export async function analyzeRegime(
   health: CompanyHealth[],
   options: {
@@ -417,16 +486,13 @@ export async function analyzeRegime(
     throw new Error('Expected tool_use response from Claude')
   }
 
-  const input = toolUse.input as {
-    regime: string; confidence: string; rationale: string
-    keyIndicators: string[]; affectedTickers: string[]; thailandRead?: string
-  }
+  const input = validatedRegimeInput(toolUse.input)
 
   return {
     id:              randomUUID(),
     date:            today,
     regime:          input.regime,
-    confidence:      input.confidence as RegimeConfidence,
+    confidence:      input.confidence,
     rationale:       input.rationale,
     keyIndicators:   input.keyIndicators,
     affectedTickers: input.affectedTickers,

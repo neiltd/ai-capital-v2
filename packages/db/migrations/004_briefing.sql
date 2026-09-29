@@ -1,7 +1,13 @@
 -- Phase 3.3: investment-analyst-agents archive schema
--- Mirrors the JSONL archive files (predictions.jsonl + qa.jsonl).
--- App stays on JSONL; this migration prepares a structured store so the
--- backtester + Q&A history can be queried with real SQL.
+-- Originally mirrored the JSONL archive files (predictions.jsonl + qa.jsonl).
+--
+-- NO LONGER A PREPARATION. This schema is the live system of record whenever
+-- DATABASE_URL is set: cli-brief writes every prediction to
+-- briefing.predictions, and since 2026-09-29 briefing-backtest READS its corpus
+-- from here rather than from predictions.jsonl. The JSONL files remain only for
+-- the offline/legacy path where no DATABASE_URL exists, and are not written in
+-- production. The superseded "App stays on JSONL" note is corrected here because
+-- it was the sentence that made the stale-read defect look intentional.
 
 CREATE SCHEMA IF NOT EXISTS briefing;
 
