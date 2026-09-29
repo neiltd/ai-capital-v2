@@ -76,6 +76,14 @@ log "=============================="
 # requires the target to be the entry point the runtime actually executes, and
 # to be the final argument, since this worker takes no arguments of its own.
 #
+# AND IT LOOKS AT THE WHOLE LAUNCHD FAMILY, not only the PID launchd reports.
+# `npx` execs into `npm exec`, replacing the argv of the process launchd watches,
+# so the runtime that actually executes the entry point is a DESCENDANT. Checking
+# the root alone refused a loaded, healthy worker and made this script exit 3 with
+# nothing enqueued. The authority is unchanged — one numeric PID from the reviewed
+# label — and the search is that root plus its proven descendants, with exactly
+# one accepted runtime required.
+#
 # THE AUTOMATIC FALLBACK WAS REMOVED IN SLICE S4D, DELIBERATELY.
 # This block used to spawn a worker inline with nohup when neither was found.
 # That inline worker inherited THIS process's environment, which made the
@@ -101,8 +109,8 @@ if WORKER_FOUND="$(find_live_worker "$WORKER_TARGET" "$LAUNCHD_LABEL")"; then
   log "worker live (${WORKER_FOUND%%:*}) — pid=${WORKER_FOUND##*:}"
 else
   log "FATAL: no live $LAUNCHD_LABEL worker, and this scheduler starts none."
-  log "  A registered launchd job is NOT sufficient: the label must have a live"
-  log "  PID whose runtime is actually EXECUTING $WORKER_TARGET"
+  log "  A registered launchd job is NOT sufficient: the label's process family must"
+  log "  contain exactly one runtime actually EXECUTING $WORKER_TARGET"
   log "  (a process that merely names it as an argument does not count)."
   log "  The daily flow was NOT submitted; nothing was enqueued."
   log "  Restore the agent, then re-run:"
