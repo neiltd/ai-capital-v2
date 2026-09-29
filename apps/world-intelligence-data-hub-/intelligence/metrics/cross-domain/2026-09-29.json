@@ -1,14 +1,14 @@
 {
   "date": "2026-09-29",
-  "generatedAt": "2026-09-29T19:56:37.941Z",
+  "generatedAt": "2026-09-29T21:26:17.256Z",
   "observationWindowDays": 14,
   "storylineBenchmarkLinks": [
     {
       "storylineId": "f2a58b1471ba7b29",
-      "storylineTitle": "Israeli settlers attack West Bank village, set homes on fire blocking Palestinian family's return",
+      "storylineTitle": "Israeli settlers block military from returning Palestinian family home in West Bank despite Supreme Court order",
       "storylineState": "active",
       "daysActive": 1,
-      "avgEscalation": 0.483,
+      "avgEscalation": 0.469,
       "maxSeverity": 4,
       "countries": [
         "SAU",
@@ -19,7 +19,10 @@
         "TUR",
         "ISR",
         "ARE",
-        "PSE"
+        "PSE",
+        "CHN",
+        "PAK",
+        "VEN"
       ],
       "eventTypes": [
         "diplomatic_incident",
@@ -29,7 +32,8 @@
         "military_operation",
         "airstrike",
         "election",
-        "protest"
+        "protest",
+        "military_exercise"
       ],
       "linkedBenchmarks": [
         "brent_crude",
@@ -37,15 +41,15 @@
       ],
       "linkStrength": 0.625,
       "linkReasons": [
-        "geopolitical_event_in_energy_region:SAU,YEM,IRN,QAT,ARE"
+        "geopolitical_event_in_energy_region:SAU,YEM,IRN,QAT,ARE,VEN"
       ]
     },
     {
       "storylineId": "358ba15acb308302",
-      "storylineTitle": "US ban on Canadian alcohol and dairy imports takes effect amid escalating trade war",
-      "storylineState": "stabilizing",
+      "storylineTitle": "Stocks fall as long-term yields hit 24-year high amid energy-driven inflation fears",
+      "storylineState": "active",
       "daysActive": 1,
-      "avgEscalation": 0.386,
+      "avgEscalation": 0.392,
       "maxSeverity": 3,
       "countries": [
         "USA",
@@ -61,7 +65,8 @@
         "market_crash",
         "commodity_price_move",
         "energy_infrastructure",
-        "economic_data_release"
+        "economic_data_release",
+        "central_bank_action"
       ],
       "linkedBenchmarks": [
         "brent_crude",
@@ -78,7 +83,7 @@
       "storylineTitle": "Putin signs decree adding 15,500 troops to Russian army",
       "storylineState": "active",
       "daysActive": 0,
-      "avgEscalation": 0.533,
+      "avgEscalation": 0.53,
       "maxSeverity": 3,
       "countries": [
         "RUS",
@@ -105,6 +110,37 @@
       "linkStrength": 0.375,
       "linkReasons": [
         "geopolitical_event_in_energy_region:RUS,GBR,IRN"
+      ]
+    },
+    {
+      "storylineId": "799aacb0a51ca58b",
+      "storylineTitle": "South Korea says North Korean mines caused DMZ blast injuring two soldiers, violating armistice",
+      "storylineState": "escalating",
+      "daysActive": 1,
+      "avgEscalation": 0.525,
+      "maxSeverity": 3,
+      "countries": [
+        "KOR",
+        "UKR",
+        "PRK",
+        "RUS",
+        "DEU",
+        "EST",
+        "POL",
+        "ROU",
+        "MDA"
+      ],
+      "eventTypes": [
+        "diplomatic_incident",
+        "military_operation"
+      ],
+      "linkedBenchmarks": [
+        "brent_crude",
+        "wti_crude"
+      ],
+      "linkStrength": 0.25,
+      "linkReasons": [
+        "geopolitical_event_in_energy_region:RUS"
       ]
     },
     {
@@ -152,30 +188,6 @@
       "linkStrength": 0.25,
       "linkReasons": [
         "energy_event_type:energy_infrastructure"
-      ]
-    },
-    {
-      "storylineId": "799aacb0a51ca58b",
-      "storylineTitle": "Seoul summons Ukraine envoy over secret transfer of North Korean POWs",
-      "storylineState": "escalating",
-      "daysActive": 1,
-      "avgEscalation": 0.463,
-      "maxSeverity": 3,
-      "countries": [
-        "KOR",
-        "UKR",
-        "PRK",
-        "RUS",
-        "DEU",
-        "EST"
-      ],
-      "eventTypes": [
-        "diplomatic_incident"
-      ],
-      "linkedBenchmarks": [],
-      "linkStrength": 0.125,
-      "linkReasons": [
-        "geopolitical_event_in_energy_region:RUS"
       ]
     },
     {
@@ -242,9 +254,9 @@
     {
       "storylineId": "072d87e1be5761db",
       "storylineTitle": "Estonia blames Russia for arson attack on defence company supplying Ukraine",
-      "storylineState": "emerging",
+      "storylineState": "active",
       "daysActive": 0,
-      "avgEscalation": 0.55,
+      "avgEscalation": 0.467,
       "maxSeverity": 3,
       "countries": [
         "EST",
@@ -294,14 +306,15 @@
     },
     {
       "storylineId": "75e217c1d5b86f1b",
-      "storylineTitle": "US refiners refuse to process Venezuelan gold brought to America by Trump administration deals",
+      "storylineTitle": "India-Middle East-Europe Economic Corridor gains Trump backing amid regional war concerns",
       "storylineState": "emerging",
-      "daysActive": 0,
-      "avgEscalation": 0.2,
+      "daysActive": 1,
+      "avgEscalation": 0.25,
       "maxSeverity": 2,
       "countries": [
         "USA",
-        "VEN"
+        "VEN",
+        "IND"
       ],
       "eventTypes": [
         "other"
@@ -430,11 +443,11 @@
   "escalationVolatilityLog": [
     {
       "date": "2026-09-29",
-      "maxEscalation": 0.6,
-      "avgEscalation": 0.46,
-      "eventCount": 45,
+      "maxEscalation": 0.7,
+      "avgEscalation": 0.453,
+      "eventCount": 59,
       "supplyDisruptionCount": 0,
-      "energyEventCount": 4,
+      "energyEventCount": 5,
       "hormuzEventCount": 7,
       "benchmarkDailyChange": [
         {
@@ -732,9 +745,9 @@
   ],
   "summary": {
     "totalActiveStorylines": 14,
-    "energyLinkedStorylines": 5,
-    "escalatingLinked": 0,
-    "avgEscalationLinked": 0.44,
+    "energyLinkedStorylines": 6,
+    "escalatingLinked": 1,
+    "avgEscalationLinked": 0.453,
     "supplyDisruptionsRecent": 0,
     "energyEventsRecent": 2,
     "hormuzEventsRecent": 1,
@@ -760,8 +773,8 @@
       }
     ],
     "pairedObservationDays": 1,
-    "avgMaxEscalation": 0.6,
-    "maxSingleDayEscalation": 0.6,
+    "avgMaxEscalation": 0.7,
+    "maxSingleDayEscalation": 0.7,
     "maxSingleDayPriceChangePct": null
   }
 }

@@ -1,10 +1,10 @@
 {
   "schemaVersion": "1.0.0",
-  "generatedAt": "2026-09-29T19:56:37.942Z",
+  "generatedAt": "2026-09-29T21:26:17.257Z",
   "hub": "world-intelligence-hub",
   "contents": {
     "events": {
-      "count": 40,
+      "count": 54,
       "from": "2026-09-29",
       "to": "2026-09-29"
     },

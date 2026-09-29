@@ -1,8 +1,8 @@
 {
   "schemaVersion": "1.0.0",
-  "generatedAt": "2026-09-29T19:56:37.942Z",
+  "generatedAt": "2026-09-29T21:26:17.257Z",
   "source": "world-intelligence-hub",
-  "eventCount": 40,
+  "eventCount": 54,
   "dateRange": {
     "from": "2026-09-25",
     "to": "2026-09-29"
@@ -77,28 +77,6 @@
       "economicImpactScore": 2
     },
     {
-      "id": "16a9517e9583eac7a8b4f5ba",
-      "source": "rss_intelligence",
-      "eventDate": "2026-09-29",
-      "iso3": [
-        "USA",
-        "CAN"
-      ],
-      "eventType": "economic.trade",
-      "headline": "US ban on Canadian alcohol and dairy imports takes effect amid escalating trade war",
-      "summary": "A US ban on Canadian alcohol and dairy products came into effect, marking the latest escalation in the Canada-US trade war after negotiations collapsed in late August with no timeline for resumed talks.",
-      "confidenceScore": 0.85,
-      "confidenceLabel": "high",
-      "coordinateQuality": "missing",
-      "tier": 2,
-      "tags": [
-        "bbc-world",
-        "storyline:358ba15a"
-      ],
-      "geopoliticalScore": 4,
-      "economicImpactScore": 6
-    },
-    {
       "id": "de8846ad5f7dbd8589469137",
       "source": "rss_intelligence",
       "eventDate": "2026-09-29",
@@ -143,28 +121,6 @@
       ],
       "geopoliticalScore": 5.5,
       "economicImpactScore": 1
-    },
-    {
-      "id": "b6a9771ae630abf865f78bc7",
-      "source": "rss_intelligence",
-      "eventDate": "2026-09-29",
-      "iso3": [
-        "USA",
-        "IRN"
-      ],
-      "eventType": "economic.trade",
-      "headline": "Oil rallies and global stocks fall to one-week low amid Iran war fears and Fed rate-hike bets",
-      "summary": "Global equities slid to a one-week low as oil prices surged and Treasury yields hit multi-year highs, driven by fading hopes for a diplomatic breakthrough in the Iran war and mounting bets on further Federal Reserve interest-rate hikes.",
-      "confidenceScore": 0.75,
-      "confidenceLabel": "high",
-      "coordinateQuality": "missing",
-      "tier": 2,
-      "tags": [
-        "bloomberg-markets",
-        "storyline:358ba15a"
-      ],
-      "geopoliticalScore": 6,
-      "economicImpactScore": 9
     },
     {
       "id": "56e204878407ffca83b6e13c",
@@ -877,6 +833,339 @@
       "economicImpactScore": 1
     },
     {
+      "id": "fe21764dbe74b7702e7169d6",
+      "source": "rss_intelligence",
+      "eventDate": "2026-09-29",
+      "iso3": [
+        "USA",
+        "IRN",
+        "CHN",
+        "PAK",
+        "TUR",
+        "SAU"
+      ],
+      "eventType": "economic.sanctions",
+      "headline": "US sanctions 10 entities across China, Pakistan, Turkiye, Iran, Saudi Arabia over Iran military support",
+      "summary": "The United States imposed sanctions on 10 individuals and firms in China, Pakistan, Turkiye, Iran and Saudi Arabia for allegedly supporting Iran's military as part of an ongoing pressure campaign.",
+      "confidenceScore": 0.75,
+      "confidenceLabel": "high",
+      "coordinateQuality": "missing",
+      "tier": 2,
+      "tags": [
+        "aljazeera-english",
+        "storyline:f2a58b14"
+      ],
+      "geopoliticalScore": 5,
+      "economicImpactScore": 3
+    },
+    {
+      "id": "5e6ff5f2422fd68bb553920e",
+      "source": "rss_intelligence",
+      "eventDate": "2026-09-29",
+      "iso3": [
+        "IRN",
+        "USA"
+      ],
+      "eventType": "energy.disruption",
+      "headline": "Optimism for Iran war diplomatic breakthrough fades as oil prices surge",
+      "summary": "Bond markets and Treasury yields reflected fading optimism for a diplomatic breakthrough in the Iran war, coinciding with surging oil prices and increased expectations of Federal Reserve rate hikes.",
+      "confidenceScore": 0.65,
+      "confidenceLabel": "medium",
+      "coordinateQuality": "missing",
+      "tier": 2,
+      "tags": [
+        "bloomberg-markets",
+        "storyline:358ba15a"
+      ],
+      "geopoliticalScore": 6,
+      "economicImpactScore": 7.5
+    },
+    {
+      "id": "ac7a4855c0dd62fc54d65118",
+      "source": "rss_intelligence",
+      "eventDate": "2026-09-29",
+      "iso3": [
+        "USA"
+      ],
+      "eventType": "economic.trade",
+      "headline": "Fed's Musalem highlights value of clear policy framework for rate transmission",
+      "summary": "Federal Reserve Bank of St. Louis President Alberto Musalem said clear communication about how the central bank adjusts interest rates based on incoming data can improve monetary policy transmission, speaking at an event in London.",
+      "confidenceScore": 0.7,
+      "confidenceLabel": "medium",
+      "coordinateQuality": "missing",
+      "tier": 3,
+      "tags": [
+        "bloomberg-markets",
+        "storyline:358ba15a"
+      ],
+      "geopoliticalScore": 1,
+      "economicImpactScore": 4
+    },
+    {
+      "id": "c6168d54bc3360db3609d86f",
+      "source": "rss_intelligence",
+      "eventDate": "2026-09-29",
+      "iso3": [
+        "CAN"
+      ],
+      "eventType": "economic.trade",
+      "headline": "Bank of Canada official cites 'dilemma' balancing trade war impact against energy-driven inflation",
+      "summary": "A senior Bank of Canada official said the central bank's rate-setting body faces a 'dilemma' in weighing the economic impact of an ongoing trade war against inflationary pressure from high energy prices. The comments reflect internal debate on interest rate policy.",
+      "confidenceScore": 0.75,
+      "confidenceLabel": "high",
+      "coordinateQuality": "missing",
+      "tier": 3,
+      "tags": [
+        "bloomberg-markets",
+        "storyline:358ba15a"
+      ],
+      "geopoliticalScore": 3,
+      "economicImpactScore": 6
+    },
+    {
+      "id": "e45356e8e966495fc7020291",
+      "source": "rss_intelligence",
+      "eventDate": "2026-09-29",
+      "iso3": [
+        "POL",
+        "ROU",
+        "MDA",
+        "RUS",
+        "UKR"
+      ],
+      "eventType": "diplomatic.dispute",
+      "headline": "Russia expected to intensify hybrid war against Europe with drone incursions and sabotage",
+      "summary": "Poland, Romania, and Moldova have been regularly targeted by drone explosions, airspace violations, and arson attacks linked to Russian actions related to the war in Ukraine. Governments increasingly describe these incidents as deliberate acts of aggression, with expectations that Russia will intensify hybrid warfare against Europe.",
+      "confidenceScore": 0.7,
+      "confidenceLabel": "medium",
+      "coordinateQuality": "missing",
+      "tier": 2,
+      "tags": [
+        "dw-world",
+        "storyline:799aacb0"
+      ],
+      "geopoliticalScore": 7.5,
+      "economicImpactScore": 2
+    },
+    {
+      "id": "f5f13b830453ca454a789a38",
+      "source": "rss_intelligence",
+      "eventDate": "2026-09-29",
+      "iso3": [
+        "VEN",
+        "USA"
+      ],
+      "eventType": "economic.sanctions",
+      "headline": "US-brokered Venezuelan gold deals struggle to find refiners willing to process metal",
+      "summary": "The Trump administration brought Venezuelan gold to the United States and is brokering deals in the industry, but American refiners are refusing to process it, partly due to corruption concerns and links to a company deemed a U.S. security threat.",
+      "confidenceScore": 0.7,
+      "confidenceLabel": "medium",
+      "coordinateQuality": "missing",
+      "tier": 3,
+      "tags": [
+        "nytimes-world",
+        "storyline:f2a58b14"
+      ],
+      "geopoliticalScore": 4,
+      "economicImpactScore": 4
+    },
+    {
+      "id": "bfa689d9fd6c6340f83d1bf0",
+      "source": "rss_intelligence",
+      "eventDate": "2026-09-29",
+      "iso3": [
+        "SAU",
+        "YEM"
+      ],
+      "eventType": "diplomatic.cooperation",
+      "headline": "Saudi grand mufti calls fight against Houthis a religious duty, urges readiness for possible campaign expansion",
+      "summary": "Saudi Arabia's grand mufti urged Saudi-led forces to remain in 'constant readiness' in the fight against Yemen's Houthi movement, calling the campaign a religious duty and suggesting the kingdom could expand its operations against the group.",
+      "confidenceScore": 0.7,
+      "confidenceLabel": "medium",
+      "coordinateQuality": "missing",
+      "tier": 2,
+      "tags": [
+        "nytimes-world",
+        "storyline:f2a58b14"
+      ],
+      "geopoliticalScore": 5,
+      "economicImpactScore": 3
+    },
+    {
+      "id": "9a101f9cd1b9888016702851",
+      "source": "rss_intelligence",
+      "eventDate": "2026-09-29",
+      "iso3": [
+        "UKR",
+        "RUS"
+      ],
+      "eventType": "conflict.armed",
+      "headline": "Russia wages sustained economic warfare campaign against Ukraine via infrastructure strikes",
+      "summary": "Russian strikes on Ukraine are causing billions of dollars in economic damage through lost sales, disrupted workdays, and logistical disruptions, according to New York Times reporting. The campaign is described as targeting Ukraine's economy while battlefield lines remain largely static.",
+      "confidenceScore": 0.7,
+      "confidenceLabel": "medium",
+      "coordinateQuality": "missing",
+      "tier": 2,
+      "tags": [
+        "nytimes-world",
+        "storyline:fba7c82c"
+      ],
+      "geopoliticalScore": 6,
+      "economicImpactScore": 3
+    },
+    {
+      "id": "541d0115675c18df5cc41f72",
+      "source": "rss_intelligence",
+      "eventDate": "2026-09-29",
+      "iso3": [
+        "ISR"
+      ],
+      "eventType": "diplomatic.dispute",
+      "headline": "Israeli settlers block military from returning Palestinian family home in West Bank despite Supreme Court order",
+      "summary": "Israel's Supreme Court ordered the military to ensure a West Bank Palestinian family that fled violence could return to their home, but Israeli settlers blocked the effort. Authorities were accused of not doing enough to confront the settlers.",
+      "confidenceScore": 0.75,
+      "confidenceLabel": "high",
+      "coordinateQuality": "missing",
+      "tier": 2,
+      "tags": [
+        "nytimes-world",
+        "storyline:f2a58b14"
+      ],
+      "geopoliticalScore": 5.5,
+      "economicImpactScore": 0.5
+    },
+    {
+      "id": "00e16ed10e216eed69c8dfa8",
+      "source": "rss_intelligence",
+      "eventDate": "2026-09-29",
+      "iso3": [
+        "EST",
+        "RUS"
+      ],
+      "eventType": "other",
+      "headline": "Estonia says August arson fire at Milrem Robotics was deliberate Russian sabotage attack",
+      "summary": "Estonian authorities say a fire that broke out in August at Milrem Robotics, a manufacturer of unmanned vehicles supplied to Ukraine, was a 'deliberate' attack orchestrated by Russia. The company produces unmanned ground vehicles used in the Ukraine conflict.",
+      "confidenceScore": 0.7,
+      "confidenceLabel": "medium",
+      "coordinateQuality": "missing",
+      "tier": 2,
+      "tags": [
+        "nytimes-world",
+        "storyline:072d87e1"
+      ],
+      "geopoliticalScore": 5.5,
+      "economicImpactScore": 1.5
+    },
+    {
+      "id": "fe0ff5a614d547f5f202c0d2",
+      "source": "rss_intelligence",
+      "eventDate": "2026-09-29",
+      "iso3": [
+        "IND",
+        "USA"
+      ],
+      "eventType": "other",
+      "headline": "India-Middle East-Europe Economic Corridor gains Trump backing amid regional war concerns",
+      "summary": "US President Donald Trump endorsed the India-Middle East-Europe Economic Corridor (IMEC), a trade route first unveiled at the 2023 G20 summit as an alternative to China's Belt and Road Initiative. Analysts say the project must expand to withstand ongoing geopolitical conflicts in the region.",
+      "confidenceScore": 0.7,
+      "confidenceLabel": "medium",
+      "coordinateQuality": "missing",
+      "tier": 3,
+      "tags": [
+        "scmp-china",
+        "storyline:75e217c1"
+      ],
+      "geopoliticalScore": 5,
+      "economicImpactScore": 5
+    },
+    {
+      "id": "80a542160b76e5b8015ca992",
+      "source": "rss_intelligence",
+      "eventDate": "2026-09-29",
+      "iso3": [
+        "KOR",
+        "PRK"
+      ],
+      "eventType": "conflict.armed",
+      "headline": "South Korea says North Korean mines caused DMZ blast injuring two soldiers, violating armistice",
+      "summary": "South Korea's Defence Minister Kang Shin-chul told a parliamentary committee that North Korean mines caused a blast last week in the demilitarised zone that injured two South Korean personnel. He said the incident violated the Korean war armistice agreement and warranted a response against Pyongyang.",
+      "confidenceScore": 0.75,
+      "confidenceLabel": "high",
+      "coordinateQuality": "missing",
+      "tier": 2,
+      "tags": [
+        "scmp-china",
+        "storyline:799aacb0"
+      ],
+      "geopoliticalScore": 6,
+      "economicImpactScore": 2
+    },
+    {
+      "id": "74fce34081ba4833c3c09ae8",
+      "source": "rss_intelligence",
+      "eventDate": "2026-09-29",
+      "iso3": [
+        "UKR"
+      ],
+      "eventType": "other",
+      "headline": "Ukraine opens boarding schools to train teens who lost parents in war against Russia",
+      "summary": "Ukraine's government has opened five boarding schools that combine grief counseling with military-style training for teenagers who lost their fathers fighting Russia. The Washington Post was granted rare access to one of these schools.",
+      "confidenceScore": 0.6,
+      "confidenceLabel": "medium",
+      "coordinateQuality": "missing",
+      "tier": 3,
+      "tags": [
+        "washingtonpost-world",
+        "storyline:072d87e1"
+      ],
+      "geopoliticalScore": 3.5,
+      "economicImpactScore": 0.5
+    },
+    {
+      "id": "16a9517e9583eac7a8b4f5ba",
+      "source": "rss_intelligence",
+      "eventDate": "2026-09-29",
+      "iso3": [
+        "USA",
+        "CAN"
+      ],
+      "eventType": "economic.trade",
+      "headline": "US ban on Canadian alcohol and dairy imports takes effect amid escalating trade war",
+      "summary": "A US ban on Canadian alcohol and dairy products came into effect, marking the latest escalation in the Canada-US trade war after negotiations collapsed in late August with no timeline for resumed talks.",
+      "confidenceScore": 0.85,
+      "confidenceLabel": "high",
+      "coordinateQuality": "missing",
+      "tier": 2,
+      "tags": [
+        "bbc-world",
+        "storyline:358ba15a"
+      ],
+      "geopoliticalScore": 4,
+      "economicImpactScore": 6
+    },
+    {
+      "id": "fd4be4d09ddcb75806deda87",
+      "source": "rss_intelligence",
+      "eventDate": "2026-09-29",
+      "iso3": [
+        "USA",
+        "IRN"
+      ],
+      "eventType": "economic.trade",
+      "headline": "Global stocks fall to one-week low as oil surge and Fed rate-hike bets lift Treasury yields",
+      "summary": "Global equities slid to a one-week low as surging oil prices and mounting bets on further Federal Reserve interest-rate hikes drove Treasury yields to multi-year highs.",
+      "confidenceScore": 0.8,
+      "confidenceLabel": "high",
+      "coordinateQuality": "missing",
+      "tier": 2,
+      "tags": [
+        "bloomberg-markets",
+        "storyline:358ba15a"
+      ],
+      "geopoliticalScore": 6,
+      "economicImpactScore": 9
+    },
+    {
       "id": "d773d7a5a10f653e59c647fa",
       "source": "rss_intelligence",
       "eventDate": "2026-09-29",
@@ -898,6 +1187,27 @@
       ],
       "geopoliticalScore": 5,
       "economicImpactScore": 3
+    },
+    {
+      "id": "ed5986a469154039e8f2eac0",
+      "source": "rss_intelligence",
+      "eventDate": "2026-09-29",
+      "iso3": [
+        "USA"
+      ],
+      "eventType": "economic.trade",
+      "headline": "Stocks fall as long-term yields hit 24-year high amid energy-driven inflation fears",
+      "summary": "US stocks and bonds declined together as long-term yields reached a 24-year high. A drop in oil prices failed to ease Wall Street concerns that elevated energy costs could fuel inflation and prompt Federal Reserve rate hikes.",
+      "confidenceScore": 0.8,
+      "confidenceLabel": "high",
+      "coordinateQuality": "missing",
+      "tier": 2,
+      "tags": [
+        "bloomberg-markets",
+        "storyline:358ba15a"
+      ],
+      "geopoliticalScore": 3,
+      "economicImpactScore": 8
     }
   ]
 }
