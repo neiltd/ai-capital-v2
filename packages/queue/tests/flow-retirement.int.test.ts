@@ -32,7 +32,9 @@ import { tmpdir } from 'node:os'
 import { join } from 'node:path'
 import { FlowProducer, Queue } from 'bullmq'
 
-import { collectFlowJobs, planFlowRemoval, removeFlow } from '../src/flow-cleanup.js'
+import {
+  collectFlowJobs, planFlowRemoval, removeFlow, removePlannedFlow,
+} from '../src/flow-cleanup.js'
 
 const REDIS_SERVER = '/opt/homebrew/bin/redis-server'
 const QUEUE = 'retirement-int'
@@ -157,6 +159,49 @@ describe('retiring one flow leaves every other flow untouched', () => {
     } finally {
       await flows.close()
     }
+  }, 60_000)
+
+  it('records each job\'s EXACT parent from the real store', async () => {
+    const flows = new FlowProducer({ connection: connection() })
+    const EXACT = 'dddddddd-0000-0000-0000-000000000004'
+    try {
+      await makeFlow(flows, EXACT)
+      const c = await census(EXACT)
+      const byName = new Map(c.map(j => [j.name, j]))
+      const root = byName.get('root')
+      const mid = byName.get('mid')
+      const leaf = byName.get('leaf')
+      expect(root?.parentId, 'the root has no parent').toBeNull()
+      expect(root?.parentQueue).toBeNull()
+      // THE EDGES, BY IDENTITY — not merely "has a parent".
+      expect(mid?.parentId, 'mid names the root').toBe(root?.id)
+      expect(leaf?.parentId, 'leaf names mid').toBe(mid?.id)
+      expect(mid?.parentQueue, 'and the parent queue is parsed').toBe(QUEUE)
+      expect(leaf?.parentQueue).toBe(QUEUE)
+
+      // AND THE PLAN IS PARENT-BEFORE-CHILD over those real edges.
+      const plan = planFlowRemoval(EXACT, c)
+      const at = new Map(plan.order.map((st, i) => [st.id, i]))
+      for (const st of plan.order) {
+        if (st.parentId === null) continue
+        expect(at.get(st.parentId)).toBeLessThan(at.get(st.id) as number)
+      }
+
+      const q = new Queue(QUEUE, { connection: connection() })
+      try { await removePlannedFlow(q, plan) } finally { await q.close() }
+      expect(await census(EXACT)).toEqual([])
+    } finally {
+      await flows.close()
+    }
+  }, 60_000)
+
+  it('sees zero workers on an unattended disposable queue', async () => {
+    // The retirement refuses unless this is zero; a real measurement proves the
+    // reading is not vacuously zero for the wrong reason.
+    const q = new Queue(QUEUE, { connection: connection(), skipMetasUpdate: true })
+    try {
+      expect((await q.getWorkers()).length).toBe(0)
+    } finally { await q.close() }
   }, 60_000)
 
   /**

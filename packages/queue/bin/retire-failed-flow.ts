@@ -31,12 +31,14 @@ import { createHash } from 'node:crypto'
 import { basename } from 'node:path'
 
 import { publishEvidence, verifyPublishedEvidence } from '@common/db/pg-copy'
-import { openDb, openDbReadOnly } from '@common/pipeline-runs'
+import { closeDb, openDb, openDbReadOnly } from '@common/pipeline-runs'
 
-import { collectFlowJobs, removeFlow, type JobRef } from '../src/flow-cleanup.js'
+import {
+  collectFlowJobs, removePlannedFlow, type FlowRemovalPlan, type JobRef,
+} from '../src/flow-cleanup.js'
 import {
   FORBIDDEN_STATES, INTENT_PREFIX, OUTCOME_PREFIX, RETIREMENT_BINDING_VERSION,
-  RetirementRefused, assertRetirable, deviceInode, measureImplementationHead,
+  RetirementRefused, assertRetirable, deviceInode, measureImplementationAuthority,
   planDigest, retirementBindingDocument, retirementPlan, retirementToken,
   type RedisEndpoint, type RetirementOutcome, type ScheduledRow,
 } from '../src/flow-retirement.js'
@@ -142,6 +144,26 @@ function inspectionQueue(name: string, redis: RedisEndpoint): Queue {
   })
 }
 
+/**
+ * One read-only measurement of the queue: the flow's census AND the workers that
+ * could advance it.
+ *
+ * Both come from the same handle in the same pass, so a census cannot be paired
+ * with a worker count taken at another moment.
+ */
+async function measureQueue(
+  name: string, redis: RedisEndpoint, parentRunId: string,
+): Promise<{ census: readonly JobRef[]; workers: number }> {
+  const q = inspectionQueue(name, redis)
+  try {
+    const census = await collectFlowJobs(q, parentRunId)
+    const workers = (await q.getWorkers()).length
+    return { census, workers }
+  } finally {
+    await q.close()
+  }
+}
+
 const artifact = (path: string, value: unknown) =>
   ({ path, bytes: Buffer.from(`${JSON.stringify(value, null, 2)}\n`, 'utf-8') })
 
@@ -178,31 +200,32 @@ async function main(): Promise<number> {
   }
 
   // ── MEASURE ──────────────────────────────────────────────────────────────
-  const implementationHead = measureImplementationHead(checkout)
+  //
+  // THE IMPLEMENTATION IS DERIVED FROM THIS FILE, not from `--checkout`. The option
+  // is compared against the derived root and refused if it names anywhere else.
+  const implementation = measureImplementationAuthority(checkout, import.meta.url)
   const row = readScheduledRow(dbPath, parentRunId)
   if (row === null) {
     throw new RetirementRefused('no scheduled run row has that identifier', parentRunId)
   }
 
-  const queue = inspectionQueue(queueName, redis)
-  let census: readonly JobRef[]
-  try {
-    census = await collectFlowJobs(queue, parentRunId)
-  } finally {
-    await queue.close()
-  }
+  const measured = await measureQueue(queueName, redis, parentRunId)
 
-  assertRetirable({ parentRunId, logicalDate, row, census, expectedFailedIds })
+  assertRetirable({
+    parentRunId, logicalDate, queue: queueName, row,
+    census: measured.census, expectedFailedIds, workersPresent: measured.workers,
+  })
 
-  const plan = retirementPlan(parentRunId, census)
+  const plan = retirementPlan(parentRunId, measured.census)
   const binding = {
     bindingVersion: RETIREMENT_BINDING_VERSION,
-    implementationHead,
+    implementation,
     parentRunId,
     queue: queueName,
     row,
-    census,
+    census: measured.census,
     planDigest: planDigest(plan),
+    workersPresent: measured.workers,
     expectedFailedIds,
     redis,
     evidenceRoot,
@@ -216,11 +239,14 @@ async function main(): Promise<number> {
     const runId = v['--run-id'] ?? newRunId()
     const stamp = v['--stamp'] ?? utcStamp(new Date())
     say(`mode inspect`)
-    say(`implementation head ${implementationHead}`)
+    say(`implementation ${implementation.root} @ ${implementation.head} (tracked worktree clean, reviewed source untracked-free)`)
+    say(`workers able to advance this queue ${String(measured.workers)}`)
     say(`scheduled row ${row.id} ${row.stage}/${row.source} ${row.status} ${String(row.logicalDate)} superseded=${String(row.supersededAt)} failedStage=${String(row.failedStage)} children=${row.children.length}`)
     say(`queue ${queueName} on ${redis.host}:${String(redis.port)}/${String(redis.db)}`)
-    say(`jobs in flow ${census.length}`)
-    for (const s of plan.order) say(`  remove ${s.state.padEnd(17)} ${s.name.padEnd(26)} ${s.id}`)
+    say(`jobs in flow ${measured.census.length}`)
+    for (const s of plan.order) {
+      say(`  remove ${s.state.padEnd(17)} ${s.name.padEnd(26)} ${s.id} parent=${s.parentId ?? '<root>'}`)
+    }
     say(`removal plan digest ${binding.planDigest}  ancestors-first ${String(plan.ancestorsFirst)}`)
     say(`evidence root ${evidenceRoot} ${binding.evidenceRootDeviceInode}`)
     say(`run ${runId} ${stamp}`)
@@ -265,28 +291,34 @@ async function main(): Promise<number> {
   let note = ''
 
   try {
-    // ONE LAST LOOK, AFTER THE INTENT IS ON DISK AND BEFORE ANYTHING MOVES.
+    // THE CENSUS THAT IS DELETED IS THE CENSUS THAT WAS CHECKED.
     //
-    // Publishing the intent takes filesystem time, and the token was computed
-    // before it. A flow that acquired a runnable job, or a row somebody else
-    // superseded, in that window must stop here — with the intent recorded and
-    // nothing mutated, which is exactly what `refused` means. Without this the only
-    // outcomes reachable after publication were `partial` and `unknown`, and a
-    // late drift would have been acted on.
-    const guardQueue = inspectionQueue(queueName, redis)
-    let fresh: readonly JobRef[]
-    try {
-      fresh = await collectFlowJobs(guardQueue, parentRunId)
-    } finally {
-      await guardQueue.close()
-    }
+    // WHAT WAS WRONG BEFORE. A guard measured a fresh census, validated it, compared
+    // its token — and then `removeFlow` went and measured a THIRD census of its own
+    // and deleted that one, unvalidated and uncompared. So the sequence validated one
+    // world and deleted another, while claiming drift was refused. It was not.
+    //
+    // Now one census is measured after the intent is on disk, exact-compared against
+    // the authorized one, structurally revalidated, turned into a plan that is
+    // compared against the authorized plan digest, and that exact plan is what the
+    // remover consumes. There is no later recollection.
+    const fresh = await measureQueue(queueName, redis, parentRunId)
     const freshRow = readScheduledRow(dbPath, parentRunId)
     if (freshRow === null) {
       throw new RetirementRefused('the scheduled row disappeared after the intent was published')
     }
-    assertRetirable({ parentRunId, logicalDate, row: freshRow, census: fresh, expectedFailedIds })
-    if (retirementToken({ ...binding, row: freshRow, census: fresh,
-                          planDigest: planDigest(retirementPlan(parentRunId, fresh)) }) !== token) {
+    assertRetirable({
+      parentRunId, logicalDate, queue: queueName, row: freshRow,
+      census: fresh.census, expectedFailedIds, workersPresent: fresh.workers,
+    })
+    const freshPlan: FlowRemovalPlan = retirementPlan(parentRunId, fresh.census)
+    const freshDigest = planDigest(freshPlan)
+    if (freshDigest !== binding.planDigest) {
+      throw new RetirementRefused('the removal plan changed after the intent was published',
+                                  freshDigest)
+    }
+    if (retirementToken({ ...binding, row: freshRow, census: fresh.census,
+                          planDigest: freshDigest, workersPresent: fresh.workers }) !== token) {
       throw new RetirementRefused('the world changed after the intent was published')
     }
 
@@ -294,9 +326,15 @@ async function main(): Promise<number> {
       connection: { host: redis.host, port: redis.port, db: redis.db },
     })
     try {
-      // ANCESTORS FIRST, via flow-cleanup. Never a local ordering.
-      const result = await removeFlow(writeQueue, parentRunId, { dryRun: false })
-      removed = result.removed
+      // AND THE WORKER CHECK IS REPEATED IMMEDIATELY BEFORE THE FIRST REMOVAL,
+      // against the handle about to do the removing.
+      const attached = (await writeQueue.getWorkers()).length
+      if (attached !== 0) {
+        throw new RetirementRefused('a worker attached to this queue before the removal',
+                                    String(attached))
+      }
+      // THE MEASURED PLAN, CONSUMED. No second collection.
+      removed = await removePlannedFlow(writeQueue, freshPlan)
       remaining = await collectFlowJobs(writeQueue, parentRunId)
     } finally {
       await writeQueue.close()
@@ -308,11 +346,19 @@ async function main(): Promise<number> {
     } else {
       // EXACTLY ONE ROW, AND ONLY IF IT IS STILL THE ROW THAT WAS BOUND.
       const db = openDb(dbPath)
-      const when = new Date().toISOString()
-      const info = db.prepare(
-        `UPDATE pipeline_runs SET superseded_at = ?
-          WHERE id = ? AND status = 'failed' AND logical_date = ? AND superseded_at IS NULL`,
-      ).run(when, parentRunId, logicalDate)
+      let changes: number
+      try {
+        const when = new Date().toISOString()
+        changes = db.prepare(
+          `UPDATE pipeline_runs SET superseded_at = ?
+            WHERE id = ? AND status = 'failed' AND logical_date = ? AND superseded_at IS NULL`,
+        ).run(when, parentRunId, logicalDate).changes
+      } finally {
+        // ON EVERY PATH. `openDb` caches its handle, and a CLI that exits without
+        // closing leaves a writable connection on the production run store.
+        closeDb()
+      }
+      const info = { changes }
       if (info.changes !== 1) {
         outcome = 'partial'
         note = `the scheduled row was not superseded (${info.changes} row(s) changed)`
