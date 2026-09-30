@@ -1,0 +1,826 @@
+{
+  "date": "2026-09-30",
+  "generatedAt": "2026-09-30T00:00:44.971Z",
+  "observationWindowDays": 14,
+  "storylineBenchmarkLinks": [
+    {
+      "storylineId": "358ba15acb308302",
+      "storylineTitle": "Saudi Arabia resumes pipeline flows bypassing Hormuz, easing oil supply fears",
+      "storylineState": "active",
+      "daysActive": 1,
+      "avgEscalation": 0.385,
+      "maxSeverity": 3,
+      "countries": [
+        "USA",
+        "CAN",
+        "IRN",
+        "SAU",
+        "CHN",
+        "IRQ",
+        "IND"
+      ],
+      "eventTypes": [
+        "trade_dispute",
+        "market_crash",
+        "commodity_price_move",
+        "energy_infrastructure",
+        "economic_data_release",
+        "central_bank_action"
+      ],
+      "linkedBenchmarks": [
+        "brent_crude",
+        "wti_crude",
+        "henry_hub"
+      ],
+      "linkStrength": 0.875,
+      "linkReasons": [
+        "energy_event_type:commodity_price_move,energy_infrastructure",
+        "chokepoint:hormuz"
+      ]
+    },
+    {
+      "storylineId": "f2a58b1471ba7b29",
+      "storylineTitle": "Israeli settlers attack West Bank village, set fire to homes, block Palestinian family's return",
+      "storylineState": "active",
+      "daysActive": 1,
+      "avgEscalation": 0.453,
+      "maxSeverity": 4,
+      "countries": [
+        "SAU",
+        "USA",
+        "YEM",
+        "IRN",
+        "QAT",
+        "TUR",
+        "ISR",
+        "ARE",
+        "PSE",
+        "CHN",
+        "PAK",
+        "VEN"
+      ],
+      "eventTypes": [
+        "diplomatic_incident",
+        "peace_negotiation",
+        "sanctions",
+        "armed_conflict",
+        "military_operation",
+        "airstrike",
+        "election",
+        "protest",
+        "military_exercise",
+        "other"
+      ],
+      "linkedBenchmarks": [
+        "brent_crude",
+        "wti_crude"
+      ],
+      "linkStrength": 0.625,
+      "linkReasons": [
+        "geopolitical_event_in_energy_region:SAU,YEM,IRN,QAT,ARE,VEN"
+      ]
+    },
+    {
+      "storylineId": "fba7c82c29aec416",
+      "storylineTitle": "Estonia blames Russian security services for arson attack on Ukraine-supplying defense firm",
+      "storylineState": "active",
+      "daysActive": 0,
+      "avgEscalation": 0.521,
+      "maxSeverity": 3,
+      "countries": [
+        "RUS",
+        "UKR",
+        "POL",
+        "ROU",
+        "MDA",
+        "EST",
+        "GBR",
+        "IRN",
+        "USA"
+      ],
+      "eventTypes": [
+        "military_exercise",
+        "military_operation",
+        "missile_attack",
+        "armed_conflict",
+        "terrorist_attack"
+      ],
+      "linkedBenchmarks": [
+        "brent_crude",
+        "wti_crude"
+      ],
+      "linkStrength": 0.375,
+      "linkReasons": [
+        "geopolitical_event_in_energy_region:RUS,GBR,IRN"
+      ]
+    },
+    {
+      "storylineId": "799aacb0a51ca58b",
+      "storylineTitle": "South Korea says North Korean mines caused DMZ blast injuring two soldiers, violating armistice",
+      "storylineState": "escalating",
+      "daysActive": 1,
+      "avgEscalation": 0.525,
+      "maxSeverity": 3,
+      "countries": [
+        "KOR",
+        "UKR",
+        "PRK",
+        "RUS",
+        "DEU",
+        "EST",
+        "POL",
+        "ROU",
+        "MDA"
+      ],
+      "eventTypes": [
+        "diplomatic_incident",
+        "military_operation"
+      ],
+      "linkedBenchmarks": [
+        "brent_crude",
+        "wti_crude"
+      ],
+      "linkStrength": 0.25,
+      "linkReasons": [
+        "geopolitical_event_in_energy_region:RUS"
+      ]
+    },
+    {
+      "storylineId": "290ca3e3996ae144",
+      "storylineTitle": "China's LNG imports set to fall second straight month as Middle East conflict drives prices higher",
+      "storylineState": "emerging",
+      "daysActive": 0,
+      "avgEscalation": 0.3,
+      "maxSeverity": 2,
+      "countries": [
+        "CHN"
+      ],
+      "eventTypes": [
+        "commodity_price_move"
+      ],
+      "linkedBenchmarks": [
+        "brent_crude",
+        "wti_crude",
+        "henry_hub"
+      ],
+      "linkStrength": 0.25,
+      "linkReasons": [
+        "energy_event_type:commodity_price_move"
+      ]
+    },
+    {
+      "storylineId": "d2eedf711fb80cd9",
+      "storylineTitle": "Myanmar military airstrike on Rakhine market kills at least 50",
+      "storylineState": "active",
+      "daysActive": 3,
+      "avgEscalation": 0.48,
+      "maxSeverity": 5,
+      "countries": [
+        "MMR",
+        "UKR",
+        "RUS"
+      ],
+      "eventTypes": [
+        "airstrike",
+        "military_operation"
+      ],
+      "linkedBenchmarks": [
+        "brent_crude",
+        "wti_crude"
+      ],
+      "linkStrength": 0.25,
+      "linkReasons": [
+        "geopolitical_event_in_energy_region:RUS"
+      ]
+    },
+    {
+      "storylineId": "921431667e639327",
+      "storylineTitle": "Russian strikes inflict billions in economic damage on Ukraine",
+      "storylineState": "active",
+      "daysActive": 5,
+      "avgEscalation": 0.5,
+      "maxSeverity": 3,
+      "countries": [
+        "UKR",
+        "RUS"
+      ],
+      "eventTypes": [
+        "energy_infrastructure",
+        "economic_data_release"
+      ],
+      "linkedBenchmarks": [
+        "brent_crude",
+        "wti_crude",
+        "henry_hub"
+      ],
+      "linkStrength": 0.25,
+      "linkReasons": [
+        "energy_event_type:energy_infrastructure"
+      ]
+    },
+    {
+      "storylineId": "03804909ca24508e",
+      "storylineTitle": "US completes troop withdrawal from Iraq after 12-year anti-ISIS mission",
+      "storylineState": "emerging",
+      "daysActive": 0,
+      "avgEscalation": 0.4,
+      "maxSeverity": 3,
+      "countries": [
+        "IRQ",
+        "USA"
+      ],
+      "eventTypes": [
+        "military_operation"
+      ],
+      "linkedBenchmarks": [],
+      "linkStrength": 0.125,
+      "linkReasons": [
+        "geopolitical_event_in_energy_region:IRQ"
+      ]
+    },
+    {
+      "storylineId": "7e91508ada8474ed",
+      "storylineTitle": "Argentina's Milei threatens legal action against UK over Falklands Sea Lion oil project",
+      "storylineState": "emerging",
+      "daysActive": 0,
+      "avgEscalation": 0.3,
+      "maxSeverity": 2,
+      "countries": [
+        "ARG",
+        "GBR"
+      ],
+      "eventTypes": [
+        "diplomatic_incident"
+      ],
+      "linkedBenchmarks": [],
+      "linkStrength": 0.125,
+      "linkReasons": [
+        "geopolitical_event_in_energy_region:GBR"
+      ]
+    },
+    {
+      "storylineId": "072d87e1be5761db",
+      "storylineTitle": "Estonia blames Russia for arson attack on defence company supplying Ukraine",
+      "storylineState": "active",
+      "daysActive": 0,
+      "avgEscalation": 0.467,
+      "maxSeverity": 3,
+      "countries": [
+        "EST",
+        "RUS",
+        "UKR"
+      ],
+      "eventTypes": [
+        "other"
+      ],
+      "linkedBenchmarks": [],
+      "linkStrength": 0,
+      "linkReasons": []
+    },
+    {
+      "storylineId": "8bb1b9dd30d6a793",
+      "storylineTitle": "Pakistani Taliban suicide bombing at police checkpoint kills at least 11",
+      "storylineState": "emerging",
+      "daysActive": 0,
+      "avgEscalation": 0.5,
+      "maxSeverity": 4,
+      "countries": [
+        "PAK"
+      ],
+      "eventTypes": [
+        "terrorist_attack"
+      ],
+      "linkedBenchmarks": [],
+      "linkStrength": 0,
+      "linkReasons": []
+    },
+    {
+      "storylineId": "6895c4b87c76d12c",
+      "storylineTitle": "Ethiopian armed rebellion sparks heavy fighting across regions amid Meskel holiday",
+      "storylineState": "emerging",
+      "daysActive": 0,
+      "avgEscalation": 0.6,
+      "maxSeverity": 3,
+      "countries": [
+        "ETH"
+      ],
+      "eventTypes": [
+        "armed_conflict"
+      ],
+      "linkedBenchmarks": [],
+      "linkStrength": 0,
+      "linkReasons": []
+    },
+    {
+      "storylineId": "75e217c1d5b86f1b",
+      "storylineTitle": "India-Middle East-Europe Economic Corridor gains Trump backing amid regional war concerns",
+      "storylineState": "emerging",
+      "daysActive": 1,
+      "avgEscalation": 0.25,
+      "maxSeverity": 2,
+      "countries": [
+        "USA",
+        "VEN",
+        "IND"
+      ],
+      "eventTypes": [
+        "other"
+      ],
+      "linkedBenchmarks": [],
+      "linkStrength": 0,
+      "linkReasons": []
+    },
+    {
+      "storylineId": "98e17dda6d0ec912",
+      "storylineTitle": "Ukraine trains war orphans in boarding schools to prepare next generation for conflict",
+      "storylineState": "emerging",
+      "daysActive": 0,
+      "avgEscalation": 0.3,
+      "maxSeverity": 2,
+      "countries": [
+        "UKR"
+      ],
+      "eventTypes": [
+        "humanitarian_crisis"
+      ],
+      "linkedBenchmarks": [],
+      "linkStrength": 0,
+      "linkReasons": []
+    }
+  ],
+  "disruptionPriceWindows": [
+    {
+      "eventId": "f579ec911ead8f55485ec43e",
+      "eventDate": "2026-09-29",
+      "eventType": "energy_infrastructure",
+      "eventTitle": "Russia wages 'total war' on Ukraine's economy through sustained strikes, causing billions in damage",
+      "countries": [
+        "UKR",
+        "RUS"
+      ],
+      "escalationPotential": 0.5,
+      "isSupplyDisruption": false,
+      "isHormuzRelated": false,
+      "benchmarkWindows": [
+        {
+          "benchmarkId": "brent_crude",
+          "priceOnDate": null,
+          "priceOnDateDate": null,
+          "price7dBefore": null,
+          "price7dBeforeDate": null,
+          "delta7dPct": null,
+          "price3dAfter": null,
+          "price3dAfterDate": null,
+          "delta3dForwardPct": null
+        },
+        {
+          "benchmarkId": "wti_crude",
+          "priceOnDate": null,
+          "priceOnDateDate": null,
+          "price7dBefore": null,
+          "price7dBeforeDate": null,
+          "delta7dPct": null,
+          "price3dAfter": null,
+          "price3dAfterDate": null,
+          "delta3dForwardPct": null
+        },
+        {
+          "benchmarkId": "henry_hub",
+          "priceOnDate": null,
+          "priceOnDateDate": null,
+          "price7dBefore": null,
+          "price7dBeforeDate": null,
+          "delta7dPct": null,
+          "price3dAfter": null,
+          "price3dAfterDate": null,
+          "delta3dForwardPct": null
+        }
+      ]
+    },
+    {
+      "eventId": "98ae8a738122a04251ec78be",
+      "eventDate": "2026-09-29",
+      "eventType": "energy_infrastructure",
+      "eventTitle": "Saudi East-West pipeline resumes oil loading after drone attack repairs",
+      "countries": [
+        "SAU",
+        "IRQ",
+        "IRN"
+      ],
+      "escalationPotential": 0.4,
+      "isSupplyDisruption": false,
+      "isHormuzRelated": true,
+      "benchmarkWindows": [
+        {
+          "benchmarkId": "brent_crude",
+          "priceOnDate": null,
+          "priceOnDateDate": null,
+          "price7dBefore": null,
+          "price7dBeforeDate": null,
+          "delta7dPct": null,
+          "price3dAfter": null,
+          "price3dAfterDate": null,
+          "delta3dForwardPct": null
+        },
+        {
+          "benchmarkId": "wti_crude",
+          "priceOnDate": null,
+          "priceOnDateDate": null,
+          "price7dBefore": null,
+          "price7dBeforeDate": null,
+          "delta7dPct": null,
+          "price3dAfter": null,
+          "price3dAfterDate": null,
+          "delta3dForwardPct": null
+        },
+        {
+          "benchmarkId": "henry_hub",
+          "priceOnDate": null,
+          "priceOnDateDate": null,
+          "price7dBefore": null,
+          "price7dBeforeDate": null,
+          "delta7dPct": null,
+          "price3dAfter": null,
+          "price3dAfterDate": null,
+          "delta3dForwardPct": null
+        }
+      ]
+    }
+  ],
+  "escalationVolatilityLog": [
+    {
+      "date": "2026-09-29",
+      "maxEscalation": 0.7,
+      "avgEscalation": 0.461,
+      "eventCount": 79,
+      "supplyDisruptionCount": 0,
+      "energyEventCount": 6,
+      "hormuzEventCount": 8,
+      "benchmarkDailyChange": [
+        {
+          "benchmarkId": "brent_crude",
+          "price": null,
+          "priorPrice": null,
+          "changePct": null
+        },
+        {
+          "benchmarkId": "wti_crude",
+          "price": null,
+          "priorPrice": null,
+          "changePct": null
+        },
+        {
+          "benchmarkId": "henry_hub",
+          "price": null,
+          "priorPrice": null,
+          "changePct": null
+        }
+      ]
+    }
+  ],
+  "chokepointPriceObservations": [
+    {
+      "eventId": "880555efabe174bce3b20248",
+      "eventDate": "2026-09-29",
+      "eventType": "diplomatic_incident",
+      "eventTitle": "Rubio and Saudi FM discuss Yemen Houthi threat and Hormuz Strait security",
+      "countries": [
+        "SAU",
+        "USA",
+        "YEM"
+      ],
+      "escalationPotential": 0.4,
+      "chokepointLabel": "hormuz",
+      "benchmarkResponses": [
+        {
+          "benchmarkId": "brent_crude",
+          "priceAtEvent": null,
+          "price3dBefore": null,
+          "price3dAfter": null,
+          "deltaBefore": null,
+          "deltaAfter": null
+        },
+        {
+          "benchmarkId": "wti_crude",
+          "priceAtEvent": null,
+          "price3dBefore": null,
+          "price3dAfter": null,
+          "deltaBefore": null,
+          "deltaAfter": null
+        },
+        {
+          "benchmarkId": "henry_hub",
+          "priceAtEvent": null,
+          "price3dBefore": null,
+          "price3dAfter": null,
+          "deltaBefore": null,
+          "deltaAfter": null
+        }
+      ]
+    },
+    {
+      "eventId": "4ad1afedd688a677bd4bee37",
+      "eventDate": "2026-09-29",
+      "eventType": "peace_negotiation",
+      "eventTitle": "Iran's Araghchi meets Qatari mediators as US insists nuclear talks must accompany Hormuz plan",
+      "countries": [
+        "IRN",
+        "QAT",
+        "USA"
+      ],
+      "escalationPotential": 0.5,
+      "chokepointLabel": "hormuz",
+      "benchmarkResponses": [
+        {
+          "benchmarkId": "brent_crude",
+          "priceAtEvent": null,
+          "price3dBefore": null,
+          "price3dAfter": null,
+          "deltaBefore": null,
+          "deltaAfter": null
+        },
+        {
+          "benchmarkId": "wti_crude",
+          "priceAtEvent": null,
+          "price3dBefore": null,
+          "price3dAfter": null,
+          "deltaBefore": null,
+          "deltaAfter": null
+        },
+        {
+          "benchmarkId": "henry_hub",
+          "priceAtEvent": null,
+          "price3dBefore": null,
+          "price3dAfter": null,
+          "deltaBefore": null,
+          "deltaAfter": null
+        }
+      ]
+    },
+    {
+      "eventId": "7e6e7310f764867b5770a63a",
+      "eventDate": "2026-09-29",
+      "eventType": "diplomatic_incident",
+      "eventTitle": "Iran maintains Hormuz proposal after Trump reportedly rejects it",
+      "countries": [
+        "IRN",
+        "USA"
+      ],
+      "escalationPotential": 0.6,
+      "chokepointLabel": "hormuz",
+      "benchmarkResponses": [
+        {
+          "benchmarkId": "brent_crude",
+          "priceAtEvent": null,
+          "price3dBefore": null,
+          "price3dAfter": null,
+          "deltaBefore": null,
+          "deltaAfter": null
+        },
+        {
+          "benchmarkId": "wti_crude",
+          "priceAtEvent": null,
+          "price3dBefore": null,
+          "price3dAfter": null,
+          "deltaBefore": null,
+          "deltaAfter": null
+        },
+        {
+          "benchmarkId": "henry_hub",
+          "priceAtEvent": null,
+          "price3dBefore": null,
+          "price3dAfter": null,
+          "deltaBefore": null,
+          "deltaAfter": null
+        }
+      ]
+    },
+    {
+      "eventId": "dd64aae7c74a32526977ab51",
+      "eventDate": "2026-09-29",
+      "eventType": "military_operation",
+      "eventTitle": "US completes troop withdrawal from Iraq after 12-year anti-ISIS mission",
+      "countries": [
+        "IRQ",
+        "USA"
+      ],
+      "escalationPotential": 0.4,
+      "chokepointLabel": "hormuz",
+      "benchmarkResponses": [
+        {
+          "benchmarkId": "brent_crude",
+          "priceAtEvent": null,
+          "price3dBefore": null,
+          "price3dAfter": null,
+          "deltaBefore": null,
+          "deltaAfter": null
+        },
+        {
+          "benchmarkId": "wti_crude",
+          "priceAtEvent": null,
+          "price3dBefore": null,
+          "price3dAfter": null,
+          "deltaBefore": null,
+          "deltaAfter": null
+        },
+        {
+          "benchmarkId": "henry_hub",
+          "priceAtEvent": null,
+          "price3dBefore": null,
+          "price3dAfter": null,
+          "deltaBefore": null,
+          "deltaAfter": null
+        }
+      ]
+    },
+    {
+      "eventId": "206ef900438c9ee12943f495",
+      "eventDate": "2026-09-29",
+      "eventType": "armed_conflict",
+      "eventTitle": "WHO reports over 800 killed in renewed Houthi-Saudi war in Yemen",
+      "countries": [
+        "YEM",
+        "SAU",
+        "IRN"
+      ],
+      "escalationPotential": 0.6,
+      "chokepointLabel": "hormuz",
+      "benchmarkResponses": [
+        {
+          "benchmarkId": "brent_crude",
+          "priceAtEvent": null,
+          "price3dBefore": null,
+          "price3dAfter": null,
+          "deltaBefore": null,
+          "deltaAfter": null
+        },
+        {
+          "benchmarkId": "wti_crude",
+          "priceAtEvent": null,
+          "price3dBefore": null,
+          "price3dAfter": null,
+          "deltaBefore": null,
+          "deltaAfter": null
+        },
+        {
+          "benchmarkId": "henry_hub",
+          "priceAtEvent": null,
+          "price3dBefore": null,
+          "price3dAfter": null,
+          "deltaBefore": null,
+          "deltaAfter": null
+        }
+      ]
+    },
+    {
+      "eventId": "4dac65a3ea86c0c6f9d280f8",
+      "eventDate": "2026-09-29",
+      "eventType": "military_operation",
+      "eventTitle": "Saudi grand mufti calls fight against Houthis a 'religious duty', urges readiness for expanded campaign",
+      "countries": [
+        "SAU",
+        "YEM"
+      ],
+      "escalationPotential": 0.6,
+      "chokepointLabel": "hormuz",
+      "benchmarkResponses": [
+        {
+          "benchmarkId": "brent_crude",
+          "priceAtEvent": null,
+          "price3dBefore": null,
+          "price3dAfter": null,
+          "deltaBefore": null,
+          "deltaAfter": null
+        },
+        {
+          "benchmarkId": "wti_crude",
+          "priceAtEvent": null,
+          "price3dBefore": null,
+          "price3dAfter": null,
+          "deltaBefore": null,
+          "deltaAfter": null
+        },
+        {
+          "benchmarkId": "henry_hub",
+          "priceAtEvent": null,
+          "price3dBefore": null,
+          "price3dAfter": null,
+          "deltaBefore": null,
+          "deltaAfter": null
+        }
+      ]
+    },
+    {
+      "eventId": "98ae8a738122a04251ec78be",
+      "eventDate": "2026-09-29",
+      "eventType": "energy_infrastructure",
+      "eventTitle": "Saudi East-West pipeline resumes oil loading after drone attack repairs",
+      "countries": [
+        "SAU",
+        "IRQ",
+        "IRN"
+      ],
+      "escalationPotential": 0.4,
+      "chokepointLabel": "hormuz",
+      "benchmarkResponses": [
+        {
+          "benchmarkId": "brent_crude",
+          "priceAtEvent": null,
+          "price3dBefore": null,
+          "price3dAfter": null,
+          "deltaBefore": null,
+          "deltaAfter": null
+        },
+        {
+          "benchmarkId": "wti_crude",
+          "priceAtEvent": null,
+          "price3dBefore": null,
+          "price3dAfter": null,
+          "deltaBefore": null,
+          "deltaAfter": null
+        },
+        {
+          "benchmarkId": "henry_hub",
+          "priceAtEvent": null,
+          "price3dBefore": null,
+          "price3dAfter": null,
+          "deltaBefore": null,
+          "deltaAfter": null
+        }
+      ]
+    },
+    {
+      "eventId": "0aab86726d89cb792feb1e1a",
+      "eventDate": "2026-09-29",
+      "eventType": "commodity_price_move",
+      "eventTitle": "Saudi Arabia resumes pipeline flows bypassing Hormuz, easing oil supply fears",
+      "countries": [
+        "SAU",
+        "IRN",
+        "USA"
+      ],
+      "escalationPotential": 0.3,
+      "chokepointLabel": "hormuz",
+      "benchmarkResponses": [
+        {
+          "benchmarkId": "brent_crude",
+          "priceAtEvent": null,
+          "price3dBefore": null,
+          "price3dAfter": null,
+          "deltaBefore": null,
+          "deltaAfter": null
+        },
+        {
+          "benchmarkId": "wti_crude",
+          "priceAtEvent": null,
+          "price3dBefore": null,
+          "price3dAfter": null,
+          "deltaBefore": null,
+          "deltaAfter": null
+        },
+        {
+          "benchmarkId": "henry_hub",
+          "priceAtEvent": null,
+          "price3dBefore": null,
+          "price3dAfter": null,
+          "deltaBefore": null,
+          "deltaAfter": null
+        }
+      ]
+    }
+  ],
+  "summary": {
+    "totalActiveStorylines": 14,
+    "energyLinkedStorylines": 7,
+    "escalatingLinked": 1,
+    "avgEscalationLinked": 0.452,
+    "supplyDisruptionsRecent": 0,
+    "energyEventsRecent": 2,
+    "hormuzEventsRecent": 1,
+    "observationWindowDays": 14,
+    "benchmarkCoverage": [
+      {
+        "benchmarkId": "brent_crude",
+        "mostRecentDate": null,
+        "mostRecentPrice": null,
+        "daysWithPairedData": 0
+      },
+      {
+        "benchmarkId": "wti_crude",
+        "mostRecentDate": null,
+        "mostRecentPrice": null,
+        "daysWithPairedData": 0
+      },
+      {
+        "benchmarkId": "henry_hub",
+        "mostRecentDate": null,
+        "mostRecentPrice": null,
+        "daysWithPairedData": 0
+      }
+    ],
+    "pairedObservationDays": 1,
+    "avgMaxEscalation": 0.7,
+    "maxSingleDayEscalation": 0.7,
+    "maxSingleDayPriceChangePct": null
+  }
+}
