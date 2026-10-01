@@ -1,7 +1,7 @@
 {
-  "generatedAt": "2026-09-30",
-  "predictionsAnalyzed": 73,
-  "scoredCalls": 1370,
+  "generatedAt": "2026-10-01",
+  "predictionsAnalyzed": 75,
+  "scoredCalls": 1377,
   "windows": [
     7,
     30,
@@ -12,17 +12,17 @@
       "7d": {
         "calls": 545,
         "accuracy": 0.689908256880734,
-        "avgReturn": 0.5038509894684781
+        "avgReturn": 0.5038509881385269
       },
       "30d": {
-        "calls": 503,
-        "accuracy": 0.4592445328031809,
-        "avgReturn": 3.440768878596273
+        "calls": 510,
+        "accuracy": 0.4588235294117647,
+        "avgReturn": 3.4037940016423494
       },
       "90d": {
         "calls": 227,
         "accuracy": 0.28193832599118945,
-        "avgReturn": 6.822305044352024
+        "avgReturn": 6.825326936744608
       }
     },
     "trim": {
@@ -65,34 +65,34 @@
       "7d": {
         "calls": 89,
         "accuracy": 0.5617977528089888,
-        "avgReturn": -0.06282492653996
+        "avgReturn": -0.06282494202084773
       },
       "30d": {
-        "calls": 92,
-        "accuracy": 0.5434782608695652,
-        "avgReturn": 1.4859730951819292
+        "calls": 93,
+        "accuracy": 0.5483870967741935,
+        "avgReturn": 1.4665963876522399
       },
       "90d": {
         "calls": 64,
         "accuracy": 0.4375,
-        "avgReturn": 6.743329222770126
+        "avgReturn": 6.743329213199204
       }
     },
     "medium": {
       "7d": {
         "calls": 375,
         "accuracy": 0.6826666666666666,
-        "avgReturn": 0.7194254442940087
+        "avgReturn": 0.7194254460352772
       },
       "30d": {
-        "calls": 353,
-        "accuracy": 0.48158640226628896,
-        "avgReturn": 4.3147552737877035
+        "calls": 357,
+        "accuracy": 0.4789915966386555,
+        "avgReturn": 4.256835755454405
       },
       "90d": {
         "calls": 171,
         "accuracy": 0.29239766081871343,
-        "avgReturn": 10.12336577123083
+        "avgReturn": 10.12737729278437
       }
     },
     "low": {
@@ -102,9 +102,9 @@
         "avgReturn": 0.9631095587219599
       },
       "30d": {
-        "calls": 94,
-        "accuracy": 0.3829787234042553,
-        "avgReturn": 4.531768410978418
+        "calls": 96,
+        "accuracy": 0.3854166666666667,
+        "avgReturn": 4.530715970735
       },
       "90d": {
         "calls": 19,

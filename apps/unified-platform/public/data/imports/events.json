@@ -1,70 +1,24 @@
 {
   "schemaVersion": "1.0.0",
-  "generatedAt": "2026-09-30T00:00:44.973Z",
+  "generatedAt": "2026-10-01T14:16:36.873Z",
   "source": "world-intelligence-hub",
-  "eventCount": 71,
+  "eventCount": 9,
   "dateRange": {
-    "from": "2026-09-25",
-    "to": "2026-09-29"
+    "from": "2026-09-30",
+    "to": "2026-10-01"
   },
   "events": [
     {
-      "id": "880555efabe174bce3b20248",
+      "id": "c65aa47f26cfec023f536e7d",
       "source": "rss_intelligence",
-      "eventDate": "2026-09-29",
+      "eventDate": "2026-10-01",
       "iso3": [
-        "SAU",
-        "USA",
-        "YEM"
+        "UKR",
+        "RUS"
       ],
-      "eventType": "diplomatic.dispute",
-      "headline": "Rubio and Saudi FM discuss Yemen Houthi threat and Hormuz Strait security",
-      "summary": "US Secretary of State Rubio held talks with Saudi Arabia's foreign minister on regional security cooperation, including hostilities with Yemen's Houthis and the situation in the Strait of Hormuz.",
-      "confidenceScore": 0.7,
-      "confidenceLabel": "medium",
-      "coordinateQuality": "missing",
-      "tier": 3,
-      "tags": [
-        "aljazeera-english",
-        "storyline:f2a58b14"
-      ],
-      "geopoliticalScore": 5,
-      "economicImpactScore": 4
-    },
-    {
-      "id": "4ad1afedd688a677bd4bee37",
-      "source": "rss_intelligence",
-      "eventDate": "2026-09-29",
-      "iso3": [
-        "IRN",
-        "QAT",
-        "USA"
-      ],
-      "eventType": "diplomatic.cooperation",
-      "headline": "Iran's Araghchi meets Qatari mediators as US insists nuclear talks must accompany Hormuz plan",
-      "summary": "Iranian Foreign Minister Araghchi met with Qatari mediators regarding a proposed Hormuz plan while awaiting a reply. A US official stated there will be no deal unless nuclear issues are addressed.",
-      "confidenceScore": 0.7,
-      "confidenceLabel": "medium",
-      "coordinateQuality": "missing",
-      "tier": 2,
-      "tags": [
-        "aljazeera-english",
-        "storyline:f2a58b14"
-      ],
-      "geopoliticalScore": 6.5,
-      "economicImpactScore": 6
-    },
-    {
-      "id": "bd4fa155154e4b25f3a1e0ab",
-      "source": "rss_intelligence",
-      "eventDate": "2026-09-29",
-      "iso3": [
-        "RUS",
-        "UKR"
-      ],
-      "eventType": "diplomatic.cooperation",
-      "headline": "Putin adds 15,000 new soldiers to Russian army, fourth expansion this year",
-      "summary": "Russian President Putin ordered an increase of 15,000 soldiers to the country's armed forces, marking the fourth such expansion this year as the war in Ukraine appears to stall.",
+      "eventType": "conflict.armed",
+      "headline": "Russian drone strikes hit school and bridge in Kyiv",
+      "summary": "Russian drone strikes hit a school in Kyiv and the main bridge, disrupting transport, as part of Moscow's latest wave of air attacks on Ukraine.",
       "confidenceScore": 0.75,
       "confidenceLabel": "high",
       "coordinateQuality": "missing",
@@ -77,796 +31,62 @@
       "economicImpactScore": 2
     },
     {
-      "id": "de8846ad5f7dbd8589469137",
+      "id": "49e001f5245650b7e5fb67a2",
       "source": "rss_intelligence",
-      "eventDate": "2026-09-29",
+      "eventDate": "2026-10-01",
       "iso3": [
-        "KOR",
-        "UKR",
-        "PRK"
-      ],
-      "eventType": "diplomatic.dispute",
-      "headline": "Seoul summons Ukraine envoy over secret transfer of North Korean POWs",
-      "summary": "South Korea summoned Ukraine's ambassador after President Zelensky revealed Ukraine had sent two captured North Korean soldiers to South Korea, a move Seoul says was meant to remain secret.",
-      "confidenceScore": 0.75,
-      "confidenceLabel": "high",
-      "coordinateQuality": "missing",
-      "tier": 3,
-      "tags": [
-        "bbc-world",
-        "storyline:799aacb0"
-      ],
-      "geopoliticalScore": 4.5,
-      "economicImpactScore": 0.5
-    },
-    {
-      "id": "43f77d21553eb5b0d91a99bd",
-      "source": "rss_intelligence",
-      "eventDate": "2026-09-29",
-      "iso3": [
-        "EST",
-        "RUS",
-        "UKR"
-      ],
-      "eventType": "other",
-      "headline": "Estonia blames Russia for arson attack on defence company supplying Ukraine",
-      "summary": "Estonia accused Russia of orchestrating an arson attack on a defence company that supplies Ukraine, part of a wider pattern of sabotage attacks attributed to Russia across several European NATO countries assisting Ukraine.",
-      "confidenceScore": 0.7,
-      "confidenceLabel": "medium",
-      "coordinateQuality": "missing",
-      "tier": 2,
-      "tags": [
-        "bbc-world",
-        "storyline:072d87e1"
-      ],
-      "geopoliticalScore": 5.5,
-      "economicImpactScore": 1
-    },
-    {
-      "id": "56e204878407ffca83b6e13c",
-      "source": "rss_intelligence",
-      "eventDate": "2026-09-29",
-      "iso3": [
-        "IRN",
-        "USA",
-        "SAU"
-      ],
-      "eventType": "energy.disruption",
-      "headline": "Oil rises second day on stalled US-Iran talks despite Saudi pipeline restart",
-      "summary": "Oil prices rose for a second consecutive day as a lack of progress in US-Iran talks and strong demand outweighed the resumption of flows through a key Saudi Arabian pipeline.",
-      "confidenceScore": 0.75,
-      "confidenceLabel": "high",
-      "coordinateQuality": "missing",
-      "tier": 2,
-      "tags": [
-        "bloomberg-markets",
-        "storyline:358ba15a"
-      ],
-      "geopoliticalScore": 5.5,
-      "economicImpactScore": 8.5
-    },
-    {
-      "id": "e195bf1c485701fb7d6cd76b",
-      "source": "rss_intelligence",
-      "eventDate": "2026-09-29",
-      "iso3": [
-        "CHN"
-      ],
-      "eventType": "energy.disruption",
-      "headline": "China's LNG imports set to fall second straight month as Middle East conflict drives prices higher",
-      "summary": "China's liquefied natural gas imports are expected to decline for a second month as surging prices triggered by the Middle East conflict curb demand.",
-      "confidenceScore": 0.7,
-      "confidenceLabel": "medium",
-      "coordinateQuality": "missing",
-      "tier": 3,
-      "tags": [
-        "bloomberg-markets",
-        "storyline:290ca3e3"
-      ],
-      "geopoliticalScore": 4,
-      "economicImpactScore": 6.5
-    },
-    {
-      "id": "bbc576e4ba6b285d69414f0d",
-      "source": "rss_intelligence",
-      "eventDate": "2026-09-29",
-      "iso3": [
-        "CHN",
-        "USA"
-      ],
-      "eventType": "economic.trade",
-      "headline": "China's planned tariff cuts on US agricultural imports leave demand outlook unclear",
-      "summary": "Traders and farmers are assessing how quickly China's planned tariff cuts on some US agricultural products, including corn and wheat, might translate into new demand.",
-      "confidenceScore": 0.7,
-      "confidenceLabel": "medium",
-      "coordinateQuality": "missing",
-      "tier": 3,
-      "tags": [
-        "bloomberg-markets",
-        "storyline:358ba15a"
-      ],
-      "geopoliticalScore": 4,
-      "economicImpactScore": 6
-    },
-    {
-      "id": "8735128b8fe1fcd0bfcb6182",
-      "source": "rss_intelligence",
-      "eventDate": "2026-09-29",
-      "iso3": [
-        "IRN",
-        "USA"
-      ],
-      "eventType": "economic.sanctions",
-      "headline": "US secondary sanctions on Iran's aviation industry disrupt international flights",
-      "summary": "The threat of secondary US sanctions is pressuring airports, fuel suppliers, and aviation companies servicing Iranian airlines, causing some countries to cancel flights and making travel less predictable.",
-      "confidenceScore": 0.7,
-      "confidenceLabel": "medium",
-      "coordinateQuality": "missing",
-      "tier": 2,
-      "tags": [
-        "dw-world",
-        "storyline:f2a58b14"
-      ],
-      "geopoliticalScore": 5.5,
-      "economicImpactScore": 4
-    },
-    {
-      "id": "1b10d63b8cb3700bdba75f91",
-      "source": "rss_intelligence",
-      "eventDate": "2026-09-29",
-      "iso3": [
-        "POL",
-        "ROU",
-        "MDA",
         "RUS",
         "UKR"
       ],
       "eventType": "conflict.armed",
-      "headline": "Russia expected to intensify hybrid war against Europe via drones, arson, airspace violations",
-      "summary": "Poland, Romania, and Moldova are being regularly targeted by drone explosions, airspace violations, and arson attacks linked to Russia's war against Ukraine. More European governments are now calling these incidents deliberate acts of aggression rather than accidents.",
+      "headline": "Putin signals continuation of Ukraine war in foreign policy speech",
+      "summary": "Russian President Vladimir Putin's foreign policy speech showed no sign of stopping the war in Ukraine, with Russia doubling down on its invasion.",
       "confidenceScore": 0.7,
       "confidenceLabel": "medium",
       "coordinateQuality": "missing",
       "tier": 2,
       "tags": [
-        "dw-world",
+        "bbc-world",
         "storyline:fba7c82c"
-      ],
-      "geopoliticalScore": 7.5,
-      "economicImpactScore": 3
-    },
-    {
-      "id": "0c4810169b92b960f0991549",
-      "source": "rss_intelligence",
-      "eventDate": "2026-09-29",
-      "iso3": [
-        "PAK"
-      ],
-      "eventType": "conflict.armed",
-      "headline": "Pakistani Taliban suicide bombing at police checkpoint kills at least 11",
-      "summary": "A suicide attack at a police stop in Pakistan killed at least 11 people. The Pakistani Taliban (TTP) claimed responsibility, part of a pattern of escalating attacks on Pakistani security forces.",
-      "confidenceScore": 0.75,
-      "confidenceLabel": "high",
-      "coordinateQuality": "missing",
-      "tier": 1,
-      "tags": [
-        "dw-world",
-        "storyline:8bb1b9dd"
-      ],
-      "geopoliticalScore": 4,
-      "economicImpactScore": 1
-    },
-    {
-      "id": "dd64aae7c74a32526977ab51",
-      "source": "rss_intelligence",
-      "eventDate": "2026-09-29",
-      "iso3": [
-        "IRQ",
-        "USA"
-      ],
-      "eventType": "conflict.armed",
-      "headline": "US completes troop withdrawal from Iraq after 12-year anti-ISIS mission",
-      "summary": "US troops completed their withdrawal from Iraq, ending the US-led Operation Inherent Resolve mission against ISIS after 12 years. Baghdad declared a new era of sovereignty, though questions remain about militias, foreign forces, and the country's future security.",
-      "confidenceScore": 0.8,
-      "confidenceLabel": "high",
-      "coordinateQuality": "missing",
-      "tier": 2,
-      "tags": [
-        "dw-world",
-        "storyline:03804909"
       ],
       "geopoliticalScore": 7,
       "economicImpactScore": 3
     },
     {
-      "id": "3bc8663af4aabcb54c324e8a",
+      "id": "077362a639b8920f746188f9",
       "source": "rss_intelligence",
-      "eventDate": "2026-09-29",
-      "iso3": [
-        "ARG",
-        "GBR"
-      ],
-      "eventType": "diplomatic.dispute",
-      "headline": "Argentina's Milei threatens legal action against UK over Falklands Sea Lion oil project",
-      "summary": "Argentine President Javier Milei threatened to sue Britain over the Sea Lion oil project near the disputed Falkland Islands, which Argentina claims sovereignty over. Developers Navitas and Rockhopper maintain they hold valid British-issued exploration licenses.",
-      "confidenceScore": 0.75,
-      "confidenceLabel": "high",
-      "coordinateQuality": "missing",
-      "tier": 3,
-      "tags": [
-        "france24-english",
-        "storyline:7e91508a"
-      ],
-      "geopoliticalScore": 4,
-      "economicImpactScore": 4
-    },
-    {
-      "id": "38653cc3c0c854a57c87cb90",
-      "source": "rss_intelligence",
-      "eventDate": "2026-09-29",
-      "iso3": [
-        "TUR",
-        "USA",
-        "IRN",
-        "ISR"
-      ],
-      "eventType": "diplomatic.dispute",
-      "headline": "Turkey positions to expand regional influence as US signals smaller Middle East footprint",
-      "summary": "Turkey is seeking to expand its regional influence in the Middle East as the United States signals a reduced military and diplomatic footprint in the region. This comes amid ongoing regional shocks including the 2023 Hamas-led attack on Israel and a seven-month war on Iran.",
-      "confidenceScore": 0.6,
-      "confidenceLabel": "medium",
-      "coordinateQuality": "missing",
-      "tier": 3,
-      "tags": [
-        "npr-news",
-        "storyline:f2a58b14"
-      ],
-      "geopoliticalScore": 6,
-      "economicImpactScore": 2
-    },
-    {
-      "id": "206ef900438c9ee12943f495",
-      "source": "rss_intelligence",
-      "eventDate": "2026-09-29",
-      "iso3": [
-        "YEM",
-        "SAU",
-        "IRN"
-      ],
-      "eventType": "conflict.armed",
-      "headline": "WHO reports over 800 killed in renewed Houthi-Saudi war in Yemen",
-      "summary": "The World Health Organization reported that fighting between the Iran-backed Houthi militia and Saudi-backed Yemeni government forces has killed more than 800 people, worsening one of the world's most severe humanitarian crises.",
-      "confidenceScore": 0.8,
-      "confidenceLabel": "high",
-      "coordinateQuality": "missing",
-      "tier": 1,
-      "tags": [
-        "nytimes-world",
-        "storyline:f2a58b14"
-      ],
-      "geopoliticalScore": 6,
-      "economicImpactScore": 3
-    },
-    {
-      "id": "74e11dfbd59cce1c3db04011",
-      "source": "rss_intelligence",
-      "eventDate": "2026-09-29",
-      "iso3": [
-        "USA",
-        "VEN"
-      ],
-      "eventType": "other",
-      "headline": "US refiners refuse to process Venezuelan gold brought to America by Trump administration deals",
-      "summary": "The Trump administration brokered deals to bring Venezuelan gold to the United States, including with a company the U.S. deems a security threat, but American refiners are refusing to process the gold due to concerns tied to Venezuela's corrupt gold industry.",
-      "confidenceScore": 0.6,
-      "confidenceLabel": "medium",
-      "coordinateQuality": "missing",
-      "tier": 3,
-      "tags": [
-        "nytimes-world",
-        "storyline:75e217c1"
-      ],
-      "geopoliticalScore": 4,
-      "economicImpactScore": 4
-    },
-    {
-      "id": "27292bc848f05db62061bd8e",
-      "source": "rss_intelligence",
-      "eventDate": "2026-09-29",
-      "iso3": [
-        "RUS",
-        "UKR"
-      ],
-      "eventType": "conflict.armed",
-      "headline": "North Ossetia region in Russia bears heavy casualties in Ukraine war, residents continue backing Kremlin",
-      "summary": "The Russian region of North Ossetia has suffered a heavy toll of soldier deaths in the war in Ukraine, yet many residents continue to support the Kremlin's position that fighting must continue until victory is achieved.",
-      "confidenceScore": 0.65,
-      "confidenceLabel": "medium",
-      "coordinateQuality": "missing",
-      "tier": 3,
-      "tags": [
-        "nytimes-world",
-        "storyline:fba7c82c"
-      ],
-      "geopoliticalScore": 4,
-      "economicImpactScore": 0.5
-    },
-    {
-      "id": "fe195e2d2e338e651005d941",
-      "source": "rss_intelligence",
-      "eventDate": "2026-09-29",
-      "iso3": [
-        "MMR"
-      ],
-      "eventType": "conflict.armed",
-      "headline": "Myanmar military uses motorized paragliders and gyrocopters to bomb rebel-held villages",
-      "summary": "Years after the 2021 coup, Myanmar's military is increasingly using recreational aerial craft such as motorized paragliders and gyrocopters to bomb towns and villages in rebel-held territory. The tactic reflects adaptation by the military amid ongoing civil conflict.",
-      "confidenceScore": 0.75,
-      "confidenceLabel": "high",
-      "coordinateQuality": "missing",
-      "tier": 2,
-      "tags": [
-        "nytimes-world",
-        "storyline:d2eedf71"
-      ],
-      "geopoliticalScore": 4,
-      "economicImpactScore": 0.5
-    },
-    {
-      "id": "a1c98ed0444bcef1710680bd",
-      "source": "rss_intelligence",
-      "eventDate": "2026-09-29",
-      "iso3": [
-        "RUS",
-        "DEU",
-        "UKR"
-      ],
-      "eventType": "diplomatic.dispute",
-      "headline": "Russia's Lavrov vows Moscow will 'see through' Ukraine war during UN meeting with German counterpart",
-      "summary": "Russian Foreign Minister Sergei Lavrov met with his German counterpart on the sidelines of the U.N. General Assembly and used part of his address to defend Russia's war on Ukraine, vowing to see the conflict through.",
-      "confidenceScore": 0.75,
-      "confidenceLabel": "high",
-      "coordinateQuality": "missing",
-      "tier": 3,
-      "tags": [
-        "nytimes-world",
-        "storyline:799aacb0"
-      ],
-      "geopoliticalScore": 5,
-      "economicImpactScore": 1
-    },
-    {
-      "id": "4dac65a3ea86c0c6f9d280f8",
-      "source": "rss_intelligence",
-      "eventDate": "2026-09-29",
-      "iso3": [
-        "SAU",
-        "YEM"
-      ],
-      "eventType": "conflict.armed",
-      "headline": "Saudi grand mufti calls fight against Houthis a 'religious duty', urges readiness for expanded campaign",
-      "summary": "Saudi Arabia's grand mufti urged Saudi-led forces to remain in 'constant readiness' against the Houthis in Yemen, describing the fight as a religious duty. The statement suggests the kingdom may expand its military campaign against the group.",
-      "confidenceScore": 0.7,
-      "confidenceLabel": "medium",
-      "coordinateQuality": "missing",
-      "tier": 2,
-      "tags": [
-        "nytimes-world",
-        "storyline:f2a58b14"
-      ],
-      "geopoliticalScore": 5,
-      "economicImpactScore": 2
-    },
-    {
-      "id": "f579ec911ead8f55485ec43e",
-      "source": "rss_intelligence",
-      "eventDate": "2026-09-29",
+      "eventDate": "2026-10-01",
       "iso3": [
         "UKR",
         "RUS"
       ],
       "eventType": "energy.disruption",
-      "headline": "Russia wages 'total war' on Ukraine's economy through sustained strikes, causing billions in damage",
-      "summary": "Russian strikes on Ukraine are causing economic damage in the billions of dollars through lost sales, disrupted workdays, and logistical disruptions, according to reporting. The campaign continues despite Russia being stuck militarily on the battlefield.",
-      "confidenceScore": 0.7,
-      "confidenceLabel": "medium",
+      "headline": "Global crop prices post biggest quarterly jump since 2022 amid Black Sea tensions and weather",
+      "summary": "Global agriculture prices recorded their largest quarterly increase since Russia's 2022 invasion of Ukraine, driven by tensions in the Black Sea region and extreme weather, raising inflation concerns for central banks.",
+      "confidenceScore": 0.75,
+      "confidenceLabel": "high",
       "coordinateQuality": "missing",
       "tier": 2,
       "tags": [
-        "nytimes-world",
+        "bloomberg-markets",
         "storyline:92143166"
       ],
       "geopoliticalScore": 5,
-      "economicImpactScore": 4
-    },
-    {
-      "id": "005efcbc21ee1089e154c111",
-      "source": "rss_intelligence",
-      "eventDate": "2026-09-29",
-      "iso3": [
-        "UKR",
-        "RUS"
-      ],
-      "eventType": "conflict.armed",
-      "headline": "Russian air strike hits Kyiv book market, destroying millions of books nationwide",
-      "summary": "A Russian air strike hit a storied book market in Kyiv, part of a pattern of attacks that have damaged millions of books across Ukraine in recent months.",
-      "confidenceScore": 0.65,
-      "confidenceLabel": "medium",
-      "coordinateQuality": "missing",
-      "tier": 3,
-      "tags": [
-        "nytimes-world",
-        "storyline:d2eedf71"
-      ],
-      "geopoliticalScore": 3,
-      "economicImpactScore": 0.5
-    },
-    {
-      "id": "98ae8a738122a04251ec78be",
-      "source": "rss_intelligence",
-      "eventDate": "2026-09-29",
-      "iso3": [
-        "SAU",
-        "IRQ",
-        "IRN"
-      ],
-      "eventType": "energy.disruption",
-      "headline": "Saudi East-West pipeline resumes oil loading after drone attack repairs",
-      "summary": "Saudi authorities restarted tanker loading from the East-West pipeline after it was taken offline this month following damage from a drone attack by an Iranian-backed Iraqi militia. The pipeline is a key artery for Saudi crude exports.",
-      "confidenceScore": 0.75,
-      "confidenceLabel": "high",
-      "coordinateQuality": "missing",
-      "tier": 2,
-      "tags": [
-        "nytimes-world",
-        "storyline:358ba15a"
-      ],
-      "geopoliticalScore": 6,
       "economicImpactScore": 8
     },
     {
-      "id": "c207404b23db564b3538be87",
+      "id": "06e4ccf3de76981fa539a9bf",
       "source": "rss_intelligence",
-      "eventDate": "2026-09-29",
-      "iso3": [
-        "MMR"
-      ],
-      "eventType": "conflict.armed",
-      "headline": "Myanmar military airstrike on Rakhine market kills at least 50",
-      "summary": "An airstrike by the Myanmar military hit a bustling market in rebel-held territory in Rakhine state, killing at least 50 people. It is described as one of the deadliest attacks on civilians in months.",
-      "confidenceScore": 0.75,
-      "confidenceLabel": "high",
-      "coordinateQuality": "missing",
-      "tier": 1,
-      "tags": [
-        "nytimes-world",
-        "storyline:d2eedf71"
-      ],
-      "geopoliticalScore": 4,
-      "economicImpactScore": 1
-    },
-    {
-      "id": "b5403baa97d0b8e60670b918",
-      "source": "rss_intelligence",
-      "eventDate": "2026-09-29",
-      "iso3": [
-        "UKR",
-        "RUS"
-      ],
-      "eventType": "conflict.armed",
-      "headline": "Russian attacks continue to strike eastern Ukraine 'fortress cities'",
-      "summary": "Emergency workers in eastern Ukraine's 'fortress cities' continue to respond rapidly to ongoing Russian attacks, with further strikes possible at any moment.",
-      "confidenceScore": 0.6,
-      "confidenceLabel": "medium",
-      "coordinateQuality": "missing",
-      "tier": 2,
-      "tags": [
-        "nytimes-world",
-        "storyline:fba7c82c"
-      ],
-      "geopoliticalScore": 4,
-      "economicImpactScore": 1
-    },
-    {
-      "id": "0e956cb80829960edd6f2b34",
-      "source": "rss_intelligence",
-      "eventDate": "2026-09-29",
-      "iso3": [
-        "EST",
-        "RUS"
-      ],
-      "eventType": "conflict.armed",
-      "headline": "Estonia says Russia carried out deliberate arson at Milrem Robotics defense plant",
-      "summary": "Estonia has determined that a fire in August at Milrem Robotics, a manufacturer of unmanned vehicles supplied to Ukraine, was a deliberate arson attack carried out by Russia.",
-      "confidenceScore": 0.7,
-      "confidenceLabel": "medium",
-      "coordinateQuality": "missing",
-      "tier": 2,
-      "tags": [
-        "nytimes-world",
-        "storyline:fba7c82c"
-      ],
-      "geopoliticalScore": 6,
-      "economicImpactScore": 2
-    },
-    {
-      "id": "732212140a713ac99a11ebd7",
-      "source": "rss_intelligence",
-      "eventDate": "2026-09-29",
-      "iso3": [
-        "RUS",
-        "UKR"
-      ],
-      "eventType": "diplomatic.cooperation",
-      "headline": "Putin signs decree adding 15,500 troops to Russian army",
-      "summary": "Russian President Vladimir Putin signed a decree increasing the Russian army's authorized size by 15,500 troops, the fourth such increase this year, amid mounting casualties in the more than four-and-a-half-year Ukraine war.",
-      "confidenceScore": 0.85,
-      "confidenceLabel": "high",
-      "coordinateQuality": "missing",
-      "tier": 2,
-      "tags": [
-        "scmp-china",
-        "storyline:fba7c82c"
-      ],
-      "geopoliticalScore": 6,
-      "economicImpactScore": 2
-    },
-    {
-      "id": "f8439802076da5d324bd4e38",
-      "source": "rss_intelligence",
-      "eventDate": "2026-09-29",
+      "eventDate": "2026-10-01",
       "iso3": [
         "USA",
         "IRN"
       ],
       "eventType": "economic.trade",
-      "headline": "US consumer confidence sinks to 12-year low amid inflation and Iran war",
-      "summary": "The Conference Board reported its consumer confidence index fell 6.7 points to 81.9 in September, down from 88.6 in August, marking the lowest reading in over a decade. The decline was attributed to elevated prices and stagnant wages amid the ongoing Iran war.",
-      "confidenceScore": 0.75,
-      "confidenceLabel": "high",
-      "coordinateQuality": "missing",
-      "tier": 3,
-      "tags": [
-        "scmp-china",
-        "storyline:358ba15a"
-      ],
-      "geopoliticalScore": 3,
-      "economicImpactScore": 6
-    },
-    {
-      "id": "4e6dc0eef08e5952cfa1f60b",
-      "source": "rss_intelligence",
-      "eventDate": "2026-09-29",
-      "iso3": [
-        "ISR",
-        "PSE"
-      ],
-      "eventType": "conflict.armed",
-      "headline": "Israeli air strike kills Hamas commander linked to October 7 attack in Gaza",
-      "summary": "An Israeli air strike killed Izz al-Din Al-Beik, head of Hamas' armed wing in north Gaza, on Tuesday. Israel's government said the target was involved in planning the October 7, 2023 attack, and Hamas confirmed his death and identified him as a leader of that attack.",
-      "confidenceScore": 0.85,
-      "confidenceLabel": "high",
-      "coordinateQuality": "missing",
-      "tier": 2,
-      "tags": [
-        "scmp-china",
-        "storyline:f2a58b14"
-      ],
-      "geopoliticalScore": 6,
-      "economicImpactScore": 2
-    },
-    {
-      "id": "4014678f7f0f704f64f2757e",
-      "source": "rss_intelligence",
-      "eventDate": "2026-09-29",
-      "iso3": [
-        "EST",
-        "RUS",
-        "UKR"
-      ],
-      "eventType": "diplomatic.dispute",
-      "headline": "Estonia accuses Russian security services of ordering arson attack on Ukraine-supplying defence firm",
-      "summary": "Estonian authorities concluded that a mid-August arson attack on a defence company supplying military vehicles to Ukraine was sabotage commissioned by Russian security services. Foreign Minister Margus Tsahkna called the actions unacceptable and summoned Russia's charge d'affaires in Tallinn.",
-      "confidenceScore": 0.75,
-      "confidenceLabel": "high",
-      "coordinateQuality": "missing",
-      "tier": 2,
-      "tags": [
-        "scmp-china",
-        "storyline:799aacb0"
-      ],
-      "geopoliticalScore": 5.5,
-      "economicImpactScore": 1
-    },
-    {
-      "id": "285bd30a6df94630332e043e",
-      "source": "rss_intelligence",
-      "eventDate": "2026-09-29",
-      "iso3": [
-        "IND",
-        "USA"
-      ],
-      "eventType": "economic.trade",
-      "headline": "Trump endorses India-Middle East-Europe trade corridor amid regional war concerns",
-      "summary": "US President Donald Trump publicly endorsed the India-Middle East-Europe Economic Corridor (IMEC), a trade route first unveiled at the 2023 G20 summit as an alternative to China's Belt and Road Initiative. Analysts caution the project must expand to withstand ongoing geopolitical conflicts in the region.",
-      "confidenceScore": 0.6,
-      "confidenceLabel": "medium",
-      "coordinateQuality": "missing",
-      "tier": 3,
-      "tags": [
-        "scmp-china",
-        "storyline:358ba15a"
-      ],
-      "geopoliticalScore": 5,
-      "economicImpactScore": 4
-    },
-    {
-      "id": "68d2615293771d87a962f5a0",
-      "source": "rss_intelligence",
-      "eventDate": "2026-09-29",
-      "iso3": [
-        "KOR",
-        "PRK"
-      ],
-      "eventType": "diplomatic.dispute",
-      "headline": "North Korean mines caused DMZ blast injuring two South Korean soldiers, Seoul says",
-      "summary": "South Korea's Defence Minister Kang Shin-chul told a parliamentary committee that North Korean mines caused a blast last week in the demilitarised zone that injured two South Korean personnel. He said the incident violated the Korean war armistice agreement and warranted a response against Pyongyang.",
-      "confidenceScore": 0.75,
-      "confidenceLabel": "high",
-      "coordinateQuality": "missing",
-      "tier": 2,
-      "tags": [
-        "scmp-china",
-        "storyline:799aacb0"
-      ],
-      "geopoliticalScore": 5,
-      "economicImpactScore": 1
-    },
-    {
-      "id": "5664ae5048063435350887cf",
-      "source": "rss_intelligence",
-      "eventDate": "2026-09-29",
-      "iso3": [
-        "UKR",
-        "RUS"
-      ],
-      "eventType": "conflict.armed",
-      "headline": "Russia's jet-powered drones turn Kyiv into daytime war zone",
-      "summary": "Russia has deployed jet-powered drones against Kyiv, escalating attacks and turning the Ukrainian capital into what is described as a frontline city even during daylight hours. Ukraine's air defenses are reported to be struggling to keep pace with the technological advance.",
-      "confidenceScore": 0.6,
-      "confidenceLabel": "medium",
-      "coordinateQuality": "missing",
-      "tier": 2,
-      "tags": [
-        "washingtonpost-world",
-        "storyline:fba7c82c"
-      ],
-      "geopoliticalScore": 5,
-      "economicImpactScore": 1
-    },
-    {
-      "id": "227e170effc13a35cc40f491",
-      "source": "rss_intelligence",
-      "eventDate": "2026-09-29",
-      "iso3": [
-        "UKR"
-      ],
-      "eventType": "humanitarian.crisis",
-      "headline": "Ukraine trains war orphans in boarding schools to prepare next generation for conflict",
-      "summary": "The Ukrainian government has opened five boarding schools for teenagers who lost parents fighting Russia, combining grief counseling with military-style training. The Washington Post was granted rare access to one of these facilities.",
-      "confidenceScore": 0.65,
-      "confidenceLabel": "medium",
-      "coordinateQuality": "missing",
-      "tier": 3,
-      "tags": [
-        "washingtonpost-world",
-        "storyline:98e17dda"
-      ],
-      "geopoliticalScore": 3.5,
-      "economicImpactScore": 0
-    },
-    {
-      "id": "936efdcb16f69afc3215f411",
-      "source": "rss_intelligence",
-      "eventDate": "2026-09-29",
-      "iso3": [
-        "ISR"
-      ],
-      "eventType": "political.election",
-      "headline": "Reports Netanyahu ignored Oct. 7 warnings become major issue in Israeli election",
-      "summary": "Reports alleging that Israeli Prime Minister Benjamin Netanyahu ignored advance warnings of the October 7, 2023 Hamas attack are dominating coverage ahead of a nearing Israeli election. Netanyahu has denied having any advance knowledge of the attack, but his role is under renewed scrutiny.",
-      "confidenceScore": 0.6,
-      "confidenceLabel": "medium",
-      "coordinateQuality": "missing",
-      "tier": 3,
-      "tags": [
-        "washingtonpost-world",
-        "storyline:f2a58b14"
-      ],
-      "geopoliticalScore": 4.5,
-      "economicImpactScore": 0.5
-    },
-    {
-      "id": "fe21764dbe74b7702e7169d6",
-      "source": "rss_intelligence",
-      "eventDate": "2026-09-29",
-      "iso3": [
-        "USA",
-        "IRN",
-        "CHN",
-        "PAK",
-        "TUR",
-        "SAU"
-      ],
-      "eventType": "economic.sanctions",
-      "headline": "US sanctions 10 entities across China, Pakistan, Turkiye, Iran, Saudi Arabia over Iran military support",
-      "summary": "The United States imposed sanctions on 10 individuals and firms in China, Pakistan, Turkiye, Iran and Saudi Arabia for allegedly supporting Iran's military as part of an ongoing pressure campaign.",
-      "confidenceScore": 0.75,
-      "confidenceLabel": "high",
-      "coordinateQuality": "missing",
-      "tier": 2,
-      "tags": [
-        "aljazeera-english",
-        "storyline:f2a58b14"
-      ],
-      "geopoliticalScore": 5,
-      "economicImpactScore": 3
-    },
-    {
-      "id": "5e6ff5f2422fd68bb553920e",
-      "source": "rss_intelligence",
-      "eventDate": "2026-09-29",
-      "iso3": [
-        "IRN",
-        "USA"
-      ],
-      "eventType": "energy.disruption",
-      "headline": "Optimism for Iran war diplomatic breakthrough fades as oil prices surge",
-      "summary": "Bond markets and Treasury yields reflected fading optimism for a diplomatic breakthrough in the Iran war, coinciding with surging oil prices and increased expectations of Federal Reserve rate hikes.",
-      "confidenceScore": 0.65,
-      "confidenceLabel": "medium",
-      "coordinateQuality": "missing",
-      "tier": 2,
-      "tags": [
-        "bloomberg-markets",
-        "storyline:358ba15a"
-      ],
-      "geopoliticalScore": 6,
-      "economicImpactScore": 7.5
-    },
-    {
-      "id": "ac7a4855c0dd62fc54d65118",
-      "source": "rss_intelligence",
-      "eventDate": "2026-09-29",
-      "iso3": [
-        "USA"
-      ],
-      "eventType": "economic.trade",
-      "headline": "Fed's Musalem highlights value of clear policy framework for rate transmission",
-      "summary": "Federal Reserve Bank of St. Louis President Alberto Musalem said clear communication about how the central bank adjusts interest rates based on incoming data can improve monetary policy transmission, speaking at an event in London.",
+      "headline": "Fed's Kashkari says central bank will act as needed on inflation amid tariffs and Iran conflict",
+      "summary": "Minneapolis Fed President Neel Kashkari said the US economy is showing resilience despite tariffs and the conflict in Iran, and that the Federal Reserve will do what is needed to bring inflation back to target.",
       "confidenceScore": 0.7,
       "confidenceLabel": "medium",
-      "coordinateQuality": "missing",
-      "tier": 3,
-      "tags": [
-        "bloomberg-markets",
-        "storyline:358ba15a"
-      ],
-      "geopoliticalScore": 1,
-      "economicImpactScore": 4
-    },
-    {
-      "id": "c6168d54bc3360db3609d86f",
-      "source": "rss_intelligence",
-      "eventDate": "2026-09-29",
-      "iso3": [
-        "CAN"
-      ],
-      "eventType": "economic.trade",
-      "headline": "Bank of Canada official cites 'dilemma' balancing trade war impact against energy-driven inflation",
-      "summary": "A senior Bank of Canada official said the central bank's rate-setting body faces a 'dilemma' in weighing the economic impact of an ongoing trade war against inflationary pressure from high energy prices. The comments reflect internal debate on interest rate policy.",
-      "confidenceScore": 0.75,
-      "confidenceLabel": "high",
       "coordinateQuality": "missing",
       "tier": 3,
       "tags": [
@@ -877,707 +97,117 @@
       "economicImpactScore": 6
     },
     {
-      "id": "e45356e8e966495fc7020291",
+      "id": "663b3a2ff5a6289d1644d9e8",
       "source": "rss_intelligence",
-      "eventDate": "2026-09-29",
+      "eventDate": "2026-10-01",
       "iso3": [
-        "POL",
-        "ROU",
-        "MDA",
-        "RUS",
-        "UKR"
+        "SAU",
+        "YEM",
+        "IRN"
       ],
-      "eventType": "diplomatic.dispute",
-      "headline": "Russia expected to intensify hybrid war against Europe with drone incursions and sabotage",
-      "summary": "Poland, Romania, and Moldova have been regularly targeted by drone explosions, airspace violations, and arson attacks linked to Russian actions related to the war in Ukraine. Governments increasingly describe these incidents as deliberate acts of aggression, with expectations that Russia will intensify hybrid warfare against Europe.",
-      "confidenceScore": 0.7,
+      "eventType": "conflict.armed",
+      "headline": "Houthis gain upper hand against Saudi Arabia amid lack of international support",
+      "summary": "Analysis highlights that Saudi Arabia faces difficulty countering the Houthi threat from Yemen, with the US uninterested in involvement, European nations hedging, and no appetite for open conflict with Iran.",
+      "confidenceScore": 0.55,
       "confidenceLabel": "medium",
       "coordinateQuality": "missing",
       "tier": 2,
       "tags": [
         "dw-world",
-        "storyline:799aacb0"
-      ],
-      "geopoliticalScore": 7.5,
-      "economicImpactScore": 2
-    },
-    {
-      "id": "f5f13b830453ca454a789a38",
-      "source": "rss_intelligence",
-      "eventDate": "2026-09-29",
-      "iso3": [
-        "VEN",
-        "USA"
-      ],
-      "eventType": "economic.sanctions",
-      "headline": "US-brokered Venezuelan gold deals struggle to find refiners willing to process metal",
-      "summary": "The Trump administration brought Venezuelan gold to the United States and is brokering deals in the industry, but American refiners are refusing to process it, partly due to corruption concerns and links to a company deemed a U.S. security threat.",
-      "confidenceScore": 0.7,
-      "confidenceLabel": "medium",
-      "coordinateQuality": "missing",
-      "tier": 3,
-      "tags": [
-        "nytimes-world",
         "storyline:f2a58b14"
       ],
-      "geopoliticalScore": 4,
+      "geopoliticalScore": 6,
       "economicImpactScore": 4
     },
     {
-      "id": "bfa689d9fd6c6340f83d1bf0",
+      "id": "f5fc57821e74d3df0a23c707",
       "source": "rss_intelligence",
-      "eventDate": "2026-09-29",
+      "eventDate": "2026-10-01",
       "iso3": [
-        "SAU",
-        "YEM"
+        "TWN",
+        "USA",
+        "CHN"
       ],
       "eventType": "diplomatic.cooperation",
-      "headline": "Saudi grand mufti calls fight against Houthis a religious duty, urges readiness for possible campaign expansion",
-      "summary": "Saudi Arabia's grand mufti urged Saudi-led forces to remain in 'constant readiness' in the fight against Yemen's Houthi movement, calling the campaign a religious duty and suggesting the kingdom could expand its operations against the group.",
-      "confidenceScore": 0.7,
-      "confidenceLabel": "medium",
-      "coordinateQuality": "missing",
-      "tier": 2,
-      "tags": [
-        "nytimes-world",
-        "storyline:f2a58b14"
-      ],
-      "geopoliticalScore": 5,
-      "economicImpactScore": 3
-    },
-    {
-      "id": "9a101f9cd1b9888016702851",
-      "source": "rss_intelligence",
-      "eventDate": "2026-09-29",
-      "iso3": [
-        "UKR",
-        "RUS"
-      ],
-      "eventType": "conflict.armed",
-      "headline": "Russia wages sustained economic warfare campaign against Ukraine via infrastructure strikes",
-      "summary": "Russian strikes on Ukraine are causing billions of dollars in economic damage through lost sales, disrupted workdays, and logistical disruptions, according to New York Times reporting. The campaign is described as targeting Ukraine's economy while battlefield lines remain largely static.",
-      "confidenceScore": 0.7,
-      "confidenceLabel": "medium",
-      "coordinateQuality": "missing",
-      "tier": 2,
-      "tags": [
-        "nytimes-world",
-        "storyline:fba7c82c"
-      ],
-      "geopoliticalScore": 6,
-      "economicImpactScore": 3
-    },
-    {
-      "id": "541d0115675c18df5cc41f72",
-      "source": "rss_intelligence",
-      "eventDate": "2026-09-29",
-      "iso3": [
-        "ISR"
-      ],
-      "eventType": "diplomatic.dispute",
-      "headline": "Israeli settlers block military from returning Palestinian family home in West Bank despite Supreme Court order",
-      "summary": "Israel's Supreme Court ordered the military to ensure a West Bank Palestinian family that fled violence could return to their home, but Israeli settlers blocked the effort. Authorities were accused of not doing enough to confront the settlers.",
-      "confidenceScore": 0.75,
-      "confidenceLabel": "high",
-      "coordinateQuality": "missing",
-      "tier": 2,
-      "tags": [
-        "nytimes-world",
-        "storyline:f2a58b14"
-      ],
-      "geopoliticalScore": 5.5,
-      "economicImpactScore": 0.5
-    },
-    {
-      "id": "00e16ed10e216eed69c8dfa8",
-      "source": "rss_intelligence",
-      "eventDate": "2026-09-29",
-      "iso3": [
-        "EST",
-        "RUS"
-      ],
-      "eventType": "other",
-      "headline": "Estonia says August arson fire at Milrem Robotics was deliberate Russian sabotage attack",
-      "summary": "Estonian authorities say a fire that broke out in August at Milrem Robotics, a manufacturer of unmanned vehicles supplied to Ukraine, was a 'deliberate' attack orchestrated by Russia. The company produces unmanned ground vehicles used in the Ukraine conflict.",
-      "confidenceScore": 0.7,
-      "confidenceLabel": "medium",
-      "coordinateQuality": "missing",
-      "tier": 2,
-      "tags": [
-        "nytimes-world",
-        "storyline:072d87e1"
-      ],
-      "geopoliticalScore": 5.5,
-      "economicImpactScore": 1.5
-    },
-    {
-      "id": "fe0ff5a614d547f5f202c0d2",
-      "source": "rss_intelligence",
-      "eventDate": "2026-09-29",
-      "iso3": [
-        "IND",
-        "USA"
-      ],
-      "eventType": "other",
-      "headline": "India-Middle East-Europe Economic Corridor gains Trump backing amid regional war concerns",
-      "summary": "US President Donald Trump endorsed the India-Middle East-Europe Economic Corridor (IMEC), a trade route first unveiled at the 2023 G20 summit as an alternative to China's Belt and Road Initiative. Analysts say the project must expand to withstand ongoing geopolitical conflicts in the region.",
-      "confidenceScore": 0.7,
+      "headline": "US Himars missile shortfalls raise stakes for potential Taiwan Strait conflict",
+      "summary": "Analysts note that a potential Taiwan Strait conflict could involve exchanges between the US-made Himars rocket system and China's PHL-16/PCL-191. Taiwan is set to receive all 29 Himars systems from its initial order by the end of the year, with additional units planned, amid concerns about US missile production shortfalls.",
+      "confidenceScore": 0.6,
       "confidenceLabel": "medium",
       "coordinateQuality": "missing",
       "tier": 3,
       "tags": [
         "scmp-china",
-        "storyline:75e217c1"
+        "storyline:f2a58b14"
+      ],
+      "geopoliticalScore": 6.5,
+      "economicImpactScore": 3
+    },
+    {
+      "id": "5c9f5abf3b23d47082542d64",
+      "source": "rss_intelligence",
+      "eventDate": "2026-10-01",
+      "iso3": [
+        "CHN",
+        "USA"
+      ],
+      "eventType": "economic.trade",
+      "headline": "EU expands surveillance of Chinese import surges amid US trade war fallout",
+      "summary": "The EU is retooling an 'import surveillance task force,' originally launched to monitor US-China trade war effects on Europe, to track a surge in Chinese shipments diverted to the EU market. The bloc fears cheaper Chinese goods displaced from the US market could harm local manufacturers.",
+      "confidenceScore": 0.6,
+      "confidenceLabel": "medium",
+      "coordinateQuality": "missing",
+      "tier": 3,
+      "tags": [
+        "scmp-china",
+        "storyline:358ba15a"
       ],
       "geopoliticalScore": 5,
       "economicImpactScore": 5
     },
     {
-      "id": "80a542160b76e5b8015ca992",
+      "id": "4988a1847bdc9da819529cf7",
       "source": "rss_intelligence",
-      "eventDate": "2026-09-29",
+      "eventDate": "2026-10-01",
+      "iso3": [
+        "JPN",
+        "UKR",
+        "RUS"
+      ],
+      "eventType": "diplomatic.cooperation",
+      "headline": "Japan examines Ukraine's war experience to overhaul its defense strategy",
+      "summary": "Japan is increasingly using Ukraine's wartime experience against Russia as intelligence to strengthen its own military capabilities. Senior Liberal Democratic Party lawmaker and former defense minister Itsunori Onodera visited Kyiv this week as part of this effort.",
+      "confidenceScore": 0.6,
+      "confidenceLabel": "medium",
+      "coordinateQuality": "missing",
+      "tier": 3,
+      "tags": [
+        "scmp-china",
+        "storyline:fba7c82c"
+      ],
+      "geopoliticalScore": 5,
+      "economicImpactScore": 1
+    },
+    {
+      "id": "61cce4f340f99e9e1015a3bd",
+      "source": "rss_intelligence",
+      "eventDate": "2026-10-01",
       "iso3": [
         "KOR",
-        "PRK"
-      ],
-      "eventType": "conflict.armed",
-      "headline": "South Korea says North Korean mines caused DMZ blast injuring two soldiers, violating armistice",
-      "summary": "South Korea's Defence Minister Kang Shin-chul told a parliamentary committee that North Korean mines caused a blast last week in the demilitarised zone that injured two South Korean personnel. He said the incident violated the Korean war armistice agreement and warranted a response against Pyongyang.",
-      "confidenceScore": 0.75,
-      "confidenceLabel": "high",
-      "coordinateQuality": "missing",
-      "tier": 2,
-      "tags": [
-        "scmp-china",
-        "storyline:799aacb0"
-      ],
-      "geopoliticalScore": 6,
-      "economicImpactScore": 2
-    },
-    {
-      "id": "74fce34081ba4833c3c09ae8",
-      "source": "rss_intelligence",
-      "eventDate": "2026-09-29",
-      "iso3": [
-        "UKR"
-      ],
-      "eventType": "other",
-      "headline": "Ukraine opens boarding schools to train teens who lost parents in war against Russia",
-      "summary": "Ukraine's government has opened five boarding schools that combine grief counseling with military-style training for teenagers who lost their fathers fighting Russia. The Washington Post was granted rare access to one of these schools.",
-      "confidenceScore": 0.6,
-      "confidenceLabel": "medium",
-      "coordinateQuality": "missing",
-      "tier": 3,
-      "tags": [
-        "washingtonpost-world",
-        "storyline:072d87e1"
-      ],
-      "geopoliticalScore": 3.5,
-      "economicImpactScore": 0.5
-    },
-    {
-      "id": "fd4be4d09ddcb75806deda87",
-      "source": "rss_intelligence",
-      "eventDate": "2026-09-29",
-      "iso3": [
-        "USA",
-        "IRN"
-      ],
-      "eventType": "economic.trade",
-      "headline": "Global stocks fall to one-week low as oil surge and Fed rate-hike bets lift Treasury yields",
-      "summary": "Global equities slid to a one-week low as surging oil prices and mounting bets on further Federal Reserve interest-rate hikes drove Treasury yields to multi-year highs.",
-      "confidenceScore": 0.8,
-      "confidenceLabel": "high",
-      "coordinateQuality": "missing",
-      "tier": 2,
-      "tags": [
-        "bloomberg-markets",
-        "storyline:358ba15a"
-      ],
-      "geopoliticalScore": 6,
-      "economicImpactScore": 9
-    },
-    {
-      "id": "20425cf23536968f5c1db50e",
-      "source": "rss_intelligence",
-      "eventDate": "2026-09-29",
-      "iso3": [
-        "RUS",
-        "UKR"
-      ],
-      "eventType": "conflict.armed",
-      "headline": "Putin orders 15,000 additional soldiers, fourth Russian military expansion this year amid Ukraine war stalemate",
-      "summary": "Russian President Vladimir Putin has added 15,000 new soldiers to the army, marking the fourth military expansion this year as the war in Ukraine appears stalled.",
-      "confidenceScore": 0.7,
-      "confidenceLabel": "medium",
-      "coordinateQuality": "missing",
-      "tier": 2,
-      "tags": [
-        "aljazeera-english",
-        "storyline:fba7c82c"
-      ],
-      "geopoliticalScore": 6,
-      "economicImpactScore": 2
-    },
-    {
-      "id": "5dffc249819a5acde27d6f2d",
-      "source": "rss_intelligence",
-      "eventDate": "2026-09-29",
-      "iso3": [
-        "QAT",
-        "ISR"
-      ],
-      "eventType": "diplomatic.dispute",
-      "headline": "Qatar's PM accuses Netanyahu of war crimes, says Israel targets Qatar to deflect from Gaza war",
-      "summary": "In an interview with broadcaster Piers Morgan, Qatar's prime minister accused Israeli Prime Minister Netanyahu of war crimes and said Israel is targeting Qatar to deflect attention from the Gaza war.",
-      "confidenceScore": 0.55,
-      "confidenceLabel": "medium",
-      "coordinateQuality": "missing",
-      "tier": 3,
-      "tags": [
-        "aljazeera-english",
-        "storyline:f2a58b14"
-      ],
-      "geopoliticalScore": 5,
-      "economicImpactScore": 1
-    },
-    {
-      "id": "62f89b99a228ab6f81cb46b6",
-      "source": "rss_intelligence",
-      "eventDate": "2026-09-29",
-      "iso3": [
-        "ISR",
-        "PSE"
-      ],
-      "eventType": "other",
-      "headline": "Israeli settlers attack West Bank village, set fire to homes, block Palestinian family's return",
-      "summary": "Israeli settlers attacked a West Bank village, setting fire to two homes belonging to the al-Tubasi family and blocking their return home. Israeli security forces were also targeted by the settlers.",
-      "confidenceScore": 0.7,
-      "confidenceLabel": "medium",
-      "coordinateQuality": "missing",
-      "tier": 3,
-      "tags": [
-        "bbc-world",
-        "storyline:f2a58b14"
-      ],
-      "geopoliticalScore": 3.5,
-      "economicImpactScore": 0.5
-    },
-    {
-      "id": "0aab86726d89cb792feb1e1a",
-      "source": "rss_intelligence",
-      "eventDate": "2026-09-29",
-      "iso3": [
-        "SAU",
-        "IRN",
         "USA"
       ],
-      "eventType": "energy.disruption",
-      "headline": "Saudi Arabia resumes pipeline flows bypassing Hormuz, easing oil supply fears",
-      "summary": "Oil prices steadied after their biggest drop in more than a week following signs that Middle East supply has risen to near pre-war levels. Saudi Arabia resumed flows through a pipeline that avoids the Strait of Hormuz, easing market concerns over the ongoing US-Iran stalemate.",
-      "confidenceScore": 0.75,
-      "confidenceLabel": "high",
-      "coordinateQuality": "missing",
-      "tier": 2,
-      "tags": [
-        "bloomberg-markets",
-        "storyline:358ba15a"
-      ],
-      "geopoliticalScore": 6,
-      "economicImpactScore": 9
-    },
-    {
-      "id": "069b9a9ecd223f7aa0b90427",
-      "source": "rss_intelligence",
-      "eventDate": "2026-09-29",
-      "iso3": [
-        "MMR"
-      ],
-      "eventType": "conflict.armed",
-      "headline": "Myanmar military uses paragliders and gyrocopters to bomb rebel-held towns",
-      "summary": "Years after a coup, Myanmar's military is increasingly using motorized paragliders and gyrocopters to bomb towns and villages in rebel-held territory.",
+      "eventType": "economic.trade",
+      "headline": "Trump announces $200 billion South Korean energy investment deal ahead of US midterms",
+      "summary": "US President Donald Trump announced $200 billion in energy investments from South Korea, including $54 billion toward an Alaska LNG project and over $100 billion in planned nuclear power investments. The announcement comes ahead of US midterm elections.",
       "confidenceScore": 0.65,
       "confidenceLabel": "medium",
       "coordinateQuality": "missing",
-      "tier": 2,
-      "tags": [
-        "nytimes-world",
-        "storyline:d2eedf71"
-      ],
-      "geopoliticalScore": 3,
-      "economicImpactScore": 0.5
-    },
-    {
-      "id": "376c6efa881e4a0abf44baba",
-      "source": "rss_intelligence",
-      "eventDate": "2026-09-29",
-      "iso3": [
-        "TUR",
-        "USA",
-        "IRN",
-        "ISR"
-      ],
-      "eventType": "other",
-      "headline": "Turkey positions to expand regional influence as U.S. reduces Middle East footprint",
-      "summary": "Turkey is seeking to expand its regional influence in the Middle East as the United States signals a reduced footprint in the region, amid ongoing shocks from the 2023 Hamas-led attack on Israel and a seven-month war on Iran.",
-      "confidenceScore": 0.6,
-      "confidenceLabel": "medium",
-      "coordinateQuality": "missing",
       "tier": 3,
       "tags": [
-        "npr-news",
-        "storyline:f2a58b14"
-      ],
-      "geopoliticalScore": 5,
-      "economicImpactScore": 1
-    },
-    {
-      "id": "cd68b454f235287b5343c1c3",
-      "source": "rss_intelligence",
-      "eventDate": "2026-09-29",
-      "iso3": [
-        "UKR",
-        "RUS"
-      ],
-      "eventType": "economic.trade",
-      "headline": "Russian strikes inflict billions in economic damage on Ukraine",
-      "summary": "Russian strikes on Ukraine are causing billions of dollars in economic damage through lost sales, disrupted workdays, and logistical disruptions, as Russia wages what is described as a 'total war' on Ukraine's economy amid a stalled battlefield.",
-      "confidenceScore": 0.75,
-      "confidenceLabel": "high",
-      "coordinateQuality": "missing",
-      "tier": 2,
-      "tags": [
-        "nytimes-world",
-        "storyline:92143166"
-      ],
-      "geopoliticalScore": 5.5,
-      "economicImpactScore": 4
-    },
-    {
-      "id": "89e9516b3af0153b65c114e7",
-      "source": "rss_intelligence",
-      "eventDate": "2026-09-29",
-      "iso3": [
-        "EST",
-        "RUS"
-      ],
-      "eventType": "conflict.armed",
-      "headline": "Estonia says arson at drone maker Milrem Robotics was deliberate Russian attack",
-      "summary": "Estonian authorities said a fire that broke out in August at Milrem Robotics, a company manufacturing unmanned vehicles for Ukraine, was a deliberate act of sabotage orchestrated by Russia.",
-      "confidenceScore": 0.75,
-      "confidenceLabel": "high",
-      "coordinateQuality": "missing",
-      "tier": 2,
-      "tags": [
-        "nytimes-world",
-        "storyline:fba7c82c"
-      ],
-      "geopoliticalScore": 5,
-      "economicImpactScore": 2
-    },
-    {
-      "id": "26a5f50ab805982abd5d783e",
-      "source": "rss_intelligence",
-      "eventDate": "2026-09-29",
-      "iso3": [
-        "EST",
-        "RUS",
-        "UKR"
-      ],
-      "eventType": "conflict.armed",
-      "headline": "Estonia blames Russian security services for arson attack on Ukraine-supplying defense firm",
-      "summary": "Estonian authorities concluded that a mid-August arson attack on a defence company supplying military vehicles to Ukraine was sabotage commissioned by Russian security services. Foreign Minister Margus Tsahkna called the actions unacceptable and summoned Russia's charge d'affaires in Tallinn.",
-      "confidenceScore": 0.75,
-      "confidenceLabel": "high",
-      "coordinateQuality": "missing",
-      "tier": 2,
-      "tags": [
         "scmp-china",
-        "storyline:fba7c82c"
-      ],
-      "geopoliticalScore": 6,
-      "economicImpactScore": 2
-    },
-    {
-      "id": "bba264d84d474b8d75271c5a",
-      "source": "rss_intelligence",
-      "eventDate": "2026-09-29",
-      "iso3": [
-        "UKR",
-        "RUS"
-      ],
-      "eventType": "conflict.armed",
-      "headline": "Russian jet-powered drone strikes Ukraine's National Academy of Sciences in Kyiv, sparks fire",
-      "summary": "A Russian jet-powered drone struck Ukraine's National Academy of Sciences in Kyiv's city center, causing a fire. The Academy is described as the source of almost all of Ukraine's major scientific discoveries.",
-      "confidenceScore": 0.8,
-      "confidenceLabel": "high",
-      "coordinateQuality": "missing",
-      "tier": 2,
-      "tags": [
-        "nytimes-world",
-        "france24-english",
-        "storyline:fba7c82c"
-      ],
-      "geopoliticalScore": 5,
-      "economicImpactScore": 3
-    },
-    {
-      "id": "8c5fd0b86139b01b9a2938f2",
-      "source": "rss_intelligence",
-      "eventDate": "2026-09-29",
-      "iso3": [
-        "ISR",
-        "PSE"
-      ],
-      "eventType": "conflict.protest",
-      "headline": "Israeli settlers attack West Bank village, set homes on fire blocking Palestinian family's return",
-      "summary": "Israeli settlers attacked a village in the West Bank, setting fire to two homes belonging to the al-Tubasi family and blocking their return. Israeli security forces were also targeted by the settlers during the incident.",
-      "confidenceScore": 0.75,
-      "confidenceLabel": "high",
-      "coordinateQuality": "missing",
-      "tier": 2,
-      "tags": [
-        "bbc-world",
-        "france24-english",
-        "nytimes-world",
-        "storyline:f2a58b14"
-      ],
-      "geopoliticalScore": 5,
-      "economicImpactScore": 1
-    },
-    {
-      "id": "16a9517e9583eac7a8b4f5ba",
-      "source": "rss_intelligence",
-      "eventDate": "2026-09-29",
-      "iso3": [
-        "USA",
-        "CAN"
-      ],
-      "eventType": "economic.trade",
-      "headline": "US ban on Canadian alcohol and dairy imports takes effect amid escalating trade war",
-      "summary": "A US ban on Canadian alcohol and dairy products came into effect, marking the latest escalation in the Canada-US trade war after negotiations collapsed in late August with no timeline for resumed talks.",
-      "confidenceScore": 0.85,
-      "confidenceLabel": "high",
-      "coordinateQuality": "missing",
-      "tier": 2,
-      "tags": [
-        "bbc-world",
         "storyline:358ba15a"
       ],
-      "geopoliticalScore": 5,
+      "geopoliticalScore": 4.5,
       "economicImpactScore": 6
-    },
-    {
-      "id": "d773d7a5a10f653e59c647fa",
-      "source": "rss_intelligence",
-      "eventDate": "2026-09-29",
-      "iso3": [
-        "UKR",
-        "RUS"
-      ],
-      "eventType": "conflict.armed",
-      "headline": "Russian drone strike hits Kyiv's National Academy of Sciences amid arms export licensing dispute",
-      "summary": "Russian drones struck Ukraine's National Academy of Sciences in central Kyiv in a deadly daytime attack. Separately, Ukrainian arms producers warned that stringent export licensing rules are eroding their competitive edge as President Zelensky continues to seek more military aid from allies.",
-      "confidenceScore": 0.7,
-      "confidenceLabel": "medium",
-      "coordinateQuality": "missing",
-      "tier": 2,
-      "tags": [
-        "france24-english",
-        "nytimes-world",
-        "storyline:d2eedf71"
-      ],
-      "geopoliticalScore": 5,
-      "economicImpactScore": 3
-    },
-    {
-      "id": "ed5986a469154039e8f2eac0",
-      "source": "rss_intelligence",
-      "eventDate": "2026-09-29",
-      "iso3": [
-        "USA",
-        "IRN"
-      ],
-      "eventType": "economic.trade",
-      "headline": "Stocks fall as long-term yields hit 24-year high amid energy-driven inflation fears",
-      "summary": "US stocks and bonds declined together as long-term yields reached a 24-year high. A drop in oil prices failed to ease Wall Street concerns that elevated energy costs could fuel inflation and prompt Federal Reserve rate hikes.",
-      "confidenceScore": 0.8,
-      "confidenceLabel": "high",
-      "coordinateQuality": "missing",
-      "tier": 2,
-      "tags": [
-        "bloomberg-markets",
-        "storyline:358ba15a"
-      ],
-      "geopoliticalScore": 5,
-      "economicImpactScore": 9
-    },
-    {
-      "id": "86c0aeaf88440ff3416327af",
-      "source": "rss_intelligence",
-      "eventDate": "2026-09-29",
-      "iso3": [
-        "USA",
-        "CAN"
-      ],
-      "eventType": "economic.trade",
-      "headline": "US ban on Canadian alcohol and dairy imports takes effect amid trade war standoff",
-      "summary": "A US ban on Canadian alcohol and dairy products has taken effect, marking the latest escalation in the Canada-US trade war. Negotiations between the two countries collapsed in late August with no indication of when talks might resume.",
-      "confidenceScore": 0.8,
-      "confidenceLabel": "high",
-      "coordinateQuality": "missing",
-      "tier": 2,
-      "tags": [
-        "bbc-world"
-      ],
-      "geopoliticalScore": 5,
-      "economicImpactScore": 5
-    },
-    {
-      "id": "3fde51443645da68598f1d94",
-      "source": "rss_intelligence",
-      "eventDate": "2026-09-29",
-      "iso3": [
-        "USA"
-      ],
-      "eventType": "economic.trade",
-      "headline": "Wall Street stocks churn as long-term Treasury yields hit 24-year high on inflation fears",
-      "summary": "US stocks fluctuated as long-term Treasury yields reached a 24-year high, driven by concerns that elevated energy costs could fuel inflation and prompt further Federal Reserve rate hikes. A decline in oil prices did not ease market worries.",
-      "confidenceScore": 0.75,
-      "confidenceLabel": "high",
-      "coordinateQuality": "missing",
-      "tier": 3,
-      "tags": [
-        "bloomberg-markets"
-      ],
-      "geopoliticalScore": 3,
-      "economicImpactScore": 8
-    },
-    {
-      "id": "5353c6bb26f47477f88025e2",
-      "source": "rss_intelligence",
-      "eventDate": "2026-09-29",
-      "iso3": [
-        "UKR",
-        "RUS"
-      ],
-      "eventType": "conflict.armed",
-      "headline": "Russian drones strike Kyiv's National Academy of Sciences amid Ukrainian arms export debate",
-      "summary": "Russian drones struck Ukraine's National Academy of Sciences in central Kyiv in a deadly daytime attack. Separately, Ukrainian arms producers warn that stringent export licence rules are eroding their competitive edge, even as Zelensky continues to seek more military aid from allies.",
-      "confidenceScore": 0.7,
-      "confidenceLabel": "medium",
-      "coordinateQuality": "missing",
-      "tier": 2,
-      "tags": [
-        "france24-english"
-      ],
-      "geopoliticalScore": 5,
-      "economicImpactScore": 3
-    },
-    {
-      "id": "0b4b5e5f334d803b8c9fcee1",
-      "source": "rss_intelligence",
-      "eventDate": "2026-09-29",
-      "iso3": [
-        "ISR",
-        "PSE"
-      ],
-      "eventType": "conflict.protest",
-      "headline": "Over 100 Israeli settlers attack West Bank village, clash with Israeli forces",
-      "summary": "More than 100 Israeli settlers attacked a village in the northern occupied West Bank, wounding three Israeli security force members and burning two Palestinian homes. The attack occurred while the Israeli military was escorting a Palestinian family back to their home in the village.",
-      "confidenceScore": 0.75,
-      "confidenceLabel": "high",
-      "coordinateQuality": "missing",
-      "tier": 2,
-      "tags": [
-        "france24-english"
-      ],
-      "geopoliticalScore": 5,
-      "economicImpactScore": 1
-    },
-    {
-      "id": "0af01c008d3b924b4c6020ff",
-      "source": "rss_intelligence",
-      "eventDate": "2026-09-29",
-      "iso3": [
-        "VEN",
-        "USA"
-      ],
-      "eventType": "economic.trade",
-      "headline": "Trump administration brokers Venezuelan gold deals but US refiners refuse to process it",
-      "summary": "The Trump administration has brought Venezuelan gold to the United States and is brokering deals in the notoriously corrupt gold mining industry, including with a company the US deems a security threat. American refiners have refused to process the gold.",
-      "confidenceScore": 0.65,
-      "confidenceLabel": "medium",
-      "coordinateQuality": "missing",
-      "tier": 3,
-      "tags": [
-        "nytimes-world"
-      ],
-      "geopoliticalScore": 4,
-      "economicImpactScore": 3
-    },
-    {
-      "id": "55fa210bd9a8baebe8661dc0",
-      "source": "rss_intelligence",
-      "eventDate": "2026-09-29",
-      "iso3": [
-        "SAU",
-        "YEM"
-      ],
-      "eventType": "other",
-      "headline": "Saudi grand mufti calls fight against Houthis a religious duty, urges readiness",
-      "summary": "Saudi Arabia's grand mufti described the campaign against Yemen's Houthis as a religious duty and urged Saudi-led forces to remain in constant readiness, suggesting the kingdom could expand its campaign against the group.",
-      "confidenceScore": 0.7,
-      "confidenceLabel": "medium",
-      "coordinateQuality": "missing",
-      "tier": 2,
-      "tags": [
-        "nytimes-world"
-      ],
-      "geopoliticalScore": 5.5,
-      "economicImpactScore": 3
-    },
-    {
-      "id": "a6fac4d95956225a83be0498",
-      "source": "rss_intelligence",
-      "eventDate": "2026-09-29",
-      "iso3": [
-        "ISR",
-        "PSE"
-      ],
-      "eventType": "conflict.protest",
-      "headline": "Israeli settlers block soldiers from returning Palestinian family to West Bank home despite Supreme Court order",
-      "summary": "Israel's Supreme Court had ordered the military to ensure a West Bank Palestinian family that fled violence could return home, but Israeli settlers blocked the effort. Authorities were accused of not doing enough to confront the settlers.",
-      "confidenceScore": 0.7,
-      "confidenceLabel": "medium",
-      "coordinateQuality": "missing",
-      "tier": 3,
-      "tags": [
-        "nytimes-world"
-      ],
-      "geopoliticalScore": 4,
-      "economicImpactScore": 0
-    },
-    {
-      "id": "22c93a69755c1b961ff77f53",
-      "source": "rss_intelligence",
-      "eventDate": "2026-09-29",
-      "iso3": [
-        "UKR",
-        "RUS"
-      ],
-      "eventType": "conflict.armed",
-      "headline": "Russian drone strike hits Ukraine's National Academy of Sciences",
-      "summary": "A Russian drone struck facilities of Ukraine's National Academy of Sciences, an institution credited with over 90 percent of Ukraine's scientific discoveries including astronomy and military technology research.",
-      "confidenceScore": 0.7,
-      "confidenceLabel": "medium",
-      "coordinateQuality": "missing",
-      "tier": 3,
-      "tags": [
-        "nytimes-world"
-      ],
-      "geopoliticalScore": 4,
-      "economicImpactScore": 1
     }
   ]
 }

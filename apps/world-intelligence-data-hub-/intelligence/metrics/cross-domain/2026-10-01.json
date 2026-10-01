@@ -1,14 +1,14 @@
 {
-  "date": "2026-09-30",
-  "generatedAt": "2026-09-30T14:14:54.056Z",
+  "date": "2026-10-01",
+  "generatedAt": "2026-10-01T14:16:36.871Z",
   "observationWindowDays": 14,
   "storylineBenchmarkLinks": [
     {
       "storylineId": "f2a58b1471ba7b29",
       "storylineTitle": "Israeli settlers block soldiers from returning Palestinian family to West Bank home despite Supreme Court order",
       "storylineState": "active",
-      "daysActive": 1,
-      "avgEscalation": 0.448,
+      "daysActive": 2,
+      "avgEscalation": 0.465,
       "maxSeverity": 4,
       "countries": [
         "SAU",
@@ -22,7 +22,9 @@
         "PSE",
         "CHN",
         "PAK",
-        "VEN"
+        "VEN",
+        "AFG",
+        "TWN"
       ],
       "eventTypes": [
         "diplomatic_incident",
@@ -35,7 +37,8 @@
         "protest",
         "military_exercise",
         "other",
-        "terrorist_attack"
+        "terrorist_attack",
+        "nuclear_incident"
       ],
       "linkedBenchmarks": [
         "brent_crude",
@@ -50,8 +53,8 @@
       "storylineId": "358ba15acb308302",
       "storylineTitle": "US inflation gauge (PCE) rises less than expected, easing October rate-hike bets",
       "storylineState": "active",
-      "daysActive": 1,
-      "avgEscalation": 0.347,
+      "daysActive": 2,
+      "avgEscalation": 0.339,
       "maxSeverity": 3,
       "countries": [
         "USA",
@@ -60,7 +63,8 @@
         "SAU",
         "CHN",
         "IRQ",
-        "IND"
+        "IND",
+        "KOR"
       ],
       "eventTypes": [
         "trade_dispute",
@@ -81,11 +85,37 @@
       ]
     },
     {
-      "storylineId": "fba7c82c29aec416",
-      "storylineTitle": "US completes final troop withdrawal from Iraq, ending decade-long anti-IS mission",
+      "storylineId": "921431667e639327",
+      "storylineTitle": "Russia launches largest attack on Ukraine's energy infrastructure since spring, hitting 11 regions",
       "storylineState": "active",
-      "daysActive": 1,
-      "avgEscalation": 0.526,
+      "daysActive": 6,
+      "avgEscalation": 0.52,
+      "maxSeverity": 4,
+      "countries": [
+        "UKR",
+        "RUS"
+      ],
+      "eventTypes": [
+        "energy_infrastructure",
+        "economic_data_release",
+        "commodity_price_move"
+      ],
+      "linkedBenchmarks": [
+        "brent_crude",
+        "wti_crude",
+        "henry_hub"
+      ],
+      "linkStrength": 0.5,
+      "linkReasons": [
+        "energy_event_type:energy_infrastructure,commodity_price_move"
+      ]
+    },
+    {
+      "storylineId": "fba7c82c29aec416",
+      "storylineTitle": "Russian drone strikes hit school and bridge in Kyiv",
+      "storylineState": "active",
+      "daysActive": 2,
+      "avgEscalation": 0.527,
       "maxSeverity": 4,
       "countries": [
         "RUS",
@@ -97,7 +127,8 @@
         "GBR",
         "IRN",
         "USA",
-        "IRQ"
+        "IRQ",
+        "JPN"
       ],
       "eventTypes": [
         "military_exercise",
@@ -192,31 +223,6 @@
       "linkStrength": 0.25,
       "linkReasons": [
         "geopolitical_event_in_energy_region:RUS"
-      ]
-    },
-    {
-      "storylineId": "921431667e639327",
-      "storylineTitle": "Russia launches largest attack on Ukraine's energy infrastructure since spring, hitting 11 regions",
-      "storylineState": "active",
-      "daysActive": 5,
-      "avgEscalation": 0.55,
-      "maxSeverity": 4,
-      "countries": [
-        "UKR",
-        "RUS"
-      ],
-      "eventTypes": [
-        "energy_infrastructure",
-        "economic_data_release"
-      ],
-      "linkedBenchmarks": [
-        "brent_crude",
-        "wti_crude",
-        "henry_hub"
-      ],
-      "linkStrength": 0.25,
-      "linkReasons": [
-        "energy_event_type:energy_infrastructure"
       ]
     },
     {
@@ -598,6 +604,35 @@
       "eventCount": 17,
       "supplyDisruptionCount": 0,
       "energyEventCount": 3,
+      "hormuzEventCount": 2,
+      "benchmarkDailyChange": [
+        {
+          "benchmarkId": "brent_crude",
+          "price": null,
+          "priorPrice": null,
+          "changePct": null
+        },
+        {
+          "benchmarkId": "wti_crude",
+          "price": null,
+          "priorPrice": null,
+          "changePct": null
+        },
+        {
+          "benchmarkId": "henry_hub",
+          "price": null,
+          "priorPrice": null,
+          "changePct": null
+        }
+      ]
+    },
+    {
+      "date": "2026-10-01",
+      "maxEscalation": 0.7,
+      "avgEscalation": 0.469,
+      "eventCount": 13,
+      "supplyDisruptionCount": 0,
+      "energyEventCount": 1,
       "hormuzEventCount": 2,
       "benchmarkDailyChange": [
         {
@@ -1008,13 +1043,91 @@
           "deltaAfter": null
         }
       ]
+    },
+    {
+      "eventId": "663b3a2ff5a6289d1644d9e8",
+      "eventDate": "2026-10-01",
+      "eventType": "armed_conflict",
+      "eventTitle": "Houthis gain upper hand against Saudi Arabia amid lack of international support",
+      "countries": [
+        "SAU",
+        "YEM",
+        "IRN"
+      ],
+      "escalationPotential": 0.6,
+      "chokepointLabel": "hormuz",
+      "benchmarkResponses": [
+        {
+          "benchmarkId": "brent_crude",
+          "priceAtEvent": null,
+          "price3dBefore": null,
+          "price3dAfter": null,
+          "deltaBefore": null,
+          "deltaAfter": null
+        },
+        {
+          "benchmarkId": "wti_crude",
+          "priceAtEvent": null,
+          "price3dBefore": null,
+          "price3dAfter": null,
+          "deltaBefore": null,
+          "deltaAfter": null
+        },
+        {
+          "benchmarkId": "henry_hub",
+          "priceAtEvent": null,
+          "price3dBefore": null,
+          "price3dAfter": null,
+          "deltaBefore": null,
+          "deltaAfter": null
+        }
+      ]
+    },
+    {
+      "eventId": "f5fc57821e74d3df0a23c707",
+      "eventDate": "2026-10-01",
+      "eventType": "military_exercise",
+      "eventTitle": "US Himars missile shortfalls raise stakes for potential Taiwan Strait conflict",
+      "countries": [
+        "TWN",
+        "USA",
+        "CHN"
+      ],
+      "escalationPotential": 0.4,
+      "chokepointLabel": "strait",
+      "benchmarkResponses": [
+        {
+          "benchmarkId": "brent_crude",
+          "priceAtEvent": null,
+          "price3dBefore": null,
+          "price3dAfter": null,
+          "deltaBefore": null,
+          "deltaAfter": null
+        },
+        {
+          "benchmarkId": "wti_crude",
+          "priceAtEvent": null,
+          "price3dBefore": null,
+          "price3dAfter": null,
+          "deltaBefore": null,
+          "deltaAfter": null
+        },
+        {
+          "benchmarkId": "henry_hub",
+          "priceAtEvent": null,
+          "price3dBefore": null,
+          "price3dAfter": null,
+          "deltaBefore": null,
+          "deltaAfter": null
+        }
+      ]
     }
   ],
   "summary": {
     "totalActiveStorylines": 15,
     "energyLinkedStorylines": 7,
     "escalatingLinked": 1,
-    "avgEscalationLinked": 0.454,
+    "avgEscalationLinked": 0.451,
     "supplyDisruptionsRecent": 0,
     "energyEventsRecent": 4,
     "hormuzEventsRecent": 1,
@@ -1039,7 +1152,7 @@
         "daysWithPairedData": 0
       }
     ],
-    "pairedObservationDays": 2,
+    "pairedObservationDays": 3,
     "avgMaxEscalation": 0.7,
     "maxSingleDayEscalation": 0.7,
     "maxSingleDayPriceChangePct": null
