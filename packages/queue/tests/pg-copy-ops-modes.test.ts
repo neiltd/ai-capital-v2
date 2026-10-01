@@ -41,7 +41,8 @@ import {
   HOLD_RETRY_INTERVAL_MS, PRE_RELEASE_OUTCOME, PRODUCER_AUTHORITY, REHEARSAL_OUTCOME, REHEARSAL_PREFIX,
   RESTORATION_PREFIX, REVIEW_PREFIX, isEntryPoint,
   MEASURED_IDENTITY_COLUMNS, MEASURED_IDENTITY_SQL, OPTIONS, OpsRefused,
-  censusFromProver, freshCopyBindingFrom, measureIdentity, parseArgs, processHold,
+  censusFromProver, freshCopyBindingFrom, measureIdentity, measuredCopyBinding,
+  parseArgs, processHold,
   readStage1Authority, acceptExistingRecord, attemptRunId, freezeRecord,
   holdRecordFileSet, DETAIL_FILE,
   type FrozenRecord, type HoldInputs,
@@ -50,6 +51,39 @@ import {
   readFencedCensus, verifyRehearsalChain,
   type FenceLike, type OpsDeps,
 } from '../bin/pg-copy-ops.js'
+
+/**
+ * THE COPY BINDING, EXERCISED DIRECTLY.
+ *
+ * `--inspect --for=apply` was how these properties used to be reached, and
+ * K7-B6.1 retires it: the production apply derives its binding from the
+ * Stage-1 bundle it publishes inside its own fenced process, so a token minted
+ * in an earlier process over an earlier bundle could only ever name a
+ * different copy. The BINDING's behaviour is unchanged and still governs the
+ * real apply, so these tests call it instead of the retired mode rather than
+ * being deleted along with it.
+ */
+/**
+ * A `FenceLike` stub. K7-B6.2 Phase F declared the capabilities the real
+ * `PsqlBackend` always had - `pid`, `rows`, `alive` - so the production
+ * supervisor satisfies `SupervisorSession` without a cast. Stubs state the
+ * behaviour they are about and inherit the rest.
+ */
+const fenceStub = (over: Partial<FenceLike> = {}): FenceLike => ({
+  pid: '41512',
+  send: async () => ({ rows: [] as string[][], error: null }),
+  rows: async () => [] as string[][],
+  close: async () => undefined,
+  alive: () => true,
+  ...over,
+})
+
+const bindingOf = async (
+  w: World, bundleDir: string, over: Partial<OpsDeps> = {},
+): ReturnType<typeof measuredCopyBinding> =>
+  await measuredCopyBinding(
+    parseArgs(base(w, ['--inspect', '--for=rehearse', ...applyScope(bundleDir)])).values,
+    deps(w, over), '/tmp/s')
 import { RELEASE_GATE_PREFIX } from '@common/db/pg-copy'
 import {
   openReviewedFileDescriptor, proveReviewedFileMetadata,
@@ -295,13 +329,40 @@ describe('--inspect', () => {
     expect(readdirSync(w.evidence)).toEqual([])
   })
 
-  it('refuses an apply inspection with no reviewed rehearsal', async () => {
+  // K7-B6.1 PHASE F1: THE APPLY INSPECTION IS RETIRED, NOT RELAXED.
+  //
+  // A separately minted apply token named a bundle from an earlier process,
+  // while the production apply now creates the only bundle it may bind to
+  // inside its own fence. The two could never be the same copy, so a token
+  // that still looked like authority was the hazard - not a missing feature.
+  it('refuses --for=apply outright, and mints no apply token', async () => {
     const w = await ready()
-    const r = await runOpsCli(base(w, ['--for=apply', '--inspect']), deps(w))
-    expect(r.exitCode).toBe(EXIT_REFUSED)
-    expect(r.lines.join('\n')).toMatch(/reviewed rehearsal that has been observed/)
+    for (const extra of [[], ['--rehearsal-authorization=' + w.authorization]]) {
+      const r = await runOpsCli(base(w, ['--for=apply', '--inspect', ...extra]), deps(w))
+      expect(r.exitCode).toBe(EXIT_REFUSED)
+      expect(r.lines.join('\n')).toMatch(/only --for=rehearse is inspectable/)
+      // NO TOKEN OF EITHER SPECIES, and no copy binding line.
+      expect(r.lines.join('\n')).not.toContain('PGCOPY-APPLY-')
+      expect(r.lines.join('\n')).not.toContain('PGCOPY-REHEARSE-')
+      expect(r.lines.some(l => l.startsWith('copy binding '))).toBe(false)
+    }
   })
 })
+
+/**
+ * The source with `runProductionApply` removed, for the guards that must hold
+ * of every OTHER path in this CLI. It REFUSES rather than returning the whole
+ * file if the function cannot be delimited - a guard that silently widens to
+ * "no text removed" would pass for the wrong reason.
+ */
+function withoutProductionApply(src: string): string {
+  const open = src.indexOf('export async function runProductionApply(')
+  if (open < 0) throw new Error('runProductionApply not found: rescope this guard')
+  const rest = src.slice(open + 1)
+  const nextExport = rest.search(/\nexport (async function|function|const) /)
+  if (nextExport < 0) throw new Error('runProductionApply end not found: rescope this guard')
+  return src.slice(0, open) + src.slice(open + 1 + nextExport)
+}
 
 describe('--rehearse', () => {
   it('proves the world, publishes IN ORDER, releases, and stops short of finished',
@@ -398,9 +459,30 @@ describe('--rehearse', () => {
     await runOpsCli(rehearseArgs(w, token), deps(w))
     const src = strip(readFileSync(
       new URL('../bin/pg-copy-ops.ts', import.meta.url), 'utf-8'))
-    for (const forbidden of ['runApply', 'runStage2', 'openStageTarget',
+    // THESE STAY FORBIDDEN EVERYWHERE. This CLI never runs Stage 2 itself and
+    // never writes SQL of its own to a target: the authorized apply HANDS the
+    // reviewed lifecycle the openers and lets IT do the writing.
+    for (const forbidden of ['runApply', 'runStage2',
                              'BEGIN READ WRITE', 'ALTER SEQUENCE', 'TARGET_COMMIT_SQL']) {
       expect(src, forbidden).not.toContain(forbidden)
+    }
+    // THE STAGE OPENERS ARE THE AUTHORIZED APPLY'S ALONE. Before K7-B6 no
+    // apply path existed and this was a whole-file ban; the ban is what
+    // mattered for the REHEARSAL, so it is now scoped to everything outside
+    // `runProductionApply` rather than dropped because one caller appeared.
+    const outside = withoutProductionApply(src)
+    // THE EXCISION ACTUALLY HAPPENED. Without this the guard below would still
+    // pass if `withoutProductionApply` quietly returned the whole file. The
+    // CALL SITE stays - the `--apply` branch is outside the function and is
+    // supposed to reference it; what must be gone is the BODY.
+    expect(outside.length).toBeLessThan(src.length)
+    // A CODE marker, not a comment: `strip` removes comments, so a comment
+    // tripwire silently reports "not present" for the wrong reason.
+    expect(src).toContain('restorationAuthority')
+    expect(outside).not.toContain('restorationAuthority')
+    for (const forbidden of ['openStageTarget', 'openStageSource',
+                             'openVerifyTarget', 'openVerifySource']) {
+      expect(outside, forbidden).not.toContain(forbidden)
     }
   })
 
@@ -828,52 +910,25 @@ describe('--review-rehearsal and --apply', () => {
     expect(r.exitCode).toBe(EXIT_REFUSED)
   })
 
-  it('an apply inspection recomputes a NON-NULL copy binding', async () => {
-    // K1.1-M20. An apply token over a null copy binding binds the operational
+  it('builds a NON-NULL copy binding over the named bundle', async () => {
+    // K1.1-M20. A confirmation over a null copy binding binds the operational
     // world and leaves the thing being copied unnamed - which is every field an
-    // operator most needs the token to cover.
+    // operator most needs the token to cover. The MINT moved into the fenced
+    // apply (K7-B6.1 F1); the requirement that the binding exist and be
+    // well-formed did not move, so it is asserted where it now lives.
     const w = await ready()
-    await rehearseAndRestore(w)
-    expect((await runOpsCli(reviewArgs(w), deps(w))).exitCode).toBe(EXIT_OK)
-    const bundleDir = stage1Bundle(w)
-    const r = await runOpsCli(base(w, [
-      '--for=apply', '--inspect',
-      `--reviewed-rehearsal=${join(w.evidence, `${REVIEW_PREFIX}-${STAMP}-${RUN_ID}`)}`,
-      `--operational-rehearsal-bundle=${join(w.evidence, `${REHEARSAL_PREFIX}-${STAMP}-${RUN_ID}`)}`,
-      `--producer-restoration-bundle=${join(w.evidence, `${RESTORATION_PREFIX}-${STAMP}-${RUN_ID}`)}`,
-      ...applyScope(bundleDir),
-    ]), deps(w))
-    expect(r.exitCode, r.lines.join('\n')).toBe(EXIT_OK)
-    const copy = r.lines.find(l => l.startsWith('copy binding '))
-    expect(copy).toBeDefined()
-    expect((copy as string).slice('copy binding '.length)).toMatch(/^[0-9a-f]{64}$/)
-    const token = r.lines.find(l => l.startsWith('confirmation '))
-    expect((token as string)).toContain('PGCOPY-APPLY-')
+    const built = await bindingOf(w, stage1Bundle(w))
+    expect(built.digest).toMatch(/^[0-9a-f]{64}$/)
+    expect(built.binding.bundleName.length).toBeGreaterThan(0)
+    expect(built.stage1.copySet.length).toBeGreaterThan(0)
   })
 
-  it('refuses an apply inspection whose copy binding cannot be built', async () => {
+  it('refuses to build a copy binding over a bundle that does not verify', async () => {
     const w = await ready()
-    await rehearseAndRestore(w)
-    expect((await runOpsCli(reviewArgs(w), deps(w))).exitCode).toBe(EXIT_OK)
-    const common = [
-      `--reviewed-rehearsal=${join(w.evidence, `${REVIEW_PREFIX}-${STAMP}-${RUN_ID}`)}`,
-      `--operational-rehearsal-bundle=${join(w.evidence, `${REHEARSAL_PREFIX}-${STAMP}-${RUN_ID}`)}`,
-      `--producer-restoration-bundle=${join(w.evidence, `${RESTORATION_PREFIX}-${STAMP}-${RUN_ID}`)}`,
-    ]
-    // NO BUNDLE AT ALL.
-    const missing = await runOpsCli(
-      base(w, ['--for=apply', '--inspect', ...common]), deps(w))
-    expect(missing.exitCode).toBe(EXIT_REFUSED)
-    expect(missing.lines.join('\n')).not.toContain('PGCOPY-APPLY-')
-    // A BUNDLE THAT DOES NOT VERIFY.
+    // A DIRECTORY THAT IS NOT A PUBLISHED BUNDLE.
     const bad = join(w.dir, 'not-a-bundle')
     mkdirSync(bad)
-    const broken = await runOpsCli(base(w, [
-      '--for=apply', '--inspect', ...common, ...applyScope(bad),
-    ]), deps(w))
-    expect(broken.exitCode).toBe(EXIT_REFUSED)
-    expect(broken.lines.join('\n')).toMatch(/does not verify/)
-    expect(broken.lines.join('\n')).not.toContain('PGCOPY-APPLY-')
+    await expect(bindingOf(w, bad)).rejects.toThrow(/does not verify/)
   })
 
   it('refuses an apply whose review names evidence that was replaced', async () => {
@@ -896,7 +951,13 @@ describe('--review-rehearsal and --apply', () => {
     expect(r.exitCode).toBe(EXIT_REFUSED)
   })
 
-  it('refuses an apply truthfully, and opens nothing', async () => {
+  // K7-B6: THIS TEST CHANGED MEANING, and was not deleted for failing. It used
+  // to prove that `--apply` refused because production apply was out of scope.
+  // K7-B6 authorized that path, so the out-of-scope refusal and its prose are
+  // gone. What is still worth holding is that an apply given NO driver
+  // credential refuses on that, having done nothing through the supervisor -
+  // and that it no longer mis-describes its own scope or the rehearsal.
+  it('refuses an apply that names no driver credential, having done nothing', async () => {
     const w = await ready()
     await rehearseAndRestore(w)
     expect((await runOpsCli(reviewArgs(w), deps(w))).exitCode).toBe(EXIT_OK)
@@ -907,21 +968,67 @@ describe('--review-rehearsal and --apply', () => {
       `--reviewed-rehearsal=${join(w.evidence, `${REVIEW_PREFIX}-${STAMP}-${RUN_ID}`)}`,
       `--operational-rehearsal-bundle=${join(w.evidence, `${REHEARSAL_PREFIX}-${STAMP}-${RUN_ID}`)}`,
       `--producer-restoration-bundle=${join(w.evidence, `${RESTORATION_PREFIX}-${STAMP}-${RUN_ID}`)}`,
+      // NO --bundle-dir: a production apply creates the only bundle it may
+      // bind to. `applyScope` still supplies the target selectors.
+      ...applyScope(bundleDir).filter(a => !a.startsWith('--bundle-dir=')),
+    ]), deps(w, {
+      openSupervisor: async () => sup,
+      // K7-B: `--apply` now PREFLIGHTS THE OPERATOR CHANNEL FIRST, before any
+      // session, Redis command or launchctl call - because a preflight that
+      // fails after the fence is taken leaves a held source with nobody able to
+      // tell this process to let go. This suite has no terminal, so without a
+      // channel the run would refuse on the preflight and never reach the
+      // truthful refusal below. A satisfied channel is injected so the rest of
+      // the path is still exercised; the preflight's own refusal is proved in
+      // `pg-copy-apply-ordering.test.ts`.
+      operatorChannel: () => ({
+        preflight: () => undefined,
+        arm: () => () => undefined,
+        nextLine: async () => '',
+        close: () => undefined,
+      }),
+    }))
+    const text = r.lines.join('\n')
+    expect(r.exitCode).toBe(EXIT_REFUSED)
+    // NOTHING WAS DONE THROUGH THE SUPERVISOR. The refusal lands before any
+    // fence, stage or lifecycle call.
+    expect(sup.seen).toEqual([])
+    // IT REFUSES FOR THE ACTUAL REASON, and names the option rather than a
+    // credential, a path or a digest.
+    expect(text).toContain('a required option is missing')
+    expect(text).toContain('--export-driver-credential')
+    // K1.1-M22. IT NO LONGER CLAIMS THE REHEARSAL HAS NOT BEEN RUN, in a branch
+    // that is only reached when a review proving one has just verified.
+    expect(text).not.toMatch(/rehearsal itself has not|has not been run/)
+    // AND IT NO LONGER CALLS THE AUTHORIZED PATH UNIMPLEMENTED.
+    expect(text).not.toContain('out of scope in this milestone')
+    // IT VERIFIED THE REVIEWED CHAIN, which is pre-fence work.
+    expect(text).toContain('reviewed rehearsal ')
+    // AND MEASURED NO BINDING, because K7-B6.1 Phase B derives it from the
+    // bundle STAGE 1 PUBLISHES - so a refusal this early cannot have touched
+    // a target identity session, and says nothing about a copy binding.
+    expect(text).not.toMatch(/^copy binding /m)
+    expect(text).not.toContain('stage 1 ')
+  })
+
+  it('PREFLIGHTS THE CHANNEL FIRST: no terminal means nothing is opened at all', async () => {
+    // The companion to the case above. With no terminal and no resolution file
+    // the apply must refuse on the channel, and the truthful
+    // target-identity sentence must NOT appear - because no target session was
+    // ever measured.
+    const w = await ready()
+    const sup = supervisorStub()
+    const bundleDir = stage1Bundle(w)
+    const r = await runOpsCli(base(w, [
+      '--apply',
+      `--reviewed-rehearsal=${join(w.evidence, `${REVIEW_PREFIX}-${STAMP}-${RUN_ID}`)}`,
       ...applyScope(bundleDir),
     ]), deps(w, { openSupervisor: async () => sup }))
     expect(r.exitCode).toBe(EXIT_REFUSED)
     expect(sup.seen).toEqual([])
     const text = r.lines.join('\n')
-    // NOT "NO TARGET CONNECTION WAS OPENED". Measuring the copy binding opens
-    // a read-only target identity session and closes it; the honest claim is
-    // about what was DONE through it, which is nothing.
-    expect(text).toContain('read-only target identity session was opened and closed')
-    expect(text).toContain('No write, no target mutation and no production')
-    expect(text).not.toContain('No target connection was opened')
-    // K1.1-M22. IT NO LONGER CLAIMS THE REHEARSAL HAS NOT BEEN RUN, in a branch
-    // that is only reached when a review proving one has just verified.
-    expect(text).not.toMatch(/rehearsal itself has not|has not been run/)
-    expect(text).toContain('out of scope in this milestone')
+    expect(text).toMatch(/needs a terminal on stdin AND stdout, or a --resolution-file/)
+    expect(text).not.toContain('read-only target identity session was opened and closed')
   })
 })
 
@@ -1606,7 +1713,7 @@ describe('the release census counts locks', () => {
     const at = async (count: string | null, locks?: string[][]): Promise<CensusResult> => {
       const base = proverStub(locks === undefined ? {} : { locks })
       const original = base.send
-      return await censusFromProver({
+      return await censusFromProver(fenceStub({
         send: async (sql: string) => {
           if (sql.includes('pg_catalog.count(*)')) {
             if (count === null) return { rows: [], error: 'statement-refused' as const }
@@ -1615,7 +1722,7 @@ describe('the release census counts locks', () => {
           return await original(sql)
         },
         close: () => base.close(),
-      }, fence)
+      }), fence)
     }
     expect((await at('0')).census).toBe('zero-locks-proved')
     expect((await at('0')).state).toBe('released')
@@ -1638,10 +1745,7 @@ describe('the release census counts locks', () => {
       expect((await censusFromProver(goneProver(), fence)).census).toBe('supervisor-gone')
       const reused = proverStub({ observedStart: '2026-09-25 12:00:00+00' })
       expect((await censusFromProver(reused, fence)).census).toBe('pid-reused')
-      const dead: FenceLike = {
-        send: async () => { throw new Error('gone') },
-        close: async () => undefined,
-      }
+      const dead = fenceStub({ send: async () => { throw new Error('gone') } })
       expect((await censusFromProver(dead, fence)).census).toBe('census-unavailable')
       // AND ONLY THE FIRST TWO RESOLVE A HOLD.
       expect((await censusFromProver(goneProver(), fence)).state).toBe('released')
@@ -1772,14 +1876,11 @@ describe('the copy binding is measured', () => {
     const w = await ready()
     const common = await chain(w)
     const bundleDir = stage1Bundle(w)
-    const run = async (over: Partial<OpsDeps>): Promise<string | undefined> => {
-      const r = await runOpsCli(base(w, [
-        '--for=apply', '--inspect', ...common, ...applyScope(bundleDir),
-      ]), deps(w, over))
-      return r.lines.find(l => l.startsWith('copy binding '))
-    }
+    expect(common.length).toBeGreaterThan(0)
+    const run = async (over: Partial<OpsDeps>): Promise<string> =>
+      (await bindingOf(w, bundleDir, over)).digest
     const asMeasured = await run({})
-    expect(asMeasured).toBeDefined()
+    expect(asMeasured).toMatch(/^[0-9a-f]{64}$/)
 
     // A DIFFERENT TARGET CLUSTER PRODUCES A DIFFERENT BINDING, because the
     // binding is what the target session said it was.
@@ -1788,25 +1889,30 @@ describe('the copy binding is measured', () => {
     })
     expect(otherCluster).not.toBe(asMeasured)
 
-    // AND SO DOES A DIFFERENT MEASURED PROVENANCE.
-    const otherHead = await run({
+    // A PROVENANCE THE BUNDLE DOES NOT RECORD IS REFUSED, not bound.
+    //
+    // THIS ASSERTION USED TO PASS VACUOUSLY. Driven through the retired
+    // inspection, the mismatch refused, `lines.find('copy binding ')` returned
+    // `undefined`, and `expect(undefined).not.toBe(<digest>)` held - so the
+    // test claimed "a different provenance yields a different binding" while
+    // actually observing a refusal and no binding at all. Calling the binding
+    // directly makes the real behaviour visible, and the real behaviour is
+    // stricter than the test used to describe.
+    await expect(bindingOf(w, bundleDir, {
       measureRepository: async () => ({ head: 'a'.repeat(40), ingestionGitlink: '1'.repeat(40) }),
-    })
-    expect(otherHead).not.toBe(asMeasured)
+    })).rejects.toThrow(/checkout is not the one the Stage-1 bundle records/)
   })
 
   it('refuses when the live source is not the one the bundle describes', async () => {
     const w = await ready()
     const common = await chain(w)
     const bundleDir = stage1Bundle(w)
-    const r = await runOpsCli(base(w, [
-      '--for=apply', '--inspect', ...common, ...applyScope(bundleDir),
-    ]), deps(w, {
+    expect(common.length).toBeGreaterThan(0)
+    // REFUSES BY THROWING, now that it is called directly rather than through
+    // a mode that turned the refusal into an exit code and a printed line.
+    await expect(bindingOf(w, bundleDir, {
       openSourceIdentity: async () => sourceIdentity({ 1: 'somewhere_else' }),
-    }))
-    expect(r.exitCode).toBe(EXIT_REFUSED)
-    expect(r.lines.join('\n')).toMatch(/not the one the Stage-1 bundle describes/)
-    expect(r.lines.join('\n')).not.toContain('PGCOPY-APPLY-')
+    })).rejects.toThrow(/not the one the Stage-1 bundle describes/)
   })
 
   it('refuses when a measurement is unavailable, and mints no token', async () => {
@@ -1817,15 +1923,13 @@ describe('the copy binding is measured', () => {
       ['no source session', { openSourceIdentity: undefined }],
       ['no target session', { openTargetIdentity: undefined }],
       ['source refuses', {
-        openSourceIdentity: async () => ({
-          send: async () => ({ rows: [], error: 'statement-refused' as const }),
-          close: async () => undefined,
+        openSourceIdentity: async () => fenceStub({
+          send: async () => ({ rows: [] as string[][], error: 'statement-refused' as const }),
         }),
       }],
       ['target answers short', {
-        openTargetIdentity: async () => ({
-          send: async () => ({ rows: [['1']], error: null }),
-          close: async () => undefined,
+        openTargetIdentity: async () => fenceStub({
+          send: async () => ({ rows: [['1']] as string[][], error: null }),
         }),
       }],
       ['repository unreadable', {
@@ -2182,22 +2286,11 @@ describe('the copy binding binds every measured field', () => {
     // target whose database is different - and "which database" is the single
     // question an apply token most needs to answer.
     const w = await ready()
-    await rehearseAndRestore(w)
-    expect((await runOpsCli(reviewArgs(w), deps(w))).exitCode).toBe(EXIT_OK)
-    const common = [
-      `--reviewed-rehearsal=${join(w.evidence, `${REVIEW_PREFIX}-${STAMP}-${RUN_ID}`)}`,
-      `--operational-rehearsal-bundle=${join(w.evidence, `${REHEARSAL_PREFIX}-${STAMP}-${RUN_ID}`)}`,
-      `--producer-restoration-bundle=${join(w.evidence, `${RESTORATION_PREFIX}-${STAMP}-${RUN_ID}`)}`,
-    ]
     const bundleDir = stage1Bundle(w)
-    const digestFor = async (over: Partial<Record<number, string>>): Promise<string> => {
-      const r = await runOpsCli(base(w, [
-        '--for=apply', '--inspect', ...common, ...applyScope(bundleDir),
-      ]), deps(w, { openTargetIdentity: async () => targetIdentity(over) }))
-      const line = r.lines.find(l => l.startsWith('copy binding '))
-      expect(line, r.lines.join('\n')).toBeDefined()
-      return (line as string).slice('copy binding '.length)
-    }
+    const digestFor = async (over: Partial<Record<number, string>>): Promise<string> =>
+      (await bindingOf(w, bundleDir, {
+        openTargetIdentity: async () => targetIdentity(over),
+      })).digest
     const baseline = await digestFor({})
     // ONE FIELD AT A TIME. Every one of them must move the digest.
     expect(await digestFor({ 0: '7689229024919775000' })).not.toBe(baseline)
@@ -2479,8 +2572,11 @@ describe('the real TTY survives more than one attempt', () => {
   it('does not consume the channel with a break out of an iterator', () => {
     const src = strip(readFileSync(
       new URL('../bin/pg-copy-ops.ts', import.meta.url), 'utf-8'))
-    const fn = src.slice(src.indexOf('export function processHold'),
-                         src.indexOf('function readResolutionFile'))
+    // K7-B: THE SAME PROPERTY, AT ITS NEW ADDRESS. The interface now lives in
+    // `operatorChannel`, the transport `processHold` and the copy confirmation
+    // share, so every assertion below moved with it rather than being dropped.
+    const fn = src.slice(src.indexOf('export function operatorChannel'),
+                         src.indexOf('export const COPY_CONFIRM_ACTION'))
     expect(fn).toContain('createInterface({ input: process.stdin')
     // ONE INTERFACE FOR THE WHOLE HOLD, created lazily and reused.
     expect(fn).toContain('if (lines === null)')
@@ -2488,10 +2584,28 @@ describe('the real TTY survives more than one attempt', () => {
     // NOT `for await (const c of process.stdin)` with a `break`.
     expect(fn).not.toContain('for await')
     expect(fn).not.toContain('chunks')
-    // AND CLOSED ON DISARM, not after a line.
+    // `rl.close()` exists in exactly one place - the transport's own `close`.
     expect(fn).toContain('rl.close()')
-    expect(fn.indexOf('for (const sig of HELD_SIGNALS) process.off'))
-      .toBeLessThan(fn.indexOf('rl.close()'))
+    // AND THE TRANSPORT'S DISARM NO LONGER CLOSES. K7-B needs a confirmation
+    // that can disarm and then hand the SAME channel to an intervention hold,
+    // so closing on disarm would destroy the only input the hold has.
+    const armBody = fn.slice(fn.indexOf('arm(sentence: string)'),
+                             fn.indexOf('async nextLine('))
+    expect(armBody).toContain('for (const sig of HELD_SIGNALS) process.off')
+    expect(armBody).not.toContain('channel.close()')
+    // A HOLD, HOWEVER, OWNS THE CHANNEL FOR ITS WHOLE LIFE: its disarm removes
+    // the handlers and THEN closes, in that order.
+    const hold = src.slice(src.indexOf('export function processHold'),
+                           src.indexOf('function readResolutionFile'))
+    // K7-B6.1 PHASE E: IT BUILDS ITS OWN CHANNEL, OR ADOPTS ONE.
+    //
+    // The production apply hands over the channel it already preflighted,
+    // because building a second one would re-run the TTY preflight while the
+    // source fence is held. Still exactly one channel per hold, and still
+    // never a raw readline interface of its own.
+    expect(hold).toContain('existing ?? operatorChannel(say, root, resolutionFile)')
+    expect(hold).not.toContain('createInterface(')
+    expect(hold.indexOf('disarmHandlers()')).toBeLessThan(hold.indexOf('channel.close()'))
   })
 })
 
@@ -2618,14 +2732,9 @@ describe('Stage-1 authority governs the copy binding', () => {
     const w = await ready()
     const common = await chain(w)
     const bundleDir = stage1Bundle(w)
-    const digestFor = async (over: Partial<OpsDeps>): Promise<string> => {
-      const r = await runOpsCli(base(w, [
-        '--for=apply', '--inspect', ...common, ...applyScope(bundleDir),
-      ]), deps(w, over))
-      const line = r.lines.find(l => l.startsWith('copy binding '))
-      expect(line, r.lines.join('\n')).toBeDefined()
-      return (line as string).slice('copy binding '.length)
-    }
+    expect(common.length).toBeGreaterThan(0)
+    const digestFor = async (over: Partial<OpsDeps>): Promise<string> =>
+      (await bindingOf(w, bundleDir, over)).digest
     const baseline = await digestFor({})
     // THE SOURCE SESSION CONNECTS AS SOMEBODY ELSE. The export role in the
     // binding comes from the manifest, so the digest does not move.
@@ -2638,20 +2747,15 @@ describe('Stage-1 authority governs the copy binding', () => {
     const w = await ready()
     const common = await chain(w)
     const bundleDir = stage1Bundle(w)
+    expect(common.length).toBeGreaterThan(0)
     for (const [label, provenance] of [
       ['head', { head: 'c'.repeat(40), ingestionGitlink: '1'.repeat(40) }],
       ['gitlink', { head: '0'.repeat(40), ingestionGitlink: 'd'.repeat(40) }],
     ] as const) {
-      const r = await runOpsCli(base(w, [
-        '--for=apply', '--inspect', ...common, ...applyScope(bundleDir),
-      ]), deps(w, { measureRepository: async () => provenance }))
-      expect(r.exitCode, label).toBe(EXIT_REFUSED)
-      // EITHER REFUSAL IS CORRECT, and the binding one is stronger: the
-      // implementation HEAD is part of the operational binding, so a checkout
-      // that moved fails the binding comparison before Stage 1 is consulted.
-      expect(r.lines.join('\n'), label)
-        .toMatch(/not the one the Stage-1 bundle records|not the one the bundle records|operational adapter binding/)
-      expect(r.lines.join('\n'), label).not.toContain('PGCOPY-APPLY-')
+      await expect(
+        bindingOf(w, bundleDir, { measureRepository: async () => provenance }),
+        label,
+      ).rejects.toThrow(/not the one the Stage-1 bundle records|not the one the bundle records/)
     }
   })
 
@@ -2821,26 +2925,21 @@ describe('the gate link agrees about the fence', () => {
 })
 
 describe('every connection claim is true', () => {
-  it('an apply inspection reports the two read-only sessions it opened',
+  // K7-B6.1 F1: the apply inspection - and therefore its two-session claim -
+  // is retired. Its truthfulness requirement now belongs to the fenced apply,
+  // which opens the target only after Stage 1 has published.
+  it('never claims an apply inspection opened anything, because there is none',
     async () => {
       const w = await ready()
-      await rehearseAndRestore(w)
-      expect((await runOpsCli(reviewArgs(w), deps(w))).exitCode).toBe(EXIT_OK)
-      const bundleDir = stage1Bundle(w)
-      const r = await runOpsCli(base(w, [
-        '--for=apply', '--inspect',
-        `--reviewed-rehearsal=${join(w.evidence, `${REVIEW_PREFIX}-${STAMP}-${RUN_ID}`)}`,
-        `--operational-rehearsal-bundle=${join(w.evidence, `${REHEARSAL_PREFIX}-${STAMP}-${RUN_ID}`)}`,
-        `--producer-restoration-bundle=${join(w.evidence, `${RESTORATION_PREFIX}-${STAMP}-${RUN_ID}`)}`,
-        ...applyScope(bundleDir),
-      ]), deps(w))
-      expect(r.exitCode, r.lines.join('\n')).toBe(EXIT_OK)
+      const r = await runOpsCli(base(w, ['--for=apply', '--inspect']), deps(w))
       const text = r.lines.join('\n')
-      expect(text).toContain('TWO read-only sessions')
-      expect(text).toContain('one on the target')
-      expect(text).toContain('no target mutation and no copy')
-      // AND IT NEVER CLAIMS TO HAVE OPENED NOTHING.
+      expect(r.exitCode).toBe(EXIT_REFUSED)
+      expect(text).not.toContain('TWO read-only sessions')
+      expect(text).not.toContain('one on the target')
+      // AND IT DOES NOT CLAIM TO HAVE OPENED NOTHING EITHER: it says why it
+      // refused, and nothing about sessions at all.
       expect(text).not.toContain('opened no database session')
+      expect(text).toMatch(/only --for=rehearse is inspectable/)
     })
 
   it('a rehearsal inspection reports the one session it opened', async () => {
@@ -3011,6 +3110,9 @@ describe('Stage-1 authority and provenance, directly', () => {
   const stage1 = (over: Partial<Stage1Authority> = {}): Stage1Authority => ({
     bundleName: 'source-manifest-20260925T101500Z-a1b2c3d4',
     digestFileDigest: 'a'.repeat(64),
+    // K7-B7.1: part of the reviewed authority now.
+    runId: 'a1b2c3d4',
+    generatedAtUtc: '2026-09-25T10:15:00Z',
     systemIdentifier: '7300000000000000001',
     database: 'ai_capital',
     currentUser: 'ai_capital_v3_export',
@@ -3062,6 +3164,11 @@ describe('Stage-1 authority and provenance, directly', () => {
     const w = await ready()
     const base = {
       complete: true,
+      // K7-B7.1: the run identity the copy chain reads out of the verified
+      // manifest. Part of the reviewed authority now, so a manifest without it
+      // is refused by the same reader as a missing role.
+      run_id: 'bbbbbbbb',
+      generated_at_utc: '2026-09-25T10:15:00Z',
       source: {
         system_identifier: '7300000000000000001', database: 'ai_capital',
         role: 'ai_capital_v3_export', session_user: 'ai_capital_v3_export',
@@ -3488,7 +3595,12 @@ describe('K1.4: Stage-1 authority requires an explicit, agreeing session user', 
     // that happens to carry both fields passes either way.
     const src = strip(readFileSync(
       new URL('../bin/pg-copy-ops.ts', import.meta.url), 'utf-8'))
-    const fn = src.slice(src.indexOf('export function readStage1Authority'))
+    // K7-B6.2 C SPLIT THE READER FROM THE PARSER. `readStage1Authority` is now
+    // a wrapper around `verifyPublishedStage1` + `stage1AuthorityOf`, so the
+    // BODY this property is about - the authority parse - lives in the latter.
+    // Slicing the wrapper would have measured three lines and passed for the
+    // wrong reason; the length assertion below is what caught that.
+    const fn = src.slice(src.indexOf('export function stage1AuthorityOf'))
     const body = fn.slice(0, fn.indexOf('\n}\n'))
     expect(body.length).toBeGreaterThan(300)
     expect(body).not.toContain('session_user ?? ')

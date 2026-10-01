@@ -33,16 +33,19 @@ export {
 
 export {
   ADAPTER_DEADLINE_MS, AdapterDeadlineExceeded, LIFECYCLE_FENCE_SENTENCE,
+  COMMIT_DISPOSITION_FILE, PRISTINE_RELEASE_FILE,
   LIFECYCLE_FILE, LIFECYCLE_PREFIX, LifecycleEvidenceFailed,
   LifecycleInterventionRequired, LifecyclePreCommitCleanupRequired, LifecycleRefused,
-  ACTIVITY_CENSUS_SQL, BACKEND_START_SQL, COMPLETE_FENCE_LOCKS,
+  ACTIVITY_CENSUS_SQL, BACKEND_START_SHAPE, BACKEND_START_SQL, COMPLETE_FENCE_LOCKS,
   QUEUE_SAMPLE_INTERVAL_MS, releasedLockCensusSqlFor,
   RELEASE_GATE_FILE, RELEASE_GATE_PREFIX, RELEASE_SQL, SESSION_IDENTITY_SQL,
   RESTORE_ORDER, SUPERVISOR_ALIVE_SQL,
   REVIEWED_BACKEND_TYPES, REVIEWED_PRODUCERS, REVIEWED_QUEUES, ReleaseGateRefused,
+  assertFencedSupervisorUnchanged,
   assertQuiescent, isAuthorizationConsumed, isInterventionRequired,
   isReleaseAuthorization, proveOperationalState, publishLifecycleBundle,
   releaseFence, rollbackAndProveReleased, runLifecycle, runOperationalGate,
+  type LifecycleInput, type LifecycleResult,
   runReleaseGate, withDeadline,
   type AdapterContext, type LifecycleFenceState, type OperationalFindings,
   type OperationalGateInput, type OperationalReleaseAuthorization,
@@ -54,6 +57,13 @@ export {
   type ReviewedSession,
 } from './lifecycle.js'
 
+// The narrow driver-credential grammar. See driver-credential.ts for why this
+// is separate from the export-role reader rather than a widening of it.
+export {
+  DriverCredentialRefused, parseDriverCredentialUrl,
+  type DriverCredentialForm, type ParsedDriverCredential,
+} from './driver-credential.js'
+
 export {
   classifyTargetDisposition, dispositionDocument, isCommitUnknownHandoff,
   mintCommitUnknownHandoff,
@@ -63,8 +73,23 @@ export {
 export {
   CommitOutcomeUnknown, Stage2Refused, loadReviewedTarget, readPublishedBundle,
   runApply, runInspect, isVerifiedBundle,
-  type ApplyResult, type PublishedManifest,
+  type InspectResult,
+  type ApplyResult, type PublishedManifest, type SourceStageInput,
 } from './stage2.js'
+
+// STAGE 1, EXPORTED FOR THE ONE ORCHESTRATOR THAT OWNS THE CONTINUOUS FENCE.
+//
+// The standalone Stage-1 CLI releases the fence in its `finally`, which is
+// correct for a manifest taken on its own and fatal for a copy: the production
+// sequence needs the manifest AND the fence that produced it to survive into
+// Stage 2. `runStage1` never releases anything - the caller does - so the
+// orchestrator can hold one supervisor across both stages. That is why this is
+// exported here rather than reached through the CLI.
+export {
+  MANIFEST_FILE, MANIFEST_PREFIX, SOURCE_CONTRACT_FILE, assertOperatorInput,
+  proveFence, runStage1,
+  type Stage1Input, type Stage1Result,
+} from './source-manifest.js'
 
 export {
   DIGEST_FILE, EVIDENCE_RETRY_SCRATCH, EvidencePublicationUnknown,
@@ -88,19 +113,42 @@ export {
   FENCE_SEQUENCES, FENCE_SEQUENCE_LOCK_MODE, FENCE_TABLES, FENCE_TABLE_LOCK_MODE,
   IDENTITY_SQL, acquireSourceFence, assertFenceProof,
   fenceRelationArray, parseLockRows,
+  SELECTED_SEQUENCE_FENCE,
   type AcquiredFence, type FenceExecutor, type SequenceFenceId,
 } from './source-fence.js'
 
 export {
-  EXPORT_BEGIN_SQL, EXPORT_ROLLBACK_SQL, type OperatorInput,
+  EXPORT_BEGIN_SQL, EXPORT_ROLLBACK_SQL,
+  // Stage 1's session type, exported so a factory can be typed EXACTLY as the
+  // field it will fill rather than cast into it.
+  type ExportSession, type OperatorInput,
 } from './source-manifest.js'
 
-export { EXPORT_ROLE_NAME } from './export-role.js'
-export { TARGET_OWNER_ROLE, type TargetExpectation } from './target-authority.js'
-export { openDriverSession, openSilentDriverSession, type DriverTarget }
-  from './driver-session.js'
 export {
-  VERIFICATION_FILE, attemptFenceProof,
+  EXPORT_ROLE_NAME, EXPORT_SCHEMAS, EXPORT_SECRET_BYTES, EXPORT_TABLES,
+  ExportRoleRefused, LEDGER_COLUMNS, LEDGER_RELATION, REAL_PUBLISH_OPS,
+  CredentialPublishedButUnverified, assertCredentialFilename,
+  buildExportCredentialTcpUrl, buildExportPgpassLine, credentialReceipt,
+  publishExportCredential as publishReviewedCredential,
+  type CredentialReceipt,
+  createExportRoleSql, deriveScramSha256Verifier, dropExportRoleSql,
+  generateExportSecret, publishExportCredential, removeExportCredential,
+  runExportRoleBatch, secretsEqual,
+  type BatchOutcome, type PublishOps, type TcpCredentialTarget,
+} from './export-role.js'
+export { TARGET_OWNER_ROLE, type TargetExpectation } from './target-authority.js'
+// `DriverSession` is exported alongside the openers so the operations CLI can
+// type its factories EXACTLY. It structurally satisfies every consumer in this
+// core - `ExportSession`/`ContractQueryExecutor` want `pid` + `rows`, and
+// `VerifyCloseable` wants those plus `end` - so the orchestration needs no
+// cast, which matters: an `as unknown as` between a session authority and
+// `runLifecycle` is the one place a wrong session passes unnoticed.
+export {
+  openDriverSession, openSilentDriverSession,
+  type DriverSession, type DriverTarget,
+} from './driver-session.js'
+export {
+  VERIFICATION_FILE, VERIFICATION_PREFIX, attemptFenceProof,
   type FenceProofResult, type VerifierHandoff, type VerifyCloseable,
 } from './verify.js'
 

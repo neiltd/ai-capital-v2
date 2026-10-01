@@ -25,12 +25,36 @@
 
 import { canonicalJson, sha256Hex, type Canonical } from './schema-contract.js'
 
-/** The prefix an operator sees, so a bare digest is never mistaken for one. */
-export const CONFIRMATION_PREFIX = 'PGCOPY-APPLY-'
-export const CONFIRMATION_PATTERN = /^PGCOPY-APPLY-[0-9a-f]{64}$/
+/**
+ * THE PREFIX AN OPERATOR SEES - AND IT NAMES A SPECIES, NOT JUST A SHAPE.
+ *
+ * WHAT WAS WRONG. This prefix was `PGCOPY-APPLY-`, and so was the operations
+ * execution-binding apply token in `bindings.ts`: `TOKEN_PATTERN.apply` and
+ * `CONFIRMATION_PATTERN` were byte-identical regexes. The two tokens hash
+ * COMPLETELY DISJOINT documents - this one binds the bundle, the source and
+ * target identities, the content digests, the provenance and the implementation
+ * head; that one binds four digests, a mode and a run - and they are checked by
+ * different functions that raise different errors. Yet either one satisfied the
+ * other's syntax check, so a token pasted into the wrong place failed on
+ * "does not match this run" rather than "wrong kind of token". Those are
+ * different problems, and the first reading sends an operator to look for
+ * drift that is not there.
+ *
+ * So the species is now in the syntax. A copy confirmation says COPY, and an
+ * operations token offered in its place fails on FORM, before a digest is
+ * computed.
+ */
+export const CONFIRMATION_PREFIX = 'PGCOPY-COPY-'
+export const CONFIRMATION_PATTERN = /^PGCOPY-COPY-[0-9a-f]{64}$/
 
-/** Bumped if the BINDING changes shape, so an old token cannot match a new one. */
-export const CONFIRMATION_VERSION = 1
+/**
+ * Bumped if the BINDING changes shape, so an old token cannot match a new one.
+ *
+ * 2 since S4F-D5-K7-B: the prefix moved, and a token minted under version 1 -
+ * whose digest covered a document declaring `confirmation_version: 1` - must
+ * not verify against a run that now declares 2.
+ */
+export const CONFIRMATION_VERSION = 2
 
 export class ConfirmationRefused extends Error {
   constructor(readonly reason: ConfirmationReason) {

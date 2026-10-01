@@ -36,7 +36,8 @@
     "retire-failed-flow": "tsx bin/retire-failed-flow.ts",
     "render-plist": "tsx bin/render-launchd-plist.ts",
     "install-credential": "tsx bin/install-pipeline-credential.ts",
-    "inspect-plist": "tsx bin/inspect-launchd-plist.ts"
+    "inspect-plist": "tsx bin/inspect-launchd-plist.ts",
+    "export-authority": "tsx bin/pg-copy-export-authority.ts"
   },
   "dependencies": {
     "@common/db": "workspace:*",

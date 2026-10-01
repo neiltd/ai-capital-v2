@@ -27,9 +27,10 @@ import {
   closeSync, fstatSync, fsyncSync, linkSync, lstatSync, openSync, unlinkSync, writeSync,
 } from 'node:fs'
 import { basename, dirname, isAbsolute, join, resolve } from 'node:path'
-import { spawn } from 'node:child_process'
+import { spawn, type ChildProcessWithoutNullStreams } from 'node:child_process'
 
 import { COPY_TABLES } from './schema-contract.js'
+import { INHERITED_FD_DIR, PASSFILE_CHILD_FD } from './psql-backend.js'
 
 export class ExportRoleRefused extends Error {
   constructor(message: string) {
@@ -371,6 +372,62 @@ export function buildExportCredentialUrl(t: CredentialTarget, secret: string): s
          `?host=${encodeURIComponent(t.socketDir)}&port=${String(t.port)}`
 }
 
+/** A TCP endpoint the reviewed export authority may be reached at. */
+export interface TcpCredentialTarget {
+  readonly host: string
+  readonly port: number
+  readonly database: string
+}
+
+const TCP_HOST = /^[A-Za-z0-9._-]{1,253}$/
+
+function assertTcpTarget(t: TcpCredentialTarget): TcpCredentialTarget {
+  assertIdent('database', t.database)
+  if (!TCP_HOST.test(t.host)) {
+    throw new ExportRoleRefused('the credential host is not a plain hostname.')
+  }
+  if (!Number.isInteger(t.port) || t.port < 1 || t.port > 65535) {
+    throw new ExportRoleRefused('the credential port is not a port number.')
+  }
+  return t
+}
+
+/**
+ * THE TCP URL node-postgres CONSUMES. Percent-encoded component by component.
+ *
+ * SEPARATE FROM THE SOCKET FORM ABOVE, which is what the disposable harness
+ * uses. The reviewed export authority is reached over TCP, and the driver and
+ * psql need the SAME secret in two different notations - so both are built
+ * here, from one argument, and neither is ever logged.
+ */
+export function buildExportCredentialTcpUrl(
+  t: TcpCredentialTarget, secret: string,
+): string {
+  assertTcpTarget(t)
+  return `postgresql://${encodeURIComponent(EXPORT_ROLE_NAME)}:${encodeURIComponent(secret)}` +
+         `@${t.host}:${String(t.port)}/${encodeURIComponent(t.database)}`
+}
+
+/**
+ * THE LIBPQ PASSFILE LINE psql CONSUMES: `host:port:database:user:password`.
+ *
+ * libpq treats `:` and `\` as structural, so both are backslash-escaped in
+ * every field - including the secret. Without that, a secret containing a colon
+ * would silently truncate the password and authentication would fail in a way
+ * that looks like a wrong password rather than a wrong FILE.
+ */
+export function buildExportPgpassLine(
+  t: TcpCredentialTarget, secret: string,
+): string {
+  assertTcpTarget(t)
+  const esc = (v: string): string => v.replace(/([\\:])/g, '\\$1')
+  if (/[\r\n]/.test(secret)) {
+    throw new ExportRoleRefused('the credential secret is not a single line.')
+  }
+  return `${esc(t.host)}:${String(t.port)}:${esc(t.database)}:` +
+         `${esc(EXPORT_ROLE_NAME)}:${esc(secret)}\n`
+}
+
 /**
  * The credential name must be one plain basename inside the validated root.
  *
@@ -396,6 +453,11 @@ export function assertCredentialFilename(secretRoot: string, filename: string): 
 /** The post-link steps, named so a failure can say exactly where it stopped. */
 export type PublishPhase =
   | 'fsync-parent-1' | 'unlink-temp' | 'fsync-parent-2' | 'lstat' | 'verify'
+  // K7-B7.2.1: a caller that READS BACK the published credential's non-secret
+  // metadata is still post-link, so a failure there is published-but-unverified
+  // too. Without this phase such a failure raised an ordinary refusal and the
+  // final name went unretained and unnamed.
+  | 'receipt'
 
 /**
  * A failure that must not be tidied away: the credential is already published.
@@ -549,6 +611,53 @@ export function publishExportCredential(
   return finalPath
 }
 
+/** Non-secret identity of one published credential. Never its bytes. */
+export interface CredentialReceipt {
+  readonly name: string
+  readonly deviceInode: string
+  readonly uid: number
+  readonly mode: string
+  readonly links: number
+}
+
+/**
+ * THE NON-SECRET IDENTITY OF AN ALREADY-PUBLISHED CREDENTIAL.
+ *
+ * SEPARATE FROM THE PUBLISHER so its reviewed return type and tests stay
+ * exactly as they are. `publishExportCredential` has already proved this
+ * object's inode, type, mode, link count and owner at the publication point;
+ * this reads that same metadata back for a caller that has to RECORD it.
+ *
+ * `lstat` AND NOT `stat`: a symlink at the name must be refused, not followed.
+ * Nothing here opens the file or reads a byte - the bytes are the secret.
+ */
+export function credentialReceipt(
+  secretRoot: string, filename: string, ops: PublishOps = REAL_PUBLISH_OPS,
+): CredentialReceipt {
+  const finalPath = assertCredentialFilename(secretRoot, filename)
+  const st = ops.lstatSync(finalPath)
+  const uid = typeof process.getuid === 'function' ? process.getuid() : -1
+  if (!st.isFile() || st.isSymbolicLink()) {
+    throw new ExportRoleRefused('the published credential is not a regular file.')
+  }
+  if ((st.mode & 0o777) !== 0o600) {
+    throw new ExportRoleRefused('the published credential is not mode 0600.')
+  }
+  if (st.nlink !== 1) {
+    throw new ExportRoleRefused('the published credential has more than one link.')
+  }
+  if (uid !== -1 && st.uid !== uid) {
+    throw new ExportRoleRefused('the published credential is owned by another user.')
+  }
+  return Object.freeze({
+    name: filename,
+    deviceInode: `${String(st.dev)}:${String(st.ino)}`,
+    uid: st.uid,
+    mode: (st.mode & 0o777).toString(8),
+    links: st.nlink,
+  })
+}
+
 /** Remove exactly the path that was published, never a pattern. */
 export function removeExportCredential(path: string, secretRoot: string, filename: string): void {
   if (path !== assertCredentialFilename(secretRoot, filename)) {
@@ -622,13 +731,41 @@ export function sterileBatchEnv(pgPassFile?: string): NodeJS.ProcessEnv {
  * batch contains a SCRAM verifier, and psql echoes a failing statement.
  */
 export async function runExportRoleBatch(
-  psqlPath: string, args: readonly string[], batch: string, pgPassFile?: string,
+  psqlPath: string, args: readonly string[], batch: string,
+  pgPassFile?: string,
+  /**
+   * AN ALREADY-VALIDATED ADMINISTRATOR PASSFILE DESCRIPTOR.
+   *
+   * WHY A DESCRIPTOR AND NOT A PATHNAME. Proving a path and then letting psql
+   * open that name is a TOCTOU boundary: everything proved was proved about the
+   * file that WAS there, and whoever can write the directory chooses what the
+   * child gets. The validated descriptor is inherited at stdio slot 3 instead,
+   * so the file that was checked and the file libpq authenticates with are the
+   * same object - and `PGPASSFILE` names `/dev/fd/3` rather than any path.
+   *
+   * THIS IS THE ADMINISTRATOR'S PASSFILE, NOT THE NEW ROLE'S PASSWORD. The new
+   * role is created with a SCRAM verifier that travels on this child's stdin
+   * and nowhere else.
+   */
+  passfileFd?: number,
 ): Promise<BatchOutcome> {
   assertBatchArgs(args)
+  if (passfileFd !== undefined && pgPassFile !== undefined) {
+    throw new ExportRoleRefused(
+      'a passfile may be named by path or inherited by descriptor, never both.')
+  }
   // The caller cannot hand us an environment to forward: it is constructed here.
-  const env = sterileBatchEnv(pgPassFile)
+  const env = sterileBatchEnv(
+    passfileFd === undefined
+      ? pgPassFile
+      : `${INHERITED_FD_DIR}/${String(PASSFILE_CHILD_FD)}`)
+  const stdio: Array<'pipe' | number> = ['pipe', 'pipe', 'pipe']
+  if (passfileFd !== undefined) stdio.push(passfileFd)
   return await new Promise<BatchOutcome>((res, reject) => {
-    const child = spawn(psqlPath, [...args], { stdio: ['pipe', 'pipe', 'pipe'], env })
+    // THE SAME NARROWING `psql-backend.ts` USES, for the same reason: adding
+    // the inherited descriptor to `stdio` moves Node off the overload that
+    // guarantees non-null streams, and all three pipes are still present.
+    const child = spawn(psqlPath, [...args], { stdio, env }) as ChildProcessWithoutNullStreams
     child.stdout.resume()
     child.stderr.resume()
     child.on('error', () => reject(new ExportRoleRefused('the role lifecycle process failed to start.')))

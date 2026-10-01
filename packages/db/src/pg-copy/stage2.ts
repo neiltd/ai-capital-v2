@@ -378,6 +378,29 @@ export interface SourceStageInput {
    * the LIVE target is that same artifact, which is what closes the loop.
    */
   readonly reviewedTarget: ContractArtifact
+  /**
+   * A FENCE THIS RUN DID NOT TAKE, AND THEREFORE MUST PROVE RATHER THAN RETAKE.
+   *
+   * THE CONTRACT THIS EXISTS FOR. A production copy is one continuous fence:
+   * ONE supervisor transaction on ONE backend holds the advisory lock, all 21
+   * table locks and all 3 sequence locks from before Stage 1 derives the
+   * manifest until after the single release is proved. Stage 2 runs inside that
+   * window, so it must not take a fence of its own.
+   *
+   * WHY RETAKING WOULD LOOK FINE AND BE WRONG. Locks are held per transaction,
+   * so re-issuing them on a supervisor that already holds them succeeds
+   * silently. The damage is not a failed lock, it is a LOST PROOF: the returned
+   * `AcquiredFence` would describe whatever backend answered second, and the
+   * chain from Stage 1 to the release gate would no longer be evidence that one
+   * unbroken fence covered the copy. A source that was briefly unfenced between
+   * stages would be indistinguishable from one that never was.
+   *
+   * Undefined on the disposable path, which legitimately owns its own fence.
+   * This is NOT a test seam: both paths run the same A3 proof below, and the
+   * production path additionally proves supervisor continuity before it gets
+   * here.
+   */
+  readonly preAcquiredFence?: AcquiredFence
 }
 
 export interface SourceStageResult {
@@ -401,12 +424,22 @@ export interface SourceStageResult {
 export async function runSourceStages(
   i: SourceStageInput, published: PublishedManifest,
 ): Promise<SourceStageResult> {
-  // A2.
+  // A2. TAKE THE FENCE, OR ADOPT THE ONE ALREADY HELD - never both.
+  //
+  // On the production path the caller has held this fence since before Stage 1
+  // and `acquireSourceFence` is not called at all, so there is no second BEGIN
+  // and no replacement fence. A3 below then proves the adopted fence from an
+  // independent backend exactly as it proves a freshly taken one, which is what
+  // makes adoption safe rather than assumed.
   let fence: AcquiredFence
-  try {
-    fence = await acquireSourceFence(i.supervisor)
-  } catch {
-    throw new Stage2Refused('A2-fence', 'the source fence could not be taken')
+  if (i.preAcquiredFence !== undefined) {
+    fence = i.preAcquiredFence
+  } else {
+    try {
+      fence = await acquireSourceFence(i.supervisor)
+    } catch {
+      throw new Stage2Refused('A2-fence', 'the source fence could not be taken')
+    }
   }
   // A3. A DIFFERENT backend.
   try {

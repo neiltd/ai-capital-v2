@@ -440,8 +440,12 @@ async function lifecycle(opts: {
     sourceBeginSql: EXPORT_BEGIN_SQL,
     targetExpectation: TARGET_EXPECTATION(),
     confirmation: opts.badConfirmation === true
-      ? `PGCOPY-APPLY-${'0'.repeat(64)}` : confirmation,
-    quiescence: a.quiescence, queue: a.queue, producers: a.producers,
+      ? `PGCOPY-COPY-${'0'.repeat(64)}` : confirmation,
+    quiescence: a.quiescence,
+    queue: a.queue,
+    // THE DISPOSABLE PATH KEEPS THE REAL ADAPTER, now named as the authority it
+    // is. Production passes `{ kind: 'manual-stop' }` and restores by hand.
+    restorationAuthority: { kind: 'adapter', producers: a.producers },
     // THE CENSUS DERIVES ITS OWN ALLOWLIST. What it is given is the SESSIONS
     // this harness is holding, each asked who it is; an earlier revision
     // handed it a snapshot of pids, which is a list a person could extend by
@@ -483,7 +487,9 @@ describe('the whole lifecycle, end to end', () => {
     try {
       expect(r.thrown).toBeNull()
       const v = r.result as Awaited<ReturnType<typeof runLifecycle>>
-      expect(v.outcome).toBe('COMPLETE')
+      // K7-B7.1: the adapter restored and confirmed every producer, and the
+      // copy is STILL OPEN - only a closure may say COMPLETE.
+      expect(v.outcome).toBe('COPY_VERIFIED_RESTORED_AWAITING_CLOSURE')
       expect(v.fence).toBe('released')
       expect([...v.restored]).toEqual([...RESTORE_ORDER])
 
@@ -512,7 +518,9 @@ describe('the whole lifecycle, end to end', () => {
       expect(gate.fence.ungranted).toBe(0)
       const outcome = JSON.parse(readFileSync(join(v.lifecycleBundle, LIFECYCLE_FILE), 'utf-8'))
       expect(outcome.record).toBe('lifecycle-outcome')
-      expect(outcome.outcome).toBe('COMPLETE')
+      expect(outcome.outcome).toBe('COPY_VERIFIED_RESTORED_AWAITING_CLOSURE')
+      // AND THE PUBLISHED BYTES DO NOT CONTAIN THE WORD AT ALL.
+      expect(JSON.stringify(outcome)).not.toContain('COMPLETE')
       expect(outcome.fence.state).toBe('released')
       expect(outcome.restoration.restored).toEqual([...RESTORE_ORDER])
       expect(outcome.bundle.release_gate).toBe(v.releaseGateBundle)

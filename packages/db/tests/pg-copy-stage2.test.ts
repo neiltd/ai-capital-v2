@@ -13,14 +13,18 @@ import { inspect } from 'node:util'
 import { describe, expect, it } from 'vitest'
 
 import {
-  CONFIRMATION_PREFIX, ConfirmationRefused, assertConfirmationMatches, bindingDocument,
+  CONFIRMATION_PATTERN, CONFIRMATION_PREFIX, ConfirmationRefused,
+  assertConfirmationMatches, bindingDocument,
   confirmationToken, copySetDigest, type ConfirmationBinding,
 } from '../src/pg-copy/confirmation.js'
+// The OTHER token species, imported so the separation is asserted against the
+// real constants rather than a copy of them.
+import { TOKEN_PATTERN, TOKEN_PREFIX } from '../src/pg-copy/bindings.js'
 import {
   CommitOutcomeUnknown, Stage2Refused,
 } from '../src/pg-copy/stage2.js'
 import {
-  COPY_TABLES, REVIEWED_CONTRACT_DIGEST,
+  COPY_TABLES, REVIEWED_CONTRACT_DIGEST, canonicalJson, sha256Hex, type Canonical,
 } from '../src/pg-copy/schema-contract.js'
 import {
   TARGET_EMPTY_SQL, TARGET_IDENTITY_COLUMNS, TARGET_IDENTITY_SQL, TARGET_OWNER_ROLE,
@@ -77,8 +81,47 @@ describe('the confirmation binds this run and no other', () => {
   it('is deterministic and shaped', () => {
     const t = confirmationToken(BINDING)
     expect(t).toBe(confirmationToken({ ...BINDING }))
-    expect(t).toMatch(/^PGCOPY-APPLY-[0-9a-f]{64}$/)
+    expect(t).toMatch(/^PGCOPY-COPY-[0-9a-f]{64}$/)
     expect(t.startsWith(CONFIRMATION_PREFIX)).toBe(true)
+  })
+
+  it('IS A DIFFERENT SPECIES from the operations apply token, by syntax', () => {
+    // K7-B. Both prefixes used to be `PGCOPY-APPLY-`, so `TOKEN_PATTERN.apply`
+    // and `CONFIRMATION_PATTERN` were byte-identical regexes over completely
+    // disjoint documents. An operations token pasted in here therefore failed
+    // on "does not match this run" instead of "wrong kind of token" - and those
+    // send an operator to look in two different places. The species is now part
+    // of the syntax, so the wrong token fails on FORM before a digest is
+    // computed.
+    expect(CONFIRMATION_PREFIX).toBe('PGCOPY-COPY-')
+    expect(CONFIRMATION_PATTERN.source).not.toBe(TOKEN_PATTERN.apply.source)
+    const operationsToken = `${TOKEN_PREFIX.apply}${'a'.repeat(64)}`
+    expect(CONFIRMATION_PATTERN.test(operationsToken)).toBe(false)
+    expect(() => assertConfirmationMatches(operationsToken, BINDING))
+      .toThrow(/not in the reviewed form/)
+    // And symmetrically: a copy confirmation is not an operations apply token.
+    expect(TOKEN_PATTERN.apply.test(confirmationToken(BINDING))).toBe(false)
+  })
+
+  it('REJECTS a real v1 token re-prefixed as v2, not merely a version constant', () => {
+    // BEHAVIOURAL, NOT DECLARATIVE. An earlier version of this case asserted
+    // that CONFIRMATION_VERSION was 2 and that the document said so - which
+    // would still have passed if `assertConfirmationMatches` ignored the
+    // version entirely. So this builds the v1 document this binding WOULD have
+    // produced, hashes it the way the module does, dresses it in the current
+    // prefix, and requires the real verifier to refuse it.
+    // Derived from the REAL document, not a hand-copied one, so a future field
+    // added to the binding is covered here too. `Canonical` is a union, so the
+    // round-trip is what makes it spreadable.
+    const current = JSON.parse(JSON.stringify(bindingDocument(BINDING))) as Record<string, unknown>
+    const v1Document = { ...current, confirmation_version: 1 } as unknown as Canonical
+    const v1Token = `${CONFIRMATION_PREFIX}${sha256Hex(canonicalJson(v1Document))}`
+    // Syntactically impeccable: the prefix and 64 hex digits are right, so only
+    // the hashed version can be what rejects it.
+    expect(v1Token).toMatch(CONFIRMATION_PATTERN)
+    expect(v1Token).not.toBe(confirmationToken(BINDING))
+    expect(() => assertConfirmationMatches(v1Token, BINDING))
+      .toThrow(/does not match this run/)
   })
 
   it('EVERY bound field changes it', () => {
@@ -126,7 +169,8 @@ describe('the confirmation binds this run and no other', () => {
     try { assertConfirmationMatches(canary, BINDING) } catch (e) { thrown = e }
     expect(thrown).toBeInstanceOf(ConfirmationRefused)
     expect(surfaces(thrown)).not.toContain('9'.repeat(64))
-    for (const bad of ['', 'nope', 'PGCOPY-APPLY-xyz', 'a'.repeat(64),
+    for (const bad of ['', 'nope', 'PGCOPY-COPY-xyz', 'PGCOPY-APPLY-' + 'a'.repeat(64),
+                       'a'.repeat(64),
                        `${CONFIRMATION_PREFIX}${'A'.repeat(64)}`]) {
       expect(() => assertConfirmationMatches(bad, BINDING), bad).toThrow(ConfirmationRefused)
     }

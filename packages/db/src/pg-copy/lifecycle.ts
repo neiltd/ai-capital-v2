@@ -52,9 +52,7 @@ import {
   type Canonical, type ContractArtifact,
 } from './schema-contract.js'
 import {
-  FENCE_SEQUENCES, FENCE_TABLES, SEQUENCE_STATE_SQL, effectiveNext, fenceRelationArray,
-  parseSequenceState,
-  type FenceExecutor, type SequenceFenceId,
+  FENCE_SEQUENCES, FENCE_TABLES, SEQUENCE_STATE_SQL, effectiveNext, fenceRelationArray, parseSequenceState, type AcquiredFence, type FenceExecutor, type SequenceFenceId,
 } from './source-fence.js'
 import {
   VERIFICATION_FILE, attemptFenceProof, observePath, runVerification,
@@ -63,6 +61,7 @@ import {
 } from './verify.js'
 import {
   CommitOutcomeUnknown, isVerifiedBundle, readPublishedBundle, runApply,
+  type ApplyInput,
   type ApplyResult, type PublishedManifest,
 } from './stage2.js'
 import {
@@ -86,6 +85,19 @@ export const RELEASE_GATE_FILE = 'release-gate.json'
 export const LIFECYCLE_FILE = 'lifecycle.json'
 export const GATE_DETAIL_FILE = 'gate-detail.json'
 export const LIFECYCLE_DETAIL_FILE = 'actions.json'
+/**
+ * THE MANIFEST NAMES THE PRODUCERS BELOW ACTUALLY WRITE.
+ *
+ * K7-B7.2.1: these were string literals at the publication sites, so a
+ * consumer had to guess them - and guessed wrong: the export authority asked
+ * for `commit-disposition.json` while the lifecycle writes `disposition.json`,
+ * which made the legitimate no-target-commit path impossible. Named here, both
+ * sides refer to the same constant.
+ */
+export const COMMIT_DISPOSITION_FILE = 'disposition.json'
+export const COMMIT_DISPOSITION_DETAIL_FILE = 'measurements.json'
+export const PRISTINE_RELEASE_FILE = 'pristine-release.json'
+export const PRISTINE_RELEASE_DETAIL_FILE = 'proof.json'
 
 /**
  * THE RELEASE. One statement, and it is the supervisor's own ROLLBACK.
@@ -352,6 +364,107 @@ export interface ProducerAdapter {
   confirm(name: string, ctx: AdapterContext): Promise<boolean>
 }
 
+/**
+ * WHO - IF ANYONE - PUTS THE PRODUCERS BACK.
+ *
+ * A DISCRIMINATED UNION RATHER THAN A NO-OP ADAPTER. The production path has no
+ * reviewed mutating launchd adapter, and inventing one that returns without
+ * acting would be worse than having none: `restoreProducers` would report every
+ * producer restored, `confirm` would be the only thing that could contradict it,
+ * and the lifecycle bundle would record a restoration that never happened. The
+ * authority is therefore part of the INPUT, and "nobody, by authorization" is a
+ * value it can take.
+ *
+ * `adapter` keeps the disposable and integration coverage exactly as it was.
+ * `manual-stop` is production: the operator stopped the producers before the
+ * copy and puts them back afterwards, under a separate reviewed mode, and the
+ * lifecycle says so instead of guessing.
+ */
+/**
+ * THE TERMINAL OUTCOME, named once so the record and the return cannot disagree.
+ *
+ * WHAT WAS WRONG. The outcome document computed its own verdict as
+ * `failure === null ? 'COMPLETE' : 'STOPPED'`, while the function's return value
+ * had learned to distinguish a manual-stop success. So a production run copied,
+ * verified, released and then FROZE A BUNDLE SAYING `COMPLETE` - the immutable
+ * evidence contradicting the result, and claiming a completion whose producers
+ * were still down. A caller trusting the bundle would have read the copy as
+ * closed.
+ *
+ * The value is computed once, returned, and written. There is no second opinion.
+ */
+/**
+ * AND NO LIFECYCLE OUTCOME IS `COMPLETE`.
+ *
+ * K7-B7: a copy is COMPLETE only when its closure says so. The lifecycle runs
+ * long before that - the restoration has not been proved, the chain has not
+ * been re-walked, and no closure record exists - so a lifecycle bundle saying
+ * COMPLETE claimed a completion that nothing had established. The adapter path
+ * now returns the truthful nonterminal value instead: the producers really were
+ * restored and confirmed, and the copy is still open.
+ */
+export type LifecycleOutcome =
+  | 'COPY_VERIFIED_RESTORED_AWAITING_CLOSURE'
+  | 'COPY_VERIFIED_AWAITING_MANUAL_RESTORATION'
+  | 'STOPPED'
+
+export type RestorationAuthority =
+  | { readonly kind: 'adapter'; readonly producers: ProducerAdapter }
+  | { readonly kind: 'manual-stop' }
+
+/**
+ * THE EXACT INPUT STAGE 2 IS GIVEN - built where it can be proved.
+ *
+ * WHY THIS IS A FUNCTION. Inline, the `preAcquiredFence` forwarding lived in an
+ * object literal inside `runLifecycle`, which cannot be reached without two
+ * live clusters. A mutant that simply DELETED the forwarding therefore survived
+ * every runnable test: the field stayed on the input type, the production path
+ * silently took a second fence, and nothing said so. The continuous-fence
+ * contract is the whole point of this milestone, so the one line that carries
+ * it is extracted here and checked directly.
+ *
+ * OMITTED RATHER THAN UNDEFINED when there is no fence, so the disposable path
+ * reaches `acquireSourceFence` exactly as it did before.
+ */
+export function applyInputFor(
+  i: LifecycleInput, source: DriverSession,
+): ApplyInput {
+  return {
+    supervisor: i.supervisor, prover: i.prover, source,
+    operator: i.operator, sourceBeginSql: i.sourceBeginSql,
+    reviewedTarget: i.reviewedTarget,
+    targetExpectation: i.targetExpectation, confirmation: i.confirmation,
+    openTarget: i.openStageTarget,
+    ...(i.preAcquiredFence === undefined
+      ? {}
+      : { preAcquiredFence: i.preAcquiredFence }),
+  }
+}
+
+/**
+ * WHICH TERMINAL SUCCESS THIS AUTHORITY MAKES TRUE.
+ *
+ * EXTRACTED SO IT CAN BE PROVED. Inline, this decision lived inside
+ * `runLifecycle`, which needs two live clusters to reach - so a mutant that
+ * swapped the two branches survived every test that could be run without one.
+ * A total function over the authority is three lines and is checkable directly.
+ *
+ * TWO NONTERMINAL SUCCESSES, AND NEITHER IS COMPLETE. An adapter that restored
+ * and confirmed every producer leaves a copy that is verified, released and
+ * running - but NOT closed, because closure re-walks the chain and publishes
+ * the only record permitted to say the word. Manual-stop leaves the producers
+ * down by authorization. The two are different facts and are named differently;
+ * reporting the adapter's success as "awaiting manual restoration" would be as
+ * untruthful as calling it COMPLETE.
+ */
+export function terminalOutcomeFor(
+  a: RestorationAuthority,
+): Exclude<LifecycleOutcome, 'STOPPED'> {
+  return a.kind === 'adapter'
+    ? 'COPY_VERIFIED_RESTORED_AWAITING_CLOSURE'
+    : 'COPY_VERIFIED_AWAITING_MANUAL_RESTORATION'
+}
+
 /** An adapter call that did not finish in time. Never carries what it was doing. */
 export class AdapterDeadlineExceeded extends Error {
   constructor(readonly adapter: string) {
@@ -526,10 +639,8 @@ export interface LifecycleFailure {
  * retained at this path" to one word is how an operator ends up looking for
  * nothing.
  */
-export interface EvidenceState {
+interface EvidenceFindings {
   readonly attempted: boolean
-  readonly publishedPath: string | null
-  readonly verified: boolean
   readonly note: string | null
   readonly publication: LifecyclePublication | null
   readonly evidencePhase: EvidencePhase | PublishedPhase | null
@@ -540,14 +651,108 @@ export interface EvidenceState {
   readonly temporaryPathState: PathState | null
 }
 
-const NO_EVIDENCE: EvidenceState = Object.freeze({
-  attempted: false, publishedPath: null, verified: false, note: null,
+/**
+ * A PUBLICATION THAT VERIFIED, and therefore CAN be identified.
+ *
+ * `digestFileDigest` is the digest of this bundle's `DIGEST` file as the
+ * publisher returned it, carried so a caller that must cross-link this
+ * publication later - during a post-COMMIT intervention, when reopening a path
+ * proves nothing and the transaction may already be unusable - can produce a
+ * COMPLETE link without guessing.
+ */
+export interface VerifiedEvidenceState extends EvidenceFindings {
+  readonly verified: true
+  readonly publishedPath: string
+  readonly digestFileDigest: string
+}
+
+/**
+ * A PUBLICATION THAT DID NOT VERIFY, or was never attempted.
+ *
+ * `digestFileDigest` is `null` BY TYPE. The first version of this carried one
+ * nullable field beside a boolean and a prose "iff": that admitted
+ * `verified: true` with `digestFileDigest: null`, and the cross-link that
+ * consumed it wrote `''` into an intervention record - a reference that looks
+ * verified and identifies nothing.
+ */
+export interface UnverifiedEvidenceState extends EvidenceFindings {
+  readonly verified: false
+  readonly publishedPath: string | null
+  readonly digestFileDigest: null
+}
+
+/**
+ * WHAT HAPPENED TO A PUBLISHED BUNDLE, in full.
+ *
+ * A DISCRIMINATED UNION, so the impossible state is not merely discouraged.
+ * Narrowing on `verified` gives a `string` digest or a `null` one; there is no
+ * third shape to remember to validate.
+ */
+export type EvidenceState = VerifiedEvidenceState | UnverifiedEvidenceState
+
+const NO_EVIDENCE: UnverifiedEvidenceState = Object.freeze({
+  attempted: false, publishedPath: null, verified: false,
+  digestFileDigest: null, note: null,
   publication: null, evidencePhase: null, evidenceReason: null,
   finalPath: null, finalPathState: null, temporaryPath: null, temporaryPathState: null,
 })
 
-/** Turn a publication failure into the state that keeps all of its findings. */
-function evidenceStateOf(e: unknown, fallback: string): EvidenceState {
+/**
+ * THE ONE CONSTRUCTOR FOR "THIS PUBLICATION VERIFIED".
+ *
+ * Every verified `EvidenceState` in this module is built here, so the digest a
+ * later cross-link depends on cannot be omitted at one site and present at
+ * another. It is taken from the publisher's own result and REFUSED unless it
+ * is 64 lowercase hex: a verified publication that cannot be identified is a
+ * contradiction, and blanking it produced an intervention record that named a
+ * bundle beside an empty digest - which reads as a verified reference and is
+ * not one.
+ */
+export function verifiedEvidence(published: PublishedEvidence): VerifiedEvidenceState {
+  if (!/^[0-9a-f]{64}$/.test(published.digestFileDigest)) {
+    // THE BUNDLE IS ON DISK. Atomic publication already completed, so this is
+    // a POST-publication identity failure and must be classified as one:
+    //
+    //   - `published-unverified`, which is the only disposition
+    //     `evidenceStateOf` retains a path for. Saying `published` lost the
+    //     path entirely and left a record claiming nothing was published,
+    //     while a complete directory sat there unreferenced.
+    //   - `verify`, a PublishedPhase - the failure is in identifying what was
+    //     published, not in writing it.
+    //   - the exact final path, PRESENT.
+    //
+    // AND NOTHING IS TOUCHED. No unlink, rename, chmod or retry: this process
+    // could not identify the bundle, which is not a licence to alter it.
+    throw new LifecycleEvidenceFailed(
+      'a verified publication carries no reviewed DIGEST digest',
+      'published-unverified', 'verify', null,
+      published.finalPath, 'present', null, 'absent')
+  }
+  return Object.freeze({
+    attempted: true,
+    publishedPath: published.finalPath,
+    verified: true as const,
+    digestFileDigest: published.digestFileDigest,
+    note: null,
+    publication: 'published' as const,
+    finalPath: published.finalPath,
+    finalPathState: 'present' as const,
+    temporaryPath: null,
+    temporaryPathState: 'absent' as const,
+    evidencePhase: null,
+    evidenceReason: null,
+  })
+}
+
+/**
+ * Turn a publication failure into the state that keeps all of its findings.
+ *
+ * EXPORTED so the pair that every publication catch is built from -
+ * `verifiedEvidence` throwing, this function classifying - can be driven
+ * directly. Asserting only that `verifiedEvidence` throws says nothing about
+ * whether the already-published path survives, which is the whole property.
+ */
+export function evidenceStateOf(e: unknown, fallback: string): UnverifiedEvidenceState {
   if (!(e instanceof LifecycleEvidenceFailed)) {
     return { ...NO_EVIDENCE, attempted: true, note: fallback }
   }
@@ -556,7 +761,10 @@ function evidenceStateOf(e: unknown, fallback: string): EvidenceState {
     // A bundle that IS published, and failed after the rename, has a path worth
     // naming. One that was refused does not, and must not be given one.
     publishedPath: e.publication === 'published-unverified' ? e.finalPath : null,
-    verified: false,
+    verified: false as const,
+    // NOT VERIFIED, SO NOT IDENTIFIABLE. A published-unverified bundle has a
+    // path worth naming and no digest anybody proved.
+    digestFileDigest: null,
     note: e.publication,
     publication: e.publication,
     evidencePhase: e.evidencePhase,
@@ -994,6 +1202,50 @@ async function sessionIdentity(
     throw new ReleaseGateRefused(refusal, `the ${which} identity is not in the reviewed form`)
   }
   return { pid, role, backendStart: start }
+}
+
+/**
+ * THE SAME BACKEND STILL HOLDS THE SAME FENCE - asserted at a STAGE SEAM.
+ *
+ * WHY A SEAM NEEDS ITS OWN PROOF. `proveOperationalState` already makes this
+ * check, but it needs quiescence and queue adapters because it is a GATE: it
+ * answers "is the whole operational world still as reviewed". Between Stage 1
+ * and Stage 2 there is no producer question to ask - the producers were stopped
+ * before any of this began - and only one thing can have changed: the
+ * supervisor. Reusing the gate here would mean re-measuring launchd and Redis
+ * to learn something about a database session.
+ *
+ * TWO SIDES, BECAUSE ONE CANNOT DETECT ITS OWN REPLACEMENT. The supervisor is
+ * asked who it is, and an INDEPENDENT backend is asked when that pid started.
+ * A supervisor that died and reconnected would answer the first question with
+ * its new backend's start and be believed; the prover's answer is what catches
+ * it. Pid alone is not identity - `backend_start` is in the fence for exactly
+ * this reason.
+ */
+export async function assertFencedSupervisorUnchanged(
+  supervisor: IdentifiableSession, prover: FenceExecutor,
+  // THE MINIMAL SHAPE, stated rather than borrowed. `FenceFactsLike` calls this
+  // field `supervisorBackendStart` and the gate's own input calls it
+  // `backendStart`; naming the two fields this proof actually needs keeps it
+  // structurally satisfiable by `AcquiredFence` without importing either.
+  fence: { readonly supervisorPid: string; readonly backendStart: string },
+): Promise<void> {
+  const observedSupervisor = await sessionIdentity(supervisor, 'supervisor')
+  if (observedSupervisor.pid !== fence.supervisorPid ||
+      observedSupervisor.backendStart !== fence.backendStart) {
+    throw new ReleaseGateRefused('the supervisor is not the backend that held the fence',
+                                 'the supervisor changed between stages')
+  }
+  const observedProver = await sessionIdentity(prover, 'prover')
+  if (observedProver.pid === observedSupervisor.pid) {
+    throw new ReleaseGateRefused('the complete source fence was not proved held',
+                                 'the prover is the supervisor')
+  }
+  const independent = await observedBackendStart(prover, fence.supervisorPid)
+  if (independent === null || independent !== fence.backendStart) {
+    throw new ReleaseGateRefused('the supervisor is not the backend that held the fence',
+                                 'the backend start does not match')
+  }
 }
 
 /** When a named backend started, as an INDEPENDENT session sees it. */
@@ -1910,13 +2162,17 @@ const outcomeDocument = (
   h: VerifierHandoff, fence: LifecycleFenceState, release: ReleaseResult | null,
   restoration: RestorationResult | null, gateBundle: string | null,
   failure: LifecycleFailure | null, runId: string, stamp: string,
+  outcome: LifecycleOutcome,
 ): Canonical => ({
   lifecycle_version: LIFECYCLE_DOCUMENT_VERSION,
   complete: true,
   record: 'lifecycle-outcome',
   run: { id: runId, stamp },
   bundle: { name: h.bundleName, release_gate: gateBundle },
-  outcome: failure === null ? 'COMPLETE' : 'STOPPED',
+  // SUPPLIED, NOT DERIVED. A failure is always STOPPED; a success is whichever
+  // terminal state the restoration authority makes true, decided by the caller
+  // that also returns it.
+  outcome: failure === null ? outcome : 'STOPPED',
   failure: failure === null
     ? null
     : { phase: failure.phase, reason: failure.reason, at: failure.at },
@@ -1926,6 +2182,15 @@ const outcomeDocument = (
     remaining_locks: release?.remainingLocks ?? null,
   },
   release: release === null ? null : { state: release.state },
+  /**
+   * SAID OUTRIGHT, not left to be inferred from `restoration: null`.
+   *
+   * A manual-stop run ends with the copy verified, the fence proved released
+   * and the producers still down by authorization. `restoration: null` alone
+   * reads as "no restoration record", which a reader could take either way;
+   * `false` is the fact. COMPLETE is unreachable while this is false.
+   */
+  producers_restored: restoration !== null && restoration.failedAt === null,
   restoration: restoration === null ? null : {
     order: [...RESTORE_ORDER],
     restored: [...restoration.restored],
@@ -2034,7 +2299,17 @@ export interface LifecycleInput {
 
   readonly quiescence: QuiescenceAdapter
   readonly queue: QueueAdapter
-  readonly producers: ProducerAdapter
+  /** Who restores the producers, or that nobody will. See RestorationAuthority. */
+  readonly restorationAuthority: RestorationAuthority
+  /**
+   * THE FENCE THIS RUN INHERITED, on the production path.
+   *
+   * The continuous-fence contract is that ONE supervisor transaction covers
+   * Stage 1, Stage 2, verification and the release. When the caller took the
+   * fence before Stage 1 it passes it here, and Stage 2 PROVES it rather than
+   * taking a second one. Undefined on the disposable path, which owns its own.
+   */
+  readonly preAcquiredFence?: AcquiredFence
   /**
    * Re-measured WHILE FENCED and compared with `expectedProducers`.
    *
@@ -2073,7 +2348,20 @@ export interface LifecycleInput {
 }
 
 export interface LifecycleResult {
-  readonly outcome: 'COMPLETE'
+  /**
+   * NO LIFECYCLE OUTCOME IS COMPLETE, on either authority.
+   *
+   * K7-B7.1: this comment used to say COMPLETE was reachable when an adapter
+   * restored the producers, and that is no longer true of the type or the
+   * behaviour. An adapter that restored and confirmed every producer returns
+   * `COPY_VERIFIED_RESTORED_AWAITING_CLOSURE`; manual-stop returns
+   * `COPY_VERIFIED_AWAITING_MANUAL_RESTORATION` with the producers still down
+   * by authorization. Either way the copy is verified, the fence is proved
+   * released, and the copy is NOT closed: closure happens later, in a separate
+   * reviewed mode, against a copy-restoration record - and that closure is the
+   * only document permitted to say the word.
+   */
+  readonly outcome: Exclude<LifecycleOutcome, 'STOPPED'>
   readonly rootDigest: string
   readonly verifierBundle: string
   readonly releaseGateBundle: string
@@ -2154,6 +2442,7 @@ export async function runLifecycle(i: LifecycleInput): Promise<LifecycleResult> 
   /** Publish the outcome record, best effort, and say truthfully what happened. */
   const recordOutcome = (
     fence: LifecycleFenceState, failure: LifecycleFailure | null, gateBundle: string | null,
+    outcome: LifecycleOutcome = 'STOPPED',
   ): EvidenceState => {
     // ONCE PER RUN ID, AND THE FIRST RESULT STANDS.
     //
@@ -2174,16 +2463,12 @@ export async function runLifecycle(i: LifecycleInput): Promise<LifecycleResult> 
         root: i.evidenceRoot, prefix: LIFECYCLE_PREFIX, stamp, runId: runIds.lifecycle,
         manifestFile: LIFECYCLE_FILE, detailFile: LIFECYCLE_DETAIL_FILE,
         manifest: outcomeDocument(
-          h, fence, release, restoration, gateBundle, failure, runIds.lifecycle, stamp),
+          h, fence, release, restoration, gateBundle, failure, runIds.lifecycle, stamp,
+          outcome),
         detail: actionsDocument(release, restoration),
         ops,
       })
-      outcomeEvidence = {
-        attempted: true, publishedPath: p.finalPath, verified: true, note: null,
-        publication: 'published', finalPath: p.finalPath, finalPathState: 'present',
-        temporaryPath: null, temporaryPathState: 'absent',
-        evidencePhase: null, evidenceReason: null,
-      }
+      outcomeEvidence = verifiedEvidence(p)
       return outcomeEvidence
     } catch (e) {
       outcomeEvidence = evidenceStateOf(e, 'the outcome bundle was not published')
@@ -2405,7 +2690,7 @@ export async function runLifecycle(i: LifecycleInput): Promise<LifecycleResult> 
       const published = publishLifecycleBundle({
         root: i.evidenceRoot, prefix: PRISTINE_RELEASE_PREFIX, stamp,
         runId: i.runIds?.lifecycle ?? newRunId(),
-        manifestFile: 'pristine-release.json', detailFile: 'proof.json',
+        manifestFile: PRISTINE_RELEASE_FILE, detailFile: PRISTINE_RELEASE_DETAIL_FILE,
         manifest: {
           record: PRISTINE_RELEASE_PREFIX,
           complete: true,
@@ -2440,12 +2725,7 @@ export async function runLifecycle(i: LifecycleInput): Promise<LifecycleResult> 
         },
         ops,
       })
-      return Object.freeze({
-        attempted: true, publishedPath: published.finalPath, verified: true, note: null,
-        publication: null, evidencePhase: null, evidenceReason: null,
-        finalPath: published.finalPath, finalPathState: 'present' as const,
-        temporaryPath: null, temporaryPathState: 'absent' as const,
-      })
+      return verifiedEvidence(published)
     } catch (e) {
       return evidenceStateOf(e, 'the pristine-release record was not published')
     }
@@ -2469,7 +2749,7 @@ const digestOfDigestFile = (dir: string, ops: EvidenceOps): string =>
       const published = publishLifecycleBundle({
         root: i.evidenceRoot, prefix: COMMIT_DISPOSITION_PREFIX, stamp,
         runId: i.runIds?.lifecycle ?? newRunId(),
-        manifestFile: 'disposition.json', detailFile: 'measurements.json',
+        manifestFile: COMMIT_DISPOSITION_FILE, detailFile: COMMIT_DISPOSITION_DETAIL_FILE,
         manifest: {
           record: COMMIT_DISPOSITION_PREFIX,
           complete: true,
@@ -2489,12 +2769,7 @@ const digestOfDigestFile = (dir: string, ops: EvidenceOps): string =>
         },
         ops,
       })
-      return Object.freeze({
-        attempted: true, publishedPath: published.finalPath, verified: true, note: null,
-        publication: null, evidencePhase: null, evidenceReason: null,
-        finalPath: published.finalPath, finalPathState: 'present' as const,
-        temporaryPath: null, temporaryPathState: 'absent' as const,
-      })
+      return verifiedEvidence(published)
     } catch (e) {
       // THE FAILURE IS THE FINDING, and it is carried in the same three-state
       // shape every other bundle's failure uses: "could not examine" never
@@ -2531,8 +2806,14 @@ const digestOfDigestFile = (dir: string, ops: EvidenceOps): string =>
         'the reviewed target artifact')
     }
 
-    // L2. QUIESCENCE, before the fence is even taken. A producer still running
-    // here would be writing to the source that Stage 2 is about to freeze.
+    // L2. QUIESCENCE, before this function takes or adopts any fence.
+    //
+    // A producer still running here would be writing to the source Stage 2 is
+    // about to freeze. ON THE PRODUCTION PATH THE FENCE IS ALREADY HELD - the
+    // caller took it before Stage 1 derived the manifest - so "before the fence
+    // is even taken" was true only of the disposable path, and the operator
+    // stopped the producers before any of it began. Either way this check runs
+    // against a measured world rather than a remembered one.
     try {
       await assertQuiescent(i.quiescence, i.deadlineMs ?? ADAPTER_DEADLINE_MS)
     } catch (e) {
@@ -2541,17 +2822,23 @@ const digestOfDigestFile = (dir: string, ops: EvidenceOps): string =>
         e instanceof ReleaseGateRefused ? e.at : null)
     }
 
-    // L3. STAGE 2. Takes the fence on the borrowed supervisor and holds it.
+    // L3. STAGE 2, on the fence this run is COMMITTED to - not a new one.
+    //
+    // ADOPTED WHEN SUPPLIED, TAKEN OTHERWISE. A production apply hands in the
+    // `AcquiredFence` Stage 1 returned, and Stage 2 proves that exact object
+    // from an independent backend instead of calling `acquireSourceFence`
+    // again. That matters more than it looks: locks are per transaction, so a
+    // second acquisition on a supervisor that already holds them SUCCEEDS
+    // silently, and the fence facts carried forward would then describe
+    // whichever read answered last. The Stage-1-through-release chain would
+    // stop being evidence that one unbroken fence covered the copy.
+    //
+    // The disposable path supplies nothing and keeps its own acquisition.
     stageSource = await i.openStageSource()
     let appliedResult: ApplyResult | null = null
     try {
-      appliedResult = await runApply({
-        supervisor: i.supervisor, prover: i.prover, source: stageSource,
-        operator: i.operator, sourceBeginSql: i.sourceBeginSql,
-        reviewedTarget: i.reviewedTarget,
-        targetExpectation: i.targetExpectation, confirmation: i.confirmation,
-        openTarget: i.openStageTarget,
-      }, bundleManifest)
+      appliedResult = await runApply(
+        applyInputFor(i, stageSource), bundleManifest)
     } catch (e) {
       if (e instanceof CommitOutcomeUnknown) {
         // NOT `committed = true`.
@@ -2673,12 +2960,7 @@ const digestOfDigestFile = (dir: string, ops: EvidenceOps): string =>
         detail: gateDetailDocument(authorization as ReleaseAuthorization),
         ops,
       })
-      gateEvidence = {
-        attempted: true, publishedPath: p.finalPath, verified: true, note: null,
-        publication: 'published', finalPath: p.finalPath, finalPathState: 'present',
-        temporaryPath: null, temporaryPathState: 'absent',
-        evidencePhase: null, evidenceReason: null,
-      }
+      gateEvidence = verifiedEvidence(p)
     } catch (e) {
       gateEvidence = evidenceStateOf(e, 'the authorization bundle was not published')
       await stop('L7-authorization-evidence',
@@ -2710,10 +2992,20 @@ const digestOfDigestFile = (dir: string, ops: EvidenceOps): string =>
       await stop('L9-release-proof', 'the fence release could not be proved', null)
     }
 
-    // L10. RESTORATION, and only now. Reviewed reverse order, each confirmed.
-    restoration = await restoreProducers(i.producers, i.deadlineMs ?? ADAPTER_DEADLINE_MS)
-    if (restoration.failedAt !== null) {
-      await stop('L10-restore', 'a reviewed producer was not restored', restoration.failedAt)
+    // L10. RESTORATION - or its authorized absence, and only now.
+    //
+    // MANUAL-STOP DOES NOT CALL `restoreProducers` AT ALL. There is nothing to
+    // call it with: no reviewed production ProducerAdapter exists, and the
+    // operator who stopped the producers will put them back under a separate
+    // mode that proves they came back. `restoration` therefore stays null, and
+    // the outcome document below records that truthfully rather than reporting
+    // an empty restoration as a successful one.
+    if (i.restorationAuthority.kind === 'adapter') {
+      restoration = await restoreProducers(
+        i.restorationAuthority.producers, i.deadlineMs ?? ADAPTER_DEADLINE_MS)
+      if (restoration.failedAt !== null) {
+        await stop('L10-restore', 'a reviewed producer was not restored', restoration.failedAt)
+      }
     }
 
     // L11. WHAT ACTUALLY HAPPENED, published separately from the authorization.
@@ -2721,7 +3013,10 @@ const digestOfDigestFile = (dir: string, ops: EvidenceOps): string =>
     // If this fails, `stop` must NOT publish again: the first attempt's outcome
     // is the finding, and a second one under the same name could only collide
     // with it and report the collision instead.
-    outcomeEvidence = recordOutcome('released', null, gateEvidence.publishedPath)
+    // DECIDED ONCE. This exact value is frozen in the bundle below and returned.
+    const terminal = terminalOutcomeFor(i.restorationAuthority)
+    outcomeEvidence = recordOutcome(
+      'released', null, gateEvidence.publishedPath, terminal)
     if (!outcomeEvidence.verified) {
       await stop('L11-outcome-evidence',
                  'the lifecycle outcome evidence was not published and verified',
@@ -2729,12 +3024,15 @@ const digestOfDigestFile = (dir: string, ops: EvidenceOps): string =>
     }
 
     return Object.freeze({
-      outcome: 'COMPLETE',
+      // THE OUTCOME FOLLOWS THE AUTHORITY, not the absence of a failure. A
+      // manual-stop run that reached here copied, verified and released
+      // correctly - and its producers are still down.
+      outcome: terminal,
       rootDigest: applyResult.rootDigest,
       verifierBundle: (verification as VerificationResult).evidence.finalPath,
       releaseGateBundle: gateEvidence.publishedPath as string,
       lifecycleBundle: outcomeEvidence.publishedPath as string,
-      restored: restoration.restored,
+      restored: restoration === null ? [] : restoration.restored,
       fence: 'released',
     })
   } finally {

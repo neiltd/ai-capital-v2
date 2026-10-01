@@ -278,7 +278,7 @@ describe('inspect never reaches the target', () => {
     expect(r.compatibility.sourceRecognition).toBe('CURRENT_V10')
     expect(r.compatibility.targetRecognition).toBe('CURRENT_V19')
     expect(r.rootDigest).toMatch(/^[0-9a-f]{64}$/)
-    expect(r.confirmation).toMatch(/^PGCOPY-APPLY-[0-9a-f]{64}$/)
+    expect(r.confirmation).toMatch(/^PGCOPY-COPY-[0-9a-f]{64}$/)
     expect(r.bundleName).toMatch(/^source-manifest-\d{8}T\d{6}Z-[0-9a-f]{8}$/)
     // And the target is still untouched.
     expect((await targetState()).rows).toBe(0)
@@ -369,7 +369,7 @@ describe('inspect never reaches the target', () => {
         await runApply({
           ...s, reviewedTarget: substitute,
           targetExpectation: TARGET_EXPECTATION(),
-          confirmation: `PGCOPY-APPLY-${'0'.repeat(64)}`,
+          confirmation: `PGCOPY-COPY-${'0'.repeat(64)}`,
           openTarget: async () => { opened += 1; return await openTargetDriver() },
         }, bundle())
         return null
@@ -405,7 +405,7 @@ describe('apply', () => {
       try {
         await runApply({
           ...s, targetExpectation: TARGET_EXPECTATION(),
-          confirmation: `PGCOPY-APPLY-${'0'.repeat(64)}`,
+          confirmation: `PGCOPY-COPY-${'0'.repeat(64)}`,
           openTarget: async () => { opened += 1; return await openTargetDriver() },
         }, bundle())
         return null

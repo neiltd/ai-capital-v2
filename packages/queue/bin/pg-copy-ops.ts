@@ -4,7 +4,6 @@
 // FIVE MODES, EXACTLY ONE PER INVOCATION:
 //
 //   --inspect --for=rehearse   print the rehearse-mode token and the scope digest
-//   --inspect --for=apply      print the apply-mode token, over BOTH digests
 //   --rehearse                 the NON-MUTATING operational rehearsal
 //   --verify-restoration       prove producers came back, publish the record
 //   --review-rehearsal         close the rehearsal, publishing the only bundle
@@ -38,13 +37,16 @@
 
 import { spawn } from 'node:child_process'
 import { createHash } from 'node:crypto'
-import { readFileSync, realpathSync, statSync } from 'node:fs'
-import { basename, dirname, join } from 'node:path'
+import { lstatSync, readFileSync, realpathSync, statSync } from 'node:fs'
+import { basename, dirname, join, resolve } from 'node:path'
 import { createInterface, type Interface } from 'node:readline'
 import { fileURLToPath } from 'node:url'
 
 import {
-  BACKEND_START_SQL, COMPLETE_FENCE_LOCKS, DESTINATION_DISPOSITIONS, STABLE_INSTALLATIONS,
+  LIFECYCLE_FILE, LIFECYCLE_PREFIX, MANIFEST_PREFIX, RELEASE_GATE_FILE,
+  VERIFICATION_FILE, VERIFICATION_PREFIX,
+  BACKEND_START_SHAPE, BACKEND_START_SQL, COMPLETE_FENCE_LOCKS,
+  SELECTED_SEQUENCE_FENCE, DESTINATION_DISPOSITIONS, STABLE_INSTALLATIONS,
   stableInstallationOf,
   QUEUE_SAMPLE_INTERVAL_MS, RELEASE_GATE_PREFIX, REVIEWED_CONTRACT_DIGEST,
   COPY_BINDING_SHAPE_VERSION, canonicalJson, fenceRelationArray,
@@ -65,9 +67,24 @@ import {
   type ExecutionBinding, type FenceExecutor, type OperationalAdapterBinding,
   type ProducerCensusRow, type ProducerIdentity, type QueueAdapter,
   type QuiescenceAdapter, type QuiescenceAttestation,
+  EXPORT_BEGIN_SQL, EXPORT_ROLLBACK_SQL, EXPORT_ROLE_NAME,
+  assertOperatorInput,
+  LifecyclePreCommitCleanupRequired, LifecycleRefused, isInterventionRequired,
+  type ReleaseResult,
+  type LifecycleFenceState,
+  type SequenceFenceId,
+  loadReviewedTarget, rollbackAndProveReleased, runInspect, runLifecycle, runStage1,
+  type ContractArtifact, type InspectResult, type LifecycleInput, type LifecycleResult,
+  type OperatorInput, type PublishedManifest, type Stage1Input, type Stage1Result,
+  type SourceStageInput,
+  type TargetExpectation,
 } from '@common/db/pg-copy'
 
 import { BLOCKING_STATES, PAUSED_IS_BLOCKING, bullmqQueueAdapter } from '../src/pg-copy-ops/bullmq.js'
+import {
+  REVIEWED_OPENERS, driverAuthority,
+  type DriverAuthority, type DriverAuthorityInputs, type DriverOpeners,
+} from '../src/pg-copy-ops/driver-authority.js'
 import {
   DestinationRefused, installationOf, proveDestinations, stableInstallationFor,
   type DestinationPolicyEntry, type ReviewedSourceEndpoint,
@@ -93,6 +110,10 @@ export const EXIT_INTERVENTION_RESOLVED = 5
 
 export const MODES: readonly string[] = Object.freeze([
   '--inspect', '--rehearse', '--verify-restoration', '--review-rehearsal', '--apply',
+  // K7-B7: THE PRODUCTION COPY'S OWN CLOSURE FAMILY, which is not the
+  // rehearsal's. `--verify-restoration` closes an operational rehearsal that
+  // copied nothing; these two close a real copy.
+  '--verify-copy-restoration', '--close-copy',
 ])
 
 export const OPTIONS: readonly string[] = Object.freeze([
@@ -117,6 +138,10 @@ export const OPTIONS: readonly string[] = Object.freeze([
   // they used to be typed in and folded into the token, which made the token
   // agree with whatever was typed - including a wrong target.
   '--bundle-dir', '--checkout',
+  // K7-B: the two reviewed driver-credential containers. No verifier-target
+  // option: the copy and its verification share ONE target authority, and
+  // independence comes from a fresh backend.
+  '--export-driver-credential', '--target-driver-credential',
   // WHERE TO LOOK, not what will be found. These say which server to open a
   // read-only identity session against; every identity FACT comes back from
   // that session, and a mismatch between what was reached and what the bundle
@@ -128,6 +153,13 @@ export const OPTIONS: readonly string[] = Object.freeze([
   '--psql', '--source-user', '--source-passfile',
   // THE INTERVENTION HOLD.
   '--resolution-file',
+  // K7-B7: THE EXACT PRODUCTION BUNDLES A COPY CLOSURE IS BUILT ON.
+  //
+  // SELECTORS, NOT EVIDENCE. Each names a directory this process then verifies
+  // from disk; none of them asserts that the bundle is the right one, which is
+  // what the chain cross-checks establish.
+  '--copy-lifecycle-bundle', '--release-gate-bundle', '--verification-bundle',
+  '--source-manifest-bundle', '--copy-restoration-bundle',
 ])
 
 /** The one accepted authority in this milestone. Stopping is a person's job. */
@@ -587,13 +619,31 @@ export interface Stage1Authority {
   readonly copySet: readonly string[]
   readonly provenanceHead: string
   readonly ingestionGitlink: string
+  /**
+   * THE RUN THIS MANIFEST WAS WRITTEN FOR, and WHEN.
+   *
+   * K7-B7.1: read from the ALREADY-VERIFIED manifest object rather than by a
+   * second parser over the same directory. The chain needs them to prove that
+   * the Stage-1 bundle belongs to this copy - a check that compared only
+   * directory names would accept a manifest whose own run identity disagreed
+   * with the name it happens to sit under.
+   */
+  readonly runId: string
+  readonly generatedAtUtc: string
 }
 
 /** Read and validate the Stage-1 manifest's authority and provenance fields. */
-export function readStage1Authority(bundleDir: string): Stage1Authority {
-  let published
+/**
+ * Verify a published Stage-1 bundle and return the REVIEWED manifest object.
+ *
+ * ONE VERIFIER CALL, one branded result. `readPublishedBundle` records what it
+ * returned in a WeakSet the consumers check, so this is the only way to get an
+ * object the copy and the release gate will accept - an object literal with
+ * the same fields is structurally identical and still refused.
+ */
+export function verifyPublishedStage1(bundleDir: string): PublishedManifest {
   try {
-    published = readPublishedBundle(
+    return readPublishedBundle(
       bundleDir, path => readFileSync(path, 'utf-8'),
       text => createHash('sha256').update(text).digest('hex'))
   } catch (e) {
@@ -601,7 +651,16 @@ export function readStage1Authority(bundleDir: string): Stage1Authority {
       'the Stage-1 bundle does not verify, so no copy binding can be built',
       e instanceof Error ? e.name : null)
   }
+}
 
+/**
+ * The authority and provenance view OF AN ALREADY-VERIFIED manifest.
+ *
+ * TAKES THE VERIFIED OBJECT, not a path, so the apply does not parse the same
+ * bundle twice. Two independent reads of one directory are two chances to
+ * disagree about what it says, and nothing would have compared them.
+ */
+export function stage1AuthorityOf(published: PublishedManifest): Stage1Authority {
   const doc = published.document as unknown as {
     source?: {
       system_identifier?: unknown; database?: unknown
@@ -610,6 +669,8 @@ export function readStage1Authority(bundleDir: string): Stage1Authority {
     content?: { root_digest?: unknown; tables?: Array<{ qname?: unknown }> }
     source_contract?: { digest?: unknown }
     provenance?: { head?: unknown; ingestion_gitlink?: unknown }
+    run_id?: unknown
+    generated_at_utc?: unknown
   }
 
   const need = (value: unknown, what: string, re: RegExp): string => {
@@ -666,6 +727,10 @@ export function readStage1Authority(bundleDir: string): Stage1Authority {
     copySet: Object.freeze(copySet),
     provenanceHead: need(doc.provenance?.head, 'provenance head', HEX40_RE),
     ingestionGitlink: need(doc.provenance?.ingestion_gitlink, 'ingestion gitlink', HEX40_RE),
+    runId: need(doc.run_id, 'run identifier', /^[0-9a-f]{8}$/),
+    generatedAtUtc: need(
+      doc.generated_at_utc, 'generation instant',
+      /^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}(?:\.\d{3})?Z$/),
   })
 }
 
@@ -759,18 +824,43 @@ export function freshCopyBindingFrom(
  * the inspection reports rather than one it glosses: "opened no database
  * session" was true of the rehearsal inspection and never of this one.
  */
-export async function measuredCopyBinding(
+/**
+ * Verify a bundle by path and return its authority view.
+ *
+ * FOR THE CALLERS THAT LEGITIMATELY START FROM A PATH - the inspection, and
+ * tests. The fenced apply starts from the manifest IT published and uses
+ * `stage1AuthorityOf` directly, so it never reads the bundle a second time.
+ */
+export function readStage1Authority(bundleDir: string): Stage1Authority {
+  return stage1AuthorityOf(verifyPublishedStage1(bundleDir))
+}
+
+/**
+ * The copy binding for ONE EXPLICITLY NAMED Stage-1 bundle.
+ *
+ * WHY THE PATH IS A PARAMETER. The production apply creates its Stage-1 bundle
+ * inside its own fenced process and must bind to THAT publication - not to
+ * whatever `--bundle-dir` happens to name. While the path came from argv, the
+ * apply token and target expectation were derived from a pre-existing bundle
+ * while the lifecycle consumed the newly published one: two different bundles,
+ * one confirmation, and no one-process chain at all. The caller now hands over
+ * the directory Stage 1 just published, so there is nothing to disagree with.
+ *
+ * The identities are measured HERE, after that publication, so a binding can
+ * never be older than the manifest it is bound to.
+ */
+export async function copyBindingFromBundle(
+  published: PublishedManifest,
   v: Readonly<Record<string, string>>, deps: OpsDeps, sourceEndpoint: string,
 ): Promise<{ binding: CopyBinding; digest: string; stage1: Stage1Authority }> {
-  const bundleDir = required(v, '--bundle-dir')
   const checkout = required(v, '--checkout')
   if (deps.openSourceIdentity === undefined || deps.openTargetIdentity === undefined) {
     throw new OpsRefused(
       'an apply inspection needs read-only source and target identity sessions')
   }
-  // THE MANIFEST FIRST. If the evidence does not verify there is nothing to
-  // measure against, and no session need be opened at all.
-  const stage1 = readStage1Authority(bundleDir)
+  // THE AUTHORITY VIEW OF THE MANIFEST THE CALLER ALREADY VERIFIED. No second
+  // read, so there is no second opinion about what this bundle says.
+  const stage1 = stage1AuthorityOf(published)
 
   const sourceSession = await deps.openSourceIdentity()
   let targetSession: FenceLike | null = null
@@ -785,6 +875,19 @@ export async function measuredCopyBinding(
     if (targetSession !== null) await targetSession.close().catch(() => undefined)
     await sourceSession.close().catch(() => undefined)
   }
+}
+
+/**
+ * The binding for the bundle named by `--bundle-dir`.
+ *
+ * STILL THE INSPECTION'S ENTRY POINT, and no longer the apply's: an inspection
+ * is asked about a bundle that already exists, so naming one is its whole job.
+ */
+export async function measuredCopyBinding(
+  v: Readonly<Record<string, string>>, deps: OpsDeps, sourceEndpoint: string,
+): Promise<{ binding: CopyBinding; digest: string; stage1: Stage1Authority }> {
+  return await copyBindingFromBundle(
+    verifyPublishedStage1(required(v, '--bundle-dir')), v, deps, sourceEndpoint)
 }
 
 /**
@@ -914,6 +1017,66 @@ export interface OpsDeps {
    */
   readonly openSourceIdentity?: () => Promise<FenceLike>
   readonly openTargetIdentity?: () => Promise<FenceLike>
+  /**
+   * The operator channel factory, injected ONLY so a test can observe ordering.
+   *
+   * Production passes nothing and gets `operatorChannel`. This is not a mode
+   * gate: it cannot select a live path, and argv still decides the mode.
+   */
+  /**
+   * THE REVIEWED CORE, injected ONLY so the orchestration can be exercised.
+   *
+   * Production passes nothing and binds to the real functions. These are not
+   * mode gates: argv alone still decides the mode, and a test double cannot
+   * reach a live database because it IS the thing that would have.
+   */
+  /**
+   * ENTERING THE INTERVENTION HOLD, as a seam.
+   *
+   * `holdForIntervention` is a deliberate `for(;;)` that pauses and asks again
+   * until an operator resolves it - correct for production, and unreachable in
+   * a test, which would simply never return. Injecting the ENTRY lets a test
+   * prove the hold was reached, and what had not been closed by then, without
+   * entering the loop.
+   */
+  readonly enterHold?: typeof holdForIntervention
+  readonly authorize?: typeof assertApplyAuthorized
+  readonly copyBinding?: typeof copyBindingFromBundle
+  /** The reviewed bundle verifier. Injected so a test need not publish one. */
+  readonly verifyPublished?: typeof verifyPublishedStage1
+  /** The pre-fence supervisor identity measurement. */
+  readonly measureFenceIdentity?: typeof measureSupervisorIdentity
+  /**
+   * The post-COMMIT intervention classifier. DEFAULTS TO THE REVIEWED,
+   * NON-FORGEABLE `isInterventionRequired`, which is the only thing
+   * production ever uses. Injected only to reach the branch in a test,
+   * because a genuine intervention cannot be constructed outside the
+   * lifecycle module by design.
+   */
+  readonly classifyIntervention?: typeof isInterventionRequired
+  /**
+   * THE THREE CORE STAGES, DECLARED AS WHAT THE ORCHESTRATION CONSUMES.
+   *
+   * Each takes the REAL reviewed input type - so a wrong session, a raw
+   * `PublishedEvidence` or an incomplete lifecycle input cannot reach the
+   * production call - and returns only the fields the orchestration actually
+   * reads. `runStage1`, `runInspect` and `runLifecycle` return strictly more
+   * than that and so satisfy these without any assertion; a stricter return
+   * type here would have forced every caller and fixture to fabricate whole
+   * result documents, and forcing that is how `as never` got in.
+   */
+  readonly stage1?: (i: Stage1Input) => Promise<Pick<Stage1Result, 'fence' | 'published'>>
+  readonly inspect?: (
+    i: SourceStageInput, published: PublishedManifest, target: TargetExpectation,
+  ) => Promise<Pick<InspectResult, 'confirmation'>>
+  readonly lifecycle?: (i: LifecycleInput) => Promise<Pick<LifecycleResult,
+    'outcome' | 'fence' | 'verifierBundle' | 'releaseGateBundle' | 'lifecycleBundle'>>
+  readonly releaseAndProve?: typeof rollbackAndProveReleased
+  readonly authority?: (i: DriverAuthorityInputs, o: DriverOpeners) => DriverAuthority
+  readonly confirm?: typeof awaitCopyConfirmation
+  readonly operatorChannel?: (
+    say: (l: string) => void, root: string, resolutionFile: string | null,
+  ) => OperatorChannel
   /** Reads HEAD and the ingestion gitlink. Injected so tests run no git. */
   readonly measureRepository?: (checkout: string) => Promise<{
     head: string; ingestionGitlink: string
@@ -922,8 +1085,24 @@ export interface OpsDeps {
 }
 
 export interface FenceLike {
+  /**
+   * THE BACKEND PID, read once at open.
+   *
+   * WHY IT IS PART OF THIS INTERFACE. The reviewed `SupervisorSession` is
+   * `FenceExecutor` plus `pid`, so a session without one could not be handed
+   * to Stage 1 at all - and the production path papered over that with
+   * `supervisor as never`, which type-checked while proving nothing. The real
+   * session is a `PsqlBackend`, which has had a `pid` all along; it was simply
+   * discarded by the wrapper. Declared here, the production value satisfies
+   * the core contract on its own and the cast disappears.
+   */
+  readonly pid: string
   send(sql: string): Promise<{ rows: string[][]; error: 'statement-refused' | null }>
+  /** `must`, under the name `ContractQueryExecutor` asks for. */
+  rows(sql: string): Promise<string[][]>
   close(): Promise<void>
+  /** True until `close()` resolves or the child exits. */
+  alive(): boolean
 }
 
 /**
@@ -936,7 +1115,15 @@ export interface FenceLike {
 export interface AcquiredFenceLike {
   readonly supervisorPid: string
   readonly backendStart: string
-  readonly mechanism: 'S3'
+  /**
+   * WIDENED TO THE REVIEWED TYPE. This was pinned to the literal `'S3'`, which
+   * is the mechanism this repository selects but not the type the fence
+   * carries. The real Stage-1 `AcquiredFence` therefore did not satisfy this
+   * interface, and the production apply could not hand its own fence to the
+   * reviewed hold without a cast - so the too-narrow declaration is corrected
+   * rather than the mismatch silenced.
+   */
+  readonly mechanism: SequenceFenceId
 }
 
 export interface CliResult {
@@ -1099,6 +1286,226 @@ export interface InterventionHold {
   ): Promise<HoldDecision>
 }
 
+/**
+ * THE LOW-LEVEL OPERATOR INPUT TRANSPORT, shared by two different questions.
+ *
+ * WHY THIS IS EXTRACTED RATHER THAN REUSED THROUGH `holdForIntervention`. An
+ * intervention hold and an ordinary copy confirmation need the same PLUMBING -
+ * one readline interface that survives many attempts, a resolution file under
+ * this run's own evidence root, and signal handlers that decline to exit while
+ * a fence is held - and they need completely different SEMANTICS. A hold asks
+ * "which reviewed operation do you choose" and publishes an intent and an
+ * outcome for the one that is chosen; a copy confirmation asks "paste back the
+ * token this run just computed" and publishes nothing at all. Routing the
+ * second through the first would put RELEASE and ABANDON in front of an
+ * operator who is being asked to approve a copy, and would publish an
+ * intervention record for an event that is not an intervention.
+ *
+ * SO THE TRANSPORT IS SHARED AND THE GRAMMAR IS NOT.
+ */
+export interface OperatorChannel {
+  /**
+   * Prove somebody could answer - BEFORE any session or fence exists.
+   *
+   * A process that discovers it has no terminal only after taking the fence has
+   * created the exact state it cannot get out of: a held source and no channel
+   * through which anyone can tell it to let go. This is why the check is a
+   * separate method rather than a side effect of the first read.
+   */
+  preflight(): void
+  /**
+   * Installs the handlers that decline to exit. Returns a DISARM ONLY.
+   *
+   * SEPARATE FROM `close` ON PURPOSE. An earlier revision closed the channel as
+   * part of disarming, which made the transition this milestone needs
+   * impossible: a wrong copy confirmation has to attempt the reviewed
+   * pre-COMMIT release, and when that release cannot be PROVED the run must go
+   * on to the intervention hold - through the same channel, because the fence
+   * may still be held and the operator is the only way out. Closing the reader
+   * on the way would have destroyed the one input the hold depends on, and
+   * re-creating it would leave a second consumer of the same stdin.
+   *
+   * ONE LEASE, RE-ARMABLE IN PLACE. A second call does NOT install a second
+   * handler set: it replaces the sentence the installed handlers print and
+   * returns the same disarm, which does its work once. That is what lets the
+   * apply arm before Stage 1 and the hold take over with no disarmed gap and
+   * no duplicate listeners.
+   */
+  arm(sentence: string): () => void
+  /** Exactly one line. Never consumes more of the channel than it returns. */
+  nextLine(): Promise<string>
+  /** Idempotent. The channel outlives every attempt and closes once. */
+  close(): void
+}
+
+/** How long the file-backed channel waits before looking again. */
+export const RESOLUTION_POLL_MS = 2_000
+
+export function operatorChannel(
+  say: (l: string) => void, root: string, resolutionFile: string | null,
+): OperatorChannel {
+  /** THE ONE HANDLER LEASE. Non-null exactly while the handlers are installed. */
+  let installed: (() => void) | null = null
+  /** What those handlers print. Updated in place by a later `arm`. */
+  let current = ''
+  /** Created on first use, reused for every attempt, closed once. */
+  let lines: AsyncIterableIterator<string> | null = null
+  let rl: Interface | null = null
+
+  const channel: OperatorChannel = {
+    preflight(): void {
+      if (resolutionFile !== null) {
+        // The PATH is checked here; the CONTENTS are not, because the operator
+        // has not written them yet. What must be true now is that the file
+        // would be read from under this run's evidence root.
+        //
+        // ONE DERIVATION, shared with the read, so the path this proves is the
+        // path that will later be opened.
+        resolutionPathUnder(root, resolutionFile)
+        return
+      }
+      // BOTH DIRECTIONS. A process with a readable stdin but a redirected
+      // stdout can be asked for a confirmation it cannot print - the token
+      // would go into a pipe or a file the operator is not watching, and a
+      // fence would be held waiting for a reply to a question nobody saw.
+      if (process.stdin.isTTY !== true || process.stdout.isTTY !== true) {
+        throw new OpsRefused(
+          'this operation needs a terminal on stdin AND stdout, or a --resolution-file')
+      }
+    },
+    /**
+     * ONE HANDLER LEASE FOR THE WHOLE RUN, whose MESSAGE can be updated.
+     *
+     * WHY ARMING TWICE WAS WRONG. The apply arms before Stage 1, because from
+     * that moment a fence may exist; the intervention hold then armed again on
+     * the same channel. That installed a SECOND handler set for the same
+     * signals - so one SIGINT printed two sentences, one of them the stale
+     * confirmation prompt - and left two outstanding disarms for one lease,
+     * where whichever ran first created a window in which the process would
+     * die on a signal WHILE HOLDING THE FENCE.
+     *
+     * So a second `arm` does not install anything. It replaces the sentence
+     * the existing handlers print and returns the SAME disarm, which does its
+     * work once however many times it is called. There is no disarmed gap
+     * between the confirmation and the hold because the lease never lapses.
+     */
+    arm(sentence: string): () => void {
+      current = sentence
+      if (installed !== null) return installed
+      const hold = (sig: NodeJS.Signals): void => {
+        say(`${sig} IGNORED: this process is holding a source fence. ${current}`)
+      }
+      for (const sig of HELD_SIGNALS) process.on(sig, hold)
+      let released = false
+      installed = (): void => {
+        if (released) return
+        released = true
+        installed = null
+        for (const sig of HELD_SIGNALS) process.off(sig, hold)
+      }
+      return installed
+    },
+
+    async nextLine(): Promise<string> {
+      if (resolutionFile !== null) return readResolutionFile(root, resolutionFile)
+      // STDIN ONLY AT READ TIME. The both-sides requirement belongs to
+      // `preflight`, which the copy confirmation runs before it takes a fence;
+      // an intervention hold arrives here without one, and narrowing its
+      // reviewed contract is not this milestone's business.
+      if (process.stdin.isTTY !== true) {
+        throw new OpsRefused(
+          'this hold has no terminal and no --resolution-file, so nobody can resolve it')
+      }
+      if (lines === null) {
+        // `terminal: false` keeps readline from taking over the tty's
+        // rendering; this is a prompt for one line, not an editor.
+        rl = createInterface({ input: process.stdin, terminal: false })
+        lines = rl[Symbol.asyncIterator]()
+      }
+      const next = await (lines as AsyncIterableIterator<string>).next()
+      if (next.done === true) {
+        throw new OpsRefused('the resolution channel closed before a line arrived')
+      }
+      return next.value
+    },
+    close(): void {
+      if (rl !== null) { rl.close(); rl = null; lines = null }
+    },
+  }
+  return channel
+}
+
+/** The one sentence an operator may reply with to approve a production copy. */
+export const COPY_CONFIRM_ACTION = 'CONFIRM'
+// NO WHITESPACE. The reply is split on whitespace into exactly three fields, so
+// a name containing a space could never survive the parse - advertising one
+// would promise a grammar this parser cannot represent.
+const OPERATOR_NAME = /^[A-Za-z][A-Za-z0-9._-]{0,63}$/
+
+export interface CopyConfirmation {
+  readonly operator: string
+  readonly token: string
+}
+
+/**
+ * WAIT FOR THE OPERATOR TO RETURN THE TOKEN THIS RUN COMPUTED.
+ *
+ * NOT SELF-ACCEPTED, AND THAT IS THE WHOLE POINT. The process already knows
+ * the token - it just printed it. What it cannot do is decide on the operator's
+ * behalf that the copy should happen. So the value is compared against input
+ * that arrived from outside the process, and there is no branch in which the
+ * computed token satisfies itself.
+ *
+ * ABSENCE IS NOT REFUSAL. A resolution file that does not exist yet means the
+ * operator has not answered, so the channel waits - on a fixed reviewed pause,
+ * so a missing file cannot spin - and publishes NOTHING while it waits. A
+ * WRONG or malformed answer is different: it is a refusal, and it leaves by the
+ * reviewed pre-COMMIT release path rather than being asked again forever,
+ * because an operator typing the wrong token at a held fence is a situation a
+ * person needs to look at.
+ *
+ * NOTHING SUPPLIED IS ECHOED. The reply may be a token for another run, or a
+ * mistyped one; either way the refusal names the problem and not the value.
+ */
+export async function awaitCopyConfirmation(
+  channel: OperatorChannel, token: string, say: (l: string) => void,
+  sleep: (ms: number) => Promise<void> = async (ms: number) =>
+    await new Promise<void>(r => { setTimeout(r, ms) }),
+  pollMs: number = RESOLUTION_POLL_MS,
+): Promise<CopyConfirmation> {
+  say('THE SOURCE IS FENCED AND THIS PROCESS IS HOLDING IT.')
+  say(`Reply with: ${COPY_CONFIRM_ACTION} <operator-name> ${token}`)
+  for (;;) {
+    let text: string
+    try {
+      text = await channel.nextLine()
+    } catch (e) {
+      // EXACTLY ONE CONDITION MEANS WAIT, and it is a type - not a phrase.
+      // Everything else (a closed stdin, a path outside the evidence root, a
+      // symlink where the file belongs, a permission error) is a refusal.
+      if (e instanceof ResolutionPending) { await sleep(pollMs); continue }
+      throw e
+    }
+    if (text.trim() === '') { await sleep(pollMs); continue }
+
+    const [action = '', operator = '', supplied = ''] = text.trim().split(/\s+/, 3)
+    // THE TOKEN FIRST, so a reply meant for a different run cannot select an
+    // action here, and an operations PGCOPY-APPLY token fails on this exact
+    // comparison rather than on a later digest check.
+    if (supplied !== token) {
+      throw new OpsRefused('the reply does not carry this run\'s copy confirmation')
+    }
+    if (action !== COPY_CONFIRM_ACTION) {
+      throw new OpsRefused(
+        `a production copy is approved with ${COPY_CONFIRM_ACTION}, and nothing else`)
+    }
+    if (!OPERATOR_NAME.test(operator)) {
+      throw new OpsRefused('a production copy needs a named operator')
+    }
+    return Object.freeze({ operator, token: supplied })
+  }
+}
+
 /** Every signal a terminal or a supervisor can send that a handler can catch. */
 export const HELD_SIGNALS: readonly NodeJS.Signals[] =
   Object.freeze(['SIGINT', 'SIGTERM', 'SIGHUP', 'SIGQUIT'])
@@ -1130,41 +1537,30 @@ export const HELD_SIGNALS: readonly NodeJS.Signals[] =
  */
 export function processHold(
   say: (l: string) => void, root: string, resolutionFile: string | null,
+  existing?: OperatorChannel,
 ): InterventionHold {
-  /** Created on first use, reused for every attempt, closed on disarm. */
-  let lines: AsyncIterableIterator<string> | null = null
-  let rl: Interface | null = null
-
-  const nextLine = async (): Promise<string> => {
-    if (process.stdin.isTTY !== true) {
-      throw new OpsRefused(
-        'this hold has no terminal and no --resolution-file, so nobody can resolve it')
-    }
-    if (lines === null) {
-      // `terminal: false` keeps readline from taking over the tty's rendering;
-      // this is a prompt for one line, not an editor.
-      rl = createInterface({ input: process.stdin, terminal: false })
-      lines = rl[Symbol.asyncIterator]()
-    }
-    const next = await (lines as AsyncIterableIterator<string>).next()
-    if (next.done === true) {
-      // THE CHANNEL CLOSED. Not a resolution, and not a reason to return: the
-      // caller treats a refusal as an attempt that resolved nothing.
-      throw new OpsRefused('the resolution channel closed before a line arrived')
-    }
-    return next.value
-  }
+  // THE SAME TRANSPORT THE COPY CONFIRMATION USES, and only the transport. The
+  // grammar below - reviewed operations, a chosen action, an intent and an
+  // outcome bundle - belongs to interventions and stays here.
+  //
+  // AN APPLY HANDS OVER THE CHANNEL IT ALREADY PREFLIGHTED. Building a second
+  // one would re-run the TTY preflight while the source fence is held, and a
+  // failure there would leave a fenced database with nobody able to tell this
+  // process to let go. The grammar is unchanged either way: this is the
+  // reviewed hold, not a reduced copy of it.
+  const channel = existing ?? operatorChannel(say, root, resolutionFile)
+  const nextLine = async (): Promise<string> => await channel.nextLine()
 
   return {
     arm(sentence: string): () => void {
-      const hold = (sig: NodeJS.Signals): void => {
-        say(`${sig} IGNORED: this process is holding a source fence. ${sentence}`)
-      }
-      for (const sig of HELD_SIGNALS) process.on(sig, hold)
+      // A HOLD OWNS THE CHANNEL FOR ITS WHOLE LIFE, so disarming a hold is the
+      // end of the conversation and closes it. The transport no longer does
+      // that itself, because the copy confirmation needs to disarm WITHOUT
+      // closing when it is about to hand the same channel to a hold.
+      const disarmHandlers = channel.arm(sentence)
       return (): void => {
-        for (const sig of HELD_SIGNALS) process.off(sig, hold)
-        // THE INPUT CHANNEL OUTLIVES EVERY ATTEMPT and is closed here, once.
-        if (rl !== null) { rl.close(); rl = null; lines = null }
+        disarmHandlers()
+        channel.close()
       }
     },
     async decide(
@@ -1199,13 +1595,64 @@ export function processHold(
  * evidence is being published into - the same authority, rather than any path
  * on the filesystem that happens to contain the right words.
  */
-function readResolutionFile(root: string, path: string): string {
+/**
+ * THE FILE HAS NOT BEEN WRITTEN YET - a CONDITION, not a failure.
+ *
+ * A typed class rather than a message an caller could match on. The detached
+ * confirmation wait has to distinguish "the operator has not answered" from
+ * "the filesystem said no", and matching error TEXT to tell those apart is a
+ * guess dressed as a check: any rewording of a libuv message, or any other
+ * error that happened to contain the same words, changes the behaviour of a
+ * process that is holding a production fence.
+ */
+export class ResolutionPending extends Error {
+  constructor(readonly path: string) {
+    super('the reviewed resolution file has not been written yet')
+    this.name = 'ResolutionPending'
+  }
+}
+
+/**
+ * THE CANONICAL FINAL PATHNAME, derived WITHOUT resolving the final component.
+ *
+ * WHY NOT `realpathSync(path)`. It resolves the last component too, so a
+ * SYMLINK supplied as the resolution file would be silently followed and the
+ * `O_NOFOLLOW` open below would then be handed the link's target - a file that
+ * was never checked against the evidence root. It also throws when the file
+ * does not exist yet, which is the normal state while the operator is being
+ * waited for.
+ *
+ * So the PARENT is canonicalised - it exists, and canonicalising it is what
+ * makes `/var` and `/private/var` comparable - and the basename is appended
+ * verbatim. The result is an exact name that `openChecked` then opens with
+ * `O_NOFOLLOW`, so a link in that position is refused rather than followed.
+ */
+function resolutionPathUnder(root: string, path: string): string {
   const realRoot = realpathSync(root)
-  const real = realpathSync(path)
-  if (!real.startsWith(`${realRoot}/`)) {
+  let parent: string
+  try {
+    parent = realpathSync(dirname(resolve(path)))
+  } catch {
     throw new OpsRefused('the resolution file is not under this run\'s evidence root')
   }
-  return openReviewedContainer(real).text
+  const full = join(parent, basename(path))
+  if (full !== realRoot && !full.startsWith(`${realRoot}/`)) {
+    throw new OpsRefused('the resolution file is not under this run\'s evidence root')
+  }
+  return full
+}
+
+function readResolutionFile(root: string, path: string): string {
+  const full = resolutionPathUnder(root, path)
+  // `lstat`, so a symlink is SEEN here and refused by the open below rather
+  // than quietly resolved. Absence is the one outcome that means "wait".
+  try {
+    lstatSync(full)
+  } catch (e) {
+    if ((e as NodeJS.ErrnoException).code === 'ENOENT') throw new ResolutionPending(full)
+    throw e
+  }
+  return openReviewedContainer(full).text
 }
 
 export interface HoldInputs {
@@ -1240,6 +1687,22 @@ export interface HoldInputs {
    * been published and verified - prover first, supervisor second.
    */
   readonly teardown: () => Promise<void>
+  /**
+   * RELEASE THE HANDLER LEASE AND CHANNEL THE CALLER ALREADY OWNED.
+   *
+   * SUPPLIED BY THE CALLER, NOT DERIVED FROM `arm`. In the apply handoff the
+   * lease and the readline owner exist BEFORE this hold is entered, and the
+   * hold's `arm` only updates the message on them. Taking cleanup authority
+   * from `arm`'s return value meant that when the message update failed the
+   * substituted no-op disarm left the original lease armed and the channel
+   * open forever - the sessions were torn down and the process kept a signal
+   * handler and a readline interface nobody could reach.
+   *
+   * Called exactly once, from the `finally` that a terminal resolution
+   * reaches, and independent of whether the message update succeeded. Both
+   * actions it performs are idempotent.
+   */
+  readonly cleanup?: () => void
   /** How the loop pauses between attempts. Injected so tests do not wait. */
   readonly sleep: (ms: number) => Promise<void>
   /**
@@ -1317,12 +1780,32 @@ export async function holdForIntervention(i: HoldInputs): Promise<CliResult> {
   const say = (l: string): void => { lines.push(l); i.say(l) }
   const backend = `${i.supervisorPid}@${i.backendStart}`
 
+  // THE SENTENCE DESCRIBES THE INTERVENTION, not the earlier confirmation
+  // prompt the apply armed with. Re-arming replaces the message on the
+  // existing lease rather than installing a second handler set.
   const sentence = i.fenceState === 'released'
     ? 'The fence is proved gone; this process is holding only to record the outcome.'
-    : 'Exiting would end the psql child, and the fence state above is what is known.'
+    : `Exiting would end the psql child; the fence is ${i.fenceState} and this ` +
+      'process is holding it until an operator resolves it.'
   // ARMED ONCE, FOR THE WHOLE HOLD. Disarmed in the `finally` below, which is
   // reached only once a terminal resolution has been published and verified.
-  const disarm = i.hold.arm(sentence)
+  //
+  // AND A FAILURE HERE MAY NOT ESCAPE. This function is reached with a fence
+  // that may be held; letting an arm error propagate would unwind the handoff
+  // and leave that fence with no hold and no terminal record - which is the
+  // one outcome the hold exists to prevent. A hold that could not update its
+  // prompt still holds.
+  //
+  // CLEANUP DOES NOT COME FROM HERE. `i.cleanup`, when the caller supplies it,
+  // owns the lease and the channel; this call only updates what the installed
+  // handlers print. So a failure is noted and the hold continues, and the
+  // terminal `finally` still releases everything exactly once.
+  let disarm: () => void = () => undefined
+  try {
+    disarm = i.hold.arm(sentence)
+  } catch {
+    say('NOTE: the signal prompt could not be updated; the hold continues regardless.')
+  }
 
   /** A pause that cannot itself end the hold. */
   const pause = async (ms: number): Promise<void> => {
@@ -1487,10 +1970,16 @@ export async function holdForIntervention(i: HoldInputs): Promise<CliResult> {
       say(`Waited ${HOLD_RETRY_INTERVAL_MS}ms before asking again.`)
     }
   } finally {
-    // DISARMED ONLY HERE, after a terminal resolution was published and
+    // RELEASED ONLY HERE, after a terminal resolution was published and
     // verified. Between the first line above and this point every catchable
     // signal is held.
+    //
+    // BOTH, AND BOTH IDEMPOTENT. `disarm` releases a lease this hold itself
+    // installed (the rehearsal's case); `cleanup` releases the lease and
+    // channel a CALLER already owned (the apply's case) and is the only thing
+    // that works when the message update above failed.
     disarm()
+    if (i.cleanup !== undefined) i.cleanup()
   }
 
   // TEARDOWN, IN ORDER, AND ONLY NOW. The prover holds nothing of the fence and
@@ -2047,6 +2536,292 @@ export function acceptExistingRecord(
   }
 }
 
+
+// ---------------------------------------------------------------------------
+// K7-B7 PHASE B — THE PRODUCTION COPY'S OWN RESTORATION
+// ---------------------------------------------------------------------------
+
+/** One verified bundle: what it is called, and which bytes it is. */
+export interface VerifiedLink {
+  readonly name: string
+  readonly digestFileDigest: string
+}
+
+/** The four production bundles a copy closure is built on, all verified. */
+export interface VerifiedCopyChain {
+  readonly lifecycle: VerifiedLink
+  readonly releaseGate: VerifiedLink
+  readonly verification: VerifiedLink
+  readonly sourceManifest: VerifiedLink
+  /** The one run this copy is, agreed by every bundle above. */
+  readonly runId: string
+  readonly stamp: string
+  /** Stage-2's content identity, agreed by the lifecycle AND the verification. */
+  readonly rootDigest: string
+  readonly sourceContractDigest: string
+  readonly targetContractDigest: string
+}
+
+export const COPY_RESTORATION_PREFIX = 'copy-restoration'
+export const COPY_RESTORATION_FILE = 'copy-restoration.json'
+export const COPY_CLOSURE_PREFIX = 'copy-closure'
+export const COPY_CLOSURE_FILE = 'copy-closure.json'
+
+/** A verified link, as it is serialized: basename AND the DIGEST file's digest. */
+export const linkDocument = (l: VerifiedLink): { name: string; digest_file_digest: string } =>
+  ({ name: l.name, digest_file_digest: l.digestFileDigest })
+
+/** A bundle whose manifest carries a version field instead of a `record` tag. */
+function verifyVersionedBundle(
+  dir: string, versionKey: string, manifestFile: string,
+): Record<string, never> {
+  const files = verifyPublishedEvidence(dir)
+  if (!files.includes(manifestFile)) {
+    throw new OpsRefused('a referenced bundle has no manifest', manifestFile)
+  }
+  const doc = JSON.parse(readFileSync(join(dir, manifestFile), 'utf-8')) as Record<string, never>
+  if (typeof (doc as Record<string, unknown>)[versionKey] !== 'number') {
+    throw new OpsRefused('a referenced bundle is not the expected record', versionKey)
+  }
+  if ((doc as { complete?: unknown }).complete !== true) {
+    throw new OpsRefused('a referenced bundle is not complete')
+  }
+  return doc
+}
+
+/** `<prefix>-<stamp>-<runid>`, refused if the directory is not one. */
+function linkFor(dir: string, prefix: string): VerifiedLink {
+  const name = basename(dir)
+  const m = new RegExp(`^${prefix}-(\\d{8}T\\d{6}Z)-([0-9a-f]{8})$`).exec(name)
+  if (m === null) {
+    throw new OpsRefused('a referenced bundle is not in the reviewed name form', prefix)
+  }
+  return Object.freeze({ name, digestFileDigest: fileSha256(join(dir, DIGEST_FILE)) })
+}
+
+const nameParts = (name: string): { stamp: string; runId: string } => {
+  const m = /-(\d{8}T\d{6}Z)-([0-9a-f]{8})$/.exec(name)
+  if (m === null) throw new OpsRefused('a referenced bundle name carries no run identity')
+  return { stamp: m[1] as string, runId: m[2] as string }
+}
+
+const str = (doc: Record<string, never>, path: readonly string[], what: string): string => {
+  let cur: unknown = doc
+  for (const k of path) {
+    if (typeof cur !== 'object' || cur === null) {
+      throw new OpsRefused(`a referenced bundle records no ${what}`)
+    }
+    cur = (cur as Record<string, unknown>)[k]
+  }
+  if (typeof cur !== 'string' || cur.length === 0) {
+    throw new OpsRefused(`a referenced bundle records no ${what}`)
+  }
+  return cur
+}
+
+/**
+ * VERIFY THE WHOLE PRODUCTION CHAIN FROM DISK, and agree it with itself.
+ *
+ * EVERY BUNDLE IS VERIFIED INDEPENDENTLY. `verifyPublishedEvidence` re-reads
+ * each directory's DIGEST against its bytes, so a changed bundle is refused
+ * however it was named - and the caller's four paths are SELECTORS, never
+ * evidence. Nothing here trusts a flag, a basename or a caller's claim that
+ * two bundles belong together.
+ *
+ * THE LIFECYCLE DOCUMENT LINKS BY NAME ONLY, and does not name the
+ * verification bundle at all. So the chain to the verification is established
+ * by CONTENT - Stage-2's root and both contract digests, which the lifecycle
+ * and the verification each record independently - and this function computes
+ * the DIGEST-file digest of all four itself. Those pairs are what the
+ * restoration record then carries; it does not copy a digest anybody supplied.
+ */
+export function verifyCopyChain(v: Readonly<Record<string, string>>): VerifiedCopyChain {
+  const lifecycleDir = required(v, '--copy-lifecycle-bundle')
+  const gateDir = required(v, '--release-gate-bundle')
+  const verifyDir = required(v, '--verification-bundle')
+  const manifestDir = required(v, '--source-manifest-bundle')
+
+  const lifecycle = linkFor(lifecycleDir, LIFECYCLE_PREFIX)
+  const releaseGate = linkFor(gateDir, RELEASE_GATE_PREFIX)
+  const verification = linkFor(verifyDir, VERIFICATION_PREFIX)
+  const sourceManifest = linkFor(manifestDir, MANIFEST_PREFIX)
+
+  const lifeDoc = verifyReferencedBundle(lifecycleDir, 'lifecycle-outcome', LIFECYCLE_FILE)
+  const gateDoc = verifyReferencedBundle(gateDir, 'authorization-to-release', RELEASE_GATE_FILE)
+  const verifyDoc = verifyVersionedBundle(verifyDir, 'verification_version', VERIFICATION_FILE)
+  // The Stage-1 manifest carries no `record` tag; its completion marker and its
+  // own DIGEST are what `readPublishedBundle` proves, and that is what the
+  // reviewed authority reader uses.
+  const stage1 = readStage1Authority(manifestDir)
+
+  // 1. ONE RUN - ID **AND** STAMP.
+  //
+  // THE ID ALONE IS NOT THE RUN. Run ids are eight hex characters minted per
+  // operation, and the same id can legitimately recur across stamps; comparing
+  // only ids accepted a chain spliced from two different copies that happened
+  // to share one. Both halves are compared, in the documents and in the names.
+  const runId = str(lifeDoc, ['run', 'id'], 'run identity')
+  const stamp = str(lifeDoc, ['run', 'stamp'], 'run stamp')
+  for (const [doc, which] of [[gateDoc, 'release gate'], [verifyDoc, 'verification']] as const) {
+    if (str(doc, ['run', 'id'], 'run identity') !== runId) {
+      throw new OpsRefused(`the ${which} bundle belongs to a different run`)
+    }
+    if (str(doc, ['run', 'stamp'], 'run stamp') !== stamp) {
+      throw new OpsRefused(`the ${which} bundle belongs to a different run instant`)
+    }
+  }
+  // 2. AND EVERY DIRECTORY NAME CARRIES THAT SAME IDENTITY. A document can
+  //    agree with another document while sitting in a directory named for a
+  //    third run; the name is what an operator reads.
+  for (const link of [lifecycle, releaseGate, verification, sourceManifest]) {
+    const parts = nameParts(link.name)
+    if (parts.runId !== runId) {
+      throw new OpsRefused('a bundle name does not carry this run identity', link.name)
+    }
+    if (parts.stamp !== stamp) {
+      throw new OpsRefused('a bundle name does not carry this run instant', link.name)
+    }
+  }
+  // 3. THE STAGE-1 MANIFEST'S OWN RUN IDENTITY, from the verified manifest
+  //    object - not from a second parse of the same directory. Its recorded
+  //    instant must be exactly the instant its stamp represents.
+  if (stage1.runId !== runId) {
+    throw new OpsRefused('the Stage-1 manifest records a different run identity')
+  }
+  if (stage1.generatedAtUtc !== isoUtcFromStamp(stamp)) {
+    throw new OpsRefused('the Stage-1 manifest records a different generation instant')
+  }
+
+  // 2. THE LIFECYCLE'S OWN LINKS, checked against what was actually supplied.
+  if (str(lifeDoc, ['bundle', 'name'], 'Stage-1 bundle name') !== sourceManifest.name) {
+    throw new OpsRefused('the copy lifecycle names a different Stage-1 bundle')
+  }
+  if (str(lifeDoc, ['bundle', 'release_gate'], 'release-gate name') !== releaseGate.name) {
+    throw new OpsRefused('the copy lifecycle names a different release-gate bundle')
+  }
+  if (str(verifyDoc, ['bundle', 'name'], 'Stage-1 bundle name') !== sourceManifest.name) {
+    throw new OpsRefused('the verification names a different Stage-1 bundle')
+  }
+  // 5a. THE GATE'S OWN STAGE-1 LINK.
+  //
+  //     MISSING UNTIL NOW. The chain checked lifecycle->Stage 1,
+  //     lifecycle->gate, verification->Stage 1 and gate->verification, so a
+  //     release gate authorizing a release over a DIFFERENT Stage-1 bundle
+  //     satisfied every edge that was actually compared. It is the gate that
+  //     permits the fence to be released, so which copy it permitted it for is
+  //     not optional.
+  if (str(gateDoc, ['bundle', 'name'], 'Stage-1 bundle name') !== sourceManifest.name) {
+    throw new OpsRefused('the release gate names a different Stage-1 bundle')
+  }
+  // 5b. THE GATE'S OWN VERIFIER LINK. The release gate authorized a release on
+  //    the strength of ONE verification; if that is not the verification bundle
+  //    being closed over, the chain is two different stories about one copy.
+  if (str(gateDoc, ['bundle', 'verifier'], 'verifier bundle name') !== verification.name) {
+    throw new OpsRefused('the release gate was authorized against a different verification')
+  }
+  if ((gateDoc as { authorized?: unknown }).authorized !== true) {
+    throw new OpsRefused('the release gate does not record an authorization')
+  }
+  // 6. AND THE VERIFICATION ACTUALLY PASSED. A verification bundle exists for
+  //    failures too; closing a copy over one is closing over a copy that did
+  //    not verify.
+  if ((verifyDoc as { outcome?: unknown }).outcome !== 'PASS') {
+    throw new OpsRefused('the verification did not pass')
+  }
+  if ((verifyDoc as { failure?: unknown }).failure !== null) {
+    throw new OpsRefused('the verification records a failure')
+  }
+
+  // 3. THE CONTENT IDENTITY, which is how the verification is tied in: it is
+  //    the one link the lifecycle document does not state by name.
+  const rootDigest = str(lifeDoc, ['content', 'root_digest'], 'content root digest')
+  const sourceContractDigest =
+    str(lifeDoc, ['content', 'source_contract_digest'], 'source contract digest')
+  const targetContractDigest =
+    str(lifeDoc, ['content', 'target_contract_digest'], 'target contract digest')
+  if (str(verifyDoc, ['stage2', 'root_digest'], 'Stage-2 root digest') !== rootDigest ||
+      str(verifyDoc, ['stage2', 'source_contract_digest'], 'source contract digest')
+        !== sourceContractDigest ||
+      str(verifyDoc, ['stage2', 'target_contract_digest'], 'target contract digest')
+        !== targetContractDigest) {
+    throw new OpsRefused('the verification does not describe this copy\'s content')
+  }
+  if (stage1.contentRootDigest !== rootDigest) {
+    throw new OpsRefused('the Stage-1 bundle does not describe this copy\'s content')
+  }
+  if (stage1.sourceContractDigest !== sourceContractDigest) {
+    throw new OpsRefused('the Stage-1 bundle does not describe this copy\'s source contract')
+  }
+  // 7. THE RELEASE GATE'S CONTENT, TOO. It authorized the release over a
+  //    specific content identity; a gate describing other content is a gate
+  //    for another copy however its run fields read.
+  if (str(gateDoc, ['content', 'root_digest'], 'content root digest') !== rootDigest ||
+      str(gateDoc, ['content', 'source_contract_digest'], 'source contract digest')
+        !== sourceContractDigest ||
+      str(gateDoc, ['content', 'target_contract_digest'], 'target contract digest')
+        !== targetContractDigest) {
+    throw new OpsRefused('the release gate does not describe this copy\'s content')
+  }
+  // 8. ONE SOURCE AND ONE TARGET. The gate and the verification each measured
+  //    them independently and must agree on which databases this was; the
+  //    source values must also agree with what Stage 1 recorded.
+  for (const side of ['source', 'target'] as const) {
+    for (const field of ['system_identifier', 'database', 'role'] as const) {
+      const g = str(gateDoc, [side, field], `${side} ${field}`)
+      const v2 = str(verifyDoc, [side, field], `${side} ${field}`)
+      if (g !== v2) {
+        throw new OpsRefused(
+          `the release gate and the verification disagree about the ${side} ${field}`)
+      }
+    }
+  }
+  if (str(gateDoc, ['source', 'system_identifier'], 'source system identifier')
+        !== stage1.systemIdentifier ||
+      str(gateDoc, ['source', 'database'], 'source database') !== stage1.database) {
+    throw new OpsRefused('the chain and the Stage-1 bundle disagree about the source')
+  }
+  // AND THE ROLE THE EXPORT ACTUALLY RAN AS. The gate/verification loop above
+  // compares all three source fields with each other, but the Stage-1
+  // comparison checked only the identifier and the database - so a manifest
+  // whose export ran as some other role agreed with the chain on everything
+  // that was compared. `stage1.currentUser` is the EFFECTIVE role the export
+  // ran as, and the reviewed reader already requires it to equal the
+  // authenticated session user.
+  if (str(gateDoc, ['source', 'role'], 'source role') !== stage1.currentUser) {
+    throw new OpsRefused('the chain and the Stage-1 bundle disagree about the export role')
+  }
+
+  // 4. THE ONLY STATE A COPY MAY BE CLOSED FROM.
+  if ((lifeDoc as { outcome?: unknown }).outcome !== 'COPY_VERIFIED_AWAITING_MANUAL_RESTORATION') {
+    throw new OpsRefused('the copy lifecycle did not reach the reviewed manual-stop outcome')
+  }
+  if ((lifeDoc as { producers_restored?: unknown }).producers_restored !== false) {
+    throw new OpsRefused('the copy lifecycle already claims the producers were restored')
+  }
+  const fence = (lifeDoc as { fence?: { state?: unknown; remaining_locks?: unknown } }).fence
+  if (fence?.state !== 'released') {
+    throw new OpsRefused('the copy lifecycle does not record a proved release')
+  }
+  if (fence.remaining_locks !== 0) {
+    throw new OpsRefused('the copy lifecycle records remaining reviewed locks')
+  }
+  if ((lifeDoc as { release?: { state?: unknown } }).release?.state !== 'released') {
+    throw new OpsRefused('the copy lifecycle does not record a released fence')
+  }
+  // AND NO BUNDLE UPSTREAM OF CLOSURE MAY CLAIM COMPLETE.
+  for (const [doc, which] of [[lifeDoc, 'copy lifecycle'], [gateDoc, 'release gate'],
+                             [verifyDoc, 'verification']] as const) {
+    if ((doc as { outcome?: unknown }).outcome === 'COMPLETE') {
+      throw new OpsRefused(`the ${which} bundle claims COMPLETE, which only a closure may`)
+    }
+  }
+
+  return Object.freeze({
+    lifecycle, releaseGate, verification, sourceManifest,
+    runId, stamp, rootDigest, sourceContractDigest, targetContractDigest,
+  })
+}
+
 // ---------------------------------------------------------------------------
 // THE REVIEWED SESSION ATTESTATION
 // ---------------------------------------------------------------------------
@@ -2215,7 +2990,7 @@ export async function runRehearsal(i: ModeInputs): Promise<CliResult> {
     const f = fence as AcquiredFenceLike
     held = false
     torndown = true
-    return await holdForIntervention({
+    return await (deps.enterHold ?? holdForIntervention)({
       root: i.scope.evidenceRoot, stamp, newRunId: deps.newRunId, mode: 'rehearse',
       outerRunId: runId,
       operationalDigest: i.operationalDigest,
@@ -2921,6 +3696,414 @@ export async function runVerifyRestoration(i: ModeInputs): Promise<CliResult> {
 }
 
 /**
+ * --verify-copy-restoration: PROVE THE WORLD CAME BACK AFTER A REAL COPY.
+ *
+ * NOT `--verify-restoration`, AND IT MAY NOT REUSE ITS BUNDLE. That mode closes
+ * an operational REHEARSAL, which copied nothing: its `producer-restoration-*`
+ * record says the producers came back after a run that never touched a target.
+ * Accepting one here would let a rehearsal's restoration stand in for a real
+ * copy's, and the two say different things about what happened to the source.
+ *
+ * WHAT IS INDEPENDENT HERE, AND WHAT IS NOT. The four production bundles are
+ * verified from disk by `verifyCopyChain`, which trusts no name or flag. The
+ * producers' required states come from the reviewed post-restoration policy and
+ * their destination identity from `proveDestinations` against the reviewed
+ * destination policy - both separate documents. They are deliberately NOT
+ * compared against `i.binding`, which was re-derived from this same measurement
+ * moments ago: comparing those two compares a value with itself and passes
+ * whatever the producers happen to be doing.
+ *
+ * IT DOES NOT CLOSE THE COPY. A restoration that proved out returns EXIT_OK for
+ * ITSELF; the copy stays open until `--close-copy`, which is the only mode that
+ * may say COMPLETE.
+ */
+export async function runVerifyCopyRestoration(i: ModeInputs): Promise<CliResult> {
+  const lines: string[] = []
+  const say = (l: string): void => { lines.push(l); i.say(l) }
+  const { runId, stamp } = runOf(i.v)
+  const policy = readRestorationPolicy(i.scope.postRestorationPolicyPath)
+
+  // 1. THE WHOLE PRODUCTION CHAIN, VERIFIED FROM DISK AND AGREED WITH ITSELF.
+  const chain = verifyCopyChain(i.v)
+  // AND THIS RESTORATION IS NOT THE COPY'S OWN RUN. It is a later operation on
+  // the copy, so it carries its own run identity and names the copy's.
+  assertOperationalBindingUnchanged(
+    str(verifyReferencedBundle(required(i.v, '--release-gate-bundle'),
+                               'authorization-to-release', RELEASE_GATE_FILE),
+        ['operational_adapter_binding_digest'], 'operational binding'),
+    i.binding)
+  say(`copy ${chain.runId} ${chain.stamp}`)
+  say(`copy lifecycle ${chain.lifecycle.name}`)
+
+  // 2. PER-LABEL RE-PROOF against the reviewed policy's required end state.
+  const measured = await withDeadline('launchd', i.deadlineMs, async ctx => {
+    const disabled = await readDisabled(i.scope.launchd, ctx)
+    const out: RestorationRow[] = []
+    for (const entry of policy) {
+      const seen = await inspectLabel(entry.label, i.scope.launchd, ctx, disabled)
+      const state: RestorationState = seen.presence === 'absent' ? 'absent'
+        : seen.running ? 'running' : 'loaded-scheduled-healthy'
+      const healthy = state !== 'loaded-scheduled-healthy' || seen.lastExitCode === '0'
+      out.push(Object.freeze({
+        label: entry.label,
+        required: entry.required,
+        observed: state,
+        lastExitCode: seen.lastExitCode,
+        plistSha256: seen.plistSha256 ?? null,
+        servedCheckout: seen.servedCheckout ?? null,
+        identityDrift: null,
+        matched: state === entry.required && healthy,
+      }))
+    }
+    return out
+  })
+
+  // 3. DESTINATIONS, against the reviewed destination policy - which is an
+  //    independent document, not this run's own measurement.
+  let destinationDrift: string | null = null
+  let destinations: readonly ProducerCensusRow[] = []
+  try {
+    destinations = await withDeadline('launchd', i.deadlineMs, ctx => proveDestinations(
+      REVIEWED_PRODUCERS, i.scope.source,
+      readDestinationPolicy(i.scope.destinationPolicyPath), i.scope.launchd, ctx))
+  } catch (e) {
+    destinationDrift = e instanceof Error ? e.message : 'the destinations could not be proved'
+  }
+
+  // 4. BOTH QUEUES, EMPTY AND STAYING EMPTY, UNDER THE COMPLETE POLICY. TWO
+  //    samples separated by the reviewed interval: one sample cannot establish
+  //    that the producers came back and did NOT immediately start work the
+  //    copy's window was supposed to contain.
+  let queueDrift: string | null = null
+  let depths: Record<string, number> = {}
+  let queueSamples: readonly Record<string, number>[] = []
+  try {
+    const queue = i.deps.queue ??
+      bullmqQueueAdapter(REVIEWED_QUEUES, i.scope.redis.connection)
+    const proof = await proveQueuesRestored(queue, i.deadlineMs, i.deps.sleep)
+    depths = proof.depths
+    queueSamples = proof.samples
+    queueDrift = proof.refusal
+  } catch (e) {
+    queueDrift = e instanceof Error ? e.message : 'the queues could not be sampled'
+  }
+  if (queueSamples.length !== 2) {
+    queueDrift = queueDrift ?? 'the queues were not sampled twice'
+  }
+
+  // 5. THE STRUCTURED WORKER, FROM A FRESH MEASUREMENT against the reviewed
+  //    policy's declared topology - never assumed, and never read out of the
+  //    binding this record also carries.
+  const structuredLabel = REVIEWED_PRODUCERS.find(l => l.endsWith('.structured-worker'))
+  let structuredActual: InstallationState | null = null
+  let structuredExpected: StableInstallation | null = null
+  let structuredDrift: string | null = null
+  if (structuredLabel === undefined) {
+    structuredDrift = 'the reviewed producer set has no structured worker'
+  } else {
+    structuredExpected = readDestinationPolicy(i.scope.destinationPolicyPath)
+      .find(e => e.label === structuredLabel)?.installation ?? null
+    if (structuredExpected === null) {
+      structuredDrift = 'the reviewed destination policy declares no structured-worker topology'
+    }
+    try {
+      structuredActual = await withDeadline('launchd', i.deadlineMs, async ctx => {
+        const disabled = await readDisabled(i.scope.launchd, ctx)
+        return installationOf(
+          await inspectLabel(structuredLabel, i.scope.launchd, ctx, disabled))
+      })
+    } catch (e) {
+      structuredDrift = e instanceof Error ? e.message
+        : 'the structured worker could not be inspected'
+    }
+    if (structuredDrift === null &&
+        (structuredActual === null ||
+         stableInstallationOf(structuredActual) !== structuredExpected)) {
+      structuredDrift = `the structured worker is ${String(structuredActual)}, ` +
+        `and the reviewed policy expects the ${String(structuredExpected)} topology`
+    }
+  }
+
+  const failed = measured.filter(o => !o.matched)
+  const systemDrift = [destinationDrift, queueDrift, structuredDrift].filter(x => x !== null)
+  const restored = failed.length === 0 && systemDrift.length === 0
+
+  const published = publishLifecycleBundle({
+    root: i.scope.evidenceRoot, prefix: COPY_RESTORATION_PREFIX, stamp, runId,
+    manifestFile: COPY_RESTORATION_FILE, detailFile: 'producers.json',
+    manifest: {
+      record: COPY_RESTORATION_PREFIX,
+      complete: true,
+      // RESTORED, NOT COMPLETE. The copy is not closed by this record, and
+      // `--close-copy` is the only mode allowed to say the other word.
+      outcome: restored ? 'COPY_RESTORED' : 'COPY_NOT_RESTORED',
+      operational_adapter_binding_digest: i.operationalDigest,
+      post_restoration_policy_sha256: i.binding.postRestorationPolicySha256,
+      structured_worker: {
+        label: structuredLabel ?? null,
+        expected: structuredExpected,
+        actual: structuredActual,
+        verdict: structuredDrift === null ? 'as-reviewed' : 'drifted',
+      },
+      // THIS OPERATION'S run identity, and separately THE COPY'S.
+      run: { id: runId, stamp },
+      copy: { id: chain.runId, stamp: chain.stamp },
+      // THE FOUR PRODUCTION BUNDLES, each by basename AND by the digest of its
+      // DIGEST file - computed here, from the directory this process verified.
+      copy_chain: {
+        copy_lifecycle: linkDocument(chain.lifecycle),
+        release_gate: linkDocument(chain.releaseGate),
+        verification: linkDocument(chain.verification),
+        source_manifest: linkDocument(chain.sourceManifest),
+      },
+      content: {
+        root_digest: chain.rootDigest,
+        source_contract_digest: chain.sourceContractDigest,
+        target_contract_digest: chain.targetContractDigest,
+      },
+    },
+    detail: {
+      producers: measured.map(o => ({
+        label: o.label, required: o.required, observed: o.observed,
+        last_exit_code: o.lastExitCode, plist_sha256: o.plistSha256,
+        served_checkout: o.servedCheckout, matched: o.matched,
+      })),
+      // THE DESTINATION FACTS, as the reviewed census proves them. Non-secret
+      // identity only: which plist, which checkout, which database.
+      destinations: destinations.map(d => ({
+        label: d.label,
+        plist_sha256: d.plistSha256,
+        plist_device_inode: d.plistDeviceInode,
+        served_checkout: d.servedCheckout,
+        installation: d.installation,
+        database_host: d.databaseHost,
+        database_port: d.databasePort,
+        database_name: d.databaseName,
+        disposition: d.disposition,
+      })),
+      // BOTH SAMPLES, VERBATIM AND IN ORDER.
+      queue_samples: queueSamples.map((x, n) => ({ ordinal: n + 1, depths: { ...x } })),
+      queue_sample_interval_ms: QUEUE_SAMPLE_INTERVAL_MS,
+      queue_depths: depths,
+      blocking_policy: { states: [...BLOCKING_STATES], paused_is_blocking: PAUSED_IS_BLOCKING },
+      system_drift: systemDrift,
+    },
+  })
+  verifyPublishedEvidence(published.finalPath)
+
+  for (const f of failed) say(`NOT RESTORED ${f.label}: observed ${f.observed}`)
+  for (const d of systemDrift) say(`NOT RESTORED: ${String(d)}`)
+  say(`copy restoration published ${basename(published.finalPath)}`)
+  if (restored) {
+    say('The copy is RESTORED and still OPEN. Run --close-copy to complete it.')
+  }
+  return { exitCode: restored ? EXIT_OK : EXIT_ACTION_REQUIRED, lines }
+}
+/**
+ * --close-copy: THE ONLY OPERATION, AND THE ONLY DOCUMENT, THAT MAY SAY COMPLETE.
+ *
+ * It re-verifies the copy restoration from disk, WALKS ITS WHOLE UPSTREAM CHAIN
+ * AGAIN rather than believing the links it recorded, and verifies the exact
+ * Stage-1 bundle a second time. Re-reading is the point: between the
+ * restoration and the closure a bundle could have been replaced, and a closure
+ * that trusted its own predecessor's digests would ratify the swap.
+ *
+ * WHAT IT REFUSES, BY CONSTRUCTION:
+ *   - a rehearsal's `producer-restoration-*`, which closes a run that copied
+ *     nothing (its record tag is not this one);
+ *   - a restoration from another run, or one whose chain no longer agrees;
+ *   - an occupied final name, which is never overwritten, repaired or adopted.
+ */
+/**
+ * The copy restoration's own link: its reviewed NAME and its DIGEST digest.
+ *
+ * EXPORTED so the name rule can be proved directly. A bundle that carries the
+ * copy-restoration record tag but sits in a `producer-restoration-*` directory
+ * is still not a copy restoration, and the tag check alone would accept it.
+ */
+/**
+ * A COPY RESTORATION AGAINST THE CHAIN IT CLAIMS TO HAVE CLOSED OVER.
+ *
+ * EXTRACTED AND SHARED. `runCloseCopy` performed these comparisons inline and
+ * the export authority's teardown performed NONE of them - it verified a
+ * restoration bundle and, separately, a four-bundle chain, and never compared
+ * the two. A forged restoration and a forged closure could therefore link to
+ * each other, each with a valid internal DIGEST, and authorize a destructive
+ * teardown beside an entirely unrelated valid upstream chain.
+ *
+ * `verifyCopyRestorationLink` is NOT this check: it only proves the directory
+ * is named like a copy restoration and computes its digest.
+ */
+export function assertRestorationMatchesChain(
+  restoration: Record<string, never>, chain: VerifiedCopyChain,
+): void {
+  const recorded = (restoration as { copy_chain?: Record<string, unknown> }).copy_chain
+  if (recorded === undefined) {
+    throw new OpsRefused('the copy restoration records no copy chain')
+  }
+  const expectLink = (key: string, link: VerifiedLink): void => {
+    const got = recorded[key] as { name?: unknown; digest_file_digest?: unknown } | undefined
+    if (got === undefined) {
+      throw new OpsRefused('the copy restoration omits a chain link', key)
+    }
+    if (got.name !== link.name) {
+      throw new OpsRefused('the copy restoration names a different bundle', key)
+    }
+    if (got.digest_file_digest !== link.digestFileDigest) {
+      throw new OpsRefused('a linked bundle no longer has the digest it was closed over', key)
+    }
+  }
+  expectLink('copy_lifecycle', chain.lifecycle)
+  expectLink('release_gate', chain.releaseGate)
+  expectLink('verification', chain.verification)
+  expectLink('source_manifest', chain.sourceManifest)
+
+  // ONE COPY IDENTITY. A restoration spliced from another run is refused.
+  const copyId = (restoration as { copy?: { id?: unknown; stamp?: unknown } }).copy
+  if (copyId?.id !== chain.runId) {
+    throw new OpsRefused('the copy restoration belongs to a different copy')
+  }
+  if (copyId.stamp !== chain.stamp) {
+    throw new OpsRefused('the copy restoration belongs to a different copy instant')
+  }
+  const content = (restoration as { content?: Record<string, unknown> }).content
+  if (content?.root_digest !== chain.rootDigest ||
+      content.source_contract_digest !== chain.sourceContractDigest ||
+      content.target_contract_digest !== chain.targetContractDigest) {
+    throw new OpsRefused('the copy restoration describes different content')
+  }
+}
+
+/**
+ * A COPY CLOSURE AGAINST THE RESTORATION AND CHAIN IT NAMES.
+ *
+ * SHARED FOR THE SAME REASON. The closure's own `source_manifest` link, copy
+ * identity, content identity and operational binding digest must agree with
+ * what the chain and restoration say - otherwise a closure can describe one
+ * copy while pointing at another's evidence.
+ */
+export function assertClosureMatchesChain(
+  closure: Record<string, unknown>,
+  restorationLink: VerifiedLink,
+  restoration: Record<string, never>,
+  chain: VerifiedCopyChain,
+): void {
+  const named = closure.copy_restoration
+  if (typeof named !== 'object' || named === null) {
+    throw new OpsRefused('the copy closure links no copy restoration')
+  }
+  const n = named as Record<string, unknown>
+  if (n.name !== restorationLink.name) {
+    throw new OpsRefused('the copy closure links a different copy restoration')
+  }
+  if (n.digest_file_digest !== restorationLink.digestFileDigest) {
+    throw new OpsRefused('the linked copy restoration no longer has that digest')
+  }
+  const sm = closure.source_manifest
+  if (typeof sm !== 'object' || sm === null) {
+    throw new OpsRefused('the copy closure links no Stage-1 bundle')
+  }
+  const m = sm as Record<string, unknown>
+  if (m.name !== chain.sourceManifest.name ||
+      m.digest_file_digest !== chain.sourceManifest.digestFileDigest) {
+    throw new OpsRefused('the copy closure links a different Stage-1 bundle')
+  }
+  const copy = closure.copy as { id?: unknown; stamp?: unknown } | undefined
+  if (copy?.id !== chain.runId || copy.stamp !== chain.stamp) {
+    throw new OpsRefused('the copy closure describes a different copy')
+  }
+  const content = closure.content as Record<string, unknown> | undefined
+  if (content?.root_digest !== chain.rootDigest ||
+      content.source_contract_digest !== chain.sourceContractDigest ||
+      content.target_contract_digest !== chain.targetContractDigest) {
+    throw new OpsRefused('the copy closure describes different content')
+  }
+  // AND THE SAME OPERATIONAL BINDING THE RESTORATION CLOSED OVER.
+  const closureBinding = closure.operational_adapter_binding_digest
+  const restorationBinding =
+    (restoration as { operational_adapter_binding_digest?: unknown })
+      .operational_adapter_binding_digest
+  if (typeof closureBinding !== 'string' || closureBinding !== restorationBinding) {
+    throw new OpsRefused(
+      'the copy closure and the copy restoration disagree about the operational binding')
+  }
+}
+
+export const verifyCopyRestorationLink = (dir: string): VerifiedLink =>
+  linkFor(dir, COPY_RESTORATION_PREFIX)
+
+export async function runCloseCopy(i: ModeInputs): Promise<CliResult> {
+  const lines: string[] = []
+  const say = (l: string): void => { lines.push(l); i.say(l) }
+  const { runId, stamp } = runOf(i.v)
+
+  // 1. THE RESTORATION, VERIFIED FROM DISK AS ITS OWN RECORD.
+  //
+  // THE RECORD TAG IS WHAT REFUSES A REHEARSAL. A `producer-restoration-*`
+  // bundle carries `record: 'producer-restoration'`, so handing one to this
+  // mode is refused here - before anything else is read - rather than being
+  // accepted as proof that a real copy was closed.
+  const restorationDir = required(i.v, '--copy-restoration-bundle')
+  const restorationLink = linkFor(restorationDir, COPY_RESTORATION_PREFIX)
+  const restoration = verifyReferencedBundle(
+    restorationDir, COPY_RESTORATION_PREFIX, COPY_RESTORATION_FILE)
+  if ((restoration as { outcome?: unknown }).outcome !== 'COPY_RESTORED') {
+    throw new OpsRefused('the copy restoration does not record a restored world')
+  }
+
+  // 2. THE WHOLE UPSTREAM CHAIN, WALKED AND VERIFIED AGAIN FROM DISK.
+  const chain = verifyCopyChain(i.v)
+
+  // 3-4. THE RESTORATION AGAINST THE CHAIN, through the ONE shared verifier
+  //      the export authority's teardown also uses.
+  assertRestorationMatchesChain(restoration, chain)
+  assertOperationalBindingUnchanged(
+    str(restoration, ['operational_adapter_binding_digest'], 'operational binding'),
+    i.binding)
+
+  // 5. PUBLISHED IMMUTABLY, NO-CLOBBER. `publishLifecycleBundle` renames into an
+  //    unoccupied name or refuses; nothing here overwrites, mutates, repairs,
+  //    adopts or retries. A post-publication failure surfaces as the reviewed
+  //    published-unverified state, which names the retained path truthfully
+  //    rather than claiming nothing was published.
+  const published = publishLifecycleBundle({
+    root: i.scope.evidenceRoot, prefix: COPY_CLOSURE_PREFIX, stamp, runId,
+    manifestFile: COPY_CLOSURE_FILE, detailFile: 'closure.json',
+    manifest: {
+      record: COPY_CLOSURE_PREFIX,
+      complete: true,
+      // THE ONLY COMPLETE IN THIS REPOSITORY.
+      outcome: 'COMPLETE',
+      run: { id: runId, stamp },
+      copy: { id: chain.runId, stamp: chain.stamp },
+      copy_restoration: linkDocument(restorationLink),
+      source_manifest: linkDocument(chain.sourceManifest),
+      operational_adapter_binding_digest: i.operationalDigest,
+      content: {
+        root_digest: chain.rootDigest,
+        source_contract_digest: chain.sourceContractDigest,
+        target_contract_digest: chain.targetContractDigest,
+      },
+    },
+    detail: {
+      // THE CHAIN THIS CLOSURE RE-VERIFIED, for a reader who has only this file.
+      copy_chain: {
+        copy_lifecycle: linkDocument(chain.lifecycle),
+        release_gate: linkDocument(chain.releaseGate),
+        verification: linkDocument(chain.verification),
+        source_manifest: linkDocument(chain.sourceManifest),
+      },
+    },
+  })
+  verifyPublishedEvidence(published.finalPath)
+  say(`copy closure published ${basename(published.finalPath)}`)
+  say('COMPLETE')
+  return { exitCode: EXIT_OK, lines }
+}
+
+
+
+/**
  * Two interval-separated samples, both empty, both complete, neither paused.
  *
  * ONE INSTANT IS NOT A STATE. A single observation says the queues were empty
@@ -3328,6 +4511,770 @@ export function verifyRehearsalChain(
  * mismatch is refused before a session is opened, a fence is taken, or a token
  * is printed that would later prove to describe a different world.
  */
+
+/**
+ * WHERE THE COMMITTED EXPECTED-TARGET CONTRACT LIVES.
+ *
+ * Resolved from this module's own location, so it cannot be redirected by an
+ * argument. `@common/db` owns the artifact; this is the one consumer that needs
+ * it by path rather than through a function that already read it.
+ */
+export function reviewedTargetContractPath(moduleUrl: string = import.meta.url): string {
+  return resolve(dirname(fileURLToPath(moduleUrl)),
+                 '..', '..', 'db', 'contracts', 'expected-target-v19.json')
+}
+
+/**
+ * ONE PROCESS, ONE FENCE, FOUR REVIEWED CALLS.
+ *
+ * WHY IT IS ALL HERE. Stage 1 takes the source fence and the release is proved
+ * at the very end of `runLifecycle`; everything between is inside that one
+ * supervisor transaction. Split across two invocations the fence would be gone
+ * before the operator could approve anything, which is why the confirmation is
+ * obtained WHILE HELD rather than pasted into a second command.
+ *
+ * THE FENCE IS PASSED BY IDENTITY, never rebuilt. `acquireSourceFence` is not
+ * called here at all: Stage 1's acquisition is the only one, and both later
+ * stages receive that exact object so the Stage-1-through-release chain is
+ * evidence about one unbroken fence.
+ *
+ * NO GENERIC catch/finally CLOSES THE SUPERVISOR. Once Stage 1 holds the fence,
+ * every exit is explicit: a proved release closes prover then supervisor; an
+ * unproved or unknown release keeps them open and goes to the intervention
+ * hold, because a process that exits there abandons a fenced production
+ * database.
+ */
+/**
+ * WHAT THE SOURCE AND THE EXPECTED TARGET ARE CALLED.
+ *
+ * REVIEWED CONSTANTS, not arguments and not measurements. `expected_target` is
+ * recorded beside `verified: false` because Stage 1 never contacts the target,
+ * so there is nothing here that could be checked; making it an operator flag
+ * would only add a way to mislabel the manifest. The source label is the same
+ * kind of value: a name for a cluster whose identity is proved separately, by
+ * `expectedSystemIdentifier` against `pg_control_system()`.
+ */
+export const REVIEWED_SOURCE_LABEL = 'ai-capital'
+export const REVIEWED_EXPECTED_TARGET_LABEL = 'ai-capital-v3'
+
+/**
+ * The one run stamp as an ISO-8601 UTC instant.
+ *
+ * DERIVED, NOT RE-READ FROM THE CLOCK. `generatedAtUtc` must name the same
+ * instant as the evidence stamp, or the manifest and the bundle that carries
+ * it disagree about when the run happened. A second `new Date()` would also
+ * make the manifest untestable for no gain.
+ */
+export function isoUtcFromStamp(stamp: string): string {
+  if (!/^\d{8}T\d{6}Z$/.test(stamp)) {
+    throw new OpsRefused('the run stamp is not a basic-format UTC instant')
+  }
+  return `${stamp.slice(0, 4)}-${stamp.slice(4, 6)}-${stamp.slice(6, 8)}T` +
+         `${stamp.slice(9, 11)}:${stamp.slice(11, 13)}:${stamp.slice(13, 15)}Z`
+}
+
+/**
+ * Build the COMPLETE operator input for Stage 1, and prove it with the
+ * reviewed validator.
+ *
+ * EVERY FIELD IS DERIVED, AND NONE IS CAST. The previous construction supplied
+ * three of eleven fields and hid the gap behind `as unknown as OperatorInput`,
+ * so the injected orchestration test passed while the real path would have
+ * been refused by `assertOperatorInput` the moment it reached Stage 1. The
+ * cast is what made a missing field invisible; passing the result through the
+ * validator here is what makes it impossible.
+ */
+export function applyOperatorInput(i: {
+  readonly runId: string
+  readonly stamp: string
+  readonly provenance: MeasuredProvenance
+  readonly measuredSource: MeasuredIdentity
+  readonly requestedEndpoint: string
+  readonly sourcePort: string
+  readonly sourceDatabase: string
+}): OperatorInput {
+  return assertOperatorInput({
+    runId: i.runId,
+    generatedAtUtc: isoUtcFromStamp(i.stamp),
+    // THE CODE THAT IS RUNNING, and the data provenance it is pinned to. Both
+    // measured from the checkout; neither is an operator assertion.
+    implementationHead: i.provenance.head,
+    provenanceHead: i.provenance.head,
+    ingestionGitlink: i.provenance.ingestionGitlink,
+    expectedTargetLabel: REVIEWED_EXPECTED_TARGET_LABEL,
+    // MEASURED FROM THE LIVE SOURCE. Stage 1 re-measures and refuses on a
+    // mismatch, which is what makes "am I fencing the right cluster" answerable.
+    expectedSystemIdentifier: i.measuredSource.systemIdentifier,
+    sourceLabel: REVIEWED_SOURCE_LABEL,
+    requestedEndpoint: i.requestedEndpoint,
+    sourcePort: i.sourcePort,
+    sourceDatabase: i.sourceDatabase,
+  })
+}
+
+const SUPERVISOR_PID = /^[1-9][0-9]{0,9}$/
+/** A DIGEST digest: exactly 64 lowercase hex. Never blank, never a placeholder. */
+const DIGEST_HEX = /^[0-9a-f]{64}$/
+
+/**
+ * Measure and prove the supervisor's backend identity, BEFORE any fence.
+ *
+ * WHY BOTH SIDES. The pid comes from the supervisor, because only a backend
+ * can name itself. The backend START comes from the PROVER, because a backend
+ * cannot vouch for its own liveness and a recycled pid would otherwise answer
+ * a question nobody meant to ask about it. The pair is unique for the
+ * cluster's lifetime, which is what makes a hold able to say exactly which
+ * transaction may still be holding locks.
+ *
+ * AND THE PROVER MUST BE SOMEBODY ELSE. A self-proof is not a proof: if the
+ * two handles are the same backend, the "independent" confirmation is the
+ * supervisor agreeing with itself.
+ */
+export async function measureSupervisorIdentity(
+  supervisor: FenceLike, prover: FenceLike,
+): Promise<AcquiredFenceLike> {
+  const pidRes = await supervisor.send('SELECT pg_catalog.pg_backend_pid()')
+  const pid = pidRes.error === null ? (pidRes.rows[0]?.[0] ?? '').trim() : ''
+  if (!SUPERVISOR_PID.test(pid)) {
+    throw new OpsRefused(
+      'the supervisor would not name its own backend, so no fence may be attempted')
+  }
+  const proverPidRes = await prover.send('SELECT pg_catalog.pg_backend_pid()')
+  const proverPid = proverPidRes.error === null
+    ? (proverPidRes.rows[0]?.[0] ?? '').trim() : ''
+  if (!SUPERVISOR_PID.test(proverPid)) {
+    throw new OpsRefused(
+      'the prover would not name its own backend, so no fence may be attempted')
+  }
+  if (proverPid === pid) {
+    throw new OpsRefused(
+      'the prover is the supervisor, so no independent fence proof is possible')
+  }
+  const startRes = await prover.send(BACKEND_START_SQL(pid))
+  const start = startRes.error === null ? (startRes.rows[0]?.[0] ?? '').trim() : ''
+  if (!BACKEND_START_SHAPE.test(start)) {
+    throw new OpsRefused(
+      'the supervisor backend could not be dated, so no fence may be attempted')
+  }
+  return Object.freeze({
+    supervisorPid: pid, backendStart: start, mechanism: SELECTED_SEQUENCE_FENCE,
+  })
+}
+
+/**
+ * A lifecycle fence state, as a hold fence state.
+ *
+ * TOTAL AND EXPLICIT. `LifecycleFenceState` adds `released` to the three
+ * dispositions plus the two unproved-release variants, and every one of them
+ * has a hold meaning. A default branch would silently turn a state nobody
+ * mapped into `unproved`, which is the flattening this mapping exists to stop.
+ */
+export function holdStateOf(f: LifecycleFenceState): HoldFenceState {
+  switch (f) {
+    case 'held': return 'held'
+    case 'not-held': return 'not-held'
+    case 'unproved': return 'unproved'
+    case 'released': return 'released'
+    case 'released-unproved': return 'released-unproved'
+    case 'release-unknown': return 'release-unknown'
+  }
+}
+
+/**
+ * WHAT A FAILED RELEASE ATTEMPT ESTABLISHED, as a hold fence state.
+ *
+ * TOTAL AND EXPLICIT, because the three outcomes license DIFFERENT reviewed
+ * actions and a ternary collapsed them into two:
+ *
+ * - `not-released`  the ROLLBACK was ACKNOWLEDGED AS REFUSED. The statement
+ *                   completed and the fence may remain, so this is `unproved`
+ *                   - not `held`, which means no release was ever attempted
+ *                   and would invite a first attempt that already happened.
+ * - `release-unknown`  nobody can say whether the ROLLBACK ran. Only this
+ *                   state licenses `TERMINATE_SUPERVISOR_WITHOUT_PRIOR_RELEASE_PROOF`,
+ *                   which flattening to `unproved` silently removed.
+ * - `released-unproved`  the ROLLBACK provably RAN and the census did not
+ *                   confirm it. `REPROVE_AND_GATE` must NOT be offered here:
+ *                   the transaction no longer exists, and flattening to
+ *                   `unproved` offered it anyway.
+ *
+ * No default branch: a state added to `ReleaseResult` later must be mapped
+ * here deliberately rather than inheriting somebody else's action set.
+ */
+export function holdStateOfRelease(r: ReleaseResult | 'not-released'): HoldFenceState {
+  if (r === 'not-released') return 'unproved'
+  switch (r.state) {
+    case 'release-unknown': return 'release-unknown'
+    case 'released-unproved': return 'released-unproved'
+    // NOT REACHED FROM `releaseOrHold`, which handles a proved release before
+    // asking. Mapped anyway so this function is TOTAL over `ReleaseResult`
+    // rather than total over a subset somebody has to remember.
+    case 'released': return 'released'
+  }
+}
+
+/** A lifecycle failure as one bounded sentence. Never a payload or a value. */
+export function bounded(f: { phase: string; reason: string; at: string | null }): string {
+  return `${f.reason} (phase ${f.phase}${f.at === null ? '' : ` at ${f.at}`})`
+}
+
+export interface ApplyOrchestration {
+  readonly v: Readonly<Record<string, string>>
+  readonly deps: OpsDeps
+  readonly scope: ScopeInputs
+  readonly say: (l: string) => void
+  readonly lines: string[]
+  /** The channel that already passed preflight. Never re-created. */
+  readonly channel: OperatorChannel
+  readonly sourceEndpoint: string
+  /** The LIVE source identity, measured before the fence by every mode. */
+  readonly measuredSource: MeasuredIdentity
+  /**
+   * The measured repository identity - HEAD AND THE INGESTION GITLINK.
+   *
+   * Was narrowed to `{ head }`, which is why the operator input could not
+   * supply `ingestionGitlink` and the whole record had to be cast.
+   */
+  readonly implementation: MeasuredProvenance
+  readonly binding: OperationalAdapterBinding
+  readonly operationalDigest: string
+  readonly observationDigest: string
+  readonly deadlineMs: number
+}
+
+export async function runProductionApply(i: ApplyOrchestration): Promise<CliResult> {
+  const { v, deps, say, lines, channel } = i
+
+  // AN APPLY NAMES NO BUNDLE. It creates the only one it may bind to, below.
+  // Accepting a path here is how the token and the target expectation came
+  // from one bundle while the lifecycle consumed another.
+  if (v['--bundle-dir'] !== undefined) {
+    throw new OpsRefused(
+      'a production apply creates its own Stage-1 bundle and accepts no --bundle-dir')
+  }
+
+  // 1. THE REVIEWED CHAIN, BEFORE ANY FENCE. Read from disk and compared with
+  //    what this run measured. Nothing here touches the target.
+  const authorize = deps.authorize ?? assertApplyAuthorized
+  const copyBinding = deps.copyBinding ?? copyBindingFromBundle
+  const chain = authorize(v, i.binding)
+  say(`reviewed rehearsal ${chain.rehearsalName}`)
+
+  // 2. ONE RUN IDENTITY for the whole copy.
+  const runId = deps.newRunId()
+  const stamp = deps.stamp()
+
+  const openSupervisor = deps.openSupervisor
+  const openProver = deps.openProver
+  if (openSupervisor === undefined || openProver === undefined) {
+    throw new OpsRefused('this build was given no way to open a source session')
+  }
+  const stage1 = deps.stage1 ?? runStage1
+  const inspect = deps.inspect ?? runInspect
+  const lifecycle = deps.lifecycle ?? runLifecycle
+  const releaseAndProve = deps.releaseAndProve ?? rollbackAndProveReleased
+  const confirm = deps.confirm ?? awaitCopyConfirmation
+  const makeAuthority = deps.authority ?? driverAuthority
+
+  /**
+   * THE TARGET EXPECTATION, WHICH DOES NOT EXIST YET.
+   *
+   * Filled in only once Stage 1 has published and the binding has been derived
+   * from THAT publication. The authority below holds this as a thunk, so a
+   * target session opened before then refuses here and never reaches a
+   * credential or a connection.
+   */
+  let targetScope: TargetExpectation | null = null
+  const reviewedTargetScope = (): TargetExpectation => {
+    if (targetScope === null) {
+      throw new OpsRefused(
+        'no target session may be opened before Stage 1 has published its bundle')
+    }
+    return targetScope
+  }
+
+  const authority = makeAuthority({
+    exportCredentialPath: required(v, '--export-driver-credential'),
+    targetCredentialPath: required(v, '--target-driver-credential'),
+    source: {
+      host: i.sourceEndpoint,
+      port: required(v, '--source-port'),
+      database: required(v, '--source-database'),
+      role: EXPORT_ROLE_NAME,
+    },
+    target: () => {
+      const t = reviewedTargetScope()
+      return { host: t.endpoint, port: t.port, database: t.database, role: t.role }
+    },
+    // THE OPENERS ARE NOT A SEAM. A test injects `deps.authority` and never
+    // sees these; production has exactly one reviewed pair.
+  }, REVIEWED_OPENERS)
+
+  // THE COMMITTED CONTRACT, LOADED BY THE REVIEWED LOADER. Its path is this
+  // package's own constant, not an argument: a target contract an operator
+  // could point elsewhere is the one input that would let a copy be checked
+  // against the wrong schema.
+  // READ PLAINLY, ON PURPOSE. `openReviewedContainer` enforces 0600 and one
+  // hard link because it reads SECRETS; this artifact is a committed,
+  // non-secret, mode-644 tracked file, and its integrity comes from Git plus
+  // `REVIEWED_CONTRACT_DIGEST`, which the loader checks.
+  const reviewedTarget: ContractArtifact = loadReviewedTarget(
+    reviewedTargetContractPath(), p => readFileSync(p, 'utf-8'))
+
+  // 3. THE COMPLETE, VALIDATED OPERATOR INPUT. Every field derived; no cast.
+  const operator: OperatorInput = applyOperatorInput({
+    runId, stamp,
+    provenance: i.implementation,
+    measuredSource: i.measuredSource,
+    requestedEndpoint: i.sourceEndpoint,
+    sourcePort: required(v, '--source-port'),
+    sourceDatabase: required(v, '--source-database'),
+  })
+
+  const quiescence = deps.quiescence ??
+    launchdQuiescenceAdapter(REVIEWED_PRODUCERS, i.scope.launchd)
+  const queue = deps.queue ?? bullmqQueueAdapter(REVIEWED_QUEUES, i.scope.redis.connection)
+  // THE SAME DEFAULT THE REHEARSAL USES. `undefined as never` here would have
+  // meant the production hold could not measure destinations at all.
+  const destinations = deps.destinations ?? {
+    measure: async (ctx: AdapterContext) => await proveDestinations(
+      REVIEWED_PRODUCERS, i.scope.source,
+      readDestinationPolicy(i.scope.destinationPolicyPath), i.scope.launchd, ctx),
+  }
+
+  // 4. ONE SUPERVISOR, ONE DISTINCT PROVER, ACQUIRED EXCEPTION-SAFELY.
+  //
+  //    A bare `await openProver()` after the supervisor leaked the supervisor
+  //    whenever the prover failed to open: a live psql child with no handle.
+  //    Every acquisition below is unwound in prover-then-supervisor order if
+  //    anything after it fails, and none of it can have taken a fence.
+  const supervisor = await openSupervisor()
+  let prover: FenceLike
+  try {
+    prover = await openProver()
+  } catch (e) {
+    await supervisor.close().catch(() => undefined)
+    throw e
+  }
+
+  /** Unwind everything acquired so far. Prover first; the supervisor ends psql. */
+  const releaseAcquired = async (): Promise<void> => {
+    await prover.close().catch(() => undefined)
+    await supervisor.close().catch(() => undefined)
+  }
+
+  /**
+   * 5. THE SUPERVISOR'S IDENTITY, MEASURED BEFORE ANY FENCE CAN BE ATTEMPTED.
+   *
+   *    WHY IT CANNOT WAIT UNTIL A HOLD NEEDS IT. Stage 1 may fail on a
+   *    PostgreSQL statement error, which leaves its transaction ABORTED - and
+   *    an aborted transaction refuses `SELECT pg_backend_pid()`. Measuring the
+   *    identity at hold time therefore fails exactly when the fence may be
+   *    held, the exception escapes the catch that asked for it, and a possibly
+   *    fenced production database is left with no terminal evidence at all.
+   *
+   *    So it is total before the boundary: measured here, proved from the
+   *    independent prover, and stored. No later hold issues a statement on a
+   *    transaction that may already be poisoned.
+   */
+  let preFence: AcquiredFenceLike
+  try {
+    preFence = await (deps.measureFenceIdentity ?? measureSupervisorIdentity)(
+      supervisor, prover)
+  } catch (e) {
+    // NOTHING WAS FENCED. Refuse before Stage 1, having closed both sessions.
+    await releaseAcquired()
+    throw e
+  }
+
+  // 6. ARMED BEFORE ANYTHING CAN TAKE THE FENCE.
+  let disarm: () => void
+  try {
+    disarm = channel.arm('Reply with the copy confirmation to proceed.')
+  } catch (e) {
+    await releaseAcquired()
+    throw e
+  }
+
+  /**
+   * WHO OWNS THE FENCE AND THE TWO SESSIONS, as a state and not a boolean.
+   *
+   * `never-acquired` is STRUCTURAL, not inferred: it holds only while control
+   * has not yet entered `stage1(...)`. The instant that call begins the state
+   * becomes `may-be-held`, because `runStage1` can take some or all of the
+   * reviewed locks and then throw while proving or publishing - and the old
+   * boolean, set only after Stage 1 RETURNED, called that case "never
+   * acquired" and closed the sessions, silently dropping a held production
+   * fence with no release proof and no intervention evidence.
+   *
+   * `transferred` means a hold owns both sessions and will close them itself;
+   * the outer cleanup must then close nothing.
+   */
+  type FenceOwnership = 'never-acquired' | 'may-be-held' | 'lifecycle-owns'
+    | 'released-proved' | 'transferred'
+  // HELD IN A FIELD, NOT A `let`. Both closures below assign it, and a `let`
+  // assigned only inside a closure is narrowed at the read site: the
+  // `transferred` check in the catch typed as unreachable, which would have
+  // made the outer cleanup close sessions a hold already owns.
+  const own: { state: FenceOwnership } = { state: 'never-acquired' }
+  /** Set the moment Stage 1 publishes, so a hold can cross-link the bundle. */
+  let stage1Prior: PriorBundle | null = null
+
+  const sleep = deps.sleep ?? ((ms: number) => new Promise<void>(r => { setTimeout(r, ms) }))
+
+  /**
+   * THE REVIEWED HOLD, entered when a release could not be proved.
+   *
+   * Ownership moves here: this closure marks `transferred` before the hold
+   * begins, the hold closes both sessions through `teardown` after a terminal
+   * record is durable, and the outer cleanup therefore neither closes them
+   * again nor leaks them.
+   */
+  /**
+   * THE FENCE IDENTITY FOR A HOLD, EVEN WHEN STAGE 1 NEVER RETURNED.
+   *
+   * Stage 1 can take locks and then throw, so the case a hold matters MOST in
+   * is precisely the one where `stage1Result.fence` does not exist. Refusing
+   * here - or sending a blank pid, which is what the first draft of this
+   * function did - fails OPEN: a possibly-fenced production database with no
+   * hold, no release proof and no intervention evidence.
+   *
+   * The fence, if it is held, is held by THE SUPERVISOR'S OWN TRANSACTION, so
+   * the supervisor's pid and backend start identify it exactly. The pid comes
+   * from the supervisor and the START comes from the PROVER, because a backend
+   * cannot be asked to vouch for its own liveness.
+   */
+  const enterHold = async (
+    state: HoldFenceState, reason: string,
+    priorBundles: readonly PriorBundle[] = stage1Prior === null ? [] : [stage1Prior],
+  ): Promise<CliResult> => {
+    // A PURE READ OF WHAT WAS ALREADY PROVED. No statement is issued here, so
+    // an aborted supervisor transaction cannot stop a hold from identifying
+    // the fence it is holding.
+    const f = preFence
+    own.state = 'transferred'
+    return await (deps.enterHold ?? holdForIntervention)({
+      root: i.scope.evidenceRoot, stamp, newRunId: deps.newRunId, mode: 'apply',
+      outerRunId: runId,
+      operationalDigest: i.operationalDigest,
+      observationDigest: i.observationDigest,
+      fenceState: state,
+      supervisorPid: f.supervisorPid, backendStart: f.backendStart,
+      reason,
+      // THE STAGE-1 BUNDLE, CROSS-LINKED. Whatever the operator decides, the
+      // intervention record names the evidence this run had already published.
+      priorBundles,
+      // THE CHANNEL THAT ALREADY PASSED PREFLIGHT, and the same bounded
+      // resolution-file policy. Never a second channel while fenced.
+      hold: deps.hold ??
+        processHold(say, i.scope.evidenceRoot, v['--resolution-file'] ?? null, channel),
+      say,
+      sleep,
+      ...(deps.ops === undefined ? {} : { ops: deps.ops }),
+      perform: async d => await performHoldOperation(d, {
+        sleep, supervisor, prover, fence: f, scope: i.scope, deps,
+        quiescence, queue, destinations, deadlineMs: i.deadlineMs,
+        expectedProducers: i.binding.producers, say,
+      }),
+      // PROVER FIRST, SUPERVISOR SECOND, and only after the terminal record is
+      // durable. Closing the supervisor is what ends the psql child.
+      teardown: async () => {
+        if (prover !== null) await prover.close().catch(() => undefined)
+        await supervisor.close().catch(() => undefined)
+      },
+      // THE LEASE AND CHANNEL THIS FUNCTION ARMED, released by the hold once
+      // its terminal record is durable - and NOT by anything the hold's own
+      // message update did or failed to do.
+      cleanup: () => { disarm(); channel.close() },
+    })
+  }
+
+  /**
+   * WHAT TO DO WITH AN EXCEPTION THE LIFECYCLE THREW.
+   *
+   * EVERY REVIEWED CLASS ALREADY DID ITS OWN CLEANUP, and treating them all as
+   * `may-be-held` sent a SECOND ROLLBACK: unauthorized after a refusal that
+   * already proved release, duplicated after a pre-COMMIT cleanup that already
+   * attempted exactly one, and - worst - issued after a COMMIT that had
+   * already happened, flattening a post-COMMIT intervention into a generic
+   * pre-COMMIT release. So each class is mapped to what it actually means, and
+   * NONE of them reaches `releaseOrHold`.
+   */
+  const afterLifecycleFailure = async (e: unknown): Promise<CliResult> => {
+    // THE REAL, NON-FORGEABLE CHECK BY DEFAULT.
+    //
+    // A genuine post-COMMIT intervention can only be minted inside the
+    // lifecycle module - membership of a private WeakSet - so no test can
+    // build one, and that is deliberate: a structurally identical literal must
+    // not be believed. The seam exists ONLY so the three branches below can be
+    // exercised at all; it defaults to `isInterventionRequired`, production
+    // never overrides it, and a test below proves the default refuses a
+    // forgery.
+    const classifyIntervention: typeof isInterventionRequired =
+      deps.classifyIntervention ?? isInterventionRequired
+    // 1. THE TARGET COMMITTED. Checked FIRST, and through the non-forgeable
+    //    identity check, because this is the one state whose truth cannot be
+    //    recovered by any later statement. Its exact fence state and every
+    //    bundle it verified are carried into the hold.
+    if (classifyIntervention(e)) {
+      own.state = 'lifecycle-owns'
+      say('INTERVENTION: the copy COMMITTED and the lifecycle stopped afterwards.')
+      // [STAGE 1, RELEASE GATE IF VERIFIED, LIFECYCLE OUTCOME IF VERIFIED],
+      // each with its exact basename AND its exact DIGEST digest.
+      //
+      // THE DIGEST COMES FROM THE PUBLISHER, through the lifecycle's own
+      // `EvidenceState`. The first version of this wrote `digestFileDigest: ''`
+      // and a name-only assertion let it through - so an intervention record
+      // serialized a blank digest beside a real bundle name, which reads as a
+      // verified reference and is not one. Reopening the path here would be no
+      // better: after a COMMIT this process cannot prove what it re-reads.
+      const prior: PriorBundle[] = stage1Prior === null ? [] : [stage1Prior]
+      for (const ev of [e.releaseGateEvidence, e.lifecycleEvidence]) {
+        if (!ev.verified || ev.publishedPath === null) continue
+        if (ev.digestFileDigest === null || !DIGEST_HEX.test(ev.digestFileDigest)) {
+          // NOT IDENTIFIABLE, SO NOT LINKED. Refused rather than linked
+          // blank: an intervention record must not assert a reference it
+          // cannot complete.
+          //
+          // AND THE MESSAGE SAYS WHAT ACTUALLY HAPPENS. It used to claim the
+          // publication was "named in this record without being linked",
+          // which was untrue: nothing names it in the record at all - it is
+          // omitted from `priorBundles` and mentioned only in this process's
+          // own output.
+          say('NOTE: a verified lifecycle publication carried no reviewed digest, ' +
+              'so it is OMITTED from this record\'s linked bundles. It is reported ' +
+              'here only.')
+          continue
+        }
+        prior.push({
+          name: basename(ev.publishedPath),
+          digestFileDigest: ev.digestFileDigest,
+        })
+      }
+      return await enterHold(holdStateOf(e.fence), bounded(e.failure), prior)
+    }
+    // 2. PRE-COMMIT CLEANUP ALREADY ATTEMPTED, EXACTLY ONCE. The lifecycle
+    //    classified the result; that classification is preserved verbatim.
+    if (e instanceof LifecyclePreCommitCleanupRequired) {
+      say('INTERVENTION: the copy stopped before COMMIT and its cleanup could not be proved.')
+      return await enterHold(holdStateOf(e.fence), bounded(e.failure))
+    }
+    // 3. A REFUSAL THAT ALREADY ROLLED BACK AND PROVED RELEASE. Nothing left
+    //    to do but report it - and no further SQL, which would be
+    //    unauthorized on a transaction that is already finished.
+    if (e instanceof LifecycleRefused) {
+      own.state = 'released-proved'
+      say(`REFUSED: ${e.reason} (phase ${e.phase}). The lifecycle rolled back and ` +
+          'proved the source fence released.')
+      await prover.close().catch(() => undefined)
+      await supervisor.close().catch(() => undefined)
+      disarm()
+      channel.close()
+      return { exitCode: EXIT_REFUSED, lines }
+    }
+    // 4. SOMETHING ELSE, AFTER THE LIFECYCLE WAS ENTERED. The commit boundary
+    //    is UNKNOWN, so this is neither a pre-COMMIT release nor a proved
+    //    commit: the sessions stay alive and an operator decides.
+    say('INTERVENTION: the copy stopped inside the lifecycle and the commit boundary is unknown.')
+    return await enterHold(
+      'unproved',
+      e instanceof Error
+        ? `the lifecycle stopped: ${e.name}`
+        : 'the lifecycle stopped for an unrecognised reason')
+  }
+
+  /** The one release attempt, and the only place the fence may end early. */
+  const releaseOrHold = async (why: string): Promise<CliResult> => {
+    const released = await releaseAndProve(supervisor)
+    if (released !== 'not-released' && released.state === 'released') {
+      own.state = 'released-proved'
+      say(`REFUSED: ${why}. The source fence was released and the release was proved.`)
+      await prover.close().catch(() => undefined)
+      await supervisor.close().catch(() => undefined)
+      disarm()
+      channel.close()
+      return { exitCode: EXIT_REFUSED, lines }
+    }
+    // NOT PROVED. The supervisor and the channel stay open: this is the hold,
+    // and WHICH hold depends on exactly what the release attempt established.
+    say(`INTERVENTION: ${why}, and the fence release could not be proved.`)
+    return await enterHold(holdStateOfRelease(released), why)
+  }
+
+  try {
+    // 6. STAGE 1 TAKES THE ONLY FENCE.
+    const exportSession = await authority.openStage1ExportSource()
+    let stage1Result
+    try {
+      // FAIL CLOSED FROM HERE. Set BEFORE the call, because a throw from
+      // inside it may leave locks held.
+      own.state = 'may-be-held'
+      stage1Result = await stage1({
+        supervisor, prover,
+        exportSession, operator, evidenceRoot: i.scope.evidenceRoot,
+      })
+    } finally {
+      // ONLY THE EXPORT SESSION. Its transaction was rolled back inside
+      // Stage 1; the supervisor keeps the fence.
+      await exportSession.end().catch(() => undefined)
+    }
+    const fence = stage1Result.fence
+    // 7. THE ACQUIRED FENCE MUST BE THE BACKEND THIS PROCESS ALREADY PROVED.
+    //    Measured before Stage 1 ran, so a fence reported against any other
+    //    pid or backend start is a fence this run cannot speak for.
+    if (fence.supervisorPid !== preFence.supervisorPid ||
+        fence.backendStart !== preFence.backendStart) {
+      throw new OpsRefused(
+        'Stage 1 reported a fence on a backend this run did not measure')
+    }
+    stage1Prior = {
+      name: basename(stage1Result.published.finalPath),
+      digestFileDigest: stage1Result.published.digestFileDigest,
+    }
+    say(`stage 1 ${stage1Result.published.finalPath}`)
+
+    // 8. READ AND VERIFY THAT EXACT PUBLICATION, THROUGH THE REVIEWED VERIFIER.
+    //
+    //    `stage1Result.published` is a `PublishedEvidence` - finalPath,
+    //    temporaryPath, files, digestFileDigest - and the copy's consumers need
+    //    a `PublishedManifest`, which carries the DOCUMENT and CONTRACT read out
+    //    of verified bytes. Casting one to the other does not create those
+    //    fields: it produced an object whose `document` was `undefined`, so the
+    //    injected suite passed and the live apply could not work at all. The
+    //    verifier is also the only thing that can mint a branded manifest, so
+    //    this is not a formality that could be skipped with a literal.
+    const verified = (deps.verifyPublished ?? verifyPublishedStage1)(
+      stage1Result.published.finalPath)
+
+    // 9. THE BINDING, DERIVED FROM THAT SAME VERIFIED OBJECT. One verifier
+    //    call, one authority view: nothing reads this directory twice, so
+    //    there is no second opinion to reconcile.
+    const copy = await copyBinding(verified, v, deps, i.sourceEndpoint)
+    say(`copy binding ${copy.digest}`)
+
+    // 8. AND THE TARGET EXPECTATION ONLY FROM THAT BINDING. Until this line no
+    //    target session can be opened at all.
+    targetScope = {
+      systemIdentifier: copy.binding.targetSystemIdentifier,
+      database: copy.binding.targetDatabase,
+      port: copy.binding.targetPort,
+      role: copy.binding.targetRole,
+      endpoint: required(v, '--target-host'),
+    }
+    const target = targetScope
+
+    // 9. INSPECTION ON THAT EXACT FENCE AND THAT EXACT BUNDLE.
+    const inspectSource = await authority.openStage2Source()
+    let inspected
+    try {
+      inspected = await inspect({
+        supervisor, prover,
+        source: inspectSource, operator,
+        sourceBeginSql: EXPORT_BEGIN_SQL,
+        reviewedTarget,
+        preAcquiredFence: fence,
+      }, verified, target)
+    } finally {
+      // THE SNAPSHOT ENDS; THE FENCE DOES NOT.
+      await inspectSource.rows(EXPORT_ROLLBACK_SQL).catch(() => undefined)
+      await inspectSource.end().catch(() => undefined)
+    }
+
+    // 10. THE TOKEN, PRINTED WHILE THE FENCE IS HELD.
+    say(inspected.confirmation)
+
+    // 11. THE OPERATOR ANSWERS THROUGH THE CHANNEL THAT PASSED PREFLIGHT.
+    let approved
+    try {
+      approved = await confirm(channel, inspected.confirmation, say)
+    } catch {
+      return await releaseOrHold('the copy confirmation was not returned')
+    }
+
+    // 12. ONE LIFECYCLE CALL, ONE FENCE, FRESH SESSIONS, SAME BUNDLE.
+    //
+    //     FROM HERE THE LIFECYCLE OWNS CLEANUP. It performs pre-COMMIT
+    //     rollback itself and classifies every post-COMMIT state, so the outer
+    //     path must not issue another ROLLBACK for any of its outcomes. The
+    //     state says so structurally rather than leaving it to the catch.
+    own.state = 'lifecycle-owns'
+    let result
+    try {
+      result = await lifecycle({
+      supervisor, prover,
+      preAcquiredFence: fence,
+      openStageSource: async () => await authority.openStage2Source(),
+      openStageTarget: async () => await authority.openStage2Target(),
+      openVerifySource: async () => await authority.openVerifierSource(),
+      openVerifyTarget: async () => await authority.openVerifierTarget(),
+      bundleDir: stage1Result.published.finalPath,
+      reviewedTarget,
+      operator, sourceBeginSql: EXPORT_BEGIN_SQL,
+      targetExpectation: target, confirmation: approved.token,
+      restorationAuthority: { kind: 'manual-stop' },
+      quiescence, queue, destinations,
+      expectedProducers: i.binding.producers,
+      evidenceRoot: i.scope.evidenceRoot,
+        runIds: { lifecycle: runId }, stamp,
+      })
+    } catch (e) {
+      return await afterLifecycleFailure(e)
+    }
+
+    // 13. ONLY THIS OUTCOME. A NORMAL RETURN ALREADY PROVES `fence: released`,
+    //     so a wrong outcome is refused ON THAT PROVED FACT - not by asking
+    //     for another release the lifecycle already performed.
+    if (result.fence !== 'released') {
+      // Unreachable through the reviewed contract, and refused rather than
+      // assumed: a normal return that does not claim a released fence is a
+      // contract violation, not a state to guess at.
+      return await enterHold(
+        'unproved', 'the lifecycle returned without proving the fence released')
+    }
+    if (result.outcome !== 'COPY_VERIFIED_AWAITING_MANUAL_RESTORATION') {
+      own.state = 'released-proved'
+      say('REFUSED: the lifecycle did not reach the reviewed manual-stop outcome. ' +
+          'The source fence was released and that release was proved by the lifecycle.')
+      await prover.close().catch(() => undefined)
+      await supervisor.close().catch(() => undefined)
+      disarm()
+      channel.close()
+      return { exitCode: EXIT_REFUSED, lines }
+    }
+    own.state = 'released-proved'
+    say(`verification ${result.verifierBundle}`)
+    say(`release gate ${result.releaseGateBundle}`)
+    say(`copy lifecycle ${result.lifecycleBundle}`)
+    say('COPY_VERIFIED_AWAITING_MANUAL_RESTORATION')
+    say('The producers are still stopped, by authorization. Restore them manually,')
+    say('then run --verify-copy-restoration and --close-copy.')
+
+    // 14. PROVER THEN SUPERVISOR, and only now.
+    await prover.close().catch(() => undefined)
+    await supervisor.close().catch(() => undefined)
+    disarm()
+    channel.close()
+    return { exitCode: EXIT_ACTION_REQUIRED, lines }
+  } catch (e) {
+    // NO UNCONDITIONAL ROLLBACK, NO UNCONDITIONAL CLOSE, and no reading of the
+    // error's text to guess whether a lock was taken. The STATE decides.
+    if (own.state === 'may-be-held') {
+      return await releaseOrHold(
+        e instanceof Error ? `the copy stopped: ${e.name}` : 'the copy stopped')
+    }
+    // NO AUTOMATIC ROLLBACK AFTER LIFECYCLE ENTRY. The commit boundary is
+    // unknown, so a ROLLBACK could either be unauthorized or arrive after a
+    // COMMIT that already happened.
+    if (own.state === 'lifecycle-owns') return await afterLifecycleFailure(e)
+    if (own.state === 'transferred') throw e
+    await prover.close().catch(() => undefined)
+    await supervisor.close().catch(() => undefined)
+    disarm()
+    channel.close()
+    throw e
+  }
+}
+
 export async function runOpsCli(argv: readonly string[], deps: OpsDeps): Promise<CliResult> {
   const lines: string[] = []
   const say = (l: string): void => { lines.push(l) }
@@ -3339,6 +5286,30 @@ export async function runOpsCli(argv: readonly string[], deps: OpsDeps): Promise
     if ((v['--producer-authority'] ?? PRODUCER_AUTHORITY) !== PRODUCER_AUTHORITY) {
       throw new OpsRefused(
         'the only reviewed producer authority in this milestone is manual-stop')
+    }
+
+    // THE OPERATOR CHANNEL IS PROVED BEFORE ANYTHING IS CONTACTED.
+    //
+    // ORDER IS THE WHOLE POINT. `measureSourceIdentity` below opens a read-only
+    // source session, and every mode runs it - so a preflight performed inside
+    // the `--apply` branch would happen AFTER a database session already
+    // existed, and a preflight that fails after the fence is taken is the one
+    // state a production apply must never reach: a held source and no channel
+    // through which anyone can tell this process to let go.
+    //
+    // So for `--apply` the channel is constructed and proved here, at the top,
+    // before the first session, the first Redis command and the first
+    // `launchctl` call. THE SAME OBJECT is then used for the confirmation and,
+    // if the confirmation fails and the release cannot be proved, for the
+    // intervention hold - one reader for the whole operation.
+    //
+    // Other modes are untouched: they take no fence and their ordering is
+    // already reviewed.
+    let applyChannel: OperatorChannel | null = null
+    if (parsed.mode === '--apply') {
+      applyChannel = (deps.operatorChannel ?? operatorChannel)(
+        say, required(v, '--evidence-root'), v['--resolution-file'] ?? null)
+      applyChannel.preflight()
     }
 
     // THE SOURCE IDENTITY AND THIS IMPLEMENTATION'S COMMIT, MEASURED.
@@ -3391,28 +5362,23 @@ export async function runOpsCli(argv: readonly string[], deps: OpsDeps): Promise
     // ----- INSPECT -----------------------------------------------------
     if (parsed.mode === '--inspect') {
       const forMode = required(v, '--for')
-      if (forMode !== 'rehearse' && forMode !== 'apply') {
-        throw new OpsRefused('--for must be rehearse or apply')
+      // ONLY THE REHEARSAL IS INSPECTABLE NOW.
+      //
+      // A SEPARATELY MINTED APPLY TOKEN IS STRUCTURALLY STALE. The production
+      // apply creates its Stage-1 bundle, derives the copy binding from THAT
+      // publication and mints its confirmation inside one fenced process, so
+      // a token minted here - in an earlier process, over an earlier bundle -
+      // can only ever name a different copy than the one being authorized.
+      // Keeping it would leave a token that looks like authority and is not.
+      if (forMode !== 'rehearse') {
+        throw new OpsRefused(
+          'only --for=rehearse is inspectable: a production apply mints its own ' +
+          'confirmation from the Stage-1 bundle it creates')
       }
-      // THE APPLY INSPECTION BUILDS A REAL COPY BINDING, and does it BEFORE a
-      // token is computed. An apply token over a null copy binding would bind
-      // the operational world and leave what is being copied unnamed.
-      let copyDigest: string | null = null
-      let authorizationDigest: string
-      if (forMode === 'apply') {
-        // THE COMPLETE CHAIN, REVERIFIED FROM DISK. Refused here, before
-        // anything is printed that an operator could mistake for authority.
-        assertApplyAuthorized(v, binding)
-        const fresh = await measuredCopyBinding(v, deps, sourceEndpoint)
-        copyDigest = fresh.digest
-        authorizationDigest = fileSha256(join(required(v, '--reviewed-rehearsal'), 'DIGEST'))
-        say(`copy binding ${copyDigest}`)
-        say(`bundle ${fresh.binding.bundleName}`)
-      } else {
-        authorizationDigest = createHash('sha256')
-          .update(openReviewedContainer(required(v, '--rehearsal-authorization')).text)
-          .digest('hex')
-      }
+      const copyDigest: string | null = null
+      const authorizationDigest: string = createHash('sha256')
+        .update(openReviewedContainer(required(v, '--rehearsal-authorization')).text)
+        .digest('hex')
       const runId = deps.newRunId()
       const stamp = deps.stamp()
       // EXACTLY ONE TOKEN, for the named mode. Printing both would be the
@@ -3427,53 +5393,29 @@ export async function runOpsCli(argv: readonly string[], deps: OpsDeps): Promise
       say(`launchd observation       ${observationDigest}`)
       say(`run ${runId} ${stamp}`)
       say(`confirmation ${token}`)
-      // TRUTHFULLY, AND THE TWO MODES DIFFER.
-      //
-      // Both now measure the source identity, so neither can say it opened no
-      // database session - that claim was true when the system identifier came
-      // from argv and became false the moment it was measured. What an apply
-      // inspection additionally opens is a TARGET identity session, and saying
-      // so is the difference between "read-only" and "never connected".
+      // TRUTHFULLY. Only the rehearsal inspection remains, and it measures
+      // the source identity - so it cannot claim it opened no database
+      // session. It opens no TARGET session, which is the difference between
+      // "read-only" and "never connected".
       say('This inspection changed nothing.')
-      if (forMode === 'apply') {
-        say('It opened and closed TWO read-only sessions - one on the source and')
-        say('one on the target - to measure their identities. It issued no write,')
-        say('no target mutation and no copy.')
-      } else {
-        say('It opened and closed ONE read-only session on the source to measure')
-        say('its identity. It opened no target session and issued no write.')
-      }
+      say('It opened and closed ONE read-only session on the source to measure')
+      say('its identity. It opened no target session and issued no write.')
       return { exitCode: EXIT_OK, lines }
     }
 
-    // ----- APPLY (still refused) ---------------------------------------
+    // ----- APPLY -------------------------------------------------------
     if (parsed.mode === '--apply') {
-      // GATE-VERIFIED FIRST, THEN REFUSED - and the refusal is truthful about
-      // what is missing.
-      //
-      // THE OLD SENTENCE WAS WRONG. It said the observed rehearsal had not been
-      // run, in a branch that is only reached when a review PROVING one has
-      // been run and its producers restored has just verified from disk. What
-      // is actually out of scope in this milestone is the production apply
-      // ITSELF: the copy against the live target. The chain is complete, the
-      // token is computable, and the step that follows has not been authorized.
-      const chain = assertApplyAuthorized(v, binding)
-      const fresh = await measuredCopyBinding(v, deps, sourceEndpoint)
-      say(`copy binding ${fresh.digest}`)
-      say(`reviewed rehearsal ${chain.rehearsalName}`)
-      say(`producer restoration ${chain.restorationName}`)
-      say('REFUSED: the production apply is out of scope in this milestone.')
-      say('The reviewed rehearsal and its restoration verify from disk, and the copy')
-      say('binding recomputes - what has not been authorized is running the copy')
-      say('against the live target.')
-      // NOT "NO TARGET CONNECTION WAS OPENED". Building the copy binding opened
-      // a read-only TARGET session to measure its identity, and closed it. The
-      // honest claim is about what was DONE through that connection, which is
-      // nothing: no write, no mutation, no copy.
-      say('A read-only target identity session was opened and closed while the copy')
-      say('binding was measured. No write, no target mutation and no production')
-      say('copy occurred.')
-      return { exitCode: EXIT_REFUSED, lines }
+      // THE ONE-PROCESS CONTINUOUS-FENCE APPLY. See runProductionApply: the
+      // fence Stage 1 takes is held through inspection, the operator's
+      // confirmation and the lifecycle, and is released only at the end.
+      if (applyChannel === null) {
+        throw new OpsRefused('the apply path reached the copy without a proved operator channel')
+      }
+      return await runProductionApply({
+        v, deps, scope, say, lines, channel: applyChannel,
+        sourceEndpoint, measuredSource, implementation, binding,
+        operationalDigest, observationDigest, deadlineMs,
+      })
     }
 
     const modeInputs: ModeInputs = {
@@ -3485,6 +5427,15 @@ export async function runOpsCli(argv: readonly string[], deps: OpsDeps): Promise
     }
     if (parsed.mode === '--verify-restoration') {
       const r = await runVerifyRestoration(modeInputs)
+      return { exitCode: r.exitCode, lines: [...lines, ...r.lines] }
+    }
+    // ----- THE PRODUCTION COPY'S OWN CLOSURE FAMILY --------------------
+    if (parsed.mode === '--verify-copy-restoration') {
+      const r = await runVerifyCopyRestoration(modeInputs)
+      return { exitCode: r.exitCode, lines: [...lines, ...r.lines] }
+    }
+    if (parsed.mode === '--close-copy') {
+      const r = await runCloseCopy(modeInputs)
       return { exitCode: r.exitCode, lines: [...lines, ...r.lines] }
     }
     if (parsed.mode === '--review-rehearsal') {
@@ -3559,9 +5510,15 @@ export async function openProductionSession(
       user: required(v, userOption),
       ...(held === null ? {} : { passfileFd: held.fd }),
     })
+    // THE REAL CAPABILITIES, NOT A THREE-FIELD SHADOW. `pid`, `rows` and
+    // `alive` were discarded here, which is why the reviewed contracts could
+    // only be satisfied by a cast.
     return {
+      pid: backend.pid,
       send: async (sql: string) => await backend.send(sql),
+      rows: async (sql: string) => await backend.rows(sql),
       close: async () => { await backend.close() },
+      alive: () => backend.alive(),
     }
   } finally {
     // CLOSED ONLY AFTER THE CHILD HAS IT. `spawn` dups the descriptor into the
@@ -3596,7 +5553,7 @@ export function productionDeps(
       return {
         supervisorPid: fence.supervisorPid,
         backendStart: fence.backendStart,
-        mechanism: fence.mechanism as 'S3',
+        mechanism: fence.mechanism,
       }
     },
   }

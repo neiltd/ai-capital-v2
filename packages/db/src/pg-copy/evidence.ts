@@ -336,6 +336,22 @@ export const REVIEWED_PREFIXES: readonly string[] = Object.freeze([
   // not distinguish "nothing happened" from "something happened and was not
   // recorded".
   'queue-flow-retirement-intent', 'queue-flow-retirement-outcome',
+  // THE PRODUCTION-COPY CLOSURE FAMILY, which is NOT the rehearsal's.
+  //
+  // `producer-restoration` closes an operational REHEARSAL: it proves the
+  // producers came back after a run that copied nothing. Reusing it as proof
+  // that a production copy was closed would let a rehearsal's restoration
+  // stand in for a real copy's, and the two say different things about what
+  // happened to the source. So the copy has its own restoration record, which
+  // links the copy-lifecycle, release-gate, verification and source-manifest
+  // bundles, and its own closure record - the only bundle in this repository
+  // permitted to report COMPLETE.
+  'copy-restoration', 'copy-closure',
+  // The temporary export authority, recorded at both ends. A role that was
+  // created and a role that was torn down are separate facts, and an
+  // intent-with-no-outcome is the truthful record of "created, and its removal
+  // is unknown" - which is exactly the state a COMMIT_UNKNOWN must leave.
+  'export-authority-create', 'export-authority-teardown',
 ])
 
 /**
@@ -366,6 +382,10 @@ export const TEMPORARY_NAME_PREFIX: Readonly<Record<string, string>> = Object.fr
   'pristine-release': '.tmp-pristine-release-',
   'queue-flow-retirement-intent': '.tmp-queue-flow-retirement-intent-',
   'queue-flow-retirement-outcome': '.tmp-queue-flow-retirement-outcome-',
+  'copy-restoration': '.tmp-copy-restoration-',
+  'copy-closure': '.tmp-copy-closure-',
+  'export-authority-create': '.tmp-export-authority-create-',
+  'export-authority-teardown': '.tmp-export-authority-teardown-',
 })
 
 const RUN_ID = /^[0-9a-f]{8}$/

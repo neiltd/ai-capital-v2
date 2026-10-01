@@ -26,6 +26,7 @@ import { afterEach, describe, expect, it } from 'vitest'
 import {
   REAL_EVIDENCE_OPS, REVIEWED_PREFIXES, TEMPORARY_NAME_PREFIX, evidenceNames,
   publishEvidence, verifyPublishedEvidence, type EvidenceOps,
+  type PublishedEvidence,
 } from '../src/pg-copy/evidence.js'
 import {
   ACTIVITY_CENSUS_SQL, ADAPTER_DEADLINE_MS, AdapterDeadlineExceeded, GATE_DETAIL_FILE,
@@ -38,7 +39,9 @@ import {
   REVIEWED_BACKEND_TYPES, REVIEWED_PRODUCERS, REVIEWED_QUEUES, ReleaseGateRefused,
   SUPERVISOR_ALIVE_SQL, actionsDocument, assertQuiescent, authorizationDocument,
   gateDetailDocument, isAuthorizationConsumed, isInterventionRequired, isReleaseAuthorization,
+  evidenceStateOf, verifiedEvidence,
   outcomeDocument, proveOperationalState, publishLifecycleBundle, releaseFence,
+  terminalOutcomeFor,
   restoreProducers,
   rollbackAndProveReleased, runReleaseGate, withDeadline,
   type AdapterContext, type LifecycleFenceState, type ProducerAdapter, type ProducerState,
@@ -102,7 +105,10 @@ afterEach(() => {
 
 /** The empty evidence state, for fixtures that predate a publication attempt. */
 const NO_EVIDENCE_FIXTURE = {
-  attempted: false, publishedPath: null, verified: false, note: null,
+  attempted: false, publishedPath: null, verified: false,
+  // K7-B6.3 B: NON-NULL IF AND ONLY IF `verified`. Carried from the publisher
+  // so a post-COMMIT cross-link never has to guess or blank it.
+  digestFileDigest: null, note: null,
   publication: null, evidencePhase: null, evidenceReason: null,
   finalPath: null, finalPathState: null, temporaryPath: null, temporaryPathState: null,
 } as const
@@ -1277,7 +1283,7 @@ describe('an unknown rollback outcome is not a release', () => {
             ? 'the fence release was not completed'
             : 'the fence release could not be proved',
           at: null },
-        RUN, STAMP))) as Record<string, never>
+        RUN, STAMP, 'STOPPED'))) as Record<string, never>
       expect((doc.fence as Record<string, unknown>).state).toBe(state)
       expect((doc.release as Record<string, unknown>).state).toBe(state)
       expect((doc.fence as Record<string, unknown>).sentence)
@@ -1428,7 +1434,7 @@ describe('the intervention state', () => {
       { phase: 'L9-release-proof', reason: 'the fence release could not be proved', at: null },
       'released-unproved', supervisor as never,
       { ...NO_EVIDENCE_FIXTURE, attempted: true, publishedPath: '/ev/release-gate-x',
-        verified: true, publication: 'published' },
+        verified: true, digestFileDigest: 'a'.repeat(64), publication: 'published' },
       { ...NO_EVIDENCE_FIXTURE },
       [], REVIEWED_PRODUCERS)
     expect(e.supervisor).toBe(supervisor)
@@ -1467,7 +1473,7 @@ describe('the two bundles are two bundles', () => {
       manifest: outcomeDocument(
         HANDOFF(), 'released', { state: 'released', remainingLocks: 0 },
         { restored: RESTORE_ORDER, notRestored: [], failedAt: null },
-        `/ev/release-gate-${STAMP}-${RUN}`, null, runId, STAMP),
+        `/ev/release-gate-${STAMP}-${RUN}`, null, runId, STAMP, 'COPY_VERIFIED_RESTORED_AWAITING_CLOSURE'),
       detail: actionsDocument({ state: 'released', remainingLocks: 0 },
                               { restored: RESTORE_ORDER, notRestored: [], failedAt: null }),
       ...(ops === undefined ? {} : { ops }),
@@ -1508,7 +1514,7 @@ describe('the two bundles are two bundles', () => {
     const outcome = publishOutcome(root)
     const odoc = JSON.parse(readFileSync(join(outcome.finalPath, LIFECYCLE_FILE), 'utf-8'))
     expect(odoc.record).toBe('lifecycle-outcome')
-    expect(odoc.outcome).toBe('COMPLETE')
+    expect(odoc.outcome).toBe('COPY_VERIFIED_RESTORED_AWAITING_CLOSURE')
     expect(odoc.release.state).toBe('released')
     expect(odoc.restoration.restored).toEqual([...RESTORE_ORDER])
     expect(odoc.fence.state).toBe('released')
@@ -1707,7 +1713,8 @@ describe('the two bundles are two bundles', () => {
       canonicalJson(gateDetailDocument(a)),
       canonicalJson(outcomeDocument(HANDOFF(), 'released',
         { state: 'released', remainingLocks: 0 },
-        { restored: RESTORE_ORDER, notRestored: [], failedAt: null }, null, null, RUN, STAMP)),
+        { restored: RESTORE_ORDER, notRestored: [], failedAt: null }, null, null, RUN, STAMP,
+        'COPY_VERIFIED_RESTORED_AWAITING_CLOSURE')),
       canonicalJson(actionsDocument({ state: 'released', remainingLocks: 0 }, null)),
     ].join('\n').toLowerCase()
     for (const marker of ['password', 'passfile', 'pgpass', 'postgres://', 'host=',
@@ -1739,7 +1746,7 @@ describe('the reviewed order is the code', () => {
       'authorization = await runReleaseGate(',
       'prefix: RELEASE_GATE_PREFIX',
       'release = await releaseFence(',
-      'restoration = await restoreProducers(i.producers,',
+      "if (i.restorationAuthority.kind === 'adapter')",
     ]
     let previous = -1
     for (const step of order) {
@@ -1752,11 +1759,34 @@ describe('the reviewed order is the code', () => {
   it('restores only after the release is PROVED, never after released-unproved', () => {
     const body = LIFECYCLE.slice(LIFECYCLE.indexOf('export async function runLifecycle'))
     const guard = body.indexOf("if ((release as ReleaseResult).state !== 'released')")
-    const restore = body.indexOf('restoration = await restoreProducers(i.producers,')
+    // K7-B: restoration is now reached only through the authority branch, which
+    // is therefore the thing that must sit after the proof.
+    const restore = body.indexOf("if (i.restorationAuthority.kind === 'adapter')")
     expect(guard).toBeGreaterThan(-1)
+    expect(restore).toBeGreaterThan(-1)
     expect(guard).toBeLessThan(restore)
     // The guard leaves through `stop`, which never returns.
     expect(body.slice(guard, restore)).toContain("'L9-release-proof'")
+  })
+
+  it('MANUAL-STOP NEVER RESTORES: restoreProducers is reachable only via the adapter', () => {
+    // Behavioural intent stated structurally because `runLifecycle` needs a
+    // live cluster: there is exactly ONE call to `restoreProducers` in the
+    // lifecycle, and it sits inside the adapter branch. A production run cannot
+    // reach it, so it cannot report producers it never touched.
+    const body = LIFECYCLE.slice(LIFECYCLE.indexOf('export async function runLifecycle'))
+    const calls = body.match(/await restoreProducers\(/g) ?? []
+    expect(calls.length).toBe(1)
+    const branch = body.indexOf("if (i.restorationAuthority.kind === 'adapter')")
+    const call = body.indexOf('await restoreProducers(')
+    expect(branch).toBeGreaterThan(-1)
+    expect(branch).toBeLessThan(call)
+    // And the terminal outcome distinguishes the two authorities, so a
+    // manual-stop run cannot be reported COMPLETE.
+    expect(body).toContain('const terminal = terminalOutcomeFor(i.restorationAuthority)')
+    // ONE value, published and returned - not two computations that could drift.
+    expect(body).toContain('outcome: terminal,')
+    expect(body).toContain("recordOutcome(\n      'released', null, gateEvidence.publishedPath, terminal)")
   })
 
   it('closes what it owns and never the caller sessions', () => {
@@ -2159,5 +2189,246 @@ describe('the pid-parameterized lock census', () => {
     // stated, and the two would eventually differ.
     expect(COMPLETE_FENCE_LOCKS).toBe(FENCE_TABLES.length + FENCE_SEQUENCES.length + 1)
     expect(COMPLETE_FENCE_LOCKS).toBe(25)
+  })
+})
+
+// ── K7-B: the PUBLISHED outcome must equal the returned one ─────────────────
+//
+// The document used to compute its own verdict - `failure === null ? COMPLETE :
+// STOPPED` - while the returned value had learned to distinguish a manual-stop
+// success. A production run therefore froze a bundle saying COMPLETE about a
+// copy whose producers were still down. These cases read the PUBLISHED bytes,
+// because a source assertion on the return statement could not have caught that.
+describe('K7-B: the copy-lifecycle document tells the truth about restoration', () => {
+  const publish = (
+    outcome: 'COPY_VERIFIED_RESTORED_AWAITING_CLOSURE'
+      | 'COPY_VERIFIED_AWAITING_MANUAL_RESTORATION',
+    restoration: { restored: readonly string[]; notRestored: readonly string[]
+                   failedAt: string | null } | null,
+  ): Record<string, never> => {
+    const root = makeRoot()
+    {
+      const runId = 'aabbccdd'
+      const p = publishLifecycleBundle({
+        root, prefix: LIFECYCLE_PREFIX, stamp: STAMP, runId,
+        manifestFile: LIFECYCLE_FILE, detailFile: LIFECYCLE_DETAIL_FILE,
+        manifest: outcomeDocument(
+          HANDOFF(), 'released', { state: 'released', remainingLocks: 0 },
+          restoration, `/ev/release-gate-${STAMP}-${runId}`, null, runId, STAMP, outcome),
+        detail: actionsDocument({ state: 'released', remainingLocks: 0 }, restoration),
+      })
+      // READ THE BYTES THAT WERE WRITTEN, not the object that was passed in.
+      return JSON.parse(
+        readFileSync(join(p.finalPath as string, LIFECYCLE_FILE), 'utf-8'),
+      ) as Record<string, never>
+    }
+  }
+
+  it('ADAPTER success: restored-awaiting-closure, and NOT complete', () => {
+    // K7-B7.1: the adapter really did restore and confirm every producer, and
+    // the copy is STILL OPEN - a closure is what completes it. COMPLETE here
+    // claimed a completion nothing had established; calling it "awaiting
+    // manual restoration" would be just as untrue.
+    const doc = publish('COPY_VERIFIED_RESTORED_AWAITING_CLOSURE',
+      { restored: RESTORE_ORDER, notRestored: [], failedAt: null })
+    expect(doc).toMatchObject({
+      outcome: 'COPY_VERIFIED_RESTORED_AWAITING_CLOSURE', producers_restored: true,
+    })
+    // AND NO LIFECYCLE BUNDLE CLAIMS COMPLETE, on either authority.
+    expect(JSON.stringify(doc)).not.toContain('COMPLETE')
+    expect(doc.restoration).not.toBeNull()
+    expect((doc.restoration as unknown as { restored: string[] }).restored)
+      .toEqual([...RESTORE_ORDER])
+  })
+
+  it('MANUAL-STOP success: the action-required outcome, restored false, no restoration', () => {
+    const doc = publish('COPY_VERIFIED_AWAITING_MANUAL_RESTORATION', null)
+    expect(doc).toMatchObject({
+      outcome: 'COPY_VERIFIED_AWAITING_MANUAL_RESTORATION',
+      producers_restored: false,
+      restoration: null,
+    })
+    // AND NOTHING IN IT IMPLIES COMPLETION.
+    expect(JSON.stringify(doc)).not.toContain('"COMPLETE"')
+  })
+
+  it('MANUAL-STOP actions show every reviewed producer not restored', () => {
+    const root = makeRoot()
+    {
+      const p = publishLifecycleBundle({
+        root, prefix: LIFECYCLE_PREFIX, stamp: STAMP, runId: 'aabbccdd',
+        manifestFile: LIFECYCLE_FILE, detailFile: LIFECYCLE_DETAIL_FILE,
+        manifest: outcomeDocument(
+          HANDOFF(), 'released', { state: 'released', remainingLocks: 0 },
+          null, null, null, 'aabbccdd', STAMP,
+          'COPY_VERIFIED_AWAITING_MANUAL_RESTORATION'),
+        detail: actionsDocument({ state: 'released', remainingLocks: 0 }, null),
+      })
+      const detail = JSON.parse(
+        readFileSync(join(p.finalPath as string, LIFECYCLE_DETAIL_FILE), 'utf-8'),
+      ) as { not_restored?: string[] }
+      expect(detail.not_restored).toEqual([...RESTORE_ORDER])
+    }
+  })
+
+  it('A FAILURE is STOPPED whatever outcome it is handed', () => {
+    // The document must never dress a stopped run as a terminal success just
+    // because the caller passed one in.
+    {
+      const doc = JSON.parse(canonicalJson(outcomeDocument(
+        HANDOFF(), 'released-unproved', { state: 'released-unproved', remainingLocks: null },
+        null, null,
+        { phase: 'L9-release-proof', reason: 'the fence release could not be proved', at: null },
+        'aabbccdd', STAMP, 'COPY_VERIFIED_RESTORED_AWAITING_CLOSURE'))) as Record<string, never>
+      expect(doc.outcome).toBe('STOPPED')
+      expect(doc.producers_restored).toBe(false)
+    }
+  })
+})
+
+describe('K7-B: which terminal success each authority makes true', () => {
+  it('each authority returns its own nonterminal success, and neither is COMPLETE', () => {
+    // Proved directly, because the inline version could only be reached with
+    // two live clusters - and a mutant that swapped the branches survived.
+    expect(terminalOutcomeFor({ kind: 'manual-stop' }))
+      .toBe('COPY_VERIFIED_AWAITING_MANUAL_RESTORATION')
+    const adapter = {
+      restore: async () => undefined,
+      confirm: async () => true,
+    }
+    expect(terminalOutcomeFor({ kind: 'adapter', producers: adapter }))
+      .toBe('COPY_VERIFIED_RESTORED_AWAITING_CLOSURE')
+  })
+
+  it('is total over the authority and returns nothing else', () => {
+    for (const a of [{ kind: 'manual-stop' as const },
+                     { kind: 'adapter' as const,
+                       producers: { restore: async () => undefined, confirm: async () => true } }]) {
+      // K7-B7.1: NEITHER IS COMPLETE. Both are nonterminal successes; the
+      // copy is closed by its closure record and by nothing else.
+      expect(['COPY_VERIFIED_RESTORED_AWAITING_CLOSURE',
+              'COPY_VERIFIED_AWAITING_MANUAL_RESTORATION'])
+        .toContain(terminalOutcomeFor(a))
+      expect(terminalOutcomeFor(a)).not.toBe('COMPLETE')
+    }
+  })
+})
+
+// ---------------------------------------------------------------------------
+// K7-B6.3 B — ONE CONSTRUCTOR FOR "VERIFIED", AND IT CARRIES THE DIGEST
+// ---------------------------------------------------------------------------
+
+describe('K7-B6.3: a verified publication carries its publisher digest', () => {
+  const published = (digestFileDigest: string): PublishedEvidence => ({
+    finalPath: '/ev/copy-release-gate-20260930T000000Z-aabbccdd',
+    temporaryPath: '/ev/.tmp-copy-release-gate-20260930T000000Z-aabbccdd',
+    files: ['release-gate.json', 'DIGEST'],
+    digestFileDigest,
+  })
+
+  it('carries the EXACT digest the publisher returned', () => {
+    const digest = 'a1b2c3d4'.repeat(8)
+    const e = verifiedEvidence(published(digest))
+    expect(e.verified).toBe(true)
+    // THE WHOLE POINT: a later cross-link can name AND identify this bundle
+    // without reopening a path it could not prove anything about.
+    expect(e.digestFileDigest).toBe(digest)
+    expect(e.publishedPath).toBe('/ev/copy-release-gate-20260930T000000Z-aabbccdd')
+  })
+
+  it('REFUSES a blank, short, uppercase or non-hex digest', () => {
+    // A verified publication that cannot be identified is a contradiction.
+    // Blanking it is what produced an intervention record naming a bundle
+    // beside an empty digest.
+    for (const bad of ['', 'a'.repeat(63), 'A'.repeat(64), 'z'.repeat(64),
+                       `${'a'.repeat(63)} `, 'not-a-digest']) {
+      expect(() => verifiedEvidence(published(bad)), JSON.stringify(bad)).toThrow()
+    }
+  })
+
+  it('an UNVERIFIED state never carries a digest', () => {
+    // `NO_EVIDENCE` and every published-unverified state must be unlinkable as
+    // verified evidence, and the absent digest is what makes that structural.
+    expect(NO_EVIDENCE_FIXTURE.verified).toBe(false)
+    expect(NO_EVIDENCE_FIXTURE.digestFileDigest).toBeNull()
+  })
+})
+
+// ---------------------------------------------------------------------------
+// K7-B6.3.1 B — A POST-PUBLICATION DIGEST FAILURE KEEPS ITS PATH
+// ---------------------------------------------------------------------------
+
+describe('K7-B6.3.1: a malformed publisher digest is published-unverified', () => {
+  const FINAL = '/ev/copy-release-gate-20260930T000000Z-aabbccdd'
+  const published = (digestFileDigest: string): PublishedEvidence => ({
+    finalPath: FINAL,
+    temporaryPath: '/ev/.tmp-copy-release-gate-20260930T000000Z-aabbccdd',
+    files: ['release-gate.json', 'DIGEST'],
+    digestFileDigest,
+  })
+
+  /**
+   * THE PAIR EVERY PUBLICATION CATCH IS BUILT FROM.
+   *
+   * `verifiedEvidence` throws and `evidenceStateOf` classifies - exactly as
+   * the four call sites do. Asserting only that the constructor throws says
+   * nothing about whether the ALREADY-PUBLISHED directory survives in the
+   * record, which is the property that was wrong: the throw said
+   * `publication: 'published'`, and `evidenceStateOf` retains a path only for
+   * `published-unverified`, so the state claimed nothing had been published
+   * while a complete bundle sat there unreferenced.
+   */
+  const throughTheCatch = (digest: string): ReturnType<typeof evidenceStateOf> => {
+    try {
+      verifiedEvidence(published(digest))
+      throw new Error('the malformed digest was accepted')
+    } catch (e) {
+      return evidenceStateOf(e, 'the authorization bundle was not published')
+    }
+  }
+
+  it('retains the EXACT final path, present, as published-unverified', () => {
+    const state = throughTheCatch('')
+    // THE DIRECTORY EXISTS AND THE RECORD SAYS SO.
+    expect(state.publication).toBe('published-unverified')
+    expect(state.publishedPath).toBe(FINAL)
+    expect(state.finalPath).toBe(FINAL)
+    expect(state.finalPathState).toBe('present')
+    // AND IS NOT TREATED AS ABSENT OR AS NOTHING-CREATED.
+    expect(state.finalPathState).not.toBe('absent')
+    expect(state.publication).not.toBe('refused-nothing-created')
+    expect(state.publishedPath).not.toBeNull()
+  })
+
+  it('carries verified:false and digestFileDigest:null', () => {
+    const state = throughTheCatch('not-a-digest')
+    expect(state.verified).toBe(false)
+    expect(state.digestFileDigest).toBeNull()
+  })
+
+  it('classifies the phase as post-publication VERIFY, not a write phase', () => {
+    const state = throughTheCatch('a'.repeat(63))
+    // The bundle was written; what failed is identifying it.
+    expect(state.evidencePhase).toBe('verify')
+    // NO FREE-FORM ERRNO OR PATH LEAK in the reviewed reason slot.
+    expect(state.evidenceReason).toBeNull()
+  })
+
+  it('names no temporary directory to clear, so nothing may be altered', () => {
+    const state = throughTheCatch('')
+    // A caller may treat a creation receipt as permission to clear an object.
+    // There is none here: this process could not identify the bundle, which is
+    // not a licence to delete, rename or chmod it.
+    expect(state.temporaryPath).toBeNull()
+    expect(state.temporaryPathState).toBe('absent')
+  })
+
+  it('a WELL-FORMED digest still produces a verified, identified state', () => {
+    const digest = 'a1b2c3d4'.repeat(8)
+    const ok = verifiedEvidence(published(digest))
+    expect(ok.publication).toBe('published')
+    expect(ok.verified).toBe(true)
+    expect(ok.digestFileDigest).toBe(digest)
+    expect(ok.publishedPath).toBe(FINAL)
   })
 })

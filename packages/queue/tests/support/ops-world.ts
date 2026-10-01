@@ -117,6 +117,13 @@ export function supervisorStub(over: {
   return {
     seen,
     closed: () => closes,
+    // K7-B6.2 F: the reviewed `FenceLike` now declares what a real
+    // `PsqlBackend` has always had. A SUPERVISOR stub needs a pid because
+    // `SupervisorSession` is `FenceExecutor` PLUS `pid` - which the
+    // production path used to satisfy by casting instead.
+    pid: '41512',
+    rows: async () => [] as string[][],
+    alive: () => closes === 0,
     async send(sql: string) {
       seen.push(sql)
       if (sql === SESSION_IDENTITY_SQL) {
@@ -144,6 +151,10 @@ export function proverStub(over: {
   return {
     seen,
     closed: () => closes,
+    /** A DIFFERENT backend: a prover that IS the supervisor is a self-proof. */
+    pid: '41513',
+    rows: async () => [] as string[][],
+    alive: () => closes === 0,
     async send(sql: string) {
       seen.push(sql)
       if (sql === ACTIVITY_CENSUS_SQL) {
@@ -235,6 +246,9 @@ export function scriptedHold(...actions: string[]): InterventionHold & {
 export function goneWhen(gone: () => boolean): FenceLike {
   const base = proverStub()
   return {
+    pid: base.pid,
+    rows: async () => [] as string[][],
+    alive: () => base.alive(),
     send: async (sql: string) => {
       if (gone() && sql.startsWith('SELECT a.backend_start')) {
         return { rows: [], error: null }
@@ -655,6 +669,10 @@ export function stage1Bundle(w: World, over: {
   /** REPLACES the whole `source` object, so a field can be left out entirely. */
   readonly source?: Record<string, unknown>
   readonly runId?: string
+  /** Overrides for the run identity the manifest records about itself. */
+  readonly runIdField?: string
+  readonly generatedAtUtc?: string
+  readonly stamp?: string
 } = {}): string {
   const contract = {
     pgcopy_schema_contract_version: 2,
@@ -662,8 +680,17 @@ export function stage1Bundle(w: World, over: {
     payload: { migrations: { recognition: 'CURRENT_V10' } },
     generated_at: '2026-09-25T10:00:00Z',
   }
+  const stamp = over.stamp ?? STAMP
+  const runId = over.runId ?? 'bbbbbbbb'
   const document = {
     complete: true,
+    // K7-B7.1: THE RUN THIS MANIFEST WAS WRITTEN FOR, and when. The copy chain
+    // reads both from the verified manifest object, so a fixture without them
+    // is not a Stage-1 bundle any production chain would accept.
+    run_id: over.runIdField ?? runId,
+    generated_at_utc: over.generatedAtUtc ??
+      `${stamp.slice(0, 4)}-${stamp.slice(4, 6)}-${stamp.slice(6, 8)}T` +
+      `${stamp.slice(9, 11)}:${stamp.slice(11, 13)}:${stamp.slice(13, 15)}Z`,
     source_contract: { digest: contract.digest },
     source: over.source ?? {
       system_identifier: '7300000000000000001',
@@ -684,8 +711,8 @@ export function stage1Bundle(w: World, over: {
     },
   }
   return publishEvidence({
-    root: w.evidence, prefix: 'source-manifest', stamp: STAMP,
-    runId: over.runId ?? 'bbbbbbbb',
+    root: w.evidence, prefix: 'source-manifest', stamp,
+    runId,
     artifacts: [{ path: 'source-contract.json',
                   bytes: Buffer.from(`${serializeArtifact(contract as never)}\n`, 'utf-8') }],
     manifest: { path: 'manifest.json',
@@ -722,6 +749,9 @@ export const applyScope = (bundleDir: string): string[] => [
 export const identitySession = (
   row: readonly string[], over: Partial<Record<number, string>> = {},
 ): FenceLike => ({
+  pid: '41599',
+  rows: async () => [] as string[][],
+  alive: () => true,
   send: async () => ({
     rows: [row.map((v, n) => over[n] ?? v)],
     error: null,

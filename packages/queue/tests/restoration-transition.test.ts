@@ -31,7 +31,7 @@ import { afterAll, describe, expect, it } from 'vitest'
 import { REVIEWED_PRODUCERS } from '@common/db/pg-copy'
 
 import {
-  EXIT_ACTION_REQUIRED, EXIT_OK, REHEARSAL_PREFIX, RESTORATION_PREFIX, REVIEW_PREFIX,
+  EXIT_ACTION_REQUIRED, EXIT_OK, EXIT_REFUSED, REHEARSAL_PREFIX, RESTORATION_PREFIX, REVIEW_PREFIX,
   runOpsCli,
 } from '../bin/pg-copy-ops.js'
 import {
@@ -104,17 +104,39 @@ describe('a proved rehearsal can walk through restoration to review and apply', 
     const review = await runOpsCli(reviewArgs(w), d)
     expect(review.exitCode, review.lines.join('\n')).toBe(EXIT_OK)
 
-    // (g) --inspect --for=apply accepts the chain, bound to the reviewed bundle
-    //     the step above published.
-    const applyInspect = await runOpsCli(base(w, [
-      '--for=apply', '--inspect',
+    // (g) THE REVIEWED CHAIN AUTHORIZES AN APPLY.
+    //
+    // K7-B6.1 F1 retired `--inspect --for=apply`: a separately minted apply
+    // token named a bundle from an earlier process, while the production apply
+    // creates the only bundle it may bind to inside its own fence. The step
+    // this walkthrough needs is unchanged - the chain published in (f) is
+    // accepted - so it is proved where that acceptance now happens.
+    const authorized = await runOpsCli(base(w, [
+      '--apply',
       `--reviewed-rehearsal=${join(w.evidence, `${REVIEW_PREFIX}-${STAMP}-${RUN_ID}`)}`,
       `--operational-rehearsal-bundle=${join(w.evidence, `${REHEARSAL_PREFIX}-${STAMP}-${RUN_ID}`)}`,
       `--producer-restoration-bundle=${join(w.evidence, `${RESTORATION_PREFIX}-${STAMP}-${RUN_ID}`)}`,
-      ...applyScope(stage1Bundle(w)),
-    ]), d)
-    expect(applyInspect.exitCode, applyInspect.lines.join('\n')).toBe(EXIT_OK)
-    expect(applyInspect.lines.find(l => l.startsWith('confirmation '))).toBeDefined()
+      // NO --bundle-dir: the apply publishes its own. The target selectors stay.
+      ...applyScope(stage1Bundle(w)).filter(a => !a.startsWith('--bundle-dir=')),
+    ]), {
+      ...d,
+      // THE CHANNEL IS PREFLIGHTED FIRST, and this suite has no terminal.
+      operatorChannel: () => ({
+        preflight: () => undefined,
+        arm: () => () => undefined,
+        nextLine: async () => '',
+        close: () => undefined,
+      }),
+    })
+    // IT ACCEPTED THE CHAIN - naming the rehearsal it was reviewed against -
+    // and then refused for want of a driver credential, which is as far as a
+    // walkthrough with no live cluster can go.
+    expect(authorized.lines.join('\n')).toContain('reviewed rehearsal ')
+    expect(authorized.exitCode).toBe(EXIT_REFUSED)
+    expect(authorized.lines.join('\n')).toContain('--export-driver-credential')
+    // AND IT TOOK NO FENCE AND PUBLISHED NOTHING: the refusal is pre-fence.
+    expect(authorized.lines.join('\n')).not.toContain('stage 1 ')
+    expect(authorized.lines.join('\n')).not.toMatch(/^copy binding /m)
 
     // (h) NO COPY AND NO LIVE MUTATION. The run never reached an --apply, and
     //     the only writes anywhere were evidence bundles under the world's own
