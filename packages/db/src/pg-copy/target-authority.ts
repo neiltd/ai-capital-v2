@@ -46,6 +46,47 @@ import {
 export const TARGET_OWNER_ROLE = 'ai_capital_owner'
 
 /**
+ * THE ONE LOGIN THE COPY MAY AUTHENTICATE TO THE TARGET AS.
+ *
+ * K8-B1: the copy's target principal was never pinned. The credential's user was
+ * compared with `CURRENT_USER` measured from a session that same credential had
+ * just opened - which proves the credential is self-consistent and nothing else.
+ * A swapped container naming any other valid login would authenticate, define
+ * the binding's `targetRole` from its own session, and then satisfy its own
+ * comparison. So the expected principal is a REVIEWED CONSTANT here, derived
+ * from neither the credential, the session nor the binding under construction.
+ *
+ * WHY THIS ROLE AND NO OTHER:
+ *
+ *   `ops/bootstrap/010_database_bootstrap.sql:234`
+ *       GRANT ai_capital_owner TO ai_capital_migrator WITH INHERIT FALSE, SET TRUE
+ *     - the migrator is the ONLY login holding the SET membership that
+ *       `SET_LOCAL_ROLE_SQL` needs during the copy window.
+ *
+ *   `ops/roles/000_cluster_roles.sql:15-20`
+ *     - every runtime role has ZERO memberships by design, so `ai_capital_app`,
+ *       `ai_capital_importer`, `ai_capital_agent` and `ai_capital_pipeline`
+ *       cannot assume the owner at all; `ai_capital_pipeline` is the later
+ *       runtime cutover's identity and is not a copy credential.
+ *
+ *   `ops/clusters/ai-capital-v3/pg_hba.conf`
+ *     - `local ai_capital_v3 ai_capital_migrator scram-sha-256` and NO `host`
+ *       line for the migrator, so the copy login is reachable over the private
+ *       Unix socket only. `ai_capital_pipeline` has the TCP line instead.
+ */
+export const TARGET_COPY_LOGIN_ROLE = 'ai_capital_migrator'
+
+/**
+ * THE TRANSPORT THE COPY LOGIN IS REACHABLE OVER, per that same HBA.
+ *
+ * Socket-only is not a preference: there is no `host` rule for the migrator, so
+ * a TCP migrator credential could not authenticate even if this code accepted
+ * it. Accepting one would mean silently switching transports and failing later,
+ * at the point where a fence is already held.
+ */
+export const TARGET_COPY_TRANSPORT = 'socket'
+
+/**
  * The target transaction, and the role it runs under.
  *
  * READ WRITE by necessity and DEFAULT isolation by choice: the target is empty

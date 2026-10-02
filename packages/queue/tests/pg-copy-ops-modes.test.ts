@@ -2295,9 +2295,15 @@ describe('the copy binding binds every measured field', () => {
     // ONE FIELD AT A TIME. Every one of them must move the digest.
     expect(await digestFor({ 0: '7689229024919775000' })).not.toBe(baseline)
     expect(await digestFor({ 1: 'ai_capital_v4' })).not.toBe(baseline)
-    // CURRENT_USER and SESSION_USER are separate facts and both are bound.
-    expect(await digestFor({ 2: 'someone_else' })).not.toBe(baseline)
-    expect(await digestFor({ 3: 'someone_else' })).not.toBe(baseline)
+    // CURRENT_USER and SESSION_USER are separate facts and both are bound -
+    // and since K8-B1 both must ALSO equal the reviewed copy login, so a
+    // perturbed role is now a REFUSAL rather than a different binding. That is
+    // the stronger property: a credential naming another valid login can no
+    // longer define the binding it is then checked against.
+    await expect(digestFor({ 2: 'someone_else' }))
+      .rejects.toThrow(/not authenticated as the reviewed copy login/)
+    await expect(digestFor({ 3: 'someone_else' }))
+      .rejects.toThrow(/authenticated as another login/)
     expect(await digestFor({ 4: '5434' })).not.toBe(baseline)
     // A TCP SESSION: an address AND a transport flag, which must agree.
     expect(await digestFor({ 5: '127.0.0.1', 6: 'false' })).not.toBe(baseline)

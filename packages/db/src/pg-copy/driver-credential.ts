@@ -6,12 +6,20 @@
 //   if (!hostAndPath.startsWith('/')) throw ... 'not the reviewed socket form'
 //
 // It therefore accepts exactly one shape - the libpq socket form
-// `postgresql://user:pass@/db?host=/sock&port=N` - and cannot parse the TCP
-// credential the reviewed production target uses,
-// `postgresql://user:pass@127.0.0.1:5432/db`. Reusing it would have meant
-// either loosening the export reader (which several suites pin) or hand-editing
-// URLs at the call site. So this is a separate, narrow parser for the two forms
-// the reviewed design actually names, and the export reader is untouched.
+// `postgresql://user:pass@/db?host=/sock&port=N` - and cannot parse a TCP
+// credential such as `postgresql://user:pass@127.0.0.1:5432/db` at all.
+// Reusing it would have meant either loosening the export reader (which several
+// suites pin) or hand-editing URLs at the call site. So this is a separate,
+// narrow parser for the two forms the reviewed design names, and the export
+// reader is untouched.
+//
+// WHY TWO FORMS, AND WHOSE POLICY DECIDES. This parser supports both reviewed
+// URL shapes because separate call sites have separate policies - it is a
+// grammar, not an authorization. K8-B1 settled the copy target specifically:
+// `pg_hba.conf` has a `local` rule for `ai_capital_migrator` and no `host`
+// rule, so THE COPY TARGET IS PRIVATE-SOCKET ONLY, and the copy-target caller
+// pins that itself through `TARGET_COPY_TRANSPORT`. Nothing here should be read
+// as saying the reviewed production copy target uses TCP; it does not.
 //
 // WHAT IT REFUSES, AND WHY THE LIST IS LONG. A credential URL is operator
 // input that decides WHICH DATABASE A PRODUCTION COPY WRITES TO. Every
@@ -141,4 +149,49 @@ export function parseDriverCredentialUrl(url: string): ParsedDriverCredential {
   const port = Number(portText)
   if (port < 1 || port > 65535) refuse('the port is out of range')
   return Object.freeze({ form: 'tcp' as const, user, password, database, host, port })
+}
+
+/**
+ * ONE PGPASS RECORD, FROM THE ALREADY-PARSED REVIEWED CREDENTIAL.
+ *
+ * K8-B: the target used to have TWO independently selected secrets - a driver
+ * URL for the node-postgres sessions and a `--target-passfile` for the
+ * psql-backed identity session. Nothing compared them, so they could name
+ * different roles, different databases or different servers, and a pgpass file
+ * can carry wildcard rows that match endpoints nobody reviewed. Provisioning a
+ * second persistent secret would have duplicated the password at rest and kept
+ * the ambiguity. So the driver credential is the single target authority and
+ * this function derives the psql form from it.
+ *
+ * EXACTLY ONE RECORD, NO WILDCARD. libpq treats `*` as "any", which is the
+ * whole hazard; every field here is a literal taken from the parsed credential.
+ * In a pgpass field a backslash escapes the next character, so a literal
+ * backslash and a literal colon must each be escaped - otherwise a password
+ * containing `:` would silently split the record into the wrong columns.
+ *
+ * The returned value is SECRET. It is written to an anonymous descriptor and
+ * never placed in argv, an environment, a log, an error or evidence.
+ */
+export function pgpassRecordFor(c: ParsedDriverCredential): string {
+  // THE ESCAPE IS APPLIED TO EVERY FIELD, including the ones that "cannot"
+  // contain a colon: a host, database or role that does is a refusal upstream,
+  // not a reason for this function to produce an ambiguous line.
+  const field = (v: string): string => v.replace(/\\/g, '\\\\').replace(/:/g, '\\:')
+  // BOTH REVIEWED FORMS, WITHOUT WIDENING THE PARSER.
+  //
+  // K8-B1: this refused everything but TCP, which is exactly backwards for the
+  // copy: `pg_hba.conf` reaches `ai_capital_migrator` over the private Unix
+  // socket only. For the socket form libpq matches the pgpass host field
+  // against the socket DIRECTORY, which is what the parser already returns as
+  // `host`, so the record is built the same way for both forms.
+  // AND NO EMBEDDED NEWLINE CAN REACH THIS. `parseDriverCredentialUrl` refuses
+  // CR and LF anywhere in the URL before any field is decoded, so a second row
+  // cannot be smuggled in through the password.
+  for (const v of [c.host, c.database, c.user, c.password]) {
+    if (/[\r\n]/.test(v)) {
+      throw new DriverCredentialRefused('a credential field spans more than one line')
+    }
+  }
+  return `${field(c.host)}:${field(String(c.port))}:${field(c.database)}:` +
+    `${field(c.user)}:${field(c.password)}\n`
 }

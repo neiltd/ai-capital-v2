@@ -662,7 +662,7 @@ describe('K7-B6.1 B: one process, one bundle', () => {
     const captured = failing.seen.authorityInputs as { target: () => unknown }
     expect(typeof captured.target).toBe('function')
     expect(() => captured.target())
-      .toThrow(/no target session may be opened before Stage 1 has published/)
+      .toThrow(/no Stage-2 or verifier target session may open/)
   })
 
   it('the target expectation comes ONLY from the new bundle\'s binding', async () => {

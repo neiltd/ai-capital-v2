@@ -734,7 +734,8 @@ export const applyScope = (bundleDir: string): string[] => [
   '--target-host=/Users/x/ai-capital-v3-run',
   '--target-port=5433',
   '--target-database=ai_capital_v3',
-  '--target-user=ai_capital_migrator',
+  // K8-B: `--target-user` is gone. The target user comes from the one reviewed
+  // target driver credential and is proved equal to the measured target role.
 ]
 
 /**

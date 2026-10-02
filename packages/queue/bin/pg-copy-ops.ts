@@ -52,7 +52,7 @@ import {
   COPY_BINDING_SHAPE_VERSION, canonicalJson, fenceRelationArray,
   releasedLockCensusSqlFor,
   acquireSourceFence, copyBindingDigest, copySetDigest, evidenceStamp, newRunId,
-  openPsqlBackend, readPublishedBundle,
+  TARGET_COPY_LOGIN_ROLE, openPsqlBackend, readPublishedBundle,
   REVIEWED_PRODUCERS, REVIEWED_QUEUES, assertConfirmationMatches,
   assertOperationalBindingUnchanged, confirmationToken, modeObservationDigest,
   operationalBindingDigest,
@@ -98,6 +98,7 @@ import {
   SecureFileRefused, openReviewedContainer, openReviewedFileDescriptor,
 } from '../src/pg-copy-ops/secure-file.js'
 import { RedisConfigRefused, resolveRedis } from '../src/pg-copy-ops/redis-config.js'
+import { openTargetIdentitySession } from '../src/pg-copy-ops/target-identity.js'
 
 export const EXIT_OK = 0
 export const EXIT_FAILED = 1
@@ -146,8 +147,13 @@ export const OPTIONS: readonly string[] = Object.freeze([
   // read-only identity session against; every identity FACT comes back from
   // that session, and a mismatch between what was reached and what the bundle
   // describes is a refusal rather than a value.
-  '--target-host', '--target-port', '--target-database', '--target-user',
-  '--target-passfile',
+  // K8-B: `--target-user` and `--target-passfile` are GONE and are refused as
+  // unknown options. The target had two independently selected authorities - a
+  // driver URL and a separate pgpass path plus a separately typed user - and
+  // nothing compared them, so they could name different roles, databases or
+  // servers. The reviewed driver credential is the single target authority: the
+  // user comes from it, and its psql form is derived from it.
+  '--target-host', '--target-port', '--target-database',
   // HOW A SOURCE SESSION IS OPENED. Paths to reviewed 0600 containers and
   // plain connection coordinates - never a URL, never a password.
   '--psql', '--source-user', '--source-passfile',
@@ -869,6 +875,25 @@ export async function copyBindingFromBundle(
     targetSession = await deps.openTargetIdentity()
     const target = await measureIdentity(
       targetSession as FenceLike, required(v, '--target-host'))
+    // THE TARGET PRINCIPAL, AGAINST A REVIEWED CONSTANT. NOT OPTIONAL.
+    //
+    // K8-B1: this used to be an injectable `deps.proveTargetRole` seam comparing
+    // the measurement with the credential that opened the very session being
+    // measured - self-consistency, not authorization, and omissible by any
+    // injected caller. Both measured role fields are now compared with
+    // `TARGET_COPY_LOGIN_ROLE` here, in the executable binding derivation, before
+    // provenance is measured and before `targetScope` can be constructed.
+    //
+    // SESSION_USER MATTERS AS MUCH AS CURRENT_USER. `current_user` alone would
+    // accept a session that authenticated as something else and then assumed the
+    // copy login; `ops/roles/000_cluster_roles.sql` keeps runtime logins
+    // membership-free precisely so `session_user` is trustworthy.
+    if (target.currentUser !== TARGET_COPY_LOGIN_ROLE) {
+      throw new OpsRefused('the target session is not authenticated as the reviewed copy login')
+    }
+    if (target.sessionUser !== TARGET_COPY_LOGIN_ROLE) {
+      throw new OpsRefused('the target session was authenticated as another login')
+    }
     const provenance = await (deps.measureRepository ?? defaultMeasureRepository)(checkout)
     return { ...freshCopyBindingFrom(stage1, source, target, provenance), stage1 }
   } finally {
@@ -4779,16 +4804,20 @@ export async function runProductionApply(i: ApplyOrchestration): Promise<CliResu
   /**
    * THE TARGET EXPECTATION, WHICH DOES NOT EXIST YET.
    *
-   * Filled in only once Stage 1 has published and the binding has been derived
-   * from THAT publication. The authority below holds this as a thunk, so a
-   * target session opened before then refuses here and never reaches a
-   * credential or a connection.
+   * THE REAL ORDER, stated because K8-B's comments did not: Stage 1 publishes
+   * and is verified; the target identity session then opens - against the one
+   * reviewed credential, whose principal and transport are pinned before it
+   * opens - and MEASURES the target; that measurement is what the binding, and
+   * therefore this expectation, is derived FROM. So the identity session
+   * necessarily precedes `targetScope`; what this thunk bars is every LATER
+   * target session - the Stage-2 target and the verifier target driver
+   * sessions - which may not open until the measured expectation exists.
    */
   let targetScope: TargetExpectation | null = null
   const reviewedTargetScope = (): TargetExpectation => {
     if (targetScope === null) {
       throw new OpsRefused(
-        'no target session may be opened before Stage 1 has published its bundle')
+        'no Stage-2 or verifier target session may open before the measured target expectation')
     }
     return targetScope
   }
@@ -5152,8 +5181,12 @@ export async function runProductionApply(i: ApplyOrchestration): Promise<CliResu
     const copy = await copyBinding(verified, v, deps, i.sourceEndpoint)
     say(`copy binding ${copy.digest}`)
 
-    // 8. AND THE TARGET EXPECTATION ONLY FROM THAT BINDING. Until this line no
-    //    target session can be opened at all.
+    // 8. AND THE TARGET EXPECTATION ONLY FROM THAT BINDING.
+    //
+    //    Stage 1 published and was verified above; the target identity session
+    //    then opened and measured the target, and its principal was compared
+    //    with the reviewed copy login before anything was derived. Until THIS
+    //    line no Stage-2 or verifier target session can open.
     targetScope = {
       systemIdentifier: copy.binding.targetSystemIdentifier,
       database: copy.binding.targetDatabase,
@@ -5543,11 +5576,26 @@ export function productionDeps(
     // READ-ONLY IDENTITY SESSIONS. Opened for five catalogue questions and
     // closed; they take no fence and hold nothing.
     openSourceIdentity: async () => await openProductionSession(v, source),
-    openTargetIdentity: async () => await openProductionSession(v, {
-      host: required(v, '--target-host'),
-      port: required(v, '--target-port'),
-      database: required(v, '--target-database'),
-    }, '--target-user', '--target-passfile'),
+    // THE ONE TARGET CREDENTIAL, for the psql identity session too.
+    //
+    // K8-B: this used to open `psql` with a separately typed `--target-user` and
+    // a separately selected `--target-passfile`, neither compared with the
+    // driver credential the Stage-2 and verifier target sessions use. It now
+    // reads THE SAME container, proves its host, port and database against the
+    // endpoint this apply is pointed at, derives exactly one pgpass record, and
+    // hands that record to the child only through an anonymous descriptor.
+    //
+    // `--target-driver-credential` is the only selectable target credential
+    // path left in production executable code.
+    openTargetIdentity: async () => await openTargetIdentitySession({
+      credentialPath: required(v, '--target-driver-credential'),
+      expected: {
+        host: required(v, '--target-host'),
+        port: required(v, '--target-port'),
+        database: required(v, '--target-database'),
+      },
+      psqlPath: required(v, '--psql'),
+    }),
     acquireFence: async (s: FenceLike) => {
       const fence = await acquireSourceFence(s as unknown as FenceExecutor)
       return {

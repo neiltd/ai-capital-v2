@@ -60,7 +60,7 @@ export {
 // The narrow driver-credential grammar. See driver-credential.ts for why this
 // is separate from the export-role reader rather than a widening of it.
 export {
-  DriverCredentialRefused, parseDriverCredentialUrl,
+  DriverCredentialRefused, parseDriverCredentialUrl, pgpassRecordFor,
   type DriverCredentialForm, type ParsedDriverCredential,
 } from './driver-credential.js'
 
@@ -136,7 +136,7 @@ export {
   runExportRoleBatch, secretsEqual,
   type BatchOutcome, type PublishOps, type TcpCredentialTarget,
 } from './export-role.js'
-export { TARGET_OWNER_ROLE, type TargetExpectation } from './target-authority.js'
+export { TARGET_COPY_LOGIN_ROLE, TARGET_COPY_TRANSPORT, TARGET_OWNER_ROLE, type TargetExpectation } from './target-authority.js'
 // `DriverSession` is exported alongside the openers so the operations CLI can
 // type its factories EXACTLY. It structurally satisfies every consumer in this
 // core - `ExportSession`/`ContractQueryExecutor` want `pid` + `rows`, and
@@ -157,5 +157,5 @@ export {
 // past this subpath into `@common/db`'s internals.
 export {
   INHERITED_FD_DIR, PASSFILE_CHILD_FD, PsqlBackendRefused, openPsqlBackend,
-  type PsqlBackend, type PsqlBackendOptions,
+  type PsqlBackend, type PsqlBackendOptions, type SqlResult,
 } from './psql-backend.js'
