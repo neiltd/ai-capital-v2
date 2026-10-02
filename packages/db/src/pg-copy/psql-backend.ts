@@ -215,7 +215,20 @@ export function psqlBackendArgs(o: PsqlBackendOptions): readonly string[] {
     throw new PsqlBackendRefused('the port is not a port number')
   }
   return assertBatchArgs([
-    '--no-psqlrc', '-q', '-A', '-t', '-F', FIELD_SEP, '--pset', 'footer=off',
+    // NEVER PROMPT. `-w` is psql's `--no-password`: if the server asks for a
+    // password and none is available, the connection FAILS instead of stopping
+    // to ask. Without it a batch session that cannot authenticate blocks on the
+    // controlling terminal, and a fence-holding command waits on a question
+    // nobody is watching for.
+    //
+    // IT DOES NOT DISABLE THE PASSFILE. psql(1) says the prompt is suppressed
+    // and the attempt fails only "if the server requires password authentication
+    // and a password is not available FROM OTHER SOURCES SUCH AS A .pgpass
+    // FILE". `sterileBatchEnv` puts PGPASSFILE in the child's environment, which
+    // is exactly such a source - so both reviewed shapes still authenticate: the
+    // source session's named passfile and the K8-B target session's inherited
+    // `/dev/fd/3`.
+    '--no-psqlrc', '-w', '-q', '-A', '-t', '-F', FIELD_SEP, '--pset', 'footer=off',
     '-h', o.host, '-p', String(o.port), '-U', o.user, '-d', o.database,
   ])
 }

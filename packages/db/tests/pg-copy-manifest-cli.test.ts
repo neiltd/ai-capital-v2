@@ -199,6 +199,33 @@ describe('argument parsing refuses rather than ignores', () => {
 })
 
 describe('the psql transport', () => {
+  it('NEVER PROMPTS: -w is in the argv for both reviewed shapes', () => {
+    // K8-D1. Without `-w` a session that cannot authenticate stops and asks on
+    // the controlling terminal, so a fence-holding command waits on a question
+    // nobody is watching. psql(1) suppresses only the PROMPT: the attempt still
+    // succeeds when a password is available "from other sources such as a
+    // .pgpass file", which is what PGPASSFILE is - so both shapes below keep
+    // authenticating.
+    const base = {
+      psqlPath: '/opt/psql', host: '/tmp/sock', port: 5432,
+      database: 'ai_capital', user: 'ai_capital_v3_export',
+    }
+    // WITH a named passfile.
+    const named = psqlBackendArgs({ ...base, passfile: '/tmp/secrets/export.pgpass' })
+    expect(named).toContain('-w')
+    // AND WITHOUT one - the inherited-descriptor shape passes no passfile PATH.
+    const bare = psqlBackendArgs(base)
+    expect(bare).toContain('-w')
+    // ONE OCCURRENCE, and the long form is not also present.
+    expect(named.filter(a => a === '-w')).toHaveLength(1)
+    expect(named).not.toContain('--no-password')
+    // AND IT IS NOT `-W`, which would force a prompt instead of refusing one.
+    expect(named).not.toContain('-W')
+    expect(bare).not.toContain('-W')
+    // The reviewed batch policy still holds with it present.
+    expect(named).toContain('--no-psqlrc')
+  })
+
   it('puts identity in argv and the secret nowhere but a PGPASSFILE path', () => {
     const args = psqlBackendArgs({
       psqlPath: '/opt/psql', host: '/tmp/sock', port: 5432,

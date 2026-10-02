@@ -32,8 +32,24 @@
 //
 // IT RUNS. `main()` below is guarded on being the process entry point, so
 // importing this module for its exports - which every test does - starts
-// nothing, opens nothing and exits nothing. `pnpm --filter @common/queue
-// pg-copy-ops -- <args>` is the reviewed way to invoke it.
+// nothing, opens nothing and exits nothing. TWO INVOCATION FORMS ARE REVIEWED:
+//
+//   pnpm --filter @common/queue pg-copy-ops -- <args>
+//
+//     The package script (packages/queue/package.json). Convenient, and what
+//     the suites and ordinary local runs use. Both pnpm and tsx forward the
+//     literal `--`, so argv[0] is `--`; `parseArgs` skips exactly one leading
+//     separator for this reason.
+//
+//   <checkout>/packages/queue/node_modules/.bin/tsx \
+//     <checkout>/packages/queue/bin/pg-copy-ops.ts <args>      (cwd packages/queue)
+//
+//     The direct shim form, which is what an operator runs for a live step. It
+//     passes no `--` at all, and it does not let pnpm run an install first:
+//     `verify-deps-before-run` defaults to `install`, and a launcher that may
+//     change `node_modules` is the wrong launcher for a command whose value
+//     depends on nothing changing. The cwd is `packages/queue` so the package's
+//     own tsconfig applies, exactly as the script form has it.
 
 import { spawn } from 'node:child_process'
 import { createHash } from 'node:crypto'
@@ -52,7 +68,7 @@ import {
   COPY_BINDING_SHAPE_VERSION, canonicalJson, fenceRelationArray,
   releasedLockCensusSqlFor,
   acquireSourceFence, copyBindingDigest, copySetDigest, evidenceStamp, newRunId,
-  TARGET_COPY_LOGIN_ROLE, openPsqlBackend, readPublishedBundle,
+  TARGET_COPY_LOGIN_ROLE, PsqlBackendRefused, openPsqlBackend, readPublishedBundle,
   REVIEWED_PRODUCERS, REVIEWED_QUEUES, assertConfirmationMatches,
   assertOperationalBindingUnchanged, confirmationToken, modeObservationDigest,
   operationalBindingDigest,
@@ -193,7 +209,16 @@ export interface ParsedArgs {
 export function parseArgs(argv: readonly string[]): ParsedArgs {
   const values: Record<string, string> = {}
   let mode: string | null = null
-  for (const arg of argv) {
+  // EXACTLY ONE LEADING `--`, AND ONLY THERE.
+  //
+  // K8-D1: both pnpm and tsx forward a literal `--` to the script, so the
+  // reviewed package-script form arrives with `--` as argv[0] and every option
+  // after it. That was refused with `every option must be --name=value (at --)`,
+  // which reads as an operator typo rather than a launcher artefact. A `--` in
+  // ANY other position, or a second one, is still refused: tolerating a
+  // separator is not the same as ignoring a stray token.
+  const rest = argv[0] === '--' ? argv.slice(1) : argv
+  for (const arg of rest) {
     if (MODES.includes(arg)) {
       if (mode !== null) throw new OpsRefused('exactly one mode is required')
       mode = arg
@@ -5482,11 +5507,20 @@ export async function runOpsCli(argv: readonly string[], deps: OpsDeps): Promise
     // `FAILED` would put "this command refuses to proceed" and "this command
     // broke" behind one exit status, and an operator reading a 1 cannot tell
     // which. Everything else stays `FAILED`, and says nothing about itself.
+    //
+    // K8-D1: `PsqlBackendRefused` BELONGS HERE. A source login that cannot
+    // authenticate, a session that times out, a statement the backend refused -
+    // all of those were reported as `FAILED: the command did not complete`, so an
+    // operator whose psql credentials were wrong read a 1 meaning "this broke"
+    // when the truth was "this declined to proceed". Its message is safe to
+    // print: the constructor takes `PsqlBackendReason`, a closed union of nine
+    // literal strings (psql-backend.ts:77-85), so no stderr, connection string or
+    // credential byte can reach it.
     const bounded = e instanceof OpsRefused || e instanceof BindingRefused ||
       e instanceof DestinationRefused || e instanceof LaunchdInspectionRefused ||
       e instanceof SecureFileRefused || e instanceof RedisConfigRefused ||
       e instanceof ReleaseGateRefused || e instanceof EvidenceRefused ||
-      e instanceof LifecycleEvidenceFailed
+      e instanceof LifecycleEvidenceFailed || e instanceof PsqlBackendRefused
     say(bounded ? `REFUSED: ${(e as Error).message}` : 'FAILED: the command did not complete')
     return { exitCode: bounded ? EXIT_REFUSED : EXIT_FAILED, lines }
   }

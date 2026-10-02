@@ -41,7 +41,11 @@ import {
 import {
   RedisConfigRefused, resolveRedis, resolveExplicitRedis,
 } from '../src/pg-copy-ops/redis-config.js'
-import { OPTIONS, OpsRefused, PRODUCER_AUTHORITY, parseArgs } from '../bin/pg-copy-ops.js'
+import {
+  EXIT_FAILED, EXIT_REFUSED, OPTIONS, OpsRefused, PRODUCER_AUTHORITY, parseArgs, runOpsCli,
+  type OpsDeps,
+} from '../bin/pg-copy-ops.js'
+import { PsqlBackendRefused } from '@common/db/pg-copy'
 
 const ROOTS: string[] = []
 const root = (): string => {
@@ -1245,5 +1249,82 @@ describe('a descriptor that fails validation is closed, not leaked', () => {
     }
     const after = openDescriptors()
     expect(after - before, `before ${before} after ${after}`).toBeLessThanOrEqual(3)
+  })
+})
+
+describe('K8-D1: exactly one leading `--` is tolerated', () => {
+  // Both pnpm and tsx forward a literal `--` to the script, so the reviewed
+  // package-script form arrives with `--` as argv[0]. Refusing it reads as an
+  // operator typo when it is a launcher artefact. Tolerating a SEPARATOR is not
+  // the same as ignoring a stray token, so everything else still refuses.
+  const base = ['--inspect', '--for=rehearse', '--source-host=127.0.0.1']
+
+  it('parses a leading `--` exactly as if it were absent', () => {
+    const without = parseArgs(base)
+    const with_ = parseArgs(['--', ...base])
+    expect(with_.mode).toBe(without.mode)
+    expect(with_.values).toEqual(without.values)
+    // And the mode is still the one mode.
+    expect(with_.mode).toBe('--inspect')
+  })
+
+  it('REFUSES a `--` anywhere but the front, and a second one', () => {
+    for (const argv of [
+      ['--inspect', '--', '--for=rehearse'],          // after the mode
+      ['--', '--', ...base],                           // two leading
+      [...base, '--'],                                 // trailing
+      ['--source-host=127.0.0.1', '--', '--inspect'],  // after an option
+    ]) {
+      expect(() => parseArgs(argv), argv.join(' ')).toThrow(OpsRefused)
+      expect(() => parseArgs(argv), argv.join(' '))
+        .toThrow(/every option must be --name=value/)
+    }
+  })
+
+  it('a leading `--` does not become a mode or an option name', () => {
+    const r = parseArgs(['--', '--inspect', '--for=rehearse'])
+    expect(Object.keys(r.values)).toEqual(['--for'])
+    expect(Object.keys(r.values)).not.toContain('--')
+  })
+})
+
+describe('K8-D1: a psql refusal is REFUSED, not FAILED', () => {
+  /** The smallest deps that reach `measureSourceIdentity` and no further. */
+  const depsThrowing = (e: Error): OpsDeps => ({
+    newRunId: () => 'aabbccdd',
+    stamp: () => '20260930T000000Z',
+    openSourceIdentity: async () => { throw e },
+  } as unknown as OpsDeps)
+
+  const argv = ['--inspect', '--for=rehearse',
+                '--evidence-root=/tmp/k8d1-unused', '--source-host=127.0.0.1']
+
+  it('PsqlBackendRefused gives REFUSED and exit 2', async () => {
+    const r = await runOpsCli(argv,
+      depsThrowing(new PsqlBackendRefused('the psql session could not be started')))
+    expect(r.exitCode).toBe(EXIT_REFUSED)
+    expect(r.lines.at(-1)).toBe('REFUSED: the psql session could not be started')
+    // The message is one of the nine reviewed literals, so nothing else leaks.
+    expect(r.lines.join('\n')).not.toMatch(/password|postgresql:\/\/|stderr/i)
+  })
+
+  it('every reviewed psql reason is reported as a refusal', async () => {
+    for (const reason of ['the psql path must be absolute',
+                          'the port is not a port number',
+                          'the psql session timed out on a statement',
+                          'the psql session refused a statement'] as const) {
+      const r = await runOpsCli(argv, depsThrowing(new PsqlBackendRefused(reason)))
+      expect(r.exitCode, reason).toBe(EXIT_REFUSED)
+      expect(r.lines.at(-1), reason).toBe(`REFUSED: ${reason}`)
+    }
+  })
+
+  it('a GENERIC Error still gives FAILED and exit 1, saying nothing about itself', async () => {
+    const r = await runOpsCli(argv, depsThrowing(new Error('ENOENT: boom /secret/path')))
+    expect(r.exitCode).toBe(EXIT_FAILED)
+    expect(r.lines.at(-1)).toBe('FAILED: the command did not complete')
+    // The widening did not turn every error into a printed message.
+    expect(r.lines.join('\n')).not.toContain('boom')
+    expect(r.lines.join('\n')).not.toContain('/secret/path')
   })
 })
