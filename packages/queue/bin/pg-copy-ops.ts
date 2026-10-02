@@ -5508,13 +5508,25 @@ export async function runOpsCli(argv: readonly string[], deps: OpsDeps): Promise
     // broke" behind one exit status, and an operator reading a 1 cannot tell
     // which. Everything else stays `FAILED`, and says nothing about itself.
     //
-    // K8-D1: `PsqlBackendRefused` BELONGS HERE. A source login that cannot
-    // authenticate, a session that times out, a statement the backend refused -
-    // all of those were reported as `FAILED: the command did not complete`, so an
-    // operator whose psql credentials were wrong read a 1 meaning "this broke"
-    // when the truth was "this declined to proceed". Its message is safe to
-    // print: the constructor takes `PsqlBackendReason`, a closed union of nine
-    // literal strings (psql-backend.ts:77-85), so no stderr, connection string or
+    // K8-D1: `PsqlBackendRefused` BELONGS HERE, but not because every one of its
+    // reasons is a decision. Two kinds live under this class:
+    //
+    //   DECLINED. A psql path that is not absolute, a port that is not a port, a
+    //   statement the backend refused - the command looked, disagreed, and did
+    //   nothing. Exit 2 means "this would not proceed".
+    //
+    //   STOPPED. `the psql session timed out on a statement` and `the psql
+    //   session has already exited` are neither a decision nor a crash of THIS
+    //   program. Nothing was decided and nothing is proved: exit 2 there means
+    //   "this stopped, and the outcome is not proved by this run". K8-D3: the
+    //   earlier wording read all of them as a deliberate decline, which would
+    //   have told an operator a timed-out session had been judged.
+    //
+    // WHAT BOTH SHARE is that `FAILED: the command did not complete` was the
+    // wrong report - it hides the distinction behind the same exit status an
+    // internal fault uses - and that the message is safe to print: the
+    // constructor takes `PsqlBackendReason`, a closed union of nine literal
+    // strings (psql-backend.ts:77-86), so no stderr, connection string or
     // credential byte can reach it.
     const bounded = e instanceof OpsRefused || e instanceof BindingRefused ||
       e instanceof DestinationRefused || e instanceof LaunchdInspectionRefused ||

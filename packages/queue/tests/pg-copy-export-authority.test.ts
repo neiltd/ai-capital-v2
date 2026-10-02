@@ -322,12 +322,43 @@ describe('K7-B7 D: the administrator passfile is inherited, not named', () => {
     expect(src).not.toMatch(/sterileBatchEnv/)
   })
 
+  it('NEVER PROMPTS: --no-password is on the privileged argv', () => {
+    // K8-D3. This channel creates and drops a role. A privileged batch that
+    // stops to ask for a password on the controlling terminal is the worst
+    // possible place to block, so the prompt is refused outright. The passfile
+    // still supplies the password: `DEFAULT_BATCH` passes the inherited
+    // descriptor and `runExportRoleBatch` sets `PGPASSFILE=/dev/fd/3`.
+    const args = adminArgs({
+      host: '127.0.0.1', port: '5432', database: 'ai_capital', adminUser: 'thanapold',
+    })
+    expect(args).toContain('--no-password')
+    expect(args.filter(a => a === '--no-password')).toHaveLength(1)
+    // NOT the short form twice over, and not `-W`, which would FORCE a prompt.
+    expect(args).not.toContain('-w')
+    expect(args).not.toContain('-W')
+    expect(args).not.toContain('--password')
+    // The reviewed batch policy still holds alongside it.
+    expect(args).toContain('--no-psqlrc')
+    // AND IT NAMES NO PASSWORD, PASSFILE OR CONNECTION STRING.
+    for (const a of args) {
+      expect(a).not.toMatch(/password=|pgpass|passfile|postgresql:\/\/|secret/i)
+    }
+  })
+
   it('names nothing secret on the psql command line', () => {
     const args = adminArgs({
       host: '127.0.0.1', port: '5432', database: 'ai_capital', adminUser: 'thanapold',
     })
     for (const a of args) {
+      // K8-D3: `--no-password` is a FLAG NAME, not a secret - it is the thing that
+      // stops psql asking for one. The bare word `password` is therefore no longer
+      // a useful needle; what must never appear is a VALUE or a passfile path, so
+      // the check now bans `password=`, `pgpass` and `passfile` instead.
+      if (a === '--no-password') continue
       expect(a).not.toMatch(/password|secret|SCRAM|postgresql:\/\//i)
+    }
+    for (const a of args) {
+      expect(a).not.toMatch(/password=|pgpass|passfile|secret=|SCRAM/i)
     }
     // SQL TRAVELS ON STDIN: no -c and no -f.
     expect(args.some(a => a === '-c' || a === '-f' || a.startsWith('--command'))).toBe(false)

@@ -1308,15 +1308,47 @@ describe('K8-D1: a psql refusal is REFUSED, not FAILED', () => {
     expect(r.lines.join('\n')).not.toMatch(/password|postgresql:\/\/|stderr/i)
   })
 
-  it('every reviewed psql reason is reported as a refusal', async () => {
-    for (const reason of ['the psql path must be absolute',
-                          'the port is not a port number',
-                          'the psql session timed out on a statement',
-                          'the psql session refused a statement'] as const) {
+  /**
+   * ALL NINE `PsqlBackendReason` LITERALS, not a sample.
+   *
+   * K8-D3: the earlier version drove four and was titled as though it covered
+   * every reason. Each one is raisable through the same seam - the fake source
+   * session constructs the error - so there is no excuse for a subset.
+   */
+  const ALL_REASONS = [
+    'the psql path must be absolute',
+    'the passfile must be an absolute path',
+    'the port is not a port number',
+    'the psql session has already exited',
+    'the psql session timed out on a statement',
+    'the psql session could not report its backend pid',
+    'the psql session did not report a backend pid',
+    'the psql session refused a statement',
+    'the psql session could not be started',
+  ] as const
+
+  it('ALL NINE reviewed psql reasons give exit 2 and their own message', async () => {
+    expect(ALL_REASONS).toHaveLength(9)
+    expect(new Set(ALL_REASONS).size).toBe(9)
+    for (const reason of ALL_REASONS) {
       const r = await runOpsCli(argv, depsThrowing(new PsqlBackendRefused(reason)))
       expect(r.exitCode, reason).toBe(EXIT_REFUSED)
       expect(r.lines.at(-1), reason).toBe(`REFUSED: ${reason}`)
+      // Nothing beyond the literal reaches the output.
+      expect(r.lines.join('\n'), reason).not.toMatch(/password|postgresql:\/\/|stderr/i)
     }
+  })
+
+  it('the nine literals here are exactly the union the source declares', () => {
+    // A guard against the list drifting from `PsqlBackendReason`. Reading the
+    // type at runtime is impossible, so the union's own source is the reference.
+    const src = readFileSync(
+      new URL('../../db/src/pg-copy/psql-backend.ts', import.meta.url), 'utf-8')
+    const block = src.slice(src.indexOf('export type PsqlBackendReason ='))
+      .slice(0, src.slice(src.indexOf('export type PsqlBackendReason =')).indexOf('\n\n'))
+    const declared = [...block.matchAll(/\|\s*'([^']+)'/g)].map(m => m[1] as string)
+    expect(declared).toHaveLength(9)
+    expect([...declared].sort()).toEqual([...ALL_REASONS].sort())
   })
 
   it('a GENERIC Error still gives FAILED and exit 1, saying nothing about itself', async () => {

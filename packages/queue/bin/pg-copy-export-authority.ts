@@ -712,7 +712,18 @@ export function adminArgs(i: {
   host: string; port: string; database: string; adminUser: string
 }): readonly string[] {
   return Object.freeze([
-    '--no-psqlrc', '--quiet', '--no-align', '--tuples-only',
+    // NEVER PROMPT ON THE PRIVILEGED CHANNEL. `--no-password` means a batch that
+    // cannot authenticate fails immediately instead of asking for a password on
+    // the controlling terminal - and this channel creates and drops a role, so a
+    // half-finished privileged batch waiting on a question nobody is watching is
+    // the worst place to block.
+    //
+    // THE PASSFILE STILL SUPPLIES IT. Only the PROMPT is suppressed: psql(1) says
+    // the attempt fails just when no password is available "from other sources
+    // such as a .pgpass file". `DEFAULT_BATCH` (below) hands `runExportRoleBatch`
+    // the inherited descriptor, which sets `PGPASSFILE=/dev/fd/3` in the child's
+    // environment (export-role.ts:757-763) - exactly such a source.
+    '--no-psqlrc', '--no-password', '--quiet', '--no-align', '--tuples-only',
     `--host=${i.host}`, `--port=${i.port}`,
     `--dbname=${i.database}`, `--username=${i.adminUser}`,
   ])
