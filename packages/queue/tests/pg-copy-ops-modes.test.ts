@@ -4874,3 +4874,135 @@ describe('K1.5.2: the creation receipt comes from the publisher, not from a gues
     expect(src).toContain('discardScratch(retry, scratch.retryReceipt, ops)')
   })
 }, 240_000)
+
+describe('K8-E3: the operator can see the question they are being asked', () => {
+  /**
+   * CONTAINED, AND NOT OPTIONALLY SO.
+   *
+   * These two cases drive the PRODUCTION `holdForIntervention` through the
+   * production `processHold`, with only its transport injected. A Vitest worker
+   * cannot host that: the hold is unbounded by design, and a `testTimeout`
+   * abandons the promise while the loop keeps running - see `support/contained.ts`.
+   * K8-E2 tried it in-process twice and wedged the worker both times.
+   */
+  const snapshotAt = (r: ContainedResult, n: number): {
+    sinkLength: number; hadIntervention: boolean; hadFenceState: boolean
+    hadReplyWith: boolean; tokenFromSink: string | null; replied: string
+  } => {
+    const snaps = r.report.channelSnapshots
+    expect(snaps.length, 'the operator was never asked').toBeGreaterThan(n)
+    return snaps[n] as never
+  }
+
+  it('T1 a rehearse hold shows its prompt and token before it waits', async () => {
+    // A queue that is only non-empty under the fence: the gate refuses while the
+    // source is frozen, which is a hold and not an exit-2 refusal.
+    const r = await contained({
+      fencedQueueBusy: REVIEWED_QUEUES[0] as string,
+      prover: { kind: 'gone-after-first-decision' },
+      hold: { kind: 'channel', actions: ['CENSUS_ONLY'] },
+    })
+    const evidence = evidenceOf(r)
+
+    // THE RUN COMPLETED, AND THE HOLD RESOLVED.
+    expect(r.report.exitCode).toBe(EXIT_INTERVENTION_RESOLVED)
+
+    // AND AT THE FIRST PROMPT THE OPERATOR COULD ALREADY SEE ALL THREE LINES.
+    const first = snapshotAt(r, 0)
+    expect(first.hadIntervention).toBe(true)
+    expect(first.hadFenceState).toBe(true)
+    expect(first.hadReplyWith).toBe(true)
+    expect(first.sinkLength).toBeGreaterThan(0)
+
+    // THE REASON NAMES THE QUEUE REFUSAL.
+    const reason = r.report.sink.find(l => l.includes('INTERVENTION REQUIRED')) ?? ''
+    expect(reason.toLowerCase()).toMatch(/queue|depth|not empty|drain/)
+
+    // THE REVIEWED OPERATIONS FOR A HELD FENCE, verbatim.
+    expect(r.report.sink).toContain(
+      `FENCE STATE: held. Reviewed operations: ${HOLD_ACTIONS.held.join(', ')}`)
+
+    // THE TOKEN REPLIED WITH IS THE ONE ON THAT LINE, and the one the hold minted.
+    expect(first.tokenFromSink).toMatch(/^PGCOPY-RESOLVE-[0-9a-f]+$/)
+    expect(first.replied).toBe(`CENSUS_ONLY k8-operator ${first.tokenFromSink ?? ''}`)
+    // The token on the streamed line is the one the reply carried. `report.requests`
+    // is deliberately NOT used here: it is the scripted resolver's record, and a
+    // `channel` case runs the production hold instead.
+    const onLine = /(PGCOPY-RESOLVE-[0-9a-f]+)/.exec(
+      r.report.sink.find(l => l.includes('Reply with: <OPERATION>')) ?? '')
+    expect(onLine?.[1]).toBe(first.tokenFromSink)
+
+    // WHAT WAS STREAMED IS WHAT WAS RETURNED, exactly once each.
+    expect(r.report.sink).toEqual([...r.report.lines])
+    expect(new Set(r.report.sink).size).toBe(r.report.sink.length)
+
+    // AND THE ATTEMPT IS ON DISK, intent then outcome, with the chosen action.
+    expect(bundles(evidence, INTENT_PREFIX).length).toBe(1)
+    expect(bundles(evidence, OUTCOME_PREFIX).length).toBe(1)
+    const intent = manifestOf(
+      join(evidence, allBundles(evidence, INTENT_PREFIX)[0] as string), 'intent.json')
+    expect((intent as { chosen_action?: unknown }).chosen_action).toBe('CENSUS_ONLY')
+  })
+
+  it('T2 a rehearse hold for an unstopped producer is a hold, not a refusal', async () => {
+    // A producer somebody started during the window: quiescent before the fence,
+    // running once it is held, found by the gate's own census.
+    const r = await contained({
+      producerRunningUnderFence: REVIEWED_PRODUCERS[0] as string,
+      prover: { kind: 'gone-after-first-decision' },
+      hold: { kind: 'channel', actions: ['CENSUS_ONLY'] },
+    })
+
+    // A HOLD WAS ENTERED. If this is 2 the code refused instead of holding, and
+    // that is a code defect to report rather than a test to adjust.
+    expect(r.report.exitCode, `refused instead of holding: ${r.report.lines.join(' | ')}`)
+      .not.toBe(EXIT_REFUSED)
+    expect(r.report.channelSnapshots.length).toBeGreaterThan(0)
+
+    const first = snapshotAt(r, 0)
+    expect(first.hadIntervention).toBe(true)
+    expect(first.hadFenceState).toBe(true)
+    expect(first.hadReplyWith).toBe(true)
+    expect(first.tokenFromSink).toMatch(/^PGCOPY-RESOLVE-[0-9a-f]+$/)
+    expect(r.report.sink).toEqual([...r.report.lines])
+  })
+})
+
+describe('K8-E3 T5: every mode returns exactly what it streamed', () => {
+  /**
+   * DRIVEN DOWN THE SUCCESS PATHS, which is what the K8-E2 version failed to do.
+   *
+   * That version called `base(w, [mode, …])` with no `--run-id`, so both modes
+   * were refused at `runOf` (pg-copy-ops.ts:2950) before a single mode line was
+   * said - and a sink that matches an empty mode is vacuous. Four of the five
+   * dispatch arms were therefore unpinned. These use the suite's own
+   * `restoreArgs` and `reviewArgs`, which supply the run identity.
+   */
+  it('--verify-restoration and --review-rehearsal stream what they return', async () => {
+    const w = await ready()
+    const token = await tokenFor(w, 'rehearse', deps(w))
+    expect((await runOpsCli(rehearseArgs(w, token), deps(w))).exitCode)
+      .toBe(EXIT_ACTION_REQUIRED)
+
+    // --verify-restoration, down its success path.
+    const restoreSink: string[] = []
+    const restore = await runOpsCli(
+      restoreArgs(w), deps(w, { sink: (l: string) => { restoreSink.push(l) } }))
+    expect(restore.exitCode, restore.lines.join('\n')).toBe(EXIT_OK)
+    expect(restoreSink).toEqual([...restore.lines])
+    // A LINE SAID INSIDE THE MODE (pg-copy-ops.ts:3768), exactly once.
+    const restoreSaid = restoreSink.filter(l => l.startsWith('producer restoration published '))
+    expect(restoreSaid).toHaveLength(1)
+
+    // --review-rehearsal, down its success path.
+    const reviewSink: string[] = []
+    const review = await runOpsCli(
+      reviewArgs(w), deps(w, { sink: (l: string) => { reviewSink.push(l) } }))
+    expect(review.exitCode, review.lines.join('\n')).toBe(EXIT_OK)
+    expect(reviewSink).toEqual([...review.lines])
+    // A LINE SAID INSIDE THE MODE (pg-copy-ops.ts:4507), exactly once.
+    const reviewSaid = reviewSink.filter(l => l.startsWith('rehearsal review published '))
+    expect(reviewSaid).toHaveLength(1)
+    expect(reviewSink.filter(l => l.startsWith('An apply may now reference'))).toHaveLength(1)
+  })
+})

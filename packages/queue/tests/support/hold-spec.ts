@@ -47,10 +47,16 @@ export interface HoldSpec {
    * `partial-then-gone` - ONE advisory lock and nothing else, which is neither a
    *   complete fence nor zero reviewed locks; the backend goes once the operator
    *   has been asked `resolveAfter` times.
+   * `gone-after-first-decision` - K8-E3. The COMPLETE fence until the operator has
+   *   been asked once, and gone afterwards. This is the shape a hold entered from
+   *   a FAILED GATE needs: no release was ever attempted, so `gone-after-release`
+   *   never fires and `CENSUS_ONLY` finds a live fence for ever. The complete
+   *   fence up front is what lets the gate's own fence proof pass, so the refusal
+   *   under test is the queue or the census and not the proof.
    */
   readonly prover?: {
     readonly kind: 'gone-after-release' | 'gone' | 'locks-until'
-      | 'reaped-on-terminate' | 'partial-then-gone'
+      | 'reaped-on-terminate' | 'partial-then-gone' | 'gone-after-first-decision'
     readonly resolveAfter?: number
     readonly terminateRefused?: boolean
     readonly observedStart?: string | null
@@ -73,9 +79,16 @@ export interface HoldSpec {
    *              an unresolved attempt, never an exit.
    * `forbidden` - no script at all. The default, so reaching a hold unscripted is
    *              a recorded fact rather than a silent one.
+   * `channel`  - K8-E3: NOT a replacement hold at all. The child passes
+   *              `hold: undefined` so `runRehearsal` builds the PRODUCTION
+   *              `processHold`, and injects only its TRANSPORT through
+   *              `deps.operatorChannel`. That is the only way to observe what an
+   *              operator actually meets - the reviewed grammar, the per-attempt
+   *              token, the intent and outcome bundles - rather than a stub's
+   *              imitation of it. `actions` is the reply script, as for `script`.
    */
   readonly hold?: {
-    readonly kind: 'script' | 'refuse' | 'forbidden'
+    readonly kind: 'script' | 'refuse' | 'forbidden' | 'channel'
     readonly actions?: readonly string[]
     readonly refusals?: number
     /** Freeze the evidence root at the first request, so nothing can publish. */
@@ -128,6 +141,24 @@ export interface HoldSpec {
      */
     readonly renameIndeterminate?: boolean
   }
+  /**
+   * MAKE ONE REVIEWED QUEUE NON-EMPTY IN THE FENCED GATE'S SAMPLES.
+   *
+   * All queue sampling happens inside the operational gate, which runs AFTER the
+   * fence is acquired - so a non-empty depth here is a refusal discovered while
+   * the source is frozen, which is a HOLD and not an exit-2 refusal. That
+   * distinction is the whole subject of T1.
+   */
+  readonly fencedQueueBusy?: string
+  /**
+   * MAKE ONE REVIEWED PRODUCER VISIBLE AS RUNNING ONLY ONCE THE FENCE IS HELD.
+   *
+   * Models a producer somebody started during the window: the pre-fence world was
+   * quiescent, and the fenced census is the one that finds it. The child flips
+   * this on in its `acquireFence` stub, which is the exact moment the fence
+   * exists, so nothing before the gate can see it.
+   */
+  readonly producerRunningUnderFence?: string
   /** Make the run-id minter throw, so the derived attempt name is exercised. */
   readonly runIdMinterThrows?: boolean
   /** Record the pause durations the hold asks for, instead of ignoring them. */
@@ -235,6 +266,31 @@ export interface HoldReport {
   }[]
   /** Every entry in the evidence root at the end, or at the moment of a kill. */
   readonly evidenceEntries: readonly string[]
+  /**
+   * EVERY LINE THE RUN STREAMED, in the order the sink received it.
+   *
+   * K8-E3: separate from `lines`, which is what `runOpsCli` RETURNED. Keeping
+   * both is the point - a build that buffers has an empty sink and a full
+   * `lines`, and a build that duplicates has a `lines` longer than its sink.
+   */
+  readonly sink: readonly string[]
+  /**
+   * WHAT HAD ALREADY BEEN STREAMED EACH TIME THE OPERATOR WAS ASKED.
+   *
+   * One entry per `nextLine`, recorded BEFORE the reply is computed. This is the
+   * evidence that the prompt and its token were visible at the moment the process
+   * blocked, rather than after it stopped waiting.
+   */
+  readonly channelSnapshots: readonly {
+    readonly sinkLength: number
+    readonly hadIntervention: boolean
+    readonly hadFenceState: boolean
+    readonly hadReplyWith: boolean
+    /** The token taken from the latest `Reply with:` line, or null if none. */
+    readonly tokenFromSink: string | null
+    /** The exact reply sent back. */
+    readonly replied: string
+  }[]
   /**
    * HOW MANY TIMES A SCRATCH DIRECTORY FOR THAT RECORD WAS CREATED.
    *

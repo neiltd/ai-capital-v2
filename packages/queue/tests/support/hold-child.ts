@@ -40,16 +40,17 @@ import { publishAtomically } from './publish.js'
 
 import {
   INTENT_PREFIX, OUTCOME_PREFIX, OpsRefused, runOpsCli,
-  type FenceLike, type InterventionHold,
+  type FenceLike, type InterventionHold, type OperatorChannel,
 } from '../../bin/pg-copy-ops.js'
 import {
-  EVIDENCE_RETRY_SCRATCH, REAL_EVIDENCE_OPS, RELEASE_SQL, type EvidenceOps,
+  EVIDENCE_RETRY_SCRATCH, REAL_EVIDENCE_OPS, RELEASE_SQL, REVIEWED_PRODUCERS,
+  REVIEWED_QUEUES, type EvidenceOps,
 } from '@common/db/pg-copy'
 
 import {
-  FENCED_CENSUS, ROOTS, RUN_ID, bundles, deps, goneWhen, lockRow,
-  observeUnscriptedHold, proverStub, ready, rehearseArgs, supervisorStub,
-  takeUnscriptedHold, tokenFor,
+  BACKEND_START, FENCED_CENSUS, ROOTS, RUN_ID, SUPERVISOR_PID, bundles, deps,
+  goneWhen, lockRow, observeUnscriptedHold, proverStub, ready, rehearseArgs,
+  supervisorStub, takeUnscriptedHold, tokenFor,
 } from './ops-world.js'
 import { installSelfLimit } from './self-limit.js'
 import type { HoldSpec } from './hold-spec.js'
@@ -134,6 +135,22 @@ function guarded(base: EvidenceOps): EvidenceOps {
 // what its control asserts on: that `decide` was asked ONCE and the operation
 // performed ONCE while the record could not be written. Those facts have to be on
 // disk before the container kills the process.
+/** Every line the run streamed, and what was visible at each prompt. */
+const sink: string[] = []
+/**
+ * HOW MANY TIMES THE OPERATOR HAS BEEN ASKED, counted by the transport itself.
+ *
+ * `report.requests` is filled by the SCRIPTED resolver's `decide`, which a
+ * `channel` case does not use - it runs the PRODUCTION hold. Gating a prover on
+ * `report.requests.length` therefore never fires for these cases, which is how
+ * the first attempt at this fixture looped until its container killed it.
+ */
+let askedCount = 0
+const channelSnapshots: Array<{
+  sinkLength: number; hadIntervention: boolean; hadFenceState: boolean
+  hadReplyWith: boolean; tokenFromSink: string | null; replied: string
+}> = []
+
 const report: {
   exitCode: number | null; lines: string[]
   root: string | null; evidence: string | null
@@ -156,6 +173,11 @@ const report: {
   }>
   evidenceEntries: string[]
   publishAttempts: number
+  sink: string[]
+  channelSnapshots: Array<{
+    sinkLength: number; hadIntervention: boolean; hadFenceState: boolean
+    hadReplyWith: boolean; tokenFromSink: string | null; replied: string
+  }>
 } = {
   exitCode: null, lines: [], root: null, evidence: null,
   supervisorSql: [], supervisorClosed: 0, proverSql: [], proverClosed: 0,
@@ -163,6 +185,7 @@ const report: {
   performed: 0, sleeps: [], unscripted: null, renames: 0, plantedSurvived: null,
   holdStartedAt: null,
   scratchCensus: [], evidenceEntries: [], publishAttempts: 0,
+  sink, channelSnapshots,
 }
 
 const flush = (): void => { publishAtomically(progressFile, `${JSON.stringify(report)}\n`) }
@@ -288,6 +311,21 @@ const prover: FenceLike = {
         return { rows: [['1']], error: null }
       }
     }
+    if (proverKind === 'gone-after-first-decision') {
+      // GONE ONCE THE OPERATOR HAS BEEN ASKED. Before that the backend holds the
+      // complete fence, so the gate's fence proof passes and the refusal under
+      // test is the one the case arranged.
+      const asked = askedCount > 0
+      if (sql.startsWith('SELECT a.backend_start') && asked) {
+        flush()
+        return { rows: [], error: null }
+      }
+      if (sql.includes('pg_catalog.count(*)') && asked) {
+        flush()
+        // ZERO REVIEWED LOCKS: the independent census that resolves the hold.
+        return { rows: [['0']], error: null }
+      }
+    }
     if (proverKind === 'locks-until' && released && sql.includes('pg_catalog.count(*)')) {
       censuses += 1
       flush()
@@ -307,9 +345,57 @@ const watchedSup: FenceLike = {
 }
 
 /** The resolver: a script, a script preceded by refusals, or nothing at all. */
+/**
+ * THE OPERATOR'S TRANSPORT, RECORDED - and nothing else about the hold replaced.
+ *
+ * NEVER THROWS AND NEVER RETURNS ''. A throw is an unresolved attempt the hold
+ * answers by asking again, and an empty line is the same; either would turn this
+ * case into an unbounded loop, which is precisely what the container exists to
+ * catch and what this must not rely on.
+ *
+ * THE TOKEN COMES ONLY FROM WHAT WAS STREAMED. Reading it from the `decide`
+ * argument would prove nothing: the question is whether an operator looking at
+ * their terminal could have answered, so the reply is built from the terminal's
+ * contents or not at all.
+ */
+function recordingChannel(actions: readonly string[]): OperatorChannel {
+  let asked = 0
+  return {
+    preflight: () => undefined,
+    arm: () => () => undefined,
+    close: () => undefined,
+    nextLine: async () => {
+      // SNAPSHOT FIRST, BEFORE A REPLY EXISTS.
+      const replyLine = [...sink].reverse().find(l => l.includes('Reply with: <OPERATION>'))
+      const m = replyLine === undefined ? null : /(PGCOPY-RESOLVE-[0-9a-f]+)/.exec(replyLine)
+      const tok = m === null ? null : (m[1] as string)
+      const action = actions[Math.min(asked, actions.length - 1)] ?? 'CENSUS_ONLY'
+      asked += 1
+      askedCount += 1
+      // A reply with no token is still a reply: the hold refuses it and asks
+      // again, which is a recorded unresolved attempt rather than a throw.
+      const replied = tok === null
+        ? `${action} k8-operator PGCOPY-RESOLVE-${'0'.repeat(64)}`
+        : `${action} k8-operator ${tok}`
+      channelSnapshots.push({
+        sinkLength: sink.length,
+        hadIntervention: sink.some(l => l.includes('INTERVENTION REQUIRED')),
+        hadFenceState: sink.some(l => l.startsWith('FENCE STATE: ')),
+        hadReplyWith: replyLine !== undefined,
+        tokenFromSink: tok, replied,
+      })
+      flush()
+      return replied
+    },
+  }
+}
+
 function resolver(): InterventionHold | undefined {
   const kind = spec.hold?.kind ?? 'forbidden'
-  if (kind === 'forbidden') return undefined
+  // `channel` REPLACES NOTHING. Returning undefined here is what makes
+  // `runRehearsal` build the production `processHold`; the transport arrives
+  // separately, through `deps.operatorChannel`.
+  if (kind === 'forbidden' || kind === 'channel') return undefined
   const actions = spec.hold?.actions ?? ['CENSUS_ONLY']
   const refusals = spec.hold?.refusals ?? 0
   let asked = 0
@@ -516,10 +602,59 @@ const held = resolver()
 const ops = guarded(failingOps() ?? REAL_EVIDENCE_OPS)
 let runIdSeq = 0
 
+/**
+ * IS THE FENCE HELD YET?
+ *
+ * Flipped inside the `acquireFence` stub, which is the exact instant the fence
+ * exists. A producer or a queue that only misbehaves after this point is a
+ * problem the FENCED gate discovers - a hold - rather than a pre-fence refusal.
+ */
+let fenced = false
+
+const channelKind = (spec.hold?.kind ?? 'forbidden') === 'channel'
+
 const r = await runOpsCli(rehearseArgs(w, token, spec.rehearseExtra ?? []), deps(w, {
   openSupervisor: async () => watchedSup as never,
   openProver: async () => prover,
   ...(held === undefined ? {} : { hold: held }),
+  // K8-E3: the PRODUCTION hold, with only its transport injected, plus the sink
+  // that records what an operator would have seen. `hold: undefined` overrides
+  // `deps()`'s `forbiddenHold()` default so `runRehearsal` builds the real one.
+  ...(channelKind
+    ? {
+      hold: undefined,
+      operatorChannel: () => recordingChannel(spec.hold?.actions ?? ['CENSUS_ONLY']),
+      sink: (l: string) => { sink.push(l); flush() },
+    }
+    : {}),
+  acquireFence: async () => {
+    fenced = true
+    return { supervisorPid: SUPERVISOR_PID, backendStart: BACKEND_START, mechanism: 'S3' as const }
+  },
+  // THE GATE SAMPLES THE QUEUES, AND THE GATE RUNS FENCED. A depth that is only
+  // non-zero here is therefore discovered with the source frozen.
+  ...(spec.fencedQueueBusy === undefined
+    ? {}
+    : {
+      queue: {
+        sample: async () => ({
+          depths: Object.fromEntries(
+            REVIEWED_QUEUES.map(q => [q, q === spec.fencedQueueBusy && fenced ? 3 : 0])),
+        }),
+      },
+    }),
+  // AND THE GATE READS THE QUIESCENCE CENSUS (lifecycle.ts:1637), so a producer
+  // that starts during the window is found there and nowhere earlier.
+  ...(spec.producerRunningUnderFence === undefined
+    ? {}
+    : {
+      quiescence: {
+        report: async () => REVIEWED_PRODUCERS.map(name => ({
+          name,
+          stopped: !(fenced && name === spec.producerRunningUnderFence),
+        })),
+      },
+    }),
   ...(spec.destinationsDrifted === true
     ? {
       destinations: {
@@ -547,6 +682,8 @@ const r = await runOpsCli(rehearseArgs(w, token, spec.rehearseExtra ?? []), deps
 
 report.exitCode = r.exitCode
 report.lines = [...r.lines]
+report.sink = [...sink]
+report.channelSnapshots = [...channelSnapshots]
 report.plantedSurvived = plantedIntact()
 try { report.evidenceEntries = readdirSync(w.evidence).sort() } catch { /* gone */ }
 const unscripted = takeUnscriptedHold()

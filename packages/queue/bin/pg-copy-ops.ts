@@ -1127,6 +1127,20 @@ export interface OpsDeps {
   readonly operatorChannel?: (
     say: (l: string) => void, root: string, resolutionFile: string | null,
   ) => OperatorChannel
+  /**
+   * WHERE A LINE GOES THE MOMENT IT IS SAID.
+   *
+   * K8-E2: `say` only pushed onto the returned array, and `main` wrote that array
+   * after `runOpsCli` RETURNED. So every line a held fence prints - the
+   * intervention prompt, its token, the `SIGINT IGNORED` notice, the apply's
+   * confirmation token - reached the terminal only once the process had already
+   * finished, which for a hold is never: it was waiting for an answer to a
+   * question nobody could see.
+   *
+   * Default: nothing. Every existing caller keeps its buffered-only behaviour,
+   * and `lines` is still returned in full.
+   */
+  readonly sink?: (line: string) => void
   /** Reads HEAD and the ingestion gitlink. Injected so tests run no git. */
   readonly measureRepository?: (checkout: string) => Promise<{
     head: string; ingestionGitlink: string
@@ -3048,7 +3062,17 @@ export async function runRehearsal(i: ModeInputs): Promise<CliResult> {
       fenceState: state,
       supervisorPid: f.supervisorPid, backendStart: f.backendStart,
       reason, priorBundles,
-      hold: deps.hold ?? processHold(say, i.scope.evidenceRoot, v['--resolution-file'] ?? null),
+      // THE PRODUCTION HOLD, WITH ONLY ITS TRANSPORT INJECTABLE.
+      //
+      // K8-E2: `deps.hold` replaces the whole reviewed hold - its grammar, its
+      // intent and outcome bundles, its token-before-lookup rule - so a test
+      // using it proves nothing about what an operator will meet. Supplying
+      // `deps.operatorChannel` instead hands `processHold` the channel it
+      // already accepts as its `existing` argument, leaving every reviewed
+      // behaviour in place. Production supplies neither.
+      hold: deps.hold ?? processHold(
+        say, i.scope.evidenceRoot, v['--resolution-file'] ?? null,
+        deps.operatorChannel?.(say, i.scope.evidenceRoot, v['--resolution-file'] ?? null)),
       say,
       sleep: deps.sleep ?? ((ms: number) => new Promise<void>(r => { setTimeout(r, ms) })),
       ...(deps.ops === undefined ? {} : { ops: deps.ops }),
@@ -5335,7 +5359,12 @@ export async function runProductionApply(i: ApplyOrchestration): Promise<CliResu
 
 export async function runOpsCli(argv: readonly string[], deps: OpsDeps): Promise<CliResult> {
   const lines: string[] = []
-  const say = (l: string): void => { lines.push(l) }
+  // EMITTED BEFORE ANYTHING IS AWAITED, so a line said while a fence is held has
+  // already left this process. Every mode and hold wrapper forwards to this
+  // `say`, so there is one place where a line becomes visible and one place
+  // where it is recorded.
+  const emit = deps.sink ?? ((): void => { /* buffered-only, as before */ })
+  const say = (l: string): void => { lines.push(l); emit(l) }
   try {
     const parsed = parseArgs(argv)
     const v = parsed.values
@@ -5479,27 +5508,33 @@ export async function runOpsCli(argv: readonly string[], deps: OpsDeps): Promise
     const modeInputs: ModeInputs = {
       v, scope, binding, operationalDigest, observationDigest, deps, deadlineMs, say,
     }
-    if (parsed.mode === '--rehearse') {
-      const r = await runRehearsal(modeInputs)
-      return { exitCode: r.exitCode, lines: [...lines, ...r.lines] }
+    // ONE COPY OF EVERY LINE.
+    //
+    // K8-E2: these returned `[...lines, ...r.lines]`, and every mode and hold
+    // wrapper ALSO forwards to `i.say` - which is the `say` above, appending to
+    // this same `lines`. So each line said inside a mode came back twice, and
+    // with a live sink it would have been written twice too. `lines` alone is
+    // the complete ordered sequence; `r.lines` remains the mode's own record,
+    // returned to its direct callers and still asserted by the mode tests.
+    // ONE RETURN FOR EVERY MODE, so no arm can drift back to duplicating.
+    //
+    // K8-E3: five arms each wrote `{ exitCode: r.exitCode, lines }` by hand, and
+    // the bug this replaced was one of them concatenating `r.lines` as well.
+    // Five copies of a rule is five chances to get it wrong; this is one.
+    const dispatch = async (
+      run: (i: ModeInputs) => Promise<CliResult>,
+    ): Promise<CliResult> => {
+      const r = await run(modeInputs)
+      return { exitCode: r.exitCode, lines }
     }
-    if (parsed.mode === '--verify-restoration') {
-      const r = await runVerifyRestoration(modeInputs)
-      return { exitCode: r.exitCode, lines: [...lines, ...r.lines] }
-    }
+    if (parsed.mode === '--rehearse') return await dispatch(runRehearsal)
+    if (parsed.mode === '--verify-restoration') return await dispatch(runVerifyRestoration)
     // ----- THE PRODUCTION COPY'S OWN CLOSURE FAMILY --------------------
     if (parsed.mode === '--verify-copy-restoration') {
-      const r = await runVerifyCopyRestoration(modeInputs)
-      return { exitCode: r.exitCode, lines: [...lines, ...r.lines] }
+      return await dispatch(runVerifyCopyRestoration)
     }
-    if (parsed.mode === '--close-copy') {
-      const r = await runCloseCopy(modeInputs)
-      return { exitCode: r.exitCode, lines: [...lines, ...r.lines] }
-    }
-    if (parsed.mode === '--review-rehearsal') {
-      const r = await runReviewRehearsal(modeInputs)
-      return { exitCode: r.exitCode, lines: [...lines, ...r.lines] }
-    }
+    if (parsed.mode === '--close-copy') return await dispatch(runCloseCopy)
+    if (parsed.mode === '--review-rehearsal') return await dispatch(runReviewRehearsal)
     throw new OpsRefused('the mode is not implemented in this milestone', parsed.mode)
   } catch (e) {
     // A BOUNDED REFUSAL IS A REFUSAL, WHICHEVER MODULE RAISED IT. Reporting a
@@ -5662,12 +5697,77 @@ export function productionDeps(
  * actually asked to run, so the difference between "imported" and "invoked" is
  * a fact about the process rather than a convention.
  */
-export async function main(argv: readonly string[]): Promise<number> {
+/** The minimum of a writable stream this module needs. */
+export interface ErrorTolerantStream {
+  write(chunk: string): unknown
+  on(event: 'error', listener: (e: unknown) => void): unknown
+}
+
+/** Streams that already carry our listener. Never grows for a dead stream. */
+const GUARDED_STREAMS = new WeakSet<object>()
+
+/**
+ * A WRITER WHOSE STREAM FAILING CANNOT END THIS PROCESS.
+ *
+ * WHAT WENT WRONG, SO IT CANNOT AGAIN. K8-E2 made every said line reach
+ * `process.stdout` as it was said - which is the point - but left the stream
+ * unguarded. When the operator's terminal hangs up, or a reader on the far end
+ * of a pipe exits, the next write emits `'error'` (EIO or EPIPE) on a stream
+ * with no listener, and an unhandled stream error ENDS THE PROCESS. The SIGHUP
+ * handler's own `IGNORED` line is one such write: the hang-up that the handler
+ * exists to survive would be the thing that killed the process, taking the
+ * fenced psql child with it - exactly what the comment at the release's `catch`
+ * forbids.
+ *
+ * A `try/catch` AROUND `write` IS NOT ENOUGH. The failure arrives as an EVENT on
+ * the stream, asynchronously, not as a throw from the call. Only a persistent
+ * listener disarms it, so that is what this attaches - once per stream, tracked
+ * in a `WeakSet` so a second writer for the same stream adds no second listener.
+ * The synchronous `try/catch` is kept as well, because some streams do throw.
+ *
+ * LOST OUTPUT STAYS LOST. Nothing is buffered for a retry and nothing is
+ * replayed: a process holding a fence must not also be holding a growing
+ * backlog, and `lines` already records every line for the caller.
+ */
+export function streamWriter(stream: ErrorTolerantStream): (s: string) => void {
+  if (!GUARDED_STREAMS.has(stream)) {
+    GUARDED_STREAMS.add(stream)
+    stream.on('error', () => { /* the terminal is gone; the fence is not */ })
+  }
+  return (s: string): void => {
+    try {
+      stream.write(s)
+    } catch {
+      /* same reasoning: the output is lost, the process goes on holding */
+    }
+  }
+}
+
+export async function main(
+  argv: readonly string[],
+  /**
+   * Where output goes, as it happens. Production: this process's stdout, guarded.
+   *
+   * CONSTRUCTED INSIDE, NOT AS A DEFAULT EXPRESSION EVALUATED AT IMPORT. A
+   * default that touched `process.stdout` while the module was merely being
+   * imported would attach a listener in every test that imports this file for
+   * its exports, which the guard above this function promises not to do.
+   */
+  write?: (s: string) => void,
+  /** How the dependencies are built. Production: the real ones. */
+  makeDeps: (
+    v: Readonly<Record<string, string>>, source: ReviewedSourceEndpoint,
+  ) => OpsDeps = productionDeps,
+): Promise<number> {
+  // THE GUARDED WRITER FIRST, so even the argv refusal goes through it.
+  const out = write ?? streamWriter(process.stdout)
   let parsed: ParsedArgs
   try {
     parsed = parseArgs(argv)
   } catch (e) {
-    process.stdout.write(`REFUSED: ${e instanceof Error ? e.message : 'bad arguments'}\n`)
+    try {
+      out(`REFUSED: ${e instanceof Error ? e.message : 'bad arguments'}\n`)
+    } catch { /* the output is lost; the exit code still says what happened */ }
     return EXIT_REFUSED
   }
   const v = parsed.values
@@ -5676,8 +5776,25 @@ export async function main(argv: readonly string[]): Promise<number> {
     port: v['--source-port'] ?? '',
     database: v['--source-database'] ?? '',
   }
-  const result = await runOpsCli(argv, productionDeps(v, source))
-  for (const line of result.lines) process.stdout.write(`${line}\n`)
+  // STREAMED, NOT REPLAYED. The sink writes each line as it is said; there is no
+  // second pass over `result.lines` afterwards, because that pass is exactly how
+  // a held fence ended up printing its prompt only after it stopped waiting.
+  const built = makeDeps(v, source)
+  // AND THE FACTORY'S OWN SINK STILL RUNS, AFTER THE WRITE. A test factory can
+  // record the said sequence without replacing the writer, so the two can be
+  // compared. `productionDeps` supplies no `sink`, so production gains nothing
+  // and loses nothing here.
+  const also = built.sink
+  const result = await runOpsCli(argv, {
+    ...built,
+    sink: (line: string): void => {
+      // NEITHER HALF MAY ABORT THE RUN. An injected writer that throws, or a
+      // recording sink that throws, must not unwind a mode or a hold: the line
+      // is lost and the process goes on.
+      try { out(`${line}\n`) } catch { /* the output is lost, nothing else is */ }
+      try { also?.(line) } catch { /* likewise */ }
+    },
+  })
   return result.exitCode
 }
 

@@ -12,7 +12,8 @@ import { tmpdir } from 'node:os'
 import {
   EXIT_ACTION_REQUIRED, EXIT_REFUSED, OpsRefused,
   REVIEWED_EXPECTED_TARGET_LABEL, REVIEWED_SOURCE_LABEL,
-  HELD_SIGNALS, HOLD_ACTIONS, applyOperatorInput, holdForIntervention,
+  HELD_SIGNALS, HOLD_ACTIONS, applyOperatorInput, awaitCopyConfirmation,
+  holdForIntervention,
   holdStateOf, holdStateOfRelease, operatorChannel,
   processHold, resolutionToken, runProductionApply, verifyPublishedStage1,
   type ApplyOrchestration, type CliResult, type HoldDecision, type HoldFenceState,
@@ -2160,5 +2161,77 @@ describe('K7-B7.1 B: only a copy closure may say COMPLETE', () => {
     // It says what it actually established, and that the copy is still open.
     expect(mode).toContain('COPY_RESTORED')
     expect(mode).toContain('still OPEN')
+  })
+})
+
+describe('K8-E3 T3: the apply confirmation token is shown before the apply waits', () => {
+  /**
+   * WHY THIS HARNESS AND NOT `runOpsCli --apply`.
+   *
+   * The order's preferred route is `runOpsCli` with `deps.operatorChannel` and
+   * the real `awaitCopyConfirmation`. Reaching the token print needs a complete
+   * reviewed chain first - a rehearsal, a restoration and a review bundle, a
+   * Stage-1 bundle, both driver credentials, and the authority and lifecycle
+   * fakes - and every `--apply` case that goes through `runOpsCli` elsewhere
+   * stops at an earlier refusal instead (see `pg-copy-ops-modes.test.ts`, which
+   * refuses on the missing driver credential). Building that chain would mean new
+   * fixture machinery outside the allowed paths, so this takes the fallback the
+   * order names: the existing harness, with its `confirm` stub removed so the
+   * REAL `awaitCopyConfirmation` runs.
+   *
+   * THE COMPOSITION IS STILL THE PRODUCTION ONE. `runOpsCli` hands the apply its
+   * own `say` (pg-copy-ops.ts:5501), and that `say` is the one that calls the
+   * sink synchronously, so a `say` wired exactly as `runOpsCli` wires it is what
+   * this harness is given below.
+   */
+  it('streams the token and the CONFIRM prompt before nextLine is read', async () => {
+    const h = harness()
+    // THE SINK, WIRED AS `runOpsCli` WIRES IT: record, then emit, synchronously.
+    const streamed: string[] = []
+    const said: string[] = []
+    const input = h.input as unknown as {
+      say: (l: string) => void
+      deps: Record<string, unknown>
+      channel: OperatorChannel
+    }
+    input.say = (l: string): void => { said.push(l); streamed.push(l) }
+
+    // THE REAL CONFIRMATION READER, not the harness's stub.
+    delete input.deps.confirm
+
+    let reads = 0
+    let seenAtRead: readonly string[] = []
+    let tokenOnLine: string | null = null
+    input.channel = {
+      ...h.channel,
+      nextLine: async () => {
+        reads += 1
+        // RECORDED, NOT ASSERTED HERE: a throw inside this callback would be
+        // caught by `awaitCopyConfirmation` and turned into a refusal, hiding a
+        // real failure. Everything is checked after the run.
+        seenAtRead = [...streamed]
+        const line = [...streamed].reverse().find(l => l.startsWith('Reply with: CONFIRM'))
+        const m = line === undefined ? null : /(PGCOPY-COPY-[0-9a-f]+)/.exec(line)
+        tokenOnLine = m === null ? null : (m[1] as string)
+        return `CONFIRM k8-operator ${tokenOnLine ?? 'no-token'}`
+      },
+    } as OperatorChannel
+
+    await runProductionApply(h.input)
+
+    // THE OPERATOR WAS ASKED EXACTLY ONCE. `awaitCopyConfirmation` returns or
+    // throws on the first non-empty reply (pg-copy-ops.ts:1543-1569).
+    expect(reads).toBe(1)
+
+    // AND AT THAT MOMENT ALL THREE LINES HAD ALREADY BEEN STREAMED.
+    expect(seenAtRead.some(l => /^PGCOPY-COPY-[0-9a-f]+$/.test(l)),
+           `token line missing: ${seenAtRead.join(' | ')}`).toBe(true)
+    expect(seenAtRead).toContain('THE SOURCE IS FENCED AND THIS PROCESS IS HOLDING IT.')
+    expect(seenAtRead.some(l => /^Reply with: CONFIRM <operator-name> PGCOPY-COPY-/.test(l)))
+      .toBe(true)
+
+    // THE REPLY WAS BUILT FROM WHAT WAS STREAMED, and it is the printed token.
+    expect(tokenOnLine).toMatch(/^PGCOPY-COPY-[0-9a-f]+$/)
+    expect(seenAtRead).toContain(tokenOnLine as string)
   })
 })
