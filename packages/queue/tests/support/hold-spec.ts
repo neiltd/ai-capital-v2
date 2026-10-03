@@ -86,14 +86,71 @@ export interface HoldSpec {
    *              operator actually meets - the reviewed grammar, the per-attempt
    *              token, the intent and outcome bundles - rather than a stub's
    *              imitation of it. `actions` is the reply script, as for `script`.
+   * `production` - K8-E5: nothing is injected at all. `hold: undefined` AND no
+   *              `operatorChannel`, so `runRehearsal` builds the production
+   *              `processHold` over the production `operatorChannel` - which is
+   *              the only object that installs REAL signal handlers, and the only
+   *              one whose `nextLine` raises the production `OperatorChannelDead`.
+   *              A case about what a signal does to this process, or about how the
+   *              transport classifies a dead stdin, cannot inject the transport:
+   *              injecting it replaces the thing under test.
+   * `dead-channel` - K8-E5: the production hold again, but over a transport whose
+   *              `nextLine` always rejects with `OperatorChannelDead`, as a
+   *              hung-up stdin does. It proves what the HOLD does with that class.
+   *              What the TRANSPORT does - which conditions raise it at all - is
+   *              `production` plus `stdinStandIn`, because this stub asserts the
+   *              classification rather than observing it.
    */
   readonly hold?: {
     readonly kind: 'script' | 'refuse' | 'forbidden' | 'channel'
+      | 'production' | 'dead-channel'
     readonly actions?: readonly string[]
     readonly refusals?: number
     /** Freeze the evidence root at the first request, so nothing can publish. */
     readonly freezeEvidence?: boolean
   }
+  /**
+   * SIGNAL THIS CHILD'S OWN PID THE INSTANT THE FENCE EXISTS.
+   *
+   * Sent from inside the `acquireFence` stub, so delivery lands between `acquire`
+   * returning and the fenced gate completing - the window in which nothing used
+   * to be armed. Its own pid only: nothing else is signalled, and no process
+   * group is.
+   */
+  readonly signalSelfWhenFenced?: readonly NodeJS.Signals[]
+  /**
+   * PARK THE INJECTED CLOCK AFTER THIS MANY DEAD-CHANNEL IDLE SLEEPS.
+   *
+   * The quiet hold never returns, by design, and the stub clock resolves
+   * instantly - so without this the loop would spin as fast as the event loop
+   * allows and the case would measure the harness rather than the code. After
+   * the given number of idle periods the stub simply never resolves, which parks
+   * the hold exactly where it should be: alive, holding, publishing nothing.
+   */
+  readonly parkAfterIdleSleeps?: number
+  /**
+   * REPLACE `process.stdin` IN THE CONTAINED CHILD, so the PRODUCTION transport
+   * raises the dead-channel class itself.
+   *
+   * The contained child's stdin is `'ignore'` (`contained.ts:297`), which reaches
+   * the no-TTY branch but never the other two. A stand-in `PassThrough` carrying
+   * `isTTY: true` gets past that branch and into the readline iterator, and then
+   * `end()` resolves it `done` and `destroy(err)` rejects it - the EOF and the
+   * stream-error conditions. Replaced only inside the child, and only before the
+   * run starts; a Vitest worker must never do this, which is why these cases are
+   * contained.
+   */
+  readonly stdinStandIn?: 'eof' | 'error'
+  /**
+   * OPEN A REAL `openPsqlBackend` AGAINST A FAKE psql AT THE FENCE.
+   *
+   * R1 proved the PARENT survives the fenced signals; its sessions are stubs, so
+   * it never showed what happens to a psql child. With this, the child opens a
+   * production backend against a `/bin/sh` fake in its own `mkdtemp` root -
+   * registered in the roots file so the container sweeps it - immediately before
+   * it signals itself.
+   */
+  readonly fakePsqlAtFence?: boolean
   /**
    * MAKE ONE PHASE'S PUBLICATION FAIL, DELIBERATELY AND PRECISELY.
    *
@@ -175,7 +232,25 @@ export interface HoldSpec {
   readonly plantRetryScratch?: string
 }
 
-/** Everything a contained case reports back. Written as it happens. */
+/**
+ * Everything a contained case reports back. Written as it happens.
+ *
+ * A KNOWN TYPE ERROR LIVES ONE FILE AWAY, AND IT IS NOT FIXED HERE.
+ * `contained.ts`'s `NOTHING_OBSERVED` - the report for a child that died before
+ * it could write one - has not grown a key since it was written, so it is now
+ * missing eleven of the fields below and does not satisfy this interface. The
+ * error predates K8-E6: it arrived with K8-E3's `sink` and has been invisible
+ * ever since, because queue `tsconfig.json` includes only `src/**` and `bin/**`
+ * and so NOTHING has ever compiled this file or that one. K8-E6's parse check
+ * finds syntax errors, not this.
+ *
+ * It is left alone deliberately: `contained.ts` is protected in this round. The
+ * two honest fixes are to add the missing keys to `NOTHING_OBSERVED`, or to make
+ * these fields optional - which is arguably the truer type, since a child that
+ * died really has not reported them - and both belong in a round where that file
+ * may be edited. Making them optional here alone costs nineteen
+ * `possibly undefined` errors in the suite that reads them.
+ */
 export interface HoldReport {
   readonly exitCode: number | null
   readonly lines: readonly string[]
@@ -299,4 +374,50 @@ export interface HoldReport {
    * cannot.
    */
   readonly publishAttempts: number
+  /**
+   * HOW MANY `SIGINT` LISTENERS THIS PROCESS HAD WHEN THE FENCE WAS TAKEN.
+   *
+   * The direct observation of the property K8-E5 adds. The lease is armed before
+   * `acquire`, so this is at least one at the instant a fence first exists.
+   * Arming only inside the hold - the pre-change shape - leaves it zero, and a
+   * terminal signal in that window then ends the process on the default action.
+   *
+   * WHY THE COUNT IS THIS APPLICATION'S, AND NOT BECAUSE THERE IS NO WRAPPER.
+   * The earlier note here said the count was "tsx-free" because `--import tsx`
+   * installs no hidden handler, and that was wrong about this harness: the
+   * contained child is spawned through `node_modules/.bin/tsx`
+   * (`contained.ts:48`, `:292`), which IS the wrapper. tsx@4.22.4's preflight
+   * (`dist/preflight.mjs`, `bindHiddenSignalsHandler`) installs a hidden
+   * SIGINT/SIGTERM handler in the child AND patches `process.listenerCount` and
+   * `process.listeners` to hide it. So the number read here excludes that
+   * handler because of the patch, not because it is absent.
+   *
+   * It also means the pre-change shape has two ways to die in this harness: the
+   * default action for SIGHUP, and the hidden handler's own
+   * `listenerCount === 0` branch for SIGINT. Both end the process, which is the
+   * kill either way.
+   */
+  readonly sigintListenersAtFence: number | null
+  /** The signals this child sent to its OWN pid, in order. */
+  readonly selfSignalsSent: readonly string[]
+  /** How many `DEAD_CHANNEL_IDLE_MS` sleeps the quiet hold asked for. */
+  readonly deadChannelIdleSleeps: number
+  /**
+   * THE FAKE psql OPENED AT THE FENCE, and what became of it.
+   *
+   * `pid` and `pgid` are read before the self-signals; a null `pgid` is a
+   * failure, not a pass, because "it is not in my group" is trivially true of a
+   * process that has died. `aliveAfterSignals` is the assertion K8-E5's R1 could
+   * not make. `exitedAtEof` is the marker the fake writes when its stdin closes,
+   * which is how a graceful end is told from a kill.
+   */
+  readonly fakePsqlPid: number | null
+  readonly fakePsqlPgid: number | null
+  readonly childPgid: number | null
+  readonly fakePsqlAliveAfterSignals: boolean | null
+  readonly fakePsqlExitedAtEof: boolean | null
+  /** How the stand-in stdin was ended, once it had been read. */
+  readonly stdinStandInEnded: string | null
+  /** The private root the fake psql was written into, for an exact-path check. */
+  readonly fakePsqlRoot: string | null
 }

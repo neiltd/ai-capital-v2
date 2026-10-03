@@ -32,23 +32,28 @@
 // NOTHING LIVE IS REACHED. The world, the stubs and the dependency wiring are the
 // same ones the in-process tests use, imported from `ops-world.ts`.
 
+import { execFileSync } from 'node:child_process'
 import {
-  chmodSync, mkdirSync, readFileSync, readdirSync, statSync, writeFileSync,
+  chmodSync, existsSync, mkdirSync, mkdtempSync, readFileSync, readdirSync, realpathSync,
+  statSync, writeFileSync,
 } from 'node:fs'
+import { tmpdir } from 'node:os'
 import { join } from 'node:path'
+import { PassThrough } from 'node:stream'
 import { publishAtomically } from './publish.js'
 
 import {
-  INTENT_PREFIX, OUTCOME_PREFIX, OpsRefused, runOpsCli,
+  DEAD_CHANNEL_IDLE_MS, INTENT_PREFIX, OUTCOME_PREFIX, OperatorChannelDead, OpsRefused,
+  runOpsCli,
   type FenceLike, type InterventionHold, type OperatorChannel,
 } from '../../bin/pg-copy-ops.js'
 import {
   EVIDENCE_RETRY_SCRATCH, REAL_EVIDENCE_OPS, RELEASE_SQL, REVIEWED_PRODUCERS,
-  REVIEWED_QUEUES, type EvidenceOps,
+  REVIEWED_QUEUES, openPsqlBackend, type EvidenceOps, type PsqlBackend,
 } from '@common/db/pg-copy'
 
 import {
-  BACKEND_START, FENCED_CENSUS, ROOTS, RUN_ID, SUPERVISOR_PID, bundles, deps,
+  BACKEND_START, FENCED_CENSUS, ROOTS, ROOT_PREFIX, RUN_ID, SUPERVISOR_PID, bundles, deps,
   goneWhen, lockRow, observeUnscriptedHold, proverStub, ready, rehearseArgs,
   supervisorStub, takeUnscriptedHold, tokenFor,
 } from './ops-world.js'
@@ -178,6 +183,16 @@ const report: {
     sinkLength: number; hadIntervention: boolean; hadFenceState: boolean
     hadReplyWith: boolean; tokenFromSink: string | null; replied: string
   }>
+  sigintListenersAtFence: number | null
+  selfSignalsSent: string[]
+  deadChannelIdleSleeps: number
+  fakePsqlPid: number | null
+  fakePsqlPgid: number | null
+  childPgid: number | null
+  fakePsqlAliveAfterSignals: boolean | null
+  fakePsqlExitedAtEof: boolean | null
+  stdinStandInEnded: string | null
+  fakePsqlRoot: string | null
 } = {
   exitCode: null, lines: [], root: null, evidence: null,
   supervisorSql: [], supervisorClosed: 0, proverSql: [], proverClosed: 0,
@@ -186,9 +201,14 @@ const report: {
   holdStartedAt: null,
   scratchCensus: [], evidenceEntries: [], publishAttempts: 0,
   sink, channelSnapshots,
+  sigintListenersAtFence: null, selfSignalsSent: [], deadChannelIdleSleeps: 0,
+  fakePsqlPid: null, fakePsqlPgid: null, childPgid: null,
+  fakePsqlAliveAfterSignals: null, fakePsqlExitedAtEof: null,
+  stdinStandInEnded: null, fakePsqlRoot: null,
 }
 
 const flush = (): void => { publishAtomically(progressFile, `${JSON.stringify(report)}\n`) }
+
 
 // RECORDED AS IT HAPPENS. A contained run that reaches an unscripted hold never
 // returns, so the fact has to be on disk before the parent kills the process.
@@ -206,6 +226,23 @@ observeUnscriptedHold(m => {
 const spec = JSON.parse(readFileSync(specPath, 'utf-8')) as HoldSpec
 
 const w = await ready(spec.world ?? {})
+/**
+ * SAMPLE THE EVIDENCE ROOT WHILE THE RUN IS STILL GOING.
+ *
+ * `evidenceEntries` used to be written once, after `runOpsCli` returned - which
+ * is never, for a case whose whole subject is a hold that correctly does not
+ * return. The container then removes the roots as it kills the child
+ * (`contained.ts:365`), so by the time the parent asserts, the directory is gone
+ * and reading it from disk is not an option either. So it is sampled here, on a
+ * low-frequency UNREF'd timer: unref'd because this must never be the handle
+ * that keeps a child alive, and low-frequency because it is a directory read.
+ */
+setInterval(() => {
+  try {
+    report.evidenceEntries = readdirSync(w.evidence).sort()
+    flush()
+  } catch { /* not built yet, or already swept */ }
+}, 250).unref()
 report.root = w.dir
 report.evidence = w.evidence
 // THE CEILINGS NOW HAVE SOMETHING TO MEASURE. Set before anything is published,
@@ -341,7 +378,23 @@ const prover: FenceLike = {
 }
 const watchedSup: FenceLike = {
   send: sup.send,
-  close: async () => { report.supervisorClosed += 1; flush(); return await sup.close() },
+  close: async () => {
+    report.supervisorClosed += 1
+    // R1b: CLOSING THE SUPERVISOR IS WHAT ENDS THE psql CHILD, and in the
+    // real CLI this is the moment the fence is released. The fake session opened
+    // at the fence is closed here, through the production `close` - which ends
+    // its stdin, lets the fake read EOF and write its marker, and reaps it.
+    if (fakeSession !== null) {
+      const s = fakeSession
+      fakeSession = null
+      try { await s.close() } catch { /* already gone */ }
+      if (fakeMarker !== null) {
+        report.fakePsqlExitedAtEof = existsSync(fakeMarker)
+      }
+    }
+    flush()
+    return await sup.close()
+  },
 }
 
 /** The resolver: a script, a script preceded by refusals, or nothing at all. */
@@ -390,12 +443,35 @@ function recordingChannel(actions: readonly string[]): OperatorChannel {
   }
 }
 
+/**
+ * A TRANSPORT THAT IS GONE, which is what a hung-up stdin is.
+ *
+ * `OperatorChannelDead` is the production class, raised by the production
+ * transport for exactly these conditions - so a hold meeting this stub takes the
+ * same branch it would take against a real closed terminal. `arm` still returns
+ * a disarm, because losing stdin does not lose the signal handlers.
+ */
+function deadChannel(): OperatorChannel {
+  return {
+    preflight: () => undefined,
+    arm: () => { report.armed += 1; flush(); return () => { report.disarmed += 1; flush() } },
+    close: () => undefined,
+    nextLine: async () => {
+      askedCount += 1
+      flush()
+      throw new OperatorChannelDead('the resolution channel closed before a line arrived')
+    },
+  }
+}
+
 function resolver(): InterventionHold | undefined {
   const kind = spec.hold?.kind ?? 'forbidden'
-  // `channel` REPLACES NOTHING. Returning undefined here is what makes
-  // `runRehearsal` build the production `processHold`; the transport arrives
-  // separately, through `deps.operatorChannel`.
-  if (kind === 'forbidden' || kind === 'channel') return undefined
+  // `channel`, `production` and `dead-channel` REPLACE NOTHING. Returning
+  // undefined here is what makes `runRehearsal` build the production
+  // `processHold`; where a transport is injected at all it arrives separately,
+  // through `deps.operatorChannel`.
+  if (kind === 'forbidden' || kind === 'channel'
+      || kind === 'production' || kind === 'dead-channel') return undefined
   const actions = spec.hold?.actions ?? ['CENSUS_ONLY']
   const refusals = spec.hold?.refusals ?? 0
   let asked = 0
@@ -597,6 +673,117 @@ function failingOps(): EvidenceOps | undefined {
 const fsyncTargets = new Set<number>()
 
 
+/**
+ * A FAKE psql, AND A REAL BACKEND OPENED AGAINST IT.
+ *
+ * R1b (K8-E6, reworded in K8-E7). R1 runs the fenced-signal scenario with stub
+ * sessions, so it can say nothing about a psql child. This opens the PRODUCTION
+ * `openPsqlBackend` against a `/bin/sh` fake in its own `mkdtemp` root,
+ * registered in `ROOTS` so the container sweeps it whatever happens to this
+ * process, and lets the case record three things: that the child is still alive
+ * once the parent has declined signals sent to the PARENT'S OWN pid, that it sits
+ * in a different process group, and that releasing the fence ends it at EOF.
+ *
+ * NOT A GROUP-DELIVERY TEST. The signals this child sends go to one pid, so they
+ * were never going to reach a grandchild and the child's survival says nothing
+ * about `detached`. What it measures is the group MEMBERSHIP, on a real backend.
+ * Whether a signal to the whole group reaches psql is D2's subject
+ * (`packages/db/tests/pg-copy-psql-backend-group.test.ts:233-240`).
+ *
+ * Modelled on pg-copy-psql-backend-group.test.ts: it answers the backend-pid
+ * query with its own `$$`, so `session.pid` is the fake's OS pid, reads stdin,
+ * exits at EOF and writes a marker on the way out. The marker is how a graceful
+ * end is told from a kill.
+ */
+function fakePsqlRoot(): { bin: string; marker: string; dir: string } {
+  // MINTED EXACTLY AS `ops-world.ts:346` MINTS ONE, through this child's own
+  // `ROOT_PREFIX`. The harness refuses to remove a directory whose basename is
+  // not the reviewed form `pgcopy-modes-<nonce>-<pid>-[c<n>-]XXXXXX`
+  // (`roots.ts:100`, `provenRoot`), and it is right to: a root it cannot
+  // attribute to this run is somebody else's. An ad-hoc prefix got exactly that
+  // refusal, which is the guard working.
+  const dir = realpathSync(mkdtempSync(join(tmpdir(), ROOT_PREFIX)))
+  ROOTS.push(dir)
+  flushRoots()
+  const bin = join(dir, 'psql')
+  const marker = join(dir, 'eof-marker')
+  writeFileSync(bin, [
+    '#!/bin/sh',
+    'while IFS= read -r line; do',
+    '  case "$line" in',
+    "    '\\echo '*) printf '%s\\n' \"${line#\\\\echo }\" ;;",
+    "    '\\warn '*) printf '%s\\n' \"${line#\\\\warn }\" >&2 ;;",
+    '    *pg_backend_pid*) printf "%s\\n" "$$" ;;',
+    '    *) ;;',
+    '  esac',
+    'done',
+    `printf 'eof' > '${marker}'`,
+  ].join('\n'), { mode: 0o700 })
+  return { bin, marker, dir }
+}
+
+/** The process group a pid is in, or null once it is gone. Null must fail loudly. */
+function pgidOf(pid: number): number | null {
+  try {
+    const out = execFileSync('/bin/ps', ['-o', 'pgid=', '-p', String(pid)], { encoding: 'utf-8' })
+    const n = Number(out.trim())
+    return Number.isSafeInteger(n) ? n : null
+  } catch { return null }
+}
+
+const aliveNow = (pid: number): boolean => {
+  try { process.kill(pid, 0); return true } catch { return false }
+}
+
+/** The backend opened at the fence, so the supervisor's close can end it. */
+let fakeSession: PsqlBackend | null = null
+let fakeMarker: string | null = null
+
+/**
+ * STAND IN FOR `process.stdin`, so the PRODUCTION transport raises the class.
+ *
+ * The contained child's stdin is `'ignore'` (contained.ts:297), which reaches the
+ * no-TTY branch and never the other two. A `PassThrough` carrying `isTTY: true`
+ * gets past that branch into the readline iterator, where `end()` resolves it
+ * `done` and `destroy(err)` rejects it. Installed only here, in a child whose
+ * whole purpose is to be disposable - a Vitest worker must never do this, which
+ * is why these cases are contained.
+ */
+const standInKind = spec.stdinStandIn
+let standIn: PassThrough | null = null
+if (standInKind !== undefined) {
+  standIn = new PassThrough()
+  Object.defineProperty(process, 'stdin', {
+    value: Object.assign(standIn, { isTTY: true }), configurable: true,
+  })
+}
+
+/**
+ * AND END IT ONLY ONCE THE READ IS IN FLIGHT.
+ *
+ * Ending before the hold has asked would make the case prove nothing: the
+ * iterator would be created on an already-finished stream, which is a different
+ * path. So this waits for the `Reply with:` line the hold streams immediately
+ * before it awaits, then yields once so the await is actually entered.
+ */
+let standInEnded = false
+const endStandInOnceAsked = (line: string): void => {
+  if (standIn === null || standInEnded || !line.includes('Reply with:')) return
+  standInEnded = true
+  setTimeout(() => {
+    const s = standIn as PassThrough
+    if (standInKind === 'error') {
+      report.stdinStandInEnded = 'destroy(Error)'
+      flush()
+      s.destroy(new Error('the stand-in stdin was destroyed'))
+    } else {
+      report.stdinStandInEnded = 'end()'
+      flush()
+      s.end()
+    }
+  }, 25)
+}
+
 const held = resolver()
 // ALWAYS GUARDED, whether or not this case injects failing operations.
 const ops = guarded(failingOps() ?? REAL_EVIDENCE_OPS)
@@ -611,7 +798,11 @@ let runIdSeq = 0
  */
 let fenced = false
 
-const channelKind = (spec.hold?.kind ?? 'forbidden') === 'channel'
+const holdKind = spec.hold?.kind ?? 'forbidden'
+const channelKind = holdKind === 'channel'
+/** The two K8-E5 kinds that run the production hold over a REAL or dead transport. */
+const productionKind = holdKind === 'production'
+const deadChannelKind = holdKind === 'dead-channel'
 
 const r = await runOpsCli(rehearseArgs(w, token, spec.rehearseExtra ?? []), deps(w, {
   openSupervisor: async () => watchedSup as never,
@@ -627,8 +818,73 @@ const r = await runOpsCli(rehearseArgs(w, token, spec.rehearseExtra ?? []), deps
       sink: (l: string) => { sink.push(l); flush() },
     }
     : {}),
+  // K8-E5 R1: NOTHING INJECTED. No `hold` and no `operatorChannel`, so the run
+  // builds the production `processHold` over the production `operatorChannel` -
+  // the only object that installs real signal handlers. Injecting the transport
+  // here would replace the thing a signal case exists to measure.
+  ...(productionKind
+    ? {
+      hold: undefined,
+      sink: (l: string) => { sink.push(l); flush(); endStandInOnceAsked(l) },
+    }
+    : {}),
+  // K8-E5 R2: the production hold over a transport that is already gone.
+  ...(deadChannelKind
+    ? {
+      hold: undefined,
+      operatorChannel: () => deadChannel(),
+      sink: (l: string) => { sink.push(l); flush(); endStandInOnceAsked(l) },
+    }
+    : {}),
   acquireFence: async () => {
     fenced = true
+    // THE EXACT INSTANT THE FENCE EXISTS. What is armed NOW is what stands
+    // between a terminal signal and a released fence, so it is recorded here and
+    // not inferred afterwards.
+    report.sigintListenersAtFence = process.listenerCount('SIGINT')
+    flush()
+    // R1b: A REAL psql CHILD, OPENED BEFORE THE SIGNALS ARE SENT, so they land
+    // while it exists and the case can ask what became of it. Its group is
+    // recorded here too, because `detached` in psql-backend.ts puts it in its own
+    // - which is the membership a terminal signal would have to cross. The
+    // signals below go to one pid and could not have reached it in any case; the
+    // group-delivery proof is D2.
+    if (spec.fakePsqlAtFence === true) {
+      const { bin, marker, dir } = fakePsqlRoot()
+      fakeMarker = marker
+      report.fakePsqlRoot = dir
+      fakeSession = await openPsqlBackend({
+        psqlPath: bin, host: '/tmp/no-such-socket', port: 5432,
+        database: 'fixture', user: 'fixture',
+      })
+      const pid = Number(fakeSession.pid)
+      report.fakePsqlPid = Number.isSafeInteger(pid) ? pid : null
+      report.fakePsqlPgid = Number.isSafeInteger(pid) ? pgidOf(pid) : null
+      report.childPgid = pgidOf(process.pid)
+      flush()
+    }
+    // AND THE SIGNALS, TO THIS PROCESS'S OWN PID ONLY. Delivered between
+    // `acquire` returning and the fenced gate completing.
+    for (const sig of spec.signalSelfWhenFenced ?? []) {
+      report.selfSignalsSent.push(sig)
+      flush()
+      process.kill(process.pid, sig)
+    }
+    if ((spec.signalSelfWhenFenced ?? []).length > 0) {
+      // AND LET THE LOOP TURN, so delivery happens HERE - inside the fenced
+      // window - rather than whenever the run next happens to yield. Node runs a
+      // signal callback from the event loop, and everything from here to the end
+      // of this run is promises and synchronous filesystem work: without a real
+      // macrotask the callbacks can be deferred past the end of the process, and
+      // the case would then prove nothing about what a signal does under a fence.
+      await new Promise<void>(r => { setTimeout(r, 100) })
+      // THE ASSERTION K8-E5's R1 COULD NOT MAKE: the psql child is still there
+      // after the signals this process declined.
+      if (report.fakePsqlPid !== null) {
+        report.fakePsqlAliveAfterSignals = aliveNow(report.fakePsqlPid)
+        flush()
+      }
+    }
     return { supervisorPid: SUPERVISOR_PID, backendStart: BACKEND_START, mechanism: 'S3' as const }
   },
   // THE GATE SAMPLES THE QUEUES, AND THE GATE RUNS FENCED. A depth that is only
@@ -677,6 +933,23 @@ const r = await runOpsCli(rehearseArgs(w, token, spec.rehearseExtra ?? []), deps
     : {}),
   sleep: async (ms: number) => {
     if (spec.recordSleeps === true) { report.sleeps.push(ms); flush() }
+    if (ms === DEAD_CHANNEL_IDLE_MS) {
+      report.deadChannelIdleSleeps += 1
+      flush()
+      // PARKED, NOT STOPPED. The quiet hold must never return; this stub simply
+      // stops resolving once the case has seen enough idle periods, which leaves
+      // the process exactly where the property says it should be - alive,
+      // holding, and publishing nothing.
+      const park = spec.parkAfterIdleSleeps
+      if (park !== undefined && report.deadChannelIdleSleeps >= park) {
+        // A LONG TIMER, NOT A PROMISE NOBODY RESOLVES. An unresolved promise is
+        // not a pending handle: the event loop would empty, and node would exit
+        // ZERO - which the container reads as a crash and which would also be a
+        // false negative for "this process is still holding". A ref'd timer is a
+        // handle, so the process stays alive exactly as the real quiet hold does.
+        await new Promise<void>(r => { setTimeout(r, 3_600_000) })
+      }
+    }
   },
 }))
 

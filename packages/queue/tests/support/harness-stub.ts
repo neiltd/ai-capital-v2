@@ -22,6 +22,14 @@
 //                 looks like to an outside observer, and it is the shape that got a
 //                 live invocation's root deleted - so a case needs to be able to
 //                 produce it exactly.
+//
+// THE READINESS CONTRACT. The `<pid> <root>` line on stdout means "everything a
+// caller may inspect immediately is already on disk and closed". A caller that
+// has seen that line may read the root's contents without polling for them.
+// Anything this stub writes once, up front, must therefore be written BEFORE the
+// line - and anything written repeatedly afterwards (the `hold` publishing loop)
+// is by definition not covered, because a caller cannot know which iteration it
+// is looking at anyway.
 
 import { mkdirSync, mkdtempSync, writeFileSync } from 'node:fs'
 import { join } from 'node:path'
@@ -35,6 +43,28 @@ const mode = process.argv[2]
 const root = mkdtempSync(join(realTmp(), ROOT_PREFIX_FOR(RUN_NONCE, process.pid)))
 const evidence = join(root, 'evidence')
 mkdirSync(evidence, { mode: 0o700 })
+
+// ONE MARKER, WRITTEN AND CLOSED, AND WRITTEN BEFORE READINESS IS REPORTED.
+//
+// `writeFileSync` opens and closes, so after this line nothing holds a descriptor
+// anywhere inside the root - which is the point of `idle`, and the reason it must
+// NOT fall through into the publishing loop below: a process that publishes would
+// eventually be stopped by a ceiling, and a case about protecting a live
+// invocation would then be measuring the ceiling.
+//
+// IT USED TO BE WRITTEN AFTER THE STDOUT LINE, and that was a race rather than a
+// style. `ownerRoot` in pg-copy-modes-harness.test.ts treats the line as
+// readiness and reads this file immediately; between the two statements the file
+// did not exist yet, so a caller that got there first read nothing and then
+// compared that empty snapshot against the real contents. Measured on 2026-10-03
+// under a loaded machine: `pg-copy-modes-harness.test.ts:276` failed with
+// `expected '{"owner":"invocation A"}\n' to be ''`. The producer is the right
+// place to fix it - a consumer polling for the file would only be waiting for a
+// promise this stub is in a position to keep.
+if (mode === 'idle') {
+  writeFileSync(join(evidence, 'marker.json'), '{"owner":"invocation A"}\n', { mode: 0o600 })
+}
+
 // ITS OWN PID FIRST, THEN THE ROOT. A case that has to be able to kill this
 // process cannot always name it: when the launcher exits so that this becomes an
 // orphan, nothing that started it survives to report a pid.
@@ -48,12 +78,6 @@ if (mode !== 'hold' && mode !== 'idle') {
 }
 
 if (mode === 'idle') {
-  // ONE MARKER, WRITTEN AND CLOSED. `writeFileSync` opens and closes, so after this
-  // line nothing holds a descriptor anywhere inside the root - which is the point of
-  // this mode, and the reason it must NOT fall through into the publishing loop
-  // below: a process that publishes would eventually be stopped by a ceiling, and a
-  // case about protecting a live invocation would then be measuring the ceiling.
-  writeFileSync(join(evidence, 'marker.json'), '{"owner":"invocation A"}\n', { mode: 0o600 })
   setInterval(() => undefined, 1_000)
   // NOTHING ELSE. No signal handlers and no self-limit either: this process exists to
   // be a live owner, and a case that needs it gone kills it.

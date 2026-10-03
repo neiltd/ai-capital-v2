@@ -41,15 +41,31 @@
 //     literal `--`, so argv[0] is `--`; `parseArgs` skips exactly one leading
 //     separator for this reason.
 //
-//   <checkout>/packages/queue/node_modules/.bin/tsx \
+//   node --import tsx \
 //     <checkout>/packages/queue/bin/pg-copy-ops.ts <args>      (cwd packages/queue)
 //
-//     The direct shim form, which is what an operator runs for a live step. It
-//     passes no `--` at all, and it does not let pnpm run an install first:
+//     THE REVIEWED LIVE FORM, and the only one an operator runs for a live step.
+//     It passes no `--` at all, and it does not let pnpm run an install first:
 //     `verify-deps-before-run` defaults to `install`, and a launcher that may
 //     change `node_modules` is the wrong launcher for a command whose value
 //     depends on nothing changing. The cwd is `packages/queue` so the package's
-//     own tsconfig applies, exactly as the script form has it.
+//     own tsconfig applies and `tsx` resolves from the package's own
+//     `node_modules`, exactly as the script form has it.
+//
+//     ONE PROCESS, AND THE HANDLERS ARE THIS FILE'S. The earlier reviewed form
+//     was the `node_modules/.bin/tsx` shim, which is the tsx CLI: it runs the
+//     script in a SECOND node process and keeps a supervisor in front of it.
+//     That supervisor installs its own SIGINT and SIGTERM handlers
+//     (`tsx/dist/cli.mjs`, `relaySignals`) which wait for an IPC acknowledgement
+//     from the child and, if two short windows pass without one, send the child
+//     `SIGKILL`. A fence-holding child cannot acknowledge while its event loop is
+//     inside a synchronous publish, and `SIGKILL` cannot be held - so the shim
+//     could end this process, and with it the psql child and the fence, in
+//     exactly the case the held-signal lease exists to survive. It also made
+//     "the CLI pid" ambiguous for an operator who needs to signal it. With
+//     `--import` there is no second process and no relay: the loader is
+//     registered in THIS process, and the handlers that decide what a signal
+//     does are the ones installed below.
 
 import { spawn } from 'node:child_process'
 import { createHash } from 'node:crypto'
@@ -191,6 +207,28 @@ export class OpsRefused extends Error {
   constructor(readonly reason: string, readonly at: string | null = null) {
     super(`${reason}${at === null ? '' : ` (at ${at})`}`)
     this.name = 'OpsRefused'
+  }
+}
+
+/**
+ * THE OPERATOR CHANNEL IS GONE, AND ASKING AGAIN CANNOT HELP.
+ *
+ * A refusal, so every existing `OpsRefused` path still classifies it exactly as
+ * before - but a NAMED one, because the hold has to tell two situations apart
+ * that an ordinary refusal cannot. A reply that was malformed, or carried
+ * another run's token, is a live operator getting it wrong: ask again. A channel
+ * that reached EOF, errored, or never had a terminal to begin with will fail
+ * identically on every attempt for the rest of the process's life, and asking
+ * again is then a loop that publishes a bundle every five seconds into the
+ * production evidence root and never terminates.
+ *
+ * ONLY THE TRANSPORT RAISES THIS, and only for those three conditions. It says
+ * nothing about the fence, which is still held, and nothing about the grammar.
+ */
+export class OperatorChannelDead extends OpsRefused {
+  constructor(reason: string) {
+    super(reason)
+    this.name = 'OperatorChannelDead'
   }
 }
 
@@ -1477,7 +1515,7 @@ export function operatorChannel(
       // an intervention hold arrives here without one, and narrowing its
       // reviewed contract is not this milestone's business.
       if (process.stdin.isTTY !== true) {
-        throw new OpsRefused(
+        throw new OperatorChannelDead(
           'this hold has no terminal and no --resolution-file, so nobody can resolve it')
       }
       if (lines === null) {
@@ -1486,9 +1524,20 @@ export function operatorChannel(
         rl = createInterface({ input: process.stdin, terminal: false })
         lines = rl[Symbol.asyncIterator]()
       }
-      const next = await (lines as AsyncIterableIterator<string>).next()
+      // ALL THREE WAYS THE CHANNEL CAN BE GONE ARE NAMED AS SUCH. A hang-up ends
+      // the iterator (`done`) or rejects it (the stream errored); neither can be
+      // cured by asking again, and the one above cannot either.
+      let next: IteratorResult<string>
+      try {
+        next = await (lines as AsyncIterableIterator<string>).next()
+      } catch {
+        // THE READ FAILED, not the reply. Nothing from the underlying error
+        // travels: it can name a device or a path, and the hold needs only the
+        // fact.
+        throw new OperatorChannelDead('the resolution channel errored before a line arrived')
+      }
       if (next.done === true) {
-        throw new OpsRefused('the resolution channel closed before a line arrived')
+        throw new OperatorChannelDead('the resolution channel closed before a line arrived')
       }
       return next.value
     },
@@ -1577,14 +1626,23 @@ export const HELD_SIGNALS: readonly NodeJS.Signals[] =
 /**
  * The real hold: signal handlers that decline to exit, and a resolution.
  *
- * WHAT THE HANDLERS DO AND DO NOT BUY. They remove the ACCIDENT - a Ctrl-C in
- * the terminal where the hold is printed, a `kill` from habit, a SIGQUIT from
- * a keyboard that still has one bound, a SIGHUP when the window closes - and
- * nothing else. `SIGKILL` cannot be handled, a crash runs no handler, and a
- * closed laptop runs none either; in every one of those the supervisor `psql`
- * child dies and PostgreSQL releases the locks with it. So the handlers are a
- * convenience, NOT a durable lease, and the durable half of this protocol is
- * the intent bundle on disk, which survives all three.
+ * WHAT THE HANDLERS DO AND DO NOT BUY. They keep THIS PROCESS alive through a
+ * `kill` from habit and through the signals a terminal generates, and nothing
+ * else. On their own that would not save the fence: the handlers protect node,
+ * and the lock lives in the supervisor `psql` child, which has no SIGHUP
+ * handler and ends its script on SIGINT. The terminal accidents - a Ctrl-C
+ * where the hold is printed, a SIGQUIT from a keyboard that still has one
+ * bound, a SIGHUP when the window closes - are removed FOR THE FENCE only
+ * because those signals go to the foreground process group and the psql
+ * children are no longer in it; see `detached` in `psql-backend.ts`. The two
+ * halves are needed together.
+ *
+ * `SIGKILL` cannot be handled, a crash runs no handler, and a closed laptop
+ * runs none either; in every one of those this process dies, the psql child
+ * reads EOF on the stdin pipe nobody else writes, and PostgreSQL releases the
+ * locks with it. So the handlers are a convenience, NOT a durable lease, and
+ * the durable half of this protocol is the intent bundle on disk, which
+ * survives all three.
  *
  * THE RESOLUTION ARRIVES TWO WAYS. A TTY, where a person types it; or a
  * reviewed file in the SAME EVIDENCE ROOT, for a hold nobody is sitting in
@@ -1882,6 +1940,8 @@ export async function holdForIntervention(i: HoldInputs): Promise<CliResult> {
   let attempt = 0
   let resolved = false
   let terminalDetail = ''
+  /** Set once the transport reports a channel no further attempt could use. */
+  let channelDead = false
 
   try {
     say(`INTERVENTION REQUIRED: ${reason}`)
@@ -1924,6 +1984,10 @@ export async function holdForIntervention(i: HoldInputs): Promise<CliResult> {
         // THE DECISION FIRST, so the intent can name the chosen operation.
         decision = await i.hold.decide(state, actions, token)
       } catch (e) {
+        // A DEAD CHANNEL IS REMEMBERED, not just recorded. The outcome below is
+        // identical either way; what changes is whether there is any point in a
+        // next attempt. See the quiet hold after the publish.
+        if (e instanceof OperatorChannelDead) channelDead = true
         outcome = {
           fenceState: state,
           detail: e instanceof OpsRefused ? `refused: ${e.message}`
@@ -2026,8 +2090,36 @@ export async function holdForIntervention(i: HoldInputs): Promise<CliResult> {
       state = outcome.fenceState
       reason = outcome.detail
       say('The fence is not resolved. This process is still holding it.')
+
+      // AND IF THE CHANNEL IS DEAD, THIS ATTEMPT WAS THE LAST ONE.
+      //
+      // The outcome above is published; that record is owed and it is written.
+      // What must not happen is the next attempt. Nobody can answer a question
+      // asked down a closed stdin, so every further attempt would fail in
+      // `nextLine` the same way, mint a token nobody can read, publish another
+      // outcome bundle and sleep five seconds - about twelve bundles a minute,
+      // for as long as the process lives, into the PRODUCTION evidence root.
+      // That is not a hold, it is a slow leak with a fence attached.
+      //
+      // So the hold becomes what it should have been all along: quiet. The
+      // fence stays held, the handlers stay armed, the sessions stay open, and
+      // this process publishes nothing further and asks nobody anything. It
+      // does not return, because returning is what releases the fence.
+      if (channelDead) {
+        say('THE OPERATOR CHANNEL IS DEAD: no reply can arrive on it.')
+        say('This process is still holding the source fence and will publish nothing further.')
+        say(`To end it, from another shell: kill -9 ${String(process.pid)}`)
+        say('That closes the psql child\'s stdin, the backend exits, and the fence is released.')
+        for (;;) {
+          // A HEARTBEAT, NOT A RETRY. Long, so it is not a spin; present at all
+          // only because this process must stay alive, and nothing here reads,
+          // writes, mints or publishes.
+          await pause(DEAD_CHANNEL_IDLE_MS)
+        }
+      }
+
       // AND PAUSE BEFORE ASKING AGAIN. Without this a resolution channel that
-      // is simply unavailable - no terminal, an unreadable file - would be
+      // is simply unavailable - an unreadable --resolution-file - would be
       // re-consulted as fast as the event loop allows, burning a core while
       // holding a fence. The hold is still unbounded; it is not a spin.
       await pause(HOLD_RETRY_INTERVAL_MS)
@@ -3031,6 +3123,43 @@ export async function runRehearsal(i: ModeInputs): Promise<CliResult> {
       readDestinationPolicy(i.scope.destinationPolicyPath), i.scope.launchd, ctx),
   }
 
+  /**
+   * ONE HOLD, AND ONE SIGNAL LEASE, FOR THE WHOLE FENCE LIFETIME.
+   *
+   * WHAT WAS WRONG. This was built inside `hold` below, so it came into
+   * existence only when an intervention was already needed - and the lease it
+   * arms came with it. Between `acquire` returning a fence and either the
+   * release being proved or `holdForIntervention` arming, no handler was
+   * installed. A Ctrl-C or a window close in that window reaches node, which is
+   * in the terminal's foreground process group, and node dies on the default
+   * action. `detached: true` in `psql-backend.ts` keeps the signal away from the
+   * psql child, but not the consequence: the child's stdin is a pipe only node
+   * writes, so node's death closes it, psql reads EOF, the backend exits and
+   * PostgreSQL releases the fence - mid-rehearsal, with nothing written down.
+   * Detaching the child is necessary and it is not sufficient; the parent has to
+   * survive too.
+   *
+   * So the hold is constructed BEFORE the fence can exist and its lease is armed
+   * before `acquire`, exactly as `--apply` has always done. A second `arm` - the
+   * one `holdForIntervention` performs - installs nothing and returns the same
+   * disarm (`arm` at `:1505` onward), so there is one handler set, one disarm,
+   * and no disarmed gap at the hand-off.
+   *
+   * LAZILY, STILL. Nothing here installs a handler: `operatorChannel` only
+   * builds the closure, and `--inspect` and the other modes never reach this
+   * function at all, so they arm nothing.
+   *
+   * AND ONLY THE TRANSPORT IS INJECTABLE. K8-E2: `deps.hold` replaces the whole
+   * reviewed hold - its grammar, its intent and outcome bundles, its
+   * token-before-lookup rule - so a test using it proves nothing about what an
+   * operator will meet. Supplying `deps.operatorChannel` instead hands
+   * `processHold` the channel it already accepts as its `existing` argument,
+   * leaving every reviewed behaviour in place. Production supplies neither.
+   */
+  const intervention = deps.hold ?? processHold(
+    say, i.scope.evidenceRoot, v['--resolution-file'] ?? null,
+    deps.operatorChannel?.(say, i.scope.evidenceRoot, v['--resolution-file'] ?? null))
+
   const supervisor = await open()
   let prover: FenceLike | null = null
   let fence: AcquiredFenceLike | null = null
@@ -3070,9 +3199,7 @@ export async function runRehearsal(i: ModeInputs): Promise<CliResult> {
       // `deps.operatorChannel` instead hands `processHold` the channel it
       // already accepts as its `existing` argument, leaving every reviewed
       // behaviour in place. Production supplies neither.
-      hold: deps.hold ?? processHold(
-        say, i.scope.evidenceRoot, v['--resolution-file'] ?? null,
-        deps.operatorChannel?.(say, i.scope.evidenceRoot, v['--resolution-file'] ?? null)),
+      hold: intervention,
       say,
       sleep: deps.sleep ?? ((ms: number) => new Promise<void>(r => { setTimeout(r, ms) })),
       ...(deps.ops === undefined ? {} : { ops: deps.ops }),
@@ -3089,6 +3216,23 @@ export async function runRehearsal(i: ModeInputs): Promise<CliResult> {
         await supervisor.close().catch(() => undefined)
       },
     })
+  }
+
+  // ARMED BEFORE THE FENCE CAN EXIST, for the reason written out above. From
+  // this line until the `finally`, no catchable signal can end this process, so
+  // no catchable signal can close the psql child's stdin and release a fence
+  // this process took.
+  //
+  // AND A FAILURE HERE MAY NOT STOP THE RUN from being able to clean up: the
+  // same rule `holdForIntervention` applies at its own arm. A rehearsal that
+  // could not install a prompt is worse off than one that could, and better off
+  // than one that refused to start and left nothing to disarm.
+  let disarm: () => void = () => undefined
+  try {
+    disarm = intervention.arm(
+      'The rehearsal is holding the source fence and releases it itself.')
+  } catch {
+    say('NOTE: the signal prompt could not be installed; the rehearsal continues.')
   }
 
   try {
@@ -3270,6 +3414,16 @@ export async function runRehearsal(i: ModeInputs): Promise<CliResult> {
       if (prover !== null) await prover.close().catch(() => undefined)
       await supervisor.close().catch(() => undefined)
     }
+    // AND THE LEASE GOES LAST, ON EVERY PATH, EXACTLY ONCE.
+    //
+    // There are three ways out of the body above and this is reached by all of
+    // them: a proved release, where disarming here is the first moment it is
+    // safe; a hold, which already disarmed the SAME lease in its own `finally`
+    // after publishing a terminal record, so this call does nothing; and a throw
+    // before or from `acquire`, where there is no fence to protect. The disarm
+    // is idempotent by construction - `arm` returns a closure guarded by its own
+    // `released` flag - so "already disarmed" and "never armed" are both safe.
+    disarm()
   }
 }
 
@@ -3518,6 +3672,18 @@ export async function performHoldOperation(
  * between a hold and a busy loop.
  */
 export const HOLD_RETRY_INTERVAL_MS = 5_000
+
+/**
+ * How long the QUIET hold sleeps between heartbeats once the channel is dead.
+ *
+ * NOT A RETRY INTERVAL. Nothing is consulted, minted or published when it
+ * elapses. It exists because this process must stay alive - returning is what
+ * releases the fence - and a long sleep is the cheapest way to stay alive
+ * without burning a core. The number is deliberately far larger than
+ * `HOLD_RETRY_INTERVAL_MS`: a reader comparing the two should see at a glance
+ * that one of them paces questions and the other paces nothing.
+ */
+export const DEAD_CHANNEL_IDLE_MS = 60_000
 
 /** How many times a termination is re-censused before it is called unproved. */
 export const TERMINATION_CENSUS_ATTEMPTS = 5

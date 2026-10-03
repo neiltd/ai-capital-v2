@@ -38,6 +38,7 @@ import { afterEach, describe, expect, it } from 'vitest'
 import {
   EXIT_ACTION_REQUIRED, EXIT_INTERVENTION_RESOLVED, EXIT_OK,
   EXIT_REFUSED, HELD_SIGNALS, HOLD_ACTIONS, INTENT_PREFIX, OUTCOME_PREFIX,
+  DEAD_CHANNEL_IDLE_MS,
   HOLD_RETRY_INTERVAL_MS, PRE_RELEASE_OUTCOME, PRODUCER_AUTHORITY, REHEARSAL_OUTCOME, REHEARSAL_PREFIX,
   RESTORATION_PREFIX, REVIEW_PREFIX, isEntryPoint,
   MEASURED_IDENTITY_COLUMNS, MEASURED_IDENTITY_SQL, OPTIONS, OpsRefused,
@@ -643,9 +644,21 @@ describe('the intervention protocol performs real operations', () => {
       // sessions from the moment it begins; the `finally` in `runRehearsal`
       // must neither close them again nor leak them.
       expect(r.report.supervisorClosed).toBe(1)
-      // ARMED ONCE FOR THE WHOLE HOLD, disarmed once at the end.
-      expect(r.report.armed).toBe(1)
-      expect(r.report.disarmed).toBe(1)
+      // ARMED TWICE, ONE HANDLER SET, DISARMED AT THE END.
+      //
+      // K8-E5: `arm` is now CALLED twice - once by `runRehearsal` before
+      // `acquire`, so the fence is never held with nothing armed, and once by
+      // `holdForIntervention` to replace the sentence. This stub counts CALLS.
+      // The invariant that matters is not the call count: a second `arm` installs
+      // no listener and returns the same disarm, which is pinned against
+      // `process.listenerCount` in pg-copy-apply-orchestration.test.ts:1963.
+      expect(r.report.armed).toBe(2)
+      // AND EXACTLY TWO DISARMS. K8-E6 re-pins this to the deterministic value
+      // rather than a lower bound: the stub resolver's `arm` returns a FRESH
+      // counting closure per call (hold-child.ts), and both are called - the
+      // hold's own in its `finally` (pg-copy-ops.ts:2137) and the rehearsal's in
+      // runRehearsal's `finally` (:3426). Two arms, two closures, two calls.
+      expect(r.report.disarmed).toBe(2)
 
       const intent = join(evidence, onlyBundle(evidence, INTENT_PREFIX))
       const outcome = join(evidence, onlyBundle(evidence, OUTCOME_PREFIX))
@@ -1655,13 +1668,25 @@ describe('an unresolved intervention cannot return', () => {
     })
     expect(r.report.requests.length).toBe(3)
     for (const [n, req] of r.report.requests.entries()) {
-      // ARMED ONCE AT THE START, AND NOT YET DISARMED AT ANY PROMPT.
-      expect(req.armedSoFar, `attempt ${n + 1}`).toBe(1)
+      // ARMED BEFORE THE FIRST PROMPT, AND NOT YET DISARMED AT ANY PROMPT.
+      //
+      // K8-E5: two `arm` CALLS, not one - the rehearsal's own, taken before
+      // `acquire` so a fence is never held unarmed, and the hold's, which only
+      // replaces the sentence. The property this case exists for is the second
+      // assertion: nothing is disarmed while an attempt has resolved nothing,
+      // because disarming there hands the terminal back the power to end a
+      // process that is holding a fence.
+      expect(req.armedSoFar, `attempt ${n + 1}`).toBe(2)
       expect(req.disarmedSoFar, `attempt ${n + 1}`).toBe(0)
     }
-    // AND DISARMED EXACTLY ONCE, at the end.
-    expect(r.report.armed).toBe(1)
-    expect(r.report.disarmed).toBe(1)
+    // AND DISARMED ONLY AT THE END. Both closures release the one lease, and the
+    // lease itself is idempotent (pg-copy-ops.ts `arm`), so what matters is that
+    // no disarm happened before the hold ended - asserted at every prompt above.
+    expect(r.report.armed).toBe(2)
+    // EXACTLY TWO, for the reason given at the other re-pinned case: two `arm`
+    // calls, each returning its own counting closure, each called once in a
+    // `finally` (pg-copy-ops.ts:2137 and :3426).
+    expect(r.report.disarmed).toBe(2)
 
     // THE SOURCE SAYS SO TOO: the disarm lives in the `finally` of the loop,
     // not inside it.
@@ -5005,4 +5030,336 @@ describe('K8-E3 T5: every mode returns exactly what it streamed', () => {
     expect(reviewSaid).toHaveLength(1)
     expect(reviewSink.filter(l => l.startsWith('An apply may now reference'))).toHaveLength(1)
   })
+})
+
+describe('K8-E5 R1: a terminal signal under the fence cannot release it', () => {
+  /**
+   * THE WINDOW THIS CASE IS ABOUT.
+   *
+   * `--apply` has always armed its held-signal lease before Stage 1, because
+   * from that moment a fence may exist. `--rehearse` armed only inside an
+   * intervention hold - so between `acquire` returning a fence and either the
+   * release being proved or a hold arming, no handler was installed. A Ctrl-C or
+   * a window close in that window reaches node, which is in the terminal's
+   * foreground group, and node dies on the default action. `detached: true` keeps
+   * the signal off the psql child but not the consequence: the child's stdin is a
+   * pipe only node writes, so node's death closes it, psql reads EOF, and the
+   * backend takes the fence with it.
+   *
+   * NOTHING IS INJECTED. No `hold` and no `operatorChannel`, so the production
+   * `processHold` is built over the production `operatorChannel` - the only
+   * object that installs real handlers. A case that injected the transport would
+   * replace the thing under test and pass against any tree.
+   *
+   * WHAT IT CANNOT SHOW. There is no real psql in this harness; the sessions are
+   * stubs. That the psql CHILD survives a group signal is E4's D1/D2, and the
+   * two halves together are the property. This case owns the parent's half.
+   */
+  it('survives SIGINT and SIGHUP taken between acquire and the gate, and still releases itself',
+     async () => {
+    const r = await contained({
+      hold: { kind: 'production' },
+      signalSelfWhenFenced: ['SIGINT', 'SIGHUP'],
+    })
+
+    // BOTH SIGNALS WERE ACTUALLY DELIVERED, to this child's own pid, at the fence.
+    expect(r.report.selfSignalsSent).toEqual(['SIGINT', 'SIGHUP'])
+
+    // THE LEASE WAS ALREADY IN PLACE WHEN THE FENCE CAME INTO EXISTENCE. This is
+    // the direct observation: on the pre-change tree it is 0 and the process dies.
+    expect(r.report.sigintListenersAtFence).not.toBeNull()
+    expect(r.report.sigintListenersAtFence as number).toBeGreaterThanOrEqual(1)
+
+    // IT DID NOT EXIT EARLY. Reaching exit 4 at all means the process outlived
+    // both signals and finished its own release.
+    expect(r.report.exitCode, r.report.lines.join(' | ')).toBe(EXIT_ACTION_REQUIRED)
+
+    // AND IT SAID SO, ONCE PER SIGNAL, rather than dying quietly.
+    const ignored = r.report.sink.filter(l => l.includes('IGNORED: this process is holding'))
+    expect(ignored).toHaveLength(2)
+    expect(ignored.some(l => l.startsWith('SIGINT '))).toBe(true)
+    expect(ignored.some(l => l.startsWith('SIGHUP '))).toBe(true)
+
+    // THE FENCE WAS RELEASED BY THE RUN, NOT BY THE SIGNAL: the success bundle
+    // exists, which is published only after the release is proved.
+    const evidence = evidenceOf(r)
+    expect(bundles(evidence, REHEARSAL_PREFIX).length).toBe(1)
+    // And no hold was ever entered, so nothing was published for one.
+    expect(bundles(evidence, INTENT_PREFIX).length).toBe(0)
+    expect(bundles(evidence, OUTCOME_PREFIX).length).toBe(0)
+  })
+})
+
+describe('K8-E5 R2: a dead operator channel publishes once, then holds quietly', () => {
+  /**
+   * WHAT THE OLD LOOP DID. Once stdin has hit EOF, every attempt fails at once in
+   * `nextLine`. Each one minted a token nobody could read, published an outcome
+   * bundle, slept five seconds and asked again - about twelve bundles a minute,
+   * for as long as the process lived, into the production evidence root, with no
+   * resolution path and no bound.
+   *
+   * THE RUN NEVER RETURNS, AND MUST NOT. Returning is what releases the fence. So
+   * this case is read from the child's progress file and ends at its container's
+   * wall clock, which is the established shape for a hold that is correct to be
+   * unbounded. The injected clock is parked after four idle periods so the case
+   * measures the code rather than how fast the harness can spin.
+   */
+  it('publishes exactly one outcome, no intent, and never asks or publishes again',
+     async () => {
+    const r = await runContained({
+      // A queue that is only non-empty under the fence: the gate refuses while
+      // the source is frozen, which is a hold rather than an exit-2 refusal.
+      fencedQueueBusy: REVIEWED_QUEUES[0] as string,
+      prover: { kind: 'locks-until', resolveAfter: -1 },
+      hold: { kind: 'dead-channel' },
+      recordSleeps: true,
+      parkAfterIdleSleeps: 4,
+    }, { wallClockMs: 12_000 })
+
+    // THE CEILING THAT STOPPED IT WAS THE CLOCK, NOT A FLOOD. K8-E6 makes this
+    // the first assertion: a mutant that publishes per attempt trips the bundle
+    // or byte ceiling instead, and "killed" alone does not tell them apart.
+    expect(r.ceiling, r.stderr).toBe('wall-clock')
+    expect(r.outcome, `${r.ceiling ?? 'no ceiling'}: ${r.stderr}`).toBe('killed')
+
+    // AND EXACTLY ONE ATTEMPT WAS EVER MADE. The sink is flushed synchronously,
+    // so this COUNTS a flood rather than sampling for one.
+    const attempts = r.report.sink.filter(l => /^ATTEMPT \d+:/.test(l))
+    expect(attempts, r.report.sink.join(' | ')).toHaveLength(1)
+
+    expect(r.report.exitCode).toBeNull()
+
+    expect(r.report.evidence, r.stderr).not.toBeNull()
+
+    // READ FROM THE CHILD'S OWN RECORD, NOT FROM DISK. A container that kills a
+    // run removes its roots on the way out (contained.ts:365), so by the time
+    // this assertion runs the evidence directory is gone. `evidenceEntries` is
+    // flushed as it changes, which is why it exists.
+    const entries = r.report.evidenceEntries
+    const named = (prefix: string): readonly string[] =>
+      entries.filter(e => e.startsWith(`${prefix}-`))
+
+    // EXACTLY ONE OUTCOME, AND NO INTENT. The outcome for the failed attempt is
+    // owed and is written; `decision` stayed null, so no intent was.
+    expect(named(OUTCOME_PREFIX), entries.join(', ')).toHaveLength(1)
+    expect(named(INTENT_PREFIX), entries.join(', ')).toHaveLength(0)
+
+    // AND STILL ONE AFTER SEVERAL IDLE PERIODS have gone by.
+    expect(r.report.deadChannelIdleSleeps).toBeGreaterThanOrEqual(3)
+
+    // THE RETRY PACE IS GONE. Nothing slept the asking interval, and nothing said
+    // it was about to ask again.
+    expect(r.report.sleeps.filter(ms => ms === HOLD_RETRY_INTERVAL_MS)).toHaveLength(0)
+    expect(r.report.sink.filter(l => l.includes('before asking again'))).toHaveLength(0)
+    expect(r.report.sleeps.filter(ms => ms === DEAD_CHANNEL_IDLE_MS).length)
+      .toBeGreaterThanOrEqual(3)
+
+    // THE OPERATOR WAS TOLD, ONCE, WHAT IS TRUE AND WHAT TO DO ABOUT IT.
+    const dead = r.report.sink.filter(l => l.startsWith('THE OPERATOR CHANNEL IS DEAD'))
+    expect(dead).toHaveLength(1)
+    expect(r.report.sink.filter(l => l.includes('kill -9'))).toHaveLength(1)
+    expect(r.report.sink.filter(l => l.includes('publish nothing further'))).toHaveLength(1)
+
+    // AND THE FENCE WAS NEVER RELEASED: the supervisor is still open.
+    expect(r.report.supervisorClosed).toBe(0)
+    // AND THE CONTAINER, NOT A VITEST TIMEOUT, IS WHAT STOPPED IT. A test
+    // timeout would reject this case and abandon the promise while the child
+    // went on holding (contained.ts:105-113), so the ceiling below is set well
+    // above the container's own.
+  }, 120_000)
+})
+
+describe('K8-E6: the PRODUCTION transport classifies a dead stdin', () => {
+  /**
+   * WHY THESE EXIST, WHEN R2 ALREADY COVERS THE QUIET HOLD.
+   *
+   * R2 injects a transport whose `nextLine` throws `OperatorChannelDead`
+   * directly, so it proves what the HOLD does with that class and nothing about
+   * which conditions actually raise it. The production `operatorChannel.nextLine`
+   * raises it at three sites - no TTY, the readline iterator rejecting, and the
+   * iterator reporting `done` - and the hold goes quiet only on
+   * `e instanceof OperatorChannelDead`. Reverting any one of those three to a
+   * plain `OpsRefused` would restore the five-second publish-and-retry flood with
+   * every other test still green. Round 45 found that gap; these three close it,
+   * one per site, against the real transport.
+   *
+   * All three are contained: they reach a real hold, and two of them replace
+   * `process.stdin`, neither of which may happen in a Vitest worker.
+   */
+  const deadChannelScenario = {
+    // A queue that is only non-empty under the fence: the gate refuses while the
+    // source is frozen, which is a hold rather than an exit-2 refusal.
+    fencedQueueBusy: REVIEWED_QUEUES[0] as string,
+    prover: { kind: 'locks-until' as const, resolveAfter: -1 },
+    recordSleeps: true,
+    parkAfterIdleSleeps: 4,
+  }
+
+  /** Everything that must hold however the channel died. */
+  const assertQuietHold = (r: ContainedResult, reasonFragment: string): void => {
+    expect(r.ceiling, r.stderr).toBe('wall-clock')
+    expect(r.outcome, `${r.ceiling ?? 'no ceiling'}: ${r.stderr}`).toBe('killed')
+
+    // ONE ATTEMPT, AND ITS REASON NAMES THE SITE THAT RAISED THE CLASS.
+    const attempts = r.report.sink.filter(l => /^ATTEMPT \d+:/.test(l))
+    expect(attempts, r.report.sink.join(' | ')).toHaveLength(1)
+    expect(attempts[0] as string).toContain(reasonFragment)
+
+    // ONE OUTCOME, NO INTENT. Read from the child's own record: a killed
+    // container removes the roots on its way out (contained.ts:365).
+    const entries = r.report.evidenceEntries
+    const named = (prefix: string): readonly string[] =>
+      entries.filter(e => e.startsWith(`${prefix}-`))
+    expect(named(OUTCOME_PREFIX), entries.join(', ')).toHaveLength(1)
+    expect(named(INTENT_PREFIX), entries.join(', ')).toHaveLength(0)
+
+    // SEVERAL IDLE PERIODS PASSED AND NOTHING CHANGED.
+    expect(r.report.deadChannelIdleSleeps).toBeGreaterThanOrEqual(3)
+    expect(r.report.sleeps.filter(ms => ms === HOLD_RETRY_INTERVAL_MS)).toHaveLength(0)
+    expect(r.report.sink.filter(l => l.includes('before asking again'))).toHaveLength(0)
+    expect(r.report.sleeps.filter(ms => ms === DEAD_CHANNEL_IDLE_MS).length)
+      .toBeGreaterThanOrEqual(3)
+
+    // THE OPERATOR WAS TOLD ONCE, and the fence was never released.
+    expect(r.report.sink.filter(l => l.startsWith('THE OPERATOR CHANNEL IS DEAD')))
+      .toHaveLength(1)
+    expect(r.report.sink.filter(l => l.includes('kill -9'))).toHaveLength(1)
+    expect(r.report.supervisorClosed).toBe(0)
+  }
+
+  it('R2a no terminal: the no-TTY site raises it, end to end', async () => {
+    // The contained child's stdin is 'ignore' (contained.ts:297), so the real
+    // `operatorChannel.nextLine` takes its no-TTY branch. Nothing is injected.
+    const r = await runContained({
+      ...deadChannelScenario,
+      hold: { kind: 'production' },
+    }, { wallClockMs: 12_000 })
+    assertQuietHold(r, 'no terminal and no --resolution-file')
+  }, 120_000)
+
+  it('R2b EOF: the iterator reporting done raises it', async () => {
+    // A stand-in stdin with isTTY true gets past the no-TTY branch and into the
+    // readline iterator; `end()` once the read is in flight resolves it `done`.
+    const r = await runContained({
+      ...deadChannelScenario,
+      hold: { kind: 'production' },
+      stdinStandIn: 'eof',
+    }, { wallClockMs: 12_000 })
+    expect(r.report.stdinStandInEnded, r.stderr).toBe('end()')
+    assertQuietHold(r, 'closed before a line arrived')
+  }, 120_000)
+
+  it('R2c stream error: the iterator rejecting raises it', async () => {
+    // Same stand-in, destroyed with an Error instead, which rejects the iterator.
+    const r = await runContained({
+      ...deadChannelScenario,
+      hold: { kind: 'production' },
+      stdinStandIn: 'error',
+    }, { wallClockMs: 12_000 })
+    expect(r.report.stdinStandInEnded, r.stderr).toBe('destroy(Error)')
+    assertQuietHold(r, 'errored before a line arrived')
+  }, 120_000)
+})
+
+describe('K8-E7 R1b: the lease holds the parent, and the psql child is in another group',
+         () => {
+  /**
+   * WHAT THIS CASE PROVES, AND WHAT IT DOES NOT.
+   *
+   * It proves three things. The parent declines SIGINT and SIGHUP sent to ITS OWN
+   * pid while the rehearsal lease is armed, and goes on to finish its own release.
+   * The psql child opened by the production `openPsqlBackend` is still alive
+   * afterwards and sits in a DIFFERENT process group from the parent, with a null
+   * pgid failing loudly rather than passing vacuously. And releasing the fence
+   * ends that child at EOF rather than killing it.
+   *
+   * IT PROVES NOTHING ABOUT TERMINAL GROUP DELIVERY, and an earlier version of
+   * this comment claimed it did. The signals here go to a single pid, and a
+   * pid-directed signal cannot reach a child whatever group the child is in - so
+   * the child's survival here is not evidence that `detached` works. What it
+   * establishes is the MEMBERSHIP that makes `detached` matter, measured on a
+   * real backend rather than argued from the source.
+   *
+   * THE GROUP-SIGNAL PROOF IS D2, in
+   * `packages/db/tests/pg-copy-psql-backend-group.test.ts:233-240`: that case
+   * signals the fixture parent's whole process group, which is what a TTY driver
+   * does, and asserts the psql child is still alive afterwards. MG1 kills it when
+   * `detached` is removed.
+   *
+   * R1 AND R1b ARE COMPLEMENTARY, not one inside the other. R1 runs the same
+   * fenced-signal scenario with stub sessions and no psql at all, and checks
+   * things this case does not: that exactly one `operational-rehearsal-*` bundle
+   * was published, and that no intervention intent or outcome was. This case adds
+   * a real backend and says what happened to it. Neither replaces the other.
+   */
+  it('declines SIGINT and SIGHUP to its own pid, keeps the psql child, '
+     + 'and ends it at EOF on release',
+     async () => {
+    const r = await runContained({
+      hold: { kind: 'production' },
+      signalSelfWhenFenced: ['SIGINT', 'SIGHUP'],
+      fakePsqlAtFence: true,
+    })
+
+    // FIRST: THE psql CHILD IS STILL THERE after the parent declined the signals.
+    // Not because it was out of their reach - a pid-directed signal never had any
+    // reach - but because the parent survived to RECORD it. The field starts null
+    // (hold-child.ts:206) and is only ever assigned 100 ms after the child signals
+    // itself (hold-child.ts:884). A parent that died on the signal never reaches
+    // that line, so the field stays null and `toBe(true)` fails on null. It is not
+    // an EOF story: nothing here observes the fake reading EOF.
+    expect(r.report.fakePsqlAliveAfterSignals,
+           `fake pid ${String(r.report.fakePsqlPid)}; ${r.stderr}`).toBe(true)
+
+    // THE RUN FINISHED ON ITS OWN. Not killed, not crashed.
+    expect(r.outcome, `${r.ceiling ?? 'no ceiling'}: ${r.stderr}`).toBe('completed')
+
+    // AND IT LED ITS OWN PROCESS GROUP. This is the MEMBERSHIP that makes a
+    // terminal-generated signal miss it; whether it actually does is D2's
+    // subject, not this one's. A null pgid fails rather than passing vacuously.
+    expect(r.report.fakePsqlPid).not.toBeNull()
+    expect(r.report.fakePsqlPgid, 'the psql child has no process group: it is gone')
+      .not.toBeNull()
+    expect(r.report.childPgid, 'the contained child has no process group').not.toBeNull()
+    expect(r.report.fakePsqlPgid).toBe(r.report.fakePsqlPid)
+    expect(r.report.fakePsqlPgid).not.toBe(r.report.childPgid)
+
+    // THE PARENT HALF, WHICH THIS CASE NEEDS IN ITS OWN RIGHT. Without these the
+    // line above would be luck: the signals have to have been sent, the lease has
+    // to have been armed when the fence came into existence, the handlers have to
+    // have run, and the process has to have reached its own exit 4. These are not
+    // a copy of R1's checks for their own sake - they are what makes "the child is
+    // still alive" mean "the parent kept it alive".
+    expect(r.report.selfSignalsSent).toEqual(['SIGINT', 'SIGHUP'])
+    expect(r.report.sigintListenersAtFence as number).toBeGreaterThanOrEqual(1)
+    expect(r.report.exitCode, r.report.lines.join(' | ')).toBe(EXIT_ACTION_REQUIRED)
+    const ignored = r.report.sink.filter(l => l.includes('IGNORED: this process is holding'))
+    expect(ignored).toHaveLength(2)
+
+    // THE SUPERVISOR'S CLOSE ENDED IT GRACEFULLY: the fake wrote its EOF marker
+    // before the run returned, so it was not killed.
+    expect(r.report.fakePsqlExitedAtEof, 'the fake did not exit at EOF').toBe(true)
+
+    // AND IT IS GONE. Bounded wait; nothing is signalled unless its command line
+    // proves it is ours, and then the case fails anyway.
+    const pid = r.report.fakePsqlPid as number
+    const alive = (): boolean => {
+      try { process.kill(pid, 0); return true } catch { return false }
+    }
+    const deadline = Date.now() + 10_000
+    while (alive() && Date.now() < deadline) {
+      await new Promise<void>(res => { setTimeout(res, 25) })
+    }
+    if (alive()) {
+      let line = ''
+      try {
+        line = execFileSync('/bin/ps', ['-o', 'command=', '-p', String(pid)],
+                            { encoding: 'utf-8' })
+      } catch { line = '' }
+      if (line.includes(r.report.fakePsqlRoot ?? '\u0000no-root')) {
+        try { process.kill(pid, 'SIGKILL') } catch { /* raced us */ }
+      }
+      expect.fail(`the fake psql outlived the run: ${line.trim()}`)
+    }
+  }, 120_000)
 })

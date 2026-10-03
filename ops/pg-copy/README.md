@@ -3,6 +3,30 @@
 `destination-policy.json` is the reviewed destination policy read by
 `packages/queue/bin/pg-copy-ops.ts` through `--destination-policy`.
 
+## The reviewed launcher
+
+Every live step runs the command as a **single node process**, from
+`<checkout>/packages/queue`:
+
+```
+node --import tsx <checkout>/packages/queue/bin/pg-copy-ops.ts <args>
+```
+
+`tsx` resolves from the package's own `node_modules`, so the working directory
+matters; it is also what makes the package's `tsconfig.json` apply. This form
+passes no `--`.
+
+**Not the `node_modules/.bin/tsx` shim.** That is the tsx CLI, which runs the
+script in a second node process behind a supervisor. The supervisor installs its
+own `SIGINT`/`SIGTERM` handlers, waits for an IPC acknowledgement from the child,
+and sends the child `SIGKILL` if two short windows pass without one
+(`tsx/dist/cli.mjs`, `relaySignals`). A process holding a source fence cannot
+acknowledge while it is inside a synchronous publish, and `SIGKILL` cannot be
+held — so the shim could kill the fence holder, which closes the `psql` child's
+stdin and releases the fence. It also leaves two node pids, so "the CLI pid" an
+operator needs to signal is ambiguous. The `--import` form has one pid and the
+application's own handlers.
+
 ## Two vocabularies, deliberately
 
 An agent's **stable installation topology** and its **observed launchd state** are

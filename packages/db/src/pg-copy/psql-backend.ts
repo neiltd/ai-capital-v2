@@ -251,8 +251,23 @@ export async function openPsqlBackend(o: PsqlBackendOptions): Promise<PsqlBacken
     inherited ? `${INHERITED_FD_DIR}/${String(PASSFILE_CHILD_FD)}` : o.passfile)
   const stdio: Array<'pipe' | number> = ['pipe', 'pipe', 'pipe']
   if (inherited) stdio.push(o.passfileFd as number)
+  // OUTSIDE THE TERMINAL'S PROCESS GROUP. On POSIX, `detached` makes the child a
+  // session and process-group leader, so the signals a terminal GENERATES - the
+  // SIGINT of Ctrl-C, the SIGHUP of a closed window, the SIGQUIT of Ctrl-\ - go
+  // to the foreground group and reach only this process, whose held-signal
+  // handlers then decide what happens. Without it the psql child shares our
+  // group: psql installs no SIGHUP handler and ends its script on SIGINT, so
+  // either accident killed the client, the BACKEND died with it, and a fence
+  // this process was still holding was released by a keystroke. The precedent
+  // is `run-stage.ts:120`, which detaches for the same reason.
+  //
+  // IT IS STILL TIED TO US, by the one thing that matters: its stdin is a pipe
+  // nobody else writes, so when this process goes the pipe closes, psql reads
+  // EOF and exits. No `unref` here, on the child or on any stdio stream - this
+  // process must keep waiting on it - and `reap` still signals `child.kill`,
+  // which targets the child's own pid and is unaffected by the new group.
   const child: ChildProcessWithoutNullStreams =
-    spawn(o.psqlPath, [...args], { stdio, env }) as ChildProcessWithoutNullStreams
+    spawn(o.psqlPath, [...args], { stdio, env, detached: true }) as ChildProcessWithoutNullStreams
 
   let out = ''
   let err = ''
