@@ -39,7 +39,7 @@ import {
   EXIT_ACTION_REQUIRED, EXIT_INTERVENTION_RESOLVED, EXIT_OK,
   EXIT_REFUSED, HELD_SIGNALS, HOLD_ACTIONS, INTENT_PREFIX, OUTCOME_PREFIX,
   DEAD_CHANNEL_IDLE_MS,
-  HOLD_RETRY_INTERVAL_MS, PRE_RELEASE_OUTCOME, PRODUCER_AUTHORITY, REHEARSAL_OUTCOME, REHEARSAL_PREFIX,
+  HOLD_RETRY_INTERVAL_MS, PRE_RELEASE_OUTCOME, RESOLUTION_POLL_MS, PRODUCER_AUTHORITY, REHEARSAL_OUTCOME, REHEARSAL_PREFIX,
   RESTORATION_PREFIX, REVIEW_PREFIX, isEntryPoint,
   MEASURED_IDENTITY_COLUMNS, MEASURED_IDENTITY_SQL, OPTIONS, OpsRefused,
   censusFromProver, freshCopyBindingFrom, measureIdentity, measuredCopyBinding,
@@ -1177,12 +1177,34 @@ describe('the completion marker cannot be missing from a published bundle', () =
 // ---------------------------------------------------------------------------
 
 describe('the resolution token is load-bearing', () => {
-  /** Resolve a hold through a file under this run's own evidence root. */
+  /**
+   * Resolve a hold through a file under this run's own evidence root.
+   *
+   * K8-E12: THE REPLY ARRIVES AFTER THE QUESTION, because that is now the
+   * contract. `decide` takes a baseline of the file before it prints the token
+   * and judges only content that differs from it, so a reply written BEFORE the
+   * call - which is what this helper used to do - is a leftover that predates the
+   * question and is correctly waited on rather than judged. Written that way the
+   * helper hung on its first call and the case timed out; F5 asserts that same
+   * waiting behaviour deliberately, for the line `--apply` leaves behind.
+   *
+   * So the file starts EMPTY, which is no baseline, and the reply is written from
+   * the `say` hook the moment the `Reply with` line is printed. `say` is called
+   * synchronously inside `decide` before its first read, so the reply is in place
+   * for that read: the helper stays bounded and never polls.
+   *
+   * Every assertion below is unchanged - what changed is when the reply lands.
+   */
   const resolveWith = async (w: World, text: string): Promise<string> => {
     const file = join(w.evidence, 'resolution.txt')
-    writeFileSync(file, text)
+    writeFileSync(file, '')
     chmodSync(file, 0o600)
-    const hold = processHold(() => undefined, w.evidence, file)
+    const say = (line: string): void => {
+      if (!line.startsWith('Reply with: <OPERATION> ')) return
+      writeFileSync(file, text)
+      chmodSync(file, 0o600)
+    }
+    const hold = processHold(say, w.evidence, file)
     try {
       const d = await hold.decide('release-unknown', HOLD_ACTIONS['release-unknown'],
                                   'PGCOPY-RESOLVE-' + 'a'.repeat(64))
@@ -5032,7 +5054,8 @@ describe('K8-E3 T5: every mode returns exactly what it streamed', () => {
   })
 })
 
-describe('K8-E5 R1: a terminal signal under the fence cannot release it', () => {
+describe('K8-E11 R1: the lease holds the parent through pid-directed signals under the fence',
+         () => {
   /**
    * THE WINDOW THIS CASE IS ABOUT.
    *
@@ -5051,11 +5074,17 @@ describe('K8-E5 R1: a terminal signal under the fence cannot release it', () => 
    * object that installs real handlers. A case that injected the transport would
    * replace the thing under test and pass against any tree.
    *
-   * WHAT IT CANNOT SHOW. There is no real psql in this harness; the sessions are
-   * stubs. That the psql CHILD survives a group signal is E4's D1/D2, and the
-   * two halves together are the property. This case owns the parent's half.
+   * WHAT IT CANNOT SHOW. Two things, and K8-E11 states both rather than one. There
+   * is no real psql in this harness: the sessions are stubs, so nothing here says
+   * what becomes of a psql child - that is R1b. And the signals go to this
+   * process's OWN pid, so nothing here says anything about TERMINAL GROUP
+   * DELIVERY either: a pid-directed signal was never going to reach a grandchild
+   * whatever group it is in. The group-delivery proof is D2, in
+   * `packages/db/tests/pg-copy-psql-backend-group.test.ts:233-240`. This case
+   * owns exactly one half: that the parent declines the signal and lives.
    */
-  it('survives SIGINT and SIGHUP taken between acquire and the gate, and still releases itself',
+  it('declines SIGINT and SIGHUP to its own pid between acquire and the gate, '
+     + 'and still releases the fence itself',
      async () => {
     const r = await contained({
       hold: { kind: 'production' },
@@ -5361,5 +5390,321 @@ describe('K8-E7 R1b: the lease holds the parent, and the psql child is in anothe
       }
       expect.fail(`the fake psql outlived the run: ${line.trim()}`)
     }
+  }, 120_000)
+})
+
+describe('K8-E11 F: a hold can be resolved through --resolution-file', () => {
+  /**
+   * THE DEFECT THESE CASES CLOSE, AND WHY IT COULD NEVER BE HIT BY ACCIDENT.
+   *
+   * `token` is derived from the ATTEMPT's run id (`resolutionToken`, called with
+   * `attemptRunId` in the hold loop), so each attempt offers a different one. A
+   * TTY channel is fine with that, because `nextLine` blocks until a person
+   * types and the token on screen is still the one being waited for. A file
+   * channel was not: `decide` printed a token and read the file in the SAME
+   * TICK, found it absent, threw, and the hold published an outcome, slept five
+   * seconds and came back with a DIFFERENT token. An operator who wrote the
+   * reply they had just been shown was always answering a question that had
+   * already been retired. A hold could not be resolved through a file at all,
+   * and the evidence root grew a bundle every five seconds while it could not.
+   *
+   * These three fix the shape of the contract rather than the timing: one token
+   * per attempt, held open until a DEFINITE answer arrives.
+   *
+   * All three are contained: they reach a real hold with a real fence.
+   */
+  const fileScenario = {
+    // A queue that is only non-empty under the fence, so the gate refuses while
+    // the source is frozen - a hold, not an exit-2 refusal.
+    fencedQueueBusy: REVIEWED_QUEUES[0] as string,
+    hold: { kind: 'production' as const, actions: ['CENSUS_ONLY'] },
+    recordSleeps: true,
+  }
+
+  /** The `Reply with:` lines, which is what "one question" is counted over. */
+  const replyLines = (r: ContainedResult): readonly string[] =>
+    r.report.sink.filter(l => l.startsWith('Reply with: <OPERATION> '))
+  const named = (r: ContainedResult, prefix: string): readonly string[] =>
+    r.report.evidenceEntries.filter(e => e.startsWith(`${prefix}-`))
+
+  it('F1 resolves when the operator writes the token they were shown', async () => {
+    // ABANDON AND `reaped-on-terminate`, DELIBERATELY, and the reason is a trap
+    // worth naming. `gone-after-first-decision` decides the backend is gone once
+    // `askedCount > 0`, and `askedCount` is incremented by the INJECTED channels
+    // only - `recordingChannel` and `deadChannel`. This case runs the PRODUCTION
+    // channel, which touches no such counter, so that prover would never report
+    // the fence gone: the reply would be accepted, CENSUS_ONLY would run, the
+    // census would still see the fence, and the hold would go round again with a
+    // new token against a file holding the old one. Measured: 39 attempts and a
+    // bundle-count ceiling. `reaped-on-terminate` is driven by the SQL the
+    // operation actually issues (`pg_terminate_backend`), so it works whatever
+    // channel asked the question - which is the property this case is about.
+    const r = await contained({
+      ...fileScenario,
+      hold: { kind: 'production' as const, actions: ['ABANDON'] },
+      prover: { kind: 'reaped-on-terminate' },
+      resolutionReply: 'current',
+    })
+
+    // IT RESOLVED. On the pre-change tree this is unreachable by construction.
+    expect(r.report.exitCode, r.report.lines.join(' | '))
+      .toBe(EXIT_INTERVENTION_RESOLVED)
+
+    // ONE QUESTION WAS ASKED, not one per poll.
+    expect(replyLines(r), r.report.sink.join(' | ')).toHaveLength(1)
+
+    // AND THE REPLY CARRIED THE TOKEN THAT WAS PRINTED. Taken from the streamed
+    // line, not from the `decide` argument: the question is whether an operator
+    // reading their terminal could have answered it.
+    const printed = /(PGCOPY-RESOLVE-[0-9a-f]+)/.exec(replyLines(r)[0] as string)?.[1]
+    expect(printed).toMatch(/^PGCOPY-RESOLVE-[0-9a-f]{64}$/)
+    expect(r.report.resolutionWritten, 'the child wrote a reply')
+      .toBe(`ABANDON k8-operator ${printed ?? ''}\n`)
+
+    // EXACTLY ONE INTENT AND ONE OUTCOME. The attempt that waited published
+    // nothing while it waited; the attempt that resolved published both.
+    const evidence = evidenceOf(r)
+    expect(bundles(evidence, INTENT_PREFIX).length).toBe(1)
+    expect(bundles(evidence, OUTCOME_PREFIX).length).toBe(1)
+    const intent = manifestOf(
+      join(evidence, allBundles(evidence, INTENT_PREFIX)[0] as string), 'intent.json')
+    expect((intent as { chosen_action?: unknown }).chosen_action).toBe('ABANDON')
+    expect((intent as { resolution_token?: unknown }).resolution_token).toBe(printed)
+    // AND THE INTENT RECORDS WHAT THE OPERATOR ACCEPTED, before the operation
+    // ran - the one reviewed operation that costs something irreversible.
+    expect((intent as { accepted?: unknown }).accepted)
+      .toContain('the supervisor backend will be terminated')
+  }, 120_000)
+
+  it('F2 asks once and publishes nothing while the file is absent', async () => {
+    // Nothing is ever written, so the hold waits until the container stops it.
+    const r = await runContained({
+      ...fileScenario,
+      prover: { kind: 'locks-until' as const, resolveAfter: -1 },
+      resolutionReply: 'never',
+      parkAfterResolutionPolls: 4,
+    }, { wallClockMs: 12_000 })
+
+    // STILL HOLDING when the clock stops it, and stopped by the CLOCK rather than
+    // by a bundle or byte ceiling - which is what a flood would trip.
+    expect(r.ceiling, r.stderr).toBe('wall-clock')
+    expect(r.outcome).toBe('killed')
+
+    // SEVERAL POLLS HAPPENED. Without them the case would prove nothing.
+    expect(r.report.resolutionPolls).toBeGreaterThanOrEqual(3)
+    expect(r.report.sleeps.filter(ms => ms === RESOLUTION_POLL_MS).length)
+      .toBeGreaterThanOrEqual(3)
+
+    // AND ACROSS ALL OF THEM, ONE QUESTION AND NO RECORDS. This is the whole
+    // point: the old code asked again, with a new token, every five seconds.
+    expect(replyLines(r), r.report.sink.join(' | ')).toHaveLength(1)
+    expect(named(r, OUTCOME_PREFIX), r.report.evidenceEntries.join(', ')).toHaveLength(0)
+    expect(named(r, INTENT_PREFIX)).toHaveLength(0)
+    expect(r.report.sink.filter(l => l.startsWith('ATTEMPT '))).toHaveLength(0)
+    expect(r.report.sink.filter(l => l.includes('before asking again'))).toHaveLength(0)
+    expect(r.report.sleeps.filter(ms => ms === HOLD_RETRY_INTERVAL_MS)).toHaveLength(0)
+
+    // THE FENCE IS STILL HELD, and the lease was armed before it existed.
+    //
+    // `armed`/`disarmed` are the STUB resolver's counters and the production
+    // channel increments neither, so asserting on them here would be the same
+    // vacuous check K8-E3 hit with `report.requests`. What is recorded for a
+    // production run is the listener count taken at the fence, which is the
+    // direct observation that the lease was in place.
+    expect(r.report.supervisorClosed).toBe(0)
+    expect(r.report.sigintListenersAtFence as number).toBeGreaterThanOrEqual(1)
+
+    // AND IT WAS STILL ARMED AT EVERY POLL, not just when the fence was taken.
+    //
+    // K8-E12: the fence-time snapshot above says nothing about the WAIT, and "the
+    // lease stays armed while the hold waits" is precisely what the file channel
+    // promises. A disarm mid-wait would hand the terminal back the power to end a
+    // process holding a fence, and the snapshot would not notice. ML in the
+    // matrix removes the listeners on the first poll; these two assertions are
+    // what kill it.
+    const atPoll = r.report.sigintListenersAtPoll
+    expect(atPoll.length, 'the lease was sampled at every poll')
+      .toBeGreaterThanOrEqual(3)
+    expect(atPoll.filter(n => n >= 1).length, `samples: ${atPoll.join(',')}`)
+      .toBe(atPoll.length)
+  }, 120_000)
+
+  /**
+   * A WRONG TOKEN, WRITTEN AFTER THE LINE - AND THEN LEFT THERE.
+   *
+   * K8-E11's F3 asserted that the refusal happened and stopped there, which the
+   * flood also satisfies: with the stub clock resolving `HOLD_RETRY_INTERVAL_MS`
+   * instantly, the old code refused the same leftover reply on every attempt and
+   * the run died at the BUNDLE ceiling, not the clock. The case passed on the
+   * defect. Round 49 is right about that.
+   *
+   * So this is now stated in exact counts, and the counts are what separate one
+   * refusal from a flood: two questions in total, one refusal, one bundle, one
+   * retry interval, and then a quiet wait on the second token that the container
+   * ends at the WALL CLOCK.
+   */
+  const refusedOnceThenQuiet = (r: ContainedResult, fragment: string): void => {
+    // STOPPED BY THE CLOCK. A flood trips the bundle ceiling instead, which is
+    // exactly how the old behaviour hid inside the old assertions.
+    expect(r.ceiling, r.stderr).toBe('wall-clock')
+    expect(r.outcome).toBe('killed')
+    expect(r.report.exitCode).toBeNull()
+
+    // EXACTLY ONE ATTEMPT, and it names the refusal.
+    const attempts = r.report.sink.filter(l => l.startsWith('ATTEMPT '))
+    expect(attempts, r.report.sink.join(' | ')).toHaveLength(1)
+    expect(attempts[0] as string).toContain(fragment)
+
+    // EXACTLY ONE OUTCOME AND NO INTENT: a refusal reached no decision.
+    expect(named(r, OUTCOME_PREFIX), r.report.evidenceEntries.join(', ')).toHaveLength(1)
+    expect(named(r, INTENT_PREFIX)).toHaveLength(0)
+
+    // EXACTLY TWO QUESTIONS, carrying DIFFERENT tokens - the refusal ended
+    // attempt 1, and attempt 2 asked once.
+    expect(replyLines(r)).toHaveLength(2)
+    expect(r.report.replyTokens).toHaveLength(2)
+    expect(r.report.replyTokens[0]).not.toBe(r.report.replyTokens[1])
+
+    // EXACTLY ONE RETRY INTERVAL: one refusal, one pause, and no more.
+    expect(r.report.sleeps.filter(ms => ms === HOLD_RETRY_INTERVAL_MS)).toHaveLength(1)
+
+    // AND THEN IT WENT QUIET ON THE SECOND TOKEN. The polls after the second
+    // question are the proof that the leftover reply is being WAITED on rather
+    // than refused again.
+    const pollsAtSecond = r.report.pollsAtReplyLine[1] as number
+    expect(r.report.resolutionPolls - pollsAtSecond,
+           `polls at reply lines: ${r.report.pollsAtReplyLine.join(',')}`)
+      .toBeGreaterThanOrEqual(3)
+
+    expect(r.report.performed).toBe(0)
+    expect(r.report.supervisorClosed).toBe(0)
+  }
+
+  it('F3 refuses a wrong token once, then waits quietly on the next one', async () => {
+    const r = await runContained({
+      ...fileScenario,
+      prover: { kind: 'locks-until' as const, resolveAfter: -1 },
+      resolutionReply: 'stale',
+      parkAfterResolutionPolls: 40,
+    }, { wallClockMs: 12_000 })
+    refusedOnceThenQuiet(r, 'does not carry this run')
+  }, 120_000)
+
+  it('F3m refuses malformed text once, then waits quietly on the next one', async () => {
+    // THE SAME ACCOUNTING FOR THE OTHER REFUSAL SHAPE. The `malformed` kind was
+    // added in K8-E11 and never used by a case, which round 49 is right to call
+    // out: an unused fixture branch is an untested one.
+    const r = await runContained({
+      ...fileScenario,
+      prover: { kind: 'locks-until' as const, resolveAfter: -1 },
+      resolutionReply: 'malformed',
+      parkAfterResolutionPolls: 40,
+    }, { wallClockMs: 12_000 })
+    refusedOnceThenQuiet(r, 'does not carry this run')
+  }, 120_000)
+
+  it('F4 waits on an earlier reply and accepts it once corrected in place', async () => {
+    /**
+     * THE CASE THE BASELINE RULE EXISTS FOR, end to end.
+     *
+     * Attempt 1 is answered CENSUS_ONLY, which is accepted and resolves nothing -
+     * the fence is still held - so the hold asks again with that reply still in
+     * the file. Under K8-E11 attempt 2 refused it immediately, published a bundle
+     * and came back five seconds later with another token, for ever. Now attempt 2
+     * sees its own baseline and waits; the operator corrects the SAME file in
+     * place; and that correction is judged and resolves the hold.
+     */
+    const r = await contained({
+      ...fileScenario,
+      prover: { kind: 'reaped-on-terminate' },
+      resolutionReply: 'census-then-abandon',
+      correctAfterPolls: 3,
+    })
+
+    // IT RESOLVED, through two accepted replies in one file.
+    expect(r.report.exitCode, r.report.lines.join(' | '))
+      .toBe(EXIT_INTERVENTION_RESOLVED)
+
+    // EXACTLY TWO QUESTIONS, with different tokens.
+    expect(replyLines(r)).toHaveLength(2)
+    expect(r.report.replyTokens).toHaveLength(2)
+    const [t1, t2] = r.report.replyTokens as readonly [string, string]
+    expect(t1).not.toBe(t2)
+
+    // NOTHING WAS EVER REFUSED. This is the assertion that fails under K8-E11:
+    // attempt 2 refused the leftover CENSUS_ONLY reply.
+    expect(r.report.sink.filter(l => l.includes('does not carry')),
+           r.report.sink.join(' | ')).toHaveLength(0)
+
+    // EXACTLY TWO INTENTS AND TWO OUTCOMES - one pair per accepted decision, and
+    // the intents name the two operations against the two tokens.
+    const evidence = evidenceOf(r)
+    const intents = allBundles(evidence, INTENT_PREFIX)
+    expect(intents).toHaveLength(2)
+    expect(bundles(evidence, OUTCOME_PREFIX).length).toBe(2)
+    const chosen = intents.map(n => {
+      const m = manifestOf(join(evidence, n), 'intent.json') as
+        { chosen_action?: unknown; resolution_token?: unknown }
+      return `${String(m.chosen_action)}/${String(m.resolution_token)}`
+    }).sort()
+    expect(chosen).toEqual([`ABANDON/${t2}`, `CENSUS_ONLY/${t1}`].sort())
+
+    // EXACTLY ONE RETRY INTERVAL: between the two attempts, and nowhere else.
+    expect(r.report.sleeps.filter(ms => ms === HOLD_RETRY_INTERVAL_MS)).toHaveLength(1)
+
+    // AND ATTEMPT 2 REALLY WAITED before the correction arrived.
+    const pollsAtSecond = r.report.pollsAtReplyLine[1] as number
+    expect(r.report.resolutionPolls - pollsAtSecond,
+           `polls at reply lines: ${r.report.pollsAtReplyLine.join(',')}`)
+      .toBeGreaterThanOrEqual(3)
+
+    // CORRECTED IN PLACE, NOT REPLACED. Two writes, one inode: an
+    // unlink-and-recreate would say nothing about whether the reader tolerates a
+    // rewrite of the file it is already watching.
+    expect(r.report.resolutionInodes).toHaveLength(2)
+    expect(r.report.resolutionInodes[0]).toBe(r.report.resolutionInodes[1])
+    expect(r.report.resolutionInodes[0]).not.toBe('absent')
+  }, 120_000)
+
+  it('F5 waits on a leftover CONFIRM line and never judges it', async () => {
+    /**
+     * THE SHAPE `--apply` LEAVES BEHIND. `awaitCopyConfirmation` reads the same
+     * file and `processHold` is handed the same `--resolution-file`, so a hold
+     * entered after an apply opens with the CONFIRM line still sitting there.
+     * Under K8-E11 that line was judged and refused on the first attempt, and on
+     * every attempt after it.
+     *
+     * Nothing is ever written by this case: the leftover is planted before the
+     * run starts and then left alone, so what is measured is purely what the hold
+     * does with content it did not ask for.
+     */
+    const r = await runContained({
+      ...fileScenario,
+      prover: { kind: 'locks-until' as const, resolveAfter: -1 },
+      resolutionReply: 'never',
+      resolutionPrewrite: 'confirm-leftover',
+      parkAfterResolutionPolls: 4,
+    }, { wallClockMs: 12_000 })
+
+    // STOPPED BY THE CLOCK, still holding.
+    expect(r.ceiling, r.stderr).toBe('wall-clock')
+    expect(r.outcome).toBe('killed')
+
+    // ONE QUESTION, AND IT WAS NEVER ANSWERED OR REFUSED.
+    expect(replyLines(r)).toHaveLength(1)
+    expect(r.report.sink.filter(l => l.startsWith('ATTEMPT ')),
+           r.report.sink.join(' | ')).toHaveLength(0)
+
+    // AND NOTHING WAS PUBLISHED AT ALL. Under K8-E11 this was one bundle per five
+    // seconds for as long as the process lived.
+    expect(named(r, OUTCOME_PREFIX), r.report.evidenceEntries.join(', ')).toHaveLength(0)
+    expect(named(r, INTENT_PREFIX)).toHaveLength(0)
+
+    // IT WAITED, repeatedly, on a file that was present the whole time.
+    expect(r.report.resolutionPolls).toBeGreaterThanOrEqual(3)
+    expect(r.report.resolutionInodes).toHaveLength(1)
+    expect(r.report.resolutionInodes[0]).not.toBe('absent')
+
+    expect(r.report.supervisorClosed).toBe(0)
   }, 120_000)
 })

@@ -1660,6 +1660,9 @@ export const HELD_SIGNALS: readonly NodeJS.Signals[] =
 export function processHold(
   say: (l: string) => void, root: string, resolutionFile: string | null,
   existing?: OperatorChannel,
+  sleep: (ms: number) => Promise<void> = async (ms: number) =>
+    await new Promise<void>(r => { setTimeout(r, ms) }),
+  pollMs: number = RESOLUTION_POLL_MS,
 ): InterventionHold {
   // THE SAME TRANSPORT THE COPY CONFIRMATION USES, and only the transport. The
   // grammar below - reviewed operations, a chosen action, an intent and an
@@ -1688,24 +1691,114 @@ export function processHold(
     async decide(
       state: HoldFenceState, actions: readonly HoldAction[], token: string,
     ): Promise<HoldDecision> {
+      // ONE TOKEN PER ATTEMPT, AND AN ANSWER IS ONLY AN ANSWER IF IT IS NEW.
+      //
+      // `token` is derived from the ATTEMPT's run id (`resolutionToken` at
+      // `:1374`, called with `attemptRunId` in the hold loop), and that run id is
+      // minted at random per attempt. So a reply can carry THIS attempt's token
+      // only if it was written after this attempt printed it. That single fact is
+      // what the baseline below turns into a rule.
+      //
+      // A TTY CHANNEL NEEDS NONE OF THIS and gets none of it: `nextLine` blocks
+      // until a person types, so every line it returns is new by construction.
+      // Everything here is guarded on `resolutionFile !== null`.
+      //
+      // WHAT K8-E11 FIXED, AND WHAT IT LEFT. It made an ABSENT or EMPTY file mean
+      // "wait", which is why a hold can now be resolved through a file at all.
+      // But it still judged any OTHER content the moment it saw it - so a reply
+      // that stayed in the file after being judged was refused again on the next
+      // attempt, against a token minted after it was written. That refusal brought
+      // a new token, a new `Reply with` line and another outcome bundle every five
+      // seconds: the original flood, reached by a different road. It is reachable
+      // three reviewed ways, and all three are ordinary rather than exotic:
+      //
+      //   (a) after a NON-TERMINAL decision - `CENSUS_ONLY` reports and resolves
+      //       nothing, so the hold asks again with the old reply still in place;
+      //   (b) after ANY refused reply, because the refusal does not consume it;
+      //   (c) in `--apply`, where `awaitCopyConfirmation` reads the same file and
+      //       `processHold` is handed the same `--resolution-file`, so the CONFIRM
+      //       line is still sitting there when a hold starts.
+      //
+      // Overwriting the file with the newest printed token cannot win that race:
+      // by the time the operator reads a token off the screen, the attempt that
+      // printed it has already refused the file's current contents.
+      //
+      // THE RULE. Take a baseline of the file BEFORE the question is asked. Then
+      // wait while the file is absent, empty, or byte-identical to that baseline,
+      // and judge only content that is both non-empty and DIFFERENT. A reply left
+      // over from an earlier attempt is the baseline, so it is waited on rather
+      // than refused; and because each attempt's baseline is whatever the previous
+      // attempt refused, a refusal happens once and then the hold goes quiet.
+      //
+      // IN MEMORY, AND BY DIGEST. The baseline is kept as a SHA-256, never as
+      // text, and the content is never echoed or logged - the file carries an
+      // operator's words and this process has no business repeating them.
+      let baseline: string | null = null
+      if (resolutionFile !== null) {
+        try {
+          const before = readResolutionFile(root, resolutionFile)
+          // AN EMPTY BASELINE IS NO BASELINE. `null` means "anything non-empty is
+          // new", which is what absent and empty both have to mean.
+          baseline = before.trim() === ''
+            ? null
+            : createHash('sha256').update(before).digest('hex')
+        } catch (e) {
+          // THE SAME DISTINCTION THE WAIT MAKES. Absence is a condition; every
+          // other refusal - a symlink, a path outside the evidence root, a mode
+          // that is not 0600 - is a bounded refusal for this attempt, exactly as
+          // it was when the first read was the only read.
+          if (!(e instanceof ResolutionPending)) throw e
+        }
+      }
+
       say(`FENCE STATE: ${state}. Reviewed operations: ${actions.join(', ')}`)
       say(`Reply with: <OPERATION> <operator-name> ${token}`)
-      const text = resolutionFile === null
-        ? await nextLine()
-        : readResolutionFile(root, resolutionFile)
-      const [action = '', operator = '', supplied = ''] = text.trim().split(/\s+/, 3)
-      // THE TOKEN IS CHECKED BEFORE THE OPERATION IS EVEN LOOKED UP, so a
-      // resolution meant for another hold cannot select an operation here.
-      if (supplied !== token) {
-        throw new OpsRefused('the resolution does not carry this run\'s token')
+
+      for (;;) {
+        let text: string
+        try {
+          text = resolutionFile === null
+            ? await nextLine()
+            : readResolutionFile(root, resolutionFile)
+        } catch (e) {
+          if (resolutionFile !== null && e instanceof ResolutionPending) {
+            await sleep(pollMs)
+            continue
+          }
+          throw e
+        }
+        if (resolutionFile !== null) {
+          // AN EMPTY FILE IS A HALF-WRITTEN ONE, not an answer. For a TTY an empty
+          // line is a reply that fails the token check below, which is the
+          // reviewed behaviour and is left alone.
+          if (text.trim() === '') {
+            await sleep(pollMs)
+            continue
+          }
+          // AND UNCHANGED CONTENT IS NOT AN ANSWER EITHER. This is the whole fix:
+          // what was already there when the question was asked cannot be a reply
+          // to it.
+          if (baseline !== null
+              && createHash('sha256').update(text).digest('hex') === baseline) {
+            await sleep(pollMs)
+            continue
+          }
+        }
+
+        const [action = '', operator = '', supplied = ''] = text.trim().split(/\s+/, 3)
+        // THE TOKEN IS CHECKED BEFORE THE OPERATION IS EVEN LOOKED UP, so a
+        // resolution meant for another hold cannot select an operation here.
+        if (supplied !== token) {
+          throw new OpsRefused('the resolution does not carry this run\'s token')
+        }
+        if (!(actions as readonly string[]).includes(action)) {
+          throw new OpsRefused('the chosen operation is not reviewed for this state', state)
+        }
+        if (!/^[A-Za-z][A-Za-z0-9 ._-]{0,63}$/.test(operator)) {
+          throw new OpsRefused('an intervention needs a named operator')
+        }
+        return { action: action as HoldAction, operator, token: supplied }
       }
-      if (!(actions as readonly string[]).includes(action)) {
-        throw new OpsRefused('the chosen operation is not reviewed for this state', state)
-      }
-      if (!/^[A-Za-z][A-Za-z0-9 ._-]{0,63}$/.test(operator)) {
-        throw new OpsRefused('an intervention needs a named operator')
-      }
-      return { action: action as HoldAction, operator, token: supplied }
     },
   }
 }
@@ -3156,9 +3249,15 @@ export async function runRehearsal(i: ModeInputs): Promise<CliResult> {
    * `processHold` the channel it already accepts as its `existing` argument,
    * leaving every reviewed behaviour in place. Production supplies neither.
    */
+  //
+  // AND THE SAME CLOCK THE HOLD USES. `decide` now waits for the answer to its
+  // own token when the channel is a file, so the poll has to be drivable by a
+  // test exactly as every other wait in this file is. Production passes nothing
+  // and gets the real `setTimeout`.
   const intervention = deps.hold ?? processHold(
     say, i.scope.evidenceRoot, v['--resolution-file'] ?? null,
-    deps.operatorChannel?.(say, i.scope.evidenceRoot, v['--resolution-file'] ?? null))
+    deps.operatorChannel?.(say, i.scope.evidenceRoot, v['--resolution-file'] ?? null),
+    deps.sleep)
 
   const supervisor = await open()
   let prover: FenceLike | null = null
@@ -5211,7 +5310,8 @@ export async function runProductionApply(i: ApplyOrchestration): Promise<CliResu
       // THE CHANNEL THAT ALREADY PASSED PREFLIGHT, and the same bounded
       // resolution-file policy. Never a second channel while fenced.
       hold: deps.hold ??
-        processHold(say, i.scope.evidenceRoot, v['--resolution-file'] ?? null, channel),
+        processHold(say, i.scope.evidenceRoot, v['--resolution-file'] ?? null, channel,
+                    deps.sleep),
       say,
       sleep,
       ...(deps.ops === undefined ? {} : { ops: deps.ops }),

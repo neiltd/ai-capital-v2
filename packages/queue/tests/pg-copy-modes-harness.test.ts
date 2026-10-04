@@ -258,6 +258,15 @@ describe('a live invocation is never reaped, however little it can be seen', () 
     const root = await ownerRoot(a)
     const marker = join(root, 'evidence', 'marker.json')
     const bytes = readFileSync(marker, 'utf-8')
+    // ITS EXACT CONTENT, AT THE FIRST READ. K8-E11: without this the comparison
+    // at the end of the case was `bytes` against itself, so an empty snapshot
+    // compared equal to an empty re-read and the case passed while proving
+    // nothing. That is how the 2026-10-03 readiness race hid: the stub printed
+    // its root before writing this file, this read landed in the gap, and only
+    // the final byte-for-byte comparison noticed. harness-stub now writes before
+    // it reports readiness, and this asserts the promise it makes.
+    expect(bytes, 'the owner wrote its marker before reporting readiness')
+      .toBe('{"owner":"invocation A"}\n')
 
     // THE TWO THINGS THE OLD PROOF LOOKED AT, BOTH ABSENT.
     expect(argvNames(a.pid, root), "the owner's command line does not name its root")

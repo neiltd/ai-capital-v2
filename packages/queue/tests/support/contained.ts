@@ -83,7 +83,23 @@ export interface ContainedResult {
   readonly stderr: string
 }
 
-/** The report a child that never got as far as reporting anything leaves. */
+/**
+ * The report a child that never got as far as reporting anything leaves.
+ *
+ * EVERY KEY `HoldReport` DECLARES, and K8-E11 is where that became true again.
+ * This literal had not grown a key since it was written, so from K8-E3's `sink`
+ * onwards it did not satisfy the interface - and nothing noticed, because
+ * `packages/queue/tsconfig.json` includes only `src/**` and `bin/**` and so no
+ * queue test file is ever compiled. An explicit `tsc` over these files reported
+ * it as its one error in this file; it is fixed here rather than carried further.
+ *
+ * The values say "the child did not get this far", which is what the absence
+ * means: empty lists, null scalars, zero counts. A case that wants to know
+ * whether something was really observed asks about the thing itself - `exitCode`
+ * is null for a killed child, `fakePsqlAliveAfterSignals` is null when the child
+ * never reached the line that records it - rather than reading a zero here as
+ * evidence.
+ */
 const NOTHING_OBSERVED: HoldReport = Object.freeze({
   exitCode: null, lines: Object.freeze([]), root: null, evidence: null,
   supervisorSql: Object.freeze([]), supervisorClosed: 0,
@@ -93,6 +109,15 @@ const NOTHING_OBSERVED: HoldReport = Object.freeze({
   unscripted: null, renames: 0, plantedSurvived: null, holdStartedAt: null,
   scratchCensus: Object.freeze([]),
   evidenceEntries: Object.freeze([]), publishAttempts: 0,
+  sink: Object.freeze([]), channelSnapshots: Object.freeze([]),
+  sigintListenersAtFence: null, selfSignalsSent: Object.freeze([]),
+  deadChannelIdleSleeps: 0,
+  fakePsqlPid: null, fakePsqlPgid: null, childPgid: null,
+  fakePsqlAliveAfterSignals: null, fakePsqlExitedAtEof: null,
+  stdinStandInEnded: null, fakePsqlRoot: null,
+  resolutionFilePath: null, resolutionWritten: null, resolutionPolls: 0,
+  sigintListenersAtPoll: Object.freeze([]), pollsAtReplyLine: Object.freeze([]),
+  replyTokens: Object.freeze([]), resolutionInodes: Object.freeze([]),
 })
 
 let containedSeq = 0

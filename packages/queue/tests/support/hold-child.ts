@@ -44,7 +44,7 @@ import { publishAtomically } from './publish.js'
 
 import {
   DEAD_CHANNEL_IDLE_MS, INTENT_PREFIX, OUTCOME_PREFIX, OperatorChannelDead, OpsRefused,
-  runOpsCli,
+  RESOLUTION_POLL_MS, runOpsCli,
   type FenceLike, type InterventionHold, type OperatorChannel,
 } from '../../bin/pg-copy-ops.js'
 import {
@@ -193,6 +193,13 @@ const report: {
   fakePsqlExitedAtEof: boolean | null
   stdinStandInEnded: string | null
   fakePsqlRoot: string | null
+  resolutionFilePath: string | null
+  resolutionWritten: string | null
+  resolutionPolls: number
+  sigintListenersAtPoll: number[]
+  pollsAtReplyLine: number[]
+  replyTokens: string[]
+  resolutionInodes: string[]
 } = {
   exitCode: null, lines: [], root: null, evidence: null,
   supervisorSql: [], supervisorClosed: 0, proverSql: [], proverClosed: 0,
@@ -205,6 +212,8 @@ const report: {
   fakePsqlPid: null, fakePsqlPgid: null, childPgid: null,
   fakePsqlAliveAfterSignals: null, fakePsqlExitedAtEof: null,
   stdinStandInEnded: null, fakePsqlRoot: null,
+  resolutionFilePath: null, resolutionWritten: null, resolutionPolls: 0,
+  sigintListenersAtPoll: [], pollsAtReplyLine: [], replyTokens: [], resolutionInodes: [],
 }
 
 const flush = (): void => { publishAtomically(progressFile, `${JSON.stringify(report)}\n`) }
@@ -749,6 +758,130 @@ let fakeMarker: string | null = null
  * whole purpose is to be disposable - a Vitest worker must never do this, which
  * is why these cases are contained.
  */
+/**
+ * ANSWER A --resolution-file HOLD FROM INSIDE THE CHILD, AT THE RIGHT MOMENT.
+ *
+ * K8-E11. The file is deliberately ABSENT when the run starts, so the hold begins
+ * in the state the old code could never leave. The reply is written only after the
+ * `Reply with:` line has been streamed, and it carries THE TOKEN FROM THAT LINE -
+ * not the one `decide` was called with. Reading the token from the argument would
+ * prove nothing: the question is whether an operator looking at their terminal
+ * could have answered it, so the reply is built from what the terminal showed or
+ * not at all.
+ *
+ * The container checks are real (`openReviewedContainer`): 0600, regular, one
+ * link, owned by this user, and at a path that resolves to itself - which is why
+ * the evidence root is already a realpath and the file is written with an
+ * explicit mode.
+ */
+/** `dev:ino`, so an in-place correction can be told from a replace. */
+const inodeOf = (path: string): string => {
+  try {
+    const st = statSync(path)
+    return `${String(st.dev)}:${String(st.ino)}`
+  } catch { return 'absent' }
+}
+
+const resolutionKind = spec.resolutionReply
+const resolutionPath = resolutionKind === undefined ? null : join(w.evidence, 'resolution.txt')
+if (resolutionPath !== null) {
+  report.resolutionFilePath = resolutionPath
+  flush()
+}
+
+/**
+ * K8-E12 F5: THE LEFTOVER AN `--apply` LEAVES BEHIND.
+ *
+ * Written before the CLI is invoked and never touched again, so the hold's first
+ * attempt opens with somebody else's answer already in the file. A well-formed
+ * CONFIRM line carrying a fabricated 64-hex token, at mode 0600 so the reader
+ * accepts the container and the question is purely about the CONTENT.
+ */
+if (resolutionPath !== null && spec.resolutionPrewrite === 'confirm-leftover') {
+  writeFileSync(resolutionPath, `CONFIRM k8-operator PGCOPY-RESOLVE-${'c'.repeat(64)}\n`,
+                { mode: 0o600 })
+  report.resolutionInodes.push(inodeOf(resolutionPath))
+  flush()
+}
+
+const STALE_TOKEN = `PGCOPY-RESOLVE-${'b'.repeat(64)}`
+
+/** Write the reply, record what and where. Never unlinks: F4 needs the same file. */
+const writeReply = (body: string): void => {
+  const path = resolutionPath as string
+  try {
+    writeFileSync(path, body, { mode: 0o600 })
+    report.resolutionWritten = body
+    report.resolutionInodes.push(inodeOf(path))
+  } catch (e) {
+    report.resolutionWritten = `WRITE FAILED: ${e instanceof Error ? e.name : 'unknown'}`
+  }
+  flush()
+}
+
+/**
+ * ANSWER THE FILE, ONCE PER QUESTION, AND ONLY AFTER THE QUESTION WAS ASKED.
+ *
+ * Every `Reply with` line is recorded with its token and with the poll count at
+ * the moment it streamed, because K8-E12's cases are stated in exact counts: how
+ * many questions were asked, and how many polls happened after each one.
+ *
+ * `census-then-abandon` is F4. The first question gets a CENSUS_ONLY reply, which
+ * is accepted and resolves nothing, so the hold asks again with that reply still
+ * in the file - the leftover shape the baseline rule exists for. The second answer
+ * is written only after `correctAfterPolls` polls on the NEW token, in place, so
+ * the case can prove the wait happened and that the file was corrected rather
+ * than replaced.
+ */
+let answered = 0
+let correctionArmed = false
+const answerResolutionFileOnceAsked = (line: string): void => {
+  if (resolutionPath === null) return
+  if (!line.startsWith('Reply with: <OPERATION> ')) return
+  const m = /(PGCOPY-RESOLVE-[0-9a-f]+)/.exec(line)
+  if (m === null) return
+  const printed = m[1] as string
+  report.replyTokens.push(printed)
+  report.pollsAtReplyLine.push(report.resolutionPolls)
+  flush()
+
+  const nth = report.replyTokens.length
+  const action = spec.hold?.actions?.[0] ?? 'CENSUS_ONLY'
+
+  if (resolutionKind === 'census-then-abandon') {
+    if (nth === 1) {
+      answered += 1
+      setTimeout(() => { writeReply(`CENSUS_ONLY k8-operator ${printed}\n`) }, 30)
+      return
+    }
+    if (nth === 2 && !correctionArmed) {
+      correctionArmed = true
+      // NOT ON A TIMER, BUT ON POLLS. The correction has to land after the wait
+      // is demonstrable, so it waits for the poll count to move on.
+      const want = report.resolutionPolls + (spec.correctAfterPolls ?? 3)
+      const tick = setInterval(() => {
+        if (report.resolutionPolls >= want) {
+          clearInterval(tick)
+          writeReply(`ABANDON k8-operator ${printed}\n`)
+        }
+      }, 5)
+    }
+    return
+  }
+
+  if (answered > 0) return
+  const body =
+    resolutionKind === 'current' ? `${action} k8-operator ${printed}\n`
+    : resolutionKind === 'stale' ? `${action} k8-operator ${STALE_TOKEN}\n`
+    : resolutionKind === 'malformed' ? 'not a reply at all\n'
+    : null
+  if (body === null) return
+  answered += 1
+  // AFTER A TURN OF THE LOOP, so the hold is genuinely waiting rather than being
+  // answered inside the same tick that printed the question.
+  setTimeout(() => { writeReply(body) }, 30)
+}
+
 const standInKind = spec.stdinStandIn
 let standIn: PassThrough | null = null
 if (standInKind !== undefined) {
@@ -804,7 +937,11 @@ const channelKind = holdKind === 'channel'
 const productionKind = holdKind === 'production'
 const deadChannelKind = holdKind === 'dead-channel'
 
-const r = await runOpsCli(rehearseArgs(w, token, spec.rehearseExtra ?? []), deps(w, {
+const extraArgs = [
+  ...(spec.rehearseExtra ?? []),
+  ...(resolutionPath === null ? [] : [`--resolution-file=${resolutionPath}`]),
+]
+const r = await runOpsCli(rehearseArgs(w, token, extraArgs), deps(w, {
   openSupervisor: async () => watchedSup as never,
   openProver: async () => prover,
   ...(held === undefined ? {} : { hold: held }),
@@ -825,7 +962,9 @@ const r = await runOpsCli(rehearseArgs(w, token, spec.rehearseExtra ?? []), deps
   ...(productionKind
     ? {
       hold: undefined,
-      sink: (l: string) => { sink.push(l); flush(); endStandInOnceAsked(l) },
+      sink: (l: string) => {
+        sink.push(l); flush(); endStandInOnceAsked(l); answerResolutionFileOnceAsked(l)
+      },
     }
     : {}),
   // K8-E5 R2: the production hold over a transport that is already gone.
@@ -833,7 +972,9 @@ const r = await runOpsCli(rehearseArgs(w, token, spec.rehearseExtra ?? []), deps
     ? {
       hold: undefined,
       operatorChannel: () => deadChannel(),
-      sink: (l: string) => { sink.push(l); flush(); endStandInOnceAsked(l) },
+      sink: (l: string) => {
+        sink.push(l); flush(); endStandInOnceAsked(l); answerResolutionFileOnceAsked(l)
+      },
     }
     : {}),
   acquireFence: async () => {
@@ -933,6 +1074,28 @@ const r = await runOpsCli(rehearseArgs(w, token, spec.rehearseExtra ?? []), deps
     : {}),
   sleep: async (ms: number) => {
     if (spec.recordSleeps === true) { report.sleeps.push(ms); flush() }
+    if (ms === RESOLUTION_POLL_MS) {
+      report.resolutionPolls += 1
+      // THE LEASE, AT EVERY POLL. K8-E12 F2: a snapshot taken when the fence was
+      // taken cannot show that the lease is STILL armed while the hold waits, and
+      // that is what the file-channel wait promises.
+      report.sigintListenersAtPoll.push(process.listenerCount('SIGINT'))
+      flush()
+      // AND YIELD A REAL MACROTASK, briefly. A stub clock that resolves instantly
+      // turns this poll into a tight loop, and a tight loop starves every other
+      // timer in the process - including the one this child uses to write the
+      // operator's reply. That is the same starvation K8-E6's MR2 ran into. Five
+      // milliseconds keeps the case two orders of magnitude faster than the real
+      // 2 s interval while leaving the loop a turn to give away.
+      await new Promise<void>(r => { setTimeout(r, 5) })
+      const park = spec.parkAfterResolutionPolls
+      if (park !== undefined && report.resolutionPolls >= park) {
+        // PARKED, NOT STOPPED, for the same reason as the dead-channel park: a
+        // ref'd timer keeps this process alive and holding, where an unresolved
+        // promise would let the loop empty and node exit zero.
+        await new Promise<void>(r => { setTimeout(r, 3_600_000) })
+      }
+    }
     if (ms === DEAD_CHANNEL_IDLE_MS) {
       report.deadChannelIdleSleeps += 1
       flush()

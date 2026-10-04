@@ -152,6 +152,53 @@ export interface HoldSpec {
    */
   readonly fakePsqlAtFence?: boolean
   /**
+   * RUN THE HOLD OVER A --resolution-file, AND ANSWER IT (OR NOT) FROM THE CHILD.
+   *
+   * K8-E11. The child creates `<evidence>/resolution.txt`'s PATH, passes it as
+   * `--resolution-file`, and leaves the file ABSENT so the hold starts out
+   * waiting - which is the state the old code could never get out of. It then
+   * watches its own sink for the `Reply with:` line and writes a reply:
+   *
+   * `current`   - the action, an operator name and THE TOKEN THAT WAS PRINTED.
+   *               The reply the operator would actually write.
+   * `stale`     - a well-formed reply carrying a fabricated token, which is what
+   *               an answer to a previous attempt looks like. Must be refused.
+   * `malformed` - three words that are not a reply at all. Must be refused.
+   * `never`     - nothing is ever written, so the hold waits for as long as the
+   *               container allows. For the no-flood case.
+   */
+  readonly resolutionReply?: 'current' | 'stale' | 'malformed' | 'never'
+    | 'census-then-abandon'
+  /**
+   * WRITE A LEFTOVER REPLY BEFORE THE RUN STARTS.
+   *
+   * K8-E12 F5. `--apply` with `--resolution-file` leaves its CONFIRM line in the
+   * file, and `processHold` is handed the same path - so a hold entered after an
+   * apply begins with somebody else's answer already sitting there. This plants
+   * exactly that shape: a well-formed CONFIRM line carrying a fabricated token,
+   * at mode 0600, written before the CLI is invoked and never touched again.
+   */
+  readonly resolutionPrewrite?: 'confirm-leftover'
+  /**
+   * HOW MANY POLLS TO LET PASS AFTER THE SECOND `Reply with` LINE before the
+   * child corrects the file in place.
+   *
+   * K8-E12 F4. The point of the case is that attempt 2 WAITS on the leftover
+   * reply rather than refusing it, so the correction has to arrive after several
+   * polls have demonstrably happened on the new token.
+   */
+  readonly correctAfterPolls?: number
+  /**
+   * PARK THE INJECTED CLOCK AFTER THIS MANY RESOLUTION POLLS.
+   *
+   * Same reason as `parkAfterIdleSleeps`: the stub clock resolves instantly, so
+   * without this a waiting hold would spin as fast as the event loop allows and
+   * the case would be measuring the harness. After this many polls the stub stops
+   * resolving, which leaves the hold exactly where the property says it should
+   * be - waiting, fenced, and silent.
+   */
+  readonly parkAfterResolutionPolls?: number
+  /**
    * MAKE ONE PHASE'S PUBLICATION FAIL, DELIBERATELY AND PRECISELY.
    *
    * The reviewed evidence prefix whose no-replace rename fails, and how many
@@ -420,4 +467,32 @@ export interface HoldReport {
   readonly stdinStandInEnded: string | null
   /** The private root the fake psql was written into, for an exact-path check. */
   readonly fakePsqlRoot: string | null
+  /** The `--resolution-file` path this run was given, or null. */
+  readonly resolutionFilePath: string | null
+  /** The exact bytes the child wrote into it, or null if it never wrote. */
+  readonly resolutionWritten: string | null
+  /** How many `RESOLUTION_POLL_MS` waits the hold asked for. */
+  readonly resolutionPolls: number
+  /**
+   * `process.listenerCount('SIGINT')` AT EVERY RESOLUTION POLL, in order.
+   *
+   * K8-E12 F2. `sigintListenersAtFence` is a single snapshot taken when the fence
+   * was taken, which says nothing about whether the lease is still armed while
+   * the hold waits - and "the lease stays armed during the wait" is exactly what
+   * the file-channel wait promises. This records it at every poll, so a mutant
+   * that disarmed mid-wait would be caught rather than inferred.
+   */
+  readonly sigintListenersAtPoll: readonly number[]
+  /** The resolution-poll count at the moment each `Reply with` line streamed. */
+  readonly pollsAtReplyLine: readonly number[]
+  /** Every token printed on a `Reply with` line, in order. */
+  readonly replyTokens: readonly string[]
+  /**
+   * `dev:ino` of the resolution file, sampled whenever the child writes it.
+   *
+   * K8-E12 F4 corrects the file IN PLACE and must prove it: an unlink-and-recreate
+   * would be a different file, and the case would then say nothing about whether
+   * the reader tolerates a rewrite.
+   */
+  readonly resolutionInodes: readonly string[]
 }
