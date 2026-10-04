@@ -596,14 +596,72 @@ export interface ProcessMatch {
  * no plist at all - that is the case this census exists for - so the pattern
  * has to be a reviewed constant rather than something read back from the
  * installation whose absence is the problem.
+ *
+ * `|` SEPARATES ALTERNATIVES, and each alternative is a plain substring test -
+ * see `matchesProducerPattern`. It is not a regular expression and it is never
+ * handed to another program. An EMPTY alternative is refused rather than
+ * ignored, because `''` is a substring of every command line and a stray `|`
+ * would silently make a label match every process on the machine.
+ *
+ * WHY ONE PATTERN PER LABEL WAS NOT ENOUGH. A single substring named the
+ * process at the MIDDLE of a chain and missed both ends of it, so a label could
+ * read as stopped while its producer was alive:
+ *
+ *   daily  'daily-queue.sh' names only the submitter wrapper. launchd starts
+ *          `/bin/bash .../scripts/daily-scheduler.sh`, which reaches
+ *          `daily-queue.sh` at daily-scheduler.sh:492 - so for the whole
+ *          eligibility phase before that line, and for every run that exits
+ *          without submitting, nothing in the chain carried the pattern.
+ *          `daily-scheduler.sh` covers that window. `run-daily.ts` covers the
+ *          other end: daily-queue.sh:149 runs the submitter through `npx`, so
+ *          the process doing the work is a DESCENDANT (daily-queue.sh:80-81),
+ *          and an orphaned one outlives the wrapper that was being matched.
+ *
+ *   alerts 'run-alerts.sh' names a process that ceases to exist.
+ *          run-alerts.sh:36-37 EXECS `npx tsx .../run-stage.ts -- npx tsx
+ *          src/cli/cli-alerts.ts`, replacing the only argv that carried the
+ *          pattern, and run-stage.ts:120 spawns the real work `detached`. The
+ *          matched window is the handful of shell lines before the exec.
+ *          `cli-alerts.ts` is in the argv of the launcher AND of the spawned
+ *          runtime, because the command after `--` is part of run-stage's own
+ *          argv, so one alternative covers the whole post-exec chain.
+ *
+ * The other three labels need nothing. `watchdog.sh` is a substring of
+ * `pipeline-watchdog.sh`, which launchd starts directly and which blocks on
+ * every child it makes; `bin/worker.ts` and `bin/structured-worker.ts` name
+ * entry points that survive every `npx` handoff in their own chains.
  */
 export const PRODUCER_PROCESS_PATTERNS: Readonly<Record<string, string>> = Object.freeze({
-  'com.thanapol.ai-capital.daily': 'daily-queue.sh',
+  'com.thanapol.ai-capital.daily': 'daily-queue.sh|daily-scheduler.sh|run-daily.ts',
   'com.thanapol.ai-capital.watchdog': 'watchdog.sh',
-  'com.thanapol.ai-capital.alerts': 'run-alerts.sh',
+  'com.thanapol.ai-capital.alerts': 'run-alerts.sh|cli-alerts.ts',
   'com.thanapol.ai-capital.structured-worker': 'bin/structured-worker.ts',
   'com.thanapol.ai-capital.worker': 'bin/worker.ts',
 })
+
+/**
+ * Does one `ps` command line match one reviewed pattern.
+ *
+ * EVERY ALTERNATIVE IS CHECKED FOR EMPTINESS BEFORE ANY OF THEM IS TESTED, so a
+ * malformed pattern refuses whatever the command happens to contain. The
+ * opposite order would let `'a|'` return true for a line containing `a` and
+ * only refuse for lines that did not - a validator that fires on some inputs is
+ * not a validator.
+ *
+ * The split happens per call rather than once per census. The function stays
+ * pure and self-validating, and the cost is bounded by the length of one `ps`
+ * listing.
+ */
+export function matchesProducerPattern(command: string, pattern: string): boolean {
+  const alternatives = pattern.split('|')
+  for (const a of alternatives) {
+    if (a === '') {
+      throw new LaunchdInspectionRefused(
+        'a reviewed process pattern has an empty alternative', pattern)
+    }
+  }
+  return alternatives.some(a => command.includes(a))
+}
 
 /**
  * Which reviewed producer processes are running, whoever started them.
@@ -637,7 +695,7 @@ export async function censusProducerProcesses(
       // THIS PROCESS AND ITS OWN `ps` ARE NOT PRODUCERS. A census that counted
       // itself would report every run as non-quiescent.
       if (pid === self) continue
-      if (command.includes(pattern)) pids.push(pid)
+      if (matchesProducerPattern(command, pattern)) pids.push(pid)
     }
     out[label] = Object.freeze({ pattern, pids: Object.freeze(pids) })
   }

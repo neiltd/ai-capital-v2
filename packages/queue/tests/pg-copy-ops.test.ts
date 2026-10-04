@@ -336,7 +336,10 @@ describe('the launchd adapter is read-only by construction', () => {
     expect(row.presence).toBe('absent')
     expect(row.stopped).toBe(false)
     expect([...row.processPids]).toEqual(['99'])
-    expect(row.processPattern).toBe('run-alerts.sh')
+    // THE WHOLE CONSTANT VALUE, alternations included: `ProcessMatch.pattern`
+    // is what reaches evidence and the binding, so it must carry everything
+    // the census matched on, not the alternative that happened to hit.
+    expect(row.processPattern).toBe('run-alerts.sh|cli-alerts.ts')
   })
 
   it('refuses a process census it could not take', async () => {

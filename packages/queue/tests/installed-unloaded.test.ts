@@ -32,6 +32,7 @@ import {
 import {
   inspectLabel, readDisabled, remeasureLabel, reviewedPlistPath, probeReviewedPlist,
   launchdQuiescenceAdapter, LaunchdInspectionRefused, READ_ONLY_LAUNCHCTL_VERBS,
+  PRODUCER_PROCESS_PATTERNS,
   type LabelInspection,
 } from '../src/pg-copy-ops/launchd.js'
 import { installationOf, proveDestinations, DestinationRefused }
@@ -1019,6 +1020,27 @@ describe('a producer with no PostgreSQL route is classified, not excused', () =>
     for (const l of [DAILY, WATCHDOG]) {
       expect(b.producerProcessPolicy.find(e => e.label === l)?.pattern, l).toBeTruthy()
       expect(RESTORE_ORDER, l).toContain(l)
+    }
+  })
+
+  /**
+   * C6. THE BINDING CARRIES THE WHOLE PATTERN, ALTERNATIONS AND ALL.
+   *
+   * `producerProcessPolicy` is what the confirmation token attests to
+   * (pg-copy-ops.ts:418-421 -> bindings.ts:634). If it carried only the first
+   * alternative, the operator would be agreeing to a narrower definition of
+   * "quiescent" than the census actually applies - and the digest would not move
+   * when an alternative was added or removed.
+   */
+  it('binds the FULL process pattern for every reviewed label', async () => {
+    const b = await bind(world({ unloaded: true }))
+    const patternOf = (l: string): string | undefined =>
+      b.producerProcessPolicy.find(e => e.label === l)?.pattern
+    expect(patternOf(DAILY)).toBe('daily-queue.sh|daily-scheduler.sh|run-daily.ts')
+    expect(patternOf(ALERTS)).toBe('run-alerts.sh|cli-alerts.ts')
+    // And no label drifts from the reviewed constant in either direction.
+    for (const l of REVIEWED_PRODUCERS) {
+      expect(patternOf(l), l).toBe(PRODUCER_PROCESS_PATTERNS[l])
     }
   })
 
