@@ -13,8 +13,8 @@ import { fileURLToPath } from 'node:url'
 
 import {
   AGENTS, type AgentName, assertParsedPlistIsSafe, assertRenderedOutputIsSafe,
-  decodeXmlEntities, escapeXml, installedPath, looksLikePostgresUrl, placeholderCounts,
-  renderPlist, validateRedisUrl,
+  decodeXmlEntities, defaultParseSeam, escapeXml, installedPath, looksLikePostgresUrl,
+  placeholderCounts, renderPlist, validateRedisUrl,
 } from '../src/launchd-renderer.js'
 import {
   type PublishSeam, acquireLock, assertDirectory, checkCount, cleanupIncomplete,
@@ -972,5 +972,101 @@ describe('render CLI retry advice matches what actually happened', () => {
     expect(r.code).toBe(0)
     expect(r.out).toMatch(/^unchanged: /m)
     expect(r.err).toBe('')
+  })
+})
+
+
+// A CALENDAR KEY LAUNCHD CANNOT READ IS A WILDCARD, NOT AN ERROR.
+//
+// launchd.plist(5) types Minute, Hour, Day, Weekday and Month inside a
+// StartCalendarInterval dictionary as <integer>, and says "Missing arguments are
+// considered to be wildcard". An <array> of integers supplied where an integer
+// is expected is therefore not a load failure and not a logged warning: the key
+// reads as absent, the field becomes a wildcard, and the agent fires far more
+// often than the template says. The alerts template shipped three array-valued
+// dictionaries, so Weekday, Hour AND Minute were all wildcard and the agent fired
+// once a minute, every day, for as long as it was loaded. It was measured at one
+// fire per 59-61 s on 2026-10-06, against a declared cadence of one per 30 min.
+//
+// Nothing in the toolchain caught it: `plutil -lint` validates plist SYNTAX and
+// the arrays are syntactically fine, and the renderer's own guard
+// (assertParsedPlistIsSafe) is a credential check. This is the missing guard.
+const CALENDAR_INT_KEYS = ['Minute', 'Hour', 'Day', 'Weekday', 'Month'] as const
+
+function parseTemplate(file: string): Record<string, unknown> {
+  const r = defaultParseSeam.toJson(join(TEMPLATES, file))
+  expect(r.status, `plutil could not parse ${file}: ${r.stderr}`).toBe(0)
+  return JSON.parse(r.stdout) as Record<string, unknown>
+}
+
+function calendarEntries(parsed: Record<string, unknown>): Record<string, unknown>[] {
+  const sci = parsed.StartCalendarInterval
+  if (sci === undefined) return []
+  // launchd accepts one dictionary or an array of them; normalise to a list.
+  return Array.isArray(sci) ? sci as Record<string, unknown>[] : [sci as Record<string, unknown>]
+}
+
+const TEMPLATE_FILES = readdirSync(TEMPLATES).filter(f => f.endsWith('.plist.template')).sort()
+
+describe('no ops/launchd template puts a non-integer in a calendar dictionary', () => {
+  it('finds the tracked templates', () => {
+    expect(TEMPLATE_FILES.length).toBeGreaterThan(0)
+    for (const a of Object.keys(AGENTS) as AgentName[]) {
+      expect(TEMPLATE_FILES).toContain(AGENTS[a].template)
+    }
+  })
+
+  it.each(TEMPLATE_FILES)('%s declares every calendar field as a plain integer', (file) => {
+    const entries = calendarEntries(parseTemplate(file))
+    entries.forEach((entry, n) => {
+      for (const key of CALENDAR_INT_KEYS) {
+        if (!(key in entry)) continue
+        const value = entry[key]
+        expect(
+          Array.isArray(value),
+          `${file}: StartCalendarInterval[${n}].${key} is an array. launchd types it as ` +
+          '<integer> and treats a key it cannot read as a wildcard, so an array makes the ' +
+          'agent fire far more often than this template says. Write one dictionary per value.',
+        ).toBe(false)
+        expect(
+          typeof value === 'number' && Number.isInteger(value),
+          `${file}: StartCalendarInterval[${n}].${key} is ${JSON.stringify(value)}, not an integer`,
+        ).toBe(true)
+      }
+    })
+  })
+})
+
+describe('the alerts template declares exactly its 160 intended slots', () => {
+  // Weekday 1-5 x Hour 6-13  x Minute {0,30}  = 80  US session
+  // Weekday 0-4 x Hour 19-22 x Minute {0,30}  = 40  Thai SET morning
+  // Weekday 1-5 x Hour 0-3   x Minute {0,30}  = 40  Thai SET afternoon
+  const expected = new Set<string>()
+  for (const [wds, hrs] of [[[1, 2, 3, 4, 5], [6, 7, 8, 9, 10, 11, 12, 13]],
+                            [[0, 1, 2, 3, 4], [19, 20, 21, 22]],
+                            [[1, 2, 3, 4, 5], [0, 1, 2, 3]]] as [number[], number[]][]) {
+    for (const wd of wds) for (const hr of hrs) for (const mi of [0, 30]) expected.add(`${wd}:${hr}:${mi}`)
+  }
+
+  const entries = calendarEntries(parseTemplate(AGENTS.alerts.template))
+  const triples = entries.map(e => `${e.Weekday}:${e.Hour}:${e.Minute}`)
+
+  it('has 160 expected triples', () => {
+    expect(expected.size).toBe(160)
+  })
+
+  it('declares one dictionary per slot, with no duplicates', () => {
+    expect(entries.length).toBe(160)
+    expect(new Set(triples).size).toBe(160)
+  })
+
+  it('declares exactly the intended set, no more and no less', () => {
+    expect(new Set(triples)).toEqual(expected)
+  })
+
+  it('names every key in every entry', () => {
+    for (const e of entries) {
+      expect(Object.keys(e).sort()).toEqual(['Hour', 'Minute', 'Weekday'])
+    }
   })
 })
