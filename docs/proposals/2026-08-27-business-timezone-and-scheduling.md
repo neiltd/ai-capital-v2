@@ -2,6 +2,20 @@
 
 **Status: DESIGN ONLY. Nothing implemented, nothing installed.**
 
+> **SUPERSEDED IN PART, 2026-10-06.** The timezone recommendation
+> (`BUSINESS_TIMEZONE = America/Los_Angeles`) stands and is unchanged. The
+> *schedule* in section 2 does not: the due time is now **04:30 PT on NYSE
+> trading days and on every Sunday**, not 07:00 PT daily. Section 2's own open
+> question — "if you want the briefing to be actionable *before* the open,
+> 06:00 PT is the natural alternative" — is what was answered, and the answer
+> went further: ready by 05:30 PT, one hour before the 06:30 PT (09:30 ET)
+> open, so due at 04:30 PT. The constant named below as the source of truth,
+> `DUE_HOUR`, no longer exists; it is `DUE_TIME = { hour: 4, minute: 30 }` in
+> `packages/pipeline-runs/src/daily-run-state.ts`, and eligibility now also
+> consults `isDailyRunDay` in `packages/pipeline-runs/src/nyse-calendar.ts`.
+> The rest of this document is left as written, as the record of the
+> 2026-08-27 decision.
+
 ## 1. Recommendation: `BUSINESS_TIMEZONE = America/Los_Angeles`
 
 Your hypothesis is confirmed by the repo, and by four independent lines of
@@ -119,7 +133,7 @@ Four concepts, deliberately separated:
 | Concept | Definition | Source of truth |
 |---|---|---|
 | `BUSINESS_TIMEZONE` | `America/Los_Angeles` | a constant in code |
-| scheduled business time | 07:00 in that zone | `DUE_HOUR` + `BUSINESS_TIMEZONE` |
+| scheduled business time | 07:00 in that zone *(superseded: 04:30, see the note at the top)* | `DUE_HOUR` + `BUSINESS_TIMEZONE` *(now `DUE_TIME`)* |
 | machine timezone | whatever macOS says | **never consulted for identity** |
 | actual execution time | when it really ran | `pipeline_runs.started_at` (UTC) |
 

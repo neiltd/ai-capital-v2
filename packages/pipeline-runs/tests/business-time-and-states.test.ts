@@ -6,7 +6,7 @@ import { tmpdir } from 'node:os'
 import { join, resolve } from 'node:path'
 import {
   assessDailyRun, logicalRunDate, dueAt, businessInstant, businessDayBounds,
-  findRunForDate, BUSINESS_TIMEZONE, DUE_HOUR, STALE_AFTER_MIN,
+  findRunForDate, BUSINESS_TIMEZONE, DUE_TIME, STALE_AFTER_MIN,
 } from '../src/daily-run-state.js'
 import { openDb, openDbReadOnly, migrateScheduledRunIdentity } from '../src/store.js'
 import { recordStart, supersedeScheduledRun } from '../src/api.js'
@@ -43,20 +43,24 @@ describe('A. canonical business time', () => {
     expect(BUSINESS_TIMEZONE).toBe('America/Los_Angeles')
   })
 
-  it('resolves 07:00 to a fixed UTC instant in DAYLIGHT time (PDT, UTC-7)', () => {
+  it('resolves 04:30 to a fixed UTC instant in DAYLIGHT time (PDT, UTC-7)', () => {
     // 2026-08-27 is PDT. This assertion is an absolute fact about UTC and
     // cannot pass by accident on a host in another timezone.
-    expect(dueAt('2026-08-27').toISOString()).toBe('2026-08-27T14:00:00.000Z')
+    expect(dueAt('2026-08-27').toISOString()).toBe('2026-08-27T11:30:00.000Z')
   })
 
-  it('resolves 07:00 to a fixed UTC instant in STANDARD time (PST, UTC-8)', () => {
-    expect(dueAt('2026-01-15').toISOString()).toBe('2026-01-15T15:00:00.000Z')
+  it('resolves 04:30 to a fixed UTC instant in STANDARD time (PST, UTC-8)', () => {
+    expect(dueAt('2026-01-15').toISOString()).toBe('2026-01-15T12:30:00.000Z')
   })
 
   it('handles the spring-forward and fall-back days without drifting', () => {
-    // 2026: DST begins Mar 8, ends Nov 1. 07:00 exists on both days.
-    expect(dueAt('2026-03-08').toISOString()).toBe('2026-03-08T14:00:00.000Z')
-    expect(dueAt('2026-11-01').toISOString()).toBe('2026-11-01T15:00:00.000Z')
+    // 2026: DST begins Mar 8 (02:00 PST -> 03:00 PDT), ends Nov 1 (02:00 PDT
+    // -> 01:00 PST). 04:30 is AFTER both transitions, so it is unambiguous on
+    // each day and takes the post-transition offset: PDT on Mar 8, PST on
+    // Nov 1. The one-hour difference between these two instants is the whole
+    // point of the two-pass conversion.
+    expect(dueAt('2026-03-08').toISOString()).toBe('2026-03-08T11:30:00.000Z')
+    expect(dueAt('2026-11-01').toISOString()).toBe('2026-11-01T12:30:00.000Z')
   })
 
   it('the host timezone (this runner is +07) does not change the result', () => {
@@ -72,11 +76,13 @@ describe('A. canonical business time', () => {
     expect(businessInstant('2026-08-27', '23:59').toISOString().slice(0, 10)).toBe('2026-08-28')
   })
 
-  it('due-time boundaries are exact', () => {
+  it('due-time boundaries are exact, to the minute', () => {
     const due = dueAt('2026-08-27')
-    expect(businessInstant('2026-08-27', '06:59').getTime()).toBeLessThan(due.getTime())
-    expect(businessInstant('2026-08-27', '07:00').getTime()).toBe(due.getTime())
-    expect(businessInstant('2026-08-27', '07:01').getTime()).toBeGreaterThan(due.getTime())
+    expect(businessInstant('2026-08-27', '04:29').getTime()).toBeLessThan(due.getTime())
+    expect(businessInstant('2026-08-27', '04:30').getTime()).toBe(due.getTime())
+    expect(businessInstant('2026-08-27', '04:31').getTime()).toBeGreaterThan(due.getTime())
+    // The half hour is load-bearing: an hour-only due time would equal 04:00.
+    expect(businessInstant('2026-08-27', '04:00').getTime()).not.toBe(due.getTime())
   })
 
   it('LEGACY schema: a run starting before LA midnight stays on its start date', () => {
@@ -454,13 +460,18 @@ describe('G. explicit logical date on the assessment seam', () => {
       VALUES (?, 'daily-pipeline', ?, ?, ?, ?)`)
       .run(id, businessInstant(logicalDate, '07:05').toISOString(), status, logicalDate, supersededAt)
 
-  const N = '2026-08-29'
-  const NEXT = '2026-08-30'
+  // A Thursday/Friday pair. These were 2026-08-29/30 — a Saturday and a
+  // Sunday — which was immaterial while every date was a run day. Under the
+  // trading-day-and-Sunday rule a Saturday is never eligible, which would
+  // have made these seam assertions pass or fail for a reason that has
+  // nothing to do with the midnight boundary they exist to test.
+  const N = '2026-08-27'
+  const NEXT = '2026-08-28'
   // The two instants that straddle the boundary, one second apart.
   const APPROVED_AT = businessInstant(N, '23:59:59')
   const RECHECK_AT = businessInstant(NEXT, '00:00:01')
   // Heartbeats since the due time, so the machine counts as having been available.
-  const beats = [businessInstant(N, '07:00'), businessInstant(N, '12:00'), APPROVED_AT]
+  const beats = [businessInstant(N, '04:30'), businessInstant(N, '12:00'), APPROVED_AT]
 
   it('1. initial approval at 23:59:59 evaluates date N and is eligible', () => {
     const d = store()

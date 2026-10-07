@@ -41,10 +41,21 @@ beforeEach(() => {
 })
 afterEach(() => rmSync(dir, { recursive: true, force: true }))
 
-/** A fixed instant: 09:00 in Los Angeles on 2026-08-29, i.e. after the 07:00 due hour. */
-const AFTER_DUE = '2026-08-29T16:00:00.000Z'
-const BEFORE_DUE = '2026-08-29T12:00:00.000Z'   // 05:00 PDT — before the due hour
-const LOGICAL = '2026-08-29'
+/**
+ * A fixed instant: 09:00 in Los Angeles on 2026-08-27, i.e. after the 04:30
+ * due time.
+ *
+ * THE DAY MATTERS NOW. This was 2026-08-29, a SATURDAY, which was immaterial
+ * while every date was eligible. Under the trading-day-and-Sunday rule a
+ * Saturday is never eligible, so the ELIGIBLE case below would have asserted
+ * against `not_trading_day`. 2026-08-27 is a Thursday and not an NYSE holiday.
+ *
+ * BEFORE_DUE also moved: 05:00 PDT was before the old 07:00 due hour and is
+ * after the new 04:30 one, so it is now 04:00 PDT.
+ */
+const AFTER_DUE = '2026-08-27T16:00:00.000Z'
+const BEFORE_DUE = '2026-08-27T11:00:00.000Z'   // 04:00 PDT — before the due time
+const LOGICAL = '2026-08-27'
 
 /** Build an isolated run store and seed it. Lives under dir/store, not dir/. */
 function seedStore(rows: Array<Record<string, unknown>> = []) {
@@ -126,15 +137,15 @@ describe('daily-scheduler.sh --dry-run', () => {
   })
 
   it('INELIGIBLE (already succeeded): exits 0 and creates no state marker', () => {
-    seedStore([{ id: 'r1', started_at: '2026-08-29T14:30:00.000Z',
-                 ended_at: '2026-08-29T15:10:00.000Z', status: 'success' }])
+    seedStore([{ id: 'r1', started_at: '2026-08-27T14:30:00.000Z',
+                 ended_at: '2026-08-27T15:10:00.000Z', status: 'success' }])
     const r = run(SCHEDULER)
     expect(r.status).toBe(0)
     assertNothingWritten(r, 'already-succeeded')
   })
 
   it('INELIGIBLE (in flight): does not submit a second run for the same day', () => {
-    seedStore([{ id: 'r2', started_at: '2026-08-29T15:50:00.000Z', status: 'running' }])
+    seedStore([{ id: 'r2', started_at: '2026-08-27T15:50:00.000Z', status: 'running' }])
     const r = run(SCHEDULER)
     expect(r.status).toBe(0)
     expect(r.stdout).not.toContain('would submit')
@@ -202,8 +213,8 @@ describe('pipeline-watchdog.sh: the same clock guard', () => {
 
 describe('pipeline-watchdog.sh --dry-run', () => {
   it('HEALTHY: reports and writes nothing — no heartbeat, no logfile', () => {
-    seedStore([{ id: 'w1', started_at: '2026-08-29T14:30:00.000Z',
-                 ended_at: '2026-08-29T15:10:00.000Z', status: 'success' }])
+    seedStore([{ id: 'w1', started_at: '2026-08-27T14:30:00.000Z',
+                 ended_at: '2026-08-27T15:10:00.000Z', status: 'success' }])
     const r = run(WATCHDOG)
     expect(r.status).toBe(0)
     assertNothingWritten(r, 'watchdog-healthy')

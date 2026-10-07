@@ -43,10 +43,10 @@ describe('A. the scheduler harness runs fully isolated and passes', () => {
       // A HOSTILE PARENT CLOCK. The harness must own its own instant; if any of
       // it were inherited, this value would move every fixture and the matrix
       // would report differently. It is set deliberately to a time BEFORE the
-      // 07:00 opportunity, which is precisely the window in which the old
+      // 04:30 opportunity, which is precisely the window in which the old
       // host-clock harness failed.
       const e: NodeJS.ProcessEnv = {
-        ...process.env, CI: '1', SCHEDULER_TEST_NOW: '2026-08-29T09:00:00.000Z',
+        ...process.env, CI: '1', SCHEDULER_TEST_NOW: '2026-08-27T09:00:00.000Z',
       }
       for (const k of STRIP) delete e[k]
       return e
@@ -61,8 +61,10 @@ describe('A. the scheduler harness runs fully isolated and passes', () => {
     expect(r.status, report).toBe(0)
   })
 
-  it('reports PASS=12 FAIL=0', () => {
-    expect(out, report).toMatch(/^PASS=12 FAIL=0$/m)
+  it('reports PASS=21 FAIL=0', () => {
+    // 12 before the calendar rule; the 9 added cases are the six Cal checks and
+    // the three real script runs on a holiday, a holiday watchdog and a Sunday.
+    expect(out, report).toMatch(/^PASS=21 FAIL=0$/m)
   })
 
   it('never hits the partial-isolation refusal', () => {
@@ -73,16 +75,16 @@ describe('A. the scheduler harness runs fully isolated and passes', () => {
   it('the harness OWNS and supplies its own fixed SCHEDULER_TEST_NOW', () => {
     // It announces the instant it fixed, and that instant is the reviewed one —
     // not the hostile value this test put in its environment.
-    expect(out, report).toMatch(/fixed clock: 2026-08-29T16:00:00\.000Z/)
-    expect(out, report).toMatch(/2026-08-29 09:00 America\/Los_Angeles/)
+    expect(out, report).toMatch(/fixed clock: 2026-08-27T16:00:00\.000Z/)
+    expect(out, report).toMatch(/2026-08-27 09:00 America\/Los_Angeles/)
   })
 
   it('a hostile parent SCHEDULER_TEST_NOW cannot change the result', () => {
     // The parent supplied 09:00Z (02:00 Los Angeles, BEFORE the opportunity).
     // If it won, Cases A, E and F would report not_due and the matrix would
     // fail — which is exactly what used to happen on the host clock.
-    expect(out, report).not.toContain('2026-08-29T09:00:00.000Z')
-    expect(out, report).toMatch(/^PASS=12 FAIL=0$/m)
+    expect(out, report).not.toContain('2026-08-27T09:00:00.000Z')
+    expect(out, report).toMatch(/^PASS=21 FAIL=0$/m)
   })
 
   it('performs no production Redis, database or pipeline action', () => {
@@ -99,8 +101,11 @@ describe('B. the harness cannot pass vacuously — structural contract', () => {
 
   it('routes every real scheduler/watchdog invocation through one helper', () => {
     expect(src, 'the centralized helper is gone').toMatch(/^run_isolated\(\)\s*\{/m)
+    expect(src, 'the explicit-clock helper is gone').toMatch(/^run_isolated_at\(\)\s*\{/m)
     const calls = src.match(/^run_isolated \.\/scripts\/(daily-scheduler|pipeline-watchdog)\.sh --dry-run$/gm) ?? []
-    expect(calls.length, `expected 4 helper call sites, found ${calls.length}`).toBe(4)
+    expect(calls.length, `expected 4 shared-clock call sites, found ${calls.length}`).toBe(4)
+    const atCalls = src.match(/^run_isolated_at '[^']+' \.\/scripts\/(daily-scheduler|pipeline-watchdog)\.sh --dry-run$/gm) ?? []
+    expect(atCalls.length, `expected 3 explicit-clock call sites, found ${atCalls.length}`).toBe(3)
   })
 
   it('supplies all four isolation variables through that helper', () => {
@@ -117,21 +122,28 @@ describe('B. the harness cannot pass vacuously — structural contract', () => {
 
   it('never invokes the real scripts outside the helper', () => {
     // Any occurrence of the script paths must be a `run_isolated` call site.
+    // Two helpers now: run_isolated (the shared FIXED_NOW) and run_isolated_at
+    // (an explicit instant, which the calendar cases need because each one is a
+    // different day). Both isolate identically; only the clock differs.
     const refs = src.match(/^.*\.\/scripts\/(daily-scheduler|pipeline-watchdog)\.sh.*$/gm) ?? []
-    const stray = refs.filter(l => !/^run_isolated \.\/scripts\//.test(l.trim()))
+    const stray = refs.filter(l =>
+      !/^run_isolated \.\/scripts\//.test(l.trim()) &&
+      !/^run_isolated_at '[^']+' \.\/scripts\//.test(l.trim()))
     expect(stray, `unisolated invocation(s):\n  ${stray.join('\n  ')}`).toEqual([])
   })
 
   it('checks the captured exit status for all four real cases before awarding PASS', () => {
+    // One per real script invocation: the original four, plus the three
+    // calendar-rule runs (holiday scheduler, holiday watchdog, Sunday scheduler).
     const checks = src.match(/if \[ "\$ISO_RC" -ne 0 \]; then/g) ?? []
-    expect(checks.length, `expected 4 exit-status guards, found ${checks.length}`).toBe(4)
+    expect(checks.length, `expected 7 exit-status guards, found ${checks.length}`).toBe(7)
   })
 
   it('supplies the fixed clock to every status check and real dry run', () => {
     // THREE PLACES, ALL REQUIRED: the helper that runs the real scripts, the
     // status check, and the declaration itself. A fixed clock supplied to only
     // some of them leaves the rest on the host clock.
-    expect(src).toContain("readonly FIXED_NOW='2026-08-29T16:00:00.000Z'")
+    expect(src).toContain("readonly FIXED_NOW='2026-08-27T16:00:00.000Z'")
     const helper = src.slice(src.indexOf('run_isolated() {'), src.indexOf('sqlite3 "$DB"'))
     expect(helper).toContain('SCHEDULER_TEST_NOW="$FIXED_NOW"')
     const check = src.slice(src.indexOf('check() {'), src.indexOf('NOW_H='))

@@ -6,7 +6,7 @@ import {
   dueAt,
   findRunForDate,
   STALE_AFTER_MIN,
-  DUE_HOUR,
+  DUE_TIME,
   BUSINESS_TIMEZONE,
   businessInstant,
 } from '../src/daily-run-state.js'
@@ -56,11 +56,13 @@ describe('logical run date', () => {
     expect(logicalRunDate(at(DATE, '21:03'))).toBe(DATE)
     expect(logicalRunDate(at(DATE, '00:30'))).toBe(DATE)
   })
-  it('due time is the business due hour, whatever the host timezone is', () => {
-    const hourInBusinessTz = Number(new Intl.DateTimeFormat('en-US', {
-      timeZone: BUSINESS_TIMEZONE, hour: '2-digit', hour12: false,
-    }).format(dueAt(DATE))) % 24
-    expect(hourInBusinessTz).toBe(DUE_HOUR)
+  it('due time is the business due time to the minute, whatever the host timezone is', () => {
+    const wall = new Intl.DateTimeFormat('en-GB', {
+      timeZone: BUSINESS_TIMEZONE, hour: '2-digit', minute: '2-digit', hour12: false,
+    }).format(dueAt(DATE))
+    const [h, min] = wall.split(':').map(Number)
+    expect(h % 24).toBe(DUE_TIME.hour)
+    expect(min).toBe(DUE_TIME.minute)
   })
   it('finds a run by its BUSINESS date', () => {
     insertRun(DATE, 'success', '21:03', '21:36')
@@ -193,8 +195,10 @@ describe('Case F — no run after a valid execution opportunity', () => {
 })
 
 describe('not-due and no-heartbeat edges', () => {
-  it('before the due hour, nothing is expected', () => {
-    const a = assessDailyRun({ db, now: at(DATE, '06:59'), heartbeats: [at(DATE, '06:59')] })
+  it('before the due time, nothing is expected', () => {
+    // 04:29, one minute before the 04:30 due time. Was 06:59 when the due
+    // time was 07:00; 06:59 is now two and a half hours PAST due.
+    const a = assessDailyRun({ db, now: at(DATE, '04:29'), heartbeats: [at(DATE, '04:29')] })
     expect(a.state).toBe('not_due')
     expect(a.eligibleToRun).toBe(false)
     expect(a.shouldAlert).toBe(false)

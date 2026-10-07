@@ -1,5 +1,6 @@
 import type { Database } from 'better-sqlite3'
 import { hasScheduledIdentity } from './store.js'
+import { isDailyRunDay, nonRunDayReason } from './nyse-calendar.js'
 
 /**
  * ── Scheduler semantics for the daily pipeline ─────────────────────────────
@@ -33,8 +34,31 @@ import { hasScheduledIdentity } from './store.js'
 
 export const DAILY_STAGE = 'daily-pipeline'
 
-/** Hour (local) at which a logical run becomes due. */
-export const DUE_HOUR = 7
+/** A wall-clock time of day in the business timezone. */
+export interface DueTime {
+  hour: number
+  minute: number
+}
+
+/**
+ * Wall-clock time (business timezone) at which a logical run becomes due.
+ *
+ * WHY 04:30. The briefing has to be READY an hour before the NYSE open. The
+ * open is 09:30 ET all year, which is 06:30 in America/Los_Angeles all year
+ * (both zones shift together), so "ready by 05:30 PT" is the requirement and
+ * the run becomes due at 04:30 PT. Measured daily-pipeline runs took 27-61
+ * minutes over 2026-08-17..2026-08-25, so 04:30 leaves the slowest observed
+ * run finishing by ~05:31 and the median by ~05:00.
+ *
+ * This is the ONE source of truth for the due time. `dueAt` and
+ * `assessDailyRun` both default to it; nothing else may hold a second copy.
+ */
+export const DUE_TIME: DueTime = { hour: 4, minute: 30 }
+
+/** `H:MM`, the way the due time is written in human-facing text. */
+export function formatDueTime(t: DueTime = DUE_TIME): string {
+  return `${t.hour}:${String(t.minute).padStart(2, '0')}`
+}
 
 /**
  * A run still in `running` after this long is an orphan, not progress.
@@ -59,7 +83,8 @@ export const STALE_AFTER_MIN = 90
 export const OPPORTUNITY_GRACE_MIN = 30
 
 export type DailyRunState =
-  | 'not_due'          // the logical date's due hour has not arrived
+  | 'not_trading_day'  // a Saturday or a weekday NYSE holiday; no run is expected
+  | 'not_due'          // the logical date's due time has not arrived
   | 'no_opportunity'   // due, but the machine has not been awake since — NOT a failure
   | 'missing'          // due, machine was awake past the grace period, still no run
   | 'running'          // in progress, within the healthy window
@@ -130,9 +155,9 @@ function tzOffsetMs(at: Date, tz: string): number {
  * exactly the day this has to be right on.
  */
 function zonedWallClockToUtc(
-  y: number, m: number, d: number, hour: number, tz: string,
+  y: number, m: number, d: number, hour: number, minute: number, tz: string,
 ): Date {
-  const naive = Date.UTC(y, m - 1, d, hour, 0, 0, 0)
+  const naive = Date.UTC(y, m - 1, d, hour, minute, 0, 0)
   const firstGuess = naive - tzOffsetMs(new Date(naive), tz)
   const corrected  = naive - tzOffsetMs(new Date(firstGuess), tz)
   return new Date(corrected)
@@ -163,9 +188,11 @@ export function logicalRunDate(now: Date, tz: string = BUSINESS_TIMEZONE): strin
 }
 
 /** The instant a logical date's run becomes due, in the BUSINESS timezone. */
-export function dueAt(logicalDate: string, dueHour = DUE_HOUR, tz: string = BUSINESS_TIMEZONE): Date {
+export function dueAt(
+  logicalDate: string, dueTime: DueTime = DUE_TIME, tz: string = BUSINESS_TIMEZONE,
+): Date {
   const [y, m, d] = logicalDate.split('-').map(Number)
-  return zonedWallClockToUtc(y, m, d, dueHour, tz)
+  return zonedWallClockToUtc(y, m, d, dueTime.hour, dueTime.minute, tz)
 }
 
 /**
@@ -178,19 +205,21 @@ export function businessInstant(
 ): Date {
   const [y, m, d] = logicalDate.split('-').map(Number)
   const [h, min] = hhmm.split(':').map(Number)
-  const base = zonedWallClockToUtc(y, m, d, h, tz)
-  return new Date(base.getTime() + (min ?? 0) * 60_000)
+  // Converted in one step rather than by adding minutes to the hour-aligned
+  // instant: on a DST transition day the offset at HH:00 and at HH:MM can
+  // differ, and the addition would silently land an hour out.
+  return zonedWallClockToUtc(y, m, d, h, min ?? 0, tz)
 }
 
 /** [start, end) of a logical date in the business timezone, as UTC instants. */
 export function businessDayBounds(logicalDate: string, tz: string = BUSINESS_TIMEZONE): { start: Date; end: Date } {
   const [y, m, d] = logicalDate.split('-').map(Number)
-  const start = zonedWallClockToUtc(y, m, d, 0, tz)
+  const start = zonedWallClockToUtc(y, m, d, 0, 0, tz)
   // Next calendar date, then its local midnight — correct across DST, where the
   // day is 23 or 25 hours long rather than 24.
   const nextUtc = new Date(Date.UTC(y, m - 1, d + 1))
   const end = zonedWallClockToUtc(
-    nextUtc.getUTCFullYear(), nextUtc.getUTCMonth() + 1, nextUtc.getUTCDate(), 0, tz,
+    nextUtc.getUTCFullYear(), nextUtc.getUTCMonth() + 1, nextUtc.getUTCDate(), 0, 0, tz,
   )
   return { start, end }
 }
@@ -290,7 +319,8 @@ export interface AssessInput {
    * machine has actually been available to run.
    */
   heartbeats: Date[]
-  dueHour?: number
+  /** Overrides the due time. Tests use it; production does not set it. */
+  dueTime?: DueTime
   staleAfterMin?: number
   graceMin?: number
 }
@@ -308,13 +338,13 @@ export function assessDailyRun(input: AssessInput): DailyRunAssessment {
   const { db, now } = input
   const heartbeats = [...input.heartbeats].sort((a, b) => a.getTime() - b.getTime())
   const lastHeartbeat = heartbeats.length ? heartbeats[heartbeats.length - 1] : null
-  const dueHour = input.dueHour ?? DUE_HOUR
+  const dueTime = input.dueTime ?? DUE_TIME
   const staleAfterMin = input.staleAfterMin ?? STALE_AFTER_MIN
   const graceMin = input.graceMin ?? OPPORTUNITY_GRACE_MIN
 
   // An explicitly requested day wins; otherwise the day `now` falls in.
   const logicalDate = input.logicalDate ?? logicalRunDate(now)
-  const due = dueAt(logicalDate, dueHour)
+  const due = dueAt(logicalDate, dueTime)
   const run = findRunForDate(db, logicalDate)
 
   const base = {
@@ -375,6 +405,30 @@ export function assessDailyRun(input: AssessInput): DailyRunAssessment {
     }
   }
 
+  // ── Days the daily run does not happen: nothing expected, nothing missing ─
+  //
+  // The rule is NYSE trading days AND every Sunday, so exactly two kinds of
+  // date reach this branch: a Saturday, or a weekday that is a full-day NYSE
+  // holiday. Sundays run regardless of the market calendar, because four
+  // pipeline stages are Sunday-only (see isDailyRunDay).
+  //
+  // Placed HERE, after every branch that reads an actual run row, and not at
+  // the top of the function. The reason is evidence: if a run row exists for a
+  // holiday — someone submitted the day by hand — its real outcome must still
+  // be reported, including a failure. Answering 'not_trading_day' first would
+  // conceal a failed manual run behind a calendar rule. By this point we know
+  // there is no run row, so "we do not run today and nothing ran" is the whole
+  // truth about the day.
+  //
+  // Both consumers are state-agnostic and need no change: the scheduler gates
+  // on eligibleToRun (scripts/daily-scheduler.sh:174) and the watchdog on
+  // shouldAlert (scripts/pipeline-watchdog.sh:164), and both are false here.
+  if (!isDailyRunDay(logicalDate)) {
+    return { ...base, state: 'not_trading_day', eligibleToRun: false, shouldAlert: false,
+      reason: `${logicalDate} is not a daily-run day (${nonRunDayReason(logicalDate)}) — ` +
+              'no daily run is expected. Sundays and early-close days do run.' }
+  }
+
   // No run row for this logical date.
   if (now < due) {
     return { ...base, state: 'not_due', eligibleToRun: false, shouldAlert: false,
@@ -399,6 +453,6 @@ export function assessDailyRun(input: AssessInput): DailyRunAssessment {
 
   return { ...base, state: 'missing', eligibleToRun: true, shouldAlert: true,
     reason: `no daily-pipeline run for ${logicalDate}; the machine has been available for ` +
-            `${awakeMin}min past the ${dueHour}:00 due time (grace ${graceMin}min). ` +
+            `${awakeMin}min past the ${formatDueTime(dueTime)} due time (grace ${graceMin}min). ` +
             'Absence is a failure, not a healthy state.' }
 }
