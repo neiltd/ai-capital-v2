@@ -7,7 +7,8 @@ import { dirname } from 'node:path'
  * This is the ONE piece of state pipeline_runs cannot supply. pipeline_runs
  * records what the pipeline did; it cannot record that the machine was AWAKE
  * and chose not to run anything — which is exactly the distinction between
- * "asleep through 07:00, nothing wrong" and "awake since 07:00, scheduler dead".
+ * "asleep through 04:30, nothing wrong" and "awake since 04:30, scheduler dead".
+ * (04:30 America/Los_Angeles is the due time; see DUE_TIME in daily-run-state.ts.)
  *
  * Deliberately a flat file, not a table: it must be writable when the database
  * is unreachable, since a dead database is one of the conditions the watchdog

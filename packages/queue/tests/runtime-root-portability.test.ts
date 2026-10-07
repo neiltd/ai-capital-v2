@@ -328,11 +328,17 @@ describe('the four relocated scripts derive ROOT from their own location', () =>
    * WHY NOT A PROLOGUE. This used to copy every line up to the first one that
    * "would do something", guessed with a regex over `exec|cd |npm |npx |"$ROOT`.
    * That guess is wrong for any script whose prologue ACTS: `daily-catchup.sh`
-   * opens with `if [ "$(date +%H)" -lt 7 ]; then exit 0; fi`, so before 07:00
+   * opened with `if [ "$(date +%H)" -lt 7 ]; then exit 0; fi`, so before 07:00
    * local the probe executed that gate, exited 0, printed nothing, and the
    * assertion compared an empty string. The same file passed after 07:00 and
    * failed before it — a wall-clock-dependent test of a property that has
    * nothing to do with the clock. Measured at 01:58 PDT and again at 09:13 PDT.
+   *
+   * That host-clock gate is gone (the due time and the run-day rule now come
+   * from daily-run-status.ts), but the prologue still ACTS — it shells out to
+   * the status evaluator and exits when the day is not eligible — so the
+   * property this extraction exists for is unchanged. The non-vacuity anchor
+   * below moved with it.
    *
    * So the reviewed assignment lines are extracted by their exact form and are
    * the ONLY statements executed. Nothing else in the script runs: no date gate,
@@ -426,10 +432,23 @@ describe('the four relocated scripts derive ROOT from their own location', () =>
 
   it('the probe executes the assignments ONLY, never a surrounding statement', () => {
     // NON-VACUITY FOR THE WHOLE APPROACH. `daily-catchup.sh` is the script whose
-    // prologue acts: it contains a date gate that exits. The probe must not
-    // contain it, and must still produce a ROOT.
+    // prologue acts: before anything else it runs the status evaluator and
+    // exits when the day is not eligible. The probe must not contain that, and
+    // must still produce a ROOT.
+    //
+    // The anchor used to be the literal `-lt 7` — the old host-clock hour gate.
+    // That gate was removed when the due time became 04:30 America/Los_Angeles
+    // and the run-day rule arrived, so the anchor is now the acting statement
+    // that replaced it. Asserting the exit as well as the call keeps this a
+    // test of "the prologue acts", not merely "the prologue mentions". That the
+    // old gate stays gone is pinned on executable text in
+    // packages/queue/tests/catchup-gate-single-source.test.ts — a check on the
+    // raw source here would match this script's own comment about it.
     const src = readFileSync(join(REPO, 'scripts', 'daily-catchup.sh'), 'utf-8')
-    expect(src).toContain('-lt 7')          // the gate really is there,
+    expect(src).toContain('daily-run-status.ts --json')   // the gate really is there,
+    const gate = src.slice(src.indexOf('if [ "$ELIGIBLE" != "True" ]'))
+    expect(gate.slice(0, gate.indexOf('\nfi')), 'the gate must still EXIT, not merely log')
+      .toContain('exit 0')
     const { root } = derivedRoot('daily-catchup.sh')
     expect(root).not.toBe('')               // and the probe is unaffected by it.
   })

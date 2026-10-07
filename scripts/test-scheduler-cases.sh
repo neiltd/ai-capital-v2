@@ -196,33 +196,33 @@ echo "Scheduler case matrix (throwaway DB, dry-run only)"
 echo "fixed clock: $FIXED_NOW  ==  $TODAY $NOW_H:00 $BUSINESS_TZ  (host clock unused)"
 echo
 
-reset; beat "07:05"
-check "Case A  awake since 07:05, run missing"            missing        true  true
+reset; beat "04:35"
+check "Case A  awake since 04:35, run missing"            missing        true  true
 
 reset; beat_ago 3
 check "Case B  asleep through 04:30, woke 3min ago"       no_opportunity true  false
 
-reset; add_run "07:00" success "07:33"; beat "07:05"
+reset; add_run "04:30" success "05:03"; beat "04:35"
 check "Case C  already succeeded -> no duplicate"         success        false false
 
-reset; add_run "07:00" failed "07:05"; beat "07:05"
+reset; add_run "04:30" failed "04:35"; beat "04:35"
 check "Case D  failed != never ran"                       failed         false true
 
-reset; add_run "07:00" running; beat "07:05"
+reset; add_run "04:30" running; beat "04:35"
 check "Case E  running >90min -> stale/orphaned"          stale          false true
 
-reset; beat "07:05"; beat "08:00"
+reset; beat "04:35"; beat "05:30"
 check "Case F  opportunity elapsed, still nothing"        missing        true  true
 
 reset
 check "Edge    scheduler never ran -> no false alarm"     no_opportunity true  false
 
-reset; add_run "$NOW_H:00" running; beat "07:05"
+reset; add_run "$NOW_H:00" running; beat "04:35"
 check "Edge    just-started run is healthy, not stale"    running        false false
 
 echo
 echo "── the scheduler script itself, on the Case C database (must NOT submit) ──"
-reset; add_run "07:00" success "07:33"; beat "07:05"
+reset; add_run "04:30" success "05:03"; beat "04:35"
 run_isolated ./scripts/daily-scheduler.sh --dry-run
 # EXIT STATUS FIRST. "no 'would submit' in the output" is also true when the
 # script never ran — a refusal, a crash, a missing file. Awarding PASS on the
@@ -236,7 +236,7 @@ else
 fi
 
 echo "── the scheduler script on the Case A database (must submit) ──"
-reset; beat "07:05"
+reset; beat "04:35"
 run_isolated ./scripts/daily-scheduler.sh --dry-run
 if [ "$ISO_RC" -ne 0 ]; then
   echo "  FAIL  scheduler exited $ISO_RC on a missing run: $ISO_OUT"; FAIL=$((FAIL+1))
@@ -247,7 +247,7 @@ else
 fi
 
 echo "── the watchdog on the Case F database (must alert) ──"
-reset; beat "07:05"; beat "08:00"
+reset; beat "04:35"; beat "05:30"
 run_isolated ./scripts/pipeline-watchdog.sh --dry-run
 if [ "$ISO_RC" -ne 0 ]; then
   echo "  FAIL  watchdog exited $ISO_RC on a missing run: $ISO_OUT"; FAIL=$((FAIL+1))

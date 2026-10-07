@@ -335,7 +335,8 @@ state it cannot be reset by a cleanup.
 **Production application runtime still uses `thanapold`, a superuser.** Moving
 the pipeline off it is Phase 2 and is deliberately separate: it touches 3
 launchd plists, 4 shell scripts, `.env`, and `unified-platform/.env.local`, for
-a DAG that runs at 07:00 on a real-money book where a missing grant means a
+a DAG that runs at 04:30 America/Los_Angeles on run days — NYSE trading days
+plus every Sunday — on a real-money book where a missing grant means a
 silently failed stage.
 
 **`ai_capital_test_runtime` can still connect to `postgres` and `template1`,**

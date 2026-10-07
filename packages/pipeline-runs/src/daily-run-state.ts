@@ -314,7 +314,7 @@ export interface AssessInput {
    *
    * The LAST heartbeat alone is not sufficient, and getting this wrong was a
    * real bug in the first draft: a machine that wakes at 10:13 and a machine
-   * that has been awake since 07:00 doing nothing both have a "last heartbeat"
+   * that has been awake since 04:30 doing nothing both have a "last heartbeat"
    * of 10:13. Only the FIRST heartbeat after the due time says how long the
    * machine has actually been available to run.
    */

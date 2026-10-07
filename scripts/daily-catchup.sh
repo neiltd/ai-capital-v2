@@ -12,11 +12,19 @@
 # This script is retained because removing it is a separate dead-code decision,
 # not part of the credential boundary. It remains safe to run by hand: launchd
 # runs missed StartCalendarInterval jobs once on wake, which covers "Mac was
-# asleep at 7am", and RunAtLoad covers "Mac was fully powered off at 7am, booted
-# later" — the behaviours the scheduler template now provides.
+# asleep at the due time", and RunAtLoad covers "Mac was fully powered off at
+# the due time, booted later" — the behaviours the scheduler template now
+# provides.
 #
-# Idempotent: safe to fire multiple times same day (double-fire guard below),
-# and safe to fire before 7am (exits without doing anything).
+# NOTHING INSTALLED OR SCHEDULED REACHES THIS FILE (verified 2026-10-07): no
+# tracked launchd template targets it (ops/launchd/*.template all name
+# run-alerts.sh, daily-scheduler.sh, pipeline-watchdog.sh or a queue bin), and
+# neither daily-scheduler.sh nor pipeline-watchdog.sh invokes it — their only
+# mentions of it are comments. It is a hand-run tool.
+#
+# Idempotent: safe to fire multiple times the same day, and safe to fire before
+# the due time or on a day the daily run does not happen (exits without doing
+# anything). It does not own either rule — see the gate below.
 
 set -o pipefail
 export PATH="/opt/homebrew/bin:/usr/local/bin:/usr/bin:/bin"
@@ -33,66 +41,72 @@ export PATH="/opt/homebrew/bin:/usr/local/bin:/usr/bin:/bin"
 # to leave behind. The script's own path is the one thing that always describes
 # the checkout it belongs to.
 ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
-DB="${PIPELINE_RUNS_DB:-$ROOT/data/pipeline-runs.db}"
 LOG="$ROOT/logs/daily-catchup.log"
 LOCK="$ROOT/data/daily-catchup.lock"
 
 mkdir -p "$ROOT/logs" "$ROOT/data"
 log() { echo "[$(date '+%Y-%m-%d %H:%M:%S')] $*" >> "$LOG"; }
 
-# Before 7am local: not due yet — the calendar trigger will fire at 7:00 and
-# this same script runs then too, so nothing to do here.
-if [ "$(date +%H)" -lt 7 ]; then
+# ── ELIGIBILITY COMES FROM ONE PLACE ────────────────────────────────────────
+#
+# This gate used to be `[ "$(date +%H)" -lt 7 ]`, with the double-fire and
+# already-failed rules re-implemented below in SQL filtered by
+# `strftime('%Y-%m-%d','now','localtime')`. Three defects in that shape:
+#
+#   1. A SECOND COPY OF THE DUE TIME. The hour 7 was hard-coded here while the
+#      real due time lives in DUE_TIME (packages/pipeline-runs/src/
+#      daily-run-state.ts). The due time is now 04:30, so the copy was wrong,
+#      and any future change would have to be made twice.
+#   2. THE HOST'S CLOCK, NOT THE BUSINESS ZONE. `date +%H` and SQLite
+#      'localtime' both read wherever the laptop happens to be. The business
+#      zone is America/Los_Angeles by definition (BUSINESS_TIMEZONE), so in
+#      Asia/Bangkok this gate opened and closed on the wrong day entirely.
+#   3. NO RUN-DAY RULE AT ALL. The daily run happens on NYSE trading days and
+#      on every Sunday — not on Saturdays, and not on a weekday that is an NYSE
+#      full-day holiday. This script had no notion of that and would have
+#      submitted a pipeline on Thanksgiving.
+#
+# The verdict now comes from the SAME read-only evaluator the scheduler and the
+# watchdog consult, so the three can never disagree: daily-run-status.ts owns
+# DUE_TIME, isDailyRunDay and the run-row states. `eligibleToRun` is false
+# before 04:30 business time, on a non-run day, and whenever a run already
+# exists for the day — which is also the double-fire guard, from recorded state
+# rather than a second query.
+#
+# FAIL CLOSED. If the state cannot be evaluated this exits WITHOUT submitting.
+# A catch-up that cannot tell what day it is must not spend API budget guessing.
+STATUS_JSON=$(cd "$ROOT" && npx tsx packages/pipeline-runs/bin/daily-run-status.ts --json 2>>"$LOG")
+if [ -z "$STATUS_JSON" ]; then
+  log "ERROR: could not evaluate daily run state — refusing to submit blind"
+  exit 1
+fi
+STATE=$(echo "$STATUS_JSON"    | python3 -c 'import json,sys;print(json.load(sys.stdin)["state"])')
+ELIGIBLE=$(echo "$STATUS_JSON" | python3 -c 'import json,sys;print(json.load(sys.stdin)["eligibleToRun"])')
+LOGICAL=$(echo "$STATUS_JSON"  | python3 -c 'import json,sys;print(json.load(sys.stdin)["logicalDate"])')
+REASON=$(echo "$STATUS_JSON"   | python3 -c 'import json,sys;print(json.load(sys.stdin)["reason"])')
+
+# A TEST CLOCK MUST NEVER CAUSE A REAL SUBMISSION, the same refusal the
+# scheduler and the watchdog carry. Without it, SCHEDULER_TEST_NOW in the
+# environment would file a live run under a fabricated date.
+CLOCK_OVERRIDE=$(echo "$STATUS_JSON" | python3 -c 'import json,sys;print(json.load(sys.stdin).get("clockOverride", False))')
+if [ "$CLOCK_OVERRIDE" = "True" ] || [ "$CLOCK_OVERRIDE" = "true" ]; then
+  log "FATAL: SCHEDULER_TEST_NOW is set — refusing to submit on an overridden clock"
+  exit 2
+fi
+
+if [ "$ELIGIBLE" != "True" ] && [ "$ELIGIBLE" != "true" ]; then
+  # Covers every reason not to act: not_due, not_trading_day, success, running,
+  # failed, timeout, killed, unknown. Each carries its own reason text.
+  log "state=$STATE logical=$LOGICAL — not eligible: $REASON"
   exit 0
 fi
 
-# Already ran (or is currently running) today? Only 'running' and 'success'
-# count as "done" here — a day with only 'failed' rows still gets handled
-# below (previously 'failed' counted as done too, so one failed 7am run
-# silently killed the whole day with no retry and no notice).
-if [ -f "$DB" ] && command -v sqlite3 > /dev/null 2>&1; then
-  SQLITE_ERR=$(mktemp)
-  COUNT=$(sqlite3 "file:$DB?mode=ro" "select count(*) from pipeline_runs
-    where stage='daily-pipeline' and status in ('running','success')
-    and strftime('%Y-%m-%d', started_at) = strftime('%Y-%m-%d','now','localtime');" 2>"$SQLITE_ERR")
-  if [ -s "$SQLITE_ERR" ]; then
-    log "sqlite3 stderr: $(cat "$SQLITE_ERR")"
-  fi
-  log "debug: COUNT=[$COUNT] hour=$(date +%H) db=$DB"
-  rm -f "$SQLITE_ERR"
-  if [ "${COUNT:-0}" -gt 0 ]; then
-    exit 0
-  fi
-
-  # No running/success row today. If there's at least one 'failed' row, this
-  # isn't a fresh day — daily-queue.sh already tried and exhausted retries.
-  # Alert instead of silently auto-resubmitting (which risks double API/LINE
-  # spend on a day that may keep failing for the same reason). Once per day.
-  FAILED_COUNT=$(sqlite3 "file:$DB?mode=ro" "select count(*) from pipeline_runs
-    where stage='daily-pipeline' and status='failed'
-    and strftime('%Y-%m-%d', started_at) = strftime('%Y-%m-%d','now','localtime');" 2>/dev/null)
-  if [ "${FAILED_COUNT:-0}" -gt 0 ]; then
-    # BUSINESS RULE, not notification: do not auto-resubmit a pipeline that has
-    # already failed today. daily-queue.sh has exhausted its retries, and a day
-    # failing for a structural reason will keep failing and keep spending.
-    #
-    # NO NOTIFICATION CHANNEL. LINE was retired 2026-08-28. The per-day marker
-    # that used to gate the alert is gone with it — it was touched BEFORE the mute
-    # check, so a muted run burned it permanently. The exit below is unchanged and
-    # is what actually prevents the auto-retry.
-    #
-    # ACCEPTED LIMITATION: visible in this log and in the pipeline status surfaces,
-    # but it does not page the operator. Awareness is pull-based for now.
-    log "today's daily-pipeline already failed ${FAILED_COUNT}x — not auto-retrying; run daily-queue.sh manually"
-    exit 0
-  fi
-fi
-
-# Concurrency guard: the 7:00 calendar fire and a same-minute wake/RunAtLoad
-# fire could race before the first enqueue produces a DB row.
+# Concurrency guard: two hand-runs, or a wake and a RunAtLoad fire in the same
+# minute, could race before the first enqueue produces a run row for the status
+# evaluator above to see.
 mkdir "$LOCK" 2>/dev/null || exit 0
 trap 'rmdir "$LOCK"' EXIT
 
-log "no daily-pipeline row for today — triggering catch-up run"
+log "state=$STATE logical=$LOGICAL — eligible, triggering catch-up run"
 "$ROOT/daily-queue.sh" >> "$LOG" 2>&1
 log "catch-up run finished, exit=$?"

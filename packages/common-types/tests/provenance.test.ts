@@ -192,7 +192,7 @@ describe('GDELT daily cadence contract (36h bound)', () => {
   })
 
   it('tolerates a late run rather than flapping to stale at exactly 24h', () => {
-    // The DAG fires at 07:00 on a laptop that sleeps; a run can land hours late.
+    // The DAG is due at 04:30 PT on a laptop that sleeps; a run can land hours late.
     expect(gdelt(30).availability).toBe('current')
   })
 
