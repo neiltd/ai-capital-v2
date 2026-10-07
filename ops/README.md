@@ -577,7 +577,7 @@ differs when a file is sourced, and cwd is whatever the caller left behind).
 |---|---|---|
 | `scripts/run-alerts.sh` | **production launcher** — the `alerts` launchd agent runs it every 30 min during market hours | the checkout whose `run-stage.ts` and app it executes |
 | `scripts/refresh-prices.sh` | **production launcher** | the checkout it executes, and `DATA_ROOT`, which is now derived **from** that `ROOT` so the two can never disagree |
-| `scripts/daily-catchup.sh` | **production launcher** | its run database, log and lock |
+| `scripts/daily-catchup.sh` | **hand-run tool — not production.** Nothing installed or scheduled reaches it: no `ops/launchd/*.template` targets it, and neither `daily-scheduler.sh` nor `pipeline-watchdog.sh` invokes it (their only mentions are comments). Its own plist was deleted in S4D | its log and its lock, and the checkout whose `daily-run-status.ts` it asks for a verdict and whose `daily-queue.sh` it submits through. It no longer opens a run database |
 | `scripts/dep-graph-scan.sh` | **production launcher** | the app directory it runs `npm run scan` in |
 | `scripts/test-scheduler-cases.sh` | **dry-run test harness — not production** | **which copy of the real scheduler and watchdog is under test** |
 

@@ -78,7 +78,11 @@ describe('logical run date', () => {
 describe('Case A — machine available, daily run missing', () => {
   it('becomes eligible and starts', () => {
     const now = at(DATE, '09:00')
-    // awake continuously since 07:05, now 09:00 -> available 115 min
+    // Availability is measured from the FIRST heartbeat at or after the due
+    // time (daily-run-state.ts:441), not from the most recent one. Due is 04:30
+    // America/Los_Angeles, so that heartbeat is 07:05 and availability is
+    // 09:00 - 07:05 = 115 min (:448). 07:05 is no longer "just after due" — it
+    // is 2h35m past it — but the number the branch computes is unchanged.
     const a = assessDailyRun({ db, now, heartbeats: [at(DATE, '07:05'), at(DATE, '08:55')] })
     expect(a.state).toBe('missing')
     expect(a.eligibleToRun).toBe(true)
@@ -88,7 +92,10 @@ describe('Case A — machine available, daily run missing', () => {
 
 describe('Case B — machine unavailable through the due time, then wakes', () => {
   it('catches the missed logical run up, and does NOT alert', () => {
-    // This is the deployment's normal morning: asleep at 07:00, woken at 10:13.
+    // This is the deployment's normal morning: asleep through the 04:30
+    // America/Los_Angeles due time, woken at 10:13. The only heartbeat is at
+    // 10:13, which IS at or after due, so availability is 0 min (:448) — inside
+    // the grace period, hence no_opportunity rather than missing.
     // Alerting here every day would train the alert to be ignored.
     const now = at(DATE, '10:13')
     const a = assessDailyRun({ db, now, heartbeats: [at(DATE, '10:13')] })
@@ -107,7 +114,9 @@ describe('Case B — machine unavailable through the due time, then wakes', () =
   })
 
   it('DOES alert once the machine has been awake past the grace period', () => {
-    // awake since 07:05; now 08:00 -> available 55 min, past the 30 min grace
+    // One heartbeat, at 07:05, which is at or after the 04:30 due time — so it
+    // is the one availability is measured from (:441). 08:00 - 07:05 = 55 min
+    // (:448), past the 30 min grace, so this alerts.
     const a = assessDailyRun({ db, now: at(DATE, '08:00'), heartbeats: [at(DATE, '07:05')] })
     expect(a.state).toBe('missing')
     expect(a.shouldAlert).toBe(true)

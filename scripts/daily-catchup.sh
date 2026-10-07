@@ -73,6 +73,10 @@ log() { echo "[$(date '+%Y-%m-%d %H:%M:%S')] $*" >> "$LOG"; }
 # exists for the day — which is also the double-fire guard, from recorded state
 # rather than a second query.
 #
+# AND THE DATE IT APPROVED IS THE DATE THAT GETS FILED. The verdict names a
+# logical date, and that date is re-checked under the lock and then passed to
+# the submitter. Nothing downstream recomputes which day this is.
+#
 # FAIL CLOSED. If the state cannot be evaluated this exits WITHOUT submitting.
 # A catch-up that cannot tell what day it is must not spend API budget guessing.
 STATUS_JSON=$(cd "$ROOT" && npx tsx packages/pipeline-runs/bin/daily-run-status.ts --json 2>>"$LOG")
@@ -101,12 +105,83 @@ if [ "$ELIGIBLE" != "True" ] && [ "$ELIGIBLE" != "true" ]; then
   exit 0
 fi
 
+# THE APPROVED DATE MUST BE A DATE. Everything below carries $LOGICAL into a
+# submission, so a blank or misshapen value would either be forwarded as a
+# nonsense logical date or silently dropped, putting us back to a day computed
+# downstream. Checked before the lock, because there is nothing to release yet.
+case "$LOGICAL" in
+  [0-9][0-9][0-9][0-9]-[0-9][0-9]-[0-9][0-9]) ;;
+  *)
+    log "FATAL: the approved logical date is not YYYY-MM-DD: '$LOGICAL' — refusing to submit"
+    exit 1
+    ;;
+esac
+
 # Concurrency guard: two hand-runs, or a wake and a RunAtLoad fire in the same
 # minute, could race before the first enqueue produces a run row for the status
 # evaluator above to see.
 mkdir "$LOCK" 2>/dev/null || exit 0
 trap 'rmdir "$LOCK"' EXIT
 
+# ── RE-CHECK UNDER THE LOCK, ABOUT $LOGICAL AND NOT ABOUT "TODAY" ───────────
+#
+# The window between the first verdict and holding the lock is small but real,
+# and a duplicate daily run costs real API spend. The scheduler carries the same
+# recheck at scripts/daily-scheduler.sh:446-478, for the same reason.
+#
+# IT ASKS WITH --logical-date. Acquiring the lock takes a moment; if that moment
+# crosses Los Angeles midnight, a recheck that asked about "today" would answer
+# about the NEXT date — which has no run and is not due — and would throw away a
+# correctly approved day. Narrowing the question is not a clock override: the
+# answer is still computed against the real current instant.
+#
+# FAIL CLOSED on every unexpected outcome. A recheck we cannot read, or one that
+# answers about a day we did not ask about, is not permission to spend.
+RECHECK_JSON=$(cd "$ROOT" && npx tsx packages/pipeline-runs/bin/daily-run-status.ts \
+  --json --logical-date "$LOGICAL" 2>>"$LOG")
+if [ -z "$RECHECK_JSON" ]; then
+  log "recheck under lock produced no output — refusing to submit blind"
+  exit 1
+fi
+RECHECK=$(echo "$RECHECK_JSON"      | python3 -c 'import json,sys;print(json.load(sys.stdin)["eligibleToRun"])' 2>/dev/null)
+RECHECK_DATE=$(echo "$RECHECK_JSON" | python3 -c 'import json,sys;print(json.load(sys.stdin)["logicalDate"])' 2>/dev/null)
+RECHECK_OVERRIDE=$(echo "$RECHECK_JSON" | python3 -c 'import json,sys;print(json.load(sys.stdin).get("clockOverride", False))' 2>/dev/null)
+if [ -z "$RECHECK" ] || [ -z "$RECHECK_DATE" ]; then
+  log "recheck under lock was unparseable — refusing to submit"
+  exit 1
+fi
+if [ "$RECHECK_DATE" != "$LOGICAL" ]; then
+  log "FATAL: recheck answered for $RECHECK_DATE but $LOGICAL was approved — refusing to submit"
+  exit 1
+fi
+if [ "$RECHECK_OVERRIDE" = "True" ] || [ "$RECHECK_OVERRIDE" = "true" ]; then
+  log "FATAL: SCHEDULER_TEST_NOW is set at the recheck — refusing to submit on an overridden clock"
+  exit 2
+fi
+if [ "$RECHECK" != "True" ] && [ "$RECHECK" != "true" ]; then
+  log "no longer eligible for $LOGICAL after acquiring the lock — another run started it"
+  exit 0
+fi
+
 log "state=$STATE logical=$LOGICAL — eligible, triggering catch-up run"
-"$ROOT/daily-queue.sh" >> "$LOG" 2>&1
-log "catch-up run finished, exit=$?"
+# THE APPROVED DATE TRAVELS WITH THE SUBMISSION.
+#
+# This used to call the submitter with no arguments. daily-queue.sh:130-149
+# forwards a logical date only when it is given one, and
+# packages/queue/bin/run-daily.ts:57 otherwise computes
+# logicalRunDate(new Date()) for itself. So the day that was APPROVED and the
+# day that got FILED were two independent answers, and across Los Angeles
+# midnight they differ: a hand run approved at Fri 23:59:5x could file Saturday
+# at about 00:00 — a non-run day, hours before 04:30 — which is exactly what the
+# eligibility gate above exists to prevent.
+"$ROOT/daily-queue.sh" --logical-date "$LOGICAL" >> "$LOG" 2>&1
+# CAPTURE FIRST, on the very next line. `log "... exit=$?"` printed the right
+# number, because the argument is expanded before log runs — but log then became
+# the script's LAST command, so the SCRIPT exited with the logger's status (0)
+# and a failed submission reported success. The scheduler fixed the same shape
+# at scripts/daily-scheduler.sh:498-502.
+SUBMIT_RC=$?
+log "catch-up run finished, exit=$SUBMIT_RC"
+# Exit with the submitter's status, not the logger's. `exit` still fires the EXIT
+# trap, so the lock is released on both the success and the failure path.
+exit "$SUBMIT_RC"

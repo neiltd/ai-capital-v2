@@ -119,9 +119,17 @@ describe('A. a recorded run on a day we do not schedule is still assessed', () =
   })
 
   it('the run-day check really does sit after the run-row branches', () => {
-    // A source assertion, because the ORDER is the property Neil decided on and
-    // the behavioural tests above can all be satisfied by code that happens to
-    // be ordered correctly today. Both anchors are in the same function.
+    // A source assertion that DUPLICATES the behavioural pin above, rather than
+    // filling a gap. Moving the run-day branch ahead of the run-row branches
+    // would already fail the tests at :67-109: the failed, stale and unknown
+    // cases would come back 'not_trading_day' with shouldAlert false. This
+    // states the same property directly, on the ordering itself, so a reader of
+    // daily-run-state.ts:426 finds the constraint written down where the order
+    // can be seen. Both anchors are in the same function.
+    //
+    // The earlier wording claimed the behavioural tests "can all be satisfied by
+    // code that happens to be ordered correctly today". That was wrong — they
+    // cannot be satisfied by the wrong order at all.
     const src = readFileSync(join(PKG, 'src', 'daily-run-state.ts'), 'utf-8')
     const body = src.slice(src.indexOf('export function assessDailyRun'))
     expect(body.indexOf('TERMINAL[run.status]'), 'terminal branch missing')
